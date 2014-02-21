@@ -1,6 +1,6 @@
 [submodule "cocos2d-x"]
 	path = cocos2d-x
-	url = /Users/james/Project/cocos2d-x
+	url = git://github.com/cocos2d/cocos2d-x.git
 [submodule "tests"]
 	path = tests
 	url = git://github.com/cocos2d/cocos2d-js-tests.git
