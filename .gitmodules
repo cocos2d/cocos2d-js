@@ -1,5 +1,5 @@
 [submodule "cocos2d-x"]
-	path = cocos2d-x
+	path = JSB/cocos2d-x
 	url = git://github.com/cocos2d/cocos2d-x.git
 [submodule "tests"]
 	path = tests
