@@ -777,7 +777,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../js-vm/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
@@ -802,7 +802,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../js-vm/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../spidermonkey/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -823,7 +823,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../project/proj.mac/Test_Info.plist";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d-x/cocos/2d/platform/mac $(SRCROOT)/../cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../js-vm/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d-x/cocos/2d/platform/mac $(SRCROOT)/../cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../spidermonkey/include/mac";
 			};
 			name = Debug;
 		};
@@ -842,7 +842,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../project/proj.mac/Test_Info.plist";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d-x/cocos/2d/platform/mac $(SRCROOT)/../cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../js-vm/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d-x/cocos/2d/platform/mac $(SRCROOT)/../cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../spidermonkey/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
