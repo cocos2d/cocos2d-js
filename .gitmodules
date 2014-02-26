@@ -1,6 +1,12 @@
 [submodule "cocos2d-x"]
-	path = JSB/cocos2d-x
+	path = jsb/cocos2d-x
 	url = git://github.com/cocos2d/cocos2d-x.git
 [submodule "cocos2d-html5"]
 	path = cocos2d-html5
 	url = git://github.com/cocos2d/cocos2d-html5.git
+[submodule "tools/cocos2d-console"]
+	path = tools/cocos2d-console
+	url = git://github.com/cocos2d/cocos2d-console.git
+[submodule "tools/bindings-generator"]
+	path = tools/bindings-generator
+	url = git://github.com/cocos2d/bindings-generator.git
