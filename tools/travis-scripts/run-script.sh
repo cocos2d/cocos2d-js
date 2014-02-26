@@ -66,7 +66,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
     ./generate-bindings.sh
     # ./generate-cocosfiles.sh
 
-    cd $PROJECT_ROOT/build
+    cd $PROJECT_ROOT/jsb/build
     ./android-build.py -n "-j8"
 
 elif [ "$PLATFORM"x = "nacl"x ]; then
