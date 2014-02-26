@@ -24,6 +24,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_localstorage_static
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,spidermonkey/prebuilt/android)
+$(call import-module,external/spidermonkey/prebuilt/android)
 $(call import-module,bindings)
 $(call import-module,storage/local-storage)

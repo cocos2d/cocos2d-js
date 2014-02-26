@@ -154,7 +154,7 @@ def build_samples(ndk_build_param,android_platform,build_mode):
     elif build_mode != 'release':
         build_mode = 'debug'
 
-    app_android_root = os.path.join(cocos_root, '../project/proj.android')       
+    app_android_root = os.path.join(cocos_root, '../tests-project/proj.android')       
     copy_resources(os.path.join(cocos_root, app_android_root))
     do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,android_platform,build_mode)
 

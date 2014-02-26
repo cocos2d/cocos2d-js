@@ -24,7 +24,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += websockets_static
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,spidermonkey/prebuilt/android)
+$(call import-module,external/spidermonkey/prebuilt/android)
 $(call import-module,bindings)
 $(call import-module,network)
 $(call import-module,websockets/prebuilt/android)

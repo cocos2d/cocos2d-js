@@ -39,6 +39,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,spidermonkey/prebuilt/android)
+$(call import-module,external/spidermonkey/prebuilt/android)
 $(call import-module,2d)
 $(call import-module,audio/android)
