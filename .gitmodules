@@ -4,3 +4,6 @@
 [submodule "cocos2d-html5"]
 	path = cocos2d-html5
 	url = git://github.com/cocos2d/cocos2d-html5.git
+[submodule "tools/cocos2d-console"]
+	path = tools/cocos2d-console
+	url = git://github.com/cocos2d/cocos2d-console.git
