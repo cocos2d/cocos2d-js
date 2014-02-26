@@ -11,15 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\bindings\auto\jsb_cocos2dx_studio_auto.cpp" />
-    <ClCompile Include="jsb_cocos2dx_studio_manual.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_studio_auto.cpp" />
+    <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\bindings\auto\jsb_cocos2dx_studio_auto.hpp" />
-    <ClInclude Include="jsb_cocos2dx_studio_manual.h" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_studio_auto.hpp" />
+    <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\bindings\auto\jsb_cocos2dx_studio_auto_api.js" />
+    <None Include="..\auto\jsb_cocos2dx_studio_auto_api.js" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{79D34511-E54E-410A-8BBA-EF175AD6C695}</ProjectGuid>
@@ -48,11 +48,11 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\cocos2d-x\cocos\2d\cocos2d_headers.props" />
+    <Import Project="..\..\cocos2d-x\cocos\2d\cocos2d_headers.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\cocos2d-x\cocos\2d\cocos2d_headers.props" />
+    <Import Project="..\..\cocos2d-x\cocos\2d\cocos2d_headers.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -74,7 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;COCOS2D_DEBUG=1;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\audio\include;$(ProjectDir)..\..\..\bindings\manual;$(EngineRoot)external;$(ProjectDir)..\..\..\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\audio\include;$(ProjectDir)..\manual;$(EngineRoot)external;$(ProjectDir)..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4068;4101;4800;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -85,7 +85,7 @@
     </Link>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\cocos2d-x\external\sqlite3\libraries\win32\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\sqlite3\libraries\win32\*.*" "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -97,7 +97,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\cocos2d-x\external\sqlite3\libraries\win32\*.
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\audio\include;$(ProjectDir)..\..\..\bindings\manual;$(EngineRoot)external;$(ProjectDir)..\..\..\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\audio\include;$(ProjectDir)..\manual;$(EngineRoot)external;$(ProjectDir)..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4068;4101;4800;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
