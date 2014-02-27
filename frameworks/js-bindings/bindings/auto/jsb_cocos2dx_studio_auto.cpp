@@ -7203,11 +7203,11 @@ bool js_cocos2dx_studio_GUIReader_widgetFromJsonFile(JSContext *cx, uint32_t arg
 		const char* arg0;
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_GUIReader_widgetFromJsonFile : Error processing arguments");
-		cocos2d::gui::Widget* ret = cobj->widgetFromJsonFile(arg0);
+		cocos2d::ui::Widget* ret = cobj->widgetFromJsonFile(arg0);
 		jsval jsret = JSVAL_NULL;
 		do {
 			if (ret) {
-				js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::gui::Widget>(cx, (cocos2d::gui::Widget*)ret);
+				js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::ui::Widget>(cx, (cocos2d::ui::Widget*)ret);
 				jsret = OBJECT_TO_JSVAL(proxy->obj);
 			} else {
 				jsret = JSVAL_NULL;

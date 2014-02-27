@@ -1507,7 +1507,7 @@ ccs.GUIReader = {
 
 /**
  * @method widgetFromJsonFile
- * @return A value converted from C/C++ "cocos2d::gui::Widget*"
+ * @return A value converted from C/C++ "cocos2d::ui::Widget*"
  * @param {const char*}
  */
 widgetFromJsonFile : function () {},
