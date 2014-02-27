@@ -70,16 +70,12 @@ DerivedData/
 .Target-Release/
 
 # Ignore files built by blackberry
-Simulator/
 Device-Debug/
 Device-Release/
 
 # Ignore vim swaps
 *.swp
 *.swo
-
-# Ignore files created by create_project.py
-projects/
 
 # Ignore config files in javascript bindings generator
 tools/tojs/user.cfg
@@ -91,9 +87,6 @@ tools/jenkins_scripts/mac/android/userconf.ini
 
 # CTags
 tags
-
-# ignore files, created with make-all-linux-project script
-/lib
 
 # Cmake files
 CMakeCache.txt
