@@ -232,11 +232,11 @@
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
-				1A119F0918BDF1D400352BAA /* external */,
 				1A119E2E18BDF19200352BAA /* auto */,
-				1A119E4118BDF19200352BAA /* manual */,
+				1A119F0918BDF1D400352BAA /* external */,
 				1A5410A518B785A10016A3AF /* libjsbindings iOS.a */,
 				1A5410A418B785A10016A3AF /* libjsbindings Mac.a */,
+				1A119E4118BDF19200352BAA /* manual */,
 			);
 			sourceTree = "<group>";
 		};
@@ -553,7 +553,7 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "";
 			};
-			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2d_jsb_lib" */;
+			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2d_js_bindings" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -800,7 +800,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2d_jsb_lib" */ = {
+		1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2d_js_bindings" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1551A34A158F2AB200E66CFE /* Debug */,
