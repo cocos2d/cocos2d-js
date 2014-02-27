@@ -79,7 +79,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\auto;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\manual;$(EngineRoot)cocos\audio\include;$(ProjectDir)..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\auto;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\manual;$(EngineRoot)cocos\audio\include;$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_DEBUG=1;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -112,11 +112,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\cocos2d-x\external\
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\TestJavascriptRes" rd /s /q "$(OutDir)\TestJavascriptRes"
 mkdir "$(OutDir)\TestJavascriptRes"
-if exist "$(OutDir)\TestJavascriptRes\src" mkdir "$(OutDir)\TestJavascriptRes\src"
-if exist "$(OutDir)\TestJavascriptRes\res" mkdir "$(OutDir)\TestJavascriptRes\res"
+mkdir "$(OutDir)\TestJavascriptRes\src"
+mkdir "$(OutDir)\TestJavascriptRes\res"
 xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\TestJavascriptRes\" /e /Y
-xcopy "$(ProjectDir)..\..\src\*" "$(OutDir)\TestJavascriptRes\src" /e /Y
-xcopy "$(ProjectDir)..\..\res\*" "$(OutDir)\TestJavascriptRes\res" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)\TestJavascriptRes\src\" /e /Y
+xcopy "$(ProjectDir)..\..\res" "$(OutDir)\TestJavascriptRes\res\" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>
@@ -136,7 +136,7 @@ xcopy "$(ProjectDir)..\..\res\*" "$(OutDir)\TestJavascriptRes\res" /e /Y</Comman
       <ProxyFileName>testjs_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\auto;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\manual;$(EngineRoot)cocos\audio\include;$(ProjectDir)..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\auto;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\manual;$(EngineRoot)cocos\audio\include;$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;NDEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -170,11 +170,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\cocos2d-x\external\
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\TestJavascriptRes" rd /s /q "$(OutDir)\TestJavascriptRes"
 mkdir "$(OutDir)\TestJavascriptRes"
-if exist "$(OutDir)\TestJavascriptRes\src" mkdir "$(OutDir)\TestJavascriptRes\src"
-if exist "$(OutDir)\TestJavascriptRes\res" mkdir "$(OutDir)\TestJavascriptRes\res"
+mkdir "$(OutDir)\TestJavascriptRes\src"
+mkdir "$(OutDir)\TestJavascriptRes\res"
 xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\TestJavascriptRes\" /e /Y
-xcopy "$(ProjectDir)..\..\src\*" "$(OutDir)\TestJavascriptRes\src" /e /Y
-xcopy "$(ProjectDir)..\..\res\*" "$(OutDir)\TestJavascriptRes\res" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)\TestJavascriptRes\src\" /e /Y
+xcopy "$(ProjectDir)..\..\res" "$(OutDir)\TestJavascriptRes\res\" /e /Y</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -194,6 +194,9 @@ xcopy "$(ProjectDir)..\..\res\*" "$(OutDir)\TestJavascriptRes\res" /e /Y</Comman
     <ResourceCompile Include="testjs.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\frameworks\js-bindings\bindings\proj.win32\libJSBinding.vcxproj">
+      <Project>{39379840-825a-45a0-b363-c09ffef864bd}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\bindings\proj.win32\libJSBindingForBuilder.vcxproj">
       <Project>{f9da0fc1-651b-457b-962e-a4d61cebf5fd}</Project>
     </ProjectReference>
@@ -220,11 +223,9 @@ xcopy "$(ProjectDir)..\..\res\*" "$(OutDir)\TestJavascriptRes\res" /e /Y</Comman
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\2d\cocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\audio\proj.win32\CocosDenshion.vcxproj">
       <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\editor-support\cocosbuilder\proj.win32\libCocosBuilder.vcxproj">
       <Project>{811c0dab-7b96-4bd3-a154-b7572b58e4ab}</Project>
@@ -240,9 +241,6 @@ xcopy "$(ProjectDir)..\..\res\*" "$(OutDir)\TestJavascriptRes\res" /e /Y</Comman
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\network\proj.win32\libNetwork.vcxproj">
       <Project>{df2638c0-8128-4847-867c-6eafe3dee7b5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\frameworks\js-bindings\bindings\proj.win32\libJSBinding.vcxproj">
-      <Project>{39379840-825a-45a0-b363-c09ffef864bd}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\storage\local-storage\proj.win32\libLocalStorage.vcxproj">
       <Project>{632a8f38-d0f0-4d22-86b3-d69f5e6bf63a}</Project>
