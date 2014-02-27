@@ -1,5 +1,5 @@
 /**
- * @module cocos2dx_gui
+ * @module cocos2dx_ui
  */
 var ccui = ccui || {};
 
@@ -10,13 +10,13 @@ ccui.LayoutParameter = {
 
 /**
  * @method getLayoutType
- * @return A value converted from C/C++ "cocos2d::gui::LayoutParameterType"
+ * @return A value converted from C/C++ "cocos2d::ui::LayoutParameterType"
  */
 getLayoutType : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::LayoutParameter*"
+ * @return A value converted from C/C++ "cocos2d::ui::LayoutParameter*"
  */
 create : function () {},
 
@@ -35,19 +35,19 @@ ccui.LinearLayoutParameter = {
 
 /**
  * @method setGravity
- * @param {cocos2d::gui::LinearGravity}
+ * @param {cocos2d::ui::LinearGravity}
  */
 setGravity : function () {},
 
 /**
  * @method getGravity
- * @return A value converted from C/C++ "cocos2d::gui::LinearGravity"
+ * @return A value converted from C/C++ "cocos2d::ui::LinearGravity"
  */
 getGravity : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::LinearLayoutParameter*"
+ * @return A value converted from C/C++ "cocos2d::ui::LinearLayoutParameter*"
  */
 create : function () {},
 
@@ -66,7 +66,7 @@ ccui.RelativeLayoutParameter = {
 
 /**
  * @method setAlign
- * @param {cocos2d::gui::RelativeAlign}
+ * @param {cocos2d::ui::RelativeAlign}
  */
 setAlign : function () {},
 
@@ -96,13 +96,13 @@ setRelativeName : function () {},
 
 /**
  * @method getAlign
- * @return A value converted from C/C++ "cocos2d::gui::RelativeAlign"
+ * @return A value converted from C/C++ "cocos2d::ui::RelativeAlign"
  */
 getAlign : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::RelativeLayoutParameter*"
+ * @return A value converted from C/C++ "cocos2d::ui::RelativeLayoutParameter*"
  */
 create : function () {},
 
@@ -170,7 +170,7 @@ getNodes : function () {},
 
 /**
  * @method setPositionType
- * @param {cocos2d::gui::PositionType}
+ * @param {cocos2d::ui::PositionType}
  */
 setPositionType : function () {},
 
@@ -205,14 +205,14 @@ getActionTag : function () {},
 
 /**
  * @method getLayoutParameter
- * @return A value converted from C/C++ "cocos2d::gui::LayoutParameter*"
- * @param {cocos2d::gui::LayoutParameterType}
+ * @return A value converted from C/C++ "cocos2d::ui::LayoutParameter*"
+ * @param {cocos2d::ui::LayoutParameterType}
  */
 getLayoutParameter : function () {},
 
 /**
  * @method getPositionType
- * @return A value converted from C/C++ "cocos2d::gui::PositionType"
+ * @return A value converted from C/C++ "cocos2d::ui::PositionType"
  */
 getPositionType : function () {},
 
@@ -224,7 +224,7 @@ setName : function () {},
 
 /**
  * @method getChildByName
- * @return A value converted from C/C++ "cocos2d::gui::Widget*"
+ * @return A value converted from C/C++ "cocos2d::ui::Widget*"
  * @param {const char*}
  */
 getChildByName : function () {},
@@ -284,7 +284,7 @@ setTouchEnabled : function () {},
 
 /**
  * @method clone
- * @return A value converted from C/C++ "cocos2d::gui::Widget*"
+ * @return A value converted from C/C++ "cocos2d::ui::Widget*"
  */
 clone : function () {},
 
@@ -302,13 +302,13 @@ setEnabled : function () {},
 
 /**
  * @method setBrightStyle
- * @param {cocos2d::gui::BrightStyle}
+ * @param {cocos2d::ui::BrightStyle}
  */
 setBrightStyle : function () {},
 
 /**
  * @method setLayoutParameter
- * @param {cocos2d::gui::LayoutParameter*}
+ * @param {cocos2d::ui::LayoutParameter*}
  */
 setLayoutParameter : function () {},
 
@@ -363,7 +363,7 @@ getTopInParent : function () {},
 
 /**
  * @method getWidgetType
- * @return A value converted from C/C++ "cocos2d::gui::WidgetType"
+ * @return A value converted from C/C++ "cocos2d::ui::WidgetType"
  */
 getWidgetType : function () {},
 
@@ -381,7 +381,7 @@ getRightInParent : function () {},
 
 /**
  * @method getSizeType
- * @return A value converted from C/C++ "cocos2d::gui::SizeType"
+ * @return A value converted from C/C++ "cocos2d::ui::SizeType"
  */
 getSizeType : function () {},
 
@@ -423,14 +423,14 @@ isFocused : function () {},
 
 /**
  * @method setSizeType
- * @param {cocos2d::gui::SizeType}
+ * @param {cocos2d::ui::SizeType}
  */
 setSizeType : function () {},
 
 /**
  * @method checkChildInfo
  * @param {int}
- * @param {cocos2d::gui::Widget*}
+ * @param {cocos2d::ui::Widget*}
  * @param {const cocos2d::Point&}
  */
 checkChildInfo : function () {},
@@ -449,7 +449,7 @@ setBright : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::Widget*"
+ * @return A value converted from C/C++ "cocos2d::ui::Widget*"
  */
 create : function () {},
 
@@ -487,26 +487,26 @@ getBackGroundImageTextureSize : function () {},
 
 /**
  * @method getLayoutType
- * @return A value converted from C/C++ "cocos2d::gui::LayoutType"
+ * @return A value converted from C/C++ "cocos2d::ui::LayoutType"
  */
 getLayoutType : function () {},
 
 /**
  * @method setClippingType
- * @param {cocos2d::gui::LayoutClippingType}
+ * @param {cocos2d::ui::LayoutClippingType}
  */
 setClippingType : function () {},
 
 /**
  * @method setBackGroundColorType
- * @param {cocos2d::gui::LayoutBackGroundColorType}
+ * @param {cocos2d::ui::LayoutBackGroundColorType}
  */
 setBackGroundColorType : function () {},
 
 /**
  * @method setBackGroundImage
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 setBackGroundImage : function () {},
 
@@ -552,13 +552,13 @@ setClippingEnabled : function () {},
 
 /**
  * @method setLayoutType
- * @param {cocos2d::gui::LayoutType}
+ * @param {cocos2d::ui::LayoutType}
  */
 setLayoutType : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::Layout*"
+ * @return A value converted from C/C++ "cocos2d::ui::Layout*"
  */
 create : function () {},
 
@@ -584,7 +584,7 @@ getTitleText : function () {},
 /**
  * @method loadTextureNormal
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadTextureNormal : function () {},
 
@@ -603,7 +603,7 @@ setCapInsetsPressedRenderer : function () {},
 /**
  * @method loadTexturePressed
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadTexturePressed : function () {},
 
@@ -634,7 +634,7 @@ getTitleColor : function () {},
 /**
  * @method loadTextureDisabled
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadTextureDisabled : function () {},
 
@@ -667,7 +667,7 @@ setScale9Enabled : function () {},
  * @param {const char*}
  * @param {const char*}
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadTextures : function () {},
 
@@ -691,7 +691,7 @@ setTitleColor : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::Button*"
+ * @return A value converted from C/C++ "cocos2d::ui::Button*"
  */
 create : function () {},
 
@@ -717,21 +717,21 @@ getSelectedState : function () {},
 /**
  * @method loadTextureBackGroundSelected
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadTextureBackGroundSelected : function () {},
 
 /**
  * @method loadTextureBackGroundDisabled
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadTextureBackGroundDisabled : function () {},
 
 /**
  * @method loadTextureFrontCross
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadTextureFrontCross : function () {},
 
@@ -742,14 +742,14 @@ loadTextureFrontCross : function () {},
  * @param {const char*}
  * @param {const char*}
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadTextures : function () {},
 
 /**
  * @method loadTextureBackGround
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadTextureBackGround : function () {},
 
@@ -762,13 +762,13 @@ setSelectedState : function () {},
 /**
  * @method loadTextureFrontCrossDisabled
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadTextureFrontCrossDisabled : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::CheckBox*"
+ * @return A value converted from C/C++ "cocos2d::ui::CheckBox*"
  */
 create : function () {},
 
@@ -806,13 +806,13 @@ setScale9Enabled : function () {},
 /**
  * @method loadTexture
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadTexture : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::ImageView*"
+ * @return A value converted from C/C++ "cocos2d::ui::ImageView*"
  */
 create : function () {},
 
@@ -891,7 +891,7 @@ setTextAreaSize : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::Text*"
+ * @return A value converted from C/C++ "cocos2d::ui::Text*"
  */
 create : function () {},
 
@@ -932,7 +932,7 @@ setStringValue : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::TextAtlas*"
+ * @return A value converted from C/C++ "cocos2d::ui::TextAtlas*"
  */
 create : function () {},
 
@@ -958,13 +958,13 @@ setPercent : function () {},
 /**
  * @method loadTexture
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadTexture : function () {},
 
 /**
  * @method setDirection
- * @param {cocos2d::gui::LoadingBarType}
+ * @param {cocos2d::ui::LoadingBarType}
  */
 setDirection : function () {},
 
@@ -994,7 +994,7 @@ getPercent : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::LoadingBar*"
+ * @return A value converted from C/C++ "cocos2d::ui::LoadingBar*"
  */
 create : function () {},
 
@@ -1042,7 +1042,7 @@ scrollToPercentBothDirection : function () {},
 
 /**
  * @method getDirection
- * @return A value converted from C/C++ "cocos2d::gui::SCROLLVIEW_DIR"
+ * @return A value converted from C/C++ "cocos2d::ui::SCROLLVIEW_DIR"
  */
 getDirection : function () {},
 
@@ -1055,7 +1055,7 @@ scrollToBottomLeft : function () {},
 
 /**
  * @method getInnerContainer
- * @return A value converted from C/C++ "cocos2d::gui::Layout*"
+ * @return A value converted from C/C++ "cocos2d::ui::Layout*"
  */
 getInnerContainer : function () {},
 
@@ -1066,7 +1066,7 @@ jumpToBottom : function () {},
 
 /**
  * @method setDirection
- * @param {cocos2d::gui::SCROLLVIEW_DIR}
+ * @param {cocos2d::ui::SCROLLVIEW_DIR}
  */
 setDirection : function () {},
 
@@ -1205,7 +1205,7 @@ scrollToTopRight : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::ScrollView*"
+ * @return A value converted from C/C++ "cocos2d::ui::ScrollView*"
  */
 create : function () {},
 
@@ -1225,7 +1225,7 @@ ccui.ListView = {
 /**
  * @method getIndex
  * @return A value converted from C/C++ "ssize_t"
- * @param {cocos2d::gui::Widget*}
+ * @param {cocos2d::ui::Widget*}
  */
 getIndex : function () {},
 
@@ -1236,19 +1236,19 @@ removeAllItems : function () {},
 
 /**
  * @method setGravity
- * @param {cocos2d::gui::ListViewGravity}
+ * @param {cocos2d::ui::ListViewGravity}
  */
 setGravity : function () {},
 
 /**
  * @method pushBackCustomItem
- * @param {cocos2d::gui::Widget*}
+ * @param {cocos2d::ui::Widget*}
  */
 pushBackCustomItem : function () {},
 
 /**
  * @method getItems
- * @return A value converted from C/C++ "cocos2d::Vector<cocos2d::gui::Widget *>&"
+ * @return A value converted from C/C++ "cocos2d::Vector<cocos2d::ui::Widget *>&"
  */
 getItems : function () {},
 
@@ -1283,14 +1283,14 @@ removeLastItem : function () {},
 
 /**
  * @method getItem
- * @return A value converted from C/C++ "cocos2d::gui::Widget*"
+ * @return A value converted from C/C++ "cocos2d::ui::Widget*"
  * @param {ssize_t}
  */
 getItem : function () {},
 
 /**
  * @method setItemModel
- * @param {cocos2d::gui::Widget*}
+ * @param {cocos2d::ui::Widget*}
  */
 setItemModel : function () {},
 
@@ -1306,14 +1306,14 @@ pushBackDefaultItem : function () {},
 
 /**
  * @method insertCustomItem
- * @param {cocos2d::gui::Widget*}
+ * @param {cocos2d::ui::Widget*}
  * @param {ssize_t}
  */
 insertCustomItem : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::ListView*"
+ * @return A value converted from C/C++ "cocos2d::ui::ListView*"
  */
 create : function () {},
 
@@ -1339,21 +1339,21 @@ setPercent : function () {},
 /**
  * @method loadSlidBallTextureNormal
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadSlidBallTextureNormal : function () {},
 
 /**
  * @method loadBarTexture
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadBarTexture : function () {},
 
 /**
  * @method loadProgressBarTexture
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadProgressBarTexture : function () {},
 
@@ -1362,7 +1362,7 @@ loadProgressBarTexture : function () {},
  * @param {const char*}
  * @param {const char*}
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadSlidBallTextures : function () {},
 
@@ -1393,14 +1393,14 @@ setCapInsets : function () {},
 /**
  * @method loadSlidBallTexturePressed
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadSlidBallTexturePressed : function () {},
 
 /**
  * @method loadSlidBallTextureDisabled
  * @param {const char*}
- * @param {cocos2d::gui::TextureResType}
+ * @param {cocos2d::ui::TextureResType}
  */
 loadSlidBallTextureDisabled : function () {},
 
@@ -1412,7 +1412,7 @@ getPercent : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::Slider*"
+ * @return A value converted from C/C++ "cocos2d::ui::Slider*"
  */
 create : function () {},
 
@@ -1567,7 +1567,7 @@ setDeleteBackward : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::TextField*"
+ * @return A value converted from C/C++ "cocos2d::ui::TextField*"
  */
 create : function () {},
 
@@ -1604,7 +1604,7 @@ setText : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::TextBMFont*"
+ * @return A value converted from C/C++ "cocos2d::ui::TextBMFont*"
  */
 create : function () {},
 
@@ -1629,7 +1629,7 @@ getCurPageIndex : function () {},
 
 /**
  * @method addWidgetToPage
- * @param {cocos2d::gui::Widget*}
+ * @param {cocos2d::ui::Widget*}
  * @param {ssize_t}
  * @param {bool}
  */
@@ -1637,20 +1637,20 @@ addWidgetToPage : function () {},
 
 /**
  * @method getPage
- * @return A value converted from C/C++ "cocos2d::gui::Layout*"
+ * @return A value converted from C/C++ "cocos2d::ui::Layout*"
  * @param {ssize_t}
  */
 getPage : function () {},
 
 /**
  * @method removePage
- * @param {cocos2d::gui::Layout*}
+ * @param {cocos2d::ui::Layout*}
  */
 removePage : function () {},
 
 /**
  * @method insertPage
- * @param {cocos2d::gui::Layout*}
+ * @param {cocos2d::ui::Layout*}
  * @param {int}
  */
 insertPage : function () {},
@@ -1669,7 +1669,7 @@ removePageAtIndex : function () {},
 
 /**
  * @method getPages
- * @return A value converted from C/C++ "cocos2d::Vector<cocos2d::gui::Layout *>&"
+ * @return A value converted from C/C++ "cocos2d::Vector<cocos2d::ui::Layout *>&"
  */
 getPages : function () {},
 
@@ -1680,13 +1680,13 @@ removeAllPages : function () {},
 
 /**
  * @method addPage
- * @param {cocos2d::gui::Layout*}
+ * @param {cocos2d::ui::Layout*}
  */
 addPage : function () {},
 
 /**
  * @method create
- * @return A value converted from C/C++ "cocos2d::gui::PageView*"
+ * @return A value converted from C/C++ "cocos2d::ui::PageView*"
  */
 create : function () {},
 
@@ -1705,32 +1705,32 @@ ccui.Helper = {
 
 /**
  * @method seekActionWidgetByActionTag
- * @return A value converted from C/C++ "cocos2d::gui::Widget*"
- * @param {cocos2d::gui::Widget*}
+ * @return A value converted from C/C++ "cocos2d::ui::Widget*"
+ * @param {cocos2d::ui::Widget*}
  * @param {int}
  */
 seekActionWidgetByActionTag : function () {},
 
 /**
  * @method seekWidgetByTag
- * @return A value converted from C/C++ "cocos2d::gui::Widget*"
- * @param {cocos2d::gui::Widget*}
+ * @return A value converted from C/C++ "cocos2d::ui::Widget*"
+ * @param {cocos2d::ui::Widget*}
  * @param {int}
  */
 seekWidgetByTag : function () {},
 
 /**
  * @method seekWidgetByRelativeName
- * @return A value converted from C/C++ "cocos2d::gui::Widget*"
- * @param {cocos2d::gui::Widget*}
+ * @return A value converted from C/C++ "cocos2d::ui::Widget*"
+ * @param {cocos2d::ui::Widget*}
  * @param {const char*}
  */
 seekWidgetByRelativeName : function () {},
 
 /**
  * @method seekWidgetByName
- * @return A value converted from C/C++ "cocos2d::gui::Widget*"
- * @param {cocos2d::gui::Widget*}
+ * @return A value converted from C/C++ "cocos2d::ui::Widget*"
+ * @param {cocos2d::ui::Widget*}
  * @param {const char*}
  */
 seekWidgetByName : function () {},

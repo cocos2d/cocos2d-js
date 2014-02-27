@@ -589,6 +589,12 @@ setPhysicsBody : function () {},
 getDescription : function () {},
 
 /**
+ * @method setRotationSkewY
+ * @param {float}
+ */
+setRotationSkewY : function () {},
+
+/**
  * @method setOpacityModifyRGB
  * @param {bool}
  */
@@ -637,6 +643,12 @@ setRotation : function () {},
 setLocalZOrder : function () {},
 
 /**
+ * @method setScaleZ
+ * @param {float}
+ */
+setScaleZ : function () {},
+
+/**
  * @method setScaleY
  * @param {float}
  */
@@ -649,10 +661,10 @@ setScaleY : function () {},
 setScaleX : function () {},
 
 /**
- * @method getColor
- * @return A value converted from C/C++ "const cocos2d::Color3B&"
+ * @method setRotationSkewX
+ * @param {float}
  */
-getColor : function () {},
+setRotationSkewX : function () {},
 
 /**
  * @method removeAllComponents
@@ -682,6 +694,12 @@ getNodeToWorldAffineTransform : function () {},
  * @return A value converted from C/C++ "kmMat4"
  */
 getNodeToWorldTransform : function () {},
+
+/**
+ * @method getPosition3D
+ * @return A value converted from C/C++ "cocos2d::Vertex3F"
+ */
+getPosition3D : function () {},
 
 /**
  * @method removeChild
@@ -728,23 +746,17 @@ setSkewY : function () {},
 getOpacity : function () {},
 
 /**
+ * @method setNormalizedPosition
+ * @param {const cocos2d::Point&}
+ */
+setNormalizedPosition : function () {},
+
+/**
  * @method convertTouchToNodeSpace
  * @return A value converted from C/C++ "cocos2d::Point"
  * @param {cocos2d::Touch*}
  */
 convertTouchToNodeSpace : function () {},
-
-/**
- * @method getRotationX
- * @return A value converted from C/C++ "float"
- */
-getRotationX : function () {},
-
-/**
- * @method getRotationY
- * @return A value converted from C/C++ "float"
- */
-getRotationY : function () {},
 
 /**
  * @method getNodeToParentAffineTransform
@@ -765,10 +777,30 @@ isCascadeOpacityEnabled : function () {},
 setParent : function () {},
 
 /**
+ * @method getRotation3D
+ * @return A value converted from C/C++ "cocos2d::Vertex3F"
+ */
+getRotation3D : function () {},
+
+/**
  * @method getNodeToParentTransform
  * @return A value converted from C/C++ "const kmMat4&"
  */
 getNodeToParentTransform : function () {},
+
+/**
+ * @method convertTouchToNodeSpaceAR
+ * @return A value converted from C/C++ "cocos2d::Point"
+ * @param {cocos2d::Touch*}
+ */
+convertTouchToNodeSpaceAR : function () {},
+
+/**
+ * @method convertToNodeSpace
+ * @return A value converted from C/C++ "cocos2d::Point"
+ * @param {const cocos2d::Point&}
+ */
+convertToNodeSpace : function () {},
 
 /**
  * @method resume
@@ -801,16 +833,16 @@ reorderChild : function () {},
 ignoreAnchorPointForPosition : function () {},
 
 /**
- * @method setColor
- * @param {const cocos2d::Color3B&}
- */
-setColor : function () {},
-
-/**
- * @method setPositionY
+ * @method setPositionZ
  * @param {float}
  */
-setPositionY : function () {},
+setPositionZ : function () {},
+
+/**
+ * @method setRotation3D
+ * @param {const cocos2d::Vertex3F&}
+ */
+setRotation3D : function () {},
 
 /**
  * @method setPositionX
@@ -909,12 +941,6 @@ runAction : function () {},
 transform : function () {},
 
 /**
- * @method setVertexZ
- * @param {float}
- */
-setVertexZ : function () {},
-
-/**
  * @method setScheduler
  * @param {cocos2d::Scheduler*}
  */
@@ -951,18 +977,6 @@ getDisplayedColor : function () {},
 getActionByTag : function () {},
 
 /**
- * @method setRotationX
- * @param {float}
- */
-setRotationX : function () {},
-
-/**
- * @method setRotationY
- * @param {float}
- */
-setRotationY : function () {},
-
-/**
  * @method getDisplayedOpacity
  * @return A value converted from C/C++ "GLubyte"
  */
@@ -987,10 +1001,22 @@ getOrderOfArrival : function () {},
 setActionManager : function () {},
 
 /**
+ * @method setColor
+ * @param {const cocos2d::Color3B&}
+ */
+setColor : function () {},
+
+/**
  * @method isRunning
  * @return A value converted from C/C++ "bool"
  */
 isRunning : function () {},
+
+/**
+ * @method getPositionZ
+ * @return A value converted from C/C++ "float"
+ */
+getPositionZ : function () {},
 
 /**
  * @method getPositionY
@@ -1012,6 +1038,12 @@ getPositionX : function () {},
 removeChildByTag : function () {},
 
 /**
+ * @method setPositionY
+ * @param {float}
+ */
+setPositionY : function () {},
+
+/**
  * @method updateDisplayedColor
  * @param {const cocos2d::Color3B&}
  */
@@ -1028,12 +1060,6 @@ setVisible : function () {},
  * @return A value converted from C/C++ "const kmMat4&"
  */
 getParentToNodeTransform : function () {},
-
-/**
- * @method getVertexZ
- * @return A value converted from C/C++ "float"
- */
-getVertexZ : function () {},
 
 /**
  * @method setGlobalZOrder
@@ -1053,6 +1079,12 @@ getChildByTag : function () {},
  * @param {int}
  */
 setOrderOfArrival : function () {},
+
+/**
+ * @method getScaleZ
+ * @return A value converted from C/C++ "float"
+ */
+getScaleZ : function () {},
 
 /**
  * @method getScaleY
@@ -1103,16 +1135,16 @@ getComponent : function () {},
 getContentSize : function () {},
 
 /**
+ * @method getColor
+ * @return A value converted from C/C++ "const cocos2d::Color3B&"
+ */
+getColor : function () {},
+
+/**
  * @method getBoundingBox
  * @return A value converted from C/C++ "cocos2d::Rect"
  */
 getBoundingBox : function () {},
-
-/**
- * @method updatePhysicsTransform
- * @return A value converted from C/C++ "bool"
- */
-updatePhysicsTransform : function () {},
 
 /**
  * @method setEventDispatcher
@@ -1143,11 +1175,10 @@ transformAncestors : function () {},
 setUserObject : function () {},
 
 /**
- * @method convertTouchToNodeSpaceAR
- * @return A value converted from C/C++ "cocos2d::Point"
- * @param {cocos2d::Touch*}
+ * @method setPosition3D
+ * @param {const cocos2d::Vertex3F&}
  */
-convertTouchToNodeSpaceAR : function () {},
+setPosition3D : function () {},
 
 /**
  * @method update
@@ -1173,11 +1204,22 @@ getWorldToNodeTransform : function () {},
 getScale : function () {},
 
 /**
- * @method convertToNodeSpace
- * @return A value converted from C/C++ "cocos2d::Point"
- * @param {const cocos2d::Point&}
+ * @method getNormalizedPosition
+ * @return A value converted from C/C++ "const cocos2d::Point&"
  */
-convertToNodeSpace : function () {},
+getNormalizedPosition : function () {},
+
+/**
+ * @method getRotationSkewX
+ * @return A value converted from C/C++ "float"
+ */
+getRotationSkewX : function () {},
+
+/**
+ * @method getRotationSkewY
+ * @return A value converted from C/C++ "float"
+ */
+getRotationSkewY : function () {},
 
 /**
  * @method setTag
@@ -4159,11 +4201,6 @@ getOffsetPosition : function () {},
  * @param {bool}
  */
 removeAllChildrenWithCleanup : function () {},
-
-/**
- * @method updateQuadVertices
- */
-updateQuadVertices : function () {},
 
 /**
  * @method updateTransform
