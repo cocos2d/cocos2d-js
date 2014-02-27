@@ -17,7 +17,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT="$DIR"/../..
 TOJS_ROOT=$PROJECT_ROOT/tools/tojs
-GENERATED_WORKTREE="$PROJECT_ROOT"/jsb/bindings/auto
+GENERATED_WORKTREE="$PROJECT_ROOT"/frameworks/js-bindings/bindings/auto
 COMMITTAG="[AUTO]"
 
 # Exit on error

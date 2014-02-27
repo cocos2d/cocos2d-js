@@ -91,7 +91,7 @@ def main():
         sys.exit(1)
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-    cocos_root = os.path.abspath(os.path.join(project_root, 'jsb/cocos2d-x'))
+    cocos_root = os.path.abspath(os.path.join(project_root, 'frameworks/js-bindings/cocos2d-x'))
     cxx_generator_root = os.path.abspath(os.path.join(project_root, 'tools/bindings-generator'))
 
     # save config to file
