@@ -56,6 +56,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto fileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths;
     searchPaths.push_back("script");
+    searchPaths.push_back("src");
     
     const char* paths[] = {
         "res",
@@ -72,20 +73,10 @@ bool AppDelegate::applicationDidFinishLaunching()
         "res/scenetest/TriggerTest",
     };
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    std::string testFolder = "tests/";
-    searchPaths.push_back(testFolder);
-    
-    for (const auto& path : paths)
-    {
-        searchPaths.push_back(testFolder + path);
-    }
-#else
     for (const auto& path : paths)
     {
         searchPaths.push_back(path);
     }
-#endif
     
     fileUtils->setSearchPaths(searchPaths);
 
@@ -119,11 +110,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
-#ifdef JS_OBFUSCATED
-    ScriptingCore::getInstance()->runScript("game.js");
-#else
-    ScriptingCore::getInstance()->runScript("tests-boot-jsb.js");
-#endif
+
+    ScriptingCore::getInstance()->runScript("src/tests-boot-jsb.js");
+
     return true;
 }
 

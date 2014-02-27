@@ -118,45 +118,50 @@ def copy_resources(app_android_root):
     if os.path.isdir(assets_dir):
         shutil.rmtree(assets_dir)
 
-    # copy resources(cpp samples and lua samples)
+    # copy resources
     os.mkdir(assets_dir)
-    resources_dir = os.path.join(app_android_root, "../Resources")
-    if os.path.isdir(resources_dir):
-        copy_files(resources_dir, assets_dir)
 
-    # jsb samples should copy javascript files and resources(shared with cocos2d-html5)
-    resources_dir = os.path.join(app_android_root, "../../bindings/script")
+    assets_res_dir = assets_dir + "/res";
+    assets_scripts_dir = assets_dir + "/src";
+    os.mkdir(assets_res_dir);
+    os.mkdir(assets_scripts_dir);
+
+    resources_dir = os.path.join(app_android_root, "../../res")
+    copy_files(resources_dir, assets_res_dir)
+
+    resources_dir = os.path.join(app_android_root, "../../src")
+    copy_files(resources_dir, assets_scripts_dir)
+
+    # js project should copy js script
+    resources_dir = os.path.join(app_android_root, "../../../../frameworks/js-bindings/bindings/script")
     copy_files(resources_dir, assets_dir)
 
-    resources_dir = os.path.join(app_android_root, "../../../tests")
-    copy_files(resources_dir, assets_dir)
-
-
-def build_samples(ndk_build_param,android_platform,build_mode):
+def build(ndk_build_param,android_platform,build_mode):
 
     ndk_root = check_environment_variables()
     sdk_root = None
     select_toolchain_version()
 
     current_dir = os.path.dirname(os.path.realpath(__file__))
-    cocos_root = os.path.join(current_dir, "../cocos2d-x")
+    cocos_root = os.path.join(current_dir, "../frameworks/js-bindings/cocos2d-x")
+
+    app_android_root = os.path.join(current_dir, "../samples/js-tests/project/proj.android")
+    copy_resources(app_android_root)
     
     if android_platform is not None:
-		sdk_root = check_environment_variables_sdk()
-		if android_platform.isdigit():
-			android_platform = 'android-'+android_platform
-		else:
-			print 'please use vaild android platform'
-			exit(1)
-    	  
+                sdk_root = check_environment_variables_sdk()
+                if android_platform.isdigit():
+                        android_platform = 'android-'+android_platform
+                else:
+                        print 'please use vaild android platform'
+                        exit(1)
+        
     if build_mode is None:
-    	  build_mode = 'debug'
+          build_mode = 'debug'
     elif build_mode != 'release':
         build_mode = 'debug'
-
-    app_android_root = os.path.join(cocos_root, '../tests-project/proj.android')       
-    copy_resources(os.path.join(cocos_root, app_android_root))
-    do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,android_platform,build_mode)
+    
+    do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,android_platform,build_mode)
 
 # -------------- main --------------
 if __name__ == '__main__':
@@ -184,7 +189,7 @@ if __name__ == '__main__':
     (opts, args) = parser.parse_args()
 
     try:
-        build_samples(opts.ndk_build_param,opts.android_platform,opts.build_mode)
+        build(opts.ndk_build_param,opts.android_platform,opts.build_mode)
     except Exception as e:
         print e
         sys.exit(1)
