@@ -16,7 +16,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT="$DIR"/../..
-TOJS_ROOT=$PROJECT_ROOT/tools/tojs
+TOJS_ROOT="$PROJECT_ROOT"/tools/tojs
 GENERATED_WORKTREE="$PROJECT_ROOT"/frameworks/js-bindings/bindings/auto
 COMMITTAG="[AUTO]"
 
@@ -120,7 +120,7 @@ set -e
 
 COCOS_BRANCH=updategeneratedsubmodule_"$ELAPSEDSECS"
 
-git add .
+git add -f "$GENERATED_WORKTREE"
 git checkout -b "$COCOS_BRANCH"
 git commit -m "$COMMITTAG : updating jsbinding automatically"
 
