@@ -232,7 +232,7 @@ void startScript()
 
 	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->runScript("cocos2d-jsb.js");
+	ScriptingCore::getInstance()->runScript("src/main.js");
 }
 
 void reloadScript()
@@ -657,6 +657,7 @@ public:
     }
     ~ConsoleCustomCommand()
     {
+		Director::getInstance()->getConsole()->stop();
         _fileserver->stop();
         if (_fileserver) {
             delete _fileserver;
@@ -707,15 +708,12 @@ void startRuntime()
 	vector<string> searchPathArray;
     searchPathArray=FileUtils::getInstance()->getSearchPaths();
     vector<string> writePathArray;
-    //CCLOG(FileUtils::getInstance()->getWritablePath().c_str());
     writePathArray.push_back(FileUtils::getInstance()->getWritablePath());
     FileUtils::getInstance()->setSearchPaths(writePathArray);
 	for (unsigned i = 0; i < searchPathArray.size(); i++)
 	{
 		FileUtils::getInstance()->addSearchPath(searchPathArray[i]);
 	}
-#ifdef COCOS2D_DEBUG
-	ScriptingCore::getInstance()->start();
 	ScriptingCore::getInstance()->enableDebugger();
 	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
@@ -727,12 +725,7 @@ void startRuntime()
     auto director = Director::getInstance();
     scene->addChild(layer);
     director->runWithScene(scene);
-    
-	//ConnectWaiter::getInstance().waitDebugConnect();
-#else
-	ScriptingCore::getInstance()->start();
-	startScript();
-#endif
+
 }
 
 

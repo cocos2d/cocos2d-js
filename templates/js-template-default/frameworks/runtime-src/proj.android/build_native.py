@@ -85,9 +85,9 @@ def do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,and
     # windows should use ";" to seperate module paths
     platform = sys.platform
     if platform == 'win32':
-        ndk_module_path = 'NDK_MODULE_PATH=%s;%s/external;%s/cocos' % (cocos_root, cocos_root, cocos_root)
+        ndk_module_path = 'NDK_MODULE_PATH=%s/..;%s/../external;%s;%s/external;%s/cocos' % (cocos_root, cocos_root, cocos_root, cocos_root, cocos_root)
     else:
-        ndk_module_path = 'NDK_MODULE_PATH=%s:%s/external:%s/cocos' % (cocos_root, cocos_root, cocos_root)
+        ndk_module_path = 'NDK_MODULE_PATH=%s/..:%s/../external:%s:%s/external:%s/cocos' % (cocos_root, cocos_root, cocos_root, cocos_root, cocos_root)
 
     num_of_cpu = get_num_of_cpu()
     if ndk_build_param == None:
@@ -130,32 +130,23 @@ def copy_resources(app_android_root, build_mode, pure):
     if os.path.isdir(assets_dir):
         shutil.rmtree(assets_dir)
 
-    #"""
-    os.makedirs(assets_dir)
-    if pure is None:
-        jsResource = os.path.join(app_android_root, "../../../")
-        dirlist = os.listdir(jsResource)
-        for line in dirlist:
-            if line == "libs" or line == "runtime" or line == ".project":
-                continue
-            fullpath = os.path.join(jsResource, line)
-            if os.path.isfile(fullpath):
-                shutil.copy(fullpath, assets_dir)
-            else:
-                dstDir = "%s/%s" %(assets_dir,line)
-                os.makedirs(dstDir)
-                copy_files(fullpath, dstDir)
-    #"""
     # copy resources
-    """
     os.mkdir(assets_dir)
-    resources_dir = os.path.join(app_android_root, "../Resources")
-    if os.path.isdir(resources_dir):
-        copy_files(resources_dir, assets_dir)
-    """
 
-    # jsb project should copy javascript files and resources(shared with cocos2d-html5)
-    resources_dir = os.path.join(app_android_root, "../cocos2d/cocos/scripting/javascript/script")
+    if pure is None:
+        assets_res_dir = assets_dir + "/res";
+        assets_scripts_dir = assets_dir + "/src";
+        os.mkdir(assets_res_dir);
+        os.mkdir(assets_scripts_dir);
+
+        resources_dir = os.path.join(app_android_root, "../../../res")
+        copy_files(resources_dir, assets_res_dir)
+
+        resources_dir = os.path.join(app_android_root, "../../../src")
+        copy_files(resources_dir, assets_scripts_dir)
+
+    # lua project should copy lua script
+    resources_dir = os.path.join(app_android_root, "../../js-bindings/bindings/script")
     copy_files(resources_dir, assets_dir)
 
 def build(ndk_build_param,android_platform,build_mode,pure):
@@ -165,7 +156,7 @@ def build(ndk_build_param,android_platform,build_mode,pure):
     select_toolchain_version()
 
     current_dir = os.path.dirname(os.path.realpath(__file__))
-    cocos_root = os.path.join(current_dir, "../cocos2d")
+    cocos_root = os.path.join(current_dir, "../../js-bindings/cocos2d-x")
 
     app_android_root = current_dir
     copy_resources(app_android_root, build_mode, pure)
