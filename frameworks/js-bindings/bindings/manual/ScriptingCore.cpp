@@ -1459,7 +1459,7 @@ void ScriptingCore::enableDebugger()
         t.detach();
 
         Scheduler* scheduler = Director::getInstance()->getScheduler();
-        scheduler->scheduleUpdate(CC_CALLBACK_1(SimpleRunLoop::update, this->_runLoop), this->_runLoop, 0, false);
+        scheduler->scheduleUpdate(this->_runLoop, 0, false);
     }
 }
 
