@@ -8620,186 +8620,6 @@ void js_register_cocos2dx_Blink(JSContext *cx, JSObject *global) {
 	}
 }
 
-JSClass  *jsb_cocos2d_FadeIn_class;
-JSObject *jsb_cocos2d_FadeIn_prototype;
-
-bool js_cocos2dx_FadeIn_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	if (argc == 1) {
-		double arg0;
-		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FadeIn_create : Error processing arguments");
-		cocos2d::FadeIn* ret = cocos2d::FadeIn::create(arg0);
-		jsval jsret = JSVAL_NULL;
-		do {
-		if (ret) {
-			js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::FadeIn>(cx, (cocos2d::FadeIn*)ret);
-			jsret = OBJECT_TO_JSVAL(proxy->obj);
-		} else {
-			jsret = JSVAL_NULL;
-		}
-	} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-	JS_ReportError(cx, "js_cocos2dx_FadeIn_create : wrong number of arguments");
-	return false;
-}
-
-
-extern JSObject *jsb_cocos2d_ActionInterval_prototype;
-
-void js_cocos2d_FadeIn_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (FadeIn)", obj);
-}
-
-void js_register_cocos2dx_FadeIn(JSContext *cx, JSObject *global) {
-	jsb_cocos2d_FadeIn_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_cocos2d_FadeIn_class->name = "FadeIn";
-	jsb_cocos2d_FadeIn_class->addProperty = JS_PropertyStub;
-	jsb_cocos2d_FadeIn_class->delProperty = JS_DeletePropertyStub;
-	jsb_cocos2d_FadeIn_class->getProperty = JS_PropertyStub;
-	jsb_cocos2d_FadeIn_class->setProperty = JS_StrictPropertyStub;
-	jsb_cocos2d_FadeIn_class->enumerate = JS_EnumerateStub;
-	jsb_cocos2d_FadeIn_class->resolve = JS_ResolveStub;
-	jsb_cocos2d_FadeIn_class->convert = JS_ConvertStub;
-	jsb_cocos2d_FadeIn_class->finalize = js_cocos2d_FadeIn_finalize;
-	jsb_cocos2d_FadeIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
-
-	static JSPropertySpec properties[] = {
-		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
-		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
-	};
-
-	static JSFunctionSpec funcs[] = {
-        JS_FS_END
-	};
-
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("create", js_cocos2dx_FadeIn_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
-
-	jsb_cocos2d_FadeIn_prototype = JS_InitClass(
-		cx, global,
-		jsb_cocos2d_ActionInterval_prototype,
-		jsb_cocos2d_FadeIn_class,
-		dummy_constructor<cocos2d::FadeIn>, 0, // no constructor
-		properties,
-		funcs,
-		NULL, // no static properties
-		st_funcs);
-	// make the class enumerable in the registered namespace
-//	bool found;
-//FIXME: Removed in Firefox v27	
-//	JS_SetPropertyAttributes(cx, global, "FadeIn", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
-
-	// add the proto and JSClass to the type->js info hash table
-	TypeTest<cocos2d::FadeIn> t;
-	js_type_class_t *p;
-	std::string typeName = t.s_name();
-	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-	{
-		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-		p->jsclass = jsb_cocos2d_FadeIn_class;
-		p->proto = jsb_cocos2d_FadeIn_prototype;
-		p->parentProto = jsb_cocos2d_ActionInterval_prototype;
-		_js_global_type_map.insert(std::make_pair(typeName, p));
-	}
-}
-
-JSClass  *jsb_cocos2d_FadeOut_class;
-JSObject *jsb_cocos2d_FadeOut_prototype;
-
-bool js_cocos2dx_FadeOut_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	if (argc == 1) {
-		double arg0;
-		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FadeOut_create : Error processing arguments");
-		cocos2d::FadeOut* ret = cocos2d::FadeOut::create(arg0);
-		jsval jsret = JSVAL_NULL;
-		do {
-		if (ret) {
-			js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::FadeOut>(cx, (cocos2d::FadeOut*)ret);
-			jsret = OBJECT_TO_JSVAL(proxy->obj);
-		} else {
-			jsret = JSVAL_NULL;
-		}
-	} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-	JS_ReportError(cx, "js_cocos2dx_FadeOut_create : wrong number of arguments");
-	return false;
-}
-
-
-extern JSObject *jsb_cocos2d_ActionInterval_prototype;
-
-void js_cocos2d_FadeOut_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (FadeOut)", obj);
-}
-
-void js_register_cocos2dx_FadeOut(JSContext *cx, JSObject *global) {
-	jsb_cocos2d_FadeOut_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_cocos2d_FadeOut_class->name = "FadeOut";
-	jsb_cocos2d_FadeOut_class->addProperty = JS_PropertyStub;
-	jsb_cocos2d_FadeOut_class->delProperty = JS_DeletePropertyStub;
-	jsb_cocos2d_FadeOut_class->getProperty = JS_PropertyStub;
-	jsb_cocos2d_FadeOut_class->setProperty = JS_StrictPropertyStub;
-	jsb_cocos2d_FadeOut_class->enumerate = JS_EnumerateStub;
-	jsb_cocos2d_FadeOut_class->resolve = JS_ResolveStub;
-	jsb_cocos2d_FadeOut_class->convert = JS_ConvertStub;
-	jsb_cocos2d_FadeOut_class->finalize = js_cocos2d_FadeOut_finalize;
-	jsb_cocos2d_FadeOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
-
-	static JSPropertySpec properties[] = {
-		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
-		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
-	};
-
-	static JSFunctionSpec funcs[] = {
-        JS_FS_END
-	};
-
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("create", js_cocos2dx_FadeOut_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
-
-	jsb_cocos2d_FadeOut_prototype = JS_InitClass(
-		cx, global,
-		jsb_cocos2d_ActionInterval_prototype,
-		jsb_cocos2d_FadeOut_class,
-		dummy_constructor<cocos2d::FadeOut>, 0, // no constructor
-		properties,
-		funcs,
-		NULL, // no static properties
-		st_funcs);
-	// make the class enumerable in the registered namespace
-//	bool found;
-//FIXME: Removed in Firefox v27	
-//	JS_SetPropertyAttributes(cx, global, "FadeOut", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
-
-	// add the proto and JSClass to the type->js info hash table
-	TypeTest<cocos2d::FadeOut> t;
-	js_type_class_t *p;
-	std::string typeName = t.s_name();
-	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-	{
-		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-		p->jsclass = jsb_cocos2d_FadeOut_class;
-		p->proto = jsb_cocos2d_FadeOut_prototype;
-		p->parentProto = jsb_cocos2d_ActionInterval_prototype;
-		_js_global_type_map.insert(std::make_pair(typeName, p));
-	}
-}
-
 JSClass  *jsb_cocos2d_FadeTo_class;
 JSObject *jsb_cocos2d_FadeTo_prototype;
 
@@ -8888,6 +8708,242 @@ void js_register_cocos2dx_FadeTo(JSContext *cx, JSObject *global) {
 		p->jsclass = jsb_cocos2d_FadeTo_class;
 		p->proto = jsb_cocos2d_FadeTo_prototype;
 		p->parentProto = jsb_cocos2d_ActionInterval_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
+	}
+}
+
+JSClass  *jsb_cocos2d_FadeIn_class;
+JSObject *jsb_cocos2d_FadeIn_prototype;
+
+bool js_cocos2dx_FadeIn_setReverseAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::FadeIn* cobj = (cocos2d::FadeIn *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FadeIn_setReverseAction : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::FadeTo* arg0;
+		do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *proxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			proxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::FadeTo*)(proxy ? proxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FadeIn_setReverseAction : Error processing arguments");
+		cobj->setReverseAction(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_FadeIn_setReverseAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_FadeIn_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	if (argc == 1) {
+		double arg0;
+		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FadeIn_create : Error processing arguments");
+		cocos2d::FadeIn* ret = cocos2d::FadeIn::create(arg0);
+		jsval jsret = JSVAL_NULL;
+		do {
+		if (ret) {
+			js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::FadeIn>(cx, (cocos2d::FadeIn*)ret);
+			jsret = OBJECT_TO_JSVAL(proxy->obj);
+		} else {
+			jsret = JSVAL_NULL;
+		}
+	} while (0);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+	JS_ReportError(cx, "js_cocos2dx_FadeIn_create : wrong number of arguments");
+	return false;
+}
+
+
+extern JSObject *jsb_cocos2d_FadeTo_prototype;
+
+void js_cocos2d_FadeIn_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (FadeIn)", obj);
+}
+
+void js_register_cocos2dx_FadeIn(JSContext *cx, JSObject *global) {
+	jsb_cocos2d_FadeIn_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_FadeIn_class->name = "FadeIn";
+	jsb_cocos2d_FadeIn_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_FadeIn_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_FadeIn_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_FadeIn_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_FadeIn_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_FadeIn_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_FadeIn_class->convert = JS_ConvertStub;
+	jsb_cocos2d_FadeIn_class->finalize = js_cocos2d_FadeIn_finalize;
+	jsb_cocos2d_FadeIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+	static JSPropertySpec properties[] = {
+		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+	};
+
+	static JSFunctionSpec funcs[] = {
+		JS_FN("setReverseAction", js_cocos2dx_FadeIn_setReverseAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+	};
+
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", js_cocos2dx_FadeIn_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	jsb_cocos2d_FadeIn_prototype = JS_InitClass(
+		cx, global,
+		jsb_cocos2d_FadeTo_prototype,
+		jsb_cocos2d_FadeIn_class,
+		dummy_constructor<cocos2d::FadeIn>, 0, // no constructor
+		properties,
+		funcs,
+		NULL, // no static properties
+		st_funcs);
+	// make the class enumerable in the registered namespace
+//	bool found;
+//FIXME: Removed in Firefox v27	
+//	JS_SetPropertyAttributes(cx, global, "FadeIn", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+	// add the proto and JSClass to the type->js info hash table
+	TypeTest<cocos2d::FadeIn> t;
+	js_type_class_t *p;
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
+		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+		p->jsclass = jsb_cocos2d_FadeIn_class;
+		p->proto = jsb_cocos2d_FadeIn_prototype;
+		p->parentProto = jsb_cocos2d_FadeTo_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
+	}
+}
+
+JSClass  *jsb_cocos2d_FadeOut_class;
+JSObject *jsb_cocos2d_FadeOut_prototype;
+
+bool js_cocos2dx_FadeOut_setReverseAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::FadeOut* cobj = (cocos2d::FadeOut *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FadeOut_setReverseAction : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::FadeTo* arg0;
+		do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *proxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			proxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::FadeTo*)(proxy ? proxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FadeOut_setReverseAction : Error processing arguments");
+		cobj->setReverseAction(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_FadeOut_setReverseAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_FadeOut_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	if (argc == 1) {
+		double arg0;
+		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FadeOut_create : Error processing arguments");
+		cocos2d::FadeOut* ret = cocos2d::FadeOut::create(arg0);
+		jsval jsret = JSVAL_NULL;
+		do {
+		if (ret) {
+			js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::FadeOut>(cx, (cocos2d::FadeOut*)ret);
+			jsret = OBJECT_TO_JSVAL(proxy->obj);
+		} else {
+			jsret = JSVAL_NULL;
+		}
+	} while (0);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+	JS_ReportError(cx, "js_cocos2dx_FadeOut_create : wrong number of arguments");
+	return false;
+}
+
+
+extern JSObject *jsb_cocos2d_FadeTo_prototype;
+
+void js_cocos2d_FadeOut_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (FadeOut)", obj);
+}
+
+void js_register_cocos2dx_FadeOut(JSContext *cx, JSObject *global) {
+	jsb_cocos2d_FadeOut_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_FadeOut_class->name = "FadeOut";
+	jsb_cocos2d_FadeOut_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_FadeOut_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_FadeOut_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_FadeOut_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_FadeOut_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_FadeOut_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_FadeOut_class->convert = JS_ConvertStub;
+	jsb_cocos2d_FadeOut_class->finalize = js_cocos2d_FadeOut_finalize;
+	jsb_cocos2d_FadeOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+	static JSPropertySpec properties[] = {
+		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+	};
+
+	static JSFunctionSpec funcs[] = {
+		JS_FN("setReverseAction", js_cocos2dx_FadeOut_setReverseAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+	};
+
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", js_cocos2dx_FadeOut_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	jsb_cocos2d_FadeOut_prototype = JS_InitClass(
+		cx, global,
+		jsb_cocos2d_FadeTo_prototype,
+		jsb_cocos2d_FadeOut_class,
+		dummy_constructor<cocos2d::FadeOut>, 0, // no constructor
+		properties,
+		funcs,
+		NULL, // no static properties
+		st_funcs);
+	// make the class enumerable in the registered namespace
+//	bool found;
+//FIXME: Removed in Firefox v27	
+//	JS_SetPropertyAttributes(cx, global, "FadeOut", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+	// add the proto and JSClass to the type->js info hash table
+	TypeTest<cocos2d::FadeOut> t;
+	js_type_class_t *p;
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
+		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+		p->jsclass = jsb_cocos2d_FadeOut_class;
+		p->proto = jsb_cocos2d_FadeOut_prototype;
+		p->parentProto = jsb_cocos2d_FadeTo_prototype;
 		_js_global_type_map.insert(std::make_pair(typeName, p));
 	}
 }
@@ -43811,10 +43867,10 @@ bool js_cocos2dx_Scheduler_isScheduled(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Scheduler* cobj = (cocos2d::Scheduler *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Scheduler_isScheduled : Invalid Native Object");
 	if (argc == 2) {
-		void* arg0;
-		long arg1;
+		std::string arg0;
+		void* arg1;
+		ok &= jsval_to_std_string(cx, argv[0], &arg0);
 		#pragma warning NO CONVERSION TO NATIVE FOR void*;
-		ok &= jsval_to_long(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Scheduler_isScheduled : Error processing arguments");
 		bool ret = cobj->isScheduled(arg0, arg1);
 		jsval jsret = JSVAL_NULL;
@@ -43824,23 +43880,6 @@ bool js_cocos2dx_Scheduler_isScheduled(JSContext *cx, uint32_t argc, jsval *vp)
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_Scheduler_isScheduled : wrong number of arguments: %d, was expecting %d", argc, 2);
-	return false;
-}
-bool js_cocos2dx_Scheduler_getTimeScale(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::Scheduler* cobj = (cocos2d::Scheduler *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Scheduler_getTimeScale : Invalid Native Object");
-	if (argc == 0) {
-		double ret = cobj->getTimeScale();
-		jsval jsret = JSVAL_NULL;
-		jsret = DOUBLE_TO_JSVAL(ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_Scheduler_getTimeScale : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_cocos2dx_Scheduler_performFunctionInCocosThread(JSContext *cx, uint32_t argc, jsval *vp)
@@ -43872,6 +43911,23 @@ bool js_cocos2dx_Scheduler_performFunctionInCocosThread(JSContext *cx, uint32_t 
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_Scheduler_performFunctionInCocosThread : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_Scheduler_getTimeScale(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::Scheduler* cobj = (cocos2d::Scheduler *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Scheduler_getTimeScale : Invalid Native Object");
+	if (argc == 0) {
+		double ret = cobj->getTimeScale();
+		jsval jsret = JSVAL_NULL;
+		jsret = DOUBLE_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_Scheduler_getTimeScale : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_cocos2dx_Scheduler_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -43928,8 +43984,8 @@ void js_register_cocos2dx_Scheduler(JSContext *cx, JSObject *global) {
 	static JSFunctionSpec funcs[] = {
 		JS_FN("setTimeScale", js_cocos2dx_Scheduler_setTimeScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isScheduled", js_cocos2dx_Scheduler_isScheduled, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getTimeScale", js_cocos2dx_Scheduler_getTimeScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("performFunctionInCocosThread", js_cocos2dx_Scheduler_performFunctionInCocosThread, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getTimeScale", js_cocos2dx_Scheduler_getTimeScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -44873,6 +44929,7 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
 	js_register_cocos2dx_TMXTiledMap(cx, obj);
 	js_register_cocos2dx_GridAction(cx, obj);
 	js_register_cocos2dx_Grid3DAction(cx, obj);
+	js_register_cocos2dx_FadeTo(cx, obj);
 	js_register_cocos2dx_FadeIn(cx, obj);
 	js_register_cocos2dx_AnimationCache(cx, obj);
 	js_register_cocos2dx_FlipX3D(cx, obj);
@@ -44922,7 +44979,6 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
 	js_register_cocos2dx_FlipX(cx, obj);
 	js_register_cocos2dx_FlipY(cx, obj);
 	js_register_cocos2dx_TransitionSplitCols(cx, obj);
-	js_register_cocos2dx_FadeTo(cx, obj);
 	js_register_cocos2dx_Repeat(cx, obj);
 	js_register_cocos2dx_Place(cx, obj);
 	js_register_cocos2dx_GLProgram(cx, obj);

@@ -3138,9 +3138,40 @@ int
 };
 
 /**
+ * @class FadeTo
+ */
+cc.FadeTo = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {unsigned char} arg1
+ * @return {cc.FadeTo}
+ */
+create : function (
+float, 
+char 
+)
+{
+    return cc.FadeTo;
+},
+
+};
+
+/**
  * @class FadeIn
  */
 cc.FadeIn = {
+
+/**
+ * @method setReverseAction
+ * @param {cc.FadeTo} arg0
+ */
+setReverseAction : function (
+fadeto 
+)
+{
+},
 
 /**
  * @method create
@@ -3162,6 +3193,16 @@ float
 cc.FadeOut = {
 
 /**
+ * @method setReverseAction
+ * @param {cc.FadeTo} arg0
+ */
+setReverseAction : function (
+fadeto 
+)
+{
+},
+
+/**
  * @method create
  * @param {float} arg0
  * @return {cc.FadeOut}
@@ -3171,27 +3212,6 @@ float
 )
 {
     return cc.FadeOut;
-},
-
-};
-
-/**
- * @class FadeTo
- */
-cc.FadeTo = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {unsigned char} arg1
- * @return {cc.FadeTo}
- */
-create : function (
-float, 
-char 
-)
-{
-    return cc.FadeTo;
 },
 
 };
@@ -14215,26 +14235,16 @@ float
 
 /**
  * @method isScheduled
- * @param {void*} arg0
- * @param {long} arg1
+ * @param {String} arg0
+ * @param {void*} arg1
  * @return {bool}
  */
 isScheduled : function (
-void, 
-long 
+str, 
+void 
 )
 {
     return false;
-},
-
-/**
- * @method getTimeScale
- * @return {float}
- */
-getTimeScale : function (
-)
-{
-    return 0;
 },
 
 /**
@@ -14245,6 +14255,16 @@ performFunctionInCocosThread : function (
 func 
 )
 {
+},
+
+/**
+ * @method getTimeScale
+ * @return {float}
+ */
+getTimeScale : function (
+)
+{
+    return 0;
 },
 
 /**
