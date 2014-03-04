@@ -134,8 +134,8 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
             });
 
             nextItem.setFontSize(16);
-            nextItem.x = cc.visibleRect.right.x -100;
-	        nextItem.y = cc.visibleRect.right.y - 30;
+            nextItem.setPositionX(cc.visibleRect.right.x -100);
+	        nextItem.setPositionY(cc.visibleRect.right.y - 30);
 
             var menu2 = cc.Menu.create(nextItem);
             menu2.setPosition(0, 0);
@@ -144,7 +144,7 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
         });
 
         removeAllTouchItem.setFontSize(16);
-        removeAllTouchItem.setPositionX(removeAllTouchItem.getPositionX() + cc.visibleRect.right.x -100);
+        removeAllTouchItem.setPositionX(cc.visibleRect.right.x -100);
 	    removeAllTouchItem.setPositionY(cc.visibleRect.right.y);
 
         var menu = cc.Menu.create(removeAllTouchItem);
@@ -550,7 +550,7 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
 
                 if (cc.rectContainsPoint(rect, locationInNode)) {
                     cc.log("sprite began... x = " + locationInNode.x + ", y = " + locationInNode.y);
-                    target.opacity = 180;
+                    target.setOpacity(180);
                     return true;
                 }
                 return false;
@@ -558,13 +558,13 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
             onTouchMoved: function (touch, event) {
                 var target = event.getCurrentTarget();
                 var delta = touch.getDelta();
-                target.x += delta.x;
-                target.y += delta.y;
+                target.setPositionX(target.getPositionX() + delta.x);
+                target.setPositionY(target.getPositionY() + delta.y);
             },
             onTouchEnded: function (touch, event) {
                 var target = event.getCurrentTarget();
                 cc.log("sprite onTouchesEnded.. ");
-                target.opacity = 255;
+                target.setOpacity(255);
             }
         });
         cc.eventManager.addListener(listener1, this._sprite);
@@ -579,8 +579,8 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
             cc.CallFunc.create(function () {
                 this._spriteSaved = false;
                 this.addChild(this._sprite);
-                if(!cc.sys.isNative)
-                    cc.eventManager.addListener(listener1, this._sprite);
+//                if(!cc.sys.isNative)
+//                    cc.eventManager.addListener(listener1, this._sprite);
                 this._sprite.release();
             }, this)
         ));
@@ -727,10 +727,10 @@ var DirectorEventTest =  EventDispatcherTestDemo.extend({
         this._event2 = dispatcher.addCustomListener(cc.Director.EVENT_AFTER_VISIT, this.onEvent2.bind(this));
         this._event3 = dispatcher.addCustomListener(cc.Director.EVENT_AFTER_DRAW, function(event) {
             selfPointer._label3.setString("Draw: " + selfPointer._count3++);
-        }, this);
+        });
         this._event4 = dispatcher.addCustomListener(cc.Director.EVENT_PROJECTION_CHANGED, function(event) {
             selfPointer._label4.setString("Projection: " + selfPointer._count4++);
-        }, this);
+        });
 
         this._event1.retain();
         this._event2.retain();
@@ -804,7 +804,7 @@ var GlobalZTouchTest = EventDispatcherTestDemo.extend({
                 var rect = cc.rect(0, 0, s.width, s.height);
 
                 if (cc.rectContainsPoint(rect, locationInNode)) {
-                    log("sprite began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+                    cc.log("sprite began... x = %f, y = %f", locationInNode.x, locationInNode.y);
                     target.setOpacity(180);
                     return true;
                 }
@@ -816,7 +816,7 @@ var GlobalZTouchTest = EventDispatcherTestDemo.extend({
                 target.y += delta.y;
             },
             onTouchEnded: function(touch, event){
-                log("sprite onTouchesEnded.. ");
+                cc.log("sprite onTouchesEnded.. ");
                 event.getCurrentTarget().setOpacity(255);
             }
         });
@@ -834,8 +834,8 @@ var GlobalZTouchTest = EventDispatcherTestDemo.extend({
             this.addChild(sprite);
 
             var visibleSize = cc.director.getVisibleSize();
-            sprite.x = cc.VisibleRect.left().x + visibleSize.width / (SPRITE_COUNT - 1) * i;
-            sprite.y = cc.VisibleRect.center().y;
+            sprite.x = cc.visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i;
+            sprite.y = cc.visibleRect.center.y;
         }
 
         this.scheduleUpdate();
@@ -958,7 +958,7 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
             }
 
 
-            cc.eventManager.addListener(touchOneByOneListener.clone(), sprite1);
+            cc.eventManager.addListener(touchOneByOneListener, sprite1);
             cc.eventManager.addListener(keyboardEventListener.clone(), sprite1);
 
             cc.eventManager.addListener(touchAllAtOnceListener.clone(), sprite2);
@@ -966,10 +966,10 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
 
 
             var visibleSize = cc.director.getVisibleSize();
-            sprite1.x = cc.VisibleRect.left().x + visibleSize.width / (SPRITE_COUNT - 1) * i;
-            sprite1.y = cc.VisibleRect.center().y + sprite2.getContentSize().height / 2 + 10;
-            sprite2.x = cc.VisibleRect.left().x + visibleSize.width / (SPRITE_COUNT - 1) * i;
-            sprite2.y = cc.VisibleRect.center().y - sprite2.getContentSize().height / 2 - 10;
+            sprite1.setPositionX(cc.visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i);
+            sprite1.setPositionY(cc.visibleRect.center.y + sprite2.getContentSize().height / 2 + 10);
+            sprite2.setPositionX(cc.visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i);
+            sprite2.setPositionY(cc.visibleRect.center.y - sprite2.getContentSize().height / 2 - 10);
         }
     },
 
@@ -1007,25 +1007,24 @@ var Issue4160 = EventDispatcherTestDemo.extend({
         var size = cc.director.getVisibleSize();
 
         var sprite1 = TouchableSprite.create();
-        sprite1.initWithFile("res/Images/CyanSquare.png");
+        sprite1.setTexture("res/Images/CyanSquare.png");
         sprite1.setPriority(-30);
-        sprite1.x = origin.x + (size.width/2) - 80;
-        sprite1.y = origin.y + (size.height/2) + 40;
+        sprite1.setPositionX(origin.x + (size.width/2) - 80);
+        sprite1.setPositionY(origin.y + (size.height/2) + 40);
         this.addChild(sprite1, 5);
 
         var sprite2 = TouchableSprite.create();
-        sprite2.initWithFile("res/Images/MagentaSquare.png");
+        sprite2.setTexture("res/Images/MagentaSquare.png");
         sprite2.setPriority(-20);
         sprite2.removeListenerOnTouchEnded(true);
-        sprite2.x = origin.x + (size.width/2);
-        sprite2.y = origin.y + (size.height/2);
+        sprite2.setPositionX(origin.x + (size.width/2));
+        sprite2.setPositionY(origin.y + (size.height/2));
         this.addChild(sprite2, 10);
 
         var sprite3 = TouchableSprite.create();
-        sprite3.initWithFile("res/Images/YellowSquare.png");
+        sprite3.setTexture("res/Images/YellowSquare.png");
         sprite3.setPriority(-10);
-        sprite3.x = 0;
-        sprite3.y = 0;
+        sprite3.setPosition(0, 0);
         sprite2.addChild(sprite3, 21);
     },
 
