@@ -203,6 +203,13 @@ var s_cocosDenshion_plist = "res/cocosDenshion/cocosDenshion.plist";
 var s_cocosDenshion_png = "res/cocosDenshion/cocosDenshion.png";
 var s_cocosDenshion_bg = "res/cocosDenshion/background_0.png";
 
+var g_eventDispatcher = [
+    "res/Images/CyanSquare.png",
+    "res/Images/MagentaSquare.png",
+    "res/Images/YellowSquare.png",
+    "res/Images/ball.png"
+];
+
 var g_resources = [];
 
 var g_sprites = [];

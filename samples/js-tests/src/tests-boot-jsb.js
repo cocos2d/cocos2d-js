@@ -13,7 +13,7 @@ var tests_files = [
 
     // base class
     'BaseTestLayer/BaseTestLayer.js',
-
+    'NewEventManagerTest/NewEventManagerTest.js',
     'ActionManagerTest/ActionManagerTest.js',
     'ActionsTest/ActionsTest.js',
     'ChipmunkTest/ChipmunkTest.js',
