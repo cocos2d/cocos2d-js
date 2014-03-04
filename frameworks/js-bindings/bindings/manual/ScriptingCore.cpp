@@ -112,8 +112,9 @@ static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
     }
 }
 
-static void getTouchesFuncName(EventTouch::EventCode eventCode, std::string &funcName)
+static std::string getTouchesFuncName(EventTouch::EventCode eventCode)
 {
+    std::string funcName;
     switch(eventCode)
     {
         case EventTouch::EventCode::BEGAN:
@@ -128,11 +129,16 @@ static void getTouchesFuncName(EventTouch::EventCode eventCode, std::string &fun
         case EventTouch::EventCode::CANCELLED:
             funcName = "onTouchesCancelled";
             break;
+        default:
+            CCASSERT(false, "Invalid event code!");
+            break;
     }
+    return funcName;
 }
 
-static void getTouchFuncName(EventTouch::EventCode eventCode, std::string &funcName)
+static std::string getTouchFuncName(EventTouch::EventCode eventCode)
 {
+    std::string funcName;
     switch(eventCode) {
         case EventTouch::EventCode::BEGAN:
             funcName = "onTouchBegan";
@@ -146,7 +152,11 @@ static void getTouchFuncName(EventTouch::EventCode eventCode, std::string &funcN
         case EventTouch::EventCode::CANCELLED:
             funcName = "onTouchCancelled";
             break;
+        default:
+            CCASSERT(false, "Invalid event code!");
     }
+    
+    return funcName;
 }
 
 static void rootObject(JSContext *cx, JSObject *obj) {
@@ -158,16 +168,12 @@ static void unRootObject(JSContext *cx, JSObject *obj) {
     JS_RemoveObjectRoot(cx, &obj);
 }
 
-static void getJSTouchObject(JSContext *cx, Touch *x, jsval &jsret) {
-    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Touch>(cx, x);
-    jsret = OBJECT_TO_JSVAL(proxy->obj);
-}
-
-static void removeJSTouchObject(JSContext *cx, Touch *x, jsval &jsret) {
+void removeJSObject(JSContext* cx, void* nativeObj)
+{
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
-    void *ptr = (void*)x;
-    nproxy = jsb_get_native_proxy(ptr);
+
+    nproxy = jsb_get_native_proxy(nativeObj);
     if (nproxy) {
         jsproxy = jsb_get_js_proxy(nproxy->obj);
         JS_RemoveObjectRoot(cx, &jsproxy->obj);
@@ -868,32 +874,22 @@ int ScriptingCore::handleMenuClickedEvent(void* data)
     return 1;
 }
 
-int ScriptingCore::handleTouchesEvent(void* data)
+bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event, jsval* jsvalRet/* = nullptr */)
 {
-    if (NULL == data)
-        return 0;
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    TouchesScriptData* touchesScriptData = static_cast<TouchesScriptData*>(data);
-    if (NULL == touchesScriptData->nativeObject || touchesScriptData->touches.empty())
-        return 0;
+    bool ret = false;
     
-    Layer* pLayer = static_cast<Layer*>(touchesScriptData->nativeObject);
-    EventTouch::EventCode eventType = touchesScriptData->actionType;
-    const std::vector<Touch*>& touches = touchesScriptData->touches;
-    
-    std::string funcName = "";
-    getTouchesFuncName(eventType, funcName);
+    std::string funcName = getTouchesFuncName(eventCode);
 
     JSObject *jsretArr = JS_NewArrayObject(this->_cx, 0, NULL);
 
     JS_AddNamedObjectRoot(this->_cx, &jsretArr, "touchArray");
     int count = 0;
     
-    for (auto& touch : touches)
+    for (const auto& touch : touches)
     {
-        jsval jsval;
-        getJSTouchObject(this->_cx, touch, jsval);
-        JS::RootedValue jsret(_cx, jsval);
+        JS::RootedValue jsret(_cx, getJSObject(this->_cx, touch));
         if (!JS_SetElement(this->_cx, jsretArr, count, &jsret))
         {
             break;
@@ -901,49 +897,75 @@ int ScriptingCore::handleTouchesEvent(void* data)
         ++count;
     }
 
-    executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsretArr);
+    do
+    {
+        js_proxy_t * p = jsb_get_native_proxy(nativeObj);
+        if (!p) break;
+        
+        jsval dataVal[2];
+        dataVal[0] = OBJECT_TO_JSVAL(jsretArr);
+        dataVal[1] = getJSObject(_cx, event);
+        
+        if (jsvalRet != nullptr)
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, jsvalRet);
+        }
+        else
+        {
+            jsval retval;
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, &retval);
+        }
+        
+    } while(false);
 
     JS_RemoveObjectRoot(this->_cx, &jsretArr);
 
     for (auto& touch : touches)
     {
-        jsval jsret;
-        removeJSTouchObject(this->_cx, touch, jsret);
+        removeJSObject(this->_cx, touch);
     }
+    
+    removeJSObject(_cx, event);
 
-    return 1;
+    return ret;
 }
 
-int ScriptingCore::handleTouchEvent(void* data)
+bool ScriptingCore::handleTouchEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, cocos2d::Touch* touch, cocos2d::Event* event, jsval* jsvalRet/* = nullptr*/)
 {
-    if (NULL == data)
-        return 0;
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    TouchScriptData* touchScriptData = static_cast<TouchScriptData*>(data);
-    if (NULL == touchScriptData->nativeObject || NULL == touchScriptData->touch)
-        return 0;
+    std::string funcName = getTouchFuncName(eventCode);
+    bool ret = false;
     
-    Layer* pLayer = static_cast<Layer*>(touchScriptData->nativeObject);
-    EventTouch::EventCode eventType = touchScriptData->actionType;
-    Touch *pTouch = touchScriptData->touch;
-
+    do
+    {
+        js_proxy_t * p = jsb_get_native_proxy(nativeObj);
+        if (!p) break;
     
-    std::string funcName = "";
-    getTouchFuncName(eventType, funcName);
+        jsval dataVal[2];
+        dataVal[0] = getJSObject(_cx, touch);
+        dataVal[1] = getJSObject(_cx, event);
+        
+        if (jsvalRet != nullptr)
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, jsvalRet);
+        }
+        else
+        {
+            jsval retval;
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, &retval);
+        }
+    } while(false);
 
-    jsval jsret;
-    getJSTouchObject(this->getGlobalContext(), pTouch, jsret);
-    JSObject *jsObj = JSVAL_TO_OBJECT(jsret);
-    bool retval = executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsObj);
+    removeJSObject(_cx, touch);
+    removeJSObject(_cx, event);
 
-    removeJSTouchObject(this->getGlobalContext(), pTouch, jsret);
-
-    return retval;
+    return ret;
 }
 
-bool ScriptingCore::executeFunctionWithObjectData(Node *self, const char *name, JSObject *obj) {
+bool ScriptingCore::executeFunctionWithObjectData(void* nativeObj, const char *name, JSObject *obj) {
 
-    js_proxy_t * p = jsb_get_native_proxy(self);
+    js_proxy_t * p = jsb_get_native_proxy(nativeObj);
     if (!p) return false;
 
     jsval retval;
@@ -991,74 +1013,34 @@ bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, uint
     return bRet;
 }
 
-int ScriptingCore::handleAccelerometerEvent(void* data)
+bool ScriptingCore::handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event)
 {
-    if (NULL == data)
-        return 0;
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    BasicScriptData* basicScriptData = static_cast<BasicScriptData*>(data);
-    if (NULL == basicScriptData->nativeObject || NULL == basicScriptData->value)
-        return 0;
-    
-    Acceleration* accelerationValue = static_cast<Acceleration*>(basicScriptData->value);
-    Layer* layer = static_cast<Layer*>(basicScriptData->nativeObject);
-    
-    jsval value = ccacceleration_to_jsval(this->getGlobalContext(), *accelerationValue);
-    JS_AddValueRoot(this->getGlobalContext(), &value);
+	js_proxy_t * p = jsb_get_native_proxy(nativeObj);
 
-    executeFunctionWithObjectData(layer, "onAccelerometer", JSVAL_TO_OBJECT(value));
-
-    JS_RemoveValueRoot(this->getGlobalContext(), &value);
-    return 1;
-}
-
-int ScriptingCore::handleKeypadEvent(void* data)
-{
-    if (NULL == data)
-        return 0;
+    if (nullptr == p)
+        return false;
     
-    KeypadScriptData* keypadScriptData = static_cast<KeypadScriptData*>(data);
-    if (NULL == keypadScriptData->nativeObject)
-        return 0;
+    bool ret = false;
     
-    EventKeyboard::KeyCode action = keypadScriptData->actionType;
+    jsval args[2] = {
+        int32_to_jsval(_cx, (int32_t)keyCode),
+        getJSObject(_cx, event)
+    };
     
-	js_proxy_t * p = jsb_get_native_proxy(keypadScriptData->nativeObject);
-
-	if (p)
+    if (isPressed)
     {
-        bool ret = false;
-        switch(action)
-        {
-        case EventKeyboard::KeyCode::KEY_BACKSPACE:
-			ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onBackClicked");
-            if (!ret)
-            {
-                ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "backClicked");
-                if (ret)
-                {
-                    CCLOG("backClicked will be deprecated, please use onBackClicked instead.");
-                }
-            }
-			break;
-		case EventKeyboard::KeyCode::KEY_MENU:
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onMenuClicked");
-            if (!ret)
-            {
-                ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "menuClicked");
-                if (ret)
-                {
-                    CCLOG("menuClicked will be deprecated, please use onMenuClicked instead.");
-                }
-            }
-			break;
-		default:
-			break;
-		}
-		return 1;
-	}
+        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onKeyPressed", 2, args);
+    }
+    else
+    {
+        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onKeyReleased", 2, args);
+    }
 
-	return 0;
+    removeJSObject(_cx, event);
+    
+    return ret;
 }
 
 
@@ -1066,16 +1048,14 @@ int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
                                        const std::vector<Touch*>& touches, JSObject *obj)
 {
     jsval retval;
-    std::string funcName;
-    getTouchesFuncName(eventType, funcName);
+    std::string funcName = getTouchesFuncName(eventType);
 
     JSObject *jsretArr = JS_NewArrayObject(this->_cx, 0, NULL);
     JS_AddNamedObjectRoot(this->_cx, &jsretArr, "touchArray");
     int count = 0;
     for (auto& touch : touches)
     {
-        jsval jsret;
-        getJSTouchObject(this->_cx, touch, jsret);
+        jsval jsret = getJSObject(this->_cx, touch);
         JS::RootedValue jsval(_cx, jsret);
         if (!JS_SetElement(this->_cx, jsretArr, count, &jsval)) {
             break;
@@ -1089,8 +1069,7 @@ int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
 
     for (auto& touch : touches)
     {
-        jsval jsret;
-        removeJSTouchObject(this->_cx, touch, jsret);
+        removeJSObject(this->_cx, touch);
     }
 
     return 1;
@@ -1103,16 +1082,15 @@ int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
     jsval retval;
-    std::string funcName;
-    getTouchFuncName(eventType, funcName);
+    std::string funcName = getTouchFuncName(eventType);
 
-    jsval jsTouch;
-    getJSTouchObject(this->_cx, pTouch, jsTouch);
+    jsval jsTouch = getJSObject(this->_cx, pTouch);
 
     executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsTouch, &retval);
 
     // Remove touch object from global hash table and unroot it.
-    removeJSTouchObject(this->_cx, pTouch, jsTouch);
+    removeJSObject(this->_cx, pTouch);
+    
     return 1;
 
 }
@@ -1124,16 +1102,14 @@ int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
 {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    std::string funcName;
-    getTouchFuncName(eventType, funcName);
+    std::string funcName = getTouchFuncName(eventType);
 
-    jsval jsTouch;
-    getJSTouchObject(this->_cx, pTouch, jsTouch);
+    jsval jsTouch = getJSObject(this->_cx, pTouch);
 
     executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsTouch, &retval);
 
     // Remove touch object from global hash table and unroot it.
-    removeJSTouchObject(this->_cx, pTouch, jsTouch);
+    removeJSObject(this->_cx, pTouch);
 
     return 1;
 
@@ -1160,25 +1136,18 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
             break;
         case kTouchEvent:
             {
-                return handleTouchEvent(evt->data);
+                TouchScriptData* data = (TouchScriptData*)evt->data;
+                return handleTouchEvent(data->nativeObject, data->actionType, data->touch, data->event);
             }
             break;
         case kTouchesEvent:
             {
-                return handleTouchesEvent(evt->data);
-            }
-            break;
-        case kKeypadEvent:
-            {
-                return handleKeypadEvent(evt->data);
-            }
-            break;
-        case kAccelerometerEvent:
-            {
-                return handleAccelerometerEvent(evt->data);
+                TouchesScriptData* data = (TouchesScriptData*)evt->data;
+                return handleTouchesEvent(data->nativeObject, data->actionType, data->touches, data->event);
             }
             break;
         default:
+            CCASSERT(false, "Invalid script event.");
             break;
     }
     
@@ -1459,7 +1428,7 @@ void ScriptingCore::enableDebugger()
         t.detach();
 
         Scheduler* scheduler = Director::getInstance()->getScheduler();
-        scheduler->scheduleUpdate(CC_CALLBACK_1(SimpleRunLoop::update, this->_runLoop), this->_runLoop, 0, false);
+        scheduler->scheduleUpdate(this->_runLoop, 0, false);
     }
 }
 

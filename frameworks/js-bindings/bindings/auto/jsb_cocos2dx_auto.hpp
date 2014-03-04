@@ -108,6 +108,38 @@ bool js_cocos2dx_Touch_getLocationInView(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_Touch_getPreviousLocation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Touch_Touch(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_Event_class;
+extern JSObject *jsb_cocos2d_Event_prototype;
+
+bool js_cocos2dx_Event_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_Event_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_Event(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_Event_isStopped(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Event_getType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Event_getCurrentTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Event_stopPropagation(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EventTouch_class;
+extern JSObject *jsb_cocos2d_EventTouch_prototype;
+
+bool js_cocos2dx_EventTouch_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EventTouch_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EventTouch(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_EventTouch_getEventCode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventTouch_setEventCode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventTouch_EventTouch(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EventKeyboard_class;
+extern JSObject *jsb_cocos2d_EventKeyboard_prototype;
+
+bool js_cocos2dx_EventKeyboard_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EventKeyboard_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EventKeyboard(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_EventKeyboard_EventKeyboard(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_Texture2D_class;
 extern JSObject *jsb_cocos2d_Texture2D_prototype;
 
@@ -144,6 +176,40 @@ bool js_cocos2dx_Texture2D_setDefaultAlphaPixelFormat(JSContext *cx, uint32_t ar
 bool js_cocos2dx_Texture2D_getDefaultAlphaPixelFormat(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Texture2D_PVRImagesHavePremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Texture2D_Texture2D(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EventListener_class;
+extern JSObject *jsb_cocos2d_EventListener_prototype;
+
+bool js_cocos2dx_EventListener_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EventListener_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EventListener(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_EventListener_clone(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventListener_checkAvailable(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EventDispatcher_class;
+extern JSObject *jsb_cocos2d_EventDispatcher_prototype;
+
+bool js_cocos2dx_EventDispatcher_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EventDispatcher_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EventDispatcher(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_EventDispatcher_pauseEventListenersForTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_addEventListenerWithSceneGraphPriority(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_addEventListenerWithFixedPriority(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_removeEventListener(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_dispatchCustomEvent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_resumeEventListenersForTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_removeEventListenersForTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_setPriority(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_addCustomEventListener(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_dispatchEvent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_removeAllEventListeners(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_removeCustomEventListeners(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_removeEventListenersForType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_EventDispatcher(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_Node_class;
 extern JSObject *jsb_cocos2d_Node_prototype;
@@ -184,7 +250,6 @@ bool js_cocos2dx_Node_getEventDispatcher(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_Node_setSkewX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setSkewY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getOpacity(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_setNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_convertTouchToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_removeAllChildrenWithCleanup(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getNodeToParentAffineTransform(JSContext *cx, uint32_t argc, jsval *vp);
@@ -216,7 +281,6 @@ bool js_cocos2dx_Node_getRotation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getLocalZOrder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getAnchorPointInPoints(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_runAction(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_transform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setScheduler(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_stopAllActions(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getSkewX(JSContext *cx, uint32_t argc, jsval *vp);
@@ -259,7 +323,6 @@ bool js_cocos2dx_Node_getBoundingBox(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setEventDispatcher(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getGlobalZOrder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_draw(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_transformAncestors(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setUserObject(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_removeFromParentAndCleanup(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setPosition3D(JSContext *cx, uint32_t argc, jsval *vp);
@@ -267,7 +330,6 @@ bool js_cocos2dx_Node_update(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getWorldToNodeTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getScale(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_getNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getRotationSkewX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getRotationSkewY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setTag(JSContext *cx, uint32_t argc, jsval *vp);
@@ -516,6 +578,15 @@ void js_register_cocos2dx_Blink(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_Blink_create(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_FadeTo_class;
+extern JSObject *jsb_cocos2d_FadeTo_prototype;
+
+bool js_cocos2dx_FadeTo_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_FadeTo_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_FadeTo(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_FadeTo_create(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_FadeIn_class;
 extern JSObject *jsb_cocos2d_FadeIn_prototype;
 
@@ -523,6 +594,7 @@ bool js_cocos2dx_FadeIn_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_FadeIn_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_FadeIn(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_FadeIn_setReverseAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FadeIn_create(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_FadeOut_class;
@@ -532,16 +604,8 @@ bool js_cocos2dx_FadeOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_FadeOut_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_FadeOut(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_FadeOut_setReverseAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FadeOut_create(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_FadeTo_class;
-extern JSObject *jsb_cocos2d_FadeTo_prototype;
-
-bool js_cocos2dx_FadeTo_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_FadeTo_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_FadeTo(JSContext *cx, JSObject *global);
-void register_all_cocos2dx(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_FadeTo_create(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_TintTo_class;
 extern JSObject *jsb_cocos2d_TintTo_prototype;
@@ -1479,6 +1543,7 @@ void js_cocos2dx_Director_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_Director(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_Director_pause(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Director_setEventDispatcher(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_setContentScaleFactor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_getContentScaleFactor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_getWinSizeInPixels(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1526,6 +1591,7 @@ bool js_cocos2dx_Director_pushScene(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_getAnimationInterval(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_isPaused(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_setDisplayStats(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Director_getEventDispatcher(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_replaceScene(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_setAnimationInterval(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_getActionManager(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2370,7 +2436,6 @@ bool js_cocos2dx_ParticleBatchNode_setTextureAtlas(JSContext *cx, uint32_t argc,
 bool js_cocos2dx_ParticleBatchNode_removeAllChildrenWithCleanup(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleBatchNode_getTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleBatchNode_insertChild(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ParticleBatchNode_visit(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleBatchNode_removeChildAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleBatchNode_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleBatchNode_createWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2606,6 +2671,27 @@ void js_register_cocos2dx_ParticleRain(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_ParticleRain_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleRain_createWithTotalParticles(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EventListenerCustom_class;
+extern JSObject *jsb_cocos2d_EventListenerCustom_prototype;
+
+bool js_cocos2dx_EventListenerCustom_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EventListenerCustom_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EventListenerCustom(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EventCustom_class;
+extern JSObject *jsb_cocos2d_EventCustom_prototype;
+
+bool js_cocos2dx_EventCustom_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EventCustom_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EventCustom(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_EventCustom_getEventName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventCustom_setUserData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventCustom_getUserData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventCustom_EventCustom(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_FileUtils_class;
 extern JSObject *jsb_cocos2d_FileUtils_prototype;
@@ -2930,6 +3016,75 @@ bool js_cocos2dx_TileMapAtlas_setTGAInfo(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_TileMapAtlas_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TileMapAtlas_TileMapAtlas(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_EventListenerTouchOneByOne_class;
+extern JSObject *jsb_cocos2d_EventListenerTouchOneByOne_prototype;
+
+bool js_cocos2dx_EventListenerTouchOneByOne_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EventListenerTouchOneByOne_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EventListenerTouchOneByOne(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_EventListenerTouchOneByOne_setSwallowTouches(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EventListenerTouchAllAtOnce_class;
+extern JSObject *jsb_cocos2d_EventListenerTouchAllAtOnce_prototype;
+
+bool js_cocos2dx_EventListenerTouchAllAtOnce_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EventListenerTouchAllAtOnce_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EventListenerTouchAllAtOnce(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+
+extern JSClass  *jsb_cocos2d_EventListenerKeyboard_class;
+extern JSObject *jsb_cocos2d_EventListenerKeyboard_prototype;
+
+bool js_cocos2dx_EventListenerKeyboard_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EventListenerKeyboard_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EventListenerKeyboard(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+
+extern JSClass  *jsb_cocos2d_EventMouse_class;
+extern JSObject *jsb_cocos2d_EventMouse_prototype;
+
+bool js_cocos2dx_EventMouse_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EventMouse_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EventMouse(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_EventMouse_getMouseButton(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventMouse_setScrollData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventMouse_setMouseButton(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventMouse_getScrollY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventMouse_getScrollX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventMouse_getCursorX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventMouse_getCursorY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventMouse_setCursorPosition(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventMouse_EventMouse(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EventListenerMouse_class;
+extern JSObject *jsb_cocos2d_EventListenerMouse_prototype;
+
+bool js_cocos2dx_EventListenerMouse_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EventListenerMouse_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EventListenerMouse(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_EventListenerMouse_create(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EventAcceleration_class;
+extern JSObject *jsb_cocos2d_EventAcceleration_prototype;
+
+bool js_cocos2dx_EventAcceleration_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EventAcceleration_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EventAcceleration(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_EventAcceleration_EventAcceleration(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EventListenerAcceleration_class;
+extern JSObject *jsb_cocos2d_EventListenerAcceleration_prototype;
+
+bool js_cocos2dx_EventListenerAcceleration_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EventListenerAcceleration_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EventListenerAcceleration(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_EventListenerAcceleration_create(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_Scheduler_class;
 extern JSObject *jsb_cocos2d_Scheduler_prototype;
 
@@ -2939,8 +3094,8 @@ void js_register_cocos2dx_Scheduler(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_Scheduler_setTimeScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_isScheduled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Scheduler_getTimeScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_performFunctionInCocosThread(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Scheduler_getTimeScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_Scheduler(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_Component_class;

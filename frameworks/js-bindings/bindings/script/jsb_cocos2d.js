@@ -716,7 +716,7 @@ var __onParseConfig = function(type, str) {
     }
 };
 
-cc.VisibleRect = {
+cc.visibleRect = {
     _topLeft:cc.p(0,0),
     _topRight:cc.p(0,0),
     _top:cc.p(0,0),
@@ -881,3 +881,292 @@ var clearInterval = function (intervalId) {
     }
 };
 var clearTimeout = clearInterval;
+
+
+/**
+ * Common getter setter configuration function
+ * @function
+ * @param {Object}   proto      A class prototype or an object to config<br/>
+ * @param {String}   prop       Property name
+ * @param {function} getter     Getter function for the property
+ * @param {function} setter     Setter function for the property
+ * @param {String}   getterName Name of getter function for the property
+ * @param {String}   setterName Name of setter function for the property
+ */
+cc.defineGetterSetter = function (proto, prop, getter, setter, getterName, setterName)
+{
+    if (proto.__defineGetter__) {
+        getter && proto.__defineGetter__(prop, getter);
+        setter && proto.__defineSetter__(prop, setter);
+    }
+    else if (Object.defineProperty) {
+        var desc = { enumerable: false, configurable: true };
+        getter && (desc.get = getter);
+        setter && (desc.set = setter);
+        Object.defineProperty(proto, prop, desc);
+    }
+    else {
+        throw new Error("browser does not support getters");
+        return;
+    }
+
+    if(!getterName && !setterName) {
+        // Lookup getter/setter function
+        var hasGetter = (getter != null), hasSetter = (setter != undefined);
+        var props = Object.getOwnPropertyNames(proto);
+        for (var i = 0; i < props.length; i++) {
+            var name = props[i];
+            if( proto.__lookupGetter__(name) !== undefined || typeof proto[name] !== "function" ) continue;
+            var func = proto[name];
+            if (hasGetter && func === getter) {
+                getterName = name;
+                if(!hasSetter || setterName) break;
+            }
+            if (hasSetter && func === setter) {
+                setterName = name;
+                if(!hasGetter || getterName) break;
+            }
+        }
+    }
+
+    // Found getter/setter
+    var ctor = proto.constructor;
+    if (getterName) {
+        if (!ctor.__getters__) {
+            ctor.__getters__ = {};
+        }
+        ctor.__getters__[getterName] = prop;
+    }
+    if (setterName) {
+        if (!ctor.__setters__) {
+            ctor.__setters__ = {};
+        }
+        ctor.__setters__[setterName] = prop;
+    }
+};
+
+/**
+ * Common getter setter configuration function
+ * @function
+ * @param {Object}   class      A class prototype or an object to config<br/>
+ * @param {String}   prop       Property name
+ * @param {function} getter     Getter function for the property
+ * @param {function} setter     Setter function for the property
+ * @param {String}   getterName Name of getter function for the property
+ * @param {String}   setterName Name of setter function for the property
+ */
+cc.defineProtoGetterSetter = function (classobj, prop, getter, setter, getterName, setterName)
+{
+    var proto = classobj.prototype;
+    cc.defineGetterSetter(proto, prop, getter, setter, getterName, setterName);
+};
+
+cc.Color = function (r, g, b, a) {
+    this.r = r || 0;
+    this.g = g || 0;
+    this.b = b || 0;
+    this.a = a || 0;
+};
+
+/**
+ *
+ * @param {Number|String|cc.Color} r
+ * @param {Number} g
+ * @param {Number} b
+ * @param {Number} a
+ * @returns {cc.Color}
+ */
+cc.color = function (r, g, b, a) {
+    if (r === undefined)
+        return {r: 0, g: 0, b: 0, a: 255};
+    if (typeof r === "string")
+        return cc.hexToColor(r);
+    if (typeof r === "object")
+        return {r: r.r, g: r.g, b: r.b, a: r.a};
+    return  {r: r, g: g, b: b, a: a };
+};
+
+/**
+ * returns true if both ccColor3B are equal. Otherwise it returns false.
+ * @param {cc.Color} color1
+ * @param {cc.Color} color2
+ * @return {Boolean}  true if both ccColor3B are equal. Otherwise it returns false.
+ */
+cc.colorEqual = function(color1, color2){
+    return color1.r === color2.r && color1.g === color2.g && color1.b === color2.b;
+};
+
+
+/**
+ * White color (255, 255, 255, 255)
+ * @returns {cc.Color}
+ * @private
+ */
+cc.color._getWhite = function(){
+    return cc.color(255, 255, 255, 255);
+};
+
+/**
+ *  Yellow color (255, 255, 0, 255)
+ * @returns {cc.Color}
+ * @private
+ */
+cc.color._getYellow = function () {
+    return cc.color(255, 255, 0, 255);
+};
+
+/**
+ *  Blue color (0, 0, 255, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getBlue = function () {
+    return  cc.color(0, 0, 255, 255);
+};
+
+/**
+ *  Green Color (0, 255, 0, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getGreen = function () {
+    return cc.color(0, 255, 0, 255);
+};
+
+/**
+ *  Red Color (255, 0, 0, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getRed = function () {
+    return cc.color(255, 0, 0, 255);
+};
+
+/**
+ *  Magenta Color (255, 0, 255, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getMagenta = function () {
+    return cc.color(255, 0, 255, 255);
+};
+
+/**
+ *  Black Color (0, 0, 0, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getBlack = function () {
+    return cc.color(0, 0, 0, 255);
+};
+
+/**
+ *  Orange Color (255, 127, 0, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getOrange = function () {
+    return cc.color(255, 127, 0, 255);
+};
+
+/**
+ *  Gray Color (166, 166, 166, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getGray = function () {
+    return cc.color(166, 166, 166, 255);
+};
+window._proto = cc.color;
+/** @expose */
+_proto.white;
+cc.defineGetterSetter(_proto, "white", _proto._getWhite);
+/** @expose */
+_proto.yellow;
+cc.defineGetterSetter(_proto, "yellow", _proto._getYellow);
+/** @expose */
+_proto.blue;
+cc.defineGetterSetter(_proto, "blue", _proto._getBlue);
+/** @expose */
+_proto.green;
+cc.defineGetterSetter(_proto, "green", _proto._getGreen);
+/** @expose */
+_proto.red;
+cc.defineGetterSetter(_proto, "red", _proto._getRed);
+/** @expose */
+_proto.magenta;
+cc.defineGetterSetter(_proto, "magenta", _proto._getMagenta);
+/** @expose */
+_proto.black;
+cc.defineGetterSetter(_proto, "black", _proto._getBlack);
+/** @expose */
+_proto.orange;
+cc.defineGetterSetter(_proto, "orange", _proto._getOrange);
+/** @expose */
+_proto.gray;
+cc.defineGetterSetter(_proto, "gray", _proto._getGray);
+delete window._proto;
+
+
+
+// event listener type
+cc.EventListener.UNKNOWN = 0;
+cc.EventListener.TOUCH_ONE_BY_ONE = 1;
+cc.EventListener.TOUCH_ALL_AT_ONCE = 2;
+cc.EventListener.KEYBOARD = 3;
+cc.EventListener.MOUSE = 4;
+cc.EventListener.ACCELERATION = 5;
+cc.EventListener.CUSTOM = 6;
+
+cc.eventManager = cc.Director.getInstance().getEventDispatcher();
+
+cc.eventManager.addListener = function(listener, nodeOrPriority) {
+    if (typeof nodeOrPriority == "number") {
+        if (nodeOrPriority == 0) {
+            cc.log("0 priority is forbidden for fixed priority since it's used for scene graph based priority.");
+            return;
+        }
+
+        cc.eventManager.addEventListenerWithFixedPriority(listener, nodeOrPriority);
+    } else {
+        cc.eventManager.addEventListenerWithSceneGraphPriority(listener, nodeOrPriority);
+    }
+};
+
+cc.EventListener.create = function(argObj){
+    if(!argObj || !argObj.event){
+        throw "Invalid parameter.";
+    }
+    var listenerType = argObj.event;
+    delete argObj.event;
+
+    var listener = null;
+    if(listenerType === cc.EventListener.TOUCH_ONE_BY_ONE) {
+        listener = cc.EventListenerTouchOneByOne.create();
+        if (argObj.swallowTouches) {
+            listener.setSwallowTouches(argObj.swallowTouches);
+        }
+    }
+    else if(listenerType === cc.EventListener.TOUCH_ALL_AT_ONCE)
+        listener = cc.EventListenerTouchAllAtOnce.create();
+    else if(listenerType === cc.EventListener.MOUSE)
+        listener = cc.EventListenerMouse.create();
+    else if(listenerType === cc.EventListener.CUSTOM){
+        listener = cc.EventListenerCustom.create(argObj.eventName, argObj.callback);
+        delete argObj.eventName;
+        delete argObj.callback;
+    } else if(listenerType === cc.EventListener.KEYBOARD)
+        listener = cc.EventListenerKeyboard.create();
+    else if(listenerType === cc.EventListener.ACCELERATION){
+        listener = cc.EventListenerAcceleration.create(argObj.callback);
+        delete argObj.callback;
+    }
+
+    for(var key in argObj) {
+        listener[key] = argObj[key];
+    }
+
+    return listener;
+};
+
+cc.director = cc.Director.getInstance();
