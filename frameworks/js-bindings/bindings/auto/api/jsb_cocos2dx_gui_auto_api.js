@@ -9,6 +9,16 @@ var ccui = ccui || {};
 ccui.LayoutParameter = {
 
 /**
+ * @method clone
+ * @return {ccui.LayoutParameter}
+ */
+clone : function (
+)
+{
+    return ccui.LayoutParameter;
+},
+
+/**
  * @method getLayoutType
  * @return {ccui.LayoutParameterType}
  */
@@ -16,6 +26,26 @@ getLayoutType : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method createCloneInstance
+ * @return {ccui.LayoutParameter}
+ */
+createCloneInstance : function (
+)
+{
+    return ccui.LayoutParameter;
+},
+
+/**
+ * @method copyProperties
+ * @param {ccui.LayoutParameter} arg0
+ */
+copyProperties : function (
+layoutparameter 
+)
+{
 },
 
 /**
@@ -775,38 +805,6 @@ point
 },
 
 /**
- * @method hitTest
- * @param {PointObject} arg0
- * @return {bool}
- */
-hitTest : function (
-point 
-)
-{
-    return false;
-},
-
-/**
- * @method getBackGroundImageTextureSize
- * @return {SizeObject}
- */
-getBackGroundImageTextureSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method getLayoutType
- * @return {ccui.LayoutType}
- */
-getLayoutType : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setClippingType
  * @param {ccui.LayoutClippingType} arg0
  */
@@ -824,6 +822,54 @@ setBackGroundColorType : function (
 layoutbackgroundcolortype 
 )
 {
+},
+
+/**
+ * @method getBackGroundColorType
+ * @return {ccui.LayoutBackGroundColorType}
+ */
+getBackGroundColorType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getBackGroundColorVector
+ * @return {PointObject}
+ */
+getBackGroundColorVector : function (
+)
+{
+    return cc.Point;
+},
+
+/**
+ * @method removeBackGroundImage
+ */
+removeBackGroundImage : function (
+)
+{
+},
+
+/**
+ * @method getBackGroundColorOpacity
+ * @return {int}
+ */
+getBackGroundColorOpacity : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getBackGroundImageCapInsets
+ * @return {RectObject}
+ */
+getBackGroundImageCapInsets : function (
+)
+{
+    return cc.Rect;
 },
 
 /**
@@ -879,6 +925,66 @@ int
 },
 
 /**
+ * @method setClippingEnabled
+ * @param {bool} arg0
+ */
+setClippingEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method isBackGroundImageScale9Enabled
+ * @return {bool}
+ */
+isBackGroundImageScale9Enabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getLayoutType
+ * @return {ccui.LayoutType}
+ */
+getLayoutType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getBackGroundEndColor
+ * @return {Color3BObject}
+ */
+getBackGroundEndColor : function (
+)
+{
+    return cc.Color3B;
+},
+
+/**
+ * @method getClippingType
+ * @return {ccui.LayoutClippingType}
+ */
+getClippingType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getBackGroundColor
+ * @return {Color3BObject}
+ */
+getBackGroundColor : function (
+)
+{
+    return cc.Color3B;
+},
+
+/**
  * @method setBackGroundImageCapInsets
  * @param {RectObject} arg0
  */
@@ -889,11 +995,35 @@ rect
 },
 
 /**
- * @method removeBackGroundImage
+ * @method getBackGroundImageTextureSize
+ * @return {SizeObject}
  */
-removeBackGroundImage : function (
+getBackGroundImageTextureSize : function (
 )
 {
+    return cc.Size;
+},
+
+/**
+ * @method getBackGroundStartColor
+ * @return {Color3BObject}
+ */
+getBackGroundStartColor : function (
+)
+{
+    return cc.Color3B;
+},
+
+/**
+ * @method hitTest
+ * @param {PointObject} arg0
+ * @return {bool}
+ */
+hitTest : function (
+point 
+)
+{
+    return false;
 },
 
 /**
@@ -901,16 +1031,6 @@ removeBackGroundImage : function (
  * @param {bool} arg0
  */
 setBackGroundImageScale9Enabled : function (
-bool 
-)
-{
-},
-
-/**
- * @method setClippingEnabled
- * @param {bool} arg0
- */
-setClippingEnabled : function (
 bool 
 )
 {
@@ -963,13 +1083,83 @@ getTitleText : function (
 },
 
 /**
- * @method loadTextureNormal
+ * @method setTitleFontSize
+ * @param {float} arg0
+ */
+setTitleFontSize : function (
+float 
+)
+{
+},
+
+/**
+ * @method setScale9Enabled
+ * @param {bool} arg0
+ */
+setScale9Enabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getCapInsetsDisabledRenderer
+ * @return {RectObject}
+ */
+getCapInsetsDisabledRenderer : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method setTitleColor
+ * @param {Color3BObject} arg0
+ */
+setTitleColor : function (
+color3b 
+)
+{
+},
+
+/**
+ * @method setCapInsetsDisabledRenderer
+ * @param {RectObject} arg0
+ */
+setCapInsetsDisabledRenderer : function (
+rect 
+)
+{
+},
+
+/**
+ * @method setCapInsets
+ * @param {RectObject} arg0
+ */
+setCapInsets : function (
+rect 
+)
+{
+},
+
+/**
+ * @method loadTextureDisabled
  * @param {char*} arg0
  * @param {ccui.TextureResType} arg1
  */
-loadTextureNormal : function (
+loadTextureDisabled : function (
 char, 
 texturerestype 
+)
+{
+},
+
+/**
+ * @method setTitleText
+ * @param {String} arg0
+ */
+setTitleText : function (
+str 
 )
 {
 },
@@ -979,16 +1169,6 @@ texturerestype
  * @param {RectObject} arg0
  */
 setCapInsetsNormalRenderer : function (
-rect 
-)
-{
-},
-
-/**
- * @method setCapInsetsPressedRenderer
- * @param {RectObject} arg0
- */
-setCapInsetsPressedRenderer : function (
 rect 
 )
 {
@@ -1007,26 +1187,6 @@ texturerestype
 },
 
 /**
- * @method setTitleFontSize
- * @param {float} arg0
- */
-setTitleFontSize : function (
-float 
-)
-{
-},
-
-/**
- * @method setCapInsetsDisabledRenderer
- * @param {RectObject} arg0
- */
-setCapInsetsDisabledRenderer : function (
-rect 
-)
-{
-},
-
-/**
  * @method setTitleFontName
  * @param {char*} arg0
  */
@@ -1037,65 +1197,23 @@ char
 },
 
 /**
- * @method getTitleColor
- * @return {Color3BObject}
+ * @method getCapInsetsNormalRenderer
+ * @return {RectObject}
  */
-getTitleColor : function (
+getCapInsetsNormalRenderer : function (
 )
 {
-    return cc.Color3B;
+    return cc.Rect;
 },
 
 /**
- * @method loadTextureDisabled
- * @param {char*} arg0
- * @param {ccui.TextureResType} arg1
+ * @method getCapInsetsPressedRenderer
+ * @return {RectObject}
  */
-loadTextureDisabled : function (
-char, 
-texturerestype 
+getCapInsetsPressedRenderer : function (
 )
 {
-},
-
-/**
- * @method getTitleFontName
- * @return {char*}
- */
-getTitleFontName : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setPressedActionEnabled
- * @param {bool} arg0
- */
-setPressedActionEnabled : function (
-bool 
-)
-{
-},
-
-/**
- * @method setCapInsets
- * @param {RectObject} arg0
- */
-setCapInsets : function (
-rect 
-)
-{
-},
-
-/**
- * @method setScale9Enabled
- * @param {bool} arg0
- */
-setScale9Enabled : function (
-bool 
-)
-{
+    return cc.Rect;
 },
 
 /**
@@ -1115,6 +1233,38 @@ texturerestype
 },
 
 /**
+ * @method isScale9Enabled
+ * @return {bool}
+ */
+isScale9Enabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method loadTextureNormal
+ * @param {char*} arg0
+ * @param {ccui.TextureResType} arg1
+ */
+loadTextureNormal : function (
+char, 
+texturerestype 
+)
+{
+},
+
+/**
+ * @method setCapInsetsPressedRenderer
+ * @param {RectObject} arg0
+ */
+setCapInsetsPressedRenderer : function (
+rect 
+)
+{
+},
+
+/**
  * @method getTitleFontSize
  * @return {float}
  */
@@ -1125,21 +1275,31 @@ getTitleFontSize : function (
 },
 
 /**
- * @method setTitleText
- * @param {String} arg0
+ * @method getTitleFontName
+ * @return {char*}
  */
-setTitleText : function (
-str 
+getTitleFontName : function (
 )
 {
+    return 0;
 },
 
 /**
- * @method setTitleColor
- * @param {Color3BObject} arg0
+ * @method getTitleColor
+ * @return {Color3BObject}
  */
-setTitleColor : function (
-color3b 
+getTitleColor : function (
+)
+{
+    return cc.Color3B;
+},
+
+/**
+ * @method setPressedActionEnabled
+ * @param {bool} arg0
+ */
+setPressedActionEnabled : function (
+bool 
 )
 {
 },
@@ -1297,6 +1457,28 @@ CheckBox : function (
 ccui.ImageView = {
 
 /**
+ * @method loadTexture
+ * @param {char*} arg0
+ * @param {ccui.TextureResType} arg1
+ */
+loadTexture : function (
+char, 
+texturerestype 
+)
+{
+},
+
+/**
+ * @method setScale9Enabled
+ * @param {bool} arg0
+ */
+setScale9Enabled : function (
+bool 
+)
+{
+},
+
+/**
  * @method setTextureRect
  * @param {RectObject} arg0
  */
@@ -1317,25 +1499,23 @@ rect
 },
 
 /**
- * @method setScale9Enabled
- * @param {bool} arg0
+ * @method getCapInsets
+ * @return {RectObject}
  */
-setScale9Enabled : function (
-bool 
+getCapInsets : function (
 )
 {
+    return cc.Rect;
 },
 
 /**
- * @method loadTexture
- * @param {char*} arg0
- * @param {ccui.TextureResType} arg1
+ * @method isScale9Enabled
+ * @return {bool}
  */
-loadTexture : function (
-char, 
-texturerestype 
+isScale9Enabled : function (
 )
 {
+    return false;
 },
 
 /**
@@ -1395,6 +1575,26 @@ bool
 },
 
 /**
+ * @method getFontSize
+ * @return {int}
+ */
+getFontSize : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTextVerticalAlignment
+ * @return {cc.TextVAlignment}
+ */
+getTextVerticalAlignment : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getStringValue
  * @return {String}
  */
@@ -1412,6 +1612,26 @@ setText : function (
 str 
 )
 {
+},
+
+/**
+ * @method getTextHorizontalAlignment
+ * @return {cc.TextHAlignment}
+ */
+getTextHorizontalAlignment : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTextAreaSize
+ * @return {SizeObject}
+ */
+getTextAreaSize : function (
+)
+{
+    return cc.Size;
 },
 
 /**
@@ -1452,6 +1672,16 @@ setTextHorizontalAlignment : function (
 texthalignment 
 )
 {
+},
+
+/**
+ * @method getFontName
+ * @return {String}
+ */
+getFontName : function (
+)
+{
+    return ;
 },
 
 /**
@@ -1614,6 +1844,26 @@ getDirection : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getCapInsets
+ * @return {RectObject}
+ */
+getCapInsets : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method isScale9Enabled
+ * @return {bool}
+ */
+isScale9Enabled : function (
+)
+{
+    return false;
 },
 
 /**
@@ -2099,6 +2349,16 @@ removeLastItem : function (
 },
 
 /**
+ * @method getItemsMargin
+ * @return {float}
+ */
+getItemsMargin : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getItem
  * @param {long} arg0
  * @return {ccui.Widget}
@@ -2185,6 +2445,18 @@ int
 },
 
 /**
+ * @method loadSlidBallTextureDisabled
+ * @param {char*} arg0
+ * @param {ccui.TextureResType} arg1
+ */
+loadSlidBallTextureDisabled : function (
+char, 
+texturerestype 
+)
+{
+},
+
+/**
  * @method loadSlidBallTextureNormal
  * @param {char*} arg0
  * @param {ccui.TextureResType} arg1
@@ -2257,6 +2529,16 @@ rect
 },
 
 /**
+ * @method getCapInsetsProgressBarRebderer
+ * @return {RectObject}
+ */
+getCapInsetsProgressBarRebderer : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method setScale9Enabled
  * @param {bool} arg0
  */
@@ -2289,15 +2571,23 @@ texturerestype
 },
 
 /**
- * @method loadSlidBallTextureDisabled
- * @param {char*} arg0
- * @param {ccui.TextureResType} arg1
+ * @method isScale9Enabled
+ * @return {bool}
  */
-loadSlidBallTextureDisabled : function (
-char, 
-texturerestype 
+isScale9Enabled : function (
 )
 {
+    return false;
+},
+
+/**
+ * @method getCapInsetsBarRenderer
+ * @return {RectObject}
+ */
+getCapInsetsBarRenderer : function (
+)
+{
+    return cc.Rect;
 },
 
 /**
@@ -2347,6 +2637,16 @@ bool
 },
 
 /**
+ * @method getFontSize
+ * @return {int}
+ */
+getFontSize : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getStringValue
  * @return {String}
  */
@@ -2357,13 +2657,23 @@ getStringValue : function (
 },
 
 /**
- * @method setPasswordStyleText
- * @param {char*} arg0
+ * @method getDeleteBackward
+ * @return {bool}
  */
-setPasswordStyleText : function (
-char 
+getDeleteBackward : function (
 )
 {
+    return false;
+},
+
+/**
+ * @method getPlaceHolder
+ * @return {String}
+ */
+getPlaceHolder : function (
+)
+{
+    return ;
 },
 
 /**
@@ -2425,6 +2735,16 @@ didNotSelectSelf : function (
 },
 
 /**
+ * @method getFontName
+ * @return {String}
+ */
+getFontName : function (
+)
+{
+    return ;
+},
+
+/**
  * @method attachWithIME
  */
 attachWithIME : function (
@@ -2443,6 +2763,16 @@ bool
 },
 
 /**
+ * @method getPasswordStyleText
+ * @return {char*}
+ */
+getPasswordStyleText : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setMaxLengthEnabled
  * @param {bool} arg0
  */
@@ -2453,13 +2783,23 @@ bool
 },
 
 /**
- * @method getDeleteBackward
- * @return {bool}
+ * @method setPasswordStyleText
+ * @param {char*} arg0
  */
-getDeleteBackward : function (
+setPasswordStyleText : function (
+char 
 )
 {
-    return false;
+},
+
+/**
+ * @method setDeleteBackward
+ * @param {bool} arg0
+ */
+setDeleteBackward : function (
+bool 
+)
+{
 },
 
 /**
@@ -2553,13 +2893,13 @@ size
 },
 
 /**
- * @method setDeleteBackward
- * @param {bool} arg0
+ * @method getTouchSize
+ * @return {SizeObject}
  */
-setDeleteBackward : function (
-bool 
+getTouchSize : function (
 )
 {
+    return cc.Size;
 },
 
 /**
