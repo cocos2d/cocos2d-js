@@ -287,12 +287,12 @@ _safeExtend(ccui.ScrollView.prototype, {
     }
 });
 
-_safeExtend(ccui.EditBox.prototype, {
-    _setFont: function(fontStyle) {
-        var res = cc.LabelTTF.prototype._fontStyleRE.exec(fontStyle);
-        if(res) {
-            this.setFontSize(parseInt(res[1]));
-            this.setFontName(res[2]);
-        }
-    }
-});
+// _safeExtend(ccui.EditBox.prototype, {
+//     _setFont: function(fontStyle) {
+//         var res = cc.LabelTTF.prototype._fontStyleRE.exec(fontStyle);
+//         if(res) {
+//             this.setFontSize(parseInt(res[1]));
+//             this.setFontName(res[2]);
+//         }
+//     }
+// });
