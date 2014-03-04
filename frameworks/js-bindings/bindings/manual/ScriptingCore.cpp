@@ -1134,6 +1134,18 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
                 return handleMenuClickedEvent(evt->data);
             }
             break;
+        case kTouchEvent:
+            {
+                TouchScriptData* data = (TouchScriptData*)evt->data;
+                return handleTouchEvent(data->nativeObject, data->actionType, data->touch, data->event);
+            }
+            break;
+        case kTouchesEvent:
+            {
+                TouchesScriptData* data = (TouchesScriptData*)evt->data;
+                return handleTouchesEvent(data->nativeObject, data->actionType, data->touches, data->event);
+            }
+            break;
         default:
             CCASSERT(false, "Invalid script event.");
             break;
