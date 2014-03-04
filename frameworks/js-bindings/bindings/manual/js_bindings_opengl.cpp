@@ -1,6 +1,6 @@
 #include "js_bindings_opengl.h"
 
-void GLNode::draw() {
+void GLNode::draw(cocos2d::Renderer *renderer, const kmMat4& transform, bool transformUpdated) {
     js_proxy_t* proxy = NULL;
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     proxy = js_get_or_create_proxy<cocos2d::Node>(cx, this);
@@ -8,9 +8,10 @@ void GLNode::draw() {
     if( proxy ) {
         JSObject *jsObj = proxy->obj;
         if (jsObj) {
-            bool found;
+            bool found = false;
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-                    JS_HasProperty(cx, jsObj, "draw", &found);
+            
+            JS_HasProperty(cx, jsObj, "draw", &found);
             if (found == true) {
                 JS::RootedValue rval(cx);
                 JS::RootedValue fval(cx);
