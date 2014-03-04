@@ -93,7 +93,7 @@ public:
 
     virtual bool handleAssert(const char *msg) { return false; }
 
-    bool executeFunctionWithObjectData(cocos2d::Node *self, const char *name, JSObject *obj);
+    bool executeFunctionWithObjectData(void* nativeObj, const char *name, JSObject *obj);
     bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
@@ -204,13 +204,14 @@ public:
     
  private:
     void string_report(jsval val);
-    
-    int handleTouchesEvent(void* data);
-    int handleTouchEvent(void* data);
+
+public:
     int handleNodeEvent(void* data);
     int handleMenuClickedEvent(void* data);
-    int handleAccelerometerEvent(void* data);
-    int handleKeypadEvent(void* data);
+    
+    bool handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event, jsval* jsvalRet = nullptr);
+    bool handleTouchEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, cocos2d::Touch* touch, cocos2d::Event* event, jsval* jsvalRet = nullptr);
+    bool handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
 };
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
@@ -223,5 +224,13 @@ js_proxy_t* jsb_get_native_proxy(void* nativeObj);
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
 
+template <class T>
+jsval getJSObject(JSContext* cx, T* nativeObj)
+{
+    js_proxy_t *proxy = js_get_or_create_proxy<T>(cx, nativeObj);
+    return proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL;
+}
+
+void removeJSObject(JSContext* cx, void* nativeObj);
 
 #endif /* __SCRIPTING_CORE_H__ */
