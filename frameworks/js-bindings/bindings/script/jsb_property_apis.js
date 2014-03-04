@@ -36,7 +36,6 @@ _proto = cc.LabelAtlas.prototype;
 cc.defineGetterSetter(_proto, "color", _proto.getColor, _proto.setColor);
 
 _proto = cc.LabelBMFont.prototype;
-cc.defineGetterSetter(_proto, "anchor", _proto._getAnchor, _proto._setAnchor);
 //cc.defineGetterSetter(_proto, "anchorX", _proto._getAnchorX, _proto._setAnchorX);
 //cc.defineGetterSetter(_proto, "anchorY", _proto._getAnchorY, _proto._setAnchorY);
 cc.defineGetterSetter(_proto, "scale", _proto.getScale, _proto.setScale);
@@ -104,10 +103,10 @@ cc.defineGetterSetter(_proto, "childrenCount", _proto.getChildrenCount);
 cc.defineGetterSetter(_proto, "layoutType", _proto.getLayoutType, _proto.setLayoutType);
 
 _proto = ccui.Button.prototype;
-cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
-cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
-cc.defineGetterSetter(_proto, "anchorX", _proto._getAnchorX, _proto._setAnchorX);
-cc.defineGetterSetter(_proto, "anchorY", _proto._getAnchorY, _proto._setAnchorY);
+//cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
+//cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
+//cc.defineGetterSetter(_proto, "anchorX", _proto._getAnchorX, _proto._setAnchorX);
+//cc.defineGetterSetter(_proto, "anchorY", _proto._getAnchorY, _proto._setAnchorY);
 cc.defineGetterSetter(_proto, "flippedX", _proto.isFlippedX, _proto.setFlippedX);
 cc.defineGetterSetter(_proto, "flippedY", _proto.isFlippedY, _proto.setFlippedY);
 cc.defineGetterSetter(_proto, "color", _proto.getColor, _proto.setColor);
@@ -117,16 +116,16 @@ _proto = ccui.CheckBox.prototype;
 //cc.defineGetterSetter(_proto, "anchorY", _proto._getAnchorY, _proto._setAnchorY);
 cc.defineGetterSetter(_proto, "flippedX", _proto.isFlippedX, _proto.setFlippedX);
 cc.defineGetterSetter(_proto, "flippedY", _proto.isFlippedY, _proto.setFlippedY);
-cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
-cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
+//cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
+//cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
 
 _proto = ccui.ImageView.prototype;
 //cc.defineGetterSetter(_proto, "anchorX", _proto._getAnchorX, _proto._setAnchorX);
 //cc.defineGetterSetter(_proto, "anchorY", _proto._getAnchorY, _proto._setAnchorY);
 cc.defineGetterSetter(_proto, "flippedX", _proto.isFlippedX, _proto.setFlippedX);
 cc.defineGetterSetter(_proto, "flippedY", _proto.isFlippedY, _proto.setFlippedY);
-cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
-cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
+//cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
+//cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
 
 _proto = ccui.Text.prototype;
 //cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
@@ -138,31 +137,33 @@ cc.defineGetterSetter(_proto, "scaleY", _proto.getScaleY, _proto.setScaleY);
 cc.defineGetterSetter(_proto, "flippedX", _proto.isFlippedX, _proto.setFlippedX);
 cc.defineGetterSetter(_proto, "flippedY", _proto.isFlippedY, _proto.setFlippedY);
 
+/*
 _proto = ccui.TextAtlas.prototype;
-//cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
-//cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
-//cc.defineGetterSetter(_proto, "anchorX", _proto._getAnchorX, _proto._setAnchorX);
-//cc.defineGetterSetter(_proto, "anchorY", _proto._getAnchorY, _proto._setAnchorY);
+cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
+cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
+cc.defineGetterSetter(_proto, "anchorX", _proto._getAnchorX, _proto._setAnchorX);
+cc.defineGetterSetter(_proto, "anchorY", _proto._getAnchorY, _proto._setAnchorY);
 
 _proto = ccui.TextBMFont.prototype;
-//cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
-//cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
-//cc.defineGetterSetter(_proto, "anchorX", _proto._getAnchorX, _proto._setAnchorX);
-//cc.defineGetterSetter(_proto, "anchorY", _proto._getAnchorY, _proto._setAnchorY);
+cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
+cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
+cc.defineGetterSetter(_proto, "anchorX", _proto._getAnchorX, _proto._setAnchorX);
+cc.defineGetterSetter(_proto, "anchorY", _proto._getAnchorY, _proto._setAnchorY);
 
 _proto = ccui.LoadingBar.prototype;
-//cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
-//cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
+cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
+cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
 
 _proto = ccui.Slider.prototype;
-//cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
-//cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
+cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
+cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
 
 _proto = ccui.TextField.prototype;
 cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
 cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
 cc.defineGetterSetter(_proto, "anchorX", _proto._getAnchorX, _proto._setAnchorX);
 cc.defineGetterSetter(_proto, "anchorY", _proto._getAnchorY, _proto._setAnchorY);
+*/
 
 _proto = cc.Control.prototype;
 cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
@@ -198,8 +199,8 @@ cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
 cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
 
 _proto = cc.ScrollView.prototype;
-cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
-cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
+//cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
+//cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
 
 
 
@@ -387,12 +388,6 @@ cc.defineGetterSetter(_proto, "mapHeight", _proto._getMapHeight, _proto._setMapH
 cc.defineGetterSetter(_proto, "tileWidth", _proto._getTileWidth, _proto._setTileWidth);
 cc.defineGetterSetter(_proto, "tileHeight", _proto._getTileHeight, _proto._setTileHeight);
 
-_proto = cc.TMXMapInfo.prototype;
-cc.defineGetterSetter(_proto, "mapWidth", _proto._getMapWidth, _proto._setMapWidth);
-cc.defineGetterSetter(_proto, "mapHeight", _proto._getMapHeight, _proto._setMapHeight);
-cc.defineGetterSetter(_proto, "tileWidth", _proto._getTileWidth, _proto._setTileWidth);
-cc.defineGetterSetter(_proto, "tileHeight", _proto._getTileHeight, _proto._setTileHeight);
-
 _proto = ccs.Armature.prototype;
 cc.defineGetterSetter(_proto, "parentBone", _proto.getParentBone, _proto.setParentBone);
 cc.defineGetterSetter(_proto, "body", _proto.getBody, _proto.setBody);
@@ -447,10 +442,10 @@ cc.defineGetterSetter(_proto, "boundingHeight", _proto._getBoundingHeight, _prot
 cc.defineGetterSetter(_proto, "string", _proto.getStringValue, _proto.setText);
 cc.defineGetterSetter(_proto, "stringLength", _proto.getStringLength);
 cc.defineGetterSetter(_proto, "font", _proto._getFont, _proto._setFont);
-cc.defineGetterSetter(_proto, "fontName", _proto._getFontName, _proto.setFontName);
-cc.defineGetterSetter(_proto, "fontSize", _proto._getFontSize, _proto.setFontSize);
-cc.defineGetterSetter(_proto, "textAlign", _proto._getHorizontalAlignment, _proto.setTextHorizontalAlignment);
-cc.defineGetterSetter(_proto, "verticalAlign", _proto._getVerticalAlignment, _proto.setTextVerticalAlignment);
+cc.defineGetterSetter(_proto, "fontName", _proto.getFontName, _proto.setFontName);
+cc.defineGetterSetter(_proto, "fontSize", _proto.getFontSize, _proto.setFontSize);
+cc.defineGetterSetter(_proto, "textAlign", _proto.getHorizontalAlignment, _proto.setTextHorizontalAlignment);
+cc.defineGetterSetter(_proto, "verticalAlign", _proto.getVerticalAlignment, _proto.setTextVerticalAlignment);
 
 _proto = ccui.TextAtlas.prototype;
 cc.defineGetterSetter(_proto, "string", _proto.getStringValue, _proto.setStringValue);
@@ -471,17 +466,17 @@ cc.defineGetterSetter(_proto, "maxLength", _proto.getMaxLength, _proto.setMaxLen
 cc.defineGetterSetter(_proto, "passwordEnabled", _proto.isPasswordEnabled, _proto.setPasswordEnabled);
 cc.defineGetterSetter(_proto, "string", _proto.getStringValue, _proto.setText);
 cc.defineGetterSetter(_proto, "font", _proto._getFont, _proto._setFont);
-cc.defineGetterSetter(_proto, "fontSize", _proto._getFontSize, _proto.setFontSize);
-cc.defineGetterSetter(_proto, "fontName", _proto._getFontName, _proto.setFontName);
+cc.defineGetterSetter(_proto, "fontSize", _proto.getFontSize, _proto.setFontSize);
+cc.defineGetterSetter(_proto, "fontName", _proto.getFontName, _proto.setFontName);
 
 _proto = ccui.ScrollView.prototype;
 cc.defineGetterSetter(_proto, "innerWidth", _proto._getInnerWidth, _proto._setInnerWidth);
 cc.defineGetterSetter(_proto, "innerHeight", _proto._getInnerHeight, _proto._setInnerHeight);
 
 _proto = cc.EditBox.prototype;
-cc.defineGetterSetter(_proto, "font", _proto._setFont);
-cc.defineGetterSetter(_proto, "fontName", _proto.setFontName);
-cc.defineGetterSetter(_proto, "fontSize", _proto.setFontSize);
+cc.defineGetterSetter(_proto, "font", null, _proto._setFont);
+cc.defineGetterSetter(_proto, "fontName", null, _proto.setFontName);
+cc.defineGetterSetter(_proto, "fontSize", null, _proto.setFontSize);
 cc.defineGetterSetter(_proto, "string", _proto.getText, _proto.setText);
 cc.defineGetterSetter(_proto, "maxLength", _proto.getMaxLength, _proto.setMaxLength);
 
