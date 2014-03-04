@@ -1117,6 +1117,14 @@ bool
 },
 
 /**
+ * @method removeAllEventListeners
+ */
+removeAllEventListeners : function (
+)
+{
+},
+
+/**
  * @method addEventListenerWithSceneGraphPriority
  * @param {cc.EventListener} arg0
  * @param {cc.Node} arg1
@@ -1139,6 +1147,20 @@ bool
 },
 
 /**
+ * @method addCustomEventListener
+ * @param {String} arg0
+ * @param {function} arg1
+ * @return {cc.EventListenerCustom}
+ */
+addCustomEventListener : function (
+str, 
+func 
+)
+{
+    return cc.EventListenerCustom;
+},
+
+/**
  * @method addEventListenerWithFixedPriority
  * @param {cc.EventListener} arg0
  * @param {int} arg1
@@ -1151,11 +1173,11 @@ int
 },
 
 /**
- * @method removeEventListener
- * @param {cc.EventListener} arg0
+ * @method removeEventListenersForType
+ * @param {cc.EventListener::Type} arg0
  */
-removeEventListener : function (
-eventlistener 
+removeEventListenersForType : function (
+type 
 )
 {
 },
@@ -1209,33 +1231,11 @@ int
 },
 
 /**
- * @method addCustomEventListener
- * @param {String} arg0
- * @param {function} arg1
- * @return {cc.EventListenerCustom}
- */
-addCustomEventListener : function (
-str, 
-func 
-)
-{
-    return cc.EventListenerCustom;
-},
-
-/**
  * @method dispatchEvent
  * @param {cc.Event} arg0
  */
 dispatchEvent : function (
 event 
-)
-{
-},
-
-/**
- * @method removeAllEventListeners
- */
-removeAllEventListeners : function (
 )
 {
 },
@@ -1251,6 +1251,16 @@ str
 },
 
 /**
+ * @method removeEventListener
+ * @param {cc.EventListener} arg0
+ */
+removeEventListener : function (
+eventlistener 
+)
+{
+},
+
+/**
  * @method isEnabled
  * @return {bool}
  */
@@ -1258,16 +1268,6 @@ isEnabled : function (
 )
 {
     return false;
-},
-
-/**
- * @method removeEventListenersForType
- * @param {cc.EventListener::Type} arg0
- */
-removeEventListenersForType : function (
-type 
-)
-{
 },
 
 /**
@@ -1428,16 +1428,6 @@ char
  */
 setRotation : function (
 float 
-)
-{
-},
-
-/**
- * @method setLocalZOrder
- * @param {int} arg0
- */
-setLocalZOrder : function (
-int 
 )
 {
 },
@@ -1907,16 +1897,6 @@ getRotation : function (
 },
 
 /**
- * @method getLocalZOrder
- * @return {int}
- */
-getLocalZOrder : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getAnchorPointInPoints
  * @return {PointObject}
  */
@@ -2013,6 +1993,16 @@ kmmat4
  * @return {unsigned char}
  */
 getDisplayedOpacity : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getLocalZOrder
+ * @return {int}
+ */
+getLocalZOrder : function (
 )
 {
     return 0;
@@ -2255,6 +2245,16 @@ getScaleX : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setLocalZOrder
+ * @param {int} arg0
+ */
+setLocalZOrder : function (
+int 
+)
+{
 },
 
 /**
