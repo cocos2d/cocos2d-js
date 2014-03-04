@@ -202,6 +202,14 @@ var TestController = cc.LayerGradient.extend({
 TestController.YOffset = 0;
 var testNames = [
     {
+        title:"Event Manager Test",
+        resource:g_eventDispatcher,
+        platforms: PLATFORM_ALL,
+        testScene:function () {
+            return new EventDispatcherTestScene();
+        }
+    },
+    {
         title:"ActionManager Test",
         platforms: PLATFORM_ALL,
         testScene:function () {
