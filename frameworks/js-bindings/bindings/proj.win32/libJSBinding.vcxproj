@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="..\auto\jsb_cocos2dx_auto.cpp" />
     <ClCompile Include="..\manual\cocos2d_specifics.cpp" />
+    <ClCompile Include="..\manual\jsb_event_dispatcher_manual.cpp" />
     <ClCompile Include="..\manual\jsb_opengl_functions.cpp" />
     <ClCompile Include="..\manual\jsb_opengl_manual.cpp" />
     <ClCompile Include="..\manual\jsb_opengl_registration.cpp" />
@@ -24,6 +25,7 @@
   <ItemGroup>
     <ClInclude Include="..\auto\jsb_cocos2dx_auto.hpp" />
     <ClInclude Include="..\manual\cocos2d_specifics.hpp" />
+    <ClInclude Include="..\manual\jsb_event_dispatcher_manual.h" />
     <ClInclude Include="..\manual\jsb_helper.h" />
     <ClInclude Include="..\manual\jsb_opengl_functions.h" />
     <ClInclude Include="..\manual\jsb_opengl_manual.h" />
