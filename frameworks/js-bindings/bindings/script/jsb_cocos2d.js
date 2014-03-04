@@ -19,7 +19,7 @@ cc.TARGET_PLATFORM = {
     PC_BROWSER:101
 };
 
-cc.RESOLUTION_POLICY = {
+cc.ResolutionPolicy = {
     // The entire application is visible in the specified area without trying to preserve the original aspect ratio.
     // Distortion can occur, and the application may appear stretched or compressed.
 EXACT_FIT:0,
