@@ -4,20 +4,21 @@ function _safeExtend(obj, list) {
             obj[key] = list[key];
 }
 
+function _customUndefined(message) {
+    return function() {
+        cc.log("Not implemented yet in JSB");
+        message && cc.log(message);
+        return undefined;
+    }
+}
+
 var _undefined = {
     _jsbUndefined: function(message) {
         cc.log("Not implemented yet in JSB");
         return undefined;
     },
-    _customUndefined: function(message) {
-        return function() {
-            cc.log("Not implemented yet in JSB");
-            message && cc.log(message);
-            return undefined;
-        }
-    },
-    _shadowUndefined: _undefined._customUndefined("Please use enableShadow function"),
-    _strokeUndefined: _undefined._customUndefined("Please use enableStroke function")
+    _shadowUndefined: _customUndefined("Please use enableShadow function"),
+    _strokeUndefined: _customUndefined("Please use enableStroke function")
 }
 
 _safeExtend(cc.Node.prototype, {
