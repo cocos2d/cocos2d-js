@@ -871,26 +871,28 @@ bool js_cocos2dx_GLProgram_getFragmentShaderLog(JSContext *cx, uint32_t argc, js
 	JS_ReportError(cx, "js_cocos2dx_GLProgram_getFragmentShaderLog : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_cocos2dx_GLProgram_addAttribute(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_GLProgram_initWithByteArrays(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::GLProgram* cobj = (cocos2d::GLProgram *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_addAttribute : Invalid Native Object");
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_initWithByteArrays : Invalid Native Object");
 	if (argc == 2) {
 		const char* arg0;
-		unsigned int arg1;
+		const char* arg1;
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-		ok &= jsval_to_uint32(cx, argv[1], &arg1);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_addAttribute : Error processing arguments");
-		cobj->addAttribute(arg0, arg1);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_initWithByteArrays : Error processing arguments");
+		bool ret = cobj->initWithByteArrays(arg0, arg1);
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_cocos2dx_GLProgram_addAttribute : wrong number of arguments: %d, was expecting %d", argc, 2);
+	JS_ReportError(cx, "js_cocos2dx_GLProgram_initWithByteArrays : wrong number of arguments: %d, was expecting %d", argc, 2);
 	return false;
 }
 bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv(JSContext *cx, uint32_t argc, jsval *vp)
@@ -915,6 +917,30 @@ bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv(JSContext *cx, uint32
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv : wrong number of arguments: %d, was expecting %d", argc, 3);
+	return false;
+}
+bool js_cocos2dx_GLProgram_initWithFilenames(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::GLProgram* cobj = (cocos2d::GLProgram *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_initWithFilenames : Invalid Native Object");
+	if (argc == 2) {
+		std::string arg0;
+		std::string arg1;
+		ok &= jsval_to_std_string(cx, argv[0], &arg0);
+		ok &= jsval_to_std_string(cx, argv[1], &arg1);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_initWithFilenames : Error processing arguments");
+		bool ret = cobj->initWithFilenames(arg0, arg1);
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_GLProgram_initWithFilenames : wrong number of arguments: %d, was expecting %d", argc, 2);
 	return false;
 }
 bool js_cocos2dx_GLProgram_getUniformLocationForName(JSContext *cx, uint32_t argc, jsval *vp)
@@ -969,54 +995,6 @@ bool js_cocos2dx_GLProgram_getVertexShaderLog(JSContext *cx, uint32_t argc, jsva
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_GLProgram_getVertexShaderLog : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-bool js_cocos2dx_GLProgram_initWithVertexShaderByteArray(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::GLProgram* cobj = (cocos2d::GLProgram *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_initWithVertexShaderByteArray : Invalid Native Object");
-	if (argc == 2) {
-		const char* arg0;
-		const char* arg1;
-		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-		std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_initWithVertexShaderByteArray : Error processing arguments");
-		bool ret = cobj->initWithVertexShaderByteArray(arg0, arg1);
-		jsval jsret = JSVAL_NULL;
-		jsret = BOOLEAN_TO_JSVAL(ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_GLProgram_initWithVertexShaderByteArray : wrong number of arguments: %d, was expecting %d", argc, 2);
-	return false;
-}
-bool js_cocos2dx_GLProgram_initWithVertexShaderFilename(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::GLProgram* cobj = (cocos2d::GLProgram *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_initWithVertexShaderFilename : Invalid Native Object");
-	if (argc == 2) {
-		const char* arg0;
-		const char* arg1;
-		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-		std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_initWithVertexShaderFilename : Error processing arguments");
-		bool ret = cobj->initWithVertexShaderFilename(arg0, arg1);
-		jsval jsret = JSVAL_NULL;
-		jsret = BOOLEAN_TO_JSVAL(ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_GLProgram_initWithVertexShaderFilename : wrong number of arguments: %d, was expecting %d", argc, 2);
 	return false;
 }
 bool js_cocos2dx_GLProgram_setUniformsForBuiltins(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1141,45 +1119,48 @@ bool js_cocos2dx_GLProgram_setUniformLocationWith4iv(JSContext *cx, uint32_t arg
 	JS_ReportError(cx, "js_cocos2dx_GLProgram_setUniformLocationWith4iv : wrong number of arguments: %d, was expecting %d", argc, 3);
 	return false;
 }
-bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_GLProgram_getUniformLocation(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::GLProgram* cobj = (cocos2d::GLProgram *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv : Invalid Native Object");
-	if (argc == 3) {
-		int arg0;
-		const float* arg1;
-		unsigned int arg2;
-		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		#pragma warning NO CONVERSION TO NATIVE FOR float*;
-		ok &= jsval_to_uint32(cx, argv[2], &arg2);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv : Error processing arguments");
-		cobj->setUniformLocationWithMatrix2fv(arg0, arg1, arg2);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv : wrong number of arguments: %d, was expecting %d", argc, 3);
-	return false;
-}
-bool js_cocos2dx_GLProgram_link(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::GLProgram* cobj = (cocos2d::GLProgram *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_link : Invalid Native Object");
-	if (argc == 0) {
-		bool ret = cobj->link();
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_getUniformLocation : Invalid Native Object");
+	if (argc == 1) {
+		const char* arg0;
+		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_getUniformLocation : Error processing arguments");
+		int ret = cobj->getUniformLocation(arg0);
 		jsval jsret = JSVAL_NULL;
-		jsret = BOOLEAN_TO_JSVAL(ret);
+		jsret = int32_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_cocos2dx_GLProgram_link : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_cocos2dx_GLProgram_getUniformLocation : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_GLProgram_setUniformLocationWith1i(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::GLProgram* cobj = (cocos2d::GLProgram *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWith1i : Invalid Native Object");
+	if (argc == 2) {
+		int arg0;
+		int arg1;
+		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+		ok &= jsval_to_int32(cx, argv[1], (int32_t *)&arg1);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWith1i : Error processing arguments");
+		cobj->setUniformLocationWith1i(arg0, arg1);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_GLProgram_setUniformLocationWith1i : wrong number of arguments: %d, was expecting %d", argc, 2);
 	return false;
 }
 bool js_cocos2dx_GLProgram_setUniformLocationWith2iv(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1245,6 +1226,74 @@ bool js_cocos2dx_GLProgram_reset(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_GLProgram_reset : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
+bool js_cocos2dx_GLProgram_bindAttribLocation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::GLProgram* cobj = (cocos2d::GLProgram *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_bindAttribLocation : Invalid Native Object");
+	if (argc == 2) {
+		const char* arg0;
+		unsigned int arg1;
+		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+		ok &= jsval_to_uint32(cx, argv[1], &arg1);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_bindAttribLocation : Error processing arguments");
+		cobj->bindAttribLocation(arg0, arg1);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_GLProgram_bindAttribLocation : wrong number of arguments: %d, was expecting %d", argc, 2);
+	return false;
+}
+bool js_cocos2dx_GLProgram_getAttribLocation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::GLProgram* cobj = (cocos2d::GLProgram *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_getAttribLocation : Invalid Native Object");
+	if (argc == 1) {
+		const char* arg0;
+		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_getAttribLocation : Error processing arguments");
+		int ret = cobj->getAttribLocation(arg0);
+		jsval jsret = JSVAL_NULL;
+		jsret = int32_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_GLProgram_getAttribLocation : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::GLProgram* cobj = (cocos2d::GLProgram *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv : Invalid Native Object");
+	if (argc == 3) {
+		int arg0;
+		const float* arg1;
+		unsigned int arg2;
+		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+		#pragma warning NO CONVERSION TO NATIVE FOR float*;
+		ok &= jsval_to_uint32(cx, argv[2], &arg2);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv : Error processing arguments");
+		cobj->setUniformLocationWithMatrix2fv(arg0, arg1, arg2);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv : wrong number of arguments: %d, was expecting %d", argc, 3);
+	return false;
+}
 bool js_cocos2dx_GLProgram_setUniformLocationWith4i(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -1273,26 +1322,21 @@ bool js_cocos2dx_GLProgram_setUniformLocationWith4i(JSContext *cx, uint32_t argc
 	JS_ReportError(cx, "js_cocos2dx_GLProgram_setUniformLocationWith4i : wrong number of arguments: %d, was expecting %d", argc, 5);
 	return false;
 }
-bool js_cocos2dx_GLProgram_setUniformLocationWith1i(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_GLProgram_link(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::GLProgram* cobj = (cocos2d::GLProgram *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWith1i : Invalid Native Object");
-	if (argc == 2) {
-		int arg0;
-		int arg1;
-		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		ok &= jsval_to_int32(cx, argv[1], (int32_t *)&arg1);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWith1i : Error processing arguments");
-		cobj->setUniformLocationWith1i(arg0, arg1);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_link : Invalid Native Object");
+	if (argc == 0) {
+		bool ret = cobj->link();
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_cocos2dx_GLProgram_setUniformLocationWith1i : wrong number of arguments: %d, was expecting %d", argc, 2);
+	JS_ReportError(cx, "js_cocos2dx_GLProgram_link : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_cocos2dx_GLProgram_setUniformLocationWith2i(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1372,25 +1416,27 @@ void js_register_cocos2dx_GLProgram(JSContext *cx, JSObject *global) {
 
 	static JSFunctionSpec funcs[] = {
 		JS_FN("getFragmentShaderLog", js_cocos2dx_GLProgram_getFragmentShaderLog, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("addAttribute", js_cocos2dx_GLProgram_addAttribute, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("initWithByteArrays", js_cocos2dx_GLProgram_initWithByteArrays, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformLocationWithMatrix4fv", js_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("initWithFilenames", js_cocos2dx_GLProgram_initWithFilenames, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getUniformLocationForName", js_cocos2dx_GLProgram_getUniformLocationForName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("use", js_cocos2dx_GLProgram_use, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getVertexShaderLog", js_cocos2dx_GLProgram_getVertexShaderLog, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("initWithString", js_cocos2dx_GLProgram_initWithVertexShaderByteArray, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("init", js_cocos2dx_GLProgram_initWithVertexShaderFilename, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformsForBuiltins", js_cocos2dx_GLProgram_setUniformsForBuiltins, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformLocationWith3i", js_cocos2dx_GLProgram_setUniformLocationWith3i, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformLocationWith3iv", js_cocos2dx_GLProgram_setUniformLocationWith3iv, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("updateUniforms", js_cocos2dx_GLProgram_updateUniforms, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformLocationWith4iv", js_cocos2dx_GLProgram_setUniformLocationWith4iv, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setUniformLocationWithMatrix2fv", js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("link", js_cocos2dx_GLProgram_link, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getUniformLocation", js_cocos2dx_GLProgram_getUniformLocation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setUniformLocationI32", js_cocos2dx_GLProgram_setUniformLocationWith1i, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformLocationWith2iv", js_cocos2dx_GLProgram_setUniformLocationWith2iv, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformLocationWithMatrix3fv", js_cocos2dx_GLProgram_setUniformLocationWithMatrix3fv, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("reset", js_cocos2dx_GLProgram_reset, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("bindAttribLocation", js_cocos2dx_GLProgram_bindAttribLocation, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getAttribLocation", js_cocos2dx_GLProgram_getAttribLocation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setUniformLocationWithMatrix2fv", js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformLocationWith4i", js_cocos2dx_GLProgram_setUniformLocationWith4i, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setUniformLocationI32", js_cocos2dx_GLProgram_setUniformLocationWith1i, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("link", js_cocos2dx_GLProgram_link, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformLocationWith2i", js_cocos2dx_GLProgram_setUniformLocationWith2i, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
@@ -34651,6 +34697,30 @@ void js_register_cocos2dx_ProgressTimer(JSContext *cx, JSObject *global) {
 JSClass  *jsb_cocos2d_RenderTexture_class;
 JSObject *jsb_cocos2d_RenderTexture_prototype;
 
+bool js_cocos2dx_RenderTexture_setVirtualViewport(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::RenderTexture* cobj = (cocos2d::RenderTexture *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_RenderTexture_setVirtualViewport : Invalid Native Object");
+	if (argc == 3) {
+		cocos2d::Point arg0;
+		cocos2d::Rect arg1;
+		cocos2d::Rect arg2;
+		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+		ok &= jsval_to_ccrect(cx, argv[1], &arg1);
+		ok &= jsval_to_ccrect(cx, argv[2], &arg2);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_RenderTexture_setVirtualViewport : Error processing arguments");
+		cobj->setVirtualViewport(arg0, arg1, arg2);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_RenderTexture_setVirtualViewport : wrong number of arguments: %d, was expecting %d", argc, 3);
+	return false;
+}
 bool js_cocos2dx_RenderTexture_clearStencil(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -34806,6 +34876,26 @@ bool js_cocos2dx_RenderTexture_isAutoDraw(JSContext *cx, uint32_t argc, jsval *v
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_RenderTexture_isAutoDraw : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+bool js_cocos2dx_RenderTexture_setKeepMatrix(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::RenderTexture* cobj = (cocos2d::RenderTexture *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_RenderTexture_setKeepMatrix : Invalid Native Object");
+	if (argc == 1) {
+		bool arg0;
+		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_RenderTexture_setKeepMatrix : Error processing arguments");
+		cobj->setKeepMatrix(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_RenderTexture_setKeepMatrix : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 bool js_cocos2dx_RenderTexture_setClearFlags(JSContext *cx, uint32_t argc, jsval *vp)
@@ -35360,6 +35450,7 @@ void js_register_cocos2dx_RenderTexture(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
+		JS_FN("setVirtualViewport", js_cocos2dx_RenderTexture_setVirtualViewport, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("clearStencil", js_cocos2dx_RenderTexture_clearStencil, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getClearDepth", js_cocos2dx_RenderTexture_getClearDepth, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getClearStencil", js_cocos2dx_RenderTexture_getClearStencil, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -35368,6 +35459,7 @@ void js_register_cocos2dx_RenderTexture(JSContext *cx, JSObject *global) {
 		JS_FN("setSprite", js_cocos2dx_RenderTexture_setSprite, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getSprite", js_cocos2dx_RenderTexture_getSprite, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isAutoDraw", js_cocos2dx_RenderTexture_isAutoDraw, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setKeepMatrix", js_cocos2dx_RenderTexture_setKeepMatrix, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setClearFlags", js_cocos2dx_RenderTexture_setClearFlags, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("begin", js_cocos2dx_RenderTexture_begin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("saveToFile", js_cocos2dx_RenderTexture_saveToFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
