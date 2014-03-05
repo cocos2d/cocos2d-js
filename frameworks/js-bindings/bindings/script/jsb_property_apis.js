@@ -1,11 +1,3 @@
-cc.defineGetterSetter = function (proto, prop, getter, setter)
-{
-    var desc = { enumerable: false, configurable: true };
-	getter && (desc.get = getter);
-	setter && (desc.set = setter);
-	Object.defineProperty(proto, prop, desc);
-};
-
 // Overrides
 var _proto = cc.AtlasNode.prototype;
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);

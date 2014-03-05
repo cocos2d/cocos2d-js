@@ -47,7 +47,7 @@ FIXED_HEIGHT:3,
     // no distortion will occur however you must make sure your application works on different
     // aspect ratios
 FIXED_WIDTH:4,
-    
+
 UNKNOWN:5
 };
 
@@ -145,6 +145,22 @@ cc._reuse_rect = {x:0, y:0, width:0, height:0};
 cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
 cc.log = cc._cocosplayerLog || cc.log || log;
+
+/**
+ * Common getter setter configuration function
+ * @function
+ * @param {Object}   proto      A class prototype or an object to config
+ * @param {String}   prop       Property name
+ * @param {function} getter     Getter function for the property
+ * @param {function} setter     Setter function for the property
+ */
+cc.defineGetterSetter = function (proto, prop, getter, setter)
+{
+    var desc = { enumerable: false, configurable: true };
+    getter && (desc.get = getter);
+    setter && (desc.set = setter);
+    Object.defineProperty(proto, prop, desc);
+};
 
 //
 // Color 3B
@@ -785,85 +801,6 @@ var clearInterval = function (intervalId) {
 };
 var clearTimeout = clearInterval;
 
-
-/**
- * Common getter setter configuration function
- * @function
- * @param {Object}   proto      A class prototype or an object to config<br/>
- * @param {String}   prop       Property name
- * @param {function} getter     Getter function for the property
- * @param {function} setter     Setter function for the property
- * @param {String}   getterName Name of getter function for the property
- * @param {String}   setterName Name of setter function for the property
- */
-cc.defineGetterSetter = function (proto, prop, getter, setter, getterName, setterName)
-{
-    if (proto.__defineGetter__) {
-        getter && proto.__defineGetter__(prop, getter);
-        setter && proto.__defineSetter__(prop, setter);
-    }
-    else if (Object.defineProperty) {
-        var desc = { enumerable: false, configurable: true };
-        getter && (desc.get = getter);
-        setter && (desc.set = setter);
-        Object.defineProperty(proto, prop, desc);
-    }
-    else {
-        throw new Error("browser does not support getters");
-        return;
-    }
-
-    if(!getterName && !setterName) {
-        // Lookup getter/setter function
-        var hasGetter = (getter != null), hasSetter = (setter != undefined);
-        var props = Object.getOwnPropertyNames(proto);
-        for (var i = 0; i < props.length; i++) {
-            var name = props[i];
-            if( proto.__lookupGetter__(name) !== undefined || typeof proto[name] !== "function" ) continue;
-            var func = proto[name];
-            if (hasGetter && func === getter) {
-                getterName = name;
-                if(!hasSetter || setterName) break;
-            }
-            if (hasSetter && func === setter) {
-                setterName = name;
-                if(!hasGetter || getterName) break;
-            }
-        }
-    }
-
-    // Found getter/setter
-    var ctor = proto.constructor;
-    if (getterName) {
-        if (!ctor.__getters__) {
-            ctor.__getters__ = {};
-        }
-        ctor.__getters__[getterName] = prop;
-    }
-    if (setterName) {
-        if (!ctor.__setters__) {
-            ctor.__setters__ = {};
-        }
-        ctor.__setters__[setterName] = prop;
-    }
-};
-
-/**
- * Common getter setter configuration function
- * @function
- * @param {Object}   class      A class prototype or an object to config<br/>
- * @param {String}   prop       Property name
- * @param {function} getter     Getter function for the property
- * @param {function} setter     Setter function for the property
- * @param {String}   getterName Name of getter function for the property
- * @param {String}   setterName Name of setter function for the property
- */
-cc.defineProtoGetterSetter = function (classobj, prop, getter, setter, getterName, setterName)
-{
-    var proto = classobj.prototype;
-    cc.defineGetterSetter(proto, prop, getter, setter, getterName, setterName);
-};
-
 cc.Color = function (r, g, b, a) {
     this.r = r || 0;
     this.g = g || 0;
@@ -980,7 +917,7 @@ cc.color._getOrange = function () {
 cc.color._getGray = function () {
     return cc.color(166, 166, 166, 255);
 };
-window._proto = cc.color;
+var _proto = cc.color;
 /** @expose */
 _proto.white;
 cc.defineGetterSetter(_proto, "white", _proto._getWhite);
@@ -1008,8 +945,38 @@ cc.defineGetterSetter(_proto, "orange", _proto._getOrange);
 /** @expose */
 _proto.gray;
 cc.defineGetterSetter(_proto, "gray", _proto._getGray);
-delete window._proto;
 
+
+
+// Define singleton objects
+cc.director = cc.Director.getInstance();
+cc.view = cc.director.getOpenGLView();
+cc.audioEngine = cc.AudioEngine.getInstance();
+cc.configuration = cc.Configuration.getInstance();
+cc.textureCache = cc.director.getTextureCache();
+cc.shaderCache = cc.ShaderCache.getInstance();
+cc.animationCache = cc.AnimationCache.getInstance();
+cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
+//cc.saxParser
+cc.plistParser = cc.SAXParser.getInstance();
+
+cc.screen = {
+    init: function() {},
+    fullScreen: function() {
+        return true;
+    },
+    requestFullScreen: function(element, onFullScreenChange) {
+        onFullScreenChange.call();
+    },
+    exitFullScreen: function() {
+        return false;
+    },
+    autoFullScreen: function(element, onFullScreenChange) {
+        onFullScreenChange.call();
+    }
+};
+//cc.tiffReader;
+//cc.imeDispatcher;
 
 
 // event listener type
@@ -1063,6 +1030,8 @@ cc.EventListener.create = function(argObj){
     return listener;
 };
 
+
+// Event manager
 cc.eventManager.addListener = function(listener, nodeOrPriority) {
     if(!(listener instanceof cc.EventListener)) {
         listener = cc.EventListener.create(listener);
@@ -1235,4 +1204,3 @@ cc.defineGetterSetter(cc.visibleRect, "right", function(){
     this.lazyInit();
     return this._right;
 });
-
