@@ -547,12 +547,15 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
 	// a) check jsc file first
 	std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
 
-	Data data = futil->getDataFromFile(byteCodePath);
-
-	if (!data.isNull())
-	{
-		script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
-	}
+    // Check whether '.jsc' files exist to avoid outputing log which says 'couldn't find .jsc file'.
+    if (futil->isFileExist(byteCodePath))
+    {
+        Data data = futil->getDataFromFile(byteCodePath);
+        if (!data.isNull())
+        {
+            script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
+        }
+    }
 
 	// b) no jsc file, check js file
 	if (!script)
