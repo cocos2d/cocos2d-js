@@ -1,4 +1,4 @@
-language: cpp
+language: objective-c
 script:
 - export PYTHON_BIN=/usr/bin/python
 - ./tools/travis-scripts/run-script.sh
@@ -7,7 +7,7 @@ before_install:
 env:
   matrix:
   - GEN_BINDINGS=YES
-  - PLATFORM=android
+  - PLATFORM=ios
   global:
   - secure: FlC71LfwoBQ0mvJnxLdScFunhWKTvpQhbheLneWBbEFYpRFiMBwBbkZ9CIgYwzVQA7Zf7smhPXJMWuch0R9332uc7H7WDx6l7iOW0tVxwCHP2BSkfIFXU433AQeS4/5OgZU8bJDUOoJKqNC0EpkQ+6elhuAnR4MP/KGx6mKtGU0=
   - secure: jZyWJln6/IQ0p0iSSsZOpifEZaW+M4tdaYiJt6Q+CL6GanJd9F2nP0tJdEGBOx2KKGWcyY0KKibO2xg6CBZnsmGxjU4G2QDIcQBtUFq+iKwkLIQ31jMqEGV6zPJVLMMNUfoOAKMppCgukyoPy7ugThuReHMAbjyy4AkKKjx4o9Q=
