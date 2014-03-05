@@ -80,7 +80,7 @@ ccs.TInfo = ccs.Class.extend({
             this._className = c._className;
             this._fun = c._fun;
         }
-        ccs.ObjectFactory.getInstance().registerType(this);
+        ccs.objectFactory.registerType(this);
     }
 });
 
@@ -192,7 +192,7 @@ ccs.TriggerObj = ccs.Class.extend({
             if (!classname) {
                 continue;
             }
-            var con = ccs.ObjectFactory.getInstance().createObject(classname);
+            var con = ccs.objectFactory.createObject(classname);
             if (!con) {
                 cc.log("class named classname(" + classname + ") can not implement!");
             }
@@ -209,7 +209,7 @@ ccs.TriggerObj = ccs.Class.extend({
             if (!classname) {
                 continue;
             }
-            var act = ccs.ObjectFactory.getInstance().createObject(classname);
+            var act = ccs.objectFactory.createObject(classname);
             if (!act) {
                 cc.log("class named classname(" + classname + ") can not implement!");
             }
