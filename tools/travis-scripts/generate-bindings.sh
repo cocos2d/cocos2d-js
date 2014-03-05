@@ -118,9 +118,9 @@ fi
 set -e
 
 
-COCOS_BRANCH=updategeneratedsubmodule_"$ELAPSEDSECS"
+COCOS_BRANCH=update_js_bindings_"$ELAPSEDSECS"
 
-git add -f "$GENERATED_WORKTREE"
+git add -f --all "$GENERATED_WORKTREE"
 git checkout -b "$COCOS_BRANCH"
 git commit -m "$COMMITTAG : updating jsbinding automatically"
 

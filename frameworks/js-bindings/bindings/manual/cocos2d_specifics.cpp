@@ -3,6 +3,8 @@
 #include <typeinfo>
 #include "js_bindings_config.h"
 #include "jsb_cocos2dx_auto.hpp"
+#include "jsb_event_dispatcher_manual.h"
+
 
 using namespace cocos2d;
 
@@ -1559,7 +1561,7 @@ bool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t argc,
         }
         
         tmpCobj->setPriority(arg0);
-        cobj->getScheduler()->scheduleUpdate(CC_CALLBACK_1(JSScheduleWrapper::update, tmpCobj), tmpCobj, arg0, !cobj->isRunning());
+        cobj->getScheduler()->scheduleUpdate(tmpCobj, arg0, !cobj->isRunning());
         
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
@@ -1593,7 +1595,7 @@ bool js_cocos2dx_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp
             for(unsigned int i = 0; i < arr->count(); ++i) {
                 wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
                 if(wrapper && wrapper->isUpdateSchedule()) {
-                    cobj->getScheduler()->unscheduleUpdateForTarget(wrapper);
+                    cobj->getScheduler()->unscheduleUpdate(wrapper);
                     CCASSERT(OBJECT_TO_JSVAL(tmpObj) == wrapper->getJSCallbackThis(), "Wrong target object.");
                     JSScheduleWrapper::removeTargetForJSObject(tmpObj, wrapper);
                     break;
@@ -1658,7 +1660,7 @@ bool js_cocos2dx_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
             JSScheduleWrapper::setTargetForJSObject(obj, tmpCobj);
         }
         
-        cobj->getScheduler()->scheduleUpdate(CC_CALLBACK_1(JSScheduleWrapper::update, tmpCobj), tmpCobj, 0, !cobj->isRunning());
+        cobj->getScheduler()->scheduleUpdate(tmpCobj, 0, !cobj->isRunning());
         
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
@@ -1776,7 +1778,7 @@ bool js_CCScheduler_scheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsval 
             JSScheduleWrapper::setTargetForJSObject(tmpObj, tmpCObj);
         }
         tmpCObj->setPriority(arg1);
-        sched->scheduleUpdate(CC_CALLBACK_1(JSScheduleWrapper::update, tmpCObj), tmpCObj, arg1, paused);
+        sched->scheduleUpdate(tmpCObj, arg1, paused);
         
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
@@ -1808,7 +1810,7 @@ bool js_CCScheduler_unscheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsva
             for(unsigned int i = 0; i < arr->count(); ++i) {
                 wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
                 if(wrapper && wrapper->isUpdateSchedule()) {
-                    cobj->unscheduleUpdateForTarget(wrapper);
+                    cobj->unscheduleUpdate(wrapper);
                     CCASSERT(argv[0] == wrapper->getJSCallbackThis(), "Wrong target object.");
                     JSScheduleWrapper::removeTargetForJSObject(tmpObj, wrapper);
                     break;
@@ -2970,18 +2972,18 @@ bool js_cocos2dx_CCLayer_setTouchPriority(JSContext *cx, uint32_t argc, jsval *v
 	return true;
 }
 
-static int executeScriptTouchHandler(Layer* layer, EventTouch::EventCode eventType, Touch* touch)
+static int executeScriptTouchHandler(Layer* layer, EventTouch::EventCode eventType, Touch* touch, Event* event)
 {
-    TouchScriptData data(eventType, layer, touch);
-    ScriptEvent event(kTouchEvent, &data);
-    return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    TouchScriptData data(eventType, layer, touch, event);
+    ScriptEvent scriptEvent(kTouchEvent, &data);
+    return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
  }
 
-static int executeScriptTouchesHandler(Layer* layer, EventTouch::EventCode eventType, const std::vector<Touch*>& touches)
+static int executeScriptTouchesHandler(Layer* layer, EventTouch::EventCode eventType, const std::vector<Touch*>& touches, Event* event)
 {
-    TouchesScriptData data(eventType, layer, touches);
-    ScriptEvent event(kTouchesEvent, &data);
-    return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    TouchesScriptData data(eventType, layer, touches, event);
+    ScriptEvent scriptEvent(kTouchesEvent, &data);
+    return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
 }
 
 static void setTouchEnabledForLayer(Layer* layer, bool enabled)
@@ -3017,16 +3019,16 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
         {
             auto listener = EventListenerTouchAllAtOnce::create();
             listener->onTouchesBegan = [layer](const std::vector<Touch*>& touches, Event* event){
-                executeScriptTouchesHandler(layer, EventTouch::EventCode::BEGAN, touches);
+                executeScriptTouchesHandler(layer, EventTouch::EventCode::BEGAN, touches, event);
             };
             listener->onTouchesMoved = [layer](const std::vector<Touch*>& touches, Event* event){
-                executeScriptTouchesHandler(layer, EventTouch::EventCode::MOVED, touches);
+                executeScriptTouchesHandler(layer, EventTouch::EventCode::MOVED, touches, event);
             };
             listener->onTouchesEnded = [layer](const std::vector<Touch*>& touches, Event* event){
-                executeScriptTouchesHandler(layer, EventTouch::EventCode::ENDED, touches);
+                executeScriptTouchesHandler(layer, EventTouch::EventCode::ENDED, touches, event);
             };
             listener->onTouchesCancelled = [layer](const std::vector<Touch*>& touches, Event* event){
-                executeScriptTouchesHandler(layer, EventTouch::EventCode::CANCELLED, touches);
+                executeScriptTouchesHandler(layer, EventTouch::EventCode::CANCELLED, touches, event);
             };
             
             dispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
@@ -3038,16 +3040,16 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
             auto listener = EventListenerTouchOneByOne::create();
             listener->setSwallowTouches(swallowTouches ? swallowTouches->getValue() : false);
             listener->onTouchBegan = [layer](Touch* touch, Event* event) -> bool{
-                return executeScriptTouchHandler(layer, EventTouch::EventCode::BEGAN, touch) == 0 ? false : true;
+                return executeScriptTouchHandler(layer, EventTouch::EventCode::BEGAN, touch, event) == 0 ? false : true;
             };
             listener->onTouchMoved = [layer](Touch* touch, Event* event){
-                executeScriptTouchHandler(layer, EventTouch::EventCode::MOVED, touch);
+                executeScriptTouchHandler(layer, EventTouch::EventCode::MOVED, touch, event);
             };
             listener->onTouchEnded = [layer](Touch* touch, Event* event){
-                executeScriptTouchHandler(layer, EventTouch::EventCode::ENDED, touch);
+                executeScriptTouchHandler(layer, EventTouch::EventCode::ENDED, touch, event);
             };
             listener->onTouchCancelled = [layer](Touch* touch, Event* event){
-                executeScriptTouchHandler(layer, EventTouch::EventCode::CANCELLED, touch);
+                executeScriptTouchHandler(layer, EventTouch::EventCode::CANCELLED, touch, event);
             };
             
             dispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
@@ -4262,6 +4264,15 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_cocos2d_FileUtils_prototype, "createDictionaryWithContentsOfFile", js_cocos2dx_FileUtils_createDictionaryWithContentsOfFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, jsb_cocos2d_FileUtils_prototype, "getByteArrayFromFile", js_cocos2dx_CCFileUtils_getByteArrayFromFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.EventListenerTouchOneByOne; })()"));
+    JS_DefineFunction(cx, tmpObj, "create", js_EventListenerTouchOneByOne_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.EventListenerTouchAllAtOnce; })()"));
+    JS_DefineFunction(cx, tmpObj, "create", js_EventListenerTouchAllAtOnce_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.EventListenerKeyboard; })()"));
+    JS_DefineFunction(cx, tmpObj, "create", js_EventListenerKeyboard_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     
     tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.BezierBy; })()"));
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCBezierBy_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);
