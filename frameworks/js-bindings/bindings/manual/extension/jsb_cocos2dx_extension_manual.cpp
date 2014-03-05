@@ -208,10 +208,10 @@ static bool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, js
         JSB_TableViewDelegate* nativeDelegate = new JSB_TableViewDelegate();
         nativeDelegate->setJSDelegate(jsDelegate);
         
-        Dictionary* userDict = static_cast<Dictionary*>(cobj->getUserObject());
+        __Dictionary* userDict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (NULL == userDict)
         {
-            userDict = new Dictionary();
+            userDict = new __Dictionary();
             cobj->setUserObject(userDict);
             userDict->release();
         }
@@ -401,10 +401,10 @@ static bool js_cocos2dx_CCTableView_setDataSource(JSContext *cx, uint32_t argc, 
         JSB_TableViewDataSource* pNativeSource = new JSB_TableViewDataSource();
         pNativeSource->setTableViewDataSource(JSVAL_TO_OBJECT(argv[0]));
     
-        Dictionary* userDict = static_cast<Dictionary*>(cobj->getUserObject());
+        __Dictionary* userDict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (NULL == userDict)
         {
-            userDict = new Dictionary();
+            userDict = new __Dictionary();
             cobj->setUserObject(userDict);
             userDict->release();
         }
@@ -474,7 +474,7 @@ static bool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval *
         }
         ret->reloadData();
         
-        Dictionary* userDict = new Dictionary();
+        __Dictionary* userDict = new __Dictionary();
         userDict->setObject(pNativeSource, KEY_TABLEVIEW_DATA_SOURCE);
         ret->setUserObject(userDict);
         userDict->release();
@@ -718,10 +718,10 @@ static bool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContext 
         nativeDelegate->setJSAction(jsFunc);
         nativeDelegate->setEventType(arg2);
 
-        Array* nativeDelegateArray = static_cast<Array*>(cobj->getUserObject());
+        __Array* nativeDelegateArray = static_cast<__Array*>(cobj->getUserObject());
         if (nullptr == nativeDelegateArray)
         {
-            nativeDelegateArray = new Array();
+            nativeDelegateArray = new __Array();
             nativeDelegateArray->init();
             cobj->setUserObject(nativeDelegateArray);  // The reference of nativeDelegateArray is added to 2
             nativeDelegateArray->release(); // Release nativeDelegateArray to make the reference to 1

@@ -771,7 +771,7 @@ bool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 
 void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)
 {
-    Array * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
+    __Array * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if (! arr) return;
     
     Node* node = (Node*)p->ptr;
@@ -785,7 +785,7 @@ void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)
 
 void ScriptingCore::resumeSchedulesAndActions(js_proxy_t* p)
 {
-    Array * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
+    __Array * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if (!arr) return;
     
     Node* node = (Node*)p->ptr;
@@ -797,7 +797,7 @@ void ScriptingCore::resumeSchedulesAndActions(js_proxy_t* p)
 
 void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
 {
-    Array* arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
+    __Array* arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if (arr) {
         Scheduler* pScheduler = Director::getInstance()->getScheduler();
         Ref* pObj = NULL;

@@ -283,7 +283,7 @@ bool jsval_to_charptr( JSContext *cx, jsval vp, const char **ret )
     JSStringWrapper strWrapper(jsstr);
     
     // XXX: It is converted to String and then back to char* to autorelease the created object.
-    String *tmp = String::create(strWrapper.get());
+    __String *tmp = String::create(strWrapper.get());
 
     JSB_PRECONDITION2( tmp, cx, false, "Error creating string from UTF8");
 
@@ -561,10 +561,10 @@ bool jsval_to_ccacceleration(JSContext* cx,jsval v, Acceleration* ret) {
     return true;
 }
 
-bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, Array** ret)
+bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, __Array** ret)
 {
     bool ok = true;
-    Array* pArray = Array::create();
+    __Array* pArray = Array::create();
     for( int i=0; i < argc; i++ )
     {
         double num = 0.0;
