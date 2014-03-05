@@ -239,6 +239,7 @@ cc.defineGetterSetter(_proto, "actionManager", _proto.getActionManager, _proto.s
 cc.defineGetterSetter(_proto, "scheduler", _proto.getScheduler, _proto.setScheduler);
 cc.defineGetterSetter(_proto, "shaderProgram", _proto.getShaderProgram, _proto.setShaderProgram);
 cc.defineGetterSetter(_proto, "glServerState", _proto.getGLServerState, _proto.setGLServerState);
+cc.defineGetterSetter(_proto, "tag", _proto.getTag, _proto.setTag);
 
 _proto = cc.NodeRGBA.prototype;
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
