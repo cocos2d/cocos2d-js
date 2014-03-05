@@ -35,6 +35,7 @@
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
+			   "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj"
             ]
          },

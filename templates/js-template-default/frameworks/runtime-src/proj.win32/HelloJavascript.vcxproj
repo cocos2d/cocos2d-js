@@ -232,6 +232,9 @@ xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
     <ProjectReference Include="..\..\js-bindings\cocos2d-x\cocos\editor-support\cocostudio\proj.win32\libCocosStudio.vcxproj">
       <Project>{b57cf53f-2e49-4031-9822-047cc0e6bde2}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\js-bindings\cocos2d-x\cocos\gui\proj.win32\libGUI.vcxproj">
+      <Project>{7e06e92c-537a-442b-9e4a-4761c84f8a1a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\js-bindings\cocos2d-x\cocos\storage\local-storage\proj.win32\libLocalStorage.vcxproj">
       <Project>{632a8f38-d0f0-4d22-86b3-d69f5e6bf63a}</Project>
     </ProjectReference>
