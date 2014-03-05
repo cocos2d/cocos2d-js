@@ -1086,6 +1086,31 @@ cc.inputManager = {
     getDPI: cc.Device.getDPI
 };
 
+cc.EventListenerTouchOneByOne.prototype.clone = function() {
+    var ret = cc.EventListenerTouchOneByOne.create();
+    ret.onTouchBegan = this.onTouchBegan;
+    ret.onTouchMoved = this.onTouchMoved;
+    ret.onTouchEnded = this.onTouchEnded;
+    ret.onTouchCancelled = this.onTouchCancelled;
+    return ret;
+};
+
+cc.EventListenerTouchAllAtOnce.prototype.clone = function() {
+    var ret = cc.EventListenerTouchAllAtOnce.create();
+    ret.onTouchesBegan = this.onTouchesBegan;
+    ret.onTouchesMoved = this.onTouchesMoved;
+    ret.onTouchesEnded = this.onTouchesEnded;
+    ret.onTouchesCancelled = this.onTouchesCancelled;
+    return ret;
+};
+
+cc.EventListenerKeyboard.prototype.clone = function() {
+    var ret = cc.EventListenerKeyboard.create();
+    ret.onKeyPressed = this.onKeyPressed;
+    ret.onKeyReleased = this.onKeyReleased;
+    return ret;
+};
+
 cc.director = cc.Director.getInstance();
 
 cc.Director.EVENT_PROJECTION_CHANGED = "director_projection_changed";

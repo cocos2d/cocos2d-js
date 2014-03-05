@@ -958,7 +958,7 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
             }
 
 
-            cc.eventManager.addListener(touchOneByOneListener, sprite1);
+            cc.eventManager.addListener(touchOneByOneListener.clone(), sprite1);
             cc.eventManager.addListener(keyboardEventListener.clone(), sprite1);
 
             cc.eventManager.addListener(touchAllAtOnceListener.clone(), sprite2);
