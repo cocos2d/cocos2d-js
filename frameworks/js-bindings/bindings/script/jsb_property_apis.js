@@ -1,3 +1,17 @@
+/**
+ *  <p>Properties configuration function </br>
+ *  All properties in attrs will be set to the node, </br>
+ *  when the setter of the node is available, </br>
+ *  the property will be set via setter function.</br>
+ *  </p>
+ * @param {Object} attrs Properties to be set to node
+ */
+cc.Node.prototype.attr = function(attrs) {
+    for(var key in attrs) {
+		this[key] = attrs[key];
+	}
+};
+
 // Overrides
 var _proto = cc.AtlasNode.prototype;
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
