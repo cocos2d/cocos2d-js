@@ -5,6 +5,14 @@
 var cc = cc || {};
 var window = window || this;
 
+cc.sys = sys || {};
+cc.sys.isNative = true;
+
+cc.assert = function(cond, msg) {
+    if (!cond)
+        cc.log("Assert: " + msg);
+}
+
 cc.TARGET_PLATFORM = {
     WINDOWS:0,
     LINUX:1,
@@ -1092,6 +1100,7 @@ cc.EventListenerTouchOneByOne.prototype.clone = function() {
     ret.onTouchMoved = this.onTouchMoved;
     ret.onTouchEnded = this.onTouchEnded;
     ret.onTouchCancelled = this.onTouchCancelled;
+    ret.setSwallowTouches(this.isSwallowTouches());
     return ret;
 };
 
@@ -1117,6 +1126,15 @@ cc.Director.EVENT_PROJECTION_CHANGED = "director_projection_changed";
 cc.Director.EVENT_AFTER_DRAW = "director_after_draw";
 cc.Director.EVENT_AFTER_VISIT = "director_after_visit";
 cc.Director.EVENT_AFTER_UPDATE = "director_after_update";
+
+cc.Director.prototype.runScene = function(scene){
+    if (!this.getRunningScene()) {
+        this.runWithScene(scene);
+    }
+    else {
+        this.replaceScene(scene);
+    }
+};
 
 cc.visibleRect = {
     _topLeft:cc.p(0,0),

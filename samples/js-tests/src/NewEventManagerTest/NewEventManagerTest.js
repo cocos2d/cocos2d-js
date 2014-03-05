@@ -40,21 +40,21 @@ var EventDispatcherTestDemo = BaseTestLayer.extend({
     onBackCallback:function (sender) {
         var s = new EventDispatcherTestScene();
         s.addChild(previousDispatcherTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
 
     onRestartCallback:function (sender) {
         var s = new EventDispatcherTestScene();
         s.addChild(restartDispatcherTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
 
     onNextCallback:function (sender) {
         var s = new EventDispatcherTestScene();
         s.addChild(nextDispatcherTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
-    // automation
+    // varmation
     numberOfPendingTests:function() {
         return ( (arrayOfEventDispatcherTest.length-1) - eventDispatcherSceneIdx );
     },
@@ -96,7 +96,7 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
 
                 if (cc.rectContainsPoint(rect, locationInNode)) {
                     cc.log("sprite began... x = " + locationInNode.x + ", y = " + locationInNode.y);
-                    target.setOpacity(180);
+                    target.opacity = 180;
                     return true;
                 }
                 return false;
@@ -104,8 +104,8 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
             onTouchMoved: function (touch, event) {
                 var target = event.getCurrentTarget();
                 var delta = touch.getDelta();
-                target.setPositionX(target.getPositionX() + delta.x);
-                target.setPositionY(target.getPositionY() + delta.y);
+                target.x += delta.x;
+                target.y += delta.y;
             },
             onTouchEnded: function (touch, event) {
                 var target = event.getCurrentTarget();
@@ -133,9 +133,9 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
                 selfPointer.onNextCallback();
             });
 
-            nextItem.setFontSize(16);
-            nextItem.setPositionX(cc.visibleRect.right.x -100);
-	        nextItem.setPositionY(cc.visibleRect.right.y - 30);
+            nextItem.fontSize = 16;
+            nextItem.x = cc.visibleRect.right.x -100;
+	        nextItem.y = cc.visibleRect.right.y - 30;
 
             var menu2 = cc.Menu.create(nextItem);
             menu2.setPosition(0, 0);
@@ -143,9 +143,9 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
             selfPointer.addChild(menu2);
         });
 
-        removeAllTouchItem.setFontSize(16);
-        removeAllTouchItem.setPositionX(cc.visibleRect.right.x -100);
-	    removeAllTouchItem.setPositionY(cc.visibleRect.right.y);
+        removeAllTouchItem.fontSize = 16;
+        removeAllTouchItem.x = cc.visibleRect.right.x -100;
+	    removeAllTouchItem.y = cc.visibleRect.right.y;
 
         var menu = cc.Menu.create(removeAllTouchItem);
         menu.setPosition(0, 0);
@@ -172,6 +172,11 @@ var TouchableSprite = cc.Sprite.extend({
     _listener:null,
     _fixedPriority:0,
     _removeListenerOnTouchEnded: false,
+
+    ctor: function(priority){
+        this._super();
+        this._fixedPriority = priority || 0;
+    },
 
     setPriority:function(fixedPriority){
         this._fixedPriority = fixedPriority;
@@ -200,17 +205,24 @@ var TouchableSprite = cc.Sprite.extend({
             },
             onTouchEnded: function (touch, event) {
                 selfPointer.setColor(cc.color.white);
-                if(selfPointer._removeListenerOnTouchEnded)
+                if(selfPointer._removeListenerOnTouchEnded) {
                     cc.eventManager.removeListener(selfPointer._listener);
+                    selfPointer._listener = null;
+                }
             }
         });
 
-        cc.eventManager.addListener(listener, this._fixedPriority);
+        if(this._fixedPriority != 0)
+            cc.eventManager.addListener(listener, this._fixedPriority);
+        else
+            cc.eventManager.addListener(listener, this);
         this._listener = listener;
     },
 
     onExit: function(){
-        cc.eventManager.removeListener(this._listener);
+        if (this._listener != null)
+            cc.eventManager.removeListener(this._listener);
+
         this._super();
     },
 
@@ -219,12 +231,11 @@ var TouchableSprite = cc.Sprite.extend({
     }
 });
 
-TouchableSprite.create = function(){
-    var test = new TouchableSprite();
+TouchableSprite.create = function(priority){
+    var test = new TouchableSprite(priority);
     test.init();
     return test;
 };
-
 
 var FixedPriorityTest =  EventDispatcherTestDemo.extend({
     onEnter:function(){
@@ -233,22 +244,22 @@ var FixedPriorityTest =  EventDispatcherTestDemo.extend({
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
 
-        var sprite1 = TouchableSprite.create();
+        var sprite1 = TouchableSprite.create(30);
         sprite1.setTexture("res/Images/CyanSquare.png");
-        sprite1.setPriority(30);
-        sprite1.setPosition(origin.x +size.width/2 - 80, origin.y + size.height/2 + 40);
+        sprite1.x = origin.x + size.width / 2 - 80;
+        sprite1.y = origin.y + size.height / 2 + 40;
         this.addChild(sprite1, 10);
 
-        var sprite2 = TouchableSprite.create();
+        var sprite2 = TouchableSprite.create(20);
         sprite2.setTexture("res/Images/MagentaSquare.png");
-        sprite2.setPriority(20);
-        sprite2.setPosition(origin.x + size.width/2, origin.y + size.height/2);
+        sprite2.x = origin.x + size.width / 2;
+        sprite2.y = origin.y + size.height / 2;
         this.addChild(sprite2, 20);
 
-        var sprite3 = TouchableSprite.create();
+        var sprite3 = TouchableSprite.create(10);
         sprite3.setTexture("res/Images/YellowSquare.png");
-        sprite3.setPriority(10);
-        sprite3.setPosition(0, 0);
+        sprite3.x = 0;
+        sprite3.y = 0;
         sprite2.addChild(sprite3, 1);
     },
 
@@ -550,7 +561,7 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
 
                 if (cc.rectContainsPoint(rect, locationInNode)) {
                     cc.log("sprite began... x = " + locationInNode.x + ", y = " + locationInNode.y);
-                    target.setOpacity(180);
+                    target.opacity = 180;
                     return true;
                 }
                 return false;
@@ -558,13 +569,13 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
             onTouchMoved: function (touch, event) {
                 var target = event.getCurrentTarget();
                 var delta = touch.getDelta();
-                target.setPositionX(target.getPositionX() + delta.x);
-                target.setPositionY(target.getPositionY() + delta.y);
+                target.x += delta.x;
+                target.y += delta.y;
             },
             onTouchEnded: function (touch, event) {
                 var target = event.getCurrentTarget();
                 cc.log("sprite onTouchesEnded.. ");
-                target.setOpacity(255);
+                target.opacity = 255;
             }
         });
         cc.eventManager.addListener(listener1, this._sprite);
@@ -579,8 +590,8 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
             cc.CallFunc.create(function () {
                 this._spriteSaved = false;
                 this.addChild(this._sprite);
-//                if(!cc.sys.isNative)
-//                    cc.eventManager.addListener(listener1, this._sprite);
+                if(!cc.sys.isNative)
+                    cc.eventManager.addListener(listener1, this._sprite);
                 this._sprite.release();
             }, this)
         ));
@@ -615,7 +626,7 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
             var listener = cc.EventListener.create({
                 event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function (touch, event) {
-                    cc.Assert(false, "Should not come here!");
+                    cc.assert(false, "Should not come here!");
                     return true;
                 }
             });
@@ -641,7 +652,7 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
             var listener = cc.EventListener.create({
                 event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function(touch, event){
-                    cc.Assert("Should not come here!");
+                    cc.assert("Should not come here!");
                     return true;
                 }
             });
@@ -655,7 +666,7 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
             var listener = cc.EventListener.create({
                 event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function(touch, event){
-                    cc.Assert(false, "Should not come here!");
+                    cc.assert(false, "Should not come here!");
                     return true;
                 }
             });
@@ -839,6 +850,8 @@ var GlobalZTouchTest = EventDispatcherTestDemo.extend({
         }
 
         this.scheduleUpdate();
+
+        this.setGlobalZOrder(-2);
     },
 
     update: function(dt){
@@ -966,10 +979,10 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
 
 
             var visibleSize = cc.director.getVisibleSize();
-            sprite1.setPositionX(cc.visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i);
-            sprite1.setPositionY(cc.visibleRect.center.y + sprite2.getContentSize().height / 2 + 10);
-            sprite2.setPositionX(cc.visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i);
-            sprite2.setPositionY(cc.visibleRect.center.y - sprite2.getContentSize().height / 2 - 10);
+            sprite1.x = cc.visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i;
+            sprite1.y = cc.visibleRect.center.y + sprite2.getContentSize().height / 2 + 10;
+            sprite2.x = cc.visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i;
+            sprite2.y = cc.visibleRect.center.y - sprite2.getContentSize().height / 2 - 10;
         }
     },
 
@@ -1006,25 +1019,23 @@ var Issue4160 = EventDispatcherTestDemo.extend({
         var origin = cc.director.getVisibleOrigin();
         var size = cc.director.getVisibleSize();
 
-        var sprite1 = TouchableSprite.create();
+        var sprite1 = TouchableSprite.create(-30);
         sprite1.setTexture("res/Images/CyanSquare.png");
-        sprite1.setPriority(-30);
-        sprite1.setPositionX(origin.x + (size.width/2) - 80);
-        sprite1.setPositionY(origin.y + (size.height/2) + 40);
+        sprite1.x = origin.x + (size.width/2) - 80;
+        sprite1.y = origin.y + (size.height/2) + 40;
         this.addChild(sprite1, 5);
 
-        var sprite2 = TouchableSprite.create();
+        var sprite2 = TouchableSprite.create(-20);
         sprite2.setTexture("res/Images/MagentaSquare.png");
-        sprite2.setPriority(-20);
         sprite2.removeListenerOnTouchEnded(true);
-        sprite2.setPositionX(origin.x + (size.width/2));
-        sprite2.setPositionY(origin.y + (size.height/2));
+        sprite2.x = origin.x + (size.width/2);
+        sprite2.y = origin.y + (size.height/2);
         this.addChild(sprite2, 10);
 
-        var sprite3 = TouchableSprite.create();
+        var sprite3 = TouchableSprite.create(-10);
         sprite3.setTexture("res/Images/YellowSquare.png");
-        sprite3.setPriority(-10);
-        sprite3.setPosition(0, 0);
+        sprite3.x = 0;
+        sprite3.y = 0;
         sprite2.addChild(sprite3, 21);
     },
 
@@ -1043,11 +1054,97 @@ Issue4160.create = function(){
     return test;
 };
 
+var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
+    ctor: function () {
+        this._super();
+
+        var origin = cc.director.getVisibleOrigin();
+        var size = cc.director.getVisibleSize();
+
+        var sprite1 = TouchableSprite.create();
+        sprite1.setTexture("res/Images/CyanSquare.png");
+        sprite1.x = origin.x + size.width / 2 - 180;
+        sprite1.y = origin.y + size.height / 2 + 40;
+        this.addChild(sprite1, 10);
+
+        var sprite2 = TouchableSprite.create();
+        sprite2.setTexture("res/Images/MagentaSquare.png");
+        sprite2.x = origin.x + size.width / 2 - 100;
+        sprite2.y = origin.y + size.height / 2;
+        this.addChild(sprite2, 1);
+
+        var sprite3 = TouchableSprite.create();
+        sprite3.setTexture("res/Images/YellowSquare.png");
+        sprite3.x = 0;
+        sprite3.y = 0;
+        sprite2.addChild(sprite3, 20);
+
+        var _this = this;
+        var popup = cc.MenuItemFont.create("Popup", function(sender){
+            cc.eventManager.pauseTarget(_this, true);
+            var colorLayer = cc.LayerColor.create(cc.color(0, 0, 255, 100));
+            _this.addChild(colorLayer, 999); //set colorLayer to top
+
+            // Add the button
+            var backgroundButton = cc.Scale9Sprite.create(s_extensions_button);
+            var backgroundHighlightedButton = cc.Scale9Sprite.create(s_extensions_buttonHighlighted);
+
+            var titleButton = cc.LabelTTF.create("Close Dialog", "Marker Felt", 26);
+            titleButton.color = cc.color(159, 168, 176);
+
+            var controlButton = cc.ControlButton.create(titleButton, backgroundButton);
+            controlButton.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
+            controlButton.setTitleColorForState(cc.color.white, cc.CONTROL_STATE_HIGHLIGHTED);
+
+            controlButton.anchorX = 0.5;
+            controlButton.anchorY = 1;
+            controlButton.x = size.width / 2 + 50;
+            controlButton.y = size.height / 2;
+            colorLayer.addChild(controlButton, 1);
+            controlButton.addTargetWithActionForControlEvents(this, function(){
+                colorLayer.removeFromParent();
+                cc.eventManager.resumeTarget(_this, true);
+            }, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
+
+            // Add the black background
+            var background = cc.Scale9Sprite.create(s_extensions_buttonBackground);
+            background.width = 300;
+            background.height = 170;
+            background.x = size.width / 2.0 + 50;
+            background.y = size.height / 2.0;
+            colorLayer.addChild(background);
+        });
+
+        popup.setAnchorPoint(1,0.5);
+        popup.setPosition(cc.visibleRect.right);
+
+        var menu = cc.Menu.create(popup);
+        menu.setAnchorPoint(0, 0);
+        menu.setPosition(0, 0);
+
+        this.addChild(menu);
+    },
+
+    title: function(){
+        return "PauseResumeTargetTest";
+    },
+
+    subtitle: function() {
+        return "";
+    }
+});
+
+PauseResumeTargetTest.create = function(){
+    var test = new Issue4160();
+    test.init();
+    return test;
+};
+
 var EventDispatcherTestScene = TestScene.extend({
     runThisTest:function () {
         eventDispatcherSceneIdx = -1;
         this.addChild(nextDispatcherTest());
-        director.replaceScene(this);
+        director.runScene(this);
     }
 });
 
@@ -1061,9 +1158,10 @@ var arrayOfEventDispatcherTest = [
     RemoveAndRetainNodeTest,
     RemoveListenerAfterAddingTest,
     DirectorEventTest,
-    GlobalZTouchTest,
+    //GlobalZTouchTest,
     StopPropagationTest,
-    Issue4160
+    Issue4160,
+    PauseResumeTargetTest
 ];
 
 var nextDispatcherTest = function () {
