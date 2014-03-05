@@ -10,6 +10,7 @@ require('jsb_cocos2d_studio.js');
 require('jsb_cocos2d_gui.js');
 require('jsb_property_impls.js');
 require('jsb_property_apis.js');
+require('jsb_create_apis.js');
 require('jsb_chipmunk_constants.js');
 require('jsb_chipmunk.js');
 require('jsb_opengl_constants.js');
