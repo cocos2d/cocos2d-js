@@ -6411,6 +6411,217 @@ create : function (
 };
 
 /**
+ * @class Configuration
+ */
+cc.Configuration = {
+
+/**
+ * @method checkForGLExtension
+ * @param {String} arg0
+ * @return {bool}
+ */
+checkForGLExtension : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method setValue
+ * @param {String} arg0
+ * @param {cc.Value} arg1
+ */
+setValue : function (
+str, 
+value 
+)
+{
+},
+
+/**
+ * @method supportsS3TC
+ * @return {bool}
+ */
+supportsS3TC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsPVRTC
+ * @return {bool}
+ */
+supportsPVRTC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsShareableVAO
+ * @return {bool}
+ */
+supportsShareableVAO : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getInfo
+ * @return {String}
+ */
+getInfo : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getMaxTextureUnits
+ * @return {int}
+ */
+getMaxTextureUnits : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method supportsNPOT
+ * @return {bool}
+ */
+supportsNPOT : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getMaxModelviewStackDepth
+ * @return {int}
+ */
+getMaxModelviewStackDepth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method supportsDiscardFramebuffer
+ * @return {bool}
+ */
+supportsDiscardFramebuffer : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsATITC
+ * @return {bool}
+ */
+supportsATITC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method gatherGPUInfo
+ */
+gatherGPUInfo : function (
+)
+{
+},
+
+/**
+ * @method supportsETC
+ * @return {bool}
+ */
+supportsETC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method loadConfigFile
+ * @param {String} arg0
+ */
+loadConfigFile : function (
+str 
+)
+{
+},
+
+/**
+ * @method getValue
+ * @param {String} arg0
+ * @param {cc.Value} arg1
+ * @return {cc.Value}
+ */
+getValue : function (
+str, 
+value 
+)
+{
+    return cc.Value;
+},
+
+/**
+ * @method getMaxTextureSize
+ * @return {int}
+ */
+getMaxTextureSize : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method supportsBGRA8888
+ * @return {bool}
+ */
+supportsBGRA8888 : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {cc.Configuration}
+ */
+getInstance : function (
+)
+{
+    return cc.Configuration;
+},
+
+};
+
+/**
  * @class LabelAtlas
  */
 cc.LabelAtlas = {
@@ -6726,6 +6937,16 @@ scheduler
 startAnimation : function (
 )
 {
+},
+
+/**
+ * @method getOpenGLView
+ * @return {cc.GLView}
+ */
+getOpenGLView : function (
+)
+{
+    return cc.GLView;
 },
 
 /**
