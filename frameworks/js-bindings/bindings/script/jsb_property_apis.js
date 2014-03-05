@@ -1,11 +1,3 @@
-cc.defineGetterSetter = function (proto, prop, getter, setter)
-{
-    var desc = { enumerable: false, configurable: true };
-	getter && (desc.get = getter);
-	setter && (desc.set = setter);
-	Object.defineProperty(proto, prop, desc);
-};
-
 // Overrides
 var _proto = cc.AtlasNode.prototype;
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
@@ -239,6 +231,7 @@ cc.defineGetterSetter(_proto, "actionManager", _proto.getActionManager, _proto.s
 cc.defineGetterSetter(_proto, "scheduler", _proto.getScheduler, _proto.setScheduler);
 cc.defineGetterSetter(_proto, "shaderProgram", _proto.getShaderProgram, _proto.setShaderProgram);
 cc.defineGetterSetter(_proto, "glServerState", _proto.getGLServerState, _proto.setGLServerState);
+cc.defineGetterSetter(_proto, "tag", _proto.getTag, _proto.setTag);
 
 _proto = cc.NodeRGBA.prototype;
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);

@@ -5,6 +5,14 @@
 var cc = cc || {};
 var window = window || this;
 
+cc.sys = sys || {};
+cc.sys.isNative = true;
+
+cc.assert = function(cond, msg) {
+    if (!cond)
+        cc.log("Assert: " + msg);
+}
+
 cc.TARGET_PLATFORM = {
     WINDOWS:0,
     LINUX:1,
@@ -39,7 +47,7 @@ FIXED_HEIGHT:3,
     // no distortion will occur however you must make sure your application works on different
     // aspect ratios
 FIXED_WIDTH:4,
-    
+
 UNKNOWN:5
 };
 
@@ -137,6 +145,15 @@ cc._reuse_rect = {x:0, y:0, width:0, height:0};
 cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
 cc.log = cc._cocosplayerLog || cc.log || log;
+
+// Getter/setter
+cc.defineGetterSetter = function (proto, prop, getter, setter)
+{
+    var desc = { enumerable: false, configurable: true };
+    getter && (desc.get = getter);
+    setter && (desc.set = setter);
+    Object.defineProperty(proto, prop, desc);
+};
 
 //
 // Color 3B
@@ -716,111 +733,6 @@ var __onParseConfig = function(type, str) {
     }
 };
 
-cc.visibleRect = {
-    _topLeft:cc.p(0,0),
-    _topRight:cc.p(0,0),
-    _top:cc.p(0,0),
-    _bottomLeft:cc.p(0,0),
-    _bottomRight:cc.p(0,0),
-    _bottom:cc.p(0,0),
-    _center:cc.p(0,0),
-    _left:cc.p(0,0),
-    _right:cc.p(0,0),
-    _width:0,
-    _height:0,
-    _isInitialized: false,
-    init:function(){
-        var director = cc.Director.getInstance();
-        var origin = director.getVisibleOrigin();
-        var size = director.getVisibleSize();
-
-        this._width = size.width;
-        this._height = size.height;
-
-        var x = origin.x;
-        var y = origin.y;
-        var w = this._width;
-        var h = this._height;
-
-        var left = origin.x;
-        var right = origin.x + size.width;
-        var middle = origin.x + size.width/2;
-
-        //top
-        this._top.y = this._topLeft.y = this._topRight.y = y + h;
-        this._topLeft.x = left;
-        this._top.x = middle;
-        this._topRight.x = right;
-
-        //bottom
-
-        this._bottom.y = this._bottomRight.y = this._bottomLeft.y = y;
-        this._bottomLeft.x = left
-        this._bottom.x = middle;
-        this._bottomRight.x = right;
-
-        //center
-        this._right.y = this._left.y = this._center.y = y + h/2;
-        this._center.x = middle;
-        
-        //left
-        this._left.x = left;
-
-        //right
-        this._right.x = right;
-    },
-
-    lazyInit: function(){
-        if (!this._isInitialized) {
-            this.init();
-            this._isInitialized = true;
-        }
-    },
-    getWidth:function(){
-        this.lazyInit();
-        return this._width;
-    },
-    getHeight:function(){
-        this.lazyInit();
-        return this._height;
-    },
-    topLeft:function(){
-        this.lazyInit();        
-        return this._topLeft;
-    },
-    topRight:function(){
-        this.lazyInit();        
-        return this._topRight;
-    },
-    top:function(){
-        this.lazyInit();        
-        return this._top;
-    },
-    bottomLeft:function(){
-        this.lazyInit();        
-        return this._bottomLeft;
-    },
-    bottomRight:function(){
-        this.lazyInit();        
-        return this._bottomRight;
-    },
-    bottom:function(){
-        this.lazyInit();        
-        return this._bottom;
-    },
-    center:function(){
-        this.lazyInit();        
-        return this._center;
-    },
-    left:function(){
-        this.lazyInit();        
-        return this._left;
-    },
-    right:function(){
-        this.lazyInit();        
-        return this._right;
-    }
-};
 
 var _windowTimeIntervalId = 0;
 var _windowTimeFunHash = {};
@@ -1108,67 +1020,6 @@ cc.defineGetterSetter(_proto, "gray", _proto._getGray);
 
 
 
-// event listener type
-cc.EventListener.UNKNOWN = 0;
-cc.EventListener.TOUCH_ONE_BY_ONE = 1;
-cc.EventListener.TOUCH_ALL_AT_ONCE = 2;
-cc.EventListener.KEYBOARD = 3;
-cc.EventListener.MOUSE = 4;
-cc.EventListener.ACCELERATION = 5;
-cc.EventListener.CUSTOM = 6;
-
-cc.eventManager = cc.Director.getInstance().getEventDispatcher();
-
-cc.eventManager.addListener = function(listener, nodeOrPriority) {
-    if (typeof nodeOrPriority == "number") {
-        if (nodeOrPriority == 0) {
-            cc.log("0 priority is forbidden for fixed priority since it's used for scene graph based priority.");
-            return;
-        }
-
-        cc.eventManager.addEventListenerWithFixedPriority(listener, nodeOrPriority);
-    } else {
-        cc.eventManager.addEventListenerWithSceneGraphPriority(listener, nodeOrPriority);
-    }
-};
-
-cc.EventListener.create = function(argObj){
-    if(!argObj || !argObj.event){
-        throw "Invalid parameter.";
-    }
-    var listenerType = argObj.event;
-    delete argObj.event;
-
-    var listener = null;
-    if(listenerType === cc.EventListener.TOUCH_ONE_BY_ONE) {
-        listener = cc.EventListenerTouchOneByOne.create();
-        if (argObj.swallowTouches) {
-            listener.setSwallowTouches(argObj.swallowTouches);
-        }
-    }
-    else if(listenerType === cc.EventListener.TOUCH_ALL_AT_ONCE)
-        listener = cc.EventListenerTouchAllAtOnce.create();
-    else if(listenerType === cc.EventListener.MOUSE)
-        listener = cc.EventListenerMouse.create();
-    else if(listenerType === cc.EventListener.CUSTOM){
-        listener = cc.EventListenerCustom.create(argObj.eventName, argObj.callback);
-        delete argObj.eventName;
-        delete argObj.callback;
-    } else if(listenerType === cc.EventListener.KEYBOARD)
-        listener = cc.EventListenerKeyboard.create();
-    else if(listenerType === cc.EventListener.ACCELERATION){
-        listener = cc.EventListenerAcceleration.create(argObj.callback);
-        delete argObj.callback;
-    }
-
-    for(var key in argObj) {
-        listener[key] = argObj[key];
-    }
-
-    return listener;
-};
-
-
 // Define singleton objects
 cc.director = cc.Director.getInstance();
 //cc.view = cc.EGLView.getInstance();
@@ -1202,3 +1053,231 @@ cc.screen = {
 cc.textureCache.purgeSharedTextureCache = function() {};
 cc.animationCache.purgeSharedAnimationCache = function() {};
 cc.spriteFrameCache.purgeSharedSpriteFrameCache = function() {};
+
+
+
+// event listener type
+cc.EventListener.UNKNOWN = 0;
+cc.EventListener.TOUCH_ONE_BY_ONE = 1;
+cc.EventListener.TOUCH_ALL_AT_ONCE = 2;
+cc.EventListener.KEYBOARD = 3;
+cc.EventListener.MOUSE = 4;
+cc.EventListener.ACCELERATION = 5;
+cc.EventListener.CUSTOM = 6;
+
+cc.eventManager = cc.Director.getInstance().getEventDispatcher();
+
+cc.EventListener.create = function(argObj){
+    if(!argObj || !argObj.event){
+        throw "Invalid parameter.";
+    }
+    var listenerType = argObj.event;
+    delete argObj.event;
+
+    var listener = null;
+    if(listenerType === cc.EventListener.TOUCH_ONE_BY_ONE) {
+        listener = cc.EventListenerTouchOneByOne.create();
+        if (argObj.swallowTouches) {
+            listener.setSwallowTouches(argObj.swallowTouches);
+        }
+    }
+    else if(listenerType === cc.EventListener.TOUCH_ALL_AT_ONCE)
+        listener = cc.EventListenerTouchAllAtOnce.create();
+    else if(listenerType === cc.EventListener.MOUSE)
+        listener = cc.EventListenerMouse.create();
+    else if(listenerType === cc.EventListener.CUSTOM){
+        listener = cc.EventListenerCustom.create(argObj.eventName, argObj.callback);
+        delete argObj.eventName;
+        delete argObj.callback;
+    } else if(listenerType === cc.EventListener.KEYBOARD)
+        listener = cc.EventListenerKeyboard.create();
+    else if(listenerType === cc.EventListener.ACCELERATION){
+        listener = cc.EventListenerAcceleration.create(argObj.callback);
+        delete argObj.callback;
+    }
+    else
+    {
+        cc.log("Error: Invalid listener type.");
+    }
+
+    for(var key in argObj) {
+        listener[key] = argObj[key];
+    }
+
+    return listener;
+};
+
+
+// Event manager
+cc.eventManager.addListener = function(listener, nodeOrPriority) {
+    if(!(listener instanceof cc.EventListener)) {
+        listener = cc.EventListener.create(listener);
+    }
+
+    if (typeof nodeOrPriority == "number") {
+        if (nodeOrPriority == 0) {
+            cc.log("0 priority is forbidden for fixed priority since it's used for scene graph based priority.");
+            return;
+        }
+
+        cc.eventManager.addEventListenerWithFixedPriority(listener, nodeOrPriority);
+    } else {
+        cc.eventManager.addEventListenerWithSceneGraphPriority(listener, nodeOrPriority);
+    }
+};
+
+cc.EventCustom.prototype.setUserData = function(userData) {
+    this._userData = userData;
+};
+
+cc.EventCustom.prototype.getUserData = function() {
+    return this._userData;
+};
+
+cc.inputManager = {
+    setAccelerometerEnabled: cc.Device.setAccelerometerEnabled,
+    setAccelerometerInterval: cc.Device.setAccelerometerInterval,
+    getDPI: cc.Device.getDPI
+};
+
+cc.EventListenerTouchOneByOne.prototype.clone = function() {
+    var ret = cc.EventListenerTouchOneByOne.create();
+    ret.onTouchBegan = this.onTouchBegan;
+    ret.onTouchMoved = this.onTouchMoved;
+    ret.onTouchEnded = this.onTouchEnded;
+    ret.onTouchCancelled = this.onTouchCancelled;
+    ret.setSwallowTouches(this.isSwallowTouches());
+    return ret;
+};
+
+cc.EventListenerTouchAllAtOnce.prototype.clone = function() {
+    var ret = cc.EventListenerTouchAllAtOnce.create();
+    ret.onTouchesBegan = this.onTouchesBegan;
+    ret.onTouchesMoved = this.onTouchesMoved;
+    ret.onTouchesEnded = this.onTouchesEnded;
+    ret.onTouchesCancelled = this.onTouchesCancelled;
+    return ret;
+};
+
+cc.EventListenerKeyboard.prototype.clone = function() {
+    var ret = cc.EventListenerKeyboard.create();
+    ret.onKeyPressed = this.onKeyPressed;
+    ret.onKeyReleased = this.onKeyReleased;
+    return ret;
+};
+
+cc.director = cc.Director.getInstance();
+
+cc.Director.EVENT_PROJECTION_CHANGED = "director_projection_changed";
+cc.Director.EVENT_AFTER_DRAW = "director_after_draw";
+cc.Director.EVENT_AFTER_VISIT = "director_after_visit";
+cc.Director.EVENT_AFTER_UPDATE = "director_after_update";
+
+cc.Director.prototype.runScene = function(scene){
+    if (!this.getRunningScene()) {
+        this.runWithScene(scene);
+    }
+    else {
+        this.replaceScene(scene);
+    }
+};
+
+cc.visibleRect = {
+    _topLeft:cc.p(0,0),
+    _topRight:cc.p(0,0),
+    _top:cc.p(0,0),
+    _bottomLeft:cc.p(0,0),
+    _bottomRight:cc.p(0,0),
+    _bottom:cc.p(0,0),
+    _center:cc.p(0,0),
+    _left:cc.p(0,0),
+    _right:cc.p(0,0),
+    _width:0,
+    _height:0,
+    _isInitialized: false,
+    init:function(){
+
+        var director = cc.Director.getInstance();
+        var origin = director.getVisibleOrigin();
+        var size = director.getVisibleSize();
+
+        this._width = size.width;
+        this._height = size.height;
+
+        var w = this._width;
+        var h = this._height;
+
+        //top
+        this._topLeft.y = h;
+        this._topRight.x = w;
+        this._topRight.y = h;
+        this._top.x = w/2;
+        this._top.y = h;
+
+        //bottom
+        this._bottomRight.x = w;
+        this._bottom.x = w/2;
+
+        //center
+        this._center.x = w/2;
+        this._center.y = h/2;
+
+        //left
+        this._left.y = h/2;
+
+        //right
+        this._right.x = w;
+        this._right.y = h/2;
+    },
+    lazyInit: function(){
+        if (!this._isInitialized) {
+            this.init();
+            this._isInitialized = true;
+        }
+    },
+};
+
+cc.defineGetterSetter(cc.visibleRect, "width", function(){
+    this.lazyInit();
+    return this._width;
+});
+cc.defineGetterSetter(cc.visibleRect, "height", function(){
+    this.lazyInit();
+    return this._height;
+});
+cc.defineGetterSetter(cc.visibleRect, "topLeft", function(){
+    this.lazyInit();
+    return this._topLeft;
+});
+cc.defineGetterSetter(cc.visibleRect, "topRight", function(){
+    this.lazyInit();
+    return this._topRight;
+});
+cc.defineGetterSetter(cc.visibleRect, "top", function(){
+    this.lazyInit();
+    return this._top;
+});
+cc.defineGetterSetter(cc.visibleRect, "bottomLeft", function(){
+    this.lazyInit();
+    return this._bottomLeft;
+});
+cc.defineGetterSetter(cc.visibleRect, "bottomRight", function(){
+    this.lazyInit();
+    return this._bottomRight;
+});
+cc.defineGetterSetter(cc.visibleRect, "bottom", function(){
+    this.lazyInit();
+    return this._bottom;
+});
+cc.defineGetterSetter(cc.visibleRect, "center", function(){
+    this.lazyInit();
+    return this._center;
+});
+cc.defineGetterSetter(cc.visibleRect, "left", function(){
+    this.lazyInit();
+    return this._left;
+});
+cc.defineGetterSetter(cc.visibleRect, "right", function(){
+    this.lazyInit();
+    return this._right;
+});

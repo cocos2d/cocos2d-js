@@ -68,25 +68,27 @@ void js_cocos2dx_GLProgram_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_GLProgram(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_GLProgram_getFragmentShaderLog(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_GLProgram_addAttribute(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgram_initWithByteArrays(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgram_initWithFilenames(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_getUniformLocationForName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_use(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_getVertexShaderLog(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_GLProgram_initWithVertexShaderByteArray(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_GLProgram_initWithVertexShaderFilename(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_setUniformsForBuiltins(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_setUniformLocationWith3i(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_setUniformLocationWith3iv(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_updateUniforms(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_setUniformLocationWith4iv(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_GLProgram_link(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgram_getUniformLocation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgram_setUniformLocationWith1i(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_setUniformLocationWith2iv(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix3fv(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_reset(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgram_bindAttribLocation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgram_getAttribLocation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_setUniformLocationWith4i(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_GLProgram_setUniformLocationWith1i(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgram_link(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_setUniformLocationWith2i(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_GLProgram(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -194,18 +196,17 @@ bool js_cocos2dx_EventDispatcher_constructor(JSContext *cx, uint32_t argc, jsval
 void js_cocos2dx_EventDispatcher_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_EventDispatcher(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_EventDispatcher_pauseEventListenersForTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_removeAllEventListeners(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_addEventListenerWithSceneGraphPriority(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EventDispatcher_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_addCustomEventListener(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_addEventListenerWithFixedPriority(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EventDispatcher_removeEventListenersForType(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EventDispatcher_dispatchCustomEvent(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EventDispatcher_resumeEventListenersForTarget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_removeEventListenersForTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_resumeEventListenersForTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_dispatchCustomEvent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_setPriority(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_dispatchEvent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EventDispatcher_pauseEventListenersForTarget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_removeCustomEventListeners(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_removeEventListener(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2386,6 +2387,7 @@ bool js_cocos2dx_RenderTexture_constructor(JSContext *cx, uint32_t argc, jsval *
 void js_cocos2dx_RenderTexture_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_RenderTexture(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_RenderTexture_setVirtualViewport(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderTexture_clearStencil(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderTexture_getClearDepth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderTexture_getClearStencil(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2394,6 +2396,7 @@ bool js_cocos2dx_RenderTexture_setClearStencil(JSContext *cx, uint32_t argc, jsv
 bool js_cocos2dx_RenderTexture_setSprite(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderTexture_getSprite(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderTexture_isAutoDraw(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_RenderTexture_setKeepMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderTexture_setClearFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderTexture_begin(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderTexture_saveToFile(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2692,6 +2695,17 @@ bool js_cocos2dx_EventCustom_getEventName(JSContext *cx, uint32_t argc, jsval *v
 bool js_cocos2dx_EventCustom_setUserData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventCustom_getUserData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventCustom_EventCustom(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_Device_class;
+extern JSObject *jsb_cocos2d_Device_prototype;
+
+bool js_cocos2dx_Device_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_Device_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_Device(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_Device_setAccelerometerEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Device_setAccelerometerInterval(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Device_getDPI(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_FileUtils_class;
 extern JSObject *jsb_cocos2d_FileUtils_prototype;
@@ -3023,6 +3037,7 @@ bool js_cocos2dx_EventListenerTouchOneByOne_constructor(JSContext *cx, uint32_t 
 void js_cocos2dx_EventListenerTouchOneByOne_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_EventListenerTouchOneByOne(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_EventListenerTouchOneByOne_isSwallowTouches(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventListenerTouchOneByOne_setSwallowTouches(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_EventListenerTouchAllAtOnce_class;
