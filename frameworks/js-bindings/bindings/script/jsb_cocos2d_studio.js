@@ -43,11 +43,9 @@ ccs.sendEvent = function (event) {
 };
 
 
-ccs.ObjectFactory = ccs.Class.extend({
-    _typeMap: null,
-    ctor: function () {
-        this._typeMap = {};
-    },
+ccs.objectFactory = {
+    _typeMap: {},
+    
     destroyInstance: function () {
         this._sharedFactory = null;
     },
@@ -64,15 +62,6 @@ ccs.ObjectFactory = ccs.Class.extend({
     registerType: function (t) {
         this._typeMap[t._className] = t;
     }
-});
-
-ccs.ObjectFactory._sharedFactory = null;
-
-ccs.ObjectFactory.getInstance = function () {
-    if (!this._sharedFactory) {
-        this._sharedFactory = new ccs.ObjectFactory();
-    }
-    return this._sharedFactory;
 };
 
 ccs.TInfo = ccs.Class.extend({
@@ -261,15 +250,10 @@ ccs.TriggerObj.create = function() {
   return null;
 }
 
-ccs.TriggerMng = ccs.Class.extend({
-    _eventTriggers: null,
-    _triggerObjs: null,
-    _movementDispatches: null,
-    ctor: function () {
-        this._eventTriggers = {};
-        this._triggerObjs = {};
-        this._movementDispatches = [];
-    },
+ccs.triggerManager = {
+    _eventTriggers: {},
+    _triggerObjs: {},
+    _movementDispatches: [],
 
     destroyInstance: function () {
         this.removeAll();
@@ -426,21 +410,23 @@ ccs.TriggerMng = ccs.Class.extend({
 
     removeAllArmatureMovementCallBack: function () {
         this._movementDispatches = [];
+    },
+                                  
+    version: function () {
+        return "1.2.0.0";
     }
-});
-
-ccs.TriggerMng.triggerMngVersion = function () {
-    return "1.2.0.0";
-};
-ccs.TriggerMng._instance = null;
-ccs.TriggerMng.getInstance = function () {
-    if (null == this._instance) {
-        this._instance = new ccs.TriggerMng();
-    }
-    return this._instance;
 };
 
 
 
+// In extension
+ccs.guiReader = ccs.GUIReader.getInstance();
+ccs.armatureDataManager = ccs.ArmatureDataManager.getInstance();
+ccs.actionManager = ccs.ActionManager.getInstance();
+ccs.sceneReader = ccs.SceneReader.getInstance();
+ccs.sceneReader.version = function() {
+    return ccs.SceneReader.sceneReaderVersion();
+}
 
-
+//ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
+//ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
