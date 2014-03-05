@@ -1523,6 +1523,34 @@ bool js_cocos2dx_DrawNode_drawCubicBezier(JSContext *cx, uint32_t argc, jsval *v
 bool js_cocos2dx_DrawNode_drawSegment(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_create(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_Configuration_class;
+extern JSObject *jsb_cocos2d_Configuration_prototype;
+
+bool js_cocos2dx_Configuration_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_Configuration_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_Configuration(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_Configuration_checkForGLExtension(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_setValue(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_supportsS3TC(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_supportsPVRTC(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_supportsShareableVAO(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_getInfo(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_getMaxTextureUnits(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_supportsNPOT(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_getMaxModelviewStackDepth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_supportsDiscardFramebuffer(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_supportsATITC(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_gatherGPUInfo(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_supportsETC(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_loadConfigFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_getValue(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_getMaxTextureSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_supportsBGRA8888(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Configuration_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_LabelAtlas_class;
 extern JSObject *jsb_cocos2d_LabelAtlas_prototype;
 
@@ -1568,6 +1596,7 @@ bool js_cocos2dx_Director_setDefaultValues(JSContext *cx, uint32_t argc, jsval *
 bool js_cocos2dx_Director_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_setScheduler(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_startAnimation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Director_getOpenGLView(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_getRunningScene(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_setViewport(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_stopAnimation(JSContext *cx, uint32_t argc, jsval *vp);
