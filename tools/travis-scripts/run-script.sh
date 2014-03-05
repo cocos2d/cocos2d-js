@@ -130,8 +130,8 @@ elif [ "$PLATFORM"x = "ios"x ]; then
     # ./generate-cocosfiles.sh
 
     cd $PROJECT_ROOT/tests/project/proj.ios_mac
-    xctool -project cocos2d_lua_tests.xcodeproj -scheme "Test lua Mac" test
-    xctool -project cocos2d_lua_tests.xcodeproj -scheme "Test lua iOS" test
+    xctool -project cocos2d_lua_samples.xcodeproj -scheme "Test lua Mac" test
+    xctool -project cocos2d_lua_samples.xcodeproj -scheme "Test lua iOS" test
 else
     echo "Unknown \$PLATFORM: '$PLATFORM'"
     exit 1
