@@ -1077,7 +1077,7 @@ cc.color._getOrange = function () {
 cc.color._getGray = function () {
     return cc.color(166, 166, 166, 255);
 };
-window._proto = cc.color;
+var _proto = cc.color;
 /** @expose */
 _proto.white;
 cc.defineGetterSetter(_proto, "white", _proto._getWhite);
@@ -1105,7 +1105,6 @@ cc.defineGetterSetter(_proto, "orange", _proto._getOrange);
 /** @expose */
 _proto.gray;
 cc.defineGetterSetter(_proto, "gray", _proto._getGray);
-delete window._proto;
 
 
 
@@ -1169,4 +1168,37 @@ cc.EventListener.create = function(argObj){
     return listener;
 };
 
+
+// Define singleton objects
 cc.director = cc.Director.getInstance();
+//cc.view = cc.EGLView.getInstance();
+cc.audioEngine = cc.AudioEngine().getInstance();
+cc.configuration = cc.Configuration.getInstance();
+cc.textureCache = cc.TextureCache.getInstance();
+cc.shaderCache = cc.ShaderCache.getInstance();
+cc.animationCache = cc.AnimationCache.getInstance();
+cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
+//cc.saxParser
+cc.plistParser = cc.SAXParser.getInstance();
+
+cc.screen = {
+    init: function() {},
+    fullScreen: function() {
+        return true;
+    },
+    requestFullScreen: function(element, onFullScreenChange) {
+        onFullScreenChange.call();
+    },
+    exitFullScreen: function() {
+        return false;
+    },
+    autoFullScreen: function(element, onFullScreenChange) {
+        onFullScreenChange.call();
+    }
+};
+//cc.tiffReader;
+//cc.imeDispatcher;
+
+cc.textureCache.purgeSharedTextureCache = function() {};
+cc.animationCache.purgeSharedAnimationCache = function() {};
+cc.spriteFrameCache.purgeSharedSpriteFrameCache = function() {};
