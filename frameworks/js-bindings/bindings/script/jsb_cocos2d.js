@@ -146,7 +146,14 @@ cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
 cc.log = cc._cocosplayerLog || cc.log || log;
 
-// Getter/setter
+/**
+ * Common getter setter configuration function
+ * @function
+ * @param {Object}   proto      A class prototype or an object to config
+ * @param {String}   prop       Property name
+ * @param {function} getter     Getter function for the property
+ * @param {function} setter     Setter function for the property
+ */
 cc.defineGetterSetter = function (proto, prop, getter, setter)
 {
     var desc = { enumerable: false, configurable: true };
@@ -794,85 +801,6 @@ var clearInterval = function (intervalId) {
 };
 var clearTimeout = clearInterval;
 
-
-/**
- * Common getter setter configuration function
- * @function
- * @param {Object}   proto      A class prototype or an object to config<br/>
- * @param {String}   prop       Property name
- * @param {function} getter     Getter function for the property
- * @param {function} setter     Setter function for the property
- * @param {String}   getterName Name of getter function for the property
- * @param {String}   setterName Name of setter function for the property
- */
-cc.defineGetterSetter = function (proto, prop, getter, setter, getterName, setterName)
-{
-    if (proto.__defineGetter__) {
-        getter && proto.__defineGetter__(prop, getter);
-        setter && proto.__defineSetter__(prop, setter);
-    }
-    else if (Object.defineProperty) {
-        var desc = { enumerable: false, configurable: true };
-        getter && (desc.get = getter);
-        setter && (desc.set = setter);
-        Object.defineProperty(proto, prop, desc);
-    }
-    else {
-        throw new Error("browser does not support getters");
-        return;
-    }
-
-    if(!getterName && !setterName) {
-        // Lookup getter/setter function
-        var hasGetter = (getter != null), hasSetter = (setter != undefined);
-        var props = Object.getOwnPropertyNames(proto);
-        for (var i = 0; i < props.length; i++) {
-            var name = props[i];
-            if( proto.__lookupGetter__(name) !== undefined || typeof proto[name] !== "function" ) continue;
-            var func = proto[name];
-            if (hasGetter && func === getter) {
-                getterName = name;
-                if(!hasSetter || setterName) break;
-            }
-            if (hasSetter && func === setter) {
-                setterName = name;
-                if(!hasGetter || getterName) break;
-            }
-        }
-    }
-
-    // Found getter/setter
-    var ctor = proto.constructor;
-    if (getterName) {
-        if (!ctor.__getters__) {
-            ctor.__getters__ = {};
-        }
-        ctor.__getters__[getterName] = prop;
-    }
-    if (setterName) {
-        if (!ctor.__setters__) {
-            ctor.__setters__ = {};
-        }
-        ctor.__setters__[setterName] = prop;
-    }
-};
-
-/**
- * Common getter setter configuration function
- * @function
- * @param {Object}   class      A class prototype or an object to config<br/>
- * @param {String}   prop       Property name
- * @param {function} getter     Getter function for the property
- * @param {function} setter     Setter function for the property
- * @param {String}   getterName Name of getter function for the property
- * @param {String}   setterName Name of setter function for the property
- */
-cc.defineProtoGetterSetter = function (classobj, prop, getter, setter, getterName, setterName)
-{
-    var proto = classobj.prototype;
-    cc.defineGetterSetter(proto, prop, getter, setter, getterName, setterName);
-};
-
 cc.Color = function (r, g, b, a) {
     this.r = r || 0;
     this.g = g || 0;
@@ -1022,10 +950,10 @@ cc.defineGetterSetter(_proto, "gray", _proto._getGray);
 
 // Define singleton objects
 cc.director = cc.Director.getInstance();
-//cc.view = cc.EGLView.getInstance();
-cc.audioEngine = cc.AudioEngine().getInstance();
+cc.view = cc.director.getOpenGLView();
+cc.audioEngine = cc.AudioEngine.getInstance();
 cc.configuration = cc.Configuration.getInstance();
-cc.textureCache = cc.TextureCache.getInstance();
+cc.textureCache = cc.director.getTextureCache();
 cc.shaderCache = cc.ShaderCache.getInstance();
 cc.animationCache = cc.AnimationCache.getInstance();
 cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
@@ -1053,7 +981,6 @@ cc.screen = {
 cc.textureCache.purgeSharedTextureCache = function() {};
 cc.animationCache.purgeSharedAnimationCache = function() {};
 cc.spriteFrameCache.purgeSharedSpriteFrameCache = function() {};
-
 
 
 // event listener type
