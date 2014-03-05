@@ -283,15 +283,17 @@ getFragmentShaderLog : function (
 },
 
 /**
- * @method addAttribute
+ * @method initWithByteArrays
  * @param {char*} arg0
- * @param {unsigned int} arg1
+ * @param {char*} arg1
+ * @return {bool}
  */
-addAttribute : function (
+initWithByteArrays : function (
 char, 
-int 
+char 
 )
 {
+    return false;
 },
 
 /**
@@ -306,6 +308,20 @@ float,
 int 
 )
 {
+},
+
+/**
+ * @method initWithFilenames
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+initWithFilenames : function (
+str, 
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -336,34 +352,6 @@ getVertexShaderLog : function (
 )
 {
     return ;
-},
-
-/**
- * @method initWithVertexShaderByteArray
- * @param {char*} arg0
- * @param {char*} arg1
- * @return {bool}
- */
-initWithVertexShaderByteArray : function (
-char, 
-char 
-)
-{
-    return false;
-},
-
-/**
- * @method initWithVertexShaderFilename
- * @param {char*} arg0
- * @param {char*} arg1
- * @return {bool}
- */
-initWithVertexShaderFilename : function (
-char, 
-char 
-)
-{
-    return false;
 },
 
 /**
@@ -429,27 +417,27 @@ int
 },
 
 /**
- * @method setUniformLocationWithMatrix2fv
- * @param {int} arg0
- * @param {float*} arg1
- * @param {unsigned int} arg2
+ * @method getUniformLocation
+ * @param {char*} arg0
+ * @return {int}
  */
-setUniformLocationWithMatrix2fv : function (
-int, 
-float, 
-int 
+getUniformLocation : function (
+char 
 )
 {
+    return 0;
 },
 
 /**
- * @method link
- * @return {bool}
+ * @method setUniformLocationWith1i
+ * @param {int} arg0
+ * @param {int} arg1
  */
-link : function (
+setUniformLocationWith1i : function (
+int, 
+int 
 )
 {
-    return false;
 },
 
 /**
@@ -489,6 +477,44 @@ reset : function (
 },
 
 /**
+ * @method bindAttribLocation
+ * @param {char*} arg0
+ * @param {unsigned int} arg1
+ */
+bindAttribLocation : function (
+char, 
+int 
+)
+{
+},
+
+/**
+ * @method getAttribLocation
+ * @param {char*} arg0
+ * @return {int}
+ */
+getAttribLocation : function (
+char 
+)
+{
+    return 0;
+},
+
+/**
+ * @method setUniformLocationWithMatrix2fv
+ * @param {int} arg0
+ * @param {float*} arg1
+ * @param {unsigned int} arg2
+ */
+setUniformLocationWithMatrix2fv : function (
+int, 
+float, 
+int 
+)
+{
+},
+
+/**
  * @method setUniformLocationWith4i
  * @param {int} arg0
  * @param {int} arg1
@@ -507,15 +533,13 @@ int
 },
 
 /**
- * @method setUniformLocationWith1i
- * @param {int} arg0
- * @param {int} arg1
+ * @method link
+ * @return {bool}
  */
-setUniformLocationWith1i : function (
-int, 
-int 
+link : function (
 )
 {
+    return false;
 },
 
 /**
@@ -10637,6 +10661,20 @@ sprite
 cc.RenderTexture = {
 
 /**
+ * @method setVirtualViewport
+ * @param {PointObject} arg0
+ * @param {RectObject} arg1
+ * @param {RectObject} arg2
+ */
+setVirtualViewport : function (
+point, 
+rect, 
+rect 
+)
+{
+},
+
+/**
  * @method clearStencil
  * @param {int} arg0
  */
@@ -10712,6 +10750,16 @@ isAutoDraw : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setKeepMatrix
+ * @param {bool} arg0
+ */
+setKeepMatrix : function (
+bool 
+)
+{
 },
 
 /**
