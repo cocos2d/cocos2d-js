@@ -978,10 +978,6 @@ cc.screen = {
 //cc.tiffReader;
 //cc.imeDispatcher;
 
-cc.textureCache.purgeSharedTextureCache = function() {};
-cc.animationCache.purgeSharedAnimationCache = function() {};
-cc.spriteFrameCache.purgeSharedSpriteFrameCache = function() {};
-
 
 // event listener type
 cc.EventListener.UNKNOWN = 0;
