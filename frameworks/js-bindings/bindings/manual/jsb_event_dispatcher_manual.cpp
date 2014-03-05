@@ -67,7 +67,6 @@ bool js_EventListenerTouchOneByOne_create(JSContext *cx, uint32_t argc, jsval *v
 	return false;
 }
 
-
 bool js_EventListenerTouchAllAtOnce_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc == 0) {

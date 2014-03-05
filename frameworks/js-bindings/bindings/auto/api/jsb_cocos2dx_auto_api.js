@@ -1105,12 +1105,10 @@ checkAvailable : function (
 cc.EventDispatcher = {
 
 /**
- * @method pauseEventListenersForTarget
- * @param {cc.Node} arg0
- * @param {bool} arg1
+ * @method setEnabled
+ * @param {bool} arg0
  */
-pauseEventListenersForTarget : function (
-node, 
+setEnabled : function (
 bool 
 )
 {
@@ -1132,16 +1130,6 @@ removeAllEventListeners : function (
 addEventListenerWithSceneGraphPriority : function (
 eventlistener, 
 node 
-)
-{
-},
-
-/**
- * @method setEnabled
- * @param {bool} arg0
- */
-setEnabled : function (
-bool 
 )
 {
 },
@@ -1173,23 +1161,13 @@ int
 },
 
 /**
- * @method removeEventListenersForType
- * @param {cc.EventListener::Type} arg0
- */
-removeEventListenersForType : function (
-type 
-)
-{
-},
-
-/**
- * @method dispatchCustomEvent
- * @param {String} arg0
- * @param {void*} arg1
- */
-dispatchCustomEvent : function (
-str, 
-void 
+ * @method removeEventListenersForTarget
+* @param {cc.Node|cc.EventListener::Type} node
+* @param {bool} bool
+*/
+removeEventListenersForTarget : function(
+node,
+bool 
 )
 {
 },
@@ -1207,13 +1185,13 @@ bool
 },
 
 /**
- * @method removeEventListenersForTarget
- * @param {cc.Node} arg0
- * @param {bool} arg1
+ * @method dispatchCustomEvent
+ * @param {String} arg0
+ * @param {void*} arg1
  */
-removeEventListenersForTarget : function (
-node, 
-bool 
+dispatchCustomEvent : function (
+str, 
+void 
 )
 {
 },
@@ -1236,6 +1214,18 @@ int
  */
 dispatchEvent : function (
 event 
+)
+{
+},
+
+/**
+ * @method pauseEventListenersForTarget
+ * @param {cc.Node} arg0
+ * @param {bool} arg1
+ */
+pauseEventListenersForTarget : function (
+node, 
+bool 
 )
 {
 },
@@ -12540,6 +12530,43 @@ str
 };
 
 /**
+ * @class Device
+ */
+cc.Device = {
+
+/**
+ * @method setAccelerometerEnabled
+ * @param {bool} arg0
+ */
+setAccelerometerEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setAccelerometerInterval
+ * @param {float} arg0
+ */
+setAccelerometerInterval : function (
+float 
+)
+{
+},
+
+/**
+ * @method getDPI
+ * @return {int}
+ */
+getDPI : function (
+)
+{
+    return 0;
+},
+
+};
+
+/**
  * @class FileUtils
  */
 cc.FileUtils = {
@@ -14589,6 +14616,16 @@ TileMapAtlas : function (
  * @class EventListenerTouchOneByOne
  */
 cc.EventListenerTouchOneByOne = {
+
+/**
+ * @method isSwallowTouches
+ * @return {bool}
+ */
+isSwallowTouches : function (
+)
+{
+    return false;
+},
 
 /**
  * @method setSwallowTouches
