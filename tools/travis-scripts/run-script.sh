@@ -129,9 +129,9 @@ elif [ "$PLATFORM"x = "ios"x ]; then
     # ./generate-bindings.sh
     # ./generate-cocosfiles.sh
 
-    cd $PROJECT_ROOT/tests/project/proj.ios_mac
-    xctool -project cocos2d_lua_samples.xcodeproj -scheme "Test lua Mac" test
-    xctool -project cocos2d_lua_samples.xcodeproj -scheme "Test lua iOS" test
+    cd $PROJECT_ROOT/build
+    xctool -project cocos2d_jsb_samples.xcodeproj -scheme "Test JavaScript Mac" test
+    xctool -project cocos2d_jsb_samples.xcodeproj -scheme "Test JavaScript iOS" test
 else
     echo "Unknown \$PLATFORM: '$PLATFORM'"
     exit 1
