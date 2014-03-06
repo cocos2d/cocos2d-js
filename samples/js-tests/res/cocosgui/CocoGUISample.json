@@ -153,22 +153,6 @@
           }
           ]
         },
-//         {
-//         "classname" : "ListView",
-//         "options" :
-//         {
-//         "x" : 330,
-//         "y" : 80,
-//         "width" : 150,
-//         "height" : 100,
-//         "backGroundScale9Enable" : true,
-//         "clipAble" : true,
-//         "touchAble" : true,
-//         "backGroundImage" : "scrollviewbg.png",
-//         "name" : "listview"
-//         },
-//         "children" : []
-//         },
          {
          "classname" : "Label",
          "options" :
@@ -318,34 +302,6 @@
          },
          "children" :[]
          },
-         /*
-         {
-         "classname" : "Button",
-         "options" :
-         {
-         "x" : 127,
-         "y" : 96,
-         "normal" : "animationbuttonnormal.png",
-         "pressed" : "animationbuttonpressed.png",
-         "touchAble" : true,
-         "name" : "animationbutton"
-         },
-         "children" :[]
-         },
-         {
-         "classname" : "Label",
-         "options" :
-         {
-         "x" : 127,
-         "y" : 70,
-         "text" : "点我播放ui动画",
-         "touchAble" : true,
-         "touchSacleEnable" : true,
-         "name" : "animationlabel"
-         },
-         "children" :[]
-         },
-          */
          {
          "classname" : "TextField",
          "options" :

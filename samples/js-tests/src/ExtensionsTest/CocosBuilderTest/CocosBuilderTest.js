@@ -34,6 +34,6 @@ var CocosBuilderTestScene = TestScene.extend({
              this.addChild(node);
          }
 
-         cc.Director.getInstance().replaceScene(this);
+         cc.director.runScene(this);
      }
 });

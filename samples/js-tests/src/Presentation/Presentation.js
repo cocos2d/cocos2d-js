@@ -41,7 +41,7 @@ var PresentationBaseLayer = function() {
 	// Only subclasses of a native classes MUST call __associateObjectWithNative
 	// Failure to do so, it will crash.
 	//
-	var parent = BaseTestLayer.call(this, cc.c4b(0,0,0,255), cc.c4b(98,99,117,255));
+	var parent = BaseTestLayer.call(this, cc.color(0,0,0,255), cc.color(98,99,117,255));
 
 	this._title =  "No title";
 	this._subtitle = "No Subtitle";
@@ -70,10 +70,14 @@ PresentationBaseLayer.prototype.onEnter = function() {
 
 	var isMain = this.isMainTitle;
 
-	if( isMain === true )
-		this.label.setPosition( centerPos );
-	else
-		this.label.setPosition( winSize.width / 2, winSize.height*11/12 );
+	if( isMain === true ) {
+		this.label.x = centerPos.x;
+		this.label.y = centerPos.y;
+	}
+	else {
+		this.label.x = winSize.width / 2;
+		this.label.y = winSize.height*11/12 ;
+	}
 
 	var subStr = this._subtitle;
 	if (subStr !== "") {
@@ -85,10 +89,14 @@ PresentationBaseLayer.prototype.onEnter = function() {
 
 		this.sublabel = cc.LabelTTF.create(subStr, "Thonburi", subfontSize);
 		this.addChild(this.sublabel, 90);
-		if( isMain )
-			this.sublabel.setPosition(winSize.width / 2, winSize.height*3/8);
-		else
-			this.sublabel.setPosition(winSize.width / 2, winSize.height*4/5);
+		if( isMain ) {
+			this.sublabel.x = winSize.width / 2;
+			this.sublabel.y = winSize.height*3/8;
+		}
+		else {
+			this.sublabel.x = winSize.width / 2;
+			this.sublabel.y = winSize.height*4/5;
+		}
 	} else
 		this.sublabel = null;
 
@@ -99,8 +107,8 @@ PresentationBaseLayer.prototype.onEnter = function() {
     var item3 = menu.getChildByTag(BASE_TEST_MENUITEM_NEXT_TAG);
 
 	[item1, item2, item3 ].forEach( function(item) {
-		item.getNormalImage().setOpacity(45);
-		item.getSelectedImage().setOpacity(45);
+		item.getNormalImage().opacity = 45;
+		item.getSelectedImage().opacity = 45;
 		} );
 
 	// remove "super" titles
@@ -127,13 +135,15 @@ PresentationBaseLayer.prototype.createBulletList = function () {
 
 	var fontSize = winSize.height*0.07;
 	var bullets = cc.LabelTTF.create( str, "Gill Sans", fontSize );
-	bullets.setPosition( centerPos );
+	bullets.x = centerPos.x;
+	bullets.y = centerPos.y;
 	this.addChild( bullets, 80 );
 };
 
 PresentationBaseLayer.prototype.createImage = function( file ) {
 	var sprite = cc.Sprite.create( file );
-	sprite.setPosition( centerPos );
+	sprite.x = centerPos.x;
+	sprite.y = centerPos.y;
 	this.addChild( sprite, 70 );
 
 	return sprite;
@@ -143,19 +153,19 @@ PresentationBaseLayer.prototype.createImage = function( file ) {
 PresentationBaseLayer.prototype.onRestartCallback = function (sender) {
     var s = new PresentationScene();
     s.addChild(restartPresentationSlide());
-    director.replaceScene(s);
+    director.runScene(s);
 };
 
 PresentationBaseLayer.prototype.onNextCallback = function (sender) {
     var s = new PresentationScene();
     s.addChild(nextPresentationSlide());
-    director.replaceScene(s);
+    director.runScene(s);
 };
 
 PresentationBaseLayer.prototype.onBackCallback = function (sender) {
     var s = new PresentationScene();
     s.addChild(previousPresentationSlide());
-    director.replaceScene(s);
+    director.runScene(s);
 };
 
 // automation
@@ -340,7 +350,7 @@ cc.inherits( ChipmunkPage, PresentationBaseLayer );
 //
 
 ChipmunkPage.prototype.onTogglePhysicsDebug = function() {
-	this.debugNode.setVisible( ! this.debugNode.isVisible() );
+	this.debugNode.visible = ! this.debugNode.visible ;
 };
 
 // Menu
@@ -351,7 +361,8 @@ ChipmunkPage.prototype.initMenu = function() {
 	var menuItem = cc.MenuItemFont.create('Toggle Physics Debug', this.onTogglePhysicsDebug, this);
 	var menu = cc.Menu.create( menuItem );
 	this.addChild( menu, 99 );
-	menu.setPosition(winSize.width-80, winSize.height-100);
+	menu.x = winSize.width-80;
+	menu.y = winSize.height-100;
 };
 
 // init physics
@@ -378,7 +389,7 @@ ChipmunkPage.prototype.initPhysics = function() {
 
 	// Physics debug layer
 	this.debugNode = cc.PhysicsDebugNode.create( this.space.handle );
-	this.debugNode.setVisible( false );
+	this.debugNode.visible = false ;
 	this.addChild( this.debugNode, 100 );
 };
 
@@ -397,7 +408,6 @@ ChipmunkPage.prototype.createPhysicsSprite = function( pos ) {
 };
 
 ChipmunkPage.prototype.onEnter = function () {
-
 	PresentationBaseLayer.prototype.onEnter.call(this);
 
 	for(var i=0; i<20; i++) {
@@ -406,10 +416,24 @@ ChipmunkPage.prototype.onEnter = function () {
 		this.addSprite( cp.v(x, y) );
 	}
 
-    if( 'touches' in sys.capabilities )
-        this.setTouchEnabled(true);
-    else if ('mouse' in sys.capabilities )
-        this.setMouseEnabled(true);
+    if( 'touches' in cc.sys.capabilities ){
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesEnded: function (touches, event) {
+                var target = event.getCurrentTarget();
+                var l = touches.length;
+                for (var i = 0; i < l; i++) {
+                    target.addSprite(touches[i].getLocation());
+                }
+            }
+        }, this);
+    } else if ('mouse' in cc.sys.capabilities )
+       cc.eventManager.addListener({
+           event: cc.EventListener.MOUSE,
+           onMouseUp: function(event){
+               event.getCurrentTarget().addSprite(event.getLocation());
+           }
+       }, this);
 };
 
 ChipmunkPage.prototype.onExitTransitionDidStart = function () {
@@ -426,18 +450,6 @@ ChipmunkPage.prototype.update = function( delta ) {
 	this.space.step( delta );
 };
 
-ChipmunkPage.prototype.onMouseDown = function( event ) {
-	for( var i=0; i<10; i++)
-		this.addSprite( event.getLocation() );
-};
-
-ChipmunkPage.prototype.onTouchesEnded = function( touches, event ) {
-	var l = touches.length;
-	for( var i=0; i < l; i++) {
-		this.addSprite( touches[i].getLocation() );
-	}
-};
-
 //------------------------------------------------------------------
 //
 // Particles Page
@@ -450,52 +462,63 @@ var ParticlesPage = function() {
 	this._title = 'Performance';
 	this._subtitle = 'Particles';
 
-	// var tex = cc.TextureCache.getInstance().addImage(s_fire);
+	// var tex = cc.textureCache.addImage(s_fire);
 
 	var firework = cc.ParticleFireworks.create();
-	// firework.setTexture(tex);
+	// firework.texture = tex;
 	this.addChild( firework );
-	firework.setPosition( centerPos );
+	firework.x = centerPos.x;
+	firework.y = centerPos.y;
 
 	var sun = cc.ParticleSun.create();
-	// sun.setTexture(tex);
+	// sun.texture = tex;
 	this.addChild( sun );
-	sun.setPosition(winSize.width/4, winSize.height/2);
+	sun.x = winSize.width/4;
+	sun.y = winSize.height/2;
 
 	var meteor = cc.ParticleMeteor.create();
-	// meteor.setTexture(tex);
+	// meteor.texture = tex;
 	this.addChild( meteor );
-	meteor.setPosition(winSize.width*3/4, winSize.height/2);
+	meteor.x = winSize.width*3/4;
+	meteor.y = winSize.height/2;
 
 	var flower = cc.ParticleSystem.create("res/Particles/Flower.plist");
 	this.addChild( flower );
-	flower.setPosition( centerPos );
+	flower.x = centerPos.x;
+	flower.y = centerPos.y;
 
 	this.particle = firework;
 
-    if( 'touches' in sys.capabilities )
-        this.setTouchEnabled(true);
-    else if ('mouse' in sys.capabilities )
-        this.setMouseEnabled(true);
-
-	this.onMouseDown = function( event ) {
-		this.particle.setPosition( event.getLocation() );
-	};
-
-	this.onMouseDragged = function( event ) {
-		return this.onMouseDown( event );
-	};
-
-	this.onTouchesEnded = function( touches, event ) {
-		var l = touches.length;
-		for( var i=0; i < l; i++) {
-			this.particle.setPosition( touches[i].getLocation() );
-		}
-	};
-
-	this.onTouchesMoved = function( touches, event ) {
-		return this.onTouchesEnded( touches, event );
-	};
+    if( 'touches' in cc.sys.capabilities ){
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesMoved: function(touches, event){
+                var particle = event.getCurrentTarget().particle;
+                var pos = touches[0].getLocation();
+                particle.x = pos.x;
+                particle.y = pos.y;
+            },
+            onTouchesEnded: function(touches, event){
+                var particle = event.getCurrentTarget().particle;
+                var pos = touches[0].getLocation();
+                particle.x = pos.x;
+                particle.y = pos.y;
+            }
+        }, this);
+    } else if ('mouse' in cc.sys.capabilities )
+        cc.eventManager.addListener({
+            event: cc.EventListener.MOUSE,
+            onMouseMove: function(event){
+                var particle = event.getCurrentTarget().particle;
+                particle.x = event.getLocationX();
+                particle.y = event.getLocationY();
+            },
+            onMouseUp: function(event){
+                var particle = event.getCurrentTarget().particle;
+                particle.x = event.getLocationX();
+                particle.y = event.getLocationY();
+            }
+        }, this);
 
 	this.onExitTransitionDidStart = function () {
 		director.setDisplayStats( false );
@@ -700,7 +723,7 @@ PresentationScene.prototype.runThisTest = function () {
     centerPos = cc.p(winSize.width/2, winSize.height/2);
     var layer = nextPresentationSlide();
     this.addChild(layer);
-    director.replaceScene(this);
+    director.runScene(this);
 };
 
 //

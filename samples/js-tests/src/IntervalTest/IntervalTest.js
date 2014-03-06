@@ -42,15 +42,16 @@ IntervalLayer = cc.LayerGradient.extend({
 
     ctor:function () {
         this._super();
-        this.init( cc.c4b(0,0,0,255), cc.c4b(98,99,117,255));
+        this.init( cc.color(0,0,0,255), cc.color(98,99,117,255));
 
         this.time0 = this.time1 = this.time2 = this.time3 = this.time4 = 0.0;
 
         var s = director.getWinSize();
         // sun
         var sun = cc.ParticleSun.create();
-        sun.setTexture(cc.TextureCache.getInstance().addImage(s_fire));
-        sun.setPosition(s.width - 32, s.height - 32);
+        sun.texture = cc.textureCache.addImage(s_fire);
+        sun.x = s.width - 32;
+        sun.y = s.height - 32;
 
         sun.setTotalParticles(130);
         sun.setLife(0.6);
@@ -69,11 +70,16 @@ IntervalLayer = cc.LayerGradient.extend({
         this.schedule(this.step3, 1.0);
         this.schedule(this.step4, 2.0);
 
-        this.label0.setPosition(s.width * 1 / 6, s.height / 2);
-        this.label1.setPosition(s.width * 2 / 6, s.height / 2);
-        this.label2.setPosition(s.width * 3 / 6, s.height / 2);
-        this.label3.setPosition(s.width * 4 / 6, s.height / 2);
-        this.label4.setPosition(s.width * 5 / 6, s.height / 2);
+        this.label0.x = s.width * 1 / 6;
+        this.label0.y = s.height / 2;
+        this.label1.x = s.width * 2 / 6;
+        this.label1.y = s.height / 2;
+        this.label2.x = s.width * 3 / 6;
+        this.label2.y = s.height / 2;
+        this.label3.x = s.width * 4 / 6;
+        this.label3.y = s.height / 2;
+        this.label4.x = s.width * 5 / 6;
+        this.label4.y = s.height / 2;
 
         this.addChild(this.label0);
         this.addChild(this.label1);
@@ -83,7 +89,8 @@ IntervalLayer = cc.LayerGradient.extend({
 
         // Sprite
         var sprite = cc.Sprite.create(s_pathGrossini);
-        sprite.setPosition(40, 50);
+        sprite.x = 40;
+        sprite.y = 50;
 
         var jump = cc.JumpBy.create(3, cc.p(s.width - 80, 0), 50, 4);
 
@@ -93,7 +100,8 @@ IntervalLayer = cc.LayerGradient.extend({
         // pause button
         var item1 = cc.MenuItemFont.create("Pause", this.onPause, this);
         var menu = cc.Menu.create(item1);
-        menu.setPosition(s.width / 2, s.height - 50);
+        menu.x = s.width / 2;
+        menu.y = s.height - 50;
 
         this.addChild(menu);
 
@@ -144,6 +152,6 @@ IntervalTestScene = TestScene.extend({
     runThisTest:function () {
         var layer = new IntervalLayer();
         this.addChild(layer);
-        director.replaceScene(this);
+        director.runScene(this);
     }
 });

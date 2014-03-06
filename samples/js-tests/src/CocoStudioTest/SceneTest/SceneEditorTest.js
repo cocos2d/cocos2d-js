@@ -31,7 +31,7 @@ var SceneEditorScene = TestScene.extend({
     runThisTest: function () {
         sceneTestIdx = -1;
         this.addChild(nextSceneEditorTest());
-        director.replaceScene(this);
+        director.runScene(this);
     },
     onMainMenuCallback: function () {
         var scene = new CocoStudioTestScene();
@@ -94,7 +94,7 @@ var restartSceneEditorTest = function () {
 var SceneEditorTestLayer = BaseTestLayer.extend({
     ctor: function () {
         if (arguments.length === 0) {
-            this._super(cc.c4b(0, 0, 0, 255), cc.c4b(98, 99, 117, 255));
+            this._super(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
         } else {
             this._super.apply(this, arguments);
         }
@@ -103,32 +103,33 @@ var SceneEditorTestLayer = BaseTestLayer.extend({
     onRestartCallback: function (sender) {
         var s = new SceneEditorScene();
         s.addChild(restartSceneEditorTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
 
     onNextCallback: function (sender) {
         var s = new SceneEditorScene();
         s.addChild(nextSceneEditorTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
 
     onBackCallback: function (sender) {
         var s = new SceneEditorScene();
         s.addChild(backSceneEditorTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onExit: function () {
-        ccs.ArmatureDataManager.destroyInstance();
-        ccs.SceneReader.destroyInstance();
-        ccs.ActionManager.destroyInstance();
-        ccs.GUIReader.destroyInstance();
+        ccs.armatureDataManager.clear();
+        ccs.sceneReader.clear();
+        ccs.actionManager.clear();
+        ccs.guiReader.clear();
         this._super();
     },
     initSize:function(node){
-        var winSize = cc.Director.getInstance().getWinSize();
+        var winSize = cc.director.getWinSize();
         var scale = winSize.height / 320;
-        node.setScale(scale);
-        node.setPosition(cc.p((winSize.width - 480 * scale) / 2, (winSize.height - 320 * scale) / 2));
+        node.scale = scale;
+        node.x = (winSize.width - 480 * scale) / 2;
+	    node.y = (winSize.height - 320 * scale) / 2;
     }
 });
 
@@ -147,9 +148,9 @@ var runSceneEditorTest = function () {
 var LoadSceneEdtiorFileTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
-        var node = ccs.SceneReader.getInstance().createNodeWithSceneFile("res/scenetest/LoadSceneEdtiorFileTest/FishJoy2.json");
+        var node = ccs.sceneReader.createNodeWithSceneFile("res/scenetest/LoadSceneEdtiorFileTest/FishJoy2.json");
         this.addChild(node);
-        ccs.ActionManager.getInstance().playActionByName("startMenu_1.json", "Animation1");
+        ccs.actionManager.playActionByName("startMenu_1.json", "Animation1");
         this.initSize(node);
     },
     title: function () {
@@ -165,7 +166,7 @@ var LoadSceneEdtiorFileTest = SceneEditorTestLayer.extend({
 var SpriteComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
-        var node = ccs.SceneReader.getInstance().createNodeWithSceneFile("res/scenetest/SpriteComponentTest/SpriteComponentTest.json");
+        var node = ccs.sceneReader.createNodeWithSceneFile("res/scenetest/SpriteComponentTest/SpriteComponentTest.json");
         this.addChild(node);
 
         var action1 = cc.Blink.create(2, 10);
@@ -191,7 +192,7 @@ var SpriteComponentTest = SceneEditorTestLayer.extend({
 var ArmatureComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
-        var node = ccs.SceneReader.getInstance().createNodeWithSceneFile("res/scenetest/ArmatureComponentTest/ArmatureComponentTest.json");
+        var node = ccs.sceneReader.createNodeWithSceneFile("res/scenetest/ArmatureComponentTest/ArmatureComponentTest.json");
         this.addChild(node);
 
         var blowFish = node.getChildByTag(10007).getComponent("CCArmature").getNode();
@@ -216,7 +217,7 @@ var UIComponentTest = SceneEditorTestLayer.extend({
     _node: null,
     onEnter: function () {
         this._super();
-        this._node = ccs.SceneReader.getInstance().createNodeWithSceneFile("res/scenetest/UIComponentTest/UIComponentTest.json");
+        this._node = ccs.sceneReader.createNodeWithSceneFile("res/scenetest/UIComponentTest/UIComponentTest.json");
         this.addChild(this._node);
         var widget = this._node.getChildByTag(10025).getComponent("GUIComponent").getNode();
         var button = widget.getChildByName("Button_156");
@@ -226,7 +227,7 @@ var UIComponentTest = SceneEditorTestLayer.extend({
     },
     touchEvent: function (sender, type) {
         switch (type) {
-            case ccui.TouchEventType.began:
+            case ccs.TouchEventType.began:
                 var blowFish = this._node.getChildByTag(10010).getComponent("CCArmature").getNode();
                 blowFish.runAction(cc.MoveBy.create(10, cc.p(-1000, 0)));
 
@@ -250,7 +251,7 @@ var UIComponentTest = SceneEditorTestLayer.extend({
 var TmxMapComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
-        var node = ccs.SceneReader.getInstance().createNodeWithSceneFile("res/scenetest/TmxMapComponentTest/TmxMapComponentTest.json");
+        var node = ccs.sceneReader.createNodeWithSceneFile("res/scenetest/TmxMapComponentTest/TmxMapComponentTest.json");
         this.addChild(node);
         var tmxMap = node.getChildByTag(10015).getComponent("CCTMXTiledMap").getNode();
         var actionTo = cc.SkewTo.create(2, 0, 2);
@@ -281,7 +282,7 @@ var TmxMapComponentTest = SceneEditorTestLayer.extend({
 var ParticleComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
-        var node = ccs.SceneReader.getInstance().createNodeWithSceneFile("res/scenetest/ParticleComponentTest/ParticleComponentTest.json");
+        var node = ccs.sceneReader.createNodeWithSceneFile("res/scenetest/ParticleComponentTest/ParticleComponentTest.json");
         this.addChild(node);
 
         var particle = node.getChildByTag(10020).getComponent("CCParticleSystemQuad").getNode();
@@ -305,7 +306,7 @@ var EffectComponentTest = SceneEditorTestLayer.extend({
     _node: null,
     onEnter: function () {
         this._super();
-        this._node = ccs.SceneReader.getInstance().createNodeWithSceneFile("res/scenetest/EffectComponentTest/EffectComponentTest.json");
+        this._node = ccs.sceneReader.createNodeWithSceneFile("res/scenetest/EffectComponentTest/EffectComponentTest.json");
         this.addChild(this._node);
 
         var armature = this._node.getChildByTag(10015).getComponent("CCArmature").getNode();
@@ -334,9 +335,9 @@ var EffectComponentTest = SceneEditorTestLayer.extend({
 var BackgroundComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
-        var node = ccs.SceneReader.getInstance().createNodeWithSceneFile("res/scenetest/BackgroundComponentTest/BackgroundComponentTest.json");
+        var node = ccs.sceneReader.createNodeWithSceneFile("res/scenetest/BackgroundComponentTest/BackgroundComponentTest.json");
         this.addChild(node);
-        ccs.ActionManager.getInstance().playActionByName("startMenu_1.json", "Animation1");
+        ccs.actionManager.playActionByName("startMenu_1.json", "Animation1");
 
         var audio = node.getComponent("CCBackgroundAudio");
         audio.playBackgroundMusic();
@@ -356,11 +357,11 @@ var BackgroundComponentTest = SceneEditorTestLayer.extend({
 var AttributeComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
-        var node = ccs.SceneReader.getInstance().createNodeWithSceneFile("res/scenetest/AttributeComponentTest/AttributeComponentTest.json");
+        var node = ccs.sceneReader.createNodeWithSceneFile("res/scenetest/AttributeComponentTest/AttributeComponentTest.json");
         this.addChild(node);
 
         var comAttribute = node.getChildByTag(10015).getComponent("CCComAttribute");
-        cc.log("name:" + comAttribute.getString("name"));
+        cc.log("name:" + comAttribute.getCString("name"));
         cc.log("maxHP:" + comAttribute.getFloat("maxHP"));
         cc.log("maxMP:" + comAttribute.getFloat("maxMP"));
 
@@ -384,14 +385,21 @@ var TriggerTest = SceneEditorTestLayer.extend({
     _flyFishNode: null,
     onEnter: function () {
         this._super();
-        var node = ccs.SceneReader.getInstance().createNodeWithSceneFile("res/scenetest/TriggerTest/TriggerTest.json");
+        var node = ccs.sceneReader.createNodeWithSceneFile("res/scenetest/TriggerTest/TriggerTest.json");
         this.addChild(node);
-        ccs.ActionManager.getInstance().playActionByName("startMenu_1.json", "Animation1");
+        ccs.actionManager.playActionByName("startMenu_1.json", "Animation1");
 
         this.schedule(this.gameLogic);
-        this.setTouchEnabled(true);
         ccs.sendEvent(TRIGGEREVENT_ENTERSCENE);
 
+        var listener1 = cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+            swallowTouches: true,
+            onTouchBegan: this.onTouchBegan.bind(this),
+            onTouchMoved: this.onTouchMoved.bind(this),
+            onTouchEnded: this.onTouchEnded.bind(this)
+        });
+        cc.eventManager.addListener(listener1, this);
         this.initSize(node);
     },
     onExit: function () {
@@ -400,20 +408,20 @@ var TriggerTest = SceneEditorTestLayer.extend({
         this._super();
     },
 
-    onTouchesBegan: function (touch, event) {
+    onTouchBegan: function (touch, event) {
         ccs.sendEvent(TRIGGEREVENT_TOUCHBEGAN);
         return true;
     },
 
-    onTouchesMoved: function (touch, event) {
+    onTouchMoved: function (touch, event) {
         ccs.sendEvent(TRIGGEREVENT_TOUCHMOVED);
     },
 
-    onTouchesEnded: function (touch, event) {
+    onTouchEnded: function (touch, event) {
         ccs.sendEvent(TRIGGEREVENT_TOUCHENDED);
     },
 
-    onTouchesCancelled: function (touch, event) {
+    onTouchCancelled: function (touch, event) {
         ccs.sendEvent(TRIGGEREVENT_TOUCHCANCELLED);
     },
 

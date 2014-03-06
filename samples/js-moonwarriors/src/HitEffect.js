@@ -3,35 +3,38 @@ var HitEffect = cc.Sprite.extend({
     ctor:function () {
         this._super();
 
-        this.setSpriteFrame("hit.png");
+        this.initWithSpriteFrameName("hit.png");
         this.setBlendFunc(gl.SRC_ALPHA, gl.ONE);
     },
-    reset:function (pos, rotation, scale) {
-        this.setPosition(pos);
-        this.setRotation(rotation);
-        this.setScale(scale);
+    reset:function (x, y, rotation, scale) {
+        this.attr({
+	        x: x,
+	        y: y,
+	        rotation: rotation,
+	        scale: scale
+        });
         this.runAction(cc.ScaleBy.create(0.3, 2, 2));
         this.runAction(cc.Sequence.create(cc.FadeOut.create(0.3), cc.CallFunc.create(this.destroy, this)));
     },
     destroy:function () {
-        this.setVisible(false);
+        this.visible = false;
         this.active = false;
     }
 });
 
-HitEffect.getOrCreateHitEffect = function (pos, rotation, scale) {
+HitEffect.getOrCreateHitEffect = function (x, y, rotation, scale) {
     var selChild = null;
     for (var j = 0; j < MW.CONTAINER.HITS.length; j++) {
         selChild = MW.CONTAINER.HITS[j];
         if (selChild.active == false) {
-            selChild.setVisible(true);
+            selChild.visible = true;
             selChild.active = true;
-            selChild.reset(pos, rotation, scale);
+            selChild.reset(x, y, rotation, scale);
             return selChild;
         }
     }
-    selChild = HitEffect.create(pos, rotation, scale);
-    selChild.reset(pos, rotation, scale);
+    selChild = HitEffect.create();
+    selChild.reset(x, y, rotation, scale);
     return selChild;
 };
 

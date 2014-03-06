@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>grossini_dance_13.png</key>
+            <key>tcc_grossini_dance_13.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,52},{51,109}}</string>
@@ -17,7 +17,7 @@
                 <key>sourceSize</key>
                 <string>{85,121}</string>
             </dict>
-            <key>grossinis_sister1.png</key>
+            <key>tcc_grossinis_sister1.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{48,113}}</string>
@@ -30,7 +30,7 @@
                 <key>sourceSize</key>
                 <string>{52,139}</string>
             </dict>
-            <key>grossinis_sister2.png</key>
+            <key>tcc_grossinis_sister2.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,105},{54,126}}</string>

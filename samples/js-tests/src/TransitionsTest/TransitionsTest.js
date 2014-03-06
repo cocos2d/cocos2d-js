@@ -101,7 +101,7 @@ var arrayOfTransitionsTest = [
     }}
 ];
 
-if( 'opengl' in sys.capabilities ){
+if( 'opengl' in cc.sys.capabilities ){
     arrayOfTransitionsTest = arrayOfTransitionsTest.concat([{title:"FlipXLeftOver", transitionFunc:function (t, s) {
         return new FlipXLeftOver(t, s);
     }},
@@ -179,7 +179,7 @@ var TransitionsTestScene = TestScene.extend({
     runThisTest:function () {
         var layer = new TestLayer1();
         this.addChild(layer);
-        director.replaceScene(this);
+        director.runScene(this);
     }
 });
 
@@ -198,18 +198,21 @@ var TransitionBase = BaseTestLayer.extend({
         y = size.height;
 
         var bg1 = cc.Sprite.create(this.backgroundImage);
-        bg1.setPosition(size.width / 2, size.height / 2);
-        bg1.setScale(1.7);
+        bg1.x = size.width / 2;
+        bg1.y = size.height / 2;
+        bg1.scale = 1.7;
         this.addChild(bg1);
 
         var title = cc.LabelTTF.create(this.title(), "Thonburi", 32);
         this.addChild(title);
-        title.setColor(cc.c3b(255, 32, 32));
-        title.setPosition(x / 2, y - 100);
+        title.color = cc.color(255, 32, 32);
+        title.x = x / 2;
+        title.y = y - 100;
 
         var label = cc.LabelTTF.create(this.sceneName, "Marker Felt", 38);
-        label.setColor(cc.c3b(16, 16, 255));
-        label.setPosition(x / 2, y / 2);
+        label.color = cc.color(16, 16, 255);
+        label.x = x / 2;
+        label.y = y / 2;
         this.addChild(label);
 
         this.schedule(this.step, 1.0);
@@ -222,7 +225,7 @@ var TransitionBase = BaseTestLayer.extend({
         var scene = arrayOfTransitionsTest[transitionsIdx].transitionFunc(TRANSITION_DURATION, s);
 
         if (scene)
-            director.replaceScene(scene);
+            director.runScene(scene);
     },
     onNextCallback:function (sender) {
         transitionsIdx++;
@@ -235,7 +238,7 @@ var TransitionBase = BaseTestLayer.extend({
 
         var scene = arrayOfTransitionsTest[transitionsIdx].transitionFunc(TRANSITION_DURATION, s);
         if (scene)
-            director.replaceScene(scene);
+            director.runScene(scene);
     },
     onBackCallback:function (sender) {
         transitionsIdx--;
@@ -248,7 +251,7 @@ var TransitionBase = BaseTestLayer.extend({
 
         var scene = arrayOfTransitionsTest[transitionsIdx].transitionFunc(TRANSITION_DURATION, s);
         if (scene)
-            director.replaceScene(scene);
+            director.runScene(scene);
     },
 
     step:function (dt) {
@@ -284,8 +287,8 @@ var TransitionBase = BaseTestLayer.extend({
 });
 var TestLayer1 = TransitionBase.extend({
     backgroundImage:s_back1,
-    colorA:cc.c4b(0,0,0,255),
-    colorB:cc.c4b(160,99,117,255),
+    colorA:cc.color(0,0,0,255),
+    colorB:cc.color(160,99,117,255),
     sceneName:"Scene 1",
     createNextScene:function() {
         return new TestLayer2();
@@ -294,8 +297,8 @@ var TestLayer1 = TransitionBase.extend({
 
 var TestLayer2 = TransitionBase.extend({
     backgroundImage:s_back2,
-    colorA:cc.c4b(0,0,0,255),
-    colorB:cc.c4b(99,160,117,255),
+    colorA:cc.color(0,0,0,255),
+    colorB:cc.color(99,160,117,255),
     sceneName:"Scene 2",
     createNextScene:function() {
         return new TestLayer1();
@@ -310,7 +313,7 @@ var FadeTransition = function (t, s) {
 };
 
 var FadeWhiteTransition = function (t, s) {
-    return cc.TransitionFade.create(t, s, cc.c3b(255, 255, 255));
+    return cc.TransitionFade.create(t, s, cc.color(255, 255, 255));
 };
 
 var FlipXLeftOver = function (t, s) {

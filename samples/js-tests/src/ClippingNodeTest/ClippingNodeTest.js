@@ -44,17 +44,17 @@ var BaseClippingNodeTest = BaseTestLayer.extend({
     onRestartCallback:function (sender) {
         var s = new ClippingNodeTestScene();
         s.addChild(restartClippingNodeTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onNextCallback:function (sender) {
         var s = new ClippingNodeTestScene();
         s.addChild(nextClippingNodeTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onBackCallback:function (sender) {
         var s = new ClippingNodeTestScene();
         s.addChild(previousClippingNodeTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     // automation
     numberOfPendingTests:function() {
@@ -79,23 +79,28 @@ var BasicTest = BaseClippingNodeTest.extend({
     },
 
     setup:function () {
-        var winSize = cc.Director.getInstance().getWinSize();
+        var winSize = cc.director.getWinSize();
 
         var stencil = this.stencil();
-        stencil.setTag(TAG_STENCILNODE);
-        stencil.setPosition(50, 50);
+        stencil.tag = TAG_STENCILNODE;
+        stencil.x = 50;
+        stencil.y = 50;
 
         var clipper = this.clipper();
-        clipper.setTag(TAG_CLIPPERNODE);
-        clipper.setAnchorPoint(0.5, 0.5);
-        clipper.setPosition(winSize.width / 2 - 50, winSize.height / 2 - 50);
-        clipper.setStencil(stencil);
+        clipper.tag = TAG_CLIPPERNODE;
+        clipper.anchorX = 0.5;
+        clipper.anchorY = 0.5;
+        clipper.x = winSize.width / 2 - 50;
+        clipper.y = winSize.height / 2 - 50;
+        clipper.stencil = stencil;
         this.addChild(clipper);
 
         var content = this.content();
-        content.setPosition(50, 50);
+        content.x = 50;
+        content.y = 50;
         clipper.addChild(content);
-        //content.setPosition(400, 225);
+        //content.x = 400;
+        //content.y = 225;
         //this.addChild(content);
     },
 
@@ -119,7 +124,7 @@ var BasicTest = BaseClippingNodeTest.extend({
 
     grossini:function () {
         var grossini = cc.Sprite.create(s_pathGrossini);
-        grossini.setScale(1.5);
+        grossini.scale = 1.5;
         return grossini;
     },
 
@@ -190,7 +195,7 @@ var SpriteTest = BasicTest.extend({
 
     clipper:function () {
         var clipper = this._super();
-        clipper.setAlphaThreshold(0.05);
+        clipper.alphaThreshold = 0.05;
         return clipper;
     },
 
@@ -212,7 +217,7 @@ var SpriteNoAlphaTest = SpriteTest.extend({
 
     clipper:function () {
         var clipper = this._super();
-        clipper.setAlphaThreshold(1);
+        clipper.alphaThreshold = 1;
         return clipper;
     }
 });
@@ -228,8 +233,8 @@ var SpriteInvertedTest = SpriteTest.extend({
 
     clipper:function () {
         var clipper = this._super();
-        clipper.setAlphaThreshold(0.05);
-        clipper.setInverted(true);
+        clipper.alphaThreshold = 0.05;
+        clipper.inverted = true;
         return clipper;
     }
 });
@@ -252,20 +257,29 @@ var NestedTest = BaseClippingNodeTest.extend({
             var size = 225 - i * (225 / (depth * 2));
 
             var clipper = cc.ClippingNode.create();
-            clipper.setContentSize(size, size);
-            clipper.setAnchorPoint(0.5, 0.5);
-            clipper.setPosition(parent.getContentSize().width / 2, parent.getContentSize().height / 2);
-            clipper.setAlphaThreshold(0.05);
+            clipper.attr({
+	            width: size,
+	            height: size,
+	            anchorX: 0.5,
+	            anchorY: 0.5,
+	            x: parent.width / 2,
+	            y: parent.height / 2
+            });
+            clipper.alphaThreshold = 0.05;
             clipper.runAction(cc.RepeatForever.create(cc.RotateBy.create((i % 3) ? 1.33 : 1.66, (i % 2) ? 90 : -90)));
             parent.addChild(clipper);
 
             var stencil = cc.Sprite.create(s_pathGrossini);
-            stencil.setScale(2.5 - (i * (2.5 / depth)));
-            stencil.setAnchorPoint(0.5, 0.5);
-            stencil.setPosition(clipper.getContentSize().width / 2, clipper.getContentSize().height / 2);
-            stencil.setVisible(false);
+            stencil.attr({
+	            scale: 2.5 - (i * (2.5 / depth)),
+	            anchorX: 0.5,
+	            anchorY: 0.5,
+	            x: clipper.width / 2,
+	            y: clipper.height / 2,
+	            visible: false
+            });
             stencil.runAction(cc.Sequence.create(cc.DelayTime.create(i), cc.Show.create()));
-            clipper.setStencil(stencil);
+            clipper.stencil = stencil;
 
             clipper.addChild(stencil);
             parent = clipper;
@@ -280,32 +294,37 @@ var HoleDemo = BaseClippingNodeTest.extend({
 
     setup:function () {
         var target = cc.Sprite.create(s_pathBlock);
-        target.setAnchorPoint(0,0);
-        target.setScale(3);
+        target.anchorX = 0;
+        target.anchorY = 0;
+        target.scale = 3;
 
-        var size = target.getContentSize();
-        var scale = target.getScale();
+        var scale = target.scale;
         var stencil = cc.DrawNode.create();
-        var rectangle = [cc.p(0, 0),cc.p(size.width*scale, 0),
-            cc.p(size.width*scale, size.height*scale),
-            cc.p(0, size.height*scale)];
+
+        var rectangle = [cc.p(0, 0),cc.p(target.width*scale, 0),
+            cc.p(target.width*scale, target.height*scale),
+            cc.p(0, target.height*scale)];
         stencil.drawPoly(rectangle, cc.color(255, 0, 0, 255), 0, cc.color(255, 255, 255, 0));
 
         this._outerClipper = cc.ClippingNode.create();
         this._outerClipper.retain();
         var transform = cc.AffineTransformMakeIdentity();
-        transform = cc.AffineTransformScale(transform, target.getScale(), target.getScale());
+        transform = cc.AffineTransformScale(transform, target.scale, target.scale);
 
-        this._outerClipper.setContentSize(cc.SizeApplyAffineTransform(target.getContentSize(), transform));
-        this._outerClipper.setAnchorPoint(0.5, 0.5);
-        this._outerClipper.setPosition(cc.pMult(cc.pFromSize(this.getContentSize()), 0.5));
+	    var ocsize = cc.SizeApplyAffineTransform(cc.size(target.width, target.height), transform);
+        this._outerClipper.width = ocsize.width;
+	    this._outerClipper.height = ocsize.height;
+        this._outerClipper.anchorX = 0.5;
+        this._outerClipper.anchorY = 0.5;
+        this._outerClipper.x = this.width * 0.5;
+	    this._outerClipper.y = this.height * 0.5;
         this._outerClipper.runAction(cc.RepeatForever.create(cc.RotateBy.create(1, 45)));
 
-        this._outerClipper.setStencil(stencil);
+        this._outerClipper.stencil = stencil;
 
         var holesClipper = cc.ClippingNode.create();
-        holesClipper.setInverted(true);
-        holesClipper.setAlphaThreshold(0.05);
+        holesClipper.inverted = true;
+        holesClipper.alphaThreshold = 0.05;
 
         holesClipper.addChild(target);
 
@@ -317,13 +336,22 @@ var HoleDemo = BaseClippingNodeTest.extend({
         this._holesStencil = cc.Node.create();
         this._holesStencil.retain();
 
-        holesClipper.setStencil(this._holesStencil);
-
+        holesClipper.stencil = this._holesStencil;
         this._outerClipper.addChild(holesClipper);
-
         this.addChild(this._outerClipper);
 
-        this.setTouchEnabled(true);
+        cc.eventManager.addListener(cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesBegan:function (touches, event) {
+                var target = event.getCurrentTarget();
+                var touch = touches[0];
+                var point = target._outerClipper.convertToNodeSpace(touch.getLocation());
+                var rect = cc.rect(0, 0, target._outerClipper.width, target._outerClipper.height);
+                if (!cc.rectContainsPoint(rect,point))
+                    return;
+                target.pokeHoleAtPoint(point);
+            }
+        }), this);
     },
 
     title:function () {
@@ -339,28 +367,25 @@ var HoleDemo = BaseClippingNodeTest.extend({
         var rotation = Math.random() * 360;
 
         var hole = cc.Sprite.create(s_hole_effect_png);
-        hole.setPosition(point);
-        hole.setRotation(rotation);
-        hole.setScale(scale);
+        hole.attr({
+	        x: point.x,
+	        y: point.y,
+	        rotation: rotation,
+	        scale: scale
+        });
 
         this._holes.addChild(hole);
 
         var holeStencil = cc.Sprite.create(s_hole_stencil_png);
-        holeStencil.setPosition(point);
-        holeStencil.setRotation(rotation);
-        holeStencil.setScale(scale);
+        holeStencil.attr({
+	        x: point.x,
+	        y: point.y,
+	        rotation: rotation,
+	        scale: scale
+        });
 
         this._holesStencil.addChild(holeStencil);
         this._outerClipper.runAction(cc.Sequence.create(cc.ScaleBy.create(0.05, 0.95), cc.ScaleTo.create(0.125, 1)));
-    },
-
-    onTouchesBegan:function (touches, event) {
-        var touch = touches[0];
-        var point = this._outerClipper.convertToNodeSpace(touch.getLocation());
-        var rect = cc.rect(0, 0, this._outerClipper.getContentSize().width, this._outerClipper.getContentSize().height);
-        if (!cc.rectContainsPoint(rect,point))
-            return;
-        this.pokeHoleAtPoint(point);
     }
 });
 
@@ -378,62 +403,70 @@ var ScrollViewDemo = BaseClippingNodeTest.extend({
 
     setup:function () {
         var clipper = cc.ClippingNode.create();
-        clipper.setTag(TAG_CLIPPERNODE);
-        clipper.setContentSize(200, 200);
-        clipper.setAnchorPoint(0.5, 0.5);
-        clipper.setPosition(this.getContentSize().width / 2, this.getContentSize().height / 2);
+        clipper.tag = TAG_CLIPPERNODE;
+        clipper.width = 200;
+	    clipper.height = 200;
+        clipper.anchorX = 0.5;
+        clipper.anchorY = 0.5;
+        clipper.x = this.width / 2;
+        clipper.y = this.height / 2;
         clipper.runAction(cc.RepeatForever.create(cc.RotateBy.create(1, 45)));
         this.addChild(clipper);
 
         var stencil = cc.DrawNode.create();
-        var rectangle = [cc.p(0, 0),cc.p(clipper.getContentSize().width, 0),
-            cc.p(clipper.getContentSize().width, clipper.getContentSize().height),
-            cc.p(0, clipper.getContentSize().height)];
+        var rectangle = [cc.p(0, 0),cc.p(clipper.width, 0),
+            cc.p(clipper.width, clipper.height),
+            cc.p(0, clipper.height)];
 
         var white = cc.color(255, 255, 255, 255);
         stencil.drawPoly(rectangle, white, 1, white);
-        clipper.setStencil(stencil);
+        clipper.stencil = stencil;
 
         var content = cc.Sprite.create(s_back2);
-        content.setTag(TAG_CONTENTNODE);
-        content.setAnchorPoint(0.5, 0.5);
-        content.setPosition(clipper.getContentSize().width / 2, clipper.getContentSize().height / 2);
+        content.tag = TAG_CONTENTNODE;
+        content.anchorX = 0.5;
+        content.anchorY = 0.5;
+        content.x = clipper.width / 2;
+	    content.y = clipper.height / 2;
         clipper.addChild(content);
 
         this._scrolling = false;
-        this.setTouchEnabled(true);
-    },
+        cc.eventManager.addListener(cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesBegan: function (touches, event) {
+                if (!touches || touches.length == 0)
+                    return;
+	            var target = event.getCurrentTarget();
 
-    onTouchesBegan:function (touches, event) {
-        if(!touches || touches.length == 0)
-            return;
+                var touch = touches[0];
+                var clipper = target.getChildByTag(TAG_CLIPPERNODE);
+                var point = clipper.convertToNodeSpace(touch.getLocation());
+                var rect = cc.rect(0, 0, clipper.width, clipper.height);
+                this._scrolling = cc.rectContainsPoint(rect, point);
+                this._lastPoint = point;
+            },
 
-        var touch =  touches[0];
-        var clipper = this.getChildByTag(TAG_CLIPPERNODE);
-        var point = clipper.convertToNodeSpace(touch.getLocation());
-        var rect = cc.rect(0, 0, clipper.getContentSize().width, clipper.getContentSize().height);
-        this._scrolling = cc.rectContainsPoint(rect,point);
-        this._lastPoint = point;
-    },
+            onTouchesMoved: function (touches, event) {
+                if (!this._scrolling)
+                    return;
+	            var target = event.getCurrentTarget();
 
-    onTouchesMoved:function (touches, event) {
-        if (!this._scrolling)
-            return;
+                if (!touches || touches.length == 0)
+                    return;
+                var touch = touches[0];
+                var clipper = target.getChildByTag(TAG_CLIPPERNODE);
+                var point = clipper.convertToNodeSpace(touch.getLocation());
+                var diff = cc.pSub(point, this._lastPoint);
+                var content = clipper.getChildByTag(TAG_CONTENTNODE);
+                content.setPosition(cc.pAdd(content.getPosition(), diff));
+                this._lastPoint = point;
+            },
 
-        if(!touches || touches.length == 0)
-            return;
-        var touch =  touches[0];
-        var clipper = this.getChildByTag(TAG_CLIPPERNODE);
-        var point = clipper.convertToNodeSpace(touch.getLocation());
-        var diff = cc.pSub(point, this._lastPoint);
-        var content = clipper.getChildByTag(TAG_CONTENTNODE);
-        content.setPosition(cc.pAdd(content.getPosition(), diff));
-        this._lastPoint = point;
-    },
-
-    onTouchesEnded:function (touches, event) {
-        if (!this._scrolling) return;
-        this._scrolling = false;
+            onTouchesEnded: function (touches, event) {
+                if (!this._scrolling) return;
+                this._scrolling = false;
+            }
+        }), this);
     }
 });
 
@@ -442,14 +475,14 @@ var _alphaThreshold = 0.05;
 var _PLANE_COUNT = 8;
 
 var _planeColor = [
-    cc.color(0, 0, 0, 0.65),
-    cc.c4f(0.7, 0, 0, 0.6),
-    cc.c4f(0, 0.7, 0, 0.55),
-    cc.c4f(0, 0, 0.7, 0.5),
-    cc.c4f(0.7, 0.7, 0, 0.45),
-    cc.c4f(0, 0.7, 0.7, 0.4),
-    cc.c4f(0.7, 0, 0.7, 0.35),
-    cc.c4f(0.7, 0.7, 0.7, 0.3)
+    cc.color(0, 0, 0, 166),
+    cc.color(179, 0, 0, 153),
+    cc.color(0, 179, 0, 140),
+    cc.color(0, 0, 179, 128),
+    cc.color(179, 179, 0, 115),
+    cc.color(0, 179, 179, 102),
+    cc.color(179, 0, 179, 89),
+    cc.color(179, 179, 179, 77)
 ];
 
 var RawStencilBufferTest = BaseClippingNodeTest.extend({
@@ -464,19 +497,20 @@ var RawStencilBufferTest = BaseClippingNodeTest.extend({
     },
 
     setup:function () {
-        _stencilBits = cc.renderContext.getParameter(cc.renderContext.STENCIL_BITS);
+        _stencilBits = cc._renderContext.getParameter(cc._renderContext.STENCIL_BITS);
         if (_stencilBits < 3)
             cc.log("Stencil must be enabled for the current CCGLView.");
 
         this._sprite = cc.Sprite.create(s_pathGrossini);
-        this._sprite.setAnchorPoint(  cc.p(0.5, 0) );
-        this._sprite.setScale( 2.5 );
-        cc.Director.getInstance().setAlphaBlending(true);
+        this._sprite.anchorX = 0.5;
+        this._sprite.anchorY = 0;
+        this._sprite.scale = 2.5;
+        cc.director.setAlphaBlending(true);
     },
 
     draw:function (ctx) {
-        var gl = ctx || cc.renderContext;
-        var winPoint = cc.pFromSize(cc.Director.getInstance().getWinSize());
+        var gl = ctx || cc._renderContext;
+        var winPoint = cc.pFromSize(cc.director.getWinSize());
         var planeSize = cc.pMult(winPoint, 1.0 / _PLANE_COUNT);
 
         gl.enable(gl.STENCIL_TEST);
@@ -486,15 +520,14 @@ var RawStencilBufferTest = BaseClippingNodeTest.extend({
             var stencilPoint = cc.pMult(planeSize, _PLANE_COUNT - i);
             stencilPoint.x = winPoint.x;
 
-            var spritePoint = cc.pMult(planeSize, i);
-            spritePoint.x += planeSize.x / 2;
-            spritePoint.y = 0;
-            this._sprite.setPosition( spritePoint );
+            var x = planeSize.x / 2 + planeSize.x * i, y = 0;
+            this._sprite.x = x;
+	        this._sprite.y = y;
 
             this.setupStencilForClippingOnPlane(i);
             //cc.CHECK_GL_ERROR_DEBUG();
 
-            cc.drawingUtil.drawSolidRect(cc.POINT_ZERO, stencilPoint, cc.c4f(1, 1, 1, 1));
+            cc._drawingUtil.drawSolidRect(cc.p(0, 0), stencilPoint, cc.color(255, 255, 255, 255));
 
             cc.kmGLPushMatrix();
             this.transform();
@@ -504,7 +537,7 @@ var RawStencilBufferTest = BaseClippingNodeTest.extend({
             this.setupStencilForDrawingOnPlane(i);
             //cc.CHECK_GL_ERROR_DEBUG();
 
-            cc.drawingUtil.drawSolidRect(cc.POINT_ZERO, winPoint, _planeColor[i]);
+            cc._drawingUtil.drawSolidRect(cc.p(0, 0), winPoint, _planeColor[i]);
 
             cc.kmGLPushMatrix();
             this.transform();
@@ -517,7 +550,7 @@ var RawStencilBufferTest = BaseClippingNodeTest.extend({
     },
 
     setupStencilForClippingOnPlane:function (plane) {
-        var gl = cc.renderContext;
+        var gl = cc._renderContext;
         var planeMask = 0x1 << plane;
         gl.stencilMask(planeMask);
         gl.clearStencil(0x0);
@@ -528,7 +561,7 @@ var RawStencilBufferTest = BaseClippingNodeTest.extend({
     },
 
     setupStencilForDrawingOnPlane:function (plane) {
-        var gl = cc.renderContext;
+        var gl = cc._renderContext;
         var planeMask = 0x1 << plane;
         var equalOrLessPlanesMask = planeMask | (planeMask - 1);
         gl.stencilFunc(gl.EQUAL, equalOrLessPlanesMask, equalOrLessPlanesMask);
@@ -543,11 +576,11 @@ var RawStencilBufferTest2 = RawStencilBufferTest.extend({
 
     setupStencilForClippingOnPlane:function (plane) {
         this._super(plane);
-        cc.renderContext.depthMask(false);
+        cc._renderContext.depthMask(false);
     },
 
     setupStencilForDrawingOnPlane:function (plane) {
-        cc.renderContext.depthMask(true);
+        cc._renderContext.depthMask(true);
         this._super(plane);
     }
 });
@@ -558,14 +591,14 @@ var RawStencilBufferTest3 = RawStencilBufferTest.extend({
     },
 
     setupStencilForClippingOnPlane:function (plane) {
-        var gl = cc.renderContext;
+        var gl = cc._renderContext;
         this._super(plane);
         gl.disable(gl.DEPTH_TEST);
         gl.depthMask(false);
     },
 
     setupStencilForDrawingOnPlane:function (plane) {
-        var gl = cc.renderContext;
+        var gl = cc._renderContext;
         gl.depthMask(true);
         //gl.enable(gl.DEPTH_TEST);
         this._super(plane);
@@ -578,19 +611,19 @@ var RawStencilBufferTest4 = RawStencilBufferTest.extend({
     },
 
     setupStencilForClippingOnPlane:function (plane) {
-        var gl = cc.renderContext;
+        var gl = cc._renderContext;
         this._super(plane);
         gl.depthMask(false);
 
-        var program = cc.ShaderCache.getInstance().programForKey(cc.SHADER_POSITION_TEXTURECOLORALPHATEST);
+        var program = cc.shaderCache.programForKey(cc.SHADER_POSITION_TEXTURECOLORALPHATEST);
         var alphaValueLocation = gl.getUniformLocation(program.getProgram(),cc.UNIFORM_ALPHA_TEST_VALUE_S);
         cc.glUseProgram(program.getProgram());
         program.setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-        this._sprite.setShaderProgram(program );
+        this._sprite.shaderProgram = program;
     },
 
     setupStencilForDrawingOnPlane:function (plane) {
-        cc.renderContext.depthMask(true);
+        cc._renderContext.depthMask(true);
         this._super(plane);
     }
 });
@@ -601,21 +634,21 @@ var RawStencilBufferTest5 = RawStencilBufferTest.extend({
     },
 
     setupStencilForClippingOnPlane:function (plane) {
-        var gl = cc.renderContext;
+        var gl = cc._renderContext;
         this._super(plane);
         gl.disable(gl.DEPTH_TEST);
         gl.depthMask(false);
 
-        var program = cc.ShaderCache.getInstance().programForKey(cc.SHADER_POSITION_TEXTURECOLORALPHATEST);
+        var program = cc.shaderCache.programForKey(cc.SHADER_POSITION_TEXTURECOLORALPHATEST);
         var alphaValueLocation = gl.getUniformLocation(program.getProgram(), cc.UNIFORM_ALPHA_TEST_VALUE_S);
         cc.glUseProgram(program.getProgram());
         program.setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-        this._sprite.setShaderProgram( program );
+        this._sprite.shaderProgram = program;
     },
 
     setupStencilForDrawingOnPlane:function (plane) {
-        cc.renderContext.depthMask(true);
-        //cc.renderContext.enable(cc.renderContext.DEPTH_TEST);
+        cc._renderContext.depthMask(true);
+        //cc._renderContext.enable(cc._renderContext.DEPTH_TEST);
         this._super(plane);
     }
 });
@@ -626,33 +659,33 @@ var RawStencilBufferTest6 = RawStencilBufferTest.extend({
     },
 
     setup:function () {
-        cc.renderContext.stencilMask(~0);
+        cc._renderContext.stencilMask(~0);
         this._super();
     },
 
     setupStencilForClippingOnPlane:function (plane) {
-        var gl = cc.renderContext;
+        var gl = cc._renderContext;
         var planeMask = 0x1 << plane;
         gl.stencilMask(planeMask);
         gl.stencilFunc(gl.NEVER, 0, planeMask);
         gl.stencilOp(gl.REPLACE, gl.KEEP, gl.KEEP);
-        cc.drawingUtil.drawSolidRect(cc.POINT_ZERO, cc.pFromSize(cc.Director.getInstance().getWinSize()), cc.c4f(1, 1, 1, 1));
+        cc._drawingUtil.drawSolidRect(cc.p(0, 0), cc.pFromSize(cc.director.getWinSize()), cc.color(255, 255, 255, 255));
         gl.stencilFunc(gl.NEVER, planeMask, planeMask);
         gl.stencilOp(gl.REPLACE, gl.KEEP, gl.KEEP);
         gl.disable(gl.DEPTH_TEST);
         gl.depthMask(false);
 
-        var program = cc.ShaderCache.getInstance().programForKey(cc.SHADER_POSITION_TEXTURECOLORALPHATEST);
+        var program = cc.shaderCache.programForKey(cc.SHADER_POSITION_TEXTURECOLORALPHATEST);
         var alphaValueLocation = gl.getUniformLocation(program.getProgram(), cc.UNIFORM_ALPHA_TEST_VALUE_S);
         cc.glUseProgram(program.getProgram());
         program.setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-        this._sprite.setShaderProgram(program);
+        this._sprite.shaderProgram = program;
 
         gl.flush();
     },
 
     setupStencilForDrawingOnPlane:function (plane) {
-        var gl = cc.renderContext;
+        var gl = cc._renderContext;
         gl.depthMask(true);
         //gl.enable(gl.DEPTH_TEST);
         this._super(plane);
@@ -666,7 +699,7 @@ var arrayOfClippingNodeTest = [
     SpriteTest
 ];
 
-if (sys.platform === 'browser' && ("opengl" in sys.capabilities)) {
+if (!cc.sys.isNative && ("opengl" in cc.sys.capabilities)) {
     arrayOfClippingNodeTest.push(
     RawStencilBufferTest,
     RawStencilBufferTest2,
@@ -675,7 +708,7 @@ if (sys.platform === 'browser' && ("opengl" in sys.capabilities)) {
     RawStencilBufferTest5,
     RawStencilBufferTest6);
 }
-if ( sys.platform !== 'browser'){
+if ( cc.sys.isNative){
     //These tests don't support to HTML5
     arrayOfClippingNodeTest.push(
         ShapeInvertedTest,
@@ -706,8 +739,8 @@ var restartClippingNodeTest = function () {
 var ClippingNodeTestScene = TestScene.extend({
     runThisTest:function () {
         clippingNodeTestSceneIdx = -1;
-        var layer = nextClippingNodeTest();
-        this.addChild(layer);
-        cc.Director.getInstance().replaceScene(this);
+        cc.director.runScene(this);
+	    var layer = nextClippingNodeTest();
+	    this.addChild(layer);
     }
 });

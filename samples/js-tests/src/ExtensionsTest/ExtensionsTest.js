@@ -45,7 +45,7 @@ var extensionsTestItemNames = [
         testScene:function () {
             var pManager = ControlSceneManager.getInstance();
             var pScene = pManager.currentControlScene();
-            cc.Director.getInstance().replaceScene(pScene);
+	        cc.director.runScene(pScene);
         }
     },
     {
@@ -88,24 +88,25 @@ var ExtensionsMainLayer = cc.Layer.extend({
     onEnter:function () {
         this._super();
 
-        var winSize = cc.Director.getInstance().getWinSize();
+        var winSize = cc.director.getWinSize();
 
         var pMenu = cc.Menu.create();
-        pMenu.setPosition(0, 0);
+        pMenu.x = 0;
+        pMenu.y = 0;
         cc.MenuItemFont.setFontName("Arial");
         cc.MenuItemFont.setFontSize(24);
         for (var i = 0; i < extensionsTestItemNames.length; ++i) {
             var selItem = extensionsTestItemNames[i];
-            var pItem = cc.MenuItemFont.create(selItem.itemTitle,
-                this.menuCallback, this);
-            pItem.setPosition(winSize.width / 2, winSize.height - (i + 1) * LINE_SPACE);
+            var pItem = cc.MenuItemFont.create(selItem.itemTitle, this.menuCallback, this);
+            pItem.x = winSize.width / 2;
+            pItem.y = winSize.height - (i + 1) * LINE_SPACE;
             pMenu.addChild(pItem, ITEM_TAG_BASIC + i);
         }
         this.addChild(pMenu);
     },
 
     menuCallback:function (sender) {
-        var nIndex = sender.getZOrder() - ITEM_TAG_BASIC;
+        var nIndex = sender.zIndex - ITEM_TAG_BASIC;
         extensionsTestItemNames[nIndex].testScene();
     }
 });
@@ -114,6 +115,6 @@ var ExtensionsTestScene = TestScene.extend({
     runThisTest:function () {
         var pLayer = new ExtensionsMainLayer();
         this.addChild(pLayer);
-        cc.Director.getInstance().replaceScene(this);
+	    cc.director.runScene(this);
     }
 });
