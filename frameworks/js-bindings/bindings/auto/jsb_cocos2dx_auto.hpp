@@ -294,7 +294,6 @@ bool js_cocos2dx_Node_getParentToNodeAffineTransform(JSContext *cx, uint32_t arg
 bool js_cocos2dx_Node_getOrderOfArrival(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setActionManager(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getPosition(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_setColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_isRunning(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getParent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getPositionZ(JSContext *cx, uint32_t argc, jsval *vp);

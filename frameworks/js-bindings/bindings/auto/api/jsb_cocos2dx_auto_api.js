@@ -2076,16 +2076,6 @@ float
 },
 
 /**
- * @method setColor
- * @param {Color3BObject} arg0
- */
-setColor : function (
-color3b 
-)
-{
-},
-
-/**
  * @method isRunning
  * @return {bool}
  */
