@@ -82,8 +82,8 @@ var TestController = cc.LayerGradient.extend({
 
     ctor:function() {
         this._super();
-        // this.init( cc.c4b(0,0,0,255), cc.c4b(98,99,117,255), cc.p(-1,-1));
-        this.init( cc.c4b(0,0,0,255), cc.c4b(0x46,0x82,0xB4,255));
+        // this.init( cc.color(0,0,0,255), cc.color(98,99,117,255), cc.p(-1,-1));
+        this.init( cc.color(0,0,0,255), cc.color(0x46,0x82,0xB4,255));
 
         // globals
         director = cc.Director.getInstance();

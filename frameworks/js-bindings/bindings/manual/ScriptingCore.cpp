@@ -280,23 +280,23 @@ bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
 
     // osx, ios, android, windows, linux, etc..
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    os = JS_InternString(cx, "ios");
+    os = JS_InternString(cx, "iOS");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    os = JS_InternString(cx, "android");
+    os = JS_InternString(cx, "Android");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    os = JS_InternString(cx, "windows");
+    os = JS_InternString(cx, "Windows");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-    os = JS_InternString(cx, "marmalade");
+    os = JS_InternString(cx, "Marmalade");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    os = JS_InternString(cx, "linux");
+    os = JS_InternString(cx, "Linux");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-    os = JS_InternString(cx, "bada");
+    os = JS_InternString(cx, "Bada");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
-    os = JS_InternString(cx, "blackberry");
+    os = JS_InternString(cx, "Blackberry");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    os = JS_InternString(cx, "osx");
+    os = JS_InternString(cx, "OS X");
 #else
-    os = JS_InternString(cx, "unknown");
+    os = JS_InternString(cx, "Unknown");
 #endif
 
     jsval ret = STRING_TO_JSVAL(os);
