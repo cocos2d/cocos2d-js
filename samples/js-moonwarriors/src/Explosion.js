@@ -6,14 +6,13 @@ var Explosion = cc.Sprite.extend({
     ctor:function () {
         this._super();
 
-        var pFrame = cc.SpriteFrameCache.getInstance().getSpriteFrame("explosion_01.png");
-        this.setSpriteFrame(pFrame);
+        var pFrame = cc.spriteFrameCache.getSpriteFrame("explosion_01.png");
+        this.initWithSpriteFrame(pFrame);
         this.setBlendFunc(gl.SRC_ALPHA, gl.ONE);
 
-        var cs = this.getContentSize();
-        this.tmpWidth = cs.width;
-        this.tmpHeight = cs.height;
-        this.animation = cc.AnimationCache.getInstance().getAnimation("Explosion");
+        this.tmpWidth = this.width;
+        this.tmpHeight = this.height;
+        this.animation = cc.animationCache.getAnimation("Explosion");
     },
     play:function(){
         //return;
@@ -23,7 +22,7 @@ var Explosion = cc.Sprite.extend({
         ));
     },
     destroy:function () {
-        this.setVisible(false);
+        this.visible = false;
         this.active = false;
     }
 });
@@ -33,11 +32,11 @@ Explosion.sharedExplosion = function () {
     var str = "";
     for (var i = 1; i < 35; i++) {
         str = "explosion_" + (i < 10 ? ("0" + i) : i) + ".png";
-        var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
+        var frame = cc.spriteFrameCache.getSpriteFrame(str);
         animFrames.push(frame);
     }
     var animation = cc.Animation.create(animFrames, 0.04);
-    cc.AnimationCache.getInstance().addAnimation(animation, "Explosion");
+    cc.animationCache.addAnimation(animation, "Explosion");
 };
 
 Explosion.getOrCreateExplosion = function () {
@@ -45,7 +44,7 @@ Explosion.getOrCreateExplosion = function () {
     for (var j = 0; j < MW.CONTAINER.EXPLOSIONS.length; j++) {
         var selChild = MW.CONTAINER.EXPLOSIONS[j];
         if (selChild.active == false) {
-            selChild.setVisible(true);
+            selChild.visible = true;
             selChild.active = true;
             selChild.play();
             return selChild;
@@ -66,7 +65,7 @@ Explosion.preSet = function () {
     var explosion = null;
     for (var i = 0; i < 6; i++) {
         explosion = Explosion.create();
-        explosion.setVisible(false);
+        explosion.visible = false;
         explosion.active = false;
     }
 };

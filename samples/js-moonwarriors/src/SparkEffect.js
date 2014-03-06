@@ -5,18 +5,23 @@ var SparkEffect = cc.Class.extend({
     scale:1.2,
     duration:0.7,
     ctor:function () {
-        this.spark1 = cc.Sprite.createWithSpriteFrameName("explode2.png");
+        this.spark1 = cc.Sprite.create("#explode2.png");
         this.spark1.setBlendFunc(gl.SRC_ALPHA, gl.ONE);
-        this.spark2 = cc.Sprite.createWithSpriteFrameName("explode3.png");
+        this.spark2 = cc.Sprite.create("#explode3.png");
         this.spark2.setBlendFunc(gl.SRC_ALPHA, gl.ONE);
     },
-    reset:function (pos) {
-        this.spark1.setPosition(pos);
-        this.spark2.setPosition(pos);
-
-        this.spark1.setScale(this.scale);
-        this.spark2.setScale(this.scale);
-        this.spark2.setRotation(Math.random() * 360);
+    reset:function (x, y) {
+        this.spark1.attr({
+	        x: x,
+	        y: y,
+	        scale: this.scale
+        });
+        this.spark2.attr({
+	        x: x,
+	        y: y,
+	        scale: this.scale,
+	        rotation: Math.random() * 360
+        });
 
         var right = cc.RotateBy.create(this.duration, 45);
         var scaleBy = cc.ScaleBy.create(this.duration, 3, 3);
@@ -31,25 +36,25 @@ var SparkEffect = cc.Class.extend({
     },
     destroy:function () {
         this.active = false;
-        this.spark1.setVisible(false);
-        this.spark2.setVisible(false);
+        this.spark1.visible = false;
+        this.spark2.visible = false;
     }
 });
 
-SparkEffect.getOrCreateSparkEffect = function (pos) {
+SparkEffect.getOrCreateSparkEffect = function (x, y) {
     var selChild = null;
     for (var j = 0; j < MW.CONTAINER.SPARKS.length; j++) {
         selChild = MW.CONTAINER.SPARKS[j];
         if (selChild.active == false) {
             selChild.active = true;
-            selChild.spark1.setVisible(true);
-            selChild.spark2.setVisible(true);
-            selChild.reset(pos);
+            selChild.spark1.visible = true;
+            selChild.spark2.visible = true;
+            selChild.reset(x, y);
             return selChild;
         }
     }
     var spark = SparkEffect.create();
-    spark.reset(pos);
+    spark.reset(x, y);
     return spark;
 };
 
@@ -66,7 +71,7 @@ SparkEffect.preSet = function () {
     for (var i = 0; i < 6; i++) {
         sparkEffect = SparkEffect.create();
         sparkEffect.active = false;
-        sparkEffect.spark1.setVisible(false);
-        sparkEffect.spark2.setVisible(false);
+        sparkEffect.spark1.visible = false;
+        sparkEffect.spark2.visible = false;
     }
 };
