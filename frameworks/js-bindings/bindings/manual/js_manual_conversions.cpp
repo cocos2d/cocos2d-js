@@ -756,10 +756,10 @@ bool jsval_to_cccolor4f(JSContext *cx, jsval v, Color4F* ret) {
     JS::ToNumber(cx, jsa, &a);
     
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ret->r = r;
-    ret->g = g;
-    ret->b = b;
-    ret->a = a;
+    ret->r = (float)r / 255;
+    ret->g = (float)g / 255;
+    ret->b = (float)b / 255;
+    ret->a = (float)a / 255;
     return true;
 }
 
@@ -784,6 +784,24 @@ bool jsval_to_cccolor3b(JSContext *cx, jsval v, Color3B* ret) {
     ret->g = g;
     ret->b = b;
     return true;
+}
+
+bool jsval_cccolor_to_opacity(JSContext *cx, jsval v, int32_t* ret) {
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jsa(cx);
+    
+    double a;
+    bool ok = v.isObject() &&
+    JS_ValueToObject(cx, JS::RootedValue(cx, v), &tmp) &&
+    JS_LookupProperty(cx, tmp, "a", &jsa) &&
+    !jsa.isUndefined() &&
+    JS::ToNumber(cx, jsa, &a);
+    
+    if (ok) {
+        *ret = (int32_t)a;
+        return true;
+    }
+    else return false;
 }
 
 bool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *numPoints) {
@@ -1614,10 +1632,10 @@ jsval cccolor4b_to_jsval(JSContext* cx, const Color4B& v) {
 jsval cccolor4f_to_jsval(JSContext* cx, const Color4F& v) {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
-    bool ok = JS_DefineProperty(cx, tmp, "r", DOUBLE_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "g", DOUBLE_TO_JSVAL(v.g), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "b", DOUBLE_TO_JSVAL(v.b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "a", DOUBLE_TO_JSVAL(v.a), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    bool ok = JS_DefineProperty(cx, tmp, "r", INT_TO_JSVAL((int)(v.r * 255)), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "g", INT_TO_JSVAL((int)(v.g * 255)), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "b", INT_TO_JSVAL((int)(v.b * 255)), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "a", INT_TO_JSVAL((int)(v.a * 255)), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }
