@@ -1,11 +1,14 @@
 var flareEffect = function (flare,target, callback) {
-    flare.setVisible(true);
     flare.stopAllActions();
     flare.setBlendFunc(gl.SRC_ALPHA, gl.ONE);
-    flare.setOpacity(0);
-    flare.setPosition(-30, 297);
-    flare.setRotation(-120);
-    flare.setScale(0.2);
+    flare.attr({
+	    x: -30,
+	    y: 297,
+	    visible: true,
+	    opacity: 0,
+		rotation: -120,
+		scale: 0.2
+	});
 
     var opacityAnim = cc.FadeTo.create(0.5, 255);
     var opacDim = cc.FadeTo.create(1, 0);
@@ -19,7 +22,7 @@ var flareEffect = function (flare,target, callback) {
 
     var onComplete = cc.CallFunc.create(callback, target);
     var killflare = cc.CallFunc.create(function () {
-        this.getParent().removeChild(this,true);
+        this.parent.removeChild(this,true);
     }, flare);
     flare.runAction(cc.Sequence.create(opacityAnim, biggerEase, opacDim, killflare, onComplete));
     flare.runAction(easeMove);
@@ -32,26 +35,34 @@ var removeFromParent = function( sprite )
     sprite.removeFromParent();
 };
 
-var spark = function (ccpoint, parent, scale, duration) {
+var spark = function (x, y, parent, scale, duration) {
     scale = scale || 0.3;
     duration = duration || 0.5;
 
-    var one = cc.Sprite.createWithSpriteFrameName("explode1.png");
-    var two = cc.Sprite.createWithSpriteFrameName("explode2.png");
-    var three = cc.Sprite.createWithSpriteFrameName("explode3.png");
+    var one = cc.Sprite.create("#explode1.png");
+    var two = cc.Sprite.create("#explode2.png");
+    var three = cc.Sprite.create("#explode3.png");
 
-    one.setPosition(ccpoint);
-    two.setPosition(ccpoint);
-    three.setPosition(ccpoint);
+    one.attr({
+	    x: x,
+	    y: y,
+	    scale: scale
+    });
+	two.attr({
+		x: x,
+		y: y,
+		scale: scale
+	});
+	three.attr({
+		x: x,
+		y: y,
+		scale: scale,
+		rotation: Math.random() * 360
+	});
 
     //parent.addChild(one);
     parent.addSpark(two);
     parent.addSpark(three);
-    one.setScale(scale);
-    two.setScale(scale);
-    three.setScale(scale);
-
-    three.setRotation(Math.random() * 360);
 
     var left = cc.RotateBy.create(duration, -45);
     var right = cc.RotateBy.create(duration, 45);

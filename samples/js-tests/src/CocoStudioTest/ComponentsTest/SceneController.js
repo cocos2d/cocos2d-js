@@ -34,12 +34,10 @@ var SceneController = ccs.ComController.extend({
         this._projectiles = [];
     },
     init: function () {
-        this._super();
         return true;
     },
 
     onEnter: function () {
-        this._super();
         this._addTargetTime = 1;
         this._targets = [];
         this._projectiles = [];
@@ -48,7 +46,7 @@ var SceneController = ccs.ComController.extend({
     },
 
     onExit: function () {
-        this._super();
+
     },
 
     update: function (dt) {
@@ -63,21 +61,21 @@ var SceneController = ccs.ComController.extend({
         var target = cc.Sprite.create("res/components/Target.png", cc.rect(0, 0, 27, 40));
         this._owner.addChild(target, 1, 2);
         target.addComponent(EnemyController.create());
-        target.setTag(2);
+        target.tag = 2;
         this._targets.push(target);
     },
 
     spriteMoveFinished: function (sender) {
         var sprite = sender;
         this._owner.removeChild(sprite, true);
-        if (sprite.getTag() == 2) {
-            cc.ArrayRemoveObject(this._targets, sprite);
+        if (sprite.tag == 2) {
+            cc.arrayRemoveObject(this._targets, sprite);
             var gameOverScene = GameOverScene.create();
             gameOverScene.getLayer().getLabel().setString("You Lose!");
-            cc.Director.getInstance().replaceScene(gameOverScene);
+            cc.director.runScene(gameOverScene);
         }
-        else if (sprite.getTag() == 3) {
-            cc.ArrayRemoveObject(this._projectiles, sprite);
+        else if (sprite.tag == 3) {
+            cc.arrayRemoveObject(this._projectiles, sprite);
         }
 
     },
@@ -89,7 +87,7 @@ var SceneController = ccs.ComController.extend({
         if (projectilesDestroyed >= 5) {
             var gameOverScene = GameOverScene.create();
             gameOverScene.getLayer().getLabel().setString("You Win!");
-            cc.Director.getInstance().replaceScene(gameOverScene);
+            cc.director.runScene(gameOverScene);
         }
     },
     getProjectiles: function () {

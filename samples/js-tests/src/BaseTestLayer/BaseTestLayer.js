@@ -39,13 +39,13 @@ var BaseTestLayer = cc.LayerGradient.extend({
 
     ctor:function(colorA, colorB ) {
 
-        sys.garbageCollect();
+        cc.sys.garbageCollect();
 
         this._super();
 
         // default gradient colors
-        var a = cc.c4b(98,99,117,255);
-        var b = cc.c4b(0,0,0,255);
+        var a = cc.color(98,99,117,255);
+        var b = cc.color(0,0,0,255);
 
         if( arguments.length >= 1 )
             a = colorA;
@@ -54,8 +54,8 @@ var BaseTestLayer = cc.LayerGradient.extend({
 
         // for automation, no gradient. helps for grabbing the screen if needed
         if( autoTestEnabled ) {
-            a = cc.c4b(0,0,0,255);
-            b = cc.c4b(0,0,0,255);
+            a = cc.color(0,0,0,255);
+            b = cc.color(0,0,0,255);
         }
 
         this.init( a, b );
@@ -109,30 +109,36 @@ var BaseTestLayer = cc.LayerGradient.extend({
         var t = this.getTitle();
         var label = cc.LabelTTF.create(t, "Arial", 28);
         this.addChild(label, 100, BASE_TEST_TITLE_TAG);
-        label.setPosition(winSize.width / 2, winSize.height - 50);
+        label.x = winSize.width / 2;
+        label.y = winSize.height - 50;
 
         var st = this.getSubtitle();
         if (st) {
             var l = cc.LabelTTF.create(st.toString(), "Thonburi", 16);
             this.addChild(l, 101, BASE_TEST_SUBTITLE_TAG);
-            l.setPosition(winSize.width / 2, winSize.height - 80);
+            l.x = winSize.width / 2;
+            l.y = winSize.height - 80;
         }
 
         var item1 = cc.MenuItemImage.create(s_pathB1, s_pathB2, this.onBackCallback, this);
         var item2 = cc.MenuItemImage.create(s_pathR1, s_pathR2, this.onRestartCallback, this);
         var item3 = cc.MenuItemImage.create(s_pathF1, s_pathF2, this.onNextCallback, this);
 
-        item1.setTag(BASE_TEST_MENUITEM_PREV_TAG);
-        item2.setTag(BASE_TEST_MENUITEM_RESET_TAG);
-        item3.setTag(BASE_TEST_MENUITEM_NEXT_TAG);
+        item1.tag = BASE_TEST_MENUITEM_PREV_TAG;
+        item2.tag = BASE_TEST_MENUITEM_RESET_TAG;
+        item3.tag = BASE_TEST_MENUITEM_NEXT_TAG;
 
         var menu = cc.Menu.create(item1, item2, item3);
 
-        menu.setPosition(0,0);
-        var cs = item2.getContentSize();
-        item1.setPosition( winSize.width/2 - cs.width*2, cs.height/2 );
-        item2.setPosition( winSize.width/2, cs.height/2 );
-        item3.setPosition( winSize.width/2 + cs.width*2, cs.height/2 );
+        menu.x = 0;
+        menu.y = 0;
+        var width = item2.width, height = item2.height;
+        item1.x =  winSize.width/2 - width*2;
+        item1.y = height/2 ;
+        item2.x =  winSize.width/2;
+        item2.y = height/2 ;
+        item3.x =  winSize.width/2 + width*2;
+        item3.y = height/2 ;
 
         this.addChild(menu, 102, BASE_TEST_MENU_TAG);
     },
@@ -217,7 +223,7 @@ var BaseTestLayer = cc.LayerGradient.extend({
             var scene = cc.Scene.create();
             var layer = new TestController();
             scene.addChild(layer);
-            director.replaceScene(scene);
+            director.runScene(scene);
         } else
             try {
                 this.onNextCallback(this);
@@ -254,14 +260,14 @@ var BaseTestLayer = cc.LayerGradient.extend({
     },
 
     readPixels:function(x,y,w,h) {
-        if( 'opengl' in sys.capabilities) {
+        if( 'opengl' in cc.sys.capabilities) {
             var size = 4 * w * h;
             var array = new Uint8Array(size);
             gl.readPixels(x, y, w, h, gl.RGBA, gl.UNSIGNED_BYTE, array);
             return array;
         } else {
             // implement a canvas-html5 readpixels
-            return cc.renderContext.getImageData(x, winSize.height-y-h, w, h).data;
+            return cc._renderContext.getImageData(x, winSize.height-y-h, w, h).data;
         }
     },
 

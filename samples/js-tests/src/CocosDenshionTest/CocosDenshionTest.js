@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var audioEngine = cc.AudioEngine.getInstance();
+var audioEngine = cc.audioEngine;
 
 var MUSIC_FILE = "res/Sound/background.mp3";
 var EFFECT_FILE = "res/Sound/effect2.mp3";
@@ -153,7 +153,7 @@ var CocosDenshionTest = cc.LayerGradient.extend({
     ctor:function () {
         this._super();
 
-        this.init(cc.c4b(0, 0, 0, 255), cc.c4b(148, 80, 120, 255));
+        this.init(cc.color(0, 0, 0, 255), cc.color(148, 80, 120, 255));
 
         this._itemMenu = cc.Menu.create();
         var winSize = director.getWinSize();
@@ -161,17 +161,30 @@ var CocosDenshionTest = cc.LayerGradient.extend({
             var label = cc.LabelTTF.create(DenshionTests[i].title, "Arial", 24);
             var menuItem = cc.MenuItemLabel.create(label, this.onMenuCallback, this);
             this._itemMenu.addChild(menuItem, i + 10000);
-            menuItem.setPosition(winSize.width / 2, (winSize.height - (i + 1) * LINE_SPACE));
+            menuItem.x = winSize.width / 2;
+            menuItem.y = winSize.height - (i + 1) * LINE_SPACE;
         }
         this._testCount = i;
-        this._itemMenu.setContentSize(winSize.width, (this._testCount + 1) * LINE_SPACE);
-        this._itemMenu.setPosition(0, 0);
+        this._itemMenu.width = winSize.width;
+	    this._itemMenu.height = (this._testCount + 1) * LINE_SPACE;
+        this._itemMenu.x = 0;
+        this._itemMenu.y = 0;
         this.addChild(this._itemMenu);
 
-        if( 'touches' in sys.capabilities )
-            this.setTouchEnabled(true);
-        else if ('mouse' in sys.capabilities )
-            this.setMouseEnabled(true);
+        if( 'touches' in cc.sys.capabilities ) {
+            cc.eventManager.addListener({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+                onTouchesMoved: function (touches, event) {
+                    event.getCurrentTarget().moveMenu(touches[0].getDelta());
+                }
+            }, this);
+        } else if ('mouse' in cc.sys.capabilities )
+             cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
+                 onMouseMove: function(event){
+                     event.getCurrentTarget().moveMenu(event.getDelta());
+                 }
+             }, this);
 
         // set default volume
         audioEngine.setEffectsVolume(0.5);
@@ -179,31 +192,17 @@ var CocosDenshionTest = cc.LayerGradient.extend({
     },
     onExit:function () {
         this._super();
-        cc.AudioEngine.end();
+        audioEngine.end();
     },
 
     onMenuCallback:function (sender) {
-        var idx = sender.getZOrder() - 10000;
+        var idx = sender.zIndex - 10000;
         // create the test scene and run it
         var scene = DenshionTests[idx].playFunc();
     },
 
-    onTouchesMoved:function (touches, event) {
-        var delta = touches[0].getDelta();
-        this.moveMenu(delta);
-        return true;
-    },
-
-    onMouseDragged:function (event) {
-        var delta = event.getDelta();
-        this.moveMenu(delta);
-        return true;
-    },
-
     moveMenu:function (delta) {
-        var current = this._itemMenu.getPosition();
-
-        var newY = current.y + delta.y;
+        var newY = this._itemMenu.y + delta.y;
 
         if (newY < 0)
             newY = 0;
@@ -211,16 +210,16 @@ var CocosDenshionTest = cc.LayerGradient.extend({
         if (newY > ((DenshionTests.length + 1) * LINE_SPACE - winSize.height))
             newY = ((DenshionTests.length + 1) * LINE_SPACE - winSize.height);
 
-        this._itemMenu.setPosition(current.x, newY);
+        this._itemMenu.y = newY;
     }
 });
 
 var CocosDenshionTestScene = TestScene.extend({
     runThisTest:function () {
-        audioEngine = cc.AudioEngine.getInstance();
+        audioEngine = cc.audioEngine;
         var layer = new CocosDenshionTest();
         this.addChild(layer);
-        director.replaceScene(this);
+        director.runScene(this);
     }
 });
 

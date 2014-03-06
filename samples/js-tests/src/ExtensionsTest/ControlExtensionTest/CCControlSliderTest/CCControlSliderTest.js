@@ -28,35 +28,41 @@ var ControlSliderTest = ControlScene.extend({
     _displayValueLabel:null,
     init:function () {
         if (this._super()) {
-            var screenSize = cc.Director.getInstance().getWinSize();
+            var screenSize = cc.director.getWinSize();
 
             // Add a label in which the slider value will be displayed
             this._displayValueLabel = cc.LabelTTF.create("Move the slider thumb!\nThe lower slider is restricted.", "Marker Felt", 32);
             this._displayValueLabel.retain();
-            this._displayValueLabel.setAnchorPoint(0.5, -1.0);
-            this._displayValueLabel.setPosition(screenSize.width / 1.7, screenSize.height / 2.0);
+            this._displayValueLabel.anchorX = 0.5;
+            this._displayValueLabel.anchorY = -1.0;
+            this._displayValueLabel.x = screenSize.width / 1.7;
+            this._displayValueLabel.y = screenSize.height / 2.0;
             this.addChild(this._displayValueLabel);
 
             // Add the slider
             var slider = cc.ControlSlider.create("res/extensions/sliderTrack.png", "res/extensions/sliderProgress.png", "res/extensions/sliderThumb.png");
-            slider.setAnchorPoint(0.5, 1.0);
+            slider.anchorX = 0.5;
+            slider.anchorY = 1.0;
             slider.setMinimumValue(0.0); // Sets the min value of range
             slider.setMaximumValue(5.0); // Sets the max value of range
-            slider.setPosition(screenSize.width / 2.0, screenSize.height / 2.0 + 16);
-            slider.setTag(1);
+            slider.x = screenSize.width / 2.0;
+            slider.y = screenSize.height / 2.0 + 16;
+            slider.tag = 1;
 
             // When the value of the slider will change, the given selector will be call
             slider.addTargetWithActionForControlEvents(this, this.valueChanged, cc.CONTROL_EVENT_VALUECHANGED);
 
             var restrictSlider = cc.ControlSlider.create("res/extensions/sliderTrack.png", "res/extensions/sliderProgress.png", "res/extensions/sliderThumb.png");
-            restrictSlider.setAnchorPoint(0.5, 1.0);
+            restrictSlider.anchorX = 0.5;
+	        restrictSlider.anchorY = 1.0;
             restrictSlider.setMinimumValue(0.0); // Sets the min value of range
             restrictSlider.setMaximumValue(5.0); // Sets the max value of range
             restrictSlider.setMaximumAllowedValue(4.0);
             restrictSlider.setMinimumAllowedValue(1.5);
             restrictSlider.setValue(3.0);
-            restrictSlider.setPosition(screenSize.width / 2.0, screenSize.height / 2.0 - 24);
-            restrictSlider.setTag(2);
+            restrictSlider.x = screenSize.width / 2.0;
+            restrictSlider.y = screenSize.height / 2.0 - 24;
+            restrictSlider.tag = 2;
 
             //same with restricted
             restrictSlider.addTargetWithActionForControlEvents(this, this.valueChanged, cc.CONTROL_EVENT_VALUECHANGED);
@@ -69,9 +75,9 @@ var ControlSliderTest = ControlScene.extend({
     },
     valueChanged:function (sender, controlEvent) {
         // Change value of label.
-        if (sender.getTag() == 1)
+        if (sender.tag == 1)
             this._displayValueLabel.setString("Upper slider value = " + sender.getValue().toFixed(2));
-        if (sender.getTag() == 2)
+        if (sender.tag == 2)
             this._displayValueLabel.setString("Lower slider value = " + sender.getValue().toFixed(2));
     }
 });

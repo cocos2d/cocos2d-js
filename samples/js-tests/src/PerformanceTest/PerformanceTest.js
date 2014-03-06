@@ -40,7 +40,7 @@ var PerformanceTests = [
 // It is pretty irrelevant in JSB so we don't include it in JSB.
 // "PerformanceVirtualMachineTest" is inserted before
 // "Automated Sprite Performarnce Test".
-if (sys.platform == 'browser')
+if (!cc.sys.isNative)
     PerformanceTests.splice(6, 0, "PerformanceVirtualMachineTest");
 
 ////////////////////////////////////////////////////////
@@ -51,29 +51,31 @@ if (sys.platform == 'browser')
 var PerformanceMainLayer = cc.LayerGradient.extend({
     ctor:function() {
         this._super();
-        this.init( cc.c4b(0,0,0,255), cc.c4b(98,99,117,255));
+        this.init( cc.color(0,0,0,255), cc.color(98,99,117,255));
     },
 
     onEnter:function () {
         this._super();
 
-        var s = cc.Director.getInstance().getWinSize();
+        var s = cc.director.getWinSize();
 
         var menu = cc.Menu.create();
-        menu.setPosition(0,0);
+        menu.x = 0;
+        menu.y = 0;
         cc.MenuItemFont.setFontName("Arial");
         cc.MenuItemFont.setFontSize(24);
 
         for (var i = 0; i < PerformanceTests.length; i++) {
             var pItem = cc.MenuItemFont.create(PerformanceTests[i], this.menuCallback, this);
-            pItem.setPosition(s.width / 2, s.height - (i + 1) * LINE_SPACE);
+            pItem.x = s.width / 2;
+            pItem.y = s.height - (i + 1) * LINE_SPACE;
             menu.addChild(pItem, ITEM_TAG_BASIC + i);
         }
 
         this.addChild(menu);
     },
     menuCallback:function (sender) {
-        var index = sender.getZOrder() - ITEM_TAG_BASIC;
+        var index = sender.zIndex - ITEM_TAG_BASIC;
         // create the test scene and run it
         switch (index) {
             case 0:
@@ -95,12 +97,12 @@ var PerformanceMainLayer = cc.LayerGradient.extend({
                 runAnimationTest();
                 break;
             case 6:
-                if (sys.platform == 'browser') {
+                if (!cc.sys.isNative) {
                     runVirtualMachineTest();
                     break;
                 }
-                // Else, fall through (JSB). 
-                // TODO: For now I think it's ugly to have "Automated Sprite 
+                // Else, fall through (JSB).
+                // TODO: For now I think it's ugly to have "Automated Sprite
                 // Perforance Test" come before "PerformanceVirtualMachineTest",
                 // that's why there's ugly code like this. Let's think about
                 // this later.
@@ -130,22 +132,27 @@ var PerformBasicLayer = cc.Layer.extend({
     onEnter:function () {
         this._super();
 
-        var s = cc.Director.getInstance().getWinSize();
+        var s = cc.director.getWinSize();
 
         cc.MenuItemFont.setFontName("Arial");
         cc.MenuItemFont.setFontSize(24);
         var mainItem = cc.MenuItemFont.create("Back", this.toMainLayer, this);
-        mainItem.setPosition(s.width - 50, 25);
+        mainItem.x = s.width - 50;
+        mainItem.y = 25;
         var menu = cc.Menu.create(mainItem);
-        menu.setPosition(0,0);
+        menu.x = 0;
+        menu.y = 0;
 
         if (this._controlMenuVisible) {
             var item1 = cc.MenuItemImage.create(s_pathB1, s_pathB2, this.backCallback, this);
             var item2 = cc.MenuItemImage.create(s_pathR1, s_pathR2, this.restartCallback, this);
             var item3 = cc.MenuItemImage.create(s_pathF1, s_pathF2, this.nextCallback, this);
-            item1.setPosition(s.width / 2 - 100, 30);
-            item2.setPosition(s.width / 2, 30);
-            item3.setPosition(s.width / 2 + 100, 30);
+            item1.x = s.width / 2 - 100;
+            item1.y = 30;
+            item2.x = s.width / 2;
+            item2.y = 30;
+            item3.x = s.width / 2 + 100;
+            item3.y = 30;
 
             menu.addChild(item1, ITEM_TAG_BASIC);
             menu.addChild(item2, ITEM_TAG_BASIC);
@@ -187,7 +194,7 @@ var PerformanceTestScene = TestScene.extend({
     runThisTest:function () {
         var layer = new PerformanceMainLayer();
         this.addChild(layer);
-        cc.Director.getInstance().replaceScene(this);
+        cc.director.runScene(this);
     }
 });
 

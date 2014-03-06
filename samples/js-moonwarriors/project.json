@@ -1,0 +1,15 @@
+{
+    "debugMode" : 4,
+    "showFPS" : true,
+    "frameRate" : 60,
+    "id" : "gameCanvas",
+    "renderMode" : 1,
+    "engineDir":"../",
+
+    "modules" : ["menus"],
+
+    "jsList" : [
+        "src/resource.js",
+        "src/myApp.js"
+    ]
+}
