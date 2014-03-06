@@ -33,40 +33,42 @@ var UILayoutTestBase = UIScene.extend({
             //init text
             this._topDisplayLabel.setText("");
             this._bottomDisplayLabel.setText(this.getText());
-            this._bottomDisplayLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - this._bottomDisplayLabel.getSize().height * 3));
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
-            var root = this._uiLayer.getChildByTag(81);
-            var background = root.getChildByName("background_Panel");
+            var background = this._widget.getChildByName("background_Panel");
 
             // Create the layout
             this.layout = this.createLayout();
             var  layoutRect = this.layout.getSize();
             var backgroundRect = background.getSize();
-            this.layout.setPosition(cc.p((widgetSize.width - backgroundRect.width) / 2 +
-                (backgroundRect.width - layoutRect.width) / 2,
-                (widgetSize.height - backgroundRect.height) / 2 +
-                    (backgroundRect.height - layoutRect.height) / 2));
-            this._uiLayer.addChild(this.layout);
+            this.layout.x = (widgetSize.width - backgroundRect.width) / 2 + (backgroundRect.width - layoutRect.width) / 2;
+	        this.layout.y = (widgetSize.height - backgroundRect.height) / 2 + (backgroundRect.height - layoutRect.height) / 2;
+            this._mainNode.addChild(this.layout);
 
-            this.button = ccui.Button.create();
+            this.button = ccs.Button.create();
             this.button.setTouchEnabled(true);
             this.button.loadTextures("res/cocosgui/animationbuttonnormal.png", "res/cocosgui/animationbuttonpressed.png", "");
-            this.button.setPosition(cc.p(this.button.getSize().width / 2, layoutRect.height - this.button.getSize().height / 2));
+            this.button.x = this.button.width / 2;
+            this.button.y = layoutRect.height - this.button.height / 2;
             this.layout.addChild(this.button);
 
-            this.textButton = ccui.Button.create();
+            this.textButton = ccs.Button.create();
             this.textButton.setTouchEnabled(true);
             this.textButton.loadTextures("res/cocosgui/backtotopnormal.png", "res/cocosgui/backtotoppressed.png", "");
             this.textButton.setTitleText("Text Button");
-            this.textButton.setPosition(cc.p(layoutRect.width / 2, layoutRect.height / 2));
+            this.textButton.x = layoutRect.width / 2;
+            this.textButton.y = layoutRect.height / 2;
             this.layout.addChild(this.textButton);
 
-            this.button_scale9 = ccui.Button.create();
+            this.button_scale9 = ccs.Button.create();
             this.button_scale9.setTouchEnabled(true);
             this.button_scale9.loadTextures("res/cocosgui/button.png", "res/cocosgui/buttonHighlighted.png", "");
             this.button_scale9.setScale9Enabled(true);
-            this.button_scale9.setSize(cc.size(100, this.button_scale9.getContentSize().height));
-            this.button_scale9.setPosition(cc.p(layoutRect.width - this.button_scale9.getSize().width / 2, this.button_scale9.getSize().height / 2));
+            this.button_scale9.width = 100;
+	        this.button_scale9.height = this.button_scale9.height;
+            this.button_scale9.x = layoutRect.width - this.button_scale9.width / 2;
+            this.button_scale9.y = this.button_scale9.height / 2;
             this.layout.addChild(this.button_scale9);
 
             this.setLayoutParameter();
@@ -78,7 +80,7 @@ var UILayoutTestBase = UIScene.extend({
         return "";
     },
     createLayout: function () {
-        var layout = ccui.Layout.create();
+        var layout = ccs.Layout.create();
         layout.setSize(cc.size(280, 150));
         return layout;
     },
@@ -88,7 +90,7 @@ var UILayoutTestBase = UIScene.extend({
 });
 var UILayoutTest = UILayoutTestBase.extend({
     createLayout: function () {
-        var layout = ccui.Layout.create();
+        var layout = ccs.Layout.create();
         layout.setSize(cc.size(280, 150));
         return layout;
     },
@@ -98,9 +100,9 @@ var UILayoutTest = UILayoutTestBase.extend({
 });
 var UILayoutTest_Color = UILayoutTestBase.extend({
     createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setBackGroundColorType(ccui.LayoutBackGroundColorType.solid);
-        layout.setBackGroundColor(cc.c3b(128, 128, 128));
+        var layout = ccs.Layout.create();
+        layout.setBackGroundColorType(ccs.LayoutBackGroundColorType.solid);
+        layout.setBackGroundColor(cc.color(128, 128, 128));
         layout.setSize(cc.size(280, 150));
         return layout;
     },
@@ -110,9 +112,9 @@ var UILayoutTest_Color = UILayoutTestBase.extend({
 });
 var UILayoutTest_Gradient = UILayoutTestBase.extend({
     createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setBackGroundColorType(ccui.LayoutBackGroundColorType.gradient);
-        layout.setBackGroundColor(cc.c3b(64, 64, 64), cc.c3b(192, 192, 192));
+        var layout = ccs.Layout.create();
+        layout.setBackGroundColorType(ccs.LayoutBackGroundColorType.gradient);
+        layout.setBackGroundColor(cc.color(64, 64, 64), cc.color(192, 192, 192));
         layout.setSize(cc.size(280, 150));
         return layout;
     },
@@ -122,7 +124,7 @@ var UILayoutTest_Gradient = UILayoutTestBase.extend({
 });
 var UILayoutTest_BackGroundImage = UILayoutTestBase.extend({
     createLayout: function () {
-        var layout = ccui.Layout.create();
+        var layout = ccs.Layout.create();
         layout.setClippingEnabled(true);
         layout.setBackGroundImage("res/cocosgui/Hello.png");
         layout.setSize(cc.size(280, 150));
@@ -135,7 +137,7 @@ var UILayoutTest_BackGroundImage = UILayoutTestBase.extend({
 
 var UILayoutTest_BackGroundImage_Scale9 = UILayoutTestBase.extend({
     createLayout: function () {
-        var layout = ccui.Layout.create();
+        var layout = ccs.Layout.create();
         layout.setBackGroundImageScale9Enabled(true);
         layout.setBackGroundImage("res/cocosgui/green_edit.png");
         layout.setSize(cc.size(280, 150));
@@ -147,8 +149,8 @@ var UILayoutTest_BackGroundImage_Scale9 = UILayoutTestBase.extend({
 });
 var UILayoutTest_Layout_Linear_Vertical = UILayoutTestBase.extend({
     createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setLayoutType(ccui.LayoutType.linearVertical);
+        var layout = ccs.Layout.create();
+        layout.setLayoutType(ccs.LayoutType.linearVertical);
         layout.setSize(cc.size(280, 150));
         return layout;
     },
@@ -156,26 +158,26 @@ var UILayoutTest_Layout_Linear_Vertical = UILayoutTestBase.extend({
         return "Layout Layout Linear Vertical";
     },
     setLayoutParameter: function () {
-        var lp1 = ccui.LinearLayoutParameter.create();
+        var lp1 = ccs.LinearLayoutParameter.create();
         this.button.setLayoutParameter(lp1);
-        lp1.setGravity(ccui.LinearGravity.centerHorizontal);
-        lp1.setMargin(new ccui.Margin(0, 5, 0, 10));
+        lp1.setGravity(ccs.LinearGravity.centerHorizontal);
+        lp1.setMargin(new ccs.Margin(0, 5, 0, 10));
 
-        var lp2 = ccui.LinearLayoutParameter.create();
+        var lp2 = ccs.LinearLayoutParameter.create();
         this.textButton.setLayoutParameter(lp2);
-        lp2.setGravity(ccui.LinearGravity.centerHorizontal);
-        lp2.setMargin(new ccui.Margin(0, 10, 0, 10));
+        lp2.setGravity(ccs.LinearGravity.centerHorizontal);
+        lp2.setMargin(new ccs.Margin(0, 10, 0, 10));
 
-        var lp3 = ccui.LinearLayoutParameter.create();
+        var lp3 = ccs.LinearLayoutParameter.create();
         this.button_scale9.setLayoutParameter(lp3);
-        lp3.setGravity(ccui.LinearGravity.centerHorizontal);
-        lp3.setMargin(new ccui.Margin(0, 10, 0, 10));
+        lp3.setGravity(ccs.LinearGravity.centerHorizontal);
+        lp3.setMargin(new ccs.Margin(0, 10, 0, 10));
     }
 });
 var UILayoutTest_Layout_Linear_Horizontal = UILayoutTestBase.extend({
     createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setLayoutType(ccui.LayoutType.linearHorizontal);
+        var layout = ccs.Layout.create();
+        layout.setLayoutType(ccs.LayoutType.linearHorizontal);
         layout.setClippingEnabled(true);
         layout.setSize(cc.size(280, 150));
         return layout;
@@ -184,46 +186,46 @@ var UILayoutTest_Layout_Linear_Horizontal = UILayoutTestBase.extend({
         return "Layout Layout Linear Horizontal";
     },
     setLayoutParameter: function () {
-        var lp1 = ccui.LinearLayoutParameter.create();
+        var lp1 = ccs.LinearLayoutParameter.create();
         this.button.setLayoutParameter(lp1);
-        lp1.setGravity(ccui.LinearGravity.centerVertical);
-        lp1.setMargin(new ccui.Margin(0, 10, 0, 10));
+        lp1.setGravity(ccs.LinearGravity.centerVertical);
+        lp1.setMargin(new ccs.Margin(0, 10, 0, 10));
 
-        var lp2 = ccui.LinearLayoutParameter.create();
+        var lp2 = ccs.LinearLayoutParameter.create();
         this.textButton.setLayoutParameter(lp2);
-        lp2.setGravity(ccui.LinearGravity.centerVertical);
-        lp2.setMargin(new ccui.Margin(0, 10, 0, 10));
+        lp2.setGravity(ccs.LinearGravity.centerVertical);
+        lp2.setMargin(new ccs.Margin(0, 10, 0, 10));
 
-        var lp3 = ccui.LinearLayoutParameter.create();
+        var lp3 = ccs.LinearLayoutParameter.create();
         this.button_scale9.setLayoutParameter(lp3);
-        lp3.setGravity(ccui.LinearGravity.centerVertical);
-        lp3.setMargin(new ccui.Margin(0, 10, 0, 10));
+        lp3.setGravity(ccs.LinearGravity.centerVertical);
+        lp3.setMargin(new ccs.Margin(0, 10, 0, 10));
     }
 });
 
 var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
     createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setLayoutType(ccui.LayoutType.relative);
+        var layout = ccs.Layout.create();
+        layout.setLayoutType(ccs.LayoutType.relative);
         layout.setSize(cc.size(280, 150));
-        layout.setBackGroundColorType(ccui.LayoutBackGroundColorType.solid);
-        layout.setBackGroundColor(cc.GREEN);
+        layout.setBackGroundColorType(ccs.LayoutBackGroundColorType.solid);
+        layout.setBackGroundColor(cc.color.green);
         return layout;
     },
     getText: function () {
         return "Layout Layout Relative";
     },
     setLayoutParameter: function () {
-        var lp1 = ccui.RelativeLayoutParameter.create();
+        var lp1 = ccs.RelativeLayoutParameter.create();
         this.button.setLayoutParameter(lp1);
-        lp1.setGravity(ccui.RelativeAlign.alignParentLeftBottom);
+        lp1.setGravity(ccs.RelativeAlign.alignParentLeftBottom);
 
-        var lp2 = ccui.RelativeLayoutParameter.create();
+        var lp2 = ccs.RelativeLayoutParameter.create();
         this.textButton.setLayoutParameter(lp2);
-        lp2.setGravity(ccui.RelativeAlign.alignParentLeftBottom);
+        lp2.setGravity(ccs.RelativeAlign.alignParentLeftBottom);
 
-        var lp3 = ccui.RelativeLayoutParameter.create();
+        var lp3 = ccs.RelativeLayoutParameter.create();
         this.button_scale9.setLayoutParameter(lp3);
-        lp3.setGravity(ccui.RelativeAlign.alignParentRightCenterVertical);
+        lp3.setGravity(ccs.RelativeAlign.alignParentRightCenterVertical);
     }
 });

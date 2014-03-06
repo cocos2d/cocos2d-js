@@ -205,10 +205,8 @@ var TouchableSprite = cc.Sprite.extend({
             },
             onTouchEnded: function (touch, event) {
                 selfPointer.setColor(cc.color.white);
-                if(selfPointer._removeListenerOnTouchEnded) {
+                if(selfPointer._removeListenerOnTouchEnded)
                     cc.eventManager.removeListener(selfPointer._listener);
-                    selfPointer._listener = null;
-                }
             }
         });
 
@@ -220,9 +218,7 @@ var TouchableSprite = cc.Sprite.extend({
     },
 
     onExit: function(){
-        if (this._listener != null)
-            cc.eventManager.removeListener(this._listener);
-
+        cc.eventManager.removeListener(this._listener);
         this._super();
     },
 
@@ -850,8 +846,6 @@ var GlobalZTouchTest = EventDispatcherTestDemo.extend({
         }
 
         this.scheduleUpdate();
-
-        this.setGlobalZOrder(-2);
     },
 
     update: function(dt){

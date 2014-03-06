@@ -33,8 +33,15 @@ Box2DTestLayer = cc.Layer.extend({
     ctor:function () {
         this._super();
 
-        this.setTouchEnabled(true);
-        //setAccelerometerEnabled( true );
+        cc.eventManager.addListener(cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesEnded: function(touches, event){
+                //Add a new body/atlas sprite at the touched location
+                var touch = touches[0];
+                var location = touch.getLocation();
+                event.getCurrentTarget().addNewSpriteWithCoords(location);
+            }
+        }), this);
 
         var b2Vec2 = Box2D.Common.Math.b2Vec2
             , b2BodyDef = Box2D.Dynamics.b2BodyDef
@@ -43,7 +50,7 @@ Box2DTestLayer = cc.Layer.extend({
             , b2World = Box2D.Dynamics.b2World
             , b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
 
-        var screenSize = cc.Director.getInstance().getWinSize();
+        var screenSize = cc.director.getWinSize();
         //UXLog(L"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
 
         // Construct a world object, which will hold and simulate the rigid bodies.
@@ -94,8 +101,9 @@ Box2DTestLayer = cc.Layer.extend({
 
         var label = cc.LabelTTF.create("Tap screen", "Marker Felt", 32);
         this.addChild(label, 0);
-        label.setColor(cc.c3b(0, 0, 255));
-        label.setPosition(screenSize.width / 2, screenSize.height - 50);
+        label.color = cc.color(0, 0, 255);
+        label.x = screenSize.width / 2;
+        label.y = screenSize.height - 50;
 
         this.scheduleUpdate();
     },
@@ -108,10 +116,11 @@ Box2DTestLayer = cc.Layer.extend({
         //just randomly picking one of the images
         var idx = (Math.random() > .5 ? 0 : 1);
         var idy = (Math.random() > .5 ? 0 : 1);
-        var sprite = cc.Sprite.createWithTexture(batch.getTexture(), cc.rect(32 * idx, 32 * idy, 32, 32));
+        var sprite = cc.Sprite.create(batch.texture, cc.rect(32 * idx, 32 * idy, 32, 32));
         batch.addChild(sprite);
 
-        sprite.setPosition(p.x, p.y);
+        sprite.x = p.x;
+        sprite.y = p.y;
 
         // Define the dynamic body.
         //Set up a 1m squared box in the physics world
@@ -156,21 +165,13 @@ Box2DTestLayer = cc.Layer.extend({
             if (b.GetUserData() != null) {
                 //Synchronize the AtlasSprites position and rotation with the corresponding body
                 var myActor = b.GetUserData();
-                myActor.setPosition(b.GetPosition().x * PTM_RATIO, b.GetPosition().y * PTM_RATIO);
-                myActor.setRotation(-1 * cc.RADIANS_TO_DEGREES(b.GetAngle()));
-                //console.log(b.GetAngle());
+                myActor.x = b.GetPosition().x * PTM_RATIO;
+                myActor.y = b.GetPosition().y * PTM_RATIO;
+                myActor.rotation = -1 * cc.RADIANS_TO_DEGREES(b.GetAngle());
             }
         }
 
-    },
-    onTouchesEnded:function(touches){
-        //Add a new body/atlas sprite at the touched location
-        var touch = touches[0];
-        var location = touch.getLocation();
-        //location = cc.Director.getInstance().convertToGL(location);
-        this.addNewSpriteWithCoords(location);
     }
-
     //CREATE_NODE(Box2DTestLayer);
 });
 
@@ -179,6 +180,6 @@ Box2DTestScene = TestScene.extend({
         var layer = new Box2DTestLayer();
         this.addChild(layer);
 
-        cc.Director.getInstance().replaceScene(this);
+        cc.director.runScene(this);
     }
 });

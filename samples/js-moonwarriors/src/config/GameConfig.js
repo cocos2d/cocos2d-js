@@ -15,6 +15,8 @@
  *
  */
 
+var MW = MW || {};
+
 //game state
 MW.GAME_STATE = {
     HOME:0,

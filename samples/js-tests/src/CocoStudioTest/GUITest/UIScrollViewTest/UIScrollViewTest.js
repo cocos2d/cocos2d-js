@@ -28,56 +28,60 @@ var UIScrollViewTest_Vertical = UIScene.extend({
             var widgetSize = this._widget.getSize();
             //init text
             this._topDisplayLabel.setText("Move by vertical direction");
-            this._topDisplayLabel.setPosition(cc.p(widgetSize.width / 2.0,  widgetSize.height / 2.0 + this._topDisplayLabel.getContentSize().height * 1.5));
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
             this._bottomDisplayLabel.setText("ScrollView");
-            this._bottomDisplayLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - this._bottomDisplayLabel.getSize().height * 3));
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
-            var root = this._uiLayer.getChildByTag(81);
-            var background = root.getChildByName("background_Panel");
+            var background = this._widget.getChildByName("background_Panel");
 
             // Create the scrollview
-            var scrollView = ccui.ScrollView.create();
-            scrollView.setDirection(ccui.ScrollViewDir.vertical);
+            var scrollView = ccs.ScrollView.create();
+            scrollView.setDirection(ccs.ScrollViewDir.vertical);
             scrollView.setTouchEnabled(true);
             scrollView.setSize(cc.size(280, 150));
 
-            var backgroundSize = background.getContentSize();
-            scrollView.setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                (backgroundSize.width - scrollView.getSize().width) / 2,
-                (widgetSize.height - backgroundSize.height) / 2 +
-                    (backgroundSize.height - scrollView.getSize().height) / 2));
-            this._uiLayer.addChild(scrollView);
+            scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollView.width) / 2;
+            scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollView.height) / 2;
+            this._mainNode.addChild(scrollView);
 
-            var imageView = ccui.ImageView.create();
+            var imageView = ccs.ImageView.create();
             imageView.loadTexture("res/cocosgui/ccicon.png");
 
-            var innerWidth = scrollView.getSize().width;
-            var innerHeight = scrollView.getSize().height + imageView.getSize().height;
+            var innerWidth = scrollView.width;
+            var innerHeight = scrollView.height + imageView.height;
 
             scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
 
-            var button = ccui.Button.create();
+            var button = ccs.Button.create();
             button.setTouchEnabled(true);
             button.loadTextures("res/cocosgui/animationbuttonnormal.png", "res/cocosgui/animationbuttonpressed.png", "");
-            button.setPosition(cc.p(innerWidth / 2, scrollView.getInnerContainerSize().height - button.getSize().height / 2));
+            button.x = innerWidth / 2;
+            button.y = scrollView.getInnerContainerSize().height - button.height / 2;
             scrollView.addChild(button);
 
-            var textButton = ccui.Button.create();
+            var textButton = ccs.Button.create();
             textButton.setTouchEnabled(true);
             textButton.loadTextures("res/cocosgui/backtotopnormal.png", "res/cocosgui/backtotoppressed.png", "");
             textButton.setTitleText("Text Button");
-            textButton.setPosition(cc.p(innerWidth / 2, button.getBottomInParent() - button.getSize().height));
+            textButton.x = innerWidth / 2;
+            textButton.y = button.getBottomInParent() - button.height;
             scrollView.addChild(textButton);
 
-            var button_scale9 = ccui.Button.create();
+            var button_scale9 = ccs.Button.create();
             button_scale9.setTouchEnabled(true);
             button_scale9.setScale9Enabled(true);
             button_scale9.loadTextures("res/cocosgui/button.png", "res/cocosgui/buttonHighlighted.png", "");
-            button_scale9.setSize(cc.size(100, button_scale9.getContentSize().height));
-            button_scale9.setPosition(cc.p(innerWidth / 2, textButton.getBottomInParent() - textButton.getSize().height));
+            button_scale9.width = 100;
+	        button_scale9.height = button_scale9.height;
+            button_scale9.x = innerWidth / 2;
+            button_scale9.y = textButton.getBottomInParent() - textButton.height;
             scrollView.addChild(button_scale9);
 
-            imageView.setPosition(cc.p(innerWidth / 2, imageView.getSize().height / 2));
+            imageView.x = innerWidth / 2;
+
+            imageView.y = imageView.height / 2;
             scrollView.addChild(imageView);
 
             return true;
@@ -92,29 +96,27 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
             var widgetSize = this._widget.getSize();
             //init text
             this._topDisplayLabel.setText("Move by horizontal direction");
-            this._topDisplayLabel.setPosition(cc.p(widgetSize.width / 2.0,  widgetSize.height / 2.0 + this._topDisplayLabel.getContentSize().height * 1.5));
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
             this._bottomDisplayLabel.setText("ScrollView");
-            this._bottomDisplayLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - this._bottomDisplayLabel.getSize().height * 3));
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
-            var root = this._uiLayer.getChildByTag(81);
-            var background = root.getChildByName("background_Panel");
+            var background = this._widget.getChildByName("background_Panel");
 
             // Create the scrollview
-            var scrollView = ccui.ScrollView.create();
-            scrollView.setDirection(ccui.ScrollViewDir.horizontal);
+            var scrollView = ccs.ScrollView.create();
+            scrollView.setDirection(ccs.ScrollViewDir.horizontal);
             scrollView.setTouchEnabled(true);
             scrollView.setSize(cc.size(280, 150));
             var scrollViewRect = scrollView.getSize();
             scrollView.setInnerContainerSize(cc.size(scrollViewRect.width,scrollViewRect.height));
 
-            var backgroundSize = background.getContentSize();
-            scrollView.setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                (backgroundSize.width - scrollViewRect.width) / 2,
-                (widgetSize.height - backgroundSize.height) / 2 +
-                    (backgroundSize.height - scrollViewRect.height) / 2));
-            this._uiLayer.addChild(scrollView);
+            scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewRect.width) / 2;
+            scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollViewRect.height) / 2;
+            this._mainNode.addChild(scrollView);
 
-            var imageView = ccui.ImageView.create();
+            var imageView = ccs.ImageView.create();
             imageView.loadTexture("res/cocosgui/ccicon.png");
 
             var innerWidth = scrollViewRect.width + imageView.getSize().width;
@@ -122,30 +124,33 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
 
             scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
 
-            var button = ccui.Button.create();
+            var button = ccs.Button.create();
             button.setTouchEnabled(true);
             button.loadTextures("res/cocosgui/animationbuttonnormal.png", "res/cocosgui/animationbuttonpressed.png", "");
-            button.setPosition(cc.p(button.getSize().width / 2, scrollView.getInnerContainerSize().height - button.getSize().height / 2));
+            button.x = button.width / 2;
+            button.y = scrollView.getInnerContainerSize().height - button.height / 2;
             scrollView.addChild(button);
 
-            var textButton = ccui.Button.create();
+            var textButton = ccs.Button.create();
             textButton.setTouchEnabled(true);
             textButton.loadTextures("res/cocosgui/backtotopnormal.png", "res/cocosgui/backtotoppressed.png", "");
             textButton.setTitleText("Text Button");
-            textButton.setPosition(cc.p(button.getRightInParent() + button.getSize().width / 2, button.getBottomInParent() - button.getSize().height));
+            textButton.x = button.getRightInParent() + button.width / 2;
+            textButton.y = button.getBottomInParent() - button.height;
             scrollView.addChild(textButton);
 
-            var button_scale9 = ccui.Button.create();
+            var button_scale9 = ccs.Button.create();
             button_scale9.setTouchEnabled(true);
             button_scale9.setScale9Enabled(true);
             button_scale9.loadTextures("res/cocosgui/button.png", "res/cocosgui/buttonHighlighted.png", "");
-            button_scale9.setSize(cc.size(100, button_scale9.getContentSize().height));
-            button_scale9.setPosition(cc.p(textButton.getRightInParent() + textButton.getSize().width / 2, textButton.getBottomInParent() - textButton.getSize().height));
+            button_scale9.width = 100;
+            button_scale9.height = button_scale9.getContentSize().height;
+            button_scale9.x = textButton.getRightInParent() + textButton.width / 2;
+            button_scale9.y = textButton.getBottomInParent() - textButton.height;
             scrollView.addChild(button_scale9);
 
-            var pos = cc.p(innerWidth - imageView.getSize().width / 2,
-                button_scale9.getBottomInParent() - button_scale9.getSize().height / 2);
-            imageView.setPosition(pos);
+            imageView.x = innerWidth - imageView.width / 2;
+	        imageView.y = button_scale9.getBottomInParent() - button_scale9.height / 2;
             scrollView.addChild(imageView);
 
             return true;
@@ -160,16 +165,17 @@ var UIScrollViewTest_Both = UIScene.extend({
             var widgetSize = this._widget.getSize();
             //init text
             this._topDisplayLabel.setText("Move by any direction");
-            this._topDisplayLabel.setPosition(cc.p(widgetSize.width / 2.0,  widgetSize.height / 2.0 + this._topDisplayLabel.getContentSize().height * 1.5));
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
             this._bottomDisplayLabel.setText("ScrollView both");
-            this._bottomDisplayLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - this._bottomDisplayLabel.getSize().height * 3));
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
-            var root = this._uiLayer.getChildByTag(81);
-            var background = root.getChildByName("background_Panel");
+            var background = this._widget.getChildByName("background_Panel");
 
             // Create the scrollview
-            var scrollView = ccui.ScrollView.create();
-            scrollView.setDirection(ccui.ScrollViewDir.both);
+            var scrollView = ccs.ScrollView.create();
+            scrollView.setDirection(ccs.ScrollViewDir.both);
             scrollView.setTouchEnabled(true);
             scrollView.setBounceEnabled(true);
             scrollView.setBackGroundImageScale9Enabled(true);
@@ -177,20 +183,17 @@ var UIScrollViewTest_Both = UIScene.extend({
             scrollView.setSize(cc.size(210, 122));
             var scrollViewSize = scrollView.getSize();
 
-            var backgroundSize = background.getContentSize();
-            scrollView.setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                (backgroundSize.width - scrollViewSize.width) / 2,
-                (widgetSize.height - backgroundSize.height) / 2 +
-                    (backgroundSize.height - scrollViewSize.height) / 2));
-            this._uiLayer.addChild(scrollView);
+            scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewSize.width) / 2;
+            scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollViewSize.height) / 2;
+            this._mainNode.addChild(scrollView);
 
-            var imageView = ccui.ImageView.create();
+            var imageView = ccs.ImageView.create();
             imageView.loadTexture("res/cocosgui/b11.png");
             scrollView.addChild(imageView);
 
-            var imageViewSize = imageView.getContentSize();
-            scrollView.setInnerContainerSize(cc.size(imageViewSize.width, imageViewSize.height));
-            imageView.setPosition(cc.p(imageViewSize.width/2,imageViewSize.height/2));
+            scrollView.setInnerContainerSize(cc.size(imageView.width, imageView.height));
+            imageView.x = imageView.width/2;
+            imageView.y = imageView.height/2;
 
             return true;
         }
@@ -205,33 +208,31 @@ var UIScrollViewTest_ScrollToPercentBothDirection = UIScene.extend({
             //init text
             this._topDisplayLabel.setText("");
             this._bottomDisplayLabel.setText("ScrollView scroll to percent both directrion");
-            this._bottomDisplayLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - this._bottomDisplayLabel.getSize().height * 3));
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
-            var root = this._uiLayer.getChildByTag(81);
-            var background = root.getChildByName("background_Panel");
+            var background = this._widget.getChildByName("background_Panel");
 
             // Create the scrollview
-            var scrollView = ccui.ScrollView.create();
+            var scrollView = ccs.ScrollView.create();
             scrollView.setTouchEnabled(true);
-            scrollView.setBackGroundColor(cc.GREEN);
-            scrollView.setBackGroundColorType(ccui.LayoutBackGroundColorType.solid);
-            scrollView.setDirection(ccui.ScrollViewDir.both);
+            scrollView.setBackGroundColor(cc.color.green);
+            scrollView.setBackGroundColorType(ccs.LayoutBackGroundColorType.solid);
+            scrollView.setDirection(ccs.ScrollViewDir.both);
             scrollView.setInnerContainerSize(cc.size(480, 320));
             scrollView.setSize(cc.size(100, 100));
             var scrollViewSize = scrollView.getSize();
 
-            var backgroundSize = background.getContentSize();
-            scrollView.setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                (backgroundSize.width - scrollViewSize.width) / 2,
-                (widgetSize.height - backgroundSize.height) / 2 +
-                    (backgroundSize.height - scrollViewSize.height) / 2));
+            scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewSize.width) / 2;
+            scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollViewSize.height) / 2;
             scrollView.scrollToPercentBothDirection(cc.p(50, 50), 1, true);
 
-            this._uiLayer.addChild(scrollView);
+            this._mainNode.addChild(scrollView);
 
-            var imageView = ccui.ImageView.create();
+            var imageView = ccs.ImageView.create();
             imageView.loadTexture("res/cocosgui/Hello.png");
-            imageView.setPosition(cc.p(240,160));
+            imageView.x = 240;
+            imageView.y = 160;
             scrollView.addChild(imageView);
 
             return true;
@@ -247,34 +248,32 @@ var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = UIScene.extend({
             //init text
             this._topDisplayLabel.setText("");
             this._bottomDisplayLabel.setText("ScrollView scroll to percent both directrion bounce");
-            this._bottomDisplayLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - this._bottomDisplayLabel.getSize().height * 3));
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
-            var root = this._uiLayer.getChildByTag(81);
-            var background = root.getChildByName("background_Panel");
+            var background = this._widget.getChildByName("background_Panel");
 
             // Create the scrollview
-            var scrollView = ccui.ScrollView.create();
+            var scrollView = ccs.ScrollView.create();
             scrollView.setTouchEnabled(true);
             scrollView.setBounceEnabled(true);
-            scrollView.setBackGroundColor(cc.GREEN);
-            scrollView.setBackGroundColorType(ccui.LayoutBackGroundColorType.solid);
-            scrollView.setDirection(ccui.ScrollViewDir.both);
+            scrollView.setBackGroundColor(cc.color.green);
+            scrollView.setBackGroundColorType(ccs.LayoutBackGroundColorType.solid);
+            scrollView.setDirection(ccs.ScrollViewDir.both);
             scrollView.setInnerContainerSize(cc.size(480, 320));
             scrollView.setSize(cc.size(100, 100));
             var scrollViewSize = scrollView.getSize();
 
-            var backgroundSize = background.getContentSize();
-            scrollView.setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                (backgroundSize.width - scrollViewSize.width) / 2,
-                (widgetSize.height - backgroundSize.height) / 2 +
-                    (backgroundSize.height - scrollViewSize.height) / 2));
+            scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewSize.width) / 2;
+            scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollViewSize.height) / 2;
             scrollView.scrollToPercentBothDirection(cc.p(50, 50), 1, true);
 
-            this._uiLayer.addChild(scrollView);
+            this._mainNode.addChild(scrollView);
 
-            var imageView = ccui.ImageView.create();
+            var imageView = ccs.ImageView.create();
             imageView.loadTexture("res/cocosgui/Hello.png");
-            imageView.setPosition(cc.p(240,160));
+            imageView.x = 240;
+            imageView.y = 160;
             scrollView.addChild(imageView);
 
             return true;

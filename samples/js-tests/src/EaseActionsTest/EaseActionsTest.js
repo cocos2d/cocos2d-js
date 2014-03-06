@@ -37,7 +37,7 @@ var EaseActionsTestScene = TestScene.extend({
     runThisTest:function () {
         easeActionsTestIdx = -1;
         this.addChild(nextEaseActionsTest());
-        director.replaceScene(this);
+        director.runScene(this);
     }
 });
 
@@ -49,7 +49,7 @@ var EaseSpriteDemo = BaseTestLayer.extend({
     _title:null,
 
     ctor:function () {
-        this._super(cc.c4b(0, 0, 0, 255), cc.c4b(98, 99, 117, 255));
+        this._super(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
     },
 
     title:function () {
@@ -67,9 +67,13 @@ var EaseSpriteDemo = BaseTestLayer.extend({
         this.addChild(this._kathia, 2);
         this.addChild(this._tamara, 1);
 
-        this._grossini.setPosition(60, winSize.height / 5);
-        this._kathia.setPosition(60, winSize.height / 2);
-        this._tamara.setPosition(60, winSize.height * 4 / 5);
+        this._grossini.x = 60;
+
+        this._grossini.y = winSize.height / 5;
+        this._kathia.x = 60;
+        this._kathia.y = winSize.height / 2;
+        this._tamara.x = 60;
+        this._tamara.y = winSize.height * 4 / 5;
 
         this.twoSprites = false;
     },
@@ -77,23 +81,25 @@ var EaseSpriteDemo = BaseTestLayer.extend({
     onRestartCallback:function (sender) {
         var s = new EaseActionsTestScene();//cc.Scene.create();
         s.addChild(restartEaseActionsTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onNextCallback:function (sender) {
         var s = new EaseActionsTestScene();//cc.Scene.create();
         s.addChild(nextEaseActionsTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onBackCallback:function (sender) {
         var s = new EaseActionsTestScene();//cc.Scene.create();
         s.addChild(previousEaseActionsTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     positionForTwo:function () {
         this.twoSprites = true;
-        this._grossini.setPosition(60, winSize.height / 5);
-        this._tamara.setPosition(60, winSize.height * 4 / 5);
-        this._kathia.setVisible(false);
+        this._grossini.x = 60;
+	    this._grossini.y = winSize.height / 5;
+        this._tamara.x = 60;
+	    this._tamara.y = winSize.height * 4 / 5;
+        this._kathia.visible = false;
     },
 
     //
@@ -122,9 +128,9 @@ var EaseSpriteDemo = BaseTestLayer.extend({
     getCurrentResult:function() {
         var ret;
         if( this.twoSprites)
-            ret = [ this._grossini.getPosition().x, this._tamara.getPosition().x];
+            ret = [ this._grossini.x, this._tamara.x];
         else
-            ret = [ this._grossini.getPosition().x, this._tamara.getPosition().x, this._kathia.getPosition().x ];
+            ret = [ this._grossini.x, this._tamara.x, this._kathia.x ];
         return JSON.stringify(ret);
     }
 
@@ -158,13 +164,13 @@ var SpriteEase = EaseSpriteDemo.extend({
 
 
         var a2 = this._grossini.runAction(cc.RepeatForever.create(seq1));
-        a2.setTag(1);
+        a2.tag = 1;
 
         var a1 = this._tamara.runAction(cc.RepeatForever.create(seq2));
-        a1.setTag(1);
+        a1.tag = 1;
 
         var a = this._kathia.runAction(cc.RepeatForever.create(seq3));
-        a.setTag(1);
+        a.tag = 1;
 
         this.scheduleOnce(this.testStopAction, 4.1);
     },
@@ -188,7 +194,7 @@ var SpriteEase = EaseSpriteDemo.extend({
     },
 
     getCurrentResult:function() {
-        var ret = [ this._grossini.getPosition().x, this._tamara.getPosition().x, this._kathia.getPosition().x ];
+        var ret = [ this._grossini.x, this._tamara.x, this._kathia.x ];
         return JSON.stringify(ret);
     }
 
@@ -569,13 +575,13 @@ var SpeedTest = EaseSpriteDemo.extend({
         var seq3_2 = cc.Sequence.create(rot1, rot2);
         var spawn = cc.Spawn.create(seq3_1, seq3_2);
         var action = cc.Speed.create(cc.RepeatForever.create(spawn), 1.0);
-        action.setTag(TAG_ACTION1_EASE_ACTIONS);
+        action.tag = TAG_ACTION1_EASE_ACTIONS;
 
         var action2 = action.clone();
         var action3 = action.clone();
 
-        action2.setTag(TAG_ACTION1_EASE_ACTIONS);
-        action3.setTag(TAG_ACTION1_EASE_ACTIONS);
+        action2.tag = TAG_ACTION1_EASE_ACTIONS;
+        action3.tag = TAG_ACTION1_EASE_ACTIONS;
 
         this._grossini.runAction(action2);
         this._tamara.runAction(action3);
@@ -633,8 +639,9 @@ var SchedulerTest = EaseSpriteDemo.extend({
         this._tamara.runAction(cc.Speed.create(action2, 1.5));
         this._kathia.runAction(cc.Speed.create(action3, 1.0));
 
-        var emitter = cc.ParticleFireworks.createWithTotalParticles(250);
-        emitter.setTexture(cc.TextureCache.getInstance().addImage("res/Images/fire.png"));
+        var emitter = new cc.ParticleFireworks();
+        emitter.initWithTotalParticles(250);
+        emitter.texture = cc.textureCache.addImage("res/Images/fire.png");
         this.addChild(emitter);
     },
     title:function () {

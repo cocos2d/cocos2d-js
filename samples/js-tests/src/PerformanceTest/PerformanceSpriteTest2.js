@@ -98,12 +98,14 @@ var PerformanceTestBase = cc.Layer.extend({
 
         var label = cc.LabelTTF.create(this._title, "Arial", 28);
         this.addChild(label, 1);
-        label.setPosition(winSize.width / 2, winSize.height - 50);
+        label.x = winSize.width / 2;
+        label.y = winSize.height - 50;
 
         if (this._subtitle !== "") {
             var l = cc.LabelTTF.create(this._subtitle, "Thonburi", 16);
             this.addChild(l, 1);
-            l.setPosition(winSize.width / 2, winSize.height - 80);
+            l.x = winSize.width / 2;
+            l.y = winSize.height - 80;
         }
 
         var item1 = cc.MenuItemImage.create(s_pathB1, s_pathB2, this.onBackCallback, this);
@@ -112,11 +114,16 @@ var PerformanceTestBase = cc.Layer.extend({
 
         var menu = cc.Menu.create(item1, item2, item3);
 
-        menu.setPosition(0,0);
-        var cs = item2.getContentSize();
-        item1.setPosition( winSize.width/2 - cs.width*2, cs.height/2 );
-        item2.setPosition( winSize.width/2, cs.height/2 );
-        item3.setPosition( winSize.width/2 + cs.width*2, cs.height/2 );
+        menu.x = 0;
+
+        menu.y = 0;
+        var csw = item2.width, csh = item2.height;
+        item1.x = winSize.width/2 - csw*2;
+        item1.y = csh/2;
+        item2.x = winSize.width/2;
+        item2.y = csh/2;
+        item3.x = winSize.width/2 + csw*2;
+        item3.y = csh/2;
 
         this.addChild(menu, 1);
     },
@@ -124,17 +131,17 @@ var PerformanceTestBase = cc.Layer.extend({
     onRestartCallback:function (sender) {
         var s = new PerformanceSpriteTestScene();
         s.addChild(restartPerformanceSpriteTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onNextCallback:function (sender) {
         var s = new PerformanceSpriteTestScene();
         s.addChild(nextPerformanceSpriteTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onBackCallback:function (sender) {
         var s = new PerformanceSpriteTestScene();
         s.addChild(previousPerformanceSpriteTest());
-        director.replaceScene(s);
+        director.runScene(s);
     }
 });
 
@@ -205,7 +212,8 @@ var PerformanceSpriteTest1 = PerformanceTestBase.extend({
 
             var x = Math.random() * winSize.width;
             var y = Math.random() * winSize.height;
-            sprite.setPosition(x,y);
+            sprite.x = x;
+            sprite.y = y;
         }
     },
     endA:function() {
@@ -228,7 +236,8 @@ var PerformanceSpriteTest1 = PerformanceTestBase.extend({
 
             var x = Math.random() * winSize.width;
             var y = Math.random() * winSize.height;
-            sprite.setPosition(x,y);
+            sprite.x = x;
+            sprite.y = y;
         }
     },
     endB:function() {
@@ -270,7 +279,7 @@ var PerformanceSpriteTestScene = TestScene.extend({
         var layer = nextPerformanceSpriteTest();
         this.addChild(layer);
 
-        director.replaceScene(this);
+        director.runScene(this);
     }
 });
 

@@ -37,7 +37,7 @@ var HelloCocosBuilderLayer = function() {
             scene.addChild(node);
 
         /* Push the new scene with a fancy transition. */
-        cc.Director.getInstance().pushScene(cc.TransitionFade.create(0.5, scene, cc.c3b(0, 0, 0)));
+        cc.director.pushScene(cc.TransitionFade.create(0.5, scene, cc.color(0, 0, 0)));
     };
 
     // ccb Callback
