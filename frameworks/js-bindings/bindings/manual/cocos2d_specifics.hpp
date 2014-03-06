@@ -11,20 +11,20 @@ class JSScheduleWrapper;
 // It will prove that i'm right. :)
 typedef struct jsScheduleFunc_proxy {
     JSObject* jsfuncObj;
-    cocos2d::Array*  targets;
+    cocos2d::__Array*  targets;
     UT_hash_handle hh;
 } schedFunc_proxy_t;
 
 typedef struct jsScheduleTarget_proxy {
     JSObject* jsTargetObj;
-    cocos2d::Array*  targets;
+    cocos2d::__Array*  targets;
     UT_hash_handle hh;
 } schedTarget_proxy_t;
 
 
 typedef struct jsCallFuncTarget_proxy {
     void * ptr;
-    cocos2d::Array *obj;
+    cocos2d::__Array *obj;
     UT_hash_handle hh;
 } callfuncTarget_proxy_t;
 
@@ -120,9 +120,9 @@ public:
     virtual ~JSScheduleWrapper();
 
     static void setTargetForSchedule(jsval sched, JSScheduleWrapper *target);
-    static cocos2d::Array * getTargetForSchedule(jsval sched);
+    static cocos2d::__Array * getTargetForSchedule(jsval sched);
     static void setTargetForJSObject(JSObject* jsTargetObj, JSScheduleWrapper *target);
-    static cocos2d::Array * getTargetForJSObject(JSObject* jsTargetObj);
+    static cocos2d::__Array * getTargetForJSObject(JSObject* jsTargetObj);
     
     // Remove all targets.
     static void removeAllTargets();

@@ -214,8 +214,8 @@ bool js_cocos2dx_spine_Skeleton_createWithFile(JSContext *cx, uint32_t argc, jsv
 			jsval jsret = JSVAL_NULL;
 			do {
 				if (ret) {
-					js_proxy_t *proxy = js_get_or_create_proxy<spine::Skeleton>(cx, (spine::Skeleton*)ret);
-					jsret = OBJECT_TO_JSVAL(proxy->obj);
+					js_proxy_t *jsProxy = js_get_or_create_proxy<spine::Skeleton>(cx, (spine::Skeleton*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
 				} else {
 					jsret = JSVAL_NULL;
 				}
@@ -239,8 +239,8 @@ bool js_cocos2dx_spine_Skeleton_createWithFile(JSContext *cx, uint32_t argc, jsv
 			jsval jsret = JSVAL_NULL;
 			do {
 				if (ret) {
-					js_proxy_t *proxy = js_get_or_create_proxy<spine::Skeleton>(cx, (spine::Skeleton*)ret);
-					jsret = OBJECT_TO_JSVAL(proxy->obj);
+					js_proxy_t *jsProxy = js_get_or_create_proxy<spine::Skeleton>(cx, (spine::Skeleton*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
 				} else {
 					jsret = JSVAL_NULL;
 				}
@@ -262,8 +262,8 @@ bool js_cocos2dx_spine_Skeleton_createWithFile(JSContext *cx, uint32_t argc, jsv
 			jsval jsret = JSVAL_NULL;
 			do {
 				if (ret) {
-					js_proxy_t *proxy = js_get_or_create_proxy<spine::Skeleton>(cx, (spine::Skeleton*)ret);
-					jsret = OBJECT_TO_JSVAL(proxy->obj);
+					js_proxy_t *jsProxy = js_get_or_create_proxy<spine::Skeleton>(cx, (spine::Skeleton*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
 				} else {
 					jsret = JSVAL_NULL;
 				}
@@ -287,8 +287,8 @@ bool js_cocos2dx_spine_Skeleton_createWithFile(JSContext *cx, uint32_t argc, jsv
 			jsval jsret = JSVAL_NULL;
 			do {
 				if (ret) {
-					js_proxy_t *proxy = js_get_or_create_proxy<spine::Skeleton>(cx, (spine::Skeleton*)ret);
-					jsret = OBJECT_TO_JSVAL(proxy->obj);
+					js_proxy_t *jsProxy = js_get_or_create_proxy<spine::Skeleton>(cx, (spine::Skeleton*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
 				} else {
 					jsret = JSVAL_NULL;
 				}
@@ -328,8 +328,8 @@ bool js_cocos2dx_spine_Skeleton_constructor(JSContext *cx, uint32_t argc, jsval 
 			typeClass = typeMapIter->second;
 			CCASSERT(typeClass, "The value is null.");
 			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-			js_proxy_t* proxy = jsb_new_proxy(cobj, obj);
-			JS_AddNamedObjectRoot(cx, &proxy->obj, "spine::Skeleton");
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "spine::Skeleton");
 		}
 	} while(0);
 
@@ -357,8 +357,8 @@ bool js_cocos2dx_spine_Skeleton_constructor(JSContext *cx, uint32_t argc, jsval 
 			typeClass = typeMapIter->second;
 			CCASSERT(typeClass, "The value is null.");
 			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-			js_proxy_t* proxy = jsb_new_proxy(cobj, obj);
-			JS_AddNamedObjectRoot(cx, &proxy->obj, "spine::Skeleton");
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "spine::Skeleton");
 		}
 	} while(0);
 
@@ -380,8 +380,8 @@ bool js_cocos2dx_spine_Skeleton_constructor(JSContext *cx, uint32_t argc, jsval 
 			typeClass = typeMapIter->second;
 			CCASSERT(typeClass, "The value is null.");
 			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-			js_proxy_t* proxy = jsb_new_proxy(cobj, obj);
-			JS_AddNamedObjectRoot(cx, &proxy->obj, "spine::Skeleton");
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "spine::Skeleton");
 		}
 	} while(0);
 
@@ -406,8 +406,8 @@ bool js_cocos2dx_spine_Skeleton_constructor(JSContext *cx, uint32_t argc, jsval 
 			typeClass = typeMapIter->second;
 			CCASSERT(typeClass, "The value is null.");
 			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-			js_proxy_t* proxy = jsb_new_proxy(cobj, obj);
-			JS_AddNamedObjectRoot(cx, &proxy->obj, "spine::Skeleton");
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "spine::Skeleton");
 		}
 	} while(0);
 
@@ -432,8 +432,8 @@ bool js_cocos2dx_spine_Skeleton_constructor(JSContext *cx, uint32_t argc, jsval 
 			typeClass = typeMapIter->second;
 			CCASSERT(typeClass, "The value is null.");
 			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-			js_proxy_t* proxy = jsb_new_proxy(cobj, obj);
-			JS_AddNamedObjectRoot(cx, &proxy->obj, "spine::Skeleton");
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "spine::Skeleton");
 		}
 	} while(0);
 
@@ -461,8 +461,8 @@ bool js_cocos2dx_spine_Skeleton_constructor(JSContext *cx, uint32_t argc, jsval 
 			typeClass = typeMapIter->second;
 			CCASSERT(typeClass, "The value is null.");
 			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-			js_proxy_t* proxy = jsb_new_proxy(cobj, obj);
-			JS_AddNamedObjectRoot(cx, &proxy->obj, "spine::Skeleton");
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "spine::Skeleton");
 		}
 	} while(0);
 
@@ -675,8 +675,8 @@ bool js_cocos2dx_spine_SkeletonAnimation_createWithFile(JSContext *cx, uint32_t 
 			jsval jsret = JSVAL_NULL;
 			do {
 				if (ret) {
-					js_proxy_t *proxy = js_get_or_create_proxy<spine::SkeletonAnimation>(cx, (spine::SkeletonAnimation*)ret);
-					jsret = OBJECT_TO_JSVAL(proxy->obj);
+					js_proxy_t *jsProxy = js_get_or_create_proxy<spine::SkeletonAnimation>(cx, (spine::SkeletonAnimation*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
 				} else {
 					jsret = JSVAL_NULL;
 				}
@@ -700,8 +700,8 @@ bool js_cocos2dx_spine_SkeletonAnimation_createWithFile(JSContext *cx, uint32_t 
 			jsval jsret = JSVAL_NULL;
 			do {
 				if (ret) {
-					js_proxy_t *proxy = js_get_or_create_proxy<spine::SkeletonAnimation>(cx, (spine::SkeletonAnimation*)ret);
-					jsret = OBJECT_TO_JSVAL(proxy->obj);
+					js_proxy_t *jsProxy = js_get_or_create_proxy<spine::SkeletonAnimation>(cx, (spine::SkeletonAnimation*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
 				} else {
 					jsret = JSVAL_NULL;
 				}
@@ -723,8 +723,8 @@ bool js_cocos2dx_spine_SkeletonAnimation_createWithFile(JSContext *cx, uint32_t 
 			jsval jsret = JSVAL_NULL;
 			do {
 				if (ret) {
-					js_proxy_t *proxy = js_get_or_create_proxy<spine::SkeletonAnimation>(cx, (spine::SkeletonAnimation*)ret);
-					jsret = OBJECT_TO_JSVAL(proxy->obj);
+					js_proxy_t *jsProxy = js_get_or_create_proxy<spine::SkeletonAnimation>(cx, (spine::SkeletonAnimation*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
 				} else {
 					jsret = JSVAL_NULL;
 				}
@@ -748,8 +748,8 @@ bool js_cocos2dx_spine_SkeletonAnimation_createWithFile(JSContext *cx, uint32_t 
 			jsval jsret = JSVAL_NULL;
 			do {
 				if (ret) {
-					js_proxy_t *proxy = js_get_or_create_proxy<spine::SkeletonAnimation>(cx, (spine::SkeletonAnimation*)ret);
-					jsret = OBJECT_TO_JSVAL(proxy->obj);
+					js_proxy_t *jsProxy = js_get_or_create_proxy<spine::SkeletonAnimation>(cx, (spine::SkeletonAnimation*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
 				} else {
 					jsret = JSVAL_NULL;
 				}
@@ -789,8 +789,8 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
 			typeClass = typeMapIter->second;
 			CCASSERT(typeClass, "The value is null.");
 			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-			js_proxy_t* proxy = jsb_new_proxy(cobj, obj);
-			JS_AddNamedObjectRoot(cx, &proxy->obj, "spine::SkeletonAnimation");
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "spine::SkeletonAnimation");
 		}
 	} while(0);
 
@@ -818,8 +818,8 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
 			typeClass = typeMapIter->second;
 			CCASSERT(typeClass, "The value is null.");
 			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-			js_proxy_t* proxy = jsb_new_proxy(cobj, obj);
-			JS_AddNamedObjectRoot(cx, &proxy->obj, "spine::SkeletonAnimation");
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "spine::SkeletonAnimation");
 		}
 	} while(0);
 
@@ -841,8 +841,8 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
 			typeClass = typeMapIter->second;
 			CCASSERT(typeClass, "The value is null.");
 			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-			js_proxy_t* proxy = jsb_new_proxy(cobj, obj);
-			JS_AddNamedObjectRoot(cx, &proxy->obj, "spine::SkeletonAnimation");
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "spine::SkeletonAnimation");
 		}
 	} while(0);
 
@@ -867,8 +867,8 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
 			typeClass = typeMapIter->second;
 			CCASSERT(typeClass, "The value is null.");
 			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-			js_proxy_t* proxy = jsb_new_proxy(cobj, obj);
-			JS_AddNamedObjectRoot(cx, &proxy->obj, "spine::SkeletonAnimation");
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "spine::SkeletonAnimation");
 		}
 	} while(0);
 
@@ -896,8 +896,8 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
 			typeClass = typeMapIter->second;
 			CCASSERT(typeClass, "The value is null.");
 			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-			js_proxy_t* proxy = jsb_new_proxy(cobj, obj);
-			JS_AddNamedObjectRoot(cx, &proxy->obj, "spine::SkeletonAnimation");
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "spine::SkeletonAnimation");
 		}
 	} while(0);
 

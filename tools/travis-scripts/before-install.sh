@@ -68,8 +68,6 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
     install_android_ndk
 elif [ "$PLATFORM"x = "ios"x ]; then
     install_android_ndk
-    brew update
-    brew install xctool
 else
     echo "Unknown \$PLATFORM: '$PLATFORM'"
     exit 1
