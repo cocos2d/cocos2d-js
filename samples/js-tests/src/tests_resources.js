@@ -42,6 +42,9 @@ var s_starsGrayscale = "res/Images/stars-grayscale.png";
 var s_grossini_dance_atlas = "res/Images/grossini_dance_atlas.png";
 var s_piece = "res/Images/piece.png";
 var s_grossini_dance_atlas_mono = "res/Images/grossini_dance_atlas-mono.png";
+var s_lookup_desktop_plist = "res/Images/lookup-desktop.plist";
+var s_lookup_mobile_plist = "res/Images/lookup-mobile.plist";
+var s_lookup_html5_plist = "res/Images/lookup-html5.plist";
 
 var s_grossini = "res/animations/grossini.png";
 var s_grossini_gray = "res/animations/grossini_gray.png";
@@ -297,11 +300,6 @@ var g_touches = [
     s_paddle
 ];
 
-var g_fileUtils = [
-    "FileTest/lookup-html5.plist",
-	s_grossini_familyPlist
-];
-
 var g_s9s_blocks = [
     s_s9s_blocks9_plist,
     s_s9s_blocks9,
@@ -544,19 +542,19 @@ var g_cocoStudio = [
     s_Cowboy_json ,
     s_Cowboy_plist,
     s_Cowboy_png,
-     s_hero_json,
-     s_hero0_plist,
-     s_hero0_png,
-     s_horse_json,
-     s_horse0_plist,
-     s_horse0_png,
-     s_bear_json,
-     s_bear0_plist,
-     s_bear0_png,
-     s_blood_plist,
-     s_HeroAnimation_json,
-     s_HeroAnimation0_plist,
-     s_HeroAnimation0_png,
+    s_hero_json,
+    s_hero0_plist,
+    s_hero0_png,
+    s_horse_json,
+    s_horse0_plist,
+    s_horse0_png,
+    s_bear_json,
+    s_bear0_plist,
+    s_bear0_png,
+    s_blood_plist,
+    s_HeroAnimation_json,
+    s_HeroAnimation0_plist,
+    s_HeroAnimation0_png,
     s_cyborg_plist ,
     s_cyborg_png ,
     s_cyborg_xml ,
