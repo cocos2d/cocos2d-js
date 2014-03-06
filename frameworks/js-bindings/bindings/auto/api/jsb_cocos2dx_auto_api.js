@@ -283,15 +283,17 @@ getFragmentShaderLog : function (
 },
 
 /**
- * @method addAttribute
+ * @method initWithByteArrays
  * @param {char*} arg0
- * @param {unsigned int} arg1
+ * @param {char*} arg1
+ * @return {bool}
  */
-addAttribute : function (
+initWithByteArrays : function (
 char, 
-int 
+char 
 )
 {
+    return false;
 },
 
 /**
@@ -306,6 +308,20 @@ float,
 int 
 )
 {
+},
+
+/**
+ * @method initWithFilenames
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+initWithFilenames : function (
+str, 
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -336,34 +352,6 @@ getVertexShaderLog : function (
 )
 {
     return ;
-},
-
-/**
- * @method initWithVertexShaderByteArray
- * @param {char*} arg0
- * @param {char*} arg1
- * @return {bool}
- */
-initWithVertexShaderByteArray : function (
-char, 
-char 
-)
-{
-    return false;
-},
-
-/**
- * @method initWithVertexShaderFilename
- * @param {char*} arg0
- * @param {char*} arg1
- * @return {bool}
- */
-initWithVertexShaderFilename : function (
-char, 
-char 
-)
-{
-    return false;
 },
 
 /**
@@ -429,27 +417,27 @@ int
 },
 
 /**
- * @method setUniformLocationWithMatrix2fv
- * @param {int} arg0
- * @param {float*} arg1
- * @param {unsigned int} arg2
+ * @method getUniformLocation
+ * @param {char*} arg0
+ * @return {int}
  */
-setUniformLocationWithMatrix2fv : function (
-int, 
-float, 
-int 
+getUniformLocation : function (
+char 
 )
 {
+    return 0;
 },
 
 /**
- * @method link
- * @return {bool}
+ * @method setUniformLocationWith1i
+ * @param {int} arg0
+ * @param {int} arg1
  */
-link : function (
+setUniformLocationWith1i : function (
+int, 
+int 
 )
 {
-    return false;
 },
 
 /**
@@ -489,6 +477,44 @@ reset : function (
 },
 
 /**
+ * @method bindAttribLocation
+ * @param {char*} arg0
+ * @param {unsigned int} arg1
+ */
+bindAttribLocation : function (
+char, 
+int 
+)
+{
+},
+
+/**
+ * @method getAttribLocation
+ * @param {char*} arg0
+ * @return {int}
+ */
+getAttribLocation : function (
+char 
+)
+{
+    return 0;
+},
+
+/**
+ * @method setUniformLocationWithMatrix2fv
+ * @param {int} arg0
+ * @param {float*} arg1
+ * @param {unsigned int} arg2
+ */
+setUniformLocationWithMatrix2fv : function (
+int, 
+float, 
+int 
+)
+{
+},
+
+/**
  * @method setUniformLocationWith4i
  * @param {int} arg0
  * @param {int} arg1
@@ -507,15 +533,13 @@ int
 },
 
 /**
- * @method setUniformLocationWith1i
- * @param {int} arg0
- * @param {int} arg1
+ * @method link
+ * @return {bool}
  */
-setUniformLocationWith1i : function (
-int, 
-int 
+link : function (
 )
 {
+    return false;
 },
 
 /**
@@ -647,6 +671,107 @@ getPreviousLocation : function (
  * @constructor
  */
 Touch : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Event
+ */
+cc.Event = {
+
+/**
+ * @method isStopped
+ * @return {bool}
+ */
+isStopped : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getType
+ * @return {cc.Event::Type}
+ */
+getType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getCurrentTarget
+ * @return {cc.Node}
+ */
+getCurrentTarget : function (
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method stopPropagation
+ */
+stopPropagation : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EventTouch
+ */
+cc.EventTouch = {
+
+/**
+ * @method getEventCode
+ * @return {cc.EventTouch::EventCode}
+ */
+getEventCode : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setEventCode
+ * @param {cc.EventTouch::EventCode} arg0
+ */
+setEventCode : function (
+eventcode 
+)
+{
+},
+
+/**
+ * @method EventTouch
+ * @constructor
+ */
+EventTouch : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EventKeyboard
+ */
+cc.EventKeyboard = {
+
+/**
+ * @method EventKeyboard
+ * @constructor
+ * @param {cc.EventKeyboard::KeyCode} arg0
+ * @param {bool} arg1
+ */
+EventKeyboard : function (
+keycode, 
+bool 
 )
 {
 },
@@ -972,6 +1097,205 @@ Texture2D : function (
 };
 
 /**
+ * @class EventListener
+ */
+cc.EventListener = {
+
+/**
+ * @method clone
+ * @return {cc.EventListener}
+ */
+clone : function (
+)
+{
+    return cc.EventListener;
+},
+
+/**
+ * @method checkAvailable
+ * @return {bool}
+ */
+checkAvailable : function (
+)
+{
+    return false;
+},
+
+};
+
+/**
+ * @class EventDispatcher
+ */
+cc.EventDispatcher = {
+
+/**
+ * @method setEnabled
+ * @param {bool} arg0
+ */
+setEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method removeAllEventListeners
+ */
+removeAllEventListeners : function (
+)
+{
+},
+
+/**
+ * @method addEventListenerWithSceneGraphPriority
+ * @param {cc.EventListener} arg0
+ * @param {cc.Node} arg1
+ */
+addEventListenerWithSceneGraphPriority : function (
+eventlistener, 
+node 
+)
+{
+},
+
+/**
+ * @method addCustomEventListener
+ * @param {String} arg0
+ * @param {function} arg1
+ * @return {cc.EventListenerCustom}
+ */
+addCustomEventListener : function (
+str, 
+func 
+)
+{
+    return cc.EventListenerCustom;
+},
+
+/**
+ * @method addEventListenerWithFixedPriority
+ * @param {cc.EventListener} arg0
+ * @param {int} arg1
+ */
+addEventListenerWithFixedPriority : function (
+eventlistener, 
+int 
+)
+{
+},
+
+/**
+ * @method removeEventListenersForTarget
+* @param {cc.Node|cc.EventListener::Type} node
+* @param {bool} bool
+*/
+removeEventListenersForTarget : function(
+node,
+bool 
+)
+{
+},
+
+/**
+ * @method resumeEventListenersForTarget
+ * @param {cc.Node} arg0
+ * @param {bool} arg1
+ */
+resumeEventListenersForTarget : function (
+node, 
+bool 
+)
+{
+},
+
+/**
+ * @method dispatchCustomEvent
+ * @param {String} arg0
+ * @param {void*} arg1
+ */
+dispatchCustomEvent : function (
+str, 
+void 
+)
+{
+},
+
+/**
+ * @method setPriority
+ * @param {cc.EventListener} arg0
+ * @param {int} arg1
+ */
+setPriority : function (
+eventlistener, 
+int 
+)
+{
+},
+
+/**
+ * @method dispatchEvent
+ * @param {cc.Event} arg0
+ */
+dispatchEvent : function (
+event 
+)
+{
+},
+
+/**
+ * @method pauseEventListenersForTarget
+ * @param {cc.Node} arg0
+ * @param {bool} arg1
+ */
+pauseEventListenersForTarget : function (
+node, 
+bool 
+)
+{
+},
+
+/**
+ * @method removeCustomEventListeners
+ * @param {String} arg0
+ */
+removeCustomEventListeners : function (
+str 
+)
+{
+},
+
+/**
+ * @method removeEventListener
+ * @param {cc.EventListener} arg0
+ */
+removeEventListener : function (
+eventlistener 
+)
+{
+},
+
+/**
+ * @method isEnabled
+ * @return {bool}
+ */
+isEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method EventDispatcher
+ * @constructor
+ */
+EventDispatcher : function (
+)
+{
+},
+
+};
+
+/**
  * @class Node
  */
 cc.Node = {
@@ -1118,16 +1442,6 @@ char
  */
 setRotation : function (
 float 
-)
-{
-},
-
-/**
- * @method setLocalZOrder
- * @param {int} arg0
- */
-setLocalZOrder : function (
-int 
 )
 {
 },
@@ -1302,16 +1616,6 @@ getOpacity : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setNormalizedPosition
- * @param {PointObject} arg0
- */
-setNormalizedPosition : function (
-point 
-)
-{
 },
 
 /**
@@ -1574,8 +1878,14 @@ component
 
 /**
  * @method visit
- */
-visit : function (
+* @param {cc.Renderer} renderer
+* @param {kmMat4} kmmat4
+* @param {bool} bool
+*/
+visit : function(
+renderer,
+kmmat4,
+bool 
 )
 {
 },
@@ -1601,16 +1911,6 @@ getRotation : function (
 },
 
 /**
- * @method getLocalZOrder
- * @return {int}
- */
-getLocalZOrder : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getAnchorPointInPoints
  * @return {PointObject}
  */
@@ -1630,14 +1930,6 @@ action
 )
 {
     return cc.Action;
-},
-
-/**
- * @method transform
- */
-transform : function (
-)
-{
 },
 
 /**
@@ -1702,10 +1994,10 @@ int
 
 /**
  * @method setAdditionalTransform
-* @param {kmMat4|cc.AffineTransform} kmmat4
+* @param {cc.AffineTransform|kmMat4*} affinetransform
 */
 setAdditionalTransform : function(
-affinetransform 
+kmmat4 
 )
 {
 },
@@ -1715,6 +2007,16 @@ affinetransform
  * @return {unsigned char}
  */
 getDisplayedOpacity : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getLocalZOrder
+ * @return {int}
+ */
+getLocalZOrder : function (
 )
 {
     return 0;
@@ -1769,16 +2071,6 @@ actionmanager
 getPosition : function(
 float,
 float 
-)
-{
-},
-
-/**
- * @method setColor
- * @param {Color3BObject} arg0
- */
-setColor : function (
-color3b 
 )
 {
 },
@@ -1960,6 +2252,16 @@ getScaleX : function (
 },
 
 /**
+ * @method setLocalZOrder
+ * @param {int} arg0
+ */
+setLocalZOrder : function (
+int 
+)
+{
+},
+
+/**
  * @method getWorldToNodeAffineTransform
  * @return {cc.AffineTransform}
  */
@@ -2061,16 +2363,14 @@ getGlobalZOrder : function (
 
 /**
  * @method draw
- */
-draw : function (
-)
-{
-},
-
-/**
- * @method transformAncestors
- */
-transformAncestors : function (
+* @param {cc.Renderer} renderer
+* @param {kmMat4} kmmat4
+* @param {bool} bool
+*/
+draw : function(
+renderer,
+kmmat4,
+bool 
 )
 {
 },
@@ -2141,16 +2441,6 @@ getScale : function (
 )
 {
     return 0;
-},
-
-/**
- * @method getNormalizedPosition
- * @return {PointObject}
- */
-getNormalizedPosition : function (
-)
-{
-    return cc.Point;
 },
 
 /**
@@ -6018,8 +6308,12 @@ color4f
 
 /**
  * @method onDraw
+ * @param {kmMat4} arg0
+ * @param {bool} arg1
  */
 onDraw : function (
+kmmat4, 
+bool 
 )
 {
 },
@@ -6111,6 +6405,217 @@ create : function (
 };
 
 /**
+ * @class Configuration
+ */
+cc.Configuration = {
+
+/**
+ * @method checkForGLExtension
+ * @param {String} arg0
+ * @return {bool}
+ */
+checkForGLExtension : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method setValue
+ * @param {String} arg0
+ * @param {cc.Value} arg1
+ */
+setValue : function (
+str, 
+value 
+)
+{
+},
+
+/**
+ * @method supportsS3TC
+ * @return {bool}
+ */
+supportsS3TC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsPVRTC
+ * @return {bool}
+ */
+supportsPVRTC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsShareableVAO
+ * @return {bool}
+ */
+supportsShareableVAO : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getInfo
+ * @return {String}
+ */
+getInfo : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getMaxTextureUnits
+ * @return {int}
+ */
+getMaxTextureUnits : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method supportsNPOT
+ * @return {bool}
+ */
+supportsNPOT : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getMaxModelviewStackDepth
+ * @return {int}
+ */
+getMaxModelviewStackDepth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method supportsDiscardFramebuffer
+ * @return {bool}
+ */
+supportsDiscardFramebuffer : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsATITC
+ * @return {bool}
+ */
+supportsATITC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method gatherGPUInfo
+ */
+gatherGPUInfo : function (
+)
+{
+},
+
+/**
+ * @method supportsETC
+ * @return {bool}
+ */
+supportsETC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method loadConfigFile
+ * @param {String} arg0
+ */
+loadConfigFile : function (
+str 
+)
+{
+},
+
+/**
+ * @method getValue
+ * @param {String} arg0
+ * @param {cc.Value} arg1
+ * @return {cc.Value}
+ */
+getValue : function (
+str, 
+value 
+)
+{
+    return cc.Value;
+},
+
+/**
+ * @method getMaxTextureSize
+ * @return {int}
+ */
+getMaxTextureSize : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method supportsBGRA8888
+ * @return {bool}
+ */
+supportsBGRA8888 : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {cc.Configuration}
+ */
+getInstance : function (
+)
+{
+    return cc.Configuration;
+},
+
+};
+
+/**
  * @class LabelAtlas
  */
 cc.LabelAtlas = {
@@ -6194,6 +6699,16 @@ cc.Director = {
  * @method pause
  */
 pause : function (
+)
+{
+},
+
+/**
+ * @method setEventDispatcher
+ * @param {cc.EventDispatcher} arg0
+ */
+setEventDispatcher : function (
+eventdispatcher 
 )
 {
 },
@@ -6416,6 +6931,16 @@ scheduler
 startAnimation : function (
 )
 {
+},
+
+/**
+ * @method getOpenGLView
+ * @return {cc.GLView}
+ */
+getOpenGLView : function (
+)
+{
+    return cc.GLView;
 },
 
 /**
@@ -6646,6 +7171,16 @@ setDisplayStats : function (
 bool 
 )
 {
+},
+
+/**
+ * @method getEventDispatcher
+ * @return {cc.EventDispatcher}
+ */
+getEventDispatcher : function (
+)
+{
+    return cc.EventDispatcher;
 },
 
 /**
@@ -7788,35 +8323,59 @@ SpriteBatchNode : function (
 cc.Label = {
 
 /**
- * @method setLineBreakWithoutSpace
- * @param {bool} arg0
+ * @method enableShadow
  */
-setLineBreakWithoutSpace : function (
-bool 
+enableShadow : function (
 )
 {
 },
 
 /**
- * @method getStringNumLines
+ * @method getString
+ * @return {String}
+ */
+getString : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method disableEffect
+ */
+disableEffect : function (
+)
+{
+},
+
+/**
+ * @method getCommonLineHeight
  * @return {int}
  */
-getStringNumLines : function (
+getCommonLineHeight : function (
 )
 {
     return 0;
 },
 
 /**
- * @method getLetter
- * @param {int} arg0
- * @return {cc.Sprite}
+ * @method breakLineWithoutSpace
+ * @return {bool}
  */
-getLetter : function (
-int 
+breakLineWithoutSpace : function (
 )
 {
-    return cc.Sprite;
+    return false;
+},
+
+/**
+ * @method getMaxLineWidth
+ * @return {float}
+ */
+getMaxLineWidth : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -7840,26 +8399,6 @@ getScaleX : function (
 },
 
 /**
- * @method getStringLenght
- * @return {int}
- */
-getStringLenght : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getTextAlignment
- * @return {cc.TextHAlignment}
- */
-getTextAlignment : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setString
  * @param {String} arg0
  */
@@ -7870,11 +8409,59 @@ str
 },
 
 /**
- * @method onDraw
+ * @method setBMFontFilePath
+ * @param {String} arg0
+ * @param {PointObject} arg1
+ * @return {bool}
  */
-onDraw : function (
+setBMFontFilePath : function (
+str, 
+point 
 )
 {
+    return false;
+},
+
+/**
+ * @method setLineBreakWithoutSpace
+ * @param {bool} arg0
+ */
+setLineBreakWithoutSpace : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getStringNumLines
+ * @return {int}
+ */
+getStringNumLines : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method enableOutline
+ * @param {Color4BObject} arg0
+ * @param {int} arg1
+ */
+enableOutline : function (
+color4b, 
+int 
+)
+{
+},
+
+/**
+ * @method getStringLenght
+ * @return {int}
+ */
+getStringLenght : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -7896,72 +8483,6 @@ int
 },
 
 /**
- * @method setLabelEffect
- * @param {cc.LabelEffect} arg0
- * @param {Color3BObject} arg1
- */
-setLabelEffect : function (
-labeleffect, 
-color3b 
-)
-{
-},
-
-/**
- * @method getMaxLineWidth
- * @return {float}
- */
-getMaxLineWidth : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setBMFontFilePath
- * @param {String} arg0
- * @param {PointObject} arg1
- * @return {bool}
- */
-setBMFontFilePath : function (
-str, 
-point 
-)
-{
-    return false;
-},
-
-/**
- * @method getCommonLineHeight
- * @return {int}
- */
-getCommonLineHeight : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getString
- * @return {String}
- */
-getString : function (
-)
-{
-    return ;
-},
-
-/**
- * @method breakLineWithoutSpace
- * @return {bool}
- */
-breakLineWithoutSpace : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setMaxLineWidth
  * @param {float} arg0
  */
@@ -7969,6 +8490,38 @@ setMaxLineWidth : function (
 float 
 )
 {
+},
+
+/**
+ * @method enableGlow
+ * @param {Color3BObject} arg0
+ */
+enableGlow : function (
+color3b 
+)
+{
+},
+
+/**
+ * @method getLetter
+ * @param {int} arg0
+ * @return {cc.Sprite}
+ */
+getLetter : function (
+int 
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method getTextAlignment
+ * @return {cc.TextHAlignment}
+ */
+getTextAlignment : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -8263,9 +8816,11 @@ float
 },
 
 /**
- * @method onDraw
+ * @method changeHeight
+ * @param {float} arg0
  */
-onDraw : function (
+changeHeight : function (
+float 
 )
 {
 },
@@ -8275,16 +8830,6 @@ onDraw : function (
  * @param {float} arg0
  */
 changeWidth : function (
-float 
-)
-{
-},
-
-/**
- * @method changeHeight
- * @param {float} arg0
- */
-changeHeight : function (
 float 
 )
 {
@@ -10341,6 +10886,20 @@ sprite
 cc.RenderTexture = {
 
 /**
+ * @method setVirtualViewport
+ * @param {PointObject} arg0
+ * @param {RectObject} arg1
+ * @param {RectObject} arg2
+ */
+setVirtualViewport : function (
+point, 
+rect, 
+rect 
+)
+{
+},
+
+/**
  * @method clearStencil
  * @param {int} arg0
  */
@@ -10416,6 +10975,16 @@ isAutoDraw : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setKeepMatrix
+ * @param {bool} arg0
+ */
+setKeepMatrix : function (
+bool 
+)
+{
 },
 
 /**
@@ -10721,14 +11290,6 @@ getTextureAtlas : function (
 insertChild : function (
 particlesystem, 
 int 
-)
-{
-},
-
-/**
- * @method visit
- */
-visit : function (
 )
 {
 },
@@ -12168,6 +12729,112 @@ int
 )
 {
     return cc.ParticleRain;
+},
+
+};
+
+/**
+ * @class EventListenerCustom
+ */
+cc.EventListenerCustom = {
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @param {function} arg1
+ * @return {cc.EventListenerCustom}
+ */
+create : function (
+str, 
+func 
+)
+{
+    return cc.EventListenerCustom;
+},
+
+};
+
+/**
+ * @class EventCustom
+ */
+cc.EventCustom = {
+
+/**
+ * @method getEventName
+ * @return {String}
+ */
+getEventName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setUserData
+ * @param {void*} arg0
+ */
+setUserData : function (
+void 
+)
+{
+},
+
+/**
+ * @method getUserData
+ * @return {void*}
+ */
+getUserData : function (
+)
+{
+    return void;
+},
+
+/**
+ * @method EventCustom
+ * @constructor
+ * @param {String} arg0
+ */
+EventCustom : function (
+str 
+)
+{
+},
+
+};
+
+/**
+ * @class Device
+ */
+cc.Device = {
+
+/**
+ * @method setAccelerometerEnabled
+ * @param {bool} arg0
+ */
+setAccelerometerEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setAccelerometerInterval
+ * @param {float} arg0
+ */
+setAccelerometerInterval : function (
+float 
+)
+{
+},
+
+/**
+ * @method getDPI
+ * @return {int}
+ */
+getDPI : function (
+)
+{
+    return 0;
 },
 
 };
@@ -14214,6 +14881,203 @@ int
 TileMapAtlas : function (
 )
 {
+},
+
+};
+
+/**
+ * @class EventListenerTouchOneByOne
+ */
+cc.EventListenerTouchOneByOne = {
+
+/**
+ * @method isSwallowTouches
+ * @return {bool}
+ */
+isSwallowTouches : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setSwallowTouches
+ * @param {bool} arg0
+ */
+setSwallowTouches : function (
+bool 
+)
+{
+},
+
+};
+
+/**
+ * @class EventListenerTouchAllAtOnce
+ */
+cc.EventListenerTouchAllAtOnce = {
+
+};
+
+/**
+ * @class EventListenerKeyboard
+ */
+cc.EventListenerKeyboard = {
+
+};
+
+/**
+ * @class EventMouse
+ */
+cc.EventMouse = {
+
+/**
+ * @method getMouseButton
+ * @return {int}
+ */
+getMouseButton : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setScrollData
+ * @param {float} arg0
+ * @param {float} arg1
+ */
+setScrollData : function (
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method setMouseButton
+ * @param {int} arg0
+ */
+setMouseButton : function (
+int 
+)
+{
+},
+
+/**
+ * @method getScrollY
+ * @return {float}
+ */
+getScrollY : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getScrollX
+ * @return {float}
+ */
+getScrollX : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getCursorX
+ * @return {float}
+ */
+getCursorX : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getCursorY
+ * @return {float}
+ */
+getCursorY : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setCursorPosition
+ * @param {float} arg0
+ * @param {float} arg1
+ */
+setCursorPosition : function (
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method EventMouse
+ * @constructor
+ * @param {cc.EventMouse::MouseEventType} arg0
+ */
+EventMouse : function (
+mouseeventtype 
+)
+{
+},
+
+};
+
+/**
+ * @class EventListenerMouse
+ */
+cc.EventListenerMouse = {
+
+/**
+ * @method create
+ * @return {cc.EventListenerMouse}
+ */
+create : function (
+)
+{
+    return cc.EventListenerMouse;
+},
+
+};
+
+/**
+ * @class EventAcceleration
+ */
+cc.EventAcceleration = {
+
+/**
+ * @method EventAcceleration
+ * @constructor
+ * @param {cc.Acceleration} arg0
+ */
+EventAcceleration : function (
+acceleration 
+)
+{
+},
+
+};
+
+/**
+ * @class EventListenerAcceleration
+ */
+cc.EventListenerAcceleration = {
+
+/**
+ * @method create
+ * @param {function} arg0
+ * @return {cc.EventListenerAcceleration}
+ */
+create : function (
+func 
+)
+{
+    return cc.EventListenerAcceleration;
 },
 
 };

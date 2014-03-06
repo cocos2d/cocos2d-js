@@ -99,8 +99,11 @@ var LayerTest1 = LayerTest.extend({
         var s = director.getWinSize();
         var layer = cc.LayerColor.create(cc.c4b(255, 0, 0, 128), 200, 200);
 
-        layer.ignoreAnchorPointForPosition(false);
-        layer.setPosition(s.width / 2, s.height / 2);
+        layer.ignoreAnchor = false;
+        layer.x = s.width / 3;
+        layer.y = s.height / 2;
+        layer.anchorX = 0;
+        layer.anchorY = 0.5
         this.addChild(layer, 1, cc.TAG_LAYER);
     },
     title:function () {
@@ -108,10 +111,11 @@ var LayerTest1 = LayerTest.extend({
     },
 
     updateSize:function (location) {
-        var newSize = cc.size(Math.abs(location.x - winSize.width / 2) * 2, Math.abs(location.y - winSize.height / 2) * 2);
         var l = this.getChildByTag(cc.TAG_LAYER);
 
-        l.setContentSize(newSize);
+        //l.setContentSize(newSize);
+        l.width = Math.abs(location.x - winSize.width / 2) * 2;
+        l.height = Math.abs(location.y - winSize.height / 2) * 2;
     },
 
     // events
@@ -123,7 +127,7 @@ var LayerTest1 = LayerTest.extend({
     onTouchesMoved:function (touches, event) {
         this.updateSize( touches[0].getLocation() );
     },
-    
+
 
     //
     // Automation
@@ -177,7 +181,7 @@ var IgnoreAnchorpointTest1 = LayerTest.extend({
     pixel2: {"0": 100, "1": 50, "2": 50, "3": 200},
 
     getExpectedResult:function() {
-        
+
         var s = director.getWinSize();
         var ret = {"big": "yes", "small": "yes"};
         return JSON.stringify(ret);
@@ -190,7 +194,7 @@ var IgnoreAnchorpointTest1 = LayerTest.extend({
         var ret3 =  this.readPixels(s.width - 50, s.height - 50, 50, 50);
         var ret = {"big": this.containsPixel(ret2, this.pixel1, true, 100) ? "yes" : "no",
 		   "small": this.containsPixel(ret3, this.pixel2, true, 100) ? "yes" : "no"};
-	
+
         return JSON.stringify(ret);
     }
 });
@@ -223,7 +227,7 @@ var IgnoreAnchorpointTest2 = LayerTest.extend({
     pixel2: {"0": 100, "1": 50, "2": 50, "3": 200},
 
     getExpectedResult:function() {
-        
+
         var s = director.getWinSize();
         var ret = {"big": "yes", "small": "yes"};
         return JSON.stringify(ret);
@@ -236,7 +240,7 @@ var IgnoreAnchorpointTest2 = LayerTest.extend({
         var ret3 =  this.readPixels(s.width - 50, s.height - 50, 5, 5);
         var ret = {"big": this.containsPixel(ret2, this.pixel1, true, 100) ? "yes" : "no",
 		   "small": this.containsPixel(ret3, this.pixel2, true, 100) ? "yes" : "no"};
-	
+
         return JSON.stringify(ret);
     }
 });
@@ -333,7 +337,7 @@ var LayerTest2 = LayerTest.extend({
     testDuration: 2.1,
     tintTest: {"r": 0, "g": 128, "b": 60},
     getExpectedResult:function() {
-        
+
         var s = director.getWinSize();
         var ret = {"tint": "yes", "opacity": 0};
         return JSON.stringify(ret);
@@ -347,7 +351,7 @@ var LayerTest2 = LayerTest.extend({
 
 	var inColorRange = function (pix1, pix2) {
 	    // Color on iOS comes as 0,128,128 and on web as 0,128,0
-	    if(abs(pix1.r - pix2.r) < 50 && abs(pix1.g - pix2.g) < 50 && 
+	    if(abs(pix1.r - pix2.r) < 50 && abs(pix1.g - pix2.g) < 50 &&
 	       abs(pix1.b - pix2.b) < 90) {
 		return true;
 	    }
@@ -358,7 +362,7 @@ var LayerTest2 = LayerTest.extend({
 	var op = this.getChildByTag(LAYERTEST2_LAYER2_TAG).getOpacity();
         var ret = {"tint": inColorRange(tint, this.tintTest) ? "yes" : "no",
 		   "opacity": op};
-	
+
         return JSON.stringify(ret);
     }
 });
@@ -490,7 +494,7 @@ var LayerGradient = LayerTest.extend({
     pixel2: {"0": 0, "1": 255, "2": 0, "3": 255},
 
     getExpectedResult:function() {
-        
+
         var s = director.getWinSize();
         var ret = {"bottomleft": "yes", "topright": "yes"};
         return JSON.stringify(ret);
@@ -503,7 +507,7 @@ var LayerGradient = LayerTest.extend({
         var ret3 =  this.readPixels(s.width - 50, s.height - 50, 50, 50);
         var ret = {"bottomleft": this.containsPixel(ret2, this.pixel1) ? "yes" : "no",
 		   "topright": this.containsPixel(ret3, this.pixel2) ? "yes" : "no"};
-	
+
         return JSON.stringify(ret);
     }
 });

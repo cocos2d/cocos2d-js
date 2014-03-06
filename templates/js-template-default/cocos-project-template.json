@@ -1,7 +1,5 @@
 {
-   "default":{
-      "dir":"SDK_ROOT/templates/js-template-default",
-      "default":{
+      "do_default":{
          "exclude_from_template":[
             "frameworks/runtime-src"
          ],
@@ -10,7 +8,7 @@
             "to":"frameworks/cocos2d-html5"
          }
       },
-      "native_support":{
+      "do_add_native_support":{
          "append_from_template":{
             "from":"frameworks/runtime-src",
             "to":"frameworks/runtime-src",
@@ -37,6 +35,7 @@
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj"
             ]
          },
@@ -70,7 +69,6 @@
                "frameworks/runtime-src/proj.ios_mac/Info.plist"
             ]
          }
-      }
-   }
+    }
 }
 

@@ -34,6 +34,16 @@ var cc = cc || {};
         return cc.Node.prototype.getNodeToWorldTransform.apply(this, arguments);
     };
 
+    cc.Node.prototype.getZOrder = function() {
+        logW("cc.Node.getZOrder", "cc.Node.getLocalZOrder");
+        return cc.Node.prototype.getLocalZOrder.apply(this, arguments);
+    };
+
+    cc.Node.prototype.setZOrder = function() {
+        logW("cc.Node.setZOrder", "cc.Node.setLocalZOrder");
+        cc.Node.prototype.setLocalZOrder.apply(this, arguments);
+    };
+
     cc.Node.prototype.nodeToParentTransform = function() {
         logW("cc.Node.nodeToParentTransform", "cc.Node.getNodeToParentTransform");
         return cc.Node.prototype.getNodeToParentTransform.apply(this, arguments);

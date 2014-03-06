@@ -90,6 +90,12 @@
 		A035A5E71782290400987F6C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		A035A5E81782290400987F6C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A035A71217822E9E00987F6C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
+		BA175BB418C5A2DA0040EA39 /* jsb_property_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */; };
+		BA175BB518C5A2DA0040EA39 /* jsb_property_impls.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */; };
+		BAA7DED518C74AE500D9A10E /* jsb_property_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */; };
+		BAA7DED618C74AE500D9A10E /* jsb_property_impls.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */; };
+		BAA7DEDE18C7560500D9A10E /* jsb_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */; };
+		BAA7DEDF18C7561100D9A10E /* jsb_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */; };
 		D60AE43817F9143D00757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		ED743D1717D099F10004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 /* End PBXBuildFile section */
@@ -312,6 +318,9 @@
 		A07A52B91783AE900073F6A7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_property_apis.js; path = "../frameworks/js-bindings/bindings/script/jsb_property_apis.js"; sourceTree = "<group>"; };
+		BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_property_impls.js; path = "../frameworks/js-bindings/bindings/script/jsb_property_impls.js"; sourceTree = "<group>"; };
+		BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_create_apis.js; path = "../frameworks/js-bindings/bindings/script/jsb_create_apis.js"; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -386,6 +395,9 @@
 				1A487B4218BF3E7F007EEB98 /* jsb_cocos2d_constants.js */,
 				1A487B4318BF3E7F007EEB98 /* jsb_cocos2d_extension.js */,
 				1A487B4418BF3E7F007EEB98 /* jsb_cocos2d_gui.js */,
+				BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */,
+				BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */,
+				BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */,
 				1A487B4518BF3E7F007EEB98 /* jsb_cocos2d_studio.js */,
 				1A487B4718BF3E7F007EEB98 /* jsb_cocosbuilder.js */,
 				1A487B4818BF3E7F007EEB98 /* jsb_debugger.js */,
@@ -706,6 +718,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAA7DEDF18C7561100D9A10E /* jsb_create_apis.js in Resources */,
+				BAA7DED518C74AE500D9A10E /* jsb_property_apis.js in Resources */,
+				BAA7DED618C74AE500D9A10E /* jsb_property_impls.js in Resources */,
 				1A487B7A18BF3EE9007EEB98 /* jsb.js in Resources */,
 				1A487B7B18BF3EE9007EEB98 /* jsb_chipmunk.js in Resources */,
 				1A487B7C18BF3EE9007EEB98 /* jsb_chipmunk_constants.js in Resources */,
@@ -740,6 +755,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAA7DEDE18C7560500D9A10E /* jsb_create_apis.js in Resources */,
+				BA175BB418C5A2DA0040EA39 /* jsb_property_apis.js in Resources */,
+				BA175BB518C5A2DA0040EA39 /* jsb_property_impls.js in Resources */,
 				1A487B6C18BF3EDF007EEB98 /* jsb.js in Resources */,
 				1A487B6D18BF3EDF007EEB98 /* jsb_chipmunk.js in Resources */,
 				1A487B6E18BF3EDF007EEB98 /* jsb_chipmunk_constants.js in Resources */,
@@ -976,7 +994,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../frameworks/js-bindings/cocos2d-x $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/base $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/physics $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/math/kazmath/include $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/gui $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/network $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/audio/include $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/editor-support $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/extensions $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/chipmunk/include/chipmunk $(SRCROOT)/../frameworks/js-bindings/bindings/auto $(SRCROOT)/../frameworks/js-bindings/bindings/manual";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../frameworks/js-bindings/cocos2d-x $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/base $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/physics $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/math/kazmath $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/gui $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/network $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/audio/include $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/editor-support $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/extensions $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/chipmunk/include/chipmunk $(SRCROOT)/../frameworks/js-bindings/bindings/auto $(SRCROOT)/../frameworks/js-bindings/bindings/manual";
 			};
 			name = Debug;
 		};
@@ -1000,7 +1018,7 @@
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../frameworks/js-bindings/cocos2d-x $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/base $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/physics $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/math/kazmath/include $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/gui $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/network $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/audio/include $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/editor-support $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/extensions $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/chipmunk/include/chipmunk $(SRCROOT)/../frameworks/js-bindings/bindings/auto $(SRCROOT)/../frameworks/js-bindings/bindings/manual";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../frameworks/js-bindings/cocos2d-x $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/base $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/physics $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/math/kazmath $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/gui $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/network $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/audio/include $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/editor-support $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/extensions $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/chipmunk/include/chipmunk $(SRCROOT)/../frameworks/js-bindings/bindings/auto $(SRCROOT)/../frameworks/js-bindings/bindings/manual";
 			};
 			name = Release;
 		};

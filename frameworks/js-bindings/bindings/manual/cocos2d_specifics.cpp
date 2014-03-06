@@ -3,6 +3,8 @@
 #include <typeinfo>
 #include "js_bindings_config.h"
 #include "jsb_cocos2dx_auto.hpp"
+#include "jsb_event_dispatcher_manual.h"
+
 
 using namespace cocos2d;
 
@@ -913,9 +915,9 @@ JSScheduleWrapper::~JSScheduleWrapper()
 void JSScheduleWrapper::setTargetForSchedule(jsval sched, JSScheduleWrapper *target) {
     do {
         JSObject* jsfunc = JSVAL_TO_OBJECT(sched);
-        Array* targetArray = getTargetForSchedule(sched);
+        auto targetArray = getTargetForSchedule(sched);
         if (NULL == targetArray) {
-            targetArray = new Array();
+            targetArray = new __Array();
             targetArray->init();
             schedFunc_proxy_t *p = (schedFunc_proxy_t *)malloc(sizeof(schedFunc_proxy_t));
             assert(p);
@@ -930,7 +932,7 @@ void JSScheduleWrapper::setTargetForSchedule(jsval sched, JSScheduleWrapper *tar
     } while(0);
 }
 
-Array * JSScheduleWrapper::getTargetForSchedule(jsval sched) {
+__Array * JSScheduleWrapper::getTargetForSchedule(jsval sched) {
     schedFunc_proxy_t *t = NULL;
     JSObject *o = JSVAL_TO_OBJECT(sched);
     HASH_FIND_PTR(_schedFunc_target_ht, &o, t);
@@ -940,9 +942,9 @@ Array * JSScheduleWrapper::getTargetForSchedule(jsval sched) {
 
 void JSScheduleWrapper::setTargetForJSObject(JSObject* jsTargetObj, JSScheduleWrapper *target)
 {
-    Array* targetArray = getTargetForJSObject(jsTargetObj);
+    auto targetArray = getTargetForJSObject(jsTargetObj);
     if (NULL == targetArray) {
-        targetArray = new Array();
+        targetArray = new __Array();
         targetArray->init();
         schedTarget_proxy_t *p = (schedTarget_proxy_t *)malloc(sizeof(schedTarget_proxy_t));
         assert(p);
@@ -955,7 +957,7 @@ void JSScheduleWrapper::setTargetForJSObject(JSObject* jsTargetObj, JSScheduleWr
     targetArray->addObject(target);
 }
 
-Array * JSScheduleWrapper::getTargetForJSObject(JSObject* jsTargetObj)
+__Array * JSScheduleWrapper::getTargetForJSObject(JSObject* jsTargetObj)
 {
     schedTarget_proxy_t *t = NULL;
     HASH_FIND_PTR(_schedObj_target_ht, &jsTargetObj, t);
@@ -1000,7 +1002,7 @@ void JSScheduleWrapper::removeAllTargetsForMinPriority(int minPriority)
         schedFunc_proxy_t *current, *tmp;
         HASH_ITER(hh, _schedFunc_target_ht, current, tmp) {
             std::vector<Ref*> objectsNeedToBeReleased;
-            Array* targets = current->targets;
+            auto targets = current->targets;
             Ref* pObj = NULL;
             CCARRAY_FOREACH(targets, pObj)
             {
@@ -1031,7 +1033,7 @@ void JSScheduleWrapper::removeAllTargetsForMinPriority(int minPriority)
         schedTarget_proxy_t *current, *tmp;
         HASH_ITER(hh, _schedObj_target_ht, current, tmp) {
             std::vector<Ref*> objectsNeedToBeReleased;
-            Array* targets = current->targets;
+            auto targets = current->targets;
             Ref* pObj = NULL;
             CCARRAY_FOREACH(targets, pObj)
             {
@@ -1067,7 +1069,7 @@ void JSScheduleWrapper::removeAllTargetsForJSObject(JSObject* jsTargetObj)
 {
     CCLOGINFO("removeAllTargetsForNatiaveNode begin");
     dump();
-    Array* removeNativeTargets = NULL;
+    __Array* removeNativeTargets = NULL;
     schedTarget_proxy_t *t = NULL;
     HASH_FIND_PTR(_schedObj_target_ht, &jsTargetObj, t);
     if (t != NULL) {
@@ -1080,7 +1082,7 @@ void JSScheduleWrapper::removeAllTargetsForJSObject(JSObject* jsTargetObj)
     schedFunc_proxy_t *current, *tmp;
     HASH_ITER(hh, _schedFunc_target_ht, current, tmp) {
         std::vector<Ref*> objectsNeedToBeReleased;
-        Array* targets = current->targets;
+        auto targets = current->targets;
         Ref* pObj = NULL;
         CCARRAY_FOREACH(targets, pObj)
         {
@@ -1130,7 +1132,7 @@ void JSScheduleWrapper::removeTargetForJSObject(JSObject* jsTargetObj, JSSchedul
     schedFunc_proxy_t *current, *tmp, *removed=NULL;
 
     HASH_ITER(hh, _schedFunc_target_ht, current, tmp) {
-        Array* targets = current->targets;
+        auto targets = current->targets;
         Ref* pObj = NULL;
         
         CCARRAY_FOREACH(targets, pObj)
@@ -1291,7 +1293,7 @@ bool js_CCNode_unschedule(JSContext *cx, uint32_t argc, jsval *vp)
         
         Scheduler *sched = node->getScheduler();
         
-        Array* targetArray = JSScheduleWrapper::getTargetForSchedule(argv[0]);
+        auto targetArray = JSScheduleWrapper::getTargetForSchedule(argv[0]);
         CCLOGINFO("unschedule target number: %d", targetArray->count());
         Ref* tmp = NULL;
         CCARRAY_FOREACH(targetArray, tmp)
@@ -1299,7 +1301,7 @@ bool js_CCNode_unschedule(JSContext *cx, uint32_t argc, jsval *vp)
             JSScheduleWrapper* target = static_cast<JSScheduleWrapper*>(tmp);
             if (node == target->getTarget())
             {
-                sched->unscheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), target);
+                sched->unschedule(schedule_selector(JSScheduleWrapper::scheduleFunc), target);
                 JSScheduleWrapper::removeTargetForJSObject(obj, target);
                 break;
             }
@@ -1321,7 +1323,7 @@ bool js_cocos2dx_CCNode_unscheduleAllSelectors(JSContext *cx, uint32_t argc, jsv
     {
         cobj->unscheduleAllSelectors();
 
-        Array *arr = JSScheduleWrapper::getTargetForJSObject(obj);
+        __Array *arr = JSScheduleWrapper::getTargetForJSObject(obj);
 		// If there aren't any targets, just return true.
 		// Otherwise, the for loop will break immediately. 
 		// It will lead to logic errors. 
@@ -1368,7 +1370,7 @@ bool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         }
         
         bool bFound = false;
-        Array* pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
+        auto pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
         Ref* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
@@ -1394,9 +1396,9 @@ bool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         }
 
         if(argc == 1) {
-            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, 0, 0.0f, !node->isRunning());
+            sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, 0, 0.0f, !node->isRunning());
         } else {
-            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, 0, delay, !node->isRunning());
+            sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, 0, delay, !node->isRunning());
         }
 
 		/* We shouldn't set the js callback function to reserved slot,
@@ -1460,7 +1462,7 @@ bool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
         bool bFound = false;
-        Array* pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
+        auto pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
         Ref* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
@@ -1485,13 +1487,13 @@ bool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         }
         
         if(argc == 1) {
-            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, !node->isRunning());
+            sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, !node->isRunning());
         } if(argc == 2) {
-            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, !node->isRunning());
+            sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, !node->isRunning());
         } if(argc == 3) {
-            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, (unsigned int)repeat, 0, !node->isRunning());
+            sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, (unsigned int)repeat, 0, !node->isRunning());
         } if (argc == 4) {
-            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, (unsigned int)repeat, delay, !node->isRunning());
+            sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, (unsigned int)repeat, delay, !node->isRunning());
         }
 		
         // I comment next line with the same reason in the js_CCNode_scheduleOnce.
@@ -1533,7 +1535,7 @@ bool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t argc,
         JSScheduleWrapper* tmpCobj = NULL;
         
         bool bFound = false;
-        Array* pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
+        auto pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
         Ref* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
@@ -1582,7 +1584,7 @@ bool js_cocos2dx_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp
         do {
 			JSObject *tmpObj = obj;
             
-            Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
+            __Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
 			// If there aren't any targets, just return true.
 			// Otherwise, the for loop will break immediately.
 			// It will lead to logic errors.
@@ -1633,7 +1635,7 @@ bool js_cocos2dx_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
         JSScheduleWrapper* tmpCobj = NULL;
         
         bool bFound = false;
-        Array* pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
+        auto pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
         Ref* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
@@ -1680,7 +1682,7 @@ bool js_cocos2dx_CCScheduler_unscheduleAllSelectorsForTarget(JSContext *cx, uint
 		do {
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
             
-            Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
+            __Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
 			// If there aren't any targets, just return true.
 			// Otherwise, the for loop will break immediately.
 			// It will lead to logic errors.
@@ -1748,7 +1750,7 @@ bool js_CCScheduler_scheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsval 
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
         bool bFound = false;
-        Array* pTargetArr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
+        auto pTargetArr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
         Ref* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
@@ -1797,7 +1799,7 @@ bool js_CCScheduler_unscheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsva
 		do {
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
             
-            Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
+            __Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
 			// If there aren't any targets, just return true.
 			// Otherwise, the for loop will break immediately.
 			// It will lead to logic errors.
@@ -1869,7 +1871,7 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
         bool bFound = false;
-        Array* pTargetArr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
+        auto pTargetArr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
         Ref* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
@@ -1896,7 +1898,7 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
             JSScheduleWrapper::setTargetForJSObject(tmpObj, tmpCObj);
         }
         
-        sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCObj, interval, repeat, delay, paused);
+        sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCObj, interval, repeat, delay, paused);
                 
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
@@ -1917,7 +1919,7 @@ bool js_CCScheduler_unscheduleCallbackForTarget(JSContext *cx, uint32_t argc, js
 		do {
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
             
-            Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
+            __Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
 			// If there aren't any targets, just return true.
 			// Otherwise, the for loop will break immediately.
 			// It will lead to logic errors.
@@ -1928,7 +1930,7 @@ bool js_CCScheduler_unscheduleCallbackForTarget(JSContext *cx, uint32_t argc, js
             for(unsigned int i = 0; i < arr->count(); ++i) {
                 wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
                 if(wrapper && wrapper->getJSCallbackFunc() == argv[1]) {
-                    cobj->unscheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), wrapper);
+                    cobj->unschedule(schedule_selector(JSScheduleWrapper::scheduleFunc), wrapper);
                     JSScheduleWrapper::removeTargetForJSObject(tmpObj, wrapper);
                     break;
                 }
@@ -1992,7 +1994,7 @@ bool js_cocos2dx_CCScheduler_pauseTarget(JSContext *cx, uint32_t argc, jsval *vp
 	if (argc == 1) {
 		do {
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-            Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
+            __Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
             if(! arr) return true;
             for(unsigned int i = 0; i < arr->count(); ++i) {
                 if(arr->getObjectAtIndex(i)) {
@@ -2018,7 +2020,7 @@ bool js_cocos2dx_CCScheduler_resumeTarget(JSContext *cx, uint32_t argc, jsval *v
 	if (argc == 1) {
 		do {
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-            Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
+            auto arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
             if(! arr) return true;
             for(unsigned int i = 0; i < arr->count(); ++i) {
                 if(arr->getObjectAtIndex(i)) {
@@ -2045,7 +2047,7 @@ bool js_cocos2dx_CCScheduler_isTargetPaused(JSContext *cx, uint32_t argc, jsval 
         bool ret = false;
 		do {
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-            Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
+            __Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
             if(! arr) return true;
             for(unsigned int i = 0; i < arr->count(); ++i) {
                 if(arr->getObjectAtIndex(i)) {
@@ -2194,6 +2196,33 @@ bool js_cocos2dx_CCNode_setAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
         return true;
     }
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+
+bool js_cocos2dx_CCNode_setColor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_setColor : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::Color3B arg0;
+		ok &= jsval_to_cccolor3b(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setColor : Error processing arguments");
+		cobj->setColor(arg0);
+        
+        int32_t alpha;
+		ok &= jsval_cccolor_to_opacity(cx, argv[0], &alpha);
+        if (ok) {
+            cobj->setOpacity(alpha);
+        }
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+    
+	JS_ReportError(cx, "js_cocos2dx_Node_setColor : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 
@@ -2970,23 +2999,23 @@ bool js_cocos2dx_CCLayer_setTouchPriority(JSContext *cx, uint32_t argc, jsval *v
 	return true;
 }
 
-static int executeScriptTouchHandler(Layer* layer, EventTouch::EventCode eventType, Touch* touch)
+static int executeScriptTouchHandler(Layer* layer, EventTouch::EventCode eventType, Touch* touch, Event* event)
 {
-    TouchScriptData data(eventType, layer, touch);
-    ScriptEvent event(kTouchEvent, &data);
-    return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    TouchScriptData data(eventType, layer, touch, event);
+    ScriptEvent scriptEvent(kTouchEvent, &data);
+    return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
  }
 
-static int executeScriptTouchesHandler(Layer* layer, EventTouch::EventCode eventType, const std::vector<Touch*>& touches)
+static int executeScriptTouchesHandler(Layer* layer, EventTouch::EventCode eventType, const std::vector<Touch*>& touches, Event* event)
 {
-    TouchesScriptData data(eventType, layer, touches);
-    ScriptEvent event(kTouchesEvent, &data);
-    return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    TouchesScriptData data(eventType, layer, touches, event);
+    ScriptEvent scriptEvent(kTouchesEvent, &data);
+    return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
 }
 
 static void setTouchEnabledForLayer(Layer* layer, bool enabled)
 {
-    auto dict = static_cast<Dictionary*>(layer->getUserObject());
+    auto dict = static_cast<__Dictionary*>(layer->getUserObject());
     if (dict == nullptr)
     {
         dict = Dictionary::create();
@@ -2997,8 +3026,8 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
     
     auto touchListenerAllAtOnce = static_cast<EventListenerTouchAllAtOnce*>(dict->objectForKey("touchListenerAllAtOnce"));
     auto touchListenerOneByOne = static_cast<EventListenerTouchOneByOne*>(dict->objectForKey("touchListenerOneByOne"));
-    auto touchMode = static_cast<Integer*>(dict->objectForKey("touchMode"));
-    auto swallowTouches = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
+    auto touchMode = static_cast<__Integer*>(dict->objectForKey("touchMode"));
+    auto swallowTouches = static_cast<__Bool*>(dict->objectForKey("swallowTouches"));
     
     auto dispatcher = layer->getEventDispatcher();
     if (touchListenerAllAtOnce != nullptr || touchListenerOneByOne != nullptr)
@@ -3017,16 +3046,16 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
         {
             auto listener = EventListenerTouchAllAtOnce::create();
             listener->onTouchesBegan = [layer](const std::vector<Touch*>& touches, Event* event){
-                executeScriptTouchesHandler(layer, EventTouch::EventCode::BEGAN, touches);
+                executeScriptTouchesHandler(layer, EventTouch::EventCode::BEGAN, touches, event);
             };
             listener->onTouchesMoved = [layer](const std::vector<Touch*>& touches, Event* event){
-                executeScriptTouchesHandler(layer, EventTouch::EventCode::MOVED, touches);
+                executeScriptTouchesHandler(layer, EventTouch::EventCode::MOVED, touches, event);
             };
             listener->onTouchesEnded = [layer](const std::vector<Touch*>& touches, Event* event){
-                executeScriptTouchesHandler(layer, EventTouch::EventCode::ENDED, touches);
+                executeScriptTouchesHandler(layer, EventTouch::EventCode::ENDED, touches, event);
             };
             listener->onTouchesCancelled = [layer](const std::vector<Touch*>& touches, Event* event){
-                executeScriptTouchesHandler(layer, EventTouch::EventCode::CANCELLED, touches);
+                executeScriptTouchesHandler(layer, EventTouch::EventCode::CANCELLED, touches, event);
             };
             
             dispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
@@ -3038,16 +3067,16 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
             auto listener = EventListenerTouchOneByOne::create();
             listener->setSwallowTouches(swallowTouches ? swallowTouches->getValue() : false);
             listener->onTouchBegan = [layer](Touch* touch, Event* event) -> bool{
-                return executeScriptTouchHandler(layer, EventTouch::EventCode::BEGAN, touch) == 0 ? false : true;
+                return executeScriptTouchHandler(layer, EventTouch::EventCode::BEGAN, touch, event) == 0 ? false : true;
             };
             listener->onTouchMoved = [layer](Touch* touch, Event* event){
-                executeScriptTouchHandler(layer, EventTouch::EventCode::MOVED, touch);
+                executeScriptTouchHandler(layer, EventTouch::EventCode::MOVED, touch, event);
             };
             listener->onTouchEnded = [layer](Touch* touch, Event* event){
-                executeScriptTouchHandler(layer, EventTouch::EventCode::ENDED, touch);
+                executeScriptTouchHandler(layer, EventTouch::EventCode::ENDED, touch, event);
             };
             listener->onTouchCancelled = [layer](Touch* touch, Event* event){
-                executeScriptTouchHandler(layer, EventTouch::EventCode::CANCELLED, touch);
+                executeScriptTouchHandler(layer, EventTouch::EventCode::CANCELLED, touch, event);
             };
             
             dispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
@@ -3088,10 +3117,10 @@ bool js_cocos2dx_CCLayer_isTouchEnabled(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 0)
     {
         bool ret = false;
-        auto dict = static_cast<Dictionary*>(cobj->getUserObject());
+        auto dict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (dict != nullptr)
         {
-            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            __Bool* enabled = static_cast<__Bool*>(dict->objectForKey("touchEnabled"));
             ret = enabled ? enabled->getValue() : false;
         }
         JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
@@ -3113,22 +3142,22 @@ bool js_cocos2dx_CCLayer_setTouchMode(JSContext *cx, uint32_t argc, jsval *vp)
         jsval* argv = JS_ARGV(cx, vp);
         int32_t mode = 0;
         jsval_to_int32(cx, argv[0], &mode);
-        Integer* touchModeObj = nullptr;
+        __Integer* touchModeObj = nullptr;
         
-        auto dict = static_cast<Dictionary*>(cobj->getUserObject());
+        auto dict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (dict == nullptr)
         {
             dict = Dictionary::create();
             cobj->setUserObject(dict);
         }
         
-        touchModeObj = static_cast<Integer*>(dict->objectForKey("touchMode"));
+        touchModeObj = static_cast<__Integer*>(dict->objectForKey("touchMode"));
         int32_t touchMode = touchModeObj ? touchModeObj->getValue() : 0;
         
         if (touchMode != mode)
         {
             dict->setObject(Integer::create(mode), "touchMode");
-            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            __Bool* enabled = static_cast<__Bool*>(dict->objectForKey("touchEnabled"));
             if (enabled && enabled->getValue())
             {
                 setTouchEnabledForLayer(cobj, false);
@@ -3152,10 +3181,10 @@ bool js_cocos2dx_CCLayer_getTouchMode(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 0)
     {
         int32_t ret = 0;
-        auto dict = static_cast<Dictionary*>(cobj->getUserObject());
+        auto dict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (dict != nullptr)
         {
-            Integer* mode = static_cast<Integer*>(dict->objectForKey("touchMode"));
+            __Integer* mode = static_cast<__Integer*>(dict->objectForKey("touchMode"));
             ret = mode ? mode->getValue() : 0;
         }
         JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret));
@@ -3176,22 +3205,22 @@ bool js_cocos2dx_CCLayer_setSwallowsTouches(JSContext *cx, uint32_t argc, jsval 
     {
         jsval* argv = JS_ARGV(cx, vp);
         bool swallowsTouches = JSVAL_TO_BOOLEAN(argv[0]);
-        Bool* swallowsTouchesObj = nullptr;
+        __Bool* swallowsTouchesObj = nullptr;
         
-        auto dict = static_cast<Dictionary*>(cobj->getUserObject());
+        auto dict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (dict == nullptr)
         {
             dict = Dictionary::create();
             cobj->setUserObject(dict);
         }
         
-        swallowsTouchesObj = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
+        swallowsTouchesObj = static_cast<__Bool*>(dict->objectForKey("swallowTouches"));
         bool oldSwallowsTouches = swallowsTouchesObj ? swallowsTouchesObj->getValue() : false;
         
         if (oldSwallowsTouches != swallowsTouches)
         {
             dict->setObject(Integer::create(swallowsTouches), "swallowTouches");
-            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            __Bool* enabled = static_cast<__Bool*>(dict->objectForKey("touchEnabled"));
             if (enabled && enabled->getValue())
             {
                 setTouchEnabledForLayer(cobj, false);
@@ -3215,10 +3244,10 @@ bool js_cocos2dx_CCLayer_isSwallowsTouches(JSContext *cx, uint32_t argc, jsval *
     if (argc == 0)
     {
         bool ret = false;
-        auto dict = static_cast<Dictionary*>(cobj->getUserObject());
+        auto dict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (dict != nullptr)
         {
-            Bool* swallowTouches = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
+            __Bool* swallowTouches = static_cast<__Bool*>(dict->objectForKey("swallowTouches"));
             ret = swallowTouches ? swallowTouches->getValue() : false;
         }
         JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
@@ -3239,7 +3268,7 @@ bool js_cocos2dx_CCLayer_setKeyboardEnabled(JSContext *cx, uint32_t argc, jsval 
     {
         jsval* argv = JS_ARGV(cx, vp);
         bool enabled = JSVAL_TO_BOOLEAN(argv[0]);
-        auto dict = static_cast<Dictionary*>(cobj->getUserObject());
+        auto dict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (dict == nullptr)
         {
             dict = Dictionary::create();
@@ -3287,10 +3316,10 @@ bool js_cocos2dx_CCLayer_isKeyboardEnabled(JSContext *cx, uint32_t argc, jsval *
     if (argc == 0)
     {
         bool ret = false;
-        auto dict = static_cast<Dictionary*>(cobj->getUserObject());
+        auto dict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (dict != nullptr)
         {
-            Bool* enabled = static_cast<Bool*>(dict->objectForKey("keyboardEnabled"));
+            __Bool* enabled = static_cast<__Bool*>(dict->objectForKey("keyboardEnabled"));
             ret = enabled ? enabled->getValue() : false;
         }
         JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
@@ -3311,7 +3340,7 @@ bool js_cocos2dx_CCLayer_setAccelerometerEnabled(JSContext *cx, uint32_t argc, j
     {
         jsval* argv = JS_ARGV(cx, vp);
         bool enabled = JSVAL_TO_BOOLEAN(argv[0]);
-        auto dict = static_cast<Dictionary*>(cobj->getUserObject());
+        auto dict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (dict == nullptr)
         {
             dict = Dictionary::create();
@@ -3357,10 +3386,10 @@ bool js_cocos2dx_CCLayer_isAccelerometerEnabled(JSContext *cx, uint32_t argc, js
     if (argc == 0)
     {
         bool ret = false;
-        auto dict = static_cast<Dictionary*>(cobj->getUserObject());
+        auto dict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (dict != nullptr)
         {
-            Bool* enabled = static_cast<Bool*>(dict->objectForKey("accelerometerEnabled"));
+            __Bool* enabled = static_cast<__Bool*>(dict->objectForKey("accelerometerEnabled"));
             ret = enabled ? enabled->getValue() : false;
         }
         JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
@@ -3718,7 +3747,7 @@ bool js_cocos2dx_CCGLProgram_create(JSContext *cx, uint32_t argc, jsval *vp)
     GLProgram* ret = new GLProgram();
     ret->autorelease();
     
-    ret->initWithVertexShaderFilename(arg0, arg1);
+    ret->initWithFilenames(arg0, arg1);
     
     jsval jsret;
     do {
@@ -3755,7 +3784,7 @@ bool js_cocos2dx_CCGLProgram_createWithString(JSContext *cx, uint32_t argc, jsva
     std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
     
     GLProgram* ret = new GLProgram();
-    ret->initWithVertexShaderByteArray(arg0, arg1);
+    ret->initWithByteArrays(arg0, arg1);
     
     jsval jsret;
     do {
@@ -4200,6 +4229,9 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
+    JS_DefineFunction(cx, jsb_cocos2d_EventListener_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, jsb_cocos2d_EventListener_prototype, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
     JS_DefineFunction(cx, jsb_cocos2d_GLProgram_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_cocos2d_GLProgram_prototype, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "onExit", js_doNothing, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
@@ -4217,6 +4249,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "setPosition", js_cocos2dx_CCNode_setPosition, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "setContentSize", js_cocos2dx_CCNode_setContentSize, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "setAnchorPoint", js_cocos2dx_CCNode_setAnchorPoint, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "setColor", js_cocos2dx_CCNode_setColor, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, jsb_cocos2d_GLProgram_prototype, "setUniformLocationF32", js_cocos2dx_CCGLProgram_setUniformLocationWith4f, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_GLProgram_prototype, "getProgram", js_cocos2dx_CCGLProgram_getProgram, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -4262,6 +4295,15 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_cocos2d_FileUtils_prototype, "createDictionaryWithContentsOfFile", js_cocos2dx_FileUtils_createDictionaryWithContentsOfFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, jsb_cocos2d_FileUtils_prototype, "getByteArrayFromFile", js_cocos2dx_CCFileUtils_getByteArrayFromFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.EventListenerTouchOneByOne; })()"));
+    JS_DefineFunction(cx, tmpObj, "create", js_EventListenerTouchOneByOne_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.EventListenerTouchAllAtOnce; })()"));
+    JS_DefineFunction(cx, tmpObj, "create", js_EventListenerTouchAllAtOnce_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.EventListenerKeyboard; })()"));
+    JS_DefineFunction(cx, tmpObj, "create", js_EventListenerKeyboard_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     
     tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.BezierBy; })()"));
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCBezierBy_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);

@@ -5,6 +5,14 @@
 var cc = cc || {};
 var window = window || this;
 
+cc.sys = sys || {};
+cc.sys.isNative = true;
+
+cc.assert = function(cond, msg) {
+    if (!cond)
+        cc.log("Assert: " + msg);
+}
+
 cc.TARGET_PLATFORM = {
     WINDOWS:0,
     LINUX:1,
@@ -19,7 +27,7 @@ cc.TARGET_PLATFORM = {
     PC_BROWSER:101
 };
 
-cc.RESOLUTION_POLICY = {
+cc.ResolutionPolicy = {
     // The entire application is visible in the specified area without trying to preserve the original aspect ratio.
     // Distortion can occur, and the application may appear stretched or compressed.
 EXACT_FIT:0,
@@ -39,7 +47,7 @@ FIXED_HEIGHT:3,
     // no distortion will occur however you must make sure your application works on different
     // aspect ratios
 FIXED_WIDTH:4,
-    
+
 UNKNOWN:5
 };
 
@@ -138,146 +146,24 @@ cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
 cc.log = cc._cocosplayerLog || cc.log || log;
 
-//
-// Color 3B
-//
-cc.c3b = function( r, g, b )
-{
-    switch (arguments.length) {
-        case 0:
-            return {r:0, g:0, b:0 };
-        case 1:
-            if (r && r instanceof cc.c3b) {
-            	  return {r:r.r, g:r.g, b:r.b };
-            } else {
-                return {r:0, g:0, b:0 };
-            }
-        case 3:
-            return {r:r, g:g, b:b };
-        default:
-            throw "unknown argument type";
-            break;
-    }
-};
-
-cc.integerToColor3B = function (intValue) {
-    intValue = intValue || 0;
-
-    var offset = 0xff;
-    var retColor = {r:0, g:0, b:0 };
-    retColor.r = intValue & (offset);
-    retColor.g = (intValue >> 8) & offset;
-    retColor.b = (intValue >> 16) & offset;
-    return retColor;
-};
-
-cc._c3b = function( r, g, b )
-{
-    cc._reuse_color3b.r = r;
-    cc._reuse_color3b.g = g;
-    cc._reuse_color3b.b = b;
-    return cc._reuse_color3b;
-};
-
-cc.c3BEqual = function(color1, color2){
-    return color1.r === color2.r && color1.g === color2.g && color1.b === color2.b;
-};
-
-cc.white = function () {
-    return cc.c3b(255, 255, 255);
-};
-
-cc.yellow = function () {
-    return cc.c3b(255, 255, 0);
-};
-
-cc.blue = function () {
-    return cc.c3b(0, 0, 255);
-};
-
-cc.green = function () {
-    return cc.c3b(0, 255, 0);
-};
-
-cc.red = function () {
-    return cc.c3b(255, 0, 0);
-};
-
-cc.magenta = function () {
-    return cc.c3b(255, 0, 255);
-};
-
-cc.black = function () {
-    return cc.c3b(0, 0, 0);
-};
-
-cc.orange = function () {
-    return cc.c3b(255, 127, 0);
-};
-
-cc.gray = function () {
-    return cc.c3b(166, 166, 166);
-};
-
-//
-// Color 4B
-//
-cc.c4b = function( r, g, b, a )
-{
-    return {r:r, g:g, b:b, a:a };
-};
-cc._c4b = function( r, g, b, a )
-{
-    cc._reuse_color4b.r = r;
-    cc._reuse_color4b.g = g;
-    cc._reuse_color4b.b = b;
-    cc._reuse_color4b.a = a;
-    return cc._reuse_color4b;
-};
-// compatibility
-cc.c4 = cc.c4b;
-cc._c4 = cc._c4b;
-
 /**
- * convert Color3B to a string of color for style.
- * e.g.  Color3B(255,6,255)  to : "#ff06ff"
- * @param clr
- * @return {String}
+ * Common getter setter configuration function
+ * @function
+ * @param {Object}   proto      A class prototype or an object to config
+ * @param {String}   prop       Property name
+ * @param {function} getter     Getter function for the property
+ * @param {function} setter     Setter function for the property
  */
-cc.convertColor3BtoHexString = function (clr) {
-    var hR = clr.r.toString(16);
-    var hG = clr.g.toString(16);
-    var hB = clr.b.toString(16);
-    var stClr = "#" + (clr.r < 16 ? ("0" + hR) : hR) + (clr.g < 16 ? ("0" + hG) : hG) + (clr.b < 16 ? ("0" + hB) : hB);
-    return stClr;
-};
-
-//
-// Color 4F
-//
-cc.c4f = function( r, g, b, a )
+cc.defineGetterSetter = function (proto, prop, getter, setter)
 {
-    return {r:r, g:g, b:b, a:a };
-};
-
-cc.c4FFromccc3B = function (c) {
-    return cc.c4f(c.r / 255.0, c.g / 255.0, c.b / 255.0, 1.0);
-};
-
-cc.c4FFromccc4B = function (c) {
-    return cc.c4f(c.r / 255.0, c.g / 255.0, c.b / 255.0, c.a / 255.0);
-};
-
-cc.c4BFromccc4F = function (c) {
-    return cc.c4f(0 | (c.r * 255), 0 | (c.g * 255), 0 | (c.b * 255), 0 | (c.a * 255));
-};
-
-cc.c4FEqual = function (a, b) {
-    return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
+    var desc = { enumerable: false, configurable: true };
+    getter && (desc.get = getter);
+    setter && (desc.set = setter);
+    Object.defineProperty(proto, prop, desc);
 };
 
 //
-// Point
+// Basic sturcture : Point
 //
 cc.p = function( x, y )
 {
@@ -314,7 +200,7 @@ cc._g = function( x, y )
 };
 
 //
-// Size
+// Basic sturcture : Size
 //
 cc.size = function(w,h)
 {
@@ -446,6 +332,159 @@ cc.rectIntersection = function (rectA, rectB) {
 cc.RectZero = function () {
     return cc.rect(0, 0, 0, 0);
 };
+
+// Basic sturcture : Color
+cc.Color = function (r, g, b, a) {
+    this.r = r || 0;
+    this.g = g || 0;
+    this.b = b || 0;
+    this.a = a || 0;
+};
+
+/**
+ *
+ * @param {Number|String|cc.Color} r
+ * @param {Number} g
+ * @param {Number} b
+ * @param {Number} a
+ * @returns {cc.Color}
+ */
+cc.color = function (r, g, b, a) {
+    if (r === undefined)
+        return {r: 0, g: 0, b: 0, a: 255};
+    if (typeof r === "string")
+        return cc.hexToColor(r);
+    if (typeof r === "object")
+        return {r: r.r, g: r.g, b: r.b, a: r.a};
+    return  {r: r, g: g, b: b, a: a };
+};
+
+cc.c4f = function(r, g, b, a) {
+    return {r: r*255, g: g*255, b: b*255, a: a*255};
+};
+cc.c4b = cc.color;
+cc.c3b = cc.color;
+
+/**
+ * returns true if both ccColor3B are equal. Otherwise it returns false.
+ * @param {cc.Color} color1
+ * @param {cc.Color} color2
+ * @return {Boolean}  true if both ccColor3B are equal. Otherwise it returns false.
+ */
+cc.colorEqual = function(color1, color2){
+    return color1.r === color2.r && color1.g === color2.g && color1.b === color2.b;
+};
+
+
+/**
+ * White color (255, 255, 255, 255)
+ * @returns {cc.Color}
+ * @private
+ */
+cc.color._getWhite = function(){
+    return cc.color(255, 255, 255, 255);
+};
+
+/**
+ *  Yellow color (255, 255, 0, 255)
+ * @returns {cc.Color}
+ * @private
+ */
+cc.color._getYellow = function () {
+    return cc.color(255, 255, 0, 255);
+};
+
+/**
+ *  Blue color (0, 0, 255, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getBlue = function () {
+    return  cc.color(0, 0, 255, 255);
+};
+
+/**
+ *  Green Color (0, 255, 0, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getGreen = function () {
+    return cc.color(0, 255, 0, 255);
+};
+
+/**
+ *  Red Color (255, 0, 0, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getRed = function () {
+    return cc.color(255, 0, 0, 255);
+};
+
+/**
+ *  Magenta Color (255, 0, 255, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getMagenta = function () {
+    return cc.color(255, 0, 255, 255);
+};
+
+/**
+ *  Black Color (0, 0, 0, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getBlack = function () {
+    return cc.color(0, 0, 0, 255);
+};
+
+/**
+ *  Orange Color (255, 127, 0, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getOrange = function () {
+    return cc.color(255, 127, 0, 255);
+};
+
+/**
+ *  Gray Color (166, 166, 166, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getGray = function () {
+    return cc.color(166, 166, 166, 255);
+};
+var _proto = cc.color;
+/** @expose */
+_proto.white;
+cc.defineGetterSetter(_proto, "white", _proto._getWhite);
+/** @expose */
+_proto.yellow;
+cc.defineGetterSetter(_proto, "yellow", _proto._getYellow);
+/** @expose */
+_proto.blue;
+cc.defineGetterSetter(_proto, "blue", _proto._getBlue);
+/** @expose */
+_proto.green;
+cc.defineGetterSetter(_proto, "green", _proto._getGreen);
+/** @expose */
+_proto.red;
+cc.defineGetterSetter(_proto, "red", _proto._getRed);
+/** @expose */
+_proto.magenta;
+cc.defineGetterSetter(_proto, "magenta", _proto._getMagenta);
+/** @expose */
+_proto.black;
+cc.defineGetterSetter(_proto, "black", _proto._getBlack);
+/** @expose */
+_proto.orange;
+cc.defineGetterSetter(_proto, "orange", _proto._getOrange);
+/** @expose */
+_proto.gray;
+cc.defineGetterSetter(_proto, "gray", _proto._getGray);
+
 
 //
 // Array: for cocos2d-html5 compatibility
@@ -716,111 +755,6 @@ var __onParseConfig = function(type, str) {
     }
 };
 
-cc.VisibleRect = {
-    _topLeft:cc.p(0,0),
-    _topRight:cc.p(0,0),
-    _top:cc.p(0,0),
-    _bottomLeft:cc.p(0,0),
-    _bottomRight:cc.p(0,0),
-    _bottom:cc.p(0,0),
-    _center:cc.p(0,0),
-    _left:cc.p(0,0),
-    _right:cc.p(0,0),
-    _width:0,
-    _height:0,
-    _isInitialized: false,
-    init:function(){
-        var director = cc.Director.getInstance();
-        var origin = director.getVisibleOrigin();
-        var size = director.getVisibleSize();
-
-        this._width = size.width;
-        this._height = size.height;
-
-        var x = origin.x;
-        var y = origin.y;
-        var w = this._width;
-        var h = this._height;
-
-        var left = origin.x;
-        var right = origin.x + size.width;
-        var middle = origin.x + size.width/2;
-
-        //top
-        this._top.y = this._topLeft.y = this._topRight.y = y + h;
-        this._topLeft.x = left;
-        this._top.x = middle;
-        this._topRight.x = right;
-
-        //bottom
-
-        this._bottom.y = this._bottomRight.y = this._bottomLeft.y = y;
-        this._bottomLeft.x = left
-        this._bottom.x = middle;
-        this._bottomRight.x = right;
-
-        //center
-        this._right.y = this._left.y = this._center.y = y + h/2;
-        this._center.x = middle;
-        
-        //left
-        this._left.x = left;
-
-        //right
-        this._right.x = right;
-    },
-
-    lazyInit: function(){
-        if (!this._isInitialized) {
-            this.init();
-            this._isInitialized = true;
-        }
-    },
-    getWidth:function(){
-        this.lazyInit();
-        return this._width;
-    },
-    getHeight:function(){
-        this.lazyInit();
-        return this._height;
-    },
-    topLeft:function(){
-        this.lazyInit();        
-        return this._topLeft;
-    },
-    topRight:function(){
-        this.lazyInit();        
-        return this._topRight;
-    },
-    top:function(){
-        this.lazyInit();        
-        return this._top;
-    },
-    bottomLeft:function(){
-        this.lazyInit();        
-        return this._bottomLeft;
-    },
-    bottomRight:function(){
-        this.lazyInit();        
-        return this._bottomRight;
-    },
-    bottom:function(){
-        this.lazyInit();        
-        return this._bottom;
-    },
-    center:function(){
-        this.lazyInit();        
-        return this._center;
-    },
-    left:function(){
-        this.lazyInit();        
-        return this._left;
-    },
-    right:function(){
-        this.lazyInit();        
-        return this._right;
-    }
-};
 
 var _windowTimeIntervalId = 0;
 var _windowTimeFunHash = {};
@@ -881,3 +815,283 @@ var clearInterval = function (intervalId) {
     }
 };
 var clearTimeout = clearInterval;
+
+
+
+// Define singleton objects
+cc.director = cc.Director.getInstance();
+cc.view = cc.director.getOpenGLView();
+cc.audioEngine = cc.AudioEngine.getInstance();
+cc.configuration = cc.Configuration.getInstance();
+cc.textureCache = cc.director.getTextureCache();
+cc.shaderCache = cc.ShaderCache.getInstance();
+cc.animationCache = cc.AnimationCache.getInstance();
+cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
+//cc.saxParser
+cc.plistParser = cc.SAXParser.getInstance();
+
+cc.screen = {
+    init: function() {},
+    fullScreen: function() {
+        return true;
+    },
+    requestFullScreen: function(element, onFullScreenChange) {
+        onFullScreenChange.call();
+    },
+    exitFullScreen: function() {
+        return false;
+    },
+    autoFullScreen: function(element, onFullScreenChange) {
+        onFullScreenChange.call();
+    }
+};
+//cc.tiffReader;
+//cc.imeDispatcher;
+
+
+// event listener type
+cc.EventListener.UNKNOWN = 0;
+cc.EventListener.TOUCH_ONE_BY_ONE = 1;
+cc.EventListener.TOUCH_ALL_AT_ONCE = 2;
+cc.EventListener.KEYBOARD = 3;
+cc.EventListener.MOUSE = 4;
+cc.EventListener.ACCELERATION = 5;
+cc.EventListener.CUSTOM = 6;
+
+cc.eventManager = cc.Director.getInstance().getEventDispatcher();
+
+cc.EventListener.create = function(argObj){
+    if(!argObj || !argObj.event){
+        throw "Invalid parameter.";
+    }
+    var listenerType = argObj.event;
+    delete argObj.event;
+
+    var listener = null;
+    if(listenerType === cc.EventListener.TOUCH_ONE_BY_ONE) {
+        listener = cc.EventListenerTouchOneByOne.create();
+        if (argObj.swallowTouches) {
+            listener.setSwallowTouches(argObj.swallowTouches);
+        }
+    }
+    else if(listenerType === cc.EventListener.TOUCH_ALL_AT_ONCE)
+        listener = cc.EventListenerTouchAllAtOnce.create();
+    else if(listenerType === cc.EventListener.MOUSE)
+        listener = cc.EventListenerMouse.create();
+    else if(listenerType === cc.EventListener.CUSTOM){
+        listener = cc.EventListenerCustom.create(argObj.eventName, argObj.callback);
+        delete argObj.eventName;
+        delete argObj.callback;
+    } else if(listenerType === cc.EventListener.KEYBOARD)
+        listener = cc.EventListenerKeyboard.create();
+    else if(listenerType === cc.EventListener.ACCELERATION){
+        listener = cc.EventListenerAcceleration.create(argObj.callback);
+        delete argObj.callback;
+    }
+    else
+    {
+        cc.log("Error: Invalid listener type.");
+    }
+
+    for(var key in argObj) {
+        listener[key] = argObj[key];
+    }
+
+    return listener;
+};
+
+
+// Event manager
+cc.eventManager.addListener = function(listener, nodeOrPriority) {
+    if(!(listener instanceof cc.EventListener)) {
+        listener = cc.EventListener.create(listener);
+    }
+
+    if (typeof nodeOrPriority == "number") {
+        if (nodeOrPriority == 0) {
+            cc.log("0 priority is forbidden for fixed priority since it's used for scene graph based priority.");
+            return;
+        }
+
+        cc.eventManager.addEventListenerWithFixedPriority(listener, nodeOrPriority);
+    } else {
+        cc.eventManager.addEventListenerWithSceneGraphPriority(listener, nodeOrPriority);
+    }
+};
+
+cc.EventCustom.prototype.setUserData = function(userData) {
+    this._userData = userData;
+};
+
+cc.EventCustom.prototype.getUserData = function() {
+    return this._userData;
+};
+
+cc.inputManager = {
+    setAccelerometerEnabled: cc.Device.setAccelerometerEnabled,
+    setAccelerometerInterval: cc.Device.setAccelerometerInterval,
+    getDPI: cc.Device.getDPI
+};
+
+cc.EventListenerTouchOneByOne.prototype.clone = function() {
+    var ret = cc.EventListenerTouchOneByOne.create();
+    ret.onTouchBegan = this.onTouchBegan;
+    ret.onTouchMoved = this.onTouchMoved;
+    ret.onTouchEnded = this.onTouchEnded;
+    ret.onTouchCancelled = this.onTouchCancelled;
+    ret.setSwallowTouches(this.isSwallowTouches());
+    return ret;
+};
+
+cc.EventListenerTouchAllAtOnce.prototype.clone = function() {
+    var ret = cc.EventListenerTouchAllAtOnce.create();
+    ret.onTouchesBegan = this.onTouchesBegan;
+    ret.onTouchesMoved = this.onTouchesMoved;
+    ret.onTouchesEnded = this.onTouchesEnded;
+    ret.onTouchesCancelled = this.onTouchesCancelled;
+    return ret;
+};
+
+cc.EventListenerKeyboard.prototype.clone = function() {
+    var ret = cc.EventListenerKeyboard.create();
+    ret.onKeyPressed = this.onKeyPressed;
+    ret.onKeyReleased = this.onKeyReleased;
+    return ret;
+};
+
+cc.director = cc.Director.getInstance();
+
+cc.Director.EVENT_PROJECTION_CHANGED = "director_projection_changed";
+cc.Director.EVENT_AFTER_DRAW = "director_after_draw";
+cc.Director.EVENT_AFTER_VISIT = "director_after_visit";
+cc.Director.EVENT_AFTER_UPDATE = "director_after_update";
+
+cc.Director.prototype.runScene = function(scene){
+    if (!this.getRunningScene()) {
+        this.runWithScene(scene);
+    }
+    else {
+        this.replaceScene(scene);
+    }
+};
+
+cc.visibleRect = {
+    _topLeft:cc.p(0,0),
+    _topRight:cc.p(0,0),
+    _top:cc.p(0,0),
+    _bottomLeft:cc.p(0,0),
+    _bottomRight:cc.p(0,0),
+    _bottom:cc.p(0,0),
+    _center:cc.p(0,0),
+    _left:cc.p(0,0),
+    _right:cc.p(0,0),
+    _width:0,
+    _height:0,
+    _isInitialized: false,
+    init:function(){
+
+        var director = cc.Director.getInstance();
+        var origin = director.getVisibleOrigin();
+        var size = director.getVisibleSize();
+
+        this._width = size.width;
+        this._height = size.height;
+
+        var w = this._width;
+        var h = this._height;
+
+        //top
+        this._topLeft.y = h;
+        this._topRight.x = w;
+        this._topRight.y = h;
+        this._top.x = w/2;
+        this._top.y = h;
+
+        //bottom
+        this._bottomRight.x = w;
+        this._bottom.x = w/2;
+
+        //center
+        this._center.x = w/2;
+        this._center.y = h/2;
+
+        //left
+        this._left.y = h/2;
+
+        //right
+        this._right.x = w;
+        this._right.y = h/2;
+    },
+    lazyInit: function(){
+        if (!this._isInitialized) {
+            this.init();
+            this._isInitialized = true;
+        }
+    },
+};
+
+cc.defineGetterSetter(cc.visibleRect, "width", function(){
+    this.lazyInit();
+    return this._width;
+});
+cc.defineGetterSetter(cc.visibleRect, "height", function(){
+    this.lazyInit();
+    return this._height;
+});
+cc.defineGetterSetter(cc.visibleRect, "topLeft", function(){
+    this.lazyInit();
+    return this._topLeft;
+});
+cc.defineGetterSetter(cc.visibleRect, "topRight", function(){
+    this.lazyInit();
+    return this._topRight;
+});
+cc.defineGetterSetter(cc.visibleRect, "top", function(){
+    this.lazyInit();
+    return this._top;
+});
+cc.defineGetterSetter(cc.visibleRect, "bottomLeft", function(){
+    this.lazyInit();
+    return this._bottomLeft;
+});
+cc.defineGetterSetter(cc.visibleRect, "bottomRight", function(){
+    this.lazyInit();
+    return this._bottomRight;
+});
+cc.defineGetterSetter(cc.visibleRect, "bottom", function(){
+    this.lazyInit();
+    return this._bottom;
+});
+cc.defineGetterSetter(cc.visibleRect, "center", function(){
+    this.lazyInit();
+    return this._center;
+});
+cc.defineGetterSetter(cc.visibleRect, "left", function(){
+    this.lazyInit();
+    return this._left;
+});
+cc.defineGetterSetter(cc.visibleRect, "right", function(){
+    this.lazyInit();
+    return this._right;
+});
+
+// Predefined font definition
+cc.FontDefinition = function () {
+    this.fontName = "Arial";
+    this.fontSize = 12;
+    this.textAlign = cc.TEXT_ALIGNMENT_CENTER;
+    this.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
+    this.fillStyle = cc.color(255, 255, 255, 255);
+    this.boundingWidth = 0;
+	this.boundingHeight = 0;
+
+    this.strokeEnabled = false;
+    this.strokeStyle = cc.color(255, 255, 255, 255);
+    this.lineWidth = 1;
+
+    this.shadowEnabled = false;
+    this.shadowOffsetX = 0;
+	this.shadowOffsetY = 0;
+    this.shadowBlur = 0;
+    this.shadowOpacity = 1.0;
+};
