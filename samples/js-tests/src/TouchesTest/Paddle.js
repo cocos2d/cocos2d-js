@@ -81,7 +81,7 @@ var Paddle = cc.Sprite.extend({
         // Actually, it would be even more complicated since in the Cocos dispatcher
         // you get Array instead of 1 cc.Touch, so you'd need to loop through the set
         // in each touchXXX method.
-        cc.Assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
+        cc.assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
 
         var touchPoint = touch.getLocation();
         //touchPoint = cc.director.convertToGL( touchPoint );
@@ -90,7 +90,7 @@ var Paddle = cc.Sprite.extend({
     },
     onTouchEnded:function (touch, event) {
         var target = event.getCurrentTarget();
-        cc.Assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
+        cc.assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
         target._state = PADDLE_STATE_UNGRABBED;
     },
     touchDelegateRetain:function () {

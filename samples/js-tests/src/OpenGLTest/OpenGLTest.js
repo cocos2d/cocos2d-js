@@ -441,7 +441,7 @@ var GLNodeCCAPITest = OpenGLTestLayer.extend({
             this.addChild(glnode,10);
             this.glnode = glnode;
 
-            this.shader = cc.ShaderCache.getInstance().getProgram("ShaderPositionColor");
+            this.shader = cc.shaderCache.getProgram("ShaderPositionColor");
             this.initBuffers();
 
             glnode.draw = function() {
@@ -1191,10 +1191,10 @@ var GLGetUniformTest = OpenGLTestLayer.extend({
         var program = shader.getProgram();
         shader.use();
 
-        var loc = gl.getUniformLocation( program, "CC_MVPMatrix");
+        var loc = cc.sys.isNative ? gl.getUniformLocation(program, "CC_MVPMatrix") : gl.getUniformLocation(program, "CC_MVMatrix");
 
         var pMatrix = [1,2,3,4, 4,3,2,1, 1,2,4,8, 1.1,1.2,1.3,1.4];
-        this.pMatrix = pMatrix = new Float32Array(pMatrix);
+        this.pMatrix = new Float32Array(pMatrix);
 
         gl.uniformMatrix4fv(loc, false, this.pMatrix);
 

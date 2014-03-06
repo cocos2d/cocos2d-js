@@ -12,7 +12,8 @@ var GameOver = cc.Layer.extend({
 
             var logo = cc.Sprite.create(res.gameOver_png);
             logo.attr({
-	            anchor: cc.p(0, 0),
+	            anchorX: 0,
+                anchorY: 0,
 	            x: 0,
 	            y: 300
             });

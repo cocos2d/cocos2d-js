@@ -307,7 +307,7 @@ var BMFontOpacityColorAlignmentTest = AtlasDemo.extend({
         // testing anchors
         label2.anchorX = 0.5;
         label2.anchorY = 0.5;
-        label2.color = cc.color.red ;
+        label2.color = cc.color.RED ;
         this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
         label2.runAction(repeat.clone());
 
@@ -1734,19 +1734,19 @@ var BMFontColorParentChild = AtlasDemo.extend({
         this.addChild(this.label);
         this.label.x = winSize.width / 2;
         this.label.y = winSize.height / 2;
-        this.label.color = cc.color.yellow;
+        this.label.color = cc.color.YELLOW;
 
         // R
         var letter = this.label.getChildByTag(1);
-        letter.color = cc.color.red;
+        letter.color = cc.color.RED;
 
         // G
         letter = this.label.getChildByTag(2);
-        letter.color = cc.color.green;
+        letter.color = cc.color.GREEN;
 
         // B
         letter = this.label.getChildByTag(3);
-        letter.color = cc.color.blue;
+        letter.color = cc.color.BLUE;
 
         this.scheduleUpdate();
 

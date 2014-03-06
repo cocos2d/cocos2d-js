@@ -1,6 +1,6 @@
 var flareEffect = function (flare,target, callback) {
     flare.stopAllActions();
-    flare.setBlendFunc(gl.SRC_ALPHA, gl.ONE);
+    flare.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
     flare.attr({
 	    x: -30,
 	    y: 297,

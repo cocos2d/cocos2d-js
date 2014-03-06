@@ -102,7 +102,7 @@ var Ship = cc.Sprite.extend({
     },
     initBornSprite:function () {
         this.bornSprite = cc.Sprite.create("#ship03.png");
-        this.bornSprite.setBlendFunc(gl.SRC_ALPHA, gl.ONE);
+        this.bornSprite.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
         this.bornSprite.x = this.width / 2;
 	    this.bornSprite.y = 12;
         this.bornSprite.visible = false;
