@@ -1,30 +1,25 @@
-/****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+//
+// cocos2d boot
+//
 
 var cc = cc || {};
+var window = window || this;
+
+
+/**
+ * Common getter setter configuration function
+ * @function
+ * @param {Object}   proto      A class prototype or an object to config
+ * @param {String}   prop       Property name
+ * @param {function} getter     Getter function for the property
+ * @param {function} setter     Setter function for the property
+ */
+cc.defineGetterSetter = function (proto, prop, getter, setter){
+    var desc = { enumerable: false, configurable: true };
+    getter && (desc.get = getter);
+    setter && (desc.set = setter);
+    Object.defineProperty(proto, prop, desc);
+};
 
 /**
  * Iterate over an object or an array, executing a function for each matched element.
@@ -270,9 +265,8 @@ cc.path = {
 
 //+++++++++++++++++++++++++something about loader start+++++++++++++++++++++++++++
 cc.loader = {
-    
-    resPath : "",//TODO root path of resource
-    audioPath : "",//TODO root path of audio
+    _resPath : "",
+    _audioPath : "",
     _register : {},//register of loaders
     cache : {},//cache for data loaded
     _langPathCache : {},//cache for lang path
@@ -281,8 +275,8 @@ cc.loader = {
      * Get XMLHttpRequest.
      * @returns {XMLHttpRequest}
      */
-    getXMLHttpRequest : function () {//TODO
-        return window.XMLHttpRequest ? new window.XMLHttpRequest() : new ActiveXObject("MSXML2.XMLHTTP");
+    getXMLHttpRequest : function () {
+        return new XMLHttpRequest();
     },
     
     
@@ -402,10 +396,10 @@ cc.loader = {
      * @param {String} url
      * @param {Function} cb
      */
-    loadBinary : function(url, cb){//TODO
+    loadBinary : function(url, cb){
         cb(null, cc.FileUtils.getInstance().getDataFromFile(url));
     },
-    loadBinarySync : function(url){//TODO
+    loadBinarySync : function(url){
         return cc.FileUtils.getInstance().getDataFromFile(url);
     },
     
@@ -441,7 +435,7 @@ cc.loader = {
         if(url.match(/[\/(\\\\)]lang[\/(\\\\)]/i)){
             if(langPathCache[url]) return langPathCache[url];
             var extname = path.extname(url) || "";
-            url = langPathCache[url] = url.substring(0, url.length - extname.length) + "_" + cc.language.current + extname;
+            url = langPathCache[url] = url.substring(0, url.length - extname.length) + "_" + cc.sys.language + extname;
         }
         return url;
     },
@@ -473,7 +467,41 @@ cc.loader = {
         option.iteratorTarget = this;
         cc.async.map(res, option);
     },
-    
+
+    /**
+     * <p>
+     *     Loads alias map from the contents of a filename.                                        <br/>
+     *                                                                                                                 <br/>
+     *     @note The plist file name should follow the format below:                                                   <br/>
+     *     <?xml version="1.0" encoding="UTF-8"?>                                                                      <br/>
+     *         <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">  <br/>
+     *             <plist version="1.0">                                                                               <br/>
+     *                 <dict>                                                                                          <br/>
+     *                     <key>filenames</key>                                                                        <br/>
+     *                     <dict>                                                                                      <br/>
+     *                         <key>sounds/click.wav</key>                                                             <br/>
+     *                         <string>sounds/click.caf</string>                                                       <br/>
+     *                         <key>sounds/endgame.wav</key>                                                           <br/>
+     *                         <string>sounds/endgame.caf</string>                                                     <br/>
+     *                         <key>sounds/gem-0.wav</key>                                                             <br/>
+     *                         <string>sounds/gem-0.caf</string>                                                       <br/>
+     *                     </dict>                                                                                     <br/>
+     *                     <key>metadata</key>                                                                         <br/>
+     *                     <dict>                                                                                      <br/>
+     *                         <key>version</key>                                                                      <br/>
+     *                         <integer>1</integer>                                                                    <br/>
+     *                     </dict>                                                                                     <br/>
+     *                 </dict>                                                                                         <br/>
+     *              </plist>                                                                                           <br/>
+     * </p>
+     * @param {String} filename  The plist file name.
+     * @param {Function} cb     callback
+     */
+    loadAliases : function(url, cb){
+        cc.FileUtils.loadFilenameLookup(url);
+        if(cb) cb();
+    },
+
     /**
      * Register a resource loader into loader.
      * @param {string} extname
@@ -493,48 +521,288 @@ cc.loader = {
      * @param url
      * @returns {*}
      */
-    getRes : function(url){//TODO
+    getRes : function(url){
         var self = this;
         var type = cc.path.extname(url);
         var loader = self._register[type.toLowerCase()];
         if(!loader) return cc.log("loader for [" + type + "] not exists!");
         var basePath = loader.getBasePath ? loader.getBasePath() : self.resPath;
         var realUrl = self.getUrl(basePath, url);
-        return loader.load(realUrl);
+        return loader.load(realUrl, url);
     },
     
     /**
      * Release the cache of resource by url.
      * @param url
      */
-    release : function(url){//TODO
+    release : function(url){//do nothing in jsb
     },
     
     /**
      * Resource cache of all resources.
      */
-    releaseAll : function(){//TODO
+    releaseAll : function(){//do nothing in jsb
     }
     
 };
+cc.defineGetterSetter(cc.loader, "", function(){
+    return this._resPath;
+}, function(resPath){
+    this._resPath = resPath || "resPath";
+    cc.FileUtils.setSearchPath(this._resPath);
+});
+cc.defineGetterSetter(cc.loader, "audioPath", function(){
+    return this._resPath;
+}, function(audioPath){
+    this._audioPath = audioPath || "";
+    cc.FileUtils.setSearchPath(this._audioPath);
+});
+
 //+++++++++++++++++++++++++something about loader end+++++++++++++++++++++++++++++
 
 
 //+++++++++++++++++++++++++something about window events begin+++++++++++++++++++++++++++
-(function(){
- cc.winEvents = {//TODO register hidden and show callback for window
- hiddens : [],
- shows : []
- };
-})();
+cc.winEvents = {//TODO register hidden and show callback for window
+    hiddens : [],
+    shows : []
+};
 //+++++++++++++++++++++++++something about window events end+++++++++++++++++++++++++++++
 
+//+++++++++++++++++++++++++something about sys begin+++++++++++++++++++++++++++++
+cc._initSys = function(config, CONFIG_KEY){
+
+    var locSys = cc.sys = sys || {};
+
+    /**
+     * English language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_ENGLISH = "en";
+    /**
+     * Chinese language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_CHINESE = "zh";
+    /**
+     * French language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_FRENCH = "fr";
+    /**
+     * Italian language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_ITALIAN = "it";
+    /**
+     * German language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_GERMAN = "de";
+    /**
+     * Spanish language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_SPANISH = "es";
+    /**
+     * Russian language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_RUSSIAN = "ru";
+    /**
+     * Korean language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_KOREAN = "ko";
+    /**
+     * Japanese language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_JAPANESE = "ja";
+    /**
+     * Hungarian language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_HUNGARIAN = "hu";
+    /**
+     * Portuguese language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_PORTUGUESE = "pt";
+    /**
+     * Arabic language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_ARABIC = "ar";
+    /**
+     * Norwegian language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_NORWEGIAN = "no";
+    /**
+     * Polish language code
+     * @constant
+     * @type Number
+     */
+    locSys.LANGUAGE_POLISH = "pl";
+
+
+    /**
+     * @constant
+     * @type {string}
+     */
+    locSys.OS_WINDOWS = "Windows";
+    /**
+     * @constant
+     * @type {string}
+     */
+    locSys.OS_IOS = "iOS";
+    /**
+     * @constant
+     * @type {string}
+     */
+    locSys.OS_OSX = "OS X";
+    /**
+     * @constant
+     * @type {string}
+     */
+    locSys.OS_UNIX = "UNIX";
+    /**
+     * @constant
+     * @type {string}
+     */
+    locSys.OS_LINUX = "Linux";
+    /**
+     * @constant
+     * @type {string}
+     */
+    locSys.OS_ANDROID = "Android";
+    locSys.OS_UNKNOWN = "unknown";
+
+    locSys.BROWSER_TYPE_WECHAT = "wechat";
+    locSys.BROWSER_TYPE_ANDROID = "androidbrowser";
+    locSys.BROWSER_TYPE_IE = "ie";
+    locSys.BROWSER_TYPE_QQ = "qqbrowser";
+    locSys.BROWSER_TYPE_MOBILE_QQ = "mqqbrowser";
+    locSys.BROWSER_TYPE_UC = "ucbrowser";
+    locSys.BROWSER_TYPE_360 = "360browser";
+    locSys.BROWSER_TYPE_BAIDU_APP = "baiduboxapp";
+    locSys.BROWSER_TYPE_BAIDU = "baidubrowser";
+    locSys.BROWSER_TYPE_MAXTHON = "maxthon";
+    locSys.BROWSER_TYPE_OPERA = "opera";
+    locSys.BROWSER_TYPE_MIUI = "miuibrowser";
+    locSys.BROWSER_TYPE_FIREFOX = "firefox";
+    locSys.BROWSER_TYPE_SAFARI = "safari";
+    locSys.BROWSER_TYPE_CHROME = "chrome";
+    locSys.BROWSER_TYPE_UNKNOWN = "unknown";
+
+    /**
+     * Is native ? This is set to be true in jsb auto.
+     * @constant
+     * @type Boolean
+     */
+    locSys.isNative = true;
+    locSys.isMobile = __getPlatform() == "mobile";
+    locSys.language = (function(){
+        var language = cc.Application.getInstance().getCurrentLanguage();
+        switch(language){
+            case 0: return locSys.LANGUAGE_ENGLISH;
+            case 1: return locSys.LANGUAGE_CHINESE;
+            case 2: return locSys.LANGUAGE_FRENCH;
+            case 3: return locSys.LANGUAGE_ITALIAN;
+            case 4: return locSys.LANGUAGE_GERMAN;
+            case 5: return locSys.LANGUAGE_SPANISH;
+            case 6: return locSys.LANGUAGE_RUSSIAN;
+            case 7: return locSys.LANGUAGE_KOREAN;
+            case 8: return locSys.LANGUAGE_JAPANESE;
+            case 9: return locSys.LANGUAGE_HUNGARIAN;
+            case 10: return locSys.LANGUAGE_PORTUGUESE;
+            case 11: return locSys.LANGUAGE_ARABIC;
+            case 12: return locSys.LANGUAGE_NORWEGIAN;
+            case 13: return locSys.LANGUAGE_POLISH;
+            default : return locSys.LANGUAGE_ENGLISH;
+        }
+    })();
+
+    /** The type of browser */
+    locSys.browserType = null;//null in jsb
+
+    var capabilities = locSys.capabilities = {"opengl":true};
+    if( locSys.isMobile ) {
+        capabilities["accelerometer"] = true;
+        capabilities["touches"] = true;
+    } else {
+        // desktop
+        capabilities["keyboard"] = true;
+        capabilities["mouse"] = true;
+    }
+
+    /** Get the os of system */
+    locSys.os = __getOS();
+
+    // Forces the garbage collector
+    locSys.garbageCollect = function() {
+        __jsc__.garbageCollect();
+    };
+
+    // Dumps rooted objects
+    locSys.dumpRoot = function() {
+        __jsc__.dumpRoot();
+    };
+
+    // restarts the JS VM
+    locSys.restartVM = function() {
+        __restartVM();
+    };
+
+    locSys.dump = function(){
+        var self = this;
+        var str = "";
+        str += "isMobile : " + self.isMobile + "\r\n";
+        str += "language : " + self.language + "\r\n";
+        str += "browserType : " + self.browserType + "\r\n";
+        str += "capabilities : " + JSON.stringify(self.capabilities) + "\r\n";
+        str += "os : " + self.os + "\r\n";
+        cc.log(str);
+    }
+};
+
+//+++++++++++++++++++++++++something about sys end+++++++++++++++++++++++++++++
 //+++++++++++++++++++++++++something about log start++++++++++++++++++++++++++++
-//TODO
-cc.log = cc._cocosplayerLog || cc.log || log;
-cc.warn = function(){cc.log.apply(cc, arguments)};
-cc.error = function(){cc.log.apply(cc, arguments)};
-cc.assert = function(){};
+/**
+ * Init Debug setting.
+ * @function
+ */
+cc._initDebugSetting = function (mode) {
+    var ccGame = cc.game;
+    var bakLog = cc._cocosplayerLog || cc.log || log;
+    cc.log = cc.warn = cc.error = cc.assert = function(){};
+    if(mode == ccGame.DEBUG_MODE_NONE){
+    }else{
+        cc.error = bakLog.bind(cc);
+        cc.assert = function(cond, msg) {
+            if (!cond) cc.log("Assert: " + msg);
+        }
+        if(mode != ccGame.DEBUG_MODE_ERROR && mode != ccGame.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
+            cc.warn = bakLog.bind(cc);
+        }
+        if(mode == ccGame.DEBUG_MODE_LOG || mode == ccGame.DEBUG_MODE_LOG_FOR_WEB_PAGE){
+            cc.log = bakLog;
+        }
+    }
+};
 //+++++++++++++++++++++++++something about log end+++++++++++++++++++++++++++++
 
 
@@ -586,7 +854,7 @@ cc.game = {
      * Callback when the scripts of engine have been load.
      * @type Function
      */
-    onEnter : null,
+    onStart : null,
     
     /**
      * Callback when game exits.
@@ -615,49 +883,22 @@ cc.game = {
     onAfterPause : null,
     
     /**
-     * Resume game.
-     */
-    resume : function(){
-        var self = this;
-        if(self.onBeforeResume && self.onBeforeResume()) return;
-        self._runMainLoop();
-        if(self.onAfterResume) self.onAfterResume();
-    },
-    /**
-     * Pause game.
-     */
-    pause : function(){
-        var self = this;
-        if(self.onBeforePause && self.onBeforePause()) return;
-        
-        //TODO pause game
-        
-        self._paused = true;
-        if(self.onAfterPause) self.onAfterPause();
-    },
-    /**
      * Set frameRate of game.
      * @param frameRate
      */
     setFrameRate : function(frameRate){
         var self = this, config = self.config, CONFIG_KEY = self.CONFIG_KEY;
         config[CONFIG_KEY.frameRate] = frameRate;
-        
-        //TODO pause game
-        
-        self._paused = true;
-        self._runMainLoop();
+        cc.director.setAnimationInterval(1.0/frameRate);
     },
     /**
      * Run game.
      * @private
      */
     _runMainLoop : function(){
-        var self = this, callback, config = self.config, CONFIG_KEY = self.CONFIG_KEY,
-        win = window, frameRate = config[CONFIG_KEY.frameRate],
-        director = cc.director;
+        var self = this, config = self.config, CONFIG_KEY = self.CONFIG_KEY,
+        frameRate = config[CONFIG_KEY.frameRate], director = cc.director;
         director.setDisplayStats(config[CONFIG_KEY.showFPS]);
-        //TODO
         director.mainLoop();
         self._paused = false;
     },
@@ -669,11 +910,11 @@ cc.game = {
         if(!self._prepareCalled){
             self.prepare(function(){
                 self._runMainLoop();
-                self.onEnter();
+                self.onStart();
             });
         }else{
             self._runMainLoop();
-            self.onEnter();
+            self.onStart();
         }
     },
     /**
@@ -729,9 +970,10 @@ cc.game = {
         var self = this;
         require("jsb.js");
         self._initConfig(function(config){
-            var CONFIG_KEY = self.CONFIG_KEY, engineDir = config[CONFIG_KEY.engineDir], loader = cc.loader;
+            var CONFIG_KEY = self.CONFIG_KEY, loader = cc.loader;
+            cc._initSys(config, CONFIG_KEY);
+            cc._initDebugSetting(config[CONFIG_KEY.debugMode]);
             self._prepareCalled = true;
-                         cc.log(config[CONFIG_KEY.jsList]);
             loader.loadJsWithImg("", config[CONFIG_KEY.jsList] || [], function(err){
                 if(err) throw err;
                 self._prepared = true;
