@@ -40,42 +40,45 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
     onRestartCallback:function (sender) {
         var s = new EffectsTestScene();
         s.addChild(restartEffectsTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onNextCallback:function (sender) {
         var s = new EffectsTestScene();
         s.addChild(nextEffectsTest());
-        //director.replaceScene(cc.TransitionZoomFlipX.create(5, s));
-        director.replaceScene(s);
+        //director.runScene(cc.TransitionZoomFlipX.create(5, s));
+        director.runScene(s);
     },
     onBackCallback:function (sender) {
         var s = new EffectsTestScene();
         s.addChild(previousEffectsTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onEnter:function () {
        this._super();
 
 
-        var node = cc.NodeGrid.create();
+        var node = cc.Node.create();
         node.runAction( this.getEffect(3) );
         this.addChild( node );
 
         // back gradient
-        var gradient = cc.LayerGradient.create( cc.c4b(0,0,0,255), cc.c4b(98,99,117,255));
+        var gradient = cc.LayerGradient.create( cc.color(0,0,0,255), cc.color(98,99,117,255));
         node.addChild( gradient );
 
         // back image
         var bg = cc.Sprite.create(s_back3);
-        bg.setPosition( cc._p( winSize.width/2, winSize.height/2) );
+        bg.x = winSize.width/2;
+        bg.y = winSize.height/2;
         node.addChild( bg );
 
         var sister1 = cc.Sprite.create(s_pathSister1);
-        sister1.setPosition( cc._p( winSize.width/3, winSize.height/2 ) );
+        sister1.x = winSize.width/3;
+        sister1.y = winSize.height/2;
         node.addChild( sister1, 1 );
 
         var sister2 = cc.Sprite.create(s_pathSister2);
-        sister2.setPosition( cc._p( winSize.width*2/3, winSize.height/2 ) );
+        sister2.x = winSize.width*2/3;
+        sister2.y = winSize.height/2;
         node.addChild( sister2, 1 );
 
         var sc = cc.ScaleBy.create(2, 5);
@@ -89,7 +92,7 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
 
     getEffect:function(duration) {
         // override me
-        return cc.MoveBy.create(2, cc._p(10,10) );
+        return cc.MoveBy.create(2, cc.p(10,10) );
     },
 
     // automation
@@ -170,7 +173,7 @@ var Lens3DTest = EffecstsBaseLayer.extend({
         return "a = cc.Lens3D.create(duration, gridSize, position, radius)";
     },
     getEffect:function(duration) {
-        return cc.Lens3D.create( duration, cc.size(15,10), cc._p(winSize.width/2, winSize.height/2), 240);
+        return cc.Lens3D.create( duration, cc.size(15,10), cc.p(winSize.width/2, winSize.height/2), 240);
     }
 });
 
@@ -182,7 +185,7 @@ var Ripple3DTest = EffecstsBaseLayer.extend({
         return "a = cc.Ripple3D.create(duration, gridSize, position, radius, waves, amplitude)";
     },
     getEffect:function(duration) {
-        return cc.Ripple3D.create( duration, cc.size(32,24), cc._p(winSize.width/2, winSize.height/2), 240, 4, 160);
+        return cc.Ripple3D.create( duration, cc.size(32,24), cc.p(winSize.width/2, winSize.height/2), 240, 4, 160);
     }
 });
 
@@ -423,7 +426,7 @@ var EffectsTestScene = TestScene.extend({
         var layer = nextEffectsTest();
         this.addChild(layer);
 
-        director.replaceScene(this);
+        director.runScene(this);
     }
 });
 

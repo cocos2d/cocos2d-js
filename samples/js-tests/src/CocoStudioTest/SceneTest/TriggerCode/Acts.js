@@ -13,7 +13,7 @@ var PlayMusic = ccs.BaseTriggerAction.extend({
     },
 
     done: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
         var audio = node.getComponent(this._comName);
@@ -65,7 +65,7 @@ var TMoveTo = ccs.BaseTriggerAction.extend({
     },
 
     done: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
         var actionTo = cc.MoveTo.create(this._duration, cc.p(this._pos.x, this._pos.y));
@@ -97,8 +97,8 @@ var TMoveTo = ccs.BaseTriggerAction.extend({
     },
 
     removeAll: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
-        node.getActionManager().removeAllActions();
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
+        node.actionManager.removeAllActions();
     }
 });
 
@@ -119,7 +119,7 @@ var TMoveBy = ccs.BaseTriggerAction.extend({
     },
 
     done: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
         var moveBy = cc.MoveBy.create(this._duration, cc.p(this._pos.x, this._pos.y));
@@ -160,8 +160,8 @@ var TMoveBy = ccs.BaseTriggerAction.extend({
     },
 
     removeAll: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
-        node.getActionManager().removeAllActions();
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
+        node.actionManager.removeAllActions();
     }
 });
 
@@ -180,7 +180,7 @@ var TRotateTo = ccs.BaseTriggerAction.extend({
     },
 
     done: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
         var actionTo = cc.RotateTo.create(this._duration, this._deltaAngle);
@@ -208,8 +208,8 @@ var TRotateTo = ccs.BaseTriggerAction.extend({
     },
 
     removeAll: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
-        node.getActionManager().removeAllActions();
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
+        node.actionManager.removeAllActions();
     }
 });
 
@@ -230,7 +230,7 @@ var TRotateBy = ccs.BaseTriggerAction.extend({
     },
 
     done: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
         var actionBy = cc.RotateBy.create(this._duration, this._deltaAngle);
@@ -268,8 +268,8 @@ var TRotateBy = ccs.BaseTriggerAction.extend({
     },
 
     removeAll: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
-        node.getActionManager().removeAllActions();
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
+        node.actionManager.removeAllActions();
     }
 });
 
@@ -290,7 +290,7 @@ var TScaleTo = ccs.BaseTriggerAction.extend({
     },
 
     done: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
         var actionTo = cc.ScaleTo.create(this._duration, this._scaleX, this._scaleY);
@@ -322,8 +322,8 @@ var TScaleTo = ccs.BaseTriggerAction.extend({
     },
 
     removeAll: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
-        node.getActionManager().removeAllActions();
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
+        node.actionManager.removeAllActions();
     }
 });
 
@@ -346,7 +346,7 @@ var TScaleBy = ccs.BaseTriggerAction.extend({
     },
 
     done: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
         var actionBy = cc.ScaleBy.create(this._duration, this._scaleX, this._scaleY);
@@ -384,8 +384,8 @@ var TScaleBy = ccs.BaseTriggerAction.extend({
     },
 
     removeAll: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
-        node.getActionManager().removeAllActions();
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
+        node.actionManager.removeAllActions();
     }
 });
 
@@ -406,7 +406,7 @@ var TSkewTo = ccs.BaseTriggerAction.extend({
     },
 
     done: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
         var actionTo = cc.SkewTo.create(this._duration, this._skewX, this._skewY);
@@ -438,8 +438,8 @@ var TSkewTo = ccs.BaseTriggerAction.extend({
     },
 
     removeAll: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
-        node.getActionManager().removeAllActions();
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
+        node.actionManager.removeAllActions();
     }
 });
 
@@ -462,7 +462,7 @@ var TSkewBy = ccs.BaseTriggerAction.extend({
     },
 
     done: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
         var actionBy = cc.SkewBy.create(this._duration, this._skewX, this._skewY);
@@ -500,8 +500,8 @@ var TSkewBy = ccs.BaseTriggerAction.extend({
     },
 
     removeAll: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
-        node.getActionManager().removeAllActions();
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
+        node.actionManager.removeAllActions();
     }
 });
 
@@ -518,7 +518,7 @@ var TriggerState = ccs.BaseTriggerAction.extend({
     },
 
     done: function () {
-        var obj = ccs.TriggerMng.getInstance().getTriggerObj(this._id);
+        var obj = ccs.triggerManager.getTriggerObj(this._id);
         if (obj) {
             if (this._state == 0) {
                 obj.setEnable(false);
@@ -527,7 +527,7 @@ var TriggerState = ccs.BaseTriggerAction.extend({
                 obj.setEnable(true);
             }
             else if (this._state == 2) {
-                ccs.TriggerMng.getInstance().removeTriggerObj(this._id);
+                ccs.triggerManager.removeTriggerObj(this._id);
             }
 
         }
@@ -568,7 +568,7 @@ var ArmaturePlayAction = ccs.BaseTriggerAction.extend({
     },
 
     done: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
         var render = node.getComponent(this._comName);

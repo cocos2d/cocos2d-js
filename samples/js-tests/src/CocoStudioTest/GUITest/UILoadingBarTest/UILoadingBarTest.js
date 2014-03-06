@@ -24,6 +24,7 @@
 
 var UILoadingBarTest = UIScene.extend({
     _count: 0,
+    _loadingBar:null,
     ctor: function () {
         this._super();
         this._count = 0;
@@ -51,8 +52,7 @@ var UILoadingBarTest = UIScene.extend({
             this._count = 0;
         }
 
-        var loadingBar = this._uiLayer.getChildByTag(0);
-        loadingBar.setPercent(this._count);
+        this._loadingBar.setPercent(this._count);
     },
 
     previousCallback: function (sender, type) {
@@ -74,59 +74,63 @@ var UILoadingBarTest = UIScene.extend({
 var UILoadingBarTest_Left = UILoadingBarTest.extend({
     createLoadingBar: function () {
         var widgetSize = this._widget.getSize();
-        var loadingBar = ccui.LoadingBar.create();
+        var loadingBar = ccs.LoadingBar.create();
         loadingBar.setName("LoadingBar");
-        loadingBar.setTag(0);
         loadingBar.loadTexture("res/cocosgui/sliderProgress.png");
         loadingBar.setPercent(0);
-        loadingBar.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + loadingBar.getSize().height / 4));
-        this._uiLayer.addChild(loadingBar);
+        loadingBar.x = widgetSize.width / 2;
+        loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
+        this._mainNode.addChild(loadingBar);
+        this._loadingBar = loadingBar;
     }
 });
 
 var UILoadingBarTest_Right = UILoadingBarTest.extend({
     createLoadingBar: function () {
         var widgetSize = this._widget.getSize();
-        var loadingBar = ccui.LoadingBar.create();
+        var loadingBar = ccs.LoadingBar.create();
         loadingBar.setName("LoadingBar");
-        loadingBar.setTag(0);
         loadingBar.loadTexture("res/cocosgui/sliderProgress.png");
-        loadingBar.setDirection(ccui.LoadingBarType.right);
+        loadingBar.setDirection(ccs.LoadingBarType.right);
         loadingBar.setPercent(0);
-        loadingBar.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + loadingBar.getSize().height / 4));
-        this._uiLayer.addChild(loadingBar);
+        loadingBar.x = widgetSize.width / 2;
+        loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
+        this._mainNode.addChild(loadingBar);
+        this._loadingBar = loadingBar;
     }
 });
 
 var UILoadingBarTest_Left_Scale9 = UILoadingBarTest.extend({
     createLoadingBar: function () {
         var widgetSize = this._widget.getSize();
-        var loadingBar = ccui.LoadingBar.create();
+        var loadingBar = ccs.LoadingBar.create();
         loadingBar.setName("LoadingBar");
-        loadingBar.setTag(0);
         loadingBar.loadTexture("res/cocosgui/slider_bar_active_9patch.png");
         loadingBar.setScale9Enabled(true);
         loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
         loadingBar.setSize(cc.size(300, 30));
         loadingBar.setPercent(0);
-        loadingBar.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + loadingBar.getSize().height / 4));
-        this._uiLayer.addChild(loadingBar);
+        loadingBar.x = widgetSize.width / 2;
+        loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
+        this._mainNode.addChild(loadingBar);
+        this._loadingBar = loadingBar;
     }
 });
 
 var UILoadingBarTest_Right_Scale9 = UILoadingBarTest.extend({
     createLoadingBar: function () {
         var widgetSize = this._widget.getSize();
-        var loadingBar = ccui.LoadingBar.create();
+        var loadingBar = ccs.LoadingBar.create();
         loadingBar.setName("LoadingBar");
-        loadingBar.setTag(0);
         loadingBar.loadTexture("res/cocosgui/slider_bar_active_9patch.png");
         loadingBar.setScale9Enabled(true);
         loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
         loadingBar.setSize(cc.size(300, 30));
-        loadingBar.setDirection(ccui.LoadingBarType.right);
+        loadingBar.setDirection(ccs.LoadingBarType.right);
         loadingBar.setPercent(0);
-        loadingBar.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + loadingBar.getSize().height / 4));
-        this._uiLayer.addChild(loadingBar);
+        loadingBar.x = widgetSize.width / 2;
+        loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
+        this._mainNode.addChild(loadingBar);
+        this._loadingBar = loadingBar;
     }
 });

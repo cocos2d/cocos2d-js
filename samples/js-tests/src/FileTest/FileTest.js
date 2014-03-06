@@ -31,36 +31,36 @@ var FileTestSceneIdx = -1;
 //
 //------------------------------------------------------------------
 var FileTestBase = BaseTestLayer.extend({
-	_title:"",
-	_subtitle:"",
+    _title:"",
+    _subtitle:"",
 
-	ctor:function() {
-		this._super(cc.c4b(0,0,0,255), cc.c4b(98,99,117,255));
-	},
+    ctor:function() {
+        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+    },
 
-	onRestartCallback:function (sender) {
-		var s = new FileTestScene();
-		s.addChild(restartFileTest());
-		director.replaceScene(s);
-	},
-	onNextCallback:function (sender) {
-		var s = new FileTestScene();
-		s.addChild(nextFileTest());
-		director.replaceScene(s);
-	},
-	onBackCallback:function (sender) {
-		var s = new FileTestScene();
-		s.addChild(previousFileTest());
-		director.replaceScene(s);
-	},
+    onRestartCallback:function (sender) {
+        var s = new FileTestScene();
+        s.addChild(restartFileTest());
+        director.runScene(s);
+    },
+    onNextCallback:function (sender) {
+        var s = new FileTestScene();
+        s.addChild(nextFileTest());
+        director.runScene(s);
+    },
+    onBackCallback:function (sender) {
+        var s = new FileTestScene();
+        s.addChild(previousFileTest());
+        director.runScene(s);
+    },
 
-	// automation
-	numberOfPendingTests:function() {
-		return ( (arrayOfFileTest.length-1) - FileTestSceneIdx );
-	},
-	getTestNumber:function() {
-		return FileTestSceneIdx;
-	}
+    // automation
+    numberOfPendingTests:function() {
+        return ( (arrayOfFileTest.length-1) - FileTestSceneIdx );
+    },
+    getTestNumber:function() {
+        return FileTestSceneIdx;
+    }
 });
 
 //------------------------------------------------------------------
@@ -69,61 +69,62 @@ var FileTestBase = BaseTestLayer.extend({
 //
 //------------------------------------------------------------------
 var FilenameLookupTest = FileTestBase.extend({
-	_title:"Testing FilenameLookup ",
-	_subtitle:"You should see a grossini on the screen",
+    _title:"Testing FilenameLookup ",
+    _subtitle:"You should see a grossini on the screen",
 
-	ctor:function () {
-		this._super();
+    ctor:function () {
+        this._super();
 
-		var t = sys.platform;
-		if( t == 'mobile')  {
-			cc.FileUtils.getInstance().loadFilenameLookup('FileTest/lookup-mobile.plist');
-		} else if( t == 'desktop' ) {
-			cc.FileUtils.getInstance().loadFilenameLookup('FileTest/lookup-desktop.plist');
-		} else {
-			cc.FileUtils.getInstance().loadFilenameLookup('FileTest/lookup-html5.plist');
-		}
+        var t = sys.platform;
+        if(cc.sys.isNative)  {
+            cc.FileUtils.getInstance().loadFilenameLookup('FileTest/lookup-mobile.plist');
+        } else if(cc.sys.isMobile) {
+            cc.FileUtils.getInstance().loadFilenameLookup('FileTest/lookup-html5.plist');
+        } else {
+            cc.FileUtils.getInstance().loadFilenameLookup('FileTest/lookup-desktop.plist');
+        }
 
-		var sprite = cc.Sprite.create("grossini.bmp");
-		this.addChild( sprite );
-		sprite.setPosition( winSize.width/2, winSize.height/2);
+        var sprite = cc.Sprite.create("grossini.bmp");
+        this.addChild( sprite );
+        sprite.x = winSize.width/2;
+        sprite.y = winSize.height/2;
 
 
-		//
-		// only for automation
-		//
-		if ( autoTestEnabled ) {
-			if ( t == 'mobile' )  {
-				this.expectedFilename = "grossini_pvr_rgba4444.pvr";
-			} else if( t == 'desktop' ) {
-				this.expectedFilename = "grossini_pvr_rgba8888.pvr";
-			} else {
-				this.expectedFilename = "grossini.png";
-			}
-		}
-	},
+        //
+        // only for automation
+        //
+        if ( autoTestEnabled ) {
+            if ( t == 'mobile' )  {
+                this.expectedFilename = "grossini_pvr_rgba4444.pvr";
+            } else if( t == 'desktop' ) {
+                this.expectedFilename = "grossini_pvr_rgba8888.pvr";
+            } else {
+                this.expectedFilename = "grossini.png";
+            }
+        }
+    },
 
-	//
-	// only for automation
-	//
-	getExpectedResult:function() {
-		return this.expectedFilename;
-	},
-	getCurrentResult:function() {
-		var filenamePlusPath    = cc.FileUtils.getInstance().fullPathForFilename("grossini.bmp");
-		var filename            = filenamePlusPath.replace(/^.*(\\|\/|\:)/, '');
-		return filename;
-	}
+    //
+    // only for automation
+    //
+    getExpectedResult:function() {
+        return this.expectedFilename;
+    },
+    getCurrentResult:function() {
+        var filenamePlusPath    = cc.FileUtils.getInstance().fullPathForFilename("grossini.bmp");
+        var filename            = filenamePlusPath.replace(/^.*(\\|\/|\:)/, '');
+        return filename;
+    }
 });
 
 var FileTestScene = TestScene.extend({
-	runThisTest:function () {
-		FileTestSceneIdx = -1;
-		var layer = nextFileTest();
-		this.addChild(layer);
+    runThisTest:function () {
+        FileTestSceneIdx = -1;
+        var layer = nextFileTest();
+        this.addChild(layer);
 
-		director.replaceScene(this);
-	}
+        director.runScene(this);
+    }
 });
 
 
@@ -177,13 +178,14 @@ var SAXParserTest = FileTestBase.extend({
 	ctor:function () {
 		this._super();
 
-		var parser = cc.SAXParser.getInstance();
+		var parser = cc.saxParser;
 		var result = parser.parse(s_grossini_familyPlist);
 
 		var ok = JSON.stringify(this._expectResult) == JSON.stringify(result);
-		this._label = cc.LabelTTF.create(ok ? "SUCCESS" : "FAIL", "Arial", 30);
-		var winsize = cc.Director.getInstance().getWinSize();
-		this._label.setPosition(winsize.width/2, winsize.height/2);
+		this._label = cc.LabelTTF.create(ok ? "SUCCESS" : "FAIL");
+		var winsize = cc.director.getWinSize();
+		this._label.x = winsize.width/2;
+		this._label.y = winsize.height/2;
 		this.addChild(this._label);
 	},
 
@@ -194,7 +196,7 @@ var SAXParserTest = FileTestBase.extend({
 		return JSON.stringify(this._expectResult);
 	},
 	getCurrentResult:function() {
-		var parser = cc.SAXParser.getInstance();
+		var parser = cc.saxParser;
 		var result = parser.parse(s_grossini_familyPlist);
 		return JSON.stringify(result);
 	}
@@ -206,7 +208,7 @@ var FileTestScene = TestScene.extend({
 		var layer = nextFileTest();
 		this.addChild(layer);
 
-		director.replaceScene(this);
+		director.runScene(this);
 	}
 });
 
@@ -216,7 +218,7 @@ var FileTestScene = TestScene.extend({
 //
 
 var arrayOfFileTest = [
-	FilenameLookupTest,
+    FilenameLookupTest,
 	SAXParserTest
 ];
 
@@ -224,16 +226,16 @@ var nextFileTest = function () {
 	fileTestSceneIdx++;
 	fileTestSceneIdx = fileTestSceneIdx % arrayOfFileTest.length;
 
-	return new arrayOfFileTest[fileTestSceneIdx]();
+    return new arrayOfFileTest[fileTestSceneIdx]();
 };
 var previousFileTest = function () {
-	fileTestSceneIdx--;
-	if (fileTestSceneIdx < 0)
-		fileTestSceneIdx += arrayOfFileTest.length;
+    fileTestSceneIdx--;
+    if (fileTestSceneIdx < 0)
+        fileTestSceneIdx += arrayOfFileTest.length;
 
-	return new arrayOfFileTest[fileTestSceneIdx]();
+    return new arrayOfFileTest[fileTestSceneIdx]();
 };
 var restartFileTest = function () {
-	return new arrayOfFileTest[fileTestSceneIdx]();
+    return new arrayOfFileTest[fileTestSceneIdx]();
 };
 

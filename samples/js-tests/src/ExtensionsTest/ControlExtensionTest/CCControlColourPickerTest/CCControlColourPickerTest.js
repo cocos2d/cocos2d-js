@@ -28,18 +28,20 @@ var ControlColourPickerTest = ControlScene.extend({
     _colorLabel:null,
     init:function () {
         if (this._super()) {
-            var screenSize = cc.Director.getInstance().getWinSize();
+            var screenSize = cc.director.getWinSize();
 
             var layer  = cc.Node.create();
-            layer.setPosition(cc.p (screenSize.width / 2, screenSize.height / 2));
+            layer.x = screenSize.width / 2;
+            layer.y = screenSize.height / 2;
             this.addChild(layer, 1);
 
             var layer_width = 0;
 
             // Create the colour picker
             var colourPicker = cc.ControlColourPicker.create();
-            colourPicker.setColor(cc.c3b(37, 46, 252));
-            colourPicker.setPosition(cc.p (colourPicker.getContentSize().width / 2, 0));
+            colourPicker.color = cc.color(37, 46, 252);
+            colourPicker.x = colourPicker.width / 2;
+            colourPicker.y = 0;
 
             // Add it to the layer
             layer.addChild(colourPicker);
@@ -48,25 +50,30 @@ var ControlColourPickerTest = ControlScene.extend({
             colourPicker.addTargetWithActionForControlEvents(this,this.colourValueChanged,  cc.CONTROL_EVENT_VALUECHANGED);
 
 
-            layer_width += colourPicker.getContentSize().width;
+            layer_width += colourPicker.width;
 
             // Add the black background for the text
             var background = cc.Scale9Sprite.create("res/extensions/buttonBackground.png");
-            background.setContentSize(150, 50);
-            background.setPosition(layer_width + background.getContentSize().width / 2.0, 0);
+            background.width = 150;
+	        background.height = 50;
+            background.x = layer_width + background.width / 2.0;
+            background.y = 0;
             layer.addChild(background);
 
-            layer_width += background.getContentSize().width;
+            layer_width += background.width;
 
             this._colorLabel = cc.LabelTTF.create("#color", "Marker Felt", 30);
             this._colorLabel.retain();
 
-            this._colorLabel.setPosition(background.getPosition());
+            this._colorLabel.x = background.x;
+            this._colorLabel.y = background.y;
             layer.addChild(this._colorLabel);
 
             // Set the layer size
-            layer.setContentSize(layer_width, 0);
-            layer.setAnchorPoint(0.5, 0.5);
+            layer.width = layer_width;
+	        layer.height = 0;
+            layer.anchorX = 0.5;
+	        layer.anchorY = 0.5;
 
             // Update the color text
             this.colourValueChanged(colourPicker, cc.CONTROL_EVENT_VALUECHANGED);
@@ -76,7 +83,7 @@ var ControlColourPickerTest = ControlScene.extend({
     },
     colourValueChanged:function (sender, controlEvent) {
         // Change value of label.
-        this._colorLabel.setString(cc.convertColor3BtoHexString(sender.getColor()).toUpperCase());
+        this._colorLabel.setString(cc.colorToHex(sender.color).toUpperCase());
     }
 });
 ControlColourPickerTest.create = function (sceneTitle) {
