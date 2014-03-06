@@ -538,11 +538,11 @@ bool FileServer::recv_file(int fd)
 {
 	char buffer[1024]={0};
     char namelen[4]={0};
-	if (read(fd, namelen, 4)<=0) {
+	if (recv(fd, namelen, 4,0)<=0) {
 		return  false;
 	}
     
-	if (read(fd, buffer, atoi(namelen))<=0) {
+	if (recv(fd, buffer, atoi(namelen),0)<=0) {
 		return  false;
 	}
     
@@ -556,7 +556,7 @@ bool FileServer::recv_file(int fd)
 	FILE *fp =fopen(fullfilename, "wb");
 	
 	int length =0;
-	while ((length=read(fd, fullfilename, sizeof(fullfilename))) > 0) {
+	while ((length=recv(fd, fullfilename, sizeof(fullfilename),0)) > 0) {
 		fwrite(fullfilename, sizeof(char), length,fp);
 	}
 	fclose(fp);
