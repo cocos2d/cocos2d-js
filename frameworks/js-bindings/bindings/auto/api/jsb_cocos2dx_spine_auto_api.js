@@ -28,8 +28,12 @@ blendfunc
 
 /**
  * @method onDraw
+ * @param {kmMat4} arg0
+ * @param {bool} arg1
  */
 onDraw : function (
+kmmat4, 
+bool 
 )
 {
 },
