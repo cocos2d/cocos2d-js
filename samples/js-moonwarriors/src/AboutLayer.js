@@ -18,7 +18,7 @@ var AboutLayer = cc.Layer.extend({
             about.attr({
 	            x: winSize.width / 2,
 	            y: winSize.height/2 -20,
-	            anchor: cc.p(0.5, 0.5)
+	            anchorX: cc.p(0.5, 0.5)
             });
             this.addChild(about);
 

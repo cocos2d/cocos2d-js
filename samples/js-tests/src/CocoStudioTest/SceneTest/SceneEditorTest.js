@@ -227,7 +227,7 @@ var UIComponentTest = SceneEditorTestLayer.extend({
     },
     touchEvent: function (sender, type) {
         switch (type) {
-            case ccs.TouchEventType.began:
+            case ccs.TOUCH_EVENT_TYPE_BAGAN:
                 var blowFish = this._node.getChildByTag(10010).getComponent("CCArmature").getNode();
                 blowFish.runAction(cc.MoveBy.create(10, cc.p(-1000, 0)));
 
@@ -390,7 +390,7 @@ var TriggerTest = SceneEditorTestLayer.extend({
         ccs.actionManager.playActionByName("startMenu_1.json", "Animation1");
 
         this.schedule(this.gameLogic);
-        ccs.sendEvent(TRIGGEREVENT_ENTERSCENE);
+        ccs.sendEvent(TRIGGER_EVENT_ENTERSCENE);
 
         var listener1 = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -403,30 +403,30 @@ var TriggerTest = SceneEditorTestLayer.extend({
         this.initSize(node);
     },
     onExit: function () {
-        ccs.sendEvent(TRIGGEREVENT_LEAVESCENE);
+        ccs.sendEvent(TRIGGER_EVENT_LEAVESCENE);
         this.unschedule(this.gameLogic, this);
         this._super();
     },
 
     onTouchBegan: function (touch, event) {
-        ccs.sendEvent(TRIGGEREVENT_TOUCHBEGAN);
+        ccs.sendEvent(TRIGGER_EVENT_TOUCHBEGAN);
         return true;
     },
 
     onTouchMoved: function (touch, event) {
-        ccs.sendEvent(TRIGGEREVENT_TOUCHMOVED);
+        ccs.sendEvent(TRIGGER_EVENT_TOUCHMOVED);
     },
 
     onTouchEnded: function (touch, event) {
-        ccs.sendEvent(TRIGGEREVENT_TOUCHENDED);
+        ccs.sendEvent(TRIGGER_EVENT_TOUCHENDED);
     },
 
     onTouchCancelled: function (touch, event) {
-        ccs.sendEvent(TRIGGEREVENT_TOUCHCANCELLED);
+        ccs.sendEvent(TRIGGER_EVENT_TOUCHCANCELLED);
     },
 
     gameLogic: function () {
-        ccs.sendEvent(TRIGGEREVENT_UPDATESCENE);
+        ccs.sendEvent(TRIGGER_EVENT_UPDATESCENE);
     },
     title: function () {
         return "Trigger Test";

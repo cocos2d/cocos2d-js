@@ -104,7 +104,7 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
         this._brush = cc.Sprite.create(s_fire);
         this._brush.retain();
 
-        this._brush.color = cc.color.red;
+        this._brush.color = cc.color.RED;
         this._brush.opacity = 20;
 
         var save = cc.MenuItemFont.create("Save", this.saveCB, this);
@@ -321,7 +321,7 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
         this.sp9.vertexZ = -400;
 
         this.sp9.scale = 2;
-        this.sp9.color = cc.color.yellow;
+        this.sp9.color = cc.color.YELLOW;
     },
 
     onTouchesBegan:function (touches, event) {
@@ -411,7 +411,7 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
         sprite.opacity = 182;
         sprite.flippedY = 1;
         this.addChild(sprite, 999999);
-        sprite.color = cc.color.green;
+        sprite.color = cc.color.GREEN;
 
         sprite.runAction(cc.Sequence.create(cc.FadeTo.create(2, 0), cc.Hide.create()));
     }

@@ -31,7 +31,7 @@ var UISliderTest = UIScene.extend({
             this._bottomDisplayLabel.setText("Slider");
 
             // Create the slider
-            var slider = ccs.Slider.create();
+            var slider = ccui.Slider.create();
             slider.setTouchEnabled(true);
             slider.loadBarTexture("res/cocosgui/sliderTrack.png");
             slider.loadSlidBallTextures("res/cocosgui/sliderThumb.png", "res/cocosgui/sliderThumb.png", "");
@@ -48,7 +48,7 @@ var UISliderTest = UIScene.extend({
 
     sliderEvent: function (sender, type) {
         switch (type) {
-            case ccs.SliderEventType.percent_changed:
+            case ccui.SLIDER_EVENT_PERCENT_CHANGED:
                 var slider = sender;
                 var percent = slider.getPercent();
                 this._topDisplayLabel.setText("Percent " + percent.toFixed(0));
@@ -68,7 +68,7 @@ var UISliderTest_Scale9 = UIScene.extend({
             this._bottomDisplayLabel.setText("Slider scale9 render");
 
             // Create the slider
-            var slider = ccs.Slider.create();
+            var slider = ccui.Slider.create();
             slider.setTouchEnabled(true);
             slider.loadBarTexture("res/cocosgui/sliderTrack2.png");
             slider.loadSlidBallTextures("res/cocosgui/sliderThumb.png", "res/cocosgui/sliderThumb.png", "");
@@ -88,7 +88,7 @@ var UISliderTest_Scale9 = UIScene.extend({
 
     sliderEvent: function (sender, type) {
         switch (type) {
-            case ccs.SliderEventType.percent_changed:
+            case ccui.SLIDER_EVENT_PERCENT_CHANGED:
                 var slider = sender;
                 var percent = slider.getPercent();
                 this._topDisplayLabel.setText("Percent " + percent.toFixed(0));

@@ -74,7 +74,7 @@ var UILoadingBarTest = UIScene.extend({
 var UILoadingBarTest_Left = UILoadingBarTest.extend({
     createLoadingBar: function () {
         var widgetSize = this._widget.getSize();
-        var loadingBar = ccs.LoadingBar.create();
+        var loadingBar = ccui.LoadingBar.create();
         loadingBar.setName("LoadingBar");
         loadingBar.loadTexture("res/cocosgui/sliderProgress.png");
         loadingBar.setPercent(0);
@@ -88,10 +88,10 @@ var UILoadingBarTest_Left = UILoadingBarTest.extend({
 var UILoadingBarTest_Right = UILoadingBarTest.extend({
     createLoadingBar: function () {
         var widgetSize = this._widget.getSize();
-        var loadingBar = ccs.LoadingBar.create();
+        var loadingBar = ccui.LoadingBar.create();
         loadingBar.setName("LoadingBar");
         loadingBar.loadTexture("res/cocosgui/sliderProgress.png");
-        loadingBar.setDirection(ccs.LoadingBarType.right);
+        loadingBar.setDirection(ccui.LOADINGBAR_TYPE_RIGHT);
         loadingBar.setPercent(0);
         loadingBar.x = widgetSize.width / 2;
         loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
@@ -103,7 +103,7 @@ var UILoadingBarTest_Right = UILoadingBarTest.extend({
 var UILoadingBarTest_Left_Scale9 = UILoadingBarTest.extend({
     createLoadingBar: function () {
         var widgetSize = this._widget.getSize();
-        var loadingBar = ccs.LoadingBar.create();
+        var loadingBar = ccui.LoadingBar.create();
         loadingBar.setName("LoadingBar");
         loadingBar.loadTexture("res/cocosgui/slider_bar_active_9patch.png");
         loadingBar.setScale9Enabled(true);
@@ -120,13 +120,13 @@ var UILoadingBarTest_Left_Scale9 = UILoadingBarTest.extend({
 var UILoadingBarTest_Right_Scale9 = UILoadingBarTest.extend({
     createLoadingBar: function () {
         var widgetSize = this._widget.getSize();
-        var loadingBar = ccs.LoadingBar.create();
+        var loadingBar = ccui.LoadingBar.create();
         loadingBar.setName("LoadingBar");
         loadingBar.loadTexture("res/cocosgui/slider_bar_active_9patch.png");
         loadingBar.setScale9Enabled(true);
         loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
         loadingBar.setSize(cc.size(300, 30));
-        loadingBar.setDirection(ccs.LoadingBarType.right);
+        loadingBar.setDirection(ccui.LOADINGBAR_TYPE_RIGHT);
         loadingBar.setPercent(0);
         loadingBar.x = widgetSize.width / 2;
         loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;

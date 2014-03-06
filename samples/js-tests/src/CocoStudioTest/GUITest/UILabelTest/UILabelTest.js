@@ -31,14 +31,14 @@ var UILabelTest = UIScene.extend({
             this._bottomDisplayLabel.setText("Label");
 
             // Create the label
-            var label = ccs.Label.create();
-            label.attr({
+            var text = ccui.Text.create();
+            text.attr({
 	            string: "Label",
 	            font: "30px AmericanTypewriter",
 	            x: this._widget.width / 2,
-	            y: this._widget.height / 2 + label.height / 4
+	            y: this._widget.height / 2 + text.height / 4
             });
-            this._mainNode.addChild(label);
+            this._mainNode.addChild(text);
 
             return true;
         }
@@ -55,17 +55,17 @@ var UILabelTest_LineWrap = UIScene.extend({
             this._bottomDisplayLabel.string = "Label line wrap";
 
             // Create the text area
-            var textArea = ccs.Label.create();
-            textArea.boundingWidth = 280;
-	        textArea.boundingHeight = 150;
-            textArea.attr({
+            var text = ccui.Text.create();
+            text.boundingWidth = 280;
+	        text.boundingHeight = 150;
+            text.attr({
 	            textAlign: cc.TEXT_ALIGNMENT_CENTER,
 	            string: "Label can line wrap",
 	            font: "32px AmericanTypewriter",
 	            x: this._widget.width / 2
             });
-	        textArea.y = this._widget.height / 2 - textArea.height / 8;
-            this._mainNode.addChild(textArea);
+	        text.y = this._widget.height / 2 - text.height / 8;
+            this._mainNode.addChild(text);
 
             return true;
         }
@@ -82,17 +82,17 @@ var UILabelTest_TTF = UIScene.extend({
             this._bottomDisplayLabel.setText("Label set TTF font");
 
             // Create the text area
-            var textArea = ccs.Label.create();
-            textArea.boundingWidth = 280;
-	        textArea.boundingHeight = 150;
-            textArea.attr({
+            var text = ccui.Text.create();
+            text.boundingWidth = 280;
+	        text.boundingHeight = 150;
+            text.attr({
 	            textAlign: cc.TEXT_ALIGNMENT_CENTER,
 	            string: "Label TTF",
 	            font: "32px mericanTypewriter",
 	            x: this._widget.width / 2,
-	            y: this._widget.height / 2 - textArea.height / 8
+	            y: this._widget.height / 2 - text.height / 8
             });
-            this._mainNode.addChild(textArea);
+            this._mainNode.addChild(text);
 
             return true;
         }
