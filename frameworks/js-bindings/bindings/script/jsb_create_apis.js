@@ -166,8 +166,9 @@ cc.SpriteBatchNode._create = cc.SpriteBatchNode.create;
 cc.SpriteBatchNode.create = function(fileName,capacity){
     if (typeof(fileName) == "string")
         return cc.SpriteBatchNode._create(fileName);
-    else if (fileName instanceof cc.Texture2D)
-        return cc.SpriteBatchNode.createWithTexture(fileName,capacity);
+    else if (fileName instanceof cc.Texture2D) {
+        return isNaN(capacity) ? cc.SpriteBatchNode.createWithTexture(fileName) :  cc.SpriteBatchNode.createWithTexture(fileName,capacity);
+    }
     return null;
 };
 
