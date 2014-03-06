@@ -1204,3 +1204,24 @@ cc.defineGetterSetter(cc.visibleRect, "right", function(){
     this.lazyInit();
     return this._right;
 });
+
+// Predefined font definition
+cc.FontDefinition = function () {
+    this.fontName = "Arial";
+    this.fontSize = 12;
+    this.textAlign = cc.TEXT_ALIGNMENT_CENTER;
+    this.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
+    this.fillStyle = cc.color(255, 255, 255, 255);
+    this.boundingWidth = 0;
+	this.boundingHeight = 0;
+
+    this.strokeEnabled = false;
+    this.strokeStyle = cc.color(255, 255, 255, 255);
+    this.lineWidth = 1;
+
+    this.shadowEnabled = false;
+    this.shadowOffsetX = 0;
+	this.shadowOffsetY = 0;
+    this.shadowBlur = 0;
+    this.shadowOpacity = 1.0;
+};
