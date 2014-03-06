@@ -390,6 +390,7 @@ public:
         _listenfd = -1;
         _running = false;
         _endThread = false;
+		_writepath = FileUtils::getInstance()->getWritablePath();
     }
     
 	bool listenOnTCP(int port);
@@ -408,6 +409,7 @@ private:
     fd_set _read_set;
     bool _running;
     bool _endThread;
+	std::string _writepath;
 };
 
 bool FileServer::listenOnTCP(int port)
@@ -487,6 +489,18 @@ void FileServer::stop()
 	}
 }
 
+string& replace_all(string& str,const string& old_value,const string& new_value)
+{
+	while(true)
+	{
+		int pos=0;
+		if((pos=str.find(old_value,0))!=string::npos)
+			str.replace(pos,old_value.length(),new_value);
+		else break;
+	}
+	return str;
+}
+
 bool CreateDir(const char *sPathName)
 {
 	char   DirName[256]={0};
@@ -533,10 +547,13 @@ bool FileServer::recv_file(int fd)
 	}
     
     char fullfilename[1024]={0};
-    sprintf(fullfilename, "%s/%s", FileUtils::getInstance()->getWritablePath().c_str(),buffer);
+	sprintf(fullfilename,"%s%s",_writepath.c_str(),buffer);
     string file(fullfilename);
+	file=replace_all(file,"\\","/");
+	sprintf(fullfilename, "%s", file.c_str());
+	cocos2d::log("recv fullfilename = %s",fullfilename);
     CreateDir(file.substr(0,file.find_last_of("/")).c_str());
-	FILE *fp =fopen(fullfilename, "w");
+	FILE *fp =fopen(fullfilename, "wb");
 	
 	int length =0;
 	while ((length=read(fd, fullfilename, sizeof(fullfilename))) > 0) {
