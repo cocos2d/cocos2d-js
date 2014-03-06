@@ -537,7 +537,7 @@ var SpriteZOrder = SpriteTestDemo.extend({
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2 - 20;
         sprite.scaleX = 10;
-        sprite.color = cc.color.red;
+        sprite.color = cc.color.RED;
 
         this.schedule(this.reorderSprite, 1);
     },
@@ -606,7 +606,7 @@ var SpriteBatchNodeZOrder = SpriteTestDemo.extend({
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2 - 20;
         sprite.scaleX = 10;
-        sprite.color = cc.color.red;
+        sprite.color = cc.color.RED;
         this.schedule(this.reorderSprite, 1);
     },
     reorderSprite:function (dt) {
@@ -4155,7 +4155,7 @@ var SpriteNilTexture = SpriteTestDemo.extend({
         // TEST: If no texture is given, then Opacity + Color should work.
         var sprite = cc.Sprite.create();
         sprite.setTextureRect(cc.rect(0, 0, 300, 300));
-        // sprite.color = cc.color.red;
+        // sprite.color = cc.color.RED;
         sprite.color = cc.color(255, 0, 0);
         sprite.opacity = 128;
         sprite.x = 3 * winSize.width / 4;
@@ -4164,7 +4164,7 @@ var SpriteNilTexture = SpriteTestDemo.extend({
 
         sprite = cc.Sprite.create();
         sprite.setTextureRect(cc.rect(0, 0, 300, 300));
-        //sprite.color = cc.color.blue;
+        //sprite.color = cc.color.BLUE;
         sprite.color = cc.color(0, 0, 255);
         sprite.opacity = 128;
         sprite.x = winSize.width / 4;

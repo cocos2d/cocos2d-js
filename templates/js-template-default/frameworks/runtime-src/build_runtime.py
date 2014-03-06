@@ -297,17 +297,34 @@ class BuildRuntime:
         if not os.path.isdir(platformsPath):
             print ("Can't find android platforms")
             return False
-        
-        platforms = os.listdir(platformsPath)
-        versions = []
-        for platform in platforms:
-            if "android-" in platform:
-                version = platform[platform.find('-')+1:]
-                versions.append(version)
-            
-        maxVersion = max(map(float, versions))
-        if maxVersion <= 10.0:
-            print ("Update android sdk please")
+
+        projectProperties = os.path.join(self.projectPath, "project.properties")
+        androidVersion = None
+        if os.path.isfile(projectProperties):
+            f = file(projectProperties, 'r')
+            while True:
+                line = f.readline()
+                if "target=" in line and not "#" in line:
+                    androidVersion = line[line.find('-')+1:]
+                    break
+                if len(line) == 0:
+                    break
+
+        if androidVersion is None:
+            platforms = os.listdir(platformsPath)
+            versions = []
+            for platform in platforms:
+                if "android-" in platform:
+                    version = platform[platform.find('-')+1:]
+                    versions.append(version)
+            versions = [x for x in map(float, versions) if x > 10.0]
+            if len(versions) == 0:
+                print ("Please update your android sdk")
+                return False
+            androidVersion = min(versions)
+
+        if androidVersion is None or int(androidVersion) < 10:
+            print ("Please update your android sdk or reset android sdk version in the project.properties file")
             return False
         
         buildNative = os.path.join(self.projectPath, "build_native.py")
@@ -317,7 +334,7 @@ class BuildRuntime:
         
         sys.path.append(self.projectPath)
         from build_native import build
-        build(None, str(int(maxVersion)), None, self.pure)
+        build(None, str(int(androidVersion)), None, self.pure)
         
     def win32Runtime(self):
         try:

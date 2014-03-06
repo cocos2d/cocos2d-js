@@ -96,7 +96,7 @@ var ControlButtonTest_HelloVariableSize = ControlScene.extend({
 
         var button = cc.ControlButton.create(titleButton, backgroundButton);
         button.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
-        button.setTitleColorForState(cc.color.white, cc.CONTROL_STATE_HIGHLIGHTED);
+        button.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
         return button;
     }
@@ -136,7 +136,7 @@ var ControlButtonTest_Event = ControlScene.extend({
 
             var controlButton = cc.ControlButton.create(titleButton, backgroundButton);
             controlButton.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
-            controlButton.setTitleColorForState(cc.color.white, cc.CONTROL_STATE_HIGHLIGHTED);
+            controlButton.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
             controlButton.anchorX = 0.5;
             controlButton.anchorY = 1;
@@ -266,7 +266,7 @@ var ControlButtonTest_Styling = ControlScene.extend({
 
         var button = cc.ControlButton.create(titleButton, backgroundButton);
         button.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
-        button.setTitleColorForState(cc.color.white, cc.CONTROL_STATE_HIGHLIGHTED);
+        button.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
         return button;
     }

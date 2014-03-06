@@ -62,8 +62,8 @@ UIScene = cc.Layer.extend({
 
             //add topDisplayLabel
             var widgetSize = widget.getSize();
-            var eventLabel = ccs.Label.create();
-            eventLabel.attr({
+            var topDisplayText = ccui.Text.create();
+            topDisplayText.attr({
 	            string: "",
 	            fontName: "Marker Felt",
 	            fontSize: 32,
@@ -72,22 +72,22 @@ UIScene = cc.Layer.extend({
 	            x: widgetSize.width / 2.0,
 	            y: widgetSize.height / 2.0
             });
-            mainNode.addChild(eventLabel);
+            mainNode.addChild(topDisplayText);
             
             //add bottomDisplayLabel
-            var uiLabel = ccs.Label.create();
-            uiLabel.attr({
+            var bottomDisplayText = ccui.Text.create();
+            bottomDisplayText.attr({
 	            string: "",
 	            fontName: "Marker Felt",
 	            fontSize: 30,
 	            color: cc.color(159, 168, 176),
 	            x: widgetSize.width / 2.0
             });
-	        uiLabel.y = widgetSize.height / 2.0 - uiLabel.height * 1.75;
-            mainNode.addChild(uiLabel);
+            bottomDisplayText.y = widgetSize.height / 2.0 - bottomDisplayText.height * 1.75;
+            mainNode.addChild(bottomDisplayText);
 
-            this._topDisplayLabel = eventLabel;
-            this._bottomDisplayLabel = uiLabel;
+            this._topDisplayLabel = topDisplayText;
+            this._bottomDisplayLabel = bottomDisplayText;
             this._mainNode = mainNode;
             this._widget = widget;
             return true;
@@ -98,7 +98,7 @@ UIScene = cc.Layer.extend({
         this._sceneTitle.setText(title);
     },
     toExtensionsMainLayer: function (sender, type) {
-        if (type == ccs.TouchEventType.ended) {
+        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
             UISceneManager.purge();
             ccs.actionManager.clear();
             ccs.sceneReader.clear();
@@ -108,19 +108,19 @@ UIScene = cc.Layer.extend({
     },
 
     previousCallback: function (sender, type) {
-        if (type == ccs.TouchEventType.ended) {
+        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
             cc.director.runScene(UISceneManager.getInstance().previousUIScene());
         }
     },
 
     restartCallback: function (sender, type) {
-        if (type == ccs.TouchEventType.ended) {
+        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
             cc.director.runScene(UISceneManager.getInstance().currentUIScene());
         }
     },
 
     nextCallback: function (sender, type) {
-        if (type == ccs.TouchEventType.ended) {
+        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
             cc.director.runScene(UISceneManager.getInstance().nextUIScene());
         }
     }

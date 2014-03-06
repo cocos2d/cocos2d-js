@@ -31,12 +31,12 @@ var UILabelAtlasTest = UIScene.extend({
             this._bottomDisplayLabel.setText("LabelAtlas");
 
             // Create the label atlas
-            var labelAtlas = ccs.LabelAtlas.create();
-            labelAtlas.setProperty("1234567890", "res/cocosgui/labelatlas.png", 17, 22, "0");
-            labelAtlas.x = this._widget.width / 2;
-	        labelAtlas.y = this._widget.height / 2;
+            var textAtlas = ccui.TextAtlas.create();
+            textAtlas.setProperty("1234567890", "res/cocosgui/labelatlas.png", 17, 22, "0");
+            textAtlas.x = this._widget.width / 2;
+	        textAtlas.y = this._widget.height / 2;
 
-            this._mainNode.addChild(labelAtlas);
+            this._mainNode.addChild(textAtlas);
             return true;
         }
         return false;

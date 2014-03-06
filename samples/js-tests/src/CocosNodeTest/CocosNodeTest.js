@@ -619,7 +619,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         this.addChild(sprite, 0);
         sprite.x = winSize.width / 5;
         sprite.y = winSize.height / 5;
-        sprite.color = cc.color.red;
+        sprite.color = cc.color.RED;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         var orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
         sprite.runAction(cc.RepeatForever.create(orbit));
@@ -629,7 +629,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         this.addChild(sprite, 0, 40);
         sprite.x = winSize.width / 5;
         sprite.y = winSize.height / 5 * 4;
-        sprite.color = cc.color.blue;
+        sprite.color = cc.color.BLUE;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
         sprite.runAction(cc.RepeatForever.create(orbit));
@@ -639,7 +639,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         this.addChild(sprite, 0);
         sprite.x = winSize.width / 5 * 4;
         sprite.y = winSize.height / 5;
-        sprite.color = cc.color.yellow;
+        sprite.color = cc.color.YELLOW;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
         sprite.runAction(cc.RepeatForever.create(orbit));
@@ -649,7 +649,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         this.addChild(sprite, 0, 40);
         sprite.x = winSize.width / 5 * 4;
         sprite.y = winSize.height / 5 * 4;
-        sprite.color = cc.color.green;
+        sprite.color = cc.color.GREEN;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
         sprite.runAction(cc.RepeatForever.create(orbit));
@@ -659,7 +659,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         this.addChild(sprite, 0, 40);
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
-        sprite.color = cc.color.white;
+        sprite.color = cc.color.WHITE;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
         sprite.runAction(cc.RepeatForever.create(orbit));
@@ -723,7 +723,7 @@ var ConvertToNode = TestNodeDemo.extend({
             }), this);
         } else if ('mouse' in cc.sys.capabilities)
             cc.eventManager.addListener({
-                event: cc.EventListener.Mouse,
+                event: cc.EventListener.MOUSE,
                 onMouseUp: function(event){
                     event.getCurrentTarget().processEvent(event.getLocation());
                 }
@@ -896,7 +896,7 @@ var NodeOpaqueTest = TestNodeDemo.extend({
         var background;
         for (var i = 0; i < 50; i++) {
             background = cc.Sprite.create(s_back1);
-            background.setBlendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+            background.setBlendFunc(cc.ONE, cc.ONE_MINUS_SRC_ALPHA);
             background.x = winSize.width / 2;
             background.y = winSize.height / 2;
             this.addChild(background);
@@ -919,7 +919,7 @@ var NodeNonOpaqueTest = TestNodeDemo.extend({
         var background;
         for (var i = 0; i < 50; i++) {
             background = cc.Sprite.create(s_back1);
-            background.setBlendFunc(gl.ONE, gl.ZERO);
+            background.setBlendFunc(cc.ONE, cc.ZERO);
             background.x = winSize.width / 2;
             background.y = winSize.height / 2;
             this.addChild(background);

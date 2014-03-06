@@ -12,7 +12,8 @@ var GameControlMenu = cc.Layer.extend({
             systemMenu.attr({
 	            x: winSize.width-95,
 	            y: 5,
-	            anchor: cc.p(0, 0)
+	            anchorX: 0,
+                anchorY: 0
             });
             this.addChild(menu, 1, 2);
             bRet = true;
