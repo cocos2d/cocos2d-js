@@ -28,6 +28,6 @@ var TestHeaderLayer = function() {
 
     // CCB callback
     this.onBackClicked = function() {
-        cc.Director.getInstance().popScene();
+        cc.director.popScene();
     };
 };

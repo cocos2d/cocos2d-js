@@ -38,7 +38,7 @@ var TAG_PARTICLE_MENU_LAYER = 1000;
 var ParticleMenuLayer = PerformBasicLayer.extend({
     _maxCases:4,
     showCurrentTest:function () {
-        var scene = this.getParent();
+        var scene = this.parent;
         var subTest = scene.getSubTestNum();
         var parNum = scene.getParticlesNum();
 
@@ -62,7 +62,7 @@ var ParticleMenuLayer = PerformBasicLayer.extend({
         s_nParCurIdx = this._curCase;
         if (newScene) {
             newScene.initWithSubTest(subTest, parNum);
-            cc.Director.getInstance().replaceScene(newScene);
+            cc.director.runScene(newScene);
         }
     }
 });
@@ -84,32 +84,35 @@ var ParticleMainScene = cc.Scene.extend({
         //srandom(0);
 
         this._subtestNumber = asubtest;
-        var s = cc.Director.getInstance().getWinSize();
+        var s = cc.director.getWinSize();
 
         this._lastRenderedCount = 0;
         this._quantityParticles = particles;
 
         cc.MenuItemFont.setFontSize(65);
         var decrease = cc.MenuItemFont.create(" - ", this.onDecrease, this);
-        decrease.setColor(cc.c3b(0, 200, 20));
+        decrease.color = cc.color(0, 200, 20);
         var increase = cc.MenuItemFont.create(" + ", this.onIncrease, this);
-        increase.setColor(cc.c3b(0, 200, 20));
+        increase.color = cc.color(0, 200, 20);
 
         var menu = cc.Menu.create(decrease, increase);
         menu.alignItemsHorizontally();
-        menu.setPosition(s.width / 2, s.height / 2 + 15);
+        menu.x = s.width / 2;
+        menu.y = s.height / 2 + 15;
         this.addChild(menu, 1);
 
         var infoLabel = cc.LabelTTF.create("0 nodes", "Marker Felt", 30);
-        infoLabel.setColor(cc.c3b(0, 200, 20));
-        infoLabel.setPosition(s.width / 2, s.height - 90);
+        infoLabel.color = cc.color(0, 200, 20);
+        infoLabel.x = s.width / 2;
+        infoLabel.y = s.height - 90;
         this.addChild(infoLabel, 1, TAG_INFO_LAYER);
 
         // particles on stage
         var labelAtlas = cc.LabelAtlas.create("0000", "res/Images/fps_images.png", 16, 24, '.');
         // var labelAtlas = cc.LabelTTF.create("0000", "Marker Felt", 30);
         this.addChild(labelAtlas, 0, TAG_LABEL_ATLAS);
-        labelAtlas.setPosition(s.width - 66, 50);
+        labelAtlas.x = s.width - 66;
+        labelAtlas.y = 50;
 
         // Next Prev Test
         var menu = new ParticleMenuLayer(true, 4, s_nParCurIdx);
@@ -121,24 +124,26 @@ var ParticleMainScene = cc.Scene.extend({
         for (var i = 1; i <= 3; ++i) {
             var str = i.toString();
             var itemFont = cc.MenuItemFont.create(str, this.testNCallback, this);
-            itemFont.setTag(i);
+            itemFont.tag = i;
             subMenu.addChild(itemFont, 10);
 
             if (i <= 1) {
-                itemFont.setColor(cc.c3b(200, 20, 20));
+                itemFont.color = cc.color(200, 20, 20);
             }
             else {
-                itemFont.setColor(cc.c3b(0, 200, 20));
+                itemFont.color = cc.color(0, 200, 20);
             }
         }
         subMenu.alignItemsHorizontally();
-        subMenu.setPosition(s.width / 2, 80);
+        subMenu.x = s.width / 2;
+        subMenu.y = 80;
         this.addChild(subMenu, 2);
 
         var label = cc.LabelTTF.create(this.title(), "Arial", 40);
         this.addChild(label, 1);
-        label.setPosition(s.width / 2, s.height - 32);
-        label.setColor(cc.c3b(255, 255, 40));
+        label.x = s.width / 2;
+        label.y = s.height - 32;
+        label.color = cc.color(255, 255, 40);
 
         this.updateQuantityLabel();
         this.createParticleSystem();
@@ -168,26 +173,26 @@ var ParticleMainScene = cc.Scene.extend({
         this.removeChildByTag(TAG_PARTICLE_SYSTEM, true);
 
         // remove the "fire.png" from the TextureCache cache.
-        //var texture = cc.TextureCache.getInstance().addImage("res/Images/fire.png");
-        //cc.TextureCache.getInstance().removeTexture(texture);
+        //var texture = cc.textureCache.addImage("res/Images/fire.png");
+        //cc.textureCache.removeTexture(texture);
 
-        var particleSystem = cc.ParticleSystem.createWithTotalParticles(this._quantityParticles);
+        var particleSystem = cc.ParticleSystem.create(this._quantityParticles);
 
         switch (this._subtestNumber) {
             case 1:
-                if ("opengl" in sys.capabilities)
-                    cc.Texture2D.setDefaultAlphaPixelFormat(cc.TEXTURE_PIXELFORMAT_RGBA8888);
-                particleSystem.setTexture(cc.TextureCache.getInstance().addImage("res/Images/fire.png"));
+                if ("opengl" in cc.sys.capabilities)
+                    cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA8888;
+                particleSystem.texture = cc.textureCache.addImage("res/Images/fire.png");
                 break;
             case 2:
-                if ("opengl" in sys.capabilities)
-                    cc.Texture2D.setDefaultAlphaPixelFormat(cc.TEXTURE_PIXELFORMAT_RGBA4444);
-                particleSystem.setTexture(cc.TextureCache.getInstance().addImage("res/Images/fire.png"));
+                if ("opengl" in cc.sys.capabilities)
+                    cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA4444;
+                particleSystem.texture = cc.textureCache.addImage("res/Images/fire.png");
                 break;
             case 3:
-                if ("opengl" in sys.capabilities)
-                    cc.Texture2D.setDefaultAlphaPixelFormat(cc.TEXTURE_PIXELFORMAT_A8);
-                particleSystem.setTexture(cc.TextureCache.getInstance().addImage("res/Images/fire.png"));
+                if ("opengl" in cc.sys.capabilities)
+                    cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_A8;
+                particleSystem.texture = cc.textureCache.addImage("res/Images/fire.png");
                 break;
             default:
                 particleSystem = null;
@@ -199,8 +204,8 @@ var ParticleMainScene = cc.Scene.extend({
         this.doTest();
 
         // restore the default pixel format
-        if ("opengl" in sys.capabilities)
-            cc.Texture2D.setDefaultAlphaPixelFormat(cc.TEXTURE_PIXELFORMAT_RGBA8888);
+        if ("opengl" in cc.sys.capabilities)
+            cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA8888;
     },
     onDecrease:function (sender) {
         this._quantityParticles -= PARTICLE_NODES_INCREASE;
@@ -219,7 +224,7 @@ var ParticleMainScene = cc.Scene.extend({
         this.createParticleSystem();
     },
     testNCallback:function (sender) {
-        this._subtestNumber = sender.getTag();
+        this._subtestNumber = sender.tag;
         var menu = this.getChildByTag(TAG_PARTICLE_MENU_LAYER);
         menu.restartCallback(sender);
     },
@@ -253,7 +258,7 @@ var ParticlePerformTest1 = ParticleMainScene.extend({
         return "A " + this._subtestNumber + " size=4";
     },
     doTest:function () {
-        var s = cc.Director.getInstance().getWinSize();
+        var s = cc.director.getWinSize();
         var particleSystem = this.getChildByTag(TAG_PARTICLE_SYSTEM);
 
         // duration
@@ -275,7 +280,8 @@ var ParticlePerformTest1 = ParticleMainScene.extend({
         particleSystem.setSpeedVar(50);
 
         // emitter position
-        particleSystem.setPosition(s.width / 2, 100);
+        particleSystem.x = s.width / 2;
+        particleSystem.y = 100;
         particleSystem.setPosVar(cc.p(s.width / 2, 0));
 
         // life of particles
@@ -286,16 +292,16 @@ var ParticlePerformTest1 = ParticleMainScene.extend({
         particleSystem.setEmissionRate(particleSystem.getTotalParticles() / particleSystem.getLife());
 
         // color of particles
-        var startColor = cc.c4f(0.5, 0.5, 0.5, 1.0);
+        var startColor = cc.color(128, 128, 128, 255);
         particleSystem.setStartColor(startColor);
 
-        var startColorVar = cc.c4f(0.5, 0.5, 0.5, 1.0);
+        var startColorVar = cc.color(128, 128, 128, 255);
         particleSystem.setStartColorVar(startColorVar);
 
-        var endColor = cc.c4f(0.1, 0.1, 0.1, 0.2);
+        var endColor = cc.color(26, 26, 26, 51);
         particleSystem.setEndColor(endColor);
 
-        var endColorVar = cc.c4f(0.1, 0.1, 0.1, 0.2);
+        var endColorVar = cc.color(26, 26, 26, 51);
         particleSystem.setEndColorVar(endColorVar);
 
         // size, in pixels
@@ -320,7 +326,7 @@ var ParticlePerformTest2 = ParticleMainScene.extend({
         return "B " + this._subtestNumber + " size=8";
     },
     doTest:function () {
-        var s = cc.Director.getInstance().getWinSize();
+        var s = cc.director.getWinSize();
         var particleSystem = this.getChildByTag(TAG_PARTICLE_SYSTEM);
 
         // duration
@@ -342,7 +348,8 @@ var ParticlePerformTest2 = ParticleMainScene.extend({
         particleSystem.setSpeedVar(50);
 
         // emitter position
-        particleSystem.setPosition(s.width / 2, 100);
+        particleSystem.x = s.width / 2;
+        particleSystem.y = 100;
         particleSystem.setPosVar(cc.p(s.width / 2, 0));
 
         // life of particles
@@ -353,16 +360,16 @@ var ParticlePerformTest2 = ParticleMainScene.extend({
         particleSystem.setEmissionRate(particleSystem.getTotalParticles() / particleSystem.getLife());
 
         // color of particles
-        var startColor = cc.c4f(0.5, 0.5, 0.5, 1.0);
+        var startColor = cc.color(128, 128, 128, 255);
         particleSystem.setStartColor(startColor);
 
-        var startColorVar = cc.c4f(0.5, 0.5, 0.5, 1.0);
+        var startColorVar = cc.color(128, 128, 128, 255);
         particleSystem.setStartColorVar(startColorVar);
 
-        var endColor = cc.c4f(0.1, 0.1, 0.1, 0.2);
+        var endColor = cc.color(26, 26, 26, 51);
         particleSystem.setEndColor(endColor);
 
-        var endColorVar = cc.c4f(0.1, 0.1, 0.1, 0.2);
+        var endColorVar = cc.color(26, 26, 26, 51);
         particleSystem.setEndColorVar(endColorVar);
 
         // size, in pixels
@@ -387,7 +394,7 @@ var ParticlePerformTest3 = ParticleMainScene.extend({
         return "C " + this._subtestNumber + " size=32";
     },
     doTest:function () {
-        var s = cc.Director.getInstance().getWinSize();
+        var s = cc.director.getWinSize();
         var particleSystem = this.getChildByTag(TAG_PARTICLE_SYSTEM);
 
         // duration
@@ -409,7 +416,8 @@ var ParticlePerformTest3 = ParticleMainScene.extend({
         particleSystem.setSpeedVar(50);
 
         // emitter position
-        particleSystem.setPosition(s.width / 2, 100);
+        particleSystem.x = s.width / 2;
+        particleSystem.y = 100;
         particleSystem.setPosVar(cc.p(s.width / 2, 0));
 
         // life of particles
@@ -420,16 +428,16 @@ var ParticlePerformTest3 = ParticleMainScene.extend({
         particleSystem.setEmissionRate(particleSystem.getTotalParticles() / particleSystem.getLife());
 
         // color of particles
-        var startColor = cc.c4f(0.5, 0.5, 0.5, 1.0);
+        var startColor = cc.color(128, 128, 128, 255);
         particleSystem.setStartColor(startColor);
 
-        var startColorVar = cc.c4f(0.5, 0.5, 0.5, 1.0);
+        var startColorVar = cc.color(128, 128, 128, 255);
         particleSystem.setStartColorVar(startColorVar);
 
-        var endColor = cc.c4f(0.1, 0.1, 0.1, 0.2);
+        var endColor = cc.color(26, 26, 26, 51);
         particleSystem.setEndColor(endColor);
 
-        var endColorVar = cc.c4f(0.1, 0.1, 0.1, 0.2);
+        var endColorVar = cc.color(26, 26, 26, 51);
         particleSystem.setEndColorVar(endColorVar);
 
         // size, in pixels
@@ -454,7 +462,7 @@ var ParticlePerformTest4 = ParticleMainScene.extend({
         return "D " + this._subtestNumber + " size=64";
     },
     doTest:function () {
-        var s = cc.Director.getInstance().getWinSize();
+        var s = cc.director.getWinSize();
         var particleSystem = this.getChildByTag(TAG_PARTICLE_SYSTEM);
 
         // duration
@@ -476,7 +484,8 @@ var ParticlePerformTest4 = ParticleMainScene.extend({
         particleSystem.setSpeedVar(50);
 
         // emitter position
-        particleSystem.setPosition(s.width / 2, 100);
+        particleSystem.x = s.width / 2;
+	    particleSystem.y = 100;
         particleSystem.setPosVar(cc.p(s.width / 2, 0));
 
         // life of particles
@@ -487,16 +496,16 @@ var ParticlePerformTest4 = ParticleMainScene.extend({
         particleSystem.setEmissionRate(particleSystem.getTotalParticles() / particleSystem.getLife());
 
         // color of particles
-        var startColor = cc.c4f(0.5, 0.5, 0.5, 1.0);
+        var startColor = cc.color(128, 128, 128, 255);
         particleSystem.setStartColor(startColor);
 
-        var startColorVar = cc.c4f(0.5, 0.5, 0.5, 1.0);
+        var startColorVar = cc.color(128, 128, 128, 255);
         particleSystem.setStartColorVar(startColorVar);
 
-        var endColor = cc.c4f(0.1, 0.1, 0.1, 0.2);
+        var endColor = cc.color(26, 26, 26, 51);
         particleSystem.setEndColor(endColor);
 
-        var endColorVar = cc.c4f(0.1, 0.1, 0.1, 0.2);
+        var endColorVar = cc.color(26, 26, 26, 51);
         particleSystem.setEndColorVar(endColorVar);
 
         // size, in pixels
@@ -513,5 +522,5 @@ var ParticlePerformTest4 = ParticleMainScene.extend({
 function runParticleTest() {
     var scene = new ParticlePerformTest1;
     scene.initWithSubTest(1, PARTICLE_NODES_INCREASE);
-    cc.Director.getInstance().replaceScene(scene);
+    cc.director.runScene(scene);
 }

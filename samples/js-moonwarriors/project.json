@@ -1,17 +1,15 @@
 {
-    "project_type": "javascript",
-
-    "debugMode" : 1,
+    "debugMode" : 4,
     "showFPS" : true,
     "frameRate" : 60,
     "id" : "gameCanvas",
-    "renderMode" : 2,
-    "engineDir":"../../../../cocos2d-html5",
+    "renderMode" : 1,
+    "engineDir":"../",
 
     "modules" : ["menus"],
 
     "jsList" : [
         "src/resource.js",
-        "src/app.js"
+        "src/myApp.js"
     ]
 }

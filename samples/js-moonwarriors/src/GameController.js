@@ -33,7 +33,7 @@ MW.GameController = cc.Class.extend({
             this._curScene = s;
             if (this._curScene) {
                 this._curScene.onEnter();
-                cc.Director.getInstance().replaceScene(s);
+	            cc.director.runScene(s);
             }
         }
     },

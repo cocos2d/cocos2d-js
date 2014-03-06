@@ -35,7 +35,7 @@ var TouchesTestScene = TestScene.extend({
         this.addChild(pongLayer);
     },
     runThisTest:function () {
-        cc.Director.getInstance().replaceScene(this);
+        cc.director.runScene(this);
     },
     MainMenuCallback:function (sender) {
         this._super(sender);
@@ -51,31 +51,36 @@ var PongLayer = cc.Layer.extend({
     ctor:function () {
         this._super();
         this._ballStartingVelocity = cc.p(20.0, -100.0);
-        this._winSize = cc.Director.getInstance().getWinSize();
+        this._winSize = cc.director.getWinSize();
 
-        this._ball = Ball.ballWithTexture(cc.TextureCache.getInstance().addImage(s_ball));
-        this._ball.setPosition(this._winSize.width / 2, this._winSize.height / 2);
+        this._ball = Ball.ballWithTexture(cc.textureCache.addImage(s_ball));
+        this._ball.x = this._winSize.width / 2;
+        this._ball.y = this._winSize.height / 2;
         this._ball.setVelocity(this._ballStartingVelocity);
         this.addChild(this._ball);
 
-        var paddleTexture = cc.TextureCache.getInstance().addImage(s_paddle);
+        var paddleTexture = cc.textureCache.addImage(s_paddle);
 
         this._paddles = [];
 
         var paddle = Paddle.paddleWithTexture(paddleTexture);
-        paddle.setPosition(this._winSize.width / 2, 15);
+        paddle.x = this._winSize.width / 2;
+        paddle.y = 15;
         this._paddles.push(paddle);
 
         paddle = Paddle.paddleWithTexture(paddleTexture);
-        paddle.setPosition(this._winSize.width / 2, this._winSize.height - STATUS_BAR_HEIGHT - 15);
+        paddle.x = this._winSize.width / 2;
+        paddle.y = this._winSize.height - STATUS_BAR_HEIGHT - 15;
         this._paddles.push(paddle);
 
         paddle = Paddle.paddleWithTexture(paddleTexture);
-        paddle.setPosition(this._winSize.width / 2, 100);
+        paddle.x = this._winSize.width / 2;
+        paddle.y = 100;
         this._paddles.push(paddle);
 
         paddle = Paddle.paddleWithTexture(paddleTexture);
-        paddle.setPosition(this._winSize.width / 2, this._winSize.height - STATUS_BAR_HEIGHT - 100);
+        paddle.x = this._winSize.width / 2;
+        paddle.y = this._winSize.height - STATUS_BAR_HEIGHT - 100;
         this._paddles.push(paddle);
 
         for (var i = 0; i < this._paddles.length; i++) {
@@ -94,7 +99,8 @@ var PongLayer = cc.Layer.extend({
             this._ballStartingVelocity = cc.pMult(this._ballStartingVelocity, -1);
         }
         this._ball.setVelocity(this._ballStartingVelocity);
-        this._ball.setPosition(this._winSize.width / 2, this._winSize.height / 2);
+        this._ball.x = this._winSize.width / 2;
+        this._ball.y = this._winSize.height / 2;
 
         // TODO -- scoring
     },
@@ -108,9 +114,9 @@ var PongLayer = cc.Layer.extend({
             this._ball.collideWithPaddle(this._paddles[i]);
         }
 
-        if (this._ball.getPosition().y > this._winSize.height - STATUS_BAR_HEIGHT + this._ball.radius())
+        if (this._ball.y > this._winSize.height - STATUS_BAR_HEIGHT + this._ball.radius())
             this.resetAndScoreBallForPlayer(LOW_PLAYER);
-        else if (this._ball.getPosition().y < -this._ball.radius())
+        else if (this._ball.y < -this._ball.radius())
             this.resetAndScoreBallForPlayer(HIGH_PLAYER);
         this._ball.draw();
     }

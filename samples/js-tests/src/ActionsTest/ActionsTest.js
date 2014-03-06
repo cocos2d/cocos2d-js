@@ -38,7 +38,7 @@ var ActionsTestScene = TestScene.extend({
     runThisTest:function () {
         actionsTestIdx = -1;
         this.addChild(nextActionsTest());
-        director.replaceScene(this);
+        director.runScene(this);
     }
 });
 
@@ -49,7 +49,7 @@ var ActionsDemo = BaseTestLayer.extend({
     _code:null,
 
     ctor:function () {
-        this._super(cc.c4b(0,0,0,255), cc.c4b(98,99,117,255) );
+        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255) );
 
         this._grossini = cc.Sprite.create(s_pathGrossini);
         this._tamara = cc.Sprite.create(s_pathSister1);
@@ -58,9 +58,12 @@ var ActionsDemo = BaseTestLayer.extend({
         this.addChild(this._tamara, SPRITE_TAMARA_TAG);
         this.addChild(this._kathia, SPRITE_KATHIA_TAG);
         var s = director.getWinSize();
-        this._grossini.setPosition(s.width / 2, s.height / 3);
-        this._tamara.setPosition(s.width / 2, 2 * s.height / 3);
-        this._kathia.setPosition(s.width / 2, s.height / 2);
+        this._grossini.x = s.width / 2;
+        this._grossini.y = s.height / 3;
+        this._tamara.x = s.width / 2;
+		this._tamara.y = 2 * s.height / 3;
+        this._kathia.x = s.width / 2;
+		this._kathia.y = s.height / 2;
 
     },
 
@@ -68,42 +71,54 @@ var ActionsDemo = BaseTestLayer.extend({
         var winSize = director.getWinSize();
 
         if (numberOfSprites === 0) {
-            this._tamara.setVisible(false);
-            this._kathia.setVisible(false);
-            this._grossini.setVisible(false);
+            this._tamara.visible = false;
+            this._kathia.visible = false;
+            this._grossini.visible = false;
         } else if (numberOfSprites == 1) {
-            this._tamara.setVisible(false);
-            this._kathia.setVisible(false);
-            this._grossini.setPosition(winSize.width / 2, winSize.height / 2);
+            this._tamara.visible = false;
+            this._kathia.visible = false;
+            this._grossini.x = winSize.width / 2;
+			this._grossini.y = winSize.height / 2;
         }
         else if (numberOfSprites == 2) {
-            this._kathia.setPosition(winSize.width / 3, winSize.height / 2);
-            this._tamara.setPosition(2 * winSize.width / 3, winSize.height / 2);
-            this._grossini.setVisible(false);
+            this._kathia.x = winSize.width / 3;
+			this._kathia.y = winSize.height / 2;
+            this._tamara.x = 2 * winSize.width / 3;
+			this._tamara.y = winSize.height / 2;
+            this._grossini.visible = false;
         }
         else if (numberOfSprites == 3) {
-            this._grossini.setPosition(winSize.width / 2, winSize.height / 2);
-            this._tamara.setPosition(winSize.width / 4, winSize.height / 2);
-            this._kathia.setPosition(3 * winSize.width / 4, winSize.height / 2);
+            this._grossini.x = winSize.width / 2;
+			this._grossini.y = winSize.height / 2;
+            this._tamara.x = winSize.width / 4;
+			this._tamara.y = winSize.height / 2;
+            this._kathia.x = 3 * winSize.width / 4;
+			this._kathia.y = winSize.height / 2;
         }
     },
     alignSpritesLeft:function (numberOfSprites) {
         var s = director.getWinSize();
 
         if (numberOfSprites == 1) {
-            this._tamara.setVisible(false);
-            this._kathia.setVisible(false);
-            this._grossini.setPosition(60, s.height / 2);
+            this._tamara.visible = false;
+            this._kathia.visible = false;
+            this._grossini.x = 60;
+			this._grossini.y = s.height / 2;
         }
         else if (numberOfSprites == 2) {
-            this._kathia.setPosition(60, s.height / 3);
-            this._tamara.setPosition(60, 2 * s.height / 3);
-            this._grossini.setVisible(false);
+            this._kathia.x = 60;
+			this._kathia.y = s.height / 3;
+            this._tamara.x = 60;
+			this._tamara.y = 2 * s.height / 3;
+            this._grossini.visible = false;
         }
         else if (numberOfSprites == 3) {
-            this._grossini.setPosition(60, s.height / 2);
-            this._tamara.setPosition(60, 2 * s.height / 3);
-            this._kathia.setPosition(60, s.height / 3);
+            this._grossini.x = 60;
+			this._grossini.y = s.height / 2;
+            this._tamara.x = 60;
+			this._tamara.y = 2 * s.height / 3;
+            this._kathia.x = 60;
+			this._kathia.y = s.height / 3;
         }
     },
     title:function () {
@@ -115,17 +130,17 @@ var ActionsDemo = BaseTestLayer.extend({
     onBackCallback:function (sender) {
         var s = new ActionsTestScene();
         s.addChild(previousActionsTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onRestartCallback:function (sender) {
         var s = new ActionsTestScene();
         s.addChild(restartActionsTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onNextCallback:function (sender) {
         var s = new ActionsTestScene();
         s.addChild(nextActionsTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     numberOfPendingTests:function() {
         return ( (arrayOfActionsTest.length-1) - actionsTestIdx );
@@ -142,25 +157,31 @@ var ActionsDemo = BaseTestLayer.extend({
 //
 //------------------------------------------------------------------
 var ActionManual = ActionsDemo.extend({
-    _code:"sprite.setPosition( 10,20 );\n" +
-        "sprite.setRotation( 90 );\n" +
-        "sprite.setScale( 2 );",
+    _code:"sprite.x = 10; sprite.y = 20;\n" +
+        "sprite.rotation = 90;\n" +
+        "sprite.scale = 2;",
 
     onEnter:function () {
         this._super();
 
-        this._tamara.setScaleX(2.5);
-        //window.tam = this._tamara;
-        this._tamara.setScaleY(-1.0);
-        this._tamara.setPosition(100, 70);
-        this._tamara.setOpacity(128);
+        this._tamara.attr({
+	        x: 100,
+	        y: 70,
+	        opacity: 128,
+	        scaleX: 2.5,
+	        scaleY: -1.0
+        });
 
-        this._grossini.setRotation(120);
-        this._grossini.setPosition(winSize.width / 2, winSize.height / 2);
-        this._grossini.setColor(cc.c3b(255, 0, 0));
+	    this._grossini.attr({
+		    x: winSize.width / 2,
+		    y: winSize.height / 2,
+		    rotation: 120,
+		    color: cc.color(255, 0, 0)
+	    });
 
-        this._kathia.setPosition(winSize.width - 100, winSize.height / 2);
-        this._kathia.setColor(cc.c3b(0, 0, 255));
+        this._kathia.x = winSize.width - 100;
+		this._kathia.y = winSize.height / 2;
+        this._kathia.color = cc.color(0, 0, 255);
     },
 
     title:function () {
@@ -181,16 +202,16 @@ var ActionManual = ActionsDemo.extend({
 
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._tamara.getScaleX() );
-        ret.push( this._tamara.getPosition() );
-        ret.push( this._tamara.getOpacity() );
+        ret.push( this._tamara.scaleX );
+        ret.push( cc.p(this._tamara.x, this._tamara.y) );
+        ret.push( this._tamara.opacity );
 
-        ret.push( this._grossini.getRotation() );
-        ret.push( this._grossini.getPosition() );
-        ret.push( this._grossini.getColor() );
+        ret.push( this._grossini.rotation );
+        ret.push( cc.p(this._grossini.x, this._grossini.y) );
+        ret.push( this._grossini.color );
 
-        ret.push( this._kathia.getPosition() );
-        ret.push( this._kathia.getColor() );
+        ret.push( cc.p(this._kathia.x, this._kathia.y) );
+        ret.push( this._kathia.color );
 
         return JSON.stringify(ret);
     }
@@ -237,9 +258,9 @@ var ActionMove = ActionsDemo.extend({
 
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._tamara.getPosition() );
-        ret.push( this._grossini.getPosition() );
-        ret.push( this._kathia.getPosition() );
+        ret.push( cc.p(this._tamara.x, this._tamara.y) );
+        ret.push( cc.p(this._grossini.x, this._grossini.y) );
+        ret.push( cc.p(this._kathia.x, this._kathia.y) );
 
         return JSON.stringify(ret);
     }
@@ -285,10 +306,10 @@ var ActionScale = ActionsDemo.extend({
 
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._tamara.getScale() );
-        ret.push( this._grossini.getScale() );
-        ret.push( this._kathia.getScaleX() );
-        ret.push( this._kathia.getScaleY() );
+        ret.push( this._tamara.scale );
+        ret.push( this._grossini.scale );
+        ret.push( this._kathia.scaleX );
+        ret.push( this._kathia.scaleY );
 
         return JSON.stringify(ret);
     }
@@ -333,9 +354,9 @@ var ActionRotate = ActionsDemo.extend({
 
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._tamara.getRotation() );
-        ret.push( this._grossini.getRotation() );
-        ret.push( this._kathia.getRotation() );
+        ret.push( this._tamara.rotation );
+        ret.push( this._grossini.rotation );
+        ret.push( this._kathia.rotation );
 
         return JSON.stringify(ret);
     }
@@ -363,9 +384,10 @@ var ActionRotateXY = ActionsDemo.extend({
 
         this._kathia.runAction(cc.Sequence.create(actionBy2, delay.clone(), actionBy2.reverse()));
 
-        if (sys.platform === 'browser' && !("opengl" in sys.capabilities)) {
+        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
             var label = cc.LabelTTF.create("Not support Actions on HTML5-canvas", "Times New Roman", 30);
-            label.setPosition(winSize.width / 2, winSize.height / 2 + 50);
+            label.x = winSize.width / 2;
+			label.y = winSize.height / 2 + 50;
             this.addChild(label, 100);
         }
     },
@@ -383,14 +405,14 @@ var ActionRotateXY = ActionsDemo.extend({
 
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._tamara.getRotationX().toFixed(2) );
-        ret.push( this._tamara.getRotationY().toFixed(2) );
+        ret.push( this._tamara.rotationX.toFixed(2) );
+        ret.push( this._tamara.rotationY.toFixed(2) );
 
-        ret.push( this._grossini.getRotationX() );
-        ret.push( this._grossini.getRotationY() );
+        ret.push( this._grossini.rotationX );
+        ret.push( this._grossini.rotationY );
 
-        ret.push( this._kathia.getRotationX() );
-        ret.push( this._kathia.getRotationY() );
+        ret.push( this._kathia.rotationX );
+        ret.push( this._kathia.rotationY );
 
         return JSON.stringify(ret);
     }
@@ -435,14 +457,14 @@ var ActionSkew = ActionsDemo.extend({
 
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._tamara.getSkewX().toFixed(2) );
-        ret.push( this._tamara.getSkewY().toFixed(2) );
+        ret.push( this._tamara.skewX.toFixed(2) );
+        ret.push( this._tamara.skewY.toFixed(2) );
 
-        ret.push( this._grossini.getSkewX() );
-        ret.push( this._grossini.getSkewX() );
+        ret.push( this._grossini.skewX );
+        ret.push( this._grossini.skewY );
 
-        ret.push( this._kathia.getSkewX() );
-        ret.push( this._kathia.getSkewY() );
+        ret.push( this._kathia.skewX );
+        ret.push( this._kathia.skewY );
 
         return JSON.stringify(ret);
     }
@@ -454,24 +476,33 @@ var ActionSkewRotateScale = ActionsDemo.extend({
 
         this.centerSprites(0);
 
-        var boxSize = cc.size(100.0, 100.0);
-        var box = cc.LayerColor.create(cc.c4b(255, 255, 0, 255));
-        box.setAnchorPoint(0, 0);
-        box.setPosition((winSize.width - boxSize.width) / 2, (winSize.height - boxSize.height) / 2);
-        box.setContentSize(boxSize);
+        var boxW = 100, boxH = 100;
+        var box = cc.LayerColor.create(cc.color(255, 255, 0, 255));
+        box.anchorX = 0;
+	    box.anchorY = 0;
+        box.x = (winSize.width - boxW) / 2;
+		box.y = (winSize.height - boxH) / 2;
+        box.width = boxW;
+        box.height = boxH;
 
         var markrside = 10.0;
-        var uL = cc.LayerColor.create(cc.c4b(255, 0, 0, 255));
+        var uL = cc.LayerColor.create(cc.color(255, 0, 0, 255));
         box.addChild(uL);
-        uL.setContentSize(markrside, markrside);
-        uL.setPosition(0, boxSize.height - markrside);
-        uL.setAnchorPoint(0, 0);
+        uL.width = markrside;
+        uL.height = markrside;
+        uL.x = 0;
+		uL.y = boxH - markrside;
+	    uL.anchorX = 0;
+	    uL.anchorY = 0;
 
-        var uR = cc.LayerColor.create(cc.c4b(0, 0, 255, 255));
+        var uR = cc.LayerColor.create(cc.color(0, 0, 255, 255));
         box.addChild(uR);
-        uR.setContentSize(markrside, markrside);
-        uR.setPosition(boxSize.width - markrside, boxSize.height - markrside);
-        uR.setAnchorPoint(0, 0);
+        uR.width = markrside;
+        uR.height = markrside;
+        uR.x = boxW - markrside;
+		uR.y = boxH - markrside;
+        uR.anchorX = 0;
+	    uR.anchorY = 0;
 
 
         this.addChild(box);
@@ -505,11 +536,11 @@ var ActionSkewRotateScale = ActionsDemo.extend({
 
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this.box.getSkewX() );
-        ret.push( this.box.getSkewY() );
-        ret.push( this.box.getRotation() );
-        ret.push( this.box.getScaleX().toFixed(2) );
-        ret.push( this.box.getScaleY().toFixed(2) );
+        ret.push( this.box.skewX );
+        ret.push( this.box.skewY );
+        ret.push( this.box.rotation );
+        ret.push( this.box.scaleX.toFixed(2) );
+        ret.push( this.box.scaleY.toFixed(2) );
 
         return JSON.stringify(ret);
     }
@@ -563,9 +594,9 @@ var ActionJump = ActionsDemo.extend({
 
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._tamara.getPosition() );
-        ret.push( this._grossini.getPosition() );
-        ret.push( this._kathia.getPosition() );
+        ret.push( cc.p(this._tamara.x, this._tamara.y) );
+        ret.push( cc.p(this._grossini.x, this._grossini.y) );
+        ret.push( cc.p(this._kathia.x, this._kathia.y) );
 
         return JSON.stringify(ret);
     }
@@ -604,7 +635,8 @@ var ActionBezier = ActionsDemo.extend({
             ));
 
         // sprite 2
-        this._tamara.setPosition(80, 160);
+        this._tamara.x = 80;
+		this._tamara.y = 160;
 
         // 3 and only 3 control points should be used for Bezier actions.
         var controlPoints2 = [ cc.p(100, s.height / 2),
@@ -614,7 +646,8 @@ var ActionBezier = ActionsDemo.extend({
 
         // // sprite 3
         var controlPoints3 = controlPoints2.slice();
-        this._kathia.setPosition(400, 160);
+        this._kathia.x = 400;
+		this._kathia.y = 160;
         var bezierTo2 = cc.BezierTo.create(2, controlPoints3);
 
         this._grossini.runAction(rep);
@@ -633,7 +666,7 @@ var ActionBezier = ActionsDemo.extend({
         this.scheduleOnce(this.checkControl2, 1.33333);
     },
     checkControl1:function(dt) {
-        this.control1 = this._grossini.getPosition();
+        this.control1 = cc.p(this._grossini.x, this._grossini.y);
     },
     verifyControl1:function(dt) {
         var x = Math.abs( this.control1.x - 77 - winSize.width/2 );
@@ -642,7 +675,7 @@ var ActionBezier = ActionsDemo.extend({
         return ( x < 5 && y < 5);
     },
     checkControl2:function(dt) {
-        this.control2 = this._grossini.getPosition();
+        this.control2 = cc.p(this._grossini.x, this._grossini.y);
     },
     verifyControl2:function(dt) {
         var x = Math.abs( this.control2.x - 222 - winSize.width/2 );
@@ -662,7 +695,7 @@ var ActionBezier = ActionsDemo.extend({
         var ret = [];
         ret.push( this.verifyControl1() );
         ret.push( this.verifyControl2() );
-        ret.push( this._grossini.getPosition() );
+        ret.push( cc.p(this._grossini.x, this._grossini.y) );
 
         return JSON.stringify(ret);
     }
@@ -685,7 +718,8 @@ var ActionBezierToCopy = ActionsDemo.extend({
         this.centerSprites(2);
 
         // sprite 1
-        this._tamara.setPosition(80, 160);
+        this._tamara.x = 80;
+		this._tamara.y = 160;
 
         // 3 and only 3 control points should be used for Bezier actions.
         var controlPoints2 = [ cc.p(100, winSize.height / 2),
@@ -694,7 +728,8 @@ var ActionBezierToCopy = ActionsDemo.extend({
         var bezierTo1 = cc.BezierTo.create(2, controlPoints2);
 
         // sprite 2
-        this._kathia.setPosition(80, 160);
+        this._kathia.x = 80;
+		this._kathia.y = 160;
         var bezierTo2 = bezierTo1.clone();
 
         this._tamara.runAction(bezierTo1);
@@ -721,7 +756,8 @@ var Issue1008 = ActionsDemo.extend({
 
         // sprite 1
 
-        this._grossini.setPosition(428, 279);
+        this._grossini.x = 428;
+		this._grossini.y = 279;
 
         // 3 and only 3 control points should be used for Bezier actions.
         var controlPoints1 = [ cc.p(428, 279), cc.p(100, 100), cc.p(100, 100)];
@@ -739,7 +775,7 @@ var Issue1008 = ActionsDemo.extend({
 
     },
     onTrace:function (sender) {
-        var pos = sender.getPosition();
+        var pos = cc.p(sender.x, sender.y);
         cc.log("Position x: " + pos.x + ' y:' + pos.y);
         if (Math.round(pos.x) != 428 || Math.round(pos.y) != 279)
             this.log("Error: Issue 1008 is still open");
@@ -794,7 +830,7 @@ var ActionBlink = ActionsDemo.extend({
         this.scheduleOnce(this.checkControl1,0.1);
     },
     checkControl1:function(dt){
-        this.control1 = this._kathia.isVisible();
+        this.control1 = this._kathia.visible;
     },
     getExpectedResult:function() {
         var ret = [false,true,true];
@@ -803,8 +839,8 @@ var ActionBlink = ActionsDemo.extend({
     getCurrentResult:function() {
         var ret = [];
         ret.push( this.control1 );
-        ret.push( this._tamara.isVisible());
-        ret.push( this._kathia.isVisible());
+        ret.push( this._tamara.visible);
+        ret.push( this._kathia.visible);
         return JSON.stringify(ret);
     }
 });
@@ -821,7 +857,7 @@ var ActionFade = ActionsDemo.extend({
         this._super();
         this.centerSprites(2);
         var delay = cc.DelayTime.create(0.25);
-        this._tamara.setOpacity(0);
+        this._tamara.opacity = 0;
         var action1 = cc.FadeIn.create(1.0);
         var action1Back = action1.reverse();
 
@@ -846,8 +882,8 @@ var ActionFade = ActionsDemo.extend({
     },
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._tamara.getOpacity() );
-        ret.push( this._kathia.getOpacity());
+        ret.push( this._tamara.opacity );
+        ret.push( this._kathia.opacity);
         return JSON.stringify(ret);
     }
 
@@ -887,8 +923,8 @@ var ActionTint = ActionsDemo.extend({
     },
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._tamara.getColor() );
-        ret.push( this._kathia.getColor());
+        ret.push( this._tamara.color );
+        ret.push( this._kathia.color );
         return JSON.stringify(ret);
     }
 
@@ -983,8 +1019,8 @@ var ActionSequence = ActionsDemo.extend({
     },
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._grossini.getPosition() );
-        ret.push( this._grossini.getRotation() );
+        ret.push( cc.p(this._grossini.x, this._grossini.y) );
+        ret.push( this._grossini.rotation );
         return JSON.stringify(ret);
     }
 });
@@ -997,7 +1033,7 @@ var ActionSequence2 = ActionsDemo.extend({
     onEnter:function () {
         this._super();
         this.centerSprites(1);
-        this._grossini.setVisible(false);
+        this._grossini.visible = false;
         var action = cc.Sequence.create(
             cc.Place.create(cc.p(200, 200)),
             cc.Show.create(),
@@ -1013,7 +1049,8 @@ var ActionSequence2 = ActionsDemo.extend({
     onCallback1:function () {
         var s = director.getWinSize();
         var label = cc.LabelTTF.create("callback 1 called", "Marker Felt", 16);
-        label.setPosition(s.width / 4 * 1, s.height / 2);
+        label.x = s.width / 4 * 1;
+		label.y = s.height / 2;
 
         this.addChild(label);
         this.called1 = true;
@@ -1021,7 +1058,8 @@ var ActionSequence2 = ActionsDemo.extend({
     onCallback2:function () {
         var s = director.getWinSize();
         var label = cc.LabelTTF.create("callback 2 called", "Marker Felt", 16);
-        label.setPosition(s.width / 4 * 2, s.height / 2);
+        label.x = s.width / 4 * 2;
+		label.y = s.height / 2;
 
         this.addChild(label);
         this.called2 = true;
@@ -1029,7 +1067,8 @@ var ActionSequence2 = ActionsDemo.extend({
     onCallback3:function () {
         var s = director.getWinSize();
         var label = cc.LabelTTF.create("callback 3 called", "Marker Felt", 16);
-        label.setPosition(s.width / 4 * 3, s.height / 2);
+        label.x = s.width / 4 * 3;
+		label.y = s.height / 2;
 
         this.addChild(label);
         this.called3 = true;
@@ -1050,8 +1089,8 @@ var ActionSequence2 = ActionsDemo.extend({
         ret.push( this.called1 );
         ret.push( this.called2 );
         ret.push( this.called3 );
-        ret.push( this._grossini.isVisible() );
-        ret.push( this._grossini.getPosition() );
+        ret.push( this._grossini.visible );
+        ret.push( cc.p(this._grossini.x, this._grossini.y) );
         return JSON.stringify(ret);
     }
 });
@@ -1094,14 +1133,16 @@ var ActionCallFunc1 = ActionsDemo.extend({
     onCallback1:function (nodeExecutingAction, value) {
         var s = director.getWinSize();
         var label = cc.LabelTTF.create("callback 1 called", "Marker Felt", 16);
-        label.setPosition(s.width / 4 * 1, s.height / 2);
+        label.x = s.width / 4 * 1;
+		label.y = s.height / 2;
         this.addChild(label);
         this.control1 = true;
     },
     onCallback2:function (nodeExecutingAction, value) {
         var s = director.getWinSize();
         var label = cc.LabelTTF.create("callback 2 called", "Marker Felt", 16);
-        label.setPosition(s.width / 4 * 2, s.height / 2);
+        label.x = s.width / 4 * 2;
+		label.y = s.height / 2;
 
         this.addChild(label);
         this.control2 = true;
@@ -1109,7 +1150,8 @@ var ActionCallFunc1 = ActionsDemo.extend({
     onCallback3:function (nodeExecutingAction, value) {
         var s = director.getWinSize();
         var label = cc.LabelTTF.create("callback 3 called:" + value, "Marker Felt", 16);
-        label.setPosition(s.width / 4 * 3, s.height / 2);
+        label.x = s.width / 4 * 3;
+		label.y = s.height / 2;
         this.addChild(label);
         this.control3 = true;
     },
@@ -1252,8 +1294,8 @@ var ActionSpawn = ActionsDemo.extend({
     },
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._grossini.getPosition() );
-        ret.push( this._grossini.getRotation() );
+        ret.push( cc.p(this._grossini.x, this._grossini.y) );
+        ret.push( this._grossini.rotation );
         return JSON.stringify(ret);
     }
 });
@@ -1293,7 +1335,7 @@ var ActionRepeatForever = ActionsDemo.extend({
     },
     getCurrentResult:function() {
         var ret = [];
-        var r = this._grossini.getRotation();
+        var r = this._grossini.rotation;
         var expected = 900;
         var error = 15;
         ret.push( r < expected+error && r > expected-error );
@@ -1336,8 +1378,8 @@ var ActionRotateToRepeat = ActionsDemo.extend({
     },
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._kathia.getRotation() );
-        var r = this._tamara.getRotation();
+        ret.push( this._kathia.rotation );
+        var r = this._tamara.rotation;
         var expected = 90;
         var error = 15;
         ret.push( r < expected+error && r > expected-error );
@@ -1399,7 +1441,7 @@ var ActionReverse = ActionsDemo.extend({
         this.scheduleOnce(this.checkControl1,2.1);
     },
     checkControl1:function(dt) {
-        this.control1 = this._grossini.getPosition();
+        this.control1 = cc.p(this._grossini.x, this._grossini.y);
     },
     getExpectedResult:function() {
         var ret = [{"x":360,"y":winSize.height/2},{"x":60,"y":winSize.height/2}];
@@ -1408,7 +1450,7 @@ var ActionReverse = ActionsDemo.extend({
     getCurrentResult:function() {
         var ret = [];
         ret.push( this.control1 );
-        ret.push( this._grossini.getPosition() );
+        ret.push( cc.p(this._grossini.x, this._grossini.y) );
         return JSON.stringify(ret);
     }
 
@@ -1444,7 +1486,7 @@ var ActionDelayTime = ActionsDemo.extend({
     },
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._grossini.getPosition() );
+        ret.push( cc.p(this._grossini.x, this._grossini.y) );
         return JSON.stringify(ret);
     }
 });
@@ -1543,8 +1585,8 @@ var ActionRepeat = ActionsDemo.extend({
     },
     getCurrentResult:function() {
         var ret = [];
-        ret.push( this._kathia.getPosition() );
-        ret.push( this._tamara.getPosition() );
+        ret.push( cc.p(this._kathia.x, this._kathia.y) );
+        ret.push( cc.p(this._tamara.x, this._tamara.y) );
         return JSON.stringify(ret);
     }
 
@@ -1602,7 +1644,8 @@ var ActionFollow = ActionsDemo.extend({
         this.centerSprites(1);
         var s = director.getWinSize();
 
-        this._grossini.setPosition(-(s.width / 2), s.height / 2);
+        this._grossini.x = -(s.width / 2);
+		this._grossini.y = s.height / 2;
         var move = cc.MoveBy.create(2, cc.p(s.width * 3, 0));
         var move_back = move.reverse();
         var seq = cc.Sequence.create(move, move_back);
@@ -1657,7 +1700,8 @@ var ActionCardinalSpline = ActionsDemo.extend({
         var reverse1 = action1.reverse();
         var seq = cc.Sequence.create(action1, delay, reverse1, delay.clone() );
 
-        this._tamara.setPosition(50, 50);
+        this._tamara.x = 50;
+		this._tamara.y = 50;
         this._tamara.runAction(seq);
 
         //
@@ -1669,7 +1713,8 @@ var ActionCardinalSpline = ActionsDemo.extend({
         var reverse2 = action2.reverse();
         var seq2 = cc.Sequence.create(action2, delay.clone(), reverse2, delay.clone());
 
-        this._kathia.setPosition(winSize.width / 2, 50);
+        this._kathia.x = winSize.width / 2;
+		this._kathia.y = 50;
         this._kathia.runAction(seq2);
 
         this._array = array;
@@ -1680,32 +1725,32 @@ var ActionCardinalSpline = ActionsDemo.extend({
         // Not supported yet on cocos2d-iphone / cocos2d-x + JSB
         this._super();
 
-        var context = ctx || cc.renderContext;
+        var context = ctx || cc._renderContext;
         var winSize = director.getWinSize();
 
-        if(!("opengl" in sys.capabilities)){
-            var locScaleX = cc.EGLView.getInstance().getScaleX(), locScaleY = cc.EGLView.getInstance().getScaleY();
+        if(!("opengl" in cc.sys.capabilities)){
+            var locScaleX = cc.view.getScaleX(), locScaleY = cc.view.getScaleY();
             var apPoint = this.getAnchorPointInPoints();
             // move to 50,50 since the "by" path will start at 50,50
             context.save();
             context.translate(50 * locScaleX , -50 * locScaleY);
-            cc.drawingUtil.drawCardinalSpline(this._array, 0, 100);
+            cc._drawingUtil.drawCardinalSpline(this._array, 0, 100);
             context.restore();
 
             context.save();
             context.translate((winSize.width * locScaleX) * 0.5 , -50 * locScaleY);
-            cc.drawingUtil.drawCardinalSpline(this._array, 1, 100);
+            cc._drawingUtil.drawCardinalSpline(this._array, 1, 100);
             context.restore();
         } else {
             // move to 50,50 since the "by" path will start at 50,50
             cc.kmGLPushMatrix();
             cc.kmGLTranslatef(50, 50, 0);
-            cc.drawingUtil.drawCardinalSpline(this._array, 0, 100);
+            cc._drawingUtil.drawCardinalSpline(this._array, 0, 100);
             cc.kmGLPopMatrix();
 
             cc.kmGLPushMatrix();
             cc.kmGLTranslatef(winSize.width/2, 50, 0);
-            cc.drawingUtil.drawCardinalSpline(this._array, 1, 100);
+            cc._drawingUtil.drawCardinalSpline(this._array, 1, 100);
             cc.kmGLPopMatrix();
         }
     },
@@ -1725,7 +1770,7 @@ var ActionCardinalSpline = ActionsDemo.extend({
         this.scheduleOnce(this.checkControl3, 1.5);
     },
     checkControl1:function(dt) {
-        this.control1 = this._tamara.getPosition();
+        this.control1 = cc.p(this._tamara.x, this._tamara.y);
     },
     verifyControl1:function(dt) {
         var x = Math.abs( 50 + winSize.width/2 - 30 - this.control1.x);
@@ -1734,7 +1779,7 @@ var ActionCardinalSpline = ActionsDemo.extend({
         return ( x < 5 && y < 5);
     },
     checkControl2:function(dt) {
-        this.control2 = this._tamara.getPosition();
+        this.control2 = cc.p(this._tamara.x, this._tamara.y);
     },
     verifyControl2:function(dt) {
         var x = Math.abs( 50 + winSize.width/2 - 30 - this.control2.x );
@@ -1743,7 +1788,7 @@ var ActionCardinalSpline = ActionsDemo.extend({
         return ( x < 5 && y < 5);
     },
     checkControl3:function(dt) {
-        this.control3 = this._tamara.getPosition();
+        this.control3 = cc.p(this._tamara.x, this._tamara.y);
     },
     verifyControl3:function(dt) {
         var x = Math.abs( 50 - this.control3.x );
@@ -1765,7 +1810,7 @@ var ActionCardinalSpline = ActionsDemo.extend({
         ret.push( this.verifyControl1() );
         ret.push( this.verifyControl2() );
         ret.push( this.verifyControl3() );
-        ret.push( this._tamara.getPosition() );
+        ret.push( cc.p(this._tamara.x, this._tamara.y) );
 
         return JSON.stringify(ret);
     }
@@ -1802,7 +1847,8 @@ var ActionCatmullRom = ActionsDemo.extend({
         // startPosition can be any coordinate, but since the movement
         // is relative to the Catmull Rom curve, it is better to start with (0,0).
         //
-        this._tamara.setPosition(50, 50);
+        this._tamara.x = 50;
+		this._tamara.y = 50;
 
         var array = [
             cc.p(0, 0),
@@ -1847,25 +1893,25 @@ var ActionCatmullRom = ActionsDemo.extend({
         // Draw is only supported in cocos2d-html5.
         // Not supported yet on cocos2d-iphone / cocos2d-x + JSB
         this._super();
-        var context = ctx || cc.renderContext;
+        var context = ctx || cc._renderContext;
 
-        if(!("opengl" in sys.capabilities)){
+        if(!("opengl" in cc.sys.capabilities)){
             var eglViewer = cc.EGLView.getInstance();
             // move to 50,50 since the "by" path will start at 50,50
             context.save();
             context.translate(50 * eglViewer.getScaleX(), - 50 * eglViewer.getScaleY());
-            cc.drawingUtil.drawCatmullRom(this._array1, 50);
+            cc._drawingUtil.drawCatmullRom(this._array1, 50);
             context.restore();
 
-            cc.drawingUtil.drawCatmullRom(this._array2, 50);
+            cc._drawingUtil.drawCatmullRom(this._array2, 50);
         } else {
             // move to 50,50 since the "by" path will start at 50,50
             cc.kmGLPushMatrix();
             cc.kmGLTranslatef(50, 50, 0);
-            cc.drawingUtil.drawCatmullRom(this._array1, 50);
+            cc._drawingUtil.drawCatmullRom(this._array1, 50);
             cc.kmGLPopMatrix();
 
-            cc.drawingUtil.drawCatmullRom(this._array2,50);
+            cc._drawingUtil.drawCatmullRom(this._array2,50);
         }
     },
     subtitle:function () {
@@ -1884,7 +1930,7 @@ var ActionCatmullRom = ActionsDemo.extend({
         this.scheduleOnce(this.checkControl3, 3 / 4 * 2);
     },
     checkControl1:function(dt) {
-        this.control1 = this._kathia.getPosition();
+        this.control1 = cc.p(this._kathia.x, this._kathia.y);
     },
     verifyControl1:function(dt) {
         var x = Math.abs( winSize.width/2 - this.control1.x);
@@ -1893,7 +1939,7 @@ var ActionCatmullRom = ActionsDemo.extend({
         return ( x < 5 && y < 5);
     },
     checkControl2:function(dt) {
-        this.control2 = this._kathia.getPosition();
+        this.control2 = cc.p(this._kathia.x, this._kathia.y);
     },
     verifyControl2:function(dt) {
         var x = Math.abs( winSize.width - 80 - this.control2.x );
@@ -1902,7 +1948,7 @@ var ActionCatmullRom = ActionsDemo.extend({
         return ( x < 5 && y < 5);
     },
     checkControl3:function(dt) {
-        this.control3 = this._kathia.getPosition();
+        this.control3 = cc.p(this._kathia.x, this._kathia.y);
     },
     verifyControl3:function(dt) {
         var x = Math.abs( winSize.width - 80 - this.control3.x );
@@ -1924,7 +1970,7 @@ var ActionCatmullRom = ActionsDemo.extend({
         ret.push( this.verifyControl1() );
         ret.push( this.verifyControl2() );
         ret.push( this.verifyControl3() );
-        ret.push( this._kathia.getPosition() );
+        ret.push( cc.p(this._kathia.x, this._kathia.y) );
 
         return JSON.stringify(ret);
     }
@@ -2001,10 +2047,11 @@ var ActionStackableMove = ActionsDemo.extend({
         this._super();
         this.centerSprites(1);
 
-        this._grossini.setPosition(40, winSize.height / 2);
+        this._grossini.x = 40;
+		this._grossini.y = winSize.height / 2;
 
         // shake
-        var move = cc.MoveBy.create(0.2, cc._p(0,50));
+        var move = cc.MoveBy.create(0.2, cc.p(0,50));
         var move_back = move.reverse();
         var delay = cc.DelayTime.create(0.25);
         var move_seq = cc.Sequence.create( move, move_back );
@@ -2012,7 +2059,7 @@ var ActionStackableMove = ActionsDemo.extend({
         this._grossini.runAction( move_rep );
 
         // move
-        var action = cc.MoveBy.create(2, cc._p(winSize.width - 80, 0));
+        var action = cc.MoveBy.create(2, cc.p(winSize.width - 80, 0));
         var back = action.reverse();
         var seq = cc.Sequence.create(action, back);
         var repeat = cc.RepeatForever.create(seq);
@@ -2037,12 +2084,12 @@ var ActionStackableMove = ActionsDemo.extend({
 
     getCurrentResult:function() {
         var ret = [];
-        var p = this._grossini.getPosition();
+        var x = this._grossini.x, y = this._grossini.y;
         var error = 10;
         var expected_x = 40 + 0.2 * (winSize.width-80) / 2;
         var expected_y =winSize.height/2 + 50;
-        var ret_x = p.x < expected_x+error && p.x > expected_x-error;
-        var ret_y = p.y < expected_y+error && p.y > expected_y-error;
+        var ret_x = x < expected_x+error && x > expected_x-error;
+        var ret_y = y < expected_y+error && y > expected_y-error;
         ret.push( ret_x );
         ret.push( ret_y );
         return JSON.stringify(ret);
@@ -2059,17 +2106,18 @@ var ActionStackableJump = ActionsDemo.extend({
         this._super();
         this.centerSprites(1);
 
-        this._grossini.setPosition(40, winSize.height / 2);
+        this._grossini.x = 40;
+		this._grossini.y = winSize.height / 2;
 
         // shake
-        var move = cc.MoveBy.create(0.05, cc._p(8, 8));
+        var move = cc.MoveBy.create(0.05, cc.p(8, 8));
         var move_back = move.reverse();
         var move_seq = cc.Sequence.create(move, move_back);
         var move_rep = cc.RepeatForever.create(move_seq);
         this._grossini.runAction(move_rep);
 
         // jump
-        var action = cc.JumpBy.create(2, cc._p(winSize.width - 80, 0), 90, 5);
+        var action = cc.JumpBy.create(2, cc.p(winSize.width - 80, 0), 90, 5);
         var back = action.reverse();
         var seq = cc.Sequence.create(action, back);
         var repeat = cc.RepeatForever.create(seq);
@@ -2095,10 +2143,11 @@ var ActionStackableBezier = ActionsDemo.extend({
         this._super();
         this.centerSprites(1);
 
-        this._grossini.setPosition(40, winSize.height / 2);
+        this._grossini.x = 40;
+		this._grossini.y = winSize.height / 2;
 
         // shake
-        var move = cc.MoveBy.create(0.05, cc._p(8, 8));
+        var move = cc.MoveBy.create(0.05, cc.p(8, 8));
         var move_back = move.reverse();
         var move_seq = cc.Sequence.create(move, move_back);
         var move_rep = cc.RepeatForever.create(move_seq);
@@ -2134,10 +2183,11 @@ var ActionStackableCatmullRom = ActionsDemo.extend({
         this._super();
         this.centerSprites(1);
 
-        this._grossini.setPosition(40, 40);
+        this._grossini.x = 40;
+		this._grossini.y = 40;
 
         // shake
-        var move = cc.MoveBy.create(0.05, cc._p(8, 8));
+        var move = cc.MoveBy.create(0.05, cc.p(8, 8));
         var move_back = move.reverse();
         var move_seq = cc.Sequence.create(move, move_back);
         var move_rep = cc.RepeatForever.create(move_seq);
@@ -2179,10 +2229,11 @@ var ActionStackableCardinalSpline = ActionsDemo.extend({
         this._super();
         this.centerSprites(1);
 
-        this._grossini.setPosition(40, 40);
+        this._grossini.x = 40;
+		this._grossini.y = 40;
 
         // shake
-        var move = cc.MoveBy.create(0.05, cc._p(8, 8));
+        var move = cc.MoveBy.create(0.05, cc.p(8, 8));
         var move_back = move.reverse();
         var move_seq = cc.Sequence.create(move, move_back);
         var move_rep = cc.RepeatForever.create(move_seq);
@@ -2278,7 +2329,8 @@ var Issue1305 = ActionsDemo.extend({
         cc.log("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
     },
     onAddSprite:function (dt) {
-        this._spriteTmp.setPosition(250, 250);
+        this._spriteTmp.x = 250;
+		this._spriteTmp.y = 250;
         this.addChild(this._spriteTmp);
     },
     title:function () {
@@ -2300,7 +2352,8 @@ var Issue1305_2 = ActionsDemo.extend({
         this.centerSprites(0);
 
         var spr = cc.Sprite.create(s_pathGrossini);
-        spr.setPosition(200, 200);
+        spr.x = 200;
+		spr.y = 200;
         this.addChild(spr);
 
         var act1 = cc.MoveBy.create(2, cc.p(0, 100));
@@ -2349,7 +2402,8 @@ var Issue1288 = ActionsDemo.extend({
         this.centerSprites(0);
 
         var spr = cc.Sprite.create(s_pathGrossini);
-        spr.setPosition(100, 100);
+        spr.x = 100;
+		spr.y = 100;
         this.addChild(spr);
 
         var act1 = cc.MoveBy.create(0.5, cc.p(100, 0));
@@ -2378,7 +2432,8 @@ var Issue1288_2 = ActionsDemo.extend({
         this.centerSprites(0);
 
         var spr = cc.Sprite.create(s_pathGrossini);
-        spr.setPosition(100, 100);
+        spr.x = 100;
+		spr.y = 100;
         this.addChild(spr);
 
         var act1 = cc.MoveBy.create(0.5, cc.p(100, 0));
@@ -2403,7 +2458,8 @@ var Issue1327 = ActionsDemo.extend({
         this.centerSprites(0);
 
         var spr = cc.Sprite.create(s_pathGrossini);
-        spr.setPosition(100, 100);
+        spr.x = 100;
+        spr.y = 100;
         this.addChild(spr);
 
         var act1 = cc.CallFunc.create(this.onLogSprRotation);
@@ -2420,7 +2476,7 @@ var Issue1327 = ActionsDemo.extend({
         spr.runAction(actF);
     },
     onLogSprRotation:function (pSender) {
-        cc.log(pSender.getRotation());
+        cc.log(pSender.rotation);
     },
     title:function () {
         return "Issue 1327";
@@ -2499,8 +2555,9 @@ var Issue1446 = ActionsDemo.extend({
         this.centerSprites(0);
         var label = this.label = cc.LabelTTF.create("Hello World", "Arial", 64);
 
-        label.setPosition(winSize.width / 2, winSize.height / 2);
-        label.setOpacity(0);
+        label.x = winSize.width / 2;
+	    label.y = winSize.height / 2;
+        label.opacity = 0;
 
         this.addChild(label);
 
@@ -2580,7 +2637,7 @@ var arrayOfActionsTest = [
     Issue1446
 ];
 
-if("opengl" in sys.capabilities){
+if("opengl" in cc.sys.capabilities){
     arrayOfActionsTest.push(ActionOrbit);
 }
 
