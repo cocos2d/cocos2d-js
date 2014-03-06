@@ -731,7 +731,6 @@ cc.game = {
         self._initConfig(function(config){
             var CONFIG_KEY = self.CONFIG_KEY, engineDir = config[CONFIG_KEY.engineDir], loader = cc.loader;
             self._prepareCalled = true;
-                         cc.log(config[CONFIG_KEY.jsList]);
             loader.loadJsWithImg("", config[CONFIG_KEY.jsList] || [], function(err){
                 if(err) throw err;
                 self._prepared = true;
