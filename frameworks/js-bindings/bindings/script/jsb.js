@@ -16,5 +16,5 @@ require('jsb_chipmunk.js');
 require('jsb_opengl_constants.js');
 require('jsb_opengl.js');
 require('jsb_cocosbuilder.js');
-require('jsb_sys.js');
 require('jsb_deprecated.js');
+require('jsb_loaders.js');

@@ -6,7 +6,7 @@
     "frameRate" : 60,
     "id" : "gameCanvas",
     "renderMode" : 2,
-    "engineDir":"../../../../cocos2d-html5",
+    "engineDir":"frameworks/cocos2d-html5",
 
     "modules" : ["menus"],
 
