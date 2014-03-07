@@ -66,7 +66,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
     ScriptingCore::getInstance()->runScript("jsb_boot.js");
-	ScriptingCore::getInstance()->runScript("src/main.js");
+	ScriptingCore::getInstance()->runScript("main.js");
 #endif
     
     return true;
