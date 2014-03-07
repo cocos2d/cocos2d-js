@@ -16,6 +16,7 @@
 		1A67683A180E9C1E0076BC67 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB58180E9ACB004C840B /* libcocos2dx-extensions iOS.a */; };
 		1A67683B180E9C1E0076BC67 /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB5E180E9ACB004C840B /* libCocosDenshion iOS.a */; };
 		1A82F5FB169AC92500C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F5FA169AC92500C4B13A /* libsqlite3.dylib */; };
+		1AC22EDE18CA0E11007112B9 /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A081B18C9DF05005C6854 /* project.json */; };
 		1AC34A1618C99CCC007834C9 /* jsb_boot.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC34A0D18C99CA5007834C9 /* jsb_boot.js */; };
 		1AC34A1718C99CCC007834C9 /* jsb_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC34A0E18C99CA5007834C9 /* jsb_create_apis.js */; };
 		1AC34A1818C99CCC007834C9 /* jsb_loaders.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC34A0F18C99CA5007834C9 /* jsb_loaders.js */; };
@@ -760,6 +761,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AC22EDE18CA0E11007112B9 /* project.json in Resources */,
 				1AD7E0A918C9DBE3004817A6 /* main.js in Resources */,
 				1AD7E0A118C9DB84004817A6 /* jsb_boot.js in Resources */,
 				1AD7E0A218C9DB84004817A6 /* jsb_create_apis.js in Resources */,
