@@ -5,22 +5,6 @@
 var cc = cc || {};
 var window = window || this;
 
-
-/**
- * Common getter setter configuration function
- * @function
- * @param {Object}   proto      A class prototype or an object to config
- * @param {String}   prop       Property name
- * @param {function} getter     Getter function for the property
- * @param {function} setter     Setter function for the property
- */
-cc.defineGetterSetter = function (proto, prop, getter, setter){
-    var desc = { enumerable: false, configurable: true };
-    getter && (desc.get = getter);
-    setter && (desc.set = setter);
-    Object.defineProperty(proto, prop, desc);
-};
-
 /**
  * Iterate over an object or an array, executing a function for each matched element.
  * @param {object|array} obj
@@ -40,6 +24,20 @@ cc.each = function(obj, iterator, context){
     }
 };
 
+/**
+ * Common getter setter configuration function
+ * @function
+ * @param {Object}   proto      A class prototype or an object to config
+ * @param {String}   prop       Property name
+ * @param {function} getter     Getter function for the property
+ * @param {function} setter     Setter function for the property
+ */
+cc.defineGetterSetter = function (proto, prop, getter, setter){
+    var desc = { enumerable: false, configurable: true };
+    getter && (desc.get = getter);
+    setter && (desc.set = setter);
+    Object.defineProperty(proto, prop, desc);
+};
 
 //+++++++++++++++++++++++++something about async begin+++++++++++++++++++++++++++++++
 cc.async = {

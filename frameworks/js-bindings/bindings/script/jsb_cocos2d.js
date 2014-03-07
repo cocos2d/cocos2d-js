@@ -2,10 +2,6 @@
 // cocos2d constants
 //
 
-var cc = cc || {};
-var window = window || this;
-
-
 cc.TARGET_PLATFORM = {
     WINDOWS:0,
     LINUX:1,
@@ -908,6 +904,12 @@ cc.eventManager.addListener = function(listener, nodeOrPriority) {
         cc.eventManager.addEventListenerWithSceneGraphPriority(listener, nodeOrPriority);
     }
 };
+
+cc.eventManager.dispatchCustomEvent = function (eventName, optionalUserData) {
+    var ev = new cc.EventCustom(eventName);
+    ev.setUserData(optionalUserData);
+    this.dispatchEvent(ev);
+}
 
 cc.EventCustom.prototype.setUserData = function(userData) {
     this._userData = userData;

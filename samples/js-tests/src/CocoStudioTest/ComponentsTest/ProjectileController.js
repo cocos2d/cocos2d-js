@@ -33,21 +33,21 @@ var ProjectileController = ccs.ComController.extend({
 
     onEnter: function () {
         var winSize = cc.director.getWinSize();
-        this._owner.x = 30;
-	    this._owner.y = winSize.height / 2;
-        this._owner.tag = 3;
-        var com = this._owner.parent.getComponent("SceneController");
-        com.getProjectiles().push(this._owner);
+        this.getOwner().x = 30;
+	    this.getOwner().y = winSize.height / 2;
+        this.getOwner().tag = 3;
+        var com = this.getOwner().parent.getComponent("SceneController");
+        com.getProjectiles().push(this.getOwner());
     },
 
     onExit: function () {
     },
 
     update: function (dt) {
-        var com = this._owner.parent.getComponent("SceneController");
+        var com = this.getOwner().parent.getComponent("SceneController");
         var targets = com.getTargets();
 
-        var projectile = this._owner;
+        var projectile = this.getOwner();
         var projectileRect = cc.rect(projectile.x - (projectile.width / 2), projectile.y - (projectile.height / 2), projectile.width, projectile.height);
 
         var targetsToDelete = [];
@@ -76,39 +76,39 @@ var ProjectileController = ccs.ComController.extend({
     move: function (x, y) {
         var winSize = cc.director.getWinSize();
 
-        var offX = x - this._owner.x;
-        var offY = y - this._owner.y;
+        var offX = x - this.getOwner().x;
+        var offY = y - this.getOwner().y;
 
         if (offX <= 0) return;
 
         // Determine where we wish to shoot the projectile to
-        var realX = winSize.width + (this._owner.width / 2);
+        var realX = winSize.width + (this.getOwner().width / 2);
         var ratio = offY / offX;
-        var realY = (realX * ratio) + this._owner.y;
+        var realY = (realX * ratio) + this.getOwner().y;
         var realDest = cc.p(realX, realY);
 
         // Determine the length of how far we're shooting
-        var offRealX = realX - this._owner.x;
-        var offRealY = realY - this._owner.y;
+        var offRealX = realX - this.getOwner().x;
+        var offRealY = realY - this.getOwner().y;
         var length = Math.sqrt((offRealX * offRealX) + (offRealY * offRealY));
         var velocity = 480 / 1; // 480pixels/1sec
         var realMoveDuration = length / velocity;
 
         // Move projectile to actual endpoint
-        this._owner.runAction(cc.Sequence.create(
+        this.getOwner().runAction(cc.Sequence.create(
             cc.MoveTo.create(realMoveDuration, realDest),
             cc.CallFunc.create(function () {
                 var sceneController = this.getOwner().parent.getComponent("SceneController");
-                sceneController.spriteMoveFinished(this._owner);
+                sceneController.spriteMoveFinished(this.getOwner());
             }, this)));
 
     },
 
     die: function () {
-        var com = this._owner.parent.getComponent("SceneController");
+        var com = this.getOwner().parent.getComponent("SceneController");
         var projectiles = com.getProjectiles();
-        cc.arrayRemoveObject(projectiles, this._owner);
-        this._owner.removeFromParent(true);
+        cc.arrayRemoveObject(projectiles, this.getOwner());
+        this.getOwner().removeFromParent(true);
     }
 
 });
