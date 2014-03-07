@@ -41,14 +41,6 @@ var MenuLayerMainMenu = cc.Layer.extend({
     ctor:function () {
         this._super();
 
-        this._touchListener = cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            swallowTouches: true,
-            onTouchBegan:function () {
-                return true;
-            }
-        });
-
         // Font Item
         var spriteNormal = cc.Sprite.create(s_menuItem, cc.rect(0,23*2,115,23));
         var spriteSelected = cc.Sprite.create(s_menuItem, cc.rect(0,23,115,23));
@@ -150,6 +142,23 @@ var MenuLayerMainMenu = cc.Layer.extend({
         this.parent.switchTo(2);
     },
 
+	onEnter: function() {
+		this._super();
+		this._touchListener = cc.EventListener.create({
+			event: cc.EventListener.TOUCH_ONE_BY_ONE,
+			swallowTouches: true,
+			onTouchBegan:function () {
+				return true;
+			}
+		});
+		cc.eventManager.addListener(this._touchListener, 1);
+	},
+
+	onExit: function() {
+		this._super();
+		cc.eventManager.removeListener(this._touchListener);
+	},
+
     onQuit:function (sender) {
         cc.log("Quit called");
     },
@@ -160,16 +169,6 @@ var MenuLayerMainMenu = cc.Layer.extend({
 
     onMenuMovingCallback:function(sender){
         this.parent.switchTo(5);
-    },
-
-    onEnter: function(){
-        cc.eventManager.addListener(this._touchListener, 1);
-        this._super();
-    },
-
-    onExit: function(){
-        cc.eventManager.removeListener(this._touchListener);
-        this._super();
     }
 });
 
@@ -481,32 +480,32 @@ var RemoveMenuItemWhenMove = cc.Layer.extend({
 
         menu.x = s.width/2;
         menu.y = s.height/2;
-        this._touchListener = cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            swallowTouches: false,
-            onTouchBegan:function(touch, event){
-                return true;
-            },
-            onTouchMoved: function(touch, event){
-                if (this._item){
-                    this._item.removeFromParent(true);
-                    this._item = null;
-                }
-            }.bind(this)
-        });
     },
 
-    onEnter: function(){
-        cc.eventManager.addListener(this._touchListener, -129);
-        this._super();
-    },
+	onEnter: function() {
+		this._super();
+		this._touchListener = cc.EventListener.create({
+			event: cc.EventListener.TOUCH_ONE_BY_ONE,
+			swallowTouches: false,
+			onTouchBegan:function(touch, event){
+				return true;
+			},
+			onTouchMoved: function(touch, event){
+				if (this._item){
+					this._item.removeFromParent(true);
+					this._item = null;
+				}
+			}.bind(this)
+		});
+		cc.eventManager.addListener(this._touchListener, -129);
+	},
 
-    onExit: function(){
-        cc.eventManager.removeListener(this._touchListener);
-        this._super();
-    },
+	onExit: function() {
+		this._super();
+		cc.eventManager.removeListener(this._touchListener);
+	},
 
-    goBack:function(sender){
+    goBack: function(sender){
         this.parent.switchTo(0);
     }
 });

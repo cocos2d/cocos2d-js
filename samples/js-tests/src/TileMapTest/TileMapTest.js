@@ -212,10 +212,6 @@ var TMXOrthoTest2 = TileDemo.extend({
         //
         var map = cc.TMXTiledMap.create(s_resprefix + "TileMaps/orthogonal-test2.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
-
-        /*var x, y, z;
-         map.getCamera().getEyeXYZ(x, y, z);
-         map.getCamera().setEyeXYZ(x - 200, y, z + 300);*/
     },
     title:function () {
         return "TMX Orthogonal test 2";

@@ -1209,18 +1209,6 @@ bool
 },
 
 /**
- * @method dispatchCustomEvent
- * @param {String} arg0
- * @param {void*} arg1
- */
-dispatchCustomEvent : function (
-str, 
-void 
-)
-{
-},
-
-/**
  * @method setPriority
  * @param {cc.EventListener} arg0
  * @param {int} arg1
@@ -12770,26 +12758,6 @@ getEventName : function (
 },
 
 /**
- * @method setUserData
- * @param {void*} arg0
- */
-setUserData : function (
-void 
-)
-{
-},
-
-/**
- * @method getUserData
- * @return {void*}
- */
-getUserData : function (
-)
-{
-    return void;
-},
-
-/**
  * @method EventCustom
  * @constructor
  * @param {String} arg0
@@ -15098,20 +15066,6 @@ float
 },
 
 /**
- * @method isScheduled
- * @param {String} arg0
- * @param {void*} arg1
- * @return {bool}
- */
-isScheduled : function (
-str, 
-void 
-)
-{
-    return false;
-},
-
-/**
  * @method performFunctionInCocosThread
  * @param {function} arg0
  */
@@ -15172,18 +15126,6 @@ str
  * @return {bool}
  */
 isEnabled : function (
-)
-{
-    return false;
-},
-
-/**
- * @method serialize
- * @param {void*} arg0
- * @return {bool}
- */
-serialize : function (
-void 
 )
 {
     return false;
