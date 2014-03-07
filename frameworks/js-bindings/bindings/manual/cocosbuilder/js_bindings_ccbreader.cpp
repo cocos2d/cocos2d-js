@@ -79,8 +79,8 @@ bool js_cocos2dx_CCBAnimationManager_animationCompleteCallback(JSContext *cx, ui
 		jsval *argv = JS_ARGV(cx, vp);
         
         JSObject *obj = JS_THIS_OBJECT(cx, vp);
-		js_proxy_t *proxy = jsb_get_js_proxy(obj);
-		cocosbuilder::CCBAnimationManager *node = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
+		js_proxy_t *p = jsb_get_js_proxy(obj);
+		cocosbuilder::CCBAnimationManager *node = (cocosbuilder::CCBAnimationManager *)(p ? p->ptr : NULL);
         
         JSCCBAnimationWrapper *tmpCobj = new JSCCBAnimationWrapper();
         tmpCobj->autorelease();
@@ -92,8 +92,8 @@ bool js_cocos2dx_CCBAnimationManager_animationCompleteCallback(JSContext *cx, ui
         
         node->setAnimationCompletedCallback(tmpCobj, callfunc_selector(JSCCBAnimationWrapper::animationCompleteCallback));
         
-        JS_SetReservedSlot(proxy->obj, 0, argv[0]);
-        JS_SetReservedSlot(proxy->obj, 1, argv[1]);
+        JS_SetReservedSlot(p->obj, 0, argv[0]);
+        JS_SetReservedSlot(p->obj, 1, argv[1]);
         return true;
     }
     return false;
@@ -106,8 +106,8 @@ bool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc, j
     JSObject *obj;
     cocosbuilder::CCBReader* cobj;
     obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (cocosbuilder::CCBReader *)(proxy ? proxy->ptr : NULL);
+    js_proxy_t *p = jsb_get_js_proxy(obj);
+    cobj = (cocosbuilder::CCBReader *)(p ? p->ptr : NULL);
     TEST_NATIVE_OBJECT(cx, cobj)
     
     if (argc == 2) {
@@ -189,8 +189,8 @@ bool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uint3
 	JSObject *obj;
 	cocosbuilder::CCBReader* cobj;
 	obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cobj = (cocosbuilder::CCBReader *)(proxy ? proxy->ptr : NULL);
+	js_proxy_t *p = jsb_get_js_proxy(obj);
+	cobj = (cocosbuilder::CCBReader *)(p ? p->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, cobj)
     
 	if (argc == 2) {

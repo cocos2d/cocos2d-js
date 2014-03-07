@@ -2,17 +2,6 @@
 // cocos2d constants
 //
 
-var cc = cc || {};
-var window = window || this;
-
-cc.sys = sys || {};
-cc.sys.isNative = true;
-
-cc.assert = function(cond, msg) {
-    if (!cond)
-        cc.log("Assert: " + msg);
-}
-
 cc.TARGET_PLATFORM = {
     WINDOWS:0,
     LINUX:1,
@@ -47,7 +36,7 @@ FIXED_HEIGHT:3,
     // no distortion will occur however you must make sure your application works on different
     // aspect ratios
 FIXED_WIDTH:4,
-    
+
 UNKNOWN:5
 };
 
@@ -144,148 +133,9 @@ cc._reuse_size = {width:0, height:0};
 cc._reuse_rect = {x:0, y:0, width:0, height:0};
 cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
-cc.log = cc._cocosplayerLog || cc.log || log;
 
 //
-// Color 3B
-//
-cc.c3b = function( r, g, b )
-{
-    switch (arguments.length) {
-        case 0:
-            return {r:0, g:0, b:0 };
-        case 1:
-            if (r && r instanceof cc.c3b) {
-            	  return {r:r.r, g:r.g, b:r.b };
-            } else {
-                return {r:0, g:0, b:0 };
-            }
-        case 3:
-            return {r:r, g:g, b:b };
-        default:
-            throw "unknown argument type";
-            break;
-    }
-};
-
-cc.integerToColor3B = function (intValue) {
-    intValue = intValue || 0;
-
-    var offset = 0xff;
-    var retColor = {r:0, g:0, b:0 };
-    retColor.r = intValue & (offset);
-    retColor.g = (intValue >> 8) & offset;
-    retColor.b = (intValue >> 16) & offset;
-    return retColor;
-};
-
-cc._c3b = function( r, g, b )
-{
-    cc._reuse_color3b.r = r;
-    cc._reuse_color3b.g = g;
-    cc._reuse_color3b.b = b;
-    return cc._reuse_color3b;
-};
-
-cc.c3BEqual = function(color1, color2){
-    return color1.r === color2.r && color1.g === color2.g && color1.b === color2.b;
-};
-
-cc.white = function () {
-    return cc.c3b(255, 255, 255);
-};
-
-cc.yellow = function () {
-    return cc.c3b(255, 255, 0);
-};
-
-cc.blue = function () {
-    return cc.c3b(0, 0, 255);
-};
-
-cc.green = function () {
-    return cc.c3b(0, 255, 0);
-};
-
-cc.red = function () {
-    return cc.c3b(255, 0, 0);
-};
-
-cc.magenta = function () {
-    return cc.c3b(255, 0, 255);
-};
-
-cc.black = function () {
-    return cc.c3b(0, 0, 0);
-};
-
-cc.orange = function () {
-    return cc.c3b(255, 127, 0);
-};
-
-cc.gray = function () {
-    return cc.c3b(166, 166, 166);
-};
-
-//
-// Color 4B
-//
-cc.c4b = function( r, g, b, a )
-{
-    return {r:r, g:g, b:b, a:a };
-};
-cc._c4b = function( r, g, b, a )
-{
-    cc._reuse_color4b.r = r;
-    cc._reuse_color4b.g = g;
-    cc._reuse_color4b.b = b;
-    cc._reuse_color4b.a = a;
-    return cc._reuse_color4b;
-};
-// compatibility
-cc.c4 = cc.c4b;
-cc._c4 = cc._c4b;
-
-/**
- * convert Color3B to a string of color for style.
- * e.g.  Color3B(255,6,255)  to : "#ff06ff"
- * @param clr
- * @return {String}
- */
-cc.convertColor3BtoHexString = function (clr) {
-    var hR = clr.r.toString(16);
-    var hG = clr.g.toString(16);
-    var hB = clr.b.toString(16);
-    var stClr = "#" + (clr.r < 16 ? ("0" + hR) : hR) + (clr.g < 16 ? ("0" + hG) : hG) + (clr.b < 16 ? ("0" + hB) : hB);
-    return stClr;
-};
-
-//
-// Color 4F
-//
-cc.c4f = function( r, g, b, a )
-{
-    return {r:r, g:g, b:b, a:a };
-};
-
-cc.c4FFromccc3B = function (c) {
-    return cc.c4f(c.r / 255.0, c.g / 255.0, c.b / 255.0, 1.0);
-};
-
-cc.c4FFromccc4B = function (c) {
-    return cc.c4f(c.r / 255.0, c.g / 255.0, c.b / 255.0, c.a / 255.0);
-};
-
-cc.c4BFromccc4F = function (c) {
-    return cc.c4f(0 | (c.r * 255), 0 | (c.g * 255), 0 | (c.b * 255), 0 | (c.a * 255));
-};
-
-cc.c4FEqual = function (a, b) {
-    return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
-};
-
-//
-// Point
+// Basic sturcture : Point
 //
 cc.p = function( x, y )
 {
@@ -322,7 +172,7 @@ cc._g = function( x, y )
 };
 
 //
-// Size
+// Basic sturcture : Size
 //
 cc.size = function(w,h)
 {
@@ -455,6 +305,180 @@ cc.RectZero = function () {
     return cc.rect(0, 0, 0, 0);
 };
 
+// Basic sturcture : Color
+cc.Color = function (r, g, b, a) {
+    this.r = r || 0;
+    this.g = g || 0;
+    this.b = b || 0;
+    this.a = a || 0;
+};
+
+/**
+ *
+ * @param {Number|String|cc.Color} r
+ * @param {Number} g
+ * @param {Number} b
+ * @param {Number} a
+ * @returns {cc.Color}
+ */
+cc.color = function (r, g, b, a) {
+    if (r === undefined)
+        return {r: 0, g: 0, b: 0, a: 255};
+    if (typeof r === "string")
+        return cc.hexToColor(r);
+    if (typeof r === "object")
+        return {r: r.r, g: r.g, b: r.b, a: r.a};
+    return  {r: r, g: g, b: b, a: a };
+};
+
+/**
+ * returns true if both ccColor3B are equal. Otherwise it returns false.
+ * @param {cc.Color} color1
+ * @param {cc.Color} color2
+ * @return {Boolean}  true if both ccColor3B are equal. Otherwise it returns false.
+ */
+cc.colorEqual = function(color1, color2){
+    return color1.r === color2.r && color1.g === color2.g && color1.b === color2.b;
+};
+
+/**
+ * convert a string of color for style to Color.
+ * e.g. "#ff06ff"  to : cc.color(255,6,255)
+ * @param {String} hex
+ * @return {cc.Color}
+ */
+cc.hexToColor = function (hex) {
+    hex = hex.replace(/^#?/, "0x");
+    var c = parseInt(hex);
+    var r = c >> 16;
+    var g = (c >> 8) % 256;
+    var b = c % 256;
+    return cc.color(r, g, b);
+};
+
+/**
+ * convert Color to a string of color for style.
+ * e.g.  cc.color(255,6,255)  to : "#ff06ff"
+ * @param {cc.Color} color
+ * @return {String}
+ */
+cc.colorToHex = function (color) {
+    var hR = color.r.toString(16);
+    var hG = color.g.toString(16);
+    var hB = color.b.toString(16);
+    var hex = "#" + (color.r < 16 ? ("0" + hR) : hR) + (color.g < 16 ? ("0" + hG) : hG) + (color.b < 16 ? ("0" + hB) : hB);
+    return hex;
+};
+
+/**
+ * White color (255, 255, 255, 255)
+ * @returns {cc.Color}
+ * @private
+ */
+cc.color._getWhite = function(){
+    return cc.color(255, 255, 255, 255);
+};
+
+/**
+ *  Yellow color (255, 255, 0, 255)
+ * @returns {cc.Color}
+ * @private
+ */
+cc.color._getYellow = function () {
+    return cc.color(255, 255, 0, 255);
+};
+
+/**
+ *  Blue color (0, 0, 255, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getBlue = function () {
+    return  cc.color(0, 0, 255, 255);
+};
+
+/**
+ *  Green Color (0, 255, 0, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getGreen = function () {
+    return cc.color(0, 255, 0, 255);
+};
+
+/**
+ *  Red Color (255, 0, 0, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getRed = function () {
+    return cc.color(255, 0, 0, 255);
+};
+
+/**
+ *  Magenta Color (255, 0, 255, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getMagenta = function () {
+    return cc.color(255, 0, 255, 255);
+};
+
+/**
+ *  Black Color (0, 0, 0, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getBlack = function () {
+    return cc.color(0, 0, 0, 255);
+};
+
+/**
+ *  Orange Color (255, 127, 0, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getOrange = function () {
+    return cc.color(255, 127, 0, 255);
+};
+
+/**
+ *  Gray Color (166, 166, 166, 255)
+ * @type {cc.Color}
+ * @private
+ */
+cc.color._getGray = function () {
+    return cc.color(166, 166, 166, 255);
+};
+var _proto = cc.color;
+/** @expose */
+_proto.WHITE;
+cc.defineGetterSetter(_proto, "WHITE", _proto._getWhite);
+/** @expose */
+_proto.YELLOW;
+cc.defineGetterSetter(_proto, "YELLOW", _proto._getYellow);
+/** @expose */
+_proto.BLUE;
+cc.defineGetterSetter(_proto, "BLUE", _proto._getBlue);
+/** @expose */
+_proto.GREEN;
+cc.defineGetterSetter(_proto, "GREEN", _proto._getGreen);
+/** @expose */
+_proto.RED;
+cc.defineGetterSetter(_proto, "RED", _proto._getRed);
+/** @expose */
+_proto.MAGENTA;
+cc.defineGetterSetter(_proto, "MAGENTA", _proto._getMagenta);
+/** @expose */
+_proto.BLACK;
+cc.defineGetterSetter(_proto, "BLACK", _proto._getBlack);
+/** @expose */
+_proto.ORANGE;
+cc.defineGetterSetter(_proto, "ORANGE", _proto._getOrange);
+/** @expose */
+_proto.GRAY;
+cc.defineGetterSetter(_proto, "GRAY", _proto._getGray);
+
 //
 // Array: for cocos2d-html5 compatibility
 //
@@ -500,16 +524,6 @@ cc.dump = function(obj)
 {
     for( var i in obj )
         cc.log( i + " = " + obj[i] );
-};
-
-// dump config info, but only in debug mode
-var sys = sys || undefined;
-cc.dumpConfig = function()
-{
-    if (sys) {
-        cc.dump(sys);
-        cc.dump(sys.capabilities);
-    }
 };
 
 //
@@ -720,7 +734,7 @@ var ConfigType = {
 
 var __onParseConfig = function(type, str) {
     if (type === ConfigType.COCOSTUDIO) {
-        ccs.TriggerMng.getInstance().parse(JSON.parse(str));
+        ccs.triggerManager.parse(JSON.parse(str));
     }
 };
 
@@ -786,230 +800,39 @@ var clearInterval = function (intervalId) {
 var clearTimeout = clearInterval;
 
 
-/**
- * Common getter setter configuration function
- * @function
- * @param {Object}   proto      A class prototype or an object to config<br/>
- * @param {String}   prop       Property name
- * @param {function} getter     Getter function for the property
- * @param {function} setter     Setter function for the property
- * @param {String}   getterName Name of getter function for the property
- * @param {String}   setterName Name of setter function for the property
- */
-cc.defineGetterSetter = function (proto, prop, getter, setter, getterName, setterName)
-{
-    if (proto.__defineGetter__) {
-        getter && proto.__defineGetter__(prop, getter);
-        setter && proto.__defineSetter__(prop, setter);
-    }
-    else if (Object.defineProperty) {
-        var desc = { enumerable: false, configurable: true };
-        getter && (desc.get = getter);
-        setter && (desc.set = setter);
-        Object.defineProperty(proto, prop, desc);
-    }
-    else {
-        throw new Error("browser does not support getters");
-        return;
-    }
 
-    if(!getterName && !setterName) {
-        // Lookup getter/setter function
-        var hasGetter = (getter != null), hasSetter = (setter != undefined);
-        var props = Object.getOwnPropertyNames(proto);
-        for (var i = 0; i < props.length; i++) {
-            var name = props[i];
-            if( proto.__lookupGetter__(name) !== undefined || typeof proto[name] !== "function" ) continue;
-            var func = proto[name];
-            if (hasGetter && func === getter) {
-                getterName = name;
-                if(!hasSetter || setterName) break;
-            }
-            if (hasSetter && func === setter) {
-                setterName = name;
-                if(!hasGetter || getterName) break;
-            }
-        }
-    }
+// Define singleton objects
+cc.director = cc.Director.getInstance();
+cc.view = cc.director.getOpenGLView();
+cc.audioEngine = cc.AudioEngine.getInstance();
+cc.audioEngine.end = function(){
+    cc.AudioEngine.end();
+};
+cc.configuration = cc.Configuration.getInstance();
+cc.textureCache = cc.director.getTextureCache();
+cc.shaderCache = cc.ShaderCache.getInstance();
+cc.animationCache = cc.AnimationCache.getInstance();
+cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
+//cc.saxParser
+cc.plistParser = cc.SAXParser.getInstance();
 
-    // Found getter/setter
-    var ctor = proto.constructor;
-    if (getterName) {
-        if (!ctor.__getters__) {
-            ctor.__getters__ = {};
-        }
-        ctor.__getters__[getterName] = prop;
-    }
-    if (setterName) {
-        if (!ctor.__setters__) {
-            ctor.__setters__ = {};
-        }
-        ctor.__setters__[setterName] = prop;
+cc.screen = {
+    init: function() {},
+    fullScreen: function() {
+        return true;
+    },
+    requestFullScreen: function(element, onFullScreenChange) {
+        onFullScreenChange.call();
+    },
+    exitFullScreen: function() {
+        return false;
+    },
+    autoFullScreen: function(element, onFullScreenChange) {
+        onFullScreenChange.call();
     }
 };
-
-/**
- * Common getter setter configuration function
- * @function
- * @param {Object}   class      A class prototype or an object to config<br/>
- * @param {String}   prop       Property name
- * @param {function} getter     Getter function for the property
- * @param {function} setter     Setter function for the property
- * @param {String}   getterName Name of getter function for the property
- * @param {String}   setterName Name of setter function for the property
- */
-cc.defineProtoGetterSetter = function (classobj, prop, getter, setter, getterName, setterName)
-{
-    var proto = classobj.prototype;
-    cc.defineGetterSetter(proto, prop, getter, setter, getterName, setterName);
-};
-
-cc.Color = function (r, g, b, a) {
-    this.r = r || 0;
-    this.g = g || 0;
-    this.b = b || 0;
-    this.a = a || 0;
-};
-
-/**
- *
- * @param {Number|String|cc.Color} r
- * @param {Number} g
- * @param {Number} b
- * @param {Number} a
- * @returns {cc.Color}
- */
-cc.color = function (r, g, b, a) {
-    if (r === undefined)
-        return {r: 0, g: 0, b: 0, a: 255};
-    if (typeof r === "string")
-        return cc.hexToColor(r);
-    if (typeof r === "object")
-        return {r: r.r, g: r.g, b: r.b, a: r.a};
-    return  {r: r, g: g, b: b, a: a };
-};
-
-/**
- * returns true if both ccColor3B are equal. Otherwise it returns false.
- * @param {cc.Color} color1
- * @param {cc.Color} color2
- * @return {Boolean}  true if both ccColor3B are equal. Otherwise it returns false.
- */
-cc.colorEqual = function(color1, color2){
-    return color1.r === color2.r && color1.g === color2.g && color1.b === color2.b;
-};
-
-
-/**
- * White color (255, 255, 255, 255)
- * @returns {cc.Color}
- * @private
- */
-cc.color._getWhite = function(){
-    return cc.color(255, 255, 255, 255);
-};
-
-/**
- *  Yellow color (255, 255, 0, 255)
- * @returns {cc.Color}
- * @private
- */
-cc.color._getYellow = function () {
-    return cc.color(255, 255, 0, 255);
-};
-
-/**
- *  Blue color (0, 0, 255, 255)
- * @type {cc.Color}
- * @private
- */
-cc.color._getBlue = function () {
-    return  cc.color(0, 0, 255, 255);
-};
-
-/**
- *  Green Color (0, 255, 0, 255)
- * @type {cc.Color}
- * @private
- */
-cc.color._getGreen = function () {
-    return cc.color(0, 255, 0, 255);
-};
-
-/**
- *  Red Color (255, 0, 0, 255)
- * @type {cc.Color}
- * @private
- */
-cc.color._getRed = function () {
-    return cc.color(255, 0, 0, 255);
-};
-
-/**
- *  Magenta Color (255, 0, 255, 255)
- * @type {cc.Color}
- * @private
- */
-cc.color._getMagenta = function () {
-    return cc.color(255, 0, 255, 255);
-};
-
-/**
- *  Black Color (0, 0, 0, 255)
- * @type {cc.Color}
- * @private
- */
-cc.color._getBlack = function () {
-    return cc.color(0, 0, 0, 255);
-};
-
-/**
- *  Orange Color (255, 127, 0, 255)
- * @type {cc.Color}
- * @private
- */
-cc.color._getOrange = function () {
-    return cc.color(255, 127, 0, 255);
-};
-
-/**
- *  Gray Color (166, 166, 166, 255)
- * @type {cc.Color}
- * @private
- */
-cc.color._getGray = function () {
-    return cc.color(166, 166, 166, 255);
-};
-window._proto = cc.color;
-/** @expose */
-_proto.white;
-cc.defineGetterSetter(_proto, "white", _proto._getWhite);
-/** @expose */
-_proto.yellow;
-cc.defineGetterSetter(_proto, "yellow", _proto._getYellow);
-/** @expose */
-_proto.blue;
-cc.defineGetterSetter(_proto, "blue", _proto._getBlue);
-/** @expose */
-_proto.green;
-cc.defineGetterSetter(_proto, "green", _proto._getGreen);
-/** @expose */
-_proto.red;
-cc.defineGetterSetter(_proto, "red", _proto._getRed);
-/** @expose */
-_proto.magenta;
-cc.defineGetterSetter(_proto, "magenta", _proto._getMagenta);
-/** @expose */
-_proto.black;
-cc.defineGetterSetter(_proto, "black", _proto._getBlack);
-/** @expose */
-_proto.orange;
-cc.defineGetterSetter(_proto, "orange", _proto._getOrange);
-/** @expose */
-_proto.gray;
-cc.defineGetterSetter(_proto, "gray", _proto._getGray);
-delete window._proto;
-
+//cc.tiffReader;
+//cc.imeDispatcher;
 
 
 // event listener type
@@ -1063,6 +886,8 @@ cc.EventListener.create = function(argObj){
     return listener;
 };
 
+
+// Event manager
 cc.eventManager.addListener = function(listener, nodeOrPriority) {
     if(!(listener instanceof cc.EventListener)) {
         listener = cc.EventListener.create(listener);
@@ -1079,6 +904,12 @@ cc.eventManager.addListener = function(listener, nodeOrPriority) {
         cc.eventManager.addEventListenerWithSceneGraphPriority(listener, nodeOrPriority);
     }
 };
+
+cc.eventManager.dispatchCustomEvent = function (eventName, optionalUserData) {
+    var ev = new cc.EventCustom(eventName);
+    ev.setUserData(optionalUserData);
+    this.dispatchEvent(ev);
+}
 
 cc.EventCustom.prototype.setUserData = function(userData) {
     this._userData = userData;
@@ -1188,7 +1019,7 @@ cc.visibleRect = {
             this.init();
             this._isInitialized = true;
         }
-    },
+    }
 };
 
 cc.defineGetterSetter(cc.visibleRect, "width", function(){
@@ -1236,3 +1067,84 @@ cc.defineGetterSetter(cc.visibleRect, "right", function(){
     return this._right;
 });
 
+// Predefined font definition
+cc.FontDefinition = function () {
+    this.fontName = "Arial";
+    this.fontSize = 12;
+    this.textAlign = cc.TEXT_ALIGNMENT_CENTER;
+    this.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
+    this.fillStyle = cc.color(255, 255, 255, 255);
+    this.boundingWidth = 0;
+	this.boundingHeight = 0;
+
+    this.strokeEnabled = false;
+    this.strokeStyle = cc.color(255, 255, 255, 255);
+    this.lineWidth = 1;
+
+    this.shadowEnabled = false;
+    this.shadowOffsetX = 0;
+	this.shadowOffsetY = 0;
+    this.shadowBlur = 0;
+    this.shadowOpacity = 1.0;
+};
+
+
+
+/**
+ * Verify Array's Type
+ * @param {Array} arr
+ * @param {function} type
+ * @return {Boolean}
+ * @function
+ */
+cc.arrayVerifyType = function (arr, type) {
+    if (arr && arr.length > 0) {
+        for (var i = 0; i < arr.length; i++) {
+            if (!(arr[i] instanceof  type)) {
+                cc.log("element type is wrong!");
+                return false;
+            }
+        }
+    }
+    return true;
+};
+
+/**
+ * Searches for the first occurance of object and removes it. If object is not found the function has no effect.
+ * @function
+ * @param {Array} arr Source Array
+ * @param {*} delObj  remove object
+ */
+cc.arrayRemoveObject = function (arr, delObj) {
+    for (var i = 0, l = arr.length; i < l; i++) {
+        if (arr[i] == delObj) {
+            arr.splice(i, 1);
+            break;
+        }
+    }
+};
+
+/**
+ * Removes from arr all values in minusArr. For each Value in minusArr, the first matching instance in arr will be removed.
+ * @function
+ * @param {Array} arr Source Array
+ * @param {Array} minusArr minus Array
+ */
+cc.arrayRemoveArray = function (arr, minusArr) {
+    for (var i = 0, l = minusArr.length; i < l; i++) {
+        cc.arrayRemoveObject(arr, minusArr[i]);
+    }
+};
+
+/**
+ * Inserts some objects at index
+ * @function
+ * @param {Array} arr
+ * @param {Array} addObjs
+ * @param {Number} index
+ * @return {Array}
+ */
+cc.arrayAppendObjectsToIndex = function(arr, addObjs,index){
+    arr.splice.apply(arr, [index, 0].concat(addObjs));
+    return arr;
+};

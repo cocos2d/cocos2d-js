@@ -97,7 +97,7 @@ public:
         
         if (data.isBinary)
         {// data is binary
-            JSObject* buffer = JS_NewArrayBuffer(cx, data.len);
+            JSObject* buffer = JS_NewArrayBuffer(cx, static_cast<uint32_t>(data.len));
             uint8_t* bufdata = JS_GetArrayBufferData(buffer);
             memcpy((void*)bufdata, (void*)data.bytes, data.len);
             JS::RootedValue dataVal(cx);

@@ -126,12 +126,12 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
     EMCC_DEBUG=1 make PLATFORM=emscripten -j 8
 elif [ "$PLATFORM"x = "ios"x ]; then
     cd $PROJECT_ROOT/tools/travis-scripts
-    # ./generate-bindings.sh
+    ./generate-bindings.sh
     # ./generate-cocosfiles.sh
 
-    cd $PROJECT_ROOT/tests/project/proj.ios_mac
-    xctool -project cocos2d_lua_tests.xcodeproj -scheme "Test lua Mac" test
-    xctool -project cocos2d_lua_tests.xcodeproj -scheme "Test lua iOS" test
+    cd $PROJECT_ROOT/build
+    xctool -project cocos2d_jsb_samples.xcodeproj -scheme "Test JavaScript Mac" test
+    xctool -project cocos2d_jsb_samples.xcodeproj -scheme "Test JavaScript iOS" test
 else
     echo "Unknown \$PLATFORM: '$PLATFORM'"
     exit 1

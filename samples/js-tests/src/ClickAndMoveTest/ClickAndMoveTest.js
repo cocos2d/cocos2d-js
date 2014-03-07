@@ -30,7 +30,7 @@ var ClickAndMoveTestScene = TestScene.extend({
         var layer = new MainLayer();
 
         this.addChild(layer);
-        director.replaceScene(this);
+        director.runScene(this);
     }
 });
 
@@ -40,18 +40,31 @@ var MainLayer = cc.Layer.extend({
 
         this.init();
 
-        if( 'touches' in sys.capabilities )
-            this.setTouchEnabled(true);
-        else if ('mouse' in sys.capabilities )
-            this.setMouseEnabled(true);
+        if( 'touches' in cc.sys.capabilities )
+            cc.eventManager.addListener(cc.EventListener.create({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+                onTouchesEnded:function (touches, event) {
+                    if (touches.length <= 0)
+                        return;
+                    event.getCurrentTarget().moveSprite(touches[0].getLocation());
+                }
+            }), this);
+        else if ('mouse' in cc.sys.capabilities )
+            cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
+                onMouseUp: function (event) {
+                    event.getCurrentTarget().moveSprite(event.getLocation());
+                }
+            }, this);
 
         var sprite = cc.Sprite.create(s_pathGrossini);
 
-        var layer = cc.LayerColor.create(cc.c4b(255, 255, 0, 100));
+        var layer = cc.LayerColor.create(cc.color(255, 255, 0, 100));
         this.addChild(layer, -1);
 
         this.addChild(sprite, 0, TAG_SPRITE);
-        sprite.setPosition(20, 150);
+        sprite.x = 20;
+	    sprite.y = 150;
 
         sprite.runAction(cc.JumpTo.create(4, cc.p(300, 48), 100, 4));
 
@@ -65,9 +78,8 @@ var MainLayer = cc.Layer.extend({
         var sprite = this.getChildByTag(TAG_SPRITE);
         sprite.stopAllActions();
         sprite.runAction(cc.MoveTo.create(1, position));
-        var current = sprite.getPosition();
-        var o = position.x - current.x;
-        var a = position.y - current.y;
+        var o = position.x - sprite.x;
+        var a = position.y - sprite.y;
         var at = Math.atan(o / a) * 57.29577951;  // radians to degrees
 
         if (a < 0) {
@@ -78,18 +90,5 @@ var MainLayer = cc.Layer.extend({
         }
 
         sprite.runAction(cc.RotateTo.create(1, at));
-    },
-    onMouseUp:function (event) {
-        var location = event.getLocation();
-        this.moveSprite(location);
-    },
-
-    onTouchesEnded:function (touches, event) {
-        if (touches.length <= 0)
-            return;
-
-        var touch = touches[0];
-        var location = touch.getLocation();
-        this.moveSprite(location);
     }
 });

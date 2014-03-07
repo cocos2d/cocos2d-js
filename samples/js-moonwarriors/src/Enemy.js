@@ -21,13 +21,14 @@ var Enemy = cc.Sprite.extend({
         this.attackMode = arg.attackMode;
         this.enemyType = arg.type;
 
-        this.setSpriteFrame(arg.textureName);
+        this.initWithSpriteFrameName(arg.textureName);
         this.schedule(this.shoot, this.delayTime);
     },
     _timeTick:0,
     update:function (dt) {
-        var p = this.getPosition();
-        if ((p.x < 0 || p.x > 320) && (p.y < 0 || p.y > 480)) {
+        var x = this.x;
+	    var y = this.y;
+        if ((x < 0 || x > 320) && (y < 0 || y > 480)) {
             this.active = false;
         }
         this._timeTick += dt;
@@ -38,8 +39,7 @@ var Enemy = cc.Sprite.extend({
             }
         }
 
-        var p = this.getPosition();
-        if (p.x < 0 || p.x > g_sharedGameLayer.screenRect.width || p.y < 0 || p.y > g_sharedGameLayer.screenRect.height || this.HP <= 0) {
+        if (x < 0 || x > g_sharedGameLayer.screenRect.width || y < 0 || y > g_sharedGameLayer.screenRect.height || this.HP <= 0) {
             this.active = false;
             this.destroy();
         }
@@ -48,29 +48,33 @@ var Enemy = cc.Sprite.extend({
     destroy:function () {
         MW.SCORE += this.scoreValue;
         var a = Explosion.getOrCreateExplosion();
-        a.setPosition(this.getPosition());
-        SparkEffect.getOrCreateSparkEffect(this.getPosition());
+        a.attr({
+	        x: this.x,
+	        y: this.y
+        });
+        SparkEffect.getOrCreateSparkEffect(this.x, this.y);
         if (MW.SOUND) {
-            cc.AudioEngine.getInstance().playEffect(res.explodeEffect_mp3);
+	        cc.audioEngine.playEffect(res.explodeEffect_mp3);
         }
-        this.setVisible(false);
+        this.visible = false;
         this.active = false;
         this.stopAllActions();
         this.unschedule(this.shoot);
         MW.ACTIVE_ENEMIES--;
     },
     shoot:function () {
-        var p = this.getPosition();
+        var x = this.x, y = this.y;
         var b = Bullet.getOrCreateBullet(this.bulletSpeed, "W2.png", this.attackMode, 3000, MW.UNIT_TAG.ENMEY_BULLET);
-        b.setPosition(p.x, p.y - this.getContentSize().height * 0.2);
+        b.x = x;
+	    b.y = y - this.height * 0.2;
     },
     hurt:function () {
         this._hurtColorLife = 2;
         this.HP--;
     },
-    collideRect:function (p) {
-        var a = this.getContentSize();
-        return cc.rect(p.x - a.width / 2, p.y - a.height / 4, a.width, a.height / 2+20);
+    collideRect:function (x, y) {
+        var w = this.width, h = this.height;
+        return cc.rect(x - w / 2, y - h / 4, w, h / 2+20);
     }
 });
 
@@ -88,7 +92,7 @@ Enemy.getOrCreateEnemy = function (arg) {
             selChild._hurtColorLife = 0;
 
             selChild.schedule(selChild.shoot, selChild.delayTime);
-            selChild.setVisible(true);
+            selChild.visible = true;
             MW.ACTIVE_ENEMIES++;
             return selChild;
         }
@@ -110,7 +114,7 @@ Enemy.preSet = function () {
     for (var i = 0; i < 3; i++) {
         for (var i = 0; i < EnemyType.length; i++) {
             enemy = Enemy.create(EnemyType[i]);
-            enemy.setVisible(false);
+            enemy.visible = false;
             enemy.active = false;
             enemy.stopAllActions();
             enemy.unscheduleAllCallbacks();

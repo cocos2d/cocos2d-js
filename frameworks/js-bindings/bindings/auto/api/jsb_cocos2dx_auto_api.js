@@ -2076,16 +2076,6 @@ float
 },
 
 /**
- * @method setColor
- * @param {Color3BObject} arg0
- */
-setColor : function (
-color3b 
-)
-{
-},
-
-/**
  * @method isRunning
  * @return {bool}
  */
@@ -6318,8 +6308,12 @@ color4f
 
 /**
  * @method onDraw
+ * @param {kmMat4} arg0
+ * @param {bool} arg1
  */
 onDraw : function (
+kmmat4, 
+bool 
 )
 {
 },
@@ -6406,6 +6400,217 @@ create : function (
 )
 {
     return cc.DrawNode;
+},
+
+};
+
+/**
+ * @class Configuration
+ */
+cc.Configuration = {
+
+/**
+ * @method checkForGLExtension
+ * @param {String} arg0
+ * @return {bool}
+ */
+checkForGLExtension : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method setValue
+ * @param {String} arg0
+ * @param {cc.Value} arg1
+ */
+setValue : function (
+str, 
+value 
+)
+{
+},
+
+/**
+ * @method supportsS3TC
+ * @return {bool}
+ */
+supportsS3TC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsPVRTC
+ * @return {bool}
+ */
+supportsPVRTC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsShareableVAO
+ * @return {bool}
+ */
+supportsShareableVAO : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getInfo
+ * @return {String}
+ */
+getInfo : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getMaxTextureUnits
+ * @return {int}
+ */
+getMaxTextureUnits : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method supportsNPOT
+ * @return {bool}
+ */
+supportsNPOT : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getMaxModelviewStackDepth
+ * @return {int}
+ */
+getMaxModelviewStackDepth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method supportsDiscardFramebuffer
+ * @return {bool}
+ */
+supportsDiscardFramebuffer : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsATITC
+ * @return {bool}
+ */
+supportsATITC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method gatherGPUInfo
+ */
+gatherGPUInfo : function (
+)
+{
+},
+
+/**
+ * @method supportsETC
+ * @return {bool}
+ */
+supportsETC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method loadConfigFile
+ * @param {String} arg0
+ */
+loadConfigFile : function (
+str 
+)
+{
+},
+
+/**
+ * @method getValue
+ * @param {String} arg0
+ * @param {cc.Value} arg1
+ * @return {cc.Value}
+ */
+getValue : function (
+str, 
+value 
+)
+{
+    return cc.Value;
+},
+
+/**
+ * @method getMaxTextureSize
+ * @return {int}
+ */
+getMaxTextureSize : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method supportsBGRA8888
+ * @return {bool}
+ */
+supportsBGRA8888 : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {cc.Configuration}
+ */
+getInstance : function (
+)
+{
+    return cc.Configuration;
 },
 
 };
@@ -6726,6 +6931,16 @@ scheduler
 startAnimation : function (
 )
 {
+},
+
+/**
+ * @method getOpenGLView
+ * @return {cc.GLView}
+ */
+getOpenGLView : function (
+)
+{
+    return cc.GLView;
 },
 
 /**
@@ -8108,35 +8323,59 @@ SpriteBatchNode : function (
 cc.Label = {
 
 /**
- * @method setLineBreakWithoutSpace
- * @param {bool} arg0
+ * @method enableShadow
  */
-setLineBreakWithoutSpace : function (
-bool 
+enableShadow : function (
 )
 {
 },
 
 /**
- * @method getStringNumLines
+ * @method getString
+ * @return {String}
+ */
+getString : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method disableEffect
+ */
+disableEffect : function (
+)
+{
+},
+
+/**
+ * @method getCommonLineHeight
  * @return {int}
  */
-getStringNumLines : function (
+getCommonLineHeight : function (
 )
 {
     return 0;
 },
 
 /**
- * @method getLetter
- * @param {int} arg0
- * @return {cc.Sprite}
+ * @method breakLineWithoutSpace
+ * @return {bool}
  */
-getLetter : function (
-int 
+breakLineWithoutSpace : function (
 )
 {
-    return cc.Sprite;
+    return false;
+},
+
+/**
+ * @method getMaxLineWidth
+ * @return {float}
+ */
+getMaxLineWidth : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -8160,26 +8399,6 @@ getScaleX : function (
 },
 
 /**
- * @method getStringLenght
- * @return {int}
- */
-getStringLenght : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getTextAlignment
- * @return {cc.TextHAlignment}
- */
-getTextAlignment : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setString
  * @param {String} arg0
  */
@@ -8190,11 +8409,59 @@ str
 },
 
 /**
- * @method onDraw
+ * @method setBMFontFilePath
+ * @param {String} arg0
+ * @param {PointObject} arg1
+ * @return {bool}
  */
-onDraw : function (
+setBMFontFilePath : function (
+str, 
+point 
 )
 {
+    return false;
+},
+
+/**
+ * @method setLineBreakWithoutSpace
+ * @param {bool} arg0
+ */
+setLineBreakWithoutSpace : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getStringNumLines
+ * @return {int}
+ */
+getStringNumLines : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method enableOutline
+ * @param {Color4BObject} arg0
+ * @param {int} arg1
+ */
+enableOutline : function (
+color4b, 
+int 
+)
+{
+},
+
+/**
+ * @method getStringLenght
+ * @return {int}
+ */
+getStringLenght : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -8216,72 +8483,6 @@ int
 },
 
 /**
- * @method setLabelEffect
- * @param {cc.LabelEffect} arg0
- * @param {Color3BObject} arg1
- */
-setLabelEffect : function (
-labeleffect, 
-color3b 
-)
-{
-},
-
-/**
- * @method getMaxLineWidth
- * @return {float}
- */
-getMaxLineWidth : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setBMFontFilePath
- * @param {String} arg0
- * @param {PointObject} arg1
- * @return {bool}
- */
-setBMFontFilePath : function (
-str, 
-point 
-)
-{
-    return false;
-},
-
-/**
- * @method getCommonLineHeight
- * @return {int}
- */
-getCommonLineHeight : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getString
- * @return {String}
- */
-getString : function (
-)
-{
-    return ;
-},
-
-/**
- * @method breakLineWithoutSpace
- * @return {bool}
- */
-breakLineWithoutSpace : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setMaxLineWidth
  * @param {float} arg0
  */
@@ -8289,6 +8490,38 @@ setMaxLineWidth : function (
 float 
 )
 {
+},
+
+/**
+ * @method enableGlow
+ * @param {Color3BObject} arg0
+ */
+enableGlow : function (
+color3b 
+)
+{
+},
+
+/**
+ * @method getLetter
+ * @param {int} arg0
+ * @return {cc.Sprite}
+ */
+getLetter : function (
+int 
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method getTextAlignment
+ * @return {cc.TextHAlignment}
+ */
+getTextAlignment : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -8583,9 +8816,11 @@ float
 },
 
 /**
- * @method onDraw
+ * @method changeHeight
+ * @param {float} arg0
  */
-onDraw : function (
+changeHeight : function (
+float 
 )
 {
 },
@@ -8595,16 +8830,6 @@ onDraw : function (
  * @param {float} arg0
  */
 changeWidth : function (
-float 
-)
-{
-},
-
-/**
- * @method changeHeight
- * @param {float} arg0
- */
-changeHeight : function (
 float 
 )
 {
@@ -15019,6 +15244,77 @@ getName : function (
  * @return {cc.Component}
  */
 create : function (
+)
+{
+    return cc.Component;
+},
+
+};
+
+/**
+ * @class ComponentContainer
+ */
+cc.ComponentContainer = {
+
+/**
+ * @method visit
+ * @param {float} arg0
+ */
+visit : function (
+float 
+)
+{
+},
+
+/**
+ * @method remove
+ * @param {String} arg0
+ * @return {bool}
+ */
+remove : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method removeAll
+ */
+removeAll : function (
+)
+{
+},
+
+/**
+ * @method add
+ * @param {cc.Component} arg0
+ * @return {bool}
+ */
+add : function (
+component 
+)
+{
+    return false;
+},
+
+/**
+ * @method isEmpty
+ * @return {bool}
+ */
+isEmpty : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method get
+ * @param {String} arg0
+ * @return {cc.Component}
+ */
+get : function (
+str 
 )
 {
     return cc.Component;

@@ -37,18 +37,20 @@ var TableViewTestLayer = cc.Layer.extend({
             return false;
         }
 
-        var winSize = cc.Director.getInstance().getWinSize();
+        var winSize = cc.director.getWinSize();
 
         var tableView = cc.TableView.create(this, cc.size(600, 60));
         tableView.setDirection(cc.SCROLLVIEW_DIRECTION_HORIZONTAL);
-        tableView.setPosition(20, winSize.height / 2 - 150);
+        tableView.x = 20;
+        tableView.y = winSize.height / 2 - 150;
         tableView.setDelegate(this);
         this.addChild(tableView);
         tableView.reloadData();
 
         tableView = cc.TableView.create(this, cc.size(60, 350));
         tableView.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL);
-        tableView.setPosition(winSize.width - 150, winSize.height / 2 - 150);
+        tableView.x = winSize.width - 150;
+        tableView.y = winSize.height / 2 - 150;
         tableView.setDelegate(this);
         tableView.setVerticalFillOrder(cc.TABLEVIEW_FILL_TOPDOWN);
         this.addChild(tableView);
@@ -56,9 +58,11 @@ var TableViewTestLayer = cc.Layer.extend({
 
         // Back Menu
         var itemBack = cc.MenuItemFont.create("Back", this.toExtensionsMainLayer, this);
-        itemBack.setPosition(winSize.width - 50, 25);
+        itemBack.x = winSize.width - 50;
+        itemBack.y = 25;
         var menuBack = cc.Menu.create(itemBack);
-        menuBack.setPosition(0,0);
+        menuBack.x = 0;
+        menuBack.y = 0;
         this.addChild(menuBack);
 
         return true;
@@ -92,14 +96,18 @@ var TableViewTestLayer = cc.Layer.extend({
         if (!cell) {
             cell = new CustomTableViewCell();
             var sprite = cc.Sprite.create(s_image_icon);
-            sprite.setAnchorPoint(0,0);
-            sprite.setPosition(0, 0);
+            sprite.anchorX = 0;
+            sprite.anchorY = 0;
+            sprite.x = 0;
+            sprite.y = 0;
             cell.addChild(sprite);
 
             label = cc.LabelTTF.create(strValue, "Helvetica", 20.0);
-            label.setPosition(0,0);
-            label.setAnchorPoint(0,0);
-            label.setTag(123);
+            label.x = 0;
+            label.y = 0;
+            label.anchorX = 0;
+            label.anchorY = 0;
+            label.tag = 123;
             cell.addChild(label);
         } else {
             label = cell.getChildByTag(123);
@@ -126,5 +134,5 @@ var runTableViewTest = function () {
     var pScene = cc.Scene.create();
     var pLayer = TableViewTestLayer.create();
     pScene.addChild(pLayer);
-    cc.Director.getInstance().replaceScene(pScene);
+    cc.director.runScene(pScene);
 };

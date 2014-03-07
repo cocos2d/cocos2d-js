@@ -8,7 +8,7 @@ var TimeElapsed = ccs.BaseTriggerCondition.extend({
         this._tmpTime = 0;
         this._scheduler = null;
         this._success = false;
-        this._scheduler = cc.Director.getInstance().getScheduler();
+        this._scheduler = cc.director.getScheduler();
     },
     
     init: function () {
@@ -60,14 +60,14 @@ var ArmatureActionState = ccs.BaseTriggerCondition.extend({
     },
     
     init: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node) return false;
         var render = node.getComponent(this._comName);
         if (!render) return false;
         var armature = render.getNode();
         if (!armature) return false;
         this._armature = armature;
-        ccs.TriggerMng.getInstance().addArmatureMovementCallBack(this._armature, this.animationEvent, this);
+        ccs.triggerManager.addArmatureMovementCallBack(this._armature, this.animationEvent, this);
         return true;
     },
 
@@ -100,7 +100,7 @@ var ArmatureActionState = ccs.BaseTriggerCondition.extend({
 
     removeAll: function () {
         if (this._armature) {
-            ccs.TriggerMng.getInstance().removeArmatureMovementCallBack(this._armature, this.animationEvent, this);
+            ccs.triggerManager.removeArmatureMovementCallBack(this._armature, this.animationEvent, this);
         }
     },
 
@@ -128,8 +128,8 @@ var NodeInRect = ccs.BaseTriggerCondition.extend({
     },
 
     detect: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
-        if (node && Math.abs(node.getPositionX() - this._origin.x) <= this._size.width && Math.abs(node.getPositionY() - this._origin.y) <= this._size.height) {
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
+        if (node && Math.abs(node.x - this._origin.x) <= this._size.width && Math.abs(node.y - this._origin.y) <= this._size.height) {
             return true;
         }
         return false;
@@ -187,8 +187,8 @@ var NodeVisible = ccs.BaseTriggerCondition.extend({
     },
 
     detect: function () {
-        var node = ccs.SceneReader.getInstance().getNodeByTag(this._tag);
-        if (node && node.isVisible() == this._visible) {
+        var node = ccs.sceneReader.getNodeByTag(this._tag);
+        if (node && node.visible == this._visible) {
             return true;
         }
         return false;

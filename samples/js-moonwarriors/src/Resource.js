@@ -33,48 +33,48 @@ var res = {
 };
 
 var g_mainmenu = [
-    {src:res.loading_png},
-    {src:res.flare_jpg},
-    {src:res.menu_png},
-    {src:res.logo_png},
-	{src:res.b01_png},
-    {src:res.b01_plist},
-    {src:res.mainMainMusic_mp3},
-    {src:res.mainMainMusic_ogg},
-    {src:res.menuTitle_png},
-    {src:res.textureTransparentPack_plist},
-    {src:res.textureTransparentPack_png}
+    res.loading_png,
+    res.flare_jpg,
+    res.menu_png,
+    res.logo_png,
+	res.b01_png,
+    res.b01_plist,
+    res.mainMainMusic_mp3,
+    res.mainMainMusic_ogg,
+    res.menuTitle_png,
+    res.textureTransparentPack_plist,
+    res.textureTransparentPack_png
 ];
 
 var g_maingame = [
     //image
-    {src:res.cocos2d_html5_png},
-    {src:res.gameOver_png},
-    {src:res.arial_14_png},
-    {src:res.explosion_png},
-    {src:res.textureOpaquePack_png},
+    res.cocos2d_html5_png,
+    res.gameOver_png,
+    res.arial_14_png,
+    res.explosion_png,
+    res.textureOpaquePack_png,
 
     //tmx
-    //{src:res.level01_tmx},
+    //res.level01_tmx,
 
     //plist
-    {src:res.explosion_plist},
-    {src:res.textureOpaquePack_plist},
+    res.explosion_plist,
+    res.textureOpaquePack_plist,
 
     //music
-    {src:res.bgMusic_mp3},
-    {src:res.bgMusic_ogg},
+    res.bgMusic_mp3,
+    res.bgMusic_ogg,
 
     //effect
-    {src:res.buttonEffet_mp3},
-    {src:res.explodeEffect_mp3},
-    {src:res.fireEffect_mp3},
-    {src:res.shipDestroyEffect_mp3},
-    {src:res.buttonEffet_ogg},
-    {src:res.explodeEffect_ogg},
-    {src:res.fireEffect_ogg},
-    {src:res.shipDestroyEffect_ogg},
+    res.buttonEffet_mp3,
+    res.explodeEffect_mp3,
+    res.fireEffect_mp3,
+    res.shipDestroyEffect_mp3,
+    res.buttonEffet_ogg,
+    res.explodeEffect_ogg,
+    res.fireEffect_ogg,
+    res.shipDestroyEffect_ogg,
 
     // FNT
-    {src:res.arial_14_fnt}
+    res.arial_14_fnt
 ];

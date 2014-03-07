@@ -227,11 +227,31 @@ point
 },
 
 /**
- * @method setActionTag
- * @param {int} arg0
+ * @method isFlippedX
+ * @return {bool}
  */
-setActionTag : function (
-int 
+isFlippedX : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setFlippedY
+ * @param {bool} arg0
+ */
+setFlippedY : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setFlippedX
+ * @param {bool} arg0
+ */
+setFlippedX : function (
+bool 
 )
 {
 },
@@ -246,16 +266,6 @@ int
 )
 {
     return cc.Node;
-},
-
-/**
- * @method isFlipY
- * @return {bool}
- */
-isFlipY : function (
-)
-{
-    return false;
 },
 
 /**
@@ -401,16 +411,6 @@ isEnabled : function (
 },
 
 /**
- * @method isFlipX
- * @return {bool}
- */
-isFlipX : function (
-)
-{
-    return false;
-},
-
-/**
  * @method removeNodeByTag
  * @param {int} arg0
  */
@@ -441,10 +441,10 @@ getContentSize : function (
 },
 
 /**
- * @method getTouchStartPos
+ * @method getWorldPosition
  * @return {PointObject}
  */
-getTouchStartPos : function (
+getWorldPosition : function (
 )
 {
     return cc.Point;
@@ -543,23 +543,23 @@ layoutparameter
 },
 
 /**
- * @method setFlipY
- * @param {bool} arg0
+ * @method getSizePercent
+ * @return {PointObject}
  */
-setFlipY : function (
-bool 
+getSizePercent : function (
 )
 {
+    return cc.Point;
 },
 
 /**
- * @method setFlipX
- * @param {bool} arg0
+ * @method getTouchStartPos
+ * @return {PointObject}
  */
-setFlipX : function (
-bool 
+getTouchStartPos : function (
 )
 {
+    return cc.Point;
 },
 
 /**
@@ -570,6 +570,16 @@ getLeftInParent : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setActionTag
+ * @param {int} arg0
+ */
+setActionTag : function (
+int 
+)
+{
 },
 
 /**
@@ -602,16 +612,6 @@ point
 )
 {
     return false;
-},
-
-/**
- * @method getSizePercent
- * @return {PointObject}
- */
-getSizePercent : function (
-)
-{
-    return cc.Point;
 },
 
 /**
@@ -683,16 +683,6 @@ removeAllNodes : function (
 },
 
 /**
- * @method getWorldPosition
- * @return {PointObject}
- */
-getWorldPosition : function (
-)
-{
-    return cc.Point;
-},
-
-/**
  * @method getPositionPercent
  * @return {PointObject}
  */
@@ -719,6 +709,16 @@ point
  * @return {bool}
  */
 isFocused : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isFlippedY
+ * @return {bool}
+ */
+isFlippedY : function (
 )
 {
     return false;

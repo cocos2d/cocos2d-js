@@ -35,23 +35,23 @@ var SysTestBase = BaseTestLayer.extend({
     _subtitle:"",
 
     ctor:function() {
-        this._super(cc.c4b(0,0,0,255), cc.c4b(98,99,117,255));
+        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
     },
 
     onRestartCallback:function (sender) {
         var s = new SysTestScene();
         s.addChild(restartSysTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onNextCallback:function (sender) {
         var s = new SysTestScene();
         s.addChild(nextSysTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onBackCallback:function (sender) {
         var s = new SysTestScene();
         s.addChild(previousSysTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     // automation
     numberOfPendingTests:function() {
@@ -77,7 +77,7 @@ var LocalStorageTest = SysTestBase.extend({
         this._super();
 
         var key = 'key_' + Math.random();
-        var ls = sys.localStorage;
+        var ls = cc.sys.localStorage;
         cc.log(1);
         ls.setItem(key, "Hello world");
 
@@ -107,7 +107,7 @@ var CapabilitiesTest = SysTestBase.extend({
     ctor:function () {
         this._super();
 
-        var c = sys.capabilities;
+        var c = cc.sys.capabilities;
         for( var i in c )
             cc.log( i + " = " + c[i] );
     }
@@ -120,7 +120,7 @@ var SysTestScene = TestScene.extend({
         var layer = nextSysTest();
         this.addChild(layer);
 
-        director.replaceScene(this);
+        director.runScene(this);
     }
 });
 
