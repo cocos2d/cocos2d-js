@@ -237,6 +237,12 @@ var s_testArray = [
         func: function () {
             return new UIWidgetAddNodeTest();
         }
+    },
+    {
+        title: "UIRichTextTest",
+        func: function () {
+            return new UIRichTextTest();
+        }
     }
 ];
 UISceneManager = cc.Class.extend({
