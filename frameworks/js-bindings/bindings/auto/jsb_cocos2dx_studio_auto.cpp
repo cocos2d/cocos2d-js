@@ -7592,6 +7592,23 @@ bool js_cocos2dx_studio_GUIReader_widgetFromJsonFile(JSContext *cx, uint32_t arg
 	JS_ReportError(cx, "js_cocos2dx_studio_GUIReader_widgetFromJsonFile : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
+bool js_cocos2dx_studio_GUIReader_getFilePath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocostudio::GUIReader* cobj = (cocostudio::GUIReader *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_GUIReader_getFilePath : Invalid Native Object");
+	if (argc == 0) {
+		const std::string& ret = cobj->getFilePath();
+		jsval jsret = JSVAL_NULL;
+		jsret = std_string_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_studio_GUIReader_getFilePath : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
 bool js_cocos2dx_studio_GUIReader_getVersionInteger(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -7671,6 +7688,7 @@ void js_register_cocos2dx_studio_GUIReader(JSContext *cx, JSObject *global) {
 
 	static JSFunctionSpec funcs[] = {
 		JS_FN("widgetFromJsonFile", js_cocos2dx_studio_GUIReader_widgetFromJsonFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getFilePath", js_cocos2dx_studio_GUIReader_getFilePath, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getVersionInteger", js_cocos2dx_studio_GUIReader_getVersionInteger, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
