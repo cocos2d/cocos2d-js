@@ -201,7 +201,9 @@ cc.SpriteFrame.create = function(fileName, rect, rotated, offset, originalSize){
     var spriteFrame = null;
     switch (arguments.length) {
         case 2:
-            spriteFrame = cc.SpriteFrame._create(fileName, rect);
+            if (fileName instanceof cc.Texture2D)
+                spriteFrame = cc.SpriteFrame.createWithTexture(fileName, rect);
+            else spriteFrame = cc.SpriteFrame._create(fileName, rect);
             break;
         case 5:
             spriteFrame = cc.SpriteFrame._create(fileName, rect, rotated, offset, originalSize);
