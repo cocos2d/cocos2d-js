@@ -215,6 +215,7 @@ cc.SpriteFrame.create = function(fileName, rect, rotated, offset, originalSize){
     return spriteFrame;
 };
 
+
 cc.ParticleSystem._create = cc.ParticleSystem.create;
 /**
  * <p> return the string found by key in dict. <br/>
@@ -232,4 +233,33 @@ cc.ParticleSystem.create = function(plistFile){
         particleSystem = cc.ParticleSystem._create(plistFile);
     }
     return particleSystem;
+};
+
+
+cc.TMXTiledMap._create = cc.TMXTiledMap.create;
+/**
+ * Creates a TMX Tiled Map with a TMX file  or content string.
+ * Implementation cc.TMXTiledMap
+ * @param {String} tmxFile tmxFile fileName or content string
+ * @param {String} resourcePath   If tmxFile is a file name ,it is not required.If tmxFile is content string ,it is must required.
+ * @return {cc.TMXTiledMap|undefined}
+ * @example
+ * //example
+ * 1.
+ * //create a TMXTiledMap with file name
+ * var tmxTiledMap = cc.TMXTiledMap.create("res/orthogonal-test1.tmx");
+ * 2.
+ * //create a TMXTiledMap with content string and resource path
+ * var resources = "res/TileMaps";
+ * var filePath = "res/TileMaps/orthogonal-test1.tmx";
+ * var xmlStr = cc.loader.getRes(filePath);
+ * var tmxTiledMap = cc.TMXTiledMap.create(xmlStr, resources);
+ */
+cc.TMXTiledMap.create = function (tmxFile,resourcePath) {
+    if(resourcePath != undefined){
+        return cc.TMXTiledMap.createWithXML(tmxFile,resourcePath);
+    } else if (tmxFile != undefined) {
+        return cc.TMXTiledMap._create(tmxFile);
+    }
+    return null;
 };
