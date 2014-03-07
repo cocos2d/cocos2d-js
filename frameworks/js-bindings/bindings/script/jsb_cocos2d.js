@@ -335,12 +335,6 @@ cc.color = function (r, g, b, a) {
     return  {r: r, g: g, b: b, a: a };
 };
 
-cc.c4f = function(r, g, b, a) {
-    return {r: r*255, g: g*255, b: b*255, a: a*255};
-};
-cc.c4b = cc.color;
-cc.c3b = cc.color;
-
 /**
  * returns true if both ccColor3B are equal. Otherwise it returns false.
  * @param {cc.Color} color1
@@ -351,6 +345,34 @@ cc.colorEqual = function(color1, color2){
     return color1.r === color2.r && color1.g === color2.g && color1.b === color2.b;
 };
 
+/**
+ * convert a string of color for style to Color.
+ * e.g. "#ff06ff"  to : cc.color(255,6,255)
+ * @param {String} hex
+ * @return {cc.Color}
+ */
+cc.hexToColor = function (hex) {
+    hex = hex.replace(/^#?/, "0x");
+    var c = parseInt(hex);
+    var r = c >> 16;
+    var g = (c >> 8) % 256;
+    var b = c % 256;
+    return cc.color(r, g, b);
+};
+
+/**
+ * convert Color to a string of color for style.
+ * e.g.  cc.color(255,6,255)  to : "#ff06ff"
+ * @param {cc.Color} color
+ * @return {String}
+ */
+cc.colorToHex = function (color) {
+    var hR = color.r.toString(16);
+    var hG = color.g.toString(16);
+    var hB = color.b.toString(16);
+    var hex = "#" + (color.r < 16 ? ("0" + hR) : hR) + (color.g < 16 ? ("0" + hG) : hG) + (color.b < 16 ? ("0" + hB) : hB);
+    return hex;
+};
 
 /**
  * White color (255, 255, 255, 255)
@@ -716,7 +738,7 @@ var ConfigType = {
 
 var __onParseConfig = function(type, str) {
     if (type === ConfigType.COCOSTUDIO) {
-        ccs.TriggerMng.getInstance().parse(JSON.parse(str));
+        ccs.triggerManager.parse(JSON.parse(str));
     }
 };
 

@@ -178,7 +178,7 @@ var SAXParserTest = FileTestBase.extend({
 	ctor:function () {
 		this._super();
 
-		var parser = cc.saxParser;
+		var parser = cc.plistParser;
 		var result = parser.parse(s_grossini_familyPlist);
 
 		var ok = JSON.stringify(this._expectResult) == JSON.stringify(result);
