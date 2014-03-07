@@ -64,12 +64,12 @@ var EditBoxTestLayer = cc.Layer.extend({
         this._box4 = cc.EditBox.create(cc.size(180, 40), cc.Scale9Sprite.create("res/extensions/yellow_edit.png"));
         this._box4.setPlaceholderFontColor(cc.color(255, 0, 0));
         this._box4.setPlaceHolder("Tooltip:");
-        this._box4.x = 220;
-        this._box4.y = 140;
+        this._box4.x = 40;
+        this._box4.y = -100;
         this._box4.setDelegate(this);
         this._box4.setFontColor(cc.color(5, 4, 10));
         this._box4.setMaxLength(10);
-        this.addChild(this._box4);
+        this._box3.addChild(this._box4);
 
         var itemBack = cc.MenuItemFont.create("Back", this.toExtensionsMainLayer, this);
         itemBack.x = winSize.width - 50;

@@ -424,6 +424,9 @@ ccs.guiReader = ccs.GUIReader.getInstance();
 ccs.armatureDataManager = ccs.ArmatureDataManager.getInstance();
 ccs.actionManager = ccs.ActionManager.getInstance();
 ccs.sceneReader = ccs.SceneReader.getInstance();
+
+ccs.sceneReader.clear = ccs.guiReader.clear = ccs.actionManager.clear = ccs.armatureDataManager.clear = function() {};
+
 ccs.sceneReader.version = function() {
     return ccs.SceneReader.sceneReaderVersion();
 }

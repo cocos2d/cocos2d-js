@@ -1,4 +1,4 @@
-cc.game.onEnter = function(){
+cc.game.onStart = function(){
     cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.SHOW_ALL);
     //load resources
     cc.LoaderScene.preload(g_resources, function () {

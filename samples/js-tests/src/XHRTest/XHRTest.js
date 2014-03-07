@@ -40,7 +40,6 @@ var XHRTestScene = TestScene.extend({
 });
 
 var XHRTestLayer = cc.Layer.extend({
-    _lineCount: 0,
     init:function () {
         if (!this._super()) {
             return false;
@@ -73,7 +72,7 @@ var XHRTestLayer = cc.Layer.extend({
 
     sendGetRequest: function() {
         var that = this;
-        var xhr = new XMLHttpRequest();
+        var xhr = cc.loader.getXMLHttpRequest();
         var statusGetLabel = cc.LabelTTF.create("Status:", "Thonburi", 18);
         this.addChild(statusGetLabel, 1);
         statusGetLabel.x = winSize.width / 2;
@@ -81,27 +80,27 @@ var XHRTestLayer = cc.Layer.extend({
         statusGetLabel.setString("Status: Send Get Request to httpbin.org");
         xhr.open("GET", "http://httpbin.org/get");
 
-        xhr.onreadystatechange = function() {
-            var httpStatus = xhr.statusText;
-            var response = xhr.responseText.substring(0,50) + "...";
-            var responseLabel = cc.LabelTTF.create("GET Response (50 chars): \n" + response, "Thonburi", 16);
-            that.addChild(responseLabel, 1);
-            responseLabel.anchorX = 0;
-	        responseLabel.anchorY = 1;
-            responseLabel.textAlign = cc.TEXT_ALIGNMENT_LEFT;
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var httpStatus = xhr.statusText;
+                var response = xhr.responseText.substring(0, 50) + "...";
+                var responseLabel = cc.LabelTTF.create("GET Response (50 chars): \n" + response, "Thonburi", 16);
+                that.addChild(responseLabel, 1);
+                responseLabel.anchorX = 0;
+                responseLabel.anchorY = 1;
+                responseLabel.textAlign = cc.TEXT_ALIGNMENT_LEFT;
 
-            responseLabel.x = winSize.width/6;
-
-            responseLabel.y = winSize.height/2 - that._lineCount * 35;
-            statusGetLabel.setString("Status: Got GET response! " + httpStatus);
-            that._lineCount ++;
+                responseLabel.x = winSize.width / 6;
+                responseLabel.y = winSize.height / 2;
+                statusGetLabel.setString("Status: Got GET response! " + httpStatus);
+            }
         };
         xhr.send();
     },
 
     sendPostRequest: function() {
         var that = this;
-        var xhr = new XMLHttpRequest();
+        var xhr = cc.loader.getXMLHttpRequest();
         var statusPostLabel = cc.LabelTTF.create("Status:", "Thonburi", 18);
         this.addChild(statusPostLabel, 1);
 
@@ -111,20 +110,20 @@ var XHRTestLayer = cc.Layer.extend({
         statusPostLabel.setString("Status: Send Post Request to httpbin.org");
 
         xhr.open("POST", "http://httpbin.org/post");
-        xhr.onreadystatechange = function() {
-            var httpStatus = xhr.statusText;
-            var response = xhr.responseText.substring(0,50) + "...";
-            var responseLabel = cc.LabelTTF.create("POST Response (50 chars):  \n" + response, "Thonburi", 16);
-            that.addChild(responseLabel, 1);
-            responseLabel.anchorX = 0;
-	        responseLabel.anchorY = 1;
-            responseLabel.textAlign = cc.TEXT_ALIGNMENT_LEFT;
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var httpStatus = xhr.statusText;
+                var response = xhr.responseText.substring(0, 50) + "...";
+                var responseLabel = cc.LabelTTF.create("POST Response (50 chars):  \n" + response, "Thonburi", 16);
+                that.addChild(responseLabel, 1);
+                responseLabel.anchorX = 0;
+                responseLabel.anchorY = 1;
+                responseLabel.textAlign = cc.TEXT_ALIGNMENT_LEFT;
 
-            responseLabel.x = winSize.width/6;
-
-            responseLabel.y = winSize.height/2 - that._lineCount * 35;
-            statusPostLabel.setString("Status: Got POST response! " + httpStatus);
-            that._lineCount ++;
+                responseLabel.x = winSize.width / 2;
+                responseLabel.y = winSize.height / 2;
+                statusPostLabel.setString("Status: Got POST response! " + httpStatus);
+            }
         };
         xhr.send("test=ok");
     },

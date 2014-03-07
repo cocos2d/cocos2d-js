@@ -408,11 +408,11 @@ var LayerTestBlend = LayerTest.extend({
         var dst;
 
         if (this._blend) {
-            src = gl.SRC_ALPHA;
-            dst = gl.ONE_MINUS_SRC_ALPHA;
+            src = cc.SRC_ALPHA;
+            dst = cc.ONE_MINUS_SRC_ALPHA;
         } else {
-            src = gl.ONE_MINUS_DST_COLOR;
-            dst = gl.ZERO;
+            src = cc.ONE_MINUS_DST_COLOR;
+            dst = cc.ZERO;
         }
         layer.setBlendFunc( src, dst );
         this._blend = ! this._blend;
