@@ -45,7 +45,7 @@ UIScene = cc.Layer.extend({
             //read widget
             var widget = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UITest/UITest.json");
             mainNode.addChild(widget,-1);
-            
+
             this._sceneTitle = widget.getChildByName("UItest");
 
             var back_label = widget.getChildByName("back");
@@ -73,7 +73,7 @@ UIScene = cc.Layer.extend({
 	            y: widgetSize.height / 2.0
             });
             mainNode.addChild(topDisplayText);
-            
+
             //add bottomDisplayLabel
             var bottomDisplayText = ccui.Text.create();
             bottomDisplayText.attr({
@@ -100,10 +100,11 @@ UIScene = cc.Layer.extend({
     toExtensionsMainLayer: function (sender, type) {
         if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
             UISceneManager.purge();
-            ccs.actionManager.clear();
-            ccs.sceneReader.clear();
-            var scene = new CocoStudioTestScene();
-            scene.runThisTest();
+            var scene = cc.Scene.create();
+            var layer = new TestController();
+            scene.addChild(layer);
+            var transition = cc.TransitionProgressRadialCCW.create(0.5,scene);
+            director.runScene(transition);
         }
     },
 
