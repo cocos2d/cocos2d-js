@@ -93,3 +93,4 @@ CMakeCache.txt
 CMakeFiles
 Makefile
 cmake_install.cmake
+templates/js-template-default/frameworks/js-bindings

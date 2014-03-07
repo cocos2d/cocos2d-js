@@ -921,7 +921,8 @@ cc.game = {
      * @returns {*}
      * @private
      */
-    _initConfig : function(cb){
+    _initConfig : function(){
+        cc._initDebugSetting(1);
         var self = this, CONFIG_KEY = self.CONFIG_KEY;
         var _init = function(cfg){
             cfg[CONFIG_KEY.engineDir] = cfg[CONFIG_KEY.engineDir] || "frameworks/cocos2d-html5";
@@ -930,12 +931,15 @@ cc.game = {
             cfg[CONFIG_KEY.renderMode] = cfg[CONFIG_KEY.renderMode] || 0;
             return cfg;
         };
-        if(self.config) return cb(_init(self.config));
-        cc.loader.loadJson("project.json", function(err, data){
-            if(err) throw err;
-            self.config = data;
-            cb(_init(self.config));
-        })
+        try{
+            var txt = cc.FileUtils.getInstance().getStringFromFile("project.json");
+            var data = JSON.parse(txt);
+            this.config = _init(data || {});
+        }catch(e){
+            this.config = _init({});
+        }
+//        cc._initDebugSetting(this.config[CONFIG_KEY.debugMode]);
+        cc._initSys(this.config, CONFIG_KEY);
     },
     
     //cache for js and module that has added into jsList to be loaded.
@@ -965,19 +969,15 @@ cc.game = {
      * @param cb
      */
     prepare : function(cb){
-        var self = this;
+        var self = this, config = self.config, CONFIG_KEY = self.CONFIG_KEY, loader = cc.loader;
         require("jsb.js");
-        self._initConfig(function(config){
-            var CONFIG_KEY = self.CONFIG_KEY, loader = cc.loader;
-            cc._initSys(config, CONFIG_KEY);
-            cc._initDebugSetting(config[CONFIG_KEY.debugMode]);
-            self._prepareCalled = true;
-            loader.loadJsWithImg("", config[CONFIG_KEY.jsList] || [], function(err){
-                if(err) throw err;
-                self._prepared = true;
-                if(cb) cb();
-            });
+        self._prepareCalled = true;
+        loader.loadJsWithImg("", config[CONFIG_KEY.jsList] || [], function(err){
+            if(err) throw err;
+            self._prepared = true;
+            if(cb) cb();
         });
     }
 };
+cc.game._initConfig();
 //+++++++++++++++++++++++++something about CCGame end+++++++++++++++++++++++++++++

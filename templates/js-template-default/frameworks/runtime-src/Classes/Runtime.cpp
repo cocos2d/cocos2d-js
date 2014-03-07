@@ -229,15 +229,17 @@ vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const 
 
 void startScript()
 {
-
 	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->runScript("src/main.js");
+	ScriptingCore::getInstance()->runScript("main.js");
 }
 
 void reloadScript()
 {
-    
+    auto core = ScriptingCore::getInstance();
+    core->reset();
+    core->runScript("jsb_boot.js");
+    core->runScript("main.js");
 }
 
 
@@ -733,7 +735,7 @@ void startRuntime()
 	ScriptingCore::getInstance()->enableDebugger();
 	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->runScript("jsb.js");
+	ScriptingCore::getInstance()->runScript("jsb_boot.js");
     
     auto scene = Scene::create();
     auto layer = new ConnectWaitLayer();
