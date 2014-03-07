@@ -433,3 +433,16 @@ ccs.sceneReader.version = function() {
 
 //ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
 //ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
+
+
+// Functions don't support binding
+ccs.Bone.prototype.getColliderBodyList = function() {
+    var decoDisplay = this.getDisplayManager().getCurrentDecorativeDisplay();
+    if (decoDisplay) {
+        var detector = decoDisplay.getColliderDetector();
+        if (detector) {
+            return detector.getColliderBodyList();
+        }
+    }
+    return [];
+}

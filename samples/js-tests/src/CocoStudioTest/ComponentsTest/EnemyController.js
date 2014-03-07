@@ -40,8 +40,8 @@ var EnemyController = ccs.ComController.extend({
 
         // Create the target slightly off-screen along the right edge,
         // and along a random position along the Y axis as calculated
-        this._owner.x = winSize.width + (this.getOwner().width / 2);
-	    this._owner.y = actualY;
+        this.getOwner().x = winSize.width + (this.getOwner().width / 2);
+	    this.getOwner().y = actualY;
 
 
         // Determine speed of the target
@@ -54,9 +54,9 @@ var EnemyController = ccs.ComController.extend({
         var actionMove = cc.MoveTo.create(actualDuration, cc.p(0 - this.getOwner().width / 2, actualY));
         var actionMoveDone = cc.CallFunc.create(function () {
             var comController = this.getOwner().parent.getComponent("SceneController");
-            comController.spriteMoveFinished(this._owner);
+            comController.spriteMoveFinished(this.getOwner());
         }, this);
-        this._owner.runAction(cc.Sequence.create(actionMove, actionMoveDone));
+        this.getOwner().runAction(cc.Sequence.create(actionMove, actionMoveDone));
     },
 
     onExit: function () {
@@ -67,10 +67,10 @@ var EnemyController = ccs.ComController.extend({
     },
 
     die: function () {
-        var com = this._owner.parent.getComponent("SceneController");
+        var com = this.getOwner().parent.getComponent("SceneController");
         var targets = com.getTargets();
-        cc.arrayRemoveObject(targets, this._owner);
-        this._owner.removeFromParent(true);
+        cc.arrayRemoveObject(targets, this.getOwner());
+        this.getOwner().removeFromParent(true);
         com.increaseKillCount();
     }
 });
