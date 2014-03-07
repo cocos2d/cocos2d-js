@@ -33,7 +33,7 @@ var LayerTestScene = TestScene.extend({
     runThisTest:function () {
         layerTestSceneIdx = -1;
         this.addChild(nextLayerTest());
-        director.replaceScene(this);
+        director.runScene(this);
     }
 });
 
@@ -56,19 +56,19 @@ var LayerTest = BaseTestLayer.extend({
     onRestartCallback:function (sender) {
         var s = new LayerTestScene();
         s.addChild(restartLayerTest());
-        director.replaceScene(s);
+        director.runScene(s);
 
     },
     onNextCallback:function (sender) {
         var s = new LayerTestScene();
         s.addChild(nextLayerTest());
-        director.replaceScene(s);
+        director.runScene(s);
 
     },
     onBackCallback:function (sender) {
         var s = new LayerTestScene();
         s.addChild(previousLayerTest());
-        director.replaceScene(s);
+        director.runScene(s);
 
     },
     // automation
@@ -91,19 +91,28 @@ var LayerTest1 = LayerTest.extend({
     onEnter:function () {
         this._super();
 
-        if( 'touches' in sys.capabilities )
-            this.setTouchEnabled(true);
-        else if ('mouse' in sys.capabilities )
-            this.setMouseEnabled(true);
+
+        if( 'touches' in cc.sys.capabilities )
+            cc.eventManager.addListener({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+                onTouchesMoved:function (touches, event) {
+                    event.getCurrentTarget().updateSize(touches[0].getLocation());
+                }
+            }, this);
+        else if ('mouse' in cc.sys.capabilities )
+            cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
+                onMouseMove: function(event){
+                    event.getCurrentTarget().updateSize(event.getLocation());
+                }
+            }, this);
 
         var s = director.getWinSize();
-        var layer = cc.LayerColor.create(cc.c4b(255, 0, 0, 128), 200, 200);
+        var layer = cc.LayerColor.create(cc.color(255, 0, 0, 128), 200, 200);
 
-        layer.ignoreAnchor = false;
-        layer.x = s.width / 3;
+        layer.ignoreAnchorPointForPosition(false);
+        layer.x = s.width / 2;
         layer.y = s.height / 2;
-        layer.anchorX = 0;
-        layer.anchorY = 0.5
         this.addChild(layer, 1, cc.TAG_LAYER);
     },
     title:function () {
@@ -113,26 +122,13 @@ var LayerTest1 = LayerTest.extend({
     updateSize:function (location) {
         var l = this.getChildByTag(cc.TAG_LAYER);
 
-        //l.setContentSize(newSize);
         l.width = Math.abs(location.x - winSize.width / 2) * 2;
-        l.height = Math.abs(location.y - winSize.height / 2) * 2;
+	    l.height = Math.abs(location.y - winSize.height / 2) * 2;
     },
-
-    // events
-    onMouseDragged : function( event ) {
-        var location = event.getLocation();
-        this.updateSize(location);
-        return true;
-    },
-    onTouchesMoved:function (touches, event) {
-        this.updateSize( touches[0].getLocation() );
-    },
-
 
     //
     // Automation
     //
-
     pixel: {"0": 190, "1": 0, "2": 0, "3": 128},
 
     getExpectedResult:function() {
@@ -157,12 +153,13 @@ var IgnoreAnchorpointTest1 = LayerTest.extend({
         this._super();
         //create layer
         var ws = director.getWinSize();
-        var layer1 = cc.LayerColor.create(cc.c4b(255, 100, 100, 128), ws.width / 2, ws.height / 2);
+        var layer1 = cc.LayerColor.create(cc.color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
         layer1.ignoreAnchorPointForPosition(true);
-        var layer2 = cc.LayerColor.create(cc.c4b(100, 255, 100, 128), ws.width / 4, ws.height / 4);
+        var layer2 = cc.LayerColor.create(cc.color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
         layer2.ignoreAnchorPointForPosition(true);
         layer1.addChild(layer2);
-        layer1.setPosition(ws.width / 2, ws.height / 2);
+        layer1.x = ws.width / 2;
+        layer1.y = ws.height / 2;
         this.addChild(layer1);
     },
     title:function () {
@@ -181,7 +178,7 @@ var IgnoreAnchorpointTest1 = LayerTest.extend({
     pixel2: {"0": 100, "1": 50, "2": 50, "3": 200},
 
     getExpectedResult:function() {
-
+        
         var s = director.getWinSize();
         var ret = {"big": "yes", "small": "yes"};
         return JSON.stringify(ret);
@@ -194,7 +191,7 @@ var IgnoreAnchorpointTest1 = LayerTest.extend({
         var ret3 =  this.readPixels(s.width - 50, s.height - 50, 50, 50);
         var ret = {"big": this.containsPixel(ret2, this.pixel1, true, 100) ? "yes" : "no",
 		   "small": this.containsPixel(ret3, this.pixel2, true, 100) ? "yes" : "no"};
-
+	
         return JSON.stringify(ret);
     }
 });
@@ -203,12 +200,13 @@ var IgnoreAnchorpointTest2 = LayerTest.extend({
         this._super();
         //create layer
         var ws = director.getWinSize();
-        var layer1 = cc.LayerColor.create(cc.c4b(255, 100, 100, 128), ws.width / 2, ws.height / 2);
+        var layer1 = cc.LayerColor.create(cc.color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
         layer1.ignoreAnchorPointForPosition(true);
-        var layer2 = cc.LayerColor.create(cc.c4b(100, 255, 100, 128), ws.width / 4, ws.height / 4);
+        var layer2 = cc.LayerColor.create(cc.color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
         layer2.ignoreAnchorPointForPosition(false);
         layer1.addChild(layer2);
-        layer1.setPosition(ws.width / 2, ws.height / 2);
+        layer1.x = ws.width / 2;
+        layer1.y = ws.height / 2;
         this.addChild(layer1);
     },
     title:function () {
@@ -227,7 +225,7 @@ var IgnoreAnchorpointTest2 = LayerTest.extend({
     pixel2: {"0": 100, "1": 50, "2": 50, "3": 200},
 
     getExpectedResult:function() {
-
+        
         var s = director.getWinSize();
         var ret = {"big": "yes", "small": "yes"};
         return JSON.stringify(ret);
@@ -240,7 +238,7 @@ var IgnoreAnchorpointTest2 = LayerTest.extend({
         var ret3 =  this.readPixels(s.width - 50, s.height - 50, 5, 5);
         var ret = {"big": this.containsPixel(ret2, this.pixel1, true, 100) ? "yes" : "no",
 		   "small": this.containsPixel(ret3, this.pixel2, true, 100) ? "yes" : "no"};
-
+	
         return JSON.stringify(ret);
     }
 });
@@ -250,12 +248,13 @@ var IgnoreAnchorpointTest3 = LayerTest.extend({
         this._super();
         //create layer
         var ws = director.getWinSize();
-        var layer1 = cc.LayerColor.create(cc.c4b(255, 100, 100, 128), ws.width / 2, ws.height / 2);
+        var layer1 = cc.LayerColor.create(cc.color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
         layer1.ignoreAnchorPointForPosition(false);
-        var layer2 = cc.LayerColor.create(cc.c4b(100, 255, 100, 128), ws.width / 4, ws.height / 4);
+        var layer2 = cc.LayerColor.create(cc.color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
         layer2.ignoreAnchorPointForPosition(false);
         layer1.addChild(layer2);
-        layer1.setPosition(ws.width / 2, ws.height / 2);
+        layer1.x = ws.width / 2;
+        layer1.y = ws.height / 2;
         this.addChild(layer1);
     },
     title:function () {
@@ -271,12 +270,13 @@ var IgnoreAnchorpointTest4 = LayerTest.extend({
         this._super();
         //create layer
         var ws = director.getWinSize();
-        var layer1 = cc.LayerColor.create(cc.c4b(255, 100, 100, 128), ws.width / 2, ws.height / 2);
+        var layer1 = cc.LayerColor.create(cc.color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
         layer1.ignoreAnchorPointForPosition(false);
-        var layer2 = cc.LayerColor.create(cc.c4b(100, 255, 100, 128), ws.width / 4, ws.height / 4);
+        var layer2 = cc.LayerColor.create(cc.color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
         layer2.ignoreAnchorPointForPosition(true);
         layer1.addChild(layer2);
-        layer1.setPosition(ws.width / 2, ws.height / 2);
+        layer1.x = ws.width / 2;
+        layer1.y = ws.height / 2;
         this.addChild(layer1);
     },
     title:function () {
@@ -299,13 +299,15 @@ var LayerTest2 = LayerTest.extend({
         this._super();
 
         var s = director.getWinSize();
-        var layer1 = cc.LayerColor.create(cc.c4b(255, 255, 0, 80), 100, 300);
-        layer1.setPosition(s.width / 3, s.height / 2);
+        var layer1 = cc.LayerColor.create(cc.color(255, 255, 0, 80), 100, 300);
+        layer1.x = s.width / 3;
+        layer1.y = s.height / 2;
         layer1.ignoreAnchorPointForPosition(false);
         this.addChild(layer1, 1, LAYERTEST2_LAYER1_TAG);
 
-        var layer2 = cc.LayerColor.create(cc.c4b(0, 0, 255, 255), 100, 300);
-        layer2.setPosition((s.width / 3) * 2, s.height / 2);
+        var layer2 = cc.LayerColor.create(cc.color(0, 0, 255, 255), 100, 300);
+        layer2.x = (s.width / 3) * 2;
+        layer2.y = s.height / 2;
         layer2.ignoreAnchorPointForPosition(false);
         this.addChild(layer2, 2, LAYERTEST2_LAYER2_TAG);
 
@@ -315,13 +317,13 @@ var LayerTest2 = LayerTest.extend({
         var actionFade = cc.FadeOut.create(2.0);
         var actionFadeBack = actionFade.reverse();
 
-        if(autoTestEnabled) {
-	    var seq1 = cc.Sequence.create(actionTint, cc.DelayTime.create(0.25), actionTintBack);
-	    var seq2 = cc.Sequence.create(actionFade, cc.DelayTime.create(0.25), actionFadeBack);
-	} else {
-	    var seq1 = cc.Sequence.create(actionTint, actionTintBack);
-	    var seq2 = cc.Sequence.create(actionFade, actionFadeBack);
-	}
+        if (autoTestEnabled) {
+            var seq1 = cc.Sequence.create(actionTint, cc.DelayTime.create(0.25), actionTintBack);
+            var seq2 = cc.Sequence.create(actionFade, cc.DelayTime.create(0.25), actionFadeBack);
+        } else {
+            var seq1 = cc.Sequence.create(actionTint, actionTintBack);
+            var seq2 = cc.Sequence.create(actionFade, actionFadeBack);
+        }
 
         layer1.runAction(seq1);
         layer2.runAction(seq2);
@@ -337,31 +339,28 @@ var LayerTest2 = LayerTest.extend({
     testDuration: 2.1,
     tintTest: {"r": 0, "g": 128, "b": 60},
     getExpectedResult:function() {
-
-        var s = director.getWinSize();
         var ret = {"tint": "yes", "opacity": 0};
         return JSON.stringify(ret);
     },
 
     getCurrentResult:function() {
-
         var abs = function (a) {
-	    return (a > 0) ? a: a*-1;
-	};
+            return (a > 0) ? a : a * -1;
+        };
 
-	var inColorRange = function (pix1, pix2) {
-	    // Color on iOS comes as 0,128,128 and on web as 0,128,0
-	    if(abs(pix1.r - pix2.r) < 50 && abs(pix1.g - pix2.g) < 50 &&
-	       abs(pix1.b - pix2.b) < 90) {
-		return true;
-	    }
-	    return false;
-	};
-    var s = director.getWinSize();
-	var tint = this.getChildByTag(LAYERTEST2_LAYER1_TAG).getColor();
-	var op = this.getChildByTag(LAYERTEST2_LAYER2_TAG).getOpacity();
+        var inColorRange = function (pix1, pix2) {
+            // Color on iOS comes as 0,128,128 and on web as 0,128,0
+            if (abs(pix1.r - pix2.r) < 50 && abs(pix1.g - pix2.g) < 50 &&
+                abs(pix1.b - pix2.b) < 90) {
+                return true;
+            }
+            return false;
+        };
+        var s = director.getWinSize();
+        var tint = this.getChildByTag(LAYERTEST2_LAYER1_TAG).color;
+        var op = this.getChildByTag(LAYERTEST2_LAYER2_TAG).opacity;
         var ret = {"tint": inColorRange(tint, this.tintTest) ? "yes" : "no",
-		   "opacity": op};
+            "opacity": op};
 
         return JSON.stringify(ret);
     }
@@ -377,7 +376,7 @@ var LayerTestBlend = LayerTest.extend({
 
     ctor:function () {
         this._super();
-        var layer1 = cc.LayerColor.create(cc.c4b(255, 255, 255, 80));
+        var layer1 = cc.LayerColor.create(cc.color(255, 255, 255, 80));
 
         var sister1 = cc.Sprite.create(s_pathSister1);
         var sister2 = cc.Sprite.create(s_pathSister2);
@@ -386,13 +385,17 @@ var LayerTestBlend = LayerTest.extend({
         this.addChild(sister2);
         this.addChild(layer1, 100, cc.TAG_LAYER);
 
-        sister1.setPosition(winSize.width/3, winSize.height / 2);
-        sister2.setPosition(winSize.width/3 * 2, winSize.height / 2);
+        sister1.x = winSize.width/3;
 
-        if (sys.platform === 'browser' && !("opengl" in sys.capabilities)) {
+        sister1.y = winSize.height / 2;
+        sister2.x = winSize.width/3 * 2;
+        sister2.y = winSize.height / 2;
+
+        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
             var label = cc.LabelTTF.create("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
-            label.setPosition(winSize.width / 2, winSize.height / 2);
+            label.x = winSize.width / 2;
+            label.y = winSize.height / 2;
         }
 
         this.schedule(this.onNewBlend, 1.0);
@@ -405,11 +408,11 @@ var LayerTestBlend = LayerTest.extend({
         var dst;
 
         if (this._blend) {
-            src = gl.SRC_ALPHA;
-            dst = gl.ONE_MINUS_SRC_ALPHA;
+            src = cc.SRC_ALPHA;
+            dst = cc.ONE_MINUS_SRC_ALPHA;
         } else {
-            src = gl.ONE_MINUS_DST_COLOR;
-            dst = gl.ZERO;
+            src = cc.ONE_MINUS_DST_COLOR;
+            dst = cc.ZERO;
         }
         layer.setBlendFunc( src, dst );
         this._blend = ! this._blend;
@@ -428,13 +431,30 @@ var LayerGradient = LayerTest.extend({
     _isPressed:false,
     ctor:function () {
         this._super();
-        var layer1 = cc.LayerGradient.create(cc.c4b(255, 0, 0, 255), cc.c4b(0, 255, 0, 255), cc.p(0.9, 0.9));
+        var layer1 = cc.LayerGradient.create(cc.color(255, 0, 0, 255), cc.color(0, 255, 0, 255), cc.p(0.9, 0.9));
         this.addChild(layer1, 0, cc.TAG_LAYER);
 
-        if( 'touches' in sys.capabilities )
-            this.setTouchEnabled(true);
-        else if ('mouse' in sys.capabilities )
-            this.setMouseEnabled(true);
+        if( 'touches' in cc.sys.capabilities ){
+            cc.eventManager.addListener({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+                onTouchesBegan:function(touches, event){
+                    event.getCurrentTarget().updateGradient(touches[0].getLocation());
+                },
+                onTouchesMoved:function (touches, event) {
+                    event.getCurrentTarget().updateGradient(touches[0].getLocation());
+                }
+            }, this);
+        } else if ('mouse' in cc.sys.capabilities ){
+            cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
+                onMouseDown: function(event){
+                    event.getCurrentTarget().updateGradient(event.getLocation());
+                },
+                onMouseMove: function(event){
+                    event.getCurrentTarget().updateGradient(event.getLocation());
+                }
+            }, this);
+        }
 
         var label1 = cc.LabelTTF.create("Compressed Interpolation: Enabled", "Marker Felt", 26);
         var label2 = cc.LabelTTF.create("Compressed Interpolation: Disabled", "Marker Felt", 26);
@@ -444,7 +464,8 @@ var LayerGradient = LayerTest.extend({
 
          var menu = cc.Menu.create(item);
          this.addChild(menu);
-         menu.setPosition(winSize.width / 2, 100);
+         menu.x = winSize.width / 2;
+         menu.y = 100;
     },
 
     updateGradient:function(pos) {
@@ -454,26 +475,7 @@ var LayerGradient = LayerTest.extend({
         var gradient = this.getChildByTag(1);
         gradient.setVector(diff);
     },
-    onTouchesBegan:function(touches, event){
-        this._isPressed = true;
-        var start = touches[0].getLocation();
-        this.updateGradient(start);
-    },
-    onTouchesMoved:function (touches, event) {
-        if(this._isPressed) {
-            var start = touches[0].getLocation();
-            this.updateGradient(start);
-        }
-    },
-    onTouchesEnded:function(touches,event){
-        this._isPressed = false;
-    },
 
-    onMouseDragged : function( event ) {
-        var location = event.getLocation();
-        this.updateGradient(location);
-        return true;
-    },
     onToggleItem:function (sender) {
         var gradient = this.getChildByTag(cc.TAG_LAYER);
         gradient.setCompressedInterpolation(!gradient.isCompressedInterpolation());
@@ -494,7 +496,7 @@ var LayerGradient = LayerTest.extend({
     pixel2: {"0": 0, "1": 255, "2": 0, "3": 255},
 
     getExpectedResult:function() {
-
+        
         var s = director.getWinSize();
         var ret = {"bottomleft": "yes", "topright": "yes"};
         return JSON.stringify(ret);
@@ -507,7 +509,7 @@ var LayerGradient = LayerTest.extend({
         var ret3 =  this.readPixels(s.width - 50, s.height - 50, 50, 50);
         var ret = {"bottomleft": this.containsPixel(ret2, this.pixel1) ? "yes" : "no",
 		   "topright": this.containsPixel(ret3, this.pixel2) ? "yes" : "no"};
-
+	
         return JSON.stringify(ret);
     }
 });
@@ -522,7 +524,7 @@ var arrayOfLayerTest = [
     IgnoreAnchorpointTest4
 ];
 
-if( 'opengl' in sys.capabilities ){
+if( 'opengl' in cc.sys.capabilities ){
     arrayOfLayerTest.push(LayerGradient);
 }
 

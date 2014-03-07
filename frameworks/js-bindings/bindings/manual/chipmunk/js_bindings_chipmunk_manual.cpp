@@ -74,6 +74,21 @@ void JSPROXY_CCPhysicsSprite_finalize(JSFreeOp *fop, JSObject *obj)
 }
 
 // Arguments:
+// Ret value: BOOL (b)
+bool JSPROXY_CCPhysicsSprite_isDirty(JSContext *cx, uint32_t argc, jsval *vp) {
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    PhysicsSprite* real = (PhysicsSprite *)(proxy ? proxy->ptr : NULL);
+	TEST_NATIVE_OBJECT(cx, real)
+    
+    if (real->isDirty()) {
+        JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+    }
+	else JS_SET_RVAL(cx, vp, JSVAL_FALSE);
+	return true;
+}
+
+// Arguments:
 // Ret value: cpBody* (N/A)
 bool JSPROXY_CCPhysicsSprite_getCPBody(JSContext *cx, uint32_t argc, jsval *vp) {
     
@@ -459,6 +474,7 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
+        JS_FN("isDirty", JSPROXY_CCPhysicsSprite_isDirty, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("getCPBody", JSPROXY_CCPhysicsSprite_getCPBody, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("getIgnoreBodyRotation", JSPROXY_CCPhysicsSprite_ignoreBodyRotation, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("_setCPBody", JSPROXY_CCPhysicsSprite_setCPBody_, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),

@@ -280,23 +280,23 @@ bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
 
     // osx, ios, android, windows, linux, etc..
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    os = JS_InternString(cx, "ios");
+    os = JS_InternString(cx, "iOS");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    os = JS_InternString(cx, "android");
+    os = JS_InternString(cx, "Android");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    os = JS_InternString(cx, "windows");
+    os = JS_InternString(cx, "Windows");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-    os = JS_InternString(cx, "marmalade");
+    os = JS_InternString(cx, "Marmalade");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    os = JS_InternString(cx, "linux");
+    os = JS_InternString(cx, "Linux");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-    os = JS_InternString(cx, "bada");
+    os = JS_InternString(cx, "Bada");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
-    os = JS_InternString(cx, "blackberry");
+    os = JS_InternString(cx, "Blackberry");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    os = JS_InternString(cx, "osx");
+    os = JS_InternString(cx, "OS X");
 #else
-    os = JS_InternString(cx, "unknown");
+    os = JS_InternString(cx, "Unknown");
 #endif
 
     jsval ret = STRING_TO_JSVAL(os);
@@ -547,12 +547,15 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
 	// a) check jsc file first
 	std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
 
-	Data data = futil->getDataFromFile(byteCodePath);
-
-	if (!data.isNull())
-	{
-		script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
-	}
+    // Check whether '.jsc' files exist to avoid outputing log which says 'couldn't find .jsc file'.
+    if (futil->isFileExist(byteCodePath))
+    {
+        Data data = futil->getDataFromFile(byteCodePath);
+        if (!data.isNull())
+        {
+            script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
+        }
+    }
 
 	// b) no jsc file, check js file
 	if (!script)
@@ -768,7 +771,7 @@ bool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 
 void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)
 {
-    Array * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
+    __Array * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if (! arr) return;
     
     Node* node = (Node*)p->ptr;
@@ -782,7 +785,7 @@ void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)
 
 void ScriptingCore::resumeSchedulesAndActions(js_proxy_t* p)
 {
-    Array * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
+    __Array * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if (!arr) return;
     
     Node* node = (Node*)p->ptr;
@@ -794,7 +797,7 @@ void ScriptingCore::resumeSchedulesAndActions(js_proxy_t* p)
 
 void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
 {
-    Array* arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
+    __Array* arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if (arr) {
         Scheduler* pScheduler = Director::getInstance()->getScheduler();
         Ref* pObj = NULL;

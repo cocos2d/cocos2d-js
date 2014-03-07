@@ -33,21 +33,22 @@ var Ball = cc.Sprite.extend({
         this._radius = rad;
     },
     move:function (delta) {
-        this.setPosition(cc.pAdd(this.getPosition(), cc.pMult(this._velocity, delta)));
-        var winSize = cc.Director.getInstance().getWinSize();
-        if (this.getPosition().x > winSize.width - this.radius()) {
-            this.setPosition(winSize.width - this.radius(), this.getPosition().y);
+	    this.x += this._velocity.x * delta;
+	    this.y += this._velocity.y * delta;
+        var winSize = cc.director.getWinSize();
+        if (this.x > winSize.width - this.radius()) {
+            this.x = winSize.width - this.radius();
             this._velocity.x *= -1;
-        } else if (this.getPosition().x < this.radius()) {
-            this.setPosition(this.radius(), this.getPosition().y);
+        } else if (this.x < this.radius()) {
+            this.x = this.radius();
             this._velocity.x *= -1;
         }
     },
     collideWithPaddle:function (paddle) {
         var paddleRect = paddle.rect();
 
-        paddleRect.x += paddle.getPosition().x;
-        paddleRect.y += paddle.getPosition().y;
+        paddleRect.x += paddle.x;
+        paddleRect.y += paddle.y;
 
         var lowY = cc.rectGetMinY(paddleRect);
         var midY = cc.rectGetMidY(paddleRect);
@@ -56,21 +57,21 @@ var Ball = cc.Sprite.extend({
         var leftX = cc.rectGetMinX(paddleRect);
         var rightX = cc.rectGetMaxX(paddleRect);
 
-        if ((this.getPosition().x > leftX) && (this.getPosition().x < rightX)) {
+        if ((this.x > leftX) && (this.x < rightX)) {
             var hit = false;
             var angleOffset = 0.0;
-            if ((this.getPositionY() > midY) && (this.getPositionY() <= (highY + this.radius()))) {
-                this.setPosition(this.getPosition().x, highY + this.radius());
+            if ((this.y > midY) && (this.y <= (highY + this.radius()))) {
+                this.y = highY + this.radius();
                 hit = true;
                 angleOffset = Math.PI / 2;
-            } else if (this.getPosition().y < midY && this.getPosition().y >= lowY - this.radius()) {
-                this.setPosition(this.getPosition().x, lowY - this.radius());
+            } else if (this.y < midY && this.y >= lowY - this.radius()) {
+                this.y = lowY - this.radius();
                 hit = true;
                 angleOffset = -Math.PI / 2;
             }
 
             if (hit) {
-                var hitAngle = cc.pToAngle(cc.pSub(paddle.getPosition(), this.getPosition())) + angleOffset;
+                var hitAngle = cc.pToAngle(cc.p(paddle.x - this.x, paddle.y - this.y)) + angleOffset;
 
                 var scalarVelocity = cc.pLength(this._velocity) * 1.00000005;
                 var velocityAngle = -cc.pToAngle(this._velocity) + 0.00000005 * hitAngle;
@@ -90,7 +91,7 @@ Ball.ballWithTexture = function (texture) {
     var ball = new Ball();
     ball.initWithTexture(texture);
     if (texture instanceof cc.Texture2D)
-        ball.setRadius(texture.getContentSize().width / 2);
+        ball.setRadius(texture.width / 2);
     else if ((texture instanceof HTMLImageElement) || (texture instanceof HTMLCanvasElement))
         ball.setRadius(texture.width / 2);
     return ball;

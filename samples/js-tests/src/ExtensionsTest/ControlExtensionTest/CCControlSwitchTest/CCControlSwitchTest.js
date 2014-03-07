@@ -27,26 +27,30 @@
 var ControlSwitchTest = ControlScene.extend({
     init:function () {
         if (this._super()) {
-            var screenSize = cc.Director.getInstance().getWinSize();
+            var screenSize = cc.director.getWinSize();
 
             var layer = cc.Node.create();
-            layer.setPosition(screenSize.width / 2, screenSize.height / 2);
+            layer.x = screenSize.width / 2;
+            layer.y = screenSize.height / 2;
             this.addChild(layer, 1);
 
             var layer_width = 0;
 
             // Add the black background for the text
             var background = cc.Scale9Sprite.create("res/extensions/buttonBackground.png");
-            background.setContentSize(80, 50);
-            background.setPosition(layer_width + background.getContentSize().width / 2.0, 0);
+            background.width = 80;
+	        background.height = 50;
+            background.x = layer_width + background.width / 2.0;
+            background.y = 0;
             layer.addChild(background);
 
-            layer_width += background.getContentSize().width;
+            layer_width += background.width;
 
             this._displayValueLabel = cc.LabelTTF.create("#color", "Marker Felt", 30);
             this._displayValueLabel.retain();
 
-            this._displayValueLabel.setPosition(background.getPosition());
+            this._displayValueLabel.x = background.x;
+            this._displayValueLabel.y = background.y;
             layer.addChild(this._displayValueLabel);
 
             // Create the switch
@@ -59,14 +63,17 @@ var ControlSwitchTest = ControlScene.extend({
                     cc.LabelTTF.create("On", "Arial-BoldMT", 16),
                     cc.LabelTTF.create("Off", "Arial-BoldMT", 16)
                 );
-            switchControl.setPosition(layer_width + 10 + switchControl.getContentSize().width / 2, 0);
+            switchControl.x = layer_width + 10 + switchControl.width / 2;
+            switchControl.y = 0;
             layer.addChild(switchControl);
 
             switchControl.addTargetWithActionForControlEvents(this, this.valueChanged, cc.CONTROL_EVENT_VALUECHANGED);
 
             // Set the layer size
-            layer.setContentSize(layer_width, 0);
-            layer.setAnchorPoint(0.5, 0.5);
+            layer.width = layer_width;
+	        layer.height = 0;
+            layer.anchorX = 0.5;
+	        layer.anchorY = 0.5;
 
             // Update the value label
             this.valueChanged(switchControl, cc.CONTROL_EVENT_VALUECHANGED);

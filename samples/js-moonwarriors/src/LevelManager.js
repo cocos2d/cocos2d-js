@@ -57,20 +57,19 @@ var LevelManager = cc.Class.extend({
 
     addEnemyToGameLayer:function(enemyType){
 		var addEnemy = Enemy.getOrCreateEnemy(EnemyType[enemyType]);
-        var enemypos = cc.p( 80 + (winSize.width - 160) * Math.random(), winSize.height);
-        var enemycs =  addEnemy.getContentSize();
-        addEnemy.setPosition( enemypos );
+        addEnemy.x = 80 + (winSize.width - 160) * Math.random();
+	    addEnemy.y = winSize.height;
 
         var offset, tmpAction;
         var a0=0;
         var a1=0;
         switch (addEnemy.moveType) {
             case MW.ENEMY_MOVE_TYPE.ATTACK:
-                offset = this._gameLayer._ship.getPosition();
+                offset = cc.p(this._gameLayer._ship.x, this._gameLayer._ship.y);
                 tmpAction = cc.MoveTo.create(1, offset);
                 break;
             case MW.ENEMY_MOVE_TYPE.VERTICAL:
-                offset = cc.p(0, -winSize.height - enemycs.height);
+                offset = cc.p(0, -winSize.height - addEnemy.height);
                 tmpAction = cc.MoveBy.create(4, offset);
                 break;
             case MW.ENEMY_MOVE_TYPE.HORIZONTAL:
@@ -87,7 +86,7 @@ var LevelManager = cc.Class.extend({
                 tmpAction = cc.Sequence.create(a0, a1, onComplete);
                 break;
             case MW.ENEMY_MOVE_TYPE.OVERLAP:
-                var newX = (enemypos.x <= winSize.width / 2) ? 320 : -320;
+                var newX = (addEnemy.x <= winSize.width / 2) ? 320 : -320;
                 a0 = cc.MoveBy.create(4, cc.p(newX, -240));
                 a1 = cc.MoveBy.create(4,cc.p(-newX,-320));
                 tmpAction = cc.Sequence.create(a0,a1);

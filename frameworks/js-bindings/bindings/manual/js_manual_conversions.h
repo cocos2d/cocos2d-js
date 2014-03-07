@@ -80,6 +80,7 @@ bool jsval_to_ccsize(JSContext *cx, jsval v, cocos2d::Size* ret);
 bool jsval_to_cccolor4b(JSContext *cx, jsval v, cocos2d::Color4B* ret);
 bool jsval_to_cccolor4f(JSContext *cx, jsval v, cocos2d::Color4F* ret);
 bool jsval_to_cccolor3b(JSContext *cx, jsval v, cocos2d::Color3B* ret);
+bool jsval_cccolor_to_opacity(JSContext *cx, jsval v, int32_t* ret);
 bool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, cocos2d::Point **points, int *numPoints);
 bool jsval_to_ccarray(JSContext* cx, jsval v, cocos2d::__Array** ret);
 bool jsval_to_ccdictionary(JSContext* cx, jsval v, cocos2d::__Dictionary** ret);

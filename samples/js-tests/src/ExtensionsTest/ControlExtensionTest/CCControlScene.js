@@ -33,31 +33,37 @@ var ControlScene = cc.Layer.extend({
     init:function(){
         if (this._super()) {
             // Get the sceensize
-            var screensize = cc.Director.getInstance().getWinSize();
+            var screensize = cc.director.getWinSize();
 
             var pBackItem = cc.MenuItemFont.create("Back", this.toExtensionsMainLayer, this);
-            pBackItem.setPosition(screensize.width - 50, 25);
+            pBackItem.x = screensize.width - 50;
+            pBackItem.y = 25;
             var pBackMenu = cc.Menu.create(pBackItem);
-            pBackMenu.setPosition(0,0);
+            pBackMenu.x = 0;
+            pBackMenu.y = 0;
             this.addChild(pBackMenu, 10);
 
             // Add the generated background
             var background = cc.Sprite.create(s_extensions_background);
-            background.setPosition(screensize.width / 2, screensize.height / 2);
+            background.x = screensize.width / 2;
+            background.y = screensize.height / 2;
             var bgRect = background.getTextureRect();
-            background.setScaleX(screensize.width/bgRect.width);
-            background.setScaleY(screensize.height/bgRect.height);
+            background.scaleX = screensize.width/bgRect.width;
+            background.scaleY = screensize.height/bgRect.height;
             this.addChild(background);
 
             // Add the ribbon
             var ribbon = cc.Scale9Sprite.create(s_extensions_ribbon, cc.rect(1, 1, 48, 55));
-            ribbon.setContentSize(screensize.width, 57);
-            ribbon.setPosition(screensize.width / 2.0, screensize.height - ribbon.getContentSize().height / 2.0);
+            ribbon.width = screensize.width;
+	        ribbon.height = 57;
+            ribbon.x = screensize.width / 2.0;
+            ribbon.y = screensize.height - ribbon.height / 2.0;
             this.addChild(ribbon);
 
             // Add the title
             this.setSceneTitleLabel(cc.LabelTTF.create("Title", "Arial", 12));
-            this._sceneTitleLabel.setPosition(cc.p (screensize.width / 2, screensize.height - this._sceneTitleLabel.getContentSize().height / 2 - 5));
+            this._sceneTitleLabel.x = screensize.width / 2;
+            this._sceneTitleLabel.y = screensize.height - this._sceneTitleLabel.height / 2 - 5;
             this.addChild(this._sceneTitleLabel, 1);
 
             // Add the menu
@@ -66,10 +72,14 @@ var ControlScene = cc.Layer.extend({
             var item3 = cc.MenuItemImage.create(s_pathF1, s_pathF2, this.nextCallback, this);
 
             var menu = cc.Menu.create(item1, item3, item2);
-            menu.setPosition(0,0);
-            item1.setPosition(screensize.width / 2 - 100, 37);
-            item2.setPosition(screensize.width / 2, 35);
-            item3.setPosition(screensize.width / 2 + 100, 37);
+            menu.x = 0;
+            menu.y = 0;
+            item1.x = screensize.width / 2 - 100;
+            item1.y = 37;
+            item2.x = screensize.width / 2;
+            item2.y = 35;
+            item3.x = screensize.width / 2 + 100;
+            item3.y = 37;
 
             this.addChild(menu ,1);
 
@@ -84,13 +94,13 @@ var ControlScene = cc.Layer.extend({
     },
 
     previousCallback:function(sender){
-        cc.Director.getInstance().replaceScene(ControlSceneManager.getInstance().previousControlScene());
+        cc.director.runScene(ControlSceneManager.getInstance().previousControlScene());
     },
     restartCallback:function(sender){
-        cc.Director.getInstance().replaceScene(ControlSceneManager.getInstance().currentControlScene());
+        cc.director.runScene(ControlSceneManager.getInstance().currentControlScene());
     },
     nextCallback:function(sender){
-        cc.Director.getInstance().replaceScene(ControlSceneManager.getInstance().nextControlScene());
+        cc.director.runScene(ControlSceneManager.getInstance().nextControlScene());
     }
 });
 

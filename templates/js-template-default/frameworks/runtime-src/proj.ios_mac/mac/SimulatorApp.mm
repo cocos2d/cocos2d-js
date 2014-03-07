@@ -193,14 +193,20 @@ using namespace cocos2d;
 
 - (void) updateView
 {
+    auto policy = g_eglView->getResolutionPolicy();
+    auto designSize = g_eglView->getDesignResolutionSize();
+    
 	if (g_landscape)
 	{
-		glfwSetWindowSize(g_eglView->getWindow(),g_screenSize.width,g_screenSize.height);
+        g_eglView->setFrameSize(g_screenSize.width, g_screenSize.height);
 	}
 	else
 	{
-		glfwSetWindowSize(g_eglView->getWindow(),g_screenSize.height,g_screenSize.width);
+        g_eglView->setFrameSize(g_screenSize.height, g_screenSize.width);
 	}
+    
+    g_eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
+    
     [self updateMenu];
 }
 
@@ -262,7 +268,7 @@ using namespace cocos2d;
 {
     if ([sender state] == NSOnState) return;
     float scale = (float)[sender tag] / 100.0f;
-    [self setZoom:scale];
+    g_eglView->setFrameZoomFactor(scale);
 }
 
 

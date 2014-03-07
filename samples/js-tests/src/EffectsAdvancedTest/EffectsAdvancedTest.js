@@ -28,9 +28,9 @@ var EffectsAdvancedTest = EffectsAdvancedTest || {};
 
 EffectsAdvancedTest.TAG_TEXTLAYER = 1;
 
-EffectsAdvancedTest.TARGET1 = 1;
+EffectsAdvancedTest.TAG_SPRITE1 = 1;
 
-EffectsAdvancedTest.TARGET2 = 2;
+EffectsAdvancedTest.TAG_SPRITE2 = 2;
 
 EffectsAdvancedTest.TAG_BACKGROUND = 1;
 
@@ -58,45 +58,43 @@ var EffectAdvanceTextLayer = cc.Layer.extend({
 
 
         // back gradient
-        var gradient = cc.NodeGrid.create();
-        gradient.setAnchorPoint(cc.p(0.5,0.5));
+        var gradient = cc.LayerGradient.create(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
         this.addChild(gradient,0, EffectsAdvancedTest.TAG_BACKGROUND);
 
         var bg = cc.Sprite.create(s_back3);
         //this.addChild(bg, 0, EffectsAdvancedTest.TAG_BACKGROUND);
         gradient.addChild(bg);
-        bg.setPosition(winSize.width / 2, winSize.height / 2);
-        
-        var target1 = cc.NodeGrid.create();
-        target1.setAnchorPoint(cc.p(0.5,0.5));
+        bg.x = winSize.width / 2;
+        bg.y = winSize.height / 2;
+
         var grossini = cc.Sprite.create(s_pathSister2);
-        target1.addChild(grossini);
-        gradient.addChild(target1, 1, EffectsAdvancedTest.TARGET1);
-        grossini.setPosition(winSize.width / 3, winSize.height / 2);
+        gradient.addChild(grossini, 1, EffectsAdvancedTest.TAG_SPRITE1);
+        grossini.x = winSize.width / 3;
+        grossini.y = winSize.height / 2;
         var sc = cc.ScaleBy.create(2, 5);
         var sc_back = sc.reverse();
-        target1.runAction(cc.RepeatForever.create(cc.Sequence.create(sc, sc_back)));
-        
-        var target2 = cc.NodeGrid.create();
-        target2.setAnchorPoint(cc.p(0.5,0.5));
+        grossini.runAction(cc.RepeatForever.create(cc.Sequence.create(sc, sc_back)));
+
         var tamara = cc.Sprite.create(s_pathSister1);
-        target2.addChild(tamara);
-        gradient.addChild(target2, 1, EffectsAdvancedTest.TARGET2);
-        tamara.setPosition(winSize.width * 2 / 3, winSize.height / 2);
+        gradient.addChild(tamara, 1, EffectsAdvancedTest.TAG_SPRITE2);
+        tamara.x = winSize.width * 2 / 3;
+        tamara.y = winSize.height / 2;
         var sc2 = cc.ScaleBy.create(2, 5);
         var sc2_back = sc2.reverse();
         tamara.runAction(cc.RepeatForever.create(cc.Sequence.create(sc2, sc2_back)));
 
         var label = cc.LabelTTF.create(this.title(), "Arial", 28);
-        label.setPosition(cc.VisibleRect.center().x, cc.VisibleRect.top().y - 80);
+        label.x = cc.visibleRect.center.x;
+        label.y = cc.visibleRect.top.y - 80;
         this.addChild(label);
-        label.setTag(EffectsAdvancedTest.TAG_LABEL);
+        label.tag = EffectsAdvancedTest.TAG_LABEL;
 
         var strSubtitle = this.subtitle();
         if (strSubtitle != "") {
             var subtitleLabel = cc.LabelTTF.create(strSubtitle, "Arial", 16);
             this.addChild(subtitleLabel, 101);
-            subtitleLabel.setPosition(cc.VisibleRect.center().x, cc.VisibleRect.top().y - 80);
+            subtitleLabel.x = cc.visibleRect.center.x;
+            subtitleLabel.y = cc.visibleRect.top.y - 80;
         }
 
         var item1 = cc.MenuItemImage.create(s_pathB1, s_pathB2, this.backCallback, this);
@@ -105,10 +103,15 @@ var EffectAdvanceTextLayer = cc.Layer.extend({
 
         var menu = cc.Menu.create(item1, item2, item3);
 
-        menu.setPosition(0, 0);
-        item1.setPosition(cc.VisibleRect.center().x - item2.getContentSize().width * 2, cc.VisibleRect.bottom().y + item2.getContentSize().height / 2);
-        item2.setPosition(cc.VisibleRect.center().x, cc.VisibleRect.bottom().y + item2.getContentSize().height / 2);
-        item3.setPosition(cc.VisibleRect.center().x + item2.getContentSize().width * 2, cc.VisibleRect.bottom().y + item2.getContentSize().height / 2);
+        menu.x = 0;
+        menu.y = 0;
+	    var centerx = cc.visibleRect.center.x, bottomy = cc.visibleRect.bottom.y;
+        item1.x = centerx - item2.width * 2;
+        item1.y = bottomy + item2.height / 2;
+        item2.x = centerx;
+        item2.y = bottomy + item2.height / 2;
+        item3.x = centerx + item2.width * 2;
+        item3.y = bottomy + item2.height / 2;
 
         this.addChild(menu, 1);
     },
@@ -124,19 +127,19 @@ var EffectAdvanceTextLayer = cc.Layer.extend({
     restartCallback:function (sender) {
         var scene = new EffectAdvanceScene();
         scene.addChild(restartEffectAdvanceAction());
-        cc.Director.getInstance().replaceScene(scene);
+        cc.director.runScene(scene);
     },
 
     nextCallback:function (sender) {
         var scene = new EffectAdvanceScene();
         scene.addChild(nextEffectAdvanceAction());
-        cc.Director.getInstance().replaceScene(scene);
+        cc.director.runScene(scene);
     },
 
     backCallback:function (sender) {
         var scene = new EffectAdvanceScene();
         scene.addChild(backEffectAdvanceAction());
-        cc.Director.getInstance().replaceScene(scene);
+        cc.director.runScene(scene);
     }
 });
 
@@ -154,7 +157,7 @@ var Effect1 = EffectAdvanceTextLayer.extend({
         // in this case:
         //     Lens3D is Grid3D and it's size is (15,10)
         //     Waves3D is Grid3D and it's size is (15,10)
-        var size = cc.Director.getInstance().getWinSize();
+        var size = cc.director.getWinSize();
         var lens = cc.Lens3D.create(0.0, cc.size(15, 10), cc.p(size.width / 2, size.height / 2), 240);
         var waves = cc.Waves3D.create(10, cc.size(15, 10), 18, 15);
 
@@ -212,8 +215,8 @@ var Effect3 = EffectAdvanceTextLayer.extend({
         this._super();
 
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
-        var target1 = bg.getChildByTag(EffectsAdvancedTest.TARGET1);
-        var target2 = bg.getChildByTag(EffectsAdvancedTest.TARGET2);
+        var target1 = bg.getChildByTag(EffectsAdvancedTest.TAG_SPRITE1);
+        var target2 = bg.getChildByTag(EffectsAdvancedTest.TAG_SPRITE2);
 
         var waves = cc.Waves.create(5, cc.size(15, 10), 5, 20, true, false);
         var shaky = cc.Shaky3D.create(5, cc.size(15, 10), 4, false);
@@ -236,7 +239,8 @@ var Lens3DTarget = cc.Node.extend({
     },
 
     update: function(dt) {
-        this._lens3D.setPosition(this.getPosition());
+        this._lens3D.x = this.x;
+	    this._lens3D.y = this.y;
     },
 
     onEnter: function() {
@@ -274,14 +278,13 @@ var Effect4 = EffectAdvanceTextLayer.extend({
          While in cocos2d-x, the target of action only supports CCNode or its subclass,
          so we make an encapsulation for CCLens3D to achieve that.
          */
-        var director = cc.Director.getInstance();
+        var director = cc.director;
         var target = Lens3DTarget.create(lens);
         // Please make sure the target been added to its parent.
         this.addChild(target);
 
         director.getActionManager().addAction(seq, target, false);
-        var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
-        bg.runAction(cc.Sequence.create(lens, cc.CallFunc.create(
+        this.runAction(cc.Sequence.create(lens, cc.CallFunc.create(
             function(sender) {
                 sender.removeChild(target, true);
             }
@@ -308,7 +311,7 @@ var Effect5 = EffectAdvanceTextLayer.extend({
 
     onExit:function () {
         this._super();
-        cc.Director.getInstance().setProjection(cc.DIRECTOR_PROJECTION_3D);
+        cc.director.setProjection(cc.DIRECTOR_PROJECTION_3D);
     }
 });
 
@@ -331,23 +334,22 @@ var Issue631 = EffectAdvanceTextLayer.extend({
         this.removeChild(bg, true);
 
         // background
-        var layer = cc.LayerColor.create(cc.c4b(255, 0, 0, 255));
+        var layer = cc.LayerColor.create(cc.color(255, 0, 0, 255));
         this.addChild(layer, -10);
         var sprite = cc.Sprite.create(s_pathGrossini);
-        sprite.setPosition(50, 80);
+        sprite.x = 50;
+        sprite.y = 80;
         layer.addChild(sprite, 10);
 
         // foreground
-        var layer2BaseGrid = cc.NodeGrid.create();
-        var layer2 = cc.LayerColor.create(cc.c4b(0, 255, 0, 255));
+        var layer2 = cc.LayerColor.create(cc.color(0, 255, 0, 255));
         var fog = cc.Sprite.create(s_pathFog);
 
-        fog.setBlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        fog.setBlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);
         layer2.addChild(fog, 1);
-        layer2BaseGrid.addChild(layer2);
-        this.addChild(layer2BaseGrid, 1);
+        this.addChild(layer2, 1);
 
-        layer2BaseGrid.runAction(cc.RepeatForever.create(effect));
+        layer2.runAction(cc.RepeatForever.create(effect));
     }
 });
 
@@ -382,7 +384,7 @@ var EffectAdvanceScene = TestScene.extend({
         sceneIndex = -1;
         var pLayer = nextEffectAdvanceAction();
         this.addChild(pLayer);
-        cc.Director.getInstance().replaceScene(this);
+        cc.director.runScene(this);
     }
 });
 

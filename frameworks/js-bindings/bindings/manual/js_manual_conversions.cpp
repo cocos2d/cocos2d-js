@@ -283,7 +283,7 @@ bool jsval_to_charptr( JSContext *cx, jsval vp, const char **ret )
     JSStringWrapper strWrapper(jsstr);
     
     // XXX: It is converted to String and then back to char* to autorelease the created object.
-    String *tmp = String::create(strWrapper.get());
+    __String *tmp = String::create(strWrapper.get());
 
     JSB_PRECONDITION2( tmp, cx, false, "Error creating string from UTF8");
 
@@ -561,10 +561,10 @@ bool jsval_to_ccacceleration(JSContext* cx,jsval v, Acceleration* ret) {
     return true;
 }
 
-bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, Array** ret)
+bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, __Array** ret)
 {
     bool ok = true;
-    Array* pArray = Array::create();
+    __Array* pArray = Array::create();
     for( int i=0; i < argc; i++ )
     {
         double num = 0.0;
@@ -756,10 +756,10 @@ bool jsval_to_cccolor4f(JSContext *cx, jsval v, Color4F* ret) {
     JS::ToNumber(cx, jsa, &a);
     
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ret->r = r;
-    ret->g = g;
-    ret->b = b;
-    ret->a = a;
+    ret->r = (float)r / 255;
+    ret->g = (float)g / 255;
+    ret->b = (float)b / 255;
+    ret->a = (float)a / 255;
     return true;
 }
 
@@ -784,6 +784,24 @@ bool jsval_to_cccolor3b(JSContext *cx, jsval v, Color3B* ret) {
     ret->g = g;
     ret->b = b;
     return true;
+}
+
+bool jsval_cccolor_to_opacity(JSContext *cx, jsval v, int32_t* ret) {
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jsa(cx);
+    
+    double a;
+    bool ok = v.isObject() &&
+    JS_ValueToObject(cx, JS::RootedValue(cx, v), &tmp) &&
+    JS_LookupProperty(cx, tmp, "a", &jsa) &&
+    !jsa.isUndefined() &&
+    JS::ToNumber(cx, jsa, &a);
+    
+    if (ok) {
+        *ret = (int32_t)a;
+        return true;
+    }
+    else return false;
 }
 
 bool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *numPoints) {
@@ -1614,10 +1632,10 @@ jsval cccolor4b_to_jsval(JSContext* cx, const Color4B& v) {
 jsval cccolor4f_to_jsval(JSContext* cx, const Color4F& v) {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
-    bool ok = JS_DefineProperty(cx, tmp, "r", DOUBLE_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "g", DOUBLE_TO_JSVAL(v.g), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "b", DOUBLE_TO_JSVAL(v.b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "a", DOUBLE_TO_JSVAL(v.a), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    bool ok = JS_DefineProperty(cx, tmp, "r", INT_TO_JSVAL((int)(v.r * 255)), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "g", INT_TO_JSVAL((int)(v.g * 255)), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "b", INT_TO_JSVAL((int)(v.b * 255)), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "a", INT_TO_JSVAL((int)(v.a * 255)), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }
@@ -1662,18 +1680,22 @@ jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t)
     
     ok &= JS_DefineProperty(cx, tmp, "fontSize", int32_to_jsval(cx, t._fontSize), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentH", int32_to_jsval(cx, (int32_t)t._alignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    ok &= JS_DefineProperty(cx, tmp, "textAlign", int32_to_jsval(cx, (int32_t)t._alignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentV", int32_to_jsval(cx, (int32_t)t._vertAlignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    ok &= JS_DefineProperty(cx, tmp, "verticalAlign", int32_to_jsval(cx, (int32_t)t._vertAlignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    ok &= JS_DefineProperty(cx, tmp, "fontFillColor", cccolor3b_to_jsval(cx, t._fontFillColor), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    ok &= JS_DefineProperty(cx, tmp, "fillStyle", cccolor3b_to_jsval(cx, t._fontFillColor), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    ok &= JS_DefineProperty(cx, tmp, "fontDimensions", ccsize_to_jsval(cx, t._dimensions), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    ok &= JS_DefineProperty(cx, tmp, "boundingWidth", DOUBLE_TO_JSVAL(t._dimensions.width), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    ok &= JS_DefineProperty(cx, tmp, "boundingHeight", DOUBLE_TO_JSVAL(t._dimensions.height), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     // Shadow
     ok &= JS_DefineProperty(cx, tmp, "shadowEnabled", BOOLEAN_TO_JSVAL(t._shadow._shadowEnabled), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    ok &= JS_DefineProperty(cx, tmp, "shadowOffset", ccsize_to_jsval(cx, t._shadow._shadowOffset), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    ok &= JS_DefineProperty(cx, tmp, "shadowOffsetX", DOUBLE_TO_JSVAL(t._shadow._shadowOffset.width), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    ok &= JS_DefineProperty(cx, tmp, "shadowOffsetY", DOUBLE_TO_JSVAL(t._shadow._shadowOffset.height), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     ok &= JS_DefineProperty(cx, tmp, "shadowBlur", DOUBLE_TO_JSVAL(t._shadow._shadowBlur), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
@@ -1682,9 +1704,9 @@ jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t)
     // Stroke
     ok &= JS_DefineProperty(cx, tmp, "strokeEnabled", BOOLEAN_TO_JSVAL(t._stroke._strokeEnabled), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    ok &= JS_DefineProperty(cx, tmp, "strokeColor", cccolor3b_to_jsval(cx, t._stroke._strokeColor), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    ok &= JS_DefineProperty(cx, tmp, "strokeStyle", cccolor3b_to_jsval(cx, t._stroke._strokeColor), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    ok &= JS_DefineProperty(cx, tmp, "strokeSize", DOUBLE_TO_JSVAL(t._stroke._strokeSize), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    ok &= JS_DefineProperty(cx, tmp, "lineWidth", DOUBLE_TO_JSVAL(t._stroke._strokeSize), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
@@ -1731,7 +1753,7 @@ bool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     }
     
     // font size
-    bool hasProperty;
+    bool hasProperty, hasSecondProp;
     JS_HasProperty(cx, jsobj, "fontSize", &hasProperty);
     if ( hasProperty )
     {
@@ -1746,10 +1768,10 @@ bool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     }
     
     // font alignment horizontal
-    JS_HasProperty(cx, jsobj, "fontAlignmentH", &hasProperty);
+    JS_HasProperty(cx, jsobj, "textAlign", &hasProperty);
     if ( hasProperty )
     {
-        JS_GetProperty(cx, jsobj, "fontAlignmentH", &jsr);
+        JS_GetProperty(cx, jsobj, "textAlign", &jsr);
         double fontAlign = 0.0;
         JS::ToNumber(cx, jsr, &fontAlign);
         out->_alignment = (TextHAlignment)(int)fontAlign;
@@ -1760,10 +1782,10 @@ bool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     }
     
     // font alignment vertical
-    JS_HasProperty(cx, jsobj, "fontAlignmentV", &hasProperty);
+    JS_HasProperty(cx, jsobj, "verticalAlign", &hasProperty);
     if ( hasProperty )
     {
-        JS_GetProperty(cx, jsobj, "fontAlignmentV", &jsr);
+        JS_GetProperty(cx, jsobj, "verticalAlign", &jsr);
         double fontAlign = 0.0;
         JS::ToNumber(cx, jsr, &fontAlign);
         out->_vertAlignment = (TextVAlignment)(int)fontAlign;
@@ -1774,10 +1796,10 @@ bool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     }
     
     // font fill color
-    JS_HasProperty(cx, jsobj, "fontFillColor", &hasProperty);
+    JS_HasProperty(cx, jsobj, "fillStyle", &hasProperty);
     if ( hasProperty )
     {
-        JS_GetProperty(cx, jsobj, "fontFillColor", &jsr);
+        JS_GetProperty(cx, jsobj, "fillStyle", &jsr);
         
         JS::RootedObject jsobjColor(cx);
         if (!JS_ValueToObject( cx, JS::RootedValue(cx, jsr), &jsobjColor ) )
@@ -1787,16 +1809,22 @@ bool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     }
     
     // font rendering box dimensions
-    JS_HasProperty(cx, jsobj, "fontDimensions", &hasProperty);
-    if ( hasProperty )
+    JS_HasProperty(cx, jsobj, "boundingWidth", &hasProperty);
+    JS_HasProperty(cx, jsobj, "boundingHeight", &hasSecondProp);
+    if ( hasProperty && hasSecondProp )
     {
-        JS_GetProperty(cx, jsobj, "fontDimensions", &jsr);
+        JS_GetProperty(cx, jsobj, "boundingWidth", &jsr);
+        double boundingW = 0.0;
+        JS::ToNumber(cx, jsr, &boundingW);
         
-        JS::RootedObject jsobjSize(cx);
-        if (!JS_ValueToObject( cx, JS::RootedValue(cx, jsr), &jsobjSize ) )
-            return false;
+        JS_GetProperty(cx, jsobj, "boundingHeight", &jsr);
+        double boundingH = 0.0;
+        JS::ToNumber(cx, jsr, &boundingH);
         
-        out->_dimensions = getSizeFromJSObject(cx, jsobjSize);
+        Size dimension;
+        dimension.width = boundingW;
+        dimension.height = boundingH;
+        out->_dimensions = dimension;
     }
     
     // shadow
@@ -1814,15 +1842,22 @@ bool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
             out->_shadow._shadowOpacity = 1;
             
             // shado offset
-            JS_HasProperty(cx, jsobj, "shadowOffset", &hasProperty);
-            if ( hasProperty )
+            JS_HasProperty(cx, jsobj, "shadowOffsetX", &hasProperty);
+            JS_HasProperty(cx, jsobj, "shadowOffsetY", &hasSecondProp);
+            if ( hasProperty && hasSecondProp )
             {
-                JS_GetProperty(cx, jsobj, "shadowOffset", &jsr);
+                JS_GetProperty(cx, jsobj, "shadowOffsetX", &jsr);
+                double offx = 0.0;
+                JS::ToNumber(cx, jsr, &offx);
                 
-                JS::RootedObject jsobjShadowOffset(cx);
-                if (!JS_ValueToObject( cx, jsr, &jsobjShadowOffset ) )
-                    return false;
-                out->_shadow._shadowOffset = getSizeFromJSObject(cx, jsobjShadowOffset);
+                JS_GetProperty(cx, jsobj, "shadowOffsetY", &jsr);
+                double offy = 0.0;
+                JS::ToNumber(cx, jsr, &offy);
+                
+                Size offset;
+                offset.width = offx;
+                offset.height = offy;
+                out->_shadow._shadowOffset = offset;
             }
             
             // shadow blur
@@ -1861,10 +1896,10 @@ bool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
             out->_stroke._strokeColor = Color3B::BLUE;
             
             // stroke color
-            JS_HasProperty(cx, jsobj, "strokeColor", &hasProperty);
+            JS_HasProperty(cx, jsobj, "strokeStyle", &hasProperty);
             if ( hasProperty )
             {
-                JS_GetProperty(cx, jsobj, "strokeColor", &jsr);
+                JS_GetProperty(cx, jsobj, "strokeStyle", &jsr);
                 
                 JS::RootedObject jsobjStrokeColor(cx);
                 if (!JS_ValueToObject( cx, jsr, &jsobjStrokeColor ) )
@@ -1873,10 +1908,10 @@ bool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
             }
             
             // stroke size
-            JS_HasProperty(cx, jsobj, "strokeSize", &hasProperty);
+            JS_HasProperty(cx, jsobj, "lineWidth", &hasProperty);
             if ( hasProperty )
             {
-                JS_GetProperty(cx, jsobj, "strokeSize", &jsr);
+                JS_GetProperty(cx, jsobj, "lineWidth", &jsr);
                 double strokeSize = 0.0;
                 JS::ToNumber(cx, jsr, &strokeSize);
                 out->_stroke._strokeSize = strokeSize;

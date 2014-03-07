@@ -30,13 +30,13 @@ var UILabelAtlasTest = UIScene.extend({
             this._topDisplayLabel.setText("");
             this._bottomDisplayLabel.setText("LabelAtlas");
 
-            var widgetSize = this._widget.getSize();
             // Create the label atlas
-            var labelAtlas = ccui.TextAtlas.create();
-            labelAtlas.setProperty("1234567890", "res/cocosgui/labelatlas.png", 17, 22, "0");
-            labelAtlas.setPosition(cc.p((widgetSize.width) / 2, widgetSize.height / 2.0));
+            var textAtlas = ccui.TextAtlas.create();
+            textAtlas.setProperty("1234567890", "res/cocosgui/labelatlas.png", 17, 22, "0");
+            textAtlas.x = this._widget.width / 2;
+	        textAtlas.y = this._widget.height / 2;
 
-            this._uiLayer.addChild(labelAtlas);
+            this._mainNode.addChild(textAtlas);
             return true;
         }
         return false;

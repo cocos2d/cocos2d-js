@@ -45,17 +45,17 @@ var TestNodeDemo = BaseTestLayer.extend({
     onRestartCallback:function (sender) {
         var s = new NodeTestScene();
         s.addChild(restartNodeTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onNextCallback:function (sender) {
         var s = new NodeTestScene();
         s.addChild(nextNodeTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     onBackCallback:function (sender) {
         var s = new NodeTestScene();
         s.addChild(previousNodeTest());
-        director.replaceScene(s);
+        director.runScene(s);
     },
     // automation
     numberOfPendingTests:function () {
@@ -76,13 +76,15 @@ var CCNodeTest2 = TestNodeDemo.extend({
         var sp3 = cc.Sprite.create(s_pathSister1);
         var sp4 = cc.Sprite.create(s_pathSister2);
 
-        sp1.setPosition(winSize.width / 4, winSize.height / 2);
-        sp2.setPosition(winSize.width / 4 * 3, winSize.height / 2);
+        sp1.x = winSize.width / 4;
+        sp1.y = winSize.height / 2;
+        sp2.x = winSize.width / 4 * 3;
+        sp2.y = winSize.height / 2;
         this.addChild(sp1);
         this.addChild(sp2);
 
-        sp3.setScale(0.25);
-        sp4.setScale(0.25);
+        sp3.scale = 0.25;
+        sp4.scale = 0.25;
 
         sp1.addChild(sp3);
         sp2.addChild(sp4);
@@ -95,7 +97,8 @@ var CCNodeTest2 = TestNodeDemo.extend({
         var action2 = cc.RepeatForever.create(cc.Sequence.create(
             a1.clone(), a2.clone(), delay.clone(), a2.reverse()));
 
-        sp2.setAnchorPoint(0, 0);
+        sp2.anchorX = 0;
+        sp2.anchorY = 0;
 
         sp1.runAction(action1);
         sp2.runAction(action2);
@@ -129,8 +132,10 @@ var CCNodeTest4 = TestNodeDemo.extend({
         this._super();
         var sp1 = cc.Sprite.create(s_pathSister1);
         var sp2 = cc.Sprite.create(s_pathSister2);
-        sp1.setPosition(150, winSize.height / 2);
-        sp2.setPosition(winSize.width - 150, winSize.height / 2);
+        sp1.x = 150;
+        sp1.y = winSize.height / 2;
+        sp2.x = winSize.width - 150;
+        sp2.y = winSize.height / 2;
 
         this.addChild(sp1, 0, 2);
         this.addChild(sp2, 0, 3);
@@ -171,15 +176,17 @@ var CCNodeTest5 = TestNodeDemo.extend({
         this._super();
         var sp1 = cc.Sprite.create(s_pathSister1);
         var sp2 = cc.Sprite.create(s_pathSister2);
-        sp1.setPosition(150, winSize.height / 2);
-        sp2.setPosition(winSize.width - 150, winSize.height / 2);
+        sp1.x = 150;
+        sp1.y = winSize.height / 2;
+        sp2.x = winSize.width - 150;
+        sp2.y = winSize.height / 2;
 
         var rot = cc.RotateBy.create(2, 360);
         var rot_back = rot.reverse();
         var forever = cc.RepeatForever.create(cc.Sequence.create(rot, rot_back));
         var forever2 = forever.clone();
-        forever.setTag(101);
-        forever2.setTag(102);
+        forever.tag = 101;
+        forever2.tag = 102;
 
         this.addChild(sp1, 0, TAG_SPRITE1);
         this.addChild(sp2, 0, TAG_SPRITE2);
@@ -244,8 +251,10 @@ var CCNodeTest6 = TestNodeDemo.extend({
         var sp2 = cc.Sprite.create(s_pathSister2);
         var sp21 = cc.Sprite.create(s_pathSister2);
 
-        sp1.setPosition(150, winSize.height / 2);
-        sp2.setPosition(winSize.width - 150, winSize.height / 2);
+        sp1.x = 150;
+        sp1.y = winSize.height / 2;
+        sp2.x = winSize.width - 150;
+        sp2.y = winSize.height / 2;
 
         var rot = cc.RotateBy.create(2, 360);
         var rot_back = rot.reverse();
@@ -313,9 +322,11 @@ var StressTest1 = TestNodeDemo.extend({
 
         var sp1 = cc.Sprite.create(s_pathSister1);
         this.addChild(sp1, 0, TAG_SPRITE1);
-        this.setContentSize(0, 0);
+        this.width = 0
+	    this.height = 0;
 
-        sp1.setPosition(winSize.width / 2, winSize.height / 2);
+        sp1.x = winSize.width / 2;
+        sp1.y = winSize.height / 2;
 
         this.schedule(this.onShouldNotCrash, 1.0);
     },
@@ -324,9 +335,10 @@ var StressTest1 = TestNodeDemo.extend({
 
         // if the node has timers, it crashes
         var explosion = cc.ParticleSun.create();
-        explosion.setTexture(cc.TextureCache.getInstance().addImage(s_fire));
+        explosion.texture = cc.textureCache.addImage(s_fire);
 
-        explosion.setPosition(winSize.width / 2, winSize.height / 2);
+        explosion.x = winSize.width / 2;
+        explosion.y = winSize.height / 2;
 
         this.runAction(cc.Sequence.create(
             cc.RotateBy.create(2, 360),
@@ -339,7 +351,7 @@ var StressTest1 = TestNodeDemo.extend({
             this.testPass = true;
             return;
         }
-        this.getParent().removeChild(node, true);
+        this.parent.removeChild(node, true);
         this.onNextCallback(this);
     },
     title:function () {
@@ -367,7 +379,8 @@ var StressTest2 = TestNodeDemo.extend({
         var sublayer = cc.Layer.create();
 
         var sp1 = cc.Sprite.create(s_pathSister1);
-        sp1.setPosition(80, winSize.height / 2);
+        sp1.x = 80;
+        sp1.y = winSize.height / 2;
 
         var move = cc.MoveBy.create(3, cc.p(350, 0));
         var move_ease_inout3 = cc.EaseInOut.create(move.clone(), 2.0);
@@ -377,8 +390,9 @@ var StressTest2 = TestNodeDemo.extend({
         sublayer.addChild(sp1, 1);
 
         var fire = cc.ParticleFire.create();
-        fire.setTexture(cc.TextureCache.getInstance().addImage(s_fire));
-        fire.setPosition(80, winSize.height / 2 - 50);
+        fire.texture = cc.textureCache.addImage(s_fire);
+        fire.x = 80;
+        fire.y = winSize.height / 2 - 50;
 
         var copy_seq3 = seq3.clone();
 
@@ -408,13 +422,14 @@ var NodeToWorld = TestNodeDemo.extend({
         this._super();
         var back = cc.Sprite.create(s_back3);
         this.addChild(back, 5);
-        back.setAnchorPoint(0, 0);
-        var backSize = back.getContentSize();
+        back.anchorX = 0;
+        back.anchorY = 0;
 
         var item = cc.MenuItemImage.create(s_playNormal, s_playSelect, this.onClicked);
         var menu = cc.Menu.create(item);
         menu.alignItemsVertically();
-        menu.setPosition(backSize.width / 2, backSize.height / 2);
+        menu.x = back.width / 2;
+        menu.y = back.height / 2;
         back.addChild(menu);
 
         var rot = cc.RotateBy.create(3, 360);
@@ -461,31 +476,35 @@ var CameraOrbitTest = TestNodeDemo.extend({
 
         var p = cc.Sprite.create(s_back3);
         this.addChild(p, 0);
-        p.setPosition(winSize.width / 2, winSize.height / 2);
-        p.setOpacity(128);
+        p.x = winSize.width / 2;
+        p.y = winSize.height / 2;
+        p.opacity = 128;
 
         // LEFT
-        var s = p.getContentSize();
+        var sw = p.width, sh = p.height;
         var sprite = cc.Sprite.create(s_pathGrossini);
-        sprite.setScale(0.5);
+        sprite.scale = 0.5;
         p.addChild(sprite, 0);
-        sprite.setPosition(s.width / 4, s.height / 2);
+        sprite.x = sw / 4;
+        sprite.y = sh / 2;
         var orbit = cc.OrbitCamera.create(2, 1, 0, 0, 360, 0, 0);
         sprite.runAction(cc.RepeatForever.create(orbit));
 
         // CENTER
         sprite = cc.Sprite.create(s_pathGrossini);
-        sprite.setScale(1.0);
+        sprite.scale = 1.0;
         p.addChild(sprite, 0);
-        sprite.setPosition(s.width / 4 * 2, s.height / 2);
+        sprite.x = sw / 4 * 2;
+        sprite.y = sh / 2;
         orbit = cc.OrbitCamera.create(2, 1, 0, 0, 360, 45, 0);
         sprite.runAction(cc.RepeatForever.create(orbit));
 
         // RIGHT
         sprite = cc.Sprite.create(s_pathGrossini);
-        sprite.setScale(2.0);
+        sprite.scale = 2.0;
         p.addChild(sprite, 0);
-        sprite.setPosition(s.width / 4 * 3, s.height / 2);
+        sprite.x = sw / 4 * 3;
+        sprite.y = sh / 2;
         orbit = cc.OrbitCamera.create(2, 1, 0, 0, 360, 90, -45);
         sprite.runAction(cc.RepeatForever.create(orbit));
 
@@ -493,7 +512,7 @@ var CameraOrbitTest = TestNodeDemo.extend({
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 90);
         p.runAction(cc.RepeatForever.create(orbit));
 
-        this.setScale(1);
+        this.scale = 1;
     },
     onEnter:function () {
         this._super();
@@ -516,24 +535,27 @@ var CameraZoomTest = TestNodeDemo.extend({
         // LEFT
         var sprite = cc.Sprite.create(s_pathGrossini);
         this.addChild(sprite, 0);
-        sprite.setPosition(winSize.width / 4, winSize.height / 2);
-        if ("opengl" in sys.capabilities) {
-            //var cam = sprite.getCamera();
-            //cam.setEye(0, 0, 415 / 2);
-            //cam.setCenter(0, 0, 0);
+        sprite.x = winSize.width / 4;
+        sprite.y = winSize.height / 2;
+        if ("opengl" in cc.sys.capabilities) {
+            var cam = sprite.getCamera();
+            cam.setEye(0, 0, 415 / 2);
+            cam.setCenter(0, 0, 0);
         }
 
         // CENTER
         sprite = cc.Sprite.create(s_pathGrossini);
         this.addChild(sprite, 0, 40);
-        sprite.setPosition(winSize.width / 4 * 2, winSize.height / 2);
+        sprite.x = winSize.width / 4 * 2;
+        sprite.y = winSize.height / 2;
         //cam = [sprite camera);
         //[cam setEyeX:0 eyeY:0 eyeZ:415/2);
 
         // RIGHT
         sprite = cc.Sprite.create(s_pathGrossini);
         this.addChild(sprite, 0, 20);
-        sprite.setPosition(winSize.width / 4 * 3, winSize.height / 2);
+        sprite.x = winSize.width / 4 * 3;
+        sprite.y = winSize.height / 2;
         //cam = [sprite camera);
         //[cam setEyeX:0 eyeY:0 eyeZ:-485);
         //[cam setCenterX:0 centerY:0 centerZ:0);
@@ -545,17 +567,17 @@ var CameraZoomTest = TestNodeDemo.extend({
         this.autoParam = sprite;
     },
     update:function (dt) {
-        if (!("opengl" in sys.capabilities))
+        if (!("opengl" in cc.sys.capabilities))
             return;
 
         this._z += dt * 100;
         var sprite = this.getChildByTag(20);
-        //var cam = sprite.getCamera();
-        //cam.setEye(0, 0, this._z);
+        var cam = sprite.getCamera();
+        cam.setEye(0, 0, this._z);
 
         sprite = this.getChildByTag(40);
-        //cam = sprite.getCamera();
-        //cam.setEye(0, 0, -this._z);
+        cam = sprite.getCamera();
+        cam.setEye(0, 0, -this._z);
     },
     onEnter:function () {
         this._super();
@@ -595,8 +617,9 @@ var CameraCenterTest = TestNodeDemo.extend({
         // LEFT-TOP
         var sprite = cc.Sprite.create(s_texture512);
         this.addChild(sprite, 0);
-        sprite.setPosition(winSize.width / 5, winSize.height / 5);
-        sprite.setColor(cc.red());
+        sprite.x = winSize.width / 5;
+        sprite.y = winSize.height / 5;
+        sprite.color = cc.color.RED;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         var orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
         sprite.runAction(cc.RepeatForever.create(orbit));
@@ -604,8 +627,9 @@ var CameraCenterTest = TestNodeDemo.extend({
         // LEFT-BOTTOM
         sprite = cc.Sprite.create(s_texture512);
         this.addChild(sprite, 0, 40);
-        sprite.setPosition(winSize.width / 5, winSize.height / 5 * 4);
-        sprite.setColor(cc.blue());
+        sprite.x = winSize.width / 5;
+        sprite.y = winSize.height / 5 * 4;
+        sprite.color = cc.color.BLUE;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
         sprite.runAction(cc.RepeatForever.create(orbit));
@@ -613,8 +637,9 @@ var CameraCenterTest = TestNodeDemo.extend({
         // RIGHT-TOP
         sprite = cc.Sprite.create(s_texture512);
         this.addChild(sprite, 0);
-        sprite.setPosition(winSize.width / 5 * 4, winSize.height / 5);
-        sprite.setColor(cc.yellow());
+        sprite.x = winSize.width / 5 * 4;
+        sprite.y = winSize.height / 5;
+        sprite.color = cc.color.YELLOW;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
         sprite.runAction(cc.RepeatForever.create(orbit));
@@ -622,8 +647,9 @@ var CameraCenterTest = TestNodeDemo.extend({
         // RIGHT-BOTTOM
         sprite = cc.Sprite.create(s_texture512);
         this.addChild(sprite, 0, 40);
-        sprite.setPosition(winSize.width / 5 * 4, winSize.height / 5 * 4);
-        sprite.setColor(cc.green());
+        sprite.x = winSize.width / 5 * 4;
+        sprite.y = winSize.height / 5 * 4;
+        sprite.color = cc.color.GREEN;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
         sprite.runAction(cc.RepeatForever.create(orbit));
@@ -631,8 +657,9 @@ var CameraCenterTest = TestNodeDemo.extend({
         // CENTER
         sprite = cc.Sprite.create(s_texture512);
         this.addChild(sprite, 0, 40);
-        sprite.setPosition(winSize.width / 2, winSize.height / 2);
-        sprite.setColor(cc.white());
+        sprite.x = winSize.width / 2;
+        sprite.y = winSize.height / 2;
+        sprite.color = cc.color.WHITE;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
         sprite.runAction(cc.RepeatForever.create(orbit));
@@ -640,11 +667,11 @@ var CameraCenterTest = TestNodeDemo.extend({
 
     onEnter:function(){
         this._super();
-        cc.Director.getInstance().setProjection(cc.DIRECTOR_PROJECTION_3D);
+        cc.director.setProjection(cc.DIRECTOR_PROJECTION_3D);
     },
 
     onExit:function(){
-        cc.Director.getInstance().setProjection(cc.DIRECTOR_PROJECTION_2D);
+        cc.director.setProjection(cc.DIRECTOR_PROJECTION_2D);
         this._super();
     },
 
@@ -682,34 +709,55 @@ var CameraCenterTest = TestNodeDemo.extend({
 var ConvertToNode = TestNodeDemo.extend({
     ctor:function () {
         this._super();
-        if ('touches' in sys.capabilities)
-            this.setTouchEnabled(true);
-        else if ('mouse' in sys.capabilities)
-            this.setMouseEnabled(true);
+        if ('touches' in cc.sys.capabilities){
+            cc.eventManager.addListener(cc.EventListener.create({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+                onTouchesEnded:function (touches, event) {
+                    var target = event.getCurrentTarget();
+                    for (var it = 0; it < touches.length; it++) {
+                        var touch = touches[it];
+                        var location = touch.getLocation();
+                        target.processEvent(location);
+                    }
+                }
+            }), this);
+        } else if ('mouse' in cc.sys.capabilities)
+            cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
+                onMouseUp: function(event){
+                    event.getCurrentTarget().processEvent(event.getLocation());
+                }
+            }, this);
 
         var rotate = cc.RotateBy.create(10, 360);
         var action = cc.RepeatForever.create(rotate);
         for (var i = 0; i < 3; i++) {
             var sprite = cc.Sprite.create(s_pathGrossini);
-            sprite.setPosition(winSize.width / 4 * (i + 1), winSize.height / 2);
+            sprite.x = winSize.width / 4 * (i + 1);
+            sprite.y = winSize.height / 2;
             var point = cc.Sprite.create(s_pathR1);
-            point.setScale(0.25);
-            point.setPosition(sprite.getPosition());
+            point.scale = 0.25;
+	        point.x = sprite.x;
+	        point.y = sprite.y;
             this.addChild(point, 10, 100 + i);
 
             switch (i) {
                 case 0:
-                    sprite.setAnchorPoint(0, 0);
+                    sprite.anchorX = 0;
+                    sprite.anchorY = 0;
                     break;
                 case 1:
-                    sprite.setAnchorPoint(0.5, 0.5);
+                    sprite.anchorX = 0.5;
+                    sprite.anchorY = 0.5;
                     break;
                 case 2:
-                    sprite.setAnchorPoint(1, 1);
+                    sprite.anchorX = 1;
+                    sprite.anchorY = 1;
                     break;
             }
 
-            point.setPosition(sprite.getPosition());
+            point.x = sprite.x;
+	        point.y = sprite.y;
 
             var copy = action.clone();
             sprite.runAction(copy);
@@ -730,17 +778,6 @@ var ConvertToNode = TestNodeDemo.extend({
             this.testP1.push({"x":p1.x, "y":p1.y});
             this.testP2.push({"x":p2.x, "y":p2.y});
         }
-    },
-    onTouchesEnded:function (touches, event) {
-        for (var it = 0; it < touches.length; it++) {
-            var touch = touches[it];
-            var location = touch.getLocation();
-            this.processEvent(location);
-        }
-    },
-    onMouseUp:function (event) {
-        var location = event.getLocation();
-        this.processEvent(location);
     },
 
     title:function () {
@@ -784,7 +821,8 @@ var BoundingBoxTest = TestNodeDemo.extend({
         this._super();
         var sprite = cc.Sprite.create(s_pathGrossini);
         this.addChild(sprite);
-        sprite.setPosition(winSize.width / 2, winSize.height / 2);
+        sprite.x = winSize.width / 2;
+        sprite.y = winSize.height / 2;
         var bb = sprite.getBoundingBox();
         this.log('BoundingBox:');
         //for( var i in bb )
@@ -854,12 +892,13 @@ var SchedulerTest1 = TestNodeDemo.extend({
 var NodeOpaqueTest = TestNodeDemo.extend({
     ctor:function () {
         this._super();
-        var winSize = cc.Director.getInstance().getWinSize();
+        var winSize = cc.director.getWinSize();
         var background;
         for (var i = 0; i < 50; i++) {
             background = cc.Sprite.create(s_back1);
-            background.setBlendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-            background.setPosition(winSize.width / 2, winSize.height / 2);
+            background.setBlendFunc(cc.ONE, cc.ONE_MINUS_SRC_ALPHA);
+            background.x = winSize.width / 2;
+            background.y = winSize.height / 2;
             this.addChild(background);
         }
     },
@@ -876,12 +915,13 @@ var NodeOpaqueTest = TestNodeDemo.extend({
 var NodeNonOpaqueTest = TestNodeDemo.extend({
     ctor:function () {
         this._super();
-        var winSize = cc.Director.getInstance().getWinSize();
+        var winSize = cc.director.getWinSize();
         var background;
         for (var i = 0; i < 50; i++) {
             background = cc.Sprite.create(s_back1);
-            background.setBlendFunc(gl.ONE, gl.ZERO);
-            background.setPosition(winSize.width / 2, winSize.height / 2);
+            background.setBlendFunc(cc.ONE, cc.ZERO);
+            background.x = winSize.width / 2;
+            background.y = winSize.height / 2;
             this.addChild(background);
         }
     },
@@ -904,7 +944,7 @@ var NodeTestScene = TestScene.extend({
         var layer = nextNodeTest();
         this.addChild(layer);
 
-        director.replaceScene(this);
+        director.runScene(this);
     }
 });
 
@@ -924,10 +964,10 @@ var arrayOfNodeTest = [
     ConvertToNode
 ];
 
-if ('opengl' in sys.capabilities) {
-    arrayOfNodeTest.push(CameraCenterTest);
+if ('opengl' in cc.sys.capabilities) {
+    cc.sys.isNative || arrayOfNodeTest.push(CameraCenterTest);
     arrayOfNodeTest.push(CameraOrbitTest);
-    arrayOfNodeTest.push(CameraZoomTest);
+	cc.sys.isNative || arrayOfNodeTest.push(CameraZoomTest);
     arrayOfNodeTest.push(NodeOpaqueTest);
     arrayOfNodeTest.push(NodeNonOpaqueTest);
 }

@@ -1,9 +1,15 @@
-cc.defineGetterSetter = function (proto, prop, getter, setter)
-{
-    var desc = { enumerable: false, configurable: true };
-	getter && (desc.get = getter);
-	setter && (desc.set = setter);
-	Object.defineProperty(proto, prop, desc);
+/**
+ *  <p>Properties configuration function </br>
+ *  All properties in attrs will be set to the node, </br>
+ *  when the setter of the node is available, </br>
+ *  the property will be set via setter function.</br>
+ *  </p>
+ * @param {Object} attrs Properties to be set to node
+ */
+cc.Node.prototype.attr = function(attrs) {
+    for(var key in attrs) {
+		this[key] = attrs[key];
+	}
 };
 
 // Overrides
@@ -72,7 +78,7 @@ cc.defineGetterSetter(_proto, "body", _proto.getBody, _proto.setBody);
 cc.defineGetterSetter(_proto, "x", _proto.getPositionX, _proto.setPositionX);
 cc.defineGetterSetter(_proto, "y", _proto.getPositionY, _proto.setPositionY);
 cc.defineGetterSetter(_proto, "rotation", _proto.getRotation, _proto.setRotation);
-cc.defineGetterSetter(_proto, "dirty", _proto.isDirty);
+cc.defineGetterSetter(_proto, "dirty", _proto.isDirty, _proto.setDirty);
 
 _proto = cc.ProgressTimer.prototype;
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);

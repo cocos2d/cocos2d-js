@@ -58,24 +58,26 @@ var CocoStudioMainLayer = cc.Layer.extend({
     onEnter:function () {
         this._super();
 
-        var winSize = cc.Director.getInstance().getWinSize();
+        var winSize = cc.director.getWinSize();
 
         var pMenu = cc.Menu.create();
-        pMenu.setPosition(0, 0);
+        pMenu.x = 0;
+	    pMenu.y = 0;
         cc.MenuItemFont.setFontName("Arial");
         cc.MenuItemFont.setFontSize(24);
         for (var i = 0; i < cocoStudioTestItemNames.length; ++i) {
             var selItem = cocoStudioTestItemNames[i];
             var pItem = cc.MenuItemFont.create(selItem.itemTitle,
                 this.menuCallback, this);
-            pItem.setPosition(winSize.width / 2, winSize.height - (i + 1) * LINE_SPACE);
+            pItem.x = winSize.width / 2;
+	        pItem.y = winSize.height - (i + 1) * LINE_SPACE;
             pMenu.addChild(pItem, ITEM_TAG_BASIC + i);
         }
         this.addChild(pMenu);
     },
 
     menuCallback:function (sender) {
-        var nIndex = sender.getZOrder() - ITEM_TAG_BASIC;
+        var nIndex = sender.zIndex - ITEM_TAG_BASIC;
         cocoStudioTestItemNames[nIndex].testScene();
     }
 });
@@ -84,6 +86,6 @@ var CocoStudioTestScene = TestScene.extend({
     runThisTest:function () {
         var pLayer = new CocoStudioMainLayer();
         this.addChild(pLayer);
-        cc.Director.getInstance().replaceScene(this);
+        cc.director.runScene(this);
     }
 });

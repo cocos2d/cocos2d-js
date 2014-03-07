@@ -36,9 +36,10 @@ var UISliderTest = UIScene.extend({
             slider.loadBarTexture("res/cocosgui/sliderTrack.png");
             slider.loadSlidBallTextures("res/cocosgui/sliderThumb.png", "res/cocosgui/sliderThumb.png", "");
             slider.loadProgressBarTexture("res/cocosgui/sliderProgress.png");
-            slider.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0));
+            slider.x = widgetSize.width / 2.0;
+            slider.y = widgetSize.height / 2.0;
             slider.addEventListenerSlider(this.sliderEvent, this);
-            this._uiLayer.addChild(slider);
+            this._mainNode.addChild(slider);
 
             return true;
         }
@@ -47,7 +48,7 @@ var UISliderTest = UIScene.extend({
 
     sliderEvent: function (sender, type) {
         switch (type) {
-            case ccui.SliderEventType.percent_changed:
+            case ccui.SLIDER_EVENT_PERCENT_CHANGED:
                 var slider = sender;
                 var percent = slider.getPercent();
                 this._topDisplayLabel.setText("Percent " + percent.toFixed(0));
@@ -75,9 +76,10 @@ var UISliderTest_Scale9 = UIScene.extend({
             slider.setScale9Enabled(true);
             slider.setCapInsets(cc.rect(0, 0, 0, 0));
             slider.setSize(cc.size(250, 10));
-            slider.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0));
+            slider.x = widgetSize.width / 2.0;
+            slider.y = widgetSize.height / 2.0;
             slider.addEventListenerSlider(this.sliderEvent, this);
-            this._uiLayer.addChild(slider);
+            this._mainNode.addChild(slider);
 
             return true;
         }
@@ -86,7 +88,7 @@ var UISliderTest_Scale9 = UIScene.extend({
 
     sliderEvent: function (sender, type) {
         switch (type) {
-            case ccui.SliderEventType.percent_changed:
+            case ccui.SLIDER_EVENT_PERCENT_CHANGED:
                 var slider = sender;
                 var percent = slider.getPercent();
                 this._topDisplayLabel.setText("Percent " + percent.toFixed(0));

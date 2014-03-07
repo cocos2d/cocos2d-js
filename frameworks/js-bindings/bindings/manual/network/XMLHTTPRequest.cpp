@@ -44,7 +44,7 @@ void MinXmlHttpRequest::_gotHeader(string header)
     char * cstr = new char [header.length()+1];
     
     // check for colon.
-    unsigned found_header_field = header.find_first_of(":");
+    size_t found_header_field = header.find_first_of(":");
     
     if (found_header_field != std::string::npos)
     {
@@ -78,7 +78,7 @@ void MinXmlHttpRequest::_gotHeader(string header)
             
             ss << pch;
             val = ss.str();
-            unsigned found_http = val.find("HTTP");
+            size_t found_http = val.find("HTTP");
             
             // Check for HTTP Header to set statusText
             if (found_http != std::string::npos) {
@@ -676,7 +676,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 
     if (data.length() > 0 && (_meth.compare("post") == 0 || _meth.compare("POST") == 0))
     {
-        _httpRequest->setRequestData(data.c_str(), data.length());
+        _httpRequest->setRequestData(data.c_str(), static_cast<unsigned int>(data.length()));
     }
 
     _setHttpRequestHeader();
@@ -817,14 +817,14 @@ static void basic_object_finalize(JSFreeOp *freeOp, JSObject *obj)
  */
 void MinXmlHttpRequest::_js_register(JSContext *cx, JSObject *global)
 {
-    JSClass js_class = {
+    JSClass jsclass = {
         "XMLHttpRequest", JSCLASS_HAS_PRIVATE, JS_PropertyStub,
         JS_DeletePropertyStub, JS_PropertyStub, JS_StrictPropertyStub,
         JS_EnumerateStub, JS_ResolveStub, JS_ConvertStub,
         basic_object_finalize, JSCLASS_NO_OPTIONAL_MEMBERS
     };
     
-    MinXmlHttpRequest::js_class = js_class;
+    MinXmlHttpRequest::js_class = jsclass;
     static JSPropertySpec props[] = {
         JS_BINDED_PROP_DEF_ACCESSOR(MinXmlHttpRequest, onreadystatechange),
         JS_BINDED_PROP_DEF_ACCESSOR(MinXmlHttpRequest, responseType),

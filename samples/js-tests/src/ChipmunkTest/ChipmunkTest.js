@@ -44,17 +44,18 @@ var ChipmunkBaseLayer = function() {
 	// Only subclasses of a native classes MUST call cc.associateWithNative
 	// Failure to do so, it will crash.
 	//
-	var parent = BaseTestLayer.call(this, cc.c4b(0,0,0,255), cc.c4b(98*0.5,99*0.5,117*0.5,255) );
+	var parent = BaseTestLayer.call(this, cc.color(0,0,0,255), cc.color(98*0.5,99*0.5,117*0.5,255) );
 
 	this._title =  "No title";
 	this._subtitle = "No Subtitle";
 
 	// Menu to toggle debug physics on / off
     var item = cc.MenuItemFont.create("Physics On/Off", this.onToggleDebug, this);
-    item.setFontSize(24);
+    item.fontSize = 24;
     var menu = cc.Menu.create( item );
     this.addChild( menu );
-    menu.setPosition( cc._p( winSize.width-100, winSize.height-90 )  );
+    menu.x = winSize.width-100;
+    menu.y = winSize.height-90;
 
     // Create the initial space
 	this.space = new cp.Space();
@@ -68,13 +69,13 @@ ChipmunkBaseLayer.prototype.setupDebugNode = function()
 {
     // debug only
 	this._debugNode = cc.PhysicsDebugNode.create( this.space );
-	this._debugNode.setVisible( false );
+	this._debugNode.visible = false ;
 	this.addChild( this._debugNode );
 };
 
 ChipmunkBaseLayer.prototype.onToggleDebug = function(sender) {
-    var state = this._debugNode.isVisible();
-    this._debugNode.setVisible( !state );
+    var state = this._debugNode.visible;
+    this._debugNode.visible = !state ;
 };
 
 //
@@ -85,8 +86,8 @@ ChipmunkBaseLayer.prototype.onEnter = function() {
 	BaseTestLayer.prototype.onEnter.call(this);
     //cc.base(this, 'onEnter');
 
-    sys.dumpRoot();
-    sys.garbageCollect();
+    cc.sys.dumpRoot();
+    cc.sys.garbageCollect();
 };
 
 ChipmunkBaseLayer.prototype.onCleanup = function() {
@@ -98,21 +99,21 @@ ChipmunkBaseLayer.prototype.onRestartCallback = function (sender) {
 	this.onCleanup();
     var s = new ChipmunkTestScene();
     s.addChild(restartChipmunkTest());
-    director.replaceScene(s);
+    director.runScene(s);
 };
 
 ChipmunkBaseLayer.prototype.onNextCallback = function (sender) {
 	this.onCleanup();
     var s = new ChipmunkTestScene();
     s.addChild(nextChipmunkTest());
-    director.replaceScene(s);
+    director.runScene(s);
 };
 
 ChipmunkBaseLayer.prototype.onBackCallback = function (sender) {
 	this.onCleanup();
     var s = new ChipmunkTestScene();
     s.addChild(previousChipmunkTest());
-    director.replaceScene(s);
+    director.runScene(s);
 };
 
 // automation
@@ -195,25 +196,27 @@ ChipmunkSprite.prototype.onEnter = function () {
 		this.addSprite( cp.v(winSize.width/2, winSize.height/2) );
 	}
 
-    if( 'touches' in sys.capabilities )
-        this.setTouchEnabled(true);
-    else if( 'mouse' in sys.capabilities )
-        this.setMouseEnabled(true);
+    if( 'touches' in cc.sys.capabilities ){
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesEnded: function(touches, event){
+                var l = touches.length, target = event.getCurrentTarget();
+                for( var i=0; i < l; i++) {
+                    target.addSprite( touches[i].getLocation() );
+                }
+            }
+        }, this);
+    } else if( 'mouse' in cc.sys.capabilities )
+        cc.eventManager.addListener({
+            event: cc.EventListener.MOUSE,
+            onMouseDown: function(event){
+                event.getCurrentTarget().addSprite(event.getLocation());
+            }
+        }, this);
 };
 
 ChipmunkSprite.prototype.update = function( delta ) {
 	this.space.step( delta );
-};
-
-ChipmunkSprite.prototype.onMouseDown = function( event ) {
-	this.addSprite( event.getLocation() );
-};
-
-ChipmunkSprite.prototype.onTouchesEnded = function( touches, event ) {
-	var l = touches.length;
-	for( var i=0; i < l; i++) {
-		this.addSprite( touches[i].getLocation() );
-	}
 };
 
 //------------------------------------------------------------------
@@ -328,7 +331,8 @@ var ChipmunkCollisionTest = function() {
 		if( ! this.messageDisplayed ) {
 			var label = cc.LabelBMFont.create("Collision Detected", s_bitmapFontTest5_fnt);
 			this.addChild( label );
-			label.setPosition( winSize.width/2, winSize.height/2 );
+			label.x = winSize.width/2;
+			label.y = winSize.height/2 ;
 			this.messageDisplayed = true;
 		}
 		cc.log('collision begin');
@@ -454,7 +458,8 @@ var ChipmunkCollisionTestB = function() {
 		if( ! this.messageDisplayed ) {
 			var label = cc.LabelBMFont.create("Collision Detected", s_bitmapFontTest5_fnt);
 			this.addChild( label );
-			label.setPosition( winSize.width/2, winSize.height/2 );
+			label.x = winSize.width/2;
+			label.y = winSize.height/2 ;
 			this.messageDisplayed = true;
 		}
 		cc.log('collision begin');
@@ -553,7 +558,7 @@ var ChipmunkSpriteAnchorPoint = function() {
 		ChipmunkBaseLayer.prototype.onEnter.call(this);
         // cc.base(this, 'onEnter');
 
-		this._debugNode.setVisible( true );
+		this._debugNode.visible = true ;
 
 		this.space.gravity = v(0, 0);
 
@@ -561,9 +566,12 @@ var ChipmunkSpriteAnchorPoint = function() {
 		var sprite2 = this.createPhysicsSprite( cp.v(winSize.width/4*2, winSize.height/2) );
 		var sprite3 = this.createPhysicsSprite( cp.v(winSize.width/4*3, winSize.height/2) );
 
-		sprite1.setAnchorPoint(0,0);
-		sprite2.setAnchorPoint(0.5,0.5);
-		sprite3.setAnchorPoint(1,1);
+		sprite1.anchorX = 0;
+		sprite1.anchorY = 0;
+		sprite2.anchorX = 0.5;
+		sprite2.anchorY = 0.5;
+		sprite3.anchorX = 1;
+		sprite3.anchorY = 1;
 
 		// scale sprite
 		var scaledown = cc.ScaleBy.create(0.5, 0.5);
@@ -651,8 +659,8 @@ var ChipmunkReleaseTest = function() {
         // cc.base(this, 'onEnter');
 
         cc.log("OnEnter");
-        sys.dumpRoot();
-        sys.garbageCollect();
+        cc.sys.dumpRoot();
+        cc.sys.garbageCollect();
 
         this.space.addCollisionHandler( 10,11,
 			this.collisionBegin.bind(this),
@@ -672,8 +680,8 @@ var ChipmunkReleaseTest = function() {
 
 		this.space = null;
 
-        sys.dumpRoot();
-        sys.garbageCollect();
+        cc.sys.dumpRoot();
+        cc.sys.garbageCollect();
 
         // cc.base(this, 'onExit');
         ChipmunkBaseLayer.prototype.onExit.call(this);
@@ -700,7 +708,7 @@ var ChipmunkDemo = function() {
 	this.remainder = 0;
 
 	// debug only
-this._debugNode.setVisible( true );
+this._debugNode.visible = true ;
 
 	this.scheduleUpdate();
 };
@@ -1455,7 +1463,7 @@ ChipmunkTestScene.prototype.runThisTest = function () {
     chipmunkTestSceneIdx = -1;
     var layer = nextChipmunkTest();
     this.addChild(layer);
-    director.replaceScene(this);
+    director.runScene(this);
 };
 
 //
@@ -1481,7 +1489,7 @@ var arrayOfChipmunkTest =  [
 		ChipmunkSpriteAnchorPoint
 		];
 
-if( sys.platform !== 'browser' ) {
+if( cc.sys.isNative ) {
 	arrayOfChipmunkTest.push( ChipmunkCollisionTestB );
 	arrayOfChipmunkTest.push( ChipmunkReleaseTest );
 }
