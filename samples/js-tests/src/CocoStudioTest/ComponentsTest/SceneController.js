@@ -41,8 +41,8 @@ var SceneController = ccs.ComController.extend({
         this._addTargetTime = 1;
         this._targets = [];
         this._projectiles = [];
-        this._owner.getComponent("Audio").playBackgroundMusic("res/Sound/background-music-aac.wav", true);
-        this._owner.getComponent("CCComAttribute").setInt("KillCount", 0);
+        this.getOwner().getComponent("Audio").playBackgroundMusic("res/Sound/background-music-aac.wav", true);
+        this.getOwner().getComponent("CCComAttribute").setInt("KillCount", 0);
     },
 
     onExit: function () {
@@ -59,7 +59,7 @@ var SceneController = ccs.ComController.extend({
 
     addTarget: function () {
         var target = cc.Sprite.create("res/components/Target.png", cc.rect(0, 0, 27, 40));
-        this._owner.addChild(target, 1, 2);
+        this.getOwner().addChild(target, 1, 2);
         target.addComponent(EnemyController.create());
         target.tag = 2;
         this._targets.push(target);
@@ -67,7 +67,7 @@ var SceneController = ccs.ComController.extend({
 
     spriteMoveFinished: function (sender) {
         var sprite = sender;
-        this._owner.removeChild(sprite, true);
+        this.getOwner().removeChild(sprite, true);
         if (sprite.tag == 2) {
             cc.arrayRemoveObject(this._targets, sprite);
             var gameOverScene = GameOverScene.create();
@@ -81,7 +81,7 @@ var SceneController = ccs.ComController.extend({
     },
 
     increaseKillCount: function () {
-        var comAttribute = this._owner.getComponent("CCComAttribute");
+        var comAttribute = this.getOwner().getComponent("CCComAttribute");
         var projectilesDestroyed = comAttribute.getInt("KillCount");
         comAttribute.setInt("KillCount", ++projectilesDestroyed);
         if (projectilesDestroyed >= 5) {
