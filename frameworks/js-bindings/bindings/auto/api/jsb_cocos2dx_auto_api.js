@@ -297,6 +297,18 @@ char
 },
 
 /**
+ * @method bindAttribLocation
+ * @param {char*} arg0
+ * @param {unsigned int} arg1
+ */
+bindAttribLocation : function (
+char, 
+int 
+)
+{
+},
+
+/**
  * @method setUniformLocationWithMatrix4fv
  * @param {int} arg0
  * @param {float*} arg1
@@ -472,18 +484,6 @@ int
  * @method reset
  */
 reset : function (
-)
-{
-},
-
-/**
- * @method bindAttribLocation
- * @param {char*} arg0
- * @param {unsigned int} arg1
- */
-bindAttribLocation : function (
-char, 
-int 
 )
 {
 },
