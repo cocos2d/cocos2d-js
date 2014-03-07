@@ -69,6 +69,7 @@ void js_register_cocos2dx_GLProgram(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_GLProgram_getFragmentShaderLog(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_initWithByteArrays(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgram_bindAttribLocation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_initWithFilenames(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_getUniformLocationForName(JSContext *cx, uint32_t argc, jsval *vp);
@@ -84,7 +85,6 @@ bool js_cocos2dx_GLProgram_setUniformLocationWith1i(JSContext *cx, uint32_t argc
 bool js_cocos2dx_GLProgram_setUniformLocationWith2iv(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix3fv(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_reset(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_GLProgram_bindAttribLocation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_getAttribLocation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_setUniformLocationWith4i(JSContext *cx, uint32_t argc, jsval *vp);
@@ -203,7 +203,6 @@ bool js_cocos2dx_EventDispatcher_addCustomEventListener(JSContext *cx, uint32_t 
 bool js_cocos2dx_EventDispatcher_addEventListenerWithFixedPriority(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_removeEventListenersForTarget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_resumeEventListenersForTarget(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EventDispatcher_dispatchCustomEvent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_setPriority(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_dispatchEvent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventDispatcher_pauseEventListenersForTarget(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2721,8 +2720,6 @@ void js_cocos2dx_EventCustom_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_EventCustom(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_EventCustom_getEventName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EventCustom_setUserData(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EventCustom_getUserData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventCustom_EventCustom(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_Device_class;
@@ -3137,7 +3134,6 @@ void js_cocos2dx_Scheduler_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_Scheduler(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_Scheduler_setTimeScale(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Scheduler_isScheduled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_performFunctionInCocosThread(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_getTimeScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_Scheduler(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3152,13 +3148,26 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_Component_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_setName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_serialize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_update(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_getOwner(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_setOwner(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_getName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_create(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ComponentContainer_class;
+extern JSObject *jsb_cocos2d_ComponentContainer_prototype;
+
+bool js_cocos2dx_ComponentContainer_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ComponentContainer_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ComponentContainer(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ComponentContainer_visit(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ComponentContainer_remove(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ComponentContainer_removeAll(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ComponentContainer_add(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ComponentContainer_isEmpty(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ComponentContainer_get(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CocosDenshion_SimpleAudioEngine_class;
 extern JSObject *jsb_CocosDenshion_SimpleAudioEngine_prototype;

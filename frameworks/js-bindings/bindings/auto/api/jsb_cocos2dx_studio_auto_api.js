@@ -682,9 +682,106 @@ bone
 };
 
 /**
+ * @class DecorativeDisplay
+ */
+ccs.DecorativeDisplay = {
+
+/**
+ * @method getColliderDetector
+ * @return {ccs.ColliderDetector}
+ */
+getColliderDetector : function (
+)
+{
+    return ccs.ColliderDetector;
+},
+
+/**
+ * @method getDisplay
+ * @return {cc.Node}
+ */
+getDisplay : function (
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method setDisplay
+ * @param {cc.Node} arg0
+ */
+setDisplay : function (
+node 
+)
+{
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setDisplayData
+ * @param {ccs.DisplayData} arg0
+ */
+setDisplayData : function (
+displaydata 
+)
+{
+},
+
+/**
+ * @method getDisplayData
+ * @return {ccs.DisplayData}
+ */
+getDisplayData : function (
+)
+{
+    return ccs.DisplayData;
+},
+
+/**
+ * @method setColliderDetector
+ * @param {ccs.ColliderDetector} arg0
+ */
+setColliderDetector : function (
+colliderdetector 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.DecorativeDisplay}
+ */
+create : function (
+)
+{
+    return ccs.DecorativeDisplay;
+},
+
+};
+
+/**
  * @class DisplayManager
  */
 ccs.DisplayManager = {
+
+/**
+ * @method getCurrentDecorativeDisplay
+ * @return {ccs.DecorativeDisplay}
+ */
+getCurrentDecorativeDisplay : function (
+)
+{
+    return ccs.DecorativeDisplay;
+},
 
 /**
  * @method getDisplayRenderNode
@@ -704,6 +801,16 @@ getAnchorPointInPoints : function (
 )
 {
     return cc.Point;
+},
+
+/**
+ * @method setCurrentDecorativeDisplay
+ * @param {ccs.DecorativeDisplay} arg0
+ */
+setCurrentDecorativeDisplay : function (
+decorativedisplay 
+)
+{
 },
 
 /**
@@ -795,6 +902,16 @@ float
 },
 
 /**
+ * @method initDisplayList
+ * @param {ccs.BoneData} arg0
+ */
+initDisplayList : function (
+bonedata 
+)
+{
+},
+
+/**
  * @method changeDisplayWithIndex
  * @param {int} arg0
  * @param {bool} arg1
@@ -826,6 +943,18 @@ isForceChangeDisplay : function (
 )
 {
     return false;
+},
+
+/**
+ * @method getDecorativeDisplayByIndex
+ * @param {int} arg0
+ * @return {ccs.DecorativeDisplay}
+ */
+getDecorativeDisplayByIndex : function (
+int 
+)
+{
+    return ccs.DecorativeDisplay;
 },
 
 /**
@@ -2638,6 +2767,16 @@ char
 )
 {
     return ccui.Widget;
+},
+
+/**
+ * @method getFilePath
+ * @return {String}
+ */
+getFilePath : function (
+)
+{
+    return ;
 },
 
 /**

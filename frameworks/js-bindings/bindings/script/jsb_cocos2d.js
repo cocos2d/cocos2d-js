@@ -2,10 +2,6 @@
 // cocos2d constants
 //
 
-var cc = cc || {};
-var window = window || this;
-
-
 cc.TARGET_PLATFORM = {
     WINDOWS:0,
     LINUX:1,
@@ -71,14 +67,6 @@ cc.TEXTURE_PIXELFORMAT_RGB5A1 = 7;
 cc.TEXTURE_PIXELFORMAT_PVRTC4 = 8;
 cc.TEXTURE_PIXELFORMAT_PVRTC4 = 9;
 cc.TEXTURE_PIXELFORMAT_DEFAULT = cc.TEXTURE_PIXELFORMAT_RGBA8888;
-
-cc.TEXT_ALIGNMENT_LEFT  = 0;
-cc.TEXT_ALIGNMENT_CENTER = 1;
-cc.TEXT_ALIGNMENT_RIGHT = 2;
-
-cc.VERTICAL_TEXT_ALIGNMENT_TOP = 0;
-cc.VERTICAL_TEXT_ALIGNMENT_CENTER = 1;
-cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM = 2;
 
 cc.IMAGE_FORMAT_JPEG = 0;
 cc.IMAGE_FORMAT_PNG = 0;
@@ -908,6 +896,12 @@ cc.eventManager.addListener = function(listener, nodeOrPriority) {
         cc.eventManager.addEventListenerWithSceneGraphPriority(listener, nodeOrPriority);
     }
 };
+
+cc.eventManager.dispatchCustomEvent = function (eventName, optionalUserData) {
+    var ev = new cc.EventCustom(eventName);
+    ev.setUserData(optionalUserData);
+    this.dispatchEvent(ev);
+}
 
 cc.EventCustom.prototype.setUserData = function(userData) {
     this._userData = userData;

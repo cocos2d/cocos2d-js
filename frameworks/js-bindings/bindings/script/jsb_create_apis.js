@@ -134,8 +134,8 @@ cc.LabelTTF.create = function (text, fontName, fontSize, dimensions, hAlignment,
         fontName = fontName || "Arial";
         fontSize = fontSize || 16;
         dimensions = dimensions || cc.size(0, 0);
-        hAlignment = hAlignment || cc.TEXT_ALIGNMENT_CENTER;
-        vAlignment = vAlignment || cc.VERTICAL_TEXT_ALIGNMENT_TOP;
+        hAlignment = hAlignment == undefined ? cc.TEXT_ALIGNMENT_CENTER : hAlignment;
+        vAlignment = vAlignment == undefined ? cc.VERTICAL_TEXT_ALIGNMENT_TOP : vAlignment;
         label = cc.LabelTTF._create(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
     }
     if (label)
