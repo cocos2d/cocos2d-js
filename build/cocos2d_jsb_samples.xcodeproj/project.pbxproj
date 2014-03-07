@@ -91,7 +91,7 @@
 		A63D2EC718C856BE00B29B8F /* jsb_boot.js in Resources */ = {isa = PBXBuildFile; fileRef = A63D2EC618C856BE00B29B8F /* jsb_boot.js */; };
 		A63D2EC818C856BE00B29B8F /* jsb_boot.js in Resources */ = {isa = PBXBuildFile; fileRef = A63D2EC618C856BE00B29B8F /* jsb_boot.js */; };
 		A63D2ECE18C8B36600B29B8F /* jsb_loaders.js in Sources */ = {isa = PBXBuildFile; fileRef = A63D2ECD18C8B36600B29B8F /* jsb_loaders.js */; };
-		A63D2ECF18C8B36600B29B8F /* jsb_loaders.js in Sources */ = {isa = PBXBuildFile; fileRef = A63D2ECD18C8B36600B29B8F /* jsb_loaders.js */; };
+		A63D2ECF18C8B36600B29B8F /* jsb_loaders.js in Resources */ = {isa = PBXBuildFile; fileRef = A63D2ECD18C8B36600B29B8F /* jsb_loaders.js */; };
 		A63D2ED018C8B37100B29B8F /* jsb_loaders.js in Resources */ = {isa = PBXBuildFile; fileRef = A63D2ECD18C8B36600B29B8F /* jsb_loaders.js */; };
 		BA175BB418C5A2DA0040EA39 /* jsb_property_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */; };
 		BA175BB518C5A2DA0040EA39 /* jsb_property_impls.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */; };
@@ -762,6 +762,7 @@
 				1A604F5418BF1D6000CC9A93 /* Icon-152.png in Resources */,
 				1A604F4F18BF1D6000CC9A93 /* Default.png in Resources */,
 				A63D2EC818C856BE00B29B8F /* jsb_boot.js in Resources */,
+				A63D2ECF18C8B36600B29B8F /* jsb_loaders.js in Resources */,
 				BAA7DEE518C84F5000D9A10E /* main.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -770,7 +771,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A63D2ED018C8B37100B29B8F /* jsb_loaders.js in Resources */,
 				BAA7DEDE18C7560500D9A10E /* jsb_create_apis.js in Resources */,
 				BA175BB418C5A2DA0040EA39 /* jsb_property_apis.js in Resources */,
 				BA175BB518C5A2DA0040EA39 /* jsb_property_impls.js in Resources */,
@@ -794,6 +794,7 @@
 				1A487B4E18BF3E7F007EEB98 /* debugger in Resources */,
 				1A604F3418BF1D4900CC9A93 /* src in Resources */,
 				1A604F6518BF1D6600CC9A93 /* MainMenu.xib in Resources */,
+				A63D2ED018C8B37100B29B8F /* jsb_loaders.js in Resources */,
 				A63D2EC718C856BE00B29B8F /* jsb_boot.js in Resources */,
 				BAA7DEE418C84F5000D9A10E /* main.js in Resources */,
 			);
@@ -810,7 +811,6 @@
 				1A604F3A18BF1D5600CC9A93 /* AppDelegate.cpp in Sources */,
 				1A604F5918BF1D6000CC9A93 /* main.m in Sources */,
 				1A604F4D18BF1D6000CC9A93 /* AppController.mm in Sources */,
-				A63D2ECF18C8B36600B29B8F /* jsb_loaders.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

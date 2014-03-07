@@ -14,6 +14,9 @@
         "src/tests_resources.js",
         "src/tests-main.js",
 
+        "src/PathTest/PathTest.js",
+        "src/LoaderTest/LoaderTest.js",
+
         "src/TouchesTest/Ball.js",
         "src/TouchesTest/Paddle.js",
         "src/TouchesTest/TouchesTest.js",
@@ -57,7 +60,6 @@
         "src/EventTest/EventTest.js",
         "src/UnitTest/UnitTest.js",
         "src/SysTest/SysTest.js",
-        "src/FileTest/FileTest.js",
         "src/EffectsTest/EffectsTest.js",
         "src/EffectsAdvancedTest/EffectsAdvancedTest.js",
         "src/MotionStreakTest/MotionStreakTest.js",

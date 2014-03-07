@@ -782,7 +782,7 @@ cc._initDebugSetting = function (mode) {
         if(mode != ccGame.DEBUG_MODE_ERROR && mode != ccGame.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
             cc.warn = bakLog.bind(cc);
         }
-        if(mode == ccGame.DEBUG_MODE_LOG || mode == ccGame.DEBUG_MODE_LOG_FOR_WEB_PAGE){
+        if(mode == ccGame.DEBUG_MODE_INFO || mode == ccGame.DEBUG_MODE_INFO_FOR_WEB_PAGE){
             cc.log = bakLog;
         }
     }
@@ -797,10 +797,10 @@ cc._initDebugSetting = function (mode) {
  */
 cc.game = {
     DEBUG_MODE_NONE : 0,
-    DEBUG_MODE_LOG : 1,
+    DEBUG_MODE_INFO : 1,
     DEBUG_MODE_WARN : 2,
     DEBUG_MODE_ERROR : 3,
-    DEBUG_MODE_LOG_FOR_WEB_PAGE : 4,
+    DEBUG_MODE_INFO_FOR_WEB_PAGE : 4,
     DEBUG_MODE_WARN_FOR_WEB_PAGE : 5,
     DEBUG_MODE_ERROR_FOR_WEB_PAGE : 6,
     
