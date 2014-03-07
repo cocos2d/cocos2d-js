@@ -646,6 +646,7 @@ void ScriptingCore::cleanup()
     }
     
     _js_global_type_map.clear();
+    filename_script.clear();
 }
 
 void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)
