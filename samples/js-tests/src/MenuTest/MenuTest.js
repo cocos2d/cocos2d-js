@@ -48,6 +48,7 @@ var MenuLayerMainMenu = cc.Layer.extend({
                 return true;
             }
         });
+	    cc.eventManager.addListener(this._touchListener, 1);
 
         // Font Item
         var spriteNormal = cc.Sprite.create(s_menuItem, cc.rect(0,23*2,115,23));
@@ -160,16 +161,6 @@ var MenuLayerMainMenu = cc.Layer.extend({
 
     onMenuMovingCallback:function(sender){
         this.parent.switchTo(5);
-    },
-
-    onEnter: function(){
-        cc.eventManager.addListener(this._touchListener, 1);
-        this._super();
-    },
-
-    onExit: function(){
-        cc.eventManager.removeListener(this._touchListener);
-        this._super();
     }
 });
 
@@ -494,16 +485,7 @@ var RemoveMenuItemWhenMove = cc.Layer.extend({
                 }
             }.bind(this)
         });
-    },
-
-    onEnter: function(){
-        cc.eventManager.addListener(this._touchListener, -129);
-        this._super();
-    },
-
-    onExit: function(){
-        cc.eventManager.removeListener(this._touchListener);
-        this._super();
+	    cc.eventManager.addListener(this._touchListener, -129);
     },
 
     goBack:function(sender){
