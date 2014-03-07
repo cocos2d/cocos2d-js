@@ -119,7 +119,10 @@ _safeExtend(cc.PhysicsSprite.prototype, {
 
 _safeExtend(cc.LabelBMFont.prototype, {
     _getAlignment: _undefined._jsbUndefined,
-    _getBoundingWidth: _undefined._jsbUndefined
+    _getBoundingWidth: _undefined._jsbUndefined,
+    setBoundingWidth: function (width) {
+        this.setWidth(width);
+    }
 });
 
 _safeExtend(cc.TMXLayer.prototype, {
