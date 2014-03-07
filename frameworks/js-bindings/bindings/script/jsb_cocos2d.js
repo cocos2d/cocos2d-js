@@ -905,6 +905,12 @@ cc.eventManager.addListener = function(listener, nodeOrPriority) {
     }
 };
 
+cc.eventManager.dispatchCustomEvent = function (eventName, optionalUserData) {
+    var ev = new cc.EventCustom(eventName);
+    ev.setUserData(optionalUserData);
+    this.dispatchEvent(ev);
+}
+
 cc.EventCustom.prototype.setUserData = function(userData) {
     this._userData = userData;
 };
