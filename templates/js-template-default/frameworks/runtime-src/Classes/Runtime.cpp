@@ -656,7 +656,7 @@ class ConsoleCustomCommand
 public:
     ConsoleCustomCommand():_fileserver(nullptr)
     {
-        
+        _writepath = FileUtils::getInstance()->getWritablePath();
         cocos2d::Console *_console = Director::getInstance()->getConsole();
         static struct Console::Command commands[] = {
             {"shutdownapp","exit runtime app",std::bind(&ConsoleCustomCommand::onShutDownApp, this, std::placeholders::_1, std::placeholders::_2)},
@@ -684,12 +684,11 @@ public:
     
     void onPreCompile(int fd, const std::string &args)
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){
-            string jsSearchPath= FileUtils::getInstance()->getWritablePath();
-            vector<std::string> fileInfoList = searchFileList(jsSearchPath,"*.js","runtime|framework|");
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            vector<std::string> fileInfoList = searchFileList(_writepath,"*.js","runtime|frameworks|");
             for (unsigned i = 0; i < fileInfoList.size(); i++)
             {
-                ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(jsSearchPath.length(),-1).c_str());
+                ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(_writepath.length(),-1).c_str());
             }
         });
     }
@@ -716,7 +715,7 @@ public:
     }
 private:
     FileServer* _fileserver;
-    
+    string _writepath;
 };
 
 void startRuntime()
