@@ -3,9 +3,13 @@
 #include "cocosbuilder/js_bindings_ccbreader.h"
 #include "SimpleAudioEngine.h"
 #include "jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_gui_auto.hpp"
+#include "jsb_cocos2dx_studio_auto.hpp"
 #include "jsb_cocos2dx_extension_auto.hpp"
 #include "jsb_cocos2dx_builder_auto.hpp"
+#include "gui/jsb_cocos2dx_gui_manual.h"
 #include "extension/jsb_cocos2dx_extension_manual.h"
+#include "cocostudio/jsb_cocos2dx_studio_manual.h"
 #include "localstorage/js_bindings_system_registration.h"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
@@ -47,6 +51,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
     sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
+	sc->addRegisterCallback(register_all_cocos2dx_ui);
+	sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
+	sc->addRegisterCallback(register_all_cocos2dx_studio);
+	sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_chipmunk);
@@ -57,6 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #else
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    ScriptingCore::getInstance()->runScript("jsb_boot.js");
 	ScriptingCore::getInstance()->runScript("src/main.js");
 #endif
     

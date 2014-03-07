@@ -46,10 +46,10 @@ var VirtualMachineTestMenuLayer = PerformBasicLayer.extend({
     _maxCases:6,
     ctor:function(){
         this._super();
-        this._maxCases = (cc.renderContextType === cc.CANVAS) ? 6 : 4;
+        this._maxCases = (cc._renderType === cc._RENDER_TYPE_CANVAS) ? 6 : 4;
     },
     showCurrentTest:function () {
-        var nodes = (this.getParent()).getQuantityOfNodes();
+        var nodes = (this.parent).getQuantityOfNodes();
         var scene = null;
         switch (this._curCase) {
             case 0:
@@ -75,7 +75,7 @@ var VirtualMachineTestMenuLayer = PerformBasicLayer.extend({
 
         if (scene) {
             scene.initWithQuantityOfNodes(nodes);
-            cc.Director.getInstance().replaceScene(scene);
+            cc.director.runScene(scene);
         }
     }
 });
@@ -102,20 +102,22 @@ var VirtualMachineTestMainScene = cc.Scene.extend({
         this.addChild(this._batchNode);
 
         //srand(time());
-        var s = cc.Director.getInstance().getWinSize();
+        var s = cc.director.getWinSize();
 
         // Title
         var label = cc.LabelTTF.create(this.title(), "Arial", 40);
         this.addChild(label, 1);
-        label.setPosition(s.width / 2, s.height - 32);
-        label.setColor(cc.c3b(255, 255, 40));
+        label.x = s.width / 2;
+        label.y = s.height - 32;
+        label.color = cc.color(255, 255, 40);
 
         // Subtitle
         var strSubTitle = this.subtitle();
         if (strSubTitle.length) {
             var l = cc.LabelTTF.create(strSubTitle, "Thonburi", 16);
             this.addChild(l, 1);
-            l.setPosition(s.width / 2, s.height - 80);
+            l.x = s.width / 2;
+            l.y = s.height - 80;
         }
 
         this._lastRenderedCount = 0;
@@ -125,18 +127,20 @@ var VirtualMachineTestMainScene = cc.Scene.extend({
         cc.MenuItemFont.setFontSize(65);
         var that = this;
         var decrease = cc.MenuItemFont.create(" - ", this.onDecrease, this);
-        decrease.setColor(cc.c3b(0, 200, 20));
+        decrease.color = cc.color(0, 200, 20);
         var increase = cc.MenuItemFont.create(" + ", this.onIncrease, this);
-        increase.setColor(cc.c3b(0, 200, 20));
+        increase.color = cc.color(0, 200, 20);
 
         var menu = cc.Menu.create(decrease, increase);
         menu.alignItemsHorizontally();
-        menu.setPosition(s.width / 2, s.height / 2 + 15);
+        menu.x = s.width / 2;
+        menu.y = s.height / 2 + 15;
         this.addChild(menu, 1);
 
         var infoLabel = cc.LabelTTF.create("0 nodes", "Marker Felt", 30);
-        infoLabel.setColor(cc.c3b(0, 200, 20));
-        infoLabel.setPosition(s.width / 2, s.height / 2 - 15);
+        infoLabel.color = cc.color(0, 200, 20);
+        infoLabel.x = s.width / 2;
+        infoLabel.y = s.height / 2 - 15;
         this.addChild(infoLabel, 1, TAG_INFO_LAYER);
 
         var menu = new VirtualMachineTestMenuLayer(true, 3, s_nVMCurCase);
@@ -281,7 +285,7 @@ var SpriteWithManyProperties = SimpleNewtonianSprite.extend({
 
 var SpritesWithManyPropertiesTestScene1 = VirtualMachineTestMainScene.extend({
     updateQuantityOfNodes:function () {
-        var s = cc.Director.getInstance().getWinSize();
+        var s = cc.director.getWinSize();
 
         // increase nodes
         if (this._currentQuantityOfNodes < this._quantityOfNodes) {
@@ -289,10 +293,11 @@ var SpritesWithManyPropertiesTestScene1 = VirtualMachineTestMainScene.extend({
                  i < (this._quantityOfNodes - this._currentQuantityOfNodes);
                  i++) {
                 var sprite = 
-                    new SpriteWithManyProperties(this._batchNode.getTexture(),
+                    new SpriteWithManyProperties(this._batchNode.texture,
                                                  cc.rect(0, 0, 52, 139));
                 this._batchNode.addChild(sprite);
-                sprite.setPosition(Math.random() * s.width,Math.random() * s.height);
+                sprite.x = Math.random() * s.width;
+                sprite.y = Math.random() * s.height;
             }
         }
 
@@ -320,9 +325,9 @@ var SpritesWithManyPropertiesTestScene2 =
     SpritesWithManyPropertiesTestScene1.extend({
     updateQuantityOfNodes:function () {
         this._super();
-        var arrayToUpdate = this._batchNode.getChildren();
+        var arrayToUpdate = this._batchNode.children;
         for (var i = 0, imax = arrayToUpdate.length; i < imax; ++i)
-            arrayToUpdate[i].setVisible(false);
+            arrayToUpdate[i].visible = false;
         this.arrayToUpdate = arrayToUpdate;
     },
     title:function () {
@@ -383,16 +388,16 @@ var SpritesUndergoneDifferentOperationsTestScene1 = VirtualMachineTestMainScene.
         };
         return fn([], array, []);
     })([
-        function() { this.getChildren(); }, // appends ._children
-        function() { this.setTag(cc.NODE_TAG_INVALID); }, // appends ._tag
+        function() { this.children; }, // appends ._children
+        function() { this.tag = cc.NODE_TAG_INVALID; }, // appends .tag
         function() { this.setParent(null); }, // appends ._parent
-        function() { this.setZOrder(0); }, // appends ._zOrder
-        function() { this.setRotation(0); }, // appends ._rotationX/Y
-        function() { this.setVisible(true); }, // appends ._visible
+        function() { this.zIndex = 0; }, // appends ._zOrder
+        function() { this.rotation = 0; }, // appends ._rotationX/Y
+        function() { this.visible = true; }, // appends ._visible
         function() { this.onEnter(); } // appends ._running
     ]),
     updateQuantityOfNodes:function () {
-        var s = cc.Director.getInstance().getWinSize();
+        var s = cc.director.getWinSize();
 
         // increase nodes
         if (this._currentQuantityOfNodes < this._quantityOfNodes) {
@@ -400,14 +405,15 @@ var SpritesUndergoneDifferentOperationsTestScene1 = VirtualMachineTestMainScene.
                  i < (this._quantityOfNodes - this._currentQuantityOfNodes);
                  i++) {
                 var sprite = 
-                    new SimpleNewtonianSprite(this._batchNode.getTexture(),
+                    new SimpleNewtonianSprite(this._batchNode.texture,
                                               cc.rect(0, 0, 52, 139));
                 var series = this.possibleOperationSeries[i];
                 for (var op = 0, opmax = series.length; op < opmax; ++op)
                     series[op].call(sprite);
 
                 this._batchNode.addChild(sprite);
-                sprite.setPosition(Math.random() * s.width,Math.random() * s.height);
+                sprite.x = Math.random() * s.width;
+                sprite.y = Math.random() * s.height;
             }
         }
 
@@ -439,9 +445,9 @@ var SpritesUndergoneDifferentOperationsTestScene2 =
     // here becasue this._super() is different!
     updateQuantityOfNodes:function () {
         this._super();
-        var arrayToUpdate = this._batchNode.getChildren();
+        var arrayToUpdate = this._batchNode.children;
         for (var i = 0, imax = arrayToUpdate.length; i < imax; ++i)
-            arrayToUpdate[i].setVisible(false);
+            arrayToUpdate[i].visible = false;
         this.arrayToUpdate = arrayToUpdate;
     },
     title:function () {
@@ -465,9 +471,9 @@ var ClonedSpritesTestScene1 = VirtualMachineTestMainScene.extend({
     updateQuantityOfNodes:function () {
         if (!this.template)
             this.template = 
-            new SimpleNewtonianSprite(this._batchNode.getTexture(),
+            new SimpleNewtonianSprite(this._batchNode.texture,
                                       cc.rect(0, 0, 52, 139));
-        var s = cc.Director.getInstance().getWinSize();
+        var s = cc.director.getWinSize();
 
         // increase nodes
         if (this._currentQuantityOfNodes < this._quantityOfNodes) {
@@ -482,13 +488,14 @@ var ClonedSpritesTestScene1 = VirtualMachineTestMainScene.extend({
                 // to the scene directly.
                 this.addChild(sprite, -1); // zOrder has to be less than 0 or it
                                            // overlaps the menu.
-                sprite.setPosition(Math.random() * s.width, Math.random() * s.height);
+                sprite.x = Math.random() * s.width;
+                sprite.y = Math.random() * s.height;
             }
         }
 
         // decrease nodes
         else if (this._currentQuantityOfNodes > this._quantityOfNodes) {
-            var children = this.getChildren();
+            var children = this.children;
             var lastChildToRemove = children.length;
             for (var i = children.length - 1; i >= 0; --i) {
                 var child = children[i];
@@ -522,12 +529,12 @@ var ClonedSpritesTestScene2 = ClonedSpritesTestScene1.extend({
     updateQuantityOfNodes:function () {
         if (!this.template) {
             this.template = 
-                new SimpleNewtonianSprite(this._batchNode.getTexture(),
+                new SimpleNewtonianSprite(this._batchNode.texture,
                                           cc.rect(0, 0, 52, 139));
-            this.template.setVisible(false);
+            this.template.visible = false;
         }
         this._super();
-        this.arrayToUpdate = this.getChildren();
+        this.arrayToUpdate = this.children;
     },
     title:function () {
         return "C2 - Cloned Sprites";
@@ -540,5 +547,5 @@ var ClonedSpritesTestScene2 = ClonedSpritesTestScene1.extend({
 function runVirtualMachineTest() {
     var scene = new SpritesWithManyPropertiesTestScene1();
     scene.initWithQuantityOfNodes(VM_NODES_INCREASE);
-    cc.Director.getInstance().replaceScene(scene);
+    cc.director.runScene(scene);
 }

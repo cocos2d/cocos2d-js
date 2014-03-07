@@ -38,9 +38,10 @@ var UICheckBoxTest = UIScene.extend({
                 "res/cocosgui/check_box_active.png",
                 "res/cocosgui/check_box_normal_disable.png",
                 "res/cocosgui/check_box_active_disable.png");
-            checkBox.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0));
+            checkBox.x = widgetSize.width / 2.0;
+	        checkBox.y = widgetSize.height / 2.0;
             checkBox.addEventListenerCheckBox(this.selectedStateEvent, this);
-            this._uiLayer.addChild(checkBox);
+            this._mainNode.addChild(checkBox);
 
             return true;
         }
@@ -49,10 +50,10 @@ var UICheckBoxTest = UIScene.extend({
 
     selectedStateEvent: function (sender, type) {
         switch (type) {
-            case  ccui.CheckBoxEventType.unselected:
+            case  ccui.CHECKBOX_EVENT_UNSELECTED:
                 this._topDisplayLabel.setText("Unselected");
                 break;
-            case ccui.CheckBoxEventType.selected:
+            case ccui.CHECKBOX_EVENT_SELECTED:
                 this._topDisplayLabel.setText("Selected");
                 break;
 

@@ -28,21 +28,20 @@ var EnemyController = ccs.ComController.extend({
         this._name = "EnemyController";
     },
     init: function () {
-        this._super();
         return true;
     },
 
     onEnter: function () {
         // Determine where to spawn the target along the Y axis
-        var winSize = cc.Director.getInstance().getWinSize();
-        var minY = this.getOwner().getContentSize().height / 2;
-        var rangeY = winSize.height - this.getOwner().getContentSize().height;
+        var winSize = cc.director.getWinSize();
+        var minY = this.getOwner().height / 2;
+        var rangeY = winSize.height - this.getOwner().height;
         var actualY = (Math.random() * rangeY ) + minY;
 
         // Create the target slightly off-screen along the right edge,
         // and along a random position along the Y axis as calculated
-        this._owner.setPosition(
-            cc.p(winSize.width + (this.getOwner().getContentSize().width / 2), actualY));
+        this._owner.x = winSize.width + (this.getOwner().width / 2);
+	    this._owner.y = actualY;
 
 
         // Determine speed of the target
@@ -52,9 +51,9 @@ var EnemyController = ccs.ComController.extend({
         var actualDuration = ( Math.random() % rangeDuration ) + minDuration;
 
         // Create the actions
-        var actionMove = cc.MoveTo.create(actualDuration, cc.p(0 - this.getOwner().getContentSize().width / 2, actualY));
+        var actionMove = cc.MoveTo.create(actualDuration, cc.p(0 - this.getOwner().width / 2, actualY));
         var actionMoveDone = cc.CallFunc.create(function () {
-            var comController = this.getOwner().getParent().getComponent("SceneController");
+            var comController = this.getOwner().parent.getComponent("SceneController");
             comController.spriteMoveFinished(this._owner);
         }, this);
         this._owner.runAction(cc.Sequence.create(actionMove, actionMoveDone));
@@ -68,9 +67,9 @@ var EnemyController = ccs.ComController.extend({
     },
 
     die: function () {
-        var com = this._owner.getParent().getComponent("SceneController");
+        var com = this._owner.parent.getComponent("SceneController");
         var targets = com.getTargets();
-        cc.ArrayRemoveObject(targets, this._owner);
+        cc.arrayRemoveObject(targets, this._owner);
         this._owner.removeFromParent(true);
         com.increaseKillCount();
     }

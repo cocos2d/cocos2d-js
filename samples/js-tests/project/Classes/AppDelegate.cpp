@@ -110,8 +110,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
-
-    ScriptingCore::getInstance()->runScript("src/tests-boot-jsb.js");
+    
+    ScriptingCore::getInstance()->runScript("jsb_boot.js");
+    ScriptingCore::getInstance()->runScript("main.js");
 
     return true;
 }

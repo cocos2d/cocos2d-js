@@ -195,7 +195,7 @@ var TouchableSprite = cc.Sprite.extend({
                 var rect = cc.rect(0, 0, s.width, s.height);
 
                 if (cc.rectContainsPoint(rect, locationInNode)) {
-                    selfPointer.setColor(cc.color.red);
+                    selfPointer.setColor(cc.color.RED);
                     return true;
                 }
                 return false;
@@ -204,11 +204,9 @@ var TouchableSprite = cc.Sprite.extend({
                 //this.setPosition(this.getPosition() + touch.getDelta());
             },
             onTouchEnded: function (touch, event) {
-                selfPointer.setColor(cc.color.white);
-                if(selfPointer._removeListenerOnTouchEnded) {
+                selfPointer.setColor(cc.color.WHITE);
+                if(selfPointer._removeListenerOnTouchEnded)
                     cc.eventManager.removeListener(selfPointer._listener);
-                    selfPointer._listener = null;
-                }
             }
         });
 
@@ -220,9 +218,7 @@ var TouchableSprite = cc.Sprite.extend({
     },
 
     onExit: function(){
-        if (this._listener != null)
-            cc.eventManager.removeListener(this._listener);
-
+        cc.eventManager.removeListener(this._listener);
         this._super();
     },
 
@@ -299,13 +295,13 @@ var RemoveListenerWhenDispatching =  EventDispatcherTestDemo.extend({
                 var rect = cc.rect(0, 0, s.width, s.height);
 
                 if (cc.rectContainsPoint(rect, locationInNode)) {
-                    sprite1.setColor(cc.color.red);
+                    sprite1.setColor(cc.color.RED);
                     return true;
                 }
                 return false;
             },
             onTouchEnded: function (touch, event) {
-                sprite1.setColor(cc.color.white);
+                sprite1.setColor(cc.color.WHITE);
             }
         });
         this.setUserObject(listener1);
@@ -850,8 +846,6 @@ var GlobalZTouchTest = EventDispatcherTestDemo.extend({
         }
 
         this.scheduleUpdate();
-
-        this.setGlobalZOrder(-2);
     },
 
     update: function(dt){
@@ -1094,7 +1088,7 @@ var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
 
             var controlButton = cc.ControlButton.create(titleButton, backgroundButton);
             controlButton.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
-            controlButton.setTitleColorForState(cc.color.white, cc.CONTROL_STATE_HIGHLIGHTED);
+            controlButton.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
             controlButton.anchorX = 0.5;
             controlButton.anchorY = 1;

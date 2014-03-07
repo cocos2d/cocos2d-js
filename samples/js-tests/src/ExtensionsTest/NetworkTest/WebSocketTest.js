@@ -40,55 +40,67 @@ var WebSocketTestLayer = cc.Layer.extend({
 
     init: function () {
 
-        var winSize = cc.Director.getInstance().getWinSize();
+        var winSize = cc.director.getWinSize();
         
         var MARGIN = 40;
         var SPACE = 35;
         
         var label = cc.LabelTTF.create("WebSocket Test", "Arial", 28);
-        label.setPosition(winSize.width / 2, winSize.height - MARGIN);
+        label.x = winSize.width / 2;
+        label.y = winSize.height - MARGIN;
         this.addChild(label, 0);
         
         var menuRequest = cc.Menu.create();
-        menuRequest.setPosition(0, 0);
+        menuRequest.x = 0;
+        menuRequest.y = 0;
         this.addChild(menuRequest);
         
         // Send Text
         var labelSendText = cc.LabelTTF.create("Send Text", "Arial", 22);
         var itemSendText = cc.MenuItemLabel.create(labelSendText, this.onMenuSendTextClicked, this);
-        itemSendText.setPosition(winSize.width / 2, winSize.height - MARGIN - SPACE);
+        itemSendText.x = winSize.width / 2;
+        itemSendText.y = winSize.height - MARGIN - SPACE;
         menuRequest.addChild(itemSendText);
         
         // Send Binary
         var labelSendBinary = cc.LabelTTF.create("Send Binary", "Arial", 22);
         var itemSendBinary = cc.MenuItemLabel.create(labelSendBinary, this.onMenuSendBinaryClicked, this);
-        itemSendBinary.setPosition(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE);
+        itemSendBinary.x = winSize.width / 2;
+        itemSendBinary.y = winSize.height - MARGIN - 2 * SPACE;
         menuRequest.addChild(itemSendBinary);
         
 
         // Send Text Status Label
         this._sendTextStatus = cc.LabelTTF.create("Send Text WS is waiting...", "Arial", 14, cc.size(160, 100), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
-        this._sendTextStatus.setAnchorPoint(0, 0);
-        this._sendTextStatus.setPosition(0, 25);
+        this._sendTextStatus.anchorX = 0;
+        this._sendTextStatus.anchorY = 0;
+        this._sendTextStatus.x = 0;
+        this._sendTextStatus.y = 25;
         this.addChild(this._sendTextStatus);
         
         // Send Binary Status Label
         this._sendBinaryStatus = cc.LabelTTF.create("Send Binary WS is waiting...", "Arial", 14, cc.size(160, 100), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
-        this._sendBinaryStatus.setAnchorPoint(0, 0);
-        this._sendBinaryStatus.setPosition(160, 25);
+        this._sendBinaryStatus.anchorX = 0;
+        this._sendBinaryStatus.anchorY = 0;
+        this._sendBinaryStatus.x = 160;
+        this._sendBinaryStatus.y = 25;
         this.addChild(this._sendBinaryStatus);
         
         // Error Label
         this._errorStatus = cc.LabelTTF.create("Error WS is waiting...", "Arial", 14, cc.size(160, 100), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
-        this._errorStatus.setAnchorPoint(0, 0);
-        this._errorStatus.setPosition(320, 25);
+        this._errorStatus.anchorX = 0;
+        this._errorStatus.anchorY = 0;
+        this._errorStatus.x = 320;
+        this._errorStatus.y = 25;
         this.addChild(this._errorStatus);
         
         // Back Menu
         var itemBack = cc.MenuItemFont.create("Back", this.toExtensionsMainLayer, this);
-        itemBack.setPosition(winSize.width - 50, 25);
+        itemBack.x = winSize.width - 50;
+        itemBack.y = 25;
         var menuBack = cc.Menu.create(itemBack);
-        menuBack.setPosition(0, 0);
+        menuBack.x = 0;
+        menuBack.y = 0;
         this.addChild(menuBack);
 
         var self = this;
@@ -246,5 +258,5 @@ var runWebSocketTest = function () {
     var pScene = cc.Scene.create();
     var pLayer = WebSocketTestLayer.create();
     pScene.addChild(pLayer);
-    cc.Director.getInstance().replaceScene(pScene);
+    cc.director.runScene(pScene);
 };

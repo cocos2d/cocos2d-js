@@ -273,12 +273,12 @@ UISceneManager.getInstance = function () {
     }
     return this._instance;
 };
-UISceneManager.destroyInstance = function () {
+UISceneManager.purge = function () {
     this._instance = null;
 };
 
 var runCocosGUITestScene = function () {
     var manager = UISceneManager.getInstance();
     var scene = manager.currentUIScene();
-    cc.Director.getInstance().replaceScene(scene);
+    cc.director.runScene(scene);
 };
