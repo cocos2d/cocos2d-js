@@ -965,9 +965,9 @@ var arrayOfNodeTest = [
 ];
 
 if ('opengl' in cc.sys.capabilities) {
-    arrayOfNodeTest.push(CameraCenterTest);
+    cc.sys.isNative || arrayOfNodeTest.push(CameraCenterTest);
     arrayOfNodeTest.push(CameraOrbitTest);
-    arrayOfNodeTest.push(CameraZoomTest);
+	cc.sys.isNative || arrayOfNodeTest.push(CameraZoomTest);
     arrayOfNodeTest.push(NodeOpaqueTest);
     arrayOfNodeTest.push(NodeNonOpaqueTest);
 }

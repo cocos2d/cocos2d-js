@@ -213,10 +213,14 @@ _proto = cc.ScrollView.prototype;
 
 // Extends
 var _proto = cc.ClippingNode.prototype;
+cc.defineGetterSetter(_proto, "alphaThreshold", _proto.getAlphaThreshold, _proto.setAlphaThreshold);
+cc.defineGetterSetter(_proto, "inverted", _proto.getInverted, _proto.setInverted);
 cc.defineGetterSetter(_proto, "stencil", _proto.getStencil, _proto.setStencil);
 
 _proto = cc.AtlasNode.prototype;
 cc.defineGetterSetter(_proto, "texture", _proto.getTexture, _proto.setTexture);
+cc.defineGetterSetter(_proto, "textureAtlas", _proto.getTextureAtlas, _proto.setTextureAtlas);
+cc.defineGetterSetter(_proto, "quadsToDraw", _proto.getQuadsToDraw, _proto.setQuadsToDraw);
 
 _proto = cc.Node.prototype;
 cc.defineGetterSetter(_proto, "x", _proto.getPositionX, _proto.setPositionX);
@@ -246,6 +250,10 @@ cc.defineGetterSetter(_proto, "scheduler", _proto.getScheduler, _proto.setSchedu
 cc.defineGetterSetter(_proto, "shaderProgram", _proto.getShaderProgram, _proto.setShaderProgram);
 cc.defineGetterSetter(_proto, "glServerState", _proto.getGLServerState, _proto.setGLServerState);
 cc.defineGetterSetter(_proto, "tag", _proto.getTag, _proto.setTag);
+cc.defineGetterSetter(_proto, "userData", _proto.getUserData, _proto.setUserData);
+cc.defineGetterSetter(_proto, "userObject", _proto.getUserObject, _proto.setUserObject);
+cc.defineGetterSetter(_proto, "arrivalOrder", _proto.getArrivalOrder, _proto.setArrivalOrder);
+cc.defineGetterSetter(_proto, "grid", _proto.getGrid, _proto.setGrid);
 
 _proto = cc.NodeRGBA.prototype;
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
@@ -293,12 +301,15 @@ cc.defineGetterSetter(_proto, "vector", _proto.getVector, _proto.setVector);
 cc.defineGetterSetter(_proto, "compresseInterpolation", _proto.isCompressedInterpolation, _proto.setCompressedInterpolation);
 
 _proto = cc.Sprite.prototype;
+cc.defineGetterSetter(_proto, "dirty", _proto.getDirty, _proto.setDirty);
 cc.defineGetterSetter(_proto, "flippedX", _proto.isFlippedX, _proto.setFlippedX);
 cc.defineGetterSetter(_proto, "flippedY", _proto.isFlippedY, _proto.setFlippedY);
 cc.defineGetterSetter(_proto, "offsetX", _proto._getOffsetX);
 cc.defineGetterSetter(_proto, "offsetY", _proto._getOffsetY);
+cc.defineGetterSetter(_proto, "atlasIndex", _proto.getAtlasIndex, _proto.setAtlasIndex);
 cc.defineGetterSetter(_proto, "texture", _proto.getTexture, _proto.setTexture);
 cc.defineGetterSetter(_proto, "textureRectRotated", _proto.isTextureRectRotated);
+cc.defineGetterSetter(_proto, "textureAtlas", _proto.getTextureAtlas, _proto.setTextureAtlas);
 cc.defineGetterSetter(_proto, "batchNode", _proto.getBatchNode, _proto.setBatchNode);
 cc.defineGetterSetter(_proto, "quad", _proto.getQuad);
 cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
@@ -306,6 +317,7 @@ cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
 cc.defineGetterSetter(_proto, "color", _proto.getColor, _proto.setColor);
 
 _proto = cc.SpriteBatchNode.prototype;
+cc.defineGetterSetter(_proto, "textureAtlas", _proto.getTextureAtlas, _proto.setTextureAtlas);
 cc.defineGetterSetter(_proto, "descendants", _proto.getDescendants);
 cc.defineGetterSetter(_proto, "texture", _proto.getTexture, _proto.setTexture);
 
@@ -316,6 +328,9 @@ cc.defineGetterSetter(_proto, "pixelsWidth", _proto.getPixelsWide);
 cc.defineGetterSetter(_proto, "pixelsHeight", _proto.getPixelsHigh);
 cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
 cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
+cc.defineGetterSetter(_proto, "shaderProgram", _proto.getShaderProgram, _proto.setShaderProgram);
+cc.defineGetterSetter(_proto, "maxS", _proto.getMaxS, _proto.setMaxS);
+cc.defineGetterSetter(_proto, "maxT", _proto.getMaxT, _proto.setMaxT);
 
 _proto = cc.LabelAtlas.prototype;
 cc.defineGetterSetter(_proto, "string", _proto.getString, _proto.setString);
@@ -325,6 +340,9 @@ _proto = cc.LabelBMFont.prototype;
 cc.defineGetterSetter(_proto, "string", _proto.getString, _proto._setStringForSetter);
 cc.defineGetterSetter(_proto, "textAlign", _proto._getAlignment, _proto.setAlignment);
 cc.defineGetterSetter(_proto, "boundingWidth", _proto._getBoundingWidth, _proto.setBoundingWidth);
+
+_proto = cc.Menu.prototype;
+cc.defineGetterSetter(_proto, "enabled", _proto.getEnabled, _proto.setEnabled);
 
 _proto = cc.MenuItem.prototype;
 cc.defineGetterSetter(_proto, "enabled", _proto.isEnabled, _proto.setEnabled);
@@ -344,17 +362,36 @@ cc.defineGetterSetter(_proto, "selectedImage", _proto.getSelectedImage, _proto.s
 cc.defineGetterSetter(_proto, "disabledImage", _proto.getDisabledImage, _proto.setDisabledImage);
 
 _proto = cc.ParticleBatchNode.prototype;
+cc.defineGetterSetter(_proto, "textureAtlas", _proto.getTextureAtlas, _proto.setTextureAtlas);
 cc.defineGetterSetter(_proto, "texture", _proto.getTexture, _proto.setTexture);
 
 _proto = cc.ParticleSystem.prototype;
 cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
 cc.defineGetterSetter(_proto, "batchNode", _proto.getBatchNode, _proto.setBatchNode);
 cc.defineGetterSetter(_proto, "active", _proto.isActive);
+cc.defineGetterSetter(_proto, "shapeType", _proto.getShapeType, _proto.setShapeType);
+cc.defineGetterSetter(_proto, "atlasIndex", _proto.getAtlasIndex, _proto.setAtlasIndex);
+cc.defineGetterSetter(_proto, "particleCount", _proto.getParticleCount, _proto.setParticleCount);
+cc.defineGetterSetter(_proto, "duration", _proto.getDuration, _proto.setDuration);
 cc.defineGetterSetter(_proto, "sourcePos", _proto.getSourcePosition, _proto.setSourcePosition);
 cc.defineGetterSetter(_proto, "posVar", _proto.getPosVar, _proto.setPosVar);
+cc.defineGetterSetter(_proto, "life", _proto.getLife, _proto.setLife);
+cc.defineGetterSetter(_proto, "lifeVar", _proto.getLifeVar, _proto.setLifeVar);
+cc.defineGetterSetter(_proto, "angle", _proto.getAngle, _proto.setAngle);
+cc.defineGetterSetter(_proto, "angleVar", _proto.getAngleVar, _proto.setAngleVar);
+cc.defineGetterSetter(_proto, "startSize", _proto.getStartSize, _proto.setStartSize);
+cc.defineGetterSetter(_proto, "startSizeVar", _proto.getStartSizeVar, _proto.setStartSizeVar);
+cc.defineGetterSetter(_proto, "endSize", _proto.getEndSize, _proto.setEndSize);
+cc.defineGetterSetter(_proto, "endSizeVar", _proto.getEndSizeVar, _proto.setEndSizeVar);
+cc.defineGetterSetter(_proto, "startSpin", _proto.getStartSpin, _proto.setStartSpin);
+cc.defineGetterSetter(_proto, "startSpinVar", _proto.getStartSpinVar, _proto.setStartSpinVar);
+cc.defineGetterSetter(_proto, "endSpin", _proto.getEndSpin, _proto.setEndSpin);
+cc.defineGetterSetter(_proto, "endSpinVar", _proto.getEndSpinVar, _proto.setEndSpinVar);
 cc.defineGetterSetter(_proto, "gravity", _proto.getGravity, _proto.setGravity);
 cc.defineGetterSetter(_proto, "speed", _proto.getSpeed, _proto.setSpeed);
 cc.defineGetterSetter(_proto, "speedVar", _proto.getSpeedVar, _proto.setSpeedVar);
+cc.defineGetterSetter(_proto, "tangentialAccel", _proto.getTangentialAccel, _proto.setTangentialAccel);
+cc.defineGetterSetter(_proto, "tangentialAccelVar", _proto.getTangentialAccelVar, _proto.setTangentialAccelVar);
 cc.defineGetterSetter(_proto, "tangentialAccel", _proto.getTangentialAccel, _proto.setTangentialAccel);
 cc.defineGetterSetter(_proto, "tangentialAccelVar", _proto.getTangentialAccelVar, _proto.setTangentialAccelVar);
 cc.defineGetterSetter(_proto, "rotationIsDir", _proto.getRotationIsDir, _proto.setRotationIsDir);
@@ -368,7 +405,11 @@ cc.defineGetterSetter(_proto, "startColor", _proto.getStartColor, _proto.setStar
 cc.defineGetterSetter(_proto, "startColorVar", _proto.getStartColorVar, _proto.setStartColorVar);
 cc.defineGetterSetter(_proto, "endColor", _proto.getEndColor, _proto.setEndColor);
 cc.defineGetterSetter(_proto, "endColorVar", _proto.getEndColorVar, _proto.setEndColorVar);
+cc.defineGetterSetter(_proto, "emissionRate", _proto.getEmissionRate, _proto.setEmissionRate);
+cc.defineGetterSetter(_proto, "emitterMode", _proto.getEmitterMode, _proto.setEmitterMode);
+cc.defineGetterSetter(_proto, "positionType", _proto.getPositionType, _proto.setPositionType);
 cc.defineGetterSetter(_proto, "totalParticles", _proto.getTotalParticles, _proto.setTotalParticles);
+cc.defineGetterSetter(_proto, "autoRemoveOnFinish", _proto.getAutoRemoveOnFinish, _proto.setAutoRemoveOnFinish);
 cc.defineGetterSetter(_proto, "texture", _proto.getTexture, _proto.setTexture);
 
 _proto = cc.ProgressTimer.prototype;
@@ -380,9 +421,19 @@ cc.defineGetterSetter(_proto, "sprite", _proto.getSprite, _proto.setSprite);
 cc.defineGetterSetter(_proto, "reverseDir", _proto.isReverseDirection, _proto.setReverseDirection);
 
 _proto = cc.RenderTexture.prototype;
+cc.defineGetterSetter(_proto, "sprite", _proto.getSprite, _proto.setSprite);
+cc.defineGetterSetter(_proto, "clearFlags", _proto.getClearFlags, _proto.setClearFlags);
+cc.defineGetterSetter(_proto, "clearDepthVal", _proto.getClearDepthVal, _proto.setClearDepthVal);
+cc.defineGetterSetter(_proto, "clearStencilVal", _proto.getClearStencilVal, _proto.setClearStencilVal);
 cc.defineGetterSetter(_proto, "clearColorVal", _proto.getClearColor, _proto.setClearColor);
+cc.defineGetterSetter(_proto, "autoDraw", _proto.getAutoDraw, _proto.setAutoDraw);
 
 _proto = cc.TMXLayer.prototype;
+cc.defineGetterSetter(_proto, "tiles", _proto.getTiles, _proto.setTiles);
+cc.defineGetterSetter(_proto, "tileset", _proto.getTileset, _proto.setTileset);
+cc.defineGetterSetter(_proto, "layerOrientation", _proto.getLayerOrientation, _proto.setLayerOrientation);
+cc.defineGetterSetter(_proto, "properties", _proto.getProperties, _proto.setProperties);
+cc.defineGetterSetter(_proto, "layerName", _proto.getLayerName, _proto.setLayerName);
 cc.defineGetterSetter(_proto, "layerWidth", _proto._getLayerWidth, _proto._setLayerWidth);
 cc.defineGetterSetter(_proto, "layerHeight", _proto._getLayerHeight, _proto._setLayerHeight);
 cc.defineGetterSetter(_proto, "tileWidth", _proto._getTileWidth, _proto._setTileWidth);
@@ -390,6 +441,9 @@ cc.defineGetterSetter(_proto, "tileHeight", _proto._getTileHeight, _proto._setTi
 cc.defineGetterSetter(_proto, "texture", _proto.getTexture, _proto.setTexture);
 
 _proto = cc.TMXTiledMap.prototype;
+cc.defineGetterSetter(_proto, "properties", _proto.getProperties, _proto.setProperties);
+cc.defineGetterSetter(_proto, "mapOrientation", _proto.getMapOrientation, _proto.setMapOrientation);
+cc.defineGetterSetter(_proto, "objectGroups", _proto.getObjectGroups, _proto.setObjectGroups);
 cc.defineGetterSetter(_proto, "mapWidth", _proto._getMapWidth, _proto._setMapWidth);
 cc.defineGetterSetter(_proto, "mapHeight", _proto._getMapHeight, _proto._setMapHeight);
 cc.defineGetterSetter(_proto, "tileWidth", _proto._getTileWidth, _proto._setTileWidth);
@@ -397,21 +451,38 @@ cc.defineGetterSetter(_proto, "tileHeight", _proto._getTileHeight, _proto._setTi
 
 _proto = ccs.Armature.prototype;
 cc.defineGetterSetter(_proto, "parentBone", _proto.getParentBone, _proto.setParentBone);
+cc.defineGetterSetter(_proto, "animation", _proto.getAnimation, _proto.setAnimation);
+cc.defineGetterSetter(_proto, "armatureData", _proto.getArmatureData, _proto.setArmatureData);
+cc.defineGetterSetter(_proto, "name", _proto.getName, _proto.setName);
+cc.defineGetterSetter(_proto, "batchNode", _proto.getBatchNode, _proto.setBatchNode);
+cc.defineGetterSetter(_proto, "version", _proto.getVersion, _proto.setVersion);
 cc.defineGetterSetter(_proto, "body", _proto.getBody, _proto.setBody);
 cc.defineGetterSetter(_proto, "colliderFilter", _proto.setColliderFilter);
 
 _proto = ccs.Bone.prototype;
 cc.defineGetterSetter(_proto, "boneData", _proto.getBoneData, _proto.setBoneData);
 cc.defineGetterSetter(_proto, "armature", _proto.getArmature, _proto.setArmature);
+cc.defineGetterSetter(_proto, "parentBone", _proto.getParentBone, _proto.setParentBone);
 cc.defineGetterSetter(_proto, "childArmature", _proto.getChildArmature, _proto.setChildArmature);
 cc.defineGetterSetter(_proto, "childrenBone", _proto.getChildrenBone);
 cc.defineGetterSetter(_proto, "tween", _proto.getTween);
 cc.defineGetterSetter(_proto, "tweenData", _proto.getTweenData);
+cc.defineGetterSetter(_proto, "transformDirty", _proto.getTransformDirty, _proto.setTransformDirty);
 cc.defineGetterSetter(_proto, "colliderFilter", _proto.getColliderFilter, _proto.setColliderFilter);
+cc.defineGetterSetter(_proto, "displayManager", _proto.getDisplayManager, _proto.setDisplayManager);
+cc.defineGetterSetter(_proto, "ignoreMovementBoneData", _proto.getIgnoreMovementBoneData, _proto.setIgnoreMovementBoneData);
+cc.defineGetterSetter(_proto, "name", _proto.getName, _proto.setName);
+cc.defineGetterSetter(_proto, "blendDirty", _proto.getBlendDirty, _proto.setBlendDirty);
 
 _proto = ccs.Skin.prototype;
 cc.defineGetterSetter(_proto, "skinData", _proto.getSkinData, _proto.setSkinData);
+cc.defineGetterSetter(_proto, "bone", _proto.getBone, _proto.setBone);
 cc.defineGetterSetter(_proto, "displayName", _proto.getDisplayName);
+
+_proto = ccs.ColliderDetector.prototype;
+cc.defineGetterSetter(_proto, "colliderFilter", _proto.getColliderFilter, _proto.setColliderFilter);
+cc.defineGetterSetter(_proto, "active", _proto.getActive, _proto.setActive);
+cc.defineGetterSetter(_proto, "body", _proto.getBody, _proto.setBody);
 
 _proto = ccui.Widget.prototype;
 cc.defineGetterSetter(_proto, "xPercent", _proto._getXPercent, _proto._setXPercent);
@@ -439,6 +510,8 @@ cc.defineGetterSetter(_proto, "titleText", _proto.getTitleText, _proto.setTitleT
 cc.defineGetterSetter(_proto, "titleFont", _proto._getTitleFont, _proto._setTitleFont);
 cc.defineGetterSetter(_proto, "titleFontSize", _proto.getTitleFontSize, _proto.setTitleFontSize);
 cc.defineGetterSetter(_proto, "titleFontName", _proto.getTitleFontName, _proto.setTitleFontName);
+cc.defineGetterSetter(_proto, "titleFontColor", _proto.getTitleFontColor, _proto.setTitleFontColor);
+cc.defineGetterSetter(_proto, "pressedActionEnabled", _proto.getPressedActionEnabled, _proto.setPressedActionEnabled);
 
 _proto = ccui.CheckBox.prototype;
 cc.defineGetterSetter(_proto, "selected", _proto.getSelectedState, _proto.setSelectedState);
@@ -453,6 +526,7 @@ cc.defineGetterSetter(_proto, "fontName", _proto.getFontName, _proto.setFontName
 cc.defineGetterSetter(_proto, "fontSize", _proto.getFontSize, _proto.setFontSize);
 cc.defineGetterSetter(_proto, "textAlign", _proto.getHorizontalAlignment, _proto.setTextHorizontalAlignment);
 cc.defineGetterSetter(_proto, "verticalAlign", _proto.getVerticalAlignment, _proto.setTextVerticalAlignment);
+cc.defineGetterSetter(_proto, "touchScaleEnabled", _proto.getTouchScaleEnabled, _proto.setTouchScaleEnabled);
 
 _proto = ccui.TextAtlas.prototype;
 cc.defineGetterSetter(_proto, "string", _proto.getStringValue, _proto.setStringValue);
@@ -479,6 +553,8 @@ cc.defineGetterSetter(_proto, "fontName", _proto.getFontName, _proto.setFontName
 _proto = ccui.ScrollView.prototype;
 cc.defineGetterSetter(_proto, "innerWidth", _proto._getInnerWidth, _proto._setInnerWidth);
 cc.defineGetterSetter(_proto, "innerHeight", _proto._getInnerHeight, _proto._setInnerHeight);
+cc.defineGetterSetter(_proto, "bounceEnabled", _proto.getBounceEnabled, _proto.setBounceEnabled);
+cc.defineGetterSetter(_proto, "inertiaScrollEnabled", _proto.getInertiaScrollEnabled, _proto.setInertiaScrollEnabled);
 
 _proto = cc.EditBox.prototype;
 cc.defineGetterSetter(_proto, "font", null, _proto._setFont);
@@ -494,6 +570,8 @@ cc.defineGetterSetter(_proto, "selected", _proto.isSelected, _proto.setSelected)
 cc.defineGetterSetter(_proto, "highlighted", _proto.isHighlighted, _proto.setHighlighted);
 
 _proto = cc.ControlButton.prototype;
+cc.defineGetterSetter(_proto, "adjustBackgroundImage", _proto.getAdjustBackgroundImage, _proto.setAdjustBackgroundImage);
+cc.defineGetterSetter(_proto, "zoomOnTouchDown", _proto.getZoomOnTouchDown, _proto.setZoomOnTouchDown);
 cc.defineGetterSetter(_proto, "preferredSize", _proto.getPreferredSize, _proto.setPreferredSize);
 cc.defineGetterSetter(_proto, "labelAnchor", _proto.getLabelAnchorPoint, _proto.setLabelAnchorPoint);
 
@@ -544,6 +622,7 @@ cc.defineGetterSetter(_proto, "continuous", _proto.isContinuous);
 cc.defineGetterSetter(_proto, "minusSprite", _proto.getMinusSprite, _proto.setMinusSprite);
 cc.defineGetterSetter(_proto, "plusSprite", _proto.getPlusSprite, _proto.setPlusSprite);
 cc.defineGetterSetter(_proto, "minusLabel", _proto.getMinusLabel, _proto.setMinusLabel);
+cc.defineGetterSetter(_proto, "plusSLabel", _proto.getPlusSLabel, _proto.setPlusSLabel);
 
 _proto = cc.Scale9Sprite.prototype;
 cc.defineGetterSetter(_proto, "preferredSize", _proto.getPreferredSize, _proto.setPreferredSize);
