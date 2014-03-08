@@ -7684,16 +7684,6 @@ getTextureRect : function (
 },
 
 /**
- * @method setPositionZ
- * @param {float} arg0
- */
-setPositionZ : function (
-float 
-)
-{
-},
-
-/**
  * @method getTextureAtlas
  * @return {cc.TextureAtlas}
  */
@@ -11213,16 +11203,6 @@ getGrid : function(
 )
 {
     return cc.GridBase;
-},
-
-/**
- * @method setGrid
- * @param {cc.GridBase} arg0
- */
-setGrid : function (
-gridbase 
-)
-{
 },
 
 /**

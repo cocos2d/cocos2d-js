@@ -24091,26 +24091,6 @@ bool js_cocos2dx_Sprite_getTextureRect(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_Sprite_getTextureRect : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_cocos2dx_Sprite_setPositionZ(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::Sprite* cobj = (cocos2d::Sprite *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Sprite_setPositionZ : Invalid Native Object");
-	if (argc == 1) {
-		double arg0;
-		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Sprite_setPositionZ : Error processing arguments");
-		cobj->setPositionZ(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_Sprite_setPositionZ : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
 bool js_cocos2dx_Sprite_getTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -24465,7 +24445,6 @@ void js_register_cocos2dx_Sprite(JSContext *cx, JSObject *global) {
 		JS_FN("setDirty", js_cocos2dx_Sprite_setDirty, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isTextureRectRotated", js_cocos2dx_Sprite_isTextureRectRotated, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getTextureRect", js_cocos2dx_Sprite_getTextureRect, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setPositionZ", js_cocos2dx_Sprite_setPositionZ, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getTextureAtlas", js_cocos2dx_Sprite_getTextureAtlas, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isFlippedX", js_cocos2dx_Sprite_isFlippedX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isFlippedY", js_cocos2dx_Sprite_isFlippedY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -36137,33 +36116,6 @@ bool js_cocos2dx_NodeGrid_getGrid(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_NodeGrid_getGrid : wrong number of arguments");
 	return false;
 }
-bool js_cocos2dx_NodeGrid_setGrid(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::NodeGrid* cobj = (cocos2d::NodeGrid *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_NodeGrid_setGrid : Invalid Native Object");
-	if (argc == 1) {
-		cocos2d::GridBase* arg0;
-		do {
-			if (!argv[0].isObject()) { ok = false; break; }
-			js_proxy_t *jsProxy;
-			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-			jsProxy = jsb_get_js_proxy(tmpObj);
-			arg0 = (cocos2d::GridBase*)(jsProxy ? jsProxy->ptr : NULL);
-			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-		} while (0);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_NodeGrid_setGrid : Error processing arguments");
-		cobj->setGrid(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_NodeGrid_setGrid : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
 bool js_cocos2dx_NodeGrid_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	if (argc == 0) {
@@ -36212,7 +36164,6 @@ void js_register_cocos2dx_NodeGrid(JSContext *cx, JSObject *global) {
 	static JSFunctionSpec funcs[] = {
 		JS_FN("setTarget", js_cocos2dx_NodeGrid_setTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getGrid", js_cocos2dx_NodeGrid_getGrid, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setGrid", js_cocos2dx_NodeGrid_setGrid, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
