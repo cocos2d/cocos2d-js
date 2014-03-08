@@ -5,7 +5,10 @@
 cc.BuilderReader = cc.BuilderReader || {};
 cc.BuilderReader._resourcePath = "";
 
-var _ccbGlobalContext = this;
+cc.BuilderReader._controllerClassCache = {};
+cc.BuilderReader.registerController = function(controllerName, controller){
+    cc.BuilderReader._controllerClassCache[controllerName] = cc.Class.extend(controller);
+};
 
 cc.BuilderReader.setResourcePath = function (rootPath) {
     cc.BuilderReader._resourcePath = rootPath;
@@ -74,6 +77,7 @@ cc.BuilderReader.load = function(file, owner, parentSize)
     var nodesWithAnimationManagers = reader.getNodesWithAnimationManagers();
     var animationManagersForNodes = reader.getAnimationManagersForNodes();
 
+    var controllerClassCache = cc.BuilderReader._controllerClassCache;
     // Attach animation managers to nodes and assign root node callbacks and member variables
     for (var i = 0; i < nodesWithAnimationManagers.length; i++)
     {
@@ -82,12 +86,14 @@ cc.BuilderReader.load = function(file, owner, parentSize)
 
         innerNode.animationManager = animationManager;
 
-        var documentControllerName = animationManager.getDocumentControllerName();
-        if (!documentControllerName) continue;
+        var controllerName = animationManager.getDocumentControllerName();
+        if (!controllerName) continue;
 
-        // Create a document controller
-        var controller = new _ccbGlobalContext[documentControllerName]();
-        controller.controllerName = documentControllerName;
+        // Create a controller
+        var controllerClass = controllerClassCache[controllerName];
+        if(!controllerClass) throw "Can not find controller : " + controllerName;
+        var controller = new controllerClass();
+        controller.controllerName = controllerName;
 
         innerNode.controller = controller;
         controller.rootNode = innerNode;
@@ -103,7 +109,7 @@ cc.BuilderReader.load = function(file, owner, parentSize)
 
             if (controller[callbackName] === undefined)
             {
-                cc.log("Warning: " + documentControllerName + "." + callbackName + " is undefined.");
+                cc.log("Warning: " + controllerName + "." + callbackName + " is undefined.");
             }
             else
             {

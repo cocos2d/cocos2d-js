@@ -24,4 +24,4 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TestParticleSystemsLayer = function() {};
+cc.BuilderReader.registerController("TestParticleSystemsLayer", {});
