@@ -1082,3 +1082,11 @@ cc.FontDefinition = function () {
     this.shadowBlur = 0;
     this.shadowOpacity = 1.0;
 };
+
+
+ccui.uiHelper = {
+    seekWidgetByTag: ccui.UIHelper.seekWidgetByTag,
+    seekWidgetByName: ccui.UIHelper.seekWidgetByName,
+    seekWidgetByRelativeName: ccui.UIHelper.seekWidgetByRelativeName,
+    seekActionWidgetByActionTag: ccui.UIHelper.seekActionWidgetByActionTag
+};
