@@ -6296,12 +6296,8 @@ color4f
 
 /**
  * @method onDraw
- * @param {kmMat4} arg0
- * @param {bool} arg1
  */
 onDraw : function (
-kmmat4, 
-bool 
 )
 {
 },
@@ -8463,6 +8459,14 @@ getStringLenght : function (
 },
 
 /**
+ * @method onDraw
+ */
+onDraw : function (
+)
+{
+},
+
+/**
  * @method setCharMap
 * @param {cc.Texture2D|String|String} texture2d
 * @param {int|int} int
@@ -8814,11 +8818,9 @@ float
 },
 
 /**
- * @method changeHeight
- * @param {float} arg0
+ * @method onDraw
  */
-changeHeight : function (
-float 
+onDraw : function (
 )
 {
 },
@@ -8828,6 +8830,16 @@ float
  * @param {float} arg0
  */
 changeWidth : function (
+float 
+)
+{
+},
+
+/**
+ * @method changeHeight
+ * @param {float} arg0
+ */
+changeHeight : function (
 float 
 )
 {
@@ -11201,6 +11213,16 @@ getGrid : function(
 )
 {
     return cc.GridBase;
+},
+
+/**
+ * @method setGrid
+ * @param {cc.GridBase} arg0
+ */
+setGrid : function (
+gridbase 
+)
+{
 },
 
 /**

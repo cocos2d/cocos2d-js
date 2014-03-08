@@ -2770,16 +2770,6 @@ char
 },
 
 /**
- * @method getFilePath
- * @return {String}
- */
-getFilePath : function (
-)
-{
-    return ;
-},
-
-/**
  * @method getVersionInteger
  * @param {char*} arg0
  * @return {int}
