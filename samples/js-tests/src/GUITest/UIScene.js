@@ -77,7 +77,7 @@ UIScene = cc.Layer.extend({
             //add bottomDisplayLabel
             var bottomDisplayText = ccui.Text.create();
             bottomDisplayText.attr({
-	            string: "",
+	            string: "INIT",
 	            fontName: "Marker Felt",
 	            fontSize: 30,
 	            color: cc.color(159, 168, 176),
@@ -98,7 +98,7 @@ UIScene = cc.Layer.extend({
         this._sceneTitle.setText(title);
     },
     toExtensionsMainLayer: function (sender, type) {
-        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
             UISceneManager.purge();
             var scene = cc.Scene.create();
             var layer = new TestController();
@@ -109,19 +109,19 @@ UIScene = cc.Layer.extend({
     },
 
     previousCallback: function (sender, type) {
-        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
             cc.director.runScene(UISceneManager.getInstance().previousUIScene());
         }
     },
 
     restartCallback: function (sender, type) {
-        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
             cc.director.runScene(UISceneManager.getInstance().currentUIScene());
         }
     },
 
     nextCallback: function (sender, type) {
-        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
             cc.director.runScene(UISceneManager.getInstance().nextUIScene());
         }
     }

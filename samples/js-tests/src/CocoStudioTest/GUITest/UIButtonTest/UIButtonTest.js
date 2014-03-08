@@ -28,16 +28,16 @@ var UIButtonEditorTest = UIBaseLayer.extend({
         var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.json");
         this._mainNode.addChild(root);
 
-        var back_label =ccui.uiHelper.seekWidgetByName(root, "back");
+        var back_label = ccui.helper.seekWidgetByName(root, "back");
         back_label.addTouchEventListener(this.backEvent,this);
 
-        var button = ccui.uiHelper.seekWidgetByName(root, "Button_123");
+        var button = ccui.helper.seekWidgetByName(root, "Button_123");
         button.addTouchEventListener(this.touchEvent,this);
 
-        var title_button = ccui.uiHelper.seekWidgetByName(root, "Button_126");
+        var title_button = ccui.helper.seekWidgetByName(root, "Button_126");
         title_button.addTouchEventListener(this.touchEvent,this);
 
-        var scale9_button = ccui.uiHelper.seekWidgetByName(root, "Button_129");
+        var scale9_button = ccui.helper.seekWidgetByName(root, "Button_129");
         scale9_button.addTouchEventListener(this.touchEvent,this);
     },
 

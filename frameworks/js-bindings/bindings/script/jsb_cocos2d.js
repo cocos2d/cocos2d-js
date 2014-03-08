@@ -1044,10 +1044,3 @@ cc.arrayAppendObjectsToIndex = function(arr, addObjs,index){
     arr.splice.apply(arr, [index, 0].concat(addObjs));
     return arr;
 };
-
-ccui.uiHelper = {
-    seekWidgetByTag: ccui.UIHelper.seekWidgetByTag,
-    seekWidgetByName: ccui.UIHelper.seekWidgetByName,
-    seekWidgetByRelativeName: ccui.UIHelper.seekWidgetByRelativeName,
-    seekActionWidgetByActionTag: ccui.UIHelper.seekActionWidgetByActionTag
-};

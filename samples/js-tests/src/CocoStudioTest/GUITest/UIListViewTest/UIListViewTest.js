@@ -32,10 +32,10 @@ var UIListViewEditorTest = UIBaseLayer.extend({
         var root = ccs.guiReader.widgetFromJsonFile(LISTVIEW_RES[LISTVIEW_INDEX]);
         this._mainNode.addChild(root);
 
-        var back_label = ccui.uiHelper.seekWidgetByName(root, "back");
+        var back_label = ccui.helper.seekWidgetByName(root, "back");
         back_label.addTouchEventListener(this.backEvent, this);
 
-        var listView = ccui.uiHelper.seekWidgetByName(root, "ListView_1214");
+        var listView = ccui.helper.seekWidgetByName(root, "ListView_1214");
         listView.addEventListenerListView(this.selectedItemEvent,this);
 
         var left_button = ccui.Button.create();

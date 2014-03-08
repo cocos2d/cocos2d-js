@@ -34,7 +34,7 @@ var UIScrollViewEditorTest = UIBaseLayer.extend({
         var root = ccs.guiReader.widgetFromJsonFile(SCROLLVIEW_RES[SCROLLVIEW_INDEX]);
         this._mainNode.addChild(root);
 
-        var back_label = ccui.uiHelper.seekWidgetByName(root, "back");
+        var back_label = ccui.helper.seekWidgetByName(root, "back");
         back_label.addTouchEventListener(this.backEvent, this);
 
         var left_button = ccui.Button.create();

@@ -28,16 +28,16 @@ var UITextFieldEditorTest = UIBaseLayer.extend({
         var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UITextField_Editor/ui_textfield_editor_1.json");
         this._mainNode.addChild(root);
 
-        var back_label =ccui.uiHelper.seekWidgetByName(root, "back");
+        var back_label =ccui.helper.seekWidgetByName(root, "back");
         back_label.addTouchEventListener(this.backEvent,this);
 
-        var textField_normal = ccui.uiHelper.seekWidgetByName(root, "TextField_1109");
+        var textField_normal = ccui.helper.seekWidgetByName(root, "TextField_1109");
         textField_normal.addEventListenerTextField(this.textFieldEvent,this);
 
-        var textField_max_character = ccui.uiHelper.seekWidgetByName(root, "TextField_1110");
+        var textField_max_character = ccui.helper.seekWidgetByName(root, "TextField_1110");
         textField_max_character.addEventListenerTextField(this.textFieldEvent,this);
 
-        var textField_password = ccui.uiHelper.seekWidgetByName(root, "TextField_1107");
+        var textField_password = ccui.helper.seekWidgetByName(root, "TextField_1107");
         textField_password.addEventListenerTextField(this.textFieldEvent,this);
     },
     textFieldEvent: function (sender, type) {

@@ -28,7 +28,7 @@ var UIWidgetAddNodeEditorTest = UIBaseLayer.extend({
         var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json");
         this._mainNode.addChild(root);
 
-        var back_label =ccui.uiHelper.seekWidgetByName(root, "back");
+        var back_label =ccui.helper.seekWidgetByName(root, "back");
         back_label.addTouchEventListener(this.backEvent,this);
 
         var sprite = cc.Sprite.create("res/cocosgui/ccicon.png");
