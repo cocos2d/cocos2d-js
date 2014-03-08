@@ -24,16 +24,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TestTimelineLayer = function() {
-    this.onCallback1 = function(sender) {
+cc.BuilderReader.registerController("TestTimelineLayer", {
+    "onCallback1" : function(sender) {
         // Rotate the label when the button is pressed
-        this.helloLabel.runAction(cc.RotateBy.create(1,360));
-        this.helloLabel.setString("Callback 1");
-    };
+        var label = this["helloLabel"];
+        label.runAction(cc.RotateBy.create(1,360));
+        label.setString("Callback 1");
+    },
 
-    this.onCallback2 = function(sender) {
+    "onCallback2" : function(sender) {
         // Rotate the label when the button is pressed
-        this.helloLabel.runAction(cc.RotateBy.create(1,-360));
-        this.helloLabel.setString("Callback 2");
-    };
-};
+        var label = this["helloLabel"];
+        label.runAction(cc.RotateBy.create(1,-360));
+        label.setString("Callback 2");
+    }
+});
