@@ -28,13 +28,13 @@ var UISliderEditorTest = UIBaseLayer.extend({
         var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.json");
         this._mainNode.addChild(root);
 
-        var back_label =ccui.uiHelper.seekWidgetByName(root, "back");
+        var back_label =ccui.helper.seekWidgetByName(root, "back");
         back_label.addTouchEventListener(this.backEvent,this);
 
-        var slider = ccui.uiHelper.seekWidgetByName(root, "Slider_738");
+        var slider = ccui.helper.seekWidgetByName(root, "Slider_738");
         slider.addEventListenerSlider(this.sliderEvent,this);
 
-        var scale9_slider = ccui.uiHelper.seekWidgetByName(root, "Slider_740");
+        var scale9_slider = ccui.helper.seekWidgetByName(root, "Slider_740");
         scale9_slider.addEventListenerSlider(this.sliderEvent,this);
     },
 

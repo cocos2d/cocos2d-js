@@ -31,13 +31,13 @@ var UILoadingBarEditorTest = UIBaseLayer.extend({
         var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.json");
         this._mainNode.addChild(root);
 
-        var back_label =ccui.uiHelper.seekWidgetByName(root, "back");
+        var back_label =ccui.helper.seekWidgetByName(root, "back");
         back_label.addTouchEventListener(this.backEvent,this);
 
-        this._loadingBar_left_to_right = ccui.uiHelper.seekWidgetByName(root, "LoadingBar_856");
+        this._loadingBar_left_to_right = ccui.helper.seekWidgetByName(root, "LoadingBar_856");
         this._loadingBar_left_to_right.setPercent(0);
 
-        this._loadingBar_right_to_left = ccui.uiHelper.seekWidgetByName(root, "LoadingBar_857");
+        this._loadingBar_right_to_left = ccui.helper.seekWidgetByName(root, "LoadingBar_857");
         this._loadingBar_right_to_left.setPercent(0);
 
         this.scheduleUpdate();

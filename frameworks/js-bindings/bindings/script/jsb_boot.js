@@ -595,6 +595,9 @@ cc.screen = {
     }
 };
 
+// GUI
+ccui.helper = ccui.Helper;
+
 // In extension
 ccs.guiReader = ccs.GUIReader.getInstance();
 ccs.armatureDataManager = ccs.ArmatureDataManager.getInstance();

@@ -57,7 +57,7 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
        this._super();
 
         var node = cc.Node.create();
-	    var nodeGrid = cc.NodeGrid.create(node);
+	    var nodeGrid = cc.NodeGrid.create();
         nodeGrid.addChild(node);
 	    nodeGrid.runAction( this.getEffect(3) );
         this.addChild( nodeGrid );

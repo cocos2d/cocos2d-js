@@ -28,10 +28,10 @@ var UICheckBoxEditorTest = UIBaseLayer.extend({
         var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UICheckBox_Editor/ui_checkbox_editor_1.json");
         this._mainNode.addChild(root);
 
-        var back_label =ccui.uiHelper.seekWidgetByName(root, "back");
+        var back_label =ccui.helper.seekWidgetByName(root, "back");
         back_label.addTouchEventListener(this.backEvent,this);
 
-        var checkbox = ccui.uiHelper.seekWidgetByName(root, "CheckBox_540");
+        var checkbox = ccui.helper.seekWidgetByName(root, "CheckBox_540");
         checkbox.addEventListenerCheckBox(this.selectedStateEvent,this);
 
     },

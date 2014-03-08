@@ -171,9 +171,9 @@ ccui.LoadingBar.RENDERER_ZORDER = -1;
  * UIRichElement
  */
 //Rich element type
-ccui.RichElement.TYPE_TEXT = 0;
-ccui.RichElement.TYPE_IMAGE = 1;
-ccui.RichElement.TYPE_CUSTOM = 2;
+//ccui.RichElement.TYPE_TEXT = 0;
+//ccui.RichElement.TYPE_IMAGE = 1;
+//ccui.RichElement.TYPE_CUSTOM = 2;
 
 /*
  * UISlider
