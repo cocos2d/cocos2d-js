@@ -11204,6 +11204,16 @@ getGrid : function(
 },
 
 /**
+ * @method setGrid
+ * @param {cc.GridBase} arg0
+ */
+setGrid : function (
+gridbase 
+)
+{
+},
+
+/**
  * @method create
  * @return {cc.NodeGrid}
  */
