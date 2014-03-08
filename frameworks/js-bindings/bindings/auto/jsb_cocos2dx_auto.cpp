@@ -20637,24 +20637,17 @@ bool js_cocos2dx_DrawNode_drawQuadraticBezier(JSContext *cx, uint32_t argc, jsva
 }
 bool js_cocos2dx_DrawNode_onDraw(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::DrawNode* cobj = (cocos2d::DrawNode *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_onDraw : Invalid Native Object");
-	if (argc == 2) {
-		kmMat4 arg0;
-		bool arg1;
-		#pragma warning NO CONVERSION TO NATIVE FOR kmMat4;
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_DrawNode_onDraw : Error processing arguments");
-		cobj->onDraw(arg0, arg1);
+	if (argc == 0) {
+		cobj->onDraw();
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_cocos2dx_DrawNode_onDraw : wrong number of arguments: %d, was expecting %d", argc, 2);
+	JS_ReportError(cx, "js_cocos2dx_DrawNode_onDraw : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_cocos2dx_DrawNode_clear(JSContext *cx, uint32_t argc, jsval *vp)
@@ -20834,7 +20827,7 @@ void js_register_cocos2dx_DrawNode(JSContext *cx, JSObject *global) {
 
 	static JSFunctionSpec funcs[] = {
 		JS_FN("drawQuadraticBezier", js_cocos2dx_DrawNode_drawQuadraticBezier, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("onDraw", js_cocos2dx_DrawNode_onDraw, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("onDraw", js_cocos2dx_DrawNode_onDraw, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("clear", js_cocos2dx_DrawNode_clear, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("drawTriangle", js_cocos2dx_DrawNode_drawTriangle, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("drawDot", js_cocos2dx_DrawNode_drawDot, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -26277,6 +26270,21 @@ bool js_cocos2dx_Label_getStringLenght(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_Label_getStringLenght : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
+bool js_cocos2dx_Label_onDraw(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_onDraw : Invalid Native Object");
+	if (argc == 0) {
+		cobj->onDraw();
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_Label_onDraw : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
 bool js_cocos2dx_Label_setCharMap(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -26709,6 +26717,7 @@ void js_register_cocos2dx_Label(JSContext *cx, JSObject *global) {
 		JS_FN("getStringNumLines", js_cocos2dx_Label_getStringNumLines, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("enableOutline", js_cocos2dx_Label_enableOutline, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getStringLenght", js_cocos2dx_Label_getStringLenght, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("onDraw", js_cocos2dx_Label_onDraw, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setCharMap", js_cocos2dx_Label_setCharMap, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setMaxLineWidth", js_cocos2dx_Label_setMaxLineWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("enableGlow", js_cocos2dx_Label_enableGlow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -27513,24 +27522,19 @@ bool js_cocos2dx_LayerColor_changeWidthAndHeight(JSContext *cx, uint32_t argc, j
 	JS_ReportError(cx, "js_cocos2dx_LayerColor_changeWidthAndHeight : wrong number of arguments: %d, was expecting %d", argc, 2);
 	return false;
 }
-bool js_cocos2dx_LayerColor_changeHeight(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_LayerColor_onDraw(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::LayerColor* cobj = (cocos2d::LayerColor *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_LayerColor_changeHeight : Invalid Native Object");
-	if (argc == 1) {
-		double arg0;
-		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_LayerColor_changeHeight : Error processing arguments");
-		cobj->changeHeight(arg0);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_LayerColor_onDraw : Invalid Native Object");
+	if (argc == 0) {
+		cobj->onDraw();
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_cocos2dx_LayerColor_changeHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
+	JS_ReportError(cx, "js_cocos2dx_LayerColor_onDraw : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_cocos2dx_LayerColor_changeWidth(JSContext *cx, uint32_t argc, jsval *vp)
@@ -27551,6 +27555,26 @@ bool js_cocos2dx_LayerColor_changeWidth(JSContext *cx, uint32_t argc, jsval *vp)
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_LayerColor_changeWidth : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_LayerColor_changeHeight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::LayerColor* cobj = (cocos2d::LayerColor *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_LayerColor_changeHeight : Invalid Native Object");
+	if (argc == 1) {
+		double arg0;
+		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_LayerColor_changeHeight : Error processing arguments");
+		cobj->changeHeight(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_LayerColor_changeHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 bool js_cocos2dx_LayerColor_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -27659,8 +27683,9 @@ void js_register_cocos2dx_LayerColor(JSContext *cx, JSObject *global) {
 
 	static JSFunctionSpec funcs[] = {
 		JS_FN("changeWidthAndHeight", js_cocos2dx_LayerColor_changeWidthAndHeight, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("changeHeight", js_cocos2dx_LayerColor_changeHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("onDraw", js_cocos2dx_LayerColor_onDraw, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("changeWidth", js_cocos2dx_LayerColor_changeWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("changeHeight", js_cocos2dx_LayerColor_changeHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2d_LayerColor_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
@@ -36112,6 +36137,33 @@ bool js_cocos2dx_NodeGrid_getGrid(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_NodeGrid_getGrid : wrong number of arguments");
 	return false;
 }
+bool js_cocos2dx_NodeGrid_setGrid(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::NodeGrid* cobj = (cocos2d::NodeGrid *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_NodeGrid_setGrid : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::GridBase* arg0;
+		do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::GridBase*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_NodeGrid_setGrid : Error processing arguments");
+		cobj->setGrid(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_NodeGrid_setGrid : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
 bool js_cocos2dx_NodeGrid_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	if (argc == 0) {
@@ -36160,6 +36212,7 @@ void js_register_cocos2dx_NodeGrid(JSContext *cx, JSObject *global) {
 	static JSFunctionSpec funcs[] = {
 		JS_FN("setTarget", js_cocos2dx_NodeGrid_setTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getGrid", js_cocos2dx_NodeGrid_getGrid, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setGrid", js_cocos2dx_NodeGrid_setGrid, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
