@@ -5154,7 +5154,6 @@ var SpriteTestScene = TestScene.extend({
 //
 var arrayOfSpriteTest = [
 	Sprite1,
-	SpriteSubclass,
     SpriteBatchNode1,
     SpriteFrameTest,
     SpriteFrameAliasNameTest,
@@ -5193,6 +5192,7 @@ var arrayOfSpriteTest = [
     SpriteChildrenChildren,
     SpriteBatchNodeChildrenChildren,
     SpriteNilTexture,
+	SpriteSubclass,
     AnimationCacheTest,
     SpriteOffsetAnchorSkew,
     SpriteBatchNodeOffsetAnchorSkew,
