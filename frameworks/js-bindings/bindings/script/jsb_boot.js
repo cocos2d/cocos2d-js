@@ -5,22 +5,6 @@
 var cc = cc || {};
 var window = window || this;
 
-
-/**
- * Common getter setter configuration function
- * @function
- * @param {Object}   proto      A class prototype or an object to config
- * @param {String}   prop       Property name
- * @param {function} getter     Getter function for the property
- * @param {function} setter     Setter function for the property
- */
-cc.defineGetterSetter = function (proto, prop, getter, setter){
-    var desc = { enumerable: false, configurable: true };
-    getter && (desc.get = getter);
-    setter && (desc.set = setter);
-    Object.defineProperty(proto, prop, desc);
-};
-
 /**
  * Iterate over an object or an array, executing a function for each matched element.
  * @param {object|array} obj
@@ -40,6 +24,20 @@ cc.each = function(obj, iterator, context){
     }
 };
 
+/**
+ * Common getter setter configuration function
+ * @function
+ * @param {Object}   proto      A class prototype or an object to config
+ * @param {String}   prop       Property name
+ * @param {function} getter     Getter function for the property
+ * @param {function} setter     Setter function for the property
+ */
+cc.defineGetterSetter = function (proto, prop, getter, setter){
+    var desc = { enumerable: false, configurable: true };
+    getter && (desc.get = getter);
+    setter && (desc.set = setter);
+    Object.defineProperty(proto, prop, desc);
+};
 
 //+++++++++++++++++++++++++something about async begin+++++++++++++++++++++++++++++++
 cc.async = {
@@ -560,6 +558,57 @@ cc.defineGetterSetter(cc.loader, "audioPath", function(){
 
 //+++++++++++++++++++++++++something about loader end+++++++++++++++++++++++++++++
 
+//+++++++++++++++++++++++Define singleton objects begin+++++++++++++++++++++++++++
+
+// Define singleton objects
+cc.director = cc.Director.getInstance();
+cc.winSize = cc.director.getWinSize();
+cc.view = cc.director.getOpenGLView();
+cc.eventManager = cc.director.getEventDispatcher();
+cc.audioEngine = cc.AudioEngine.getInstance();
+cc.audioEngine.end = function(){
+    cc.AudioEngine.end();
+};
+cc.configuration = cc.Configuration.getInstance();
+cc.textureCache = cc.director.getTextureCache();
+cc.shaderCache = cc.ShaderCache.getInstance();
+cc.animationCache = cc.AnimationCache.getInstance();
+cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
+//cc.saxParser
+cc.plistParser = cc.SAXParser.getInstance();
+//cc.tiffReader;
+//cc.imeDispatcher;
+
+cc.screen = {
+    init: function() {},
+    fullScreen: function() {
+        return true;
+    },
+    requestFullScreen: function(element, onFullScreenChange) {
+        onFullScreenChange.call();
+    },
+    exitFullScreen: function() {
+        return false;
+    },
+    autoFullScreen: function(element, onFullScreenChange) {
+        onFullScreenChange.call();
+    }
+};
+
+// In extension
+ccs.guiReader = ccs.GUIReader.getInstance();
+ccs.armatureDataManager = ccs.ArmatureDataManager.getInstance();
+ccs.actionManager = ccs.ActionManager.getInstance();
+ccs.sceneReader = ccs.SceneReader.getInstance();
+//ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
+//ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
+
+ccs.sceneReader.clear = ccs.guiReader.clear = ccs.actionManager.clear = ccs.armatureDataManager.clear = function() {};
+ccs.sceneReader.version = function() {
+    return ccs.SceneReader.sceneReaderVersion();
+}
+
+//+++++++++++++++++++++++Define singleton objects end+++++++++++++++++++++++++++
 
 //+++++++++++++++++++++++++something about window events begin+++++++++++++++++++++++++++
 cc.winEvents = {//TODO register hidden and show callback for window
@@ -798,7 +847,7 @@ cc._initDebugSetting = function (mode) {
         if(mode != ccGame.DEBUG_MODE_ERROR && mode != ccGame.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
             cc.warn = bakLog.bind(cc);
         }
-        if(mode == ccGame.DEBUG_MODE_LOG || mode == ccGame.DEBUG_MODE_LOG_FOR_WEB_PAGE){
+        if(mode == ccGame.DEBUG_MODE_INFO || mode == ccGame.DEBUG_MODE_INFO_FOR_WEB_PAGE){
             cc.log = bakLog;
         }
     }
@@ -813,10 +862,10 @@ cc._initDebugSetting = function (mode) {
  */
 cc.game = {
     DEBUG_MODE_NONE : 0,
-    DEBUG_MODE_LOG : 1,
+    DEBUG_MODE_INFO : 1,
     DEBUG_MODE_WARN : 2,
     DEBUG_MODE_ERROR : 3,
-    DEBUG_MODE_LOG_FOR_WEB_PAGE : 4,
+    DEBUG_MODE_INFO_FOR_WEB_PAGE : 4,
     DEBUG_MODE_WARN_FOR_WEB_PAGE : 5,
     DEBUG_MODE_ERROR_FOR_WEB_PAGE : 6,
     
@@ -923,7 +972,8 @@ cc.game = {
      * @returns {*}
      * @private
      */
-    _initConfig : function(cb){
+    _initConfig : function(){
+        cc._initDebugSetting(1);
         var self = this, CONFIG_KEY = self.CONFIG_KEY;
         var _init = function(cfg){
             cfg[CONFIG_KEY.engineDir] = cfg[CONFIG_KEY.engineDir] || "frameworks/cocos2d-html5";
@@ -932,12 +982,15 @@ cc.game = {
             cfg[CONFIG_KEY.renderMode] = cfg[CONFIG_KEY.renderMode] || 0;
             return cfg;
         };
-        if(self.config) return cb(_init(self.config));
-        cc.loader.loadJson("project.json", function(err, data){
-            if(err) throw err;
-            self.config = data;
-            cb(_init(self.config));
-        })
+        try{
+            var txt = cc.FileUtils.getInstance().getStringFromFile("project.json");
+            var data = JSON.parse(txt);
+            this.config = _init(data || {});
+        }catch(e){
+            this.config = _init({});
+        }
+//        cc._initDebugSetting(this.config[CONFIG_KEY.debugMode]);
+        cc._initSys(this.config, CONFIG_KEY);
     },
     
     //cache for js and module that has added into jsList to be loaded.
@@ -967,19 +1020,15 @@ cc.game = {
      * @param cb
      */
     prepare : function(cb){
-        var self = this;
+        var self = this, config = self.config, CONFIG_KEY = self.CONFIG_KEY, loader = cc.loader;
         require("jsb.js");
-        self._initConfig(function(config){
-            var CONFIG_KEY = self.CONFIG_KEY, loader = cc.loader;
-            cc._initSys(config, CONFIG_KEY);
-            cc._initDebugSetting(config[CONFIG_KEY.debugMode]);
-            self._prepareCalled = true;
-            loader.loadJsWithImg("", config[CONFIG_KEY.jsList] || [], function(err){
-                if(err) throw err;
-                self._prepared = true;
-                if(cb) cb();
-            });
+        self._prepareCalled = true;
+        loader.loadJsWithImg("", config[CONFIG_KEY.jsList] || [], function(err){
+            if(err) throw err;
+            self._prepared = true;
+            if(cb) cb();
         });
     }
 };
+cc.game._initConfig();
 //+++++++++++++++++++++++++something about CCGame end+++++++++++++++++++++++++++++

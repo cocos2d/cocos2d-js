@@ -2,10 +2,6 @@
 // cocos2d constants
 //
 
-var cc = cc || {};
-var window = window || this;
-
-
 cc.TARGET_PLATFORM = {
     WINDOWS:0,
     LINUX:1,
@@ -72,35 +68,14 @@ cc.TEXTURE_PIXELFORMAT_PVRTC4 = 8;
 cc.TEXTURE_PIXELFORMAT_PVRTC4 = 9;
 cc.TEXTURE_PIXELFORMAT_DEFAULT = cc.TEXTURE_PIXELFORMAT_RGBA8888;
 
-cc.TEXT_ALIGNMENT_LEFT  = 0;
-cc.TEXT_ALIGNMENT_CENTER = 1;
-cc.TEXT_ALIGNMENT_RIGHT = 2;
-
-cc.VERTICAL_TEXT_ALIGNMENT_TOP = 0;
-cc.VERTICAL_TEXT_ALIGNMENT_CENTER = 1;
-cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM = 2;
-
 cc.IMAGE_FORMAT_JPEG = 0;
 cc.IMAGE_FORMAT_PNG = 0;
 
 cc.PROGRESS_TIMER_TYPE_RADIAL = 0;
 cc.PROGRESS_TIMER_TYPE_BAR = 1;
 
-cc.PARTICLE_TYPE_FREE = 0;
-cc.PARTICLE_TYPE_RELATIVE = 1;
-cc.PARTICLE_TYPE_GROUPED = 2;
-cc.PARTICLE_DURATION_INFINITY = -1;
-cc.PARTICLE_MODE_GRAVITY = 0;
-cc.PARTICLE_MODE_RADIUS = 1;
-cc.PARTICLE_START_SIZE_EQUAL_TO_END_SIZE = -1;
-cc.PARTICLE_START_RADIUS_EQUAL_TO_END_RADIUS = -1;
-
 cc.TOUCH_ALL_AT_ONCE = 0;
 cc.TOUCH_ONE_BY_ONE = 1;
-
-cc.TMX_TILE_HORIZONTAL_FLAG = 0x80000000;
-cc.TMX_TILE_VERTICAL_FLAG = 0x40000000;
-cc.TMX_TILE_DIAGONAL_FLAG = 0x20000000;
 
 cc.TRANSITION_ORIENTATION_LEFT_OVER = 0;
 cc.TRANSITION_ORIENTATION_RIGHT_OVER = 1;
@@ -484,53 +459,6 @@ _proto.GRAY;
 cc.defineGetterSetter(_proto, "GRAY", _proto._getGray);
 
 //
-// Array: for cocos2d-html5 compatibility
-//
-
-/**
- * Returns index of first occurence of object, -1 if value not found.
- * @function
- * @param {Array} arr Source Array
- * @param {*} findObj find object
- * @return {Number} index of first occurence of value
- */
-cc.ArrayGetIndexOfObject = function (arr, findObj) {
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] == findObj)
-            return i;
-    }
-    return -1;
-};
-
-/**
- * Returns a Boolean value that indicates whether value is present in the array.
- * @function
- * @param {Array} arr
- * @param {*} findObj
- * @return {Boolean}
- */
-cc.ArrayContainsObject = function (arr, findObj) {
-    return cc.ArrayGetIndexOfObject(arr, findObj) != -1;
-};
-
-cc.ArrayRemoveObject = function (arr, delObj) {
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] == delObj) {
-            arr.splice(i, 1);
-        }
-    }
-};
-
-//
-// Helpers
-//
-cc.dump = function(obj)
-{
-    for( var i in obj )
-        cc.log( i + " = " + obj[i] );
-};
-
-//
 // Bindings Overrides
 //
 // MenuItemToggle
@@ -804,38 +732,6 @@ var clearInterval = function (intervalId) {
 var clearTimeout = clearInterval;
 
 
-
-// Define singleton objects
-cc.director = cc.Director.getInstance();
-cc.view = cc.director.getOpenGLView();
-cc.audioEngine = cc.AudioEngine.getInstance();
-cc.configuration = cc.Configuration.getInstance();
-cc.textureCache = cc.director.getTextureCache();
-cc.shaderCache = cc.ShaderCache.getInstance();
-cc.animationCache = cc.AnimationCache.getInstance();
-cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
-//cc.saxParser
-cc.plistParser = cc.SAXParser.getInstance();
-
-cc.screen = {
-    init: function() {},
-    fullScreen: function() {
-        return true;
-    },
-    requestFullScreen: function(element, onFullScreenChange) {
-        onFullScreenChange.call();
-    },
-    exitFullScreen: function() {
-        return false;
-    },
-    autoFullScreen: function(element, onFullScreenChange) {
-        onFullScreenChange.call();
-    }
-};
-//cc.tiffReader;
-//cc.imeDispatcher;
-
-
 // event listener type
 cc.EventListener.UNKNOWN = 0;
 cc.EventListener.TOUCH_ONE_BY_ONE = 1;
@@ -844,8 +740,6 @@ cc.EventListener.KEYBOARD = 3;
 cc.EventListener.MOUSE = 4;
 cc.EventListener.ACCELERATION = 5;
 cc.EventListener.CUSTOM = 6;
-
-cc.eventManager = cc.Director.getInstance().getEventDispatcher();
 
 cc.EventListener.create = function(argObj){
     if(!argObj || !argObj.event){
@@ -905,6 +799,12 @@ cc.eventManager.addListener = function(listener, nodeOrPriority) {
         cc.eventManager.addEventListenerWithSceneGraphPriority(listener, nodeOrPriority);
     }
 };
+
+cc.eventManager.dispatchCustomEvent = function (eventName, optionalUserData) {
+    var ev = new cc.EventCustom(eventName);
+    ev.setUserData(optionalUserData);
+    this.dispatchEvent(ev);
+}
 
 cc.EventCustom.prototype.setUserData = function(userData) {
     this._userData = userData;
@@ -1083,6 +983,67 @@ cc.FontDefinition = function () {
     this.shadowOpacity = 1.0;
 };
 
+
+// Array utils
+
+/**
+ * Verify Array's Type
+ * @param {Array} arr
+ * @param {function} type
+ * @return {Boolean}
+ * @function
+ */
+cc.arrayVerifyType = function (arr, type) {
+    if (arr && arr.length > 0) {
+        for (var i = 0; i < arr.length; i++) {
+            if (!(arr[i] instanceof  type)) {
+                cc.log("element type is wrong!");
+                return false;
+            }
+        }
+    }
+    return true;
+};
+
+/**
+ * Searches for the first occurance of object and removes it. If object is not found the function has no effect.
+ * @function
+ * @param {Array} arr Source Array
+ * @param {*} delObj  remove object
+ */
+cc.arrayRemoveObject = function (arr, delObj) {
+    for (var i = 0, l = arr.length; i < l; i++) {
+        if (arr[i] == delObj) {
+            arr.splice(i, 1);
+            break;
+        }
+    }
+};
+
+/**
+ * Removes from arr all values in minusArr. For each Value in minusArr, the first matching instance in arr will be removed.
+ * @function
+ * @param {Array} arr Source Array
+ * @param {Array} minusArr minus Array
+ */
+cc.arrayRemoveArray = function (arr, minusArr) {
+    for (var i = 0, l = minusArr.length; i < l; i++) {
+        cc.arrayRemoveObject(arr, minusArr[i]);
+    }
+};
+
+/**
+ * Inserts some objects at index
+ * @function
+ * @param {Array} arr
+ * @param {Array} addObjs
+ * @param {Number} index
+ * @return {Array}
+ */
+cc.arrayAppendObjectsToIndex = function(arr, addObjs,index){
+    arr.splice.apply(arr, [index, 0].concat(addObjs));
+    return arr;
+};
 
 ccui.uiHelper = {
     seekWidgetByTag: ccui.UIHelper.seekWidgetByTag,

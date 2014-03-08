@@ -4195,26 +4195,22 @@ var SpriteNilTexture = SpriteTestDemo.extend({
 //
 //------------------------------------------------------------------
 var MySprite1 = cc.Sprite.extend({
-    _ivar:0
+    _ivar:0,
+	ctor: function(spriteFrameName) {
+		this._super();
+		var pFrame = spriteFrameCache.getSpriteFrame(spriteFrameName);
+		this.setSpriteFrame(pFrame);
+	}
 });
-
-MySprite1.spriteWithSpriteFrameName = function (spriteFrameName) {
-    var pFrame = spriteFrameCache.getSpriteFrame(spriteFrameName);
-    var sprite = new MySprite1();
-    sprite.initWithSpriteFrame(pFrame);
-
-    return sprite;
-};
 
 var MySprite2 = cc.Sprite.extend({
-    _ivar:0
+    _ivar:0,
+	ctor: function(name) {
+		this._super();
+		//var texture = cc.textureCache.addImage();
+		this.setTexture(name);
+	}
 });
-
-MySprite2.spriteWithFile = function (name) {
-    var sprite = new MySprite2();
-    sprite.init(name);
-    return sprite;
-};
 
 var SpriteSubclass = SpriteTestDemo.extend({
     _title:"Sprite subclass",
@@ -4224,17 +4220,17 @@ var SpriteSubclass = SpriteTestDemo.extend({
         this._super();
 
         spriteFrameCache.addSpriteFrames(s_ghostsPlist);
-        var aParent = cc.SpriteBatchNode.create(s_ghosts);
+		var aParent = cc.SpriteBatchNode.create(s_ghosts);
 
-        // MySprite1
-        var sprite = MySprite1.spriteWithSpriteFrameName("father.gif");
-        sprite.x = winSize.width / 4;
-        sprite.y = winSize.height / 2;
-        aParent.addChild(sprite);
-        this.addChild(aParent);
+		// MySprite1
+		var sprite = new MySprite1("father.gif");
+		sprite.x = winSize.width / 4;
+		sprite.y = winSize.height / 2;
+		aParent.addChild(sprite);
+		this.addChild(aParent);
 
         // MySprite2
-        var sprite2 = MySprite2.spriteWithFile(s_pathGrossini);
+        var sprite2 = new MySprite2(s_pathGrossini);
         this.addChild(sprite2);
         sprite2.x = winSize.width / 4 * 3;
         sprite2.y = winSize.height / 2;
@@ -5157,7 +5153,8 @@ var SpriteTestScene = TestScene.extend({
 // Flow control
 //
 var arrayOfSpriteTest = [
-    Sprite1,
+	Sprite1,
+	SpriteSubclass,
     SpriteBatchNode1,
     SpriteFrameTest,
     SpriteFrameAliasNameTest,
@@ -5196,7 +5193,6 @@ var arrayOfSpriteTest = [
     SpriteChildrenChildren,
     SpriteBatchNodeChildrenChildren,
     SpriteNilTexture,
-    SpriteSubclass,
     AnimationCacheTest,
     SpriteOffsetAnchorSkew,
     SpriteBatchNodeOffsetAnchorSkew,

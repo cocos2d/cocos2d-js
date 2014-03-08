@@ -297,6 +297,18 @@ char
 },
 
 /**
+ * @method bindAttribLocation
+ * @param {char*} arg0
+ * @param {unsigned int} arg1
+ */
+bindAttribLocation : function (
+char, 
+int 
+)
+{
+},
+
+/**
  * @method setUniformLocationWithMatrix4fv
  * @param {int} arg0
  * @param {float*} arg1
@@ -472,18 +484,6 @@ int
  * @method reset
  */
 reset : function (
-)
-{
-},
-
-/**
- * @method bindAttribLocation
- * @param {char*} arg0
- * @param {unsigned int} arg1
- */
-bindAttribLocation : function (
-char, 
-int 
 )
 {
 },
@@ -1209,18 +1209,6 @@ bool
 },
 
 /**
- * @method dispatchCustomEvent
- * @param {String} arg0
- * @param {void*} arg1
- */
-dispatchCustomEvent : function (
-str, 
-void 
-)
-{
-},
-
-/**
  * @method setPriority
  * @param {cc.EventListener} arg0
  * @param {int} arg1
@@ -1765,16 +1753,6 @@ bool
 },
 
 /**
- * @method setPositionZ
- * @param {float} arg0
- */
-setPositionZ : function (
-float 
-)
-{
-},
-
-/**
  * @method setRotation3D
  * @param {cc.Vertex3F} arg0
  */
@@ -1930,6 +1908,16 @@ action
 )
 {
     return cc.Action;
+},
+
+/**
+ * @method setPositionZ
+ * @param {float} arg0
+ */
+setPositionZ : function (
+float 
+)
+{
 },
 
 /**
@@ -2096,16 +2084,6 @@ getParent : function(
 },
 
 /**
- * @method getPositionZ
- * @return {float}
- */
-getPositionZ : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getPositionY
  * @return {float}
  */
@@ -2175,6 +2153,16 @@ getParentToNodeTransform : function (
 )
 {
     return kmMat4;
+},
+
+/**
+ * @method getPositionZ
+ * @return {float}
+ */
+getPositionZ : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -7700,6 +7688,16 @@ getTextureRect : function (
 },
 
 /**
+ * @method setPositionZ
+ * @param {float} arg0
+ */
+setPositionZ : function (
+float 
+)
+{
+},
+
+/**
  * @method getTextureAtlas
  * @return {cc.TextureAtlas}
  */
@@ -12770,26 +12768,6 @@ getEventName : function (
 },
 
 /**
- * @method setUserData
- * @param {void*} arg0
- */
-setUserData : function (
-void 
-)
-{
-},
-
-/**
- * @method getUserData
- * @return {void*}
- */
-getUserData : function (
-)
-{
-    return void;
-},
-
-/**
  * @method EventCustom
  * @constructor
  * @param {String} arg0
@@ -15098,20 +15076,6 @@ float
 },
 
 /**
- * @method isScheduled
- * @param {String} arg0
- * @param {void*} arg1
- * @return {bool}
- */
-isScheduled : function (
-str, 
-void 
-)
-{
-    return false;
-},
-
-/**
  * @method performFunctionInCocosThread
  * @param {function} arg0
  */
@@ -15178,18 +15142,6 @@ isEnabled : function (
 },
 
 /**
- * @method serialize
- * @param {void*} arg0
- * @return {bool}
- */
-serialize : function (
-void 
-)
-{
-    return false;
-},
-
-/**
  * @method update
  * @param {float} arg0
  */
@@ -15244,6 +15196,77 @@ getName : function (
  * @return {cc.Component}
  */
 create : function (
+)
+{
+    return cc.Component;
+},
+
+};
+
+/**
+ * @class ComponentContainer
+ */
+cc.ComponentContainer = {
+
+/**
+ * @method visit
+ * @param {float} arg0
+ */
+visit : function (
+float 
+)
+{
+},
+
+/**
+ * @method remove
+ * @param {String} arg0
+ * @return {bool}
+ */
+remove : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method removeAll
+ */
+removeAll : function (
+)
+{
+},
+
+/**
+ * @method add
+ * @param {cc.Component} arg0
+ * @return {bool}
+ */
+add : function (
+component 
+)
+{
+    return false;
+},
+
+/**
+ * @method isEmpty
+ * @return {bool}
+ */
+isEmpty : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method get
+ * @param {String} arg0
+ * @return {cc.Component}
+ */
+get : function (
+str 
 )
 {
     return cc.Component;
