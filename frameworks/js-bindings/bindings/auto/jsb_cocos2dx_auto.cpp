@@ -4561,26 +4561,6 @@ bool js_cocos2dx_Node_ignoreAnchorPointForPosition(JSContext *cx, uint32_t argc,
 	JS_ReportError(cx, "js_cocos2dx_Node_ignoreAnchorPointForPosition : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
-bool js_cocos2dx_Node_setPositionZ(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_setPositionZ : Invalid Native Object");
-	if (argc == 1) {
-		double arg0;
-		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setPositionZ : Error processing arguments");
-		cobj->setPositionZ(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_Node_setPositionZ : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
 bool js_cocos2dx_Node_setRotation3D(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -4916,6 +4896,26 @@ bool js_cocos2dx_Node_runAction(JSContext *cx, uint32_t argc, jsval *vp)
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_Node_runAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_Node_setPositionZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_setPositionZ : Invalid Native Object");
+	if (argc == 1) {
+		double arg0;
+		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setPositionZ : Error processing arguments");
+		cobj->setPositionZ(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_Node_setPositionZ : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 bool js_cocos2dx_Node_setScheduler(JSContext *cx, uint32_t argc, jsval *vp)
@@ -5322,23 +5322,6 @@ bool js_cocos2dx_Node_getParent(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_Node_getParent : wrong number of arguments");
 	return false;
 }
-bool js_cocos2dx_Node_getPositionZ(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getPositionZ : Invalid Native Object");
-	if (argc == 0) {
-		double ret = cobj->getPositionZ();
-		jsval jsret = JSVAL_NULL;
-		jsret = DOUBLE_TO_JSVAL(ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_Node_getPositionZ : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
 bool js_cocos2dx_Node_getPositionY(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -5478,6 +5461,23 @@ bool js_cocos2dx_Node_getParentToNodeTransform(JSContext *cx, uint32_t argc, jsv
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_Node_getParentToNodeTransform : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+bool js_cocos2dx_Node_getPositionZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getPositionZ : Invalid Native Object");
+	if (argc == 0) {
+		double ret = cobj->getPositionZ();
+		jsval jsret = JSVAL_NULL;
+		jsret = DOUBLE_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_Node_getPositionZ : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_cocos2dx_Node_setGlobalZOrder(JSContext *cx, uint32_t argc, jsval *vp)
@@ -6312,7 +6312,6 @@ void js_register_cocos2dx_Node(JSContext *cx, JSObject *global) {
 		JS_FN("stopActionByTag", js_cocos2dx_Node_stopActionByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("reorderChild", js_cocos2dx_Node_reorderChild, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("ignoreAnchorPointForPosition", js_cocos2dx_Node_ignoreAnchorPointForPosition, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setPositionZ", js_cocos2dx_Node_setPositionZ, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setRotation3D", js_cocos2dx_Node_setRotation3D, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setPositionX", js_cocos2dx_Node_setPositionX, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setNodeToParentTransform", js_cocos2dx_Node_setNodeToParentTransform, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -6328,6 +6327,7 @@ void js_register_cocos2dx_Node(JSContext *cx, JSObject *global) {
 		JS_FN("getRotation", js_cocos2dx_Node_getRotation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getAnchorPointInPoints", js_cocos2dx_Node_getAnchorPointInPoints, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("runAction", js_cocos2dx_Node_runAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setVertexZ", js_cocos2dx_Node_setPositionZ, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setScheduler", js_cocos2dx_Node_setScheduler, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("stopAllActions", js_cocos2dx_Node_stopAllActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getSkewX", js_cocos2dx_Node_getSkewX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -6344,7 +6344,6 @@ void js_register_cocos2dx_Node(JSContext *cx, JSObject *global) {
 		JS_FN("getPosition", js_cocos2dx_Node_getPosition, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isRunning", js_cocos2dx_Node_isRunning, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getParent", js_cocos2dx_Node_getParent, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getPositionZ", js_cocos2dx_Node_getPositionZ, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getPositionY", js_cocos2dx_Node_getPositionY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getPositionX", js_cocos2dx_Node_getPositionX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("removeChildByTag", js_cocos2dx_Node_removeChildByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -6352,6 +6351,7 @@ void js_register_cocos2dx_Node(JSContext *cx, JSObject *global) {
 		JS_FN("updateDisplayedColor", js_cocos2dx_Node_updateDisplayedColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setVisible", js_cocos2dx_Node_setVisible, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getParentToNodeTransform", js_cocos2dx_Node_getParentToNodeTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getVertexZ", js_cocos2dx_Node_getPositionZ, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setGlobalZOrder", js_cocos2dx_Node_setGlobalZOrder, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setScale", js_cocos2dx_Node_setScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getChildByTag", js_cocos2dx_Node_getChildByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -24098,6 +24098,26 @@ bool js_cocos2dx_Sprite_getTextureRect(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_Sprite_getTextureRect : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
+bool js_cocos2dx_Sprite_setPositionZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::Sprite* cobj = (cocos2d::Sprite *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Sprite_setPositionZ : Invalid Native Object");
+	if (argc == 1) {
+		double arg0;
+		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Sprite_setPositionZ : Error processing arguments");
+		cobj->setPositionZ(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_Sprite_setPositionZ : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
 bool js_cocos2dx_Sprite_getTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -24452,6 +24472,7 @@ void js_register_cocos2dx_Sprite(JSContext *cx, JSObject *global) {
 		JS_FN("setDirty", js_cocos2dx_Sprite_setDirty, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isTextureRectRotated", js_cocos2dx_Sprite_isTextureRectRotated, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getTextureRect", js_cocos2dx_Sprite_getTextureRect, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setPositionZ", js_cocos2dx_Sprite_setPositionZ, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getTextureAtlas", js_cocos2dx_Sprite_getTextureAtlas, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isFlippedX", js_cocos2dx_Sprite_isFlippedX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isFlippedY", js_cocos2dx_Sprite_isFlippedY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),

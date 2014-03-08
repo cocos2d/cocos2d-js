@@ -1753,16 +1753,6 @@ bool
 },
 
 /**
- * @method setPositionZ
- * @param {float} arg0
- */
-setPositionZ : function (
-float 
-)
-{
-},
-
-/**
  * @method setRotation3D
  * @param {cc.Vertex3F} arg0
  */
@@ -1918,6 +1908,16 @@ action
 )
 {
     return cc.Action;
+},
+
+/**
+ * @method setPositionZ
+ * @param {float} arg0
+ */
+setPositionZ : function (
+float 
+)
+{
 },
 
 /**
@@ -2084,16 +2084,6 @@ getParent : function(
 },
 
 /**
- * @method getPositionZ
- * @return {float}
- */
-getPositionZ : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getPositionY
  * @return {float}
  */
@@ -2163,6 +2153,16 @@ getParentToNodeTransform : function (
 )
 {
     return kmMat4;
+},
+
+/**
+ * @method getPositionZ
+ * @return {float}
+ */
+getPositionZ : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -7685,6 +7685,16 @@ getTextureRect : function (
 )
 {
     return cc.Rect;
+},
+
+/**
+ * @method setPositionZ
+ * @param {float} arg0
+ */
+setPositionZ : function (
+float 
+)
+{
 },
 
 /**
