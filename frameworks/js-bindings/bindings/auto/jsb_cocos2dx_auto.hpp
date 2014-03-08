@@ -1790,6 +1790,7 @@ bool js_cocos2dx_Label_setLineBreakWithoutSpace(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_Label_getStringNumLines(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_enableOutline(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getStringLenght(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Label_onDraw(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setCharMap(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setMaxLineWidth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_enableGlow(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1849,8 +1850,9 @@ void js_cocos2dx_LayerColor_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_LayerColor(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_LayerColor_changeWidthAndHeight(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_LayerColor_changeHeight(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_LayerColor_onDraw(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_LayerColor_changeWidth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_LayerColor_changeHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_LayerColor_create(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_LayerGradient_class;
@@ -2452,6 +2454,7 @@ void js_register_cocos2dx_NodeGrid(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_NodeGrid_setTarget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_NodeGrid_getGrid(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_NodeGrid_setGrid(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_NodeGrid_create(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_ParticleBatchNode_class;

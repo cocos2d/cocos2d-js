@@ -1,7 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2013 cocos2d-x.org
 
  http://www.cocos2d-x.org
 
@@ -24,15 +22,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-/**
- * Only use for CocosBuilderTest.
-*/
-if(this['HelloCocosBuilderLayer']) HelloCocosBuilderLayer.toString();
-if(this['TestAnimationsLayer']) TestAnimationsLayer.toString();
-if(this['TestButtonsLayer']) TestButtonsLayer.toString();
-if(this['TestHeaderLayer']) TestHeaderLayer.toString();
-if(this['TestMenusLayer']) TestMenusLayer.toString();
-if(this['TestParticleSystemsLayer']) TestParticleSystemsLayer.toString();
-if(this['TestScrollViewsLayer']) TestScrollViewsLayer.toString();
-if(this['TestSpritesLayer']) TestSpritesLayer.toString();
-if(this['TestTimelineLayer']) TestTimelineLayer.toString();
+var UIImageViewEditorTest = UIBaseLayer.extend({
+    ctor: function () {
+        this._super();
+        var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UIImageView_Editor/ui_ImageView_editor_1.json");
+        this._mainNode.addChild(root);
+
+        var back_label =ccui.uiHelper.seekWidgetByName(root, "back");
+        back_label.addTouchEventListener(this.backEvent,this);
+    }
+});

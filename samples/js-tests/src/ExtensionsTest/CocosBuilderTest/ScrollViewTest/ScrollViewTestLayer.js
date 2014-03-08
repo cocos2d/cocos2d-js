@@ -24,4 +24,4 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TestScrollViewsLayer = function() {};
+cc.BuilderReader.registerController("TestScrollViewsLayer", {});

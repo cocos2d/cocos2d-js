@@ -24,10 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TestHeaderLayer = function() {
-
-    // CCB callback
-    this.onBackClicked = function() {
+cc.BuilderReader.registerController("TestHeaderLayer", {
+    "onBackClicked" : function() {
         cc.director.popScene();
-    };
-};
+    }
+});
