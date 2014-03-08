@@ -36,12 +36,14 @@ public:
 
 class ScriptingCore : public cocos2d::ScriptEngineProtocol
 {
+private:
 	JSRuntime *_rt;
 	JSContext *_cx;
 	JSObject  *_global;
 	JSObject  *_debugGlobal;
 	SimpleRunLoop* _runLoop;
 
+    bool _callFromScript;
 	ScriptingCore();
 public:
 	~ScriptingCore();
@@ -93,6 +95,9 @@ public:
 
     virtual bool handleAssert(const char *msg) { return false; }
 
+    virtual void setCalledFromScript(bool callFromScript) { _callFromScript = callFromScript; };
+    virtual bool isCalledFromScript() { return _callFromScript; };
+    
     bool executeFunctionWithObjectData(void* nativeObj, const char *name, JSObject *obj);
     bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
@@ -201,6 +206,8 @@ public:
 	void enableDebugger();
 	JSObject* getDebugGlobal() { return _debugGlobal; }
     JSObject* getGlobalObject() { return _global; }
+
+    bool isFunctionOverridedInJS(JSObject* obj, const std::string& name, JSNative native);
     
  private:
     void string_report(jsval val);
