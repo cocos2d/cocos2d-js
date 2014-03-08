@@ -77,7 +77,7 @@ UIScene = cc.Layer.extend({
             //add bottomDisplayLabel
             var bottomDisplayText = ccui.Text.create();
             bottomDisplayText.attr({
-	            string: "",
+	            string: "INIT",
 	            fontName: "Marker Felt",
 	            fontSize: 30,
 	            color: cc.color(159, 168, 176),
