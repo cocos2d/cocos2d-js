@@ -562,6 +562,7 @@ cc.defineGetterSetter(cc.loader, "audioPath", function(){
 
 // Define singleton objects
 cc.director = cc.Director.getInstance();
+cc.winSize = cc.director.getWinSize();
 cc.view = cc.director.getOpenGLView();
 cc.eventManager = cc.director.getEventDispatcher();
 cc.audioEngine = cc.AudioEngine.getInstance();

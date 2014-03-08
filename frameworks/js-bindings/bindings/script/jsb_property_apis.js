@@ -253,7 +253,6 @@ cc.defineGetterSetter(_proto, "tag", _proto.getTag, _proto.setTag);
 cc.defineGetterSetter(_proto, "userData", _proto.getUserData, _proto.setUserData);
 cc.defineGetterSetter(_proto, "userObject", _proto.getUserObject, _proto.setUserObject);
 cc.defineGetterSetter(_proto, "arrivalOrder", _proto.getArrivalOrder, _proto.setArrivalOrder);
-cc.defineGetterSetter(_proto, "grid", _proto.getGrid, _proto.setGrid);
 
 _proto = cc.NodeRGBA.prototype;
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
@@ -427,6 +426,10 @@ cc.defineGetterSetter(_proto, "clearDepthVal", _proto.getClearDepthVal, _proto.s
 cc.defineGetterSetter(_proto, "clearStencilVal", _proto.getClearStencilVal, _proto.setClearStencilVal);
 cc.defineGetterSetter(_proto, "clearColorVal", _proto.getClearColor, _proto.setClearColor);
 cc.defineGetterSetter(_proto, "autoDraw", _proto.getAutoDraw, _proto.setAutoDraw);
+
+_proto = cc.NodeGrid.prototype;
+cc.defineGetterSetter(_proto, "grid", _proto.getGrid, _proto.setGrid);
+cc.defineGetterSetter(_proto, "target", _proto.getTarget, _proto.setTarget);
 
 _proto = cc.TMXLayer.prototype;
 cc.defineGetterSetter(_proto, "tiles", _proto.getTiles, _proto.setTiles);
