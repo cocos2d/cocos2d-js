@@ -77,7 +77,7 @@ var UIRichTextTest = UIScene.extend({
         return false;
     },
     touchEvent: function (sender, type) {
-        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
                 this._richText.setSize(cc.size(120, 100));

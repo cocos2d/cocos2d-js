@@ -48,23 +48,23 @@ var UITextFieldTest = UIScene.extend({
 
     textFieldEvent: function (sender, type) {
         switch (type) {
-            case ccui.TEXTFILE_EVENT_ATTACH_WITH_ME:
+            case ccui.TextField.EVENT_ATTACH_WITH_ME:
                 var textField = sender;
                 var widgetSize = this._widget.getSize();
                 textField.runAction(cc.MoveTo.create(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setText("attach with IME");
                 break;
-            case ccui.TEXTFILE_EVENT_DETACH_WITH_ME:
+            case ccui.TextField.EVENT_DETACH_WITH_ME:
                 var textField = sender;
                 var widgetSize = this._widget.getSize();
                 textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
                 this._topDisplayLabel.setText("detach with IME");
                 break;
-            case ccui.TEXTFILE_EVENT_INSERT_TEXT:
+            case ccui.TextField.EVENT_INSERT_TEXT:
                 this._topDisplayLabel.setText("insert words");
                 break;
-            case ccui.TEXTFILE_EVENT_DELETE_BACKWARD:
+            case ccui.TextField.EVENT_DELETE_BACKWARD:
                 this._topDisplayLabel.setText("delete word");
                 break;
             default:
@@ -103,19 +103,19 @@ var UITextFieldTest_MaxLength = UIScene.extend({
         var textField = sender;
         var widgetSize = this._widget.getSize();
         switch (type) {
-            case ccui.TEXTFILE_EVENT_ATTACH_WITH_ME:
+            case ccui.TextField.EVENT_ATTACH_WITH_ME:
                 textField.runAction(cc.MoveTo.create(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setText("attach with IME max length:" + textField.getMaxLength());
                 break;
-            case ccui.TEXTFILE_EVENT_DETACH_WITH_ME:
+            case ccui.TextField.EVENT_DETACH_WITH_ME:
                 textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
                 this._topDisplayLabel.setText("detach with IME max length:" + textField.getMaxLength());
                 break;
-            case ccui.TEXTFILE_EVENT_INSERT_TEXT:
+            case ccui.TextField.EVENT_INSERT_TEXT:
                 this._topDisplayLabel.setText("insert with IME max length:" + textField.getMaxLength());
                 break;
-            case ccui.TEXTFILE_EVENT_DELETE_BACKWARD:
+            case ccui.TextField.EVENT_DELETE_BACKWARD:
                 this._topDisplayLabel.setText("delete with IME max length:" + textField.getMaxLength());
                 break;
             default:
@@ -152,23 +152,23 @@ var UITextFieldTest_Password = UIScene.extend({
 
     textFieldEvent: function (sender, type) {
         switch (type) {
-            case ccui.TEXTFILE_EVENT_ATTACH_WITH_ME:
+            case ccui.TextField.EVENT_ATTACH_WITH_ME:
                 var textField = sender;
                 var widgetSize = this._widget.getSize();
                 textField.runAction(cc.MoveTo.create(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setText("attach with IME IME password");
                 break;
-            case ccui.TEXTFILE_EVENT_DETACH_WITH_ME:
+            case ccui.TextField.EVENT_DETACH_WITH_ME:
                 var textField = sender;
                 var widgetSize = this._widget.getSize();
                 textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
                 this._topDisplayLabel.setText("detach with IME password");
                 break;
-            case ccui.TEXTFILE_EVENT_INSERT_TEXT:
+            case ccui.TextField.EVENT_INSERT_TEXT:
                 this._topDisplayLabel.setText("insert with IME password");
                 break;
-            case ccui.TEXTFILE_EVENT_DELETE_BACKWARD:
+            case ccui.TextField.EVENT_DELETE_BACKWARD:
                 this._topDisplayLabel.setText("delete with IME password");
                 break;
             default:

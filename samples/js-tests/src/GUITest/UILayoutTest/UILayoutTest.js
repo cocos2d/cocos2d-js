@@ -101,7 +101,7 @@ var UILayoutTest = UILayoutTestBase.extend({
 var UILayoutTest_Color = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
-        layout.setBackGroundColorType(ccui.LAYOUT_BG_COLOR_SOLID);
+        layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
         layout.setBackGroundColor(cc.color(128, 128, 128));
         layout.setSize(cc.size(280, 150));
         return layout;
@@ -113,7 +113,7 @@ var UILayoutTest_Color = UILayoutTestBase.extend({
 var UILayoutTest_Gradient = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
-        layout.setBackGroundColorType(ccui.LAYOUT_BG_COLOR_GRADIENT);
+        layout.setBackGroundColorType(ccui.Layout.BG_COLOR_GRADIENT);
         layout.setBackGroundColor(cc.color(64, 64, 64), cc.color(192, 192, 192));
         layout.setSize(cc.size(280, 150));
         return layout;
@@ -208,7 +208,7 @@ var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
         var layout = ccui.Layout.create();
         layout.setLayoutType(ccui.LAYOUT_TYPE_RELATIVE);
         layout.setSize(cc.size(280, 150));
-        layout.setBackGroundColorType(ccui.LAYOUT_BG_COLOR_SOLID);
+        layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
         layout.setBackGroundColor(cc.color.GREEN);
         return layout;
     },
