@@ -779,41 +779,6 @@ var clearInterval = function (intervalId) {
 var clearTimeout = clearInterval;
 
 
-
-// Define singleton objects
-cc.director = cc.Director.getInstance();
-cc.view = cc.director.getOpenGLView();
-cc.audioEngine = cc.AudioEngine.getInstance();
-cc.audioEngine.end = function(){
-    cc.AudioEngine.end();
-};
-cc.configuration = cc.Configuration.getInstance();
-cc.textureCache = cc.director.getTextureCache();
-cc.shaderCache = cc.ShaderCache.getInstance();
-cc.animationCache = cc.AnimationCache.getInstance();
-cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
-//cc.saxParser
-cc.plistParser = cc.SAXParser.getInstance();
-
-cc.screen = {
-    init: function() {},
-    fullScreen: function() {
-        return true;
-    },
-    requestFullScreen: function(element, onFullScreenChange) {
-        onFullScreenChange.call();
-    },
-    exitFullScreen: function() {
-        return false;
-    },
-    autoFullScreen: function(element, onFullScreenChange) {
-        onFullScreenChange.call();
-    }
-};
-//cc.tiffReader;
-//cc.imeDispatcher;
-
-
 // event listener type
 cc.EventListener.UNKNOWN = 0;
 cc.EventListener.TOUCH_ONE_BY_ONE = 1;
@@ -822,8 +787,6 @@ cc.EventListener.KEYBOARD = 3;
 cc.EventListener.MOUSE = 4;
 cc.EventListener.ACCELERATION = 5;
 cc.EventListener.CUSTOM = 6;
-
-cc.eventManager = cc.Director.getInstance().getEventDispatcher();
 
 cc.EventListener.create = function(argObj){
     if(!argObj || !argObj.event){

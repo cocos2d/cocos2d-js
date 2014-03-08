@@ -418,23 +418,6 @@ ccs.triggerManager = {
 };
 
 
-
-// In extension
-ccs.guiReader = ccs.GUIReader.getInstance();
-ccs.armatureDataManager = ccs.ArmatureDataManager.getInstance();
-ccs.actionManager = ccs.ActionManager.getInstance();
-ccs.sceneReader = ccs.SceneReader.getInstance();
-
-ccs.sceneReader.clear = ccs.guiReader.clear = ccs.actionManager.clear = ccs.armatureDataManager.clear = function() {};
-
-ccs.sceneReader.version = function() {
-    return ccs.SceneReader.sceneReaderVersion();
-}
-
-//ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
-//ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
-
-
 // Functions don't support binding
 ccs.Bone.prototype.getColliderBodyList = function() {
     var decoDisplay = this.getDisplayManager().getCurrentDecorativeDisplay();
