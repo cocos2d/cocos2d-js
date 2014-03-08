@@ -6296,8 +6296,12 @@ color4f
 
 /**
  * @method onDraw
+ * @param {kmMat4} arg0
+ * @param {bool} arg1
  */
 onDraw : function (
+kmmat4, 
+bool 
 )
 {
 },
@@ -7684,16 +7688,6 @@ getTextureRect : function (
 },
 
 /**
- * @method setPositionZ
- * @param {float} arg0
- */
-setPositionZ : function (
-float 
-)
-{
-},
-
-/**
  * @method getTextureAtlas
  * @return {cc.TextureAtlas}
  */
@@ -8325,6 +8319,18 @@ enableShadow : function (
 },
 
 /**
+ * @method setDimensions
+ * @param {unsigned int} arg0
+ * @param {unsigned int} arg1
+ */
+setDimensions : function (
+int, 
+int 
+)
+{
+},
+
+/**
  * @method getString
  * @return {String}
  */
@@ -8343,6 +8349,16 @@ disableEffect : function (
 },
 
 /**
+ * @method getWidth
+ * @return {unsigned int}
+ */
+getWidth : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getCommonLineHeight
  * @return {int}
  */
@@ -8353,18 +8369,18 @@ getCommonLineHeight : function (
 },
 
 /**
- * @method breakLineWithoutSpace
- * @return {bool}
+ * @method setWidth
+ * @param {unsigned int} arg0
  */
-breakLineWithoutSpace : function (
+setWidth : function (
+int 
 )
 {
-    return false;
 },
 
 /**
  * @method getMaxLineWidth
- * @return {float}
+ * @return {unsigned int}
  */
 getMaxLineWidth : function (
 )
@@ -8373,20 +8389,10 @@ getMaxLineWidth : function (
 },
 
 /**
- * @method getScaleY
- * @return {float}
+ * @method getHorizontalAlignment
+ * @return {cc.TextHAlignment}
  */
-getScaleY : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getScaleX
- * @return {float}
- */
-getScaleX : function (
+getHorizontalAlignment : function (
 )
 {
     return 0;
@@ -8403,6 +8409,16 @@ str
 },
 
 /**
+ * @method getHeight
+ * @return {unsigned int}
+ */
+getHeight : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setBMFontFilePath
  * @param {String} arg0
  * @param {PointObject} arg1
@@ -8414,6 +8430,16 @@ point
 )
 {
     return false;
+},
+
+/**
+ * @method getStringLength
+ * @return {int}
+ */
+getStringLength : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -8449,24 +8475,6 @@ int
 },
 
 /**
- * @method getStringLenght
- * @return {int}
- */
-getStringLenght : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method onDraw
- */
-onDraw : function (
-)
-{
-},
-
-/**
  * @method setCharMap
 * @param {cc.Texture2D|String|String} texture2d
 * @param {int|int} int
@@ -8486,10 +8494,42 @@ int
 
 /**
  * @method setMaxLineWidth
- * @param {float} arg0
+ * @param {unsigned int} arg0
  */
 setMaxLineWidth : function (
-float 
+int 
+)
+{
+},
+
+/**
+ * @method setVerticalAlignment
+ * @param {cc.TextVAlignment} arg0
+ * @param {bool} arg1
+ */
+setVerticalAlignment : function (
+textvalignment, 
+bool 
+)
+{
+},
+
+/**
+ * @method getVerticalAlignment
+ * @return {cc.TextVAlignment}
+ */
+getVerticalAlignment : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setHeight
+ * @param {unsigned int} arg0
+ */
+setHeight : function (
+int 
 )
 {
 },
@@ -8527,11 +8567,27 @@ getTextAlignment : function (
 },
 
 /**
- * @method setAlignment
+ * @method setHorizontalAlignment
  * @param {cc.TextHAlignment} arg0
+ * @param {bool} arg1
  */
-setAlignment : function (
-texthalignment 
+setHorizontalAlignment : function (
+texthalignment, 
+bool 
+)
+{
+},
+
+/**
+ * @method setAlignment
+* @param {cc.TextHAlignment|cc.TextHAlignment} texthalignment
+* @param {cc.TextVAlignment|bool} textvalignment
+* @param {bool} bool
+*/
+setAlignment : function(
+texthalignment,
+textvalignment,
+bool 
 )
 {
 },
@@ -8818,9 +8874,11 @@ float
 },
 
 /**
- * @method onDraw
+ * @method changeHeight
+ * @param {float} arg0
  */
-onDraw : function (
+changeHeight : function (
+float 
 )
 {
 },
@@ -8830,16 +8888,6 @@ onDraw : function (
  * @param {float} arg0
  */
 changeWidth : function (
-float 
-)
-{
-},
-
-/**
- * @method changeHeight
- * @param {float} arg0
- */
-changeHeight : function (
 float 
 )
 {
@@ -11213,16 +11261,6 @@ getGrid : function(
 )
 {
     return cc.GridBase;
-},
-
-/**
- * @method setGrid
- * @param {cc.GridBase} arg0
- */
-setGrid : function (
-gridbase 
-)
-{
 },
 
 /**
@@ -13609,6 +13647,18 @@ TextFieldTTF : function (
  * @class TextureCache
  */
 cc.TextureCache = {
+
+/**
+ * @method reloadTexture
+ * @param {String} arg0
+ * @return {bool}
+ */
+reloadTexture : function (
+str 
+)
+{
+    return false;
+},
 
 /**
  * @method removeTextureForKey
