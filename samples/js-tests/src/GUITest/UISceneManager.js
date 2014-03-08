@@ -283,8 +283,10 @@ UISceneManager.purge = function () {
     this._instance = null;
 };
 
-var runCocosGUITestScene = function () {
-    var manager = UISceneManager.getInstance();
-    var scene = manager.currentUIScene();
-    cc.director.runScene(scene);
-};
+GUITestScene = cc.Class.extend({
+    runThisTest:function () {
+        var manager = UISceneManager.getInstance();
+        var scene = manager.currentUIScene();
+        cc.director.runScene(scene);
+    }
+});
