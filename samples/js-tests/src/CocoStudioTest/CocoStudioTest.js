@@ -34,12 +34,12 @@ var cocoStudioTestItemNames = [
             runArmatureTestScene();
         }
     },
-   /* {
+    {
         itemTitle:"CocoStudioGUITest",
         testScene:function () {
-            runCocosGUITestScene();
+            runGuiTestMain();
         }
-    },*/
+    },
     {
         itemTitle:"CocoStudioComponentsTest",
         testScene:function () {
