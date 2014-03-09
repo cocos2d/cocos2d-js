@@ -76,17 +76,24 @@ bool js_cocos2dx_spine_Skeleton_setBlendFunc(JSContext *cx, uint32_t argc, jsval
 }
 bool js_cocos2dx_spine_Skeleton_onDraw(JSContext *cx, uint32_t argc, jsval *vp)
 {
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	spine::Skeleton* cobj = (spine::Skeleton *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_Skeleton_onDraw : Invalid Native Object");
-	if (argc == 0) {
-		cobj->onDraw();
+	if (argc == 2) {
+		kmMat4 arg0;
+		bool arg1;
+		#pragma warning NO CONVERSION TO NATIVE FOR kmMat4;
+		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_Skeleton_onDraw : Error processing arguments");
+		cobj->onDraw(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_cocos2dx_spine_Skeleton_onDraw : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_cocos2dx_spine_Skeleton_onDraw : wrong number of arguments: %d, was expecting %d", argc, 2);
 	return false;
 }
 bool js_cocos2dx_spine_Skeleton_setSlotsToSetupPose(JSContext *cx, uint32_t argc, jsval *vp)
@@ -502,7 +509,7 @@ void js_register_cocos2dx_spine_Skeleton(JSContext *cx, JSObject *global) {
 	static JSFunctionSpec funcs[] = {
 		JS_FN("setToSetupPose", js_cocos2dx_spine_Skeleton_setToSetupPose, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setBlendFunc", js_cocos2dx_spine_Skeleton_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("onDraw", js_cocos2dx_spine_Skeleton_onDraw, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("onDraw", js_cocos2dx_spine_Skeleton_onDraw, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setSlotsToSetupPose", js_cocos2dx_spine_Skeleton_setSlotsToSetupPose, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setAttachment", js_cocos2dx_spine_Skeleton_setAttachment, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getBlendFunc", js_cocos2dx_spine_Skeleton_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
