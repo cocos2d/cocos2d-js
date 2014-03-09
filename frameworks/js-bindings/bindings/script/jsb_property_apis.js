@@ -429,7 +429,7 @@ cc.defineGetterSetter(_proto, "autoDraw", _proto.getAutoDraw, _proto.setAutoDraw
 
 _proto = cc.NodeGrid.prototype;
 cc.defineGetterSetter(_proto, "grid", _proto.getGrid, _proto.setGrid);
-cc.defineGetterSetter(_proto, "target", _proto.getTarget, _proto.setTarget);
+cc.defineGetterSetter(_proto, "target", null, _proto.setTarget);
 
 _proto = cc.TMXLayer.prototype;
 cc.defineGetterSetter(_proto, "tiles", _proto.getTiles, _proto.setTiles);
