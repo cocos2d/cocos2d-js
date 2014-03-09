@@ -4755,13 +4755,11 @@ var SpriteSkewNegativeScaleChildren = SpriteTestDemo.extend({
 var DoubleSprite = cc.Sprite.extend({
     HD:false,
 
-    initWithTexture:function (texture, rect) {
-        if (this._super(texture, rect)) {
-            //var resolutionType = texture.getResolutionType();
-            //this.HD = ( resolutionType == cc.kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
-            return true;
-        }
-        return false;
+    ctor:function (fileName) {
+	    this._super();
+        this.setTexture(fileName);
+        //var resolutionType = texture.getResolutionType();
+        //this.HD = ( resolutionType == cc.kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
     },
 
     setContentSize:function (size) {
@@ -4802,8 +4800,7 @@ cc.defineGetterSetter(DoubleSprite.prototype, "width", DoubleSprite.prototype._g
 cc.defineGetterSetter(DoubleSprite.prototype, "height", DoubleSprite.prototype._getHeight, DoubleSprite.prototype._setHeight);
 
 DoubleSprite.create = function (fileName) {
-    var pSp = new DoubleSprite();
-    pSp.init(fileName);
+    var pSp = new DoubleSprite(fileName);
     return pSp;
 };
 
