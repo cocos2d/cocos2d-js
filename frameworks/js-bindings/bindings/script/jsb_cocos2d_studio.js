@@ -30,7 +30,7 @@ if(ccs.Armature){
 
 
 ccs.sendEvent = function (event) {
-    var triggerObjArr = ccs.TriggerMng.getInstance().get(event);
+    var triggerObjArr = ccs.triggerManager.get(event);
     if (triggerObjArr == null) {
         return;
     }
@@ -288,7 +288,7 @@ ccs.triggerManager = {
         if (!eventTriggers) {
             eventTriggers = [];
         }
-        if (!cc.ArrayContainsObject(eventTriggers, triggerObj)) {
+	    if (eventTriggers.indexOf(triggerObj) == -1) {
             eventTriggers.push(triggerObj);
             this._eventTriggers[event] = eventTriggers;
         }
