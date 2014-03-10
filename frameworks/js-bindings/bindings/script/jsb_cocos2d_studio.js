@@ -30,7 +30,7 @@ if(ccs.Armature){
 
 
 ccs.sendEvent = function (event) {
-    var triggerObjArr = ccs.TriggerMng.getInstance().get(event);
+    var triggerObjArr = ccs.triggerManager.get(event);
     if (triggerObjArr == null) {
         return;
     }
@@ -288,7 +288,7 @@ ccs.triggerManager = {
         if (!eventTriggers) {
             eventTriggers = [];
         }
-        if (!cc.ArrayContainsObject(eventTriggers, triggerObj)) {
+	    if (eventTriggers.indexOf(triggerObj) == -1) {
             eventTriggers.push(triggerObj);
             this._eventTriggers[event] = eventTriggers;
         }
@@ -416,23 +416,6 @@ ccs.triggerManager = {
         return "1.2.0.0";
     }
 };
-
-
-
-// In extension
-ccs.guiReader = ccs.GUIReader.getInstance();
-ccs.armatureDataManager = ccs.ArmatureDataManager.getInstance();
-ccs.actionManager = ccs.ActionManager.getInstance();
-ccs.sceneReader = ccs.SceneReader.getInstance();
-
-ccs.sceneReader.clear = ccs.guiReader.clear = ccs.actionManager.clear = ccs.armatureDataManager.clear = function() {};
-
-ccs.sceneReader.version = function() {
-    return ccs.SceneReader.sceneReaderVersion();
-}
-
-//ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
-//ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
 
 
 // Functions don't support binding

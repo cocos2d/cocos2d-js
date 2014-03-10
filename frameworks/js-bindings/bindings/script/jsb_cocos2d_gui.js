@@ -6,151 +6,216 @@
 
 var ccui = ccui || {};
 
-ccui.BrightStyle = {
-    none: -1,
-    normal: 0,
-    highlight: 1
-};
+// =====================Constants=====================
 
-ccui.WidgetType = {
-    widget: 0, //control
-    container: 1 //container
-};
+/*
+ * UILayout
+ */
+//layoutBackGround color type
+ccui.Layout.BG_COLOR_NONE = 0;
+ccui.Layout.BG_COLOR_SOLID = 1;
+ccui.Layout.BG_COLOR_GRADIENT = 2;
 
-ccui.TextureResType = {
-    local: 0,
-    plist: 1
-};
+//Layout type
+ccui.Layout.ABSOLUTE = 0;
+ccui.Layout.LINEAR_VERTICAL = 1;
+ccui.Layout.LINEAR_HORIZONTAL = 2;
+ccui.Layout.RELATIVE = 3;
 
-ccui.TouchEventType = {
-    began: 0,
-    moved: 1,
-    ended: 2,
-    canceled: 3
-};
+//Layout clipping type
+ccui.Layout.CLIPPING_STENCIL = 0;
+ccui.Layout.CLIPPING_SCISSOR = 1;
 
-ccui.SizeType = {
-    absolute: 0,
-    percent: 1
-};
+ccui.Layout.BACKGROUND_IMAGE_ZORDER = -2;
+ccui.Layout.BACKGROUND_RENDERER_ZORDER = -2;
 
-ccui.PositionType = {
-    absolute: 0,
-    percent: 1
-};
+/*
+ * UILayoutDefine
+ */
+//LinearGravity
+ccui.LINEAR_GRAVITY_NONE = 0;
+ccui.LINEAR_GRAVITY_LEFT = 1;
+ccui.LINEAR_GRAVITY_TOP = 2;
+ccui.LINEAR_GRAVITY_RIGHT = 3;
+ccui.LINEAR_GRAVITY_BOTTOM = 4;
+ccui.LINEAR_GRAVITY_CENTER_VERTICAL = 5;
+ccui.LINEAR_GRAVITY_CENTER_HORIZONTAL = 6;
 
-ccui.CheckBoxEventType = {
-    selected: 0,
-    unselected: 1
-};
+//RelativeAlign
+ccui.RELATIVE_ALIGN_NONE = 0;
+ccui.RELATIVE_ALIGN_PARENT_TOP_LEFT = 1;
+ccui.RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL = 2;
+ccui.RELATIVE_ALIGN_PARENT_TOP_RIGHT = 3;
+ccui.RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL = 4;
+ccui.RELATIVE_ALIGN_PARENT_CENTER = 5;
+ccui.RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL = 6;
+ccui.RELATIVE_ALIGN_PARENT_LEFT_BOTTOM = 7;
+ccui.RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL = 8;
+ccui.RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM = 9;
 
-ccui.TextFiledEventType = {
-    attach_with_me: 0,
-    detach_with_ime: 1,
-    insert_text: 2,
-    delete_backward: 3
-};
+ccui.RELATIVE_ALIGN_LOCATION_ABOVE_LEFT = 10;
+ccui.RELATIVE_ALIGN_LOCATION_ABOVE_CENTER = 11;
+ccui.RELATIVE_ALIGN_LOCATION_ABOVE_RIGHT = 12;
 
-ccui.LayoutBackGroundColorType = {
-    none: 0,
-    solid: 1,
-    gradient: 2
-};
+ccui.RELATIVE_ALIGN_LOCATION_LEFT_TOP = 13;
+ccui.RELATIVE_ALIGN_LOCATION_LEFT_CENTER = 14;
+ccui.RELATIVE_ALIGN_LOCATION_LEFT_BOTTOM = 15;
 
-ccui.LayoutType = {
-    absolute: 0,
-    linearVertical: 1,
-    linearHorizontal: 2,
-    relative: 3
-};
+ccui.RELATIVE_ALIGN_LOCATION_RIGHT_TOP = 16;
+ccui.RELATIVE_ALIGN_LOCATION_RIGHT_CENTER = 17;
+ccui.RELATIVE_ALIGN_LOCATION_RIGHT_BOTTOM = 18;
 
-ccui.LayoutParameterType = {
-    none: 0,
-    linear: 1,
-    relative: 2
-};
+ccui.RELATIVE_ALIGN_LOCATION_BELOW_TOP = 19;
+ccui.RELATIVE_ALIGN_LOCATION_BELOW_CENTER = 20;
+ccui.RELATIVE_ALIGN_LOCATION_BELOW_BOTTOM = 21;
 
-ccui.LinearGravity = {
-    none: 0,
-    left: 1,
-    top: 2,
-    right: 3,
-    bottom: 4,
-    centerVertical: 5,
-    centerHorizontal: 6
-};
+/*
+ * LayoutParameter
+ */
+//layout parameter type
+ccui.LayoutParameter.NONE = 0;
+ccui.LayoutParameter.LINEAR = 1;
+ccui.LayoutParameter.RELATIVE = 2;
 
-ccui.RelativeAlign = {
-    alignNone: 0,
-    alignParentTopLeft: 1,
-    alignParentTopCenterHorizontal: 2,
-    alignParentTopRight: 3,
-    alignParentLeftCenterVertical: 4,
-    centerInParent: 5,
-    alignParentRightCenterVertical: 6,
-    alignParentLeftBottom: 7,
-    alignParentBottomCenterHorizontal: 8,
-    alignParentRightBottom: 9,
-    locationAboveLeftAlign: 10,
-    locationAboveCenter: 11,
-    locationAboveRightAlign: 12,
-    locationLeftOfTopAlign: 13,
-    locationLeftOfCenter: 14,
-    locationLeftOfBottomAlign: 15,
-    locationRightOfTopAlign: 16,
-    locationRightOfCenter: 17,
-    locationRightOfBottomAlign: 18,
-    locationBelowLeftAlign: 19,
-    locationBelowCenter: 20,
-    locationBelowRightAlign: 21
-};
+/*
+ * UIWidget
+ */
+//bright style
+ccui.Widget.BRIGHT_STYLE_NONE = -1;
+ccui.Widget.BRIGHT_STYLE_NORMAL = 0;
+ccui.Widget.BRIGHT_STYLE_HIGH_LIGHT = 1;
 
-ccui.SliderEventType = {percent_changed: 0};
+//widget type
+ccui.Widget.TYPE_WIDGET = 0;
+ccui.Widget.TYPE_CONTAINER = 1;
 
-ccui.LoadingBarType = { left: 0, right: 1};
+//texture resource type
+ccui.Widget.LOCAL_TEXTURE = 0;
+ccui.Widget.PLIST_TEXTURE = 1;
 
-ccui.ScrollViewDir = {
-    none: 0,
-    vertical: 1,
-    horizontal: 2,
-    both: 3
-};
+//touch event type
+ccui.Widget.TOUCH_BAGAN = 0;
+ccui.Widget.TOUCH_MOVED = 1;
+ccui.Widget.TOUCH_ENDED = 2;
+ccui.Widget.TOUCH_CANCELED = 3;
 
-ccui.ScrollviewEventType = {
-    scrollToTop: 0,
-    scrollToBottom: 1,
-    scrollToLeft: 2,
-    scrollToRight: 3,
-    scrolling: 4,
-    bounceTop: 5,
-    bounceBottom: 6,
-    bounceLeft: 7,
-    bounceRight: 8
-};
+//size type
+ccui.Widget.SIZE_ABSOLUTE = 0;
+ccui.Widget.SIZE_PERCENT = 1;
 
-ccui.ListViewEventType = {
-    init_child: 0,
-    update_child: 1
-};
+//position type
+ccui.Widget.POSITION_ABSOLUTE = 0;
+ccui.Widget.POSITION_PERCENT = 1;
 
-ccui.ListViewGravity = {
-    left: 0,
-    right: 1,
-    centerHorizontal: 2,
-    top: 3,
-    bottom: 4,
-    centerVertical: 5
-};
+/*
+ * UIListView
+ */
+//listView event type
+ccui.ListView.EVENT_SELECTED_ITEM = 0;
 
-ccui.PageViewEventType = {
-    turning: 0
-};
+//listView gravity
+ccui.ListView.GRAVITY_LEFT = 0;
+ccui.ListView.GRAVITY_RIGHT = 1;
+ccui.ListView.GRAVITY_CENTER_HORIZONTAL = 2;
+ccui.ListView.GRAVITY_TOP = 3;
+ccui.ListView.GRAVITY_BOTTOM = 4;
+ccui.ListView.GRAVITY_CENTER_VERTICAL = 5;
 
-ccui.PVTouchDir = {
-    touchLeft: 0,
-    touchRight: 1
-};
+/*
+ * UIPageView
+ */
+//PageView event
+ccui.PageView.EVENT_TURNING = 0;
 
+//PageView touch direction
+ccui.PageView.TOUCH_DIR_LEFT = 0;
+ccui.PageView.TOUCH_DIR_RIGHT = 1;
+
+/*
+ * UIButton
+ */
+ccui.NORMAL_RENDERER_ZORDER = -2;
+ccui.PRESSED_RENDERER_ZORDER = -2;
+ccui.DISABLED_RENDERER_ZORDER = -2;
+ccui.TITLE_RENDERER_ZORDER = -1;
+
+/*
+ * UICheckBox
+ */
+//CheckBoxEvent type
+ccui.CheckBox.EVENT_SELECTED = 0;
+ccui.CheckBox.EVENT_UNSELECTED = 1;
+
+//Render zorder
+ccui.CheckBox.BOX_RENDERER_ZORDER = -1;
+ccui.CheckBox.BOX_SELECTED_RENDERER_ZORDER = -1;
+ccui.CheckBox.BOX_DISABLED_RENDERER_ZORDER = -1;
+ccui.CheckBox.FRONT_CROSS_RENDERER_ZORDER = -1;
+ccui.CheckBox.FRONT_CROSS_DISABLED_RENDERER_ZORDER = -1;
+
+/*
+ * UIImageView
+ */
+ccui.ImageView.RENDERER_ZORDER = -1;
+
+/*
+ * UILoadingBar
+ */
+//loadingBar Type
+ccui.LoadingBar.TYPE_LEFT = 0;
+ccui.LoadingBar.TYPE_RIGHT = 1;
+
+ccui.LoadingBar.RENDERER_ZORDER = -1;
+
+/*
+ * UIRichElement
+ */
+//Rich element type
+//ccui.RichElement.TYPE_TEXT = 0;
+//ccui.RichElement.TYPE_IMAGE = 1;
+//ccui.RichElement.TYPE_CUSTOM = 2;
+
+/*
+ * UISlider
+ */
+//Slider event type
+ccui.Slider.EVENT_PERCENT_CHANGED = 0;
+
+//Render zorder
+ccui.Slider.BASEBAR_RENDERER_ZORDER = -3;
+ccui.Slider.PROGRESSBAR_RENDERER_ZORDER = -2;
+ccui.Slider.BALL_RENDERER_ZORDER = -1;
+
+/*
+ * UIText
+ */
+ccui.Text.RENDERER_ZORDER = -1;
+
+/*
+ * UITextAtlas
+ */
+ccui.TextAtlas.RENDERER_ZORDER = -1;
+
+/*
+ * UITextBMFont
+ */
+ccui.TextBMFont.RENDERER_ZORDER = -1;
+
+/*
+ * UITextField
+ */
+//TextField event
+ccui.TextField.EVENT_ATTACH_WITH_ME = 0;
+ccui.TextField.EVENT_DETACH_WITH_ME = 1;
+ccui.TextField.EVENT_INSERT_TEXT = 2;
+ccui.TextField.EVENT_DELETE_BACKWARD = 3;
+
+ccui.TextField.RENDERER_ZORDER = -1;
+
+
+/*
+ * UIMargin
+ */
 ccui.Margin = cc.Class.extend({
     left: 0,
     top: 0,
@@ -181,3 +246,7 @@ ccui.Margin = cc.Class.extend({
         return (this.left == target.left && this.top == target.top && this.right == target.right && this.bottom == target.bottom);
     }
 });
+
+ccui.MarginZero = function(){
+    return new ccui.Margin(0,0,0,0);
+};

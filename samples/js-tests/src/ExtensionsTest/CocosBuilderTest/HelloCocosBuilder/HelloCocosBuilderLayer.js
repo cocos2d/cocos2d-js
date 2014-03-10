@@ -24,48 +24,46 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var HelloCocosBuilderLayer = function() {
-
-    this.openTest = function(ccbFileName) {
-
+cc.BuilderReader.registerController("HelloCocosBuilderLayer", {
+    _openTest : function(ccbFileName) {
         cc.BuilderReader.setResourcePath("res/");
         var node = cc.BuilderReader.load(ccbFileName, this);
 
-        this.mTestTitleLabelTTF.setString(ccbFileName);
+        this["mTestTitleLabelTTF"].setString(ccbFileName);
         var scene = cc.Scene.create();
         if(node != null)
             scene.addChild(node);
 
         /* Push the new scene with a fancy transition. */
         cc.director.pushScene(cc.TransitionFade.create(0.5, scene, cc.color(0, 0, 0)));
-    };
-
-    // ccb Callback
-    this.onMenuTestClicked = function() {
-        this.openTest("res/ccb/ccb/TestMenus.ccbi");
-    };
-
-    this.onSpriteTestClicked = function() {
-        this.openTest("res/ccb/ccb/TestSprites.ccbi");
-    };
-    this.onButtonTestClicked = function() {
-        this.openTest("res/ccb/ccb/TestButtons.ccbi");
-    };
-
-    this.onAnimationsTestClicked = function() {
-        this.openTest("res/ccb/ccb/TestAnimations.ccbi");
-    };
-
-    this.onParticleSystemTestClicked = function() {
-        this.openTest("res/ccb/ccb/TestParticleSystems.ccbi");
-    };
-
-    this.onScrollViewTestClicked = function() {
-        this.openTest("res/ccb/ccb/TestScrollViews.ccbi");
-    };
-
-    this.onTimelineCallbackSoundClicked = function() {
-        this.openTest("res/ccb/ccb/TestTimelineCallback.ccbi");
-    };
-};
+    },
+    
+    "onMenuTestClicked" : function() {
+        this._openTest("res/ccb/ccb/TestMenus.ccbi");
+    },
+    
+    "onSpriteTestClicked" : function() {
+        this._openTest("res/ccb/ccb/TestSprites.ccbi");
+    },
+    
+    "onButtonTestClicked" : function() {
+        this._openTest("res/ccb/ccb/TestButtons.ccbi");
+    },
+    
+    "onAnimationsTestClicked" : function() {
+        this._openTest("res/ccb/ccb/TestAnimations.ccbi");
+    },
+    
+    "onParticleSystemTestClicked" : function() {
+        this._openTest("res/ccb/ccb/TestParticleSystems.ccbi");
+    },
+    
+    "onScrollViewTestClicked" : function() {
+        this._openTest("res/ccb/ccb/TestScrollViews.ccbi");
+    },
+    
+    "onTimelineCallbackSoundClicked" : function() {
+        this._openTest("res/ccb/ccb/TestTimelineCallback.ccbi");
+    }
+});
 

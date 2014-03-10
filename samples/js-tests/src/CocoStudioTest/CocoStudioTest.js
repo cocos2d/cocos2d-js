@@ -37,7 +37,7 @@ var cocoStudioTestItemNames = [
     {
         itemTitle:"CocoStudioGUITest",
         testScene:function () {
-            runCocosGUITestScene();
+            runGuiTestMain();
         }
     },
     {

@@ -22,65 +22,24 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIPageViewTest = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            var widgetSize = this._widget.getSize();
-            //init text
-            this._topDisplayLabel.setText("Move by horizontal direction");
-            this._topDisplayLabel.x = widgetSize.width / 2.0;
-            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
-            this._bottomDisplayLabel.setText("PageView");
-            this._bottomDisplayLabel.x = widgetSize.width / 2;
-            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+var UIPageViewEditorTest = UIBaseLayer.extend({
+    ctor: function () {
+        this._super();
+        var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UIPageView_Editor/ui_pageview_editor_1.json");
+        this._mainNode.addChild(root);
 
-            var background = this._widget.getChildByName("background_Panel");
+        var back_label =ccui.helper.seekWidgetByName(root, "back");
+        back_label.addTouchEventListener(this.backEvent,this);
 
-            // Create the page view
-            var pageView = ccui.PageView.create();
-            pageView.setTouchEnabled(true);
-            pageView.setSize(cc.size(240, 130));
-            pageView.x = (widgetSize.width - background.width) / 2 + (background.width - pageView.width) / 2;
-            pageView.y = (widgetSize.height - background.height) / 2 + (background.height - pageView.height) / 2;
-
-            for (var i = 0; i < 3; ++i) {
-                var layout = ccui.Layout.create();
-                layout.setSize(cc.size(240, 130));
-                var layoutRect = layout.getSize();
-
-                var imageView = ccui.ImageView.create();
-                imageView.setTouchEnabled(true);
-                imageView.setScale9Enabled(true);
-                imageView.loadTexture("res/cocosgui/scrollviewbg.png");
-                imageView.setSize(cc.size(240, 130));
-                imageView.x = layoutRect.width / 2;
-                imageView.y = layoutRect.height / 2;
-                layout.addChild(imageView);
-
-                var text = ccui.Text.create();
-                text.string = "page" + (i + 1);
-                text.font = "30px 'Marker Felt'";
-                text.color = cc.color(192, 192, 192);
-                text.x = layoutRect.width / 2;
-                text.y = layoutRect.height / 2;
-                layout.addChild(text);
-
-                pageView.addPage(layout);
-            }
-            pageView.addEventListenerPageView(this.pageViewEvent, this);
-            var a = ccui.Layout.create();
-            this._mainNode.addChild(pageView);
-
-            return true;
-        }
-        return false;
+        var pageView =ccui.helper.seekWidgetByName(root, "PageView_1269");
+        pageView.addEventListenerPageView(this.pageViewEvent, this);
     },
 
     pageViewEvent: function (sender, type) {
         switch (type) {
-            case ccui.PAGEVIEW_EVENT_TURNING:
+            case ccui.PageView.EVENT_TURNING:
                 var pageView = sender;
-                this._topDisplayLabel.setText("page = " + (pageView.getCurPageIndex() + 1));
+                this._topDisplayText.setText("page = " + (pageView.getCurPageIndex() + 1));
                 break;
             default:
                 break;

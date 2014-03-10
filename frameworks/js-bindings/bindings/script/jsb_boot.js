@@ -558,6 +558,60 @@ cc.defineGetterSetter(cc.loader, "audioPath", function(){
 
 //+++++++++++++++++++++++++something about loader end+++++++++++++++++++++++++++++
 
+//+++++++++++++++++++++++Define singleton objects begin+++++++++++++++++++++++++++
+
+// Define singleton objects
+cc.director = cc.Director.getInstance();
+cc.winSize = cc.director.getWinSize();
+cc.view = cc.director.getOpenGLView();
+cc.eventManager = cc.director.getEventDispatcher();
+cc.audioEngine = cc.AudioEngine.getInstance();
+cc.audioEngine.end = function(){
+    cc.AudioEngine.end();
+};
+cc.configuration = cc.Configuration.getInstance();
+cc.textureCache = cc.director.getTextureCache();
+cc.shaderCache = cc.ShaderCache.getInstance();
+cc.animationCache = cc.AnimationCache.getInstance();
+cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
+//cc.saxParser
+cc.plistParser = cc.SAXParser.getInstance();
+//cc.tiffReader;
+//cc.imeDispatcher;
+
+cc.screen = {
+    init: function() {},
+    fullScreen: function() {
+        return true;
+    },
+    requestFullScreen: function(element, onFullScreenChange) {
+        onFullScreenChange.call();
+    },
+    exitFullScreen: function() {
+        return false;
+    },
+    autoFullScreen: function(element, onFullScreenChange) {
+        onFullScreenChange.call();
+    }
+};
+
+// GUI
+ccui.helper = ccui.Helper;
+
+// In extension
+ccs.guiReader = ccs.GUIReader.getInstance();
+ccs.armatureDataManager = ccs.ArmatureDataManager.getInstance();
+ccs.actionManager = ccs.ActionManager.getInstance();
+ccs.sceneReader = ccs.SceneReader.getInstance();
+//ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
+//ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
+
+ccs.sceneReader.clear = ccs.guiReader.clear = ccs.actionManager.clear = ccs.armatureDataManager.clear = function() {};
+ccs.sceneReader.version = function() {
+    return ccs.SceneReader.sceneReaderVersion();
+};
+
+//+++++++++++++++++++++++Define singleton objects end+++++++++++++++++++++++++++
 
 //+++++++++++++++++++++++++something about window events begin+++++++++++++++++++++++++++
 cc.winEvents = {//TODO register hidden and show callback for window

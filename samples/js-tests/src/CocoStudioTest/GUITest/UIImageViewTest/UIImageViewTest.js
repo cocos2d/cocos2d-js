@@ -22,46 +22,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIImageViewTest = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            //init text
-            this._topDisplayLabel.setText("");
-            this._bottomDisplayLabel.setText("ImageView");
+var UIImageViewEditorTest = UIBaseLayer.extend({
+    ctor: function () {
+        this._super();
+        var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UIImageView_Editor/ui_ImageView_editor_1.json");
+        this._mainNode.addChild(root);
 
-            var widgetSize = this._widget.getSize();
-            // Create the imageview
-            var imageView = ccui.ImageView.create();
-            imageView.loadTexture("res/cocosgui/ccicon.png");
-            imageView.x = widgetSize.width / 2;
-	        imageView.y = widgetSize.height / 2 + imageView.height / 4;
-            this._mainNode.addChild(imageView);
-
-            return true;
-        }
-        return false;
-    }
-});
-
-var UIImageViewTest_Scale9 = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            var widgetSize = this._widget.getSize();
-            //init text
-            this._topDisplayLabel.setText("");
-            this._bottomDisplayLabel.setText("ImageView scale9 render");
-
-            // Create the imageview
-            var imageView = ccui.ImageView.create();
-            imageView.setScale9Enabled(true);
-            imageView.loadTexture("res/cocosgui/buttonHighlighted.png");
-            imageView.setSize(cc.size(200, 85));
-            imageView.x = widgetSize.width / 2;
-	        imageView.y = widgetSize.height / 2 + imageView.getSize().height / 4;
-            this._mainNode.addChild(imageView);
-
-            return true;
-        }
-        return false;
+        var back_label =ccui.helper.seekWidgetByName(root, "back");
+        back_label.addTouchEventListener(this.backEvent,this);
     }
 });

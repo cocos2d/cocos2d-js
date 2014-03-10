@@ -337,6 +337,14 @@ var testNames = [
             return new FontTestScene();
         }
     },
+    {
+        title:"GUI Test",
+        resource:g_gui,
+        platforms: PLATFORM_ALL,
+        testScene:function () {
+            return new GUITestScene();
+        }
+    },
     //"HiResTest",
     {
         title:"Interval Test",
