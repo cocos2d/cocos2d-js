@@ -63,7 +63,7 @@ var UILayoutEditorTest = UIBaseLayer.extend({
         this._mainNode.addChild(right_button);
     },
     previousCallback: function (render, type) {
-        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
             LAYOUT_INDEX--;
             if (LAYOUT_INDEX < 0)LAYOUT_INDEX = LAYOUT_RES.length-1;
             if (LAYOUT_INDEX >= LAYOUT_RES.length)LAYOUT_INDEX = 0;
@@ -71,7 +71,7 @@ var UILayoutEditorTest = UIBaseLayer.extend({
         }
     },
     nextCallback: function (render, type) {
-        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
             LAYOUT_INDEX++;
             if (LAYOUT_INDEX < 0)LAYOUT_INDEX = LAYOUT_RES.length-1;
             if (LAYOUT_INDEX >= LAYOUT_RES.length)LAYOUT_INDEX = 0;

@@ -59,7 +59,7 @@ var UIScrollViewEditorTest = UIBaseLayer.extend({
     },
 
     previousCallback: function (render, type) {
-        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
             SCROLLVIEW_INDEX--;
             if (SCROLLVIEW_INDEX < 0)SCROLLVIEW_INDEX = SCROLLVIEW_RES.length-1;
             if (SCROLLVIEW_INDEX >= SCROLLVIEW_RES.length)SCROLLVIEW_INDEX = 0;
@@ -67,7 +67,7 @@ var UIScrollViewEditorTest = UIBaseLayer.extend({
         }
     },
     nextCallback: function (render, type) {
-        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
             SCROLLVIEW_INDEX++;
             if (SCROLLVIEW_INDEX < 0)SCROLLVIEW_INDEX = SCROLLVIEW_RES.length-1;
             if (SCROLLVIEW_INDEX >= SCROLLVIEW_RES.length)SCROLLVIEW_INDEX = 0;
