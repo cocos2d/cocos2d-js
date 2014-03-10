@@ -48,7 +48,7 @@ var UIBaseLayer = cc.Layer.extend({
         this._topDisplayText = topDisplayText;
     },
     backEvent: function (sender, type) {
-        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
             runGuiTestMain();
         }
     }
