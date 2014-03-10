@@ -564,9 +564,15 @@ cc.defineGetterSetter(cc.loader, "audioPath", function(){
 cc.director = cc.Director.getInstance();
 cc.winSize = cc.director.getWinSize();
 cc.view = cc.director.getOpenGLView();
-cc.view.getDevicePixelRatio = function () {return 1;};
+cc.view.getDevicePixelRatio = function () {
+    var sys = cc.sys;
+    return (sys.os == sys.OS_IOS || sys.os == sys.OS_OSX) ? 2 : 1;
+};
 cc.view.enableRetina = function(enabled) {};
-cc.view.isRetinaEnabled = function() {return false;};
+cc.view.isRetinaEnabled = function() {
+    var sys = cc.sys;
+    return (sys.os == sys.OS_IOS || sys.os == sys.OS_OSX) ? true : false;
+};
 
 cc.eventManager = cc.director.getEventDispatcher();
 cc.audioEngine = cc.AudioEngine.getInstance();
