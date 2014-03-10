@@ -646,8 +646,20 @@ void FileServer::loop()
 
 	// clean up: ignore stdin, stdout and stderr
 	for(const auto &fd: _fds )
+	{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+		closesocket(fd);
+#else
 		close(fd);
+#endif
+	}
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	closesocket(_listenfd);
+	WSACleanup();
+#else
 	close(_listenfd);
+#endif
 
 	_running = false;
 }

@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 
+#include "cocos2d.h"
 using namespace std;
 
 bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<string> &fileList)
@@ -110,15 +111,23 @@ vector<string> getSearchPath()
 	return searchPathArray;
 }
 
-string getDotWaitFilePath()
-{
-	extern std::string getCurAppPath(void);
-	string dotwaitFile = getCurAppPath();
-	dotwaitFile += "/.wait";
-	return dotwaitFile;
-}
-
 string getIPAddress()
 {
-	return "";
+	WSADATA wsaData;  
+	char name[155]={0};
+	char *ip=nullptr;
+	PHOSTENT hostinfo;
+
+	if ( WSAStartup( MAKEWORD(2,0), &wsaData ) == 0 )   
+	{  
+		if( gethostname ( name, sizeof(name)) == 0)   
+		{ 
+			if((hostinfo = gethostbyname(name)) != NULL)   
+			{ 
+				ip = inet_ntoa (*(struct in_addr *)*hostinfo->h_addr_list);
+			}   
+		}   
+		WSACleanup( );
+	}   
+	return ip;
 }
