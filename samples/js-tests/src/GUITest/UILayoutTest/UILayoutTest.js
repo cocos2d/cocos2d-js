@@ -150,7 +150,7 @@ var UILayoutTest_BackGroundImage_Scale9 = UILayoutTestBase.extend({
 var UILayoutTest_Layout_Linear_Vertical = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
-        layout.setLayoutType(ccui.LAYOUT_TYPE_LINEAR_VERTICAL);
+        layout.setLayoutType(ccui.Layout.LINEAR_VERTICAL);
         layout.setSize(cc.size(280, 150));
         return layout;
     },
@@ -177,7 +177,7 @@ var UILayoutTest_Layout_Linear_Vertical = UILayoutTestBase.extend({
 var UILayoutTest_Layout_Linear_Horizontal = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
-        layout.setLayoutType(ccui.LAYOUT_TYPE_LINEAR_HORIZONTAL);
+        layout.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
         layout.setClippingEnabled(true);
         layout.setSize(cc.size(280, 150));
         return layout;
@@ -206,7 +206,7 @@ var UILayoutTest_Layout_Linear_Horizontal = UILayoutTestBase.extend({
 var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
-        layout.setLayoutType(ccui.LAYOUT_TYPE_RELATIVE);
+        layout.setLayoutType(ccui.Layout.RELATIVE);
         layout.setSize(cc.size(280, 150));
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
         layout.setBackGroundColor(cc.color.GREEN);

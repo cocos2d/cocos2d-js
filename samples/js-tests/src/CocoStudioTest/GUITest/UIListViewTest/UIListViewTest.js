@@ -60,7 +60,7 @@ var UIListViewEditorTest = UIBaseLayer.extend({
     },
     selectedItemEvent: function (sender, type) {
         switch (type) {
-            case ccui.LISTVIEW_EVENT_SELECTED_ITEM:
+            case ccui.ListView.EVENT_SELECTED_ITEM:
                 var listViewEx = sender;
                 cc.log("select child index = " + listViewEx.getCurSelectedIndex());
                 break;
@@ -70,7 +70,7 @@ var UIListViewEditorTest = UIBaseLayer.extend({
         }
     },
     previousCallback: function (render, type) {
-        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
             LISTVIEW_INDEX--;
             if (LISTVIEW_INDEX < 0)LISTVIEW_INDEX = LISTVIEW_RES.length-1;
             if (LISTVIEW_INDEX >= LISTVIEW_RES.length)LISTVIEW_INDEX = 0;
@@ -78,7 +78,7 @@ var UIListViewEditorTest = UIBaseLayer.extend({
         }
     },
     nextCallback: function (render, type) {
-        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
             LISTVIEW_INDEX++;
             if (LISTVIEW_INDEX < 0)LISTVIEW_INDEX = LISTVIEW_RES.length-1;
             if (LISTVIEW_INDEX >= LISTVIEW_RES.length)LISTVIEW_INDEX = 0;

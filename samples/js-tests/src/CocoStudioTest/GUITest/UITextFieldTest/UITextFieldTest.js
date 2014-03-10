@@ -42,16 +42,16 @@ var UITextFieldEditorTest = UIBaseLayer.extend({
     },
     textFieldEvent: function (sender, type) {
         switch (type) {
-            case ccui.TEXTFILE_EVENT_ATTACH_WITH_ME:
+            case ccui.TextField. EVENT_ATTACH_WITH_ME:
                 this._topDisplayText.setText("attach with IME");
                 break;
-            case ccui.TEXTFILE_EVENT_DETACH_WITH_ME:
+            case ccui.TextField. EVENT_DETACH_WITH_ME:
                 this._topDisplayText.setText("detach with IME");
                 break;
-            case ccui.TEXTFILE_EVENT_INSERT_TEXT:
+            case ccui.TextField. EVENT_INSERT_TEXT:
                 this._topDisplayText.setText("insert words");
                 break;
-            case ccui.TEXTFILE_EVENT_DELETE_BACKWARD:
+            case ccui.TextField. EVENT_DELETE_BACKWARD:
                 this._topDisplayText.setText("delete word");
                 break;
             default:
