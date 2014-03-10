@@ -142,7 +142,7 @@ var configObj = {
     showFPS:true,
     scale:1,
     tag:"gameCanvas",
-    bootFile:"MoonWarriors-html5.js"
+    bootFile:"../../frameworks/cocos2d-html5/CCBoot.js"
 };
 // parse url param
 function getUrlVars() {
@@ -410,9 +410,9 @@ Phone.prototype.stopAnim = function(){
         display.div.style.height = height+"px";
         display.touchPanel.style.width = width+"px";
         display.touchPanel.style.height = height+"px";
-        if(cc.canvas) {
-            cc.canvas.width = width;
-            cc.canvas.height = height;
+        if(cc._canvas) {
+            cc._canvas.width = width;
+            cc._canvas.height = height;
             cc.container.style.width = width+"px";
             cc.container.style.height = height+"px";
             cc.view._adjustSizeKeepCanvasSize(width, height);
@@ -481,10 +481,10 @@ Display.prototype.resizeDisplay = function(){
     this.div.style.height = height +"px";
     this.touchPanel.style.width = width+"px";
     this.touchPanel.style.height = height+"px";
-    if(cc.canvas)
+    if(cc._canvas)
     {
-        cc.canvas.width = width;
-        cc.canvas.height = height;
+        cc._canvas.width = width;
+        cc._canvas.height = height;
         cc.container.style.width = width+"px";
         cc.container.style.height = height+"px";
         cc.view._adjustSizeKeepCanvasSize(width, height);
@@ -493,16 +493,16 @@ Display.prototype.resizeDisplay = function(){
 Display.prototype.registerEvents = function(){
     var touchPanel = this.touchPanel;
     touchPanel.addEventListener("mousedown", function(e){
-        if(cc.canvas){
-            var bcr = cc.canvas.getBoundingClientRect();
+        if(cc._canvas){
+            var bcr = cc._canvas.getBoundingClientRect();
             var mdEvent = document.createEvent("MouseEvents");
             var pageOffsetY = document.body.scrollTop;
-            var diffWidth = (parseInt(touchPanel.style.width) - parseInt(cc.canvas.style.width))/2;
-            var diffHeight = (parseInt(touchPanel.style.height) - parseInt(cc.canvas.style.height))/2;
+            var diffWidth = (parseInt(touchPanel.style.width) - parseInt(cc._canvas.style.width))/2;
+            var diffHeight = (parseInt(touchPanel.style.height) - parseInt(cc._canvas.style.height))/2;
             var x = ((e.offsetX))+ bcr.left - diffWidth;
             var y = ((e.offsetY))+bcr.top - (touchPanel.clientHeight - bcr.height)+pageOffsetY + diffHeight;
-            mdEvent.initMouseEvent("mousedown",false,false,cc.canvas,null, x, y, x, y, false,false,false,false,1,cc.canvas);
-            cc.canvas.dispatchEvent(mdEvent);
+            mdEvent.initMouseEvent("mousedown",false,false,cc._canvas,null, x, y, x, y, false,false,false,false,1,cc._canvas);
+            cc._canvas.dispatchEvent(mdEvent);
             window.dispatchEvent(mdEvent);
             e.stopPropagation();
             e.preventDefault();
@@ -511,17 +511,17 @@ Display.prototype.registerEvents = function(){
         }
     });
     touchPanel.addEventListener("mouseup", function(e){
-        if (cc.canvas) {
-            var bcr = cc.canvas.getBoundingClientRect();
+        if (cc._canvas) {
+            var bcr = cc._canvas.getBoundingClientRect();
             var mdEvent = document.createEvent("MouseEvents");
             var pageOffsetY = document.body.scrollTop;
-            var diffWidth = (parseInt(touchPanel.style.width) - parseInt(cc.canvas.style.width))/2;
-            var diffHeight = (parseInt(touchPanel.style.height) - parseInt(cc.canvas.style.height))/2;
+            var diffWidth = (parseInt(touchPanel.style.width) - parseInt(cc._canvas.style.width))/2;
+            var diffHeight = (parseInt(touchPanel.style.height) - parseInt(cc._canvas.style.height))/2;
             var x = ((e.offsetX)) + bcr.left - diffWidth;
             var y = ((e.offsetY)) + bcr.top - (touchPanel.clientHeight - bcr.height) + pageOffsetY + diffHeight;
-            mdEvent.initMouseEvent("mouseup", false, false, cc.canvas, null, x, y, x, y, false, false, false, false, 1, cc.canvas);
+            mdEvent.initMouseEvent("mouseup", false, false, cc._canvas, null, x, y, x, y, false, false, false, false, 1, cc._canvas);
             mdEvent.pageY = e.offsetY + bcr.top;
-            cc.canvas.dispatchEvent(mdEvent);
+            cc._canvas.dispatchEvent(mdEvent);
             window.dispatchEvent(mdEvent);
             e.stopPropagation();
             e.preventDefault();
@@ -529,17 +529,17 @@ Display.prototype.registerEvents = function(){
         }
     });
     touchPanel.addEventListener("mousemove", function (e) {
-        if (cc.canvas) {
-            var bcr = cc.canvas.getBoundingClientRect();
+        if (cc._canvas) {
+            var bcr = cc._canvas.getBoundingClientRect();
             var mdEvent = document.createEvent("MouseEvents");
             var pageOffsetY = document.body.scrollTop;
-            var diffWidth = (parseInt(touchPanel.style.width) - parseInt(cc.canvas.style.width))/2;
-            var diffHeight = (parseInt(touchPanel.style.height) - parseInt(cc.canvas.style.height))/2;
+            var diffWidth = (parseInt(touchPanel.style.width) - parseInt(cc._canvas.style.width))/2;
+            var diffHeight = (parseInt(touchPanel.style.height) - parseInt(cc._canvas.style.height))/2;
             var x = ((e.offsetX )) + bcr.left - diffWidth;
             var y = ((e.offsetY)) + bcr.top - (touchPanel.clientHeight - bcr.height) + pageOffsetY + diffHeight;
-            mdEvent.initMouseEvent("mousemove", true, false, cc.canvas, null, x, y, x, y, false, false, false, false, 0, cc.canvas);
+            mdEvent.initMouseEvent("mousemove", true, false, cc._canvas, null, x, y, x, y, false, false, false, false, 0, cc._canvas);
             mdEvent.pageY = e.offsetY + bcr.top;
-            cc.canvas.dispatchEvent(mdEvent);
+            cc._canvas.dispatchEvent(mdEvent);
             e.stopPropagation();
             e.preventDefault();
             return false;
@@ -561,6 +561,16 @@ function startCocos(button){
         var evt = document.createEvent("HTMLEvents");
         evt.initEvent("DOMContentLoaded", false, true);
         window.dispatchEvent(evt);
+        cc.game.onStart = function(){
+            cc.view.adjustViewPort(true);
+            cc.view.setDesignResolutionSize(320,480,cc.ResolutionPolicy.SHOW_ALL);
+            cc.view.resizeWithBrowserSize(true);
+            //load resources
+            cc.LoaderScene.preload(g_mainmenu, function () {
+                cc.director.runScene(new SysMenu.scene());
+            }, this);
+        };
+        cc.game.run();
     }
     started = true;
     var but = cc.$(button);

@@ -74,21 +74,8 @@ cc.IMAGE_FORMAT_PNG = 0;
 cc.PROGRESS_TIMER_TYPE_RADIAL = 0;
 cc.PROGRESS_TIMER_TYPE_BAR = 1;
 
-cc.PARTICLE_TYPE_FREE = 0;
-cc.PARTICLE_TYPE_RELATIVE = 1;
-cc.PARTICLE_TYPE_GROUPED = 2;
-cc.PARTICLE_DURATION_INFINITY = -1;
-cc.PARTICLE_MODE_GRAVITY = 0;
-cc.PARTICLE_MODE_RADIUS = 1;
-cc.PARTICLE_START_SIZE_EQUAL_TO_END_SIZE = -1;
-cc.PARTICLE_START_RADIUS_EQUAL_TO_END_RADIUS = -1;
-
 cc.TOUCH_ALL_AT_ONCE = 0;
 cc.TOUCH_ONE_BY_ONE = 1;
-
-cc.TMX_TILE_HORIZONTAL_FLAG = 0x80000000;
-cc.TMX_TILE_VERTICAL_FLAG = 0x40000000;
-cc.TMX_TILE_DIAGONAL_FLAG = 0x20000000;
 
 cc.TRANSITION_ORIENTATION_LEFT_OVER = 0;
 cc.TRANSITION_ORIENTATION_RIGHT_OVER = 1;
@@ -472,53 +459,6 @@ _proto.GRAY;
 cc.defineGetterSetter(_proto, "GRAY", _proto._getGray);
 
 //
-// Array: for cocos2d-html5 compatibility
-//
-
-/**
- * Returns index of first occurence of object, -1 if value not found.
- * @function
- * @param {Array} arr Source Array
- * @param {*} findObj find object
- * @return {Number} index of first occurence of value
- */
-cc.ArrayGetIndexOfObject = function (arr, findObj) {
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] == findObj)
-            return i;
-    }
-    return -1;
-};
-
-/**
- * Returns a Boolean value that indicates whether value is present in the array.
- * @function
- * @param {Array} arr
- * @param {*} findObj
- * @return {Boolean}
- */
-cc.ArrayContainsObject = function (arr, findObj) {
-    return cc.ArrayGetIndexOfObject(arr, findObj) != -1;
-};
-
-cc.ArrayRemoveObject = function (arr, delObj) {
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] == delObj) {
-            arr.splice(i, 1);
-        }
-    }
-};
-
-//
-// Helpers
-//
-cc.dump = function(obj)
-{
-    for( var i in obj )
-        cc.log( i + " = " + obj[i] );
-};
-
-//
 // Bindings Overrides
 //
 // MenuItemToggle
@@ -792,41 +732,6 @@ var clearInterval = function (intervalId) {
 var clearTimeout = clearInterval;
 
 
-
-// Define singleton objects
-cc.director = cc.Director.getInstance();
-cc.view = cc.director.getOpenGLView();
-cc.audioEngine = cc.AudioEngine.getInstance();
-cc.audioEngine.end = function(){
-    cc.AudioEngine.end();
-};
-cc.configuration = cc.Configuration.getInstance();
-cc.textureCache = cc.director.getTextureCache();
-cc.shaderCache = cc.ShaderCache.getInstance();
-cc.animationCache = cc.AnimationCache.getInstance();
-cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
-//cc.saxParser
-cc.plistParser = cc.SAXParser.getInstance();
-
-cc.screen = {
-    init: function() {},
-    fullScreen: function() {
-        return true;
-    },
-    requestFullScreen: function(element, onFullScreenChange) {
-        onFullScreenChange.call();
-    },
-    exitFullScreen: function() {
-        return false;
-    },
-    autoFullScreen: function(element, onFullScreenChange) {
-        onFullScreenChange.call();
-    }
-};
-//cc.tiffReader;
-//cc.imeDispatcher;
-
-
 // event listener type
 cc.EventListener.UNKNOWN = 0;
 cc.EventListener.TOUCH_ONE_BY_ONE = 1;
@@ -835,8 +740,6 @@ cc.EventListener.KEYBOARD = 3;
 cc.EventListener.MOUSE = 4;
 cc.EventListener.ACCELERATION = 5;
 cc.EventListener.CUSTOM = 6;
-
-cc.eventManager = cc.Director.getInstance().getEventDispatcher();
 
 cc.EventListener.create = function(argObj){
     if(!argObj || !argObj.event){
@@ -1081,6 +984,7 @@ cc.FontDefinition = function () {
 };
 
 
+// Array utils
 
 /**
  * Verify Array's Type

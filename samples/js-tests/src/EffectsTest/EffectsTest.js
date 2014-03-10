@@ -56,10 +56,11 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
     onEnter:function () {
        this._super();
 
-
         var node = cc.Node.create();
-        node.runAction( this.getEffect(3) );
-        this.addChild( node );
+	    var nodeGrid = cc.NodeGrid.create();
+        nodeGrid.addChild(node);
+	    nodeGrid.runAction( this.getEffect(3) );
+        this.addChild( nodeGrid );
 
         // back gradient
         var gradient = cc.LayerGradient.create( cc.color(0,0,0,255), cc.color(98,99,117,255));

@@ -316,7 +316,7 @@ var TMXOrthoTest4 = TileDemo.extend({
         sprite = layer.getTileAt(cc.p(s.width - 1, s.height - 1));
         sprite.scale = 2;
 
-        this.schedule(this.onRemoveSprite, 0.2);
+        this.scheduleOnce(this.onRemoveSprite, 0.2);
     },
     onRemoveSprite:function (dt) {
         var map = this.getChildByTag(TAG_TILE_MAP);
@@ -1774,9 +1774,13 @@ var arrayOfTileMapTest = [
     TMXOrthoFromXMLTest,
     TMXBug987,
     TMXBug787,
-    TMXGIDObjectsTest,
     TMXIsoOffsetTest
 ];
+
+if ( !cc.sys.isNative ){
+    //This test is supported only in HTML5
+    arrayOfTileMapTest.push(TMXGIDObjectsTest);
+}
 
 var nextTileMapTest = function () {
     tileTestSceneIdx++;

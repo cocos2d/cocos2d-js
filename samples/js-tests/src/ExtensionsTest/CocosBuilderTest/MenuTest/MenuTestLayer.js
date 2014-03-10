@@ -24,16 +24,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TestMenusLayer = function() {
-    this.onMenuItemAClicked = function(sender) {
-        this.mMenuItemStatusLabelBMFont.setString("Menu Item A clicked.");
-    };
+cc.BuilderReader.registerController("TestMenusLayer", {
+    "onMenuItemAClicked" : function(sender) {
+        this["mMenuItemStatusLabelBMFont"].setString("Menu Item A clicked.");
+    },
 
-    this.onMenuItemBClicked = function(sender) {
-        this.mMenuItemStatusLabelBMFont.setString("Menu Item B clicked.");
-    };
+    "onMenuItemBClicked" : function(sender) {
+        this["mMenuItemStatusLabelBMFont"].setString("Menu Item B clicked.");
+    },
 
-    this.onMenuItemCClicked = function(sender) {
-        this.mMenuItemStatusLabelBMFont.setString("Menu Item C clicked.");
-    };
-};
+    "onMenuItemCClicked" : function(sender) {
+        this["mMenuItemStatusLabelBMFont"].setString("Menu Item C clicked.");
+    }
+});

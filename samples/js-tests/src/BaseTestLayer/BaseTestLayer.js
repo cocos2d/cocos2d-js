@@ -82,7 +82,7 @@ var BaseTestLayer = cc.LayerGradient.extend({
         // some tests use "this.title()" and others use "this._title";
         if( 'title' in this )
             t = this.title();
-        else if('_title' in this )
+        else if('_title' in this || this._title)
             t = this._title;
         return t;
     },

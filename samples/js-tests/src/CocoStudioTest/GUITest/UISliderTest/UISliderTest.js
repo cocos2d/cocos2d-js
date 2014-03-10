@@ -22,76 +22,28 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UISliderTest = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            var widgetSize = this._widget.getSize();
-            //init text
-            this._topDisplayLabel.setText("Move the slider thumb");
-            this._bottomDisplayLabel.setText("Slider");
+var UISliderEditorTest = UIBaseLayer.extend({
+    ctor: function () {
+        this._super();
+        var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.json");
+        this._mainNode.addChild(root);
 
-            // Create the slider
-            var slider = ccui.Slider.create();
-            slider.setTouchEnabled(true);
-            slider.loadBarTexture("res/cocosgui/sliderTrack.png");
-            slider.loadSlidBallTextures("res/cocosgui/sliderThumb.png", "res/cocosgui/sliderThumb.png", "");
-            slider.loadProgressBarTexture("res/cocosgui/sliderProgress.png");
-            slider.x = widgetSize.width / 2.0;
-            slider.y = widgetSize.height / 2.0;
-            slider.addEventListenerSlider(this.sliderEvent, this);
-            this._mainNode.addChild(slider);
+        var back_label =ccui.helper.seekWidgetByName(root, "back");
+        back_label.addTouchEventListener(this.backEvent,this);
 
-            return true;
-        }
-        return false;
+        var slider = ccui.helper.seekWidgetByName(root, "Slider_738");
+        slider.addEventListenerSlider(this.sliderEvent,this);
+
+        var scale9_slider = ccui.helper.seekWidgetByName(root, "Slider_740");
+        scale9_slider.addEventListenerSlider(this.sliderEvent,this);
     },
 
     sliderEvent: function (sender, type) {
         switch (type) {
-            case ccui.SLIDER_EVENT_PERCENT_CHANGED:
+            case ccui.Slider.EVENT_PERCENT_CHANGED:
                 var slider = sender;
                 var percent = slider.getPercent();
-                this._topDisplayLabel.setText("Percent " + percent.toFixed(0));
-                break;
-            default:
-                break;
-        }
-    }
-});
-
-var UISliderTest_Scale9 = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            var widgetSize = this._widget.getSize();
-            //init text
-            this._topDisplayLabel.setText("Move the slider thumb");
-            this._bottomDisplayLabel.setText("Slider scale9 render");
-
-            // Create the slider
-            var slider = ccui.Slider.create();
-            slider.setTouchEnabled(true);
-            slider.loadBarTexture("res/cocosgui/sliderTrack2.png");
-            slider.loadSlidBallTextures("res/cocosgui/sliderThumb.png", "res/cocosgui/sliderThumb.png", "");
-            slider.loadProgressBarTexture("res/cocosgui/slider_bar_active_9patch.png");
-            slider.setScale9Enabled(true);
-            slider.setCapInsets(cc.rect(0, 0, 0, 0));
-            slider.setSize(cc.size(250, 10));
-            slider.x = widgetSize.width / 2.0;
-            slider.y = widgetSize.height / 2.0;
-            slider.addEventListenerSlider(this.sliderEvent, this);
-            this._mainNode.addChild(slider);
-
-            return true;
-        }
-        return false;
-    },
-
-    sliderEvent: function (sender, type) {
-        switch (type) {
-            case ccui.SLIDER_EVENT_PERCENT_CHANGED:
-                var slider = sender;
-                var percent = slider.getPercent();
-                this._topDisplayLabel.setText("Percent " + percent.toFixed(0));
+                this._topDisplayText.setText("Percent " + percent.toFixed(0));
                 break;
             default:
                 break;

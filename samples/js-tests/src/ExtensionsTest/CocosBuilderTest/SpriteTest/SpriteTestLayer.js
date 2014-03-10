@@ -24,5 +24,5 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TestSpritesLayer = function() {};
+cc.BuilderReader.registerController("TestSpritesLayer", {});
 
