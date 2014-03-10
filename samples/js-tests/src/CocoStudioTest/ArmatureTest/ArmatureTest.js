@@ -102,7 +102,7 @@ if (!cc.sys.isNative)
 {
     armatureSceneArr.push( function () { return new TestColliderDetector();} );
 }else{
-    armatureSceneArr.push( function () { return new TestPerformanceBatchNode();} );
+    //armatureSceneArr.push( function () { return new TestPerformanceBatchNode();} );
     armatureSceneArr.push( function () { return new TestChangeAnimationInternal();} );
 }
 
@@ -322,8 +322,7 @@ var TestPerformance = ArmatureTestLayer.extend({
     addArmature: function (number) {
         for (var i = 0; i < number; i++) {
             this.armatureCount++;
-            var armature = new ccs.Armature();
-            armature.init("Knight_f/Knight");
+            var armature = ccs.Armature.create("Knight_f/Knight");
             armature.getAnimation().playWithIndex(0);
             armature.x = 50 + this.armatureCount * 2;
             armature.y = 150;
@@ -352,9 +351,9 @@ var TestPerformance = ArmatureTestLayer.extend({
 var TestPerformanceBatchNode = TestPerformance.extend({
     batchNode: null,
     onEnter: function () {
+	    this._super();
         this.batchNode = ccs.BatchNode.create();
         this.addChild(this.batchNode);
-        this._super();
     },
     title: function () {
         return "Test Performance of using CCBatchNode";
@@ -469,6 +468,7 @@ var TestAnimationEvent = ArmatureTestLayer.extend({
 
 var FRAME_EVENT_ACTION_TAG = 10000;
 var TestFrameEvent = ArmatureTestLayer.extend({
+	_nodeGrid: null,
     onEnter: function () {
         this._super();
         var armature = ccs.Armature.create("HeroAnimation");
@@ -477,7 +477,10 @@ var TestFrameEvent = ArmatureTestLayer.extend({
 	    var center = cc.visibleRect.center;
         armature.x = center.x - 50;
 	    armature.y = center.y - 100;
-        this.addChild(armature);
+
+	    this._nodeGrid = cc.NodeGrid.create();
+	    this._nodeGrid.addChild(armature);
+        this.addChild(this._nodeGrid);
         /*
          * Set armature's frame event callback function
          * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
@@ -496,14 +499,14 @@ var TestFrameEvent = ArmatureTestLayer.extend({
                 this.stopAllActions();
                 var action = cc.ShatteredTiles3D.create(0.2, cc.size(16, 12), 5, false);
                 action.tag = FRAME_EVENT_ACTION_TAG;
-                this.runAction(action);
+                this._nodeGrid.runAction(action);
             }
         }
     },
     checkAction: function (dt) {
         if ("opengl" in cc.sys.capabilities) {
-            if (this.getNumberOfRunningActions() == 0 && this.grid != null)
-                this.grid = null;
+            if (this._nodeGrid.getNumberOfRunningActions() == 0 && this._nodeGrid.grid != null)
+                this._nodeGrid.grid = null;
         }
     }
 });
@@ -996,6 +999,8 @@ var Hero = ccs.Armature.extend({
 
     changeMount: function (armature) {
         if (armature == null) {
+	        this.retain();
+
             this.playWithIndex(0);
             //Remove hero from display list
             this._mount.getBone("hero").removeDisplay(0);
@@ -1010,6 +1015,7 @@ var Hero = ccs.Armature.extend({
         }
         else {
             this._mount = armature;
+	        this.retain();
             //Remove from layer
             this.removeFromParent(false);
 
