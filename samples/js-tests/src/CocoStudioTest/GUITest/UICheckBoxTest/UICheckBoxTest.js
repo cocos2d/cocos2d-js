@@ -38,10 +38,10 @@ var UICheckBoxEditorTest = UIBaseLayer.extend({
 
     selectedStateEvent: function (sender, type) {
         switch (type) {
-            case ccui.CHECKBOX_EVENT_SELECTED:
+            case ccui.CheckBox.EVENT_SELECTED:
                 this._topDisplayText.setText("Selected");
                 break;
-            case ccui.CHECKBOX_EVENT_UNSELECTED:
+            case ccui.CheckBox.EVENT_UNSELECTED:
                 this._topDisplayText.setText("Unselected");
                 break;
 

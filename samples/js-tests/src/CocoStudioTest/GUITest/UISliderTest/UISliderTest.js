@@ -40,7 +40,7 @@ var UISliderEditorTest = UIBaseLayer.extend({
 
     sliderEvent: function (sender, type) {
         switch (type) {
-            case ccui.SLIDER_EVENT_PERCENT_CHANGED:
+            case ccui.Slider.EVENT_PERCENT_CHANGED:
                 var slider = sender;
                 var percent = slider.getPercent();
                 this._topDisplayText.setText("Percent " + percent.toFixed(0));
