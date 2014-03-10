@@ -212,10 +212,6 @@ var TMXOrthoTest2 = TileDemo.extend({
         //
         var map = cc.TMXTiledMap.create(s_resprefix + "TileMaps/orthogonal-test2.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
-
-        /*var x, y, z;
-         map.getCamera().getEyeXYZ(x, y, z);
-         map.getCamera().setEyeXYZ(x - 200, y, z + 300);*/
     },
     title:function () {
         return "TMX Orthogonal test 2";
@@ -320,7 +316,7 @@ var TMXOrthoTest4 = TileDemo.extend({
         sprite = layer.getTileAt(cc.p(s.width - 1, s.height - 1));
         sprite.scale = 2;
 
-        this.schedule(this.onRemoveSprite, 0.2);
+        this.scheduleOnce(this.onRemoveSprite, 0.2);
     },
     onRemoveSprite:function (dt) {
         var map = this.getChildByTag(TAG_TILE_MAP);
@@ -1778,9 +1774,13 @@ var arrayOfTileMapTest = [
     TMXOrthoFromXMLTest,
     TMXBug987,
     TMXBug787,
-    TMXGIDObjectsTest,
     TMXIsoOffsetTest
 ];
+
+if ( !cc.sys.isNative ){
+    //This test is supported only in HTML5
+    arrayOfTileMapTest.push(TMXGIDObjectsTest);
+}
 
 var nextTileMapTest = function () {
     tileTestSceneIdx++;

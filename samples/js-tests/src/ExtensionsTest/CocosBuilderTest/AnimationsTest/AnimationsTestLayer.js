@@ -24,20 +24,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TestAnimationsLayer = function() {
-    this.onCCControlButtonIdleClicked = function(sender, controlEvent) {
+cc.BuilderReader.registerController("TestAnimationsLayer", {
+    "onCCControlButtonIdleClicked" : function(sender, controlEvent) {
         this.rootNode.animationManager.runAnimationsForSequenceNamedTweenDuration("Idle", 0.3);
-    };
-
-    this.onCCControlButtonWaveClicked = function(sender, controlEvent) {
+    },
+    "onCCControlButtonWaveClicked" : function(sender, controlEvent) {
         this.rootNode.animationManager.runAnimationsForSequenceNamedTweenDuration("Wave", 0.3);
-    };
-
-    this.onCCControlButtonJumpClicked = function(sender, controlEvent) {
+    },
+    "onCCControlButtonJumpClicked" : function(sender, controlEvent) {
         this.rootNode.animationManager.runAnimationsForSequenceNamedTweenDuration("Jump", 0.3);
-    };
-
-    this.onCCControlButtonFunkyClicked = function(sender, controlEvent) {
+    },
+    "onCCControlButtonFunkyClicked" : function(sender, controlEvent) {
         this.rootNode.animationManager.runAnimationsForSequenceNamedTweenDuration("Funky", 0.3);
-    };
-};
+    }
+});

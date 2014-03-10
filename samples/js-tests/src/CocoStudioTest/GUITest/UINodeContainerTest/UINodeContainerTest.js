@@ -22,27 +22,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIWidgetAddNodeTest = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            var widgetSize = this._widget.getSize();
-            //init text
-            this._topDisplayLabel.setText("");
-            this._bottomDisplayLabel.setText("NodeContainer");
+var UIWidgetAddNodeEditorTest = UIBaseLayer.extend({
+    ctor: function () {
+        this._super();
+        var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json");
+        this._mainNode.addChild(root);
 
-            // Create the ui node container
-            var nodeContainer = ccui.Widget.create();
-            nodeContainer.x = widgetSize.width / 2;
-            nodeContainer.y = widgetSize.height / 2;
-            this._mainNode.addChild(nodeContainer);
+        var back_label =ccui.helper.seekWidgetByName(root, "back");
+        back_label.addTouchEventListener(this.backEvent,this);
 
-            var sprite = cc.Sprite.create("res/cocosgui/ccicon.png");
-            sprite.x = 0;
-            sprite.y = sprite.getBoundingBox().height / 4;
-            nodeContainer.addNode(sprite);
-
-            return true;
-        }
-        return false;
+        var sprite = cc.Sprite.create("res/cocosgui/ccicon.png");
+        sprite.x = 240;
+        sprite.y = 160;
+        root.addNode(sprite,9999);
     }
 });

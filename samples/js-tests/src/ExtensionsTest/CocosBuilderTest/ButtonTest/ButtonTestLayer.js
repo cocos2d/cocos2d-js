@@ -23,41 +23,22 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-var TestButtonsLayer = function() {
-
-    this.onCCControlButtonClicked = function(sender,controlEvent) {
-         switch(controlEvent) {
-             case cc.CONTROL_EVENT_TOUCH_DOWN:
-                 this.mCCControlEventLabel.setString("Touch Down.");
-                 break;
-             case cc.CONTROL_EVENT_TOUCH_DRAG_INSIDE:
-                 this.mCCControlEventLabel.setString("Touch Drag Inside.");
-                 break;
-             case cc.CONTROL_EVENT_TOUCH_DRAG_OUTSIDE:
-                 this.mCCControlEventLabel.setString("Touch Drag Outside.");
-                 break;
-             case cc.CONTROL_EVENT_TOUCH_DRAG_ENTER:
-                 this.mCCControlEventLabel.setString("Touch Drag Enter.");
-                 break;
-             case cc.CONTROL_EVENT_TOUCH_DRAG_EXIT:
-                 this.mCCControlEventLabel.setString("Touch Drag Exit.");
-                 break;
-             case cc.CONTROL_EVENT_TOUCH_UP_INSIDE:
-                 this.mCCControlEventLabel.setString("Touch Up Inside.");
-                 break;
-             case cc.CONTROL_EVENT_TOUCH_UP_OUTSIDE:
-                 this.mCCControlEventLabel.setString("Touch Up Outside.");
-                 break;
-             case cc.CONTROL_EVENT_TOUCH_CANCEL:
-                 this.mCCControlEventLabel.setString("Touch Cancel.");
-                 break;
-             case cc.CONTROL_EVENT_VALUECHANGED:
-                 this.mCCControlEventLabel.setString("Value Changed.");
-                 break;
-             default:
-                 // cc.assert(false);
-                 break;
-         }
-    };
-};
+cc.BuilderReader.registerController("TestButtonsLayer", {
+    "onCCControlButtonClicked" : function(sender,controlEvent) {
+        var str = (function(){
+            switch(controlEvent) {
+                case cc.CONTROL_EVENT_TOUCH_DOWN: return "Touch Down.";
+                case cc.CONTROL_EVENT_TOUCH_DRAG_INSIDE: return "Touch Drag Inside.";
+                case cc.CONTROL_EVENT_TOUCH_DRAG_OUTSIDE: return "Touch Drag Outside.";
+                case cc.CONTROL_EVENT_TOUCH_DRAG_ENTER: return "Touch Drag Enter.";
+                case cc.CONTROL_EVENT_TOUCH_DRAG_EXIT: return "Touch Drag Exit.";
+                case cc.CONTROL_EVENT_TOUCH_UP_INSIDE: return "Touch Up Inside.";
+                case cc.CONTROL_EVENT_TOUCH_UP_OUTSIDE: return "Touch Up Outside.";
+                case cc.CONTROL_EVENT_TOUCH_CANCEL: return "Touch Cancel.";
+                case cc.CONTROL_EVENT_VALUECHANGED: return "Value Changed.";
+            }
+            return "";
+        })();
+        this["mCCControlEventLabel"].setString(str);
+    }
+});

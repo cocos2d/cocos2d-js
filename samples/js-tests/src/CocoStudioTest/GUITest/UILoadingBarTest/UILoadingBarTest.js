@@ -22,115 +22,32 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UILoadingBarTest = UIScene.extend({
+var UILoadingBarEditorTest = UIBaseLayer.extend({
     _count: 0,
-    _loadingBar:null,
+    _loadingBar_left_to_right:null,
+    _loadingBar_right_to_left:null,
     ctor: function () {
         this._super();
-        this._count = 0;
-    },
-    init: function () {
-        if (this._super()) {
-            var widgetSize = this._widget.getSize();
-            //init text
-            this._topDisplayLabel.setText("");
-            this._bottomDisplayLabel.setText("LoadingBar");
+        var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.json");
+        this._mainNode.addChild(root);
 
-            this.createLoadingBar();
+        var back_label =ccui.helper.seekWidgetByName(root, "back");
+        back_label.addTouchEventListener(this.backEvent,this);
 
-            this.scheduleUpdate();
-            return true;
-        }
-        return false;
-    },
-    createLoadingBar: function () {
-        // override me
+        this._loadingBar_left_to_right = ccui.helper.seekWidgetByName(root, "LoadingBar_856");
+        this._loadingBar_left_to_right.setPercent(0);
+
+        this._loadingBar_right_to_left = ccui.helper.seekWidgetByName(root, "LoadingBar_857");
+        this._loadingBar_right_to_left.setPercent(0);
+
+        this.scheduleUpdate();
     },
     update: function (dt) {
         this._count++;
         if (this._count > 100) {
             this._count = 0;
         }
-
-        this._loadingBar.setPercent(this._count);
-    },
-
-    previousCallback: function (sender, type) {
-        this.unscheduleUpdate();
-        this._super(sender, type)
-    },
-
-    restartCallback: function (sender, type) {
-        this.unscheduleUpdate();
-        this._super(sender, type)
-    },
-
-    nextCallback: function (sender, type) {
-        this.unscheduleUpdate();
-        this._super(sender, type)
-    }
-});
-
-var UILoadingBarTest_Left = UILoadingBarTest.extend({
-    createLoadingBar: function () {
-        var widgetSize = this._widget.getSize();
-        var loadingBar = ccui.LoadingBar.create();
-        loadingBar.setName("LoadingBar");
-        loadingBar.loadTexture("res/cocosgui/sliderProgress.png");
-        loadingBar.setPercent(0);
-        loadingBar.x = widgetSize.width / 2;
-        loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
-        this._mainNode.addChild(loadingBar);
-        this._loadingBar = loadingBar;
-    }
-});
-
-var UILoadingBarTest_Right = UILoadingBarTest.extend({
-    createLoadingBar: function () {
-        var widgetSize = this._widget.getSize();
-        var loadingBar = ccui.LoadingBar.create();
-        loadingBar.setName("LoadingBar");
-        loadingBar.loadTexture("res/cocosgui/sliderProgress.png");
-        loadingBar.setDirection(ccui.LOADINGBAR_TYPE_RIGHT);
-        loadingBar.setPercent(0);
-        loadingBar.x = widgetSize.width / 2;
-        loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
-        this._mainNode.addChild(loadingBar);
-        this._loadingBar = loadingBar;
-    }
-});
-
-var UILoadingBarTest_Left_Scale9 = UILoadingBarTest.extend({
-    createLoadingBar: function () {
-        var widgetSize = this._widget.getSize();
-        var loadingBar = ccui.LoadingBar.create();
-        loadingBar.setName("LoadingBar");
-        loadingBar.loadTexture("res/cocosgui/slider_bar_active_9patch.png");
-        loadingBar.setScale9Enabled(true);
-        loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
-        loadingBar.setSize(cc.size(300, 30));
-        loadingBar.setPercent(0);
-        loadingBar.x = widgetSize.width / 2;
-        loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
-        this._mainNode.addChild(loadingBar);
-        this._loadingBar = loadingBar;
-    }
-});
-
-var UILoadingBarTest_Right_Scale9 = UILoadingBarTest.extend({
-    createLoadingBar: function () {
-        var widgetSize = this._widget.getSize();
-        var loadingBar = ccui.LoadingBar.create();
-        loadingBar.setName("LoadingBar");
-        loadingBar.loadTexture("res/cocosgui/slider_bar_active_9patch.png");
-        loadingBar.setScale9Enabled(true);
-        loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
-        loadingBar.setSize(cc.size(300, 30));
-        loadingBar.setDirection(ccui.LOADINGBAR_TYPE_RIGHT);
-        loadingBar.setPercent(0);
-        loadingBar.x = widgetSize.width / 2;
-        loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
-        this._mainNode.addChild(loadingBar);
-        this._loadingBar = loadingBar;
+        this._loadingBar_left_to_right.setPercent(this._count);
+        this._loadingBar_right_to_left.setPercent(this._count);
     }
 });

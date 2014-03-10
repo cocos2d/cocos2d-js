@@ -207,16 +207,6 @@ RelativeLayoutParameter : function (
 ccui.Widget = {
 
 /**
- * @method getVirtualRenderer
- * @return {cc.Node}
- */
-getVirtualRenderer : function (
-)
-{
-    return cc.Node;
-},
-
-/**
  * @method setSizePercent
  * @param {PointObject} arg0
  */
@@ -234,6 +224,16 @@ isFlippedX : function (
 )
 {
     return false;
+},
+
+/**
+ * @method getCustomSize
+ * @return {SizeObject}
+ */
+getCustomSize : function (
+)
+{
+    return cc.Size;
 },
 
 /**
@@ -506,6 +506,16 @@ setEnabled : function (
 bool 
 )
 {
+},
+
+/**
+ * @method getVirtualRenderer
+ * @return {cc.Node}
+ */
+getVirtualRenderer : function (
+)
+{
+    return cc.Node;
 },
 
 /**
@@ -825,13 +835,13 @@ layoutbackgroundcolortype
 },
 
 /**
- * @method getBackGroundColorType
- * @return {ccui.LayoutBackGroundColorType}
+ * @method setBackGroundImageColor
+ * @param {Color3BObject} arg0
  */
-getBackGroundColorType : function (
+setBackGroundImageColor : function (
+color3b 
 )
 {
-    return 0;
 },
 
 /**
@@ -845,6 +855,16 @@ getBackGroundColorVector : function (
 },
 
 /**
+ * @method getClippingType
+ * @return {ccui.LayoutClippingType}
+ */
+getClippingType : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method removeBackGroundImage
  */
 removeBackGroundImage : function (
@@ -854,7 +874,7 @@ removeBackGroundImage : function (
 
 /**
  * @method getBackGroundColorOpacity
- * @return {int}
+ * @return {unsigned char}
  */
 getBackGroundColorOpacity : function (
 )
@@ -863,13 +883,23 @@ getBackGroundColorOpacity : function (
 },
 
 /**
- * @method getBackGroundImageCapInsets
- * @return {RectObject}
+ * @method isClippingEnabled
+ * @return {bool}
  */
-getBackGroundImageCapInsets : function (
+isClippingEnabled : function (
 )
 {
-    return cc.Rect;
+    return false;
+},
+
+/**
+ * @method setBackGroundImageOpacity
+ * @param {unsigned char} arg0
+ */
+setBackGroundImageOpacity : function (
+char 
+)
+{
 },
 
 /**
@@ -905,23 +935,23 @@ requestDoLayout : function (
 },
 
 /**
- * @method isClippingEnabled
- * @return {bool}
+ * @method getBackGroundImageCapInsets
+ * @return {RectObject}
  */
-isClippingEnabled : function (
+getBackGroundImageCapInsets : function (
 )
 {
-    return false;
+    return cc.Rect;
 },
 
 /**
- * @method setBackGroundColorOpacity
- * @param {int} arg0
+ * @method getBackGroundColor
+ * @return {Color3BObject}
  */
-setBackGroundColorOpacity : function (
-int 
+getBackGroundColor : function (
 )
 {
+    return cc.Color3B;
 },
 
 /**
@@ -935,6 +965,16 @@ bool
 },
 
 /**
+ * @method getBackGroundImageColor
+ * @return {Color3BObject}
+ */
+getBackGroundImageColor : function (
+)
+{
+    return cc.Color3B;
+},
+
+/**
  * @method isBackGroundImageScale9Enabled
  * @return {bool}
  */
@@ -945,10 +985,10 @@ isBackGroundImageScale9Enabled : function (
 },
 
 /**
- * @method getLayoutType
- * @return {ccui.LayoutType}
+ * @method getBackGroundColorType
+ * @return {ccui.LayoutBackGroundColorType}
  */
-getLayoutType : function (
+getBackGroundColorType : function (
 )
 {
     return 0;
@@ -965,23 +1005,23 @@ getBackGroundEndColor : function (
 },
 
 /**
- * @method getClippingType
- * @return {ccui.LayoutClippingType}
+ * @method setBackGroundColorOpacity
+ * @param {unsigned char} arg0
  */
-getClippingType : function (
+setBackGroundColorOpacity : function (
+char 
 )
 {
-    return 0;
 },
 
 /**
- * @method getBackGroundColor
- * @return {Color3BObject}
+ * @method getBackGroundImageOpacity
+ * @return {unsigned char}
  */
-getBackGroundColor : function (
+getBackGroundImageOpacity : function (
 )
 {
-    return cc.Color3B;
+    return 0;
 },
 
 /**
@@ -1002,6 +1042,16 @@ getBackGroundImageTextureSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method getLayoutType
+ * @return {ccui.LayoutType}
+ */
+getLayoutType : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -1054,6 +1104,16 @@ create : function (
 )
 {
     return ccui.Layout;
+},
+
+/**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
 },
 
 /**
@@ -1315,6 +1375,16 @@ create : function (
 },
 
 /**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
+},
+
+/**
  * @method Button
  * @constructor
  */
@@ -1441,6 +1511,16 @@ create : function (
 },
 
 /**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
+},
+
+/**
  * @method CheckBox
  * @constructor
  */
@@ -1526,6 +1606,16 @@ create : function (
 )
 {
     return ccui.ImageView;
+},
+
+/**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
 },
 
 /**
@@ -1705,6 +1795,16 @@ create : function (
 },
 
 /**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
+},
+
+/**
  * @method Text
  * @constructor
  */
@@ -1766,6 +1866,16 @@ create : function (
 )
 {
     return ccui.TextAtlas;
+},
+
+/**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
 },
 
 /**
@@ -1884,6 +1994,16 @@ create : function (
 )
 {
     return ccui.LoadingBar;
+},
+
+/**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
 },
 
 /**
@@ -2235,6 +2355,16 @@ create : function (
 },
 
 /**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
+},
+
+/**
  * @method ScrollView
  * @constructor
  */
@@ -2341,6 +2471,14 @@ float
 },
 
 /**
+ * @method refreshView
+ */
+refreshView : function (
+)
+{
+},
+
+/**
  * @method removeLastItem
  */
 removeLastItem : function (
@@ -2416,6 +2554,16 @@ create : function (
 )
 {
     return ccui.ListView;
+},
+
+/**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
 },
 
 /**
@@ -2611,6 +2759,16 @@ create : function (
 },
 
 /**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
+},
+
+/**
  * @method Slider
  * @constructor
  */
@@ -2727,6 +2885,16 @@ getDetachWithIME : function (
 },
 
 /**
+ * @method setTextVerticalAlignment
+ * @param {cc.TextVAlignment} arg0
+ */
+setTextVerticalAlignment : function (
+textvalignment 
+)
+{
+},
+
+/**
  * @method didNotSelectSelf
  */
 didNotSelectSelf : function (
@@ -2742,6 +2910,16 @@ getFontName : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setTextAreaSize
+ * @param {SizeObject} arg0
+ */
+setTextAreaSize : function (
+size 
+)
+{
 },
 
 /**
@@ -2833,6 +3011,16 @@ isPasswordEnabled : function (
 },
 
 /**
+ * @method setTextHorizontalAlignment
+ * @param {cc.TextHAlignment} arg0
+ */
+setTextHorizontalAlignment : function (
+texthalignment 
+)
+{
+},
+
+/**
  * @method getMaxLength
  * @return {int}
  */
@@ -2873,6 +3061,28 @@ str
 },
 
 /**
+ * @method setTouchAreaEnabled
+ * @param {bool} arg0
+ */
+setTouchAreaEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method hitTest
+ * @param {PointObject} arg0
+ * @return {bool}
+ */
+hitTest : function (
+point 
+)
+{
+    return false;
+},
+
+/**
  * @method setMaxLength
  * @param {int} arg0
  */
@@ -2910,6 +3120,16 @@ create : function (
 )
 {
     return ccui.TextField;
+},
+
+/**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
 },
 
 /**
@@ -2966,6 +3186,16 @@ create : function (
 )
 {
     return ccui.TextBMFont;
+},
+
+/**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
 },
 
 /**
@@ -3098,6 +3328,16 @@ create : function (
 )
 {
     return ccui.PageView;
+},
+
+/**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
 },
 
 /**

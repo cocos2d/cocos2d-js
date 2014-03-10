@@ -368,6 +368,7 @@ ScriptingCore::ScriptingCore()
 , _cx(nullptr)
 , _global(nullptr)
 , _debugGlobal(nullptr)
+, _callFromScript(false)
 {
     // set utf8 strings internally (we don't need utf16)
     // XXX: Removed in SpiderMonkey 19.0
@@ -646,6 +647,7 @@ void ScriptingCore::cleanup()
     }
     
     _js_global_type_map.clear();
+    filename_script.clear();
 }
 
 void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)
@@ -810,6 +812,18 @@ void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
     }
 }
 
+bool ScriptingCore::isFunctionOverridedInJS(JSObject* obj, const std::string& name, JSNative native)
+{
+    JS::RootedValue value(_cx);
+    bool ok = JS_GetProperty(_cx, obj, name.c_str(), &value);
+    if (ok && !value.isNullOrUndefined() && !JS_IsNativeFunction(JSVAL_TO_OBJECT(value), native))
+    {
+        return true;
+    }
+    
+    return false;
+}
+
 int ScriptingCore::handleNodeEvent(void* data)
 {
     if (NULL == data)
@@ -825,32 +839,45 @@ int ScriptingCore::handleNodeEvent(void* data)
     js_proxy_t * p = jsb_get_native_proxy(node);
     if (!p) return 0;
 
+    int ret = 0;
     jsval retval;
     jsval dataVal = INT_TO_JSVAL(1);
 
     if (action == kNodeOnEnter)
     {
-        executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
+        if (isFunctionOverridedInJS(p->obj, "onEnter", js_cocos2dx_Node_onEnter))
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
+        }
         resumeSchedulesAndActions(p);
     }
     else if (action == kNodeOnExit)
     {
-        executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
+        if (isFunctionOverridedInJS(p->obj, "onExit", js_cocos2dx_Node_onExit))
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
+        }
         pauseSchedulesAndActions(p);
     }
     else if (action == kNodeOnEnterTransitionDidFinish)
     {
-        executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnterTransitionDidFinish", 1, &dataVal, &retval);
+        if (isFunctionOverridedInJS(p->obj, "onEnterTransitionDidFinish", js_cocos2dx_Node_onEnterTransitionDidFinish))
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnterTransitionDidFinish", 1, &dataVal, &retval);
+        }
     }
     else if (action == kNodeOnExitTransitionDidStart)
     {
-        executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExitTransitionDidStart", 1, &dataVal, &retval);
+        if (isFunctionOverridedInJS(p->obj, "onExitTransitionDidStart", js_cocos2dx_Node_onExitTransitionDidStart))
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExitTransitionDidStart", 1, &dataVal, &retval);
+        }
     }
     else if (action == kNodeOnCleanup) {
         cleanupSchedulesAndActions(p);
     }
 
-    return 1;
+    return ret;
 }
 
 int ScriptingCore::handleMenuClickedEvent(void* data)

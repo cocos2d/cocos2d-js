@@ -21,121 +21,43 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+var LISTVIEW_RES = [
+    "res/cocosgui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/ui_listview_editor_1.json",
+    "res/cocosgui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/ui_listview_horizontal_editor_1.json"
+];
+var LISTVIEW_INDEX = 0;
+var UIListViewEditorTest = UIBaseLayer.extend({
+    ctor: function () {
+        this._super();
+        var root = ccs.guiReader.widgetFromJsonFile(LISTVIEW_RES[LISTVIEW_INDEX]);
+        this._mainNode.addChild(root);
 
-var UIListViewTest_Vertical = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            var widgetSize = this._widget.getSize();
-            var background = this._widget.getChildByName("background_Panel");
+        var back_label = ccui.helper.seekWidgetByName(root, "back");
+        back_label.addTouchEventListener(this.backEvent, this);
 
-            this._array = [];
-            for (var i = 0; i < 20; ++i) {
-                this._array.push("item_" + i);
-            }
+        var listView = ccui.helper.seekWidgetByName(root, "ListView_1214");
+        listView.addEventListenerListView(this.selectedItemEvent,this);
 
-            // Create the list view
-            var listView = ccui.ListView.create();
-            // set list view ex direction
-            listView.setDirection(ccui.SCROLLVIEW_DIR_VERTICAL);
-            listView.setTouchEnabled(true);
-            listView.setBounceEnabled(true);
-            listView.setBackGroundImage("res/cocosgui/green_edit.png");
-            listView.setBackGroundImageScale9Enabled(true);
-            listView.setSize(cc.size(240, 130));
-            listView.x = (widgetSize.width - background.width) / 2 + (background.width - listView.width) / 2;
-            listView.y = (widgetSize.height - background.height) / 2 + (background.height - listView.height) / 2;
-            listView.addEventListenerListView(this.selectedItemEvent, this);
-            this._mainNode.addChild(listView);
+        var left_button = ccui.Button.create();
+        left_button.loadTextures("res/Images/b1.png", "res/Images/b2.png", "");
+        left_button.x = 240-50;
+        left_button.y = 50;
+        left_button.anchorX = 0.5;
+        left_button.anchorY = 0.5;
+        left_button.zOrder = 999;
+        left_button.addTouchEventListener(this.previousCallback, this);
+        this._mainNode.addChild(left_button);
 
-
-            // create model
-            var default_button = ccui.Button.create();
-            default_button.setName("TextButton");
-            default_button.setTouchEnabled(true);
-            default_button.loadTextures("res/cocosgui/backtotoppressed.png", "res/cocosgui/backtotopnormal.png", "");
-
-            var default_item = ccui.Layout.create();
-            default_item.setTouchEnabled(true);
-            default_item.setSize(default_button.getSize());
-            default_button.x = default_item.width / 2;
-            default_button.y = default_item.height / 2;
-            default_item.addChild(default_button);
-
-            // set model
-            listView.setItemModel(default_item);
-
-            // add default item
-            var count = this._array.length;
-            for (var i = 0; i < count / 4; ++i) {
-                listView.pushBackDefaultItem();
-            }
-            // insert default item
-            for (var i = 0; i < count / 4; ++i) {
-                listView.insertDefaultItem(0);
-            }
-
-            // add custom item
-            for (var i = 0; i < count / 4; ++i) {
-                var custom_button = ccui.Button.create();
-                custom_button.setName("TextButton");
-                custom_button.setTouchEnabled(true);
-                custom_button.loadTextures("res/cocosgui/button.png", "res/cocosgui/buttonHighlighted.png", "");
-                custom_button.setScale9Enabled(true);
-                custom_button.setSize(default_button.getSize());
-
-                var custom_item = ccui.Layout.create();
-                custom_item.setSize(custom_button.getSize());
-                custom_button.x = custom_item.width / 2;
-                custom_button.y = custom_item.height / 2;
-                custom_item.addChild(custom_button);
-
-                listView.pushBackCustomItem(custom_item);
-            }
-            // insert custom item
-            var items = listView.getItems();
-            var items_count = items.length;
-            for (var i = 0; i < count / 4; ++i) {
-                var custom_button = ccui.Button.create();
-                custom_button.setName("TextButton");
-                custom_button.setTouchEnabled(true);
-                custom_button.loadTextures("res/cocosgui/button.png", "res/cocosgui/buttonHighlighted.png", "");
-                custom_button.setScale9Enabled(true);
-                custom_button.setSize(default_button.getSize());
-
-                var custom_item = ccui.Layout.create();
-                custom_item.setSize(custom_button.getSize());
-                custom_button.x = custom_item.width / 2;
-                custom_button.y = custom_item.height / 2;
-                custom_item.addChild(custom_button);
-
-                listView.insertCustomItem(custom_item, items_count);
-            }
-
-            // set item data
-            items_count = items.length;
-            for (var i = 0; i < items_count; ++i) {
-                var item = listView.getItem(i);
-                var button = item.getChildByName("TextButton");
-                var index = listView.getIndex(item);
-                button.setTitleText(this._array[index]);
-            }
-
-            // remove last item
-            listView.removeLastItem();
-
-            // remove item by index
-            items_count = items.length;
-            listView.removeItem(items_count - 1);
-
-            // set all items layout gravity
-            listView.setGravity(ccui.LISTVIEW_GRAVITY_CENTER_VERTICAL);
-
-            return true;
-        }
-
-        return false;
+        var right_button = ccui.Button.create();
+        right_button.loadTextures("res/Images/f1.png", "res/Images/f2.png", "");
+        right_button.x = 240+50;
+        right_button.y = 50;
+        right_button.zOrder = 999;
+        right_button.anchorX = 0.5;
+        right_button.anchorY = 0.5;
+        right_button.addTouchEventListener(this.nextCallback, this);
+        this._mainNode.addChild(right_button);
     },
-
     selectedItemEvent: function (sender, type) {
         switch (type) {
             case ccui.LISTVIEW_EVENT_SELECTED_ITEM:
@@ -146,139 +68,28 @@ var UIListViewTest_Vertical = UIScene.extend({
             default:
                 break;
         }
-    }
-});
-
-var UIListViewTest_Horizontal = UIScene.extend({
-    _array: null,
-    init: function () {
-        if (this._super()) {
-            var widgetSize = this._widget.getSize();
-            var background = this._widget.getChildByName("background_Panel");
-            // create list view ex data
-            this._array = [];
-            for (var i = 0; i < 20; ++i) {
-                this._array.push("item_" + i);
-            }
-
-
-            // Create the list view
-            var listView = ccui.ListView.create();
-            // set list view ex direction
-            listView.setDirection(ccui.SCROLLVIEW_DIR_HORIZONTAL);
-            listView.setTouchEnabled(true);
-            listView.setBounceEnabled(true);
-            listView.setBackGroundImage("res/cocosgui/green_edit.png");
-            listView.setBackGroundImageScale9Enabled(true);
-            listView.setSize(cc.size(240, 130));
-            listView.x = (widgetSize.width - background.width) / 2 + (background.width - listView.width) / 2;
-            listView.y = (widgetSize.height - background.height) / 2 + (background.height - listView.height) / 2;
-            listView.addEventListenerListView(this.selectedItemEvent, this);
-            this._mainNode.addChild(listView);
-
-
-            // create model
-            var default_button = ccui.Button.create();
-            default_button.setName("TextButton");
-            default_button.setTouchEnabled(true);
-            default_button.loadTextures("res/cocosgui/backtotoppressed.png", "res/cocosgui/backtotopnormal.png", "");
-
-            var default_item = ccui.Layout.create();
-            default_item.setTouchEnabled(true);
-            default_item.setSize(default_button.getSize());
-            default_button.x = default_item.width / 2;
-            default_button.y = default_item.height / 2;
-            default_item.addChild(default_button);
-
-            // set model
-            listView.setItemModel(default_item);
-
-            // add default item
-            var count = this._array.length;
-            for (var i = 0; i < count / 4; ++i) {
-                listView.pushBackDefaultItem();
-            }
-            // insert default item
-            for (var i = 0; i < count / 4; ++i) {
-                listView.insertDefaultItem(0);
-            }
-
-            // add custom item
-            for (var i = 0; i < count / 4; ++i) {
-                var custom_button = ccui.Button.create();
-                custom_button.setName("TextButton");
-                custom_button.setTouchEnabled(true);
-                custom_button.loadTextures("res/cocosgui/button.png", "res/cocosgui/buttonHighlighted.png", "");
-                custom_button.setScale9Enabled(true);
-                custom_button.setSize(default_button.getSize());
-
-                var custom_item = ccui.Layout.create();
-                custom_item.setSize(custom_button.getSize());
-                custom_button.x = custom_item.width / 2;
-                custom_button.y = custom_item.height / 2;
-                custom_item.addChild(custom_button);
-
-                listView.pushBackCustomItem(custom_item);
-            }
-            // insert custom item
-            var items = listView.getItems();
-            var items_count = items.length;
-            for (var i = 0; i < count / 4; ++i) {
-                var custom_button = ccui.Button.create();
-                custom_button.setName("TextButton");
-                custom_button.setTouchEnabled(true);
-                custom_button.loadTextures("res/cocosgui/button.png", "res/cocosgui/buttonHighlighted.png", "");
-                custom_button.setScale9Enabled(true);
-                custom_button.setSize(default_button.getSize());
-
-                var custom_item = ccui.Layout.create();
-                custom_item.setSize(custom_button.getSize());
-                custom_button.x = custom_item.width / 2;
-                custom_button.y = custom_item.height / 2;
-                custom_item.addChild(custom_button);
-
-                listView.insertCustomItem(custom_item, items_count);
-            }
-
-            // set item data
-            items_count = items.length;
-            for (var i = 0; i < items_count; ++i) {
-                var item = listView.getItem(i);
-                var button = item.getChildByName("TextButton");
-                var index = listView.getIndex(item);
-                button.setTitleText(this._array[index]);
-            }
-
-            // remove last item
-            listView.removeLastItem();
-
-            // remove item by index
-            items_count = items.length;
-            listView.removeItem(items_count - 1);
-
-            // set all items layout gravity
-            listView.setGravity(ccui.LISTVIEW_GRAVITY_CENTER_VERTICAL);
-
-            // set items margin
-            listView.setItemsMargin(2);
-
-            return true;
-        }
-
-        return false;
     },
-
-    selectedItemEvent: function (sender, type) {
-        switch (type) {
-            case ccui.LISTVIEW_EVENT_SELECTED_ITEM:
-            {
-                var listViewEx = sender;
-                cc.log("select child index = " + listViewEx.getCurSelectedIndex());
-            }
-                break;
-
-            default:
-                break;
+    previousCallback: function (render, type) {
+        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+            LISTVIEW_INDEX--;
+            if (LISTVIEW_INDEX < 0)LISTVIEW_INDEX = LISTVIEW_RES.length-1;
+            if (LISTVIEW_INDEX >= LISTVIEW_RES.length)LISTVIEW_INDEX = 0;
+            this.runNextScene();
         }
+    },
+    nextCallback: function (render, type) {
+        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+            LISTVIEW_INDEX++;
+            if (LISTVIEW_INDEX < 0)LISTVIEW_INDEX = LISTVIEW_RES.length-1;
+            if (LISTVIEW_INDEX >= LISTVIEW_RES.length)LISTVIEW_INDEX = 0;
+            this.runNextScene();
+        }
+    },
+    runNextScene: function () {
+        var scene = cc.Scene.create();
+        scene.addChild(new UIListViewEditorTest());
+        cc.director.runScene(scene);
     }
 });
+
+

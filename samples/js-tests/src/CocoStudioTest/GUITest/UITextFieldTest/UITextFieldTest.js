@@ -22,154 +22,37 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UITextFieldTest = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            var widgetSize = this._widget.getSize();
-            //init text
-            this._topDisplayLabel.setText("No Event");
-            this._bottomDisplayLabel.setText("TextField");
+var UITextFieldEditorTest = UIBaseLayer.extend({
+    ctor: function () {
+        this._super();
+        var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UITextField_Editor/ui_textfield_editor_1.json");
+        this._mainNode.addChild(root);
 
-            // Create the textfield
-            var textField = ccui.TextField.create();
-            textField.setTouchEnabled(true);
-            textField.fontName = "Marker Felt";
-            textField.fontSize = 30;
-            textField.placeHolder = "input words here";
-            textField.x = widgetSize.width / 2.0;
-            textField.y = widgetSize.height / 2.0;
-            textField.addEventListenerTextField(this.textFieldEvent, this);
-            this._mainNode.addChild(textField);
+        var back_label =ccui.helper.seekWidgetByName(root, "back");
+        back_label.addTouchEventListener(this.backEvent,this);
 
-            return true;
-        }
-        return false;
+        var textField_normal = ccui.helper.seekWidgetByName(root, "TextField_1109");
+        textField_normal.addEventListenerTextField(this.textFieldEvent,this);
+
+        var textField_max_character = ccui.helper.seekWidgetByName(root, "TextField_1110");
+        textField_max_character.addEventListenerTextField(this.textFieldEvent,this);
+
+        var textField_password = ccui.helper.seekWidgetByName(root, "TextField_1107");
+        textField_password.addEventListenerTextField(this.textFieldEvent,this);
     },
-
     textFieldEvent: function (sender, type) {
         switch (type) {
             case ccui.TEXTFILE_EVENT_ATTACH_WITH_ME:
-                var textField = sender;
-                var widgetSize = this._widget.getSize();
-                textField.runAction(cc.MoveTo.create(0.225,
-                    cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
-                this._topDisplayLabel.setText("attach with IME");
+                this._topDisplayText.setText("attach with IME");
                 break;
             case ccui.TEXTFILE_EVENT_DETACH_WITH_ME:
-                var textField = sender;
-                var widgetSize = this._widget.getSize();
-                textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
-                this._topDisplayLabel.setText("detach with IME");
+                this._topDisplayText.setText("detach with IME");
                 break;
             case ccui.TEXTFILE_EVENT_INSERT_TEXT:
-                this._topDisplayLabel.setText("insert words");
+                this._topDisplayText.setText("insert words");
                 break;
             case ccui.TEXTFILE_EVENT_DELETE_BACKWARD:
-                this._topDisplayLabel.setText("delete word");
-                break;
-            default:
-                break;
-        }
-    }
-});
-
-var UITextFieldTest_MaxLength = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            var widgetSize = this._widget.getSize();
-            //init text
-            this._topDisplayLabel.setText("No Event");
-            this._bottomDisplayLabel.setText("TextField max length");
-
-            // Create the textfield
-            var textField = ccui.TextField.create();
-            textField.setMaxLengthEnabled(true);
-            textField.setMaxLength(3);
-            textField.setTouchEnabled(true);
-            textField.fontName = "Marker Felt";
-            textField.fontSize = 30;
-            textField.placeHolder = "input words here";
-            textField.x = widgetSize.width / 2.0;
-            textField.y = widgetSize.height / 2.0;
-            textField.addEventListenerTextField(this.textFieldEvent, this);
-            this._mainNode.addChild(textField);
-
-            return true;
-        }
-        return false;
-    },
-
-    textFieldEvent: function (sender, type) {
-        var textField = sender;
-        var widgetSize = this._widget.getSize();
-        switch (type) {
-            case ccui.TEXTFILE_EVENT_ATTACH_WITH_ME:
-                textField.runAction(cc.MoveTo.create(0.225,
-                    cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
-                this._topDisplayLabel.setText("attach with IME max length:" + textField.getMaxLength());
-                break;
-            case ccui.TEXTFILE_EVENT_DETACH_WITH_ME:
-                textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
-                this._topDisplayLabel.setText("detach with IME max length:" + textField.getMaxLength());
-                break;
-            case ccui.TEXTFILE_EVENT_INSERT_TEXT:
-                this._topDisplayLabel.setText("insert with IME max length:" + textField.getMaxLength());
-                break;
-            case ccui.TEXTFILE_EVENT_DELETE_BACKWARD:
-                this._topDisplayLabel.setText("delete with IME max length:" + textField.getMaxLength());
-                break;
-            default:
-                break;
-        }
-    }
-});
-
-var UITextFieldTest_Password = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            var widgetSize = this._widget.getSize();
-            //init text
-            this._topDisplayLabel.setText("No Event");
-            this._bottomDisplayLabel.setText("TextField max length");
-
-            // Create the textfield
-            var textField = ccui.TextField.create();
-            textField.passwordEnabled = true;
-            textField.setPasswordStyleText("*");
-            textField.setTouchEnabled(true);
-            textField.fontName = "Marker Felt";
-            textField.fontSize = 30;
-            textField.placeHolder = "input password here";
-            textField.x = widgetSize.width / 2.0;
-            textField.y = widgetSize.height / 2.0;
-            textField.addEventListenerTextField(this.textFieldEvent, this);
-            this._mainNode.addChild(textField);
-
-            return true;
-        }
-        return false;
-    },
-
-    textFieldEvent: function (sender, type) {
-        switch (type) {
-            case ccui.TEXTFILE_EVENT_ATTACH_WITH_ME:
-                var textField = sender;
-                var widgetSize = this._widget.getSize();
-                textField.runAction(cc.MoveTo.create(0.225,
-                    cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
-                this._topDisplayLabel.setText("attach with IME IME password");
-                break;
-            case ccui.TEXTFILE_EVENT_DETACH_WITH_ME:
-                var textField = sender;
-                var widgetSize = this._widget.getSize();
-                textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
-                this._topDisplayLabel.setText("detach with IME password");
-                break;
-            case ccui.TEXTFILE_EVENT_INSERT_TEXT:
-                this._topDisplayLabel.setText("insert with IME password");
-                break;
-            case ccui.TEXTFILE_EVENT_DELETE_BACKWARD:
-                this._topDisplayLabel.setText("delete with IME password");
+                this._topDisplayText.setText("delete word");
                 break;
             default:
                 break;

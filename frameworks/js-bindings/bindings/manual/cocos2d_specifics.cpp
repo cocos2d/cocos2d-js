@@ -2103,6 +2103,66 @@ bool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_Node_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
+	if (thisObj) {
+		js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
+		if (proxy) {
+            ScriptingCore::getInstance()->setCalledFromScript(true);
+			static_cast<Node*>(proxy->ptr)->onEnter();
+			return true;
+		}
+	}
+    JS_ReportError(cx, "Invalid Native Object.");
+	return false;
+}
+
+bool js_cocos2dx_Node_onExit(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
+	if (thisObj) {
+		js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
+		if (proxy) {
+            ScriptingCore::getInstance()->setCalledFromScript(true);
+			static_cast<Node*>(proxy->ptr)->onExit();
+			return true;
+		}
+	}
+    JS_ReportError(cx, "Invalid Native Object.");
+	return false;
+}
+
+bool js_cocos2dx_Node_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
+	if (thisObj) {
+		js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
+		if (proxy) {
+            ScriptingCore::getInstance()->setCalledFromScript(true);
+			static_cast<Node*>(proxy->ptr)->onEnterTransitionDidFinish();
+			return true;
+		}
+	}
+    JS_ReportError(cx, "Invalid Native Object.");
+	return false;
+}
+
+bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
+	if (thisObj) {
+		js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
+		if (proxy) {
+            ScriptingCore::getInstance()->setCalledFromScript(true);
+			static_cast<Node*>(proxy->ptr)->onExitTransitionDidStart();
+			return true;
+		}
+	}
+    JS_ReportError(cx, "Invalid Native Object.");
+	return false;
+}
+
 bool js_cocos2dx_CCNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -4234,10 +4294,10 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     
     JS_DefineFunction(cx, jsb_cocos2d_GLProgram_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_cocos2d_GLProgram_prototype, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "onExit", js_doNothing, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "onEnter", js_doNothing, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "onEnterTransitionDidFinish", js_doNothing, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "onExitTransitionDidStart", js_doNothing, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "onEnter", js_cocos2dx_Node_onEnter, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "onExit", js_cocos2dx_Node_onExit, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "onEnterTransitionDidFinish", js_cocos2dx_Node_onEnterTransitionDidFinish, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "onExitTransitionDidStart", js_cocos2dx_Node_onExitTransitionDidStart, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "init", js_doNothing, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "schedule", js_CCNode_schedule, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "scheduleOnce", js_CCNode_scheduleOnce, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);

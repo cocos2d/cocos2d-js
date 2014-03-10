@@ -297,6 +297,18 @@ char
 },
 
 /**
+ * @method bindAttribLocation
+ * @param {char*} arg0
+ * @param {unsigned int} arg1
+ */
+bindAttribLocation : function (
+char, 
+int 
+)
+{
+},
+
+/**
  * @method setUniformLocationWithMatrix4fv
  * @param {int} arg0
  * @param {float*} arg1
@@ -472,18 +484,6 @@ int
  * @method reset
  */
 reset : function (
-)
-{
-},
-
-/**
- * @method bindAttribLocation
- * @param {char*} arg0
- * @param {unsigned int} arg1
- */
-bindAttribLocation : function (
-char, 
-int 
 )
 {
 },
@@ -1209,18 +1209,6 @@ bool
 },
 
 /**
- * @method dispatchCustomEvent
- * @param {String} arg0
- * @param {void*} arg1
- */
-dispatchCustomEvent : function (
-str, 
-void 
-)
-{
-},
-
-/**
  * @method setPriority
  * @param {cc.EventListener} arg0
  * @param {int} arg1
@@ -1765,16 +1753,6 @@ bool
 },
 
 /**
- * @method setPositionZ
- * @param {float} arg0
- */
-setPositionZ : function (
-float 
-)
-{
-},
-
-/**
  * @method setRotation3D
  * @param {cc.Vertex3F} arg0
  */
@@ -1930,6 +1908,16 @@ action
 )
 {
     return cc.Action;
+},
+
+/**
+ * @method setPositionZ
+ * @param {float} arg0
+ */
+setPositionZ : function (
+float 
+)
+{
 },
 
 /**
@@ -2096,16 +2084,6 @@ getParent : function(
 },
 
 /**
- * @method getPositionZ
- * @return {float}
- */
-getPositionZ : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getPositionY
  * @return {float}
  */
@@ -2175,6 +2153,16 @@ getParentToNodeTransform : function (
 )
 {
     return kmMat4;
+},
+
+/**
+ * @method getPositionZ
+ * @return {float}
+ */
+getPositionZ : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -8331,6 +8319,18 @@ enableShadow : function (
 },
 
 /**
+ * @method setDimensions
+ * @param {unsigned int} arg0
+ * @param {unsigned int} arg1
+ */
+setDimensions : function (
+int, 
+int 
+)
+{
+},
+
+/**
  * @method getString
  * @return {String}
  */
@@ -8349,6 +8349,16 @@ disableEffect : function (
 },
 
 /**
+ * @method getWidth
+ * @return {unsigned int}
+ */
+getWidth : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getCommonLineHeight
  * @return {int}
  */
@@ -8359,18 +8369,18 @@ getCommonLineHeight : function (
 },
 
 /**
- * @method breakLineWithoutSpace
- * @return {bool}
+ * @method setWidth
+ * @param {unsigned int} arg0
  */
-breakLineWithoutSpace : function (
+setWidth : function (
+int 
 )
 {
-    return false;
 },
 
 /**
  * @method getMaxLineWidth
- * @return {float}
+ * @return {unsigned int}
  */
 getMaxLineWidth : function (
 )
@@ -8379,20 +8389,10 @@ getMaxLineWidth : function (
 },
 
 /**
- * @method getScaleY
- * @return {float}
+ * @method getHorizontalAlignment
+ * @return {cc.TextHAlignment}
  */
-getScaleY : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getScaleX
- * @return {float}
- */
-getScaleX : function (
+getHorizontalAlignment : function (
 )
 {
     return 0;
@@ -8409,6 +8409,16 @@ str
 },
 
 /**
+ * @method getHeight
+ * @return {unsigned int}
+ */
+getHeight : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setBMFontFilePath
  * @param {String} arg0
  * @param {PointObject} arg1
@@ -8420,6 +8430,16 @@ point
 )
 {
     return false;
+},
+
+/**
+ * @method getStringLength
+ * @return {int}
+ */
+getStringLength : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -8455,16 +8475,6 @@ int
 },
 
 /**
- * @method getStringLenght
- * @return {int}
- */
-getStringLenght : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setCharMap
 * @param {cc.Texture2D|String|String} texture2d
 * @param {int|int} int
@@ -8484,10 +8494,42 @@ int
 
 /**
  * @method setMaxLineWidth
- * @param {float} arg0
+ * @param {unsigned int} arg0
  */
 setMaxLineWidth : function (
-float 
+int 
+)
+{
+},
+
+/**
+ * @method setVerticalAlignment
+ * @param {cc.TextVAlignment} arg0
+ * @param {bool} arg1
+ */
+setVerticalAlignment : function (
+textvalignment, 
+bool 
+)
+{
+},
+
+/**
+ * @method getVerticalAlignment
+ * @return {cc.TextVAlignment}
+ */
+getVerticalAlignment : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setHeight
+ * @param {unsigned int} arg0
+ */
+setHeight : function (
+int 
 )
 {
 },
@@ -8525,11 +8567,27 @@ getTextAlignment : function (
 },
 
 /**
- * @method setAlignment
+ * @method setHorizontalAlignment
  * @param {cc.TextHAlignment} arg0
+ * @param {bool} arg1
  */
-setAlignment : function (
-texthalignment 
+setHorizontalAlignment : function (
+texthalignment, 
+bool 
+)
+{
+},
+
+/**
+ * @method setAlignment
+* @param {cc.TextHAlignment|cc.TextHAlignment} texthalignment
+* @param {cc.TextVAlignment|bool} textvalignment
+* @param {bool} bool
+*/
+setAlignment : function(
+texthalignment,
+textvalignment,
+bool 
 )
 {
 },
@@ -12770,26 +12828,6 @@ getEventName : function (
 },
 
 /**
- * @method setUserData
- * @param {void*} arg0
- */
-setUserData : function (
-void 
-)
-{
-},
-
-/**
- * @method getUserData
- * @return {void*}
- */
-getUserData : function (
-)
-{
-    return void;
-},
-
-/**
  * @method EventCustom
  * @constructor
  * @param {String} arg0
@@ -13609,6 +13647,18 @@ TextFieldTTF : function (
  * @class TextureCache
  */
 cc.TextureCache = {
+
+/**
+ * @method reloadTexture
+ * @param {String} arg0
+ * @return {bool}
+ */
+reloadTexture : function (
+str 
+)
+{
+    return false;
+},
 
 /**
  * @method removeTextureForKey
@@ -15098,20 +15148,6 @@ float
 },
 
 /**
- * @method isScheduled
- * @param {String} arg0
- * @param {void*} arg1
- * @return {bool}
- */
-isScheduled : function (
-str, 
-void 
-)
-{
-    return false;
-},
-
-/**
  * @method performFunctionInCocosThread
  * @param {function} arg0
  */
@@ -15172,18 +15208,6 @@ str
  * @return {bool}
  */
 isEnabled : function (
-)
-{
-    return false;
-},
-
-/**
- * @method serialize
- * @param {void*} arg0
- * @return {bool}
- */
-serialize : function (
-void 
 )
 {
     return false;

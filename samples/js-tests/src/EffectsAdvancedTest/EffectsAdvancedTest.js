@@ -47,6 +47,7 @@ var sceneIndex = -1;
 var EffectAdvanceTextLayer = cc.Layer.extend({
     _atlas:null,
     _title:null,
+	rootNode: null,
 
     ctor:function() {
         this._super();
@@ -56,19 +57,22 @@ var EffectAdvanceTextLayer = cc.Layer.extend({
     onEnter:function () {
         this._super();
 
-
         // back gradient
-        var gradient = cc.LayerGradient.create(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
-        this.addChild(gradient,0, EffectsAdvancedTest.TAG_BACKGROUND);
+        this.rootNode = cc.LayerGradient.create(cc.color(0, 0, 0, 255), cc.color(98, 99, 117, 255));
+	    var nodeGrid = cc.NodeGrid.create();
+	    nodeGrid.addChild(this.rootNode);
+        this.addChild(nodeGrid, 0, EffectsAdvancedTest.TAG_BACKGROUND);
 
         var bg = cc.Sprite.create(s_back3);
         //this.addChild(bg, 0, EffectsAdvancedTest.TAG_BACKGROUND);
-        gradient.addChild(bg);
+	    this.rootNode.addChild(bg);
         bg.x = winSize.width / 2;
         bg.y = winSize.height / 2;
 
         var grossini = cc.Sprite.create(s_pathSister2);
-        gradient.addChild(grossini, 1, EffectsAdvancedTest.TAG_SPRITE1);
+	    var grossiniGrid = cc.NodeGrid.create();
+	    grossiniGrid.addChild(grossini);
+	    this.rootNode.addChild(grossiniGrid, 1, EffectsAdvancedTest.TAG_SPRITE1);
         grossini.x = winSize.width / 3;
         grossini.y = winSize.height / 2;
         var sc = cc.ScaleBy.create(2, 5);
@@ -76,7 +80,9 @@ var EffectAdvanceTextLayer = cc.Layer.extend({
         grossini.runAction(cc.RepeatForever.create(cc.Sequence.create(sc, sc_back)));
 
         var tamara = cc.Sprite.create(s_pathSister1);
-        gradient.addChild(tamara, 1, EffectsAdvancedTest.TAG_SPRITE2);
+	    var tamaraGrid = cc.NodeGrid.create();
+	    tamaraGrid.addChild(tamara);
+	    this.rootNode.addChild(tamaraGrid, 1, EffectsAdvancedTest.TAG_SPRITE2);
         tamara.x = winSize.width * 2 / 3;
         tamara.y = winSize.height / 2;
         var sc2 = cc.ScaleBy.create(2, 5);
@@ -215,14 +221,14 @@ var Effect3 = EffectAdvanceTextLayer.extend({
         this._super();
 
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
-        var target1 = bg.getChildByTag(EffectsAdvancedTest.TAG_SPRITE1);
-        var target2 = bg.getChildByTag(EffectsAdvancedTest.TAG_SPRITE2);
+        var target1 = this.rootNode.getChildByTag(EffectsAdvancedTest.TAG_SPRITE1);
+        var target2 = this.rootNode.getChildByTag(EffectsAdvancedTest.TAG_SPRITE2);
 
         var waves = cc.Waves.create(5, cc.size(15, 10), 5, 20, true, false);
         var shaky = cc.Shaky3D.create(5, cc.size(15, 10), 4, false);
 
-        target1.runAction(cc.RepeatForever.create(waves));
-        target2.runAction(cc.RepeatForever.create(shaky));
+	    target1.runAction(cc.RepeatForever.create(waves));
+	    target2.runAction(cc.RepeatForever.create(shaky));
 
         // moving background. Testing issue #244
         var move = cc.MoveBy.create(3, cc.p(200, 0));
@@ -303,6 +309,7 @@ var Effect5 = EffectAdvanceTextLayer.extend({
         //CCDirector.sharedDirector().setProjection(CCDirectorProjection2D);
         var effect = cc.Liquid.create(2, cc.size(32, 24), 1, 20);
 
+
         var stopEffect = cc.Sequence.create(effect, cc.DelayTime.create(2), cc.StopGrid.create());
 
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
@@ -357,10 +364,12 @@ var arrayOfEffectsAdvancedTest = [
     Effect3,
     Effect2,
     Effect1,
-    Effect4,
     Effect5,
     Issue631
 ];
+
+if (!cc.sys.isNative)
+	arrayOfEffectsAdvancedTest.push(Effect4);
 
 var nextEffectAdvanceAction = function () {
     sceneIndex++;

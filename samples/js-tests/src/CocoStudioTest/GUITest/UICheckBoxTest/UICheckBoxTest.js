@@ -22,39 +22,27 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UICheckBoxTest = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            //init text
-            this._topDisplayLabel.setText("No Event");
-            this._bottomDisplayLabel.setText("CheckBox");
+var UICheckBoxEditorTest = UIBaseLayer.extend({
+    ctor: function () {
+        this._super();
+        var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UICheckBox_Editor/ui_checkbox_editor_1.json");
+        this._mainNode.addChild(root);
 
-            var widgetSize = this._widget.getSize();
-            // Create the checkbox
-            var checkBox = ccui.CheckBox.create();
-            checkBox.setTouchEnabled(true);
-            checkBox.loadTextures("res/cocosgui/check_box_normal.png",
-                "res/cocosgui/check_box_normal_press.png",
-                "res/cocosgui/check_box_active.png",
-                "res/cocosgui/check_box_normal_disable.png",
-                "res/cocosgui/check_box_active_disable.png");
-            checkBox.x = widgetSize.width / 2.0;
-	        checkBox.y = widgetSize.height / 2.0;
-            checkBox.addEventListenerCheckBox(this.selectedStateEvent, this);
-            this._mainNode.addChild(checkBox);
+        var back_label =ccui.helper.seekWidgetByName(root, "back");
+        back_label.addTouchEventListener(this.backEvent,this);
 
-            return true;
-        }
-        return false;
+        var checkbox = ccui.helper.seekWidgetByName(root, "CheckBox_540");
+        checkbox.addEventListenerCheckBox(this.selectedStateEvent,this);
+
     },
 
     selectedStateEvent: function (sender, type) {
         switch (type) {
-            case  ccui.CHECKBOX_EVENT_UNSELECTED:
-                this._topDisplayLabel.setText("Unselected");
-                break;
             case ccui.CHECKBOX_EVENT_SELECTED:
-                this._topDisplayLabel.setText("Selected");
+                this._topDisplayText.setText("Selected");
+                break;
+            case ccui.CHECKBOX_EVENT_UNSELECTED:
+                this._topDisplayText.setText("Unselected");
                 break;
 
             default:

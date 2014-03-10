@@ -22,174 +22,43 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIButtonTest = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            //init text
-            this._topDisplayLabel.setText("No Event");
-            this._bottomDisplayLabel.setText("Button");
+var UIButtonEditorTest = UIBaseLayer.extend({
+    ctor: function () {
+        this._super();
+        var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.json");
+        this._mainNode.addChild(root);
 
-            var widgetSize = this._widget.getSize();
-            // Create the button
-            var button = ccui.Button.create();
-            button.setTouchEnabled(true);
-            button.loadTextures("res/cocosgui/animationbuttonnormal.png", "res/cocosgui/animationbuttonpressed.png", "");
-            button.x = widgetSize.width / 2.0;
-            button.y = widgetSize.height / 2.0;
-            button.addTouchEventListener(this.touchEvent ,this);
-            this._mainNode.addChild(button);
+        var back_label = ccui.helper.seekWidgetByName(root, "back");
+        back_label.addTouchEventListener(this.backEvent,this);
 
-            return true;
-        }
-        return false;
+        var button = ccui.helper.seekWidgetByName(root, "Button_123");
+        button.addTouchEventListener(this.touchEvent,this);
+
+        var title_button = ccui.helper.seekWidgetByName(root, "Button_126");
+        title_button.addTouchEventListener(this.touchEvent,this);
+
+        var scale9_button = ccui.helper.seekWidgetByName(root, "Button_129");
+        scale9_button.addTouchEventListener(this.touchEvent,this);
     },
 
     touchEvent: function (sender, type) {
         switch (type) {
             case ccui.TOUCH_EVENT_TYPE_BAGAN:
-                this._topDisplayLabel.setText("Touch Down");
+                this._topDisplayText.setText("Touch Down");
                 break;
 
             case ccui.TOUCH_EVENT_TYPE_MOVED:
-                this._topDisplayLabel.setText("Touch Move");
+                this._topDisplayText.setText("Touch Move");
                 break;
 
             case ccui.TOUCH_EVENT_TYPE_ENDED:
-                this._topDisplayLabel.setText("Touch Up");
+                this._topDisplayText.setText("Touch Up");
                 break;
 
             case ccui.TOUCH_EVENT_TYPE_CANCELED:
-                this._topDisplayLabel.setText("Touch Cancelled");
+                this._topDisplayText.setText("Touch Cancelled");
                 break;
 
-            default:
-                break;
-        }
-    }
-});
-var UIButtonTest_Scale9 = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            //init text
-            this._topDisplayLabel.setText("No Event");
-            this._bottomDisplayLabel.setText("Button scale9 render");
-
-            // Create the button
-            var button = ccui.Button.create();
-            button.setTouchEnabled(true);
-            button.setScale9Enabled(true);
-            button.loadTextures("res/cocosgui/button.png", "res/cocosgui/buttonHighlighted.png", "");
-            button.x = this._widget.width / 2.0;
-            button.y = this._widget.height / 2.0;
-            button.setSize(cc.size(150, button.height * 1.5));
-            button.addTouchEventListener(this.touchEvent ,this);
-            this._mainNode.addChild(button);
-
-            return true;
-        }
-        return false;
-    },
-
-    touchEvent: function (sender, type) {
-        switch (type) {
-            case ccui.TOUCH_EVENT_TYPE_BAGAN:
-                this._topDisplayLabel.setText("Touch Down");
-                break;
-            case ccui.TOUCH_EVENT_TYPE_MOVED:
-                this._topDisplayLabel.setText("Touch Move");
-                break;
-            case ccui.TOUCH_EVENT_TYPE_ENDED:
-                this._topDisplayLabel.setText("Touch Up");
-                break;
-            case ccui.TOUCH_EVENT_TYPE_CANCELED:
-                this._topDisplayLabel.setText("Touch Cancelled");
-                break;
-
-            default:
-                break;
-        }
-    }
-});
-
-var UIButtonTest_PressedAction = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            //init text
-            this._topDisplayLabel.setText("No Event");
-            this._bottomDisplayLabel.setText("Button Pressed Action");
-
-            var widgetSize = this._widget.getSize();
-            // Create the button
-            var button = ccui.Button.create();
-            button.setTouchEnabled(true);
-            button.setPressedActionEnabled(true);
-            button.loadTextures("res/cocosgui/animationbuttonnormal.png", "res/cocosgui/animationbuttonpressed.png", "");
-            button.x = widgetSize.width / 2;
-            button.y = widgetSize.height / 2;
-            button.addTouchEventListener(this.touchEvent ,this);
-            this._mainNode.addChild(button);
-            return true;
-        }
-        return false;
-    },
-
-    touchEvent: function (sender, type) {
-        switch (type) {
-            case ccui.TOUCH_EVENT_TYPE_BAGAN:
-                this._topDisplayLabel.setText("Touch Down");
-                break;
-            case ccui.TOUCH_EVENT_TYPE_MOVED:
-                this._topDisplayLabel.setText("Touch Move");
-                break;
-            case ccui.TOUCH_EVENT_TYPE_ENDED:
-                this._topDisplayLabel.setText("Touch Up");
-                break;
-            case ccui.TOUCH_EVENT_TYPE_CANCELED:
-                this._topDisplayLabel.setText("Touch Cancelled");
-                break;
-            default:
-                break;
-        }
-    }
-});
-
-var UIButtonTest_Title = UIScene.extend({
-    init: function () {
-        if (this._super()) {
-            var widgetSize = this._widget.getSize();
-            //init text
-            this._topDisplayLabel.setText("No Event");
-            this._bottomDisplayLabel.setText("Button with title");
-
-            // Create the text button
-            var textButton = ccui.Button.create();
-            textButton.setTouchEnabled(true);
-            textButton.loadTextures("res/cocosgui/backtotopnormal.png", "res/cocosgui/backtotoppressed.png", "");
-            textButton.setTitleText("Title Button");
-            textButton.x = widgetSize.width / 2.0;
-            textButton.y = widgetSize.height / 2.0;
-            textButton.addTouchEventListener(this.touchEvent ,this);
-            this._mainNode.addChild(textButton);
-
-            return true;
-        }
-        return false;
-    },
-
-    touchEvent: function (sender, type) {
-        switch (type) {
-            case ccui.TOUCH_EVENT_TYPE_BAGAN:
-                this._topDisplayLabel.setText("Touch Down");
-                break;
-            case ccui.TOUCH_EVENT_TYPE_MOVED:
-                this._topDisplayLabel.setText("Touch Move");
-                break;
-            case ccui.TOUCH_EVENT_TYPE_ENDED:
-                this._topDisplayLabel.setText("Touch Up");
-                break;
-            case ccui.TOUCH_EVENT_TYPE_CANCELED:
-                this._topDisplayLabel.setText("Touch Cancelled");
-                break;
             default:
                 break;
         }

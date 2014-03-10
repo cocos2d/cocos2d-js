@@ -21,211 +21,66 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+var LAYOUT_RES = [
+    "res/cocosgui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.json",
+    "res/cocosgui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ui_layout_color_editor_1.json",
+    "res/cocosgui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ui_layout_gradient_color_editor_1_0.json",
+    "res/cocosgui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ui_layout_backgroundimage_editor_1_0_0.json",
+    "res/cocosgui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ui_layout_scale9_backgroundimage_editor.json",
+    "res/cocosgui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ui_layout_linear_vertical_layout_editor.json",
+    "res/cocosgui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ui_layout_linear_horizontal_layout_editor.json",
+    "res/cocosgui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ui_layout_relative_align_parent_editor.json",
+    "res/cocosgui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ui_layout_relative_align_location_editor.json"
+];
+var LAYOUT_INDEX = 0;
+var UILayoutEditorTest = UIBaseLayer.extend({
+    ctor: function () {
+        this._super();
+        var root = ccs.guiReader.widgetFromJsonFile(LAYOUT_RES[LAYOUT_INDEX]);
+        this._mainNode.addChild(root);
 
-var UILayoutTestBase = UIScene.extend({
-    layout: null,
-    button: null,
-    textButton: null,
-    button_scale9: null,
-    init: function () {
-        if (this._super()) {
-            var widgetSize = this._widget.getSize();
-            //init text
-            this._topDisplayLabel.setText("");
-            this._bottomDisplayLabel.setText(this.getText());
-            this._bottomDisplayLabel.x = widgetSize.width / 2;
-            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+        var back_label = ccui.helper.seekWidgetByName(root, "back");
+        back_label.addTouchEventListener(this.backEvent, this);
 
-            var background = this._widget.getChildByName("background_Panel");
+        var left_button = ccui.Button.create();
+        left_button.loadTextures("res/Images/b1.png", "res/Images/b2.png", "");
+        left_button.x = 240-50;
+        left_button.y = 50;
+        left_button.anchorX = 0.5;
+        left_button.anchorY = 0.5;
+        left_button.zOrder = 999;
+        left_button.addTouchEventListener(this.previousCallback, this);
+        this._mainNode.addChild(left_button);
 
-            // Create the layout
-            this.layout = this.createLayout();
-            var  layoutRect = this.layout.getSize();
-            var backgroundRect = background.getSize();
-            this.layout.x = (widgetSize.width - backgroundRect.width) / 2 + (backgroundRect.width - layoutRect.width) / 2;
-	        this.layout.y = (widgetSize.height - backgroundRect.height) / 2 + (backgroundRect.height - layoutRect.height) / 2;
-            this._mainNode.addChild(this.layout);
-
-            this.button = ccui.Button.create();
-            this.button.setTouchEnabled(true);
-            this.button.loadTextures("res/cocosgui/animationbuttonnormal.png", "res/cocosgui/animationbuttonpressed.png", "");
-            this.button.x = this.button.width / 2;
-            this.button.y = layoutRect.height - this.button.height / 2;
-            this.layout.addChild(this.button);
-
-            this.textButton = ccui.Button.create();
-            this.textButton.setTouchEnabled(true);
-            this.textButton.loadTextures("res/cocosgui/backtotopnormal.png", "res/cocosgui/backtotoppressed.png", "");
-            this.textButton.setTitleText("Text Button");
-            this.textButton.x = layoutRect.width / 2;
-            this.textButton.y = layoutRect.height / 2;
-            this.layout.addChild(this.textButton);
-
-            this.button_scale9 = ccui.Button.create();
-            this.button_scale9.setTouchEnabled(true);
-            this.button_scale9.loadTextures("res/cocosgui/button.png", "res/cocosgui/buttonHighlighted.png", "");
-            this.button_scale9.setScale9Enabled(true);
-            this.button_scale9.width = 100;
-	        this.button_scale9.height = this.button_scale9.height;
-            this.button_scale9.x = layoutRect.width - this.button_scale9.width / 2;
-            this.button_scale9.y = this.button_scale9.height / 2;
-            this.layout.addChild(this.button_scale9);
-
-            this.setLayoutParameter();
-            return true;
+        var right_button = ccui.Button.create();
+        right_button.loadTextures("res/Images/f1.png", "res/Images/f2.png", "");
+        right_button.x = 240+50;
+        right_button.y = 50;
+        right_button.zOrder = 999;
+        right_button.anchorX = 0.5;
+        right_button.anchorY = 0.5;
+        right_button.addTouchEventListener(this.nextCallback, this);
+        this._mainNode.addChild(right_button);
+    },
+    previousCallback: function (render, type) {
+        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+            LAYOUT_INDEX--;
+            if (LAYOUT_INDEX < 0)LAYOUT_INDEX = LAYOUT_RES.length-1;
+            if (LAYOUT_INDEX >= LAYOUT_RES.length)LAYOUT_INDEX = 0;
+            this.runNextScene();
         }
-        return false;
     },
-    getText: function () {
-        return "";
+    nextCallback: function (render, type) {
+        if (type == ccui.TOUCH_EVENT_TYPE_ENDED) {
+            LAYOUT_INDEX++;
+            if (LAYOUT_INDEX < 0)LAYOUT_INDEX = LAYOUT_RES.length-1;
+            if (LAYOUT_INDEX >= LAYOUT_RES.length)LAYOUT_INDEX = 0;
+            this.runNextScene();
+        }
     },
-    createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setSize(cc.size(280, 150));
-        return layout;
-    },
-    setLayoutParameter: function () {
-
-    }
-});
-var UILayoutTest = UILayoutTestBase.extend({
-    createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setSize(cc.size(280, 150));
-        return layout;
-    },
-    getText: function () {
-        return "Layout";
-    }
-});
-var UILayoutTest_Color = UILayoutTestBase.extend({
-    createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setBackGroundColorType(ccui.LAYOUT_BG_COLOR_SOLID);
-        layout.setBackGroundColor(cc.color(128, 128, 128));
-        layout.setSize(cc.size(280, 150));
-        return layout;
-    },
-    getText: function () {
-        return "Layout color render";
-    }
-});
-var UILayoutTest_Gradient = UILayoutTestBase.extend({
-    createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setBackGroundColorType(ccui.LAYOUT_BG_COLOR_GRADIENT);
-        layout.setBackGroundColor(cc.color(64, 64, 64), cc.color(192, 192, 192));
-        layout.setSize(cc.size(280, 150));
-        return layout;
-    },
-    getText: function () {
-        return "Layout gradient render";
-    }
-});
-var UILayoutTest_BackGroundImage = UILayoutTestBase.extend({
-    createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setClippingEnabled(true);
-        layout.setBackGroundImage("res/cocosgui/Hello.png");
-        layout.setSize(cc.size(280, 150));
-        return layout;
-    },
-    getText: function () {
-        return "Layout background image";
-    }
-});
-
-var UILayoutTest_BackGroundImage_Scale9 = UILayoutTestBase.extend({
-    createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setBackGroundImageScale9Enabled(true);
-        layout.setBackGroundImage("res/cocosgui/green_edit.png");
-        layout.setSize(cc.size(280, 150));
-        return layout;
-    },
-    getText: function () {
-        return "Layout background image scale9";
-    }
-});
-var UILayoutTest_Layout_Linear_Vertical = UILayoutTestBase.extend({
-    createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setLayoutType(ccui.LAYOUT_TYPE_LINEAR_VERTICAL);
-        layout.setSize(cc.size(280, 150));
-        return layout;
-    },
-    getText: function () {
-        return "Layout Layout Linear Vertical";
-    },
-    setLayoutParameter: function () {
-        var lp1 = ccui.LinearLayoutParameter.create();
-        this.button.setLayoutParameter(lp1);
-        lp1.setGravity(ccui.LINEAR_GRAVITY_CENTER_HORIZONTAL);
-        lp1.setMargin(new ccui.Margin(0, 5, 0, 10));
-
-        var lp2 = ccui.LinearLayoutParameter.create();
-        this.textButton.setLayoutParameter(lp2);
-        lp2.setGravity(ccui.LINEAR_GRAVITY_CENTER_HORIZONTAL);
-        lp2.setMargin(new ccui.Margin(0, 10, 0, 10));
-
-        var lp3 = ccui.LinearLayoutParameter.create();
-        this.button_scale9.setLayoutParameter(lp3);
-        lp3.setGravity(ccui.LINEAR_GRAVITY_CENTER_HORIZONTAL);
-        lp3.setMargin(new ccui.Margin(0, 10, 0, 10));
-    }
-});
-var UILayoutTest_Layout_Linear_Horizontal = UILayoutTestBase.extend({
-    createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setLayoutType(ccui.LAYOUT_TYPE_LINEAR_HORIZONTAL);
-        layout.setClippingEnabled(true);
-        layout.setSize(cc.size(280, 150));
-        return layout;
-    },
-    getText: function () {
-        return "Layout Layout Linear Horizontal";
-    },
-    setLayoutParameter: function () {
-        var lp1 = ccui.LinearLayoutParameter.create();
-        this.button.setLayoutParameter(lp1);
-        lp1.setGravity(ccui.LINEAR_GRAVITY_CENTER_VERTICAL);
-        lp1.setMargin(new ccui.Margin(0, 10, 0, 10));
-
-        var lp2 = ccui.LinearLayoutParameter.create();
-        this.textButton.setLayoutParameter(lp2);
-        lp2.setGravity(ccui.LINEAR_GRAVITY_CENTER_VERTICAL);
-        lp2.setMargin(new ccui.Margin(0, 10, 0, 10));
-
-        var lp3 = ccui.LinearLayoutParameter.create();
-        this.button_scale9.setLayoutParameter(lp3);
-        lp3.setGravity(ccui.LINEAR_GRAVITY_CENTER_VERTICAL);
-        lp3.setMargin(new ccui.Margin(0, 10, 0, 10));
-    }
-});
-
-var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
-    createLayout: function () {
-        var layout = ccui.Layout.create();
-        layout.setLayoutType(ccui.LAYOUT_TYPE_RELATIVE);
-        layout.setSize(cc.size(280, 150));
-        layout.setBackGroundColorType(ccui.LAYOUT_BG_COLOR_SOLID);
-        layout.setBackGroundColor(cc.color.GREEN);
-        return layout;
-    },
-    getText: function () {
-        return "Layout Layout Relative";
-    },
-    setLayoutParameter: function () {
-        var lp1 = ccui.RelativeLayoutParameter.create();
-        this.button.setLayoutParameter(lp1);
-        lp1.setGravity(ccui.RELATIVE_ALIGN_PARENT_LEFT_BOTTOM);
-
-        var lp2 = ccui.RelativeLayoutParameter.create();
-        this.textButton.setLayoutParameter(lp2);
-        lp2.setGravity(ccui.RELATIVE_ALIGN_PARENT_LEFT_BOTTOM);
-
-        var lp3 = ccui.RelativeLayoutParameter.create();
-        this.button_scale9.setLayoutParameter(lp3);
-        lp3.setGravity(ccui.RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL);
+    runNextScene: function () {
+        var scene = cc.Scene.create();
+        scene.addChild(new UILayoutEditorTest());
+        cc.director.runScene(scene);
     }
 });
