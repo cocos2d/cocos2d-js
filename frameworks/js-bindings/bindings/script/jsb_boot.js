@@ -564,6 +564,10 @@ cc.defineGetterSetter(cc.loader, "audioPath", function(){
 cc.director = cc.Director.getInstance();
 cc.winSize = cc.director.getWinSize();
 cc.view = cc.director.getOpenGLView();
+cc.view.getDevicePixelRatio = function () {return 1;};
+cc.view.enableRetina = function(enabled) {};
+cc.view.isRetinaEnabled = function() {return false;};
+
 cc.eventManager = cc.director.getEventDispatcher();
 cc.audioEngine = cc.AudioEngine.getInstance();
 cc.audioEngine.end = function(){
