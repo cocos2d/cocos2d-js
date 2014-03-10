@@ -609,7 +609,7 @@ ccs.sceneReader = ccs.SceneReader.getInstance();
 ccs.sceneReader.clear = ccs.guiReader.clear = ccs.actionManager.clear = ccs.armatureDataManager.clear = function() {};
 ccs.sceneReader.version = function() {
     return ccs.SceneReader.sceneReaderVersion();
-}
+};
 
 //+++++++++++++++++++++++Define singleton objects end+++++++++++++++++++++++++++
 
