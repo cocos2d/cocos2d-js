@@ -4,6 +4,7 @@
         "../../js-bindings/cocos2d-x",
         "../../js-bindings/cocos2d-x/cocos/",
         "../../js-bindings/cocos2d-x/external",
+        "../../js-bindings",
         "../../js-bindings/external"
     ],
     "copy_to_assets" :[
