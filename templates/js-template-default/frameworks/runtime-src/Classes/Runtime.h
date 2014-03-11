@@ -33,7 +33,7 @@ using namespace std;
 
 void startRuntime();
 
-void reloadScript(string modulefile);
+void reloadScript(const string& modulefile);
 
 // SimulatorConfig
 typedef struct _SimulatorScreenSize {

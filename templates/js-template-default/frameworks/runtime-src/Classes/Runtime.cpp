@@ -234,16 +234,15 @@ void startScript()
 	ScriptingCore::getInstance()->runScript("main.js");
 }
 
-void reloadScript(string modulefile)
+void reloadScript(const string& file)
 {
+	string modulefile = file;
 	if (modulefile.empty())
 	{
 		modulefile = "main.js";
 	}
-	
     auto core = ScriptingCore::getInstance();
     core->reset();
-    core->runScript("jsb_boot.js");
     core->runScript(modulefile.c_str());
 }
 
@@ -752,8 +751,7 @@ void startRuntime()
 	ScriptingCore::getInstance()->enableDebugger();
 	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->runScript("jsb_boot.js");
-    
+
     auto scene = Scene::create();
     auto layer = new ConnectWaitLayer();
     layer->autorelease();

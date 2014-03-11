@@ -68,8 +68,7 @@
          "project_replace_package_name":{
             "src_package_name":"org.cocos2dx.hellojavascript",
             "files":[
-               "frameworks/runtime-src/proj.android/AndroidManifest.xml",
-               "frameworks/runtime-src/proj.ios_mac/Info.plist"
+               "frameworks/runtime-src/proj.android/AndroidManifest.xml"
             ]
          }
     }
