@@ -138,8 +138,15 @@ static bool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *cx
         jsval *argv = JS_ARGV(cx, vp);
 
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
-        cobj->setUserObject(tmpObj);
-        tmpObj->release();
+        tmpObj->autorelease();
+        
+        cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
+        if (nullptr == dict)
+        {
+            dict = cocos2d::__Dictionary::create();
+            cobj->setUserObject(dict);
+        }
+        dict->setObject(tmpObj, "moveEvent");
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -163,8 +170,15 @@ static bool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx, u
         jsval *argv = JS_ARGV(cx, vp);
 
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
-        cobj->setUserObject(tmpObj);
-        tmpObj->release();
+        tmpObj->autorelease();
+        
+        cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
+        if (nullptr == dict)
+        {
+            dict = cocos2d::__Dictionary::create();
+            cobj->setUserObject(dict);
+        }
+        dict->setObject(tmpObj, "frameEvent");
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
