@@ -234,12 +234,17 @@ void startScript()
 	ScriptingCore::getInstance()->runScript("main.js");
 }
 
-void reloadScript()
+void reloadScript(string modulefile)
 {
+	if (modulefile.empty())
+	{
+		modulefile = "main.js";
+	}
+	
     auto core = ScriptingCore::getInstance();
     core->reset();
     core->runScript("jsb_boot.js");
-    core->runScript("main.js");
+    core->runScript(modulefile.c_str());
 }
 
 
@@ -716,8 +721,8 @@ public:
     
     void onReloadScriptFile(int fd,const std::string &args)
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){
-             reloadScript();
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+             reloadScript(args.c_str());
         });
     }
     
