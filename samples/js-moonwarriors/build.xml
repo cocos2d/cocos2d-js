@@ -50,9 +50,7 @@
                 <file name="core/CCScheduler.js"/>
                 <file name="core/CCLoader.js"/>
                 <!--<file name="core/CCDrawingPrimitives.js"/> -->
-                <file name="core/platform/CCApplication.js"/>
                 <file name="core/platform/CCSAXParser.js"/>
-                <file name="core/platform/AppControl.js"/>
                 <file name="core/labelTTF/CCLabelTTF.js"/>
                 <file name="core/CCActionManager.js"/>
                 <!--<file name="kazmath/utility.js"/>
