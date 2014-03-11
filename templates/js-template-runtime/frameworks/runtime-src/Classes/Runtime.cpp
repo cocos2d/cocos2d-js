@@ -234,12 +234,16 @@ void startScript()
 	ScriptingCore::getInstance()->runScript("main.js");
 }
 
-void reloadScript()
+void reloadScript(const string& file)
 {
+	string modulefile = file;
+	if (modulefile.empty())
+	{
+		modulefile = "main.js";
+	}
     auto core = ScriptingCore::getInstance();
     core->reset();
-    core->runScript("jsb_boot.js");
-    core->runScript("main.js");
+    core->runScript(modulefile.c_str());
 }
 
 
@@ -646,8 +650,20 @@ void FileServer::loop()
 
 	// clean up: ignore stdin, stdout and stderr
 	for(const auto &fd: _fds )
+	{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+		closesocket(fd);
+#else
 		close(fd);
+#endif
+	}
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	closesocket(_listenfd);
+	WSACleanup();
+#else
 	close(_listenfd);
+#endif
 
 	_running = false;
 }
@@ -704,8 +720,8 @@ public:
     
     void onReloadScriptFile(int fd,const std::string &args)
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){
-             reloadScript();
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+             reloadScript(args.c_str());
         });
     }
     
@@ -735,8 +751,7 @@ void startRuntime()
 	ScriptingCore::getInstance()->enableDebugger();
 	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->runScript("jsb_boot.js");
-    
+
     auto scene = Scene::create();
     auto layer = new ConnectWaitLayer();
     layer->autorelease();
