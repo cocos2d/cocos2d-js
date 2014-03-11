@@ -153,7 +153,6 @@ var GuiTestMainLayer = cc.Layer.extend({
     touchEvent:function(sender,type){
         if(type==ccui.Widget.TOUCH_ENDED){
             var tag = sender.tag;
-            console.log(tag);
             var scene = cc.Scene.create();
              var guiTest = s_GuiTestEditorArray[tag];
              scene.addChild(guiTest.layer());
