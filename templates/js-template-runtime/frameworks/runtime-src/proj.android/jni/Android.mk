@@ -7,7 +7,9 @@ LOCAL_MODULE := cocos2djs_shared
 LOCAL_MODULE_FILENAME := libcocos2djs
 
 LOCAL_SRC_FILES := hellojavascript/main.cpp \
-                   ../../Classes/AppDelegate.cpp 
+				   hellojavascript/Runtime_android.cpp \
+                   ../../Classes/AppDelegate.cpp \
+				   ../../Classes/Runtime.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
@@ -19,8 +21,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES += jsb_gui_static
 LOCAL_WHOLE_STATIC_LIBRARIES += jsb_studio_static
 LOCAL_WHOLE_STATIC_LIBRARIES += jsb_network_static
 LOCAL_WHOLE_STATIC_LIBRARIES += jsb_builder_static
-DCOCOS2D_JAVASCRIPT
-LOCAL_EXPORT_CFLAGS := -DCOCOS2D_DEBUG=2 -
+
+LOCAL_EXPORT_CFLAGS := -DCOCOS2D_DEBUG=2 -DCOCOS2D_JAVASCRIPT
 
 include $(BUILD_SHARED_LIBRARY)
 
