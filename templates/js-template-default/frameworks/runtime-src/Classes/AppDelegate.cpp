@@ -13,7 +13,6 @@
 #include "localstorage/js_bindings_system_registration.h"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
-#include "Runtime.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -60,15 +59,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_chipmunk);
     sc->start();
     
-#ifdef COCOS2D_DEBUG
-    startRuntime();
-#else
+
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    ScriptingCore::getInstance()->runScript("jsb_boot.js");
 	ScriptingCore::getInstance()->runScript("main.js");
-#endif
-    
+
     return true;
 }
 

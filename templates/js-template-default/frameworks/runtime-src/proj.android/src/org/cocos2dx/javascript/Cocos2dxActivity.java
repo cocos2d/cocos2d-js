@@ -37,30 +37,4 @@ public class Cocos2dxActivity extends NativeActivity{
 		
 	}
 
-	public static String getLocalIpAddress() {
-		try {
-			for (Enumeration<NetworkInterface> en = NetworkInterface
-					.getNetworkInterfaces(); en.hasMoreElements();) {
-				NetworkInterface intf = en.nextElement();
-				for (Enumeration<InetAddress> enumIpAddr = intf
-						.getInetAddresses(); enumIpAddr.hasMoreElements();) {
-					InetAddress inetAddress = enumIpAddr.nextElement();
-					if (!inetAddress.isLoopbackAddress() && !inetAddress.isLinkLocalAddress()) {
-						return inetAddress.getHostAddress().toString();
-					}
-				}
-			}
-		} catch (SocketException ex) {
-			Log.e("WifiPreference IpAddress", ex.toString());
-		}
-		return null;
-	}
-	
-	public static String getSDCardPath() {
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {  
-           return  Environment.getExternalStorageDirectory().getPath();
-		}
-		return null;
-	}
-	
 }

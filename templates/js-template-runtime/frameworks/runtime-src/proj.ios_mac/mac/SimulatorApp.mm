@@ -247,7 +247,7 @@ using namespace cocos2d;
 
 - (IBAction) onReloadScript:(id)sender
 {
-    reloadScript();
+    reloadScript("");
 }
 
 
