@@ -11,23 +11,23 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\auto\jsb_cocos2dx_gui_auto.cpp">
+    <ClCompile Include="..\auto\jsb_cocos2dx_ui_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
-    <ClCompile Include="..\manual\gui\jsb_cocos2dx_gui_manual.cpp">
+    <ClCompile Include="..\manual\ui\jsb_cocos2dx_ui_manual.cpp">
       <Filter>manual</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\auto\jsb_cocos2dx_gui_auto.hpp">
+    <ClInclude Include="..\auto\jsb_cocos2dx_ui_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
-    <ClInclude Include="..\manual\gui\jsb_cocos2dx_gui_manual.h">
+    <ClInclude Include="..\manual\ui\jsb_cocos2dx_ui_manual.h">
       <Filter>manual</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\auto\jsb_cocos2dx_gui_auto_api.js">
+    <None Include="..\auto\jsb_cocos2dx_ui_auto_api.js">
       <Filter>auto</Filter>
     </None>
   </ItemGroup>

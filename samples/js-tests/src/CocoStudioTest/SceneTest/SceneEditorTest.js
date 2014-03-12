@@ -121,7 +121,7 @@ var SceneEditorTestLayer = BaseTestLayer.extend({
         ccs.armatureDataManager.clear();
         ccs.sceneReader.clear();
         ccs.actionManager.clear();
-        ccs.guiReader.clear();
+        ccs.uiReader.clear();
         this._super();
     },
     initSize:function(node){
