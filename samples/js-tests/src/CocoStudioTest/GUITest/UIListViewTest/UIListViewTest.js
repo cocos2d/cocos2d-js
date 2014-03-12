@@ -29,7 +29,7 @@ var LISTVIEW_INDEX = 0;
 var UIListViewEditorTest = UIBaseLayer.extend({
     ctor: function () {
         this._super();
-        var root = ccs.guiReader.widgetFromJsonFile(LISTVIEW_RES[LISTVIEW_INDEX]);
+        var root = ccs.uiReader.widgetFromJsonFile(LISTVIEW_RES[LISTVIEW_INDEX]);
         this._mainNode.addChild(root);
 
         var back_label = ccui.helper.seekWidgetByName(root, "back");

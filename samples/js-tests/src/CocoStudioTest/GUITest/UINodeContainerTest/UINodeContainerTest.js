@@ -25,7 +25,7 @@
 var UIWidgetAddNodeEditorTest = UIBaseLayer.extend({
     ctor: function () {
         this._super();
-        var root = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json");
+        var root = ccs.uiReader.widgetFromJsonFile("res/cocosgui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json");
         this._mainNode.addChild(root);
 
         var back_label =ccui.helper.seekWidgetByName(root, "back");
