@@ -263,3 +263,81 @@ cc.TMXTiledMap.create = function (tmxFile,resourcePath) {
     }
     return null;
 };
+
+
+
+
+/************************************************************
+ *
+ * Constructors with built in init function
+ *
+ ************************************************************/
+
+_cc = {};
+
+// Layers
+_cc.Layer = cc.Layer;
+cc.Layer = _cc.Layer.extend({
+    ctor: function() {
+	    _cc.Layer.prototype.ctor.call(this);
+
+		this.setAnchorPoint(cc.p(0.5, 0.5));
+	    this.ignoreAnchorPointForPosition(true);
+	    this.setContentSize(cc.winSize);
+    }
+});
+cc.Layer.create = _cc.Layer.create;
+
+
+_cc.LayerColor = cc.LayerColor;
+cc.LayerColor = _cc.LayerColor.extend({
+	ctor: function(color, w, h) {
+		_cc.LayerColor.prototype.ctor.call(this);
+
+		color = color ||  cc.color(0, 0, 0, 255);
+		w = w === undefined ? cc.winSize.width : w;
+		h = h === undefined ? cc.winSize.height : h;
+
+		this.setColor(color);
+		this.setContentSize(w, h);
+	}
+});
+cc.LayerColor.create = _cc.LayerColor.create;
+
+
+_cc.LayerGradient = cc.LayerGradient;
+cc.LayerGradient = _cc.LayerGradient.extend({
+	ctor: function(start, end, v) {
+		_cc.LayerGradient.prototype.ctor.call(this);
+
+		start = start || cc.color(0,0,0,255);
+		end = end || cc.color(0,0,0,255);
+		v = v || cc.p(0, -1);
+
+		this.setStartColor(start);
+		this.setEndColor(end);
+		this.setVector(v);
+		this.setColor(cc.color(start.r, start.g, start.b, 255));
+	}
+});
+cc.LayerGradient.create = _cc.LayerGradient.create;
+
+
+/*
+_cc.LayerMultiplex = cc.LayerMultiplex;
+cc.LayerMultiplex = _cc.LayerMultiplex.extend({
+	ctor: function(layers) {
+		_cc.LayerMultiplex.prototype.ctor.call(this);
+
+		var l = layers ? layers.length : 0;
+		for (var i = 0; i < l; i++) {
+			this.addLayer(layers[i]);
+		}
+		if (l > 0) {
+			this.switchTo(0);
+		}
+	}
+});
+cc.LayerMultiplex.create = _cc.LayerMultiplex.create;*/
+
+
