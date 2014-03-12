@@ -1,13 +1,13 @@
 //
-//  jsb_cocos2dx_gui_manual.h
+//  jsb_cocos2dx_ui_manual.h
 //
 //  Created by LinWenhai on 17/11/13.
 //
 //
-#include "jsb_cocos2dx_gui_manual.h"
+#include "jsb_cocos2dx_ui_manual.h"
 #include "ScriptingCore.h"
 #include "cocos2d_specifics.hpp"
-#include "gui/CocosGUI.h"
+#include "ui/CocosGUI.h"
 
 using namespace cocos2d;
 using namespace cocos2d::ui;

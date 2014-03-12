@@ -338,8 +338,8 @@ var testNames = [
         }
     },
     {
-        title:"GUI Test",
-        resource:g_gui,
+        title:"UI Test",
+        resource:g_ui,
         platforms: PLATFORM_ALL,
         testScene:function () {
             return new GUITestScene();

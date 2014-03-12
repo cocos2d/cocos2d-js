@@ -33,7 +33,7 @@ var UIButtonTest = UIScene.extend({
             // Create the button
             var button = ccui.Button.create();
             button.setTouchEnabled(true);
-            button.loadTextures("res/cocosgui/animationbuttonnormal.png", "res/cocosgui/animationbuttonpressed.png", "");
+            button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
             button.x = widgetSize.width / 2.0;
             button.y = widgetSize.height / 2.0;
             button.addTouchEventListener(this.touchEvent, this);
@@ -78,7 +78,7 @@ var UIButtonTest_Scale9 = UIScene.extend({
             var button = ccui.Button.create();
             button.setTouchEnabled(true);
             button.setScale9Enabled(true);
-            button.loadTextures("res/cocosgui/button.png", "res/cocosgui/buttonHighlighted.png", "");
+            button.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
             button.x = this._widget.width / 2.0;
             button.y = this._widget.height / 2.0;
             button.setSize(cc.size(150, button.height * 1.5));
@@ -123,7 +123,7 @@ var UIButtonTest_PressedAction = UIScene.extend({
             var button = ccui.Button.create();
             button.setTouchEnabled(true);
             button.setPressedActionEnabled(true);
-            button.loadTextures("res/cocosgui/animationbuttonnormal.png", "res/cocosgui/animationbuttonpressed.png", "");
+            button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
             button.x = widgetSize.width / 2;
             button.y = widgetSize.height / 2;
             button.addTouchEventListener(this.touchEvent ,this);
@@ -164,7 +164,7 @@ var UIButtonTest_Title = UIScene.extend({
             // Create the text button
             var textButton = ccui.Button.create();
             textButton.setTouchEnabled(true);
-            textButton.loadTextures("res/cocosgui/backtotopnormal.png", "res/cocosgui/backtotoppressed.png", "");
+            textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
             textButton.setTitleText("Title Button");
             textButton.x = widgetSize.width / 2.0;
             textButton.y = widgetSize.height / 2.0;

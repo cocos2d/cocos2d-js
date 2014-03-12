@@ -11,15 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\auto\jsb_cocos2dx_gui_auto.cpp" />
-    <ClCompile Include="..\manual\gui\jsb_cocos2dx_gui_manual.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_ui_auto.cpp" />
+    <ClCompile Include="..\manual\ui\jsb_cocos2dx_ui_manual.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\auto\jsb_cocos2dx_gui_auto.hpp" />
-    <ClInclude Include="..\manual\gui\jsb_cocos2dx_gui_manual.h" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_ui_auto.hpp" />
+    <ClInclude Include="..\manual\ui\jsb_cocos2dx_ui_manual.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\auto\jsb_cocos2dx_gui_auto_api.js" />
+    <None Include="..\auto\jsb_cocos2dx_ui_auto_api.js" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9A844C88-97E8-4E2D-B09A-E138C67D338B}</ProjectGuid>
