@@ -609,14 +609,14 @@ cc.screen = {
 ccui.helper = ccui.Helper;
 
 // In extension
-ccs.guiReader = ccs.GUIReader.getInstance();
+ccs.uiReader = ccs.GUIReader.getInstance();
 ccs.armatureDataManager = ccs.ArmatureDataManager.getInstance();
 ccs.actionManager = ccs.ActionManager.getInstance();
 ccs.sceneReader = ccs.SceneReader.getInstance();
 //ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
 //ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
 
-ccs.sceneReader.clear = ccs.guiReader.clear = ccs.actionManager.clear = ccs.armatureDataManager.clear = function() {};
+ccs.sceneReader.clear = ccs.uiReader.clear = ccs.actionManager.clear = ccs.armatureDataManager.clear = function() {};
 ccs.sceneReader.version = function() {
     return ccs.SceneReader.sceneReaderVersion();
 };

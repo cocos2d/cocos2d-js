@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 var LISTVIEW_RES = [
-    "res/cocosgui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/ui_listview_editor_1.json",
-    "res/cocosgui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/ui_listview_horizontal_editor_1.json"
+    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/ui_listview_editor_1.json",
+    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/ui_listview_horizontal_editor_1.json"
 ];
 var LISTVIEW_INDEX = 0;
 var UIListViewEditorTest = UIBaseLayer.extend({

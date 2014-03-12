@@ -48,14 +48,14 @@ var UILayoutTestBase = UIScene.extend({
 
             this.button = ccui.Button.create();
             this.button.setTouchEnabled(true);
-            this.button.loadTextures("res/cocosgui/animationbuttonnormal.png", "res/cocosgui/animationbuttonpressed.png", "");
+            this.button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
             this.button.x = this.button.width / 2;
             this.button.y = layoutRect.height - this.button.height / 2;
             this.layout.addChild(this.button);
 
             this.textButton = ccui.Button.create();
             this.textButton.setTouchEnabled(true);
-            this.textButton.loadTextures("res/cocosgui/backtotopnormal.png", "res/cocosgui/backtotoppressed.png", "");
+            this.textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
             this.textButton.setTitleText("Text Button");
             this.textButton.x = layoutRect.width / 2;
             this.textButton.y = layoutRect.height / 2;
@@ -63,7 +63,7 @@ var UILayoutTestBase = UIScene.extend({
 
             this.button_scale9 = ccui.Button.create();
             this.button_scale9.setTouchEnabled(true);
-            this.button_scale9.loadTextures("res/cocosgui/button.png", "res/cocosgui/buttonHighlighted.png", "");
+            this.button_scale9.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
             this.button_scale9.setScale9Enabled(true);
             this.button_scale9.width = 100;
 	        this.button_scale9.height = this.button_scale9.height;
@@ -126,7 +126,7 @@ var UILayoutTest_BackGroundImage = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
         layout.setClippingEnabled(true);
-        layout.setBackGroundImage("res/cocosgui/Hello.png");
+        layout.setBackGroundImage("res/cocosui/Hello.png");
         layout.setSize(cc.size(280, 150));
         return layout;
     },
@@ -139,7 +139,7 @@ var UILayoutTest_BackGroundImage_Scale9 = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
         layout.setBackGroundImageScale9Enabled(true);
-        layout.setBackGroundImage("res/cocosgui/green_edit.png");
+        layout.setBackGroundImage("res/cocosui/green_edit.png");
         layout.setSize(cc.size(280, 150));
         return layout;
     },
