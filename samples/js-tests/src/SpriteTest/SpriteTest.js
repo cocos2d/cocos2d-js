@@ -4197,18 +4197,14 @@ var SpriteNilTexture = SpriteTestDemo.extend({
 var MySprite1 = cc.Sprite.extend({
     _ivar:0,
 	ctor: function(spriteFrameName) {
-		this._super();
-		var pFrame = spriteFrameCache.getSpriteFrame(spriteFrameName);
-		this.setSpriteFrame(pFrame);
+		this._super(spriteFrameName);
 	}
 });
 
 var MySprite2 = cc.Sprite.extend({
     _ivar:0,
 	ctor: function(name) {
-		this._super();
-		//var texture = cc.textureCache.addImage();
-		this.setTexture(name);
+		this._super(name);
 	}
 });
 
@@ -4223,7 +4219,7 @@ var SpriteSubclass = SpriteTestDemo.extend({
 		var aParent = cc.SpriteBatchNode.create(s_ghosts);
 
 		// MySprite1
-		var sprite = new MySprite1("father.gif");
+		var sprite = new MySprite1("#father.gif");
 		sprite.x = winSize.width / 4;
 		sprite.y = winSize.height / 2;
 		aParent.addChild(sprite);
@@ -4756,8 +4752,7 @@ var DoubleSprite = cc.Sprite.extend({
     HD:false,
 
     ctor:function (fileName) {
-	    this._super();
-        this.setTexture(fileName);
+	    this._super(fileName);
         //var resolutionType = texture.getResolutionType();
         //this.HD = ( resolutionType == cc.kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
     },
@@ -4799,11 +4794,6 @@ var DoubleSprite = cc.Sprite.extend({
 cc.defineGetterSetter(DoubleSprite.prototype, "width", DoubleSprite.prototype._getWidth, DoubleSprite.prototype._setWidth);
 cc.defineGetterSetter(DoubleSprite.prototype, "height", DoubleSprite.prototype._getHeight, DoubleSprite.prototype._setHeight);
 
-DoubleSprite.create = function (fileName) {
-    var pSp = new DoubleSprite(fileName);
-    return pSp;
-};
-
 var SpriteDoubleResolution = SpriteTestDemo.extend({
 
     _title:"Sprite Double resolution",
@@ -4816,17 +4806,17 @@ var SpriteDoubleResolution = SpriteTestDemo.extend({
         // LEFT: SD sprite
         //
         // there is no HD resolution file of grossini_dance_08.
-        var spriteSD = DoubleSprite.create(s_grossiniDance08);
+        var spriteSD = new DoubleSprite(s_grossiniDance08);
         this.addChild(spriteSD);
         spriteSD.x = winSize.width / 4;
         spriteSD.y = winSize.height / 2;
 
-        var child1_left = DoubleSprite.create(s_grossiniDance08);
+        var child1_left = new DoubleSprite(s_grossiniDance08);
         spriteSD.addChild(child1_left);
         child1_left.x = -30;
         child1_left.y = 0;
 
-        var child1_right = cc.Sprite.create(s_pathGrossini);
+        var child1_right = new cc.Sprite(s_pathGrossini);
         spriteSD.addChild(child1_right);
         child1_left.x = spriteSD.height;
         child1_left.y = 0;
@@ -4835,17 +4825,17 @@ var SpriteDoubleResolution = SpriteTestDemo.extend({
         // RIGHT: HD sprite
         //
         // there is an HD version of grossini.png
-        var spriteHD = cc.Sprite.create(s_pathGrossini);
+        var spriteHD = new cc.Sprite(s_pathGrossini);
         this.addChild(spriteHD);
         spriteHD.x = winSize.width / 4 * 3;
         spriteHD.y = winSize.height / 2;
 
-        var child2_left = DoubleSprite.create(s_grossiniDance08);
+        var child2_left = new DoubleSprite(s_grossiniDance08);
         spriteHD.addChild(child2_left);
         child2_left.x = -30;
         child2_left.y = 0;
 
-        var child2_right = cc.Sprite.create(s_pathGrossini);
+        var child2_right = new cc.Sprite(s_pathGrossini);
         spriteHD.addChild(child2_right);
         child2_left.x = spriteHD.height;
         child2_left.y = 0;
