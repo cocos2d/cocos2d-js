@@ -227,6 +227,11 @@ vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const 
 	return _lfileList;
 }
 
+string getRuntimeVersion()
+{
+    return "0.0.1";
+}
+
 void startScript()
 {
 	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
@@ -681,14 +686,15 @@ public:
             {"precompile","",std::bind(&ConsoleCustomCommand::onPreCompile, this, std::placeholders::_1, std::placeholders::_2)},
             {"start-logic","run game logic script",std::bind(&ConsoleCustomCommand::onRunLogicScript, this, std::placeholders::_1, std::placeholders::_2)},
             {"reload","reload script.Args:[filepath]",std::bind(&ConsoleCustomCommand::onReloadScriptFile, this, std::placeholders::_1, std::placeholders::_2)},
+            {"getversion","get runtime version.",std::bind(&ConsoleCustomCommand::onRuntimeVersion, this, std::placeholders::_1, std::placeholders::_2)},
         };
         for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
             _console->addCommand(commands[i]);
         }
-        _console->listenOnTCP(5678);
+        _console->listenOnTCP(6051);
         
         _fileserver=new FileServer();
-        _fileserver->listenOnTCP(6666);
+        _fileserver->listenOnTCP(6052);
     }
     ~ConsoleCustomCommand()
     {
@@ -725,6 +731,12 @@ public:
         });
     }
     
+	void onRuntimeVersion(int fd, const std::string &args)
+    {
+        string runtimeVer=getRuntimeVersion();
+        send(fd, runtimeVer.c_str(), runtimeVer.size(),0);
+    }
+	
     void onShutDownApp(int fd, const std::string &args)
     {
         Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){

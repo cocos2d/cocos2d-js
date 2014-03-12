@@ -53,7 +53,6 @@
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
                "frameworks/runtime-src/proj.win32/main.cpp",
-               "frameworks/runtime-src/proj.win32/Runtime_win32.cpp",
                "frameworks/runtime-src/proj.android/.project",
                "frameworks/runtime-src/proj.android/AndroidManifest.xml",
                "frameworks/runtime-src/proj.android/build.xml",
