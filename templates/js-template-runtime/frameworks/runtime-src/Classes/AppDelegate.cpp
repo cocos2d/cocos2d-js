@@ -39,8 +39,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // turn on display FPS
     director->setDisplayStats(true);
-	auto designSize = Size(480, 320);
-    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::EXACT_FIT);
+	//auto designSize = Size(480, 320);
+    //glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::EXACT_FIT);
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
     
@@ -65,7 +65,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 #else
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    ScriptingCore::getInstance()->runScript("jsb_boot.js");
 	ScriptingCore::getInstance()->runScript("main.js");
 #endif
     
