@@ -691,10 +691,10 @@ public:
         for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
             _console->addCommand(commands[i]);
         }
-        _console->listenOnTCP(6051);
+        _console->listenOnTCP(6050);
         
         _fileserver=new FileServer();
-        _fileserver->listenOnTCP(6052);
+        _fileserver->listenOnTCP(6060);
     }
     ~ConsoleCustomCommand()
     {
