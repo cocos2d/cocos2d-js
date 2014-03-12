@@ -1,5 +1,5 @@
 //
-// cocos2d gui constants
+// cocos2d ui constants
 //
 // This helper file should be required after jsb_cocos2d.js
 //
