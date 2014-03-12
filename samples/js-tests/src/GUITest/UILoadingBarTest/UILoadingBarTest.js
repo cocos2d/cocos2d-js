@@ -76,7 +76,7 @@ var UILoadingBarTest_Left = UILoadingBarTest.extend({
         var widgetSize = this._widget.getSize();
         var loadingBar = ccui.LoadingBar.create();
         loadingBar.setName("LoadingBar");
-        loadingBar.loadTexture("res/cocosgui/sliderProgress.png");
+        loadingBar.loadTexture("res/cocosui/sliderProgress.png");
         loadingBar.setPercent(0);
         loadingBar.x = widgetSize.width / 2;
         loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
@@ -90,7 +90,7 @@ var UILoadingBarTest_Right = UILoadingBarTest.extend({
         var widgetSize = this._widget.getSize();
         var loadingBar = ccui.LoadingBar.create();
         loadingBar.setName("LoadingBar");
-        loadingBar.loadTexture("res/cocosgui/sliderProgress.png");
+        loadingBar.loadTexture("res/cocosui/sliderProgress.png");
         loadingBar.setDirection(ccui.LoadingBar.TYPE_RIGHT);
         loadingBar.setPercent(0);
         loadingBar.x = widgetSize.width / 2;
@@ -105,7 +105,7 @@ var UILoadingBarTest_Left_Scale9 = UILoadingBarTest.extend({
         var widgetSize = this._widget.getSize();
         var loadingBar = ccui.LoadingBar.create();
         loadingBar.setName("LoadingBar");
-        loadingBar.loadTexture("res/cocosgui/slider_bar_active_9patch.png");
+        loadingBar.loadTexture("res/cocosui/slider_bar_active_9patch.png");
         loadingBar.setScale9Enabled(true);
         loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
         loadingBar.setSize(cc.size(300, 30));
@@ -122,7 +122,7 @@ var UILoadingBarTest_Right_Scale9 = UILoadingBarTest.extend({
         var widgetSize = this._widget.getSize();
         var loadingBar = ccui.LoadingBar.create();
         loadingBar.setName("LoadingBar");
-        loadingBar.loadTexture("res/cocosgui/slider_bar_active_9patch.png");
+        loadingBar.loadTexture("res/cocosui/slider_bar_active_9patch.png");
         loadingBar.setScale9Enabled(true);
         loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
         loadingBar.setSize(cc.size(300, 30));

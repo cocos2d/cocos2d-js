@@ -43,7 +43,7 @@ UIScene = cc.Layer.extend({
             this.addChild(mainNode);
 
             //read widget
-            var widget = ccs.guiReader.widgetFromJsonFile("res/cocosgui/UITest/UITest.json");
+            var widget = ccs.uiReader.widgetFromJsonFile("res/cocosui/UITest/UITest.json");
             mainNode.addChild(widget,-1);
 
             this._sceneTitle = widget.getChildByName("UItest");
