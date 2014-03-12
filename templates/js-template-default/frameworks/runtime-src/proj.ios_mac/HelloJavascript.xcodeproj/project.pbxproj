@@ -84,8 +84,8 @@
 		C0F9A1B418C6D1FC00C75ABD /* jsb_cocos2d_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = C0F9A19F18C6D1FC00C75ABD /* jsb_cocos2d_constants.js */; };
 		C0F9A1B518C6D1FC00C75ABD /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = C0F9A1A018C6D1FC00C75ABD /* jsb_cocos2d_extension.js */; };
 		C0F9A1B618C6D1FC00C75ABD /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = C0F9A1A018C6D1FC00C75ABD /* jsb_cocos2d_extension.js */; };
-		C0F9A1B718C6D1FC00C75ABD /* jsb_cocos2d_gui.js in Resources */ = {isa = PBXBuildFile; fileRef = C0F9A1A118C6D1FC00C75ABD /* jsb_cocos2d_gui.js */; };
-		C0F9A1B818C6D1FC00C75ABD /* jsb_cocos2d_gui.js in Resources */ = {isa = PBXBuildFile; fileRef = C0F9A1A118C6D1FC00C75ABD /* jsb_cocos2d_gui.js */; };
+		C0F9A1B718C6D1FC00C75ABD /* jsb_cocos2d_ui.js in Resources */ = {isa = PBXBuildFile; fileRef = C0F9A1A118C6D1FC00C75ABD /* jsb_cocos2d_ui.js */; };
+		C0F9A1B818C6D1FC00C75ABD /* jsb_cocos2d_ui.js in Resources */ = {isa = PBXBuildFile; fileRef = C0F9A1A118C6D1FC00C75ABD /* jsb_cocos2d_ui.js */; };
 		C0F9A1B918C6D1FC00C75ABD /* jsb_cocos2d_studio.js in Resources */ = {isa = PBXBuildFile; fileRef = C0F9A1A218C6D1FC00C75ABD /* jsb_cocos2d_studio.js */; };
 		C0F9A1BA18C6D1FC00C75ABD /* jsb_cocos2d_studio.js in Resources */ = {isa = PBXBuildFile; fileRef = C0F9A1A218C6D1FC00C75ABD /* jsb_cocos2d_studio.js */; };
 		C0F9A1BB18C6D1FC00C75ABD /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = C0F9A1A318C6D1FC00C75ABD /* jsb_cocos2d.js */; };
@@ -326,7 +326,7 @@
 		C0F9A19E18C6D1FB00C75ABD /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_chipmunk.js; path = "../../js-bindings/bindings/script/jsb_chipmunk.js"; sourceTree = "<group>"; };
 		C0F9A19F18C6D1FC00C75ABD /* jsb_cocos2d_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_constants.js; path = "../../js-bindings/bindings/script/jsb_cocos2d_constants.js"; sourceTree = "<group>"; };
 		C0F9A1A018C6D1FC00C75ABD /* jsb_cocos2d_extension.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_extension.js; path = "../../js-bindings/bindings/script/jsb_cocos2d_extension.js"; sourceTree = "<group>"; };
-		C0F9A1A118C6D1FC00C75ABD /* jsb_cocos2d_gui.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_gui.js; path = "../../js-bindings/bindings/script/jsb_cocos2d_gui.js"; sourceTree = "<group>"; };
+		C0F9A1A118C6D1FC00C75ABD /* jsb_cocos2d_ui.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_ui.js; path = "../../js-bindings/bindings/script/jsb_cocos2d_ui.js"; sourceTree = "<group>"; };
 		C0F9A1A218C6D1FC00C75ABD /* jsb_cocos2d_studio.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_studio.js; path = "../../js-bindings/bindings/script/jsb_cocos2d_studio.js"; sourceTree = "<group>"; };
 		C0F9A1A318C6D1FC00C75ABD /* jsb_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d.js; path = "../../js-bindings/bindings/script/jsb_cocos2d.js"; sourceTree = "<group>"; };
 		C0F9A1A418C6D1FC00C75ABD /* jsb_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocosbuilder.js; path = "../../js-bindings/bindings/script/jsb_cocosbuilder.js"; sourceTree = "<group>"; };
@@ -520,7 +520,7 @@
 				C0F9A1A318C6D1FC00C75ABD /* jsb_cocos2d.js */,
 				C0F9A19F18C6D1FC00C75ABD /* jsb_cocos2d_constants.js */,
 				C0F9A1A018C6D1FC00C75ABD /* jsb_cocos2d_extension.js */,
-				C0F9A1A118C6D1FC00C75ABD /* jsb_cocos2d_gui.js */,
+				C0F9A1A118C6D1FC00C75ABD /* jsb_cocos2d_ui.js */,
 				C0F9A1A218C6D1FC00C75ABD /* jsb_cocos2d_studio.js */,
 				C0F9A1A418C6D1FC00C75ABD /* jsb_cocosbuilder.js */,
 				1AC34A0E18C99CA5007834C9 /* jsb_create_apis.js */,
@@ -752,7 +752,7 @@
 				C0F9A1C418C6D1FC00C75ABD /* jsb_opengl_constants.js in Resources */,
 				C0F9A1C218C6D1FC00C75ABD /* jsb_deprecated.js in Resources */,
 				C0F9A1BA18C6D1FC00C75ABD /* jsb_cocos2d_studio.js in Resources */,
-				C0F9A1B818C6D1FC00C75ABD /* jsb_cocos2d_gui.js in Resources */,
+				C0F9A1B818C6D1FC00C75ABD /* jsb_cocos2d_ui.js in Resources */,
 				C0F9A1C618C6D1FC00C75ABD /* jsb_opengl.js in Resources */,
 				C0F9A1CA18C6D1FC00C75ABD /* jsb_property_impls.js in Resources */,
 				C0F9A1B618C6D1FC00C75ABD /* jsb_cocos2d_extension.js in Resources */,
@@ -785,7 +785,7 @@
 				C0F9A1C318C6D1FC00C75ABD /* jsb_opengl_constants.js in Resources */,
 				C0F9A1BD18C6D1FC00C75ABD /* jsb_cocosbuilder.js in Resources */,
 				C0F9A1C718C6D1FC00C75ABD /* jsb_property_apis.js in Resources */,
-				C0F9A1B718C6D1FC00C75ABD /* jsb_cocos2d_gui.js in Resources */,
+				C0F9A1B718C6D1FC00C75ABD /* jsb_cocos2d_ui.js in Resources */,
 				C0F9A1BB18C6D1FC00C75ABD /* jsb_cocos2d.js in Resources */,
 				C0F9A1B518C6D1FC00C75ABD /* jsb_cocos2d_extension.js in Resources */,
 				C0F9A1B318C6D1FC00C75ABD /* jsb_cocos2d_constants.js in Resources */,
