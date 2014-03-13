@@ -117,6 +117,31 @@ cc.Sprite = _cc.Sprite.extend({
 cc.Sprite.create = _cc.Sprite.create;
 
 
+// SpriteBatchNode - Doesn't work until Cocos2d-x provide correct set functions
+/*
+_cc.SpriteBatchNode = cc.SpriteBatchNode;
+cc.SpriteBatchNode = _cc.SpriteBatchNode.extend({
+	ctor: function(fileImage, capacity) {
+		_cc.SpriteBatchNode.prototype.ctor.call(this);
+
+		capacity = capacity || cc.DEFAULT_SPRITE_BATCH_CAPACITY;
+		var texture2D;
+		if (typeof(fileImage) == "string") {
+			texture2D = cc.textureCache.textureForKey(fileImage);
+			if (!texture2D)
+				texture2D = cc.textureCache.addImage(fileImage);
+		}
+		else if (fileImage instanceof cc.Texture2D)
+			texture2D  = fileImage;
+
+	    texture2D && this.setTexture(texture2D);
+	    this.setCapacity(capacity);
+
+	}
+});
+cc.SpriteBatchNode.create = _cc.SpriteBatchNode.create;*/
+
+
 
 
 
