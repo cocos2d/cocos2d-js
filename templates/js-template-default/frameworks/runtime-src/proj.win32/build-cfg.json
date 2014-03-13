@@ -1,0 +1,9 @@
+{
+    "copy_files" :[
+        "../../../src",
+        "../../../res",
+        "../../../main.js",
+        "../../../project.json",
+        "../../js-bindings/bindings/script/"
+    ]
+}
