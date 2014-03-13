@@ -41,7 +41,7 @@
 using namespace cocos2d;
 
 bool g_landscape=false;
-CCSize g_screenSize;
+cocos2d::Size g_screenSize;
 GLView* g_eglView=NULL;
 
 using namespace std;
@@ -53,7 +53,7 @@ using namespace cocos2d;
 
 -(void) dealloc
 {
-    CCDirector::sharedDirector()->end();
+    Director::getInstance()->end();
     [super dealloc];
 }
 
@@ -62,11 +62,12 @@ using namespace cocos2d;
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-
     AppDelegate app;
 	[self createSimulator:[NSString stringWithUTF8String:"HelloJavascript"] viewWidth:960 viewHeight:640 factor:1.0];
-    int ret = Application::getInstance()->run();
+    Application::getInstance()->run();
     
+    // After run, application needs to be terminated immediately.
+    [NSApp terminate: self];
 }
 
 
@@ -185,9 +186,6 @@ using namespace cocos2d;
         NSMenuItem *itemView = [menuScreen itemWithTitle:[NSString stringWithUTF8String:size.title.c_str()]];
         [itemView setState:(bSel? NSOnState : NSOffState)];
 	}
-    
-
-    //[window setTitle:[NSString stringWithFormat:@"quick-x-player (%0.0f%%)", projectConfig.getFrameScale() * 100]];
 }
 
 
