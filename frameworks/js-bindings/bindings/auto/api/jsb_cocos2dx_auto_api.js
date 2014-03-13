@@ -1415,18 +1415,6 @@ isIgnoreAnchorPointForPosition : function (
 },
 
 /**
- * @method getChildByName
- * @param {String} arg0
- * @return {cc.Node}
- */
-getChildByName : function (
-str 
-)
-{
-    return cc.Node;
-},
-
-/**
  * @method updateDisplayedOpacity
  * @param {unsigned char} arg0
  */
@@ -1457,13 +1445,11 @@ float
 },
 
 /**
- * @method enumerateChildrenByName
- * @param {String} arg0
- * @param {function} arg1
+ * @method setScaleY
+ * @param {float} arg0
  */
-enumerateChildrenByName : function (
-str, 
-func 
+setScaleY : function (
+float 
 )
 {
 },
@@ -1673,16 +1659,6 @@ node
 },
 
 /**
- * @method getName
- * @return {String}
- */
-getName : function (
-)
-{
-    return ;
-},
-
-/**
  * @method getRotation3D
  * @return {cc.Vertex3F}
  */
@@ -1879,15 +1855,17 @@ component
 },
 
 /**
- * @method runAction
- * @param {cc.Action} arg0
- * @return {cc.Action}
- */
-runAction : function (
-action 
+ * @method visit
+* @param {cc.Renderer} renderer
+* @param {kmMat4} kmmat4
+* @param {bool} bool
+*/
+visit : function(
+renderer,
+kmmat4,
+bool 
 )
 {
-    return cc.Action;
 },
 
 /**
@@ -1921,17 +1899,15 @@ getAnchorPointInPoints : function (
 },
 
 /**
- * @method visit
-* @param {cc.Renderer} renderer
-* @param {kmMat4} kmmat4
-* @param {bool} bool
-*/
-visit : function(
-renderer,
-kmmat4,
-bool 
+ * @method runAction
+ * @param {cc.Action} arg0
+ * @return {cc.Action}
+ */
+runAction : function (
+action 
 )
 {
+    return cc.Action;
 },
 
 /**
@@ -2002,16 +1978,6 @@ int
 )
 {
     return cc.Action;
-},
-
-/**
- * @method setName
- * @param {String} arg0
- */
-setName : function (
-str 
-)
-{
 },
 
 /**
@@ -2204,16 +2170,6 @@ getPositionZ : function (
  * @param {float} arg0
  */
 setGlobalZOrder : function (
-float 
-)
-{
-},
-
-/**
- * @method setScaleY
- * @param {float} arg0
- */
-setScaleY : function (
 float 
 )
 {

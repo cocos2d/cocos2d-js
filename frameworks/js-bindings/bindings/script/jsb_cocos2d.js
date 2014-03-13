@@ -458,50 +458,6 @@ cc.defineGetterSetter(_proto, "ORANGE", _proto._getOrange);
 _proto.GRAY;
 cc.defineGetterSetter(_proto, "GRAY", _proto._getGray);
 
-//
-// Bindings Overrides
-//
-// MenuItemToggle
-cc.MenuItemToggle.create = function( /* var args */) {
-
-    var n = arguments.length;
-
-    if (typeof arguments[n-2] === 'function' || typeof arguments[n-1] === 'function') {
-        var args = Array.prototype.slice.call(arguments);
-        var obj = null;
-        if( typeof arguments[n-2] === 'function' )
-            obj = args.pop();
-
-        var func = args.pop();
-
-        // create it with arguments,
-        var item = cc.MenuItemToggle._create.apply(this, args);
-
-        // then set the callback
-        if( obj !== null )
-            item.setCallback(func, obj);
-        else
-            item.setCallback(func);
-        return item;
-    } else {
-        return cc.MenuItemToggle._create.apply(this, arguments);
-    }
-};
-
-// LabelAtlas
-cc.LabelAtlas.create = function( a,b,c,d,e ) {
-
-    var n = arguments.length;
-
-    if ( n == 5) {
-        return cc.LabelAtlas._create(a,b,c,d,e.charCodeAt(0));
-    } else {
-        return cc.LabelAtlas._create.apply(this, arguments);
-    }
-};
-
-cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
-
 
 /**
  * Associates a base class with a native superclass
@@ -633,7 +589,10 @@ cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
 cc.LayerColor.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
+cc.Menu.extend = cc.Class.extend;
+cc.MenuItem.extend = cc.Class.extend;
 cc.MenuItemFont.extend = cc.Class.extend;
+cc.MenuItemToggle.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
 
