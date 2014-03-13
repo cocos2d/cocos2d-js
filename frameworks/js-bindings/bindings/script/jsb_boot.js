@@ -573,6 +573,8 @@ cc.view.isRetinaEnabled = function() {
     var sys = cc.sys;
     return (sys.os == sys.OS_IOS || sys.os == sys.OS_OSX) ? true : false;
 };
+cc.view.resizeWithBrowserSize = function () {return;};
+cc.view.setResizeCallback = function() {return;};
 
 cc.eventManager = cc.director.getEventDispatcher();
 cc.audioEngine = cc.AudioEngine.getInstance();
