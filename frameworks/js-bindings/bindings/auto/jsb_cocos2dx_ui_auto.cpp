@@ -1,4 +1,4 @@
-#include "jsb_cocos2dx_gui_auto.hpp"
+#include "jsb_cocos2dx_ui_auto.hpp"
 #include "cocos2d_specifics.hpp"
 #include "CocosGUI.h"
 

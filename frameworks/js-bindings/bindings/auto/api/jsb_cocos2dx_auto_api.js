@@ -1415,6 +1415,18 @@ isIgnoreAnchorPointForPosition : function (
 },
 
 /**
+ * @method getChildByName
+ * @param {String} arg0
+ * @return {cc.Node}
+ */
+getChildByName : function (
+str 
+)
+{
+    return cc.Node;
+},
+
+/**
  * @method updateDisplayedOpacity
  * @param {unsigned char} arg0
  */
@@ -1445,11 +1457,13 @@ float
 },
 
 /**
- * @method setScaleY
- * @param {float} arg0
+ * @method enumerateChildrenByName
+ * @param {String} arg0
+ * @param {function} arg1
  */
-setScaleY : function (
-float 
+enumerateChildrenByName : function (
+str, 
+func 
 )
 {
 },
@@ -1659,6 +1673,16 @@ node
 },
 
 /**
+ * @method getName
+ * @return {String}
+ */
+getName : function (
+)
+{
+    return ;
+},
+
+/**
  * @method getRotation3D
  * @return {cc.Vertex3F}
  */
@@ -1855,17 +1879,15 @@ component
 },
 
 /**
- * @method visit
-* @param {cc.Renderer} renderer
-* @param {kmMat4} kmmat4
-* @param {bool} bool
-*/
-visit : function(
-renderer,
-kmmat4,
-bool 
+ * @method runAction
+ * @param {cc.Action} arg0
+ * @return {cc.Action}
+ */
+runAction : function (
+action 
 )
 {
+    return cc.Action;
 },
 
 /**
@@ -1899,15 +1921,17 @@ getAnchorPointInPoints : function (
 },
 
 /**
- * @method runAction
- * @param {cc.Action} arg0
- * @return {cc.Action}
- */
-runAction : function (
-action 
+ * @method visit
+* @param {cc.Renderer} renderer
+* @param {kmMat4} kmmat4
+* @param {bool} bool
+*/
+visit : function(
+renderer,
+kmmat4,
+bool 
 )
 {
-    return cc.Action;
 },
 
 /**
@@ -1978,6 +2002,16 @@ int
 )
 {
     return cc.Action;
+},
+
+/**
+ * @method setName
+ * @param {String} arg0
+ */
+setName : function (
+str 
+)
+{
 },
 
 /**
@@ -2170,6 +2204,16 @@ getPositionZ : function (
  * @param {float} arg0
  */
 setGlobalZOrder : function (
+float 
+)
+{
+},
+
+/**
+ * @method setScaleY
+ * @param {float} arg0
+ */
+setScaleY : function (
 float 
 )
 {
@@ -7467,323 +7511,6 @@ TiledGrid3D : function (
 };
 
 /**
- * @class Sprite
- */
-cc.Sprite = {
-
-/**
- * @method setSpriteFrame
-* @param {cc.SpriteFrame|String} spriteframe
-*/
-setSpriteFrame : function(
-str 
-)
-{
-},
-
-/**
- * @method setTexture
-* @param {cc.Texture2D|String} texture2d
-*/
-setTexture : function(
-str 
-)
-{
-},
-
-/**
- * @method getTexture
- * @return {cc.Texture2D}
- */
-getTexture : function (
-)
-{
-    return cc.Texture2D;
-},
-
-/**
- * @method setFlippedY
- * @param {bool} arg0
- */
-setFlippedY : function (
-bool 
-)
-{
-},
-
-/**
- * @method setFlippedX
- * @param {bool} arg0
- */
-setFlippedX : function (
-bool 
-)
-{
-},
-
-/**
- * @method getBatchNode
- * @return {cc.SpriteBatchNode}
- */
-getBatchNode : function (
-)
-{
-    return cc.SpriteBatchNode;
-},
-
-/**
- * @method getOffsetPosition
- * @return {PointObject}
- */
-getOffsetPosition : function (
-)
-{
-    return cc.Point;
-},
-
-/**
- * @method removeAllChildrenWithCleanup
- * @param {bool} arg0
- */
-removeAllChildrenWithCleanup : function (
-bool 
-)
-{
-},
-
-/**
- * @method updateTransform
- */
-updateTransform : function (
-)
-{
-},
-
-/**
- * @method setTextureRect
-* @param {RectObject|RectObject} rect
-* @param {bool} bool
-* @param {SizeObject} size
-*/
-setTextureRect : function(
-rect,
-bool,
-size 
-)
-{
-},
-
-/**
- * @method isFrameDisplayed
- * @param {cc.SpriteFrame} arg0
- * @return {bool}
- */
-isFrameDisplayed : function (
-spriteframe 
-)
-{
-    return false;
-},
-
-/**
- * @method getAtlasIndex
- * @return {long}
- */
-getAtlasIndex : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setBatchNode
- * @param {cc.SpriteBatchNode} arg0
- */
-setBatchNode : function (
-spritebatchnode 
-)
-{
-},
-
-/**
- * @method setDisplayFrameWithAnimationName
- * @param {String} arg0
- * @param {long} arg1
- */
-setDisplayFrameWithAnimationName : function (
-str, 
-long 
-)
-{
-},
-
-/**
- * @method setTextureAtlas
- * @param {cc.TextureAtlas} arg0
- */
-setTextureAtlas : function (
-textureatlas 
-)
-{
-},
-
-/**
- * @method getSpriteFrame
- * @return {cc.SpriteFrame}
- */
-getSpriteFrame : function (
-)
-{
-    return cc.SpriteFrame;
-},
-
-/**
- * @method isDirty
- * @return {bool}
- */
-isDirty : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setAtlasIndex
- * @param {long} arg0
- */
-setAtlasIndex : function (
-long 
-)
-{
-},
-
-/**
- * @method setDirty
- * @param {bool} arg0
- */
-setDirty : function (
-bool 
-)
-{
-},
-
-/**
- * @method isTextureRectRotated
- * @return {bool}
- */
-isTextureRectRotated : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getTextureRect
- * @return {RectObject}
- */
-getTextureRect : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
- * @method getTextureAtlas
- * @return {cc.TextureAtlas}
- */
-getTextureAtlas : function (
-)
-{
-    return cc.TextureAtlas;
-},
-
-/**
- * @method isFlippedX
- * @return {bool}
- */
-isFlippedX : function (
-)
-{
-    return false;
-},
-
-/**
- * @method isFlippedY
- * @return {bool}
- */
-isFlippedY : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setVertexRect
- * @param {RectObject} arg0
- */
-setVertexRect : function (
-rect 
-)
-{
-},
-
-/**
- * @method create
-* @param {String|String} str
-* @param {RectObject} rect
-* @return {cc.Sprite|cc.Sprite|cc.Sprite}
-*/
-create : function(
-str,
-rect 
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method createWithTexture
-* @param {cc.Texture2D|cc.Texture2D} texture2d
-* @param {RectObject} rect
-* @param {bool} bool
-* @return {cc.Sprite|cc.Sprite}
-*/
-createWithTexture : function(
-texture2d,
-rect,
-bool 
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method createWithSpriteFrameName
- * @param {String} arg0
- * @return {cc.Sprite}
- */
-createWithSpriteFrameName : function (
-str 
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method createWithSpriteFrame
- * @param {cc.SpriteFrame} arg0
- * @return {cc.Sprite}
- */
-createWithSpriteFrame : function (
-spriteframe 
-)
-{
-    return cc.Sprite;
-},
-
-};
-
-/**
  * @class LabelTTF
  */
 cc.LabelTTF = {
@@ -7832,6 +7559,26 @@ getString : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setFlippedY
+ * @param {bool} arg0
+ */
+setFlippedY : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setFlippedX
+ * @param {bool} arg0
+ */
+setFlippedX : function (
+bool 
+)
+{
 },
 
 /**
@@ -7890,31 +7637,21 @@ str
 
 /**
  * @method initWithString
-* @param {String|String|String} str
-* @param {String|String|String} str
-* @param {float|float|float} float
-* @param {SizeObject|SizeObject} size
-* @param {cc.TextHAlignment|cc.TextHAlignment} texthalignment
-* @param {cc.TextVAlignment} textvalignment
-* @return {bool|bool|bool}
-*/
-initWithString : function(
-str,
-str,
-float,
-size,
-texthalignment,
-textvalignment 
-)
-{
-    return false;
-},
-
-/**
- * @method init
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {float} arg2
+ * @param {SizeObject} arg3
+ * @param {cc.TextHAlignment} arg4
+ * @param {cc.TextVAlignment} arg5
  * @return {bool}
  */
-init : function (
+initWithString : function (
+str, 
+str, 
+float, 
+size, 
+texthalignment, 
+textvalignment 
 )
 {
     return false;
@@ -7930,6 +7667,16 @@ color3b,
 bool 
 )
 {
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
 },
 
 /**
@@ -7997,6 +7744,16 @@ getTextDefinition : function (
 },
 
 /**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
  * @method getFontName
  * @return {String}
  */
@@ -8034,13 +7791,13 @@ disableStroke : function (
 
 /**
  * @method create
-* @param {String|String|String} str
-* @param {String|String|String} str
-* @param {float|float|float} float
-* @param {SizeObject|SizeObject} size
-* @param {cc.TextHAlignment|cc.TextHAlignment} texthalignment
+* @param {String} str
+* @param {String} str
+* @param {float} float
+* @param {SizeObject} size
+* @param {cc.TextHAlignment} texthalignment
 * @param {cc.TextVAlignment} textvalignment
-* @return {cc.LabelTTF|cc.LabelTTF|cc.LabelTTF|cc.LabelTTF}
+* @return {cc.LabelTTF|cc.LabelTTF}
 */
 create : function(
 str,
@@ -8331,6 +8088,16 @@ int
 },
 
 /**
+ * @method getFontSize
+ * @return {int}
+ */
+getFontSize : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getString
  * @return {String}
  */
@@ -8374,6 +8141,16 @@ getCommonLineHeight : function (
  */
 setWidth : function (
 int 
+)
+{
+},
+
+/**
+ * @method setFontName
+ * @param {String} arg0
+ */
+setFontName : function (
+str 
 )
 {
 },
@@ -8430,6 +8207,34 @@ point
 )
 {
     return false;
+},
+
+/**
+ * @method getFontDefinition
+ * @return {cc.FontDefinition}
+ */
+getFontDefinition : function (
+)
+{
+    return cc.FontDefinition;
+},
+
+/**
+ * @method getFontName
+ * @return {String}
+ */
+getFontName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method updateContent
+ */
+updateContent : function (
+)
+{
 },
 
 /**
@@ -8493,6 +8298,16 @@ int
 },
 
 /**
+ * @method getDimensions
+ * @return {SizeObject}
+ */
+getDimensions : function (
+)
+{
+    return cc.Size;
+},
+
+/**
  * @method setMaxLineWidth
  * @param {unsigned int} arg0
  */
@@ -8505,11 +8320,19 @@ int
 /**
  * @method setVerticalAlignment
  * @param {cc.TextVAlignment} arg0
- * @param {bool} arg1
  */
 setVerticalAlignment : function (
-textvalignment, 
-bool 
+textvalignment 
+)
+{
+},
+
+/**
+ * @method setFontSize
+ * @param {int} arg0
+ */
+setFontSize : function (
+int 
 )
 {
 },
@@ -8569,11 +8392,19 @@ getTextAlignment : function (
 /**
  * @method setHorizontalAlignment
  * @param {cc.TextHAlignment} arg0
- * @param {bool} arg1
  */
 setHorizontalAlignment : function (
-texthalignment, 
-bool 
+texthalignment 
+)
+{
+},
+
+/**
+ * @method setFontDefinition
+ * @param {cc.FontDefinition} arg0
+ */
+setFontDefinition : function (
+fontdefinition 
 )
 {
 },
@@ -8581,13 +8412,11 @@ bool
 /**
  * @method setAlignment
 * @param {cc.TextHAlignment|cc.TextHAlignment} texthalignment
-* @param {cc.TextVAlignment|bool} textvalignment
-* @param {bool} bool
+* @param {cc.TextVAlignment} textvalignment
 */
 setAlignment : function(
 texthalignment,
-textvalignment,
-bool 
+textvalignment 
 )
 {
 },
@@ -8614,9 +8443,21 @@ point
 
 /**
  * @method create
- * @return {cc.Label}
- */
-create : function (
+* @param {String} str
+* @param {String} str
+* @param {float} float
+* @param {SizeObject} size
+* @param {cc.TextHAlignment} texthalignment
+* @param {cc.TextVAlignment} textvalignment
+* @return {cc.Label|cc.Label}
+*/
+create : function(
+str,
+str,
+float,
+size,
+texthalignment,
+textvalignment 
 )
 {
     return cc.Label;
@@ -8635,6 +8476,20 @@ str,
 int,
 int,
 int 
+)
+{
+    return cc.Label;
+},
+
+/**
+ * @method createWithFontDefinition
+ * @param {String} arg0
+ * @param {cc.FontDefinition} arg1
+ * @return {cc.Label}
+ */
+createWithFontDefinition : function (
+str, 
+fontdefinition 
 )
 {
     return cc.Label;
@@ -10795,6 +10650,323 @@ str
 )
 {
     return cc.MotionStreak;
+},
+
+};
+
+/**
+ * @class Sprite
+ */
+cc.Sprite = {
+
+/**
+ * @method setSpriteFrame
+* @param {cc.SpriteFrame|String} spriteframe
+*/
+setSpriteFrame : function(
+str 
+)
+{
+},
+
+/**
+ * @method setTexture
+* @param {cc.Texture2D|String} texture2d
+*/
+setTexture : function(
+str 
+)
+{
+},
+
+/**
+ * @method getTexture
+ * @return {cc.Texture2D}
+ */
+getTexture : function (
+)
+{
+    return cc.Texture2D;
+},
+
+/**
+ * @method setFlippedY
+ * @param {bool} arg0
+ */
+setFlippedY : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setFlippedX
+ * @param {bool} arg0
+ */
+setFlippedX : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getBatchNode
+ * @return {cc.SpriteBatchNode}
+ */
+getBatchNode : function (
+)
+{
+    return cc.SpriteBatchNode;
+},
+
+/**
+ * @method getOffsetPosition
+ * @return {PointObject}
+ */
+getOffsetPosition : function (
+)
+{
+    return cc.Point;
+},
+
+/**
+ * @method removeAllChildrenWithCleanup
+ * @param {bool} arg0
+ */
+removeAllChildrenWithCleanup : function (
+bool 
+)
+{
+},
+
+/**
+ * @method updateTransform
+ */
+updateTransform : function (
+)
+{
+},
+
+/**
+ * @method setTextureRect
+* @param {RectObject|RectObject} rect
+* @param {bool} bool
+* @param {SizeObject} size
+*/
+setTextureRect : function(
+rect,
+bool,
+size 
+)
+{
+},
+
+/**
+ * @method isFrameDisplayed
+ * @param {cc.SpriteFrame} arg0
+ * @return {bool}
+ */
+isFrameDisplayed : function (
+spriteframe 
+)
+{
+    return false;
+},
+
+/**
+ * @method getAtlasIndex
+ * @return {long}
+ */
+getAtlasIndex : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setBatchNode
+ * @param {cc.SpriteBatchNode} arg0
+ */
+setBatchNode : function (
+spritebatchnode 
+)
+{
+},
+
+/**
+ * @method setDisplayFrameWithAnimationName
+ * @param {String} arg0
+ * @param {long} arg1
+ */
+setDisplayFrameWithAnimationName : function (
+str, 
+long 
+)
+{
+},
+
+/**
+ * @method setTextureAtlas
+ * @param {cc.TextureAtlas} arg0
+ */
+setTextureAtlas : function (
+textureatlas 
+)
+{
+},
+
+/**
+ * @method getSpriteFrame
+ * @return {cc.SpriteFrame}
+ */
+getSpriteFrame : function (
+)
+{
+    return cc.SpriteFrame;
+},
+
+/**
+ * @method isDirty
+ * @return {bool}
+ */
+isDirty : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setAtlasIndex
+ * @param {long} arg0
+ */
+setAtlasIndex : function (
+long 
+)
+{
+},
+
+/**
+ * @method setDirty
+ * @param {bool} arg0
+ */
+setDirty : function (
+bool 
+)
+{
+},
+
+/**
+ * @method isTextureRectRotated
+ * @return {bool}
+ */
+isTextureRectRotated : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getTextureRect
+ * @return {RectObject}
+ */
+getTextureRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method getTextureAtlas
+ * @return {cc.TextureAtlas}
+ */
+getTextureAtlas : function (
+)
+{
+    return cc.TextureAtlas;
+},
+
+/**
+ * @method isFlippedX
+ * @return {bool}
+ */
+isFlippedX : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isFlippedY
+ * @return {bool}
+ */
+isFlippedY : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setVertexRect
+ * @param {RectObject} arg0
+ */
+setVertexRect : function (
+rect 
+)
+{
+},
+
+/**
+ * @method create
+* @param {String|String} str
+* @param {RectObject} rect
+* @return {cc.Sprite|cc.Sprite|cc.Sprite}
+*/
+create : function(
+str,
+rect 
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method createWithTexture
+* @param {cc.Texture2D|cc.Texture2D} texture2d
+* @param {RectObject} rect
+* @param {bool} bool
+* @return {cc.Sprite|cc.Sprite}
+*/
+createWithTexture : function(
+texture2d,
+rect,
+bool 
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method createWithSpriteFrameName
+ * @param {String} arg0
+ * @return {cc.Sprite}
+ */
+createWithSpriteFrameName : function (
+str 
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method createWithSpriteFrame
+ * @param {cc.SpriteFrame} arg0
+ * @return {cc.Sprite}
+ */
+createWithSpriteFrame : function (
+spriteframe 
+)
+{
+    return cc.Sprite;
 },
 
 };
