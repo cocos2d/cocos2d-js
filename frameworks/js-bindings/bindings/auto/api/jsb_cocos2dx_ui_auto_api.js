@@ -299,16 +299,6 @@ getNodes : function (
 },
 
 /**
- * @method getLayoutSize
- * @return {SizeObject}
- */
-getLayoutSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
  * @method setPositionType
  * @param {ccui.PositionType} arg0
  */
@@ -340,10 +330,8 @@ isIgnoreContentAdaptWithSize : function (
 
 /**
  * @method updateSizeAndPosition
-* @param {SizeObject} size
-*/
-updateSizeAndPosition : function(
-size 
+ */
+updateSizeAndPosition : function (
 )
 {
 },
