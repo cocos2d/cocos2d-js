@@ -656,10 +656,10 @@ cc.ParticleBatchNode._create = cc.ParticleBatchNode.create;
  * var particleBatchNode = cc.ParticleBatchNode.create(texture, 30);
  */
 cc.ParticleBatchNode.create = function(fileImage, capacity){
-	if (typeof(fileName) == "string")
-		return cc.ParticleBatchNode._create(fileName);
-	else if (fileName instanceof cc.Texture2D) {
-		return isNaN(capacity) ? cc.ParticleBatchNode.createWithTexture(fileName) :  cc.ParticleBatchNode.createWithTexture(fileName, capacity);
+	if (typeof(fileImage) == "string")
+		return cc.ParticleBatchNode._create(fileImage);
+	else if (fileImage instanceof cc.Texture2D) {
+		return isNaN(capacity) ? cc.ParticleBatchNode.createWithTexture(fileImage) :  cc.ParticleBatchNode.createWithTexture(fileImage, capacity);
 	}
 	return null;
 };

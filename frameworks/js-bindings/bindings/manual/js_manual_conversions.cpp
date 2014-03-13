@@ -730,10 +730,10 @@ bool jsval_to_cccolor4b(JSContext *cx, jsval v, Color4B* ret) {
     
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     
-    ret->r = r;
-    ret->g = g;
-    ret->b = b;
-    ret->a = a;
+    ret->r = (GLubyte)r;
+    ret->g = (GLubyte)g;
+    ret->b = (GLubyte)b;
+    ret->a = (GLubyte)a;
     return true;
 }
 
@@ -780,9 +780,9 @@ bool jsval_to_cccolor3b(JSContext *cx, jsval v, Color3B* ret) {
     
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     
-    ret->r = r;
-    ret->g = g;
-    ret->b = b;
+    ret->r = (GLubyte)r;
+    ret->g = (GLubyte)g;
+    ret->b = (GLubyte)b;
     return true;
 }
 

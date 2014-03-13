@@ -353,10 +353,12 @@ var Issue631 = EffectAdvanceTextLayer.extend({
         var fog = cc.Sprite.create(s_pathFog);
 
         fog.setBlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);
+	    var nodeGrid = cc.NodeGrid.create();
         layer2.addChild(fog, 1);
-        this.addChild(layer2, 1);
+	    nodeGrid.addChild(layer2);
+        this.addChild(nodeGrid, 1);
 
-        layer2.runAction(cc.RepeatForever.create(effect));
+	    nodeGrid.runAction(cc.RepeatForever.create(effect));
     }
 });
 
