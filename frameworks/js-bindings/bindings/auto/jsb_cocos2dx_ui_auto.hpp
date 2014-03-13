@@ -63,6 +63,7 @@ bool js_cocos2dx_ui_Widget_getNodeByTag(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_ui_Widget_getTouchEndPos(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setPositionPercent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getNodes(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Widget_getLayoutSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setPositionType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_isIgnoreContentAdaptWithSize(JSContext *cx, uint32_t argc, jsval *vp);
