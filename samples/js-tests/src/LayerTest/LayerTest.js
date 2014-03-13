@@ -91,7 +91,6 @@ var LayerTest1 = LayerTest.extend({
     onEnter:function () {
         this._super();
 
-
         if( 'touches' in cc.sys.capabilities )
             cc.eventManager.addListener({
                 event: cc.EventListener.TOUCH_ALL_AT_ONCE,
@@ -108,9 +107,9 @@ var LayerTest1 = LayerTest.extend({
             }, this);
 
         var s = director.getWinSize();
-        var layer = cc.LayerColor.create(cc.color(255, 0, 0, 128), 200, 200);
+        var layer = new cc.LayerColor(cc.color(255, 0, 0, 128), 200, 200);
 
-        layer.ignoreAnchorPointForPosition(false);
+        layer.ignoreAnchor = false;
         layer.x = s.width / 2;
         layer.y = s.height / 2;
         this.addChild(layer, 1, cc.TAG_LAYER);
