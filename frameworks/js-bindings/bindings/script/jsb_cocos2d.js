@@ -599,14 +599,14 @@ cc.DrawNode.extend = cc.Class.extend;
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
 cc.Loader = cc.Class.extend({
-                            initWith:function (resources, selector, target) {
-                            if (selector) {
-                            this._selector = selector;
-                            this._target = target;
-                            }
-                            this._selector.call(this._target);
-                            }
-                            });
+	initWith:function (resources, selector, target) {
+		if (selector) {
+			this._selector = selector;
+			this._target = target;
+		}
+		this._selector.call(this._target);
+	}
+});
 
 cc.Loader.preload = function (resources, selector, target) {
     if (!this._instance) {
