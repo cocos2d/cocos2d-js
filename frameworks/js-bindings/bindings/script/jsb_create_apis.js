@@ -1,4 +1,131 @@
-cc.Sprite._create = cc.Sprite.create;
+/************************************************************
+ *
+ * Constructors with built in init function
+ *
+ ************************************************************/
+
+_cc = {};
+
+// Layers
+_cc.Layer = cc.Layer;
+cc.Layer = _cc.Layer.extend({
+    ctor: function() {
+	    _cc.Layer.prototype.ctor.call(this);
+
+		this.setAnchorPoint(cc.p(0.5, 0.5));
+	    this.ignoreAnchorPointForPosition(true);
+	    this.setContentSize(cc.winSize);
+    }
+});
+cc.Layer.create = _cc.Layer.create;
+
+
+_cc.LayerColor = cc.LayerColor;
+cc.LayerColor = _cc.LayerColor.extend({
+	ctor: function(color, w, h) {
+		_cc.LayerColor.prototype.ctor.call(this);
+
+		color = color ||  cc.color(0, 0, 0, 255);
+		w = w === undefined ? cc.winSize.width : w;
+		h = h === undefined ? cc.winSize.height : h;
+
+		this.setColor(color);
+		this.setContentSize(w, h);
+	}
+});
+cc.LayerColor.create = _cc.LayerColor.create;
+
+
+_cc.LayerGradient = cc.LayerGradient;
+cc.LayerGradient = _cc.LayerGradient.extend({
+	ctor: function(start, end, v) {
+		_cc.LayerGradient.prototype.ctor.call(this);
+
+		start = start || cc.color(0,0,0,255);
+		end = end || cc.color(0,0,0,255);
+		v = v || cc.p(0, -1);
+
+		this.setStartColor(start);
+		this.setEndColor(end);
+		this.setVector(v);
+		this.setColor(cc.color(start.r, start.g, start.b, 255));
+	}
+});
+cc.LayerGradient.create = _cc.LayerGradient.create;
+
+
+/*
+_cc.LayerMultiplex = cc.LayerMultiplex;
+cc.LayerMultiplex = _cc.LayerMultiplex.extend({
+	ctor: function(layers) {
+		_cc.LayerMultiplex.prototype.ctor.call(this);
+
+		var l = layers ? layers.length : 0;
+		for (var i = 0; i < l; i++) {
+			this.addLayer(layers[i]);
+		}
+		if (l > 0) {
+			this.switchTo(0);
+		}
+	}
+});
+cc.LayerMultiplex.create = _cc.LayerMultiplex.create;*/
+
+
+// Sprite
+_cc.Sprite = cc.Sprite;
+cc.Sprite = _cc.Sprite.extend({
+	ctor: function(fileName, rect) {
+		_cc.Sprite.prototype.ctor.call(this);
+
+		if (fileName === undefined) {
+			// Serves as init function
+			rect = rect || cc.rect();
+			this.setTextureRect(rect);
+		}
+		else if (typeof(fileName) === "string") {
+			if (fileName[0] === "#") {
+				//init with a sprite frame name
+				var frameName = fileName.substr(1, fileName.length - 1);
+				var spriteFrame = cc.spriteFrameCache.getSpriteFrame(frameName);
+				this.setTexture(spriteFrame.getTexture());
+				this.setTextureRect(spriteFrame.getRect());
+				this.setSpriteFrame(spriteFrame);
+			} else {
+				// Create with filename and rect
+				this.setTexture(fileName);
+				if (rect)
+					this.setTextureRect(rect);
+			}
+		}
+		else if (typeof(fileName) === "object") {
+			if (fileName instanceof cc.Texture2D) {
+				//init with texture and rect
+				var texSize = fileName.getContentSize();
+				rect = rect || cc.rect(0, 0, texSize.width, texSize.height);
+				this.setTexture(fileName);
+				this.setTextureRect(rect);
+			} else if (fileName instanceof cc.SpriteFrame) {
+				//init with a sprite frame
+				this.setTexture(fileName.getTexture());
+				this.setTextureRect(fileName.getRect());
+				this.setSpriteFrame(fileName);
+			}
+		}
+	}
+});
+cc.Sprite.create = _cc.Sprite.create;
+
+
+
+
+
+/************************************************************
+ *
+ * Unified create function
+ *
+ ************************************************************/
+
 /**
  * Create a sprite with image path or frame name or texture or spriteFrame.
  * @constructs
@@ -27,52 +154,52 @@ cc.Sprite._create = cc.Sprite.create;
  */
 cc.Sprite.create = function (fileName, rect) {
     var sprite;
-
+    
     if (arguments.length == 0) {
-        sprite = cc.Sprite._create();
+        sprite = _cc.Sprite.create();
         return sprite;
     }
-
+    
     if (typeof(fileName) === "string") {
         if (fileName[0] === "#") {
             //init with a sprite frame name
             var frameName = fileName.substr(1, fileName.length - 1);
             var spriteFrame = cc.spriteFrameCache.getSpriteFrame(frameName);
-            sprite = cc.Sprite.createWithSpriteFrame(spriteFrame);
+            sprite = _cc.Sprite.createWithSpriteFrame(spriteFrame);
         } else {
             // Create with filename and rect
-            sprite = rect ? cc.Sprite._create(fileName, rect) : cc.Sprite._create(fileName);
+            sprite = rect ? _cc.Sprite.create(fileName, rect) : _cc.Sprite.create(fileName);
         }
         if (sprite)
             return sprite;
         else return null;
     }
-
+    
     if (typeof(fileName) === "object") {
         if (fileName instanceof cc.Texture2D) {
             //init  with texture and rect
-            sprite = rect ? cc.Sprite.createWithTexture(fileName, rect) : cc.Sprite.createWithTexture(fileName);
+            sprite = rect ? _cc.Sprite.createWithTexture(fileName, rect) : _cc.Sprite.createWithTexture(fileName);
         } else if (fileName instanceof cc.SpriteFrame) {
             //init with a sprite frame
-            sprite = cc.Sprite.createWithSpriteFrame(fileName);
+            sprite = _cc.Sprite.createWithSpriteFrame(fileName);
         }
         if (sprite)
             return  sprite;
         else return null;
     }
-
+    
     return null;
 };
 
 cc.PhysicsSprite._create = cc.PhysicsSprite.create;
 cc.PhysicsSprite.create = function (fileName, rect) {
     var sprite;
-
+    
     if (arguments.length == 0) {
         sprite = cc.PhysicsSprite._create();
         return sprite;
     }
-
+    
     if (typeof(fileName) === "string") {
         if (fileName[0] === "#") {
             //init with a sprite frame name
@@ -87,7 +214,7 @@ cc.PhysicsSprite.create = function (fileName, rect) {
             return sprite;
         else return null;
     }
-
+    
     if (typeof(fileName) === "object") {
         if (fileName instanceof cc.Texture2D) {
             //init  with texture and rect
@@ -100,7 +227,7 @@ cc.PhysicsSprite.create = function (fileName, rect) {
             return  sprite;
         else return null;
     }
-
+    
     return null;
 };
 
