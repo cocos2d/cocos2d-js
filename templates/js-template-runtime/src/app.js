@@ -22,7 +22,7 @@ var HelloWorldLayer = cc.Layer.extend({
             res.CloseNormal_png,
             res.CloseSelected_png,
             function () {
-                history.go(-1);
+                cc.log("Menu is clicked!");
             },this);
         closeItem.attr({
             x: size.width - 20,
