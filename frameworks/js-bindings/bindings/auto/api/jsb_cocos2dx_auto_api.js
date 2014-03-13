@@ -284,8 +284,8 @@ getFragmentShaderLog : function (
 
 /**
  * @method initWithByteArrays
- * @param {char*} arg0
- * @param {char*} arg1
+ * @param {char} arg0
+ * @param {char} arg1
  * @return {bool}
  */
 initWithByteArrays : function (
@@ -298,7 +298,7 @@ char
 
 /**
  * @method bindAttribLocation
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {unsigned int} arg1
  */
 bindAttribLocation : function (
@@ -311,7 +311,7 @@ int
 /**
  * @method setUniformLocationWithMatrix4fv
  * @param {int} arg0
- * @param {float*} arg1
+ * @param {float} arg1
  * @param {unsigned int} arg2
  */
 setUniformLocationWithMatrix4fv : function (
@@ -338,7 +338,7 @@ str
 
 /**
  * @method getUniformLocationForName
- * @param {char*} arg0
+ * @param {char} arg0
  * @return {int}
  */
 getUniformLocationForName : function (
@@ -395,7 +395,7 @@ int
 /**
  * @method setUniformLocationWith3iv
  * @param {int} arg0
- * @param {int*} arg1
+ * @param {int} arg1
  * @param {unsigned int} arg2
  */
 setUniformLocationWith3iv : function (
@@ -417,7 +417,7 @@ updateUniforms : function (
 /**
  * @method setUniformLocationWith4iv
  * @param {int} arg0
- * @param {int*} arg1
+ * @param {int} arg1
  * @param {unsigned int} arg2
  */
 setUniformLocationWith4iv : function (
@@ -430,7 +430,7 @@ int
 
 /**
  * @method getUniformLocation
- * @param {char*} arg0
+ * @param {char} arg0
  * @return {int}
  */
 getUniformLocation : function (
@@ -455,7 +455,7 @@ int
 /**
  * @method setUniformLocationWith2iv
  * @param {int} arg0
- * @param {int*} arg1
+ * @param {int} arg1
  * @param {unsigned int} arg2
  */
 setUniformLocationWith2iv : function (
@@ -469,7 +469,7 @@ int
 /**
  * @method setUniformLocationWithMatrix3fv
  * @param {int} arg0
- * @param {float*} arg1
+ * @param {float} arg1
  * @param {unsigned int} arg2
  */
 setUniformLocationWithMatrix3fv : function (
@@ -490,7 +490,7 @@ reset : function (
 
 /**
  * @method getAttribLocation
- * @param {char*} arg0
+ * @param {char} arg0
  * @return {int}
  */
 getAttribLocation : function (
@@ -503,7 +503,7 @@ char
 /**
  * @method setUniformLocationWithMatrix2fv
  * @param {int} arg0
- * @param {float*} arg1
+ * @param {float} arg1
  * @param {unsigned int} arg2
  */
 setUniformLocationWithMatrix2fv : function (
@@ -805,7 +805,7 @@ getMaxT : function (
 
 /**
  * @method getStringForFormat
- * @return {char*}
+ * @return {char}
  */
 getStringForFormat : function (
 )
@@ -911,8 +911,8 @@ getName : function (
 
 /**
  * @method initWithString
-* @param {char*|char*} char
-* @param {cc.FontDefinition|char*} fontdefinition
+* @param {char|char} char
+* @param {cc.FontDefinition|char} fontdefinition
 * @param {float} float
 * @param {SizeObject} size
 * @param {cc.TextHAlignment} texthalignment
@@ -1982,7 +1982,7 @@ int
 
 /**
  * @method setAdditionalTransform
-* @param {cc.AffineTransform|kmMat4*} affinetransform
+* @param {cc.AffineTransform|kmMat4} affinetransform
 */
 setAdditionalTransform : function(
 kmmat4 
@@ -2052,8 +2052,8 @@ actionmanager
 
 /**
  * @method getPosition
-* @param {float*} float
-* @param {float*} float
+* @param {float} float
+* @param {float} float
 * @return {PointObject}
 */
 getPosition : function(
@@ -3730,9 +3730,9 @@ cc.OrbitCamera = {
 
 /**
  * @method sphericalRadius
- * @param {float*} arg0
- * @param {float*} arg1
- * @param {float*} arg2
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
  */
 sphericalRadius : function (
 float, 
@@ -5616,7 +5616,7 @@ tile
 
 /**
  * @method shuffle
- * @param {unsigned int*} arg0
+ * @param {unsigned int} arg0
  * @param {unsigned int} arg1
  */
 shuffle : function (
@@ -5825,7 +5825,7 @@ point
 
 /**
  * @method shuffle
- * @param {unsigned int*} arg0
+ * @param {unsigned int} arg0
  * @param {unsigned int} arg1
  */
 shuffle : function (
@@ -13187,7 +13187,7 @@ cc.SAXParser = {
 
 /**
  * @method init
- * @param {char*} arg0
+ * @param {char} arg0
  * @return {bool}
  */
 init : function (
@@ -14559,7 +14559,7 @@ releaseMap : function (
 
 /**
  * @method setTiles
- * @param {unsigned int*} arg0
+ * @param {unsigned int} arg0
  */
 setTiles : function (
 int 
@@ -15481,7 +15481,7 @@ cc.AudioEngine = {
 
 /**
  * @method preloadBackgroundMusic
- * @param {char*} arg0
+ * @param {char} arg0
  */
 preloadBackgroundMusic : function (
 char 
@@ -15535,7 +15535,7 @@ float
 
 /**
  * @method preloadEffect
- * @param {char*} arg0
+ * @param {char} arg0
  */
 preloadEffect : function (
 char 
@@ -15585,7 +15585,7 @@ int
 
 /**
  * @method playEffect
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {bool} arg1
  * @param {float} arg2
  * @param {float} arg3
@@ -15613,7 +15613,7 @@ rewindBackgroundMusic : function (
 
 /**
  * @method playBackgroundMusic
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {bool} arg1
  */
 playBackgroundMusic : function (
@@ -15669,7 +15669,7 @@ pauseAllEffects : function (
 
 /**
  * @method unloadEffect
- * @param {char*} arg0
+ * @param {char} arg0
  */
 unloadEffect : function (
 char 

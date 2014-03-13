@@ -98,7 +98,7 @@ node
 
 /**
  * @method runAnimationsForSequenceNamedTweenDuration
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {float} arg1
  */
 runAnimationsForSequenceNamedTweenDuration : function (
@@ -250,7 +250,7 @@ float
 
 /**
  * @method getRunningSequenceName
- * @return {char*}
+ * @return {char}
  */
 getRunningSequenceName : function (
 )
@@ -310,7 +310,7 @@ ccbanimationmanagerdelegate
 
 /**
  * @method getSequenceDuration
- * @param {char*} arg0
+ * @param {char} arg0
  * @return {float}
  */
 getSequenceDuration : function (
@@ -332,7 +332,7 @@ node
 
 /**
  * @method runAnimationsForSequenceNamed
- * @param {char*} arg0
+ * @param {char} arg0
  */
 runAnimationsForSequenceNamed : function (
 char 
@@ -342,7 +342,7 @@ char
 
 /**
  * @method getSequenceId
- * @param {char*} arg0
+ * @param {char} arg0
  * @return {int}
  */
 getSequenceId : function (
@@ -470,7 +470,7 @@ eventtype
 
 /**
  * @method setCCBRootPath
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setCCBRootPath : function (
 char 

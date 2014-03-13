@@ -28,7 +28,7 @@ pause : function (
 
 /**
  * @method setName
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setName : function (
 char 
@@ -58,7 +58,7 @@ getTotalTime : function (
 
 /**
  * @method getName
- * @return {char*}
+ * @return {char}
  */
 getName : function (
 )
@@ -192,8 +192,8 @@ ccs.ActionManager = {
 
 /**
  * @method playActionByName
-* @param {char*|char*} char
-* @param {char*|char*} char
+* @param {char|char} char
+* @param {char|char} char
 * @param {cc.CallFunc} callfunc
 * @return {ccs.ActionObject|ccs.ActionObject}
 */
@@ -208,8 +208,8 @@ callfunc
 
 /**
  * @method getActionByName
- * @param {char*} arg0
- * @param {char*} arg1
+ * @param {char} arg0
+ * @param {char} arg1
  * @return {ccs.ActionObject}
  */
 getActionByName : function (
@@ -2436,7 +2436,7 @@ pauseAllEffects : function (
 
 /**
  * @method preloadBackgroundMusic
- * @param {char*} arg0
+ * @param {char} arg0
  */
 preloadBackgroundMusic : function (
 char 
@@ -2446,7 +2446,7 @@ char
 
 /**
  * @method playBackgroundMusic
-* @param {char*|char*} char
+* @param {char|char} char
 * @param {bool} bool
 */
 playBackgroundMusic : function(
@@ -2458,7 +2458,7 @@ bool
 
 /**
  * @method playEffect
-* @param {char*|char*} char
+* @param {char|char} char
 * @param {bool} bool
 * @return {unsigned int|unsigned int|unsigned int}
 */
@@ -2472,7 +2472,7 @@ bool
 
 /**
  * @method preloadEffect
- * @param {char*} arg0
+ * @param {char} arg0
  */
 preloadEffect : function (
 char 
@@ -2492,7 +2492,7 @@ bool
 
 /**
  * @method unloadEffect
- * @param {char*} arg0
+ * @param {char} arg0
  */
 unloadEffect : function (
 char 
@@ -2528,7 +2528,7 @@ resumeBackgroundMusic : function (
 
 /**
  * @method setFile
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setFile : function (
 char 
@@ -2548,7 +2548,7 @@ float
 
 /**
  * @method getFile
- * @return {char*}
+ * @return {char}
  */
 getFile : function (
 )
@@ -2739,7 +2739,7 @@ getNode : function (
 /**
  * @method create
 * @param {cc.Node} node
-* @param {char*} char
+* @param {char} char
 * @return {ccs.ComRender|ccs.ComRender}
 */
 create : function(
@@ -2759,7 +2759,7 @@ ccs.GUIReader = {
 
 /**
  * @method widgetFromJsonFile
- * @param {char*} arg0
+ * @param {char} arg0
  * @return {ccui.Widget}
  */
 widgetFromJsonFile : function (
@@ -2781,7 +2781,7 @@ getFilePath : function (
 
 /**
  * @method getVersionInteger
- * @param {char*} arg0
+ * @param {char} arg0
  * @return {int}
  */
 getVersionInteger : function (
@@ -2850,7 +2850,7 @@ destroyInstance : function (
 
 /**
  * @method sceneReaderVersion
- * @return {char*}
+ * @return {char}
  */
 sceneReaderVersion : function (
 )
