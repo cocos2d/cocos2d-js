@@ -566,7 +566,7 @@ cc.SpriteBatchNode._create = cc.SpriteBatchNode.create;
  * var texture = cc.textureCache.addImage("res/animations/grossini.png");
  * var spriteBatchNode = cc.SpriteBatchNode.create(texture,50);
  */
-cc.SpriteBatchNode.create = function(fileName,capacity){
+cc.SpriteBatchNode.create = function(fileName, capacity){
     if (typeof(fileName) == "string")
         return cc.SpriteBatchNode._create(fileName);
     else if (fileName instanceof cc.Texture2D) {
@@ -636,6 +636,32 @@ cc.ParticleSystem.create = function(plistFile){
         particleSystem = cc.ParticleSystem._create(plistFile);
     }
     return particleSystem;
+};
+
+
+cc.ParticleBatchNode._create = cc.ParticleBatchNode.create;
+/**
+ * initializes the particle system with the name of a file on disk (for a list of supported formats look at the cc.Texture2D class), a capacity of particles
+ * @param {String|cc.Texture2D} fileImage
+ * @param {Number} capacity
+ * @return {cc.ParticleBatchNode}
+ * @example
+ * 1.
+ * //Create a cc.ParticleBatchNode with image path  and capacity
+ * var particleBatchNode = cc.ParticleBatchNode.create("res/grossini_dance.png",30);
+ *
+ * 2.
+ * //Create a cc.ParticleBatchNode with a texture and capacity
+ * var texture = cc.TextureCache.getInstance().addImage("res/grossini_dance.png");
+ * var particleBatchNode = cc.ParticleBatchNode.create(texture, 30);
+ */
+cc.ParticleBatchNode.create = function(fileImage, capacity){
+	if (typeof(fileName) == "string")
+		return cc.ParticleBatchNode._create(fileName);
+	else if (fileName instanceof cc.Texture2D) {
+		return isNaN(capacity) ? cc.ParticleBatchNode.createWithTexture(fileName) :  cc.ParticleBatchNode.createWithTexture(fileName, capacity);
+	}
+	return null;
 };
 
 
