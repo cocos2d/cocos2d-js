@@ -47064,14 +47064,7 @@ bool js_cocos2dx_EventListenerAcceleration_create(JSContext *cx, uint32_t argc, 
 			std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
 			auto lambda = [=](cocos2d::Acceleration* larg0, cocos2d::Event* larg1) -> void {
 				jsval largv[2];
-				do {
-					if (larg0) {
-						js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Acceleration>(cx, (cocos2d::Acceleration*)larg0);
-						largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
-					} else {
-						largv[0] = JSVAL_NULL;
-					}
-				} while (0);
+				largv[0] = ccacceleration_to_jsval(cx, *larg0);
 				do {
 					if (larg1) {
 						js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Event>(cx, (cocos2d::Event*)larg1);
