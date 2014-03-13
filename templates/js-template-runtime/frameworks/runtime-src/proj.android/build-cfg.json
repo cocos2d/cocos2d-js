@@ -9,6 +9,8 @@
     "copy_to_assets" :[
         "../../../src",
         "../../../res",
-        "../../js-bindings/bindings/script/"
+        "../../../main.js",
+        "../../../project.json",
+		"../../js-bindings/bindings/script/"
     ]
 }
