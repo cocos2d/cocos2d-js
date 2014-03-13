@@ -32741,6 +32741,15 @@ void js_cocos2d_MenuItem_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (MenuItem)", obj);
 }
 
+static bool js_cocos2d_MenuItem_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::MenuItem *nobj = cocos2d::MenuItem::create();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::MenuItem");
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_MenuItem(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_MenuItem_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_MenuItem_class->name = "MenuItem";
@@ -32767,6 +32776,7 @@ void js_register_cocos2dx_MenuItem(JSContext *cx, JSObject *global) {
 		JS_FN("isSelected", js_cocos2dx_MenuItem_isSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("unselected", js_cocos2dx_MenuItem_unselected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("rect", js_cocos2dx_MenuItem_rect, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_MenuItem_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -33789,6 +33799,15 @@ void js_cocos2d_MenuItemToggle_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (MenuItemToggle)", obj);
 }
 
+static bool js_cocos2d_MenuItemToggle_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::MenuItemToggle *nobj = cocos2d::MenuItemToggle::create();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::MenuItemToggle");
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_MenuItemToggle(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_MenuItemToggle_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_MenuItemToggle_class->name = "MenuItemToggle";
@@ -33813,6 +33832,7 @@ void js_register_cocos2dx_MenuItemToggle(JSContext *cx, JSObject *global) {
 		JS_FN("addSubItem", js_cocos2dx_MenuItemToggle_addSubItem, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getSelectedItem", js_cocos2dx_MenuItemToggle_getSelectedItem, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setSelectedIndex", js_cocos2dx_MenuItemToggle_setSelectedIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_MenuItemToggle_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -33963,6 +33983,15 @@ void js_cocos2d_Menu_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Menu)", obj);
 }
 
+static bool js_cocos2d_Menu_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::Menu *nobj = cocos2d::Menu::create();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::Menu");
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_Menu(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_Menu_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_Menu_class->name = "Menu";
@@ -33988,6 +34017,7 @@ void js_register_cocos2dx_Menu(JSContext *cx, JSObject *global) {
 		JS_FN("alignItemsHorizontallyWithPadding", js_cocos2dx_Menu_alignItemsHorizontallyWithPadding, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("alignItemsVerticallyWithPadding", js_cocos2dx_Menu_alignItemsVerticallyWithPadding, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("alignItemsHorizontally", js_cocos2dx_Menu_alignItemsHorizontally, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_Menu_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
