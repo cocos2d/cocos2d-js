@@ -11,6 +11,6 @@
         "../../../res",
         "../../../main.js",
         "../../../project.json",
-		"../../js-bindings/bindings/script/"
+        "../../js-bindings/bindings/script/"
     ]
 }
