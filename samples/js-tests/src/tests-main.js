@@ -370,7 +370,7 @@ var testNames = [
     },
     {
         title:"Loader Test",
-        platforms: PLATFORM_ALL,
+        platforms: PLATFORM_HTML5_WEBGL,
         testScene:function () {
             return new LoaderTestScene();
         }
