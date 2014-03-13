@@ -32,7 +32,7 @@ float
 
 /**
  * @method initWithSpriteFrameName
-* @param {char*|char*} char
+* @param {char|char} char
 * @param {RectObject} rect
 * @return {bool|bool}
 */
@@ -162,8 +162,8 @@ getOriginalSize : function (
 
 /**
  * @method initWithFile
-* @param {char*|char*|RectObject|char*} char
-* @param {RectObject|RectObject|char*} rect
+* @param {char|char|RectObject|char} char
+* @param {RectObject|RectObject|char} rect
 * @param {RectObject} rect
 * @return {bool|bool|bool|bool}
 */
@@ -252,8 +252,8 @@ float
 
 /**
  * @method create
-* @param {char*|RectObject|char*|char*} char
-* @param {RectObject|char*|RectObject} rect
+* @param {char|RectObject|char|char} char
+* @param {RectObject|char|RectObject} rect
 * @param {RectObject} rect
 * @return {cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite}
 */
@@ -268,7 +268,7 @@ rect
 
 /**
  * @method createWithSpriteFrameName
-* @param {char*|char*} char
+* @param {char|char} char
 * @param {RectObject} rect
 * @return {cc.Scale9Sprite|cc.Scale9Sprite}
 */
@@ -1500,9 +1500,9 @@ point
 
 /**
  * @method create
- * @param {char*} arg0
- * @param {char*} arg1
- * @param {char*} arg2
+ * @param {char} arg0
+ * @param {char} arg1
+ * @param {char} arg2
  * @return {cc.ControlPotentiometer}
  */
 create : function (
@@ -1772,10 +1772,10 @@ float
 
 /**
  * @method create
-* @param {cc.Sprite|char*|char*|cc.Sprite} sprite
-* @param {cc.Sprite|char*|char*|cc.Sprite} sprite
-* @param {cc.Sprite|char*|char*|cc.Sprite} sprite
-* @param {char*|cc.Sprite} char
+* @param {cc.Sprite|char|char|cc.Sprite} sprite
+* @param {cc.Sprite|char|char|cc.Sprite} sprite
+* @param {cc.Sprite|char|char|cc.Sprite} sprite
+* @param {char|cc.Sprite} char
 * @return {cc.ControlSlider|cc.ControlSlider|cc.ControlSlider|cc.ControlSlider}
 */
 create : function(
@@ -2688,7 +2688,7 @@ cc.EditBox = {
 
 /**
  * @method getText
- * @return {char*}
+ * @return {char}
  */
 getText : function (
 )
@@ -2698,7 +2698,7 @@ getText : function (
 
 /**
  * @method setPlaceholderFontName
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setPlaceholderFontName : function (
 char 
@@ -2708,7 +2708,7 @@ char
 
 /**
  * @method getPlaceHolder
- * @return {char*}
+ * @return {char}
  */
 getPlaceHolder : function (
 )
@@ -2718,7 +2718,7 @@ getPlaceHolder : function (
 
 /**
  * @method setFontName
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setFontName : function (
 char 
@@ -2768,7 +2768,7 @@ color3b
 
 /**
  * @method setPlaceholderFont
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {int} arg1
  */
 setPlaceholderFont : function (
@@ -2804,7 +2804,7 @@ scale9sprite
 
 /**
  * @method setPlaceHolder
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setPlaceHolder : function (
 char 
@@ -2844,7 +2844,7 @@ getMaxLength : function (
 
 /**
  * @method setText
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setText : function (
 char 
@@ -2864,7 +2864,7 @@ int
 
 /**
  * @method setFont
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {int} arg1
  */
 setFont : function (
@@ -2910,7 +2910,7 @@ cc.AssetsManager = {
 
 /**
  * @method setStoragePath
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setStoragePath : function (
 char 
@@ -2920,7 +2920,7 @@ char
 
 /**
  * @method setPackageUrl
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setPackageUrl : function (
 char 
@@ -2940,7 +2940,7 @@ checkUpdate : function (
 
 /**
  * @method getStoragePath
- * @return {char*}
+ * @return {char}
  */
 getStoragePath : function (
 )
@@ -2968,7 +2968,7 @@ int
 
 /**
  * @method setVersionFileUrl
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setVersionFileUrl : function (
 char 
@@ -2978,7 +2978,7 @@ char
 
 /**
  * @method getPackageUrl
- * @return {char*}
+ * @return {char}
  */
 getPackageUrl : function (
 )
@@ -3008,7 +3008,7 @@ getVersion : function (
 
 /**
  * @method getVersionFileUrl
- * @return {char*}
+ * @return {char}
  */
 getVersionFileUrl : function (
 )
@@ -3026,9 +3026,9 @@ deleteVersion : function (
 
 /**
  * @method create
- * @param {char*} arg0
- * @param {char*} arg1
- * @param {char*} arg2
+ * @param {char} arg0
+ * @param {char} arg1
+ * @param {char} arg2
  * @param {function} arg3
  * @param {function} arg4
  * @param {function} arg5

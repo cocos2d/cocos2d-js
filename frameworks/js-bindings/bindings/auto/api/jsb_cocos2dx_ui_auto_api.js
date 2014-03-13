@@ -132,7 +132,7 @@ relativealign
 
 /**
  * @method setRelativeToWidgetName
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setRelativeToWidgetName : function (
 char 
@@ -142,7 +142,7 @@ char
 
 /**
  * @method getRelativeName
- * @return {char*}
+ * @return {char}
  */
 getRelativeName : function (
 )
@@ -152,7 +152,7 @@ getRelativeName : function (
 
 /**
  * @method getRelativeToWidgetName
- * @return {char*}
+ * @return {char}
  */
 getRelativeToWidgetName : function (
 )
@@ -162,7 +162,7 @@ getRelativeToWidgetName : function (
 
 /**
  * @method setRelativeName
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setRelativeName : function (
 char 
@@ -320,7 +320,7 @@ positiontype
 
 /**
  * @method getName
- * @return {char*}
+ * @return {char}
  */
 getName : function (
 )
@@ -392,7 +392,7 @@ getPositionType : function (
 
 /**
  * @method setName
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setName : function (
 char 
@@ -402,7 +402,7 @@ char
 
 /**
  * @method getChildByName
- * @param {char*} arg0
+ * @param {char} arg0
  * @return {ccui.Widget}
  */
 getChildByName : function (
@@ -916,7 +916,7 @@ char
 
 /**
  * @method setBackGroundImage
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 setBackGroundImage : function (
@@ -1216,7 +1216,7 @@ rect
 
 /**
  * @method loadTextureDisabled
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadTextureDisabled : function (
@@ -1248,7 +1248,7 @@ rect
 
 /**
  * @method loadTexturePressed
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadTexturePressed : function (
@@ -1260,7 +1260,7 @@ texturerestype
 
 /**
  * @method setTitleFontName
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setTitleFontName : function (
 char 
@@ -1290,9 +1290,9 @@ getCapInsetsPressedRenderer : function (
 
 /**
  * @method loadTextures
- * @param {char*} arg0
- * @param {char*} arg1
- * @param {char*} arg2
+ * @param {char} arg0
+ * @param {char} arg1
+ * @param {char} arg2
  * @param {ccui.TextureResType} arg3
  */
 loadTextures : function (
@@ -1316,7 +1316,7 @@ isScale9Enabled : function (
 
 /**
  * @method loadTextureNormal
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadTextureNormal : function (
@@ -1348,7 +1348,7 @@ getTitleFontSize : function (
 
 /**
  * @method getTitleFontName
- * @return {char*}
+ * @return {char}
  */
 getTitleFontName : function (
 )
@@ -1424,7 +1424,7 @@ getSelectedState : function (
 
 /**
  * @method loadTextureBackGroundSelected
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadTextureBackGroundSelected : function (
@@ -1436,7 +1436,7 @@ texturerestype
 
 /**
  * @method loadTextureBackGroundDisabled
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadTextureBackGroundDisabled : function (
@@ -1448,7 +1448,7 @@ texturerestype
 
 /**
  * @method loadTextureFrontCross
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadTextureFrontCross : function (
@@ -1460,11 +1460,11 @@ texturerestype
 
 /**
  * @method loadTextures
- * @param {char*} arg0
- * @param {char*} arg1
- * @param {char*} arg2
- * @param {char*} arg3
- * @param {char*} arg4
+ * @param {char} arg0
+ * @param {char} arg1
+ * @param {char} arg2
+ * @param {char} arg3
+ * @param {char} arg4
  * @param {ccui.TextureResType} arg5
  */
 loadTextures : function (
@@ -1480,7 +1480,7 @@ texturerestype
 
 /**
  * @method loadTextureBackGround
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadTextureBackGround : function (
@@ -1502,7 +1502,7 @@ bool
 
 /**
  * @method loadTextureFrontCrossDisabled
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadTextureFrontCrossDisabled : function (
@@ -1550,7 +1550,7 @@ ccui.ImageView = {
 
 /**
  * @method loadTexture
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadTexture : function (
@@ -1918,7 +1918,7 @@ int
 
 /**
  * @method loadTexture
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadTexture : function (
@@ -2606,7 +2606,7 @@ int
 
 /**
  * @method loadSlidBallTextureDisabled
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadSlidBallTextureDisabled : function (
@@ -2618,7 +2618,7 @@ texturerestype
 
 /**
  * @method loadSlidBallTextureNormal
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadSlidBallTextureNormal : function (
@@ -2630,7 +2630,7 @@ texturerestype
 
 /**
  * @method loadBarTexture
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadBarTexture : function (
@@ -2642,7 +2642,7 @@ texturerestype
 
 /**
  * @method loadProgressBarTexture
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadProgressBarTexture : function (
@@ -2654,9 +2654,9 @@ texturerestype
 
 /**
  * @method loadSlidBallTextures
- * @param {char*} arg0
- * @param {char*} arg1
- * @param {char*} arg2
+ * @param {char} arg0
+ * @param {char} arg1
+ * @param {char} arg2
  * @param {ccui.TextureResType} arg3
  */
 loadSlidBallTextures : function (
@@ -2720,7 +2720,7 @@ rect
 
 /**
  * @method loadSlidBallTexturePressed
- * @param {char*} arg0
+ * @param {char} arg0
  * @param {ccui.TextureResType} arg1
  */
 loadSlidBallTexturePressed : function (
@@ -2954,7 +2954,7 @@ bool
 
 /**
  * @method getPasswordStyleText
- * @return {char*}
+ * @return {char}
  */
 getPasswordStyleText : function (
 )
@@ -2974,7 +2974,7 @@ bool
 
 /**
  * @method setPasswordStyleText
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setPasswordStyleText : function (
 char 
@@ -3162,7 +3162,7 @@ ccui.TextBMFont = {
 
 /**
  * @method setFntFile
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setFntFile : function (
 char 
@@ -3172,7 +3172,7 @@ char
 
 /**
  * @method getStringValue
- * @return {char*}
+ * @return {char}
  */
 getStringValue : function (
 )
@@ -3182,7 +3182,7 @@ getStringValue : function (
 
 /**
  * @method setText
- * @param {char*} arg0
+ * @param {char} arg0
  */
 setText : function (
 char 
@@ -3399,7 +3399,7 @@ int
 /**
  * @method seekWidgetByRelativeName
  * @param {ccui.Widget} arg0
- * @param {char*} arg1
+ * @param {char} arg1
  * @return {ccui.Widget}
  */
 seekWidgetByRelativeName : function (
@@ -3413,7 +3413,7 @@ char
 /**
  * @method seekWidgetByName
  * @param {ccui.Widget} arg0
- * @param {char*} arg1
+ * @param {char} arg1
  * @return {ccui.Widget}
  */
 seekWidgetByName : function (
