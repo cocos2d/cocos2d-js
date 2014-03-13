@@ -23,6 +23,10 @@
 #define ID_TEST_RESET                   32782
 #define ID_CONTROL                      32783
 #define ID_CONTROL_RELOAD               32784
+#define ID_VIEW_ZOOMOUT100              32785
+#define ID_VIEW_ZOOMOUT75               32786
+#define ID_VIEW_ZOOMOUT50               32787
+#define ID_VIEW_ZOOMOUT25               32788
 
 // Next default values for new objects
 // 
