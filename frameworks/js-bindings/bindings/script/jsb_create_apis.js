@@ -696,7 +696,6 @@ cc.MenuItemToggle.create = function(/* var args */) {
 
 
 // LabelAtlas
-cc.LabelAtlas._create = cc.LabelAtlas.create;
 cc.LabelAtlas.create = function( a,b,c,d,e ) {
 
 	var n = arguments.length;
