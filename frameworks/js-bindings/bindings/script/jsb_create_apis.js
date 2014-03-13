@@ -117,6 +117,271 @@ cc.Sprite = _cc.Sprite.extend({
 cc.Sprite.create = _cc.Sprite.create;
 
 
+// SpriteBatchNode - Doesn't work until Cocos2d-x provide correct set functions
+/*
+_cc.SpriteBatchNode = cc.SpriteBatchNode;
+cc.SpriteBatchNode = _cc.SpriteBatchNode.extend({
+	ctor: function(fileImage, capacity) {
+		_cc.SpriteBatchNode.prototype.ctor.call(this);
+
+		capacity = capacity || cc.DEFAULT_SPRITE_BATCH_CAPACITY;
+		var texture2D;
+		if (typeof(fileImage) == "string") {
+			texture2D = cc.textureCache.textureForKey(fileImage);
+			if (!texture2D)
+				texture2D = cc.textureCache.addImage(fileImage);
+		}
+		else if (fileImage instanceof cc.Texture2D)
+			texture2D  = fileImage;
+
+	    texture2D && this.setTexture(texture2D);
+	    this.setCapacity(capacity);
+
+	}
+});
+cc.SpriteBatchNode.create = _cc.SpriteBatchNode.create;*/
+
+
+// Menu
+_cc.Menu = cc.Menu;
+cc.Menu = _cc.Menu.extend({
+	ctor: function(menuItems) {
+		_cc.Menu.prototype.ctor.call(this);
+
+		if((arguments.length > 0) && (arguments[arguments.length-1] == null))
+			cc.log("parameters should not be ending with null in Javascript");
+
+		var argc = arguments.length, items;
+		if (argc == 0) {
+			items = [];
+		} else if (argc == 1) {
+			if (menuItems instanceof Array) {
+				items = menuItems;
+			}
+			else items = [];
+		}
+		else if (argc > 1) {
+			var items = [];
+			for (var i = 0; i < argc; i++) {
+				if (arguments[i])
+					items.push(arguments[i]);
+			}
+		}
+
+		var winSize = cc.winSize;
+		this.setPosition(winSize.width / 2, winSize.height / 2);
+		this.setContentSize(winSize);
+		this.setAnchorPoint(0.5, 0.5);
+		this.ignoreAnchorPointForPosition(true);
+
+		for (var i = 0; i < items.length; i++)
+			this.addChild(items[i], i);
+
+		this.setCascadeColorEnabled(true);
+		this.setCascadeOpacityEnabled(true);
+
+		var touchListener = cc.EventListener.create({
+			event: cc.EventListener.TOUCH_ONE_BY_ONE,
+			swallowTouches: true,
+			onTouchBegan: this.onTouchBegan,
+			onTouchMoved: this.onTouchMoved,
+			onTouchEnded: this.onTouchEnded,
+			onTouchCancelled: this.onTouchCancelled
+		});
+		cc.eventManager.addListener(touchListener, this);
+	}
+});
+cc.Menu.create = _cc.Menu.create;
+
+
+// Menu items
+var _initWithCb = function(callback, target) {
+	if (target !== undefined) {
+		this.setAnchorPoint(0.5, 0.5);
+		this.setTarget(callback, target);
+		this.setEnabled(true);
+	}
+	else if (callback !== undefined) {
+		this.setAnchorPoint(0.5, 0.5);
+		this.setCallback(callback);
+		this.setEnabled(true);
+	}
+};
+var _initLabel = function(label) {
+	if (label) {
+		this.setScale(1);
+		this.setDisabledColor(cc.color(126,126,126));
+		this.setLabel(label);
+		this.setCascadeColorEnabled(true);
+		this.setCascadeOpacityEnabled(true);
+	}
+};
+
+_cc.MenuItem = cc.MenuItem;
+cc.MenuItem = _cc.MenuItem.extend({
+	ctor: function(callback, target) {
+		_cc.MenuItem.prototype.ctor.call(this);
+
+		_initWithCb.call(this, callback, target);
+	}
+});
+cc.MenuItem.create = _cc.MenuItem.create;
+
+/*
+_cc.MenuItemLabel = cc.MenuItemLabel;
+cc.MenuItemLabel = _cc.MenuItemLabel.extend({
+	ctor: function(label, callback, target) {
+		_cc.MenuItemLabel.prototype.ctor.call(this);
+
+		_initWithCb.call(this, callback, target);
+		_initLabel.call(this, label);
+	}
+});
+cc.MenuItemLabel.create = _cc.MenuItemLabel.create;
+
+_cc.MenuItemAtlasFont = cc.MenuItemAtlasFont;
+cc.MenuItemAtlasFont = _cc.MenuItemAtlasFont.extend({
+	ctor: function(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
+		_cc.MenuItemAtlasFont.prototype.ctor.call(this);
+
+		_initWithCb.call(this, callback, target);
+		if (value && value.length > 0) {
+			var label = cc.LabelAtlas.create(value, charMapFile, itemWidth, itemHeight, startCharMap);
+
+			_initLabel.call(this, label);
+		}
+	}
+});
+cc.MenuItemAtlasFont.create = _cc.MenuItemAtlasFont.create;*/
+
+_cc.MenuItemFont = cc.MenuItemFont;
+cc.MenuItemFont = _cc.MenuItemFont.extend({
+	ctor: function(value, callback, target) {
+		_cc.MenuItemFont.prototype.ctor.call(this);
+
+		_initWithCb.call(this, callback, target);
+		var label;
+		if(value && value.length > 0) {
+			var fontName = cc.MenuItemFont.fontName;
+			var fontSize = cc.MenuItemFont.fontSize;
+			label = cc.LabelTTF.create(value, fontName, fontSize);
+
+			if (label) {
+				_initLabel.call(this, label);
+				this.setFontName(fontName);
+				this.setFontSize(fontSize);
+			}
+		}
+	}
+});
+cc.MenuItemFont.create = _cc.MenuItemFont.create;
+
+/*
+_cc.MenuItemSprite = cc.MenuItemSprite;
+cc.MenuItemSprite = _cc.MenuItemSprite.extend({
+	ctor: function(normalSprite, selectedSprite, three, four, five) {
+		_cc.MenuItemSprite.prototype.ctor.call(this);
+
+		var argc = arguments.length;
+		if (argc > 1) {
+			normalSprite = arguments[0];
+			selectedSprite = arguments[1];
+			var disabledImage, target, callback;
+			if (argc == 5) {
+				disabledImage = arguments[2];
+				callback = arguments[3];
+				target = arguments[4];
+			} else if (argc == 4 && typeof arguments[3] === "function") {
+				disabledImage = arguments[2];
+				callback = arguments[3];
+			} else if (argc == 4 && typeof arguments[2] === "function") {
+				target = arguments[3];
+				callback = arguments[2];
+			} else if (argc <= 2) {
+				disabledImage = arguments[2];
+			}
+
+			_initWithCb.call(this, callback, target);
+
+			normalSprite && this.setNormalImage(normalSprite);
+			selectedSprite && this.setSelectedImage(selectedSprite);
+			disabledImage && this.setDisabledImage(disabledImage);
+
+			if(normalSprite)
+				this.setContentSize(normalSprite.getContentSize());
+			this.setCascadeColorEnabled(true);
+			this.setCascadeOpacityEnabled(true);
+		}
+	}
+});
+cc.MenuItemSprite.create = _cc.MenuItemSprite.create;
+
+_cc.MenuItemImage = cc.MenuItemImage;
+cc.MenuItemImage = _cc.MenuItemImage.extend({
+	ctor: function(normalImage, selectedImage, three, four, five) {
+		var normalSprite = null,
+			selectedSprite = null,
+			disabledSprite = null,
+			callback = null,
+			target = null;
+
+		if (normalImage === undefined) {
+			cc.MenuItemSprite.prototype.ctor.call(this);
+		}
+		else {
+			normalSprite = cc.Sprite.create(normalImage);
+			selectedImage &&
+			(selectedSprite = cc.Sprite.create(selectedImage));
+			if (four === undefined)  {
+				callback = three;
+			}
+			else if (five === undefined) {
+				callback = three;
+				target = four;
+			}
+			else if (five) {
+				disabledSprite = cc.Sprite.create(three);
+				callback = four;
+				target = five;
+			}
+			cc.MenuItemSprite.prototype.ctor.call(this, normalSprite, selectedSprite, disabledSprite, callback, target);
+		}
+	}
+});
+cc.MenuItemImage.create = _cc.MenuItemImage.create;*/
+
+_cc.MenuItemToggle = cc.MenuItemToggle;
+cc.MenuItemToggle = _cc.MenuItemToggle.extend({
+	ctor: function() {
+		_cc.MenuItemToggle.prototype.ctor.call(this);
+
+		var argc =  arguments.length, callback, target;
+		// passing callback.
+		if (typeof arguments[argc-2] === 'function') {
+			callback = arguments[argc-2];
+			target = arguments[argc-1];
+			argc = argc - 2;
+		} else if(typeof arguments[argc-1] === 'function'){
+			callback = arguments[argc-1];
+			argc = argc-1;
+		}
+		_initWithCb.call(this, callback, target);
+
+		for (var i = 0; i < argc; i++) {
+			if (arguments[i])
+				this.addSubItem(arguments[i]);
+		}
+		if (argc > 1) {
+			this.setSelectedIndex(1);
+		}
+		this.setSelectedIndex(0);
+		this.setCascadeColorEnabled(true);
+		this.setCascadeOpacityEnabled(true);
+	}
+});
+//cc.MenuItemToggle.create = _cc.MenuItemToggle.create;
+
+
 
 
 
@@ -382,11 +647,56 @@ cc.TMXTiledMap._create = cc.TMXTiledMap.create;
  * var xmlStr = cc.loader.getRes(filePath);
  * var tmxTiledMap = cc.TMXTiledMap.create(xmlStr, resources);
  */
-cc.TMXTiledMap.create = function (tmxFile,resourcePath) {
+cc.TMXTiledMap.create = function (tmxFile, resourcePath) {
     if(resourcePath != undefined){
-        return cc.TMXTiledMap.createWithXML(tmxFile,resourcePath);
+        return cc.TMXTiledMap.createWithXML(tmxFile, resourcePath);
     } else if (tmxFile != undefined) {
         return cc.TMXTiledMap._create(tmxFile);
     }
     return null;
 };
+
+
+// MenuItemToggle
+cc.MenuItemToggle.create = function(/* var args */) {
+	var n = arguments.length;
+
+	if (typeof arguments[n-2] === 'function' || typeof arguments[n-1] === 'function')   {
+		var args = Array.prototype.slice.call(arguments);
+		var obj = null;
+		if( typeof arguments[n-2] === 'function' )
+			obj = args.pop();
+
+		var func = args.pop();
+
+		// create it with arguments,
+		var item = _cc.MenuItemToggle._create.apply(this, args);
+
+		// then set the callback
+		if( obj !== null )
+			item.setCallback(func, obj);
+		else
+			item.setCallback(func);
+		return item;
+	} else {
+		return _cc.MenuItemToggle._create.apply(this, arguments);
+	}
+};
+
+
+// LabelAtlas
+cc.LabelAtlas._create = cc.LabelAtlas.create;
+cc.LabelAtlas.create = function( a,b,c,d,e ) {
+
+	var n = arguments.length;
+
+	if ( n == 5) {
+		return cc.LabelAtlas._create(a,b,c,d,e.charCodeAt(0));
+	} else {
+		return cc.LabelAtlas._create.apply(this, arguments);
+	}
+};
+
+
+// LayerMultiplex
+cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
