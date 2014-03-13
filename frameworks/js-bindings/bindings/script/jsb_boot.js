@@ -496,7 +496,7 @@ cc.loader = {
      * @param {Function} cb     callback
      */
     loadAliases : function(url, cb){
-        cc.FileUtils.loadFilenameLookup(url);
+        cc.FileUtils.getInstance().loadFilenameLookup(url);
         if(cb) cb();
     },
 
@@ -547,13 +547,13 @@ cc.defineGetterSetter(cc.loader, "", function(){
     return this._resPath;
 }, function(resPath){
     this._resPath = resPath || "resPath";
-    cc.FileUtils.setSearchPath(this._resPath);
+    cc.FileUtils.getInstance().setSearchPath(this._resPath);
 });
 cc.defineGetterSetter(cc.loader, "audioPath", function(){
     return this._resPath;
 }, function(audioPath){
     this._audioPath = audioPath || "";
-    cc.FileUtils.setSearchPath(this._audioPath);
+    cc.FileUtils.getInstance().setSearchPath(this._audioPath);
 });
 
 //+++++++++++++++++++++++++something about loader end+++++++++++++++++++++++++++++
