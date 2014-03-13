@@ -379,7 +379,7 @@ cc.MenuItemToggle = _cc.MenuItemToggle.extend({
 		this.setCascadeOpacityEnabled(true);
 	}
 });
-cc.MenuItemToggle.create = _cc.MenuItemToggle.create;
+//cc.MenuItemToggle.create = _cc.MenuItemToggle.create;
 
 
 
@@ -647,11 +647,56 @@ cc.TMXTiledMap._create = cc.TMXTiledMap.create;
  * var xmlStr = cc.loader.getRes(filePath);
  * var tmxTiledMap = cc.TMXTiledMap.create(xmlStr, resources);
  */
-cc.TMXTiledMap.create = function (tmxFile,resourcePath) {
+cc.TMXTiledMap.create = function (tmxFile, resourcePath) {
     if(resourcePath != undefined){
-        return cc.TMXTiledMap.createWithXML(tmxFile,resourcePath);
+        return cc.TMXTiledMap.createWithXML(tmxFile, resourcePath);
     } else if (tmxFile != undefined) {
         return cc.TMXTiledMap._create(tmxFile);
     }
     return null;
 };
+
+
+// MenuItemToggle
+cc.MenuItemToggle.create = function(/* var args */) {
+	var n = arguments.length;
+
+	if (typeof arguments[n-2] === 'function' || typeof arguments[n-1] === 'function')   {
+		var args = Array.prototype.slice.call(arguments);
+		var obj = null;
+		if( typeof arguments[n-2] === 'function' )
+			obj = args.pop();
+
+		var func = args.pop();
+
+		// create it with arguments,
+		var item = _cc.MenuItemToggle._create.apply(this, args);
+
+		// then set the callback
+		if( obj !== null )
+			item.setCallback(func, obj);
+		else
+			item.setCallback(func);
+		return item;
+	} else {
+		return _cc.MenuItemToggle._create.apply(this, arguments);
+	}
+};
+
+
+// LabelAtlas
+cc.LabelAtlas._create = cc.LabelAtlas.create;
+cc.LabelAtlas.create = function( a,b,c,d,e ) {
+
+	var n = arguments.length;
+
+	if ( n == 5) {
+		return cc.LabelAtlas._create(a,b,c,d,e.charCodeAt(0));
+	} else {
+		return cc.LabelAtlas._create.apply(this, arguments);
+	}
+};
+
+
+// LayerMultiplex
+cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
