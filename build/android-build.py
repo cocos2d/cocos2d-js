@@ -170,15 +170,15 @@ def build(targets,ndk_build_param,android_platform,build_mode):
         "js-moonwarriors": "samples/js-moonwarriors/project/proj.android",
     }
 
+    if "all" in targets:
+        targets = JS_SAMPLES
+
     for target in targets:
         if target in target_proj_path_map:
             app_android_root = os.path.join(project_root, target_proj_path_map[target])
         else:
             print 'unknown target: %s' % target
             continue
-
-        print "app_root:" + app_android_root
-        print "cocos_root:" + cocos_root
 
         copy_resources(target, app_android_root)
         do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,android_platform,build_mode)
@@ -190,11 +190,15 @@ if __name__ == '__main__':
     usage = """
     This script is mainy used for building tests built-in with cocos2d-x.
 
-    Usage: %prog [options] [js-tests|js-moonwarriors]
+    Usage: %prog [options] [js-tests|js-moonwarriors|all]
 
     You can combine these targets like this:
 
     python android-build.py -p 10 js-tests js-moonwarriors
+
+    or build all valid targets as follows:
+
+    python android-build.py -p 10 all
 
     Note: You should install ant to generate apk while building the andriod tests. But it is optional. You can generate apk with eclipse.
     """
