@@ -6,7 +6,7 @@ Cocos2d-JS provides a console tool that makes the development of CH5 and JSB app
 
 ##Setup
 
-First step, you need to setup before using this tool. Download Cocos2d-JS repository, open console in Cocos2d-JS folder, then just run `./setup.py` on console. You may need to provide your NDK, Android SDK and ANT's path during the setup. Note that this tool is developed with python, so you will need python installed on your machine.
+First step, you need to setup before using this tool. Download Cocos2d-JS repository, open console in Cocos2d-JS folder, then just run `./setup.py` on console. You may need to provide your NDK, Android SDK and ANT's path during the setup. Note that this tool is developed with python, so you will need python (32bit) 2.7.5 or later installed on your machine (but it doesn't support Python3).
 
 ##Usage
 
