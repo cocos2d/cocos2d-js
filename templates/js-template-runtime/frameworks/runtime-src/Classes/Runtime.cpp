@@ -760,6 +760,7 @@ void startRuntime()
 	{
 		FileUtils::getInstance()->addSearchPath(searchPathArray[i]);
 	}
+    ScriptingCore::getInstance()->start();
 	ScriptingCore::getInstance()->enableDebugger();
 	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);

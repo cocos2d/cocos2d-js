@@ -56,11 +56,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_chipmunk);
-    sc->start();
     
 #ifdef COCOS2D_DEBUG
     startRuntime();
 #else
+    sc->start();
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
 	ScriptingCore::getInstance()->runScript("main.js");
