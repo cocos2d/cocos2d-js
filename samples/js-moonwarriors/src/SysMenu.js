@@ -35,7 +35,7 @@ var SysMenu = cc.Layer.extend({
             var aboutSelected = cc.Sprite.create(res.menu_png, cc.rect(252, 33, 126, 33));
             var aboutDisabled = cc.Sprite.create(res.menu_png, cc.rect(252, 33 * 2, 126, 33));
             var flare = cc.Sprite.create(res.flare_jpg);
-            this.addChild(flare);
+            this.addChild(flare, 15, 10);
             flare.visible = false;
             var newGame = cc.MenuItemSprite.create(newGameNormal, newGameSelected, newGameDisabled, function () {
                 this.onButtonEffect();

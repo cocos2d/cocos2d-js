@@ -1,9 +1,8 @@
 var HitEffect = cc.Sprite.extend({
     active:true,
     ctor:function () {
-        this._super();
+        this._super("#hit.png");
 
-        this.initWithSpriteFrameName("hit.png");
         this.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
     },
     reset:function (x, y, rotation, scale) {

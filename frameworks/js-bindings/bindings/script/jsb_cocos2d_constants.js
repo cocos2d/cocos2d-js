@@ -165,6 +165,35 @@ cc.UNIFORM_SAMPLER_S	= 'CC_Texture0';
 cc.UNIFORM_SIN_TIME_S	= 'CC_SinTime';
 cc.UNIFORM_TIME_S	= 'CC_Time';
 
+/**
+ * @constant
+ * @type Number
+ */
+cc.ONE = 1;
+
+/**
+ * @constant
+ * @type Number
+ */
+cc.ZERO = 0;
+
+/**
+ * @constant
+ * @type Number
+ */
+cc.SRC_ALPHA = 0x0302;
+
+/**
+ * @constant
+ * @type Number
+ */
+cc.ONE_MINUS_SRC_ALPHA = 0x0303;
+
+/**
+ * @constant
+ * @type Number
+ */
+cc.ONE_MINUS_DST_COLOR = 0x0307;
 
 
 cc.Scheduler.PRIORITY_SYSTEM	= -2147483648;
