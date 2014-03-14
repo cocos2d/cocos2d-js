@@ -48,8 +48,8 @@ setSlotsToSetupPose : function (
 
 /**
  * @method setAttachment
- * @param {char*} arg0
- * @param {char*} arg1
+ * @param {char} arg0
+ * @param {char} arg1
  * @return {bool}
  */
 setAttachment : function (
@@ -72,7 +72,7 @@ getBlendFunc : function (
 
 /**
  * @method setSkin
- * @param {char*} arg0
+ * @param {char} arg0
  * @return {bool}
  */
 setSkin : function (
@@ -100,8 +100,8 @@ setBonesToSetupPose : function (
 
 /**
  * @method createWithFile
-* @param {char*|char*} char
-* @param {char*|spAtlas*} char
+* @param {char|char} char
+* @param {char|spAtlas} char
 * @param {float|float} float
 * @return {sp.Skeleton|sp.Skeleton}
 */
@@ -117,8 +117,8 @@ float
 /**
  * @method Skeleton
  * @constructor
-* @param {char*|spSkeletonData*|char*} char
-* @param {spAtlas*|bool|char*} spatlas
+* @param {char|spSkeletonData|char} char
+* @param {spAtlas|bool|char} spatlas
 * @param {float|float} float
 */
 Skeleton : function(
@@ -148,8 +148,8 @@ float
 
 /**
  * @method setMix
- * @param {char*} arg0
- * @param {char*} arg1
+ * @param {char} arg0
+ * @param {char} arg1
  * @param {float} arg2
  */
 setMix : function (
@@ -180,7 +180,7 @@ clearTrack : function (
  * @method onAnimationStateEvent
  * @param {int} arg0
  * @param {spEventType} arg1
- * @param {spEvent*} arg2
+ * @param {spEvent} arg2
  * @param {int} arg3
  */
 onAnimationStateEvent : function (
@@ -194,8 +194,8 @@ int
 
 /**
  * @method createWithFile
-* @param {char*|char*} char
-* @param {char*|spAtlas*} char
+* @param {char|char} char
+* @param {char|spAtlas} char
 * @param {float|float} float
 * @return {sp.SkeletonAnimation|sp.SkeletonAnimation}
 */
@@ -211,8 +211,8 @@ float
 /**
  * @method SkeletonAnimation
  * @constructor
-* @param {char*|spSkeletonData*|char*} char
-* @param {spAtlas*|char*} spatlas
+* @param {char|spSkeletonData|char} char
+* @param {spAtlas|char} spatlas
 * @param {float|float} float
 */
 SkeletonAnimation : function(
