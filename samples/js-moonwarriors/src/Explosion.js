@@ -7,7 +7,7 @@ var Explosion = cc.Sprite.extend({
         this._super();
 
         var pFrame = cc.spriteFrameCache.getSpriteFrame("explosion_01.png");
-        this.initWithSpriteFrame(pFrame);
+        this.setSpriteFrame(pFrame);
         this.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
 
         this.tmpWidth = this.width;

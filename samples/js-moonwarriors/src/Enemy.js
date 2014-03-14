@@ -21,7 +21,7 @@ var Enemy = cc.Sprite.extend({
         this.attackMode = arg.attackMode;
         this.enemyType = arg.type;
 
-        this.initWithSpriteFrameName(arg.textureName);
+        this.setSpriteFrame(arg.textureName);
         this.schedule(this.shoot, this.delayTime);
     },
     _timeTick:0,
