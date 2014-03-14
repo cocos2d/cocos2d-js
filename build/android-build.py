@@ -214,6 +214,7 @@ if __name__ == '__main__':
 
     if len(args) == 0:
         parser.print_help()
+        sys.exit(1)
     else:
         try:
             build(args, opts.ndk_build_param,opts.android_platform,opts.build_mode)
