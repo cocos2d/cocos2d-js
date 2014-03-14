@@ -41,18 +41,20 @@ var cocoStudioTestItemNames = [
         }
     },
     {
-        itemTitle:"CocoStudioComponentsTest",
-        testScene:function () {
-            runComponentsTestLayer();
-        }
-    },
-    {
         itemTitle:"CocoStudioSceneTest",
         testScene:function () {
             runSceneEditorTest();
         }
     }
 ];
+if(!cc.sys.isNative){
+    cocoStudioTestItemNames.push({
+        itemTitle: "CocoStudioComponentsTest",
+        testScene: function () {
+            runComponentsTestLayer();
+        }
+    });
+}
 
 var CocoStudioMainLayer = cc.Layer.extend({
     onEnter:function () {

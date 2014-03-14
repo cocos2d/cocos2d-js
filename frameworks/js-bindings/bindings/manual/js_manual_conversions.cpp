@@ -730,10 +730,10 @@ bool jsval_to_cccolor4b(JSContext *cx, jsval v, Color4B* ret) {
     
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     
-    ret->r = r;
-    ret->g = g;
-    ret->b = b;
-    ret->a = a;
+    ret->r = (GLubyte)r;
+    ret->g = (GLubyte)g;
+    ret->b = (GLubyte)b;
+    ret->a = (GLubyte)a;
     return true;
 }
 
@@ -780,9 +780,9 @@ bool jsval_to_cccolor3b(JSContext *cx, jsval v, Color3B* ret) {
     
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     
-    ret->r = r;
-    ret->g = g;
-    ret->b = b;
+    ret->r = (GLubyte)r;
+    ret->g = (GLubyte)g;
+    ret->b = (GLubyte)b;
     return true;
 }
 
@@ -1568,7 +1568,8 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
     return ret;
 }
 
-jsval ccpoint_to_jsval(JSContext* cx, const Point& v) {
+jsval ccpoint_to_jsval(JSContext* cx, const Point& v)
+{
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(v.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -1579,7 +1580,10 @@ jsval ccpoint_to_jsval(JSContext* cx, const Point& v) {
     return JSVAL_NULL;
 }
 
-jsval ccacceleration_to_jsval(JSContext* cx, const Acceleration& v) {
+jsval ccacceleration_to_jsval(JSContext* cx, const Acceleration& v)
+{
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(v.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -1592,7 +1596,8 @@ jsval ccacceleration_to_jsval(JSContext* cx, const Acceleration& v) {
     return JSVAL_NULL;
 }
 
-jsval ccrect_to_jsval(JSContext* cx, const Rect& v) {
+jsval ccrect_to_jsval(JSContext* cx, const Rect& v)
+{
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(v.origin.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -1605,7 +1610,8 @@ jsval ccrect_to_jsval(JSContext* cx, const Rect& v) {
     return JSVAL_NULL;
 }
 
-jsval ccsize_to_jsval(JSContext* cx, const Size& v) {
+jsval ccsize_to_jsval(JSContext* cx, const Size& v)
+{
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "width", DOUBLE_TO_JSVAL(v.width), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -1616,7 +1622,8 @@ jsval ccsize_to_jsval(JSContext* cx, const Size& v) {
     return JSVAL_NULL;
 }
 
-jsval cccolor4b_to_jsval(JSContext* cx, const Color4B& v) {
+jsval cccolor4b_to_jsval(JSContext* cx, const Color4B& v)
+{
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "r", INT_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&

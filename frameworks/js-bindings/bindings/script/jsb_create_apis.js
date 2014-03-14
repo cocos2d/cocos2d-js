@@ -5,6 +5,13 @@
  ************************************************************/
 
 _cc = {};
+_cc.copyStatics = function (origin, target) {
+	for ( var key in origin ) {
+		if ( key != "extend" ) {
+			target[key] = origin[key];
+		}
+	}
+};
 
 // Layers
 _cc.Layer = cc.Layer;
@@ -17,7 +24,7 @@ cc.Layer = _cc.Layer.extend({
 	    this.setContentSize(cc.winSize);
     }
 });
-cc.Layer.create = _cc.Layer.create;
+_cc.copyStatics(_cc.Layer, cc.Layer);
 
 
 _cc.LayerColor = cc.LayerColor;
@@ -33,7 +40,7 @@ cc.LayerColor = _cc.LayerColor.extend({
 		this.setContentSize(w, h);
 	}
 });
-cc.LayerColor.create = _cc.LayerColor.create;
+_cc.copyStatics(_cc.LayerColor, cc.LayerColor);
 
 
 _cc.LayerGradient = cc.LayerGradient;
@@ -51,7 +58,7 @@ cc.LayerGradient = _cc.LayerGradient.extend({
 		this.setColor(cc.color(start.r, start.g, start.b, 255));
 	}
 });
-cc.LayerGradient.create = _cc.LayerGradient.create;
+_cc.copyStatics(_cc.LayerGradient, cc.LayerGradient);
 
 
 /*
@@ -69,7 +76,7 @@ cc.LayerMultiplex = _cc.LayerMultiplex.extend({
 		}
 	}
 });
-cc.LayerMultiplex.create = _cc.LayerMultiplex.create;*/
+ _cc.copyStatics(_cc.LayerMultiplex, cc.LayerMultiplex);*/
 
 
 // Sprite
@@ -114,7 +121,7 @@ cc.Sprite = _cc.Sprite.extend({
 		}
 	}
 });
-cc.Sprite.create = _cc.Sprite.create;
+_cc.copyStatics(_cc.Sprite, cc.Sprite);
 
 
 // SpriteBatchNode - Doesn't work until Cocos2d-x provide correct set functions
@@ -139,7 +146,7 @@ cc.SpriteBatchNode = _cc.SpriteBatchNode.extend({
 
 	}
 });
-cc.SpriteBatchNode.create = _cc.SpriteBatchNode.create;*/
+ _cc.copyStatics(_cc.SpriteBatchNode, cc.SpriteBatchNode);*/
 
 
 // Menu
@@ -191,6 +198,7 @@ cc.Menu = _cc.Menu.extend({
 		cc.eventManager.addListener(touchListener, this);
 	}
 });
+_cc.copyStatics(_cc.Menu, cc.Menu);
 cc.Menu.create = _cc.Menu.create;
 
 
@@ -225,6 +233,7 @@ cc.MenuItem = _cc.MenuItem.extend({
 		_initWithCb.call(this, callback, target);
 	}
 });
+_cc.copyStatics(_cc.MenuItem, cc.MenuItem);
 cc.MenuItem.create = _cc.MenuItem.create;
 
 /*
@@ -237,7 +246,7 @@ cc.MenuItemLabel = _cc.MenuItemLabel.extend({
 		_initLabel.call(this, label);
 	}
 });
-cc.MenuItemLabel.create = _cc.MenuItemLabel.create;
+ _cc.copyStatics(_cc.MenuItemLabel, cc.MenuItemLabel);
 
 _cc.MenuItemAtlasFont = cc.MenuItemAtlasFont;
 cc.MenuItemAtlasFont = _cc.MenuItemAtlasFont.extend({
@@ -252,7 +261,7 @@ cc.MenuItemAtlasFont = _cc.MenuItemAtlasFont.extend({
 		}
 	}
 });
-cc.MenuItemAtlasFont.create = _cc.MenuItemAtlasFont.create;*/
+ _cc.copyStatics(_cc.MenuItemAtlasFont, cc.MenuItemAtlasFont);*/
 
 _cc.MenuItemFont = cc.MenuItemFont;
 cc.MenuItemFont = _cc.MenuItemFont.extend({
@@ -274,7 +283,9 @@ cc.MenuItemFont = _cc.MenuItemFont.extend({
 		}
 	}
 });
+_cc.copyStatics(_cc.MenuItemFont, cc.MenuItemFont);
 cc.MenuItemFont.create = _cc.MenuItemFont.create;
+
 
 /*
 _cc.MenuItemSprite = cc.MenuItemSprite;
@@ -314,7 +325,7 @@ cc.MenuItemSprite = _cc.MenuItemSprite.extend({
 		}
 	}
 });
-cc.MenuItemSprite.create = _cc.MenuItemSprite.create;
+ _cc.copyStatics(_cc.MenuItemSprite, cc.MenuItemSprite);
 
 _cc.MenuItemImage = cc.MenuItemImage;
 cc.MenuItemImage = _cc.MenuItemImage.extend({
@@ -348,7 +359,7 @@ cc.MenuItemImage = _cc.MenuItemImage.extend({
 		}
 	}
 });
-cc.MenuItemImage.create = _cc.MenuItemImage.create;*/
+ _cc.copyStatics(_cc.MenuItemImage, cc.MenuItemImage);*/
 
 _cc.MenuItemToggle = cc.MenuItemToggle;
 cc.MenuItemToggle = _cc.MenuItemToggle.extend({
@@ -379,7 +390,7 @@ cc.MenuItemToggle = _cc.MenuItemToggle.extend({
 		this.setCascadeOpacityEnabled(true);
 	}
 });
-//cc.MenuItemToggle.create = _cc.MenuItemToggle.create;
+_cc.copyStatics(_cc.MenuItemToggle, cc.MenuItemToggle);
 
 
 
@@ -555,7 +566,7 @@ cc.SpriteBatchNode._create = cc.SpriteBatchNode.create;
  * var texture = cc.textureCache.addImage("res/animations/grossini.png");
  * var spriteBatchNode = cc.SpriteBatchNode.create(texture,50);
  */
-cc.SpriteBatchNode.create = function(fileName,capacity){
+cc.SpriteBatchNode.create = function(fileName, capacity){
     if (typeof(fileName) == "string")
         return cc.SpriteBatchNode._create(fileName);
     else if (fileName instanceof cc.Texture2D) {
@@ -628,6 +639,32 @@ cc.ParticleSystem.create = function(plistFile){
 };
 
 
+cc.ParticleBatchNode._create = cc.ParticleBatchNode.create;
+/**
+ * initializes the particle system with the name of a file on disk (for a list of supported formats look at the cc.Texture2D class), a capacity of particles
+ * @param {String|cc.Texture2D} fileImage
+ * @param {Number} capacity
+ * @return {cc.ParticleBatchNode}
+ * @example
+ * 1.
+ * //Create a cc.ParticleBatchNode with image path  and capacity
+ * var particleBatchNode = cc.ParticleBatchNode.create("res/grossini_dance.png",30);
+ *
+ * 2.
+ * //Create a cc.ParticleBatchNode with a texture and capacity
+ * var texture = cc.TextureCache.getInstance().addImage("res/grossini_dance.png");
+ * var particleBatchNode = cc.ParticleBatchNode.create(texture, 30);
+ */
+cc.ParticleBatchNode.create = function(fileImage, capacity){
+	if (typeof(fileImage) == "string")
+		return cc.ParticleBatchNode._create(fileImage);
+	else if (fileImage instanceof cc.Texture2D) {
+		return isNaN(capacity) ? cc.ParticleBatchNode.createWithTexture(fileImage) :  cc.ParticleBatchNode.createWithTexture(fileImage, capacity);
+	}
+	return null;
+};
+
+
 cc.TMXTiledMap._create = cc.TMXTiledMap.create;
 /**
  * Creates a TMX Tiled Map with a TMX file  or content string.
@@ -685,7 +722,6 @@ cc.MenuItemToggle.create = function(/* var args */) {
 
 
 // LabelAtlas
-cc.LabelAtlas._create = cc.LabelAtlas.create;
 cc.LabelAtlas.create = function( a,b,c,d,e ) {
 
 	var n = arguments.length;
