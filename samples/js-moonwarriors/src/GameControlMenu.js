@@ -22,6 +22,8 @@ var GameControlMenu = cc.Layer.extend({
         return bRet;
     },
     onSysMenu:function (pSender) {
+        cc.audioEngine.stopMusic();
+        cc.audioEngine.stopAllEffects();
         var scene = cc.Scene.create();
         scene.addChild(SysMenu.create());
 	    cc.director.runScene(cc.TransitionFade.create(1.2,scene));
