@@ -426,11 +426,12 @@ bool ScriptingCore::evalString(const char *string, jsval *outVal, const char *fi
     return false;
 }
 
-void ScriptingCore::start() {
+void ScriptingCore::start()
+{
     // for now just this
-    this->createGlobalContext();
+    createGlobalContext();
     
-    ScriptingCore::getInstance()->runScript("jsb_boot.js");
+    runScript("jsb_boot.js");
 }
 
 void ScriptingCore::addRegisterCallback(sc_register_sth callback) {

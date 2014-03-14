@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0500"
+   LastUpgradeVersion = "0510"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A01E16C01784C06E00B0CA4A"
-               BuildableName = "Test JavaScript iOS.app"
-               BlueprintName = "Test JavaScript iOS"
+               BuildableName = "js-tests iOS.app"
+               BlueprintName = "js-tests iOS"
                ReferencedContainer = "container:cocos2d_jsb_samples.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A01E16C01784C06E00B0CA4A"
-            BuildableName = "Test JavaScript iOS.app"
-            BlueprintName = "Test JavaScript iOS"
+            BuildableName = "js-tests iOS.app"
+            BlueprintName = "js-tests iOS"
             ReferencedContainer = "container:cocos2d_jsb_samples.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -52,8 +52,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A01E16C01784C06E00B0CA4A"
-            BuildableName = "Test JavaScript iOS.app"
-            BlueprintName = "Test JavaScript iOS"
+            BuildableName = "js-tests iOS.app"
+            BlueprintName = "js-tests iOS"
             ReferencedContainer = "container:cocos2d_jsb_samples.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -70,8 +70,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A01E16C01784C06E00B0CA4A"
-            BuildableName = "Test JavaScript iOS.app"
-            BlueprintName = "Test JavaScript iOS"
+            BuildableName = "js-tests iOS.app"
+            BlueprintName = "js-tests iOS"
             ReferencedContainer = "container:cocos2d_jsb_samples.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
