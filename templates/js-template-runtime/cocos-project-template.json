@@ -23,17 +23,19 @@
                "proj.win32/HelloJavascript.sdf"
             ]
          },
-         "append_dir":{
-            "from":"frameworks/js-bindings",
-            "to":"frameworks/js-bindings",
-            "exclude":[
-               "cocos2d-x",
-               "bindings/proj.win32/Debug.win32",
-               "bindings/proj.win32/Release.win32",
-               "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/project.xcworkspace",
-               "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/xcuserdata"
-            ]
-         },
+         "append_dir":[
+             {
+                "from":"frameworks/js-bindings",
+                "to":"frameworks/js-bindings",
+                "exclude":[
+                   "cocos2d-x",
+                   "bindings/proj.win32/Debug.win32",
+                   "bindings/proj.win32/Release.win32",
+                   "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/project.xcworkspace",
+                   "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/xcuserdata"
+                ]
+             }
+         ],
          "append_x_engine":{
             "from":"frameworks/js-bindings/cocos2d-x",
             "to":"frameworks/js-bindings/cocos2d-x"
