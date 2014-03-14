@@ -15,8 +15,6 @@ var Ship = cc.Sprite.extend({
     bornSprite:null,
     ctor:function () {
         this._super("#ship01.png");
-
-        //init life
         this.tag = this.zOrder;
         this.x = this.appearPosition.x;
 	    this.y = this.appearPosition.y;

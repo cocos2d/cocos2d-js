@@ -55,7 +55,7 @@ MW.GameController = cc.Class.extend({
 });
 
 MW.GameController.getInstance = function () {
-    cc.Assert(this._sharedGame, "Havn't call setSharedGame");
+    cc.assert(this._sharedGame, "Havn't call setSharedGame");
     if (!this._sharedGame) {
         this._sharedGame = new MW.GameController();
         if (this._sharedGame.init()) {

@@ -20,7 +20,6 @@ var Enemy = cc.Sprite.extend({
         this.scoreValue = arg.scoreValue;
         this.attackMode = arg.attackMode;
         this.enemyType = arg.type;
-        
         this.schedule(this.shoot, this.delayTime);
     },
     _timeTick:0,
@@ -111,8 +110,8 @@ Enemy.create = function (arg) {
 Enemy.preSet = function () {
     var enemy = null;
     for (var i = 0; i < 3; i++) {
-        for (var i = 0; i < EnemyType.length; i++) {
-            enemy = Enemy.create(EnemyType[i]);
+        for (var j = 0; j < EnemyType.length; j++) {
+            enemy = Enemy.create(EnemyType[j]);
             enemy.visible = false;
             enemy.active = false;
             enemy.stopAllActions();

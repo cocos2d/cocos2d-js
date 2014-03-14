@@ -1,4 +1,4 @@
-package org.cocos2dx.moonwarriors;
+package org.cocos2dx.js_moonwarriors;
 
 import android.app.NativeActivity;
 import android.graphics.PixelFormat;
