@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D0F06A44-A245-4D13-A498-0120C203B539}</ProjectGuid>
-    <RootNamespace>TestJavascript</RootNamespace>
+    <RootNamespace>js-tests</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -70,16 +70,16 @@
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)testjs.tlb</TypeLibraryName>
-      <HeaderFileName>testjs.h</HeaderFileName>
+      <TypeLibraryName>$(IntDir)js-tests.tlb</TypeLibraryName>
+      <HeaderFileName>js-tests.h</HeaderFileName>
       <DllDataFileName>
       </DllDataFileName>
-      <InterfaceIdentifierFileName>testjs_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>testjs_p.c</ProxyFileName>
+      <InterfaceIdentifierFileName>js-tests_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>js-tests_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\auto;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\manual;$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\include\win32;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\auto;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\manual;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_DEBUG=1;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -130,15 +130,15 @@ copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)testjs.tlb</TypeLibraryName>
-      <HeaderFileName>testjs.h</HeaderFileName>
+      <TypeLibraryName>$(IntDir)js-tests.tlb</TypeLibraryName>
+      <HeaderFileName>js-tests.h</HeaderFileName>
       <DllDataFileName>
       </DllDataFileName>
-      <InterfaceIdentifierFileName>testjs_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>testjs_p.c</ProxyFileName>
+      <InterfaceIdentifierFileName>js-tests_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>js-tests_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\auto;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\manual;$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\include\win32;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\auto;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\manual;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;NDEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -192,10 +192,10 @@ copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
     <ClInclude Include="..\Classes\AppDelegate.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\testjs.ico" />
+    <None Include="res\js-tests.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="testjs.rc" />
+    <ResourceCompile Include="js-tests.rc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\bindings\proj.win32\libJSBinding.vcxproj">

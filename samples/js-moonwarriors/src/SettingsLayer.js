@@ -72,6 +72,7 @@ var SettingsLayer = cc.Layer.extend({
         }
         else{
             audioEngine.stopMusic();
+	        audioEngine.stopAllEffects();
         }
     },
     onModeControl:function(){

@@ -380,7 +380,7 @@ bool JSB_glGetSupportedExtensions(JSContext *cx, uint32_t argc, jsval *vp)
 
     int start_extension=0;
     int element=0;
-    for( int i=0; i<len+1; i++) {
+    for( size_t i=0; i<len+1; i++) {
         if( copy[i]==' ' || copy[i]==',' || i==len ) {
             copy[i] = 0;
 

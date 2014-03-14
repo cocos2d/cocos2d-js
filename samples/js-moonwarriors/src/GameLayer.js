@@ -317,6 +317,8 @@ var GameLayer = cc.Layer.extend({
     },
 
     onGameOver:function () {
+        cc.audioEngine.stopMusic();
+        cc.audioEngine.stopAllEffects();
         var scene = cc.Scene.create();
         scene.addChild(GameOver.create());
 	    cc.director.runScene(cc.TransitionFade.create(1.2, scene));

@@ -69,6 +69,8 @@ var GameOver = cc.Layer.extend({
         return bRet;
     },
     onPlayAgain:function (pSender) {
+        cc.audioEngine.stopMusic();
+        cc.audioEngine.stopAllEffects();
         var scene = cc.Scene.create();
         scene.addChild(GameLayer.create());
         scene.addChild(GameControlMenu.create());
