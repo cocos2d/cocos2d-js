@@ -1,4 +1,4 @@
-package org.cocos2dx.testjavascript;
+package org.cocos2dx.js_tests;
 
 import android.app.NativeActivity;
 import android.graphics.PixelFormat;
