@@ -2,7 +2,7 @@ var BackSky = cc.Sprite.extend({
     active:true,
     ctor:function () {
         this._super();
-        this.initWithSpriteFrameName("bg01.png");
+        this.setSpriteFrame("bg01.png");
         this.anchorX = 0;
 	    this.anchorY = 0;
     },
@@ -54,7 +54,7 @@ var BackTileMap = cc.Sprite.extend({
     active:true,
     ctor:function (frameName) {
         this._super();
-        this.initWithSpriteFrameName(frameName);
+        this.setSpriteFrame(frameName);
         this.anchorX = 0.5;
 	    this.anchorY = 0;
     },
