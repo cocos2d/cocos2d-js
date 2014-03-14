@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D0F06A44-A245-4D13-A498-0120C203B539}</ProjectGuid>
-    <RootNamespace>js-tests</RootNamespace>
+    <ProjectGuid>{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}</ProjectGuid>
+    <RootNamespace>js-moonwarriors</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -70,17 +70,17 @@
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)js-tests.tlb</TypeLibraryName>
-      <HeaderFileName>js-tests.h</HeaderFileName>
+      <TypeLibraryName>$(IntDir)js-moonwarriors.tlb</TypeLibraryName>
+      <HeaderFileName>js-moonwarriors.h</HeaderFileName>
       <DllDataFileName>
       </DllDataFileName>
-      <InterfaceIdentifierFileName>js-tests_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>js-tests_p.c</ProxyFileName>
+      <InterfaceIdentifierFileName>js-moonwarriors_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>js-moonwarriors_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\include\win32;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\auto;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\manual;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_DEBUG=1;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;DEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_DEBUG=1;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -99,10 +99,10 @@
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\cocos2d-x\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libcurl_imp.lib;mozjs-27.lib;ws2_32.lib;sqlite3.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcurl_imp.lib;mozjs-27.lib;ws2_32.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -110,17 +110,15 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\cocos2d-x\external\
     </Link>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\js-tests-res" rd /s /q "$(OutDir)\js-tests-res"
-mkdir "$(OutDir)\js-tests-res"
-mkdir "$(OutDir)\js-tests-res\src"
-mkdir "$(OutDir)\js-tests-res\res"
-xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-tests-res\" /e /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)\js-tests-res\src\" /e /Y
-xcopy "$(ProjectDir)..\..\res" "$(OutDir)\js-tests-res\res\" /e /Y
-copy "$(ProjectDir)..\..\main.js" "$(OutDir)\js-tests-res"
-copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
-    </PreBuildEvent>
-    <PreBuildEvent>
+if exist "$(OutDir)\js-moonwarriors-res" rd /s /q "$(OutDir)\js-moonwarriors-res"
+mkdir "$(OutDir)\js-moonwarriors-res"
+mkdir "$(OutDir)\js-moonwarriors-res\src"
+mkdir "$(OutDir)\js-moonwarriors-res\res"
+xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-moonwarriors-res\" /e /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)\js-moonwarriors-res\src\" /e /Y
+xcopy "$(ProjectDir)..\..\res" "$(OutDir)\js-moonwarriors-res\res\" /e /Y
+copy "$(ProjectDir)..\..\main.js" "$(OutDir)\js-moonwarriors-res"
+copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-moonwarriors-res"</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -130,12 +128,12 @@ copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)js-tests.tlb</TypeLibraryName>
-      <HeaderFileName>js-tests.h</HeaderFileName>
+      <TypeLibraryName>$(IntDir)js-moonwarriors.tlb</TypeLibraryName>
+      <HeaderFileName>js-moonwarriors.h</HeaderFileName>
       <DllDataFileName>
       </DllDataFileName>
-      <InterfaceIdentifierFileName>js-tests_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>js-tests_p.c</ProxyFileName>
+      <InterfaceIdentifierFileName>js-moonwarriors_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>js-moonwarriors_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\include\win32;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\auto;$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\manual;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -159,10 +157,10 @@ copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\cocos2d-x\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libcurl_imp.lib;mozjs-27.lib;ws2_32.lib;sqlite3.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcurl_imp.lib;mozjs-27.lib;ws2_32.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -170,15 +168,15 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\cocos2d-x\external\
     </Link>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\js-tests-res" rd /s /q "$(OutDir)\js-tests-res"
-mkdir "$(OutDir)\js-tests-res"
-mkdir "$(OutDir)\js-tests-res\src"
-mkdir "$(OutDir)\js-tests-res\res"
-xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-tests-res\" /e /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)\js-tests-res\src\" /e /Y
-xcopy "$(ProjectDir)..\..\res" "$(OutDir)\js-tests-res\res\" /e /Y
-copy "$(ProjectDir)..\..\main.js" "$(OutDir)\js-tests-res"
-copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
+if exist "$(OutDir)\js-moonwarriors-res" rd /s /q "$(OutDir)\js-moonwarriors-res"
+mkdir "$(OutDir)\js-moonwarriors-res"
+mkdir "$(OutDir)\js-moonwarriors-res\src"
+mkdir "$(OutDir)\js-moonwarriors-res\res"
+xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-moonwarriors-res\" /e /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)\js-moonwarriors-res\src\" /e /Y
+xcopy "$(ProjectDir)..\..\res" "$(OutDir)\js-moonwarriors-res\res\" /e /Y
+copy "$(ProjectDir)..\..\main.js" "$(OutDir)\js-moonwarriors-res"
+copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-moonwarriors-res"</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -192,10 +190,10 @@ copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
     <ClInclude Include="..\Classes\AppDelegate.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\js-tests.ico" />
+    <None Include="res\js-moonwarriors.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="js-tests.rc" />
+    <ResourceCompile Include="js-moonwarriors.rc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\bindings\proj.win32\libJSBinding.vcxproj">
@@ -219,9 +217,6 @@ copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\bindings\proj.win32\libJSBindingForNetwork.vcxproj">
       <Project>{3bec13f5-e227-4d80-bc77-1c857f83bcfc}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\frameworks\js-bindings\bindings\proj.win32\libJSBindingForSpine.vcxproj">
-      <Project>{e78cdc6b-f37d-48d2-ad91-1db549497e32}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\bindings\proj.win32\libJSBindingForStudio.vcxproj">
       <Project>{79d34511-e54e-410a-8bba-ef175ad6c695}</Project>
     </ProjectReference>
@@ -237,9 +232,6 @@ copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\editor-support\cocostudio\proj.win32\libCocosStudio.vcxproj">
       <Project>{b57cf53f-2e49-4031-9822-047cc0e6bde2}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\editor-support\spine\proj.win32\libSpine.vcxproj">
-      <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\network\proj.win32\libNetwork.vcxproj">
       <Project>{df2638c0-8128-4847-867c-6eafe3dee7b5}</Project>
     </ProjectReference>
@@ -251,9 +243,6 @@ copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\cocos2d-x\extensions\proj.win32\libExtensions.vcxproj">
       <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\frameworks\js-bindings\cocos2d-x\external\Box2D\proj.win32\Box2D.vcxproj">
-      <Project>{929480e7-23c0-4df6-8456-096d71547116}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\frameworks\js-bindings\cocos2d-x\external\chipmunk\proj.win32\chipmunk.vcxproj">
       <Project>{207bc7a9-ccf1-4f2f-a04d-45f72242ae25}</Project>
