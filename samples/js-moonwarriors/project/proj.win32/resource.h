@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by testjs.RC
+// Used by js-moonwarriors.RC
 //
 
 #define IDS_PROJNAME                100
