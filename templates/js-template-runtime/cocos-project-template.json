@@ -35,15 +35,15 @@
             ]
          },
          "append_dir":{
-            "from":"frameworks/js-bindings/bindings/script/",
+            "from":"frameworks/js-bindings/bindings/script",
             "to":"runtime/mac/PrebuiltRuntimeJs.app/Contents/Resources",
          },
          "append_dir":{
-            "from":"frameworks/js-bindings/bindings/script/",
+            "from":"frameworks/js-bindings/bindings/script",
             "to":"runtime/ios/PrebuiltRuntimeJs.app",
          },
          "append_dir":{
-            "from":"frameworks/js-bindings/bindings/script/",
+            "from":"frameworks/js-bindings/bindings/script",
             "to":"runtime/win32",
          },
          "append_file":[
@@ -78,7 +78,7 @@
             {
                "from":"frameworks/js-bindings/external/spidermonkey/prebuilt/win32/mozjs-27.dll",
                "to":"runtime/win32/mozjs-27.dll",
-            },
+            }
          ]
          "append_x_engine":{
             "from":"frameworks/js-bindings/cocos2d-x",
