@@ -113,7 +113,7 @@ Enemy.preSet = function () {
     var enemy = null;
     for (var i = 0; i < 3; i++) {
         for (var j = 0; j < EnemyType.length; j++) {
-            enemy = Enemy.create(EnemyType[i]);
+            enemy = Enemy.create(EnemyType[j]);
             enemy.visible = false;
             enemy.active = false;
             enemy.stopAllActions();
