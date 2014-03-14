@@ -1749,6 +1749,7 @@ bool js_cocos2dx_Label_disableEffect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getWidth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getCommonLineHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setWidth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Label_listenToFontAtlasPurge(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setFontName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getMaxLineWidth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getHorizontalAlignment(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1771,6 +1772,7 @@ bool js_cocos2dx_Label_getVerticalAlignment(JSContext *cx, uint32_t argc, jsval 
 bool js_cocos2dx_Label_setHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_enableGlow(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getLetter(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Label_listenToBackground(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getTextAlignment(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setHorizontalAlignment(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setFontDefinition(JSContext *cx, uint32_t argc, jsval *vp);

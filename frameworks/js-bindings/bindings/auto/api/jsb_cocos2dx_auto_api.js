@@ -8102,6 +8102,16 @@ int
 },
 
 /**
+ * @method listenToFontAtlasPurge
+ * @param {cc.EventCustom} arg0
+ */
+listenToFontAtlasPurge : function (
+eventcustom 
+)
+{
+},
+
+/**
  * @method setFontName
  * @param {String} arg0
  */
@@ -8333,6 +8343,16 @@ int
 )
 {
     return cc.Sprite;
+},
+
+/**
+ * @method listenToBackground
+ * @param {cc.EventCustom} arg0
+ */
+listenToBackground : function (
+eventcustom 
+)
+{
 },
 
 /**
