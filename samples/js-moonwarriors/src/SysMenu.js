@@ -70,6 +70,8 @@ var SysMenu = cc.Layer.extend({
     onNewGame:function (pSender) {
         //load resources
         cc.LoaderScene.preload(g_maingame, function () {
+            cc.audioEngine.stopMusic();
+            cc.audioEngine.stopAllEffects();
             var scene = cc.Scene.create();
             scene.addChild(GameLayer.create());
             scene.addChild(GameControlMenu.create());
