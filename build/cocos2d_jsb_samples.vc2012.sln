@@ -23,7 +23,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSpine", "..\frameworks\j
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libLocalStorage", "..\frameworks\js-bindings\cocos2d-x\cocos\storage\local-storage\proj.win32\libLocalStorage.vcxproj", "{632A8F38-D0F0-4D22-86B3-D69F5E6BF63A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestJavascript", "..\samples\js-tests\project\proj.win32\TestJavascript.vcxproj", "{D0F06A44-A245-4D13-A498-0120C203B539}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js-tests", "..\samples\js-tests\project\proj.win32\js-tests.vcxproj", "{D0F06A44-A245-4D13-A498-0120C203B539}"
 	ProjectSection(ProjectDependencies) = postProject
 		{79D34511-E54E-410A-8BBA-EF175AD6C695} = {79D34511-E54E-410A-8BBA-EF175AD6C695}
 		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
