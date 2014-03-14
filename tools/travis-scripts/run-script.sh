@@ -67,7 +67,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
     # ./generate-cocosfiles.sh
 
     cd $PROJECT_ROOT/build
-    ./android-build.py -n "-j8"
+    ./android-build.py -n "-j8" all
 
 elif [ "$PLATFORM"x = "nacl"x ]; then
     export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary
