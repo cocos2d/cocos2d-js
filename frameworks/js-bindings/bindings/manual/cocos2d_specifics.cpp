@@ -1330,7 +1330,7 @@ bool js_cocos2dx_CCNode_unscheduleAllSelectors(JSContext *cx, uint32_t argc, jsv
 		// For details to reproduce it, please refer to SchedulerTest/SchedulerUpdate.
         if(! arr) return true;
         JSScheduleWrapper* wrapper = NULL;
-        for(unsigned int i = 0; i < arr->count(); ++i) {
+        for(ssize_t i = 0; i < arr->count(); ++i) {
             wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
             if(wrapper) {
                 cobj->getScheduler()->unscheduleAllForTarget(wrapper);
@@ -1592,7 +1592,7 @@ bool js_cocos2dx_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp
             if(! arr) return true;
             
             JSScheduleWrapper* wrapper = NULL;
-            for(unsigned int i = 0; i < arr->count(); ++i) {
+            for(ssize_t i = 0; i < arr->count(); ++i) {
                 wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
                 if(wrapper && wrapper->isUpdateSchedule()) {
                     cobj->getScheduler()->unscheduleUpdate(wrapper);
@@ -1690,7 +1690,7 @@ bool js_cocos2dx_CCScheduler_unscheduleAllSelectorsForTarget(JSContext *cx, uint
             if(! arr) return true;
             
             JSScheduleWrapper* wrapper = NULL;
-            for(unsigned int i = 0; i < arr->count(); ++i) {
+            for(ssize_t i = 0; i < arr->count(); ++i) {
                 wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
                 if(wrapper) {
                     cobj->unscheduleAllForTarget(wrapper);
@@ -1807,7 +1807,7 @@ bool js_CCScheduler_unscheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsva
             if(! arr) return true;
             
             JSScheduleWrapper* wrapper = NULL;
-            for(unsigned int i = 0; i < arr->count(); ++i) {
+            for(ssize_t i = 0; i < arr->count(); ++i) {
                 wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
                 if(wrapper && wrapper->isUpdateSchedule()) {
                     cobj->unscheduleUpdate(wrapper);
@@ -1927,7 +1927,7 @@ bool js_CCScheduler_unscheduleCallbackForTarget(JSContext *cx, uint32_t argc, js
             if(! arr) return true;
             
             JSScheduleWrapper* wrapper = NULL;
-            for(unsigned int i = 0; i < arr->count(); ++i) {
+            for(ssize_t i = 0; i < arr->count(); ++i) {
                 wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
                 if(wrapper && wrapper->getJSCallbackFunc() == argv[1]) {
                     cobj->unschedule(schedule_selector(JSScheduleWrapper::scheduleFunc), wrapper);
@@ -1996,7 +1996,7 @@ bool js_cocos2dx_CCScheduler_pauseTarget(JSContext *cx, uint32_t argc, jsval *vp
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
             __Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
             if(! arr) return true;
-            for(unsigned int i = 0; i < arr->count(); ++i) {
+            for(ssize_t i = 0; i < arr->count(); ++i) {
                 if(arr->getObjectAtIndex(i)) {
                     sched->pauseTarget(arr->getObjectAtIndex(i));
                 }
@@ -2022,7 +2022,7 @@ bool js_cocos2dx_CCScheduler_resumeTarget(JSContext *cx, uint32_t argc, jsval *v
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
             auto arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
             if(! arr) return true;
-            for(unsigned int i = 0; i < arr->count(); ++i) {
+            for(ssize_t i = 0; i < arr->count(); ++i) {
                 if(arr->getObjectAtIndex(i)) {
                     sched->resumeTarget(arr->getObjectAtIndex(i));
                 }
@@ -2049,7 +2049,7 @@ bool js_cocos2dx_CCScheduler_isTargetPaused(JSContext *cx, uint32_t argc, jsval 
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
             __Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
             if(! arr) return true;
-            for(unsigned int i = 0; i < arr->count(); ++i) {
+            for(ssize_t i = 0; i < arr->count(); ++i) {
                 if(arr->getObjectAtIndex(i)) {
                     ret = cobj->isTargetPaused(arr->getObjectAtIndex(i)) ? true : false;
                     // break directly since all targets have the same `pause` status.
