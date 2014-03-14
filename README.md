@@ -56,6 +56,7 @@ After setup correctly done, you can start to use `cocos` command in your console
 	-s source   : Your project directory, if not specified the current directory will be used.
 	-q          : Quiet mode, remove log messages.
 	-m mode     : Mode debug or release, debug is default
+	--source-map: General source-map file. (Web platform only)
 	```
 
 ###Help
