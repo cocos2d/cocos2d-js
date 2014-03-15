@@ -12,6 +12,10 @@
 #include "localstorage/js_bindings_system_registration.h"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
+#include "jsb_cocos2dx_ui_auto.hpp"
+#include "ui/jsb_cocos2dx_ui_manual.h"
+#include "cocostudio/jsb_cocos2dx_studio_manual.h"
+#include "jsb_cocos2dx_studio_auto.hpp"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -31,7 +35,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::createWithRect("MoonWarriors", Rect(0, 0, 480, 720));
+        glview = GLView::createWithRect("js-moonwarriors", Rect(0, 0, 480, 720));
         director->setOpenGLView(glview);
     }
     director->setProjection(Director::Projection::_2D);
@@ -48,17 +52,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
     
     FileUtils::getInstance()->setSearchPaths(searchPaths);
-    
-    // Set the design resolution
-    glview->setDesignResolutionSize(320, 480, ResolutionPolicy::SHOW_ALL);
 
     // turn on display FPS
     director->setDisplayStats(true);
     
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-    
-    
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
@@ -70,6 +69,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_CCBuilderReader);
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(JSB_register_opengl);
+    sc->addRegisterCallback(register_all_cocos2dx_ui);
+    sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
+    sc->addRegisterCallback(register_all_cocos2dx_studio);
+    sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
     
     sc->start();
     
@@ -80,7 +83,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
 
-    ScriptingCore::getInstance()->runScript("MoonWarriors-jsb.js");
+    ScriptingCore::getInstance()->runScript("main.js");
 
     return true;
 }

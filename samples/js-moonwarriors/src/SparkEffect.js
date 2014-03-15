@@ -14,13 +14,15 @@ var SparkEffect = cc.Class.extend({
         this.spark1.attr({
 	        x: x,
 	        y: y,
-	        scale: this.scale
+	        scale: this.scale,
+	        opacity: 255
         });
         this.spark2.attr({
 	        x: x,
 	        y: y,
 	        scale: this.scale,
-	        rotation: Math.random() * 360
+	        rotation: Math.random() * 360,
+	        opacity: 255
         });
 
         var right = cc.RotateBy.create(this.duration, 45);
@@ -47,8 +49,8 @@ SparkEffect.getOrCreateSparkEffect = function (x, y) {
         selChild = MW.CONTAINER.SPARKS[j];
         if (selChild.active == false) {
             selChild.active = true;
-            selChild.spark1.visible = true;
-            selChild.spark2.visible = true;
+            selChild.spark1.setVisible(true);
+            selChild.spark2.setVisible(true);
             selChild.reset(x, y);
             return selChild;
         }

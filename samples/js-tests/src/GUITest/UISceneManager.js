@@ -237,14 +237,19 @@ var s_testArray = [
         func: function () {
             return new UIWidgetAddNodeTest();
         }
-    },
-    {
-        title: "UIRichTextTest",
-        func: function () {
-            return new UIRichTextTest();
-        }
     }
 ];
+if (!cc.sys.isNative) {
+	s_testArray.push(
+		{
+			title: "UIRichTextTest",
+			func: function () {
+				return new UIRichTextTest();
+			}
+		}
+	);
+}
+
 UISceneManager = cc.Class.extend({
     _currentUISceneId: 0,
     ctor: function () {

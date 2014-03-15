@@ -6,11 +6,11 @@
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_cocos2dx_extension_auto.hpp"
 #include "jsb_cocos2dx_builder_auto.hpp"
-#include "jsb_cocos2dx_studio_auto.hpp"
-#include "jsb_cocos2dx_ui_auto.hpp"
 #include "jsb_cocos2dx_spine_auto.hpp"
 #include "extension/jsb_cocos2dx_extension_manual.h"
 #include "cocostudio/jsb_cocos2dx_studio_manual.h"
+#include "jsb_cocos2dx_studio_auto.hpp"
+#include "jsb_cocos2dx_ui_auto.hpp"
 #include "ui/jsb_cocos2dx_ui_manual.h"
 #include "spine/jsb_cocos2dx_spine_manual.h"
 #include "cocos2d_specifics.hpp"
@@ -41,7 +41,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::createWithRect("Test JavaScript", Rect(0,0,900,640));
+        glview = GLView::createWithRect("js-tests", Rect(0,0,900,640));
         director->setOpenGLView(glview);
     }
 

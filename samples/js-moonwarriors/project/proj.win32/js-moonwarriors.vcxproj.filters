@@ -32,12 +32,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\testjs.ico">
+    <None Include="res\js-moonwarriors.ico">
       <Filter>resource</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="testjs.rc">
+    <ResourceCompile Include="js-moonwarriors.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
   </ItemGroup>

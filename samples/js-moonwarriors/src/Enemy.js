@@ -13,15 +13,13 @@ var Enemy = cc.Sprite.extend({
     attackMode:MW.ENEMY_MOVE_TYPE.NORMAL,
     _hurtColorLife:0,
     ctor:function (arg) {
-        this._super();
+        this._super("#"+arg.textureName);
 
         this.HP = arg.HP;
         this.moveType = arg.moveType;
         this.scoreValue = arg.scoreValue;
         this.attackMode = arg.attackMode;
         this.enemyType = arg.type;
-
-        this.initWithSpriteFrameName(arg.textureName);
         this.schedule(this.shoot, this.delayTime);
     },
     _timeTick:0,
@@ -112,8 +110,8 @@ Enemy.create = function (arg) {
 Enemy.preSet = function () {
     var enemy = null;
     for (var i = 0; i < 3; i++) {
-        for (var i = 0; i < EnemyType.length; i++) {
-            enemy = Enemy.create(EnemyType[i]);
+        for (var j = 0; j < EnemyType.length; j++) {
+            enemy = Enemy.create(EnemyType[j]);
             enemy.visible = false;
             enemy.active = false;
             enemy.stopAllActions();

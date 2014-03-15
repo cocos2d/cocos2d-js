@@ -10,11 +10,10 @@ var Bullet = cc.Sprite.extend({
     attackMode:MW.ENEMY_MOVE_TYPE.NORMAL,
     parentType:MW.BULLET_TYPE.PLAYER,
     ctor:function (bulletSpeed, weaponType, attackMode) {
-        this._super();
+        this._super("#"+weaponType);
 
         this.yVelocity = -bulletSpeed;
         this.attackMode = attackMode;
-        this.initWithSpriteFrameName(weaponType);
         this.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
     },
     update:function (dt) {

@@ -1,5 +1,5 @@
-APPNAME="TestJavascript"
-APP_ANDROID_NAME="org.cocos2dx.testjavascript"
+APPNAME="JSTests"
+APP_ANDROID_NAME="org.cocos2dx.js_tests"
 
 if [ -z "${SDK_ROOT+aaa}" ]; then
 # ... if SDK_ROOT is not set, use "$HOME/bin/android-sdk"

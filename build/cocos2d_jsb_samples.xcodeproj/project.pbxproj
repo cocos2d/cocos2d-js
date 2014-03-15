@@ -7,6 +7,124 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A2B735018D2952200ED9E74 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F1618BF1D1D00CC9A93 /* libchipmunk Mac.a */; };
+		1A2B735118D2952200ED9E74 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F1218BF1D1D00CC9A93 /* libcocos2dx Mac.a */; };
+		1A2B735218D2952200ED9E74 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F1418BF1D1D00CC9A93 /* libcocos2dx-extensions Mac.a */; };
+		1A2B735318D2952200ED9E74 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F1A18BF1D1D00CC9A93 /* libCocosDenshion Mac.a */; };
+		1A2B735418D2952200ED9E74 /* libjsbindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F2B18BF1D2000CC9A93 /* libjsbindings Mac.a */; };
+		1A2B735518D2952200ED9E74 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
+		1A2B735618D2952200ED9E74 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
+		1A2B735718D2952200ED9E74 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
+		1A2B735818D2952200ED9E74 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		1A2B735918D2952200ED9E74 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
+		1A2B735A18D2952200ED9E74 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482A165F3979007D4F18 /* ApplicationServices.framework */; };
+		1A2B735B18D2952200ED9E74 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
+		1A2B735C18D2952200ED9E74 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
+		1A2B735D18D2952200ED9E74 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
+		1A2B735E18D2952200ED9E74 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
+		1A2B735F18D2952200ED9E74 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
+		1A2B73B018D295DC00ED9E74 /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F2018BF1D1D00CC9A93 /* libchipmunk iOS.a */; };
+		1A2B73B118D295DC00ED9E74 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F1C18BF1D1D00CC9A93 /* libcocos2dx iOS.a */; };
+		1A2B73B218D295DC00ED9E74 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F1E18BF1D1D00CC9A93 /* libcocos2dx-extensions iOS.a */; };
+		1A2B73B318D295DC00ED9E74 /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F2418BF1D1D00CC9A93 /* libCocosDenshion iOS.a */; };
+		1A2B73B418D295DC00ED9E74 /* libjsbindings iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F2D18BF1D2000CC9A93 /* libjsbindings iOS.a */; };
+		1A2B73B518D295DC00ED9E74 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		1A2B73B618D295DC00ED9E74 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
+		1A2B73B718D295DC00ED9E74 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		1A2B73B818D295DC00ED9E74 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
+		1A2B73B918D295DC00ED9E74 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
+		1A2B73BA18D295DC00ED9E74 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
+		1A2B73BB18D295DC00ED9E74 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */; };
+		1A2B73BC18D295DC00ED9E74 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
+		1A2B73BD18D295DC00ED9E74 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
+		1A2B73BE18D295DC00ED9E74 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
+		1A2B73BF18D295DC00ED9E74 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
+		1A2B73D318D2967800ED9E74 /* debugger in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B3F18BF3E7F007EEB98 /* debugger */; };
+		1A2B73D418D2967800ED9E74 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4D18BF3E7F007EEB98 /* jsb.js */; };
+		1A2B73D518D2967800ED9E74 /* jsb_boot.js in Resources */ = {isa = PBXBuildFile; fileRef = A63D2EC618C856BE00B29B8F /* jsb_boot.js */; };
+		1A2B73D618D2967800ED9E74 /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4118BF3E7F007EEB98 /* jsb_chipmunk.js */; };
+		1A2B73D718D2967800ED9E74 /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4018BF3E7F007EEB98 /* jsb_chipmunk_constants.js */; };
+		1A2B73D818D2967800ED9E74 /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4618BF3E7F007EEB98 /* jsb_cocos2d.js */; };
+		1A2B73D918D2967800ED9E74 /* jsb_cocos2d_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4218BF3E7F007EEB98 /* jsb_cocos2d_constants.js */; };
+		1A2B73DA18D2967800ED9E74 /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4318BF3E7F007EEB98 /* jsb_cocos2d_extension.js */; };
+		1A2B73DB18D2967800ED9E74 /* jsb_cocos2d_studio.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4518BF3E7F007EEB98 /* jsb_cocos2d_studio.js */; };
+		1A2B73DC18D2967800ED9E74 /* jsb_cocos2d_ui.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AB5E63B18D05CD70088DAA4 /* jsb_cocos2d_ui.js */; };
+		1A2B73DD18D2967800ED9E74 /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4718BF3E7F007EEB98 /* jsb_cocosbuilder.js */; };
+		1A2B73DE18D2967800ED9E74 /* jsb_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */; };
+		1A2B73DF18D2967800ED9E74 /* jsb_debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4818BF3E7F007EEB98 /* jsb_debugger.js */; };
+		1A2B73E018D2967800ED9E74 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4918BF3E7F007EEB98 /* jsb_deprecated.js */; };
+		1A2B73E118D2967800ED9E74 /* jsb_loaders.js in Resources */ = {isa = PBXBuildFile; fileRef = A63D2ECD18C8B36600B29B8F /* jsb_loaders.js */; };
+		1A2B73E218D2967800ED9E74 /* jsb_opengl.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4B18BF3E7F007EEB98 /* jsb_opengl.js */; };
+		1A2B73E318D2967800ED9E74 /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4A18BF3E7F007EEB98 /* jsb_opengl_constants.js */; };
+		1A2B73E418D2967800ED9E74 /* jsb_property_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */; };
+		1A2B73E518D2967800ED9E74 /* jsb_property_impls.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */; };
+		1A2B73EA18D2969800ED9E74 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B72E518D294E500ED9E74 /* res */; };
+		1A2B73EB18D2969800ED9E74 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B72E618D294E500ED9E74 /* src */; };
+		1A2B73F018D296C600ED9E74 /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B73ED18D296C600ED9E74 /* project.json */; };
+		1A2B73F118D296C600ED9E74 /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B73ED18D296C600ED9E74 /* project.json */; };
+		1A2B73F218D296F100ED9E74 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B73EC18D296C600ED9E74 /* main.js */; };
+		1A2B73F418D2972600ED9E74 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B72E518D294E500ED9E74 /* res */; };
+		1A2B73F518D2972900ED9E74 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B72E618D294E500ED9E74 /* src */; };
+		1A2B73FF18D297D600ED9E74 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B73FD18D297D600ED9E74 /* AppDelegate.cpp */; };
+		1A2B740018D297D600ED9E74 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B73FD18D297D600ED9E74 /* AppDelegate.cpp */; };
+		1A2B741618D297E000ED9E74 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B740318D297E000ED9E74 /* AppController.mm */; };
+		1A2B741718D297E000ED9E74 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B740418D297E000ED9E74 /* Default-568h@2x.png */; };
+		1A2B741818D297E000ED9E74 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B740518D297E000ED9E74 /* Default.png */; };
+		1A2B741918D297E000ED9E74 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B740618D297E000ED9E74 /* Default@2x.png */; };
+		1A2B741A18D297E000ED9E74 /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B740718D297E000ED9E74 /* Icon-120.png */; };
+		1A2B741B18D297E000ED9E74 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B740818D297E000ED9E74 /* Icon-144.png */; };
+		1A2B741C18D297E000ED9E74 /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B740918D297E000ED9E74 /* Icon-152.png */; };
+		1A2B741D18D297E000ED9E74 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B740A18D297E000ED9E74 /* Icon-72.png */; };
+		1A2B741E18D297E000ED9E74 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B740B18D297E000ED9E74 /* Icon-76.png */; };
+		1A2B741F18D297E000ED9E74 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B740C18D297E000ED9E74 /* Icon-Small-50.png */; };
+		1A2B742018D297E000ED9E74 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B740D18D297E000ED9E74 /* Icon-Small.png */; };
+		1A2B742118D297E000ED9E74 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B740E18D297E000ED9E74 /* Icon-Small@2x.png */; };
+		1A2B742218D297E000ED9E74 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B740F18D297E000ED9E74 /* Icon.png */; };
+		1A2B742318D297E000ED9E74 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B741018D297E000ED9E74 /* Icon@2x.png */; };
+		1A2B742518D297E000ED9E74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B741218D297E000ED9E74 /* main.m */; };
+		1A2B742618D297E000ED9E74 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B741518D297E000ED9E74 /* RootViewController.mm */; };
+		1A2B742F18D297E600ED9E74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B742818D297E600ED9E74 /* InfoPlist.strings */; };
+		1A2B743018D297E600ED9E74 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B742A18D297E600ED9E74 /* MainMenu.xib */; };
+		1A2B743118D297E600ED9E74 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B742C18D297E600ED9E74 /* Icon.icns */; };
+		1A2B743318D297E600ED9E74 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B742E18D297E600ED9E74 /* main.cpp */; };
+		1A2B743418D298A200ED9E74 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B73EC18D296C600ED9E74 /* main.js */; };
+		1A2B743718D299EB00ED9E74 /* debugger in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B3F18BF3E7F007EEB98 /* debugger */; };
+		1A2B743C18D299F000ED9E74 /* jsb.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A487B4D18BF3E7F007EEB98 /* jsb.js */; };
+		1A2B743D18D299F000ED9E74 /* jsb_boot.js in Sources */ = {isa = PBXBuildFile; fileRef = A63D2EC618C856BE00B29B8F /* jsb_boot.js */; };
+		1A2B743E18D299F000ED9E74 /* jsb_chipmunk.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A487B4118BF3E7F007EEB98 /* jsb_chipmunk.js */; };
+		1A2B743F18D299F000ED9E74 /* jsb_chipmunk_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A487B4018BF3E7F007EEB98 /* jsb_chipmunk_constants.js */; };
+		1A2B744018D299F000ED9E74 /* jsb_cocos2d.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A487B4618BF3E7F007EEB98 /* jsb_cocos2d.js */; };
+		1A2B744118D299F000ED9E74 /* jsb_cocos2d_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A487B4218BF3E7F007EEB98 /* jsb_cocos2d_constants.js */; };
+		1A2B744218D299F000ED9E74 /* jsb_cocos2d_extension.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A487B4318BF3E7F007EEB98 /* jsb_cocos2d_extension.js */; };
+		1A2B744318D299F000ED9E74 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A487B4518BF3E7F007EEB98 /* jsb_cocos2d_studio.js */; };
+		1A2B744418D299F000ED9E74 /* jsb_cocos2d_ui.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5E63B18D05CD70088DAA4 /* jsb_cocos2d_ui.js */; };
+		1A2B744518D299F000ED9E74 /* jsb_cocosbuilder.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A487B4718BF3E7F007EEB98 /* jsb_cocosbuilder.js */; };
+		1A2B744618D299F000ED9E74 /* jsb_create_apis.js in Sources */ = {isa = PBXBuildFile; fileRef = BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */; };
+		1A2B744718D299F000ED9E74 /* jsb_debugger.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A487B4818BF3E7F007EEB98 /* jsb_debugger.js */; };
+		1A2B744818D299F000ED9E74 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A487B4918BF3E7F007EEB98 /* jsb_deprecated.js */; };
+		1A2B744918D299F000ED9E74 /* jsb_loaders.js in Sources */ = {isa = PBXBuildFile; fileRef = A63D2ECD18C8B36600B29B8F /* jsb_loaders.js */; };
+		1A2B744A18D299F000ED9E74 /* jsb_opengl.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A487B4B18BF3E7F007EEB98 /* jsb_opengl.js */; };
+		1A2B744B18D299F000ED9E74 /* jsb_opengl_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A487B4A18BF3E7F007EEB98 /* jsb_opengl_constants.js */; };
+		1A2B744C18D299F000ED9E74 /* jsb_property_apis.js in Sources */ = {isa = PBXBuildFile; fileRef = BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */; };
+		1A2B744D18D299F000ED9E74 /* jsb_property_impls.js in Sources */ = {isa = PBXBuildFile; fileRef = BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */; };
+		1A2B744E18D29A1800ED9E74 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4D18BF3E7F007EEB98 /* jsb.js */; };
+		1A2B744F18D29A1800ED9E74 /* jsb_boot.js in Resources */ = {isa = PBXBuildFile; fileRef = A63D2EC618C856BE00B29B8F /* jsb_boot.js */; };
+		1A2B745018D29A1800ED9E74 /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4118BF3E7F007EEB98 /* jsb_chipmunk.js */; };
+		1A2B745118D29A1800ED9E74 /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4018BF3E7F007EEB98 /* jsb_chipmunk_constants.js */; };
+		1A2B745218D29A1800ED9E74 /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4618BF3E7F007EEB98 /* jsb_cocos2d.js */; };
+		1A2B745318D29A1800ED9E74 /* jsb_cocos2d_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4218BF3E7F007EEB98 /* jsb_cocos2d_constants.js */; };
+		1A2B745418D29A1800ED9E74 /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4318BF3E7F007EEB98 /* jsb_cocos2d_extension.js */; };
+		1A2B745518D29A1800ED9E74 /* jsb_cocos2d_studio.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4518BF3E7F007EEB98 /* jsb_cocos2d_studio.js */; };
+		1A2B745618D29A1800ED9E74 /* jsb_cocos2d_ui.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AB5E63B18D05CD70088DAA4 /* jsb_cocos2d_ui.js */; };
+		1A2B745718D29A1800ED9E74 /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4718BF3E7F007EEB98 /* jsb_cocosbuilder.js */; };
+		1A2B745818D29A1800ED9E74 /* jsb_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */; };
+		1A2B745918D29A1800ED9E74 /* jsb_debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4818BF3E7F007EEB98 /* jsb_debugger.js */; };
+		1A2B745A18D29A1800ED9E74 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4918BF3E7F007EEB98 /* jsb_deprecated.js */; };
+		1A2B745B18D29A1800ED9E74 /* jsb_loaders.js in Resources */ = {isa = PBXBuildFile; fileRef = A63D2ECD18C8B36600B29B8F /* jsb_loaders.js */; };
+		1A2B745C18D29A1900ED9E74 /* jsb_opengl.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4B18BF3E7F007EEB98 /* jsb_opengl.js */; };
+		1A2B745D18D29A1900ED9E74 /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4A18BF3E7F007EEB98 /* jsb_opengl_constants.js */; };
+		1A2B745E18D29A1900ED9E74 /* jsb_property_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */; };
+		1A2B745F18D29A1900ED9E74 /* jsb_property_impls.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */; };
 		1A487B4E18BF3E7F007EEB98 /* debugger in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B3F18BF3E7F007EEB98 /* debugger */; };
 		1A487B4F18BF3E7F007EEB98 /* debugger in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B3F18BF3E7F007EEB98 /* debugger */; };
 		1A487B6C18BF3EDF007EEB98 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A487B4D18BF3E7F007EEB98 /* jsb.js */; };
@@ -107,6 +225,76 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1A2B732018D2952200ED9E74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A604F2518BF1D2000CC9A93 /* cocos2d_js_bindings.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F31E81781479B006731B9;
+			remoteInfo = "jsbindings Mac";
+		};
+		1A2B732218D2952200ED9E74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = "cocos2dx Mac";
+		};
+		1A2B732418D2952200ED9E74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2FC117814595006731B9;
+			remoteInfo = "cocos2dx-extensions Mac";
+		};
+		1A2B732618D2952200ED9E74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2B781780BD04006731B9;
+			remoteInfo = "chipmunk Mac";
+		};
+		1A2B732818D2952200ED9E74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2E9817814268006731B9;
+			remoteInfo = "CocosDenshion Mac";
+		};
+		1A2B736D18D295DC00ED9E74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A604F2518BF1D2000CC9A93 /* cocos2d_js_bindings.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4FB5178387750073F6A7;
+			remoteInfo = "jsbindings iOS";
+		};
+		1A2B736F18D295DC00ED9E74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4C241783777C0073F6A7;
+			remoteInfo = "cocos2dx iOS";
+		};
+		1A2B737118D295DC00ED9E74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4E111783867C0073F6A7;
+			remoteInfo = "cocos2dx-extensions iOS";
+		};
+		1A2B737318D295DC00ED9E74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4EFD178387670073F6A7;
+			remoteInfo = "chipmunk iOS";
+		};
+		1A2B737518D295DC00ED9E74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4F9F178387730073F6A7;
+			remoteInfo = "CocosDenshion iOS";
+		};
 		1A604F1118BF1D1D00CC9A93 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */;
@@ -272,6 +460,39 @@
 		15C6482C165F3988007D4F18 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		15C6482E165F399D007D4F18 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		15C64832165F3AFD007D4F18 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		1A2B72E518D294E500ED9E74 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = "../samples/js-moonwarriors/res"; sourceTree = "<group>"; };
+		1A2B72E618D294E500ED9E74 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = "../samples/js-moonwarriors/src"; sourceTree = "<group>"; };
+		1A2B736318D2952200ED9E74 /* js-moonwarriors Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-moonwarriors Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A2B73C318D295DC00ED9E74 /* js-moonwarriors iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-moonwarriors iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A2B73EC18D296C600ED9E74 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../samples/js-moonwarriors/main.js"; sourceTree = "<group>"; };
+		1A2B73ED18D296C600ED9E74 /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = "../samples/js-moonwarriors/project.json"; sourceTree = "<group>"; };
+		1A2B73FD18D297D600ED9E74 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
+		1A2B73FE18D297D600ED9E74 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1A2B740218D297E000ED9E74 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		1A2B740318D297E000ED9E74 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
+		1A2B740418D297E000ED9E74 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		1A2B740518D297E000ED9E74 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		1A2B740618D297E000ED9E74 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		1A2B740718D297E000ED9E74 /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = "<group>"; };
+		1A2B740818D297E000ED9E74 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
+		1A2B740918D297E000ED9E74 /* Icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-152.png"; sourceTree = "<group>"; };
+		1A2B740A18D297E000ED9E74 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		1A2B740B18D297E000ED9E74 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
+		1A2B740C18D297E000ED9E74 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		1A2B740D18D297E000ED9E74 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		1A2B740E18D297E000ED9E74 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		1A2B740F18D297E000ED9E74 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		1A2B741018D297E000ED9E74 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		1A2B741118D297E000ED9E74 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1A2B741218D297E000ED9E74 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1A2B741318D297E000ED9E74 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		1A2B741418D297E000ED9E74 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		1A2B741518D297E000ED9E74 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		1A2B742918D297E600ED9E74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1A2B742B18D297E600ED9E74 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		1A2B742C18D297E600ED9E74 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
+		1A2B742D18D297E600ED9E74 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1A2B742E18D297E600ED9E74 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1A487B3F18BF3E7F007EEB98 /* debugger */ = {isa = PBXFileReference; lastKnownFileType = folder; name = debugger; path = "../frameworks/js-bindings/bindings/script/debugger"; sourceTree = "<group>"; };
 		1A487B4018BF3E7F007EEB98 /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_chipmunk_constants.js; path = "../frameworks/js-bindings/bindings/script/jsb_chipmunk_constants.js"; sourceTree = "<group>"; };
 		1A487B4118BF3E7F007EEB98 /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_chipmunk.js; path = "../frameworks/js-bindings/bindings/script/jsb_chipmunk.js"; sourceTree = "<group>"; };
@@ -316,8 +537,8 @@
 		1A604F6318BF1D6600CC9A93 /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = "<group>"; };
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		1AB5E63B18D05CD70088DAA4 /* jsb_cocos2d_ui.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_ui.js; path = "../frameworks/js-bindings/bindings/script/jsb_cocos2d_ui.js"; sourceTree = "<group>"; };
-		A01E17721784C06E00B0CA4A /* Test JavaScript iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test JavaScript iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A035A5EC1782290400987F6C /* Test JavaScript Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test JavaScript Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A01E17721784C06E00B0CA4A /* js-tests iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-tests iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A035A5EC1782290400987F6C /* js-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A07A52B71783AE6D0073F6A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52B91783AE900073F6A7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
@@ -335,6 +556,52 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1A2B734F18D2952200ED9E74 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A2B735018D2952200ED9E74 /* libchipmunk Mac.a in Frameworks */,
+				1A2B735118D2952200ED9E74 /* libcocos2dx Mac.a in Frameworks */,
+				1A2B735218D2952200ED9E74 /* libcocos2dx-extensions Mac.a in Frameworks */,
+				1A2B735318D2952200ED9E74 /* libCocosDenshion Mac.a in Frameworks */,
+				1A2B735418D2952200ED9E74 /* libjsbindings Mac.a in Frameworks */,
+				1A2B735518D2952200ED9E74 /* libsqlite3.dylib in Frameworks */,
+				1A2B735618D2952200ED9E74 /* libcurl.dylib in Frameworks */,
+				1A2B735718D2952200ED9E74 /* libz.dylib in Frameworks */,
+				1A2B735818D2952200ED9E74 /* Foundation.framework in Frameworks */,
+				1A2B735918D2952200ED9E74 /* AudioToolbox.framework in Frameworks */,
+				1A2B735A18D2952200ED9E74 /* ApplicationServices.framework in Frameworks */,
+				1A2B735B18D2952200ED9E74 /* OpenAL.framework in Frameworks */,
+				1A2B735C18D2952200ED9E74 /* QuartzCore.framework in Frameworks */,
+				1A2B735D18D2952200ED9E74 /* OpenGL.framework in Frameworks */,
+				1A2B735E18D2952200ED9E74 /* IOKit.framework in Frameworks */,
+				1A2B735F18D2952200ED9E74 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1A2B73AF18D295DC00ED9E74 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A2B73B018D295DC00ED9E74 /* libchipmunk iOS.a in Frameworks */,
+				1A2B73B118D295DC00ED9E74 /* libcocos2dx iOS.a in Frameworks */,
+				1A2B73B218D295DC00ED9E74 /* libcocos2dx-extensions iOS.a in Frameworks */,
+				1A2B73B318D295DC00ED9E74 /* libCocosDenshion iOS.a in Frameworks */,
+				1A2B73B418D295DC00ED9E74 /* libjsbindings iOS.a in Frameworks */,
+				1A2B73B518D295DC00ED9E74 /* CoreMotion.framework in Frameworks */,
+				1A2B73B618D295DC00ED9E74 /* libz.dylib in Frameworks */,
+				1A2B73B718D295DC00ED9E74 /* Foundation.framework in Frameworks */,
+				1A2B73B818D295DC00ED9E74 /* AudioToolbox.framework in Frameworks */,
+				1A2B73B918D295DC00ED9E74 /* OpenAL.framework in Frameworks */,
+				1A2B73BA18D295DC00ED9E74 /* QuartzCore.framework in Frameworks */,
+				1A2B73BB18D295DC00ED9E74 /* CoreGraphics.framework in Frameworks */,
+				1A2B73BC18D295DC00ED9E74 /* OpenGLES.framework in Frameworks */,
+				1A2B73BD18D295DC00ED9E74 /* UIKit.framework in Frameworks */,
+				1A2B73BE18D295DC00ED9E74 /* AVFoundation.framework in Frameworks */,
+				1A2B73BF18D295DC00ED9E74 /* libsqlite3.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A01E17601784C06E00B0CA4A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -387,10 +654,83 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A035A5EC1782290400987F6C /* Test JavaScript Mac.app */,
-				A01E17721784C06E00B0CA4A /* Test JavaScript iOS.app */,
+				A035A5EC1782290400987F6C /* js-tests Mac.app */,
+				A01E17721784C06E00B0CA4A /* js-tests iOS.app */,
+				1A2B736318D2952200ED9E74 /* js-moonwarriors Mac.app */,
+				1A2B73C318D295DC00ED9E74 /* js-moonwarriors iOS.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1A2B72DA18D294AE00ED9E74 /* project */ = {
+			isa = PBXGroup;
+			children = (
+				1A604F3618BF1D5600CC9A93 /* Classes */,
+				1A604F3B18BF1D6000CC9A93 /* proj.ios */,
+				1A604F5B18BF1D6600CC9A93 /* proj.mac */,
+			);
+			name = project;
+			sourceTree = "<group>";
+		};
+		1A2B73FB18D297C900ED9E74 /* project */ = {
+			isa = PBXGroup;
+			children = (
+				1A2B73FC18D297D600ED9E74 /* Classes */,
+				1A2B740118D297E000ED9E74 /* proj.ios */,
+				1A2B742718D297E600ED9E74 /* proj.mac */,
+			);
+			name = project;
+			sourceTree = "<group>";
+		};
+		1A2B73FC18D297D600ED9E74 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				1A2B73FD18D297D600ED9E74 /* AppDelegate.cpp */,
+				1A2B73FE18D297D600ED9E74 /* AppDelegate.h */,
+			);
+			name = Classes;
+			path = "../samples/js-moonwarriors/project/Classes";
+			sourceTree = "<group>";
+		};
+		1A2B740118D297E000ED9E74 /* proj.ios */ = {
+			isa = PBXGroup;
+			children = (
+				1A2B740218D297E000ED9E74 /* AppController.h */,
+				1A2B740318D297E000ED9E74 /* AppController.mm */,
+				1A2B740418D297E000ED9E74 /* Default-568h@2x.png */,
+				1A2B740518D297E000ED9E74 /* Default.png */,
+				1A2B740618D297E000ED9E74 /* Default@2x.png */,
+				1A2B740718D297E000ED9E74 /* Icon-120.png */,
+				1A2B740818D297E000ED9E74 /* Icon-144.png */,
+				1A2B740918D297E000ED9E74 /* Icon-152.png */,
+				1A2B740A18D297E000ED9E74 /* Icon-72.png */,
+				1A2B740B18D297E000ED9E74 /* Icon-76.png */,
+				1A2B740C18D297E000ED9E74 /* Icon-Small-50.png */,
+				1A2B740D18D297E000ED9E74 /* Icon-Small.png */,
+				1A2B740E18D297E000ED9E74 /* Icon-Small@2x.png */,
+				1A2B740F18D297E000ED9E74 /* Icon.png */,
+				1A2B741018D297E000ED9E74 /* Icon@2x.png */,
+				1A2B741118D297E000ED9E74 /* Info.plist */,
+				1A2B741218D297E000ED9E74 /* main.m */,
+				1A2B741318D297E000ED9E74 /* Prefix.pch */,
+				1A2B741418D297E000ED9E74 /* RootViewController.h */,
+				1A2B741518D297E000ED9E74 /* RootViewController.mm */,
+			);
+			name = proj.ios;
+			path = "../samples/js-moonwarriors/project/proj.ios";
+			sourceTree = "<group>";
+		};
+		1A2B742718D297E600ED9E74 /* proj.mac */ = {
+			isa = PBXGroup;
+			children = (
+				1A2B742818D297E600ED9E74 /* InfoPlist.strings */,
+				1A2B742A18D297E600ED9E74 /* MainMenu.xib */,
+				1A2B742C18D297E600ED9E74 /* Icon.icns */,
+				1A2B742D18D297E600ED9E74 /* Info.plist */,
+				1A2B742E18D297E600ED9E74 /* main.cpp */,
+			);
+			name = proj.mac;
+			path = "../samples/js-moonwarriors/project/proj.mac";
 			sourceTree = "<group>";
 		};
 		1A487B3A18BF3E67007EEB98 /* JS Common */ = {
@@ -449,10 +789,8 @@
 			isa = PBXGroup;
 			children = (
 				BAA7DEE218C84F5000D9A10E /* main.js */,
+				1A2B72DA18D294AE00ED9E74 /* project */,
 				BAA7DEE318C84F5000D9A10E /* project.json */,
-				1A604F3618BF1D5600CC9A93 /* Classes */,
-				1A604F3B18BF1D6000CC9A93 /* proj.ios */,
-				1A604F5B18BF1D6600CC9A93 /* proj.mac */,
 				1A604F3018BF1D4900CC9A93 /* res */,
 				1A604F3118BF1D4900CC9A93 /* src */,
 			);
@@ -462,6 +800,11 @@
 		1A604F2F18BF1D3900CC9A93 /* js-moonwarriors */ = {
 			isa = PBXGroup;
 			children = (
+				1A2B73FB18D297C900ED9E74 /* project */,
+				1A2B73EC18D296C600ED9E74 /* main.js */,
+				1A2B73ED18D296C600ED9E74 /* project.json */,
+				1A2B72E518D294E500ED9E74 /* res */,
+				1A2B72E618D294E500ED9E74 /* src */,
 			);
 			name = "js-moonwarriors";
 			sourceTree = "<group>";
@@ -555,9 +898,53 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A01E16C01784C06E00B0CA4A /* Test JavaScript iOS */ = {
+		1A2B731E18D2952200ED9E74 /* js-moonwarriors Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A01E176F1784C06E00B0CA4A /* Build configuration list for PBXNativeTarget "Test JavaScript iOS" */;
+			buildConfigurationList = 1A2B736018D2952200ED9E74 /* Build configuration list for PBXNativeTarget "js-moonwarriors Mac" */;
+			buildPhases = (
+				1A2B732918D2952200ED9E74 /* Resources */,
+				1A2B734A18D2952200ED9E74 /* Sources */,
+				1A2B734F18D2952200ED9E74 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1A2B731F18D2952200ED9E74 /* PBXTargetDependency */,
+				1A2B732118D2952200ED9E74 /* PBXTargetDependency */,
+				1A2B732318D2952200ED9E74 /* PBXTargetDependency */,
+				1A2B732518D2952200ED9E74 /* PBXTargetDependency */,
+				1A2B732718D2952200ED9E74 /* PBXTargetDependency */,
+			);
+			name = "js-moonwarriors Mac";
+			productName = iphone;
+			productReference = 1A2B736318D2952200ED9E74 /* js-moonwarriors Mac.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1A2B736B18D295DC00ED9E74 /* js-moonwarriors iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A2B73C018D295DC00ED9E74 /* Build configuration list for PBXNativeTarget "js-moonwarriors iOS" */;
+			buildPhases = (
+				1A2B737618D295DC00ED9E74 /* Resources */,
+				1A2B73A618D295DC00ED9E74 /* Sources */,
+				1A2B73AF18D295DC00ED9E74 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1A2B736C18D295DC00ED9E74 /* PBXTargetDependency */,
+				1A2B736E18D295DC00ED9E74 /* PBXTargetDependency */,
+				1A2B737018D295DC00ED9E74 /* PBXTargetDependency */,
+				1A2B737218D295DC00ED9E74 /* PBXTargetDependency */,
+				1A2B737418D295DC00ED9E74 /* PBXTargetDependency */,
+			);
+			name = "js-moonwarriors iOS";
+			productName = iphone;
+			productReference = 1A2B73C318D295DC00ED9E74 /* js-moonwarriors iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A01E16C01784C06E00B0CA4A /* js-tests iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A01E176F1784C06E00B0CA4A /* Build configuration list for PBXNativeTarget "js-tests iOS" */;
 			buildPhases = (
 				A01E16CB1784C06E00B0CA4A /* Resources */,
 				A01E16F51784C06E00B0CA4A /* Sources */,
@@ -572,14 +959,14 @@
 				1A604FBD18BF1EF400CC9A93 /* PBXTargetDependency */,
 				1A604FBF18BF1EF400CC9A93 /* PBXTargetDependency */,
 			);
-			name = "Test JavaScript iOS";
+			name = "js-tests iOS";
 			productName = iphone;
-			productReference = A01E17721784C06E00B0CA4A /* Test JavaScript iOS.app */;
+			productReference = A01E17721784C06E00B0CA4A /* js-tests iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A035A5441782290400987F6C /* Test JavaScript Mac */ = {
+		A035A5441782290400987F6C /* js-tests Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A035A5E91782290400987F6C /* Build configuration list for PBXNativeTarget "Test JavaScript Mac" */;
+			buildConfigurationList = A035A5E91782290400987F6C /* Build configuration list for PBXNativeTarget "js-tests Mac" */;
 			buildPhases = (
 				A035A54F1782290400987F6C /* Resources */,
 				A035A5701782290400987F6C /* Sources */,
@@ -594,9 +981,9 @@
 				1A604FAE18BF1EC700CC9A93 /* PBXTargetDependency */,
 				1A604FB018BF1EC700CC9A93 /* PBXTargetDependency */,
 			);
-			name = "Test JavaScript Mac";
+			name = "js-tests Mac";
 			productName = iphone;
-			productReference = A035A5EC1782290400987F6C /* Test JavaScript Mac.app */;
+			productReference = A035A5EC1782290400987F6C /* js-tests Mac.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -632,8 +1019,10 @@
 			);
 			projectRoot = "";
 			targets = (
-				A035A5441782290400987F6C /* Test JavaScript Mac */,
-				A01E16C01784C06E00B0CA4A /* Test JavaScript iOS */,
+				A035A5441782290400987F6C /* js-tests Mac */,
+				A01E16C01784C06E00B0CA4A /* js-tests iOS */,
+				1A2B731E18D2952200ED9E74 /* js-moonwarriors Mac */,
+				1A2B736B18D295DC00ED9E74 /* js-moonwarriors iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -726,6 +1115,82 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1A2B732918D2952200ED9E74 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A2B73F218D296F100ED9E74 /* main.js in Resources */,
+				1A2B742F18D297E600ED9E74 /* InfoPlist.strings in Resources */,
+				1A2B73EA18D2969800ED9E74 /* res in Resources */,
+				1A2B73EB18D2969800ED9E74 /* src in Resources */,
+				1A2B73D318D2967800ED9E74 /* debugger in Resources */,
+				1A2B743118D297E600ED9E74 /* Icon.icns in Resources */,
+				1A2B73D418D2967800ED9E74 /* jsb.js in Resources */,
+				1A2B743018D297E600ED9E74 /* MainMenu.xib in Resources */,
+				1A2B73D518D2967800ED9E74 /* jsb_boot.js in Resources */,
+				1A2B73D618D2967800ED9E74 /* jsb_chipmunk.js in Resources */,
+				1A2B73D718D2967800ED9E74 /* jsb_chipmunk_constants.js in Resources */,
+				1A2B73D818D2967800ED9E74 /* jsb_cocos2d.js in Resources */,
+				1A2B73D918D2967800ED9E74 /* jsb_cocos2d_constants.js in Resources */,
+				1A2B73DA18D2967800ED9E74 /* jsb_cocos2d_extension.js in Resources */,
+				1A2B73DB18D2967800ED9E74 /* jsb_cocos2d_studio.js in Resources */,
+				1A2B73F018D296C600ED9E74 /* project.json in Resources */,
+				1A2B73DC18D2967800ED9E74 /* jsb_cocos2d_ui.js in Resources */,
+				1A2B73DD18D2967800ED9E74 /* jsb_cocosbuilder.js in Resources */,
+				1A2B73DE18D2967800ED9E74 /* jsb_create_apis.js in Resources */,
+				1A2B73DF18D2967800ED9E74 /* jsb_debugger.js in Resources */,
+				1A2B73E018D2967800ED9E74 /* jsb_deprecated.js in Resources */,
+				1A2B73E118D2967800ED9E74 /* jsb_loaders.js in Resources */,
+				1A2B73E218D2967800ED9E74 /* jsb_opengl.js in Resources */,
+				1A2B73E318D2967800ED9E74 /* jsb_opengl_constants.js in Resources */,
+				1A2B73E418D2967800ED9E74 /* jsb_property_apis.js in Resources */,
+				1A2B73E518D2967800ED9E74 /* jsb_property_impls.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1A2B737618D295DC00ED9E74 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A2B744E18D29A1800ED9E74 /* jsb.js in Resources */,
+				1A2B744F18D29A1800ED9E74 /* jsb_boot.js in Resources */,
+				1A2B745018D29A1800ED9E74 /* jsb_chipmunk.js in Resources */,
+				1A2B745118D29A1800ED9E74 /* jsb_chipmunk_constants.js in Resources */,
+				1A2B745218D29A1800ED9E74 /* jsb_cocos2d.js in Resources */,
+				1A2B745318D29A1800ED9E74 /* jsb_cocos2d_constants.js in Resources */,
+				1A2B745418D29A1800ED9E74 /* jsb_cocos2d_extension.js in Resources */,
+				1A2B745518D29A1800ED9E74 /* jsb_cocos2d_studio.js in Resources */,
+				1A2B745618D29A1800ED9E74 /* jsb_cocos2d_ui.js in Resources */,
+				1A2B745718D29A1800ED9E74 /* jsb_cocosbuilder.js in Resources */,
+				1A2B745818D29A1800ED9E74 /* jsb_create_apis.js in Resources */,
+				1A2B745918D29A1800ED9E74 /* jsb_debugger.js in Resources */,
+				1A2B745A18D29A1800ED9E74 /* jsb_deprecated.js in Resources */,
+				1A2B745B18D29A1800ED9E74 /* jsb_loaders.js in Resources */,
+				1A2B745C18D29A1900ED9E74 /* jsb_opengl.js in Resources */,
+				1A2B745D18D29A1900ED9E74 /* jsb_opengl_constants.js in Resources */,
+				1A2B745E18D29A1900ED9E74 /* jsb_property_apis.js in Resources */,
+				1A2B745F18D29A1900ED9E74 /* jsb_property_impls.js in Resources */,
+				1A2B743418D298A200ED9E74 /* main.js in Resources */,
+				1A2B741A18D297E000ED9E74 /* Icon-120.png in Resources */,
+				1A2B742318D297E000ED9E74 /* Icon@2x.png in Resources */,
+				1A2B741D18D297E000ED9E74 /* Icon-72.png in Resources */,
+				1A2B741918D297E000ED9E74 /* Default@2x.png in Resources */,
+				1A2B742018D297E000ED9E74 /* Icon-Small.png in Resources */,
+				1A2B73F518D2972900ED9E74 /* src in Resources */,
+				1A2B741718D297E000ED9E74 /* Default-568h@2x.png in Resources */,
+				1A2B73F118D296C600ED9E74 /* project.json in Resources */,
+				1A2B741E18D297E000ED9E74 /* Icon-76.png in Resources */,
+				1A2B73F418D2972600ED9E74 /* res in Resources */,
+				1A2B741B18D297E000ED9E74 /* Icon-144.png in Resources */,
+				1A2B741F18D297E000ED9E74 /* Icon-Small-50.png in Resources */,
+				1A2B741C18D297E000ED9E74 /* Icon-152.png in Resources */,
+				1A2B742218D297E000ED9E74 /* Icon.png in Resources */,
+				1A2B743718D299EB00ED9E74 /* debugger in Resources */,
+				1A2B741818D297E000ED9E74 /* Default.png in Resources */,
+				1A2B742118D297E000ED9E74 /* Icon-Small@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A01E16CB1784C06E00B0CA4A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -802,6 +1267,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1A2B734A18D2952200ED9E74 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A2B73FF18D297D600ED9E74 /* AppDelegate.cpp in Sources */,
+				1A2B743318D297E600ED9E74 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1A2B73A618D295DC00ED9E74 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A2B744118D299F000ED9E74 /* jsb_cocos2d_constants.js in Sources */,
+				1A2B744018D299F000ED9E74 /* jsb_cocos2d.js in Sources */,
+				1A2B744318D299F000ED9E74 /* jsb_cocos2d_studio.js in Sources */,
+				1A2B744218D299F000ED9E74 /* jsb_cocos2d_extension.js in Sources */,
+				1A2B744518D299F000ED9E74 /* jsb_cocosbuilder.js in Sources */,
+				1A2B744818D299F000ED9E74 /* jsb_deprecated.js in Sources */,
+				1A2B743C18D299F000ED9E74 /* jsb.js in Sources */,
+				1A2B741618D297E000ED9E74 /* AppController.mm in Sources */,
+				1A2B743E18D299F000ED9E74 /* jsb_chipmunk.js in Sources */,
+				1A2B744D18D299F000ED9E74 /* jsb_property_impls.js in Sources */,
+				1A2B744618D299F000ED9E74 /* jsb_create_apis.js in Sources */,
+				1A2B744C18D299F000ED9E74 /* jsb_property_apis.js in Sources */,
+				1A2B742618D297E000ED9E74 /* RootViewController.mm in Sources */,
+				1A2B744918D299F000ED9E74 /* jsb_loaders.js in Sources */,
+				1A2B740018D297D600ED9E74 /* AppDelegate.cpp in Sources */,
+				1A2B743F18D299F000ED9E74 /* jsb_chipmunk_constants.js in Sources */,
+				1A2B743D18D299F000ED9E74 /* jsb_boot.js in Sources */,
+				1A2B744718D299F000ED9E74 /* jsb_debugger.js in Sources */,
+				1A2B744418D299F000ED9E74 /* jsb_cocos2d_ui.js in Sources */,
+				1A2B744B18D299F000ED9E74 /* jsb_opengl_constants.js in Sources */,
+				1A2B742518D297E000ED9E74 /* main.m in Sources */,
+				1A2B744A18D299F000ED9E74 /* jsb_opengl.js in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A01E16F51784C06E00B0CA4A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -825,6 +1328,56 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1A2B731F18D2952200ED9E74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "jsbindings Mac";
+			targetProxy = 1A2B732018D2952200ED9E74 /* PBXContainerItemProxy */;
+		};
+		1A2B732118D2952200ED9E74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx Mac";
+			targetProxy = 1A2B732218D2952200ED9E74 /* PBXContainerItemProxy */;
+		};
+		1A2B732318D2952200ED9E74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx-extensions Mac";
+			targetProxy = 1A2B732418D2952200ED9E74 /* PBXContainerItemProxy */;
+		};
+		1A2B732518D2952200ED9E74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "chipmunk Mac";
+			targetProxy = 1A2B732618D2952200ED9E74 /* PBXContainerItemProxy */;
+		};
+		1A2B732718D2952200ED9E74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocosDenshion Mac";
+			targetProxy = 1A2B732818D2952200ED9E74 /* PBXContainerItemProxy */;
+		};
+		1A2B736C18D295DC00ED9E74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "jsbindings iOS";
+			targetProxy = 1A2B736D18D295DC00ED9E74 /* PBXContainerItemProxy */;
+		};
+		1A2B736E18D295DC00ED9E74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx iOS";
+			targetProxy = 1A2B736F18D295DC00ED9E74 /* PBXContainerItemProxy */;
+		};
+		1A2B737018D295DC00ED9E74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx-extensions iOS";
+			targetProxy = 1A2B737118D295DC00ED9E74 /* PBXContainerItemProxy */;
+		};
+		1A2B737218D295DC00ED9E74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "chipmunk iOS";
+			targetProxy = 1A2B737318D295DC00ED9E74 /* PBXContainerItemProxy */;
+		};
+		1A2B737418D295DC00ED9E74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocosDenshion iOS";
+			targetProxy = 1A2B737518D295DC00ED9E74 /* PBXContainerItemProxy */;
+		};
 		1A604FA818BF1EC700CC9A93 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "jsbindings Mac";
@@ -878,6 +1431,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		1A2B742818D297E600ED9E74 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A2B742918D297E600ED9E74 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1A2B742A18D297E600ED9E74 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A2B742B18D297E600ED9E74 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 		1A604F5C18BF1D6600CC9A93 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -897,6 +1466,102 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1A2B736118D2952200ED9E74 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = "$(SRCROOT)/../samples/js-moonwarriors/project/proj.mac/Info.plist";
+				PRODUCT_NAME = "js-moonwarriors Mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/mac $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/mac";
+			};
+			name = Debug;
+		};
+		1A2B736218D2952200ED9E74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = "$(SRCROOT)/../samples/js-moonwarriors/project/proj.mac/Info.plist";
+				PRODUCT_NAME = "js-moonwarriors Mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/mac $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/mac";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1A2B73C118D295DC00ED9E74 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+					COCOS2D_JAVASCRIPT,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = "$(SRCROOT)/../samples/js-moonwarriors/project/proj.ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				PRODUCT_NAME = "js-moonwarriors iOS";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
+			};
+			name = Debug;
+		};
+		1A2B73C218D295DC00ED9E74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+					COCOS2D_JAVASCRIPT,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = "$(SRCROOT)/../samples/js-moonwarriors/project/proj.ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				PRODUCT_NAME = "js-moonwarriors iOS";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		A01E17701784C06E00B0CA4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1043,7 +1708,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A01E176F1784C06E00B0CA4A /* Build configuration list for PBXNativeTarget "Test JavaScript iOS" */ = {
+		1A2B736018D2952200ED9E74 /* Build configuration list for PBXNativeTarget "js-moonwarriors Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A2B736118D2952200ED9E74 /* Debug */,
+				1A2B736218D2952200ED9E74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		1A2B73C018D295DC00ED9E74 /* Build configuration list for PBXNativeTarget "js-moonwarriors iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A2B73C118D295DC00ED9E74 /* Debug */,
+				1A2B73C218D295DC00ED9E74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A01E176F1784C06E00B0CA4A /* Build configuration list for PBXNativeTarget "js-tests iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A01E17701784C06E00B0CA4A /* Debug */,
@@ -1052,7 +1735,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A035A5E91782290400987F6C /* Build configuration list for PBXNativeTarget "Test JavaScript Mac" */ = {
+		A035A5E91782290400987F6C /* Build configuration list for PBXNativeTarget "js-tests Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A035A5EA1782290400987F6C /* Debug */,

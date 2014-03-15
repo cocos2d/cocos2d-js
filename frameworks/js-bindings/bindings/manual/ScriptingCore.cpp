@@ -86,6 +86,15 @@ static std::unordered_map<int,int> ports_sockets;
 // name ~> globals
 static std::unordered_map<std::string, JS::RootedObject*> globals;
 
+static void cc_closesocket(int fd)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    closesocket(fd);
+#else
+    close(fd);
+#endif
+}
+
 static void ReportException(JSContext *cx)
 {
     if (JS_IsExceptionPending(cx)) {
@@ -426,11 +435,12 @@ bool ScriptingCore::evalString(const char *string, jsval *outVal, const char *fi
     return false;
 }
 
-void ScriptingCore::start() {
+void ScriptingCore::start()
+{
     // for now just this
-    this->createGlobalContext();
+    createGlobalContext();
     
-    ScriptingCore::getInstance()->runScript("jsb_boot.js");
+    runScript("jsb_boot.js");
 }
 
 void ScriptingCore::addRegisterCallback(sc_register_sth callback) {
@@ -779,7 +789,7 @@ void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)
     if (! arr) return;
     
     Node* node = (Node*)p->ptr;
-    for(unsigned int i = 0; i < arr->count(); ++i) {
+    for(ssize_t i = 0; i < arr->count(); ++i) {
         if (arr->getObjectAtIndex(i)) {
             node->getScheduler()->pauseTarget(arr->getObjectAtIndex(i));
         }
@@ -793,7 +803,7 @@ void ScriptingCore::resumeSchedulesAndActions(js_proxy_t* p)
     if (!arr) return;
     
     Node* node = (Node*)p->ptr;
-    for(unsigned int i = 0; i < arr->count(); ++i) {
+    for(ssize_t i = 0; i < arr->count(); ++i) {
         if (!arr->getObjectAtIndex(i)) continue;
         node->getScheduler()->resumeTarget(arr->getObjectAtIndex(i));
     }
@@ -1348,7 +1358,7 @@ static void serverEntryPoint(void)
         }
         int optval = 1;
         if ((setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval))) < 0) {
-            close(s);
+            cc_closesocket(s);
 			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_REUSEADDR");
             return;
         }
@@ -1364,7 +1374,7 @@ static void serverEntryPoint(void)
         if ((::bind(s, rp->ai_addr, rp->ai_addrlen)) == 0) {
             break;
         }
-        close(s);
+        cc_closesocket(s);
         s = -1;
     }
     if (s < 0 || rp == NULL) {
@@ -1406,7 +1416,7 @@ static void serverEntryPoint(void)
                 clearBuffers();
             } // while(read)
             
-            close(clientSocket);
+            cc_closesocket(clientSocket);
         }
 	} // while(true)
 }

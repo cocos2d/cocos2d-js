@@ -23,7 +23,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSpine", "..\frameworks\j
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libLocalStorage", "..\frameworks\js-bindings\cocos2d-x\cocos\storage\local-storage\proj.win32\libLocalStorage.vcxproj", "{632A8F38-D0F0-4D22-86B3-D69F5E6BF63A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestJavascript", "..\samples\js-tests\project\proj.win32\TestJavascript.vcxproj", "{D0F06A44-A245-4D13-A498-0120C203B539}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js-tests", "..\samples\js-tests\project\proj.win32\js-tests.vcxproj", "{D0F06A44-A245-4D13-A498-0120C203B539}"
 	ProjectSection(ProjectDependencies) = postProject
 		{79D34511-E54E-410A-8BBA-EF175AD6C695} = {79D34511-E54E-410A-8BBA-EF175AD6C695}
 		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
@@ -64,6 +64,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBindingForSpine", "..\frameworks\js-bindings\bindings\proj.win32\libJSBindingForSpine.vcxproj", "{E78CDC6B-F37D-48D2-AD91-1DB549497E32}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBindingForStudio", "..\frameworks\js-bindings\bindings\proj.win32\libJSBindingForStudio.vcxproj", "{79D34511-E54E-410A-8BBA-EF175AD6C695}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js-moonwarriors", "..\samples\js-moonwarriors\project\proj.win32\js-moonwarriors.vcxproj", "{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -155,6 +157,10 @@ Global
 		{79D34511-E54E-410A-8BBA-EF175AD6C695}.Debug|Win32.Build.0 = Debug|Win32
 		{79D34511-E54E-410A-8BBA-EF175AD6C695}.Release|Win32.ActiveCfg = Release|Win32
 		{79D34511-E54E-410A-8BBA-EF175AD6C695}.Release|Win32.Build.0 = Release|Win32
+		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Debug|Win32.Build.0 = Debug|Win32
+		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Release|Win32.ActiveCfg = Release|Win32
+		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
