@@ -734,6 +734,7 @@ public:
 	void onRuntimeVersion(int fd, const std::string &args)
     {
         string runtimeVer=getRuntimeVersion();
+		runtimeVer += "\n";
         send(fd, runtimeVer.c_str(), runtimeVer.size(),0);
     }
 	
