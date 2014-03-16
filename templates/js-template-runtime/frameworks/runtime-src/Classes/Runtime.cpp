@@ -673,28 +673,40 @@ void FileServer::loop()
 	_running = false;
 }
 
-
 class ConsoleCustomCommand
 {
 public:
+	static ConsoleCustomCommand* getInstance()
+	{
+        static ConsoleCustomCommand *s_SharedCustomCommand = nullptr;
+		if (!s_SharedCustomCommand)
+		{
+			s_SharedCustomCommand = new ConsoleCustomCommand();
+		}
+		return s_SharedCustomCommand;
+	}
+	void init()
+	{
+        _writepath = FileUtils::getInstance()->getWritablePath();
+        _console->listenOnTCP(6050);
+        _fileserver=new FileServer();
+        _fileserver->listenOnTCP(6060);
+	}
+protected:
     ConsoleCustomCommand():_fileserver(nullptr)
     {
-        _writepath = FileUtils::getInstance()->getWritablePath();
-        cocos2d::Console *_console = Director::getInstance()->getConsole();
+    	//cocos2d::log("create ConsoleCustomCommand");
+		 _console= Director::getInstance()->getConsole();
         static struct Console::Command commands[] = {
             {"shutdownapp","exit runtime app",std::bind(&ConsoleCustomCommand::onShutDownApp, this, std::placeholders::_1, std::placeholders::_2)},
             {"precompile","",std::bind(&ConsoleCustomCommand::onPreCompile, this, std::placeholders::_1, std::placeholders::_2)},
             {"start-logic","run game logic script",std::bind(&ConsoleCustomCommand::onRunLogicScript, this, std::placeholders::_1, std::placeholders::_2)},
             {"reload","reload script.Args:[filepath]",std::bind(&ConsoleCustomCommand::onReloadScriptFile, this, std::placeholders::_1, std::placeholders::_2)},
             {"getversion","get runtime version.",std::bind(&ConsoleCustomCommand::onRuntimeVersion, this, std::placeholders::_1, std::placeholders::_2)},
-        };
-        for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
-            _console->addCommand(commands[i]);
-        }
-        _console->listenOnTCP(6050);
-        
-        _fileserver=new FileServer();
-        _fileserver->listenOnTCP(6060);
+		};       
+		for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
+			_console->addCommand(commands[i]);
+		}
     }
     ~ConsoleCustomCommand()
     {
@@ -746,12 +758,13 @@ public:
     }
 private:
     FileServer* _fileserver;
+	cocos2d::Console *_console;
     string _writepath;
 };
 
 void startRuntime()
 {
-    static ConsoleCustomCommand s_customCommand;
+    ConsoleCustomCommand::getInstance()->init();
 	vector<string> searchPathArray;
     searchPathArray=FileUtils::getInstance()->getSearchPaths();
     vector<string> writePathArray;
