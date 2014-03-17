@@ -361,7 +361,7 @@ var AttributeComponentTest = SceneEditorTestLayer.extend({
         this.addChild(node);
 
         var comAttribute = node.getChildByTag(10015).getComponent("CCComAttribute");
-        cc.log("name:" + comAttribute.getCString("name"));
+        cc.log("name:" + comAttribute.getString("name"));
         cc.log("maxHP:" + comAttribute.getFloat("maxHP"));
         cc.log("maxMP:" + comAttribute.getFloat("maxMP"));
 
