@@ -595,6 +595,7 @@ cc.MenuItemFont.extend = cc.Class.extend;
 cc.MenuItemToggle.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
+cc.Component.extend = cc.Class.extend;
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
