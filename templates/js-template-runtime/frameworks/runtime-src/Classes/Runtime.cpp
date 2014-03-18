@@ -402,7 +402,6 @@ public:
         _listenfd = -1;
         _running = false;
         _endThread = false;
-		_writepath = FileUtils::getInstance()->getWritablePath();
     }
     
 	bool listenOnTCP(int port);
@@ -421,7 +420,6 @@ private:
     fd_set _read_set;
     bool _running;
     bool _endThread;
-	std::string _writepath;
 };
 
 bool FileServer::listenOnTCP(int port)
@@ -559,9 +557,8 @@ bool FileServer::recv_file(int fd)
 	}
     
     char fullfilename[1024]={0};
-	sprintf(fullfilename,"%s%s",_writepath.c_str(),buffer);
+	sprintf(fullfilename,"%s%s",g_resourcePath.c_str(),buffer);
     string file(fullfilename);
-	file=replaceAll(file,"\\","/");
 	sprintf(fullfilename, "%s", file.c_str());
 	cocos2d::log("recv fullfilename = %s",fullfilename);
     CreateDir(file.substr(0,file.find_last_of("/")).c_str());
@@ -680,7 +677,6 @@ class ConsoleCustomCommand
 public:
     ConsoleCustomCommand():_fileserver(nullptr)
     {
-        _writepath = FileUtils::getInstance()->getWritablePath();
         cocos2d::Console *_console = Director::getInstance()->getConsole();
         static struct Console::Command commands[] = {
             {"shutdownapp","exit runtime app",std::bind(&ConsoleCustomCommand::onShutDownApp, this, std::placeholders::_1, std::placeholders::_2)},
@@ -710,10 +706,10 @@ public:
     void onPreCompile(int fd, const std::string &args)
     {
         Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
-            vector<std::string> fileInfoList = searchFileList(_writepath,"*.js","runtime|frameworks|");
+            vector<std::string> fileInfoList = searchFileList(g_resourcePath,"*.js","runtime|frameworks|");
             for (unsigned i = 0; i < fileInfoList.size(); i++)
             {
-                ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(_writepath.length(),-1).c_str());
+                ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
             }
         });
     }
@@ -758,7 +754,6 @@ private:
 
 void startRuntime()
 {
-    static ConsoleCustomCommand s_customCommand;
 	vector<string> oldSearchPathArray;
     oldSearchPathArray=FileUtils::getInstance()->getSearchPaths();
     vector<string> newSearchPathArray;
@@ -767,19 +762,20 @@ void startRuntime()
 	{
 		g_resourcePath = FileUtils::getInstance()->getWritablePath();
 	}
-	g_resourcePath=replaceAll(g_resourcePath,"\\","/");
-	newSearchPathArray.push_back(g_resourcePath);
-	
+
 #else
 	g_resourcePath = FileUtils::getInstance()->getWritablePath();
-	newSearchPathArray.push_back(g_resourcePath);
+    
 #endif
     
+    g_resourcePath=replaceAll(g_resourcePath,"\\","/");
+    newSearchPathArray.push_back(g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(newSearchPathArray);
 	for (unsigned i = 0; i < oldSearchPathArray.size(); i++)
 	{
 		FileUtils::getInstance()->addSearchPath(oldSearchPathArray[i]);
 	}
+	static ConsoleCustomCommand s_customCommand;
     ScriptingCore::getInstance()->start();
 	ScriptingCore::getInstance()->enableDebugger();
 	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
