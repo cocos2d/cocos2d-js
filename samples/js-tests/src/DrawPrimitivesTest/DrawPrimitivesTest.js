@@ -87,8 +87,7 @@ var DrawNewAPITest2 = DrawTestDemo.extend({
         draw.drawDot(cc.p(winSize.width / 2, winSize.height / 2), 40, cc.color(0, 0, 255, 128));
         var points = [cc.p(60, 60), cc.p(70, 70), cc.p(60, 70), cc.p(70, 60)];
         for (var i = 0; i < points.length; i++) {
-            var p = points[i];
-            draw.drawDot(p, 4, cc.color(0, 255, 255, 255));
+            draw.drawDot(points[i], 4, cc.color(0, 255, 255, 255));
         }
         //drawCircle
         draw.drawCircle(cc.p(winSize.width / 2, winSize.height / 2), 100, 0, 10, false, 6, cc.color(0, 255, 0, 255));
@@ -108,7 +107,7 @@ var DrawNewAPITest2 = DrawTestDemo.extend({
         //not fill
         draw.drawRect(cc.p(120, 120), cc.p(200, 200), null, 2, cc.color(255, 0, 255, 255));
         //fill
-        draw.drawRect(cc.p(120, 220), cc.p(200, 300), cc.color(0, 255, 255, 50), 2, cc.color(255, 0, 255, 255));
+        draw.drawRect(cc.p(120, 220), cc.p(200, 300), cc.color(0, 255, 255, 50), 2, cc.color(128, 128, 0, 255));
 
         // draw quad bezier path
         draw.drawQuadBezier(cc.p(0, winSize.height), cc.p(centerPos.x, centerPos.y), cc.p(winSize.width, winSize.height), 50, 2, cc.color(255, 0, 255, 255));
@@ -154,7 +153,7 @@ var DrawNewAPITest = DrawTestDemo.extend({
         // Polygons
         //
         var points = [ cc.p(winSize.height/4,0), cc.p(winSize.width,winSize.height/5), cc.p(winSize.width/3*2,winSize.height) ];
-        draw.drawPoly(points, cc.color(255,0,0,128), 4, cc.color(0,0,255,255) );
+        draw.drawPoly(points, cc.color(255,0,0,128), 8, cc.color(0,128,128,255) );
 
         // star poly (triggers bugs)
         var o=80;
@@ -162,11 +161,11 @@ var DrawNewAPITest = DrawTestDemo.extend({
         var h=50;
         var star = [
             cc.p(o+w,o-h), cc.p(o+w*2, o),                  // lower spike
-            cc.p(o + w*2 + h, o+w ), cc.p(o + w*2, o+w*2)/*,  // right spike
+            cc.p(o + w*2 + h, o+w ), cc.p(o + w*2, o+w*2),  // right spike
             cc.p(o +w, o+w*2+h), cc.p(o,o+w*2),             // top spike
-            cc.p(o -h, o+w), cc.p(o,o)                     // left spike*/
+            cc.p(o -h, o+w), cc.p(o,o)                     // left spike
         ];
-        draw.drawPoly(star, cc.color(255,0,0,128), 1, cc.color(0,0,255,255) );
+        draw.drawPoly(star, cc.color(255,0,0,128), 2, cc.color(0,0,255,255) );
 
         // star poly (doesn't trigger bug... order is important un tesselation is supported.
         o=180;
@@ -178,7 +177,7 @@ var DrawNewAPITest = DrawTestDemo.extend({
             cc.p(o +w, o+w*2+h), cc.p(o,o+w*2),             // top spike
             cc.p(o -h, o+w)                                 // left spike
         ];
-        draw.drawPoly(star, cc.color(255,0,0,128), 1, cc.color(0,0,255,255) );
+        draw.drawPoly(star, cc.color(255,0,0,128), 2, cc.color(0,0,255,255) );
 
         //
         // Segments
@@ -187,7 +186,6 @@ var DrawNewAPITest = DrawTestDemo.extend({
         draw.drawSegment( cc.p(10,winSize.height/2), cc.p(winSize.width/2, winSize.height/2), 40, cc.color(255, 0, 255, 128) );
     }
 });
-
 
 //
 //
@@ -206,14 +204,9 @@ var DrawPrimitivesTestScene = TestScene.extend({
 //
 
 var arrayOfDrawTest = [
-    DrawNewAPITest
+    DrawNewAPITest,
+    DrawNewAPITest2
 ];
-
-if( !cc.sys.isNative ) {
-    if(!('opengl' in cc.sys.capabilities)){
-        arrayOfDrawTest.push( DrawNewAPITest2 );
-    }
-}
 
 var nextDrawTest = function () {
     drawTestSceneIdx++;

@@ -1667,6 +1667,8 @@ var ActionFollow = ActionsDemo.extend({
 //------------------------------------------------------------------
 var ActionCardinalSpline = ActionsDemo.extend({
     _array:null,
+    _drawNode1: null,
+    _drawNode2: null,
 
     _code:" a = cc.CadinalSplineBy.create( time, array_of_points, tension );\n" +
         " a = cc.CadinalSplineTo.create( time, array_of_points, tension );",
@@ -1674,11 +1676,25 @@ var ActionCardinalSpline = ActionsDemo.extend({
     ctor:function () {
         this._super();
         this._array = [];
+
+        //add draw node
+        var winSize = cc.director.getWinSize();
+        this._drawNode1 = cc.DrawNode.create();
+        this.addChild(this._drawNode1);
+        this._drawNode1.x = 50;
+        this._drawNode1.y = 50;
+        this._drawNode1.setDrawColor(cc.color(255,255,255,255));
+
+        this._drawNode2 = cc.DrawNode.create();
+        this.addChild(this._drawNode2);
+        this._drawNode2.x = winSize.width * 0.5;
+        this._drawNode2.y = 50;
+        this._drawNode2.setDrawColor(cc.color(255,255,255,255));
     },
 
     onEnter:function () {
         this._super();
-
+        var winSize = cc.director.getWinSize();
         this.centerSprites(2);
 
         var delay = cc.DelayTime.create(0.25);
@@ -1717,43 +1733,10 @@ var ActionCardinalSpline = ActionsDemo.extend({
 		this._kathia.y = 50;
         this._kathia.runAction(seq2);
 
-        this._array = array;
+        this._drawNode1.drawCardinalSpline(array, 0, 100, 1);
+        this._drawNode2.drawCardinalSpline(array, 1, 100, 1);
     },
 
-    draw:function (ctx) {
-        // Draw is only supported in cocos2d-html5.
-        // Not supported yet on cocos2d-iphone / cocos2d-x + JSB
-        this._super();
-
-        var context = ctx || cc._renderContext;
-        var winSize = director.getWinSize();
-
-        if(!("opengl" in cc.sys.capabilities)){
-            var locScaleX = cc.view.getScaleX(), locScaleY = cc.view.getScaleY();
-            var apPoint = this.getAnchorPointInPoints();
-            // move to 50,50 since the "by" path will start at 50,50
-            context.save();
-            context.translate(50 * locScaleX , -50 * locScaleY);
-            cc._drawingUtil.drawCardinalSpline(this._array, 0, 100);
-            context.restore();
-
-            context.save();
-            context.translate((winSize.width * locScaleX) * 0.5 , -50 * locScaleY);
-            cc._drawingUtil.drawCardinalSpline(this._array, 1, 100);
-            context.restore();
-        } else {
-            // move to 50,50 since the "by" path will start at 50,50
-            cc.kmGLPushMatrix();
-            cc.kmGLTranslatef(50, 50, 0);
-            cc._drawingUtil.drawCardinalSpline(this._array, 0, 100);
-            cc.kmGLPopMatrix();
-
-            cc.kmGLPushMatrix();
-            cc.kmGLTranslatef(winSize.width/2, 50, 0);
-            cc._drawingUtil.drawCardinalSpline(this._array, 1, 100);
-            cc.kmGLPopMatrix();
-        }
-    },
     subtitle:function () {
         return "Cardinal Spline paths. Testing different tensions for one array";
     },
@@ -1822,16 +1805,24 @@ var ActionCardinalSpline = ActionsDemo.extend({
 //
 //------------------------------------------------------------------
 var ActionCatmullRom = ActionsDemo.extend({
-    _array1:null,
-    _array2:null,
+    _drawNode1: null,
+    _drawNode2: null,
 
     _code:"a = cc.CatmullRomBy.create( time, array_of_points );\n" +
         " a = cc.CatmullRomTo.create( time, array_of_points );",
 
     ctor:function () {
         this._super();
-        this._array1 = [];
-        this._array2 = [];
+
+        this._drawNode1 = cc.DrawNode.create();
+        this._drawNode1.x = 50;
+        this._drawNode1.y = 50;
+        this._drawNode1.setDrawColor(cc.color(255,255,255,255));
+        this.addChild(this._drawNode1);
+
+        this._drawNode2 = cc.DrawNode.create();
+        this._drawNode2.setDrawColor(cc.color(255,255,255,255));
+        this.addChild(this._drawNode2);
     },
 
     onEnter:function () {
@@ -1886,33 +1877,8 @@ var ActionCatmullRom = ActionsDemo.extend({
 
         this._kathia.runAction(seq2);
 
-        this._array1 = array;
-        this._array2 = array2;
-    },
-    draw:function (ctx) {
-        // Draw is only supported in cocos2d-html5.
-        // Not supported yet on cocos2d-iphone / cocos2d-x + JSB
-        this._super();
-        var context = ctx || cc._renderContext;
-
-        if(!("opengl" in cc.sys.capabilities)){
-            var eglViewer = cc.view;
-            // move to 50,50 since the "by" path will start at 50,50
-            context.save();
-            context.translate(50 * eglViewer.getScaleX(), - 50 * eglViewer.getScaleY());
-            cc._drawingUtil.drawCatmullRom(this._array1, 50);
-            context.restore();
-
-            cc._drawingUtil.drawCatmullRom(this._array2, 50);
-        } else {
-            // move to 50,50 since the "by" path will start at 50,50
-            cc.kmGLPushMatrix();
-            cc.kmGLTranslatef(50, 50, 0);
-            cc._drawingUtil.drawCatmullRom(this._array1, 50);
-            cc.kmGLPopMatrix();
-
-            cc._drawingUtil.drawCatmullRom(this._array2,50);
-        }
+        this._drawNode1.drawCatmullRom(array,50, 1);
+        this._drawNode2.drawCatmullRom(array2,50, 1);
     },
     subtitle:function () {
         return "Catmull Rom spline paths. Testing reverse too";
