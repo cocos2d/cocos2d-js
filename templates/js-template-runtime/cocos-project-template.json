@@ -6,22 +6,6 @@
          "append_h5_engine":{
             "from":"frameworks/cocos2d-html5",
             "to":"frameworks/cocos2d-html5"
-         }
-      },
-      "do_add_native_support":{
-         "append_from_template":{
-            "from":"frameworks/runtime-src",
-            "to":"frameworks/runtime-src",
-            "exclude":[
-               "proj.android/bin",
-               "proj.android/assets",
-               "proj.android/libs",
-               "proj.ios_mac/HelloJavascript.xcodeproj/project.xcworkspace",
-               "proj.ios_mac/HelloJavascript.xcodeproj/xcuserdata",
-               "proj.win32/Debug.win32",
-               "proj.win32/Release.win32",
-               "proj.win32/HelloJavascript.sdf"
-            ]
          },
          "append_dir":[
             {
@@ -84,7 +68,23 @@
                "from":"frameworks/js-bindings/external/spidermonkey/prebuilt/win32/mozjs-27.dll",
                "to":"runtime/win32/mozjs-27.dll"
             }
-         ],
+         ]
+      },
+      "do_add_native_support":{
+         "append_from_template":{
+            "from":"frameworks/runtime-src",
+            "to":"frameworks/runtime-src",
+            "exclude":[
+               "proj.android/bin",
+               "proj.android/assets",
+               "proj.android/libs",
+               "proj.ios_mac/HelloJavascript.xcodeproj/project.xcworkspace",
+               "proj.ios_mac/HelloJavascript.xcodeproj/xcuserdata",
+               "proj.win32/Debug.win32",
+               "proj.win32/Release.win32",
+               "proj.win32/HelloJavascript.sdf"
+            ]
+         },
          "append_x_engine":{
             "from":"frameworks/js-bindings/cocos2d-x",
             "to":"frameworks/js-bindings/cocos2d-x"
