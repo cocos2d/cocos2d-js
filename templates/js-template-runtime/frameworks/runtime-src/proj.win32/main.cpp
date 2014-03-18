@@ -20,7 +20,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	int argCount=0;
 
 	szArgList = CommandLineToArgvW(GetCommandLine(),&argCount);
-	if (2 == argCount)
+	if (argCount >=2 )
 	{
 		int iLen = 2*wcslen(szArgList[1]);    
 		char* chRtn = new char[iLen+1];    
