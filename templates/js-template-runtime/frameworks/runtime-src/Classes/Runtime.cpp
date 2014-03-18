@@ -53,6 +53,7 @@ THE SOFTWARE.
 using namespace std;
 using namespace cocos2d;
 
+std::string g_resourcePath;
 extern string getDotWaitFilePath();
 extern string getProjSearchPath();
 extern string getIPAddress();
@@ -500,7 +501,7 @@ void FileServer::stop()
 	}
 }
 
-string& replace_all(string& str,const string& old_value,const string& new_value)
+string& replaceAll(string& str,const string& old_value,const string& new_value)
 {
 	while(true)
 	{
@@ -560,7 +561,7 @@ bool FileServer::recv_file(int fd)
     char fullfilename[1024]={0};
 	sprintf(fullfilename,"%s%s",_writepath.c_str(),buffer);
     string file(fullfilename);
-	file=replace_all(file,"\\","/");
+	file=replaceAll(file,"\\","/");
 	sprintf(fullfilename, "%s", file.c_str());
 	cocos2d::log("recv fullfilename = %s",fullfilename);
     CreateDir(file.substr(0,file.find_last_of("/")).c_str());
@@ -758,14 +759,26 @@ private:
 void startRuntime()
 {
     static ConsoleCustomCommand s_customCommand;
-	vector<string> searchPathArray;
-    searchPathArray=FileUtils::getInstance()->getSearchPaths();
-    vector<string> writePathArray;
-    writePathArray.push_back(FileUtils::getInstance()->getWritablePath());
-    FileUtils::getInstance()->setSearchPaths(writePathArray);
-	for (unsigned i = 0; i < searchPathArray.size(); i++)
+	vector<string> oldSearchPathArray;
+    oldSearchPathArray=FileUtils::getInstance()->getSearchPaths();
+    vector<string> newSearchPathArray;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+	if (g_resourcePath.empty())
 	{
-		FileUtils::getInstance()->addSearchPath(searchPathArray[i]);
+		g_resourcePath = FileUtils::getInstance()->getWritablePath();
+	}
+	g_resourcePath=replaceAll(g_resourcePath,"\\","/");
+	newSearchPathArray.push_back(g_resourcePath);
+	
+#else
+	g_resourcePath = FileUtils::getInstance()->getWritablePath();
+	newSearchPathArray.push_back(g_resourcePath);
+#endif
+    
+    FileUtils::getInstance()->setSearchPaths(newSearchPathArray);
+	for (unsigned i = 0; i < oldSearchPathArray.size(); i++)
+	{
+		FileUtils::getInstance()->addSearchPath(oldSearchPathArray[i]);
 	}
     ScriptingCore::getInstance()->start();
 	ScriptingCore::getInstance()->enableDebugger();
