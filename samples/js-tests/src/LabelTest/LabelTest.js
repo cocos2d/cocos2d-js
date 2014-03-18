@@ -384,12 +384,18 @@ var BMFontSubSpriteTest = AtlasDemo.extend({
         this._super();
         this.time = 0;
 
+        var s = director.getWinSize();
+
+        var drawNode = cc.DrawNode.create();
+        this.addChild(drawNode);
+        drawNode.setDrawColor(cc.color(255,0,0,128));
+        drawNode.drawSegment(cc.p(0, s.height / 2), cc.p(s.width, s.height / 2), 2);
+        drawNode.drawSegment(cc.p(s.width / 2, 0), cc.p(s.width / 2, s.height), 2);
+
         // Upper Label
         var label = cc.LabelBMFont.create("Bitmap Font Atlas", s_resprefix + "fonts/bitmapFontTest.fnt");
         this.labelObj = label;
         this.addChild(label);
-
-        var s = director.getWinSize();
 
         label.x = s.width / 2;
         label.y = s.height / 2;
@@ -400,7 +406,6 @@ var BMFontSubSpriteTest = AtlasDemo.extend({
         var FChar = label.getChildByTag(7);
         var AChar = label.getChildByTag(12);
 
-
         if(autoTestEnabled) {
             var jump = cc.JumpBy.create(0.5, cc.p(0,0), 60, 1);
             var jump_4ever = cc.RepeatForever.create(cc.Sequence.create(jump, cc.DelayTime.create(0.25)));
@@ -409,8 +414,6 @@ var BMFontSubSpriteTest = AtlasDemo.extend({
             var rot_4ever = cc.RepeatForever.create(cc.Sequence.create(rotate, cc.DelayTime.create(0.25), rotate.clone()));
 
             var scale = cc.ScaleBy.create(0.5, 1.5);
-
-
         } else {
             var jump = cc.JumpBy.create(4, cc.p(0,0), 60, 1);
             var jump_4ever = cc.RepeatForever.create(jump);
@@ -419,7 +422,6 @@ var BMFontSubSpriteTest = AtlasDemo.extend({
             var rot_4ever = cc.RepeatForever.create(rotate);
 
             var scale = cc.ScaleBy.create(2, 1.5);
-
         }
 
         var scale_back = scale.reverse();
@@ -452,12 +454,6 @@ var BMFontSubSpriteTest = AtlasDemo.extend({
         string = (string < 10) ? "0" + string : string;
         var label1 = this.getChildByTag(TAG_BITMAP_ATLAS2);
         label1.setString(string);
-    },
-    draw:function () {
-        var s = director.getWinSize();
-        cc._drawingUtil.setDrawColor(255,0,0,255);
-        cc._drawingUtil.drawLine(cc.p(0, s.height / 2), cc.p(s.width, s.height / 2));
-        cc._drawingUtil.drawLine(cc.p(s.width / 2, 0), cc.p(s.width / 2, s.height));
     },
     title:function () {
         return "cc.LabelBMFont BMFontSubSpriteTest";
