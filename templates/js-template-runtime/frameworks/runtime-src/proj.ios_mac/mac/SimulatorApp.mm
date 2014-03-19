@@ -50,6 +50,10 @@ using namespace cocos2d;
 @implementation AppController
 
 @synthesize menu;
+std::string getCurAppPath(void)
+{
+    return [[[NSBundle mainBundle] bundlePath] UTF8String];
+}
 
 -(void) dealloc
 {
