@@ -958,27 +958,14 @@ cc.game = {
     },
     /**
      * Run game.
-     * @private
-     */
-    _runMainLoop : function(){
-        var self = this, config = self.config, CONFIG_KEY = self.CONFIG_KEY,
-        frameRate = config[CONFIG_KEY.frameRate], director = cc.director;
-        director.setDisplayStats(config[CONFIG_KEY.showFPS]);
-        director.mainLoop();
-        self._paused = false;
-    },
-    /**
-     * Run game.
      */
     run : function(){
         var self = this;
         if(!self._prepareCalled){
             self.prepare(function(){
-                self._runMainLoop();
                 self.onStart();
             });
         }else{
-            self._runMainLoop();
             self.onStart();
         }
     },
