@@ -3355,12 +3355,14 @@ cc.ScaleTo = {
 
 /**
  * @method create
-* @param {float|float} float
+* @param {float|float|float} float
+* @param {float|float|float} float
 * @param {float|float} float
 * @param {float} float
-* @return {cc.ScaleTo|cc.ScaleTo}
+* @return {cc.ScaleTo|cc.ScaleTo|cc.ScaleTo}
 */
 create : function(
+float,
 float,
 float,
 float 
@@ -3378,12 +3380,14 @@ cc.ScaleBy = {
 
 /**
  * @method create
-* @param {float|float} float
+* @param {float|float|float} float
+* @param {float|float|float} float
 * @param {float|float} float
 * @param {float} float
-* @return {cc.ScaleBy|cc.ScaleBy}
+* @return {cc.ScaleBy|cc.ScaleBy|cc.ScaleBy}
 */
 create : function(
+float,
 float,
 float,
 float 
@@ -7808,6 +7812,22 @@ sprite
 },
 
 /**
+ * @method addSpriteWithoutQuad
+ * @param {cc.Sprite} arg0
+ * @param {int} arg1
+ * @param {int} arg2
+ * @return {cc.SpriteBatchNode}
+ */
+addSpriteWithoutQuad : function (
+sprite, 
+int, 
+int 
+)
+{
+    return cc.SpriteBatchNode;
+},
+
+/**
  * @method reorderBatch
  * @param {bool} arg0
  */
@@ -8072,16 +8092,6 @@ disableEffect : function (
 },
 
 /**
- * @method getWidth
- * @return {unsigned int}
- */
-getWidth : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getCommonLineHeight
  * @return {int}
  */
@@ -8314,6 +8324,16 @@ int
 },
 
 /**
+ * @method getWidth
+ * @return {unsigned int}
+ */
+getWidth : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method enableGlow
  * @param {Color3BObject} arg0
  */
@@ -8343,6 +8363,16 @@ getTextAlignment : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getBMFontFilePath
+ * @return {String}
+ */
+getBMFontFilePath : function (
+)
+{
+    return ;
 },
 
 /**
