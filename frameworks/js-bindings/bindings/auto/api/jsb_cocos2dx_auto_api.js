@@ -5227,15 +5227,6 @@ bool
     return cc.Shaky3D;
 },
 
-/**
- * @method Shaky3D
- * @constructor
- */
-Shaky3D : function (
-)
-{
-},
-
 };
 
 /**
@@ -5264,16 +5255,6 @@ float
 },
 
 /**
- * @method getAmplitude
- * @return {float}
- */
-getAmplitude : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setAmplitudeRate
  * @param {float} arg0
  */
@@ -5281,6 +5262,16 @@ setAmplitudeRate : function (
 float 
 )
 {
+},
+
+/**
+ * @method getAmplitude
+ * @return {float}
+ */
+getAmplitude : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -5299,15 +5290,6 @@ float
 )
 {
     return cc.Liquid;
-},
-
-/**
- * @method Liquid
- * @constructor
- */
-Liquid : function (
-)
-{
 },
 
 };
@@ -5338,16 +5320,6 @@ float
 },
 
 /**
- * @method getAmplitude
- * @return {float}
- */
-getAmplitude : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setAmplitudeRate
  * @param {float} arg0
  */
@@ -5355,6 +5327,16 @@ setAmplitudeRate : function (
 float 
 )
 {
+},
+
+/**
+ * @method getAmplitude
+ * @return {float}
+ */
+getAmplitude : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -5377,15 +5359,6 @@ bool
 )
 {
     return cc.Waves;
-},
-
-/**
- * @method Waves
- * @constructor
- */
-Waves : function (
-)
-{
 },
 
 };
@@ -5473,15 +5446,6 @@ float
 )
 {
     return cc.Twirl;
-},
-
-/**
- * @method Twirl
- * @constructor
- */
-Twirl : function (
-)
-{
 },
 
 };
@@ -8065,7 +8029,7 @@ int
 
 /**
  * @method getFontSize
- * @return {int}
+ * @return {float}
  */
 getFontSize : function (
 )
@@ -8295,10 +8259,10 @@ textvalignment
 
 /**
  * @method setFontSize
- * @param {int} arg0
+ * @param {float} arg0
  */
 setFontSize : function (
-int 
+float 
 )
 {
 },

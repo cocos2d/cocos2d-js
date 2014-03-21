@@ -1240,7 +1240,6 @@ void js_cocos2dx_Shaky3D_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_Shaky3D(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_Shaky3D_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Shaky3D_Shaky3D(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_Liquid_class;
 extern JSObject *jsb_cocos2d_Liquid_prototype;
@@ -1251,10 +1250,9 @@ void js_register_cocos2dx_Liquid(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_Liquid_getAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Liquid_setAmplitude(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Liquid_getAmplitude(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Liquid_setAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Liquid_getAmplitude(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Liquid_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Liquid_Liquid(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_Waves_class;
 extern JSObject *jsb_cocos2d_Waves_prototype;
@@ -1265,10 +1263,9 @@ void js_register_cocos2dx_Waves(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_Waves_getAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Waves_setAmplitude(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Waves_getAmplitude(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Waves_setAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Waves_getAmplitude(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Waves_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Waves_Waves(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_Twirl_class;
 extern JSObject *jsb_cocos2d_Twirl_prototype;
@@ -1284,7 +1281,6 @@ bool js_cocos2dx_Twirl_getAmplitude(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Twirl_setPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Twirl_getPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Twirl_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Twirl_Twirl(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_PageTurn3D_class;
 extern JSObject *jsb_cocos2d_PageTurn3D_prototype;

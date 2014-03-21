@@ -17265,33 +17265,6 @@ bool js_cocos2dx_Shaky3D_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
-bool js_cocos2dx_Shaky3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	if (argc == 0) {
-		cocos2d::Shaky3D* cobj = new cocos2d::Shaky3D();
-		cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-		if (_ccobj) {
-			_ccobj->autorelease();
-		}
-		TypeTest<cocos2d::Shaky3D> t;
-		js_type_class_t *typeClass = nullptr;
-		std::string typeName = t.s_name();
-		auto typeMapIter = _js_global_type_map.find(typeName);
-		CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-		typeClass = typeMapIter->second;
-		CCASSERT(typeClass, "The value is null.");
-		JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-		// link the native object with the javascript object
-		js_proxy_t* p = jsb_new_proxy(cobj, obj);
-		JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::Shaky3D");
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_Shaky3D_constructor : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-
 
 extern JSObject *jsb_cocos2d_Grid3DAction_prototype;
 
@@ -17330,7 +17303,7 @@ void js_register_cocos2dx_Shaky3D(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_Grid3DAction_prototype,
 		jsb_cocos2d_Shaky3D_class,
-		js_cocos2dx_Shaky3D_constructor, 0, // constructor
+		dummy_constructor<cocos2d::Shaky3D>, 0, // no constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -17394,23 +17367,6 @@ bool js_cocos2dx_Liquid_setAmplitude(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_Liquid_setAmplitude : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
-bool js_cocos2dx_Liquid_getAmplitude(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::Liquid* cobj = (cocos2d::Liquid *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Liquid_getAmplitude : Invalid Native Object");
-	if (argc == 0) {
-		double ret = cobj->getAmplitude();
-		jsval jsret = JSVAL_NULL;
-		jsret = DOUBLE_TO_JSVAL(ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_Liquid_getAmplitude : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
 bool js_cocos2dx_Liquid_setAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -17429,6 +17385,23 @@ bool js_cocos2dx_Liquid_setAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_Liquid_setAmplitudeRate : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_Liquid_getAmplitude(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::Liquid* cobj = (cocos2d::Liquid *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Liquid_getAmplitude : Invalid Native Object");
+	if (argc == 0) {
+		double ret = cobj->getAmplitude();
+		jsval jsret = JSVAL_NULL;
+		jsret = DOUBLE_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_Liquid_getAmplitude : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_cocos2dx_Liquid_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -17462,33 +17435,6 @@ bool js_cocos2dx_Liquid_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
-bool js_cocos2dx_Liquid_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	if (argc == 0) {
-		cocos2d::Liquid* cobj = new cocos2d::Liquid();
-		cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-		if (_ccobj) {
-			_ccobj->autorelease();
-		}
-		TypeTest<cocos2d::Liquid> t;
-		js_type_class_t *typeClass = nullptr;
-		std::string typeName = t.s_name();
-		auto typeMapIter = _js_global_type_map.find(typeName);
-		CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-		typeClass = typeMapIter->second;
-		CCASSERT(typeClass, "The value is null.");
-		JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-		// link the native object with the javascript object
-		js_proxy_t* p = jsb_new_proxy(cobj, obj);
-		JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::Liquid");
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_Liquid_constructor : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-
 
 extern JSObject *jsb_cocos2d_Grid3DAction_prototype;
 
@@ -17517,8 +17463,8 @@ void js_register_cocos2dx_Liquid(JSContext *cx, JSObject *global) {
 	static JSFunctionSpec funcs[] = {
 		JS_FN("getAmplitudeRate", js_cocos2dx_Liquid_getAmplitudeRate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setAmplitude", js_cocos2dx_Liquid_setAmplitude, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getAmplitude", js_cocos2dx_Liquid_getAmplitude, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setAmplitudeRate", js_cocos2dx_Liquid_setAmplitudeRate, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getAmplitude", js_cocos2dx_Liquid_getAmplitude, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -17531,7 +17477,7 @@ void js_register_cocos2dx_Liquid(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_Grid3DAction_prototype,
 		jsb_cocos2d_Liquid_class,
-		js_cocos2dx_Liquid_constructor, 0, // constructor
+		dummy_constructor<cocos2d::Liquid>, 0, // no constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -17595,23 +17541,6 @@ bool js_cocos2dx_Waves_setAmplitude(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_Waves_setAmplitude : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
-bool js_cocos2dx_Waves_getAmplitude(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::Waves* cobj = (cocos2d::Waves *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Waves_getAmplitude : Invalid Native Object");
-	if (argc == 0) {
-		double ret = cobj->getAmplitude();
-		jsval jsret = JSVAL_NULL;
-		jsret = DOUBLE_TO_JSVAL(ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_Waves_getAmplitude : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
 bool js_cocos2dx_Waves_setAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -17630,6 +17559,23 @@ bool js_cocos2dx_Waves_setAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp)
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_Waves_setAmplitudeRate : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_Waves_getAmplitude(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::Waves* cobj = (cocos2d::Waves *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Waves_getAmplitude : Invalid Native Object");
+	if (argc == 0) {
+		double ret = cobj->getAmplitude();
+		jsval jsret = JSVAL_NULL;
+		jsret = DOUBLE_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_Waves_getAmplitude : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_cocos2dx_Waves_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -17667,33 +17613,6 @@ bool js_cocos2dx_Waves_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
-bool js_cocos2dx_Waves_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	if (argc == 0) {
-		cocos2d::Waves* cobj = new cocos2d::Waves();
-		cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-		if (_ccobj) {
-			_ccobj->autorelease();
-		}
-		TypeTest<cocos2d::Waves> t;
-		js_type_class_t *typeClass = nullptr;
-		std::string typeName = t.s_name();
-		auto typeMapIter = _js_global_type_map.find(typeName);
-		CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-		typeClass = typeMapIter->second;
-		CCASSERT(typeClass, "The value is null.");
-		JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-		// link the native object with the javascript object
-		js_proxy_t* p = jsb_new_proxy(cobj, obj);
-		JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::Waves");
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_Waves_constructor : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-
 
 extern JSObject *jsb_cocos2d_Grid3DAction_prototype;
 
@@ -17722,8 +17641,8 @@ void js_register_cocos2dx_Waves(JSContext *cx, JSObject *global) {
 	static JSFunctionSpec funcs[] = {
 		JS_FN("getAmplitudeRate", js_cocos2dx_Waves_getAmplitudeRate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setAmplitude", js_cocos2dx_Waves_setAmplitude, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getAmplitude", js_cocos2dx_Waves_getAmplitude, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setAmplitudeRate", js_cocos2dx_Waves_setAmplitudeRate, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getAmplitude", js_cocos2dx_Waves_getAmplitude, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -17736,7 +17655,7 @@ void js_register_cocos2dx_Waves(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_Grid3DAction_prototype,
 		jsb_cocos2d_Waves_class,
-		js_cocos2dx_Waves_constructor, 0, // constructor
+		dummy_constructor<cocos2d::Waves>, 0, // no constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -17907,33 +17826,6 @@ bool js_cocos2dx_Twirl_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
-bool js_cocos2dx_Twirl_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	if (argc == 0) {
-		cocos2d::Twirl* cobj = new cocos2d::Twirl();
-		cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-		if (_ccobj) {
-			_ccobj->autorelease();
-		}
-		TypeTest<cocos2d::Twirl> t;
-		js_type_class_t *typeClass = nullptr;
-		std::string typeName = t.s_name();
-		auto typeMapIter = _js_global_type_map.find(typeName);
-		CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-		typeClass = typeMapIter->second;
-		CCASSERT(typeClass, "The value is null.");
-		JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-		// link the native object with the javascript object
-		js_proxy_t* p = jsb_new_proxy(cobj, obj);
-		JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::Twirl");
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_Twirl_constructor : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-
 
 extern JSObject *jsb_cocos2d_Grid3DAction_prototype;
 
@@ -17978,7 +17870,7 @@ void js_register_cocos2dx_Twirl(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_Grid3DAction_prototype,
 		jsb_cocos2d_Twirl_class,
-		js_cocos2dx_Twirl_constructor, 0, // constructor
+		dummy_constructor<cocos2d::Twirl>, 0, // no constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -25306,9 +25198,9 @@ bool js_cocos2dx_Label_getFontSize(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_getFontSize : Invalid Native Object");
 	if (argc == 0) {
-		int ret = cobj->getFontSize();
+		double ret = cobj->getFontSize();
 		jsval jsret = JSVAL_NULL;
-		jsret = int32_to_jsval(cx, ret);
+		jsret = DOUBLE_TO_JSVAL(ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -25787,8 +25679,8 @@ bool js_cocos2dx_Label_setFontSize(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_setFontSize : Invalid Native Object");
 	if (argc == 1) {
-		int arg0;
-		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+		double arg0;
+		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_setFontSize : Error processing arguments");
 		cobj->setFontSize(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
