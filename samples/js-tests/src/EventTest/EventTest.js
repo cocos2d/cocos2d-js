@@ -402,10 +402,10 @@ var KeyboardTest = EventTest.extend({
             cc.eventManager.addListener({
                 event: cc.EventListener.KEYBOARD,
                 onKeyPressed:function(key, event) {
-                    cc.log("Key up:" + key);
+                    cc.log("Key down:" + key);
                 },
                 onKeyReleased:function(key, event) {
-                    cc.log("Key down:" + key);
+                    cc.log("Key up:" + key);
                 }
             }, this);
         } else {
