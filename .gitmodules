@@ -1,6 +1,6 @@
 [submodule "frameworks/js-bindings/cocos2d-x"]
 	path = frameworks/js-bindings/cocos2d-x
-	url = git://github.com/cocos2d/cocos2d-x.git
+	url = git://github.com/cocos2d-html5/cocos2d-x.git
 [submodule "frameworks/cocos2d-html5"]
 	path = frameworks/cocos2d-html5
 	url = git://github.com/cocos2d/cocos2d-html5.git
