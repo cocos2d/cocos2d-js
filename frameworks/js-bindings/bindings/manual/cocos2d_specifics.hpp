@@ -244,5 +244,7 @@ bool js_cocos2dx_Node_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_onExit(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_onExit(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif
