@@ -8056,6 +8056,16 @@ disableEffect : function (
 },
 
 /**
+ * @method getTextColor
+ * @return {Color4BObject}
+ */
+getTextColor : function (
+)
+{
+    return cc.Color4B;
+},
+
+/**
  * @method getCommonLineHeight
  * @return {int}
  */
@@ -8278,6 +8288,16 @@ getVerticalAlignment : function (
 },
 
 /**
+ * @method setTextColor
+ * @param {Color4BObject} arg0
+ */
+setTextColor : function (
+color4b 
+)
+{
+},
+
+/**
  * @method setHeight
  * @param {unsigned int} arg0
  */
@@ -8299,10 +8319,10 @@ getWidth : function (
 
 /**
  * @method enableGlow
- * @param {Color3BObject} arg0
+ * @param {Color4BObject} arg0
  */
 enableGlow : function (
-color3b 
+color4b 
 )
 {
 },
@@ -13209,13 +13229,13 @@ getTargetPlatform : function (
 },
 
 /**
- * @method setAnimationInterval
- * @param {double} arg0
+ * @method getCurrentLanguageCode
+ * @return {char}
  */
-setAnimationInterval : function (
-double 
+getCurrentLanguageCode : function (
 )
 {
+    return 0;
 },
 
 /**
@@ -13226,6 +13246,16 @@ getCurrentLanguage : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setAnimationInterval
+ * @param {double} arg0
+ */
+setAnimationInterval : function (
+double 
+)
+{
 },
 
 /**
