@@ -214,6 +214,7 @@ public:
 
 public:
     int handleNodeEvent(void* data);
+    int handleComponentEvent(void* data);
     int handleMenuClickedEvent(void* data);
     
     bool handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event, jsval* jsvalRet = nullptr);
