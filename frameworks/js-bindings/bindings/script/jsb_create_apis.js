@@ -18,10 +18,7 @@ _cc.Layer = cc.Layer;
 cc.Layer = _cc.Layer.extend({
     ctor: function() {
 	    _cc.Layer.prototype.ctor.call(this);
-
-		this.setAnchorPoint(cc.p(0.5, 0.5));
-	    this.ignoreAnchorPointForPosition(true);
-	    this.setContentSize(cc.winSize);
+	    this.init();
     }
 });
 _cc.copyStatics(_cc.Layer, cc.Layer);
@@ -36,8 +33,7 @@ cc.LayerColor = _cc.LayerColor.extend({
 		w = w === undefined ? cc.winSize.width : w;
 		h = h === undefined ? cc.winSize.height : h;
 
-		this.setColor(color);
-		this.setContentSize(w, h);
+		this.init(color, w, h);
 	}
 });
 _cc.copyStatics(_cc.LayerColor, cc.LayerColor);
@@ -52,10 +48,7 @@ cc.LayerGradient = _cc.LayerGradient.extend({
 		end = end || cc.color(0,0,0,255);
 		v = v || cc.p(0, -1);
 
-		this.setStartColor(start);
-		this.setEndColor(end);
-		this.setVector(v);
-		this.setColor(cc.color(start.r, start.g, start.b, 255));
+		this.init(start, end, v);
 	}
 });
 _cc.copyStatics(_cc.LayerGradient, cc.LayerGradient);
@@ -88,37 +81,28 @@ cc.Sprite = _cc.Sprite.extend({
 		if (fileName === undefined) {
 			// Serves as init function
 			rect = rect || cc.rect();
-			this.setTextureRect(rect);
+			this.initWithTexture(null, rect);
 		}
 		else if (typeof(fileName) === "string") {
 			if (fileName[0] === "#") {
 				//init with a sprite frame name
 				var frameName = fileName.substr(1, fileName.length - 1);
-				var spriteFrame = cc.spriteFrameCache.getSpriteFrame(frameName);
-				this.setTexture(spriteFrame.getTexture());
-				this.setTextureRect(spriteFrame.getRect());
-				this.setSpriteFrame(spriteFrame);
+				this.initWithSpriteFrameName(frameName);
 			} else {
 				// Create with filename and rect
-				this.setTexture(fileName);
-				if (rect)
-					this.setTextureRect(rect);
+                rect ? this.initWithFile(fileName, rect) : this.initWithFile(fileName);
 			}
 		}
 		else if (typeof(fileName) === "object") {
 			if (fileName instanceof cc.Texture2D) {
 				//init with texture and rect
-				var texSize = fileName.getContentSize();
-				rect = rect || cc.rect(0, 0, texSize.width, texSize.height);
-				this.setTexture(fileName);
-				this.setTextureRect(rect);
+				rect ? this.initWithTexture(fileName, rect) : this.initWithTexture(fileName);
 			} else if (fileName instanceof cc.SpriteFrame) {
 				//init with a sprite frame
-				this.setTexture(fileName.getTexture());
-				this.setTextureRect(fileName.getRect());
-				this.setSpriteFrame(fileName);
+				this.initWithSpriteFrame(fileName);
 			}
 		}
+		cc.log("Created");
 	}
 });
 _cc.copyStatics(_cc.Sprite, cc.Sprite);
@@ -175,27 +159,7 @@ cc.Menu = _cc.Menu.extend({
 			}
 		}
 
-		var winSize = cc.winSize;
-		this.setPosition(winSize.width / 2, winSize.height / 2);
-		this.setContentSize(winSize);
-		this.setAnchorPoint(0.5, 0.5);
-		this.ignoreAnchorPointForPosition(true);
-
-		for (var i = 0; i < items.length; i++)
-			this.addChild(items[i], i);
-
-		this.setCascadeColorEnabled(true);
-		this.setCascadeOpacityEnabled(true);
-
-		var touchListener = cc.EventListener.create({
-			event: cc.EventListener.TOUCH_ONE_BY_ONE,
-			swallowTouches: true,
-			onTouchBegan: this.onTouchBegan,
-			onTouchMoved: this.onTouchMoved,
-			onTouchEnded: this.onTouchEnded,
-			onTouchCancelled: this.onTouchCancelled
-		});
-		cc.eventManager.addListener(touchListener, this);
+		this.initWithArray(items);
 	}
 });
 _cc.copyStatics(_cc.Menu, cc.Menu);
@@ -205,12 +169,10 @@ cc.Menu.create = _cc.Menu.create;
 // Menu items
 var _initWithCb = function(callback, target) {
 	if (target !== undefined) {
-		this.setAnchorPoint(0.5, 0.5);
 		this.setTarget(callback, target);
 		this.setEnabled(true);
 	}
 	else if (callback !== undefined) {
-		this.setAnchorPoint(0.5, 0.5);
 		this.setCallback(callback);
 		this.setEnabled(true);
 	}
@@ -230,7 +192,7 @@ cc.MenuItem = _cc.MenuItem.extend({
 	ctor: function(callback, target) {
 		_cc.MenuItem.prototype.ctor.call(this);
 
-		_initWithCb.call(this, callback, target);
+		this.initWithCallback(callback.bind(target));
 	}
 });
 _cc.copyStatics(_cc.MenuItem, cc.MenuItem);
@@ -268,19 +230,20 @@ cc.MenuItemFont = _cc.MenuItemFont.extend({
 	ctor: function(value, callback, target) {
 		_cc.MenuItemFont.prototype.ctor.call(this);
 
-		_initWithCb.call(this, callback, target);
-		var label;
-		if(value && value.length > 0) {
-			var fontName = cc.MenuItemFont.fontName;
-			var fontSize = cc.MenuItemFont.fontSize;
-			label = cc.LabelTTF.create(value, fontName, fontSize);
-
-			if (label) {
-				_initLabel.call(this, label);
-				this.setFontName(fontName);
-				this.setFontSize(fontSize);
-			}
-		}
+		this.initWithString(value, callback.bind(target));
+//		_initWithCb.call(this, callback, target);
+//		var label;
+//		if(value && value.length > 0) {
+//			var fontName = cc.MenuItemFont.fontName;
+//			var fontSize = cc.MenuItemFont.fontSize;
+//			label = cc.LabelTTF.create(value, fontName, fontSize);
+//
+//			if (label) {
+//				_initLabel.call(this, label);
+//				this.setFontName(fontName);
+//				this.setFontSize(fontSize);
+//			}
+//		}
 	}
 });
 _cc.copyStatics(_cc.MenuItemFont, cc.MenuItemFont);
@@ -374,20 +337,19 @@ cc.MenuItemToggle = _cc.MenuItemToggle.extend({
 			argc = argc - 2;
 		} else if(typeof arguments[argc-1] === 'function'){
 			callback = arguments[argc-1];
-			argc = argc-1;
+			argc = argc - 1;
 		}
-		_initWithCb.call(this, callback, target);
 
-		for (var i = 0; i < argc; i++) {
-			if (arguments[i])
-				this.addSubItem(arguments[i]);
+		if(argc > 0) {
+			this.initWithItem(arguments[0]);
+
+			for (var i = 1; i < argc; i++) {
+				if (arguments[i])
+					this.addSubItem(arguments[i]);
+			}
+			this.setCallback(callback, target);
 		}
-		if (argc > 1) {
-			this.setSelectedIndex(1);
-		}
-		this.setSelectedIndex(0);
-		this.setCascadeColorEnabled(true);
-		this.setCascadeOpacityEnabled(true);
+		else this.initWithCallback(callback.bind(target));
 	}
 });
 _cc.copyStatics(_cc.MenuItemToggle, cc.MenuItemToggle);
