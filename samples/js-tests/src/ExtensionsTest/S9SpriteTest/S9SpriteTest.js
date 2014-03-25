@@ -39,8 +39,7 @@ var S9SpriteTestDemo = cc.LayerGradient.extend({
     _subtitle:"",
 
     ctor:function() {
-        this._super();
-        this.init( cc.color(0,0,0,255), cc.color(98,99,117,255));
+        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
         cc.spriteFrameCache.addSpriteFrames(s_s9s_blocks9_plist);
         cc.log('sprite frames added to sprite frame cache...');
     },

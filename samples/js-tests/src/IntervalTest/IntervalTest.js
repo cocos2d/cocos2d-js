@@ -41,8 +41,7 @@ IntervalLayer = cc.LayerGradient.extend({
     time4:null,
 
     ctor:function () {
-        this._super();
-        this.init( cc.color(0,0,0,255), cc.color(98,99,117,255));
+        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
         this.time0 = this.time1 = this.time2 = this.time3 = this.time4 = 0.0;
 
