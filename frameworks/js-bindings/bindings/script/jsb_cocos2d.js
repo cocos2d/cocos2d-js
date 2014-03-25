@@ -118,6 +118,10 @@ cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
 //
 cc.p = function( x, y )
 {
+    if (x == undefined)
+        return {x: 0, y: 0};
+    if (y == undefined)
+        return {x: x.x, y: x.y};
     return {x:x, y:y};
 };
 cc._p = function( x, y )

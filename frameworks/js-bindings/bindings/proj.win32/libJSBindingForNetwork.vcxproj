@@ -11,10 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\manual\network\jsb_socketio.cpp" />
     <ClCompile Include="..\manual\network\jsb_websocket.cpp" />
     <ClCompile Include="..\manual\network\XMLHTTPRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\manual\network\jsb_socketio.h" />
     <ClInclude Include="..\manual\network\jsb_websocket.h" />
     <ClInclude Include="..\manual\network\XMLHTTPRequest.h" />
   </ItemGroup>

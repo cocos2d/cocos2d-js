@@ -90,6 +90,7 @@
         "src/ExtensionsTest/EditBoxTest/EditBoxTest.js",
         "src/ExtensionsTest/S9SpriteTest/S9SpriteTest.js",
         "src/ExtensionsTest/NetworkTest/WebSocketTest.js",
+        "src/ExtensionsTest/NetworkTest/SocketIOTest.js",
         "src/CocoStudioTest/ArmatureTest/ArmatureTest.js",
         "src/CocoStudioTest/ComponentsTest/ComponentsTestScene.js",
         "src/CocoStudioTest/ComponentsTest/EnemyController.js",

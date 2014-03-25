@@ -81,6 +81,12 @@ var extensionsTestItemNames = [
         testScene:function () {
             runWebSocketTest();
         }
+    },
+    {
+        itemTitle:"SocketIOTest",
+        testScene:function () {
+            runSocketIOTest();
+        }
     }
 ];
 
