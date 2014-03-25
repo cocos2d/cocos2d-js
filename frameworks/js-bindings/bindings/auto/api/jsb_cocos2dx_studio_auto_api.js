@@ -1183,10 +1183,10 @@ bonedata
 
 /**
  * @method init
-* @param {String} str
-* @return {bool|bool}
-*/
-init : function(
+ * @param {String} arg0
+ * @return {bool}
+ */
+init : function (
 str 
 )
 {
@@ -1939,7 +1939,7 @@ getName : function (
  * @method init
 * @param {String|String} str
 * @param {ccs.Bone} bone
-* @return {bool|bool|bool}
+* @return {bool|bool}
 */
 init : function(
 str,
@@ -2090,18 +2090,6 @@ getNodeToWorldTransformAR : function (
 },
 
 /**
- * @method initWithFile
- * @param {String} arg0
- * @return {bool}
- */
-initWithFile : function (
-str 
-)
-{
-    return false;
-},
-
-/**
  * @method getDisplayName
  * @return {String}
  */
@@ -2117,18 +2105,6 @@ getDisplayName : function (
 updateArmatureTransform : function (
 )
 {
-},
-
-/**
- * @method initWithSpriteFrameName
- * @param {String} arg0
- * @return {bool}
- */
-initWithSpriteFrameName : function (
-str 
-)
-{
-    return false;
 },
 
 /**
