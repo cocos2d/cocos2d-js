@@ -762,18 +762,19 @@ public:
 			dArgParse.Parse<0>(args.c_str());
 			if (dArgParse.HasMember("cmd"))
 			{
-				if (strcmp(dArgParse["cmd"].GetString(),"start-logic")==0)
+                string strcmd =dArgParse["cmd"].GetString();
+				if (strcmp(strcmd.c_str(),"start-logic")==0)
 				{
 					startScript();
 
-				}else if(strcmp(dArgParse["cmd"].GetString(),"precompile")==0)
+				}else if(strcmp(strcmd.c_str(),"precompile")==0)
 				{
 					vector<std::string> fileInfoList = searchFileList(g_resourcePath,"*.js","runtime|frameworks|");
 					for (unsigned i = 0; i < fileInfoList.size(); i++)
 					{
 						ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
 					}
-				}else if(strcmp(dArgParse["cmd"].GetString(),"reload")==0)
+				}else if(strcmp(strcmd.c_str(),"reload")==0)
 				{
 					if (dArgParse.HasMember("modulefiles"))
 					{
@@ -783,22 +784,22 @@ public:
 							reloadScript(objectfiles[i].GetString());
 						}
 					}
-				}else if(strcmp(dArgParse["cmd"].GetString(),"getversion")==0)
+				}else if(strcmp(strcmd.c_str(),"getversion")==0)
 				{
 					dArgParse["version"] = getRuntimeVersion().c_str();
 
-				}else if(strcmp(dArgParse["cmd"].GetString(),"getfileinfo")==0)
+				}else if(strcmp(strcmd.c_str(),"getfileinfo")==0)
 				{
 					for (auto it=g_filecfgjson.MemberonBegin();it!=g_filecfgjson.MemberonEnd();++it)
 					{
 						dArgParse[it->name.GetString()]=it->value;
 					}
 
-				}else if(strcmp(dArgParse["cmd"].GetString(),"getIP")==0)
+				}else if(strcmp(strcmd.c_str(),"getIP")==0)
 				{
 					dArgParse["IP"] = getIPAddress().c_str();
 
-				}else if(strcmp(dArgParse["cmd"].GetString(),"remove")==0)
+				}else if(strcmp(strcmd.c_str(),"remove")==0)
 				{
 					if (dArgParse.HasMember("files"))
 					{
@@ -812,7 +813,7 @@ public:
 						}
 					}
 
-				}else if(strcmp(dArgParse["cmd"].GetString(),"shutdownapp")==0)
+				}else if(strcmp(strcmd.c_str(),"shutdownapp")==0)
 				{
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 					extern void shutDownApp();
@@ -823,7 +824,11 @@ public:
 				}
 				
 				char replymsg[1024]={0};
-				sprintf(replymsg,"%d:%s",strlen(dArgParse.GetString()),dArgParse.GetString());
+                rapidjson::StringBuffer buffer;
+                rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
+                dArgParse.Accept(writer);
+                const char* str = buffer.GetString();
+				sprintf(replymsg,"%d:%s",strlen(str),str);
 				send(fd,replymsg,strlen(replymsg),0);
 			}
 		});
