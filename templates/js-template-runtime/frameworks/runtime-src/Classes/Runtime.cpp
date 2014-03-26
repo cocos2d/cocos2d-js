@@ -766,6 +766,13 @@ public:
 				{
 					startScript();
 
+				}else if(strcmp(dArgParse["cmd"].GetString(),"precompile")==0)
+				{
+					vector<std::string> fileInfoList = searchFileList(g_resourcePath,"*.js","runtime|frameworks|");
+					for (unsigned i = 0; i < fileInfoList.size(); i++)
+					{
+						ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
+					}
 				}else if(strcmp(dArgParse["cmd"].GetString(),"reload")==0)
 				{
 					if (dArgParse.HasMember("modulefiles"))
