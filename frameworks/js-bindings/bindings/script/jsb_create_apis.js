@@ -8,15 +8,13 @@ var _p;
 
 // Layers
 _p = cc.Layer.prototype;
-_p._ctor = _p.ctor;
-_p.ctor = function() {
-	this._ctor();
+_p._ctor = function() {
 	_p.init.call(this);
 };
 
 
 _p = cc.LayerColor.prototype;
-_p.ctor = function(color, w, h) {
+_p._ctor = function(color, w, h) {
 	color = color ||  cc.color(0, 0, 0, 255);
 	w = w === undefined ? cc.winSize.width : w;
 	h = h === undefined ? cc.winSize.height : h;
@@ -26,7 +24,7 @@ _p.ctor = function(color, w, h) {
 
 
 _p = cc.LayerGradient.prototype;
-_p.ctor = function(start, end, v) {
+_p._ctor = function(start, end, v) {
 	start = start || cc.color(0,0,0,255);
 	end = end || cc.color(0,0,0,255);
 	v = v || cc.p(0, -1);
@@ -36,18 +34,16 @@ _p.ctor = function(start, end, v) {
 
 
 _p = cc.LayerMultiplex.prototype;
-_p.ctor = function(layers) {
+_p._ctor = function(layers) {
 	layers && layers.length ? this.initWithArray(layers) : this.init();
 };
 
 
 // Sprite
 _p = cc.Sprite.prototype;
-_p.ctor = function(fileName, rect) {
+_p._ctor = function(fileName, rect) {
 	if (fileName === undefined) {
-		// Serves as init function
-		rect = rect || cc.rect();
-		this.initWithTexture(null, rect);
+		_p.init.call(this);
 	}
 	else if (typeof(fileName) === "string") {
 		if (fileName[0] === "#") {
@@ -73,7 +69,7 @@ _p.ctor = function(fileName, rect) {
 
 // SpriteBatchNode
 _p = cc.SpriteBatchNode.prototype;
-_p.ctor = function(fileImage, capacity) {
+_p._ctor = function(fileImage, capacity) {
 	capacity = capacity || cc.DEFAULT_SPRITE_BATCH_CAPACITY;
 	if (typeof(fileImage) == "string")
 		this.initWithFile(fileImage, capacity);
@@ -84,7 +80,7 @@ _p.ctor = function(fileImage, capacity) {
 
 // Menu
 _p = cc.Menu.prototype;
-_p.ctor = function(menuItems) {
+_p._ctor = function(menuItems) {
 	if((arguments.length > 0) && (arguments[arguments.length-1] == null))
 		cc.log("parameters should not be ending with null in Javascript");
 
@@ -111,30 +107,30 @@ _p.ctor = function(menuItems) {
 
 // Menu items
 _p = cc.MenuItem.prototype;
-_p.ctor = function(callback, target) {
+_p._ctor = function(callback, target) {
 	callback && this.initWithCallback(callback.bind(target));
 };
 
 _p = cc.MenuItemLabel.prototype;
-_p.ctor = function(label, callback, target) {
+_p._ctor = function(label, callback, target) {
 	callback = callback ? callback.bind(target) : null;
 	label && this.initWithLabel(label, callback);
 };
 
 _p = cc.MenuItemAtlasFont.prototype;
-_p.ctor = function(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
+_p._ctor = function(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
 	callback = callback ? callback.bind(target) : null;
 	value !== undefined && this.initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, callback);
 };
 
 _p = cc.MenuItemFont.prototype;
-_p.ctor = function(value, callback, target) {
+_p._ctor = function(value, callback, target) {
 	callback = callback ? callback.bind(target) : null;
 	value !== undefined && this.initWithString(value, callback);
 };
 
 _p = cc.MenuItemSprite.prototype;
-_p.ctor = function(normalSprite, selectedSprite, three, four, five) {
+_p._ctor = function(normalSprite, selectedSprite, three, four, five) {
 	var argc = arguments.length;
 	if (argc > 1) {
 		normalSprite = arguments[0];
@@ -159,7 +155,7 @@ _p.ctor = function(normalSprite, selectedSprite, three, four, five) {
 };
 
 _p = cc.MenuItemImage.prototype;
-_p.ctor = function(normalImage, selectedImage, three, four, five) {
+_p._ctor = function(normalImage, selectedImage, three, four, five) {
 	var disabledImage = null,
 		callback = null,
 		target = null;
@@ -186,7 +182,7 @@ _p.ctor = function(normalImage, selectedImage, three, four, five) {
 };
 
 _p = cc.MenuItemToggle.prototype;
-_p.ctor = function() {
+_p._ctor = function() {
 	var argc =  arguments.length, callback, target;
 	// passing callback.
 	if (typeof arguments[argc-2] === 'function') {
