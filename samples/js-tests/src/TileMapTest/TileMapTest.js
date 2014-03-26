@@ -749,6 +749,11 @@ var TMXTilesetTest = TileDemo.extend({
 var TMXOrthoObjectsTest = TileDemo.extend({
     ctor:function () {
         this._super();
+        var drawNode = cc.DrawNode.create();
+        drawNode.setLineWidth(3);
+        drawNode.setDrawColor(cc.color(255,255,255,255));
+        this.addChild(drawNode);
+
         var map = cc.TMXTiledMap.create(s_resprefix + "TileMaps/ortho-objects.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
@@ -763,6 +768,14 @@ var TMXOrthoObjectsTest = TileDemo.extend({
             for (var k in dict) {
                 this.log(k + ' = ' + dict[k]);
             }
+
+            var x = dict["x"], y = dict["y"];
+            var width = dict["width"], height = dict["height"];
+
+            drawNode.drawSegment(cc.p(x, y), cc.p((x + width), y));
+            drawNode.drawSegment(cc.p((x + width), y), cc.p((x + width), (y + height)));
+            drawNode.drawSegment(cc.p((x + width), (y + height)), cc.p(x, (y + height)));
+            drawNode.drawSegment(cc.p(x, (y + height)), cc.p(x, y));
         }
 
         //Automation parameters
@@ -772,33 +785,6 @@ var TMXOrthoObjectsTest = TileDemo.extend({
         this._super();
         this.anchorX = 0;
         this.anchorY = 0;
-    },
-    draw:function () {
-        var map = this.getChildByTag(TAG_TILE_MAP);
-        var group = map.getObjectGroup("Object Group 1");
-        var objects = group.getObjects();
-
-        for (var i = 0; i < objects.length; i++) {
-            var dict = objects[i];
-            if (!dict)
-                break;
-
-            var x = dict["x"];
-            var y = dict["y"];
-            var width = dict["width"];
-            var height = dict["height"];
-
-            cc._renderContext.lineWidth = 3;
-            cc._renderContext.strokeStyle = "#ffffff";
-
-            cc._drawingUtil.drawLine(cc.p(x, y), cc.p((x + width), y));
-            cc._drawingUtil.drawLine(cc.p((x + width), y), cc.p((x + width), (y + height)));
-            cc._drawingUtil.drawLine(cc.p((x + width), (y + height)), cc.p(x, (y + height)));
-            cc._drawingUtil.drawLine(cc.p(x, (y + height)), cc.p(x, y));
-
-            cc._renderContext.lineWidth = 1;
-        }
-
     },
     title:function () {
         return "TMX Ortho object test";
@@ -838,6 +824,11 @@ var TMXIsoObjectsTest = TileDemo.extend({
     ctor:function () {
         this._super();
 
+        var drawNode = cc.DrawNode.create();
+        drawNode.setLineWidth(3);
+        drawNode.setDrawColor(cc.color(255,255,255,255));
+        this.addChild(drawNode);
+
         var map = cc.TMXTiledMap.create(s_resprefix + "TileMaps/iso-test-objectgroup.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
 
@@ -851,6 +842,14 @@ var TMXIsoObjectsTest = TileDemo.extend({
             for (var k in dict) {
                 this.log(k + ' = ' + dict[k]);
             }
+
+            var x = dict["x"], y = dict["y"];
+            var width = dict["width"], height = dict["height"];
+
+            drawNode.drawSegment(cc.p(x, y), cc.p((x + width), y));
+            drawNode.drawSegment(cc.p((x + width), y), cc.p((x + width), (y + height)));
+            drawNode.drawSegment(cc.p((x + width), (y + height)), cc.p(x, (y + height)));
+            drawNode.drawSegment(cc.p(x, (y + height)), cc.p(x, y));
         }
 
         //Automation parameters
@@ -865,33 +864,6 @@ var TMXIsoObjectsTest = TileDemo.extend({
 
     title:function () {
         return "TMX Iso object test";
-    },
-    draw:function (ctx) {
-        var map = this.getChildByTag(TAG_TILE_MAP);
-        var group = map.getObjectGroup("Object Group 1");
-        var objects = group.getObjects();
-        var dict;
-
-        for (var i = 0, len = objects.length; i < len; i++) {
-            dict = objects[i];
-            if (!dict)
-                break;
-
-            var x = dict["x"];
-            var y = dict["y"];
-            var width = dict["width"];
-            var height = dict["height"];
-
-            cc._renderContext.lineWidth = 3;
-            cc._renderContext.strokeStyle = "#ffffff";
-
-            cc._drawingUtil.drawLine(cc.p(x, y), cc.p(x + width, y));
-            cc._drawingUtil.drawLine(cc.p(x + width, y), cc.p(x + width, y + height));
-            cc._drawingUtil.drawLine(cc.p(x + width, y + height), cc.p(x, y + height));
-            cc._drawingUtil.drawLine(cc.p(x, y + height), cc.p(x, y));
-
-            cc._renderContext.lineWidth = 1;
-        }
     },
     subtitle:function () {
         return "You need to parse them manually. See bug #810";
@@ -1625,8 +1597,14 @@ var TMXBug787 = TileDemo.extend({
 var TMXGIDObjectsTest = TileDemo.extend({
     ctor:function () {
         this._super();
+
+        var drawNode = cc.DrawNode.create();
+        drawNode.setLineWidth(3);
+        drawNode.setDrawColor(cc.color(255,255,255,255));
+        this.addChild(drawNode);
+
         var map = cc.TMXTiledMap.create(s_resprefix + "TileMaps/test-object-layer.tmx");
-        this.addChild(map, -1, TAG_TILE_MAP);
+        this.addChild(map, 0, TAG_TILE_MAP);
 
         this.log("ContentSize:" + map.width + "," + map.height);
         this.log("---. Iterating over all the group objets");
@@ -1641,6 +1619,16 @@ var TMXGIDObjectsTest = TileDemo.extend({
             for (var k in dict) {
                 this.log(k + ' = ' + dict[k]);
             }
+
+            var x = dict["x"], y = dict["y"];
+            var width = dict["width"], height = dict["height"];
+
+            if (width != 0 && height != 0) {
+                drawNode.drawSegment(cc.p(x, y), cc.p((x + width), y));
+                drawNode.drawSegment(cc.p((x + width), y), cc.p((x + width), (y + height)));
+                drawNode.drawSegment(cc.p((x + width), (y + height)), cc.p(x, (y + height)));
+                drawNode.drawSegment(cc.p(x, (y + height)), cc.p(x, y));
+            }
         }
         this.testObjects = array;
     },
@@ -1649,32 +1637,6 @@ var TMXGIDObjectsTest = TileDemo.extend({
     },
     subtitle:function () {
         return "Tiles are created from an object group";
-    },
-    draw:function () {
-        var map = this.getChildByTag(TAG_TILE_MAP);
-        var group = map.getObjectGroup("Object Layer 1");
-
-        var array = group.getObjects();
-        var dict;
-        for (var i = 0, len = array.length; i < len; i++) {
-            dict = array[i];
-            if (!dict)
-                break;
-            var x = dict["x"];
-            var y = dict["y"];
-            var width = dict["width"];
-            var height = dict["height"];
-
-            cc._renderContext.lineWidth = 3;
-            cc._renderContext.strokeStyle = "#ffffff";
-
-            cc._drawingUtil.drawLine(cc.p(x, y), cc.p(x + width, y));
-            cc._drawingUtil.drawLine(cc.p(x + width, y), cc.p(x + width, y + height));
-            cc._drawingUtil.drawLine(cc.p(x + width, y + height), cc.p(x, y + height));
-            cc._drawingUtil.drawLine(cc.p(x, y + height), cc.p(x, y));
-
-            cc._renderContext.lineWidth = 1;
-        }
     },
     //
     // Automation

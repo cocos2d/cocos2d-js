@@ -6,7 +6,23 @@ Cocos2d-JS provides a console tool that makes the development of CH5 and JSB app
 
 ##Setup
 
-First step, you need to setup before using this tool. Please clone Cocos2d-JS repository and update all submodules. Open console in Cocos2d-JS folder, then just run `./setup.py` on console. You may need to provide your NDK, Android SDK and ANT's path during the setup. Note that this tool is developed with python, so you will need python (32bit) 2.7.5 or later installed on your machine (but it doesn't support Python3).
+First step, you need to setup before using this tool. Please clone Cocos2d-JS repository and update all submodule. Open console in Cocos2d-JS folder, then just run `./setup.py` on console. You may need to provide your NDK, Android SDK and ANT's path during the setup. Note that this tool is developed with python, so you will need python (32bit) 2.7.5 or later installed on your machine (but it doesn't support Python3).
+
+Some useful links:
+
+* [Android SDK](https://developer.android.com/sdk/index.html?hl=sk)
+* [NDK](https://developer.android.com/tools/sdk/ndk/index.html)
+* [Ant binary release](http://ant.apache.org/)
+    - Download Ant.
+    - Uncompress the downloaded file into a directory.
+    - Set environmental variables JAVA_HOME to your Java environment, ANT_HOME to the directory you uncompressed Ant to, and add ${ANT_HOME}/bin (Unix) or %ANT_HOME%/bin (Windows) to your PATH.
+    
+    ```            
+    // Example: Execute in console or add into .bash_profile(Mac)
+    export ANT_HOME=/usr/local/ant
+    export JAVA_HOME=/usr/local/jdk1.7.0_51
+    export PATH=${PATH}:${ANT_HOME}/bin
+    ```
 
 ##Usage
 

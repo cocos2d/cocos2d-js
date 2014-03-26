@@ -888,26 +888,35 @@ var TestCalculatedVertex = ArmatureTestLayer.extend({
 //
 //------------------------------------------------------------------
 var TestBoundingBox = ArmatureTestLayer.extend({
-    armature:null,
+    armature: null,
+    drawNode: null,
     onEnter:function () {
-        this._super();
+        var _this = this;
+        _this._super();
+
+        _this.drawNode = cc.DrawNode.create();
+        _this.drawNode.setDrawColor(cc.color(100,100,100,255));
+        _this.addChild(_this.drawNode);
+
         ccs.armatureDataManager.addArmatureFileInfo(s_Cowboy_json);
 
-        this.armature = ccs.Armature.create("Cowboy");
-        this.armature.getAnimation().playWithIndex(0);
-        this.armature.x = winSize.width / 2;
-        this.armature.y = winSize.height / 2;
-        this.armature.scale = 0.2;
-        this.addChild(this.armature);
+        _this.armature = ccs.Armature.create("Cowboy");
+        _this.armature.getAnimation().playWithIndex(0);
+        _this.armature.x = winSize.width / 2;
+        _this.armature.y = winSize.height / 2;
+        _this.armature.scale = 0.2;
+        _this.addChild(_this.armature);
+
+        _this.scheduleUpdate();
     },
+
     title:function () {
         return "Test BoundingBox";
     },
-    draw:function () {
+    update: function () {
         var rect =  this.armature.boundingBox();
-        cc._drawingUtil.setDrawColor(100, 100, 100, 255);
-        cc._drawingUtil.setLineWidth(1);
-        cc._drawingUtil.drawRect(cc.p(rect.x, rect.y), cc.p(cc.rectGetMaxX(rect), cc.rectGetMaxY(rect)));
+        this.drawNode.clear();
+        this.drawNode.drawRect(cc.p(rect.x, rect.y), cc.p(cc.rectGetMaxX(rect), cc.rectGetMaxY(rect)));
     }
 });
 

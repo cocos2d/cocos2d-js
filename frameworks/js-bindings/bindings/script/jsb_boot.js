@@ -543,14 +543,14 @@ cc.loader = {
     }
     
 };
-cc.defineGetterSetter(cc.loader, "", function(){
+cc.defineGetterSetter(cc.loader, "resPath", function(){
     return this._resPath;
 }, function(resPath){
-    this._resPath = resPath || "resPath";
+    this._resPath = resPath || "";
     cc.FileUtils.getInstance().setSearchPath(this._resPath);
 });
 cc.defineGetterSetter(cc.loader, "audioPath", function(){
-    return this._resPath;
+    return this._audioPath;
 }, function(audioPath){
     this._audioPath = audioPath || "";
     cc.FileUtils.getInstance().setSearchPath(this._audioPath);
