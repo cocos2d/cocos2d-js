@@ -34,6 +34,10 @@ THE SOFTWARE.
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
 #include "cocos2d.h"
+#include "json/document.h"
+#include "json/filestream.h"
+#include "json/stringbuffer.h"
+#include "json/writer.h"
 
 #ifdef _WIN32
 #define realpath(dir,fuldir) _fullpath(fuldir,dir,_MAX_PATH_)
@@ -54,6 +58,7 @@ using namespace std;
 using namespace cocos2d;
 
 std::string g_resourcePath;
+rapidjson::Document g_filecfgjson; 
 extern string getDotWaitFilePath();
 extern string getProjSearchPath();
 extern string getIPAddress();
@@ -559,32 +564,67 @@ bool CreateDir(const char *sPathName)
 	return   true;  
 }
 
+void updateResFileInfo(string filename,string filetime)
+{
+	g_filecfgjson[filename.c_str()] = filetime.c_str();
+	rapidjson::StringBuffer buffer;
+	rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
+	g_filecfgjson.Accept(writer);
+	const char* str = buffer.GetString();
+
+	string filecfg = g_resourcePath;
+	filecfg.append("/");
+	filecfg.append("fileinfo_debug.json");
+	FILE * pFile = fopen (filecfg.c_str() , "w");
+	fwrite(str,sizeof(char),strlen(str),pFile);
+	fclose(pFile);
+}
+
+void readResFile()
+{
+	string filecfg = g_resourcePath;
+	filecfg.append("/");
+	filecfg.append("fileinfo_debug.json");
+	FILE * pFile = fopen (filecfg.c_str() , "r");
+	rapidjson::FileStream inputStream(pFile);
+	g_filecfgjson.ParseStream<0>(inputStream);
+	fclose(pFile);
+}
+
 bool FileServer::recv_file(int fd)
 {
-	char buffer[1024]={0};
-    char namelen[5]={0};
-	if (recv(fd, namelen, 4,0)<=0) {
+	char filename[1024]={0};
+    char headlen[5]={0};
+	if (recv(fd, headlen, 4,0)<=0) {
+		return  false;
+	}
+	if (recv(fd, filename, atoi(headlen),0)<=0) {
 		return  false;
 	}
     
-	if (recv(fd, buffer, atoi(namelen),0)<=0) {
+	char filetimeinfo[1024]={0};
+	if (recv(fd, headlen, 4,0)<=0) {
 		return  false;
 	}
-    
+	if (recv(fd, filetimeinfo, atoi(headlen),0)<=0) {
+		return  false;
+	}
     char fullfilename[1024]={0};
-	sprintf(fullfilename,"%s%s",g_resourcePath.c_str(),buffer);
+	sprintf(fullfilename,"%s%s",g_resourcePath.c_str(),filename);
     string file(fullfilename);
 	file=replaceAll(file,"\\","/");
 	sprintf(fullfilename, "%s", file.c_str());
 	cocos2d::log("recv fullfilename = %s",fullfilename);
     CreateDir(file.substr(0,file.find_last_of("/")).c_str());
 	FILE *fp =fopen(fullfilename, "wb");
-	
 	int length =0;
 	while ((length=recv(fd, fullfilename, sizeof(fullfilename),0)) > 0) {
 		fwrite(fullfilename, sizeof(char), length,fp);
 	}
 	fclose(fp);
+    string finish("finish\n");
+    send(fd, finish.c_str(), finish.size(),0);
+	updateResFileInfo(filename,filetimeinfo);
 	return true;
 }
     
@@ -695,12 +735,8 @@ public:
     {
         cocos2d::Console *_console = Director::getInstance()->getConsole();
         static struct Console::Command commands[] = {
-            {"shutdownapp","exit runtime app",std::bind(&ConsoleCustomCommand::onShutDownApp, this, std::placeholders::_1, std::placeholders::_2)},
-            {"precompile","",std::bind(&ConsoleCustomCommand::onPreCompile, this, std::placeholders::_1, std::placeholders::_2)},
-            {"start-logic","run game logic script",std::bind(&ConsoleCustomCommand::onRunLogicScript, this, std::placeholders::_1, std::placeholders::_2)},
-            {"reload","reload script.Args:[filepath]",std::bind(&ConsoleCustomCommand::onReloadScriptFile, this, std::placeholders::_1, std::placeholders::_2)},
-            {"getversion","get runtime version.",std::bind(&ConsoleCustomCommand::onRuntimeVersion, this, std::placeholders::_1, std::placeholders::_2)},
-        };
+			{"sendcmd","send command to runtime.Args[json format]",std::bind(&ConsoleCustomCommand::onSendCommand, this, std::placeholders::_1, std::placeholders::_2)},
+		};
         for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
             _console->addCommand(commands[i]);
         }
@@ -719,50 +755,72 @@ public:
         }
     }
     
-    void onPreCompile(int fd, const std::string &args)
-    {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
-            vector<std::string> fileInfoList = searchFileList(g_resourcePath,"*.js","runtime|frameworks|");
-            for (unsigned i = 0; i < fileInfoList.size(); i++)
-            {
-                ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
-            }
-        });
-    }
-    
-    void onRunLogicScript(int fd, const std::string &args)
-    {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){
-            startScript();
-        });
-    }
-    
-    void onReloadScriptFile(int fd,const std::string &args)
-    {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
-             reloadScript(args.c_str());
-        });
-    }
-    
-	void onRuntimeVersion(int fd, const std::string &args)
-    {
-        string runtimeVer=getRuntimeVersion();
-		runtimeVer += "\n";
-        send(fd, runtimeVer.c_str(), runtimeVer.size(),0);
-    }
-	
-    void onShutDownApp(int fd, const std::string &args)
-    {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){
-            
+	void onSendCommand(int fd, const std::string &args)
+	{
+		Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+			rapidjson::Document dArgParse;
+			dArgParse.Parse<0>(args.c_str());
+			if (dArgParse.HasMember("cmd"))
+			{
+				if (strcmp(dArgParse["cmd"].GetString(),"start-logic")==0)
+				{
+					startScript();
+
+				}else if(strcmp(dArgParse["cmd"].GetString(),"reload")==0)
+				{
+					if (dArgParse.HasMember("modulefiles"))
+					{
+						const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
+						for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
+						{
+							reloadScript(objectfiles[i].GetString());
+						}
+					}
+				}else if(strcmp(dArgParse["cmd"].GetString(),"getversion")==0)
+				{
+					dArgParse["version"] = getRuntimeVersion().c_str();
+
+				}else if(strcmp(dArgParse["cmd"].GetString(),"getfileinfo")==0)
+				{
+					for (auto it=g_filecfgjson.MemberonBegin();it!=g_filecfgjson.MemberonEnd();++it)
+					{
+						dArgParse[it->name.GetString()]=it->value;
+					}
+
+				}else if(strcmp(dArgParse["cmd"].GetString(),"getIP")==0)
+				{
+					dArgParse["IP"] = getIPAddress().c_str();
+
+				}else if(strcmp(dArgParse["cmd"].GetString(),"remove")==0)
+				{
+					if (dArgParse.HasMember("files"))
+					{
+						const rapidjson::Value& objectfiles = dArgParse["files"];
+						for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
+						{
+							string filename(g_resourcePath);
+							filename.append("/");
+							filename.append(objectfiles[i].GetString());
+							remove(filename.c_str());
+						}
+					}
+
+				}else if(strcmp(dArgParse["cmd"].GetString(),"shutdownapp")==0)
+				{
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-			extern void shutDownApp();
-			shutDownApp();
+					extern void shutDownApp();
+					shutDownApp();
 #else
-			exit(0);
+					exit(0);
 #endif	
-        });
-    }
+				}
+				
+				char replymsg[1024]={0};
+				sprintf(replymsg,"%d:%s",strlen(dArgParse.GetString()),dArgParse.GetString());
+				send(fd,replymsg,strlen(replymsg),0);
+			}
+		});
+	}
 private:
     FileServer* _fileserver;
     string _writepath;
