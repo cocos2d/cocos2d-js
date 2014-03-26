@@ -9059,145 +9059,11 @@ sprite
 },
 
 /**
- * @method addSpriteWithoutQuad
- * @param {cc.Sprite} arg0
- * @param {int} arg1
- * @param {int} arg2
- * @return {cc.SpriteBatchNode}
- */
-addSpriteWithoutQuad : function (
-sprite, 
-int, 
-int 
-)
-{
-    return cc.SpriteBatchNode;
-},
-
-/**
  * @method reorderBatch
  * @param {bool} arg0
  */
 reorderBatch : function (
 bool 
-)
-{
-},
-
-/**
- * @method initWithTexture
- * @param {cc.Texture2D} arg0
- * @param {long} arg1
- * @return {bool}
- */
-initWithTexture : function (
-texture2d, 
-long 
-)
-{
-    return false;
-},
-
-/**
- * @method lowestAtlasIndexInChild
- * @param {cc.Sprite} arg0
- * @return {long}
- */
-lowestAtlasIndexInChild : function (
-sprite 
-)
-{
-    return 0;
-},
-
-/**
- * @method atlasIndexForChild
- * @param {cc.Sprite} arg0
- * @param {int} arg1
- * @return {long}
- */
-atlasIndexForChild : function (
-sprite, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method setTextureAtlas
- * @param {cc.TextureAtlas} arg0
- */
-setTextureAtlas : function (
-textureatlas 
-)
-{
-},
-
-/**
- * @method rebuildIndexInOrder
- * @param {cc.Sprite} arg0
- * @param {long} arg1
- * @return {long}
- */
-rebuildIndexInOrder : function (
-sprite, 
-long 
-)
-{
-    return 0;
-},
-
-/**
- * @method increaseAtlasCapacity
- */
-increaseAtlasCapacity : function (
-)
-{
-},
-
-/**
- * @method getTextureAtlas
- * @return {cc.TextureAtlas}
- */
-getTextureAtlas : function (
-)
-{
-    return cc.TextureAtlas;
-},
-
-/**
- * @method insertQuadFromSprite
- * @param {cc.Sprite} arg0
- * @param {long} arg1
- */
-insertQuadFromSprite : function (
-sprite, 
-long 
-)
-{
-},
-
-/**
- * @method init
-* @param {String} str
-* @param {long} long
-* @return {bool|bool}
-*/
-init : function(
-str,
-long 
-)
-{
-    return false;
-},
-
-/**
- * @method setTexture
- * @param {cc.Texture2D} arg0
- */
-setTexture : function (
-texture2d 
 )
 {
 },
@@ -9213,15 +9079,13 @@ getTexture : function (
 },
 
 /**
- * @method highestAtlasIndexInChild
- * @param {cc.Sprite} arg0
- * @return {long}
+ * @method setTexture
+ * @param {cc.Texture2D} arg0
  */
-highestAtlasIndexInChild : function (
-sprite 
+setTexture : function (
+texture2d 
 )
 {
-    return 0;
 },
 
 /**
@@ -9244,6 +9108,152 @@ removeSpriteFromAtlas : function (
 sprite 
 )
 {
+},
+
+/**
+ * @method addSpriteWithoutQuad
+ * @param {cc.Sprite} arg0
+ * @param {int} arg1
+ * @param {int} arg2
+ * @return {cc.SpriteBatchNode}
+ */
+addSpriteWithoutQuad : function (
+sprite, 
+int, 
+int 
+)
+{
+    return cc.SpriteBatchNode;
+},
+
+/**
+ * @method atlasIndexForChild
+ * @param {cc.Sprite} arg0
+ * @param {int} arg1
+ * @return {long}
+ */
+atlasIndexForChild : function (
+sprite, 
+int 
+)
+{
+    return 0;
+},
+
+/**
+ * @method increaseAtlasCapacity
+ */
+increaseAtlasCapacity : function (
+)
+{
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method lowestAtlasIndexInChild
+ * @param {cc.Sprite} arg0
+ * @return {long}
+ */
+lowestAtlasIndexInChild : function (
+sprite 
+)
+{
+    return 0;
+},
+
+/**
+ * @method initWithTexture
+ * @param {cc.Texture2D} arg0
+ * @param {long} arg1
+ * @return {bool}
+ */
+initWithTexture : function (
+texture2d, 
+long 
+)
+{
+    return false;
+},
+
+/**
+ * @method setTextureAtlas
+ * @param {cc.TextureAtlas} arg0
+ */
+setTextureAtlas : function (
+textureatlas 
+)
+{
+},
+
+/**
+ * @method insertQuadFromSprite
+ * @param {cc.Sprite} arg0
+ * @param {long} arg1
+ */
+insertQuadFromSprite : function (
+sprite, 
+long 
+)
+{
+},
+
+/**
+ * @method initWithFile
+ * @param {String} arg0
+ * @param {long} arg1
+ * @return {bool}
+ */
+initWithFile : function (
+str, 
+long 
+)
+{
+    return false;
+},
+
+/**
+ * @method rebuildIndexInOrder
+ * @param {cc.Sprite} arg0
+ * @param {long} arg1
+ * @return {long}
+ */
+rebuildIndexInOrder : function (
+sprite, 
+long 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTextureAtlas
+ * @return {cc.TextureAtlas}
+ */
+getTextureAtlas : function (
+)
+{
+    return cc.TextureAtlas;
+},
+
+/**
+ * @method highestAtlasIndexInChild
+ * @param {cc.Sprite} arg0
+ * @return {long}
+ */
+highestAtlasIndexInChild : function (
+sprite 
+)
+{
+    return 0;
 },
 
 /**
@@ -10001,11 +10011,21 @@ float
 },
 
 /**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
  * @method initWithColor
 * @param {Color4BObject|Color4BObject} color4b
 * @param {float} float
 * @param {float} float
-* @return {bool|bool|bool}
+* @return {bool|bool}
 */
 initWithColor : function(
 color4b,
@@ -10139,16 +10159,10 @@ getVector : function (
 },
 
 /**
- * @method initWithColor
-* @param {Color4BObject|Color4BObject} color4b
-* @param {Color4BObject|Color4BObject} color4b
-* @param {PointObject} point
-* @return {bool|bool|bool}
-*/
-initWithColor : function(
-color4b,
-color4b,
-point 
+ * @method init
+ * @return {bool}
+ */
+init : function (
 )
 {
     return false;
@@ -10162,6 +10176,22 @@ setEndColor : function (
 color3b 
 )
 {
+},
+
+/**
+ * @method initWithColor
+* @param {Color4BObject|Color4BObject} color4b
+* @param {Color4BObject|Color4BObject} color4b
+* @param {PointObject} point
+* @return {bool|bool}
+*/
+initWithColor : function(
+color4b,
+color4b,
+point 
+)
+{
+    return false;
 },
 
 /**
