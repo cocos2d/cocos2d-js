@@ -1183,10 +1183,10 @@ bonedata
 
 /**
  * @method init
-* @param {String} str
-* @return {bool|bool}
-*/
-init : function(
+ * @param {String} arg0
+ * @return {bool}
+ */
+init : function (
 str 
 )
 {
@@ -1939,7 +1939,7 @@ getName : function (
  * @method init
 * @param {String|String} str
 * @param {ccs.Bone} bone
-* @return {bool|bool|bool}
+* @return {bool|bool}
 */
 init : function(
 str,
@@ -2090,18 +2090,6 @@ getNodeToWorldTransformAR : function (
 },
 
 /**
- * @method initWithFile
- * @param {String} arg0
- * @return {bool}
- */
-initWithFile : function (
-str 
-)
-{
-    return false;
-},
-
-/**
  * @method getDisplayName
  * @return {String}
  */
@@ -2117,18 +2105,6 @@ getDisplayName : function (
 updateArmatureTransform : function (
 )
 {
-},
-
-/**
- * @method initWithSpriteFrameName
- * @param {String} arg0
- * @return {bool}
- */
-initWithSpriteFrameName : function (
-str 
-)
-{
-    return false;
 },
 
 /**
@@ -2819,13 +2795,25 @@ ccs.SceneReader = {
 /**
  * @method createNodeWithSceneFile
  * @param {String} arg0
+ * @param {ccs.SceneReader::AttachComponentType} arg1
  * @return {cc.Node}
  */
 createNodeWithSceneFile : function (
-str 
+str, 
+attachcomponenttype 
 )
 {
     return cc.Node;
+},
+
+/**
+ * @method getAttachComponentType
+ * @return {ccs.SceneReader::AttachComponentType}
+ */
+getAttachComponentType : function (
+)
+{
+    return 0;
 },
 
 /**

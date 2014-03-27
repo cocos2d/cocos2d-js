@@ -83,9 +83,7 @@ var TestController = cc.LayerGradient.extend({
     isMouseDown:false,
 
     ctor:function() {
-        this._super();
-        // this.init( cc.color(0,0,0,255), cc.color(98,99,117,255), cc.p(-1,-1));
-        this.init( cc.color(0,0,0,255), cc.color(0x46,0x82,0xB4,255));
+        this._super(cc.color(0,0,0,255), cc.color(0x46,0x82,0xB4,255));
 
         // globals
         director = cc.director;

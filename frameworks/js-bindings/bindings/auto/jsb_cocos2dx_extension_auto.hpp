@@ -58,6 +58,7 @@ bool js_cocos2dx_extension_Control_setHighlighted(JSContext *cx, uint32_t argc, 
 bool js_cocos2dx_extension_Control_getTouchLocation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_Control_isHighlighted(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_Control_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Control_Control(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_extension_ControlButton_class;
 extern JSObject *jsb_cocos2d_extension_ControlButton_prototype;
@@ -75,6 +76,7 @@ bool js_cocos2dx_extension_ControlButton_setZoomOnTouchDown(JSContext *cx, uint3
 bool js_cocos2dx_extension_ControlButton_setTitleForState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_setLabelAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_getLabelAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ControlButton_initWithBackgroundSprite(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_getTitleTTFSizeForState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_setTitleTTFForState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_setTitleTTFSizeForState(JSContext *cx, uint32_t argc, jsval *vp);
@@ -82,9 +84,11 @@ bool js_cocos2dx_extension_ControlButton_setTitleLabel(JSContext *cx, uint32_t a
 bool js_cocos2dx_extension_ControlButton_setPreferredSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_getCurrentTitleColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ControlButton_setBackgroundSprite(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_getBackgroundSpriteForState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_getHorizontalOrigin(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_needsLayout(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ControlButton_initWithTitleAndFontNameAndFontSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_getCurrentTitle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_getScaleRatio(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_getTitleTTFForState(JSContext *cx, uint32_t argc, jsval *vp);
@@ -95,7 +99,7 @@ bool js_cocos2dx_extension_ControlButton_doesAdjustBackgroundImage(JSContext *cx
 bool js_cocos2dx_extension_ControlButton_setBackgroundSpriteFrameForState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_setBackgroundSpriteForState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_setScaleRatio(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_ControlButton_setBackgroundSprite(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ControlButton_initWithLabelAndBackgroundSprite(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_getTitleLabel(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_getPreferredSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_getVerticalMargin(JSContext *cx, uint32_t argc, jsval *vp);
@@ -106,6 +110,7 @@ bool js_cocos2dx_extension_ControlButton_getTitleBMFontForState(JSContext *cx, u
 bool js_cocos2dx_extension_ControlButton_getZoomOnTouchDown(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_getTitleForState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ControlButton_ControlButton(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_extension_ControlHuePicker_class;
 extern JSObject *jsb_cocos2d_extension_ControlHuePicker_prototype;
@@ -160,7 +165,6 @@ bool js_cocos2dx_extension_ControlColourPicker_setColor(JSContext *cx, uint32_t 
 bool js_cocos2dx_extension_ControlColourPicker_hueSliderValueChanged(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlColourPicker_getcolourPicker(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlColourPicker_setBackground(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_ControlColourPicker_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlColourPicker_setcolourPicker(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlColourPicker_colourSliderValueChanged(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlColourPicker_setHuePicker(JSContext *cx, uint32_t argc, jsval *vp);
@@ -397,6 +401,5 @@ bool js_cocos2dx_extension_AssetsManager_getVersion(JSContext *cx, uint32_t argc
 bool js_cocos2dx_extension_AssetsManager_getVersionFileUrl(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManager_deleteVersion(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManager_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_AssetsManager_AssetsManager(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 
