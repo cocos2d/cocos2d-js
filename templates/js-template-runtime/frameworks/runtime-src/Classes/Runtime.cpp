@@ -233,19 +233,19 @@ vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const 
 	return _lfileList;
 }
 
-string getRuntimeVersion()
+const char* getRuntimeVersion()
 {
     return "0.0.1";
 }
 
-void startScript()
+bool startScript()
 {
 	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->runScript("main.js");
+	return ScriptingCore::getInstance()->runScript("main.js");
 }
 
-void reloadScript(const string& file)
+bool reloadScript(const string& file)
 {
 	string modulefile = file;
 	if (modulefile.empty())
@@ -259,9 +259,7 @@ void reloadScript(const string& file)
     
     auto core = ScriptingCore::getInstance();
     core->reset();
-    core->runScript(modulefile.c_str());
-    
-
+    return core->runScript(modulefile.c_str());
 }
 
 
@@ -762,11 +760,26 @@ public:
 			dArgParse.Parse<0>(args.c_str());
 			if (dArgParse.HasMember("cmd"))
 			{
-                string strcmd =dArgParse["cmd"].GetString();
+                string strcmd = dArgParse["cmd"].GetString();
+                
+                rapidjson::Document dReplyParse;
+				dReplyParse.SetObject();
+				dReplyParse.AddMember("cmd",strcmd.c_str(),dReplyParse.GetAllocator());
+				//dReplyParse.AddMember("cmd",dArgParse["cmd"]);
+                if (dArgParse.HasMember("seq")) {
+					dReplyParse.AddMember("seq",dArgParse["seq"],dReplyParse.GetAllocator());
+                }
+                
 				if (strcmp(strcmd.c_str(),"start-logic")==0)
 				{
-					startScript();
-
+					if (startScript())
+                    {
+						dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                    }else
+                    {
+                        dReplyParse.AddMember("code",1,dReplyParse.GetAllocator());
+                    }
+                    
 				}else if(strcmp(strcmd.c_str(),"precompile")==0)
 				{
 					vector<std::string> fileInfoList = searchFileList(g_resourcePath,"*.js","runtime|frameworks|");
@@ -774,44 +787,70 @@ public:
 					{
 						ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
 					}
+					dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
 				}else if(strcmp(strcmd.c_str(),"reload")==0)
 				{
 					if (dArgParse.HasMember("modulefiles"))
 					{
+                        rapidjson::Value bodyvalue(rapidjson::kObjectType);
 						const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
 						for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
 						{
-							reloadScript(objectfiles[i].GetString());
+							if (!reloadScript(objectfiles[i].GetString())) {
+								bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
+                            }
 						}
+						dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
 					}
+					dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
 				}else if(strcmp(strcmd.c_str(),"getversion")==0)
 				{
-					dArgParse["version"] = getRuntimeVersion().c_str();
-
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+					bodyvalue.AddMember("version",getRuntimeVersion(),dReplyParse.GetAllocator());
+					dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
 				}else if(strcmp(strcmd.c_str(),"getfileinfo")==0)
 				{
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
 					for (auto it=g_filecfgjson.MemberonBegin();it!=g_filecfgjson.MemberonEnd();++it)
 					{
-						dArgParse[it->name.GetString()]=it->value;
+						bodyvalue.AddMember(it->name.GetString(),it->value,dReplyParse.GetAllocator());
 					}
-
+					dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                    
 				}else if(strcmp(strcmd.c_str(),"getIP")==0)
 				{
-					dArgParse["IP"] = getIPAddress().c_str();
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+					rapidjson::Value IPValue(rapidjson::kStringType);
+					IPValue.SetString(getIPAddress().c_str(),dReplyParse.GetAllocator());
+					bodyvalue.AddMember("IP",IPValue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
 
 				}else if(strcmp(strcmd.c_str(),"remove")==0)
 				{
 					if (dArgParse.HasMember("files"))
 					{
+                        rapidjson::Value bodyvalue(rapidjson::kObjectType);
 						const rapidjson::Value& objectfiles = dArgParse["files"];
 						for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
 						{
 							string filename(g_resourcePath);
 							filename.append("/");
 							filename.append(objectfiles[i].GetString());
-							remove(filename.c_str());
+                            if (FileUtils::getInstance()->isFileExist(filename)) {
+                                if(remove(filename.c_str())!=0)
+									bodyvalue.AddMember(objectfiles[i].GetString(),2,dReplyParse.GetAllocator());
+                            }else
+                            {
+								bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
+                            }
+							
 						}
+						dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
 					}
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
 
 				}else if(strcmp(strcmd.c_str(),"shutdownapp")==0)
 				{
@@ -823,19 +862,20 @@ public:
 #endif	
 				}
 				
-				char replymsg[1024]={0};
                 rapidjson::StringBuffer buffer;
                 rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
-                dArgParse.Accept(writer);
+                dReplyParse.Accept(writer);
                 const char* str = buffer.GetString();
-				sprintf(replymsg,"%d:%s",strlen(str),str);
-				send(fd,replymsg,strlen(replymsg),0);
+                char msgSize[64]={0};
+				sprintf(msgSize,"%d:",strlen(str));
+                string replymsg(msgSize);
+                replymsg.append(str);
+				send(fd,replymsg.c_str(),replymsg.size(),0);
 			}
 		});
 	}
 private:
     FileServer* _fileserver;
-    string _writepath;
 };
 
 void startRuntime()
@@ -847,7 +887,11 @@ void startRuntime()
 	{
 		extern std::string getCurAppPath();
 		string resourcePath = getCurAppPath();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 		resourcePath.append("/../../");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        resourcePath.append("/../../../");
+#endif
 		resourcePath =replaceAll(resourcePath,"\\","/");
 		g_resourcePath = resourcePath;
 	}
