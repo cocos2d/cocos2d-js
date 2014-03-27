@@ -227,7 +227,7 @@ var UIComponentTest = SceneEditorTestLayer.extend({
     },
     touchEvent: function (sender, type) {
         switch (type) {
-            case ccs.TOUCH_EVENT_TYPE_BAGAN:
+            case ccui.Widget.TOUCH_BEGAN:
                 var blowFish = this._node.getChildByTag(10010).getComponent("CCArmature").getNode();
                 blowFish.runAction(cc.MoveBy.create(10, cc.p(-1000, 0)));
 
