@@ -2795,13 +2795,25 @@ ccs.SceneReader = {
 /**
  * @method createNodeWithSceneFile
  * @param {String} arg0
+ * @param {ccs.SceneReader::AttachComponentType} arg1
  * @return {cc.Node}
  */
 createNodeWithSceneFile : function (
-str 
+str, 
+attachcomponenttype 
 )
 {
     return cc.Node;
+},
+
+/**
+ * @method getAttachComponentType
+ * @return {ccs.SceneReader::AttachComponentType}
+ */
+getAttachComponentType : function (
+)
+{
+    return 0;
 },
 
 /**

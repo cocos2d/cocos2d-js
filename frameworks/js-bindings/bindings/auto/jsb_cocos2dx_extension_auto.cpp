@@ -5060,11 +5060,11 @@ bool js_cocos2dx_extension_ControlStepper_getMinusLabel(JSContext *cx, uint32_t 
 	cocos2d::extension::ControlStepper* cobj = (cocos2d::extension::ControlStepper *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlStepper_getMinusLabel : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::LabelTTF* ret = cobj->getMinusLabel();
+		cocos2d::Label* ret = cobj->getMinusLabel();
 		jsval jsret = JSVAL_NULL;
 		do {
 			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::LabelTTF>(cx, (cocos2d::LabelTTF*)ret);
+				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Label>(cx, (cocos2d::Label*)ret);
 				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
 			} else {
 				jsret = JSVAL_NULL;
@@ -5187,11 +5187,11 @@ bool js_cocos2dx_extension_ControlStepper_getPlusLabel(JSContext *cx, uint32_t a
 	cocos2d::extension::ControlStepper* cobj = (cocos2d::extension::ControlStepper *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlStepper_getPlusLabel : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::LabelTTF* ret = cobj->getPlusLabel();
+		cocos2d::Label* ret = cobj->getPlusLabel();
 		jsval jsret = JSVAL_NULL;
 		do {
 			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::LabelTTF>(cx, (cocos2d::LabelTTF*)ret);
+				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Label>(cx, (cocos2d::Label*)ret);
 				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
 			} else {
 				jsret = JSVAL_NULL;
@@ -5299,13 +5299,13 @@ bool js_cocos2dx_extension_ControlStepper_setMinusLabel(JSContext *cx, uint32_t 
 	cocos2d::extension::ControlStepper* cobj = (cocos2d::extension::ControlStepper *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlStepper_setMinusLabel : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::LabelTTF* arg0;
+		cocos2d::Label* arg0;
 		do {
 			if (!argv[0].isObject()) { ok = false; break; }
 			js_proxy_t *jsProxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
 			jsProxy = jsb_get_js_proxy(tmpObj);
-			arg0 = (cocos2d::LabelTTF*)(jsProxy ? jsProxy->ptr : NULL);
+			arg0 = (cocos2d::Label*)(jsProxy ? jsProxy->ptr : NULL);
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlStepper_setMinusLabel : Error processing arguments");
@@ -5476,13 +5476,13 @@ bool js_cocos2dx_extension_ControlStepper_setPlusLabel(JSContext *cx, uint32_t a
 	cocos2d::extension::ControlStepper* cobj = (cocos2d::extension::ControlStepper *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlStepper_setPlusLabel : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::LabelTTF* arg0;
+		cocos2d::Label* arg0;
 		do {
 			if (!argv[0].isObject()) { ok = false; break; }
 			js_proxy_t *jsProxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
 			jsProxy = jsb_get_js_proxy(tmpObj);
-			arg0 = (cocos2d::LabelTTF*)(jsProxy ? jsProxy->ptr : NULL);
+			arg0 = (cocos2d::Label*)(jsProxy ? jsProxy->ptr : NULL);
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlStepper_setPlusLabel : Error processing arguments");
@@ -5776,23 +5776,23 @@ bool js_cocos2dx_extension_ControlSwitch_initWithMaskSprite(JSContext *cx, uint3
 				JSB_PRECONDITION2( arg3, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
-			cocos2d::LabelTTF* arg4;
+			cocos2d::Label* arg4;
 			do {
 				if (!argv[4].isObject()) { ok = false; break; }
 				js_proxy_t *jsProxy;
 				JSObject *tmpObj = JSVAL_TO_OBJECT(argv[4]);
 				jsProxy = jsb_get_js_proxy(tmpObj);
-				arg4 = (cocos2d::LabelTTF*)(jsProxy ? jsProxy->ptr : NULL);
+				arg4 = (cocos2d::Label*)(jsProxy ? jsProxy->ptr : NULL);
 				JSB_PRECONDITION2( arg4, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
-			cocos2d::LabelTTF* arg5;
+			cocos2d::Label* arg5;
 			do {
 				if (!argv[5].isObject()) { ok = false; break; }
 				js_proxy_t *jsProxy;
 				JSObject *tmpObj = JSVAL_TO_OBJECT(argv[5]);
 				jsProxy = jsb_get_js_proxy(tmpObj);
-				arg5 = (cocos2d::LabelTTF*)(jsProxy ? jsProxy->ptr : NULL);
+				arg5 = (cocos2d::Label*)(jsProxy ? jsProxy->ptr : NULL);
 				JSB_PRECONDITION2( arg5, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
@@ -6007,23 +6007,23 @@ bool js_cocos2dx_extension_ControlSwitch_create(JSContext *cx, uint32_t argc, js
 				JSB_PRECONDITION2( arg3, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
-			cocos2d::LabelTTF* arg4;
+			cocos2d::Label* arg4;
 			do {
 				if (!argv[4].isObject()) { ok = false; break; }
 				js_proxy_t *jsProxy;
 				JSObject *tmpObj = JSVAL_TO_OBJECT(argv[4]);
 				jsProxy = jsb_get_js_proxy(tmpObj);
-				arg4 = (cocos2d::LabelTTF*)(jsProxy ? jsProxy->ptr : NULL);
+				arg4 = (cocos2d::Label*)(jsProxy ? jsProxy->ptr : NULL);
 				JSB_PRECONDITION2( arg4, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
-			cocos2d::LabelTTF* arg5;
+			cocos2d::Label* arg5;
 			do {
 				if (!argv[5].isObject()) { ok = false; break; }
 				js_proxy_t *jsProxy;
 				JSObject *tmpObj = JSVAL_TO_OBJECT(argv[5]);
 				jsProxy = jsb_get_js_proxy(tmpObj);
-				arg5 = (cocos2d::LabelTTF*)(jsProxy ? jsProxy->ptr : NULL);
+				arg5 = (cocos2d::Label*)(jsProxy ? jsProxy->ptr : NULL);
 				JSB_PRECONDITION2( arg5, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
@@ -8427,32 +8427,6 @@ bool js_cocos2dx_extension_AssetsManager_create(JSContext *cx, uint32_t argc, js
 	return false;
 }
 
-bool js_cocos2dx_extension_AssetsManager_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-    cocos2d::extension::AssetsManager* cobj = new cocos2d::extension::AssetsManager();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::extension::AssetsManager> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::extension::AssetsManager");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
-    return true;
-}
-
 
 extern JSObject *jsb_cocos2d_Node_prototype;
 
@@ -8503,7 +8477,7 @@ void js_register_cocos2dx_extension_AssetsManager(JSContext *cx, JSObject *globa
 		cx, global,
 		jsb_cocos2d_Node_prototype,
 		jsb_cocos2d_extension_AssetsManager_class,
-		js_cocos2dx_extension_AssetsManager_constructor, 0, // constructor
+		empty_constructor, 0,
 		properties,
 		funcs,
 		NULL, // no static properties

@@ -401,6 +401,5 @@ bool js_cocos2dx_extension_AssetsManager_getVersion(JSContext *cx, uint32_t argc
 bool js_cocos2dx_extension_AssetsManager_getVersionFileUrl(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManager_deleteVersion(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManager_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_AssetsManager_AssetsManager(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 

@@ -9301,6 +9301,16 @@ SpriteBatchNode : function (
 cc.Label = {
 
 /**
+ * @method isClipMarginEnabled
+ * @return {bool}
+ */
+isClipMarginEnabled : function (
+)
+{
+    return false;
+},
+
+/**
  * @method enableShadow
  */
 enableShadow : function (
@@ -9406,6 +9416,16 @@ getHorizontalAlignment : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setClipMarginEnabled
+ * @param {bool} arg0
+ */
+setClipMarginEnabled : function (
+bool 
+)
+{
 },
 
 /**
@@ -10238,6 +10258,15 @@ point
 )
 {
     return cc.LayerGradient;
+},
+
+/**
+ * @method LayerGradient
+ * @constructor
+ */
+LayerGradient : function (
+)
+{
 },
 
 };
@@ -14236,13 +14265,13 @@ getEndColorVar : function (
 },
 
 /**
- * @method getRotationIsDir
- * @return {bool}
+ * @method getEndColor
+ * @return {Color4FObject}
  */
-getRotationIsDir : function (
+getEndColor : function (
 )
 {
-    return false;
+    return cc.Color4F;
 },
 
 /**
@@ -14266,13 +14295,13 @@ getEmissionRate : function (
 },
 
 /**
- * @method getEndColor
- * @return {Color4FObject}
+ * @method getRotationIsDir
+ * @return {bool}
  */
-getEndColor : function (
+getRotationIsDir : function (
 )
 {
-    return cc.Color4F;
+    return false;
 },
 
 /**
@@ -18031,6 +18060,119 @@ getInstance : function (
 )
 {
     return cc.SimpleAudioEngine;
+},
+
+};
+
+/**
+ * @class ProtectedNode
+ */
+cc.ProtectedNode = {
+
+/**
+ * @method addProtectedChild
+* @param {cc.Node|cc.Node|cc.Node} node
+* @param {int|int} int
+* @param {int} int
+*/
+addProtectedChild : function(
+node,
+int,
+int 
+)
+{
+},
+
+/**
+ * @method disableCascadeColor
+ */
+disableCascadeColor : function (
+)
+{
+},
+
+/**
+ * @method removeProtectedChildByTag
+ * @param {int} arg0
+ * @param {bool} arg1
+ */
+removeProtectedChildByTag : function (
+int, 
+bool 
+)
+{
+},
+
+/**
+ * @method reorderProtectedChild
+ * @param {cc.Node} arg0
+ * @param {int} arg1
+ */
+reorderProtectedChild : function (
+node, 
+int 
+)
+{
+},
+
+/**
+ * @method removeAllProtectedChildrenWithCleanup
+ * @param {bool} arg0
+ */
+removeAllProtectedChildrenWithCleanup : function (
+bool 
+)
+{
+},
+
+/**
+ * @method sortAllProtectedChildren
+ */
+sortAllProtectedChildren : function (
+)
+{
+},
+
+/**
+ * @method getProtectedChildByTag
+ * @param {int} arg0
+ * @return {cc.Node}
+ */
+getProtectedChildByTag : function (
+int 
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method removeProtectedChild
+ * @param {cc.Node} arg0
+ * @param {bool} arg1
+ */
+removeProtectedChild : function (
+node, 
+bool 
+)
+{
+},
+
+/**
+ * @method removeAllProtectedChildren
+ */
+removeAllProtectedChildren : function (
+)
+{
+},
+
+/**
+ * @method create
+ * @return {cc.ProtectedNode}
+ */
+create : function (
+)
+{
+    return cc.ProtectedNode;
 },
 
 };

@@ -1866,12 +1866,12 @@ sprite
 
 /**
  * @method getMinusLabel
- * @return {cc.LabelTTF}
+ * @return {cc.Label}
  */
 getMinusLabel : function (
 )
 {
-    return cc.LabelTTF;
+    return cc.Label;
 },
 
 /**
@@ -1928,12 +1928,12 @@ bool
 
 /**
  * @method getPlusLabel
- * @return {cc.LabelTTF}
+ * @return {cc.Label}
  */
 getPlusLabel : function (
 )
 {
-    return cc.LabelTTF;
+    return cc.Label;
 },
 
 /**
@@ -1976,10 +1976,10 @@ sprite
 
 /**
  * @method setMinusLabel
- * @param {cc.LabelTTF} arg0
+ * @param {cc.Label} arg0
  */
 setMinusLabel : function (
-labelttf 
+label 
 )
 {
 },
@@ -2058,10 +2058,10 @@ getValue : function (
 
 /**
  * @method setPlusLabel
- * @param {cc.LabelTTF} arg0
+ * @param {cc.Label} arg0
  */
 setPlusLabel : function (
-labelttf 
+label 
 )
 {
 },
@@ -2134,8 +2134,8 @@ isOn : function (
 * @param {cc.Sprite|cc.Sprite} sprite
 * @param {cc.Sprite|cc.Sprite} sprite
 * @param {cc.Sprite|cc.Sprite} sprite
-* @param {cc.LabelTTF} labelttf
-* @param {cc.LabelTTF} labelttf
+* @param {cc.Label} label
+* @param {cc.Label} label
 * @return {bool|bool}
 */
 initWithMaskSprite : function(
@@ -2143,8 +2143,8 @@ sprite,
 sprite,
 sprite,
 sprite,
-labelttf,
-labelttf 
+label,
+label 
 )
 {
     return false;
@@ -2178,8 +2178,8 @@ touch
 * @param {cc.Sprite|cc.Sprite} sprite
 * @param {cc.Sprite|cc.Sprite} sprite
 * @param {cc.Sprite|cc.Sprite} sprite
-* @param {cc.LabelTTF} labelttf
-* @param {cc.LabelTTF} labelttf
+* @param {cc.Label} label
+* @param {cc.Label} label
 * @return {cc.ControlSwitch|cc.ControlSwitch}
 */
 create : function(
@@ -2187,8 +2187,8 @@ sprite,
 sprite,
 sprite,
 sprite,
-labelttf,
-labelttf 
+label,
+label 
 )
 {
     return cc.ControlSwitch;
@@ -3094,15 +3094,6 @@ func
 )
 {
     return cc.AssetsManager;
-},
-
-/**
- * @method AssetsManager
- * @constructor
- */
-AssetsManager : function (
-)
-{
 },
 
 };
