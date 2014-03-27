@@ -547,13 +547,13 @@ cc.defineGetterSetter(cc.loader, "resPath", function(){
     return this._resPath;
 }, function(resPath){
     this._resPath = resPath || "";
-    cc.FileUtils.getInstance().setSearchPath(this._resPath);
+    cc.FileUtils.getInstance().addSearchPath(this._resPath);
 });
 cc.defineGetterSetter(cc.loader, "audioPath", function(){
     return this._audioPath;
 }, function(audioPath){
     this._audioPath = audioPath || "";
-    cc.FileUtils.getInstance().setSearchPath(this._audioPath);
+    cc.FileUtils.getInstance().addSearchPath(this._audioPath);
 });
 
 //+++++++++++++++++++++++++something about loader end+++++++++++++++++++++++++++++
