@@ -651,7 +651,7 @@ var WindowTimeFun = cc.Class.extend({
             Function(code)();
         }
         else if (typeof code == "function") {
-            code();
+            code.apply(null, this._args);
         }
     }
 });
@@ -664,6 +664,8 @@ var WindowTimeFun = cc.Class.extend({
  */
 var setTimeout = function (code, delay) {
     var target = new WindowTimeFun(code);
+    if (arguments.length > 2)
+        target._args = Array.prototype.slice.call(arguments, 2);
     cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, 0, 0, false);
     _windowTimeFunHash[target._intervalId] = target;
     return target._intervalId;
@@ -677,6 +679,8 @@ var setTimeout = function (code, delay) {
  */
 var setInterval = function (code, delay) {
     var target = new WindowTimeFun(code);
+    if (arguments.length > 2)
+        target._args = Array.prototype.slice.call(arguments, 2);
     cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, cc.REPEAT_FOREVER, 0, false);
     _windowTimeFunHash[target._intervalId] = target;
     return target._intervalId;
