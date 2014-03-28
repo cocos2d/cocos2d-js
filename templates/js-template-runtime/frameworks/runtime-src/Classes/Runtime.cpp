@@ -866,10 +866,11 @@ public:
                 rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
                 dReplyParse.Accept(writer);
                 const char* str = buffer.GetString();
-                char msgSize[64]={0};
-				sprintf(msgSize,"%d:",strlen(str));
+                char msgSize[64]={0x1,0};
+				sprintf(msgSize+1,"%d:",strlen(str));
                 string replymsg(msgSize);
                 replymsg.append(str);
+				printf("%d,%s",replymsg.size(),replymsg.c_str());
 				send(fd,replymsg.c_str(),replymsg.size(),0);
 			}
 		});
