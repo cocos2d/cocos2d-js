@@ -328,9 +328,10 @@ var MenuLayer4 = cc.Layer.extend({
     ctor:function () {
         this._super();
         this.init();
+	    cc.log("INITED");
     },
     init:function () {
-        this._super();
+        //this._super();
         cc.MenuItemFont.setFontName("American Typewriter");
         cc.MenuItemFont.setFontSize(18);
 
@@ -519,7 +520,7 @@ var MenuTestScene = TestScene.extend({
         var layer5 = new MenuBugsTest();
         var layer6 = new RemoveMenuItemWhenMove();
 
-        var layer = cc.LayerMultiplex.create(layer1, layer2, layer3, layer4, layer5,layer6);
+        var layer = cc.LayerMultiplex.create(layer1, layer2, layer3, layer4, layer5, layer6);
         this.addChild(layer, 0);
 
         director.runScene(this);

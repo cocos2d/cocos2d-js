@@ -442,6 +442,15 @@ create : function (
     return cc.Control;
 },
 
+/**
+ * @method Control
+ * @constructor
+ */
+Control : function (
+)
+{
+},
+
 };
 
 /**
@@ -544,6 +553,18 @@ getLabelAnchorPoint : function (
 },
 
 /**
+ * @method initWithBackgroundSprite
+ * @param {cc.Scale9Sprite} arg0
+ * @return {bool}
+ */
+initWithBackgroundSprite : function (
+scale9sprite 
+)
+{
+    return false;
+},
+
+/**
  * @method getTitleTTFSizeForState
  * @param {cc.Control::State} arg0
  * @return {float}
@@ -620,6 +641,16 @@ bool
 },
 
 /**
+ * @method setBackgroundSprite
+ * @param {cc.Scale9Sprite} arg0
+ */
+setBackgroundSprite : function (
+scale9sprite 
+)
+{
+},
+
+/**
  * @method getBackgroundSpriteForState
  * @param {cc.Control::State} arg0
  * @return {cc.Scale9Sprite}
@@ -647,6 +678,22 @@ getHorizontalOrigin : function (
 needsLayout : function (
 )
 {
+},
+
+/**
+ * @method initWithTitleAndFontNameAndFontSize
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {float} arg2
+ * @return {bool}
+ */
+initWithTitleAndFontNameAndFontSize : function (
+str, 
+str, 
+float 
+)
+{
+    return false;
 },
 
 /**
@@ -760,13 +807,17 @@ float
 },
 
 /**
- * @method setBackgroundSprite
- * @param {cc.Scale9Sprite} arg0
+ * @method initWithLabelAndBackgroundSprite
+ * @param {cc.Node} arg0
+ * @param {cc.Scale9Sprite} arg1
+ * @return {bool}
  */
-setBackgroundSprite : function (
+initWithLabelAndBackgroundSprite : function (
+node, 
 scale9sprite 
 )
 {
+    return false;
 },
 
 /**
@@ -883,6 +934,15 @@ float
 )
 {
     return cc.ControlButton;
+},
+
+/**
+ * @method ControlButton
+ * @constructor
+ */
+ControlButton : function (
+)
+{
 },
 
 };
@@ -1220,16 +1280,6 @@ setBackground : function (
 sprite 
 )
 {
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
 },
 
 /**
@@ -1816,12 +1866,12 @@ sprite
 
 /**
  * @method getMinusLabel
- * @return {cc.LabelTTF}
+ * @return {cc.Label}
  */
 getMinusLabel : function (
 )
 {
-    return cc.LabelTTF;
+    return cc.Label;
 },
 
 /**
@@ -1878,12 +1928,12 @@ bool
 
 /**
  * @method getPlusLabel
- * @return {cc.LabelTTF}
+ * @return {cc.Label}
  */
 getPlusLabel : function (
 )
 {
-    return cc.LabelTTF;
+    return cc.Label;
 },
 
 /**
@@ -1926,10 +1976,10 @@ sprite
 
 /**
  * @method setMinusLabel
- * @param {cc.LabelTTF} arg0
+ * @param {cc.Label} arg0
  */
 setMinusLabel : function (
-labelttf 
+label 
 )
 {
 },
@@ -2008,10 +2058,10 @@ getValue : function (
 
 /**
  * @method setPlusLabel
- * @param {cc.LabelTTF} arg0
+ * @param {cc.Label} arg0
  */
 setPlusLabel : function (
-labelttf 
+label 
 )
 {
 },
@@ -2084,8 +2134,8 @@ isOn : function (
 * @param {cc.Sprite|cc.Sprite} sprite
 * @param {cc.Sprite|cc.Sprite} sprite
 * @param {cc.Sprite|cc.Sprite} sprite
-* @param {cc.LabelTTF} labelttf
-* @param {cc.LabelTTF} labelttf
+* @param {cc.Label} label
+* @param {cc.Label} label
 * @return {bool|bool}
 */
 initWithMaskSprite : function(
@@ -2093,8 +2143,8 @@ sprite,
 sprite,
 sprite,
 sprite,
-labelttf,
-labelttf 
+label,
+label 
 )
 {
     return false;
@@ -2128,8 +2178,8 @@ touch
 * @param {cc.Sprite|cc.Sprite} sprite
 * @param {cc.Sprite|cc.Sprite} sprite
 * @param {cc.Sprite|cc.Sprite} sprite
-* @param {cc.LabelTTF} labelttf
-* @param {cc.LabelTTF} labelttf
+* @param {cc.Label} label
+* @param {cc.Label} label
 * @return {cc.ControlSwitch|cc.ControlSwitch}
 */
 create : function(
@@ -2137,8 +2187,8 @@ sprite,
 sprite,
 sprite,
 sprite,
-labelttf,
-labelttf 
+label,
+label 
 )
 {
     return cc.ControlSwitch;
@@ -3044,15 +3094,6 @@ func
 )
 {
     return cc.AssetsManager;
-},
-
-/**
- * @method AssetsManager
- * @constructor
- */
-AssetsManager : function (
-)
-{
 },
 
 };

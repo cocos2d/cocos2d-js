@@ -151,9 +151,7 @@ var CocosDenshionTest = cc.LayerGradient.extend({
     _beginPos:cc.p(0, 0),
     _testCount:0,
     ctor:function () {
-        this._super();
-
-        this.init(cc.color(0, 0, 0, 255), cc.color(148, 80, 120, 255));
+        this._super(cc.color(0, 0, 0, 255), cc.color(148, 80, 120, 255));
 
         this._itemMenu = cc.Menu.create();
         var winSize = director.getWinSize();

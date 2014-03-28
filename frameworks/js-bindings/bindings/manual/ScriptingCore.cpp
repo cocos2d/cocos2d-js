@@ -15,6 +15,7 @@
 #include "cocos2d.h"
 #include "local-storage/LocalStorage.h"
 #include "cocos2d_specifics.hpp"
+#include "jsb_cocos2dx_auto.hpp"
 #include "js_bindings_config.h"
 // for debug socket
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -892,6 +893,52 @@ int ScriptingCore::handleNodeEvent(void* data)
     return ret;
 }
 
+int ScriptingCore::handleComponentEvent(void* data)
+{
+    if (NULL == data)
+        return 0;
+    
+    BasicScriptData* basicScriptData = static_cast<BasicScriptData*>(data);
+    if (NULL == basicScriptData->nativeObject || NULL == basicScriptData->value)
+        return 0;
+    
+    Component* node = static_cast<Component*>(basicScriptData->nativeObject);
+    int action = *((int*)(basicScriptData->value));
+    
+    js_proxy_t * p = jsb_get_native_proxy(node);
+    if (!p) return 0;
+    
+    int ret = 0;
+    jsval retval;
+    jsval dataVal = INT_TO_JSVAL(1);
+    
+    if (action == kComponentOnEnter)
+    {
+        if (isFunctionOverridedInJS(p->obj, "onEnter", js_cocos2dx_Component_onEnter))
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
+        }
+        resumeSchedulesAndActions(p);
+    }
+    else if (action == kComponentOnExit)
+    {
+        if (isFunctionOverridedInJS(p->obj, "onExit", js_cocos2dx_Component_onExit))
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
+        }
+        pauseSchedulesAndActions(p);
+    }
+    else if (action == kComponentOnUpdate)
+    {
+        if (isFunctionOverridedInJS(p->obj, "update", js_cocos2dx_Component_update))
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "update", 1, &dataVal, &retval);
+        }
+    }
+    
+    return ret;
+}
+
 int ScriptingCore::handleMenuClickedEvent(void* data)
 {
     if (NULL == data)
@@ -1186,6 +1233,11 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
             {
                 TouchesScriptData* data = (TouchesScriptData*)evt->data;
                 return handleTouchesEvent(data->nativeObject, data->actionType, data->touches, data->event);
+            }
+            break;
+        case kComponentEvent:
+            {
+                return handleComponentEvent(evt->data);
             }
             break;
         default:
