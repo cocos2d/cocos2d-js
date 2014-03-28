@@ -1186,6 +1186,23 @@ bool js_cocos2dx_GLProgram_setUniformsForBuiltins(JSContext *cx, uint32_t argc, 
 	JS_ReportError(cx, "js_cocos2dx_GLProgram_setUniformsForBuiltins : wrong number of arguments");
 	return false;
 }
+bool js_cocos2dx_GLProgram_getMaterialProgramID(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::GLProgram* cobj = (cocos2d::GLProgram *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_getMaterialProgramID : Invalid Native Object");
+	if (argc == 0) {
+		const unsigned int ret = cobj->getMaterialProgramID();
+		jsval jsret = JSVAL_NULL;
+		jsret = uint32_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_GLProgram_getMaterialProgramID : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
 bool js_cocos2dx_GLProgram_setUniformLocationWith3i(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -1557,6 +1574,7 @@ void js_register_cocos2dx_GLProgram(JSContext *cx, JSObject *global) {
 		JS_FN("use", js_cocos2dx_GLProgram_use, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getVertexShaderLog", js_cocos2dx_GLProgram_getVertexShaderLog, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformsForBuiltins", js_cocos2dx_GLProgram_setUniformsForBuiltins, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getMaterialProgramID", js_cocos2dx_GLProgram_getMaterialProgramID, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformLocationWith3i", js_cocos2dx_GLProgram_setUniformLocationWith3i, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformLocationWith3iv", js_cocos2dx_GLProgram_setUniformLocationWith3iv, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("updateUniforms", js_cocos2dx_GLProgram_updateUniforms, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -2380,6 +2398,36 @@ bool js_cocos2dx_Texture2D_getMaxS(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_Texture2D_getMaxS : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
+bool js_cocos2dx_Texture2D_updateWithData(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::Texture2D* cobj = (cocos2d::Texture2D *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Texture2D_updateWithData : Invalid Native Object");
+	if (argc == 5) {
+		const void* arg0;
+		int arg1;
+		int arg2;
+		int arg3;
+		int arg4;
+		#pragma warning NO CONVERSION TO NATIVE FOR void*;
+		ok &= jsval_to_int32(cx, argv[1], (int32_t *)&arg1);
+		ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
+		ok &= jsval_to_int32(cx, argv[3], (int32_t *)&arg3);
+		ok &= jsval_to_int32(cx, argv[4], (int32_t *)&arg4);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Texture2D_updateWithData : Error processing arguments");
+		bool ret = cobj->updateWithData(arg0, arg1, arg2, arg3, arg4);
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_Texture2D_updateWithData : wrong number of arguments: %d, was expecting %d", argc, 5);
+	return false;
+}
 bool js_cocos2dx_Texture2D_hasPremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -2951,6 +2999,7 @@ void js_register_cocos2dx_Texture2D(JSContext *cx, JSObject *global) {
 		JS_FN("initWithImage", js_cocos2dx_Texture2D_initWithImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setShaderProgram", js_cocos2dx_Texture2D_setShaderProgram, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getMaxS", js_cocos2dx_Texture2D_getMaxS, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("updateWithData", js_cocos2dx_Texture2D_updateWithData, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("hasPremultipliedAlpha", js_cocos2dx_Texture2D_hasPremultipliedAlpha, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("initWithMipmaps", js_cocos2dx_Texture2D_initWithMipmaps, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getPixelsHigh", js_cocos2dx_Texture2D_getPixelsHigh, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -12144,6 +12193,22 @@ void js_cocos2d_TargetedAction_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (TargetedAction)", obj);
 }
 
+static bool js_cocos2d_TargetedAction_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::TargetedAction *nobj = new cocos2d::TargetedAction();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::TargetedAction");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_TargetedAction(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_TargetedAction_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_TargetedAction_class->name = "TargetedAction";
@@ -12166,6 +12231,7 @@ void js_register_cocos2dx_TargetedAction(JSContext *cx, JSObject *global) {
 		JS_FN("getForcedTarget", js_cocos2dx_TargetedAction_getForcedTarget, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("initWithTarget", js_cocos2dx_TargetedAction_initWithTarget, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setForcedTarget", js_cocos2dx_TargetedAction_setForcedTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_TargetedAction_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -12371,6 +12437,22 @@ void js_cocos2d_ActionCamera_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ActionCamera)", obj);
 }
 
+static bool js_cocos2d_ActionCamera_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::ActionCamera *nobj = new cocos2d::ActionCamera();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::ActionCamera");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_ActionCamera(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_ActionCamera_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_ActionCamera_class->name = "ActionCamera";
@@ -12396,6 +12478,7 @@ void js_register_cocos2dx_ActionCamera(JSContext *cx, JSObject *global) {
 		JS_FN("getCenter", js_cocos2dx_ActionCamera_getCenter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setCenter", js_cocos2dx_ActionCamera_setCenter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getUp", js_cocos2dx_ActionCamera_getUp, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_ActionCamera_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -12966,6 +13049,22 @@ void js_cocos2d_ActionManager_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ActionManager)", obj);
 }
 
+static bool js_cocos2d_ActionManager_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::ActionManager *nobj = new cocos2d::ActionManager();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::ActionManager");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_ActionManager(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_ActionManager_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_ActionManager_class->name = "ActionManager";
@@ -12997,6 +13096,7 @@ void js_register_cocos2dx_ActionManager(JSContext *cx, JSObject *global) {
 		JS_FN("removeAction", js_cocos2dx_ActionManager_removeAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("pauseTarget", js_cocos2dx_ActionManager_pauseTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("pauseAllRunningActions", js_cocos2dx_ActionManager_pauseAllRunningActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_ActionManager_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -13033,6 +13133,35 @@ void js_register_cocos2dx_ActionManager(JSContext *cx, JSObject *global) {
 JSClass  *jsb_cocos2d_ActionEase_class;
 JSObject *jsb_cocos2d_ActionEase_prototype;
 
+bool js_cocos2dx_ActionEase_initWithAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::ActionEase* cobj = (cocos2d::ActionEase *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionEase_initWithAction : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::ActionInterval* arg0;
+		do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ActionEase_initWithAction : Error processing arguments");
+		bool ret = cobj->initWithAction(arg0);
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_ActionEase_initWithAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
 bool js_cocos2dx_ActionEase_getInnerAction(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -13083,6 +13212,7 @@ void js_register_cocos2dx_ActionEase(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
+		JS_FN("initWithAction", js_cocos2dx_ActionEase_initWithAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getInnerAction", js_cocos2dx_ActionEase_getInnerAction, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
@@ -13140,6 +13270,37 @@ bool js_cocos2dx_EaseRateAction_setRate(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_EaseRateAction_setRate : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
+bool js_cocos2dx_EaseRateAction_initWithAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::EaseRateAction* cobj = (cocos2d::EaseRateAction *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EaseRateAction_initWithAction : Invalid Native Object");
+	if (argc == 2) {
+		cocos2d::ActionInterval* arg0;
+		double arg1;
+		do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
+		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EaseRateAction_initWithAction : Error processing arguments");
+		bool ret = cobj->initWithAction(arg0, arg1);
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_EaseRateAction_initWithAction : wrong number of arguments: %d, was expecting %d", argc, 2);
+	return false;
+}
 bool js_cocos2dx_EaseRateAction_getRate(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -13184,6 +13345,7 @@ void js_register_cocos2dx_EaseRateAction(JSContext *cx, JSObject *global) {
 
 	static JSFunctionSpec funcs[] = {
 		JS_FN("setRate", js_cocos2dx_EaseRateAction_setRate, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("initWithAction", js_cocos2dx_EaseRateAction_initWithAction, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getRate", js_cocos2dx_EaseRateAction_getRate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
@@ -13255,6 +13417,32 @@ bool js_cocos2dx_EaseIn_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_EaseIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseIn* cobj = new cocos2d::EaseIn();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_EaseRateAction_prototype;
 
@@ -13293,7 +13481,7 @@ void js_register_cocos2dx_EaseIn(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_EaseRateAction_prototype,
 		jsb_cocos2d_EaseIn_class,
-		dummy_constructor<cocos2d::EaseIn>, 0, // no constructor
+		js_cocos2dx_EaseIn_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -13354,6 +13542,32 @@ bool js_cocos2dx_EaseOut_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_EaseOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseOut* cobj = new cocos2d::EaseOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_EaseRateAction_prototype;
 
@@ -13392,7 +13606,7 @@ void js_register_cocos2dx_EaseOut(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_EaseRateAction_prototype,
 		jsb_cocos2d_EaseOut_class,
-		dummy_constructor<cocos2d::EaseOut>, 0, // no constructor
+		js_cocos2dx_EaseOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -13453,6 +13667,32 @@ bool js_cocos2dx_EaseInOut_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_EaseInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseInOut* cobj = new cocos2d::EaseInOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_EaseRateAction_prototype;
 
@@ -13491,7 +13731,7 @@ void js_register_cocos2dx_EaseInOut(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_EaseRateAction_prototype,
 		jsb_cocos2d_EaseInOut_class,
-		dummy_constructor<cocos2d::EaseInOut>, 0, // no constructor
+		js_cocos2dx_EaseInOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -13550,6 +13790,32 @@ bool js_cocos2dx_EaseExponentialIn_create(JSContext *cx, uint32_t argc, jsval *v
 	return false;
 }
 
+bool js_cocos2dx_EaseExponentialIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseExponentialIn* cobj = new cocos2d::EaseExponentialIn();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseExponentialIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseExponentialIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -13588,7 +13854,7 @@ void js_register_cocos2dx_EaseExponentialIn(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseExponentialIn_class,
-		dummy_constructor<cocos2d::EaseExponentialIn>, 0, // no constructor
+		js_cocos2dx_EaseExponentialIn_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -13647,6 +13913,32 @@ bool js_cocos2dx_EaseExponentialOut_create(JSContext *cx, uint32_t argc, jsval *
 	return false;
 }
 
+bool js_cocos2dx_EaseExponentialOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseExponentialOut* cobj = new cocos2d::EaseExponentialOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseExponentialOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseExponentialOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -13685,7 +13977,7 @@ void js_register_cocos2dx_EaseExponentialOut(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseExponentialOut_class,
-		dummy_constructor<cocos2d::EaseExponentialOut>, 0, // no constructor
+		js_cocos2dx_EaseExponentialOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -13744,6 +14036,32 @@ bool js_cocos2dx_EaseExponentialInOut_create(JSContext *cx, uint32_t argc, jsval
 	return false;
 }
 
+bool js_cocos2dx_EaseExponentialInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseExponentialInOut* cobj = new cocos2d::EaseExponentialInOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseExponentialInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseExponentialInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -13782,7 +14100,7 @@ void js_register_cocos2dx_EaseExponentialInOut(JSContext *cx, JSObject *global) 
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseExponentialInOut_class,
-		dummy_constructor<cocos2d::EaseExponentialInOut>, 0, // no constructor
+		js_cocos2dx_EaseExponentialInOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -13841,6 +14159,32 @@ bool js_cocos2dx_EaseSineIn_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_EaseSineIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseSineIn* cobj = new cocos2d::EaseSineIn();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseSineIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseSineIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -13879,7 +14223,7 @@ void js_register_cocos2dx_EaseSineIn(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseSineIn_class,
-		dummy_constructor<cocos2d::EaseSineIn>, 0, // no constructor
+		js_cocos2dx_EaseSineIn_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -13938,6 +14282,32 @@ bool js_cocos2dx_EaseSineOut_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_EaseSineOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseSineOut* cobj = new cocos2d::EaseSineOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseSineOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseSineOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -13976,7 +14346,7 @@ void js_register_cocos2dx_EaseSineOut(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseSineOut_class,
-		dummy_constructor<cocos2d::EaseSineOut>, 0, // no constructor
+		js_cocos2dx_EaseSineOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -14035,6 +14405,32 @@ bool js_cocos2dx_EaseSineInOut_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_EaseSineInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseSineInOut* cobj = new cocos2d::EaseSineInOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseSineInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseSineInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -14073,7 +14469,7 @@ void js_register_cocos2dx_EaseSineInOut(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseSineInOut_class,
-		dummy_constructor<cocos2d::EaseSineInOut>, 0, // no constructor
+		js_cocos2dx_EaseSineInOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -14120,6 +14516,54 @@ bool js_cocos2dx_EaseElastic_setPeriod(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_EaseElastic_setPeriod : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
+bool js_cocos2dx_EaseElastic_initWithAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::EaseElastic* cobj = (cocos2d::EaseElastic *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EaseElastic_initWithAction : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::ActionInterval* arg0;
+		do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EaseElastic_initWithAction : Error processing arguments");
+		bool ret = cobj->initWithAction(arg0);
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+	if (argc == 2) {
+		cocos2d::ActionInterval* arg0;
+		double arg1;
+		do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
+		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EaseElastic_initWithAction : Error processing arguments");
+		bool ret = cobj->initWithAction(arg0, arg1);
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_EaseElastic_initWithAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
 bool js_cocos2dx_EaseElastic_getPeriod(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -14164,6 +14608,7 @@ void js_register_cocos2dx_EaseElastic(JSContext *cx, JSObject *global) {
 
 	static JSFunctionSpec funcs[] = {
 		JS_FN("setPeriod", js_cocos2dx_EaseElastic_setPeriod, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("initWithAction", js_cocos2dx_EaseElastic_initWithAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getPeriod", js_cocos2dx_EaseElastic_getPeriod, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
@@ -14265,6 +14710,32 @@ bool js_cocos2dx_EaseElasticIn_create(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_EaseElasticIn_create : wrong number of arguments");
 	return false;
 }
+bool js_cocos2dx_EaseElasticIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseElasticIn* cobj = new cocos2d::EaseElasticIn();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseElasticIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseElasticIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_EaseElastic_prototype;
 
@@ -14303,7 +14774,7 @@ void js_register_cocos2dx_EaseElasticIn(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_EaseElastic_prototype,
 		jsb_cocos2d_EaseElasticIn_class,
-		dummy_constructor<cocos2d::EaseElasticIn>, 0, // no constructor
+		js_cocos2dx_EaseElasticIn_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -14394,6 +14865,32 @@ bool js_cocos2dx_EaseElasticOut_create(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_EaseElasticOut_create : wrong number of arguments");
 	return false;
 }
+bool js_cocos2dx_EaseElasticOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseElasticOut* cobj = new cocos2d::EaseElasticOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseElasticOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseElasticOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_EaseElastic_prototype;
 
@@ -14432,7 +14929,7 @@ void js_register_cocos2dx_EaseElasticOut(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_EaseElastic_prototype,
 		jsb_cocos2d_EaseElasticOut_class,
-		dummy_constructor<cocos2d::EaseElasticOut>, 0, // no constructor
+		js_cocos2dx_EaseElasticOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -14523,6 +15020,32 @@ bool js_cocos2dx_EaseElasticInOut_create(JSContext *cx, uint32_t argc, jsval *vp
 	JS_ReportError(cx, "js_cocos2dx_EaseElasticInOut_create : wrong number of arguments");
 	return false;
 }
+bool js_cocos2dx_EaseElasticInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseElasticInOut* cobj = new cocos2d::EaseElasticInOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseElasticInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseElasticInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_EaseElastic_prototype;
 
@@ -14561,7 +15084,7 @@ void js_register_cocos2dx_EaseElasticInOut(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_EaseElastic_prototype,
 		jsb_cocos2d_EaseElasticInOut_class,
-		dummy_constructor<cocos2d::EaseElasticInOut>, 0, // no constructor
+		js_cocos2dx_EaseElasticInOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -14682,6 +15205,32 @@ bool js_cocos2dx_EaseBounceIn_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_EaseBounceIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseBounceIn* cobj = new cocos2d::EaseBounceIn();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseBounceIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseBounceIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_EaseBounce_prototype;
 
@@ -14720,7 +15269,7 @@ void js_register_cocos2dx_EaseBounceIn(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_EaseBounce_prototype,
 		jsb_cocos2d_EaseBounceIn_class,
-		dummy_constructor<cocos2d::EaseBounceIn>, 0, // no constructor
+		js_cocos2dx_EaseBounceIn_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -14779,6 +15328,32 @@ bool js_cocos2dx_EaseBounceOut_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_EaseBounceOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseBounceOut* cobj = new cocos2d::EaseBounceOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseBounceOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseBounceOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_EaseBounce_prototype;
 
@@ -14817,7 +15392,7 @@ void js_register_cocos2dx_EaseBounceOut(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_EaseBounce_prototype,
 		jsb_cocos2d_EaseBounceOut_class,
-		dummy_constructor<cocos2d::EaseBounceOut>, 0, // no constructor
+		js_cocos2dx_EaseBounceOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -14876,6 +15451,32 @@ bool js_cocos2dx_EaseBounceInOut_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_EaseBounceInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseBounceInOut* cobj = new cocos2d::EaseBounceInOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseBounceInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseBounceInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_EaseBounce_prototype;
 
@@ -14914,7 +15515,7 @@ void js_register_cocos2dx_EaseBounceInOut(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_EaseBounce_prototype,
 		jsb_cocos2d_EaseBounceInOut_class,
-		dummy_constructor<cocos2d::EaseBounceInOut>, 0, // no constructor
+		js_cocos2dx_EaseBounceInOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -14973,6 +15574,32 @@ bool js_cocos2dx_EaseBackIn_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_EaseBackIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseBackIn* cobj = new cocos2d::EaseBackIn();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseBackIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseBackIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -15011,7 +15638,7 @@ void js_register_cocos2dx_EaseBackIn(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseBackIn_class,
-		dummy_constructor<cocos2d::EaseBackIn>, 0, // no constructor
+		js_cocos2dx_EaseBackIn_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -15070,6 +15697,32 @@ bool js_cocos2dx_EaseBackOut_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_EaseBackOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseBackOut* cobj = new cocos2d::EaseBackOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseBackOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseBackOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -15108,7 +15761,7 @@ void js_register_cocos2dx_EaseBackOut(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseBackOut_class,
-		dummy_constructor<cocos2d::EaseBackOut>, 0, // no constructor
+		js_cocos2dx_EaseBackOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -15167,6 +15820,32 @@ bool js_cocos2dx_EaseBackInOut_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_EaseBackInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseBackInOut* cobj = new cocos2d::EaseBackInOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseBackInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseBackInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -15205,7 +15884,7 @@ void js_register_cocos2dx_EaseBackInOut(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseBackInOut_class,
-		dummy_constructor<cocos2d::EaseBackInOut>, 0, // no constructor
+		js_cocos2dx_EaseBackInOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -15290,6 +15969,32 @@ bool js_cocos2dx_EaseBezierAction_create(JSContext *cx, uint32_t argc, jsval *vp
 	return false;
 }
 
+bool js_cocos2dx_EaseBezierAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseBezierAction* cobj = new cocos2d::EaseBezierAction();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseBezierAction> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseBezierAction");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -15297,6 +16002,22 @@ void js_cocos2d_EaseBezierAction_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseBezierAction)", obj);
 }
 
+static bool js_cocos2d_EaseBezierAction_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseBezierAction *nobj = new cocos2d::EaseBezierAction();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseBezierAction");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseBezierAction(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseBezierAction_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseBezierAction_class->name = "EaseBezierAction";
@@ -15317,6 +16038,7 @@ void js_register_cocos2dx_EaseBezierAction(JSContext *cx, JSObject *global) {
 
 	static JSFunctionSpec funcs[] = {
 		JS_FN("setBezierParamer", js_cocos2dx_EaseBezierAction_setBezierParamer, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_EaseBezierAction_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -15329,7 +16051,7 @@ void js_register_cocos2dx_EaseBezierAction(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseBezierAction_class,
-		dummy_constructor<cocos2d::EaseBezierAction>, 0, // no constructor
+		js_cocos2dx_EaseBezierAction_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -15388,6 +16110,32 @@ bool js_cocos2dx_EaseQuadraticActionIn_create(JSContext *cx, uint32_t argc, jsva
 	return false;
 }
 
+bool js_cocos2dx_EaseQuadraticActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseQuadraticActionIn* cobj = new cocos2d::EaseQuadraticActionIn();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseQuadraticActionIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuadraticActionIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -15395,6 +16143,22 @@ void js_cocos2d_EaseQuadraticActionIn_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseQuadraticActionIn)", obj);
 }
 
+static bool js_cocos2d_EaseQuadraticActionIn_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseQuadraticActionIn *nobj = new cocos2d::EaseQuadraticActionIn();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuadraticActionIn");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseQuadraticActionIn(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseQuadraticActionIn_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseQuadraticActionIn_class->name = "EaseQuadraticActionIn";
@@ -15414,6 +16178,7 @@ void js_register_cocos2dx_EaseQuadraticActionIn(JSContext *cx, JSObject *global)
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseQuadraticActionIn_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -15426,7 +16191,7 @@ void js_register_cocos2dx_EaseQuadraticActionIn(JSContext *cx, JSObject *global)
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseQuadraticActionIn_class,
-		dummy_constructor<cocos2d::EaseQuadraticActionIn>, 0, // no constructor
+		js_cocos2dx_EaseQuadraticActionIn_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -15485,6 +16250,32 @@ bool js_cocos2dx_EaseQuadraticActionOut_create(JSContext *cx, uint32_t argc, jsv
 	return false;
 }
 
+bool js_cocos2dx_EaseQuadraticActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseQuadraticActionOut* cobj = new cocos2d::EaseQuadraticActionOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseQuadraticActionOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuadraticActionOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -15492,6 +16283,22 @@ void js_cocos2d_EaseQuadraticActionOut_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseQuadraticActionOut)", obj);
 }
 
+static bool js_cocos2d_EaseQuadraticActionOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseQuadraticActionOut *nobj = new cocos2d::EaseQuadraticActionOut();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuadraticActionOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseQuadraticActionOut(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseQuadraticActionOut_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseQuadraticActionOut_class->name = "EaseQuadraticActionOut";
@@ -15511,6 +16318,7 @@ void js_register_cocos2dx_EaseQuadraticActionOut(JSContext *cx, JSObject *global
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseQuadraticActionOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -15523,7 +16331,7 @@ void js_register_cocos2dx_EaseQuadraticActionOut(JSContext *cx, JSObject *global
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseQuadraticActionOut_class,
-		dummy_constructor<cocos2d::EaseQuadraticActionOut>, 0, // no constructor
+		js_cocos2dx_EaseQuadraticActionOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -15582,6 +16390,32 @@ bool js_cocos2dx_EaseQuadraticActionInOut_create(JSContext *cx, uint32_t argc, j
 	return false;
 }
 
+bool js_cocos2dx_EaseQuadraticActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseQuadraticActionInOut* cobj = new cocos2d::EaseQuadraticActionInOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseQuadraticActionInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuadraticActionInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -15589,6 +16423,22 @@ void js_cocos2d_EaseQuadraticActionInOut_finalize(JSFreeOp *fop, JSObject *obj) 
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseQuadraticActionInOut)", obj);
 }
 
+static bool js_cocos2d_EaseQuadraticActionInOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseQuadraticActionInOut *nobj = new cocos2d::EaseQuadraticActionInOut();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuadraticActionInOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseQuadraticActionInOut(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseQuadraticActionInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseQuadraticActionInOut_class->name = "EaseQuadraticActionInOut";
@@ -15608,6 +16458,7 @@ void js_register_cocos2dx_EaseQuadraticActionInOut(JSContext *cx, JSObject *glob
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseQuadraticActionInOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -15620,7 +16471,7 @@ void js_register_cocos2dx_EaseQuadraticActionInOut(JSContext *cx, JSObject *glob
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseQuadraticActionInOut_class,
-		dummy_constructor<cocos2d::EaseQuadraticActionInOut>, 0, // no constructor
+		js_cocos2dx_EaseQuadraticActionInOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -15679,6 +16530,32 @@ bool js_cocos2dx_EaseQuarticActionIn_create(JSContext *cx, uint32_t argc, jsval 
 	return false;
 }
 
+bool js_cocos2dx_EaseQuarticActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseQuarticActionIn* cobj = new cocos2d::EaseQuarticActionIn();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseQuarticActionIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuarticActionIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -15686,6 +16563,22 @@ void js_cocos2d_EaseQuarticActionIn_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseQuarticActionIn)", obj);
 }
 
+static bool js_cocos2d_EaseQuarticActionIn_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseQuarticActionIn *nobj = new cocos2d::EaseQuarticActionIn();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuarticActionIn");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseQuarticActionIn(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseQuarticActionIn_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseQuarticActionIn_class->name = "EaseQuarticActionIn";
@@ -15705,6 +16598,7 @@ void js_register_cocos2dx_EaseQuarticActionIn(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseQuarticActionIn_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -15717,7 +16611,7 @@ void js_register_cocos2dx_EaseQuarticActionIn(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseQuarticActionIn_class,
-		dummy_constructor<cocos2d::EaseQuarticActionIn>, 0, // no constructor
+		js_cocos2dx_EaseQuarticActionIn_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -15776,6 +16670,32 @@ bool js_cocos2dx_EaseQuarticActionOut_create(JSContext *cx, uint32_t argc, jsval
 	return false;
 }
 
+bool js_cocos2dx_EaseQuarticActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseQuarticActionOut* cobj = new cocos2d::EaseQuarticActionOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseQuarticActionOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuarticActionOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -15783,6 +16703,22 @@ void js_cocos2d_EaseQuarticActionOut_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseQuarticActionOut)", obj);
 }
 
+static bool js_cocos2d_EaseQuarticActionOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseQuarticActionOut *nobj = new cocos2d::EaseQuarticActionOut();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuarticActionOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseQuarticActionOut(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseQuarticActionOut_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseQuarticActionOut_class->name = "EaseQuarticActionOut";
@@ -15802,6 +16738,7 @@ void js_register_cocos2dx_EaseQuarticActionOut(JSContext *cx, JSObject *global) 
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseQuarticActionOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -15814,7 +16751,7 @@ void js_register_cocos2dx_EaseQuarticActionOut(JSContext *cx, JSObject *global) 
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseQuarticActionOut_class,
-		dummy_constructor<cocos2d::EaseQuarticActionOut>, 0, // no constructor
+		js_cocos2dx_EaseQuarticActionOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -15873,6 +16810,32 @@ bool js_cocos2dx_EaseQuarticActionInOut_create(JSContext *cx, uint32_t argc, jsv
 	return false;
 }
 
+bool js_cocos2dx_EaseQuarticActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseQuarticActionInOut* cobj = new cocos2d::EaseQuarticActionInOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseQuarticActionInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuarticActionInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -15880,6 +16843,22 @@ void js_cocos2d_EaseQuarticActionInOut_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseQuarticActionInOut)", obj);
 }
 
+static bool js_cocos2d_EaseQuarticActionInOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseQuarticActionInOut *nobj = new cocos2d::EaseQuarticActionInOut();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuarticActionInOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseQuarticActionInOut(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseQuarticActionInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseQuarticActionInOut_class->name = "EaseQuarticActionInOut";
@@ -15899,6 +16878,7 @@ void js_register_cocos2dx_EaseQuarticActionInOut(JSContext *cx, JSObject *global
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseQuarticActionInOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -15911,7 +16891,7 @@ void js_register_cocos2dx_EaseQuarticActionInOut(JSContext *cx, JSObject *global
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseQuarticActionInOut_class,
-		dummy_constructor<cocos2d::EaseQuarticActionInOut>, 0, // no constructor
+		js_cocos2dx_EaseQuarticActionInOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -15970,6 +16950,32 @@ bool js_cocos2dx_EaseQuinticActionIn_create(JSContext *cx, uint32_t argc, jsval 
 	return false;
 }
 
+bool js_cocos2dx_EaseQuinticActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseQuinticActionIn* cobj = new cocos2d::EaseQuinticActionIn();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseQuinticActionIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuinticActionIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -15977,6 +16983,22 @@ void js_cocos2d_EaseQuinticActionIn_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseQuinticActionIn)", obj);
 }
 
+static bool js_cocos2d_EaseQuinticActionIn_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseQuinticActionIn *nobj = new cocos2d::EaseQuinticActionIn();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuinticActionIn");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseQuinticActionIn(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseQuinticActionIn_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseQuinticActionIn_class->name = "EaseQuinticActionIn";
@@ -15996,6 +17018,7 @@ void js_register_cocos2dx_EaseQuinticActionIn(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseQuinticActionIn_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -16008,7 +17031,7 @@ void js_register_cocos2dx_EaseQuinticActionIn(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseQuinticActionIn_class,
-		dummy_constructor<cocos2d::EaseQuinticActionIn>, 0, // no constructor
+		js_cocos2dx_EaseQuinticActionIn_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -16067,6 +17090,32 @@ bool js_cocos2dx_EaseQuinticActionOut_create(JSContext *cx, uint32_t argc, jsval
 	return false;
 }
 
+bool js_cocos2dx_EaseQuinticActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseQuinticActionOut* cobj = new cocos2d::EaseQuinticActionOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseQuinticActionOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuinticActionOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -16074,6 +17123,22 @@ void js_cocos2d_EaseQuinticActionOut_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseQuinticActionOut)", obj);
 }
 
+static bool js_cocos2d_EaseQuinticActionOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseQuinticActionOut *nobj = new cocos2d::EaseQuinticActionOut();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuinticActionOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseQuinticActionOut(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseQuinticActionOut_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseQuinticActionOut_class->name = "EaseQuinticActionOut";
@@ -16093,6 +17158,7 @@ void js_register_cocos2dx_EaseQuinticActionOut(JSContext *cx, JSObject *global) 
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseQuinticActionOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -16105,7 +17171,7 @@ void js_register_cocos2dx_EaseQuinticActionOut(JSContext *cx, JSObject *global) 
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseQuinticActionOut_class,
-		dummy_constructor<cocos2d::EaseQuinticActionOut>, 0, // no constructor
+		js_cocos2dx_EaseQuinticActionOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -16164,6 +17230,32 @@ bool js_cocos2dx_EaseQuinticActionInOut_create(JSContext *cx, uint32_t argc, jsv
 	return false;
 }
 
+bool js_cocos2dx_EaseQuinticActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseQuinticActionInOut* cobj = new cocos2d::EaseQuinticActionInOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseQuinticActionInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuinticActionInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -16171,6 +17263,22 @@ void js_cocos2d_EaseQuinticActionInOut_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseQuinticActionInOut)", obj);
 }
 
+static bool js_cocos2d_EaseQuinticActionInOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseQuinticActionInOut *nobj = new cocos2d::EaseQuinticActionInOut();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseQuinticActionInOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseQuinticActionInOut(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseQuinticActionInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseQuinticActionInOut_class->name = "EaseQuinticActionInOut";
@@ -16190,6 +17298,7 @@ void js_register_cocos2dx_EaseQuinticActionInOut(JSContext *cx, JSObject *global
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseQuinticActionInOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -16202,7 +17311,7 @@ void js_register_cocos2dx_EaseQuinticActionInOut(JSContext *cx, JSObject *global
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseQuinticActionInOut_class,
-		dummy_constructor<cocos2d::EaseQuinticActionInOut>, 0, // no constructor
+		js_cocos2dx_EaseQuinticActionInOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -16261,6 +17370,32 @@ bool js_cocos2dx_EaseCircleActionIn_create(JSContext *cx, uint32_t argc, jsval *
 	return false;
 }
 
+bool js_cocos2dx_EaseCircleActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseCircleActionIn* cobj = new cocos2d::EaseCircleActionIn();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseCircleActionIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseCircleActionIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -16268,6 +17403,22 @@ void js_cocos2d_EaseCircleActionIn_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseCircleActionIn)", obj);
 }
 
+static bool js_cocos2d_EaseCircleActionIn_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseCircleActionIn *nobj = new cocos2d::EaseCircleActionIn();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseCircleActionIn");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseCircleActionIn(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseCircleActionIn_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseCircleActionIn_class->name = "EaseCircleActionIn";
@@ -16287,6 +17438,7 @@ void js_register_cocos2dx_EaseCircleActionIn(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseCircleActionIn_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -16299,7 +17451,7 @@ void js_register_cocos2dx_EaseCircleActionIn(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseCircleActionIn_class,
-		dummy_constructor<cocos2d::EaseCircleActionIn>, 0, // no constructor
+		js_cocos2dx_EaseCircleActionIn_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -16358,6 +17510,32 @@ bool js_cocos2dx_EaseCircleActionOut_create(JSContext *cx, uint32_t argc, jsval 
 	return false;
 }
 
+bool js_cocos2dx_EaseCircleActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseCircleActionOut* cobj = new cocos2d::EaseCircleActionOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseCircleActionOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseCircleActionOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -16365,6 +17543,22 @@ void js_cocos2d_EaseCircleActionOut_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseCircleActionOut)", obj);
 }
 
+static bool js_cocos2d_EaseCircleActionOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseCircleActionOut *nobj = new cocos2d::EaseCircleActionOut();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseCircleActionOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseCircleActionOut(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseCircleActionOut_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseCircleActionOut_class->name = "EaseCircleActionOut";
@@ -16384,6 +17578,7 @@ void js_register_cocos2dx_EaseCircleActionOut(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseCircleActionOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -16396,7 +17591,7 @@ void js_register_cocos2dx_EaseCircleActionOut(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseCircleActionOut_class,
-		dummy_constructor<cocos2d::EaseCircleActionOut>, 0, // no constructor
+		js_cocos2dx_EaseCircleActionOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -16455,6 +17650,32 @@ bool js_cocos2dx_EaseCircleActionInOut_create(JSContext *cx, uint32_t argc, jsva
 	return false;
 }
 
+bool js_cocos2dx_EaseCircleActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseCircleActionInOut* cobj = new cocos2d::EaseCircleActionInOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseCircleActionInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseCircleActionInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -16462,6 +17683,22 @@ void js_cocos2d_EaseCircleActionInOut_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseCircleActionInOut)", obj);
 }
 
+static bool js_cocos2d_EaseCircleActionInOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseCircleActionInOut *nobj = new cocos2d::EaseCircleActionInOut();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseCircleActionInOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseCircleActionInOut(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseCircleActionInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseCircleActionInOut_class->name = "EaseCircleActionInOut";
@@ -16481,6 +17718,7 @@ void js_register_cocos2dx_EaseCircleActionInOut(JSContext *cx, JSObject *global)
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseCircleActionInOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -16493,7 +17731,7 @@ void js_register_cocos2dx_EaseCircleActionInOut(JSContext *cx, JSObject *global)
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseCircleActionInOut_class,
-		dummy_constructor<cocos2d::EaseCircleActionInOut>, 0, // no constructor
+		js_cocos2dx_EaseCircleActionInOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -16552,6 +17790,32 @@ bool js_cocos2dx_EaseCubicActionIn_create(JSContext *cx, uint32_t argc, jsval *v
 	return false;
 }
 
+bool js_cocos2dx_EaseCubicActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseCubicActionIn* cobj = new cocos2d::EaseCubicActionIn();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseCubicActionIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseCubicActionIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -16559,6 +17823,22 @@ void js_cocos2d_EaseCubicActionIn_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseCubicActionIn)", obj);
 }
 
+static bool js_cocos2d_EaseCubicActionIn_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseCubicActionIn *nobj = new cocos2d::EaseCubicActionIn();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseCubicActionIn");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseCubicActionIn(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseCubicActionIn_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseCubicActionIn_class->name = "EaseCubicActionIn";
@@ -16578,6 +17858,7 @@ void js_register_cocos2dx_EaseCubicActionIn(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseCubicActionIn_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -16590,7 +17871,7 @@ void js_register_cocos2dx_EaseCubicActionIn(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseCubicActionIn_class,
-		dummy_constructor<cocos2d::EaseCubicActionIn>, 0, // no constructor
+		js_cocos2dx_EaseCubicActionIn_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -16649,6 +17930,32 @@ bool js_cocos2dx_EaseCubicActionOut_create(JSContext *cx, uint32_t argc, jsval *
 	return false;
 }
 
+bool js_cocos2dx_EaseCubicActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseCubicActionOut* cobj = new cocos2d::EaseCubicActionOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseCubicActionOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseCubicActionOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -16656,6 +17963,22 @@ void js_cocos2d_EaseCubicActionOut_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseCubicActionOut)", obj);
 }
 
+static bool js_cocos2d_EaseCubicActionOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseCubicActionOut *nobj = new cocos2d::EaseCubicActionOut();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseCubicActionOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseCubicActionOut(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseCubicActionOut_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseCubicActionOut_class->name = "EaseCubicActionOut";
@@ -16675,6 +17998,7 @@ void js_register_cocos2dx_EaseCubicActionOut(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseCubicActionOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -16687,7 +18011,7 @@ void js_register_cocos2dx_EaseCubicActionOut(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseCubicActionOut_class,
-		dummy_constructor<cocos2d::EaseCubicActionOut>, 0, // no constructor
+		js_cocos2dx_EaseCubicActionOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -16746,6 +18070,32 @@ bool js_cocos2dx_EaseCubicActionInOut_create(JSContext *cx, uint32_t argc, jsval
 	return false;
 }
 
+bool js_cocos2dx_EaseCubicActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::EaseCubicActionInOut* cobj = new cocos2d::EaseCubicActionInOut();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EaseCubicActionInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseCubicActionInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_ActionEase_prototype;
 
@@ -16753,6 +18103,22 @@ void js_cocos2d_EaseCubicActionInOut_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EaseCubicActionInOut)", obj);
 }
 
+static bool js_cocos2d_EaseCubicActionInOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::EaseCubicActionInOut *nobj = new cocos2d::EaseCubicActionInOut();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EaseCubicActionInOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_EaseCubicActionInOut(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_EaseCubicActionInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_EaseCubicActionInOut_class->name = "EaseCubicActionInOut";
@@ -16772,6 +18138,7 @@ void js_register_cocos2dx_EaseCubicActionInOut(JSContext *cx, JSObject *global) 
 	};
 
 	static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2d_EaseCubicActionInOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -16784,7 +18151,7 @@ void js_register_cocos2dx_EaseCubicActionInOut(JSContext *cx, JSObject *global) 
 		cx, global,
 		jsb_cocos2d_ActionEase_prototype,
 		jsb_cocos2d_EaseCubicActionInOut_class,
-		dummy_constructor<cocos2d::EaseCubicActionInOut>, 0, // no constructor
+		js_cocos2dx_EaseCubicActionInOut_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -22615,6 +23982,22 @@ void js_cocos2d_ActionTween_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ActionTween)", obj);
 }
 
+static bool js_cocos2d_ActionTween_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::ActionTween *nobj = new cocos2d::ActionTween();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::ActionTween");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_ActionTween(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_ActionTween_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_cocos2d_ActionTween_class->name = "ActionTween";
@@ -22635,6 +24018,7 @@ void js_register_cocos2dx_ActionTween(JSContext *cx, JSObject *global) {
 
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithDuration", js_cocos2dx_ActionTween_initWithDuration, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_ActionTween_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -28434,6 +29818,23 @@ bool js_cocos2dx_Label_getFontDefinition(JSContext *cx, uint32_t argc, jsval *vp
 	JS_ReportError(cx, "js_cocos2dx_Label_getFontDefinition : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
+bool js_cocos2dx_Label_getBoundingBox(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_getBoundingBox : Invalid Native Object");
+	if (argc == 0) {
+		cocos2d::Rect ret = cobj->getBoundingBox();
+		jsval jsret = JSVAL_NULL;
+		jsret = ccrect_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_Label_getBoundingBox : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
 bool js_cocos2dx_Label_getFontName(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -29342,6 +30743,7 @@ void js_register_cocos2dx_Label(JSContext *cx, JSObject *global) {
 		JS_FN("getHeight", js_cocos2dx_Label_getHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setBMFontFilePath", js_cocos2dx_Label_setBMFontFilePath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getFontDefinition", js_cocos2dx_Label_getFontDefinition, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getBoundingBox", js_cocos2dx_Label_getBoundingBox, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getFontName", js_cocos2dx_Label_getFontName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("updateContent", js_cocos2dx_Label_updateContent, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getStringLength", js_cocos2dx_Label_getStringLength, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -54426,6 +55828,32 @@ bool js_cocos2dx_ProtectedNode_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
+bool js_cocos2dx_ProtectedNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::ProtectedNode* cobj = new cocos2d::ProtectedNode();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::ProtectedNode> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::ProtectedNode");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
 
 extern JSObject *jsb_cocos2d_Node_prototype;
 
@@ -54473,7 +55901,7 @@ void js_register_cocos2dx_ProtectedNode(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_cocos2d_Node_prototype,
 		jsb_cocos2d_ProtectedNode_class,
-		dummy_constructor<cocos2d::ProtectedNode>, 0, // no constructor
+		js_cocos2dx_ProtectedNode_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
