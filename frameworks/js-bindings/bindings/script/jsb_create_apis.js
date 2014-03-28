@@ -10,7 +10,7 @@ var _p;
 
 _p = cc.Layer.prototype;
 _p._ctor = function() {
-	_p.init.call(this);
+	cc.Layer.prototype.init.call(this);
 };
 
 
@@ -45,7 +45,7 @@ _p._ctor = function(layers) {
 _p = cc.Sprite.prototype;
 _p._ctor = function(fileName, rect) {
 	if (fileName === undefined) {
-		_p.init.call(this);
+		cc.Sprite.prototype.init.call(this);
 	}
 	else if (typeof(fileName) === "string") {
 		if (fileName[0] === "#") {
@@ -161,7 +161,7 @@ _p._ctor = function(normalImage, selectedImage, three, four, five) {
 		target = null;
 
 	if (normalImage === undefined) {
-		_p.init.call(this);
+		cc.MenuItemImage.prototype.init.call(this);
 	}
 	else {
 		if (four === undefined)  {
