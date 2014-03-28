@@ -870,7 +870,6 @@ public:
 				sprintf(msgSize+1,"%d:",strlen(str));
                 string replymsg(msgSize);
                 replymsg.append(str);
-				printf("%d,%s",replymsg.size(),replymsg.c_str());
 				send(fd,replymsg.c_str(),replymsg.size(),0);
 			}
 		});
