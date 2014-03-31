@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
 #include "cocos2d.h"
+#include "CCFontFNT.h"
 #include "json/document.h"
 #include "json/filestream.h"
 #include "json/stringbuffer.h"
@@ -253,8 +254,15 @@ bool reloadScript(const string& file)
 		modulefile = "main.js";
 	}
     
-    auto director = Director::getInstance();
-	director->purgeCachedData();
+	auto director = Director::getInstance();
+	FontFNT::purgeCachedData();
+	if (director->getOpenGLView())
+	{
+		SpriteFrameCache::getInstance()->removeSpriteFrames();
+		director->getTextureCache()->removeAllTextures();
+	}
+	FileUtils::getInstance()->purgeCachedEntries();
+
     director->getScheduler()->unscheduleAll();
     director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     
@@ -623,7 +631,7 @@ bool FileServer::recv_file(int fd)
 	{
 		string filename = headjson["filename"].GetString();
 		char fullfilename[1024]={0};
-		sprintf(fullfilename,"%s%s",g_resourcePath.c_str(),filename);
+		sprintf(fullfilename,"%s%s",g_resourcePath.c_str(),filename.c_str());
 		string file(fullfilename);
 		file=replaceAll(file,"\\","/");
 		sprintf(fullfilename, "%s", file.c_str());
