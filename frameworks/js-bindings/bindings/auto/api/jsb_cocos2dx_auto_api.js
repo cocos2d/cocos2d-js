@@ -9849,16 +9849,6 @@ getFontDefinition : function (
 },
 
 /**
- * @method getBoundingBox
- * @return {RectObject}
- */
-getBoundingBox : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
  * @method getFontName
  * @return {String}
  */
@@ -14651,13 +14641,13 @@ getEndColorVar : function (
 },
 
 /**
- * @method getEndColor
- * @return {Color4FObject}
+ * @method getRotationIsDir
+ * @return {bool}
  */
-getEndColor : function (
+getRotationIsDir : function (
 )
 {
-    return cc.Color4F;
+    return false;
 },
 
 /**
@@ -14681,13 +14671,13 @@ getEmissionRate : function (
 },
 
 /**
- * @method getRotationIsDir
- * @return {bool}
+ * @method getEndColor
+ * @return {Color4FObject}
  */
-getRotationIsDir : function (
+getEndColor : function (
 )
 {
-    return false;
+    return cc.Color4F;
 },
 
 /**
