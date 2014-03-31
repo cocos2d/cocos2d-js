@@ -254,6 +254,7 @@ bool reloadScript(const string& file)
 	}
     
     auto director = Director::getInstance();
+	director->purgeCachedData();
     director->getScheduler()->unscheduleAll();
     director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     
@@ -611,7 +612,8 @@ bool FileServer::recv_file(int fd)
 	{
 		return false;
 	}
-	
+
+	memset(headSeg,0,atoi(headlen)+1);
 	if (recv(fd, headSeg, atoi(headlen),0)<=0) {
 		return  false;
 	}
