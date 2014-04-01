@@ -282,6 +282,11 @@ cc.ReuseGrid.prototype._ctor = function(times) {
 cc.GridAction.prototype._ctor
 	= cc.Grid3DAction.prototype._ctor
 	= cc.TiledGrid3DAction.prototype._ctor
+	= cc.PageTurn3D.prototype._ctor
+	= cc.FadeOutTRTiles.prototype._ctor
+	= cc.FadeOutBLTiles.prototype._ctor
+	= cc.FadeOutUpTiles.prototype._ctor
+	= cc.FadeOutDownTiles.prototype._ctor
 	= function(duration, gridSize) {
 	gridSize && this.initWithDuration(duration, gridSize);
 };
@@ -474,6 +479,49 @@ cc.Animate.prototype._ctor = function(animation) {
 
 cc.TargetedAction.prototype._ctor = function(target, action) {
 	action && this.initWithTarget(target, action);
+};
+
+cc.ProgressTo.prototype._ctor = function(duration, percent) {
+	percent !== undefined && this.initWithDuration(duration, percent);
+};
+
+cc.ProgressFromTo.prototype._ctor = function(duration, fromPercentage, toPercentage) {
+	toPercentage !== undefined && this.initWithDuration(duration, fromPercentage, toPercentage);
+};
+
+cc.SplitCols.prototype._ctor = cc.SplitRows.prototype._ctor = function(duration, rowsCols) {
+	rowsCols !== undefined && this.initWithDuration(duration, rowsCols);
+};
+
+cc.JumpTiles3D.prototype._ctor = function(duration, gridSize, numberOfJumps, amplitude) {
+	amplitude !== undefined && this.initWithDuration(duration, gridSize, numberOfJumps, amplitude);
+};
+
+cc.WavesTiles3D.prototype._ctor = function(duration, gridSize, waves, amplitude) {
+	amplitude !== undefined && this.initWithDuration(duration, gridSize, waves, amplitude);
+};
+
+cc.TurnOffTiles.prototype._ctor = function(duration, gridSize, seed) {
+	if (gridSize !== undefined) {
+		seed = seed || 0;
+		this.initWithDuration(duration, gridSize, seed);
+	}
+};
+
+cc.ShakyTiles3D.prototype._ctor = function(duration, gridSize, range, shakeZ) {
+	shakeZ !== undefined && this.initWithDuration(duration, gridSize, range, shakeZ);
+};
+
+cc.ShatteredTiles3D.prototype._ctor = function(duration, gridSize, range, shatterZ) {
+	shatterZ !== undefined && this.initWithDuration(duration, gridSize, range, shatterZ);
+};
+
+cc.ShuffleTiles.prototype._ctor = function(duration, gridSize, seed) {
+	seed !== undefined && this.initWithDuration(duration, gridSize, seed);
+};
+
+cc.ActionTween.prototype._ctor = function(duration, key, from, to) {
+	to !== undefined && this.initWithDuration(duration, key, from, to);
 };
 
 
