@@ -547,13 +547,13 @@ cc.defineGetterSetter(cc.loader, "resPath", function(){
     return this._resPath;
 }, function(resPath){
     this._resPath = resPath || "";
-    cc.FileUtils.getInstance().setSearchPath(this._resPath);
+    cc.FileUtils.getInstance().addSearchPath(this._resPath);
 });
 cc.defineGetterSetter(cc.loader, "audioPath", function(){
     return this._audioPath;
 }, function(audioPath){
     this._audioPath = audioPath || "";
-    cc.FileUtils.getInstance().setSearchPath(this._audioPath);
+    cc.FileUtils.getInstance().addSearchPath(this._audioPath);
 });
 
 //+++++++++++++++++++++++++something about loader end+++++++++++++++++++++++++++++
@@ -584,6 +584,14 @@ cc.audioEngine.end = function(){
 };
 cc.configuration = cc.Configuration.getInstance();
 cc.textureCache = cc.director.getTextureCache();
+cc.textureCache._addImage = cc.textureCache.addImage;
+cc.textureCache.addImage = function(url, cb, target) {
+	if (cb) {
+		target && (cb = cb.bind(target));
+		this.addImageAsync(url, cb);
+	}
+	else this._addImage(url);
+};
 cc.shaderCache = cc.ShaderCache.getInstance();
 cc.animationCache = cc.AnimationCache.getInstance();
 cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();

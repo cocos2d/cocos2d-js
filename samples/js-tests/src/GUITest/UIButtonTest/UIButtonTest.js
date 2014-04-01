@@ -46,7 +46,7 @@ var UIButtonTest = UIScene.extend({
 
     touchEvent: function (sender, type) {
         switch (type) {
-            case ccui.Widget.TOUCH_BAGAN:
+            case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setText("Touch Down");
                 break;
 
@@ -92,7 +92,7 @@ var UIButtonTest_Scale9 = UIScene.extend({
 
     touchEvent: function (sender, type) {
         switch (type) {
-            case ccui.Widget.TOUCH_BAGAN:
+            case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setText("Touch Down");
                 break;
             case ccui.Widget.TOUCH_MOVED:
@@ -135,7 +135,7 @@ var UIButtonTest_PressedAction = UIScene.extend({
 
     touchEvent: function (sender, type) {
         switch (type) {
-            case ccui.Widget.TOUCH_BAGAN:
+            case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setText("Touch Down");
                 break;
             case ccui.Widget.TOUCH_MOVED:
@@ -178,7 +178,7 @@ var UIButtonTest_Title = UIScene.extend({
 
     touchEvent: function (sender, type) {
         switch (type) {
-            case ccui.Widget.TOUCH_BAGAN:
+            case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setText("Touch Down");
                 break;
             case ccui.Widget.TOUCH_MOVED:

@@ -17,11 +17,10 @@ Some useful links:
     - Uncompress the downloaded file into a directory.
     - Set environmental variables JAVA_HOME to your Java environment, ANT_HOME to the directory you uncompressed Ant to, and add ${ANT_HOME}/bin (Unix) or %ANT_HOME%/bin (Windows) to your PATH.
     
-    ```            
+    ```
     // Example: Execute in console or add into .bash_profile(Mac)
-    export ANT_HOME=/usr/local/ant
+    export ANT_ROOT=/usr/local/ant/bin
     export JAVA_HOME=/usr/local/jdk1.7.0_51
-    export PATH=${PATH}:${ANT_HOME}/bin
     ```
 
 ##Usage

@@ -6,10 +6,11 @@
 
 var _p;
 
-// Layers
+/************************  Layers  *************************/
+
 _p = cc.Layer.prototype;
 _p._ctor = function() {
-	_p.init.call(this);
+	cc.Layer.prototype.init.call(this);
 };
 
 
@@ -39,11 +40,12 @@ _p._ctor = function(layers) {
 };
 
 
-// Sprite
+/************************  Sprite  *************************/
+
 _p = cc.Sprite.prototype;
 _p._ctor = function(fileName, rect) {
 	if (fileName === undefined) {
-		_p.init.call(this);
+		cc.Sprite.prototype.init.call(this);
 	}
 	else if (typeof(fileName) === "string") {
 		if (fileName[0] === "#") {
@@ -66,8 +68,6 @@ _p._ctor = function(fileName, rect) {
 	}
 };
 
-
-// SpriteBatchNode
 _p = cc.SpriteBatchNode.prototype;
 _p._ctor = function(fileImage, capacity) {
 	capacity = capacity || cc.DEFAULT_SPRITE_BATCH_CAPACITY;
@@ -78,7 +78,8 @@ _p._ctor = function(fileImage, capacity) {
 };
 
 
-// Menu
+/************************  Menu and menu items  *************************/
+
 _p = cc.Menu.prototype;
 _p._ctor = function(menuItems) {
 	if((arguments.length > 0) && (arguments[arguments.length-1] == null))
@@ -105,7 +106,6 @@ _p._ctor = function(menuItems) {
 };
 
 
-// Menu items
 _p = cc.MenuItem.prototype;
 _p._ctor = function(callback, target) {
 	callback && this.initWithCallback(callback.bind(target));
@@ -161,7 +161,7 @@ _p._ctor = function(normalImage, selectedImage, three, four, five) {
 		target = null;
 
 	if (normalImage === undefined) {
-		_p.init.call(this);
+		cc.MenuItemImage.prototype.init.call(this);
 	}
 	else {
 		if (four === undefined)  {
@@ -209,6 +209,320 @@ _p._ctor = function() {
 	}
 };
 
+
+/************************  Actions  *************************/
+
+cc.Speed.prototype._ctor = function(action, speed) {
+	speed !== undefined && this.initWithAction(action, speed);
+};
+
+cc.Follow.prototype._ctor = function (followedNode, rect) {
+	if(followedNode)
+		rect ? ret.initWithTarget(followedNode, rect)
+			 : ret.initWithTarget(followedNode);
+};
+
+cc.OrbitCamera.prototype._ctor = function (t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX) {
+	deltaAngleX !== undefined && this.initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX);
+};
+
+cc.CardinalSplineTo.prototype._ctor = cc.CardinalSplineBy.prototype._ctor = function(duration, points, tension) {
+	tension !== undefined && this.initWithDuration(duration, points, tension);
+};
+
+cc.CatmullRomTo.prototype._ctor = cc.CatmullRomBy.prototype._ctor = function(dt, points) {
+	points && this.initWithDuration(dt, points);
+};
+
+_p = cc.ActionEase.prototype;
+_p._ctor = function(action) {
+	action && this.initWithAction(action);
+};
+cc.EaseExponentialIn._ctor
+	= cc.EaseExponentialOut._ctor
+	= cc.EaseExponentialInOut._ctor
+	= cc.EaseSineIn._ctor
+	= cc.EaseSineOut._ctor
+	= cc.EaseSineInOut._ctor
+	= cc.EaseBounce._ctor
+	= cc.EaseBounceIn._ctor
+	= cc.EaseBounceOut._ctor
+	= cc.EaseBounceInOut._ctor
+	= cc.EaseBackIn._ctor
+	= cc.EaseBackOut._ctor
+	= cc.EaseBackInOut._ctor
+	= _p._ctor;
+
+_p = cc.EaseRateAction.prototype;
+_p._ctor = function(action, rate) {
+	rate !== undefined && this.initWithAction(action, rate);
+};
+cc.EaseIn.prototype._ctor
+	= cc.EaseOut.prototype._ctor
+	= cc.EaseInOut.prototype._ctor
+	= _p._ctor;
+
+_p = cc.EaseElastic.prototype;
+_p._ctor = function(action, period) {
+	if( action ) {
+		period !== undefined ? this.initWithAction(action, period)
+							 : this.initWithAction(action);
+	}
+};
+cc.EaseElasticIn._ctor
+	= cc.EaseElasticOut._ctor
+	= cc.EaseElasticInOut._ctor
+	= _p._ctor;
+
+
+cc.ReuseGrid.prototype._ctor = function(times) {
+	times !== undefined && this.initWithTimes(times);
+};
+
+cc.GridAction.prototype._ctor
+	= cc.Grid3DAction.prototype._ctor
+	= cc.TiledGrid3DAction.prototype._ctor
+	= cc.PageTurn3D.prototype._ctor
+	= cc.FadeOutTRTiles.prototype._ctor
+	= cc.FadeOutBLTiles.prototype._ctor
+	= cc.FadeOutUpTiles.prototype._ctor
+	= cc.FadeOutDownTiles.prototype._ctor
+	= function(duration, gridSize) {
+	gridSize && this.initWithDuration(duration, gridSize);
+};
+
+cc.Twirl.prototype._ctor = function(duration, gridSize, position, twirls, amplitude) {
+	amplitude !== undefined && this.initWithDuration(duration, gridSize, position, twirls, amplitude);
+};
+
+cc.Waves.prototype._ctor = function(duration, gridSize, waves, amplitude, horizontal, vertical) {
+	vertical !== undefined && this.initWithDuration(duration, gridSize, waves, amplitude, horizontal, vertical);
+};
+
+cc.Liquid.prototype._ctor = function(duration, gridSize, waves, amplitude) {
+	amplitude !== undefined && this.initWithDuration(duration, gridSize, waves, amplitude);
+};
+
+cc.Shaky3D.prototype._ctor = function(duration, gridSize, range, shakeZ) {
+	shakeZ !== undefined && this.initWithDuration(duration, gridSize, range, shakeZ);
+};
+
+cc.Ripple3D.prototype._ctor = function(duration, gridSize, position, radius, waves, amplitude) {
+	amplitude !== undefined && this.initWithDuration(duration, gridSize, position, radius, waves, amplitude);
+};
+
+cc.Lens3D.prototype._ctor = function(duration, gridSize, position, radius) {
+	radius !== undefined && this.initWithDuration(duration, gridSize, position, radius);
+};
+
+cc.FlipY3D.prototype._ctor
+	= cc.FlipX3D.prototype._ctor
+	= function(duration) {
+	duration !== undefiend && this.initWithDuration(duration, cc.size(1, 1));
+};
+
+cc.Waves3D.prototype._ctor = function(duration, gridSize, waves, amplitude) {
+	amplitude !== undefined && this.initWithDuration(duration, gridSize, waves, amplitude);
+};
+
+cc.RemoveSelf.prototype._ctor = function(isNeedCleanUp) {
+	isNeedCleanUp !== undefined && this.init(isNeedCleanUp);
+};
+
+cc.FlipX.prototype._ctor = function(flip) {
+	flip !== undefined && this.initWithFlipX(flip);
+};
+
+cc.FlipY.prototype._ctor = function(flip) {
+	flip !== undefined && this.initWithFlipY(flip);
+};
+
+cc.Place.prototype._ctor = function(pos, y) {
+	if (pos !== undefined) {
+		if (pos.x !== undefined) {
+			y = pos.y;
+			pos = pos.x;
+		}
+		this.initWithPosition(pos, y);
+	}
+};
+
+cc.CallFunc.prototype._ctor = function(selector, selectorTarget, data) {
+	if(selector !== undefined){
+		if(selectorTarget === undefined)
+			this.initWithFunction(selector);
+		else this.initWithFunction(selector, selectorTarget, data);
+	}
+};
+
+cc.ActionInterval.prototype._ctor = function(d) {
+	d !== undefined && this.initWithDuration(d);
+};
+
+cc.Sequence.prototype._ctor = function(tempArray) {
+	var paramArray = (tempArray instanceof Array) ? tempArray : arguments;
+	var last = paramArray.length - 1;
+	if ((last >= 0) && (paramArray[last] == null))
+		cc.log("parameters should not be ending with null in Javascript");
+
+	if (last >= 0) {
+		var prev = paramArray[0];
+		for (var i = 1; i < last; i++) {
+			if (paramArray[i]) {
+				prev = cc.Sequence.create(prev, paramArray[i]);
+			}
+		}
+		this.initWithTwoActions(prev, paramArray[last]);
+	}
+};
+
+cc.Repeat.prototype._ctor = function(action, times) {
+	times !== undefined && this.initWithAction(action, times);
+};
+
+cc.RepeatForever.prototype._ctor = function(action) {
+	action && this.initWithAction(action);
+};
+
+cc.Spawn.prototype._ctor = function(tempArray) {
+	var paramArray = (tempArray instanceof Array) ? tempArray : arguments;
+	var last = paramArray.length - 1;
+	if ((last >= 0) && (paramArray[last] == null))
+		cc.log("parameters should not be ending with null in Javascript");
+
+	if (last >= 0) {
+		var prev = paramArray[0];
+		for (var i = 1; i < last; i++) {
+			if (paramArray[i]) {
+				prev = cc.Spawn.create(prev, paramArray[i]);
+			}
+		}
+		this.initWithTwoActions(prev, paramArray[last]);
+	}
+};
+
+cc.RotateTo.prototype._ctor = cc.RotateBy.prototype._ctor = function(duration, deltaAngleX, deltaAngleY) {
+	if (deltaAngleX !== undefined) {
+		if (deltaAngleY !== undefined)
+			this.initWithDuration(duration, deltaAngleX, deltaAngleY);
+		else
+			this.initWithDuration(duration, deltaAngleX);
+	}
+};
+
+cc.MoveBy.prototype._ctor = cc.MoveTo.prototype._ctor = function(duration, pos, y) {
+	if (pos !== undefined) {
+		if(pos.x === undefined) {
+			pos = cc.p(pos, y);
+		}
+
+		this.initWithDuration(duration, pos);
+	}
+};
+
+cc.SkewTo.prototype._ctor = cc.SkewBy.prototype._ctor = function(t, sx, sy) {
+	sy !== undefined && this.initWithDuration(t, sx, sy);
+};
+
+cc.JumpBy.prototype._ctor = cc.JumpTo.prototype._ctor = function(duration, position, y, height, jumps) {
+	if (height !== undefined) {
+		if (jumps !== undefined) {
+			position = cc.p(position, y);
+		}
+		else {
+			jumps = height;
+			height = y;
+		}
+		this.initWithDuration(duration, position, height, jumps);
+	}
+};
+
+cc.BezierBy.prototype._ctor = cc.BezierTo.prototype._ctor = function(t, c) {
+	c && this.initWithDuration(t, c);
+};
+
+cc.ScaleTo.prototype._ctor = cc.ScaleBy.prototype._ctor = function(duration, sx, sy) {
+	if (sx !== undefined) {
+		if (sy !== undefined)
+			this.initWithDuration(duration, sx, sy);
+		else this.initWithDuration(duration, sx);
+	}
+};
+
+cc.Blink.prototype._ctor = function(duration, blinks) {
+	blinks !== undefined && this.initWithDuration(duration, blinks);
+};
+
+cc.FadeTo.prototype._ctor = function(duration, opacity) {
+	opacity !== undefined && this.initWithDuration(duration, opacity);
+};
+
+cc.FadeIn.prototype._ctor = cc.FadeOut.prototype._ctor = function(duration) {
+	duration !== undefined && this.initWithDuration(duration);
+};
+
+cc.TintTo.prototype._ctor = cc.TintBy.prototype._ctor = function(duration, red, green, blue) {
+	blue !== undefined && this.initWithDuration(duration, red, green, blue);
+};
+
+cc.DelayTime.prototype._ctor = function(duration) {
+	duration !== undefined && this.initWithDuration(duration);
+};
+/*
+cc.ReverseTime.prototype._ctor = function(action) {
+	action && this.initWithAction(action);
+};*/
+
+cc.Animate.prototype._ctor = function(animation) {
+	animation && this.initWithAnimation(animation);
+};
+
+cc.TargetedAction.prototype._ctor = function(target, action) {
+	action && this.initWithTarget(target, action);
+};
+
+cc.ProgressTo.prototype._ctor = function(duration, percent) {
+	percent !== undefined && this.initWithDuration(duration, percent);
+};
+
+cc.ProgressFromTo.prototype._ctor = function(duration, fromPercentage, toPercentage) {
+	toPercentage !== undefined && this.initWithDuration(duration, fromPercentage, toPercentage);
+};
+
+cc.SplitCols.prototype._ctor = cc.SplitRows.prototype._ctor = function(duration, rowsCols) {
+	rowsCols !== undefined && this.initWithDuration(duration, rowsCols);
+};
+
+cc.JumpTiles3D.prototype._ctor = function(duration, gridSize, numberOfJumps, amplitude) {
+	amplitude !== undefined && this.initWithDuration(duration, gridSize, numberOfJumps, amplitude);
+};
+
+cc.WavesTiles3D.prototype._ctor = function(duration, gridSize, waves, amplitude) {
+	amplitude !== undefined && this.initWithDuration(duration, gridSize, waves, amplitude);
+};
+
+cc.TurnOffTiles.prototype._ctor = function(duration, gridSize, seed) {
+	if (gridSize !== undefined) {
+		seed = seed || 0;
+		this.initWithDuration(duration, gridSize, seed);
+	}
+};
+
+cc.ShakyTiles3D.prototype._ctor = function(duration, gridSize, range, shakeZ) {
+	shakeZ !== undefined && this.initWithDuration(duration, gridSize, range, shakeZ);
+};
+
+cc.ShatteredTiles3D.prototype._ctor = function(duration, gridSize, range, shatterZ) {
+	shatterZ !== undefined && this.initWithDuration(duration, gridSize, range, shatterZ);
+};
+
+cc.ShuffleTiles.prototype._ctor = function(duration, gridSize, seed) {
+	seed !== undefined && this.initWithDuration(duration, gridSize, seed);
+};
+
+cc.ActionTween.prototype._ctor = function(duration, key, from, to) {
+	to !== undefined && this.initWithDuration(duration, key, from, to);
+};
 
 
 

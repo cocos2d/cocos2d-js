@@ -34,6 +34,15 @@
                    "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/project.xcworkspace",
                    "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/xcuserdata"
                 ]
+             },
+             {
+                "from":"tools",
+                "to":"tools",
+                "exclude":[
+                   "cocos2d-console",
+                   "make-package",
+                   "travis-scripts"
+                ]
              }
          ],
          "append_x_engine":{
