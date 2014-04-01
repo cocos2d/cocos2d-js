@@ -468,10 +468,10 @@ cc.TintTo.prototype._ctor = cc.TintBy.prototype._ctor = function(duration, red, 
 cc.DelayTime.prototype._ctor = function(duration) {
 	duration !== undefined && this.initWithDuration(duration);
 };
-
+/*
 cc.ReverseTime.prototype._ctor = function(action) {
 	action && this.initWithAction(action);
-};
+};*/
 
 cc.Animate.prototype._ctor = function(animation) {
 	animation && this.initWithAnimation(animation);
