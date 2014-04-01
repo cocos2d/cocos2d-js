@@ -904,6 +904,77 @@ static bool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+// callFunc.initWithFunction( func, this, [data])
+// callFunc.initWithFunction( func )
+bool js_cocos2dx_CallFunc_initWithFunction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc >= 1 && argc <= 3) {
+        JSObject *obj = JS_THIS_OBJECT(cx, vp);
+		js_proxy_t *proxy = jsb_get_js_proxy(obj);
+		CallFuncN *action = (cocos2d::CallFuncN *)(proxy ? proxy->ptr : NULL);
+        JSB_PRECONDITION2(action, cx, false, "Invalid Native Object");
+        
+		jsval *argv = JS_ARGV(cx, vp);
+        
+        std::shared_ptr<JSCallbackWrapper> tmpCobj(new JSCallbackWrapper());
+        
+        tmpCobj->setJSCallbackFunc(argv[0]);
+        if(argc >= 2) {
+            tmpCobj->setJSCallbackThis(argv[1]);
+        } if(argc == 3) {
+            tmpCobj->setJSExtraData(argv[2]);
+        }
+        
+        action->initWithFunction([=](Node* sender){
+            const jsval& jsvalThis = tmpCobj->getJSCallbackThis();
+            const jsval& jsvalCallback = tmpCobj->getJSCallbackFunc();
+            const jsval& jsvalExtraData = tmpCobj->getJSExtraData();
+            
+            bool hasExtraData = !JSVAL_IS_VOID(jsvalExtraData);
+            JSObject* thisObj = JSVAL_IS_VOID(jsvalThis) ? nullptr : JSVAL_TO_OBJECT(jsvalThis);
+            
+            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+            
+            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, sender);
+            
+            jsval retval;
+            if(jsvalCallback != JSVAL_VOID)
+            {
+                if (hasExtraData)
+                {
+                    jsval valArr[2];
+                    valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
+                    valArr[1] = jsvalExtraData;
+                    
+                    JS_AddValueRoot(cx, valArr);
+                    JS_CallFunctionValue(cx, thisObj, jsvalCallback, 2, valArr, &retval);
+                    JS_RemoveValueRoot(cx, valArr);
+                }
+                else
+                {
+                    jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
+                    JS_AddValueRoot(cx, &senderVal);
+                    JS_CallFunctionValue(cx, thisObj, jsvalCallback, 1, &senderVal, &retval);
+                    JS_RemoveValueRoot(cx, &senderVal);
+                }
+            }
+            
+            // I think the JSCallFuncWrapper isn't needed.
+            // Since an action will be run by a cc.Node, it will be released at the Node::cleanup.
+            // By James Chen
+            // JSCallFuncWrapper::setTargetForNativeNode(node, (JSCallFuncWrapper *)this);
+        });
+        
+		JS_SetReservedSlot(proxy->obj, 0, argv[0]);
+        if(argc > 1) {
+            JS_SetReservedSlot(proxy->obj, 1, argv[1]);
+        }
+        return true;
+    }
+    JS_ReportError(cx, "Invalid number of arguments");
+    return false;
+}
+
 JSScheduleWrapper::~JSScheduleWrapper()
 {
     if (_pPureJSTarget) {
@@ -4466,6 +4537,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.CallFunc; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_callFunc, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_CallFunc_prototype, "initWithFunction", js_cocos2dx_CallFunc_initWithFunction, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.SAXParser; })()"));
 	JS_DefineFunction(cx, tmpObj, "getInstance", js_SAXParser_getInstance, 0, JSPROP_READONLY | JSPROP_PERMANENT);
