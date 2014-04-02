@@ -3145,11 +3145,13 @@ getDelayPerUnit : function (
  * @method initWithSpriteFrames
  * @param {Array} arg0
  * @param {float} arg1
+ * @param {unsigned int} arg2
  * @return {bool}
  */
 initWithSpriteFrames : function (
 array, 
-float 
+float, 
+int 
 )
 {
     return false;

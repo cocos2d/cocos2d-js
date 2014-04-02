@@ -8035,6 +8035,20 @@ bool js_cocos2dx_Animation_initWithSpriteFrames(JSContext *cx, uint32_t argc, js
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
+	if (argc == 3) {
+		cocos2d::Vector<cocos2d::SpriteFrame *> arg0;
+		double arg1;
+		unsigned int arg2;
+		ok &= jsval_to_ccvector(cx, argv[0], &arg0);
+		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
+		ok &= jsval_to_uint32(cx, argv[2], &arg2);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Animation_initWithSpriteFrames : Error processing arguments");
+		bool ret = cobj->initWithSpriteFrames(arg0, arg1, arg2);
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
 
 	JS_ReportError(cx, "js_cocos2dx_Animation_initWithSpriteFrames : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
