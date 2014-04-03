@@ -423,16 +423,6 @@ kmmat4
 },
 
 /**
- * @method getMaterialProgramID
- * @return {unsigned int}
- */
-getMaterialProgramID : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setUniformLocationWith3i
  * @param {int} arg0
  * @param {int} arg1
@@ -16343,12 +16333,12 @@ bool
 
 /**
  * @method getColorSpaceHolder
- * @return {Color3BObject}
+ * @return {Color4BObject}
  */
 getColorSpaceHolder : function (
 )
 {
-    return cc.Color3B;
+    return cc.Color4B;
 },
 
 /**
@@ -16373,9 +16363,9 @@ float
 
 /**
  * @method setColorSpaceHolder
- * @param {Color3BObject} arg0
- */
-setColorSpaceHolder : function (
+* @param {Color4BObject|Color3BObject} color4b
+*/
+setColorSpaceHolder : function(
 color3b 
 )
 {
