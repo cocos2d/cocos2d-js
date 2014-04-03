@@ -1186,23 +1186,6 @@ bool js_cocos2dx_GLProgram_setUniformsForBuiltins(JSContext *cx, uint32_t argc, 
 	JS_ReportError(cx, "js_cocos2dx_GLProgram_setUniformsForBuiltins : wrong number of arguments");
 	return false;
 }
-bool js_cocos2dx_GLProgram_getMaterialProgramID(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::GLProgram* cobj = (cocos2d::GLProgram *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_getMaterialProgramID : Invalid Native Object");
-	if (argc == 0) {
-		const unsigned int ret = cobj->getMaterialProgramID();
-		jsval jsret = JSVAL_NULL;
-		jsret = uint32_to_jsval(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_GLProgram_getMaterialProgramID : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
 bool js_cocos2dx_GLProgram_setUniformLocationWith3i(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -1574,7 +1557,6 @@ void js_register_cocos2dx_GLProgram(JSContext *cx, JSObject *global) {
 		JS_FN("use", js_cocos2dx_GLProgram_use, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getVertexShaderLog", js_cocos2dx_GLProgram_getVertexShaderLog, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformsForBuiltins", js_cocos2dx_GLProgram_setUniformsForBuiltins, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getMaterialProgramID", js_cocos2dx_GLProgram_getMaterialProgramID, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformLocationWith3i", js_cocos2dx_GLProgram_setUniformLocationWith3i, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setUniformLocationWith3iv", js_cocos2dx_GLProgram_setUniformLocationWith3iv, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("updateUniforms", js_cocos2dx_GLProgram_updateUniforms, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -8030,6 +8012,20 @@ bool js_cocos2dx_Animation_initWithSpriteFrames(JSContext *cx, uint32_t argc, js
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Animation_initWithSpriteFrames : Error processing arguments");
 		bool ret = cobj->initWithSpriteFrames(arg0, arg1);
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+	if (argc == 3) {
+		cocos2d::Vector<cocos2d::SpriteFrame *> arg0;
+		double arg1;
+		unsigned int arg2;
+		ok &= jsval_to_ccvector(cx, argv[0], &arg0);
+		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
+		ok &= jsval_to_uint32(cx, argv[2], &arg2);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Animation_initWithSpriteFrames : Error processing arguments");
+		bool ret = cobj->initWithSpriteFrames(arg0, arg1, arg2);
 		jsval jsret = JSVAL_NULL;
 		jsret = BOOLEAN_TO_JSVAL(ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -49769,9 +49765,9 @@ bool js_cocos2dx_TextFieldTTF_getColorSpaceHolder(JSContext *cx, uint32_t argc, 
 	cocos2d::TextFieldTTF* cobj = (cocos2d::TextFieldTTF *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TextFieldTTF_getColorSpaceHolder : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::Color3B& ret = cobj->getColorSpaceHolder();
+		const cocos2d::Color4B& ret = cobj->getColorSpaceHolder();
 		jsval jsret = JSVAL_NULL;
-		jsret = cccolor3b_to_jsval(cx, ret);
+		jsret = cccolor4b_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -49841,20 +49837,36 @@ bool js_cocos2dx_TextFieldTTF_setColorSpaceHolder(JSContext *cx, uint32_t argc, 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::TextFieldTTF* cobj = (cocos2d::TextFieldTTF *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TextFieldTTF_setColorSpaceHolder : Invalid Native Object");
-	if (argc == 1) {
-		cocos2d::Color3B arg0;
-		ok &= jsval_to_cccolor3b(cx, argv[0], &arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TextFieldTTF_setColorSpaceHolder : Error processing arguments");
-		cobj->setColorSpaceHolder(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
 
-	JS_ReportError(cx, "js_cocos2dx_TextFieldTTF_setColorSpaceHolder : wrong number of arguments: %d, was expecting %d", argc, 1);
+	JSObject *obj = NULL;
+	cocos2d::TextFieldTTF* cobj = NULL;
+	obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cobj = (cocos2d::TextFieldTTF *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TextFieldTTF_setColorSpaceHolder : Invalid Native Object");
+	do {
+		if (argc == 1) {
+			cocos2d::Color4B arg0;
+			ok &= jsval_to_cccolor4b(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			cobj->setColorSpaceHolder(arg0);
+			JS_SET_RVAL(cx, vp, JSVAL_VOID);
+			return true;
+		}
+	} while(0);
+
+	do {
+		if (argc == 1) {
+			cocos2d::Color3B arg0;
+			ok &= jsval_to_cccolor3b(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			cobj->setColorSpaceHolder(arg0);
+			JS_SET_RVAL(cx, vp, JSVAL_VOID);
+			return true;
+		}
+	} while(0);
+
+	JS_ReportError(cx, "js_cocos2dx_TextFieldTTF_setColorSpaceHolder : wrong number of arguments");
 	return false;
 }
 bool js_cocos2dx_TextFieldTTF_detachWithIME(JSContext *cx, uint32_t argc, jsval *vp)
