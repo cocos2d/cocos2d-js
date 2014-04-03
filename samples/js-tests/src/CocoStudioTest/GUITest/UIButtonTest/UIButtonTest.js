@@ -43,7 +43,7 @@ var UIButtonEditorTest = UIBaseLayer.extend({
 
     touchEvent: function (sender, type) {
         switch (type) {
-            case ccui.Widget.TOUCH_BEGAN:
+            case ccui.Widget.TOUCH_BAGAN:
                 this._topDisplayText.setText("Touch Down");
                 break;
 

@@ -4,525 +4,394 @@
  *
  ************************************************************/
 
-var _p;
-
-/************************  Layers  *************************/
-
-_p = cc.Layer.prototype;
-_p._ctor = function() {
-	cc.Layer.prototype.init.call(this);
-};
-
-
-_p = cc.LayerColor.prototype;
-_p._ctor = function(color, w, h) {
-	color = color ||  cc.color(0, 0, 0, 255);
-	w = w === undefined ? cc.winSize.width : w;
-	h = h === undefined ? cc.winSize.height : h;
-
-	this.initWithColor(color, w, h);
-};
-
-
-_p = cc.LayerGradient.prototype;
-_p._ctor = function(start, end, v) {
-	start = start || cc.color(0,0,0,255);
-	end = end || cc.color(0,0,0,255);
-	v = v || cc.p(0, -1);
-
-	this.initWithColor(start, end, v);
-};
-
-
-_p = cc.LayerMultiplex.prototype;
-_p._ctor = function(layers) {
-	layers && layers.length ? this.initWithArray(layers) : this.init();
-};
-
-
-/************************  Sprite  *************************/
-
-_p = cc.Sprite.prototype;
-_p._ctor = function(fileName, rect) {
-	if (fileName === undefined) {
-		cc.Sprite.prototype.init.call(this);
-	}
-	else if (typeof(fileName) === "string") {
-		if (fileName[0] === "#") {
-			//init with a sprite frame name
-			var frameName = fileName.substr(1, fileName.length - 1);
-			this.initWithSpriteFrameName(frameName);
-		} else {
-			// Create with filename and rect
-            rect ? this.initWithFile(fileName, rect) : this.initWithFile(fileName);
-		}
-	}
-	else if (typeof(fileName) === "object") {
-		if (fileName instanceof cc.Texture2D) {
-			//init with texture and rect
-			rect ? this.initWithTexture(fileName, rect) : this.initWithTexture(fileName);
-		} else if (fileName instanceof cc.SpriteFrame) {
-			//init with a sprite frame
-			this.initWithSpriteFrame(fileName);
+_cc = {};
+_cc.copyStatics = function (origin, target) {
+	for ( var key in origin ) {
+		if ( key != "extend" ) {
+			target[key] = origin[key];
 		}
 	}
 };
 
-_p = cc.SpriteBatchNode.prototype;
-_p._ctor = function(fileImage, capacity) {
-	capacity = capacity || cc.DEFAULT_SPRITE_BATCH_CAPACITY;
-	if (typeof(fileImage) == "string")
-		this.initWithFile(fileImage, capacity);
-	else
-		this.initWithTexture(fileImage, capacity);
+// Layers
+_cc.Layer = cc.Layer;
+cc.Layer = _cc.Layer.extend({
+    ctor: function() {
+	    _cc.Layer.prototype.ctor.call(this);
+
+		this.setAnchorPoint(cc.p(0.5, 0.5));
+	    this.ignoreAnchorPointForPosition(true);
+	    this.setContentSize(cc.winSize);
+    }
+});
+_cc.copyStatics(_cc.Layer, cc.Layer);
+
+
+_cc.LayerColor = cc.LayerColor;
+cc.LayerColor = _cc.LayerColor.extend({
+	ctor: function(color, w, h) {
+		_cc.LayerColor.prototype.ctor.call(this);
+
+		color = color ||  cc.color(0, 0, 0, 255);
+		w = w === undefined ? cc.winSize.width : w;
+		h = h === undefined ? cc.winSize.height : h;
+
+		this.setColor(color);
+		this.setContentSize(w, h);
+	}
+});
+_cc.copyStatics(_cc.LayerColor, cc.LayerColor);
+
+
+_cc.LayerGradient = cc.LayerGradient;
+cc.LayerGradient = _cc.LayerGradient.extend({
+	ctor: function(start, end, v) {
+		_cc.LayerGradient.prototype.ctor.call(this);
+
+		start = start || cc.color(0,0,0,255);
+		end = end || cc.color(0,0,0,255);
+		v = v || cc.p(0, -1);
+
+		this.setStartColor(start);
+		this.setEndColor(end);
+		this.setVector(v);
+		this.setColor(cc.color(start.r, start.g, start.b, 255));
+	}
+});
+_cc.copyStatics(_cc.LayerGradient, cc.LayerGradient);
+
+
+/*
+_cc.LayerMultiplex = cc.LayerMultiplex;
+cc.LayerMultiplex = _cc.LayerMultiplex.extend({
+	ctor: function(layers) {
+		_cc.LayerMultiplex.prototype.ctor.call(this);
+
+		var l = layers ? layers.length : 0;
+		for (var i = 0; i < l; i++) {
+			this.addLayer(layers[i]);
+		}
+		if (l > 0) {
+			this.switchTo(0);
+		}
+	}
+});
+ _cc.copyStatics(_cc.LayerMultiplex, cc.LayerMultiplex);*/
+
+
+// Sprite
+_cc.Sprite = cc.Sprite;
+cc.Sprite = _cc.Sprite.extend({
+	ctor: function(fileName, rect) {
+		_cc.Sprite.prototype.ctor.call(this);
+
+		if (fileName === undefined) {
+			// Serves as init function
+			rect = rect || cc.rect();
+			this.setTextureRect(rect);
+		}
+		else if (typeof(fileName) === "string") {
+			if (fileName[0] === "#") {
+				//init with a sprite frame name
+				var frameName = fileName.substr(1, fileName.length - 1);
+				var spriteFrame = cc.spriteFrameCache.getSpriteFrame(frameName);
+				this.setTexture(spriteFrame.getTexture());
+				this.setTextureRect(spriteFrame.getRect());
+				this.setSpriteFrame(spriteFrame);
+			} else {
+				// Create with filename and rect
+				this.setTexture(fileName);
+				if (rect)
+					this.setTextureRect(rect);
+			}
+		}
+		else if (typeof(fileName) === "object") {
+			if (fileName instanceof cc.Texture2D) {
+				//init with texture and rect
+				var texSize = fileName.getContentSize();
+				rect = rect || cc.rect(0, 0, texSize.width, texSize.height);
+				this.setTexture(fileName);
+				this.setTextureRect(rect);
+			} else if (fileName instanceof cc.SpriteFrame) {
+				//init with a sprite frame
+				this.setTexture(fileName.getTexture());
+				this.setTextureRect(fileName.getRect());
+				this.setSpriteFrame(fileName);
+			}
+		}
+	}
+});
+_cc.copyStatics(_cc.Sprite, cc.Sprite);
+
+
+// SpriteBatchNode - Doesn't work until Cocos2d-x provide correct set functions
+/*
+_cc.SpriteBatchNode = cc.SpriteBatchNode;
+cc.SpriteBatchNode = _cc.SpriteBatchNode.extend({
+	ctor: function(fileImage, capacity) {
+		_cc.SpriteBatchNode.prototype.ctor.call(this);
+
+		capacity = capacity || cc.DEFAULT_SPRITE_BATCH_CAPACITY;
+		var texture2D;
+		if (typeof(fileImage) == "string") {
+			texture2D = cc.textureCache.textureForKey(fileImage);
+			if (!texture2D)
+				texture2D = cc.textureCache.addImage(fileImage);
+		}
+		else if (fileImage instanceof cc.Texture2D)
+			texture2D  = fileImage;
+
+	    texture2D && this.setTexture(texture2D);
+	    this.setCapacity(capacity);
+
+	}
+});
+ _cc.copyStatics(_cc.SpriteBatchNode, cc.SpriteBatchNode);*/
+
+
+// Menu
+_cc.Menu = cc.Menu;
+cc.Menu = _cc.Menu.extend({
+	ctor: function(menuItems) {
+		_cc.Menu.prototype.ctor.call(this);
+
+		if((arguments.length > 0) && (arguments[arguments.length-1] == null))
+			cc.log("parameters should not be ending with null in Javascript");
+
+		var argc = arguments.length, items;
+		if (argc == 0) {
+			items = [];
+		} else if (argc == 1) {
+			if (menuItems instanceof Array) {
+				items = menuItems;
+			}
+			else items = [];
+		}
+		else if (argc > 1) {
+			var items = [];
+			for (var i = 0; i < argc; i++) {
+				if (arguments[i])
+					items.push(arguments[i]);
+			}
+		}
+
+		var winSize = cc.winSize;
+		this.setPosition(winSize.width / 2, winSize.height / 2);
+		this.setContentSize(winSize);
+		this.setAnchorPoint(0.5, 0.5);
+		this.ignoreAnchorPointForPosition(true);
+
+		for (var i = 0; i < items.length; i++)
+			this.addChild(items[i], i);
+
+		this.setCascadeColorEnabled(true);
+		this.setCascadeOpacityEnabled(true);
+
+		var touchListener = cc.EventListener.create({
+			event: cc.EventListener.TOUCH_ONE_BY_ONE,
+			swallowTouches: true,
+			onTouchBegan: this.onTouchBegan,
+			onTouchMoved: this.onTouchMoved,
+			onTouchEnded: this.onTouchEnded,
+			onTouchCancelled: this.onTouchCancelled
+		});
+		cc.eventManager.addListener(touchListener, this);
+	}
+});
+_cc.copyStatics(_cc.Menu, cc.Menu);
+cc.Menu.create = _cc.Menu.create;
+
+
+// Menu items
+var _initWithCb = function(callback, target) {
+	if (target !== undefined) {
+		this.setAnchorPoint(0.5, 0.5);
+		this.setTarget(callback, target);
+		this.setEnabled(true);
+	}
+	else if (callback !== undefined) {
+		this.setAnchorPoint(0.5, 0.5);
+		this.setCallback(callback);
+		this.setEnabled(true);
+	}
+};
+var _initLabel = function(label) {
+	if (label) {
+		this.setScale(1);
+		this.setDisabledColor(cc.color(126,126,126));
+		this.setLabel(label);
+		this.setCascadeColorEnabled(true);
+		this.setCascadeOpacityEnabled(true);
+	}
 };
 
+_cc.MenuItem = cc.MenuItem;
+cc.MenuItem = _cc.MenuItem.extend({
+	ctor: function(callback, target) {
+		_cc.MenuItem.prototype.ctor.call(this);
 
-/************************  Menu and menu items  *************************/
-
-_p = cc.Menu.prototype;
-_p._ctor = function(menuItems) {
-	if((arguments.length > 0) && (arguments[arguments.length-1] == null))
-		cc.log("parameters should not be ending with null in Javascript");
-
-	var argc = arguments.length, items;
-	if (argc == 0) {
-		items = [];
-	} else if (argc == 1) {
-		if (menuItems instanceof Array) {
-			items = menuItems;
-		}
-		else items = [];
+		_initWithCb.call(this, callback, target);
 	}
-	else if (argc > 1) {
-		var items = [];
+});
+_cc.copyStatics(_cc.MenuItem, cc.MenuItem);
+cc.MenuItem.create = _cc.MenuItem.create;
+
+/*
+_cc.MenuItemLabel = cc.MenuItemLabel;
+cc.MenuItemLabel = _cc.MenuItemLabel.extend({
+	ctor: function(label, callback, target) {
+		_cc.MenuItemLabel.prototype.ctor.call(this);
+
+		_initWithCb.call(this, callback, target);
+		_initLabel.call(this, label);
+	}
+});
+ _cc.copyStatics(_cc.MenuItemLabel, cc.MenuItemLabel);
+
+_cc.MenuItemAtlasFont = cc.MenuItemAtlasFont;
+cc.MenuItemAtlasFont = _cc.MenuItemAtlasFont.extend({
+	ctor: function(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
+		_cc.MenuItemAtlasFont.prototype.ctor.call(this);
+
+		_initWithCb.call(this, callback, target);
+		if (value && value.length > 0) {
+			var label = cc.LabelAtlas.create(value, charMapFile, itemWidth, itemHeight, startCharMap);
+
+			_initLabel.call(this, label);
+		}
+	}
+});
+ _cc.copyStatics(_cc.MenuItemAtlasFont, cc.MenuItemAtlasFont);*/
+
+_cc.MenuItemFont = cc.MenuItemFont;
+cc.MenuItemFont = _cc.MenuItemFont.extend({
+	ctor: function(value, callback, target) {
+		_cc.MenuItemFont.prototype.ctor.call(this);
+
+		_initWithCb.call(this, callback, target);
+		var label;
+		if(value && value.length > 0) {
+			var fontName = cc.MenuItemFont.fontName;
+			var fontSize = cc.MenuItemFont.fontSize;
+			label = cc.LabelTTF.create(value, fontName, fontSize);
+
+			if (label) {
+				_initLabel.call(this, label);
+				this.setFontName(fontName);
+				this.setFontSize(fontSize);
+			}
+		}
+	}
+});
+_cc.copyStatics(_cc.MenuItemFont, cc.MenuItemFont);
+cc.MenuItemFont.create = _cc.MenuItemFont.create;
+
+
+/*
+_cc.MenuItemSprite = cc.MenuItemSprite;
+cc.MenuItemSprite = _cc.MenuItemSprite.extend({
+	ctor: function(normalSprite, selectedSprite, three, four, five) {
+		_cc.MenuItemSprite.prototype.ctor.call(this);
+
+		var argc = arguments.length;
+		if (argc > 1) {
+			normalSprite = arguments[0];
+			selectedSprite = arguments[1];
+			var disabledImage, target, callback;
+			if (argc == 5) {
+				disabledImage = arguments[2];
+				callback = arguments[3];
+				target = arguments[4];
+			} else if (argc == 4 && typeof arguments[3] === "function") {
+				disabledImage = arguments[2];
+				callback = arguments[3];
+			} else if (argc == 4 && typeof arguments[2] === "function") {
+				target = arguments[3];
+				callback = arguments[2];
+			} else if (argc <= 2) {
+				disabledImage = arguments[2];
+			}
+
+			_initWithCb.call(this, callback, target);
+
+			normalSprite && this.setNormalImage(normalSprite);
+			selectedSprite && this.setSelectedImage(selectedSprite);
+			disabledImage && this.setDisabledImage(disabledImage);
+
+			if(normalSprite)
+				this.setContentSize(normalSprite.getContentSize());
+			this.setCascadeColorEnabled(true);
+			this.setCascadeOpacityEnabled(true);
+		}
+	}
+});
+ _cc.copyStatics(_cc.MenuItemSprite, cc.MenuItemSprite);
+
+_cc.MenuItemImage = cc.MenuItemImage;
+cc.MenuItemImage = _cc.MenuItemImage.extend({
+	ctor: function(normalImage, selectedImage, three, four, five) {
+		var normalSprite = null,
+			selectedSprite = null,
+			disabledSprite = null,
+			callback = null,
+			target = null;
+
+		if (normalImage === undefined) {
+			cc.MenuItemSprite.prototype.ctor.call(this);
+		}
+		else {
+			normalSprite = cc.Sprite.create(normalImage);
+			selectedImage &&
+			(selectedSprite = cc.Sprite.create(selectedImage));
+			if (four === undefined)  {
+				callback = three;
+			}
+			else if (five === undefined) {
+				callback = three;
+				target = four;
+			}
+			else if (five) {
+				disabledSprite = cc.Sprite.create(three);
+				callback = four;
+				target = five;
+			}
+			cc.MenuItemSprite.prototype.ctor.call(this, normalSprite, selectedSprite, disabledSprite, callback, target);
+		}
+	}
+});
+ _cc.copyStatics(_cc.MenuItemImage, cc.MenuItemImage);*/
+
+_cc.MenuItemToggle = cc.MenuItemToggle;
+cc.MenuItemToggle = _cc.MenuItemToggle.extend({
+	ctor: function() {
+		_cc.MenuItemToggle.prototype.ctor.call(this);
+
+		var argc =  arguments.length, callback, target;
+		// passing callback.
+		if (typeof arguments[argc-2] === 'function') {
+			callback = arguments[argc-2];
+			target = arguments[argc-1];
+			argc = argc - 2;
+		} else if(typeof arguments[argc-1] === 'function'){
+			callback = arguments[argc-1];
+			argc = argc-1;
+		}
+		_initWithCb.call(this, callback, target);
+
 		for (var i = 0; i < argc; i++) {
-			if (arguments[i])
-				items.push(arguments[i]);
-		}
-	}
-
-	items && items.length > 0 && this.initWithArray(items);
-};
-
-
-_p = cc.MenuItem.prototype;
-_p._ctor = function(callback, target) {
-	callback && this.initWithCallback(callback.bind(target));
-};
-
-_p = cc.MenuItemLabel.prototype;
-_p._ctor = function(label, callback, target) {
-	callback = callback ? callback.bind(target) : null;
-	label && this.initWithLabel(label, callback);
-};
-
-_p = cc.MenuItemAtlasFont.prototype;
-_p._ctor = function(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
-	callback = callback ? callback.bind(target) : null;
-	value !== undefined && this.initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, callback);
-};
-
-_p = cc.MenuItemFont.prototype;
-_p._ctor = function(value, callback, target) {
-	callback = callback ? callback.bind(target) : null;
-	value !== undefined && this.initWithString(value, callback);
-};
-
-_p = cc.MenuItemSprite.prototype;
-_p._ctor = function(normalSprite, selectedSprite, three, four, five) {
-	var argc = arguments.length;
-	if (argc > 1) {
-		normalSprite = arguments[0];
-		selectedSprite = arguments[1];
-		var disabledImage, target, callback;
-		if (argc == 5) {
-			disabledImage = arguments[2];
-			callback = arguments[3];
-			target = arguments[4];
-		} else if (argc == 4 && typeof arguments[3] === "function") {
-			disabledImage = arguments[2];
-			callback = arguments[3];
-		} else if (argc == 4 && typeof arguments[2] === "function") {
-			target = arguments[3];
-			callback = arguments[2];
-		} else if (argc <= 2) {
-			disabledImage = arguments[2];
-		}
-		callback = callback ? callback.bind(target) : null;
-		this.initWithNormalSprite(normalSprite, selectedSprite, disabledImage, callback);
-	}
-};
-
-_p = cc.MenuItemImage.prototype;
-_p._ctor = function(normalImage, selectedImage, three, four, five) {
-	var disabledImage = null,
-		callback = null,
-		target = null;
-
-	if (normalImage === undefined) {
-		cc.MenuItemImage.prototype.init.call(this);
-	}
-	else {
-		if (four === undefined)  {
-			callback = three;
-		}
-		else if (five === undefined) {
-			callback = three;
-			target = four;
-		}
-		else if (five) {
-			disabledImage = three;
-			callback = four;
-			target = five;
-		}
-		callback = callback ? callback.bind(target) : null;
-		this.initWithNormalImage(normalImage, selectedImage, disabledImage, callback);
-	}
-};
-
-_p = cc.MenuItemToggle.prototype;
-_p._ctor = function() {
-	var argc =  arguments.length, callback, target;
-	// passing callback.
-	if (typeof arguments[argc-2] === 'function') {
-		callback = arguments[argc-2];
-		target = arguments[argc-1];
-		argc = argc - 2;
-	} else if(typeof arguments[argc-1] === 'function'){
-		callback = arguments[argc-1];
-		argc = argc - 1;
-	}
-
-	if(argc > 0) {
-		this.initWithItem(arguments[0]);
-
-		for (var i = 1; i < argc; i++) {
 			if (arguments[i])
 				this.addSubItem(arguments[i]);
 		}
-		this.setCallback(callback, target);
-	}
-	else {
-		callback = callback ? callback.bind(target) : null;
-		this.initWithCallback(callback);
-	}
-};
-
-
-/************************  Actions  *************************/
-
-cc.Speed.prototype._ctor = function(action, speed) {
-	speed !== undefined && this.initWithAction(action, speed);
-};
-
-cc.Follow.prototype._ctor = function (followedNode, rect) {
-	if(followedNode)
-		rect ? ret.initWithTarget(followedNode, rect)
-			 : ret.initWithTarget(followedNode);
-};
-
-cc.OrbitCamera.prototype._ctor = function (t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX) {
-	deltaAngleX !== undefined && this.initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX);
-};
-
-cc.CardinalSplineTo.prototype._ctor = cc.CardinalSplineBy.prototype._ctor = function(duration, points, tension) {
-	tension !== undefined && this.initWithDuration(duration, points, tension);
-};
-
-cc.CatmullRomTo.prototype._ctor = cc.CatmullRomBy.prototype._ctor = function(dt, points) {
-	points && this.initWithDuration(dt, points);
-};
-
-_p = cc.ActionEase.prototype;
-_p._ctor = function(action) {
-	action && this.initWithAction(action);
-};
-cc.EaseExponentialIn._ctor
-	= cc.EaseExponentialOut._ctor
-	= cc.EaseExponentialInOut._ctor
-	= cc.EaseSineIn._ctor
-	= cc.EaseSineOut._ctor
-	= cc.EaseSineInOut._ctor
-	= cc.EaseBounce._ctor
-	= cc.EaseBounceIn._ctor
-	= cc.EaseBounceOut._ctor
-	= cc.EaseBounceInOut._ctor
-	= cc.EaseBackIn._ctor
-	= cc.EaseBackOut._ctor
-	= cc.EaseBackInOut._ctor
-	= _p._ctor;
-
-_p = cc.EaseRateAction.prototype;
-_p._ctor = function(action, rate) {
-	rate !== undefined && this.initWithAction(action, rate);
-};
-cc.EaseIn.prototype._ctor
-	= cc.EaseOut.prototype._ctor
-	= cc.EaseInOut.prototype._ctor
-	= _p._ctor;
-
-_p = cc.EaseElastic.prototype;
-_p._ctor = function(action, period) {
-	if( action ) {
-		period !== undefined ? this.initWithAction(action, period)
-							 : this.initWithAction(action);
-	}
-};
-cc.EaseElasticIn._ctor
-	= cc.EaseElasticOut._ctor
-	= cc.EaseElasticInOut._ctor
-	= _p._ctor;
-
-
-cc.ReuseGrid.prototype._ctor = function(times) {
-	times !== undefined && this.initWithTimes(times);
-};
-
-cc.GridAction.prototype._ctor
-	= cc.Grid3DAction.prototype._ctor
-	= cc.TiledGrid3DAction.prototype._ctor
-	= cc.PageTurn3D.prototype._ctor
-	= cc.FadeOutTRTiles.prototype._ctor
-	= cc.FadeOutBLTiles.prototype._ctor
-	= cc.FadeOutUpTiles.prototype._ctor
-	= cc.FadeOutDownTiles.prototype._ctor
-	= function(duration, gridSize) {
-	gridSize && this.initWithDuration(duration, gridSize);
-};
-
-cc.Twirl.prototype._ctor = function(duration, gridSize, position, twirls, amplitude) {
-	amplitude !== undefined && this.initWithDuration(duration, gridSize, position, twirls, amplitude);
-};
-
-cc.Waves.prototype._ctor = function(duration, gridSize, waves, amplitude, horizontal, vertical) {
-	vertical !== undefined && this.initWithDuration(duration, gridSize, waves, amplitude, horizontal, vertical);
-};
-
-cc.Liquid.prototype._ctor = function(duration, gridSize, waves, amplitude) {
-	amplitude !== undefined && this.initWithDuration(duration, gridSize, waves, amplitude);
-};
-
-cc.Shaky3D.prototype._ctor = function(duration, gridSize, range, shakeZ) {
-	shakeZ !== undefined && this.initWithDuration(duration, gridSize, range, shakeZ);
-};
-
-cc.Ripple3D.prototype._ctor = function(duration, gridSize, position, radius, waves, amplitude) {
-	amplitude !== undefined && this.initWithDuration(duration, gridSize, position, radius, waves, amplitude);
-};
-
-cc.Lens3D.prototype._ctor = function(duration, gridSize, position, radius) {
-	radius !== undefined && this.initWithDuration(duration, gridSize, position, radius);
-};
-
-cc.FlipY3D.prototype._ctor
-	= cc.FlipX3D.prototype._ctor
-	= function(duration) {
-	duration !== undefiend && this.initWithDuration(duration, cc.size(1, 1));
-};
-
-cc.Waves3D.prototype._ctor = function(duration, gridSize, waves, amplitude) {
-	amplitude !== undefined && this.initWithDuration(duration, gridSize, waves, amplitude);
-};
-
-cc.RemoveSelf.prototype._ctor = function(isNeedCleanUp) {
-	isNeedCleanUp !== undefined && this.init(isNeedCleanUp);
-};
-
-cc.FlipX.prototype._ctor = function(flip) {
-	flip !== undefined && this.initWithFlipX(flip);
-};
-
-cc.FlipY.prototype._ctor = function(flip) {
-	flip !== undefined && this.initWithFlipY(flip);
-};
-
-cc.Place.prototype._ctor = function(pos, y) {
-	if (pos !== undefined) {
-		if (pos.x !== undefined) {
-			y = pos.y;
-			pos = pos.x;
+		if (argc > 1) {
+			this.setSelectedIndex(1);
 		}
-		this.initWithPosition(pos, y);
+		this.setSelectedIndex(0);
+		this.setCascadeColorEnabled(true);
+		this.setCascadeOpacityEnabled(true);
 	}
-};
+});
+_cc.copyStatics(_cc.MenuItemToggle, cc.MenuItemToggle);
 
-cc.CallFunc.prototype._ctor = function(selector, selectorTarget, data) {
-	if(selector !== undefined){
-		if(selectorTarget === undefined)
-			this.initWithFunction(selector);
-		else this.initWithFunction(selector, selectorTarget, data);
-	}
-};
-
-cc.ActionInterval.prototype._ctor = function(d) {
-	d !== undefined && this.initWithDuration(d);
-};
-
-cc.Sequence.prototype._ctor = function(tempArray) {
-	var paramArray = (tempArray instanceof Array) ? tempArray : arguments;
-	var last = paramArray.length - 1;
-	if ((last >= 0) && (paramArray[last] == null))
-		cc.log("parameters should not be ending with null in Javascript");
-
-	if (last >= 0) {
-		var prev = paramArray[0];
-		for (var i = 1; i < last; i++) {
-			if (paramArray[i]) {
-				prev = cc.Sequence.create(prev, paramArray[i]);
-			}
-		}
-		this.initWithTwoActions(prev, paramArray[last]);
-	}
-};
-
-cc.Repeat.prototype._ctor = function(action, times) {
-	times !== undefined && this.initWithAction(action, times);
-};
-
-cc.RepeatForever.prototype._ctor = function(action) {
-	action && this.initWithAction(action);
-};
-
-cc.Spawn.prototype._ctor = function(tempArray) {
-	var paramArray = (tempArray instanceof Array) ? tempArray : arguments;
-	var last = paramArray.length - 1;
-	if ((last >= 0) && (paramArray[last] == null))
-		cc.log("parameters should not be ending with null in Javascript");
-
-	if (last >= 0) {
-		var prev = paramArray[0];
-		for (var i = 1; i < last; i++) {
-			if (paramArray[i]) {
-				prev = cc.Spawn.create(prev, paramArray[i]);
-			}
-		}
-		this.initWithTwoActions(prev, paramArray[last]);
-	}
-};
-
-cc.RotateTo.prototype._ctor = cc.RotateBy.prototype._ctor = function(duration, deltaAngleX, deltaAngleY) {
-	if (deltaAngleX !== undefined) {
-		if (deltaAngleY !== undefined)
-			this.initWithDuration(duration, deltaAngleX, deltaAngleY);
-		else
-			this.initWithDuration(duration, deltaAngleX);
-	}
-};
-
-cc.MoveBy.prototype._ctor = cc.MoveTo.prototype._ctor = function(duration, pos, y) {
-	if (pos !== undefined) {
-		if(pos.x === undefined) {
-			pos = cc.p(pos, y);
-		}
-
-		this.initWithDuration(duration, pos);
-	}
-};
-
-cc.SkewTo.prototype._ctor = cc.SkewBy.prototype._ctor = function(t, sx, sy) {
-	sy !== undefined && this.initWithDuration(t, sx, sy);
-};
-
-cc.JumpBy.prototype._ctor = cc.JumpTo.prototype._ctor = function(duration, position, y, height, jumps) {
-	if (height !== undefined) {
-		if (jumps !== undefined) {
-			position = cc.p(position, y);
-		}
-		else {
-			jumps = height;
-			height = y;
-		}
-		this.initWithDuration(duration, position, height, jumps);
-	}
-};
-
-cc.BezierBy.prototype._ctor = cc.BezierTo.prototype._ctor = function(t, c) {
-	c && this.initWithDuration(t, c);
-};
-
-cc.ScaleTo.prototype._ctor = cc.ScaleBy.prototype._ctor = function(duration, sx, sy) {
-	if (sx !== undefined) {
-		if (sy !== undefined)
-			this.initWithDuration(duration, sx, sy);
-		else this.initWithDuration(duration, sx);
-	}
-};
-
-cc.Blink.prototype._ctor = function(duration, blinks) {
-	blinks !== undefined && this.initWithDuration(duration, blinks);
-};
-
-cc.FadeTo.prototype._ctor = function(duration, opacity) {
-	opacity !== undefined && this.initWithDuration(duration, opacity);
-};
-
-cc.FadeIn.prototype._ctor = cc.FadeOut.prototype._ctor = function(duration) {
-	duration !== undefined && this.initWithDuration(duration);
-};
-
-cc.TintTo.prototype._ctor = cc.TintBy.prototype._ctor = function(duration, red, green, blue) {
-	blue !== undefined && this.initWithDuration(duration, red, green, blue);
-};
-
-cc.DelayTime.prototype._ctor = function(duration) {
-	duration !== undefined && this.initWithDuration(duration);
-};
-/*
-cc.ReverseTime.prototype._ctor = function(action) {
-	action && this.initWithAction(action);
-};*/
-
-cc.Animate.prototype._ctor = function(animation) {
-	animation && this.initWithAnimation(animation);
-};
-
-cc.TargetedAction.prototype._ctor = function(target, action) {
-	action && this.initWithTarget(target, action);
-};
-
-cc.ProgressTo.prototype._ctor = function(duration, percent) {
-	percent !== undefined && this.initWithDuration(duration, percent);
-};
-
-cc.ProgressFromTo.prototype._ctor = function(duration, fromPercentage, toPercentage) {
-	toPercentage !== undefined && this.initWithDuration(duration, fromPercentage, toPercentage);
-};
-
-cc.SplitCols.prototype._ctor = cc.SplitRows.prototype._ctor = function(duration, rowsCols) {
-	rowsCols !== undefined && this.initWithDuration(duration, rowsCols);
-};
-
-cc.JumpTiles3D.prototype._ctor = function(duration, gridSize, numberOfJumps, amplitude) {
-	amplitude !== undefined && this.initWithDuration(duration, gridSize, numberOfJumps, amplitude);
-};
-
-cc.WavesTiles3D.prototype._ctor = function(duration, gridSize, waves, amplitude) {
-	amplitude !== undefined && this.initWithDuration(duration, gridSize, waves, amplitude);
-};
-
-cc.TurnOffTiles.prototype._ctor = function(duration, gridSize, seed) {
-	if (gridSize !== undefined) {
-		seed = seed || 0;
-		this.initWithDuration(duration, gridSize, seed);
-	}
-};
-
-cc.ShakyTiles3D.prototype._ctor = function(duration, gridSize, range, shakeZ) {
-	shakeZ !== undefined && this.initWithDuration(duration, gridSize, range, shakeZ);
-};
-
-cc.ShatteredTiles3D.prototype._ctor = function(duration, gridSize, range, shatterZ) {
-	shatterZ !== undefined && this.initWithDuration(duration, gridSize, range, shatterZ);
-};
-
-cc.ShuffleTiles.prototype._ctor = function(duration, gridSize, seed) {
-	seed !== undefined && this.initWithDuration(duration, gridSize, seed);
-};
-
-cc.ActionTween.prototype._ctor = function(duration, key, from, to) {
-	to !== undefined && this.initWithDuration(duration, key, from, to);
-};
 
 
 
@@ -533,7 +402,6 @@ cc.ActionTween.prototype._ctor = function(duration, key, from, to) {
  *
  ************************************************************/
 
-cc.Sprite._create = cc.Sprite.create;
 /**
  * Create a sprite with image path or frame name or texture or spriteFrame.
  * @constructs
@@ -564,7 +432,7 @@ cc.Sprite.create = function (fileName, rect) {
     var sprite;
     
     if (arguments.length == 0) {
-        sprite = cc.Sprite._create();
+        sprite = _cc.Sprite.create();
         return sprite;
     }
     
@@ -573,10 +441,10 @@ cc.Sprite.create = function (fileName, rect) {
             //init with a sprite frame name
             var frameName = fileName.substr(1, fileName.length - 1);
             var spriteFrame = cc.spriteFrameCache.getSpriteFrame(frameName);
-            sprite = cc.Sprite.createWithSpriteFrame(spriteFrame);
+            sprite = _cc.Sprite.createWithSpriteFrame(spriteFrame);
         } else {
             // Create with filename and rect
-            sprite = rect ? cc.Sprite._create(fileName, rect) : cc.Sprite._create(fileName);
+            sprite = rect ? _cc.Sprite.create(fileName, rect) : _cc.Sprite.create(fileName);
         }
         if (sprite)
             return sprite;
@@ -586,10 +454,10 @@ cc.Sprite.create = function (fileName, rect) {
     if (typeof(fileName) === "object") {
         if (fileName instanceof cc.Texture2D) {
             //init  with texture and rect
-            sprite = rect ? cc.Sprite.createWithTexture(fileName, rect) : cc.Sprite.createWithTexture(fileName);
+            sprite = rect ? _cc.Sprite.createWithTexture(fileName, rect) : _cc.Sprite.createWithTexture(fileName);
         } else if (fileName instanceof cc.SpriteFrame) {
             //init with a sprite frame
-            sprite = cc.Sprite.createWithSpriteFrame(fileName);
+            sprite = _cc.Sprite.createWithSpriteFrame(fileName);
         }
         if (sprite)
             return  sprite;
@@ -839,7 +707,7 @@ cc.MenuItemToggle.create = function(/* var args */) {
 		var func = args.pop();
 
 		// create it with arguments,
-		var item = cc.MenuItemToggle._create.apply(this, args);
+		var item = _cc.MenuItemToggle._create.apply(this, args);
 
 		// then set the callback
 		if( obj !== null )
@@ -848,7 +716,7 @@ cc.MenuItemToggle.create = function(/* var args */) {
 			item.setCallback(func);
 		return item;
 	} else {
-		return cc.MenuItemToggle._create.apply(this, arguments);
+		return _cc.MenuItemToggle._create.apply(this, arguments);
 	}
 };
 

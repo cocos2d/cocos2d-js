@@ -217,6 +217,16 @@ point
 },
 
 /**
+ * @method isFlippedX
+ * @return {bool}
+ */
+isFlippedX : function (
+)
+{
+    return false;
+},
+
+/**
  * @method getCustomSize
  * @return {SizeObject}
  */
@@ -247,13 +257,15 @@ bool
 },
 
 /**
- * @method getLeftInParent
- * @return {float}
+ * @method getNodeByTag
+ * @param {int} arg0
+ * @return {cc.Node}
  */
-getLeftInParent : function (
+getNodeByTag : function (
+int 
 )
 {
-    return 0;
+    return cc.Node;
 },
 
 /**
@@ -274,6 +286,16 @@ setPositionPercent : function (
 point 
 )
 {
+},
+
+/**
+ * @method getNodes
+ * @return {Array}
+ */
+getNodes : function (
+)
+{
+    return new Array();
 },
 
 /**
@@ -314,6 +336,16 @@ isIgnoreContentAdaptWithSize : function (
 )
 {
     return false;
+},
+
+/**
+ * @method updateSizeAndPosition
+* @param {SizeObject} size
+*/
+updateSizeAndPosition : function(
+size 
+)
+{
 },
 
 /**
@@ -359,13 +391,13 @@ getPositionType : function (
 },
 
 /**
- * @method getWidgetType
- * @return {ccui.WidgetType}
+ * @method setName
+ * @param {char} arg0
  */
-getWidgetType : function (
+setName : function (
+char 
 )
 {
-    return 0;
 },
 
 /**
@@ -391,13 +423,13 @@ isEnabled : function (
 },
 
 /**
- * @method isFocused
- * @return {bool}
+ * @method removeNodeByTag
+ * @param {int} arg0
  */
-isFocused : function (
+removeNodeByTag : function (
+int 
 )
 {
-    return false;
 },
 
 /**
@@ -509,11 +541,15 @@ brightstyle
 },
 
 /**
- * @method setName
- * @param {char} arg0
- */
-setName : function (
-char 
+ * @method addNode
+* @param {cc.Node|cc.Node|cc.Node} node
+* @param {int|int} int
+* @param {int} int
+*/
+addNode : function(
+node,
+int,
+int 
 )
 {
 },
@@ -549,11 +585,31 @@ getTouchStartPos : function (
 },
 
 /**
+ * @method getLeftInParent
+ * @return {float}
+ */
+getLeftInParent : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setActionTag
  * @param {int} arg0
  */
 setActionTag : function (
 int 
+)
+{
+},
+
+/**
+ * @method ignoreContentAdaptWithSize
+ * @param {bool} arg0
+ */
+ignoreContentAdaptWithSize : function (
+bool 
 )
 {
 },
@@ -591,13 +647,13 @@ getTopInParent : function (
 },
 
 /**
- * @method updateSizeAndPosition
-* @param {SizeObject} size
-*/
-updateSizeAndPosition : function(
-size 
+ * @method getWidgetType
+ * @return {ccui.WidgetType}
+ */
+getWidgetType : function (
 )
 {
+    return 0;
 },
 
 /**
@@ -631,11 +687,19 @@ getSizeType : function (
 },
 
 /**
- * @method ignoreContentAdaptWithSize
- * @param {bool} arg0
+ * @method removeNode
+ * @param {cc.Node} arg0
  */
-ignoreContentAdaptWithSize : function (
-bool 
+removeNode : function (
+node 
+)
+{
+},
+
+/**
+ * @method removeAllNodes
+ */
+removeAllNodes : function (
 )
 {
 },
@@ -663,10 +727,10 @@ point
 },
 
 /**
- * @method isFlippedX
+ * @method isFocused
  * @return {bool}
  */
-isFlippedX : function (
+isFocused : function (
 )
 {
     return false;
@@ -3305,6 +3369,20 @@ PageView : function (
 ccui.Helper = {
 
 /**
+ * @method seekActionWidgetByActionTag
+ * @param {ccui.Widget} arg0
+ * @param {int} arg1
+ * @return {ccui.Widget}
+ */
+seekActionWidgetByActionTag : function (
+widget, 
+int 
+)
+{
+    return ccui.Widget;
+},
+
+/**
  * @method seekWidgetByTag
  * @param {ccui.Widget} arg0
  * @param {int} arg1
@@ -3319,14 +3397,14 @@ int
 },
 
 /**
- * @method seekActionWidgetByActionTag
+ * @method seekWidgetByRelativeName
  * @param {ccui.Widget} arg0
- * @param {int} arg1
+ * @param {char} arg1
  * @return {ccui.Widget}
  */
-seekActionWidgetByActionTag : function (
+seekWidgetByRelativeName : function (
 widget, 
-int 
+char 
 )
 {
     return ccui.Widget;

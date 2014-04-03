@@ -50,7 +50,8 @@ if (!cc.sys.isNative)
 ////////////////////////////////////////////////////////
 var PerformanceMainLayer = cc.LayerGradient.extend({
     ctor:function() {
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+        this._super();
+        this.init( cc.color(0,0,0,255), cc.color(98,99,117,255));
     },
 
     onEnter:function () {

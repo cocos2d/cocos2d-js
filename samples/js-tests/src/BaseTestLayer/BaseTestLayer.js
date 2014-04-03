@@ -41,6 +41,8 @@ var BaseTestLayer = cc.LayerGradient.extend({
 
         cc.sys.garbageCollect();
 
+        this._super();
+
         // default gradient colors
         var a = cc.color(98,99,117,255);
         var b = cc.color(0,0,0,255);
@@ -56,7 +58,7 @@ var BaseTestLayer = cc.LayerGradient.extend({
             b = cc.color(0,0,0,255);
         }
 
-	    this._super( a, b );
+        this.init( a, b );
 
         // Update winsize in case it was resized
         winSize = director.getWinSize();
