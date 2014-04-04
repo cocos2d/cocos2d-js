@@ -329,20 +329,6 @@ getFragmentShaderLog : function (
 },
 
 /**
- * @method initWithByteArrays
- * @param {char} arg0
- * @param {char} arg1
- * @return {bool}
- */
-initWithByteArrays : function (
-char, 
-char 
-)
-{
-    return false;
-},
-
-/**
  * @method bindAttribLocation
  * @param {char} arg0
  * @param {unsigned int} arg1
@@ -366,20 +352,6 @@ float,
 int 
 )
 {
-},
-
-/**
- * @method initWithFilenames
- * @param {String} arg0
- * @param {String} arg1
- * @return {bool}
- */
-initWithFilenames : function (
-str, 
-str 
-)
-{
-    return false;
 },
 
 /**
@@ -410,6 +382,34 @@ getVertexShaderLog : function (
 )
 {
     return ;
+},
+
+/**
+ * @method initWithByteArrays
+ * @param {char} arg0
+ * @param {char} arg1
+ * @return {bool}
+ */
+initWithByteArrays : function (
+char, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithFilenames
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+initWithFilenames : function (
+str, 
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -487,15 +487,13 @@ char
 },
 
 /**
- * @method setUniformLocationWith1i
- * @param {int} arg0
- * @param {int} arg1
+ * @method link
+ * @return {bool}
  */
-setUniformLocationWith1i : function (
-int, 
-int 
+link : function (
 )
 {
+    return false;
 },
 
 /**
@@ -579,13 +577,15 @@ int
 },
 
 /**
- * @method link
- * @return {bool}
+ * @method setUniformLocationWith1i
+ * @param {int} arg0
+ * @param {int} arg1
  */
-link : function (
+setUniformLocationWith1i : function (
+int, 
+int 
 )
 {
-    return false;
 },
 
 /**
@@ -11856,18 +11856,6 @@ bool
 activate : function (
 )
 {
-},
-
-/**
- * @method initWithCallback
- * @param {function} arg0
- * @return {bool}
- */
-initWithCallback : function (
-func 
-)
-{
-    return false;
 },
 
 /**
