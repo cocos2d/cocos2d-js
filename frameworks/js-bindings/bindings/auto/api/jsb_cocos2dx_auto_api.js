@@ -11859,6 +11859,18 @@ activate : function (
 },
 
 /**
+ * @method initWithCallback
+ * @param {function} arg0
+ * @return {bool}
+ */
+initWithCallback : function (
+func 
+)
+{
+    return false;
+},
+
+/**
  * @method isEnabled
  * @return {bool}
  */

@@ -2401,6 +2401,7 @@ void js_register_cocos2dx_MenuItem(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_MenuItem_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_MenuItem_activate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_MenuItem_initWithCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_MenuItem_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_MenuItem_selected(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_MenuItem_isSelected(JSContext *cx, uint32_t argc, jsval *vp);
