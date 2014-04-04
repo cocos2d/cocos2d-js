@@ -48,26 +48,26 @@ var TextureCacheTest = cc.Layer.extend({
 
         var texCache = cc.textureCache;
         // load textrues
-        texCache.addImage("res/Images/HelloWorld.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_01.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_02.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_03.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_04.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_05.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_06.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_07.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_08.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_09.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_10.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_11.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_12.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_13.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/grossini_dance_14.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/background1.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/background2.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/background3.png", this, this.loadingCallBack);
-        texCache.addImage("res/Images/blocks.png", this, this.loadingCallBack);
+        texCache.addImage("res/Images/HelloWorld.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_01.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_02.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_03.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_04.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_05.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_06.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_07.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_08.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_09.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_10.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_11.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_12.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_13.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/grossini_dance_14.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/background1.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/background2.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/background3.png", this.loadingCallBack, this);
+        texCache.addImage("res/Images/blocks.png", this.loadingCallBack, this);
     },
     addSprite:function () {
         var size = cc.director.getWinSize();

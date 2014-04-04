@@ -329,20 +329,6 @@ getFragmentShaderLog : function (
 },
 
 /**
- * @method initWithByteArrays
- * @param {char} arg0
- * @param {char} arg1
- * @return {bool}
- */
-initWithByteArrays : function (
-char, 
-char 
-)
-{
-    return false;
-},
-
-/**
  * @method bindAttribLocation
  * @param {char} arg0
  * @param {unsigned int} arg1
@@ -366,20 +352,6 @@ float,
 int 
 )
 {
-},
-
-/**
- * @method initWithFilenames
- * @param {String} arg0
- * @param {String} arg1
- * @return {bool}
- */
-initWithFilenames : function (
-str, 
-str 
-)
-{
-    return false;
 },
 
 /**
@@ -413,6 +385,34 @@ getVertexShaderLog : function (
 },
 
 /**
+ * @method initWithByteArrays
+ * @param {char} arg0
+ * @param {char} arg1
+ * @return {bool}
+ */
+initWithByteArrays : function (
+char, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithFilenames
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+initWithFilenames : function (
+str, 
+str 
+)
+{
+    return false;
+},
+
+/**
  * @method setUniformsForBuiltins
 * @param {kmMat4} kmmat4
 */
@@ -420,16 +420,6 @@ setUniformsForBuiltins : function(
 kmmat4 
 )
 {
-},
-
-/**
- * @method getMaterialProgramID
- * @return {unsigned int}
- */
-getMaterialProgramID : function (
-)
-{
-    return 0;
 },
 
 /**
@@ -497,15 +487,13 @@ char
 },
 
 /**
- * @method setUniformLocationWith1i
- * @param {int} arg0
- * @param {int} arg1
+ * @method link
+ * @return {bool}
  */
-setUniformLocationWith1i : function (
-int, 
-int 
+link : function (
 )
 {
+    return false;
 },
 
 /**
@@ -589,13 +577,15 @@ int
 },
 
 /**
- * @method link
- * @return {bool}
+ * @method setUniformLocationWith1i
+ * @param {int} arg0
+ * @param {int} arg1
  */
-link : function (
+setUniformLocationWith1i : function (
+int, 
+int 
 )
 {
-    return false;
 },
 
 /**
@@ -3145,11 +3135,13 @@ getDelayPerUnit : function (
  * @method initWithSpriteFrames
  * @param {Array} arg0
  * @param {float} arg1
+ * @param {unsigned int} arg2
  * @return {bool}
  */
 initWithSpriteFrames : function (
 array, 
-float 
+float, 
+int 
 )
 {
     return false;
@@ -16341,12 +16333,12 @@ bool
 
 /**
  * @method getColorSpaceHolder
- * @return {Color3BObject}
+ * @return {Color4BObject}
  */
 getColorSpaceHolder : function (
 )
 {
-    return cc.Color3B;
+    return cc.Color4B;
 },
 
 /**
@@ -16371,9 +16363,9 @@ float
 
 /**
  * @method setColorSpaceHolder
- * @param {Color3BObject} arg0
- */
-setColorSpaceHolder : function (
+* @param {Color4BObject|Color3BObject} color4b
+*/
+setColorSpaceHolder : function(
 color3b 
 )
 {

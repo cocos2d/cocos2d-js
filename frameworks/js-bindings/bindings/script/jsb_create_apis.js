@@ -524,6 +524,88 @@ cc.ActionTween.prototype._ctor = function(duration, key, from, to) {
 	to !== undefined && this.initWithDuration(duration, key, from, to);
 };
 
+cc.Animation.prototype._ctor = function(frames, delay, loops) {
+	if (frames === undefined) {
+		this.initWithSpriteFrames(null, 0);
+	} else {
+		var frame0 = frames[0];
+		delay = delay === undefined ? 0 : delay;
+		loops = loops === undefined ? 1 : loops;
+		if(frame0){
+			if (frame0 instanceof cc.SpriteFrame) {
+				//init with sprite frames , delay and loops.
+				this.initWithSpriteFrames(frames, delay, loops);
+			}else if(frame0 instanceof cc.AnimationFrame) {
+				//init with sprite frames , delay and loops.
+				this.initWithAnimationFrames(frames, delay, loops);
+			}
+		}
+	}
+};
+
+
+/************************  Nodes  *************************/
+
+cc.AtlasNode.prototype._ctor = function(tile, tileWidth, tileHeight, itemsToRender) {
+	itemsToRender !== undefined && this.initWithTileFile(tile, tileWidth, tileHeight, itemsToRender);
+};
+
+cc.ClippingNode.prototype._ctor = function(stencil) {
+	stencil = stencil || null;
+	cc.ClippingNode.prototype.init.call(this, stencil);
+};
+
+cc.DrawNode.prototype._ctor = function() {
+	this.init();
+};
+
+cc.LabelAtlas.prototype._ctor = function(strText, charMapFile, itemWidth, itemHeight, startCharMap) {
+	if (charMapFile) {
+		itemWidth = itemWidth || 0;
+		itemHeight = itemHeight || 0;
+		startCharMap = startCharMap || "";
+		cc.LabelAtlas.prototype.initWithString.call(this, strText, charMapFile, itemWidth, itemHeight, startCharMap);
+	}
+};
+
+cc.LabelBMFont.prototype._ctor = function(str, fntFile, width, alignment, imageOffset) {
+	if( str && fntFile ) {
+		width = width || 0;
+		alignment = alignment === undefined ? cc.TEXT_ALIGNMENT_LEFT : alignment;
+		imageOffset = imageOffset || cc.p(0, 0);
+		cc.LabelBMFont.prototype.initWithString.call(this, str, fntFile, width, alignment, imageOffset);
+	}
+};
+
+cc.LabelTTF.prototype._ctor = function(text, fontName, fontSize, dimensions, hAlignment, vAlignment) {
+	text = text || "";
+	if (fontName && fontName instanceof cc.FontDefinition) {
+		this.initWithStringAndTextDefinition(text, fontName);
+	}
+	else {
+		fontName = fontName || "Arial";
+		fontSize = fontSize || 16;
+		dimensions = dimensions || cc.size(0,0);
+		hAlignment = hAlignment === undefined ? cc.TEXT_ALIGNMENT_LEFT : hAlignment;
+		vAlignment = vAlignment === undefined ? cc.VERTICAL_TEXT_ALIGNMENT_TOP : vAlignment;
+		this.initWithString(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
+	}
+};
+
+
+/************************  Other classes  *************************/
+
+cc.GLProgram.prototype._ctor = function(vShaderFileName, fShaderFileName) {
+	vShaderFileName && fShaderFileName && this.init(vShaderFileName, fShaderFileName);
+};
+
+
+/************************  Cocostudio  *************************/
+
+ccs.Armature.prototype._ctor = function(name, parentBone) {
+	parentBone && ccs.Armature.prototype.init.call(this, name, parentBone);
+};
+
 
 
 
