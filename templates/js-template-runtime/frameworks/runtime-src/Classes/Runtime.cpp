@@ -266,9 +266,13 @@ bool reloadScript(const string& file)
     director->getScheduler()->unscheduleAll();
     director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     
-    auto core = ScriptingCore::getInstance();
+    
+    return ScriptingCore::getInstance()->runScript(modulefile.c_str());
+    
+    /*auto core = ScriptingCore::getInstance();
     core->reset();
-    return core->runScript(modulefile.c_str());
+    ScriptingCore::getInstance()->enableDebugger();
+    return core->runScript(modulefile.c_str());*/
 }
 
 
