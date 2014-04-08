@@ -32,12 +32,12 @@ float
 
 /**
  * @method initWithSpriteFrameName
-* @param {char|char} char
+* @param {String|String} str
 * @param {RectObject} rect
 * @return {bool|bool}
 */
 initWithSpriteFrameName : function(
-char,
+str,
 rect 
 )
 {
@@ -162,13 +162,13 @@ getOriginalSize : function (
 
 /**
  * @method initWithFile
-* @param {char|char|RectObject|char} char
-* @param {RectObject|RectObject|char} rect
+* @param {String|String|RectObject|String} str
+* @param {RectObject|RectObject|String} rect
 * @param {RectObject} rect
 * @return {bool|bool|bool|bool}
 */
 initWithFile : function(
-char,
+str,
 rect,
 rect 
 )
@@ -252,13 +252,13 @@ float
 
 /**
  * @method create
-* @param {char|RectObject|char|char} char
-* @param {RectObject|char|RectObject} rect
+* @param {String|RectObject|String|String} str
+* @param {RectObject|String|RectObject} rect
 * @param {RectObject} rect
 * @return {cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite}
 */
 create : function(
-char,
+str,
 rect,
 rect 
 )
@@ -268,12 +268,12 @@ rect
 
 /**
  * @method createWithSpriteFrameName
-* @param {char|char} char
+* @param {String|String} str
 * @param {RectObject} rect
 * @return {cc.Scale9Sprite|cc.Scale9Sprite}
 */
 createWithSpriteFrameName : function(
-char,
+str,
 rect 
 )
 {
