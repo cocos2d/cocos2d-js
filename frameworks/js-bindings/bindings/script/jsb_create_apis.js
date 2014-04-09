@@ -249,12 +249,10 @@ _p._ctor = function(fade, minSeg, stroke, color, texture){
 /************************  Particle  *************************/
 _p = cc.ParticleBatchNode.prototype;
 _p._ctor = function(fileImage, capacity){
-    if(fileImage !== undefined){
-        if (typeof(fileImage) == "string") {
-            this.init(fileImage, capacity);
-        } else if (fileImage instanceof cc.Texture2D) {
-            this.initWithTexture(fileImage, capacity);
-        }
+    if (typeof(fileImage) == "string") {
+        this.init(fileImage, capacity);
+    } else if (fileImage instanceof cc.Texture2D) {
+        this.initWithTexture(fileImage, capacity);
     }
 };
 
@@ -302,22 +300,28 @@ _p._ctor = function(fileName, rect){
 /************************  TextFieldTTF  *************************/
 _p = cc.TextFieldTTF.prototype;
 _p._ctor = function(placeholder, dimensions, alignment, fontName, fontSize){
-    if(fontSize !== undefined)
-        this.initWithPlaceHolder("", dimensions, alignment, fontName, fontSize);
+    if(fontSize !== undefined){
+    	this.initWithPlaceHolder("", dimensions, alignment, fontName, fontSize);
+    	if(placeholder)
+            this._placeHolder = placeholder;
+    }        
     else if(fontName === undefined && alignment !== undefined){
         fontName = arguments[1];
         fontSize = arguments[2];
         this.initWithString("", fontName, fontSize);
+        if(placeholder)
+            this._placeHolder = placeholder;
     }
 };
 
 /************************  RenderTexture  *************************/
 _p = cc.RenderTexture.prototype;
 _p._ctor = function(width, height, format, depthStencilFormat){
-    format = format || cc.Texture2D.PIXEL_FORMAT_RGBA8888;
-    depthStencilFormat = depthStencilFormat || 0;
-    if(width !== undefined && height !== undefined)
-    	this.initWithWidthAndHeight(width, height, format, depthStencilFormat);
+    if(width !== undefined && height !== undefined){
+        format = format || cc.Texture2D.PIXEL_FORMAT_RGBA8888;
+        depthStencilFormat = depthStencilFormat || 0;
+        this.initWithWidthAndHeight(width, height, format, depthStencilFormat);
+    }
 };
 
 /************************  Tile Map  *************************/
