@@ -266,8 +266,8 @@ bool reloadScript(const string& file)
     director->getScheduler()->unscheduleAll();
     director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     
-    
-    return ScriptingCore::getInstance()->runScript(modulefile.c_str());
+    ScriptingCore::getInstance()->reloadScript("src/app.js");
+    return ScriptingCore::getInstance()->reloadScript(modulefile.c_str());
     
     /*auto core = ScriptingCore::getInstance();
     core->reset();
