@@ -248,12 +248,7 @@ bool startScript()
 
 bool reloadScript(const string& file)
 {
-	string modulefile = file;
-	if (modulefile.empty())
-	{
-		modulefile = "main.js";
-	}
-    
+
 	auto director = Director::getInstance();
 	FontFNT::purgeCachedData();
 	if (director->getOpenGLView())
@@ -266,8 +261,15 @@ bool reloadScript(const string& file)
     director->getScheduler()->unscheduleAll();
     director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     
-    ScriptingCore::getInstance()->reloadScript("src/app.js");
-    return ScriptingCore::getInstance()->reloadScript(modulefile.c_str());
+    string modulefile = file;
+    bool reloadAll = false;
+	if (modulefile.empty())
+	{
+		modulefile = "main.js";
+        reloadAll = true;
+	}
+    
+    return ScriptingCore::getInstance()->reloadScript(modulefile.c_str(),reloadAll);
     
     /*auto core = ScriptingCore::getInstance();
     core->reset();
@@ -849,6 +851,9 @@ public:
 								bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
                             }
 						}
+                        if (0 == objectfiles.Size()) {
+                            reloadScript("");
+                        }
 						dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
 					}
 					dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
