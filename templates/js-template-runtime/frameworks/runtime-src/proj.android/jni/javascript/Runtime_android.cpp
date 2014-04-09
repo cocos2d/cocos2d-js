@@ -29,7 +29,7 @@ string getSDCardPath()
 	JniMethodInfo t;
     string sdcardPath("");
 
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/javascript/Cocos2dxActivity", "getSDCardPath", "()Ljava/lang/String;")) {
+    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/javascript/AppActivity", "getSDCardPath", "()Ljava/lang/String;")) {
         jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
         t.env->DeleteLocalRef(t.classID);
         sdcardPath = JniHelper::jstring2string(str);
@@ -44,7 +44,7 @@ string getIPAddress()
 	JniMethodInfo t;
     string IPAddress("");
 
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/javascript/Cocos2dxActivity", "getLocalIpAddress", "()Ljava/lang/String;")) {
+    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/javascript/AppActivity", "getLocalIpAddress", "()Ljava/lang/String;")) {
         jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
         t.env->DeleteLocalRef(t.classID);
         IPAddress = JniHelper::jstring2string(str);
