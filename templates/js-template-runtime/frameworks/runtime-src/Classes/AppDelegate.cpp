@@ -58,13 +58,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_chipmunk);
     
 #ifdef COCOS2D_DEBUG
-    startRuntime();
-#else
-    sc->start();
-    ScriptEngineProtocol *engine = ScriptingCore::getInstance();
+	if (startRuntime())
+		return true;
+#endif
+
+	auto engine = LuaEngine::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
 	ScriptingCore::getInstance()->runScript("main.js");
-#endif
     
     return true;
 }

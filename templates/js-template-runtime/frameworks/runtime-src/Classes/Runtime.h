@@ -31,7 +31,7 @@ using namespace std;
 
 #define _MAX_PATH_ 512
 
-void startRuntime();
+bool startRuntime();
 
 bool reloadScript(const string& modulefile);
 
