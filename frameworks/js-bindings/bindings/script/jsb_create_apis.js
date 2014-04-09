@@ -272,9 +272,7 @@ _p = cc.PhysicsSprite.prototype;
 _p._ctor = function(fileName, rect){
     if (fileName === undefined) {
         cc.PhysicsSprite.prototype.init.call(this);
-    }
-
-    if (typeof(fileName) === "string") {
+    }else if (typeof(fileName) === "string") {
         if (fileName[0] === "#") {
             //init with a sprite frame name
             var frameName = fileName.substr(1, fileName.length - 1);
@@ -284,9 +282,7 @@ _p._ctor = function(fileName, rect){
             //init  with filename and rect
             this.init(fileName, rect);
         }
-    }
-
-    if (typeof(fileName) === "object") {
+    }else if (typeof(fileName) === "object") {
         if (fileName instanceof cc.Texture2D) {
             //init  with texture and rect
            this.initWithTexture(fileName, rect);
