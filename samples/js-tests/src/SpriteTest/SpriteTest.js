@@ -4760,7 +4760,7 @@ var DoubleSprite = cc.Sprite.extend({
     setContentSize:function (size) {
         var newSize = cc.size(size.width, size.height);
         // If Retina Display and Texture is in HD then scale the vertex rect
-        if (cc.CONTENT_SCALE_FACTOR() == 2 && !this.HD) {
+        if (cc.contentScaleFactor() == 2 && !this.HD) {
             newSize.width *= 2;
             newSize.height *= 2;
         }
@@ -4768,14 +4768,14 @@ var DoubleSprite = cc.Sprite.extend({
     },
 	_setWidth:function (value) {
 		// If Retina Display and Texture is in HD then scale the vertex rect
-		if (cc.CONTENT_SCALE_FACTOR() == 2 && !this.HD) {
+		if (cc.contentScaleFactor() == 2 && !this.HD) {
 			value *= 2;
 		}
 		this._super(value);
 	},
 	_setHeight:function (value) {
 		// If Retina Display and Texture is in HD then scale the vertex rect
-		if (cc.CONTENT_SCALE_FACTOR() == 2 && !this.HD) {
+		if (cc.contentScaleFactor() == 2 && !this.HD) {
 			value *= 2;
 		}
 		this._super(value);
@@ -4783,7 +4783,7 @@ var DoubleSprite = cc.Sprite.extend({
 
     setVertexRect:function (rect) {
         // If Retina Display and Texture is in HD then scale the vertex rect
-        if (cc.CONTENT_SCALE_FACTOR() == 2 && !this.HD) {
+        if (cc.contentScaleFactor() == 2 && !this.HD) {
             rect.width *= 2;
             rect.height *= 2;
         }
