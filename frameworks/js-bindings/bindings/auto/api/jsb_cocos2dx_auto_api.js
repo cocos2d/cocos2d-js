@@ -1168,6 +1168,16 @@ Texture2D : function (
 cc.EventListener = {
 
 /**
+ * @method setEnabled
+ * @param {bool} arg0
+ */
+setEnabled : function (
+bool 
+)
+{
+},
+
+/**
  * @method clone
  * @return {cc.EventListener}
  */
@@ -1175,6 +1185,16 @@ clone : function (
 )
 {
     return cc.EventListener;
+},
+
+/**
+ * @method isEnabled
+ * @return {bool}
+ */
+isEnabled : function (
+)
+{
+    return false;
 },
 
 /**
