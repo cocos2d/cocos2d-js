@@ -24885,32 +24885,30 @@ void js_register_cocos2dx_AtlasNode(JSContext *cx, JSObject *global) {
 JSClass  *jsb_cocos2d_DrawNode_class;
 JSObject *jsb_cocos2d_DrawNode_prototype;
 
-bool js_cocos2dx_DrawNode_drawQuadraticBezier(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_DrawNode_drawTriangle(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::DrawNode* cobj = (cocos2d::DrawNode *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_drawQuadraticBezier : Invalid Native Object");
-	if (argc == 5) {
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_drawTriangle : Invalid Native Object");
+	if (argc == 4) {
 		cocos2d::Point arg0;
 		cocos2d::Point arg1;
 		cocos2d::Point arg2;
-		unsigned int arg3;
-		cocos2d::Color4F arg4;
+		cocos2d::Color4F arg3;
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
 		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
 		ok &= jsval_to_ccpoint(cx, argv[2], &arg2);
-		ok &= jsval_to_uint32(cx, argv[3], &arg3);
-		ok &= jsval_to_cccolor4f(cx, argv[4], &arg4);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_DrawNode_drawQuadraticBezier : Error processing arguments");
-		cobj->drawQuadraticBezier(arg0, arg1, arg2, arg3, arg4);
+		ok &= jsval_to_cccolor4f(cx, argv[3], &arg3);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_DrawNode_drawTriangle : Error processing arguments");
+		cobj->drawTriangle(arg0, arg1, arg2, arg3);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_cocos2dx_DrawNode_drawQuadraticBezier : wrong number of arguments: %d, was expecting %d", argc, 5);
+	JS_ReportError(cx, "js_cocos2dx_DrawNode_drawTriangle : wrong number of arguments: %d, was expecting %d", argc, 4);
 	return false;
 }
 bool js_cocos2dx_DrawNode_onDraw(JSContext *cx, uint32_t argc, jsval *vp)
@@ -24948,32 +24946,6 @@ bool js_cocos2dx_DrawNode_clear(JSContext *cx, uint32_t argc, jsval *vp)
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_DrawNode_clear : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-bool js_cocos2dx_DrawNode_drawTriangle(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::DrawNode* cobj = (cocos2d::DrawNode *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_drawTriangle : Invalid Native Object");
-	if (argc == 4) {
-		cocos2d::Point arg0;
-		cocos2d::Point arg1;
-		cocos2d::Point arg2;
-		cocos2d::Color4F arg3;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
-		ok &= jsval_to_ccpoint(cx, argv[2], &arg2);
-		ok &= jsval_to_cccolor4f(cx, argv[3], &arg3);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_DrawNode_drawTriangle : Error processing arguments");
-		cobj->drawTriangle(arg0, arg1, arg2, arg3);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_DrawNode_drawTriangle : wrong number of arguments: %d, was expecting %d", argc, 4);
 	return false;
 }
 bool js_cocos2dx_DrawNode_init(JSContext *cx, uint32_t argc, jsval *vp)
@@ -25015,6 +24987,34 @@ bool js_cocos2dx_DrawNode_drawDot(JSContext *cx, uint32_t argc, jsval *vp)
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_DrawNode_drawDot : wrong number of arguments: %d, was expecting %d", argc, 3);
+	return false;
+}
+bool js_cocos2dx_DrawNode_drawQuadraticBezier(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::DrawNode* cobj = (cocos2d::DrawNode *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_drawQuadraticBezier : Invalid Native Object");
+	if (argc == 5) {
+		cocos2d::Point arg0;
+		cocos2d::Point arg1;
+		cocos2d::Point arg2;
+		unsigned int arg3;
+		cocos2d::Color4F arg4;
+		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
+		ok &= jsval_to_ccpoint(cx, argv[2], &arg2);
+		ok &= jsval_to_uint32(cx, argv[3], &arg3);
+		ok &= jsval_to_cccolor4f(cx, argv[4], &arg4);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_DrawNode_drawQuadraticBezier : Error processing arguments");
+		cobj->drawQuadraticBezier(arg0, arg1, arg2, arg3, arg4);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_DrawNode_drawQuadraticBezier : wrong number of arguments: %d, was expecting %d", argc, 5);
 	return false;
 }
 bool js_cocos2dx_DrawNode_drawCubicBezier(JSContext *cx, uint32_t argc, jsval *vp)
@@ -25161,12 +25161,12 @@ void js_register_cocos2dx_DrawNode(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
-		JS_FN("drawQuadraticBezier", js_cocos2dx_DrawNode_drawQuadraticBezier, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("drawTriangle", js_cocos2dx_DrawNode_drawTriangle, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("onDraw", js_cocos2dx_DrawNode_onDraw, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("clear", js_cocos2dx_DrawNode_clear, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("drawTriangle", js_cocos2dx_DrawNode_drawTriangle, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("init", js_cocos2dx_DrawNode_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("drawDot", js_cocos2dx_DrawNode_drawDot, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("drawQuadBezier", js_cocos2dx_DrawNode_drawQuadraticBezier, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("drawCubicBezier", js_cocos2dx_DrawNode_drawCubicBezier, 6, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("drawSegment", js_cocos2dx_DrawNode_drawSegment, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2d_DrawNode_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
