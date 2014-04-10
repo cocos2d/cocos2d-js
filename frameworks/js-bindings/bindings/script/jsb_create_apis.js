@@ -249,6 +249,7 @@ _p._ctor = function(fade, minSeg, stroke, color, texture){
 /************************  Particle  *************************/
 _p = cc.ParticleBatchNode.prototype;
 _p._ctor = function(fileImage, capacity){
+    capacity = capacity || cc.PARTICLE_DEFAULT_CAPACITY;
     if (typeof(fileImage) == "string") {
         this.init(fileImage, capacity);
     } else if (fileImage instanceof cc.Texture2D) {
@@ -260,7 +261,6 @@ _p = cc.ParticleSystem.prototype;
 _p._ctor = function(plistFile){
     if (!plistFile || typeof(plistFile) === "number") {
         var ton = plistFile || 100;
-        this.setDrawMode(cc.PARTICLE_TEXTURE_MODE);
         this.initWithTotalParticles(ton);
     }else{
         this.initWithFile(plistFile);
@@ -280,7 +280,10 @@ _p._ctor = function(fileName, rect){
             this.initWithSpriteFrame(spriteFrame);
         } else {
             //init  with filename and rect
-            this.init(fileName, rect);
+            if(rect)
+                this.initWithFile(fileName, rect);
+            else
+                this.initWithFile(fileName);
         }
     }else if (typeof(fileName) === "object") {
         if (fileName instanceof cc.Texture2D) {
