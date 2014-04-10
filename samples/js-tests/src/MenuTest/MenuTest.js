@@ -328,7 +328,6 @@ var MenuLayer4 = cc.Layer.extend({
     ctor:function () {
         this._super();
         this.init();
-	    cc.log("INITED");
     },
     init:function () {
         //this._super();

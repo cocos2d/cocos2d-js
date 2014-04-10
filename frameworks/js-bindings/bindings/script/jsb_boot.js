@@ -601,6 +601,9 @@ cc.plistParser = cc.PlistParser.getInstance();
 //cc.tiffReader;
 //cc.imeDispatcher;
 
+// File utils (only in JSB)
+cc.fileUtils = cc.FileUtils.getInstance();
+
 cc.screen = {
     init: function() {},
     fullScreen: function() {
