@@ -586,10 +586,10 @@ cc.configuration = cc.Configuration.getInstance();
 cc.textureCache = cc.director.getTextureCache();
 cc.textureCache._addImage = cc.textureCache.addImage;
 cc.textureCache.addImage = function(url, cb, target) {
-	if (cb) {
-		target && (cb = cb.bind(target));
-		this.addImageAsync(url, cb);
-	}
+    if (cb) {
+        target && (cb = cb.bind(target));
+        this.addImageAsync(url, cb);
+    }
 	else
         return this._addImage(url);
 };
