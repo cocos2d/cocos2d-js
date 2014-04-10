@@ -24,10 +24,10 @@
             "to": ""
         } 
     ],
-	"must_copy_resources": [
-		{
+    "must_copy_resources": [
+        {
             "from": "../../js-bindings/bindings/script",
             "to": ""
         }
-	]
+    ]
 }

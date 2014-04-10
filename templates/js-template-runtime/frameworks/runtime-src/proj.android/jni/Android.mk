@@ -7,9 +7,9 @@ LOCAL_MODULE := cocos2djs_shared
 LOCAL_MODULE_FILENAME := libcocos2djs
 
 LOCAL_SRC_FILES := javascript/main.cpp \
-				   javascript/Runtime_android.cpp \
+                   javascript/Runtime_android.cpp \
                    ../../Classes/AppDelegate.cpp \
-				   ../../Classes/Runtime.cpp
+                   ../../Classes/Runtime.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
