@@ -590,7 +590,8 @@ cc.textureCache.addImage = function(url, cb, target) {
 		target && (cb = cb.bind(target));
 		this.addImageAsync(url, cb);
 	}
-	else this._addImage(url);
+	else 
+        return this._addImage(url);
 };
 cc.shaderCache = cc.ShaderCache.getInstance();
 cc.animationCache = cc.AnimationCache.getInstance();
