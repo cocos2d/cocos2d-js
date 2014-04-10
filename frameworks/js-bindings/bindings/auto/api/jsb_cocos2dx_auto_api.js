@@ -15874,7 +15874,7 @@ getInstance : function (
 /**
  * @class SAXParser
  */
-cc.SAXParser = {
+cc.PlistParser = {
 
 /**
  * @method init

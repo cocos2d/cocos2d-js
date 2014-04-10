@@ -597,7 +597,7 @@ cc.shaderCache = cc.ShaderCache.getInstance();
 cc.animationCache = cc.AnimationCache.getInstance();
 cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
 //cc.saxParser
-cc.plistParser = cc.SAXParser.getInstance();
+cc.plistParser = cc.PlistParser.getInstance();
 //cc.tiffReader;
 //cc.imeDispatcher;
 
