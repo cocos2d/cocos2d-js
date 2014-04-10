@@ -62,7 +62,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 		return true;
 #endif
 
-	auto engine = LuaEngine::getInstance();
+    ScriptingCore::getInstance()->start();
+	auto engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
 	ScriptingCore::getInstance()->runScript("main.js");
     
