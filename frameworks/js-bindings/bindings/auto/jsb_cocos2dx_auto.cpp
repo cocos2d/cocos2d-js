@@ -48444,7 +48444,7 @@ void js_cocos2d_SAXParser_finalize(JSFreeOp *fop, JSObject *obj) {
 
 void js_register_cocos2dx_SAXParser(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_SAXParser_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_cocos2d_SAXParser_class->name = "SAXParser";
+	jsb_cocos2d_SAXParser_class->name = "PlistParser";
 	jsb_cocos2d_SAXParser_class->addProperty = JS_PropertyStub;
 	jsb_cocos2d_SAXParser_class->delProperty = JS_DeletePropertyStub;
 	jsb_cocos2d_SAXParser_class->getProperty = JS_PropertyStub;
@@ -48479,7 +48479,7 @@ void js_register_cocos2dx_SAXParser(JSContext *cx, JSObject *global) {
 	// make the class enumerable in the registered namespace
 //	bool found;
 //FIXME: Removed in Firefox v27	
-//	JS_SetPropertyAttributes(cx, global, "SAXParser", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+//	JS_SetPropertyAttributes(cx, global, "PlistParser", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
 	// add the proto and JSClass to the type->js info hash table
 	TypeTest<cocos2d::SAXParser> t;
