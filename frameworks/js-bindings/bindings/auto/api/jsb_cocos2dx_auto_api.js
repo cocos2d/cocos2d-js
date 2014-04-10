@@ -329,20 +329,6 @@ getFragmentShaderLog : function (
 },
 
 /**
- * @method initWithByteArrays
- * @param {char} arg0
- * @param {char} arg1
- * @return {bool}
- */
-initWithByteArrays : function (
-char, 
-char 
-)
-{
-    return false;
-},
-
-/**
  * @method bindAttribLocation
  * @param {char} arg0
  * @param {unsigned int} arg1
@@ -366,20 +352,6 @@ float,
 int 
 )
 {
-},
-
-/**
- * @method initWithFilenames
- * @param {String} arg0
- * @param {String} arg1
- * @return {bool}
- */
-initWithFilenames : function (
-str, 
-str 
-)
-{
-    return false;
 },
 
 /**
@@ -413,6 +385,34 @@ getVertexShaderLog : function (
 },
 
 /**
+ * @method initWithByteArrays
+ * @param {char} arg0
+ * @param {char} arg1
+ * @return {bool}
+ */
+initWithByteArrays : function (
+char, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithFilenames
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+initWithFilenames : function (
+str, 
+str 
+)
+{
+    return false;
+},
+
+/**
  * @method setUniformsForBuiltins
 * @param {kmMat4} kmmat4
 */
@@ -420,16 +420,6 @@ setUniformsForBuiltins : function(
 kmmat4 
 )
 {
-},
-
-/**
- * @method getMaterialProgramID
- * @return {unsigned int}
- */
-getMaterialProgramID : function (
-)
-{
-    return 0;
 },
 
 /**
@@ -497,15 +487,13 @@ char
 },
 
 /**
- * @method setUniformLocationWith1i
- * @param {int} arg0
- * @param {int} arg1
+ * @method link
+ * @return {bool}
  */
-setUniformLocationWith1i : function (
-int, 
-int 
+link : function (
 )
 {
+    return false;
 },
 
 /**
@@ -589,13 +577,15 @@ int
 },
 
 /**
- * @method link
- * @return {bool}
+ * @method setUniformLocationWith1i
+ * @param {int} arg0
+ * @param {int} arg1
  */
-link : function (
+setUniformLocationWith1i : function (
+int, 
+int 
 )
 {
-    return false;
 },
 
 /**
@@ -1178,6 +1168,16 @@ Texture2D : function (
 cc.EventListener = {
 
 /**
+ * @method setEnabled
+ * @param {bool} arg0
+ */
+setEnabled : function (
+bool 
+)
+{
+},
+
+/**
  * @method clone
  * @return {cc.EventListener}
  */
@@ -1185,6 +1185,16 @@ clone : function (
 )
 {
     return cc.EventListener;
+},
+
+/**
+ * @method isEnabled
+ * @return {bool}
+ */
+isEnabled : function (
+)
+{
+    return false;
 },
 
 /**
@@ -3145,11 +3155,13 @@ getDelayPerUnit : function (
  * @method initWithSpriteFrames
  * @param {Array} arg0
  * @param {float} arg1
+ * @param {unsigned int} arg2
  * @return {bool}
  */
 initWithSpriteFrames : function (
 array, 
-float 
+float, 
+int 
 )
 {
     return false;
@@ -7885,18 +7897,16 @@ AtlasNode : function (
 cc.DrawNode = {
 
 /**
- * @method drawQuadraticBezier
+ * @method drawTriangle
  * @param {PointObject} arg0
  * @param {PointObject} arg1
  * @param {PointObject} arg2
- * @param {unsigned int} arg3
- * @param {Color4FObject} arg4
+ * @param {Color4FObject} arg3
  */
-drawQuadraticBezier : function (
+drawTriangle : function (
 point, 
 point, 
 point, 
-int, 
 color4f 
 )
 {
@@ -7923,22 +7933,6 @@ clear : function (
 },
 
 /**
- * @method drawTriangle
- * @param {PointObject} arg0
- * @param {PointObject} arg1
- * @param {PointObject} arg2
- * @param {Color4FObject} arg3
- */
-drawTriangle : function (
-point, 
-point, 
-point, 
-color4f 
-)
-{
-},
-
-/**
  * @method init
  * @return {bool}
  */
@@ -7957,6 +7951,24 @@ init : function (
 drawDot : function (
 point, 
 float, 
+color4f 
+)
+{
+},
+
+/**
+ * @method drawQuadraticBezier
+ * @param {PointObject} arg0
+ * @param {PointObject} arg1
+ * @param {PointObject} arg2
+ * @param {unsigned int} arg3
+ * @param {Color4FObject} arg4
+ */
+drawQuadraticBezier : function (
+point, 
+point, 
+point, 
+int, 
 color4f 
 )
 {
@@ -15862,7 +15874,7 @@ getInstance : function (
 /**
  * @class SAXParser
  */
-cc.SAXParser = {
+cc.PlistParser = {
 
 /**
  * @method init
@@ -16341,12 +16353,12 @@ bool
 
 /**
  * @method getColorSpaceHolder
- * @return {Color3BObject}
+ * @return {Color4BObject}
  */
 getColorSpaceHolder : function (
 )
 {
-    return cc.Color3B;
+    return cc.Color4B;
 },
 
 /**
@@ -16371,9 +16383,9 @@ float
 
 /**
  * @method setColorSpaceHolder
- * @param {Color3BObject} arg0
- */
-setColorSpaceHolder : function (
+* @param {Color4BObject|Color3BObject} color4b
+*/
+setColorSpaceHolder : function(
 color3b 
 )
 {

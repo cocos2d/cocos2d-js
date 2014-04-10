@@ -586,17 +586,18 @@ cc.configuration = cc.Configuration.getInstance();
 cc.textureCache = cc.director.getTextureCache();
 cc.textureCache._addImage = cc.textureCache.addImage;
 cc.textureCache.addImage = function(url, cb, target) {
-	if (cb) {
-		target && (cb = cb.bind(target));
-		this.addImageAsync(url, cb);
-	}
-	else this._addImage(url);
+    if (cb) {
+        target && (cb = cb.bind(target));
+        this.addImageAsync(url, cb);
+    }
+    else
+        return this._addImage(url);
 };
 cc.shaderCache = cc.ShaderCache.getInstance();
 cc.animationCache = cc.AnimationCache.getInstance();
 cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
 //cc.saxParser
-cc.plistParser = cc.SAXParser.getInstance();
+cc.plistParser = cc.PlistParser.getInstance();
 //cc.tiffReader;
 //cc.imeDispatcher;
 
@@ -998,6 +999,7 @@ cc.game = {
             var data = JSON.parse(txt);
             this.config = _init(data || {});
         }catch(e){
+	        cc.log("Failed to read or parse project.json");
             this.config = _init({});
         }
 //        cc._initDebugSetting(this.config[CONFIG_KEY.debugMode]);
