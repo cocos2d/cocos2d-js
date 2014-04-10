@@ -161,23 +161,23 @@ _p._ctor = function(value, callback, target) {
 
 _p = cc.MenuItemSprite.prototype;
 _p._ctor = function(normalSprite, selectedSprite, three, four, five) {
-	var argc = arguments.length;
-	if (argc > 1) {
-		normalSprite = arguments[0];
-		selectedSprite = arguments[1];
+	if (selectedSprite) {
+		normalSprite = normalSprite;
+		selectedSprite = selectedSprite;
 		var disabledImage, target, callback;
-		if (argc == 5) {
-			disabledImage = arguments[2];
-			callback = arguments[3];
-			target = arguments[4];
-		} else if (argc == 4 && typeof arguments[3] === "function") {
-			disabledImage = arguments[2];
-			callback = arguments[3];
-		} else if (argc == 4 && typeof arguments[2] === "function") {
-			target = arguments[3];
-			callback = arguments[2];
-		} else if (argc <= 2) {
-			disabledImage = arguments[2];
+		if (five) {
+			disabledImage = three;
+			callback = four;
+			target = five;
+		} else if (four && typeof four === "function") {
+			disabledImage = three;
+			callback = four;
+		} else if (four && typeof three === "function") {
+			target = four;
+			callback = three;
+            disabledImage = normalSprite;
+		} else if (three === undefined) {
+			disabledImage = normalSprite;
 		}
 		callback = callback ? callback.bind(target) : null;
 		this.initWithNormalSprite(normalSprite, selectedSprite, disabledImage, callback);
