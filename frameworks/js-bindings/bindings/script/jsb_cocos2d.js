@@ -91,6 +91,8 @@ cc.YELLOW = {r:255, g:255, b:0};
 
 cc.POINT_ZERO = {x:0, y:0};
 
+cc.PARTICLE_DEFAULT_CAPACITY = 500;
+
 // XXX: This definition is different than cocos2d-html5
 // cc.REPEAT_FOREVER = - 1;
 // We can't assign -1 to cc.REPEAT_FOREVER, since it will be a very big double value after
@@ -1269,6 +1271,7 @@ cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
 cc.LayerColor.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
+cc.SpriteFrame.extend = cc.Class.extend;
 cc.Menu.extend = cc.Class.extend;
 cc.MenuItem.extend = cc.Class.extend;
 cc.MenuItemFont.extend = cc.Class.extend;
@@ -1276,6 +1279,21 @@ cc.MenuItemToggle.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
 cc.Component.extend = cc.Class.extend;
+cc.GridBase.extend = cc.Class.extend;
+cc.Grid3D.extend = cc.Class.extend;
+cc.TiledGrid3D.extend = cc.Class.extend;
+cc.MotionStreak.extend = cc.Class.extend;
+cc.ParticleBatchNode.extend = cc.Class.extend;
+cc.ParticleSystem.extend = cc.Class.extend;
+cc.PhysicsSprite.extend = cc.Class.extend;
+cc.TextFieldTTF.extend = cc.Class.extend;
+cc.RenderTexture.extend = cc.Class.extend;
+cc.TileMapAtlas.extend = cc.Class.extend;
+cc.TMXLayer.extend = cc.Class.extend;
+cc.TMXTiledMap.extend = cc.Class.extend;
+cc.TMXMapInfo.extend = cc.Class.extend;
+cc.TransitionScene.extend = cc.Class.extend;
+ccs.Armature.extend = cc.Class.extend;
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
