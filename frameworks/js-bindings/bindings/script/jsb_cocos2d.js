@@ -126,8 +126,16 @@ _Class.defaultPixelFormat = _Class.PIXEL_FORMAT_DEFAULT;
 cc.ONE = 1;
 cc.ZERO = 0;
 cc.SRC_ALPHA = 0x0302;
+cc.SRC_ALPHA_SATURATE = 0x308;
+cc.SRC_COLOR = 0x300;
+cc.DST_ALPHA = 0x304;
+cc.DST_COLOR = 0x306;
 cc.ONE_MINUS_SRC_ALPHA = 0x0303;
+cc.ONE_MINUS_SRC_COLOR = 0x301;
+cc.ONE_MINUS_DST_ALPHA = 0x305;
 cc.ONE_MINUS_DST_COLOR = 0x0307;
+cc.ONE_MINUS_CONSTANT_ALPHA	= 0x8004;
+cc.ONE_MINUS_CONSTANT_COLOR	= 0x8002;
 
 
 //
@@ -1830,5 +1838,3 @@ cc.DrawNode = cc._DrawNode.extend({
 cc.DrawNode.create = function () {
 	return new cc.DrawNode();
 };
-
-//cc.DrawNode = cc._DrawNode;
