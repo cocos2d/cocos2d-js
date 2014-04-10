@@ -85,6 +85,17 @@
                "proj.win32/HelloJavascript.sdf"
             ]
          },
+         "append_dir":[
+             {
+                "from":"tools",
+                "to":"tools",
+                "exclude":[
+                   "cocos2d-console",
+                   "make-package",
+                   "travis-scripts"
+                ]
+             }
+         ],
          "append_x_engine":{
             "from":"frameworks/js-bindings/cocos2d-x",
             "to":"frameworks/js-bindings/cocos2d-x"
