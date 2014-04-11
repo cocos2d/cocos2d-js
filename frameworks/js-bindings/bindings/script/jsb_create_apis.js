@@ -20,7 +20,7 @@ _p._ctor = function(color, w, h) {
 	w = w === undefined ? cc.winSize.width : w;
 	h = h === undefined ? cc.winSize.height : h;
 
-	this.initWithColor(color, w, h);
+	this.init(color, w, h);
 };
 
 

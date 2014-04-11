@@ -3078,6 +3078,24 @@ bool js_cocos2dx_CCDrawNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp
     return js_cocos2dx_setBlendFunc<DrawNode>(cx, argc, vp);
 }
 
+bool js_cocos2dx_CCSprite_textureLoaded(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj;
+    Sprite* cobj;
+    obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (Sprite*)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, cobj);
+    
+    bool ret = false;
+    if( cobj->getTexture() )
+        ret = true;
+    
+    JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
+    
+    return true;
+}
+
 bool js_cocos2dx_CCTexture2D_setTexParameters(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -3877,11 +3895,14 @@ bool js_cocos2dx_CCGLProgram_setUniformLocationWith4f(JSContext *cx, uint32_t ar
 		cobj->setUniformLocationWith2f(arg0, arg1, arg2);
 	}
     if(argc == 4) {
+        ok &= JS::ToNumber(cx, argv[2], &arg2);
         ok &= JS::ToNumber(cx, argv[3], &arg3);
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 		cobj->setUniformLocationWith3f(arg0, arg1, arg2, arg3);
     }
     if(argc == 5) {
+        ok &= JS::ToNumber(cx, argv[2], &arg2);
+        ok &= JS::ToNumber(cx, argv[3], &arg3);
         ok &= JS::ToNumber(cx, argv[4], &arg4);
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 		cobj->setUniformLocationWith4f(arg0, arg1, arg2, arg3, arg4);
@@ -4446,6 +4467,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCCatmullRomTo_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, jsb_cocos2d_Sprite_prototype, "setBlendFunc", js_cocos2dx_CCSprite_setBlendFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_Sprite_prototype, "textureLoaded", js_cocos2dx_CCSprite_textureLoaded, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_SpriteBatchNode_prototype, "setBlendFunc", js_cocos2dx_CCSpriteBatchNode_setBlendFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_cocos2d_SpriteBatchNode_prototype, "getDescendants", js_cocos2dx_SpriteBatchNode_getDescendants, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     //JS_DefineFunction(cx, jsb_cocos2d_MotionStreak_prototype, "setBlendFunc", js_cocos2dx_CCMotionStreak_setBlendFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);

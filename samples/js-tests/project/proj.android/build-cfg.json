@@ -1,0 +1,35 @@
+{
+    "alias": "android123.keystore", 
+    "alias_pass": "w3297825w", 
+    "copy_resources": [
+        {
+            "from": "../../src", 
+            "to": "src"
+        }, 
+        {
+            "from": "../../res", 
+            "to": "res"
+        }, 
+        {
+            "from": "../../main.js", 
+            "to": ""
+        }, 
+        {
+            "from": "../../project.json", 
+            "to": ""
+        }, 
+        {
+            "from": "../../../../frameworks/js-bindings/bindings/script", 
+            "to": ""
+        }
+    ], 
+    "key_store": "/Users/cocos2d-x/Desktop/for_sign/punchbox.keystore", 
+    "key_store_pass": "w3297825w", 
+    "ndk_module_path": [
+        "../../../../frameworks/js-bindings", 
+        "../../../../frameworks/js-bindings/external", 
+        "../../../../frameworks/js-bindings/cocos2d-x", 
+        "../../../../frameworks/js-bindings/cocos2d-x/cocos", 
+        "../../../../frameworks/js-bindings/cocos2d-x/external"
+    ]
+}
