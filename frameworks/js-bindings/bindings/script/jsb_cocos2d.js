@@ -2,6 +2,8 @@
 // cocos2d constants
 //
 
+cc.ENGINE_VERSION = "Cocos2d-JS-v3.0 alpha 2";
+
 cc.TARGET_PLATFORM = {
     WINDOWS:0,
     LINUX:1,
@@ -53,8 +55,16 @@ cc.LANGUAGE_HUNGARIAN  = 9;
 cc.LANGUAGE_PORTUGUESE = 10;
 cc.LANGUAGE_ARABIC     = 11;
 
-cc.DIRECTOR_PROJECTION_2D = 0;
-cc.DIRECTOR_PROJECTION_3D = 1;
+cc.Director.PROJECTION_2D = 0;
+cc.Director.PROJECTION_3D = 1;
+cc.Director.PROJECTION_CUSTOM = 3;
+cc.Director.PROJECTION_DEFAULT = cc.Director.PROJECTION_3D;
+
+cc.DEVICE_ORIENTATION_PORTRAIT = 0;
+cc.DEVICE_ORIENTATION_LANDSCAPE_LEFT = 1;
+cc.DEVICE_ORIENTATION_PORTRAIT_UPSIDE_DOWN = 2;
+cc.DEVICE_ORIENTATION_LANDSCAPE_RIGHT = 3;
+cc.DEVICE_MAX_ORIENTATIONS = 2;
 
 cc.TEXTURE_PIXELFORMAT_RGBA8888 = 0;
 cc.TEXTURE_PIXELFORMAT_RGB888 = 1;
@@ -90,6 +100,8 @@ cc.WHITE = {r:255, g:255, b:255};
 cc.YELLOW = {r:255, g:255, b:0};
 
 cc.POINT_ZERO = {x:0, y:0};
+
+cc.PARTICLE_DEFAULT_CAPACITY = 500;
 
 // XXX: This definition is different than cocos2d-html5
 // cc.REPEAT_FOREVER = - 1;
@@ -136,6 +148,46 @@ cc.ONE_MINUS_DST_ALPHA = 0x305;
 cc.ONE_MINUS_DST_COLOR = 0x0307;
 cc.ONE_MINUS_CONSTANT_ALPHA	= 0x8004;
 cc.ONE_MINUS_CONSTANT_COLOR	= 0x8002;
+
+cc.VERTEX_ATTRIB_FLAG_NONE = 0;
+cc.VERTEX_ATTRIB_FLAG_POSITION = 1 << 0;
+cc.VERTEX_ATTRIB_FLAG_COLOR = 1 << 1;
+cc.VERTEX_ATTRIB_FLAG_TEX_COORDS = 1 << 2;
+cc.VERTEX_ATTRIB_FLAG_POS_COLOR_TEX = ( cc.VERTEX_ATTRIB_FLAG_POSITION | cc.VERTEX_ATTRIB_FLAG_COLOR | cc.VERTEX_ATTRIB_FLAG_TEX_COORDS );
+cc.GL_ALL = 0;
+
+cc.VERTEX_ATTRIB_POSITION = 0;
+cc.VERTEX_ATTRIB_COLOR = 1;
+cc.VERTEX_ATTRIB_TEX_COORDS = 2;
+cc.VERTEX_ATTRIB_MAX = 3;
+
+cc.UNIFORM_PMATRIX = 0;
+cc.UNIFORM_MVMATRIX = 1;
+cc.UNIFORM_MVPMATRIX = 2;
+cc.UNIFORM_TIME = 3;
+cc.UNIFORM_SINTIME = 4;
+cc.UNIFORM_COSTIME = 5;
+cc.UNIFORM_RANDOM01 = 6;
+cc.UNIFORM_SAMPLER = 7;
+cc.UNIFORM_MAX = 8;
+
+cc.UNIFORM_PMATRIX_S = "CC_PMatrix";
+cc.UNIFORM_MVMATRIX_S = "CC_MVMatrix";
+cc.UNIFORM_MVPMATRIX_S = "CC_MVPMatrix";
+cc.UNIFORM_TIME_S = "CC_Time";
+cc.UNIFORM_SINTIME_S = "CC_SinTime";
+cc.UNIFORM_COSTIME_S = "CC_CosTime";
+cc.UNIFORM_RANDOM01_S = "CC_Random01";
+cc.UNIFORM_SAMPLER_S = "CC_Texture0";
+cc.UNIFORM_ALPHA_TEST_VALUE_S = "CC_alpha_value";
+
+cc.ITEM_SIZE = 32;
+
+cc.CURRENT_ITEM = 0xc0c05001;
+cc.ZOOM_ACTION_TAG = 0xc0c05002;
+cc.NORMAL_TAG = 8801;
+cc.SELECTED_TAG = 8802;
+cc.DISABLE_TAG = 8803;
 
 
 //
@@ -1269,6 +1321,7 @@ cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
 cc.LayerColor.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
+cc.SpriteFrame.extend = cc.Class.extend;
 cc.Menu.extend = cc.Class.extend;
 cc.MenuItem.extend = cc.Class.extend;
 cc.MenuItemFont.extend = cc.Class.extend;
@@ -1276,6 +1329,21 @@ cc.MenuItemToggle.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
 cc.Component.extend = cc.Class.extend;
+cc.GridBase.extend = cc.Class.extend;
+cc.Grid3D.extend = cc.Class.extend;
+cc.TiledGrid3D.extend = cc.Class.extend;
+cc.MotionStreak.extend = cc.Class.extend;
+cc.ParticleBatchNode.extend = cc.Class.extend;
+cc.ParticleSystem.extend = cc.Class.extend;
+cc.PhysicsSprite.extend = cc.Class.extend;
+cc.TextFieldTTF.extend = cc.Class.extend;
+cc.RenderTexture.extend = cc.Class.extend;
+cc.TileMapAtlas.extend = cc.Class.extend;
+cc.TMXLayer.extend = cc.Class.extend;
+cc.TMXTiledMap.extend = cc.Class.extend;
+cc.TMXMapInfo.extend = cc.Class.extend;
+cc.TransitionScene.extend = cc.Class.extend;
+ccs.Armature.extend = cc.Class.extend;
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.

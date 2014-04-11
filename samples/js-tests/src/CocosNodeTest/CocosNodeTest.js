@@ -516,10 +516,10 @@ var CameraOrbitTest = TestNodeDemo.extend({
     },
     onEnter:function () {
         this._super();
-        director.setProjection(cc.DIRECTOR_PROJECTION_3D);
+        director.setProjection(cc.Director.PROJECTION_3D);
     },
     onExit:function () {
-        director.setProjection(cc.DIRECTOR_PROJECTION_2D);
+        director.setProjection(cc.Director.PROJECTION_2D);
         this._super();
     },
     title:function () {
@@ -582,11 +582,11 @@ var CameraZoomTest = TestNodeDemo.extend({
     onEnter:function () {
         this._super();
         //TODO
-        director.setProjection(cc.DIRECTOR_PROJECTION_3D);
+        director.setProjection(cc.Director.PROJECTION_3D);
     },
     onExit:function () {
         //TODO
-        director.setProjection(cc.DIRECTOR_PROJECTION_2D);
+        director.setProjection(cc.Director.PROJECTION_2D);
         this._super();
     },
     title:function () {
@@ -667,11 +667,11 @@ var CameraCenterTest = TestNodeDemo.extend({
 
     onEnter:function(){
         this._super();
-        cc.director.setProjection(cc.DIRECTOR_PROJECTION_3D);
+        cc.director.setProjection(cc.Director.PROJECTION_3D);
     },
 
     onExit:function(){
-        cc.director.setProjection(cc.DIRECTOR_PROJECTION_2D);
+        cc.director.setProjection(cc.Director.PROJECTION_2D);
         this._super();
     },
 

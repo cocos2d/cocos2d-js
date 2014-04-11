@@ -771,7 +771,7 @@ var DirectorEventTest =  EventDispatcherTestDemo.extend({
     update:function(dt){
         this._time += dt;
         if(this._time > 0.5) {
-            cc.director.setProjection(cc.DIRECTOR_PROJECTION_2D);
+            cc.director.setProjection(cc.Director.PROJECTION_2D);
             this._time = 0;
         }
     },

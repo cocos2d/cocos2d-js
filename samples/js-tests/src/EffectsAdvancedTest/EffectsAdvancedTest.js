@@ -318,7 +318,7 @@ var Effect5 = EffectAdvanceTextLayer.extend({
 
     onExit:function () {
         this._super();
-        cc.director.setProjection(cc.DIRECTOR_PROJECTION_3D);
+        cc.director.setProjection(cc.Director.PROJECTION_3D);
     }
 });
 

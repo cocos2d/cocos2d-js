@@ -34,6 +34,10 @@ THE SOFTWARE.
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
 #include "cocos2d.h"
+#include "json/document.h"
+#include "json/filestream.h"
+#include "json/stringbuffer.h"
+#include "json/writer.h"
 
 #ifdef _WIN32
 #define realpath(dir,fuldir) _fullpath(fuldir,dir,_MAX_PATH_)
@@ -53,6 +57,8 @@ THE SOFTWARE.
 using namespace std;
 using namespace cocos2d;
 
+std::string g_resourcePath;
+static rapidjson::Document g_filecfgjson; 
 extern string getDotWaitFilePath();
 extern string getProjSearchPath();
 extern string getIPAddress();
@@ -63,54 +69,54 @@ extern bool browseDir(const char *dir,const char *filespec,vector<string> &filte
 /*@brief   use "|" splite string  */
 vector<string> splitFilter(const char *str)
 {
-	vector<string> filterArray;
-	if (str)
-	{
-		char *token=NULL;
-		char szFilterFile[_MAX_PATH_]={0};
-		strcpy(szFilterFile,str);
-		token = strtok(szFilterFile, "|" );		
-		while( token != NULL )
-		{
-			filterArray.push_back(token);
-			token = strtok( NULL, "|");
-		}
-	}
-	return filterArray;
+    vector<string> filterArray;
+    if (str)
+    {
+        char *token=NULL;
+        char szFilterFile[_MAX_PATH_]={0};
+        strcpy(szFilterFile,str);
+        token = strtok(szFilterFile, "|" );		
+        while( token != NULL )
+        {
+            filterArray.push_back(token);
+            token = strtok( NULL, "|");
+        }
+    }
+    return filterArray;
 }
 
 /*@brief wildcard funciton*/
 bool wildcardMatches(const char *wildcard, const char *str) 
 {
-	while (1) {
-		if (*wildcard == '\0')
-		{
-			return *str == '\0';
-		}
-		if (*wildcard == '?') 
-		{
-			++wildcard; ++str;
-		} 
-		else if (*wildcard == '*') 
-		{
-			for (++wildcard; *str; ++str)
-			{
-				if (wildcardMatches(wildcard, str))
-				{
-					return true;
-				}
-			}
-			return *wildcard == '\0';
-		} 
-		else 
-		{
-			if (*wildcard != *str)
-			{
-				return false;
-			}
-			++wildcard; ++str;
-		}
-	}
+    while (1) {
+        if (*wildcard == '\0')
+        {
+            return *str == '\0';
+        }
+        if (*wildcard == '?') 
+        {
+            ++wildcard; ++str;
+        } 
+        else if (*wildcard == '*') 
+        {
+            for (++wildcard; *str; ++str)
+            {
+                if (wildcardMatches(wildcard, str))
+                {
+                    return true;
+                }
+            }
+            return *wildcard == '\0';
+        } 
+        else 
+        {
+            if (*wildcard != *str)
+            {
+                return false;
+            }
+            ++wildcard; ++str;
+        }
+    }
 }
 
 
@@ -120,76 +126,76 @@ bool wildcardMatches(const char *wildcard, const char *str)
 */
 bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<std::string> &fileList)
 {
-	DIR *dp=NULL;
-	struct dirent *entry=NULL;
-	struct stat statbuf;
-	if((dp = opendir(dir)) == NULL) 
-	{
-		return false;
-	}
+    DIR *dp=NULL;
+    struct dirent *entry=NULL;
+    struct stat statbuf;
+    if((dp = opendir(dir)) == NULL) 
+    {
+        return false;
+    }
 
-	if (chdir(dir) != 0)
-	{
-		return false;
-	}
+    if (chdir(dir) != 0)
+    {
+        return false;
+    }
 
-	while((entry = readdir(dp)) != NULL) 
-	{
-		lstat(entry->d_name,&statbuf);
-		if(S_ISDIR(statbuf.st_mode)) 
-		{
-			if(strcmp(".",entry->d_name) == 0 ||strcmp("..",entry->d_name) == 0)
-			{
-				continue;
-			}
+    while((entry = readdir(dp)) != NULL) 
+    {
+        lstat(entry->d_name,&statbuf);
+        if(S_ISDIR(statbuf.st_mode)) 
+        {
+            if(strcmp(".",entry->d_name) == 0 ||strcmp("..",entry->d_name) == 0)
+            {
+                continue;
+            }
 
-			if (find(filterArray.begin(),filterArray.end(),entry->d_name) != filterArray.end())
-			{
-				continue;
-			}
+            if (find(filterArray.begin(),filterArray.end(),entry->d_name) != filterArray.end())
+            {
+                continue;
+            }
 
-			char subdir[_MAX_PATH_]={0};
-			sprintf(subdir,"%s%s/",dir,entry->d_name);
-			if (!browseDir(subdir,filespec,filterArray,fileList))
-			{
-				closedir(dp);
-				return false;
-			}
-		} 
-		else 
-		{
+            char subdir[_MAX_PATH_]={0};
+            sprintf(subdir,"%s%s/",dir,entry->d_name);
+            if (!browseDir(subdir,filespec,filterArray,fileList))
+            {
+                closedir(dp);
+                return false;
+            }
+        } 
+        else 
+        {
 
-			if (!wildcardMatches(filespec,entry->d_name))
-			{
-				continue;
-			}
+            if (!wildcardMatches(filespec,entry->d_name))
+            {
+                continue;
+            }
 
-			char *pszexten=strrchr(entry->d_name,'.');
-			char szextension[_MAX_PATH_]={0};
-			if (pszexten)
-			{
-				strcpy(szextension,"*");
-				strcat(szextension,pszexten);
-				if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
-				{
-					continue;
-				}
-			}
+            char *pszexten=strrchr(entry->d_name,'.');
+            char szextension[_MAX_PATH_]={0};
+            if (pszexten)
+            {
+                strcpy(szextension,"*");
+                strcat(szextension,pszexten);
+                if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
+                {
+                    continue;
+                }
+            }
 
-			strcpy(szextension,entry->d_name);
-			if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
-			{
-				continue;
-			}
+            strcpy(szextension,entry->d_name);
+            if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
+            {
+                continue;
+            }
 
-			char fullFileName[_MAX_PATH_] ={0};
-			sprintf(fullFileName,"%s%s",dir,entry->d_name);
-			fileList.push_back(fullFileName);
-		}
-	}
-	chdir("..");
-	closedir(dp);
-	return true;
+            char fullFileName[_MAX_PATH_] ={0};
+            sprintf(fullFileName,"%s%s",dir,entry->d_name);
+            fileList.push_back(fullFileName);
+        }
+    }
+    chdir("..");
+    closedir(dp);
+    return true;
 }
 #endif
 
@@ -206,49 +212,68 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 *********************************/
 vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const char *filterfile=NULL)
 {
-	char fulldir[_MAX_PATH_]={0};
-	vector<string> _filterArray;
-	vector<std::string> _lfileList;
-	_filterArray = splitFilter(filterfile);
+    char fulldir[_MAX_PATH_]={0};
+    vector<string> _filterArray;
+    vector<std::string> _lfileList;
+    _filterArray = splitFilter(filterfile);
 
-	if (realpath(dir.c_str(), fulldir)== NULL)
-	{
-		return _lfileList;
-	}
+    if (realpath(dir.c_str(), fulldir)== NULL)
+    {
+        return _lfileList;
+    }
 
-	int len=strlen(fulldir);
-	if (fulldir[len-1] != '/')
-	{
-		strcat(fulldir,"/");
-	}
+    int len=strlen(fulldir);
+    if (fulldir[len-1] != '/')
+    {
+        strcat(fulldir,"/");
+    }
 
-	browseDir(fulldir,filespec,_filterArray,_lfileList);
-	dir =fulldir;
-	return _lfileList;
+    browseDir(fulldir,filespec,_filterArray,_lfileList);
+    dir =fulldir;
+    return _lfileList;
 }
 
-string getRuntimeVersion()
+const char* getRuntimeVersion()
 {
     return "0.0.1";
 }
 
-void startScript()
+bool startScript()
 {
-	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
-	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->runScript("main.js");
+    ScriptEngineProtocol *engine = ScriptingCore::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    return ScriptingCore::getInstance()->runScript("main.js");
 }
 
-void reloadScript(const string& file)
+bool reloadScript(const string& file)
 {
-	string modulefile = file;
-	if (modulefile.empty())
-	{
-		modulefile = "main.js";
-	}
-    auto core = ScriptingCore::getInstance();
+
+    auto director = Director::getInstance();
+    FontFNT::purgeCachedData();
+    if (director->getOpenGLView())
+    {
+        SpriteFrameCache::getInstance()->removeSpriteFrames();
+        director->getTextureCache()->removeAllTextures();
+    }
+    FileUtils::getInstance()->purgeCachedEntries();
+
+    director->getScheduler()->unscheduleAll();
+    director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
+    
+    string modulefile = file;
+    bool reloadAll = false;
+    if (modulefile.empty())
+    {
+        modulefile = "main.js";
+        reloadAll = true;
+    }
+    
+    return ScriptingCore::getInstance()->reloadScript(modulefile.c_str(),reloadAll);
+    
+    /*auto core = ScriptingCore::getInstance();
     core->reset();
-    core->runScript(modulefile.c_str());
+    ScriptingCore::getInstance()->enableDebugger();
+    return core->runScript(modulefile.c_str());*/
 }
 
 
@@ -344,8 +369,8 @@ class ConnectWaitLayer: public Layer
 {
 public:
 
-	ConnectWaitLayer()
-	{
+    ConnectWaitLayer()
+    {
         string strip = getIPAddress();
         char szIPAddress[512]={0};
         sprintf(szIPAddress, "LocalIP: %s",strip.c_str());
@@ -353,7 +378,15 @@ public:
         addChild(label, 9999);
         label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
         
-        auto labelwait = LabelTTF::create("wait transfer files ...", "Arial", 22);
+        string strShowMsg ="";
+        if (CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
+        {
+            strShowMsg = "waiting for debugger to connect ...";
+        }else
+        {
+            strShowMsg = "waiting for file transfer ...";
+        }
+        auto labelwait = LabelTTF::create(strShowMsg.c_str(), "Arial", 22);
         addChild(labelwait, 10000);
         labelwait->setPosition( Point(VisibleRect::center().x, VisibleRect::center().y) );
         
@@ -365,9 +398,7 @@ public:
         menu->setPosition( Point::ZERO );
         menuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
         addChild(menu, 1);
-		//_scheduler = CCDirector::sharedDirector()->getScheduler();
-        //scheduleUpdate();
-	}
+    }
     
     void playerCallback(Object* sender)
     {
@@ -401,14 +432,13 @@ public:
         _listenfd = -1;
         _running = false;
         _endThread = false;
-		_writepath = FileUtils::getInstance()->getWritablePath();
     }
     
-	bool listenOnTCP(int port);
+    bool listenOnTCP(int port);
     void stop();
     
 private:
-    bool recv_file(int fd);
+    bool receiveFile(int fd);
     void addClient();
     void loop();
  
@@ -420,116 +450,115 @@ private:
     fd_set _read_set;
     bool _running;
     bool _endThread;
-	std::string _writepath;
 };
 
 bool FileServer::listenOnTCP(int port)
 {
-	int listenfd, n;
-	const int on = 1;
-	struct addrinfo hints, *res, *ressave;
-	char serv[30];
+    int listenfd, n;
+    const int on = 1;
+    struct addrinfo hints, *res, *ressave;
+    char serv[30];
 
-	snprintf(serv, sizeof(serv)-1, "%d", port );
-	serv[sizeof(serv)-1]=0;
+    snprintf(serv, sizeof(serv)-1, "%d", port );
+    serv[sizeof(serv)-1]=0;
 
-	bzero(&hints, sizeof(struct addrinfo));
-	hints.ai_flags = AI_PASSIVE;
-	hints.ai_family = AF_INET; // AF_UNSPEC: Do we need IPv6 ?
-	hints.ai_socktype = SOCK_STREAM;
+    bzero(&hints, sizeof(struct addrinfo));
+    hints.ai_flags = AI_PASSIVE;
+    hints.ai_family = AF_INET; // AF_UNSPEC: Do we need IPv6 ?
+    hints.ai_socktype = SOCK_STREAM;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	WSADATA wsaData;
-	n = WSAStartup(MAKEWORD(2, 2),&wsaData);
+    WSADATA wsaData;
+    n = WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
 
-	if ( (n = getaddrinfo(NULL, serv, &hints, &res)) != 0) {
-		fprintf(stderr,"net_listen error for %s: %s", serv, gai_strerror(n));
-		return false;
-	}
+    if ( (n = getaddrinfo(NULL, serv, &hints, &res)) != 0) {
+        fprintf(stderr,"net_listen error for %s: %s", serv, gai_strerror(n));
+        return false;
+    }
 
-	ressave = res;
-	do {
-		listenfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
-		if (listenfd < 0)
-			continue;       /* error, try next one */
-		
-		setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, (const char*)&on, sizeof(on));
-		if (::bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
-			break;          /* success */
-		
-		close(listenfd);    /* bind error, close and try next one */
-	} while ( (res = res->ai_next) != NULL);
+    ressave = res;
+    do {
+        listenfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+        if (listenfd < 0)
+            continue;       /* error, try next one */
+        
+        setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, (const char*)&on, sizeof(on));
+        if (::bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
+            break;          /* success */
+        
+        close(listenfd);    /* bind error, close and try next one */
+    } while ( (res = res->ai_next) != NULL);
 
-	if (res == NULL) {
-		perror("net_listen:");
-		freeaddrinfo(ressave);
-		return false;
-	}
+    if (res == NULL) {
+        perror("net_listen:");
+        freeaddrinfo(ressave);
+        return false;
+    }
 
-	listen(listenfd, 1);
+    listen(listenfd, 1);
 
-	if (res->ai_family == AF_INET) 
-	{
-		char buf[INET_ADDRSTRLEN] = "";
-		struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
-		if( inet_ntop(res->ai_family, &sin->sin_addr, buf, sizeof(buf)) != NULL )
-			cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin_port));
-		else
-			perror("inet_ntop");
-	} else if (res->ai_family == AF_INET6) 
-	{
-		char buf[INET6_ADDRSTRLEN] = "";
-		struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
-		if( inet_ntop(res->ai_family, &sin->sin6_addr, buf, sizeof(buf)) != NULL )
-			cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin6_port));
-		else
-			perror("inet_ntop");
-	}
-	freeaddrinfo(ressave);
-	_listenfd = listenfd;
-	_thread = std::thread( std::bind( &FileServer::loop, this) );
-	return true;	
+    if (res->ai_family == AF_INET) 
+    {
+        char buf[INET_ADDRSTRLEN] = "";
+        struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
+        if( inet_ntop(res->ai_family, &sin->sin_addr, buf, sizeof(buf)) != NULL )
+            cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin_port));
+        else
+            perror("inet_ntop");
+    } else if (res->ai_family == AF_INET6) 
+    {
+        char buf[INET6_ADDRSTRLEN] = "";
+        struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
+        if( inet_ntop(res->ai_family, &sin->sin6_addr, buf, sizeof(buf)) != NULL )
+            cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin6_port));
+        else
+            perror("inet_ntop");
+    }
+    freeaddrinfo(ressave);
+    _listenfd = listenfd;
+    _thread = std::thread( std::bind( &FileServer::loop, this) );
+    return true;	
 }
-	
+    
 void FileServer::stop()
 {
-	if( _running ) {
-		_endThread = true;
-		_thread.join();
-	}
+    if( _running ) {
+        _endThread = true;
+        _thread.join();
+    }
 }
 
-string& replace_all(string& str,const string& old_value,const string& new_value)
+string& replaceAll(string& str,const string& old_value,const string& new_value)
 {
-	while(true)
-	{
-		int pos=0;
-		if((pos=str.find(old_value,0))!=string::npos)
-			str.replace(pos,old_value.length(),new_value);
-		else break;
-	}
-	return str;
+    while(true)
+    {
+        int pos=0;
+        if((pos=str.find(old_value,0))!=string::npos)
+            str.replace(pos,old_value.length(),new_value);
+        else break;
+    }
+    return str;
 }
 
 bool CreateDir(const char *sPathName)
 {
-	char   DirName[256]={0};
-	strcpy(DirName,   sPathName);
-	int   i,len   =   strlen(DirName);
-	if(DirName[len-1]!='/')
-		strcat(DirName,   "/");
+    char   DirName[256]={0};
+    strcpy(DirName,   sPathName);
+    int   i,len   =   strlen(DirName);
+    if(DirName[len-1]!='/')
+        strcat(DirName,   "/");
     
-	len   =   strlen(DirName);
-	for(i=1;   i<len;   i++)
-	{
-		if(DirName[i]=='/')
-		{
-			DirName[i]   =   0;
-			if(access(DirName,   NULL)!=0   )
-			{
+    len   =   strlen(DirName);
+    for(i=1;   i<len;   i++)
+    {
+        if(DirName[i]=='/')
+        {
+            DirName[i]   =   0;
+            if(access(DirName,   NULL)!=0   )
+            {
 #ifdef _WIN32
-				if(mkdir(DirName/*,   0755*/)==-1)
+                if(mkdir(DirName/*,   0755*/)==-1)
 #else
                 if(mkdir(DirName,   0755)==-1)
 #endif
@@ -537,140 +566,211 @@ bool CreateDir(const char *sPathName)
                     perror("mkdir   error");
                     return  false;
                 }
-			}  
-			DirName[i]   =   '/';  
-		}  
-	}  
+            }  
+            DirName[i]   =   '/';  
+        }  
+    }  
     
-	return   true;  
+    return   true;  
 }
 
-bool FileServer::recv_file(int fd)
+static bool updateResFileInfo()
 {
-	char buffer[1024]={0};
-    char namelen[4]={0};
-	if (recv(fd, namelen, 4,0)<=0) {
-		return  false;
-	}
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
+    g_filecfgjson.Accept(writer);
+    const char* str = buffer.GetString();
+
+    string filecfg = g_resourcePath;
+    filecfg.append("/");
+    filecfg.append("fileinfo_debug.json");
+    FILE * pFile = fopen (filecfg.c_str() , "w");
+    if (!pFile)
+        return false;
     
-	if (recv(fd, buffer, atoi(namelen),0)<=0) {
-		return  false;
-	}
+    fwrite(str,sizeof(char),strlen(str),pFile);
+    fclose(pFile);
+
+    return true;
+}
+
+static void readResFileFinfo()
+{
+    string filecfg = g_resourcePath;
+    filecfg.append("/");
+    filecfg.append("fileinfo_debug.json");
+    FILE * pFile = fopen (filecfg.c_str() , "r");
+    if(pFile)
+    {
+        rapidjson::FileStream inputStream(pFile);
+        g_filecfgjson.ParseStream<0>(inputStream);
+        fclose(pFile);
+    }
+    if(!g_filecfgjson.IsObject())
+    {
+        g_filecfgjson.SetObject();
+    }
+}
+
+bool FileServer::receiveFile(int fd)
+{
+    char headlen[5]={0};
+    if (recv(fd, headlen, 4,0)<=0) {
+        return  false;
+    }
+    char *headSeg = new char[atoi(headlen)+1];
+    if (!headSeg)
+    {
+        return false;
+    }
+
+    memset(headSeg,0,atoi(headlen)+1);
+    if (recv(fd, headSeg, atoi(headlen),0)<=0) {
+        return  false;
+    }
+    rapidjson::Document headjson; 
+    headjson.Parse<0>(headSeg);
+    if (headjson.HasMember("filename"))
+    {
+        string filename = headjson["filename"].GetString();
+        char fullfilename[1024]={0};
+        sprintf(fullfilename,"%s%s",g_resourcePath.c_str(),filename.c_str());
+        string file(fullfilename);
+        file=replaceAll(file,"\\","/");
+        sprintf(fullfilename, "%s", file.c_str());
+        cocos2d::log("recv fullfilename = %s",fullfilename);
+        CreateDir(file.substr(0,file.find_last_of("/")).c_str());
+        FILE *fp =fopen(fullfilename, "wb");
+        int length =0;
+        while ((length=recv(fd, fullfilename, sizeof(fullfilename),0)) > 0) {
+            fwrite(fullfilename, sizeof(char), length,fp);
+        }
+        fclose(fp);
+
+        if (headjson.HasMember("lastmodifytime"))
+        {
+            string filemodifytime = headjson["lastmodifytime"].GetString();
+            if (g_filecfgjson.HasMember(filename.c_str()))
+            {
+                g_filecfgjson.RemoveMember(filename.c_str());
+            }
+            rapidjson::Value filetimeValue(rapidjson::kStringType);
+            filetimeValue.SetString(filemodifytime.c_str(),g_filecfgjson.GetAllocator());
+            rapidjson::Value filenameValue(rapidjson::kStringType);
+            filenameValue.SetString(filename.c_str(),g_filecfgjson.GetAllocator());
+            g_filecfgjson.AddMember(filenameValue.GetString(),filetimeValue,g_filecfgjson.GetAllocator());
+            updateResFileInfo();
+        }
+    }
+
+    if (headSeg)
+    {
+        delete [] headSeg;
+        headSeg =nullptr;
+    }
     
-    char fullfilename[1024]={0};
-	sprintf(fullfilename,"%s%s",_writepath.c_str(),buffer);
-    string file(fullfilename);
-	file=replace_all(file,"\\","/");
-	sprintf(fullfilename, "%s", file.c_str());
-	cocos2d::log("recv fullfilename = %s",fullfilename);
-    CreateDir(file.substr(0,file.find_last_of("/")).c_str());
-	FILE *fp =fopen(fullfilename, "wb");
-	
-	int length =0;
-	while ((length=recv(fd, fullfilename, sizeof(fullfilename),0)) > 0) {
-		fwrite(fullfilename, sizeof(char), length,fp);
-	}
-	fclose(fp);
-	return true;
+    string finish("finish\n");
+    send(fd, finish.c_str(), finish.size(),0);
+    return true;
 }
     
 void FileServer::addClient()
 {
-	struct sockaddr client;
-	socklen_t client_len;
+    struct sockaddr client;
+    socklen_t client_len;
 
-	/* new client */
-	client_len = sizeof( client );
-	int fd = accept(_listenfd, (struct sockaddr *)&client, &client_len );
+    /* new client */
+    client_len = sizeof( client );
+    int fd = accept(_listenfd, (struct sockaddr *)&client, &client_len );
 
-	// add fd to list of FD
-	if( fd != -1 ) {
-		FD_SET(fd, &_read_set);
-		_fds.push_back(fd);
-		_maxfd = std::max(_maxfd,fd);
-	}
+    // add fd to list of FD
+    if( fd != -1 ) {
+        FD_SET(fd, &_read_set);
+        _fds.push_back(fd);
+        _maxfd = std::max(_maxfd,fd);
+    }
 }
 
 void FileServer::loop()
 {
-	fd_set copy_set;
-	struct timeval timeout, timeout_copy;
+    fd_set copy_set;
+    struct timeval timeout, timeout_copy;
 
-	_running = true;
+    _running = true;
 
-	FD_ZERO(&_read_set);
-	FD_SET(_listenfd, &_read_set);
-	_maxfd = _listenfd;
+    FD_ZERO(&_read_set);
+    FD_SET(_listenfd, &_read_set);
+    _maxfd = _listenfd;
 
-	timeout.tv_sec = 0;
+    timeout.tv_sec = 0;
 
-	/* 0.016 seconds. Wake up once per frame at 60PFS */
-	timeout.tv_usec = 16000;
+    /* 0.016 seconds. Wake up once per frame at 60PFS */
+    timeout.tv_usec = 16000;
 
-	while(!_endThread) {
+    while(!_endThread) {
 
-		copy_set = _read_set;
-		timeout_copy = timeout;
-		int nready = select(_maxfd+1, &copy_set, NULL, NULL, &timeout_copy);
+        copy_set = _read_set;
+        timeout_copy = timeout;
+        int nready = select(_maxfd+1, &copy_set, NULL, NULL, &timeout_copy);
 
-		if( nready == -1 )
-		{
-			/* error */
-			if(errno != EINTR)
-				log("Abnormal error in select()\n");
-			continue;
-		}
-		else if( nready == 0 )
-		{
-			/* timeout. do somethig ? */
-		}
-		else
-		{
-			/* new client */
-			if(FD_ISSET(_listenfd, &copy_set)) {
-				addClient();
-				if(--nready <= 0)
-					continue;
-			}
+        if( nready == -1 )
+        {
+            /* error */
+            if(errno != EINTR)
+                log("Abnormal error in select()\n");
+            continue;
+        }
+        else if( nready == 0 )
+        {
+            /* timeout. do somethig ? */
+        }
+        else
+        {
+            /* new client */
+            if(FD_ISSET(_listenfd, &copy_set)) {
+                addClient();
+                if(--nready <= 0)
+                    continue;
+            }
 
-			/* data from client */
-			std::vector<int> to_remove;
-			for(const auto &fd: _fds) {
-				if(FD_ISSET(fd,&copy_set)) {
-					if( ! recv_file(fd) ) {
-						to_remove.push_back(fd);
-					}
-					if(--nready <= 0)
-						break;
-				}
-			}
+            /* data from client */
+            std::vector<int> to_remove;
+            for(const auto &fd: _fds) {
+                if(FD_ISSET(fd,&copy_set)) {
+                    if( ! receiveFile(fd) ) {
+                        to_remove.push_back(fd);
+                    }
+                    if(--nready <= 0)
+                        break;
+                }
+            }
 
-			/* remove closed conections */
-			for(int fd: to_remove) {
-				FD_CLR(fd, &_read_set);
-				_fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
-			}
-		}
-	}
+            /* remove closed conections */
+            for(int fd: to_remove) {
+                FD_CLR(fd, &_read_set);
+                _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
+            }
+        }
+    }
 
-	// clean up: ignore stdin, stdout and stderr
-	for(const auto &fd: _fds )
-	{
+    // clean up: ignore stdin, stdout and stderr
+    for(const auto &fd: _fds )
+    {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-		closesocket(fd);
+        closesocket(fd);
 #else
-		close(fd);
+        close(fd);
 #endif
-	}
+    }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	closesocket(_listenfd);
-	WSACleanup();
+    closesocket(_listenfd);
+    WSACleanup();
 #else
-	close(_listenfd);
+    close(_listenfd);
 #endif
 
-	_running = false;
+    _running = false;
 }
 
 
@@ -679,14 +779,9 @@ class ConsoleCustomCommand
 public:
     ConsoleCustomCommand():_fileserver(nullptr)
     {
-        _writepath = FileUtils::getInstance()->getWritablePath();
         cocos2d::Console *_console = Director::getInstance()->getConsole();
         static struct Console::Command commands[] = {
-            {"shutdownapp","exit runtime app",std::bind(&ConsoleCustomCommand::onShutDownApp, this, std::placeholders::_1, std::placeholders::_2)},
-            {"precompile","",std::bind(&ConsoleCustomCommand::onPreCompile, this, std::placeholders::_1, std::placeholders::_2)},
-            {"start-logic","run game logic script",std::bind(&ConsoleCustomCommand::onRunLogicScript, this, std::placeholders::_1, std::placeholders::_2)},
-            {"reload","reload script.Args:[filepath]",std::bind(&ConsoleCustomCommand::onReloadScriptFile, this, std::placeholders::_1, std::placeholders::_2)},
-            {"getversion","get runtime version.",std::bind(&ConsoleCustomCommand::onRuntimeVersion, this, std::placeholders::_1, std::placeholders::_2)},
+            {"sendrequest","send command to runtime.Args[json format]",std::bind(&ConsoleCustomCommand::onSendCommand, this, std::placeholders::_1, std::placeholders::_2)},
         };
         for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
             _console->addCommand(commands[i]);
@@ -698,7 +793,7 @@ public:
     }
     ~ConsoleCustomCommand()
     {
-		Director::getInstance()->getConsole()->stop();
+        Director::getInstance()->getConsole()->stop();
         _fileserver->stop();
         if (_fileserver) {
             delete _fileserver;
@@ -706,71 +801,206 @@ public:
         }
     }
     
-    void onPreCompile(int fd, const std::string &args)
+    void onSendCommand(int fd, const std::string &args)
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
-            vector<std::string> fileInfoList = searchFileList(_writepath,"*.js","runtime|frameworks|");
-            for (unsigned i = 0; i < fileInfoList.size(); i++)
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            rapidjson::Document dArgParse;
+            dArgParse.Parse<0>(args.c_str());
+            if (dArgParse.HasMember("cmd"))
             {
-                ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(_writepath.length(),-1).c_str());
+                string strcmd = dArgParse["cmd"].GetString();
+                
+                rapidjson::Document dReplyParse;
+                dReplyParse.SetObject();
+                dReplyParse.AddMember("cmd",strcmd.c_str(),dReplyParse.GetAllocator());
+                if (dArgParse.HasMember("seq")) {
+                    dReplyParse.AddMember("seq",dArgParse["seq"],dReplyParse.GetAllocator());
+                }
+                
+                if (strcmp(strcmd.c_str(),"start-logic")==0)
+                {
+                    if (startScript())
+                    {
+                        dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                    }else
+                    {
+                        dReplyParse.AddMember("code",1,dReplyParse.GetAllocator());
+                    }
+                    
+                }else if(strcmp(strcmd.c_str(),"precompile")==0)
+                {
+                    vector<std::string> fileInfoList = searchFileList(g_resourcePath,"*.js","runtime|frameworks|");
+                    for (unsigned i = 0; i < fileInfoList.size(); i++)
+                    {
+                        ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
+                    }
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                }else if(strcmp(strcmd.c_str(),"reload")==0)
+                {
+                    if (dArgParse.HasMember("modulefiles"))
+                    {
+                        rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                        const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
+                        for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
+                        {
+                            if (!reloadScript(objectfiles[i].GetString())) {
+                                bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
+                            }
+                        }
+                        if (0 == objectfiles.Size()) {
+                            reloadScript("");
+                        }
+                        dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    }
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                }else if(strcmp(strcmd.c_str(),"getversion")==0)
+                {
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                    bodyvalue.AddMember("version",getRuntimeVersion(),dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                }else if(strcmp(strcmd.c_str(),"getfileinfo")==0)
+                {
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                    for (auto it=g_filecfgjson.MemberonBegin();it!=g_filecfgjson.MemberonEnd();++it)
+                    {
+                        bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
+                    }
+                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                    
+                }else if(strcmp(strcmd.c_str(),"getIP")==0)
+                {
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                    rapidjson::Value IPValue(rapidjson::kStringType);
+                    IPValue.SetString(getIPAddress().c_str(),dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("IP",IPValue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+
+                }else if(strcmp(strcmd.c_str(),"updatefileinfo")==0)
+                {
+                    if(updateResFileInfo())
+                    {
+                        dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                    }else
+                    {
+                        dReplyParse.AddMember("code",1,dReplyParse.GetAllocator());
+                    }
+                    
+                }else if(strcmp(strcmd.c_str(),"remove")==0)
+                {
+                    if (dArgParse.HasMember("files"))
+                    {
+                        rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                        const rapidjson::Value& objectfiles = dArgParse["files"];
+                        for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
+                        {
+                            string filename(g_resourcePath);
+                            filename.append("/");
+                            filename.append(objectfiles[i].GetString());
+                            if (FileUtils::getInstance()->isFileExist(filename)) {
+                                if(remove(filename.c_str())==0)
+                                {
+                                    if (g_filecfgjson.HasMember(objectfiles[i].GetString())) {
+                                        g_filecfgjson.RemoveMember(objectfiles[i].GetString());
+                                    }
+                                }
+                                else
+                                {
+                                    bodyvalue.AddMember(objectfiles[i].GetString(),2,dReplyParse.GetAllocator());
+                                }
+                            }else
+                            {
+                                bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
+                            }
+                            
+                        }
+                        dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                        updateResFileInfo();
+                    }
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+
+                }else if(strcmp(strcmd.c_str(),"shutdownapp")==0)
+                {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+                    extern void shutDownApp();
+                    shutDownApp();
+#else
+                    exit(0);
+#endif	
+                }
+                
+                rapidjson::StringBuffer buffer;
+                rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
+                dReplyParse.Accept(writer);
+                const char* str = buffer.GetString();
+                char msgSize[64]={0x1,0};
+                sprintf(msgSize+1,"%d:",strlen(str));
+                string replymsg(msgSize);
+                replymsg.append(str);
+                send(fd,replymsg.c_str(),replymsg.size(),0);
             }
-        });
-    }
-    
-    void onRunLogicScript(int fd, const std::string &args)
-    {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){
-            startScript();
-        });
-    }
-    
-    void onReloadScriptFile(int fd,const std::string &args)
-    {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
-             reloadScript(args.c_str());
-        });
-    }
-    
-	void onRuntimeVersion(int fd, const std::string &args)
-    {
-        string runtimeVer=getRuntimeVersion();
-        send(fd, runtimeVer.c_str(), runtimeVer.size(),0);
-    }
-	
-    void onShutDownApp(int fd, const std::string &args)
-    {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){
-            exit(0);
         });
     }
 private:
     FileServer* _fileserver;
-    string _writepath;
 };
 
-void startRuntime()
+bool startRuntime()
 {
-    static ConsoleCustomCommand s_customCommand;
-	vector<string> searchPathArray;
-    searchPathArray=FileUtils::getInstance()->getSearchPaths();
-    vector<string> writePathArray;
-    writePathArray.push_back(FileUtils::getInstance()->getWritablePath());
-    FileUtils::getInstance()->setSearchPaths(writePathArray);
-	for (unsigned i = 0; i < searchPathArray.size(); i++)
-	{
-		FileUtils::getInstance()->addSearchPath(searchPathArray[i]);
-	}
-	ScriptingCore::getInstance()->enableDebugger();
-	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
-	ScriptEngineManager::getInstance()->setScriptEngine(engine);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifndef _DEBUG
+    return false;
+#endif
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#ifdef NDEBUG
+    return false;
+#endif
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#ifndef COCOS2D_DEBUG
+    return false;
+#endif
+#endif
 
+    vector<string> searchPathArray;
+    searchPathArray=FileUtils::getInstance()->getSearchPaths();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    if (g_resourcePath.empty())
+    {
+        extern std::string getCurAppPath();
+        string resourcePath = getCurAppPath();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        resourcePath.append("/../../");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        resourcePath.append("/../../../");
+#endif
+        resourcePath =replaceAll(resourcePath,"\\","/");
+        g_resourcePath = resourcePath;
+    }
+
+#else
+    g_resourcePath = FileUtils::getInstance()->getWritablePath();
+    
+#endif
+    
+    g_resourcePath=replaceAll(g_resourcePath,"\\","/");
+    searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
+    FileUtils::getInstance()->setSearchPaths(searchPathArray);
+    static ConsoleCustomCommand s_customCommand;
+    ScriptingCore::getInstance()->start();
+    ScriptingCore::getInstance()->enableDebugger();
+    ScriptEngineProtocol *engine = ScriptingCore::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+
+    readResFileFinfo();
     auto scene = Scene::create();
     auto layer = new ConnectWaitLayer();
     layer->autorelease();
     auto director = Director::getInstance();
     scene->addChild(layer);
     director->runWithScene(scene);
-
+    return true;
 }
 
 
@@ -778,35 +1008,35 @@ void startRuntime()
 SimulatorConfig *SimulatorConfig::s_sharedInstance = NULL;
 SimulatorConfig *SimulatorConfig::getInstance(void)
 {
-	if (!s_sharedInstance)
-	{
-		s_sharedInstance = new SimulatorConfig();
-	}
-	return s_sharedInstance;
+    if (!s_sharedInstance)
+    {
+        s_sharedInstance = new SimulatorConfig();
+    }
+    return s_sharedInstance;
 }
 
 SimulatorConfig::SimulatorConfig(void)
 {
-	m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 3Gs (480x320)", 480, 320));
-	m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 4 (960x640)", 960, 640));
-	m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 5 (1136x640)", 1136, 640));
-	m_screenSizeArray.push_back(SimulatorScreenSize("iPad (1024x768)", 1024, 768));
-	m_screenSizeArray.push_back(SimulatorScreenSize("iPad Retina (2048x1536)", 2048, 1536));
-	m_screenSizeArray.push_back(SimulatorScreenSize("Android (800x480)", 800, 480));
-	m_screenSizeArray.push_back(SimulatorScreenSize("Android (854x480)", 854, 480));
-	m_screenSizeArray.push_back(SimulatorScreenSize("Android (960x540)", 960, 540));
-	m_screenSizeArray.push_back(SimulatorScreenSize("Android (1024x600)", 1024, 600));
-	m_screenSizeArray.push_back(SimulatorScreenSize("Android (1280x720)", 1280, 720));
-	m_screenSizeArray.push_back(SimulatorScreenSize("Android (1280x800)", 1280, 800));
-	m_screenSizeArray.push_back(SimulatorScreenSize("Android (1920x1080)", 1920, 1080));
+    m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 3Gs (480x320)", 480, 320));
+    m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 4 (960x640)", 960, 640));
+    m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 5 (1136x640)", 1136, 640));
+    m_screenSizeArray.push_back(SimulatorScreenSize("iPad (1024x768)", 1024, 768));
+    m_screenSizeArray.push_back(SimulatorScreenSize("iPad Retina (2048x1536)", 2048, 1536));
+    m_screenSizeArray.push_back(SimulatorScreenSize("Android (800x480)", 800, 480));
+    m_screenSizeArray.push_back(SimulatorScreenSize("Android (854x480)", 854, 480));
+    m_screenSizeArray.push_back(SimulatorScreenSize("Android (960x540)", 960, 540));
+    m_screenSizeArray.push_back(SimulatorScreenSize("Android (1024x600)", 1024, 600));
+    m_screenSizeArray.push_back(SimulatorScreenSize("Android (1280x720)", 1280, 720));
+    m_screenSizeArray.push_back(SimulatorScreenSize("Android (1280x800)", 1280, 800));
+    m_screenSizeArray.push_back(SimulatorScreenSize("Android (1920x1080)", 1920, 1080));
 }
 
 int SimulatorConfig::getScreenSizeCount(void)
 {
-	return (int)m_screenSizeArray.size();
+    return (int)m_screenSizeArray.size();
 }
 
 const SimulatorScreenSize SimulatorConfig::getScreenSize(int index)
 {
-	return m_screenSizeArray.at(index);
+    return m_screenSizeArray.at(index);
 }

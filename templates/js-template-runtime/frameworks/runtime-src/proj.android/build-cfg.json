@@ -22,7 +22,9 @@
         {
             "from": "../../../project.json",
             "to": ""
-        },
+        } 
+    ],
+    "must_copy_resources": [
         {
             "from": "../../js-bindings/bindings/script",
             "to": ""
