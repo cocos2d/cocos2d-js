@@ -9699,16 +9699,6 @@ int
 },
 
 /**
- * @method getFontSize
- * @return {float}
- */
-getFontSize : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getString
  * @return {String}
  */
@@ -9716,6 +9706,16 @@ getString : function (
 )
 {
     return ;
+},
+
+/**
+ * @method getHeight
+ * @return {unsigned int}
+ */
+getHeight : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -9752,16 +9752,6 @@ getCommonLineHeight : function (
  */
 setWidth : function (
 int 
-)
-{
-},
-
-/**
- * @method setFontName
- * @param {String} arg0
- */
-setFontName : function (
-str 
 )
 {
 },
@@ -9807,13 +9797,13 @@ str
 },
 
 /**
- * @method getHeight
- * @return {unsigned int}
+ * @method setSystemFontName
+ * @param {String} arg0
  */
-getHeight : function (
+setSystemFontName : function (
+str 
 )
 {
-    return 0;
 },
 
 /**
@@ -9831,23 +9821,13 @@ point
 },
 
 /**
- * @method getFontDefinition
- * @return {cc.FontDefinition}
+ * @method setSystemFontSize
+ * @param {float} arg0
  */
-getFontDefinition : function (
+setSystemFontSize : function (
+float 
 )
 {
-    return cc.FontDefinition;
-},
-
-/**
- * @method getFontName
- * @return {String}
- */
-getFontName : function (
-)
-{
-    return ;
 },
 
 /**
@@ -9939,6 +9919,16 @@ int
 },
 
 /**
+ * @method getSystemFontName
+ * @return {String}
+ */
+getSystemFontName : function (
+)
+{
+    return ;
+},
+
+/**
  * @method setVerticalAlignment
  * @param {cc.TextVAlignment} arg0
  */
@@ -9949,13 +9939,13 @@ textvalignment
 },
 
 /**
- * @method setFontSize
- * @param {float} arg0
+ * @method getTTFConfig
+ * @return {cc._ttfConfig}
  */
-setFontSize : function (
-float 
+getTTFConfig : function (
 )
 {
+    return cc._ttfConfig;
 },
 
 /**
@@ -10021,6 +10011,16 @@ int
 },
 
 /**
+ * @method getSystemFontSize
+ * @return {float}
+ */
+getSystemFontSize : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getTextAlignment
  * @return {cc.TextHAlignment}
  */
@@ -10046,16 +10046,6 @@ getBMFontFilePath : function (
  */
 setHorizontalAlignment : function (
 texthalignment 
-)
-{
-},
-
-/**
- * @method setFontDefinition
- * @param {cc.FontDefinition} arg0
- */
-setFontDefinition : function (
-fontdefinition 
 )
 {
 },
@@ -10094,21 +10084,9 @@ point
 
 /**
  * @method create
-* @param {String} str
-* @param {String} str
-* @param {float} float
-* @param {SizeObject} size
-* @param {cc.TextHAlignment} texthalignment
-* @param {cc.TextVAlignment} textvalignment
-* @return {cc.Label|cc.Label}
-*/
-create : function(
-str,
-str,
-float,
-size,
-texthalignment,
-textvalignment 
+ * @return {cc.Label}
+ */
+create : function (
 )
 {
     return cc.Label;
@@ -10133,14 +10111,22 @@ int
 },
 
 /**
- * @method createWithFontDefinition
+ * @method createWithSystemFont
  * @param {String} arg0
- * @param {cc.FontDefinition} arg1
+ * @param {String} arg1
+ * @param {float} arg2
+ * @param {SizeObject} arg3
+ * @param {cc.TextHAlignment} arg4
+ * @param {cc.TextVAlignment} arg5
  * @return {cc.Label}
  */
-createWithFontDefinition : function (
+createWithSystemFont : function (
 str, 
-fontdefinition 
+str, 
+float, 
+size, 
+texthalignment, 
+textvalignment 
 )
 {
     return cc.Label;
