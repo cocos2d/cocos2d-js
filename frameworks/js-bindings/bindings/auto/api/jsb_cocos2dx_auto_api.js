@@ -7897,18 +7897,16 @@ AtlasNode : function (
 cc.DrawNode = {
 
 /**
- * @method drawQuadraticBezier
+ * @method drawTriangle
  * @param {PointObject} arg0
  * @param {PointObject} arg1
  * @param {PointObject} arg2
- * @param {unsigned int} arg3
- * @param {Color4FObject} arg4
+ * @param {Color4FObject} arg3
  */
-drawQuadraticBezier : function (
+drawTriangle : function (
 point, 
 point, 
 point, 
-int, 
 color4f 
 )
 {
@@ -7935,22 +7933,6 @@ clear : function (
 },
 
 /**
- * @method drawTriangle
- * @param {PointObject} arg0
- * @param {PointObject} arg1
- * @param {PointObject} arg2
- * @param {Color4FObject} arg3
- */
-drawTriangle : function (
-point, 
-point, 
-point, 
-color4f 
-)
-{
-},
-
-/**
  * @method init
  * @return {bool}
  */
@@ -7969,6 +7951,24 @@ init : function (
 drawDot : function (
 point, 
 float, 
+color4f 
+)
+{
+},
+
+/**
+ * @method drawQuadraticBezier
+ * @param {PointObject} arg0
+ * @param {PointObject} arg1
+ * @param {PointObject} arg2
+ * @param {unsigned int} arg3
+ * @param {Color4FObject} arg4
+ */
+drawQuadraticBezier : function (
+point, 
+point, 
+point, 
+int, 
 color4f 
 )
 {
@@ -15874,7 +15874,7 @@ getInstance : function (
 /**
  * @class SAXParser
  */
-cc.SAXParser = {
+cc.PlistParser = {
 
 /**
  * @method init

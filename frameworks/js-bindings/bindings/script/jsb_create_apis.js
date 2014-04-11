@@ -77,7 +77,37 @@ _p._ctor = function(fileImage, capacity) {
 		this.initWithTexture(fileImage, capacity);
 };
 
+_p = cc.SpriteFrame.prototype;
+_p._ctor = function(filename, rect, rotated, offset, originalSize){
 
+    if(filename !== undefined && rect !== undefined ){
+        if(rotated === undefined || offset === undefined || originalSize === undefined){
+            this.initWithTexture(filename, rect);
+        }
+        else{
+            this.initWithTexture(filename, rect, rotated, offset, originalSize)
+        }
+    }
+};
+
+/*****************************  effect   *******************************/
+_p = cc.GridBase.prototype;
+_p._ctor = function(gridSize, texture, flipped){
+    if(gridSize !== undefined)
+        this.initWithSize(gridSize, texture, flipped);
+};
+
+_p = cc.Grid3D.prototype;
+_p._ctor = function(gridSize, texture, flipped){
+    if(gridSize !== undefined)
+        this.initWithSize(gridSize, texture, flipped);
+};
+
+_p = cc.TiledGrid3D.prototype;
+_p._ctor = function(gridSize, texture, flipped){
+    if(gridSize !== undefined)
+        this.initWithSize(gridSize, texture, flipped);
+};
 /************************  Menu and menu items  *************************/
 
 _p = cc.Menu.prototype;
@@ -131,23 +161,23 @@ _p._ctor = function(value, callback, target) {
 
 _p = cc.MenuItemSprite.prototype;
 _p._ctor = function(normalSprite, selectedSprite, three, four, five) {
-	var argc = arguments.length;
-	if (argc > 1) {
-		normalSprite = arguments[0];
-		selectedSprite = arguments[1];
+	if (selectedSprite) {
+		normalSprite = normalSprite;
+		selectedSprite = selectedSprite;
 		var disabledImage, target, callback;
-		if (argc == 5) {
-			disabledImage = arguments[2];
-			callback = arguments[3];
-			target = arguments[4];
-		} else if (argc == 4 && typeof arguments[3] === "function") {
-			disabledImage = arguments[2];
-			callback = arguments[3];
-		} else if (argc == 4 && typeof arguments[2] === "function") {
-			target = arguments[3];
-			callback = arguments[2];
-		} else if (argc <= 2) {
-			disabledImage = arguments[2];
+		if (five) {
+			disabledImage = three;
+			callback = four;
+			target = five;
+		} else if (four && typeof four === "function") {
+			disabledImage = three;
+			callback = four;
+		} else if (four && typeof three === "function") {
+			target = four;
+			callback = three;
+            disabledImage = normalSprite;
+		} else if (three === undefined) {
+			disabledImage = normalSprite;
 		}
 		callback = callback ? callback.bind(target) : null;
 		this.initWithNormalSprite(normalSprite, selectedSprite, disabledImage, callback);
@@ -209,6 +239,127 @@ _p._ctor = function() {
 	}
 };
 
+/************************  motion-streak  *************************/
+_p = cc.MotionStreak.prototype;
+_p._ctor = function(fade, minSeg, stroke, color, texture){
+	if(texture !== undefined)
+    	this.initWithFade(fade, minSeg, stroke, color, texture);
+};
+
+/************************  Particle  *************************/
+_p = cc.ParticleBatchNode.prototype;
+_p._ctor = function(fileImage, capacity){
+    capacity = capacity || cc.PARTICLE_DEFAULT_CAPACITY;
+    if (typeof(fileImage) == "string") {
+        this.init(fileImage, capacity);
+    } else if (fileImage instanceof cc.Texture2D) {
+        this.initWithTexture(fileImage, capacity);
+    }
+};
+
+_p = cc.ParticleSystem.prototype;
+_p._ctor = function(plistFile){
+    if (!plistFile || typeof(plistFile) === "number") {
+        var ton = plistFile || 100;
+        this.initWithTotalParticles(ton);
+    }else{
+        this.initWithFile(plistFile);
+    }
+};
+
+/************************  PhysicsSprite  *************************/
+_p = cc.PhysicsSprite.prototype;
+_p._ctor = function(fileName, rect){
+    if (fileName === undefined) {
+        cc.PhysicsSprite.prototype.init.call(this);
+    }else if (typeof(fileName) === "string") {
+        if (fileName[0] === "#") {
+            //init with a sprite frame name
+            var frameName = fileName.substr(1, fileName.length - 1);
+            var spriteFrame = cc.spriteFrameCache.getSpriteFrame(frameName);
+            this.initWithSpriteFrame(spriteFrame);
+        } else {
+            //init  with filename and rect
+            if(rect)
+                this.initWithFile(fileName, rect);
+            else
+                this.initWithFile(fileName);
+        }
+    }else if (typeof(fileName) === "object") {
+        if (fileName instanceof cc.Texture2D) {
+            //init  with texture and rect
+           this.initWithTexture(fileName, rect);
+        } else if (fileName instanceof cc.SpriteFrame) {
+            //init with a sprite frame
+            this.initWithSpriteFrame(fileName);
+        }
+    }
+};
+
+/************************  TextFieldTTF  *************************/
+_p = cc.TextFieldTTF.prototype;
+_p._ctor = function(placeholder, dimensions, alignment, fontName, fontSize){
+    if(fontSize !== undefined){
+    	this.initWithPlaceHolder("", dimensions, alignment, fontName, fontSize);
+    	if(placeholder)
+            this._placeHolder = placeholder;
+    }        
+    else if(fontName === undefined && alignment !== undefined){
+        fontName = arguments[1];
+        fontSize = arguments[2];
+        this.initWithString("", fontName, fontSize);
+        if(placeholder)
+            this._placeHolder = placeholder;
+    }
+};
+
+/************************  RenderTexture  *************************/
+_p = cc.RenderTexture.prototype;
+_p._ctor = function(width, height, format, depthStencilFormat){
+    if(width !== undefined && height !== undefined){
+        format = format || cc.Texture2D.PIXEL_FORMAT_RGBA8888;
+        depthStencilFormat = depthStencilFormat || 0;
+        this.initWithWidthAndHeight(width, height, format, depthStencilFormat);
+    }
+};
+
+/************************  Tile Map  *************************/
+_p = cc.TileMapAtlas.prototype;
+_p._ctor = function(tile, mapFile, tileWidth, tileHeight){
+	if(tileHeight !== undefined)
+    	this.initWithTileFile(tile, mapFile, tileWidth, tileHeight);
+};
+
+_p = cc.TMXLayer.prototype;
+_p._ctor = function(tilesetInfo, layerInfo, mapInfo){
+	if(mapInfo !== undefined)
+    	this.initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo);
+};
+
+_p = cc.TMXTiledMap.prototype;
+_p._ctor = function(tmxFile,resourcePath){
+    if(resourcePath !== undefined){
+        this.initWithXML(tmxFile,resourcePath);
+    }else if(tmxFile !== undefined){
+        this.initWithTMXFile(tmxFile);
+    }
+};
+
+_p = cc.TMXMapInfo.prototype;
+_p._ctor = function(tmxFile, resourcePath){
+    if (resourcePath !== undefined) {
+    	this.initWithXML(tmxFile,resourcePath);
+    }else if(tmxFile !== undefined){
+        this.initWithTMXFile(tmxFile);
+    }
+};
+
+/************************  TransitionScene  *************************/
+_p = cc.TransitionScene.prototype;
+_p._ctor = function(t, scene){
+    if(t !== undefined && scene !== undefined)
+        this.initWithDuration(t, scene);
+};
 
 /************************  Actions  *************************/
 

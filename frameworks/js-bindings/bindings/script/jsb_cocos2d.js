@@ -91,6 +91,8 @@ cc.YELLOW = {r:255, g:255, b:0};
 
 cc.POINT_ZERO = {x:0, y:0};
 
+cc.PARTICLE_DEFAULT_CAPACITY = 500;
+
 // XXX: This definition is different than cocos2d-html5
 // cc.REPEAT_FOREVER = - 1;
 // We can't assign -1 to cc.REPEAT_FOREVER, since it will be a very big double value after
@@ -105,13 +107,368 @@ cc.MENU_STATE_TRACKING_TOUCH = 1;
 cc.MENU_HANDLER_PRIORITY = -128;
 cc.DEFAULT_PADDING = 5;
 
-// reusable objects
+cc.Scheduler.PRIORITY_SYSTEM	= -2147483648;
+
+var _Class = cc.Texture2D;
+_Class.PIXEL_FORMAT_AUTO = 0;
+_Class.PIXEL_FORMAT_RGBA8888 = 2;
+_Class.PIXEL_FORMAT_RGB888 = 3;
+_Class.PIXEL_FORMAT_RGB565 = 4;
+_Class.PIXEL_FORMAT_A8 = 5;
+_Class.PIXEL_FORMAT_I8 = 6;
+_Class.PIXEL_FORMAT_AI88 = 7;
+_Class.PIXEL_FORMAT_RGBA4444 = 8;
+_Class.PIXEL_FORMAT_RGB5A1 = 9;
+_Class.PIXEL_FORMAT_PVRTC4 = 10;
+_Class.PIXEL_FORMAT_PVRTC2 = 11;
+_Class.PIXEL_FORMAT_DEFAULT = _Class.PIXEL_FORMAT_RGBA8888;
+_Class.defaultPixelFormat = _Class.PIXEL_FORMAT_DEFAULT;
+
+// For blend
+cc.ONE = 1;
+cc.ZERO = 0;
+cc.SRC_ALPHA = 0x0302;
+cc.SRC_ALPHA_SATURATE = 0x308;
+cc.SRC_COLOR = 0x300;
+cc.DST_ALPHA = 0x304;
+cc.DST_COLOR = 0x306;
+cc.ONE_MINUS_SRC_ALPHA = 0x0303;
+cc.ONE_MINUS_SRC_COLOR = 0x301;
+cc.ONE_MINUS_DST_ALPHA = 0x305;
+cc.ONE_MINUS_DST_COLOR = 0x0307;
+cc.ONE_MINUS_CONSTANT_ALPHA	= 0x8004;
+cc.ONE_MINUS_CONSTANT_COLOR	= 0x8002;
+
+
+//
+// CCMacro.js export
+//
+
+/**
+ * @constant
+ * @type Number
+ */
+cc.INVALID_INDEX = -1;
+
+/**
+ * PI is the ratio of a circle's circumference to its diameter.
+ * @constant
+ * @type Number
+ */
+cc.PI = Math.PI;
+
+/**
+ * @constant
+ * @type Number
+ */
+cc.FLT_MAX = parseFloat('3.402823466e+38F');
+
+/**
+ * @constant
+ * @type Number
+ */
+cc.RAD = cc.PI / 180;
+
+/**
+ * @constant
+ * @type Number
+ */
+cc.DEG = 180 / cc.PI;
+
+/**
+ * maximum unsigned int value
+ * @constant
+ * @type Number
+ */
+cc.UINT_MAX = 0xffffffff;
+
+/**
+ * <p>
+ * simple macro that swaps 2 variables<br/>
+ *  modified from c++ macro, you need to pass in the x and y variables names in string, <br/>
+ *  and then a reference to the whole object as third variable
+ * </p>
+ * @param x
+ * @param y
+ * @param ref
+ * @function
+ * @deprecated
+ */
+cc.swap = function (x, y, ref) {
+	if ((typeof ref) == 'object' && (typeof ref.x) != 'undefined' && (typeof ref.y) != 'undefined') {
+		var tmp = ref[x];
+		ref[x] = ref[y];
+		ref[y] = tmp;
+	} else
+		cc.log("cc.swap is being modified from original macro, please check usage");
+};
+
+/**
+ * <p>
+ *     Linear interpolation between 2 numbers, the ratio sets how much it is biased to each end
+ * </p>
+ * @param {Number} a number A
+ * @param {Number} b number B
+ * @param {Number} r ratio between 0 and 1
+ * @function
+ * @example
+ * cc.lerp(2,10,0.5)//returns 6<br/>
+ * cc.lerp(2,10,0.2)//returns 3.6
+ */
+cc.lerp = function (a, b, r) {
+	return a + (b - a) * r;
+};
+
+/**
+ * get a random number from 0 to 0xffffff
+ * @function
+ * @returns {number}
+ */
+cc.rand = function () {
+	return Math.random() * 0xffffff;
+};
+
+/**
+ * returns a random float between -1 and 1
+ * @return {Number}
+ * @function
+ */
+cc.randomMinus1To1 = function () {
+	return (Math.random() - 0.5) * 2;
+};
+
+/**
+ * returns a random float between 0 and 1
+ * @return {Number}
+ * @function
+ */
+cc.random0To1 = Math.random;
+
+/**
+ * converts degrees to radians
+ * @param {Number} angle
+ * @return {Number}
+ * @function
+ */
+cc.degreesToRadians = function (angle) {
+	return angle * cc.RAD;
+};
+
+/**
+ * converts radians to degrees
+ * @param {Number} angle
+ * @return {Number}
+ * @function
+ */
+cc.radiansToDegress = function (angle) {
+	return angle * cc.DEG;
+};
+
+/**
+ * @constant
+ * @type Number
+ */
+cc.REPEAT_FOREVER = Number.MAX_VALUE - 1;
+
+/**
+ * default gl blend src function. Compatible with premultiplied alpha images.
+ * @constant
+ * @type Number
+ */
+cc.BLEND_SRC = cc.OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA ? 1 : 0x0302;
+
+/**
+ * default gl blend dst function. Compatible with premultiplied alpha images.
+ * @constant
+ * @type Number
+ */
+cc.BLEND_DST = 0x0303;
+
+/**
+ * Helpful macro that setups the GL server state, the correct GL program and sets the Model View Projection matrix
+ * @param {cc.Node} node setup node
+ * @function
+ */
+cc.nodeDrawSetup = function (node) {
+	//cc.glEnable(node._glServerState);
+	if (node._shaderProgram) {
+		//cc._renderContext.useProgram(node._shaderProgram._programObj);
+		node._shaderProgram.use();
+		node._shaderProgram.setUniformForModelViewAndProjectionMatrixWithMat4();
+	}
+};
+
+/**
+ * <p>
+ *     GL states that are enabled:<br/>
+ *       - GL_TEXTURE_2D<br/>
+ *       - GL_VERTEX_ARRAY<br/>
+ *       - GL_TEXTURE_COORD_ARRAY<br/>
+ *       - GL_COLOR_ARRAY<br/>
+ * </p>
+ * @function
+ */
+cc.enableDefaultGLStates = function () {
+	//TODO OPENGL STUFF
+	/*
+	 glEnableClientState(GL_VERTEX_ARRAY);
+	 glEnableClientState(GL_COLOR_ARRAY);
+	 glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	 glEnable(GL_TEXTURE_2D);*/
+};
+
+/**
+ * <p>
+ *   Disable default GL states:<br/>
+ *     - GL_TEXTURE_2D<br/>
+ *     - GL_TEXTURE_COORD_ARRAY<br/>
+ *     - GL_COLOR_ARRAY<br/>
+ * </p>
+ * @function
+ */
+cc.disableDefaultGLStates = function () {
+	//TODO OPENGL
+	/*
+	 glDisable(GL_TEXTURE_2D);
+	 glDisableClientState(GL_COLOR_ARRAY);
+	 glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	 glDisableClientState(GL_VERTEX_ARRAY);
+	 */
+};
+
+/**
+ * <p>
+ *  Increments the GL Draws counts by one.<br/>
+ *  The number of calls per frame are displayed on the screen when the CCDirector's stats are enabled.<br/>
+ * </p>
+ * @param {Number} addNumber
+ * @function
+ */
+cc.incrementGLDraws = function (addNumber) {
+	cc.g_NumberOfDraws += addNumber;
+};
+
+/**
+ * @constant
+ * @type Number
+ */
+cc.FLT_EPSILON = 0.0000001192092896;
+
+/**
+ * <p>
+ *     On Mac it returns 1;<br/>
+ *     On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
+ * </p>
+ * @function
+ */
+cc.contentScaleFactor = cc.IS_RETINA_DISPLAY_SUPPORTED ? function () {
+	return cc.director.getContentScaleFactor();
+} : function () {
+	return 1;
+};
+
+/**
+ * Converts a Point in points to pixels
+ * @param {cc.Point} points
+ * @return {cc.Point}
+ * @function
+ */
+cc.pointPointsToPixels = function (points) {
+	var scale = cc.contentScaleFactor();
+	return cc.p(points.x * scale, points.y * scale);
+};
+
+/**
+ * Converts a Point in pixels to points
+ * @param {Point} pixels
+ * @function
+ */
+cc.pointPixelsToPoints = function (pixels) {
+	var scale = cc.contentScaleFactor();
+	return cc.p(pixels.x / scale, pixels.y / scale);
+};
+
+cc._pointPixelsToPointsOut = function(pixels, outPoint){
+	var scale = cc.contentScaleFactor();
+	outPoint.x = pixels.x / scale;
+	outPoint.y = pixels.y / scale;
+};
+
+/**
+ * Converts a Size in points to pixels
+ * @param {cc.Size} sizeInPoints
+ * @return {cc.Size}
+ * @function
+ */
+cc.sizePointsToPixels = function (sizeInPoints) {
+	var scale = cc.contentScaleFactor();
+	return cc.size(sizeInPoints.width * scale, sizeInPoints.height * scale);
+};
+
+/**
+ * Converts a size in pixels to points
+ * @param {cc.Size} sizeInPixels
+ * @return {cc.Size}
+ * @function
+ */
+cc.sizePixelsToPoints = function (sizeInPixels) {
+	var scale = cc.contentScaleFactor();
+	return cc.size(sizeInPixels.width / scale, sizeInPixels.height / scale);
+};
+
+cc._sizePixelsToPointsOut = function (sizeInPixels, outSize) {
+	var scale = cc.contentScaleFactor();
+	outSize.width = sizeInPixels.width / scale;
+	outSize.height = sizeInPixels.height / scale;
+};
+
+/**
+ * Converts a rect in pixels to points
+ * @param {cc.Rect} pixel
+ * @function
+ */
+cc.rectPixelsToPoints = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (pixel) {
+	var scale = cc.contentScaleFactor();
+	return cc.rect(pixel.x / scale, pixel.y / scale,
+		pixel.width / scale, pixel.height / scale);
+} : function (p) {
+	return p;
+};
+
+/**
+ * Converts a rect in points to pixels
+ * @param {cc.Rect} point
+ * @function
+ */
+cc.rectPointsToPixels = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (point) {
+	var scale = cc.contentScaleFactor();
+	return cc.rect(point.x * scale, point.y * scale,
+		point.width * scale, point.height * scale);
+} : function (p) {
+	return p;
+};
+
+cc.checkGLErrorDebug = function () {
+	if (cc.renderMode == cc._RENDER_TYPE_WEBGL) {
+		var _error = cc._renderContext.getError();
+		if (_error) {
+			cc.log(CC._localZOrder.checkGLErrorDebug, _error);
+		}
+	}
+};
+
+
+//
+// Reusable objects
+//
 cc._reuse_p = [ {x:0, y:0}, {x:0,y:0}, {x:0,y:0}, {x:0,y:0} ];
 cc._reuse_p_index = 0;
 cc._reuse_size = {width:0, height:0};
 cc._reuse_rect = {x:0, y:0, width:0, height:0};
 cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
+
+
 
 //
 // Basic sturcture : Point
@@ -914,6 +1271,7 @@ cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
 cc.LayerColor.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
+cc.SpriteFrame.extend = cc.Class.extend;
 cc.Menu.extend = cc.Class.extend;
 cc.MenuItem.extend = cc.Class.extend;
 cc.MenuItemFont.extend = cc.Class.extend;
@@ -921,6 +1279,21 @@ cc.MenuItemToggle.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
 cc.Component.extend = cc.Class.extend;
+cc.GridBase.extend = cc.Class.extend;
+cc.Grid3D.extend = cc.Class.extend;
+cc.TiledGrid3D.extend = cc.Class.extend;
+cc.MotionStreak.extend = cc.Class.extend;
+cc.ParticleBatchNode.extend = cc.Class.extend;
+cc.ParticleSystem.extend = cc.Class.extend;
+cc.PhysicsSprite.extend = cc.Class.extend;
+cc.TextFieldTTF.extend = cc.Class.extend;
+cc.RenderTexture.extend = cc.Class.extend;
+cc.TileMapAtlas.extend = cc.Class.extend;
+cc.TMXLayer.extend = cc.Class.extend;
+cc.TMXTiledMap.extend = cc.Class.extend;
+cc.TMXMapInfo.extend = cc.Class.extend;
+cc.TransitionScene.extend = cc.Class.extend;
+ccs.Armature.extend = cc.Class.extend;
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
@@ -1332,4 +1705,163 @@ cc.arrayRemoveArray = function (arr, minusArr) {
 cc.arrayAppendObjectsToIndex = function(arr, addObjs,index){
     arr.splice.apply(arr, [index, 0].concat(addObjs));
     return arr;
+};
+
+
+
+//
+// DrawNode JS API Wrapper
+//
+
+cc.cardinalSplineAt = function (p0, p1, p2, p3, tension, t) {
+	var t2 = t * t;
+	var t3 = t2 * t;
+
+	var s = (1 - tension) / 2;
+
+	var b1 = s * ((-t3 + (2 * t2)) - t);                      // s(-t3 + 2 t2 - t)P1
+	var b2 = s * (-t3 + t2) + (2 * t3 - 3 * t2 + 1);          // s(-t3 + t2)P2 + (2 t3 - 3 t2 + 1)P2
+	var b3 = s * (t3 - 2 * t2 + t) + (-2 * t3 + 3 * t2);      // s(t3 - 2 t2 + t)P3 + (-2 t3 + 3 t2)P3
+	var b4 = s * (t3 - t2);                                   // s(t3 - t2)P4
+
+	var x = (p0.x * b1 + p1.x * b2 + p2.x * b3 + p3.x * b4);
+	var y = (p0.y * b1 + p1.y * b2 + p2.y * b3 + p3.y * b4);
+	return cc.p(x, y);
+};
+
+cc._DrawNode = cc.DrawNode;
+cc.DrawNode = cc._DrawNode.extend({
+	_drawColor: cc.color(255, 255, 255, 255),
+	_lineWidth: 1,
+
+	setLineWidth: function (width) {
+		this._lineWidth = width;
+	},
+
+	getLineWidth: function () {
+		return this._lineWidth;
+	},
+
+	setDrawColor: function(color) {
+		var locDrawColor = this._drawColor;
+		locDrawColor.r = color.r;
+		locDrawColor.g = color.g;
+		locDrawColor.b = color.b;
+		locDrawColor.a = (color.a == null) ? 255 : color.a;
+	},
+
+	getDrawColor: function () {
+		return  cc.color(this._drawColor.r, this._drawColor.g, this._drawColor.b, this._drawColor.a);
+	},
+
+	drawRect: function (origin, destination, fillColor, lineWidth, lineColor) {
+		lineWidth = lineWidth || this._lineWidth;
+		lineColor = lineColor || this._drawColor;
+		var points = [origin, cc.p(origin.x, destination.y), destination, cc.p(destination.x, origin.y)];
+		if (fillColor)
+			cc._DrawNode.prototype.drawPoly.call(this, points, fillColor, lineWidth, lineColor);
+		else {
+			points.push(origin);
+			var drawSeg = cc._DrawNode.prototype.drawSegment;
+			for (var i = 0, len = points.length; i < len - 1; i++)
+				drawSeg.call(this, points[i], points[i + 1], lineWidth, lineColor);
+		}
+	},
+
+	drawCircle: function (center, radius, angle, segments, drawLineToCenter, lineWidth, color) {
+		lineWidth = lineWidth || this._lineWidth;
+		color = color || this._drawColor;
+		if (color.a == null)
+			color.a = 255;
+		var coef = 2.0 * Math.PI / segments, vertices = [], i, len;
+		for (i = 0; i <= segments; i++) {
+			var rads = i * coef;
+			var j = radius * Math.cos(rads + angle) + center.x;
+			var k = radius * Math.sin(rads + angle) + center.y;
+			vertices.push(cc.p(j, k));
+		}
+		if (drawLineToCenter)
+			vertices.push(cc.p(center.x, center.y));
+
+		lineWidth *= 0.5;
+		var drawSeg = cc._DrawNode.prototype.drawSegment;
+		for (i = 0, len = vertices.length; i < len - 1; i++)
+			drawSeg.call(this, vertices[i], vertices[i + 1], lineWidth, color);
+	},
+
+	drawQuadBezier: function (origin, control, destination, segments, lineWidth, color) {
+		lineWidth = lineWidth || this._lineWidth;
+		color = color || this._drawColor;
+		cc._DrawNode.prototype.drawQuadBezier.call(this, origin, control, destination, segments, color);
+	},
+
+	drawCubicBezier: function (origin, control1, control2, destination, segments, lineWidth, color) {
+		lineWidth = lineWidth || this._lineWidth;
+		color = color || this._drawColor;
+		cc._DrawNode.prototype.drawCubicBezier.call(this, origin, control1, control2, destination, segments, color);
+	},
+
+	drawCatmullRom: function (points, segments, lineWidth, color) {
+		this.drawCardinalSpline(points, 0.5, segments, lineWidth, color);
+	},
+
+	drawCardinalSpline: function (config, tension, segments, lineWidth, color) {
+		lineWidth = lineWidth || this._lineWidth;
+		color = color || this._drawColor;
+		if (color.a == null)
+			color.a = 255;
+		var vertices = [], p, lt, deltaT = 1.0 / config.length, m1len = config.length - 1;
+
+		for (var i = 0; i < segments + 1; i++) {
+			var dt = i / segments;
+
+			// border
+			if (dt == 1) {
+				p = m1len;
+				lt = 1;
+			} else {
+				p = 0 | (dt / deltaT);
+				lt = (dt - deltaT * p) / deltaT;
+			}
+
+			// Interpolate
+			var newPos = cc.cardinalSplineAt(
+				config[Math.min(m1len, Math.max(p - 1, 0))],
+				config[Math.min(m1len, Math.max(p + 0, 0))],
+				config[Math.min(m1len, Math.max(p + 1, 0))],
+				config[Math.min(m1len, Math.max(p + 2, 0))],
+				tension, lt);
+			vertices.push(newPos);
+		}
+
+		lineWidth *= 0.5;
+		var drawSeg = cc._DrawNode.prototype.drawSegment;
+		for (var j = 0, len = vertices.length; j < len - 1; j++)
+			drawSeg.call(this, vertices[j], vertices[j + 1], lineWidth, color);
+	},
+
+	drawDot:function (pos, radius, color) {
+		color = color || this._drawColor;
+		cc._DrawNode.prototype.drawDot.call(this, pos, radius, color);
+	},
+
+	drawSegment:function (from, to, radius, color) {
+		color = color || this._drawColor;
+		cc._DrawNode.prototype.drawSegment.call(this, from, to, radius, color);
+	},
+
+	drawPoly:function (verts, fillColor, borderWidth, borderColor) {
+		borderColor = borderColor || this._drawColor;
+		if (fillColor)
+			cc._DrawNode.prototype.drawPoly.call(this, verts, fillColor, borderWidth, borderColor);
+		else {
+			verts.push(verts[0]);
+			var drawSeg = cc._DrawNode.prototype.drawSegment;
+			for (var i = 0, len = verts.length; i < len - 1; i++)
+				drawSeg.call(this, verts[i], verts[i + 1], borderWidth, borderColor);
+		}
+	}
+});
+cc.DrawNode.create = function () {
+	return new cc.DrawNode();
 };
