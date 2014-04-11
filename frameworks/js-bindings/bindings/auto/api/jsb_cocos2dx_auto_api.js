@@ -10385,21 +10385,11 @@ float
 },
 
 /**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
  * @method initWithColor
 * @param {Color4BObject|Color4BObject} color4b
 * @param {float} float
 * @param {float} float
-* @return {bool|bool}
+* @return {bool|bool|bool}
 */
 initWithColor : function(
 color4b,
