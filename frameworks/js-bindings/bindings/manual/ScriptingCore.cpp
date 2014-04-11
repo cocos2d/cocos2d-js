@@ -596,20 +596,19 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
 	}
 }
 
-bool ScriptingCore::reloadScript(const char *path,bool reloadAll)
+void ScriptingCore::cleanScript(const char *path)
 {
-    if(reloadAll)
+    auto it = filename_script.find(path);
+    if (it != filename_script.end())
     {
-        filename_script.clear();
-    }else
-    {
-        auto it = filename_script.find(path);
-        if (it != filename_script.end())
-        {
-            filename_script.erase(it);
-        }
+        filename_script.erase(it);
     }
-   return runScript(path);
+
+}
+
+void ScriptingCore::cleanAllScript()
+{
+    filename_script.clear();
 }
 
 bool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
