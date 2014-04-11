@@ -39,7 +39,7 @@ var UIWidgetAddNodeTest = UIScene.extend({
             var sprite = cc.Sprite.create("res/cocosui/ccicon.png");
             sprite.x = 0;
             sprite.y = sprite.getBoundingBox().height / 4;
-            nodeContainer.addNode(sprite);
+            nodeContainer.addChild(sprite);
 
             return true;
         }
