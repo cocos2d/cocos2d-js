@@ -57,7 +57,7 @@ THE SOFTWARE.
 using namespace std;
 using namespace cocos2d;
 
-static std::string g_resourcePath;
+std::string g_resourcePath;
 static rapidjson::Document g_filecfgjson; 
 extern string getDotWaitFilePath();
 extern string getProjSearchPath();
