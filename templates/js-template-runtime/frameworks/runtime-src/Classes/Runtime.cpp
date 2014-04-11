@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
 #include "cocos2d.h"
-#include "CCFontFNT.h"
 #include "json/document.h"
 #include "json/filestream.h"
 #include "json/stringbuffer.h"
@@ -58,8 +57,8 @@ THE SOFTWARE.
 using namespace std;
 using namespace cocos2d;
 
-std::string g_resourcePath;
-rapidjson::Document g_filecfgjson; 
+static std::string g_resourcePath;
+static rapidjson::Document g_filecfgjson; 
 extern string getDotWaitFilePath();
 extern string getProjSearchPath();
 extern string getIPAddress();
