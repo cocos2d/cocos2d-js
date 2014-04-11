@@ -123,6 +123,12 @@ public:
 	 */
 	bool runScript(const char *path, JSObject* global = NULL, JSContext* cx = NULL);
 
+    /**
+     *will reload the specified string
+     *@param string The path of the script to reload
+     */
+    bool reloadScript(const char *path,bool reloadAll=false);
+    
 	/**
 	 * initialize everything
 	 */
