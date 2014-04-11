@@ -496,7 +496,7 @@ cc.loader = {
      * @param {Function} cb     callback
      */
     loadAliases : function(url, cb){
-        cc.FileUtils.getInstance().loadFilenameLookup(url);
+        cc.fileUtils.loadFilenameLookup(url);
         if(cb) cb();
     },
 

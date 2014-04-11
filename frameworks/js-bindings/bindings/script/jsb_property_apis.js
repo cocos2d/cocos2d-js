@@ -12,8 +12,11 @@ cc.Node.prototype.attr = function(attrs) {
 	}
 };
 
+var _proto = cc.Action.prototype;
+cc.defineGetterSetter(_proto, "tag", _proto.getTag, _proto.setTag);
+
 // Overrides
-var _proto = cc.AtlasNode.prototype;
+_proto = cc.AtlasNode.prototype;
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
 cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
 cc.defineGetterSetter(_proto, "color", _proto.getColor, _proto.setColor);
