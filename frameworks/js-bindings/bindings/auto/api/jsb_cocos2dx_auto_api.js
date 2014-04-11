@@ -15694,6 +15694,16 @@ str
 },
 
 /**
+ * @method loadFilenameLookupDictionaryFromFile
+ * @param {String} arg0
+ */
+loadFilenameLookupDictionaryFromFile : function (
+str 
+)
+{
+},
+
+/**
  * @method isPopupNotify
  * @return {bool}
  */
