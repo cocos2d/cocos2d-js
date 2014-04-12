@@ -66,7 +66,7 @@ After setup correctly done, you can start to use `cocos` command in your console
 	```
 	cd directory/to/project
 	cocos compile -p ios|mac|android|web
-	cocos run -p ios|mac|android
+	cocos run -p ios|mac|android|web
 	```
 
 * Useful options
@@ -86,3 +86,30 @@ And if you have any doubt about the usage, please use `-h` with any command to h
 * `new` for create
 * `compile` for compile
 * `run` for run
+
+###Prebuilt projects
+
+There are two prebuilt projects in Cocos2d-JS repo:
+
+- Test cases, located in `samples/js-tests`
+- Game sample : Moon Warriors, located in `samples/js-moonwarriors`
+
+And they share the same project file which located in `build` folder, there are Xcode and Visual Studio projects.
+
+###Improvement in Cocos2d-JS v3.0 alpha2
+
+Now test cases and the sample game Moon Warriors can be run directly with Cocos Console tool.
+
+For test cases
+
+```
+cd samples/js-tests
+run -p ios|mac|android|web
+```
+
+For Moon Warriors
+
+```
+cd samples/js-moonwarriors
+run -p ios|mac|android|web
+```
