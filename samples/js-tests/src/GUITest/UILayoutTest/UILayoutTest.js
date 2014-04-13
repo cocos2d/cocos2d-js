@@ -63,10 +63,10 @@ var UILayoutTestBase = UIScene.extend({
 
             this.button_scale9 = ccui.Button.create();
             this.button_scale9.setTouchEnabled(true);
-            this.button_scale9.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
             this.button_scale9.setScale9Enabled(true);
+            this.button_scale9.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
             this.button_scale9.width = 100;
-	        this.button_scale9.height = this.button_scale9.height;
+	        this.button_scale9.height = 32;
             this.button_scale9.x = layoutRect.width - this.button_scale9.width / 2;
             this.button_scale9.y = this.button_scale9.height / 2;
             this.layout.addChild(this.button_scale9);

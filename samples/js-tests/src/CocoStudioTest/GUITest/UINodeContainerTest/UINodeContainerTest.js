@@ -34,6 +34,6 @@ var UIWidgetAddNodeEditorTest = UIBaseLayer.extend({
         var sprite = cc.Sprite.create("res/cocosui/ccicon.png");
         sprite.x = 240;
         sprite.y = 160;
-        root.addChild(sprite,9999);
+        root.addNode(sprite,9999);
     }
 });

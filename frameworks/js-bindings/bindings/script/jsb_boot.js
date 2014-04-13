@@ -576,6 +576,8 @@ cc.view.isRetinaEnabled = function() {
 cc.view.adjustViewPort = function() {};
 cc.view.resizeWithBrowserSize = function () {return;};
 cc.view.setResizeCallback = function() {return;};
+cc.view.enableAutoFullScreen = function () {return;};
+cc.view.isAutoFullScreenEnabled = function() {return true;};
 
 cc.eventManager = cc.director.getEventDispatcher();
 cc.audioEngine = cc.AudioEngine.getInstance();
