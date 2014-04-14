@@ -2,7 +2,6 @@
     "remove_res" : [
         "src",
         "res",
-        "main.js",
-        "project.json"
+        "main.js"
     ]
 }
