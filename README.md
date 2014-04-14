@@ -11,7 +11,7 @@ Furthermore, javascript friendly API makes your game development experience a br
 
 ## API Reference
 
-[Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0alpha/index.html)
+[Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0alpha2/index.html)
 
 And you can download it from
 [Cocos2d-html5_v3.0_Alpha2_API_Doc.zip](http://cdn.cocos2d-x.org/Cocos2d-html5_v3.0_Alpha2_API_Doc.zip)
