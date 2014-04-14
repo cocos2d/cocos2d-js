@@ -264,6 +264,7 @@ bool reloadScript(const string& file,bool reloadAll)
     if (modulefile.empty())
     {
         modulefile = "main.js";
+        ScriptingCore::getInstance()->cleanScript(modulefile.c_str());
     }
     if (reloadAll)
     {
@@ -867,6 +868,9 @@ public:
                             reloadScript("");
                         }
                         dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    }else
+                    {
+                        reloadScript("");
                     }
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }else if(strcmp(strcmd.c_str(),"getversion")==0)
@@ -884,7 +888,7 @@ public:
                     }
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
-                    
+                   
                 }else if(strcmp(strcmd.c_str(),"getIP")==0)
                 {
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
@@ -912,6 +916,9 @@ public:
                         const rapidjson::Value& objectfiles = dArgParse["files"];
                         for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
                         {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
+                            ScriptingCore::getInstance()->cleanScript(objectfiles[i].GetString());
+#else
                             string filename(g_resourcePath);
                             filename.append("/");
                             filename.append(objectfiles[i].GetString());
@@ -921,6 +928,7 @@ public:
                                 {
                                     if (g_filecfgjson.HasMember(objectfiles[i].GetString())) {
                                         g_filecfgjson.RemoveMember(objectfiles[i].GetString());
+                                        ScriptingCore::getInstance()->cleanScript(objectfiles[i].GetString());
                                     }
                                 }
                                 else
@@ -931,7 +939,7 @@ public:
                             {
                                 bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
                             }
-                            ScriptingCore::getInstance()->cleanScript(objectfiles[i].GetString());
+#endif                            
                         }
                         dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                         updateResFileInfo();
