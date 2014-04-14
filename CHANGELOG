@@ -1,4 +1,4 @@
-Cocos2d-html5-v3.0 alpha2 @ April.14, 2014
+Cocos2d-JS-v3.0 alpha2 @ April.14, 2014
 * Minimize the size of core from 254k to 113k after google closure advanced compiling.
 * Make engine classes can be constructed via `new` with the same parameters as create functions.
 * Make engine classes extendable directly via ctor.
@@ -57,8 +57,7 @@ Cocos2d-html5-v3.0 alpha2 @ April.14, 2014
     5. [JSB]PhysicsSprite is not updating with physics node.
     6. [JSB]ccui.TextField's is not responding to keyboard backspace button.
 
-
-Cocos2d-html5-v3.0 alpha @ March.15, 2014
+Cocos2d-JS-v3.0 alpha @ March.15, 2014
 * Refactor some properties of all rendering classes with getter setter for providing javascript user friendly APIs.
 * Provide `attr` function for cc.Node and its descendants to permit modify multiple properties at the same time with a key-value object.
 * Refactor foundational data structures for better maintainability.
