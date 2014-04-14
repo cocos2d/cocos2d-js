@@ -915,11 +915,11 @@ public:
                             string filename(g_resourcePath);
                             filename.append("/");
                             filename.append(objectfiles[i].GetString());
-                            if (FileUtils::getInstance()->isFileExist(filename)) {
+                            if (FileUtils::getInstance()->isFileExist(filename))
+                            {
                                 if(remove(filename.c_str())==0)
                                 {
                                     if (g_filecfgjson.HasMember(objectfiles[i].GetString())) {
-                                        ScriptingCore::getInstance()->cleanScript(objectfiles[i].GetString());
                                         g_filecfgjson.RemoveMember(objectfiles[i].GetString());
                                     }
                                 }
@@ -931,7 +931,7 @@ public:
                             {
                                 bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
                             }
-                            
+                            ScriptingCore::getInstance()->cleanScript(objectfiles[i].GetString());
                         }
                         dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                         updateResFileInfo();
