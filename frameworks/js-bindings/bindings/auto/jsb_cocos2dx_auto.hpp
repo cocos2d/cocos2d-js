@@ -2584,6 +2584,7 @@ bool js_cocos2dx_Sprite_isTextureRectRotated(JSContext *cx, uint32_t argc, jsval
 bool js_cocos2dx_Sprite_getTextureRect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_initWithFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_getTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Sprite_setCullingEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_initWithSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_isFlippedX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_isFlippedY(JSContext *cx, uint32_t argc, jsval *vp);
