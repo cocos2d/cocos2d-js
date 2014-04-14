@@ -37,6 +37,10 @@
          ],
          "append_file":[
             {
+               "from":"templates/js-template-runtime/project.json",
+               "to":"runtime/ios/PrebuiltRuntimeJs.app/project.json"
+            },
+            {
                "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/gles/prebuilt/glew32.dll",
                "to":"runtime/win32/glew32.dll"
             },
