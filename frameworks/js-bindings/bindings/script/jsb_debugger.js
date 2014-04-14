@@ -119,21 +119,17 @@ TestTabActor.prototype.requestTypes = {
 };
 
 this.processInput = function (inputstr) {
-cc.log("connected 001");
     if (!inputstr) {
         return;
     }
 
     if (inputstr === "connected")
     {
-        cc.log("connected 01");
         DebuggerServer.createRootActor = (conn => {
             return new RootActor(conn, { tabList: new TestTabList(conn) });
         });
-                cc.log("connected 02");
         DebuggerServer.init(() => true);
         DebuggerServer.openListener(5086);
-        cc.log("connected 03");
         if (debuggerServer && debuggerServer.onSocketAccepted)
         {
             var aTransport = {
@@ -152,9 +148,7 @@ cc.log("connected 001");
                     };
                 },
             };
-        cc.log("connected 04");
             debuggerServer.onSocketAccepted(null, aTransport);
-                    cc.log("connected 05");
         }
         return;
     }
