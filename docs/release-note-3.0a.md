@@ -4,12 +4,13 @@
 
 ## Download
 
-[Cocos2d-JS-v3.0-alpha.zip](http://cdn.cocos2d-x.org/Cocos2d-JS-v3.0-alpha.zip)
-[Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0alpha/index.html)
+- [Cocos2d-JS-v3.0-alpha2.zip](http://cdn.cocos2d-x.org/Cocos2d-JS-v3.0-alpha2.zip)
+- [Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0alpha2/index.html)
+- [Downloadable API reference](http://cdn.cocos2d-x.org/Cocos2d-html5_v3.0_Alpha2_API_Doc.zip)
 
 ## Highlights
 
-* Provide a python tool which make the development of Html5 and JSB application much simpler and more convenient, [document reference](http://www.cocos2d-x.org/docs/manual/framework/html5/cocos-console/en).
+* Provide a python tool which make the development of Html5 and JSB application much simpler and more convenient, [Cocos Console document](http://www.cocos2d-x.org/docs/manual/framework/html5/cocos-console/en).
 * Incredibly simplified game creation process via cc.game which replaced old cc.Application, [document reference](http://www.cocos2d-x.org/docs/manual/framework/html5/v3.0/cc-game/en).
 * Cocos2d-html5 engine core is separated into modules and can be configured via `project.json`, see [project.json guide](http://www.cocos2d-x.org/docs/manual/framework/html5/v3.0/project-json/en) and [module config doc](http://www.cocos2d-x.org/docs/manual/framework/html5/v3.0/moduleconfig-json/en).
 * Refactor some properties of all rendering classes with getter setter for providing a new set of Javascript user friendly APIs, and `attr` function is provided for cc.Node to modify multiple properties, [document reference](http://www.cocos2d-x.org/docs/manual/framework/html5/v3.0/getter-setter-api/en).
