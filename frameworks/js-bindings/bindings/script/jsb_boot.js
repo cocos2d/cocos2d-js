@@ -578,6 +578,11 @@ cc.view.resizeWithBrowserSize = function () {return;};
 cc.view.setResizeCallback = function() {return;};
 cc.view.enableAutoFullScreen = function () {return;};
 cc.view.isAutoFullScreenEnabled = function() {return true;};
+cc.view._setDesignResolutionSize = cc.view.setDesignResolutionSize;
+cc.view.setDesignResolutionSize = function(width,height,resolutionPolicy){
+    cc.view._setDesignResolutionSize(width,height,resolutionPolicy);
+    cc.winSize = cc.director.getWinSize();
+}
 
 cc.eventManager = cc.director.getEventDispatcher();
 cc.audioEngine = cc.AudioEngine.getInstance();
