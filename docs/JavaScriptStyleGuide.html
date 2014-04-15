@@ -1,0 +1,3522 @@
+<html><head><meta content="text/html; charset=UTF-8" http-equiv="Content-Type"><title>Google JavaScript Style Guide</title><meta content="text/html; charset=UTF-8" http-equiv="Content-Type"><link rel="shortcut icon" type="image/x-icon" href="http://www.google.com/favicon.ico"><link rel="stylesheet" type="text/css" href="JavaScriptStyleGuide_files/styleguide.css"><script type="text/javascript" language="javascript">
+
+                function GetElementsByName(name) {
+                  // Workaround a bug on old versions of opera.
+                  if (document.getElementsByName) {
+                    return document.getElementsByName(name);
+                  } else {
+                    return [document.getElementById(name)];
+                  }
+                }
+
+                /**
+                 * @param {string} namePrefix The prefix of the body name.
+                 * @param {function(boolean): boolean} getVisibility Computes the new
+                 *     visibility state, given the current one.
+                 */
+                function ChangeVisibility(namePrefix, getVisibility) {
+                  var bodyName = namePrefix + '__body';
+                  var buttonName = namePrefix + '__button';
+                  var bodyElements = GetElementsByName(bodyName);
+                  var linkElement = GetElementsByName('link-' + buttonName)[0];
+                  if (bodyElements.length != 1) {
+                    throw Error('ShowHideByName() got the wrong number of bodyElements:  ' + 
+                        bodyElements.length);
+                  } else {
+                    var bodyElement = bodyElements[0];
+                    var buttonElement = GetElementsByName(buttonName)[0];
+                    var isVisible = bodyElement.style.display != "none";
+                    if (getVisibility(isVisible)) {
+                      bodyElement.style.display = "inline";
+                      linkElement.style.display = "block";
+                      buttonElement.innerHTML = '▽';
+                    } else {
+                      bodyElement.style.display = "none";
+                      linkElement.style.display = "none";
+                      buttonElement.innerHTML = '▶';
+                    }
+                  }
+                }
+
+                function ShowHideByName(namePrefix) {
+                  ChangeVisibility(namePrefix, function(old) { return !old; });
+                }
+
+                function ShowByName(namePrefix) {
+                  ChangeVisibility(namePrefix, function() { return true; });
+                }
+
+                function ShowHideAll() {
+                  var allButton = GetElementsByName("show_hide_all_button")[0];
+                  if (allButton.innerHTML == '▽') {
+                    allButton.innerHTML = '▶';
+                    SetHiddenState(document.getElementsByTagName("body")[0].childNodes, "none", '▶');
+                  } else {
+                    allButton.innerHTML = '▽';
+                    SetHiddenState(document.getElementsByTagName("body")[0].childNodes, "inline", '▽');
+                  }
+                }
+
+                // Recursively sets state of all children
+                // of a particular node.
+                function SetHiddenState(root, newState, newButton) {
+                  for (var i = 0; i != root.length; i++) {
+                    SetHiddenState(root[i].childNodes, newState, newButton);
+                    if (root[i].className == 'showhide_button')  {
+                      root[i].innerHTML = newButton;
+                    }
+                    if (root[i].className == 'stylepoint_body' ||
+                        root[i].className == 'link_button')  {
+                      root[i].style.display = newState;
+                    }
+                  }
+                }
+
+
+                function EndsWith(str, suffix) {
+                  var l = str.length - suffix.length;
+                  return l >= 0 && str.indexOf(suffix, l) == l;
+                }
+
+                function RefreshVisibilityFromHashParam() {
+                  var hashRegexp = new RegExp('#([^&#]*)$');
+                  var hashMatch = hashRegexp.exec(window.location.href);
+                  var anchor = hashMatch && GetElementsByName(hashMatch[1])[0];
+                  var node = anchor;
+                  var suffix = '__body';
+                  while (node) {
+                    var id = node.id;
+                    var matched = id && EndsWith(id, suffix);
+                    if (matched) {
+                      var len = id.length - suffix.length;
+                      ShowByName(id.substring(0, len));
+                      if (anchor.scrollIntoView) {
+                        anchor.scrollIntoView();
+                      }
+
+                      return;
+                    }
+                    node = node.parentNode;
+                  }
+                }
+
+                window.onhashchange = RefreshVisibilityFromHashParam;
+
+                window.onload = function() {
+                  // if the URL contains "?showall=y", expand the details of all children
+                  var showHideAllRegex = new RegExp("[\\?&](showall)=([^&#]*)");
+                  var showHideAllValue = showHideAllRegex.exec(window.location.href);
+                  if (showHideAllValue != null) {
+                    if (showHideAllValue[2] == "y") {
+                      SetHiddenState(document.getElementsByTagName("body")[0].childNodes, 
+                          "inline", '▽');
+                    } else {
+                      SetHiddenState(document.getElementsByTagName("body")[0].childNodes, 
+                          "none", '▶');
+                    }
+                  }
+                  var showOneRegex = new RegExp("[\\?&](showone)=([^&#]*)");
+                  var showOneValue = showOneRegex.exec(window.location.href);
+                  if (showOneValue) {
+                    ShowHideByName(showOneValue[2]);
+                  }
+
+
+                  RefreshVisibilityFromHashParam();
+                }
+              </script></head><body><h1>Google JavaScript Style Guide</h1>
+  <p class="revision">
+    
+    Revision 2.93
+  </p>
+  
+  <address>
+    Aaron Whyte<br>
+    Bob Jervis<br>
+    Dan Pupius<br>
+    Erik Arvidsson<br>
+    Fritz Schneider<br>
+    Robby Walker<br>
+  </address>
+  <div style="margin-left: 50%; font-size: 75%;"><p>
+        Each style point has a summary for which additional information is available
+        by toggling the accompanying arrow button that looks this way:
+        <span style="margin-left: 0; float: none" class="showhide_button">▶</span>.
+        You may toggle all summaries with the big arrow button:
+      </p><div style=" font-size: larger; margin-left: +2em;"><span id="show_hide_all_button" name="show_hide_all_button" onclick="javascript:ShowHideAll()" style="font-size: 180%; float: none" class="showhide_button">▶</span>
+        Toggle all summaries
+      </div></div><div class="toc"><div class="toc_title">Table of Contents</div><table><tbody><tr class="" valign="top"><td><div class="toc_category"><a href="#JavaScript_Language_Rules">JavaScript Language Rules</a></div></td><td><div class="toc_stylepoint"><span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#var">var</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Constants">Constants</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Semicolons">Semicolons</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Nested_functions">Nested functions</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Function_Declarations_Within_Blocks">Function Declarations Within Blocks</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Exceptions">Exceptions</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Custom_exceptions">Custom exceptions</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Standards_features">Standards features</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Wrapper_objects_for_primitive_types">Wrapper objects for primitive types</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Multi-level_prototype_hierarchies">Multi-level prototype hierarchies</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Method_and_property_definitions">Method and property definitions</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#delete">delete</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Closures">Closures</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#eval__">eval()</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#with___%7B%7D">with() {}</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#this">this</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#for-in_loop">for-in loop</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Associative_Arrays">Associative Arrays</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Multiline_string_literals">Multiline string literals</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Array_and_Object_literals">Array and Object literals</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Modifying_prototypes_of_builtin_objects">Modifying prototypes of builtin objects</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Internet_Explorer_s_Conditional_Comments">Internet Explorer's Conditional Comments</a></span> </div></td></tr><tr class="" valign="top"><td><div class="toc_category"><a href="#JavaScript_Style_Rules">JavaScript Style Rules</a></div></td><td><div class="toc_stylepoint"><span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Naming">Naming</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Custom_toString___methods">Custom toString() methods</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Deferred_initialization">Deferred initialization</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Explicit_scope">Explicit scope</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Code_formatting">Code formatting</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Parentheses">Parentheses</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Strings">Strings</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Visibility__private_and_protected_fields_">Visibility (private and protected fields)</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#JavaScript_Types">JavaScript Types</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Comments">Comments</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Providing_Dependencies_With_goog.provide">Providing Dependencies With goog.provide</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Compiling">Compiling</a></span> <span class="" style="padding-right: 1em; white-space:nowrap;"><a href="#Tips_and_Tricks">Tips and Tricks</a></span> </div></td></tr></tbody></table></div>
+    <div class=""><h2 id="Important_Note" name="Important_Note">Important Note</h2>
+      <div class=""><h3><a id="Displaying_Hidden_Details_in_this_Guide" name="Displaying_Hidden_Details_in_this_Guide">Displaying Hidden Details in this Guide</a></h3><span name="link-Displaying_Hidden_Details_in_this_Guide__button" id="link-Displaying_Hidden_Details_in_this_Guide__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Displaying_Hidden_Details_in_this_Guide#Displaying_Hidden_Details_in_this_Guide">
+          link
+        </a></span><span id="Displaying_Hidden_Details_in_this_Guide__button" name="Displaying_Hidden_Details_in_this_Guide__button" onclick="javascript:ShowHideByName('Displaying_Hidden_Details_in_this_Guide')" class="showhide_button">▶</span>
+        <div class="" style="display:inline;">
+          This style guide contains many details that are initially
+          hidden from view.  They are marked by the triangle icon, which you
+          see here on your left.  Click it now.
+          You should see "Hooray" appear below.
+        </div>
+        <div class=""><div style="display: none" id="Displaying_Hidden_Details_in_this_Guide__body" name="Displaying_Hidden_Details_in_this_Guide__body" class="stylepoint_body">
+          <p>
+            Hooray!  Now you know you can expand points to get more
+            details.  Alternatively, there's a "toggle all" at the
+            top of this document.
+          </p>
+        </div></div>
+      </div>
+    </div>
+    <div class=""><h2 id="Background" name="Background">Background</h2>
+      <p>
+        JavaScript is the main client-side scripting language used
+        
+        by many of Google's open-source
+          projects.
+        This style guide is a list of <em>do</em>s and <em>don't</em>s for
+        JavaScript programs.
+      </p>
+      
+      
+      
+      
+      
+    </div>
+  
+  <div class=""><h2 id="JavaScript_Language_Rules" name="JavaScript_Language_Rules">JavaScript Language Rules</h2>
+    
+
+    
+
+    <div class=""><h3><a id="var" name="var">var</a></h3><span name="link-var__button" id="link-var__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=var#var">
+          link
+        </a></span><span id="var__button" name="var__button" onclick="javascript:ShowHideByName('var')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">
+        Declarations with <code>var</code>: Always
+      </div>
+      <div class=""><div style="display: none" id="var__body" name="var__body" class="stylepoint_body">
+        <p class=""><span class="stylepoint_section">Decision:  </span>
+          When you fail to specify <code>var</code>,
+          the variable gets placed in the global context, potentially clobbering
+          existing values. Also, if there's no declaration, it's hard to tell in
+          what scope a variable lives (e.g., it could be in the Document or
+          Window just as easily as in the local scope). So always declare with
+          <code>var</code>.
+        </p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Constants" name="Constants">Constants</a></h3><span name="link-Constants__button" id="link-Constants__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Constants#Constants">
+          link
+        </a></span><span id="Constants__button" name="Constants__button" onclick="javascript:ShowHideByName('Constants')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">
+        <ul>
+          <li>Use <code>NAMES_LIKE_THIS</code> for constant <em>values</em>.</li>
+          <li>Use <code>@const</code> to indicate a constant (non-overwritable)
+            <em>pointer</em> (a variable or property).</li>
+          <li>Never use the
+            <a href="https://developer.mozilla.org/en/JavaScript/Reference/Statements/const">
+              <code>const</code> keyword</a>
+            as it's not supported in Internet Explorer.</li>
+        </ul>
+      </div>
+      <div class=""><div style="display: none" id="Constants__body" name="Constants__body" class="stylepoint_body">
+        <p class=""><span class="stylepoint_section">Decision:  </span>
+          <p class=""><span class="stylepoint_subsection">Constant values</span>
+
+          <p>If a value is intended to be <em>constant</em>
+             and <em>immutable</em>, it should be given a name
+             in <code>CONSTANT_VALUE_CASE</code>.
+             <code>ALL_CAPS</code> additionally implies <code>@const</code>
+             (that the value is not overwritable).
+           </p>
+
+           <p>Primitive types (<code>number</code>, <code>string</code>,
+             <code>boolean</code>) are constant values.</p>
+
+           <p><code>Objects</code>'
+             immutability is more subjective — objects should be
+             considered immutable only if they do not demonstrate observable
+             state change.  This is not enforced by the compiler.</p>
+
+           
+           </p>
+
+          <p class=""><span class="stylepoint_subsection">Constant pointers (variables and properties)</span>
+            <p>The <code>@const</code> annotation on a variable or property
+              implies that it is not overwritable.  This is enforced by the
+              compiler at build time.  This behavior is consistent with the
+              <a href="https://developer.mozilla.org/en/JavaScript/Reference/Statements/const">
+                <code>const</code> keyword</a> (which we do not use due to the
+              lack of support in Internet Explorer).</p>
+
+            <p>A <code>@const</code> annotation on a method additionally
+              implies that the method cannot not be overridden in subclasses.
+            </p>
+
+            <p>A <code>@const</code> annotation on a constructor implies the
+              class cannot be subclassed (akin to <code>final</code> in Java).
+            </p>
+
+          </p>
+
+          <p class=""><span class="stylepoint_subsection">Examples</span>
+
+            <p>Note that <code>@const</code> does not necessarily imply
+              <code>CONSTANT_VALUES_CASE</code>.
+
+              However, <code>CONSTANT_VALUES_CASE</code>
+              <em>does</em> imply <code>@const</code>.
+            </p>
+
+            <div class=""><pre>/**
+ * Request timeout in milliseconds.
+ * @type {number}
+ */
+goog.example.TIMEOUT_IN_MILLISECONDS = 60;</pre></div>
+
+            <p>The number of seconds in a minute never changes.  It is a
+              constant value.  <code>ALL_CAPS</code>
+              also implies <code>@const</code>, so the constant cannot be
+              overwritten.
+            </p>
+
+            <p>The open source compiler will allow the symbol to be
+              overwritten because the constant is
+              <em>not</em> marked as <code>@const</code>.</p>
+
+            <div class=""><pre>/**
+ * Map of URL to response string.
+ * @const
+ */
+MyClass.fetchedUrlCache_ = new goog.structs.Map();</pre></div>
+
+            <div class=""><pre>/**
+ * Class that cannot be subclassed.
+ * @const
+ * @constructor
+ */
+sloth.MyFinalClass = function() {};</pre></div>
+
+            <p>In this case, the pointer can never be overwritten, but
+              value is highly mutable and not constant (and thus in
+              <code>camelCase</code>, not <code>ALL_CAPS</code>).</p>
+        </p>
+
+        </p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Semicolons" name="Semicolons">Semicolons</a></h3><span name="link-Semicolons__button" id="link-Semicolons__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Semicolons#Semicolons">
+          link
+        </a></span><span id="Semicolons__button" name="Semicolons__button" onclick="javascript:ShowHideByName('Semicolons')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">
+        Always use semicolons.
+      </div>
+      <div class=""><div style="display: none" id="Semicolons__body" name="Semicolons__body" class="stylepoint_body">
+        <p>Relying on implicit insertion can cause subtle, hard to debug
+          problems. Don't do it. You're better than that.</p>
+        <p>There are a couple places where missing semicolons are particularly
+          dangerous:</p>
+        <div class=""><pre class="badcode">// 1.
+MyClass.prototype.myMethod = function() {
+  return 42;
+}  // No semicolon here.
+
+(function() {
+  // Some initialization code wrapped in a function to create a scope for locals.
+})();
+
+
+var x = {
+  'i': 1,
+  'j': 2
+}  // No semicolon here.
+
+// 2.  Trying to do one thing on Internet Explorer and another on Firefox.
+// I know you'd never write code like this, but throw me a bone.
+[ffVersion, ieVersion][isIE]();
+
+
+var THINGS_TO_EAT = [apples, oysters, sprayOnCheese]  // No semicolon here.
+
+// 3. conditional execution a la bash
+-1 == resultOfOperation() || die();</pre></div>
+        <p class=""><span class="stylepoint_subsection">So what happens?</span>
+          <ol>
+            <li>JavaScript error - first the function returning 42 is called
+              with the second function as a parameter, then the number 42 is
+              "called" resulting in an error.</li>
+            <li>You will most likely get a 'no such property in undefined'
+              error at runtime as it tries to call
+              <code>x[ffVersion, ieVersion][isIE]()</code>.</li>
+            <li><code>die</code> is always called since the array minus 1 is
+              <code>NaN</code> which is never equal to anything (not even if
+              <code>resultOfOperation()</code> returns <code>NaN</code>) and
+              <code>THINGS_TO_EAT</code> gets assigned the result of
+              <code>die()</code>.</li>
+          </ol>
+        </p>
+        <p class=""><span class="stylepoint_subsection">Why?</span>
+          <p>JavaScript requires statements to end with a semicolon, except when
+            it thinks it can safely infer their existence. In each of these
+            examples, a function declaration or object or array literal is used
+            inside a statement. The closing brackets are not enough to signal
+            the end of the statement. Javascript never ends a statement if the
+            next token is an infix or bracket operator.</p>
+          <p>This has really surprised people, so make sure your assignments end
+            with semicolons.</p>
+        </p>
+        <p class=""><span class="stylepoint_subsection">Clarification: Semicolons and functions</span>
+          <p>Semicolons should be included at the end of function expressions,
+            but not at the end of function declarations. The distinction is
+            best illustrated with an example:</p>
+          <div class=""><pre>var foo = function() {
+  return true;
+};  // semicolon here.
+
+function foo() {
+  return true;
+}  // no semicolon here.</pre></div>
+        </p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Nested_functions" name="Nested_functions">Nested functions</a></h3><span name="link-Nested_functions__button" id="link-Nested_functions__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Nested_functions#Nested_functions">
+          link
+        </a></span><span id="Nested_functions__button" name="Nested_functions__button" onclick="javascript:ShowHideByName('Nested_functions')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Yes</div>
+      <div class=""><div style="display: none" id="Nested_functions__body" name="Nested_functions__body" class="stylepoint_body">
+        <p>Nested functions can be very useful, for example in the creation of
+          continuations and for the task of hiding helper functions. Feel free
+          to use them.</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Function_Declarations_Within_Blocks" name="Function_Declarations_Within_Blocks">Function Declarations Within Blocks</a></h3><span name="link-Function_Declarations_Within_Blocks__button" id="link-Function_Declarations_Within_Blocks__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Function_Declarations_Within_Blocks#Function_Declarations_Within_Blocks">
+          link
+        </a></span><span id="Function_Declarations_Within_Blocks__button" name="Function_Declarations_Within_Blocks__button" onclick="javascript:ShowHideByName('Function_Declarations_Within_Blocks')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">No</div>
+      <div class=""><div style="display: none" id="Function_Declarations_Within_Blocks__body" name="Function_Declarations_Within_Blocks__body" class="stylepoint_body">
+        <p>Do not do this:</p>
+        <div class=""><pre class="badcode">if (x) {
+  function foo() {}
+}</pre></div>
+
+        <p>While most script engines support Function Declarations within blocks
+          it is not part of ECMAScript (see
+          <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMA-262</a>,
+          clause 13 and 14). Worse implementations are inconsistent with each
+          other and with future EcmaScript proposals. ECMAScript only allows for
+          Function Declarations in the root statement list of a script or
+          function. Instead use a variable initialized with a Function
+          Expression to define a function within a block:</p>
+        <div class=""><pre>if (x) {
+  var foo = function() {};
+}</pre></div>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Exceptions" name="Exceptions">Exceptions</a></h3><span name="link-Exceptions__button" id="link-Exceptions__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Exceptions#Exceptions">
+          link
+        </a></span><span id="Exceptions__button" name="Exceptions__button" onclick="javascript:ShowHideByName('Exceptions')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Yes</div>
+      <div class=""><div style="display: none" id="Exceptions__body" name="Exceptions__body" class="stylepoint_body">
+        <p>You basically can't avoid exceptions if you're doing something
+          non-trivial (using an application development framework, etc.).
+          Go for it.</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Custom_exceptions" name="Custom_exceptions">Custom exceptions</a></h3><span name="link-Custom_exceptions__button" id="link-Custom_exceptions__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Custom_exceptions#Custom_exceptions">
+          link
+        </a></span><span id="Custom_exceptions__button" name="Custom_exceptions__button" onclick="javascript:ShowHideByName('Custom_exceptions')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Yes</div>
+      <div class=""><div style="display: none" id="Custom_exceptions__body" name="Custom_exceptions__body" class="stylepoint_body">
+        <p>Without custom exceptions, returning error information from a
+          function that also returns a value can be tricky, not to mention
+          inelegant.  Bad solutions include passing in a reference type to hold
+          error information or always returning Objects with a potential
+          error member.  These basically amount to a primitive exception
+          handling hack. Feel free to use custom exceptions when
+          appropriate.</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Standards_features" name="Standards_features">Standards features</a></h3><span name="link-Standards_features__button" id="link-Standards_features__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Standards_features#Standards_features">
+          link
+        </a></span><span id="Standards_features__button" name="Standards_features__button" onclick="javascript:ShowHideByName('Standards_features')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Always preferred over non-standards features</div>
+      <div class=""><div style="display: none" id="Standards_features__body" name="Standards_features__body" class="stylepoint_body">
+        <p>For maximum portability and compatibility, always prefer standards
+          features over non-standards features (e.g.,
+          <code>string.charAt(3)</code> over <code>string[3]</code> and element
+          access with DOM functions instead of using an application-specific
+          shorthand).</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Wrapper_objects_for_primitive_types" name="Wrapper_objects_for_primitive_types">Wrapper objects for primitive types</a></h3><span name="link-Wrapper_objects_for_primitive_types__button" id="link-Wrapper_objects_for_primitive_types__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Wrapper_objects_for_primitive_types#Wrapper_objects_for_primitive_types">
+          link
+        </a></span><span id="Wrapper_objects_for_primitive_types__button" name="Wrapper_objects_for_primitive_types__button" onclick="javascript:ShowHideByName('Wrapper_objects_for_primitive_types')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">No</div>
+      <div class=""><div style="display: none" id="Wrapper_objects_for_primitive_types__body" name="Wrapper_objects_for_primitive_types__body" class="stylepoint_body">
+        <p>There's no reason to use wrapper objects for primitive types, plus
+          they're dangerous:</p>
+        <div class=""><pre class="badcode">var x = new Boolean(false);
+if (x) {
+  alert('hi');  // Shows 'hi'.
+}</pre></div>
+        <p>Don't do it!</p>
+        <p>However type casting is fine.</p>
+        <div class=""><pre>var x = Boolean(0);
+if (x) {
+  alert('hi');  // This will never be alerted.
+}
+typeof Boolean(0) == 'boolean';
+typeof new Boolean(0) == 'object';</pre></div>
+        <p>This is very useful for casting things to
+          <code>number</code>, <code>string</code> and <code>boolean</code>.</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Multi-level_prototype_hierarchies" name="Multi-level_prototype_hierarchies">Multi-level prototype hierarchies</a></h3><span name="link-Multi-level_prototype_hierarchies__button" id="link-Multi-level_prototype_hierarchies__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Multi-level_prototype_hierarchies#Multi-level_prototype_hierarchies">
+          link
+        </a></span><span id="Multi-level_prototype_hierarchies__button" name="Multi-level_prototype_hierarchies__button" onclick="javascript:ShowHideByName('Multi-level_prototype_hierarchies')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Not preferred</div>
+      <div class=""><div style="display: none" id="Multi-level_prototype_hierarchies__body" name="Multi-level_prototype_hierarchies__body" class="stylepoint_body">
+        <p>Multi-level prototype hierarchies are how JavaScript implements
+          inheritance. You have a multi-level hierarchy if you have a
+          user-defined class D with another user-defined class B as its
+          prototype. These hierarchies are much harder to get right than they
+          first appear! </p>
+
+        <p>For that reason, it is best to use <code>goog.inherits()</code> from
+          <a href="http://code.google.com/closure/library/">
+            the Closure Library
+          </a>
+          or a similar library function.
+        </p>
+        <div class=""><pre>function D() {
+  goog.base(this)
+}
+goog.inherits(D, B);
+
+D.prototype.method = function() {
+  ...
+};</pre></div>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Method_and_property_definitions" name="Method_and_property_definitions">Method and property definitions</a></h3><span name="link-Method_and_property_definitions__button" id="link-Method_and_property_definitions__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Method_and_property_definitions#Method_and_property_definitions">
+          link
+        </a></span><span id="Method_and_property_definitions__button" name="Method_and_property_definitions__button" onclick="javascript:ShowHideByName('Method_and_property_definitions')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;"><code>/** @constructor */
+        function SomeConstructor() {
+          this.someProperty = 1;
+        }
+        Foo.prototype.someMethod = function() { ... };</code></div>
+      <div class=""><div style="display: none" id="Method_and_property_definitions__body" name="Method_and_property_definitions__body" class="stylepoint_body">
+        <p>While there are several ways to attach methods and properties to an
+          object created via "new", the preferred style for methods
+          is:</p>
+        <div class=""><pre>Foo.prototype.bar = function() {
+  /* ... */
+};</pre></div>
+        <p>The preferred style for other properties is to initialize the field
+          in the constructor:</p>
+        <div class=""><pre>/** @constructor */
+function Foo() {
+  this.bar = value;
+}</pre></div>
+        <p class=""><span class="stylepoint_subsection">Why?</span>
+          <p>Current JavaScript engines optimize based on the "shape"
+            of an object, <a href="https://developers.google.com/v8/design#prop_access">
+            adding a property to an object (including overriding
+            a value set on the prototype) changes the shape and can degrade
+            performance.</a></p>
+        </p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="delete" name="delete">delete</a></h3><span name="link-delete__button" id="link-delete__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=delete#delete">
+          link
+        </a></span><span id="delete__button" name="delete__button" onclick="javascript:ShowHideByName('delete')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Prefer <code>this.foo = null</code>.</div>
+      <div class=""><div style="display: none" id="delete__body" name="delete__body" class="stylepoint_body">
+        <div class=""><pre>Foo.prototype.dispose = function() {
+  this.property_ = null;
+};</pre></div>
+        <p>Instead of:</p>
+        <div class=""><pre class="badcode">Foo.prototype.dispose = function() {
+  delete this.property_;
+};</pre></div>
+        <p>In modern JavaScript engines, changing the number of properties on an
+          object is much slower than reassigning the values. The delete keyword
+          should be avoided except when it is necessary to remove a property
+          from an object's iterated list of keys, or to change the result of
+          <code>if (key in obj)</code>.</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Closures" name="Closures">Closures</a></h3><span name="link-Closures__button" id="link-Closures__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Closures#Closures">
+          link
+        </a></span><span id="Closures__button" name="Closures__button" onclick="javascript:ShowHideByName('Closures')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Yes, but be careful.</div>
+      <div class=""><div style="display: none" id="Closures__body" name="Closures__body" class="stylepoint_body">
+        <p>The ability to create closures is perhaps the most useful and often
+          overlooked feature of JS. Here is
+          <a href="http://jibbering.com/faq/faq_notes/closures.html">
+            a good description of how closures work</a>.</p>
+        <p>One thing to keep in mind, however, is that a closure keeps a pointer
+          to its enclosing scope. As a result, attaching a closure to a DOM
+          element can create a circular reference and thus, a memory leak. For
+          example, in the following code:</p>
+        <div class=""><pre class="badcode">function foo(element, a, b) {
+  element.onclick = function() { /* uses a and b */ };
+}</pre></div>
+        <p>the function closure keeps a reference to <code>element</code>,
+          <code>a</code>, and <code>b</code> even if it never uses
+          <code>element</code>. Since <code>element</code> also keeps a
+          reference to the closure, we have a cycle that won't be cleaned up by
+          garbage collection. In these situations, the code can be structured
+          as follows:</p>
+        <div class=""><pre>function foo(element, a, b) {
+  element.onclick = bar(a, b);
+}
+
+function bar(a, b) {
+  return function() { /* uses a and b */ };
+}</pre></div>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="eval__" name="eval__">eval()</a></h3><span name="link-eval____button" id="link-eval____button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=eval__#eval__">
+          link
+        </a></span><span id="eval____button" name="eval____button" onclick="javascript:ShowHideByName('eval__')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">
+        Only for code loaders and REPL (Read–eval–print loop)
+      </div>
+      <div class=""><div style="display: none" id="eval____body" name="eval____body" class="stylepoint_body">
+        <p><code>eval()</code> makes for confusing semantics and is dangerous
+          to use if the string being <code>eval()</code>'d contains user input.
+          There's usually a better, clearer, and safer way to write your code,
+          so its use is generally not permitted.</p>
+
+        <p>For RPC you can always use JSON and read the result using
+          <code>JSON.parse()</code> instead of <code>eval()</code>.</p>
+
+        <p>Let's assume we have a server that returns something like this:</p>
+
+        <div class=""><pre>{
+  "name": "Alice",
+  "id": 31502,
+  "email": "looking_glass@example.com"
+}</pre></div>
+
+        <div class=""><pre class="badcode">var userInfo = eval(feed);
+var email = userInfo['email'];</pre></div>
+
+        <p>If the feed was modified to include malicious JavaScript code, then
+          if we use <code>eval</code> then that code will be executed.</p>
+
+        <div class=""><pre>var userInfo = JSON.parse(feed);
+var email = userInfo['email'];</pre></div>
+
+        <p>With <code>JSON.parse</code>, invalid JSON (including all executable
+          JavaScript) will cause an exception to be thrown.</p>
+
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="with___{}" name="with___{}">with() {}</a></h3><span name="link-with___{}__button" id="link-with___{}__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=with___%7B%7D#with___%7B%7D">
+          link
+        </a></span><span id="with___{}__button" name="with___{}__button" onclick="javascript:ShowHideByName('with___{}')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">No</div>
+      <div class=""><div style="display: none" id="with___{}__body" name="with___{}__body" class="stylepoint_body">
+        <p>Using <code>with</code> clouds the semantics of your program.
+          Because the object of the <code>with</code> can have properties that
+          collide with local variables, it can drastically change the meaning
+          of your program. For example, what does this do?</p>
+        <div class=""><pre class="badcode">with (foo) {
+  var x = 3;
+  return x;
+}</pre></div>
+        <p>Answer: anything. The local variable <code>x</code> could be
+          clobbered by a property of <code>foo</code> and perhaps it even has
+          a setter, in which case assigning <code>3</code> could cause lots of
+          other code to execute. Don't use <code>with</code>.</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="this" name="this">this</a></h3><span name="link-this__button" id="link-this__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=this#this">
+          link
+        </a></span><span id="this__button" name="this__button" onclick="javascript:ShowHideByName('this')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">
+        Only in object constructors, methods, and in setting up closures
+      </div>
+      <div class=""><div style="display: none" id="this__body" name="this__body" class="stylepoint_body">
+        <p>The semantics of <code>this</code> can be tricky. At times it refers
+          to the global object (in most places), the scope of the caller (in
+          <code>eval</code>), a node in the DOM tree (when attached using an
+          event handler HTML attribute), a newly created object (in a
+          constructor), or some other object (if function was
+          <code>call()</code>ed or <code>apply()</code>ed).</p>
+        <p>Because this is so easy to get wrong, limit its use to those places
+          where it is required:</p>
+        <ul>
+          <li>in constructors</li>
+          <li>in methods of objects (including in the creation of closures)</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="for-in_loop" name="for-in_loop">for-in loop</a></h3><span name="link-for-in_loop__button" id="link-for-in_loop__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=for-in_loop#for-in_loop">
+          link
+        </a></span><span id="for-in_loop__button" name="for-in_loop__button" onclick="javascript:ShowHideByName('for-in_loop')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">
+        Only for iterating over keys in an object/map/hash
+      </div>
+      <div class=""><div style="display: none" id="for-in_loop__body" name="for-in_loop__body" class="stylepoint_body">
+        <p><code>for-in</code> loops are often incorrectly used to loop over
+          the elements in an <code>Array</code>. This is however very error
+          prone because it does not loop from <code>0</code> to
+          <code>length - 1</code> but over all the present keys in the object
+          and its prototype chain. Here are a few cases where it fails:</p>
+        <div class=""><pre class="badcode">function printArray(arr) {
+  for (var key in arr) {
+    print(arr[key]);
+  }
+}
+
+printArray([0,1,2,3]);  // This works.
+
+var a = new Array(10);
+printArray(a);  // This is wrong.
+
+a = document.getElementsByTagName('*');
+printArray(a);  // This is wrong.
+
+a = [0,1,2,3];
+a.buhu = 'wine';
+printArray(a);  // This is wrong again.
+
+a = new Array;
+a[3] = 3;
+printArray(a);  // This is wrong again.</pre></div>
+        <p>Always use normal for loops when using arrays.</p>
+        <div class=""><pre>function printArray(arr) {
+  var l = arr.length;
+  for (var i = 0; i &lt; l; i++) {
+    print(arr[i]);
+  }
+}</pre></div>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Associative_Arrays" name="Associative_Arrays">Associative Arrays</a></h3><span name="link-Associative_Arrays__button" id="link-Associative_Arrays__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Associative_Arrays#Associative_Arrays">
+          link
+        </a></span><span id="Associative_Arrays__button" name="Associative_Arrays__button" onclick="javascript:ShowHideByName('Associative_Arrays')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">
+        Never use <code>Array</code> as a map/hash/associative array
+      </div>
+      <div class=""><div style="display: none" id="Associative_Arrays__body" name="Associative_Arrays__body" class="stylepoint_body">
+        <p>Associative <code>Array</code>s are not allowed... or more precisely
+          you are not allowed to use non number indexes for arrays. If you need
+          a map/hash use <code>Object</code> instead of <code>Array</code> in
+          these cases because the features that you want are actually features
+          of <code>Object</code> and not of <code>Array</code>.
+          <code>Array</code> just happens to extend <code>Object</code> (like
+          any other object in JS and therefore you might as well have used
+          <code>Date</code>, <code>RegExp</code> or <code>String</code>).</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Multiline_string_literals" name="Multiline_string_literals">Multiline string literals</a></h3><span name="link-Multiline_string_literals__button" id="link-Multiline_string_literals__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Multiline_string_literals#Multiline_string_literals">
+          link
+        </a></span><span id="Multiline_string_literals__button" name="Multiline_string_literals__button" onclick="javascript:ShowHideByName('Multiline_string_literals')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">No</div>
+      <div class=""><div style="display: none" id="Multiline_string_literals__body" name="Multiline_string_literals__body" class="stylepoint_body">
+        <p>Do not do this:</p>
+        <div class=""><pre class="badcode">var myString = 'A rather long string of English text, an error message \
+                actually that just keeps going and going -- an error \
+                message to make the Energizer bunny blush (right through \
+                those Schwarzenegger shades)! Where was I? Oh yes, \
+                you\'ve got an error and all the extraneous whitespace is \
+                just gravy.  Have a nice day.';</pre></div>
+        <p>The whitespace at the beginning of each line can't be safely stripped
+          at compile time; whitespace after the slash will result in tricky
+          errors; and while most script engines support this, it is not part
+          of ECMAScript. </p>
+        <p>Use string concatenation instead:</p>
+        <div class=""><pre>var myString = 'A rather long string of English text, an error message ' +
+    'actually that just keeps going and going -- an error ' +
+    'message to make the Energizer bunny blush (right through ' +
+    'those Schwarzenegger shades)! Where was I? Oh yes, ' +
+    'you\'ve got an error and all the extraneous whitespace is ' +
+    'just gravy.  Have a nice day.';</pre></div>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Array_and_Object_literals" name="Array_and_Object_literals">Array and Object literals</a></h3><span name="link-Array_and_Object_literals__button" id="link-Array_and_Object_literals__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Array_and_Object_literals#Array_and_Object_literals">
+          link
+        </a></span><span id="Array_and_Object_literals__button" name="Array_and_Object_literals__button" onclick="javascript:ShowHideByName('Array_and_Object_literals')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Yes</div>
+      <div class=""><div style="display: none" id="Array_and_Object_literals__body" name="Array_and_Object_literals__body" class="stylepoint_body">
+        <p>Use <code>Array</code> and <code>Object</code> literals instead of
+          <code>Array</code> and <code>Object</code> constructors.</p>
+        <p>Array constructors are error-prone due to their arguments.</p>
+        <div class=""><pre class="badcode">// Length is 3.
+var a1 = new Array(x1, x2, x3);
+
+// Length is 2.
+var a2 = new Array(x1, x2);
+
+// If x1 is a number and it is a natural number the length will be x1.
+// If x1 is a number but not a natural number this will throw an exception.
+// Otherwise the array will have one element with x1 as its value.
+var a3 = new Array(x1);
+
+// Length is 0.
+var a4 = new Array();</pre></div>
+        <p>Because of this, if someone changes the code to pass 1 argument
+          instead of 2 arguments, the array might not have the expected
+          length.</p>
+        <p>To avoid these kinds of weird cases, always use the more readable
+          array literal.</p>
+        <div class=""><pre>var a = [x1, x2, x3];
+var a2 = [x1, x2];
+var a3 = [x1];
+var a4 = [];</pre></div>
+        <p>Object constructors don't have the same problems, but for readability
+          and consistency object literals should be used.</p>
+        <div class=""><pre class="badcode">var o = new Object();
+
+var o2 = new Object();
+o2.a = 0;
+o2.b = 1;
+o2.c = 2;
+o2['strange key'] = 3;</pre></div>
+        <p>Should be written as:</p>
+        <div class=""><pre>var o = {};
+
+var o2 = {
+  a: 0,
+  b: 1,
+  c: 2,
+  'strange key': 3
+};</pre></div>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Modifying_prototypes_of_builtin_objects" name="Modifying_prototypes_of_builtin_objects">Modifying prototypes of builtin objects</a></h3><span name="link-Modifying_prototypes_of_builtin_objects__button" id="link-Modifying_prototypes_of_builtin_objects__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Modifying_prototypes_of_builtin_objects#Modifying_prototypes_of_builtin_objects">
+          link
+        </a></span><span id="Modifying_prototypes_of_builtin_objects__button" name="Modifying_prototypes_of_builtin_objects__button" onclick="javascript:ShowHideByName('Modifying_prototypes_of_builtin_objects')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">No</div>
+      <div class=""><div style="display: none" id="Modifying_prototypes_of_builtin_objects__body" name="Modifying_prototypes_of_builtin_objects__body" class="stylepoint_body">
+        <p>Modifying builtins like <code>Object.prototype</code> and
+          <code>Array.prototype</code> are strictly forbidden.  Modifying other
+          builtins like <code>Function.prototype</code> is less dangerous but
+          still leads to hard to debug issues in production and should be
+          avoided.</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Internet_Explorer_s_Conditional_Comments" name="Internet_Explorer_s_Conditional_Comments">Internet Explorer's Conditional Comments</a></h3><span name="link-Internet_Explorer_s_Conditional_Comments__button" id="link-Internet_Explorer_s_Conditional_Comments__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Internet_Explorer_s_Conditional_Comments#Internet_Explorer_s_Conditional_Comments">
+          link
+        </a></span><span id="Internet_Explorer_s_Conditional_Comments__button" name="Internet_Explorer_s_Conditional_Comments__button" onclick="javascript:ShowHideByName('Internet_Explorer_s_Conditional_Comments')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">No</div>
+      <div class=""><div style="display: none" id="Internet_Explorer_s_Conditional_Comments__body" name="Internet_Explorer_s_Conditional_Comments__body" class="stylepoint_body">
+        <p>Don't do this:</p>
+        <div class=""><pre class="badcode">var f = function () {
+    /*@cc_on if (@_jscript) { return 2* @*/  3; /*@ } @*/
+};</pre></div>
+        <p>Conditional Comments hinder automated tools as they can vary the
+        JavaScript syntax tree at runtime.</p>
+      </div></div>
+    </div>
+  </div>
+
+  <div class=""><h2 id="JavaScript_Style_Rules" name="JavaScript_Style_Rules">JavaScript Style Rules</h2>
+    <div class=""><h3><a id="Naming" name="Naming">Naming</a></h3><span name="link-Naming__button" id="link-Naming__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Naming#Naming">
+          link
+        </a></span><span id="Naming__button" name="Naming__button" onclick="javascript:ShowHideByName('Naming')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">
+        <p>In general, use
+          <code>functionNamesLikeThis</code>,
+          <code>variableNamesLikeThis</code>,
+          <code>ClassNamesLikeThis</code>,
+          <code>EnumNamesLikeThis</code>,
+          <code>methodNamesLikeThis</code>,
+          <code>CONSTANT_VALUES_LIKE_THIS</code>,
+          <code>foo.namespaceNamesLikeThis.bar</code>, and
+          <code>filenameslikethis.js</code>.
+        </p>
+      </div>
+      <div class=""><div style="display: none" id="Naming__body" name="Naming__body" class="stylepoint_body">
+        <p class=""><span class="stylepoint_subsection">Properties and methods</span>
+          <ul>
+            <li><em>Private</em> properties and methods should be named with a
+              trailing underscore.
+              </li>
+            <li><em>Protected</em> properties and methods should be
+              named without a trailing underscore (like public ones).</li>
+          </ul>
+          <p>For more information on <em>private</em> and <em>protected</em>,
+            read the section on
+            <a href="#Visibility__private_and_protected_fields_">
+              visibility</a>.
+            </p>
+
+
+
+
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Method and function parameter</span>
+          <p>Optional function arguments start with <code>opt_</code>.</p>
+          <p>Functions that take a variable number of arguments should have the
+            last argument named <code>var_args</code>. You may not refer to
+            <code>var_args</code> in the code; use the <code>arguments</code>
+            array.</p>
+          <p>Optional and variable arguments can also be specified in
+            <code>@param</code> annotations. Although either convention is
+            acceptable to the compiler, using both together is preferred.</p>
+          
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Getters and Setters</span>
+          <p>EcmaScript 5 getters and setters for properties are discouraged.
+            However, if they are used, then getters must not change observable
+            state.</p>
+            <div class=""><pre class="badcode">/**
+ * WRONG -- Do NOT do this.
+ */
+var foo = { get next() { return this.nextId++; } };</pre></div>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Accessor functions</span>
+          <p>Getters and setters methods for properties are not required.
+            However, if they are used, then getters must be named
+            <code>getFoo()</code> and setters must be named
+            <code>setFoo(value)</code>. (For boolean getters,
+            <code>isFoo()</code> is also acceptable, and often sounds more
+            natural.)</p>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Namespaces</span>
+          <p>JavaScript has no inherent packaging or namespacing support.</p>
+          <p>Global name conflicts are difficult to debug, and can cause
+            intractable problems when two projects try to integrate. In order
+            to make it possible to share common JavaScript code, we've adopted
+            conventions to prevent collisions. </p>
+          <p class=""><span class="stylepoint_subsubsection">Use namespaces for global code</span>
+            <p><em>ALWAYS</em> prefix identifiers in the global scope with a
+              unique pseudo namespace related to the project or library. If you
+              are working on "Project Sloth", a reasonable pseudo namespace
+              would be <code>sloth.*</code>.</p>
+            <div class=""><pre>var sloth = {};
+
+sloth.sleep = function() {
+  ...
+};</pre></div>
+            
+            
+            <p>Many JavaScript libraries, including
+              <a href="http://code.google.com/closure/library/">
+                the Closure Library
+              </a>
+              and
+              <a href="http://www.dojotoolkit.org/">
+                Dojo toolkit
+              </a>
+              give you high-level functions for declaring your namespaces.
+              Be consistent about how you declare your namespaces.</p>
+            <div class=""><pre>goog.provide('sloth');
+
+sloth.sleep = function() {
+  ...
+};</pre></div>
+          </p>
+          <p class=""><span class="stylepoint_subsubsection">Respect namespace ownership</span>
+            <p>When choosing a child-namespace, make sure that the owners of the
+              parent namespace know what you are doing. If you start a project
+              that creates hats for sloths, make sure that the Sloth team knows
+              that you're using <code>sloth.hats</code>.</p>
+            
+          </p>
+          <p class=""><span class="stylepoint_subsubsection">Use different namespaces for external code and internal code</span>
+            <p>"External code" is code that comes from outside your codebase,
+              and is compiled independently. Internal and external names should
+              be kept strictly separate. If you're using an external library
+              that makes things available in <code>foo.hats.*</code>, your
+              internal code should not define all its symbols in
+              <code>foo.hats.*</code>, because it will break if the other
+              team defines new symbols.</p>
+            <div class=""><pre class="badcode">foo.require('foo.hats');
+
+/**
+ * WRONG -- Do NOT do this.
+ * @constructor
+ * @extends {foo.hats.RoundHat}
+ */
+foo.hats.BowlerHat = function() {
+};</pre></div>
+            <p>If you need to define new APIs on an external namespace, then you
+              should explicitly export the public API functions, and only those
+              functions. Your internal code should call the internal APIs by
+              their internal names, for consistency and so that the compiler
+              can optimize them better.</p>
+            <div class=""><pre>foo.provide('googleyhats.BowlerHat');
+
+foo.require('foo.hats');
+
+/**
+ * @constructor
+ * @extends {foo.hats.RoundHat}
+ */
+googleyhats.BowlerHat = function() {
+  ...
+};
+
+goog.exportSymbol('foo.hats.BowlerHat', googleyhats.BowlerHat);</pre></div>
+            
+            
+          </p>
+          <p class=""><span class="stylepoint_subsubsection">Alias long type names to improve readability</span>
+            <p>Use local aliases for fully-qualified types if doing so improves
+              readability. The name of a local alias should match the last part
+              of the type.</p>
+            <div class=""><pre>/**
+ * @constructor
+ */
+some.long.namespace.MyClass = function() {
+};
+
+/**
+ * @param {some.long.namespace.MyClass} a
+ */
+some.long.namespace.MyClass.staticHelper = function(a) {
+  ...
+};
+
+myapp.main = function() {
+  var MyClass = some.long.namespace.MyClass;
+  var staticHelper = some.long.namespace.MyClass.staticHelper;
+  staticHelper(new MyClass());
+};</pre></div>
+            <p>Do not create local aliases of namespaces. Namespaces should only
+              be aliased using <a href="#goog-scope">goog.scope</a>.</p>
+            <div class=""><pre class="badcode">myapp.main = function() {
+  var namespace = some.long.namespace;
+  namespace.MyClass.staticHelper(new namespace.MyClass());
+};</pre></div>
+            <p>Avoid accessing properties of an aliased type, unless it is an
+              enum.</p>
+            <div class=""><pre>/** @enum {string} */
+some.long.namespace.Fruit = {
+  APPLE: 'a',
+  BANANA: 'b'
+};
+
+myapp.main = function() {
+  var Fruit = some.long.namespace.Fruit;
+  switch (fruit) {
+    case Fruit.APPLE:
+      ...
+    case Fruit.BANANA:
+      ...
+  }
+};</pre></div>
+            <div class=""><pre class="badcode">myapp.main = function() {
+  var MyClass = some.long.namespace.MyClass;
+  MyClass.staticHelper(null);
+};</pre></div>
+            <p>Never create aliases in the global scope. Use them only in
+              function blocks.</p>
+          </p>
+        </p>
+        <p class=""><span class="stylepoint_subsection">Filenames</span>
+          <p>Filenames should be all lowercase in order to avoid confusion on
+            case-sensitive platforms. Filenames should end in <code>.js</code>,
+            and should contain no punctuation except for <code>-</code> or
+            <code>_</code> (prefer <code>-</code> to <code>_</code>).</p>
+        </p>
+        
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Custom_toString___methods" name="Custom_toString___methods">Custom toString() methods</a></h3><span name="link-Custom_toString___methods__button" id="link-Custom_toString___methods__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Custom_toString___methods#Custom_toString___methods">
+          link
+        </a></span><span id="Custom_toString___methods__button" name="Custom_toString___methods__button" onclick="javascript:ShowHideByName('Custom_toString___methods')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">
+        Must always succeed without side effects.
+      </div>
+      <div class=""><div style="display: none" id="Custom_toString___methods__body" name="Custom_toString___methods__body" class="stylepoint_body">
+        <p>You can control how your objects string-ify themselves by defining a
+          custom <code>toString()</code> method. This is fine, but you need
+          to ensure that your method (1) always succeeds and (2) does not have
+          side-effects. If your method doesn't meet these criteria, it's very
+          easy to run into serious problems. For example, if
+          <code>toString()</code> calls a method that does an
+          <code>assert</code>, <code>assert</code> might try to output the name
+          of the object in which it failed, which of course requires calling
+          <code>toString()</code>.</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Deferred_initialization" name="Deferred_initialization">Deferred initialization</a></h3><span name="link-Deferred_initialization__button" id="link-Deferred_initialization__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Deferred_initialization#Deferred_initialization">
+          link
+        </a></span><span id="Deferred_initialization__button" name="Deferred_initialization__button" onclick="javascript:ShowHideByName('Deferred_initialization')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">OK</div>
+      <div class=""><div style="display: none" id="Deferred_initialization__body" name="Deferred_initialization__body" class="stylepoint_body">
+        <p>It isn't always possible to initialize variables at the point of
+          declaration, so deferred initialization is fine.</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Explicit_scope" name="Explicit_scope">Explicit scope</a></h3><span name="link-Explicit_scope__button" id="link-Explicit_scope__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Explicit_scope#Explicit_scope">
+          link
+        </a></span><span id="Explicit_scope__button" name="Explicit_scope__button" onclick="javascript:ShowHideByName('Explicit_scope')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Always</div>
+      <div class=""><div style="display: none" id="Explicit_scope__body" name="Explicit_scope__body" class="stylepoint_body">
+        <p>Always use explicit scope - doing so increases portability and
+          clarity. For example, don't rely on <code>window</code> being in the
+          scope chain. You might want to use your function in another
+          application for which <code>window</code> is not the content
+          window.</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Code_formatting" name="Code_formatting">Code formatting</a></h3><span name="link-Code_formatting__button" id="link-Code_formatting__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Code_formatting#Code_formatting">
+          link
+        </a></span><span id="Code_formatting__button" name="Code_formatting__button" onclick="javascript:ShowHideByName('Code_formatting')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Expand for more information.</div>
+      <div class=""><div style="display: none" id="Code_formatting__body" name="Code_formatting__body" class="stylepoint_body">
+        <p>We follow the <a href="https://google-styleguide.googlecode.com/svn/trunk/cppguide.xml#Formatting">C++ formatting
+          rules</a> in spirit, with the following additional clarifications.</p>
+        <p class=""><span class="stylepoint_subsection">Curly Braces</span>
+          <p>Because of implicit semicolon insertion, always start your curly
+            braces on the same line as whatever they're opening.  For
+            example:</p>
+          <div class=""><pre>if (something) {
+  // ...
+} else {
+  // ...
+}</pre></div>
+        </p>
+        <p class=""><span class="stylepoint_subsection">Array and Object Initializers</span>
+          <p>Single-line array and object initializers are allowed when they
+            fit on a line:</p>
+          <div class=""><pre>var arr = [1, 2, 3];  // No space after [ or before ].
+var obj = {a: 1, b: 2, c: 3};  // No space after { or before }.</pre></div>
+          <p>Multiline array initializers and object initializers are indented
+            2 spaces, with the braces on their own line, just like blocks.</p>
+          <div class=""><pre>// Object initializer.
+var inset = {
+  top: 10,
+  right: 20,
+  bottom: 15,
+  left: 12
+};
+
+// Array initializer.
+this.rows_ = [
+  '"Slartibartfast" &lt;fjordmaster@magrathea.com&gt;',
+  '"Zaphod Beeblebrox" &lt;theprez@universe.gov&gt;',
+  '"Ford Prefect" &lt;ford@theguide.com&gt;',
+  '"Arthur Dent" &lt;has.no.tea@gmail.com&gt;',
+  '"Marvin the Paranoid Android" &lt;marv@googlemail.com&gt;',
+  'the.mice@magrathea.com'
+];
+
+// Used in a method call.
+goog.dom.createDom(goog.dom.TagName.DIV, {
+  id: 'foo',
+  className: 'some-css-class',
+  style: 'display:none'
+}, 'Hello, world!');</pre></div>
+          <p>Long identifiers or values present problems for aligned
+            initialization lists, so always prefer non-aligned initialization.
+            For example:</p>
+          <div class=""><pre>CORRECT_Object.prototype = {
+  a: 0,
+  b: 1,
+  lengthyName: 2
+};</pre></div>
+          <p>Not like this:</p>
+          <div class=""><pre class="badcode">WRONG_Object.prototype = {
+  a          : 0,
+  b          : 1,
+  lengthyName: 2
+};</pre></div>
+        </p>
+        <p class=""><span class="stylepoint_subsection">Function Arguments</span>
+          <p>When possible, all function arguments should be listed on the same
+            line. If doing so would exceed the 80-column limit, the arguments
+            must be line-wrapped in a readable way. To save space, you may wrap
+            as close to 80 as possible, or put each argument on its own line to
+            enhance readability. The indentation may be either four spaces, or
+            aligned to the parenthesis. Below are the most common patterns for
+            argument wrapping:</p>
+          <div class=""><pre>// Four-space, wrap at 80.  Works with very long function names, survives
+// renaming without reindenting, low on space.
+goog.foo.bar.doThingThatIsVeryDifficultToExplain = function(
+    veryDescriptiveArgumentNumberOne, veryDescriptiveArgumentTwo,
+    tableModelEventHandlerProxy, artichokeDescriptorAdapterIterator) {
+  // ...
+};
+
+// Four-space, one argument per line.  Works with long function names,
+// survives renaming, and emphasizes each argument.
+goog.foo.bar.doThingThatIsVeryDifficultToExplain = function(
+    veryDescriptiveArgumentNumberOne,
+    veryDescriptiveArgumentTwo,
+    tableModelEventHandlerProxy,
+    artichokeDescriptorAdapterIterator) {
+  // ...
+};
+
+// Parenthesis-aligned indentation, wrap at 80.  Visually groups arguments,
+// low on space.
+function foo(veryDescriptiveArgumentNumberOne, veryDescriptiveArgumentTwo,
+             tableModelEventHandlerProxy, artichokeDescriptorAdapterIterator) {
+  // ...
+}
+
+// Parenthesis-aligned, one argument per line.  Emphasizes each
+// individual argument.
+function bar(veryDescriptiveArgumentNumberOne,
+             veryDescriptiveArgumentTwo,
+             tableModelEventHandlerProxy,
+             artichokeDescriptorAdapterIterator) {
+  // ...
+}</pre></div>
+          <p>When the function call is itself indented, you're free to start the
+          4-space indent relative to the beginning of the original statement
+          or relative to the beginning of the current function call.
+          The following are all acceptable indentation styles.</p>
+          <div class=""><pre>if (veryLongFunctionNameA(
+        veryLongArgumentName) ||
+    veryLongFunctionNameB(
+    veryLongArgumentName)) {
+  veryLongFunctionNameC(veryLongFunctionNameD(
+      veryLongFunctioNameE(
+          veryLongFunctionNameF)));
+}</pre></div>
+        </p>
+        <p class=""><span class="stylepoint_subsection">Passing Anonymous Functions</span>
+          <p>When declaring an anonymous function in the list of arguments for
+            a function call, the body of the function is indented two spaces
+            from the left edge of the statement, or two spaces from the left
+            edge of the function keyword. This is to make the body of the
+            anonymous function easier to read (i.e. not be all squished up into
+            the right half of the screen).</p>
+          <div class=""><pre>prefix.something.reallyLongFunctionName('whatever', function(a1, a2) {
+  if (a1.equals(a2)) {
+    someOtherLongFunctionName(a1);
+  } else {
+    andNowForSomethingCompletelyDifferent(a2.parrot);
+  }
+});
+
+var names = prefix.something.myExcellentMapFunction(
+    verboselyNamedCollectionOfItems,
+    function(item) {
+      return item.name;
+    });</pre></div>
+        </p>
+        <p class=""><span class="stylepoint_subsection">Aliasing with goog.scope</span>
+          <a name="goog-scope"></a>
+          <p>
+            <a href="https://docs.google.com/document/pub?id=1ETFAuh2kaXMVL-vafUYhaWlhl6b5D9TOvboVg7Zl68Y"><code>goog.scope</code></a>
+            may be used to shorten references to
+            namespaced symbols in programs using
+            <a href="http://code.google.com/closure/library/">the Closure
+              Library</a>.</p>
+          <p>Only one <code>goog.scope</code> invocation may be added per
+            file.  Always place it in the global scope.</p>
+          <p>The opening <code>goog.scope(function() {</code> invocation
+            must be preceded by exactly one blank line and follow any
+            <code>goog.provide</code> statements, <code>goog.require</code>
+            statements, or top-level comments.  The invocation must be closed on
+            the last line in the file.  Append <code>// goog.scope</code> to the
+            closing statement of the scope. Separate the comment from the
+            semicolon by two spaces.</p>
+          <p>Similar to C++ namespaces, do not indent under goog.scope
+            declarations. Instead, continue from the 0 column.</p>
+          <p>Only alias names that will not be re-assigned to another object
+            (e.g., most constructors, enums, and namespaces). Do not do
+            this (see below for how to alias a constructor):</p>
+
+          <div class=""><pre class="badcode">goog.scope(function() {
+var Button = goog.ui.Button;
+
+Button = function() { ... };
+...</pre></div>
+
+          <p>Names must be the same as the last property of the global that they
+            are aliasing.</p>
+
+          <div class=""><pre>goog.provide('my.module.SomeType');
+
+goog.require('goog.dom');
+goog.require('goog.ui.Button');
+
+goog.scope(function() {
+var Button = goog.ui.Button;
+var dom = goog.dom;
+
+// Alias new types after the constructor declaration.
+my.module.SomeType = function() { ... };
+var SomeType = my.module.SomeType;
+
+// Declare methods on the prototype as usual:
+SomeType.prototype.findButton = function() {
+  // Button as aliased above.
+  this.button = new Button(dom.getElement('my-button'));
+};
+...
+});  // goog.scope</pre></div>
+        </p>
+        <p class=""><span class="stylepoint_subsection">Indenting wrapped lines</span>
+          <p>Except for <a href="#Array_and_Object_literals">array literals,
+            object literals</a>, and anonymous functions, all wrapped lines
+            should be indented either left-aligned to a sibling expression
+            above, or four spaces (not two spaces) deeper than a parent
+            expression (where "sibling" and "parent" refer to parenthesis
+            nesting level).
+          </p>
+
+          <div class=""><pre>someWonderfulHtml = '' +
+                    getEvenMoreHtml(someReallyInterestingValues, moreValues,
+                                    evenMoreParams, 'a duck', true, 72,
+                                    slightlyMoreMonkeys(0xfff)) +
+                    '';
+
+thisIsAVeryLongVariableName =
+    hereIsAnEvenLongerOtherFunctionNameThatWillNotFitOnPrevLine();
+
+thisIsAVeryLongVariableName = siblingOne + siblingTwo + siblingThree +
+    siblingFour + siblingFive + siblingSix + siblingSeven +
+    moreSiblingExpressions + allAtTheSameIndentationLevel;
+
+thisIsAVeryLongVariableName = operandOne + operandTwo + operandThree +
+    operandFour + operandFive * (
+        aNestedChildExpression + shouldBeIndentedMore);
+
+someValue = this.foo(
+    shortArg,
+    'Some really long string arg - this is a pretty common case, actually.',
+    shorty2,
+    this.bar());
+
+if (searchableCollection(allYourStuff).contains(theStuffYouWant) &amp;&amp;
+    !ambientNotification.isActive() &amp;&amp; (client.isAmbientSupported() ||
+                                        client.alwaysTryAmbientAnyways())) {
+  ambientNotification.activate();
+}</pre></div>
+        </p>
+        <p class=""><span class="stylepoint_subsection">Blank lines</span>
+          <p>Use newlines to group logically related pieces of code.
+            For example:</p>
+          <div class=""><pre>doSomethingTo(x);
+doSomethingElseTo(x);
+andThen(x);
+
+nowDoSomethingWith(y);
+
+andNowWith(z);</pre></div>
+        </p>
+        <p class=""><span class="stylepoint_subsection">Binary and Ternary Operators</span>
+          <p>Always put the operator on the preceding line. Otherwise,
+            line breaks and indentation follow the same rules as in other
+            Google style guides. This operator placement was initially agreed
+            upon out of concerns about automatic semicolon insertion. In fact,
+            semicolon insertion cannot happen before a binary operator, but new
+            code should stick to this style for consistency.</p>
+          <div class=""><pre>var x = a ? b : c;  // All on one line if it will fit.
+
+// Indentation +4 is OK.
+var y = a ?
+    longButSimpleOperandB : longButSimpleOperandC;
+
+// Indenting to the line position of the first operand is also OK.
+var z = a ?
+        moreComplicatedB :
+        moreComplicatedC;</pre></div>
+          <p>This includes the dot operator.</p>
+          <div class=""><pre>var x = foo.bar().
+    doSomething().
+    doSomethingElse();</pre></div>
+        </p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Parentheses" name="Parentheses">Parentheses</a></h3><span name="link-Parentheses__button" id="link-Parentheses__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Parentheses#Parentheses">
+          link
+        </a></span><span id="Parentheses__button" name="Parentheses__button" onclick="javascript:ShowHideByName('Parentheses')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Only where required</div>
+      <div class=""><div style="display: none" id="Parentheses__body" name="Parentheses__body" class="stylepoint_body">
+        <p>Use sparingly and in general only where required by the syntax
+          and semantics.</p>
+        <p>Never use parentheses for unary operators such as
+          <code>delete</code>, <code>typeof</code> and <code>void</code> or
+          after keywords such as <code>return</code>, <code>throw</code> as
+          well as others (<code>case</code>, <code>in</code> or
+          <code>new</code>).</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Strings" name="Strings">Strings</a></h3><span name="link-Strings__button" id="link-Strings__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Strings#Strings">
+          link
+        </a></span><span id="Strings__button" name="Strings__button" onclick="javascript:ShowHideByName('Strings')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Prefer ' over "</div>
+      <div class=""><div style="display: none" id="Strings__body" name="Strings__body" class="stylepoint_body">
+        <p>For consistency single-quotes (') are preferred to double-quotes (").
+          This is helpful when creating strings that include HTML:</p>
+        <div class=""><pre>var msg = 'This is some HTML';</pre></div>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Visibility__private_and_protected_fields_" name="Visibility__private_and_protected_fields_">Visibility (private and protected fields)</a></h3><span name="link-Visibility__private_and_protected_fields___button" id="link-Visibility__private_and_protected_fields___button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Visibility__private_and_protected_fields_#Visibility__private_and_protected_fields_">
+          link
+        </a></span><span id="Visibility__private_and_protected_fields___button" name="Visibility__private_and_protected_fields___button" onclick="javascript:ShowHideByName('Visibility__private_and_protected_fields_')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Encouraged, use JSDoc annotations <code>@private</code> and
+        <code>@protected</code></div>
+      <div class=""><div style="display: none" id="Visibility__private_and_protected_fields___body" name="Visibility__private_and_protected_fields___body" class="stylepoint_body">
+        <p>We recommend the use of the JSDoc annotations <code>@private</code> and
+          <code>@protected</code> to indicate visibility levels for classes,
+          functions, and properties.</p>
+        <p>The --jscomp_warning=visibility compiler flag turns on compiler
+          warnings for visibility violations. See
+          <a href="http://code.google.com/p/closure-compiler/wiki/Warnings">
+            Closure Compiler
+          Warnings</a>.
+        </p>
+        <p><code>@private</code> global variables and functions are only
+          accessible to code in the same file.</p>
+        <p>Constructors marked <code>@private</code> may only be instantiated by
+          code in the same file and by their static and instance members.
+          <code>@private</code> constructors may also be accessed anywhere in the
+          same file for their public static properties and by the
+          <code>instanceof</code> operator.</p>
+        <p>Global variables, functions, and constructors should never be
+          annotated <code>@protected</code>.</p>
+        <div class=""><pre>// File 1.
+// AA_PrivateClass_ and AA_init_ are accessible because they are global
+// and in the same file.
+
+/**
+ * @private
+ * @constructor
+ */
+AA_PrivateClass_ = function() {
+};
+
+/** @private */
+function AA_init_() {
+  return new AA_PrivateClass_();
+}
+
+AA_init_();</pre></div>
+        <p><code>@private</code> properties are accessible to all code in the
+          same file, plus all static methods and instance methods of that class
+          that "owns" the property, if the property belongs to a class. They
+          cannot be accessed or overridden from a subclass in a different file.</p>
+        <p><code>@protected</code> properties are accessible to all code in the
+          same file, plus any static methods and instance methods of any subclass
+          of a class that "owns" the property.</p>
+        <p>Note that these semantics differ from those of C++ and Java, in that
+          they grant private and protected access to all code in the same file,
+          not just in the same class or class hierarchy. Also, unlike in C++,
+          private properties cannot be overridden by a subclass.
+        </p>
+        <div class=""><pre>// File 1.
+
+/** @constructor */
+AA_PublicClass = function() {
+  /** @private */
+  this.privateProp_ = 2;
+
+  /** @protected */
+  this.protectedProp = 4;
+};
+
+/** @private */
+AA_PublicClass.staticPrivateProp_ = 1;
+
+/** @protected */
+AA_PublicClass.staticProtectedProp = 31;
+
+/** @private */
+AA_PublicClass.prototype.privateMethod_ = function() {};
+
+/** @protected */
+AA_PublicClass.prototype.protectedMethod = function() {};
+
+// File 2.
+
+/**
+ * @return {number} The number of ducks we've arranged in a row.
+ */
+AA_PublicClass.prototype.method = function() {
+  // Legal accesses of these two properties.
+  return this.privateProp_ + AA_PublicClass.staticPrivateProp_;
+};
+
+// File 3.
+
+/**
+ * @constructor
+ * @extends {AA_PublicClass}
+ */
+AA_SubClass = function() {
+  // Legal access of a protected static property.
+  AA_PublicClass.staticProtectedProp = this.method();
+};
+goog.inherits(AA_SubClass, AA_PublicClass);
+
+/**
+ * @return {number} The number of ducks we've arranged in a row.
+ */
+AA_SubClass.prototype.method = function() {
+  // Legal access of a protected instance property.
+  return this.protectedProp;
+};</pre></div>
+
+        <p>Notice that in JavaScript, there is no distinction between a type
+        (like  <code>AA_PrivateClass_</code>) and the constructor for that
+        type. There is no way to express both that a type is public and its
+        constructor is private (because the constructor could easily be aliased
+        in a way that would defeat the privacy check).</p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="JavaScript_Types" name="JavaScript_Types">JavaScript Types</a></h3><span name="link-JavaScript_Types__button" id="link-JavaScript_Types__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=JavaScript_Types#JavaScript_Types">
+          link
+        </a></span><span id="JavaScript_Types__button" name="JavaScript_Types__button" onclick="javascript:ShowHideByName('JavaScript_Types')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Encouraged and enforced by the compiler.</div>
+      <div class=""><div style="display: none" id="JavaScript_Types__body" name="JavaScript_Types__body" class="stylepoint_body">
+        <a name="JsTypes"></a>
+        <p>When documenting a type in JSDoc, be as specific and accurate as
+          possible. The types we support are based on the
+          <a href="http://wiki.ecmascript.org/doku.php?id=spec:spec">
+            EcmaScript 4 spec</a>.</p>
+        <p class=""><span class="stylepoint_subsection">The JavaScript Type Language</span>
+          <p>The ES4 proposal contained a language for specifying JavaScript
+            types. We use this language in JsDoc to express the types of
+            function parameters and return values.</p>
+
+          <p>As the ES4 proposal has evolved, this language has changed. The
+            compiler still supports old syntaxes for types, but those syntaxes
+            are deprecated.</p>
+
+          <p></p>
+          <table style="border-collapse:collapse" border="1" cellpadding="4">
+            
+              <tbody><tr>
+                <th>Syntax Name</th>
+                <th>Syntax</th>
+                <th>Description</th>
+                <th>Deprecated Syntaxes</th>
+              </tr>
+            
+            
+              <tr>
+                <td>Primitive Type</td>
+                <td>
+                  There are 5 primitive types in JavaScript:
+                  <code>{null}</code>,
+                  <code>{undefined}</code>,
+                  <code>{boolean}</code>,
+                  <code>{number}</code>, and
+                  <code>{string}</code>.
+                </td>
+                <td>Simply the name of a type.</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Instance Type</td>
+                <td>
+                  <code>{Object}</code><br>
+                  An instance of Object or null.<p></p>
+                  <code>{Function}</code><br>
+                  An instance of Function or null.<p></p>
+                  <code>{EventTarget}</code><br>
+                  An instance of a constructor that implements the EventTarget
+                  interface, or null.
+                </td>
+                <td>An instance of a constructor or interface function.<p></p>
+
+                Constructor functions are functions defined with the
+                <code>@constructor</code> JSDoc tag.
+                Interface functions are functions defined with the
+                <code>@interface</code> JSDoc tag.<p></p>
+
+                By default, instance types will accept null. This is the only
+		type syntax that makes the type nullable. Other type syntaxes
+		in this table will not accept null.
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Enum Type</td>
+                <td>
+                  <code>{goog.events.EventType}</code><br>
+                  One of the properties of the object literal initializer
+                  of <code>goog.events.EventType</code>.
+                </td>
+                <td>An enum must be initialized as an object literal, or as
+                an alias of another enum, annotated with the <code>@enum</code>
+                JSDoc tag. The properties of this literal are the instances
+                of the enum. The syntax of the enum is defined
+                <a href="#enums">below</a>.<p></p>
+
+                Note that this is one of the few things in our type system
+                that were not in the ES4 spec.
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Type Application</td>
+                <td>
+                  <code>{Array.&lt;string&gt;}</code><br>An array of strings.<p></p>
+                  <code>{Object.&lt;string, number&gt;}</code>
+                  <br>An object in which the keys are strings and the values
+                  are numbers.
+                </td>
+                <td>Parameterizes a type, by applying a set of type arguments
+                  to that type. The idea is analogous to generics in Java.
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Type Union</td>
+                <td>
+                  <code>{(number|boolean)}</code><br>A number or a boolean.
+                </td>
+                <td>Indicates that a value might have type A OR type B.<p></p>
+
+                  The parentheses may be omitted at the top-level
+                  expression, but the parentheses should be included in
+                  sub-expressions to avoid ambiguity.<br>
+                  <code>{number|boolean}</code><br>
+                  <code>{function(): (number|boolean)}</code>
+                </td>
+                <td>
+                  <code>{(number,boolean)}</code>,<br>
+                  <code>{(number||boolean)}</code>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Nullable type</td>
+                <td>
+                  <code>{?number}</code><br> A number or null.
+                </td>
+                <td>Shorthand for the union of the null type with any
+                other type. This is just syntactic sugar.
+                </td>
+                <td>
+                  <code>{number?}</code>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Non-nullable type</td>
+                <td>
+                  <code>{!Object}</code><br> An Object, but never the
+                  <code>null</code> value.
+                </td>
+                <td>Filters null out of nullable types. Most often used
+                with instance types, which are nullable by default.
+                </td>
+                <td>
+                  <code>{Object!}</code>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Record Type</td>
+                <td>
+                  <code>{{myNum: number, myObject}}</code>
+                  <br>An anonymous type with the given type members.
+                </td>
+                <td>
+                  <p>Indicates that the value has the specified members with the
+                    specified types. In this case, <code>myNum</code> with a
+                    type <code>number</code> and <code>myObject</code> with any
+                    type.</p>
+                  <p>Notice that the braces are part of the type syntax. For
+                    example, to denote an <code>Array</code> of objects that
+                    have a <code>length</code> property, you might write
+                  <code>Array.&lt;{length}&gt;</code>.</p>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Function Type</td>
+                <td>
+                  <code>{function(string, boolean)}</code><br>
+                  A function that takes two arguments (a string and a boolean),
+                  and has an unknown return value.<br>
+                </td>
+                <td>Specifies a function.</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Function Return Type</td>
+                <td>
+                  <code>{function(): number}</code><br>
+                  A function that takes no arguments and returns a number.<br>
+                </td>
+                <td>Specifies a function return type.</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Function <code>this</code> Type</td>
+                <td>
+                  <code>{function(this:goog.ui.Menu, string)}</code><br>
+                  A function that takes one argument (a string), and executes
+                  in the context of a goog.ui.Menu.
+                </td>
+                <td>Specifies the context type of a function type.</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Function <code>new</code> Type</td>
+                <td>
+                  <code>{function(new:goog.ui.Menu, string)}</code><br>
+                  A constructor that takes one argument (a string), and
+                  creates a new instance of goog.ui.Menu when called
+                  with the 'new' keyword.
+                </td>
+                <td>Specifies the constructed type of a constructor.</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Variable arguments</td>
+                <td>
+                  <code>{function(string, ...[number]): number}</code><br>
+                  A function that takes one argument (a string), and then a
+                  variable number of arguments that must be numbers.
+                </td>
+                <td>Specifies variable arguments to a function.</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a name="var-args-annotation"></a>
+                  Variable arguments (in <code>@param</code> annotations)
+                </td>
+                <td>
+                  <code>@param {...number} var_args</code><br>
+                  A variable number of arguments to an annotated function.
+                </td>
+                <td>
+                  Specifies that the annotated function accepts a variable
+                  number of arguments.
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Function <a href="#optional">optional arguments</a></td>
+                <td>
+                  <code>{function(?string=, number=)}</code><br>
+                  A function that takes one optional, nullable string and one
+                  optional number as arguments. The <code>=</code> syntax is
+                  only for <code>function</code> type declarations.
+                </td>
+                <td>Specifies optional arguments to a function.</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a name="optional-arg-annotation"></a>
+                  Function <a href="#optional">optional arguments</a>
+                  (in <code>@param</code> annotations)
+                </td>
+                <td>
+                  <code>@param {number=} opt_argument</code><br>
+                  An optional parameter of type <code>number</code>.
+                </td>
+                <td>Specifies that the annotated function accepts an optional
+                  argument.</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>The ALL type</td>
+                <td><code>{*}</code></td>
+                <td>Indicates that the variable can take on any type.</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>The UNKNOWN type</td>
+                <td><code>{?}</code></td>
+                <td>Indicates that the variable can take on any type,
+                    and the compiler should not type-check any uses of it.</td>
+                <td></td>
+              </tr>
+            
+          </tbody></table>
+        </p>
+        <p class=""><span class="stylepoint_subsection">Types in JavaScript</span>
+          <p></p>
+          <table style="border-collapse:collapse" border="1" cellpadding="4">
+            
+              <tbody><tr>
+                <th>Type Example</th>
+                <th>Value Examples</th>
+                <th>Description</th>
+              </tr>
+            
+            
+
+              <tr>
+                <td>number</td>
+                <td>
+                  <div class=""><pre>1
+1.0
+-5
+1e5
+Math.PI</pre></div>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Number</td>
+                <td>
+                  <div class=""><pre>new Number(true)</pre></div>
+                </td>
+                <td>
+                  <a href="#Wrapper_objects_for_primitive_types">
+                    Number object
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td>string</td>
+                <td>
+                  <div class=""><pre>'Hello'
+"World"
+String(42)</pre></div>
+                </td>
+                <td>
+                  String value
+                </td>
+              </tr>
+
+              <tr>
+                <td>String</td>
+                <td>
+                  <div class=""><pre>new String('Hello')
+new String(42)</pre></div>
+                </td>
+                <td>
+                  <a href="#Wrapper_objects_for_primitive_types">
+                    String object
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td>boolean</td>
+                <td>
+                  <div class=""><pre>true
+false
+Boolean(0)</pre></div>
+                </td>
+                <td>
+                  Boolean value
+                </td>
+              </tr>
+
+              <tr>
+                <td>Boolean</td>
+                <td>
+                  <div class=""><pre>new Boolean(true)</pre></div>
+                </td>
+                <td>
+                  <a href="#Wrapper_objects_for_primitive_types">
+                    Boolean object
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td>RegExp</td>
+                <td>
+                  <div class=""><pre>new RegExp('hello')
+/world/g</pre></div></td><td>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Date</td>
+                <td>
+                  <div class=""><pre>new Date
+new Date()</pre></div></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>
+                  
+                  null
+                  
+                </td>
+                <td>
+                  <div class=""><pre>null</pre></div>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>
+                  
+                  undefined
+                  
+                </td>
+                <td>
+                  <div class=""><pre>undefined</pre></div>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>void</td>
+                <td>
+                  <div class=""><pre>function f() {
+  return;
+}</pre></div>
+                </td>
+                <td>No return value</td>
+              </tr>
+
+              <tr>
+                <td>Array</td>
+                <td>
+                  <div class=""><pre>['foo', 0.3, null]
+[]</pre></div>
+                </td>
+                <td>Untyped Array</td>
+              </tr>
+
+              <tr>
+                <td>Array.&lt;number&gt;</td>
+                <td>
+                  <div class=""><pre>[11, 22, 33]</pre></div>
+                </td>
+                <td>
+                  An Array of numbers
+                </td>
+              </tr>
+
+              <tr>
+                <td>Array.&lt;Array.&lt;string&gt;&gt;</td>
+                <td>
+                  <div class=""><pre>[['one', 'two', 'three'], ['foo', 'bar']]</pre></div>
+                </td>
+                <td>Array of Arrays of strings</td>
+              </tr>
+
+              <tr>
+                <td>Object</td>
+                <td>
+                  <div class=""><pre>{}
+{foo: 'abc', bar: 123, baz: null}</pre></div>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Object.&lt;string&gt;</td>
+                <td>
+                  <div class=""><pre>{'foo': 'bar'}</pre></div>
+                </td>
+                <td>
+                  An Object in which the values are strings.
+                </td>
+              </tr>
+
+              <tr>
+                <td>Object.&lt;number, string&gt;</td>
+                <td>
+                  <div class=""><pre>var obj = {};
+obj[1] = 'bar';</pre></div>
+                </td>
+                <td>
+                  An Object in which the keys are numbers and the values are
+                  strings.  <p></p>Note that in JavaScript, the keys are always
+                  implicitly converted to strings, so
+                  <code>obj['1'] == obj[1]</code>.
+                  So the key will always be a string in for...in loops. But the
+                  compiler will verify the type of the key when indexing into
+                  the object.
+                </td>
+              </tr>
+
+              <tr>
+                <td>Function</td>
+                <td>
+                  <div class=""><pre>function(x, y) {
+  return x * y;
+}</pre></div>
+                </td>
+                <td>
+                  <a href="#Wrapper_objects_for_primitive_types">
+                    Function object
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td>function(number, number): number</td>
+                <td>
+                  <div class=""><pre>function(x, y) {
+  return x * y;
+}</pre></div>
+                </td>
+                <td>function value</td>
+              </tr>
+
+              <tr>
+                <td><a name="constructor-tag">SomeClass</a></td>
+                <td>
+                  <div class=""><pre>/** @constructor */
+function SomeClass() {}
+
+new SomeClass();</pre></div>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>SomeInterface</td>
+                <td>
+                  <div class=""><pre>/** @interface */
+function SomeInterface() {}
+
+SomeInterface.prototype.draw = function() {};</pre></div>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>project.MyClass</td>
+                <td>
+                  <div class=""><pre>/** @constructor */
+project.MyClass = function () {}
+
+new project.MyClass()</pre></div>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>project.MyEnum</td>
+                <td>
+                  <div class=""><pre>/** @enum {string} */
+project.MyEnum = {
+  /** The color blue. */
+  BLUE: '#0000dd',
+  /** The color red. */
+  RED: '#dd0000'
+};</pre></div>
+                </td>
+                <td><a name="enums">Enumeration</a><p></p>
+                  JSDoc comments on enum values are optional.
+                </td>
+              </tr>
+
+              <tr>
+                <td>Element</td>
+                <td>
+                  <div class=""><pre>document.createElement('div')</pre></div>
+                </td>
+                <td>Elements in the DOM.</td>
+              </tr>
+
+              <tr>
+                <td>Node</td>
+                <td>
+                  <div class=""><pre>document.body.firstChild</pre></div>
+                </td>
+                <td>Nodes in the DOM.</td>
+              </tr>
+
+              <tr>
+                <td>HTMLInputElement</td>
+                <td>
+                  <div class=""><pre>htmlDocument.getElementsByTagName('input')[0]</pre></div>
+                </td>
+                <td>A specific type of DOM element.</td>
+              </tr>
+            
+          </tbody></table>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Type Casts</span>
+          <p>In cases where type-checking doesn't accurately infer the type of
+            an expression, it is possible to add a type cast comment by adding a
+            type annotation comment and enclosing the expression in
+            parentheses. The parentheses are required.</p>
+
+          <div class=""><pre>/** @type {number} */ (x)</pre></div>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Nullable vs. Optional Parameters and Properties</span>
+          <a name="optional"></a>
+          <p>Because JavaScript is a loosely-typed language, it is very
+            important to understand the subtle differences between optional,
+            nullable, and undefined function parameters and class
+            properties.</p>
+
+          <p>Instances of classes and interfaces are nullable by default.
+          For example, the following declaration</p>
+
+          <div class=""><pre>/**
+ * Some class, initialized with a value.
+ * @param {Object} value Some value.
+ * @constructor
+ */
+function MyClass(value) {
+  /**
+   * Some value.
+   * @type {Object}
+   * @private
+   */
+  this.myValue_ = value;
+}</pre></div>
+
+          <p>tells the compiler that the <code>myValue_</code> property holds
+            either an Object or null.  If <code>myValue_</code> must never be
+            null, it should be declared like this:</p>
+
+          <div class=""><pre>/**
+ * Some class, initialized with a non-null value.
+ * @param {!Object} value Some value.
+ * @constructor
+ */
+function MyClass(value) {
+  /**
+   * Some value.
+   * @type {!Object}
+   * @private
+   */
+  this.myValue_ = value;
+}</pre></div>
+
+          <p>This way, if the compiler can determine that somewhere in the code
+            <code>MyClass</code> is initialized with a null value, it will issue
+            a warning.</p>
+
+          
+
+          <p>Optional parameters to functions may be undefined at runtime, so if
+          they are assigned to class properties, those properties must be
+          declared accordingly:</p>
+
+          <div class=""><pre>/**
+ * Some class, initialized with an optional value.
+ * @param {Object=} opt_value Some value (optional).
+ * @constructor
+ */
+function MyClass(opt_value) {
+  /**
+   * Some value.
+   * @type {Object|undefined}
+   * @private
+   */
+  this.myValue_ = opt_value;
+}</pre></div>
+
+          <p>This tells the compiler that <code>myValue_</code> may hold an
+            Object, null, or remain undefined.</p>
+
+          <p>Note that the optional parameter <code>opt_value</code> is declared
+            to be of type <code>{Object=}</code>, not
+            <code>{Object|undefined}</code>.  This is because optional
+            parameters may, by definition, be undefined.  While there is no harm
+            in explicitly declaring an optional parameter as possibly undefined,
+            it is both unnecessary and makes the code harder to read.</p>
+
+          <p>Finally, note that being nullable and being optional are orthogonal
+            properties.  The following four declarations are all different:</p>
+
+          <div class=""><pre>/**
+ * Takes four arguments, two of which are nullable, and two of which are
+ * optional.
+ * @param {!Object} nonNull Mandatory (must not be undefined), must not be null.
+ * @param {Object} mayBeNull Mandatory (must not be undefined), may be null.
+ * @param {!Object=} opt_nonNull Optional (may be undefined), but if present,
+ *     must not be null!
+ * @param {Object=} opt_mayBeNull Optional (may be undefined), may be null.
+ */
+function strangeButTrue(nonNull, mayBeNull, opt_nonNull, opt_mayBeNull) {
+  // ...
+};</pre></div>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Typedefs</span>
+          <a name="Typedefs"></a>
+          <p>Sometimes types can get complicated. A function that accepts
+            content for an Element might look like:</p>
+
+          <div class=""><pre>/**
+ * @param {string} tagName
+ * @param {(string|Element|Text|Array.&lt;Element&gt;|Array.&lt;Text&gt;)} contents
+ * @return {!Element}
+ */
+goog.createElement = function(tagName, contents) {
+  ...
+};</pre></div>
+
+          <p>You can define commonly used type expressions with a
+            <code>@typedef</code> tag. For example,</p>
+
+          <div class=""><pre>/** @typedef {(string|Element|Text|Array.&lt;Element&gt;|Array.&lt;Text&gt;)} */
+goog.ElementContent;
+
+/**
+ * @param {string} tagName
+ * @param {goog.ElementContent} contents
+ * @return {!Element}
+ */
+goog.createElement = function(tagName, contents) {
+...
+};</pre></div>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Template types</span>
+          <a name="Template_types"></a>
+          <p>The compiler has limited support for template types. It can only
+            infer the type of <code>this</code> inside an anonymous function
+            literal from the type of the <code>this</code> argument and whether the
+            <code>this</code> argument is missing.</p>
+
+          <div class=""><pre>/**
+ * @param {function(this:T, ...)} fn
+ * @param {T} thisObj
+ * @param {...*} var_args
+ * @template T
+ */
+goog.bind = function(fn, thisObj, var_args) {
+...
+};
+// Possibly generates a missing property warning.
+goog.bind(function() { this.someProperty; }, new SomeClass());
+// Generates an undefined this warning.
+goog.bind(function() { this.someProperty; });</pre></div>
+        </p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Comments" name="Comments">Comments</a></h3><span name="link-Comments__button" id="link-Comments__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Comments#Comments">
+          link
+        </a></span><span id="Comments__button" name="Comments__button" onclick="javascript:ShowHideByName('Comments')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Use JSDoc</div>
+      <div class=""><div style="display: none" id="Comments__body" name="Comments__body" class="stylepoint_body">
+        <p>
+          We follow the
+          <a href="https://google-styleguide.googlecode.com/svn/trunk/cppguide.xml#Comments">
+            C++ style for comments</a> in spirit.
+        </p>
+
+        <p>All files, classes, methods and properties should be documented with
+          <a href="http://code.google.com/p/jsdoc-toolkit/">JSDoc</a>
+          comments with the appropriate <a href="#JSDoc_Tag_Reference">tags</a>
+          and <a href="#JsTypes">types</a>. Textual descriptions for properties,
+          methods, method parameters and method return values should be included
+          unless obvious from the property, method, or parameter name.
+        </p>
+
+        <p>Inline comments should be of the <code>//</code> variety.</p>
+
+        <p>Complete sentences are recommended but not required.
+        Complete sentences should use appropriate capitalization
+        and punctuation.</p>
+
+        <p class=""><span class="stylepoint_subsection">Comment Syntax</span>
+          <p>The JSDoc syntax is based on
+          <a href="http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">
+          JavaDoc</a>. Many tools extract metadata from JSDoc comments to
+          perform code validation and optimizations. These comments must be
+          well-formed.</p>
+
+          <div class=""><pre>/**
+ * A JSDoc comment should begin with a slash and 2 asterisks.
+ * Inline tags should be enclosed in braces like {@code this}.
+ * @desc Block tags should always start on their own line.
+ */</pre></div>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">JSDoc Indentation</span>
+          <p>If you have to line break a block tag, you should treat this as
+          breaking a code statement and indent it four spaces.</p>
+
+          <div class=""><pre>/**
+ * Illustrates line wrapping for long param/return descriptions.
+ * @param {string} foo This is a param with a description too long to fit in
+ *     one line.
+ * @return {number} This returns something that has a description too long to
+ *     fit in one line.
+ */
+project.MyClass.prototype.method = function(foo) {
+  return 5;
+};</pre></div>
+
+          <p>You should not indent the <code>@fileoverview</code> command. You do not have to
+            indent the <code>@desc</code> command.</p>
+
+          <p>Even though it is not preferred, it is also acceptable to line up
+             the description.</p>
+
+          <div class=""><pre>/**
+ * This is NOT the preferred indentation method.
+ * @param {string} foo This is a param with a description too long to fit in
+ *                     one line.
+ * @return {number} This returns something that has a description too long to
+ *                  fit in one line.
+ */
+project.MyClass.prototype.method = function(foo) {
+  return 5;
+};</pre></div>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">HTML in JSDoc</span>
+          <p>Like JavaDoc, JSDoc supports many HTML tags, like &lt;code&gt;,
+            &lt;pre&gt;, &lt;tt&gt;, &lt;strong&gt;, &lt;ul&gt;, &lt;ol&gt;,
+            &lt;li&gt;, &lt;a&gt;, and others.</p>
+
+          <p>This means that plaintext formatting is not respected. So, don't
+            rely on whitespace to format JSDoc:</p>
+
+          <div class=""><pre class="badcode">/**
+ * Computes weight based on three factors:
+ *   items sent
+ *   items received
+ *   last timestamp
+ */</pre></div>
+
+          <p>It'll come out like this:</p>
+
+          <div class=""><pre class="badcode">Computes weight based on three factors: items sent items received last timestamp</pre></div>
+
+          <p>Instead, do this:</p>
+
+          <div class=""><pre>/**
+ * Computes weight based on three factors:
+ * &lt;ul&gt;
+ * &lt;li&gt;items sent
+ * &lt;li&gt;items received
+ * &lt;li&gt;last timestamp
+ * &lt;/ul&gt;
+ */</pre></div>
+
+          The <a href="http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">
+          JavaDoc</a> style guide is a useful resource on how to write
+          well-formed doc comments.
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Top/File-Level Comments</span>
+          <p>
+            
+            A <a href="https://google-styleguide.googlecode.com/svn/trunk/copyright.html">copyright notice</a> and author information are optional.
+            File overviews are generally recommended whenever a file consists of
+            more than a single class definition. The top level comment is
+            designed to orient readers unfamiliar with the code to what is in
+            this file.  If present, it should provide a description of the
+            file's contents and any dependencies or compatibility information.
+            As an example:
+          </p>
+
+          <div class=""><pre>/**
+ * @fileoverview Description of file, its uses and information
+ * about its dependencies.
+ */</pre></div>
+
+          
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Class Comments</span>
+          <p>Classes must be documented with a description and a
+            <a href="#constructor-tag">type tag that
+              identifies the constructor</a>.
+          </p>
+
+          <div class=""><pre>/**
+ * Class making something fun and easy.
+ * @param {string} arg1 An argument that makes this more interesting.
+ * @param {Array.&lt;number&gt;} arg2 List of numbers to be processed.
+ * @constructor
+ * @extends {goog.Disposable}
+ */
+project.MyClass = function(arg1, arg2) {
+  // ...
+};
+goog.inherits(project.MyClass, goog.Disposable);</pre></div>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Method and Function Comments</span>
+          <p>Parameter and return types should be documented. The method
+             description may be omitted if it is obvious from the parameter
+             or return type descriptions. Method descriptions should start
+             with a sentence written in the third person declarative voice.</p>
+          <div class=""><pre>/**
+ * Operates on an instance of MyClass and returns something.
+ * @param {project.MyClass} obj Instance of MyClass which leads to a long
+ *     comment that needs to be wrapped to two lines.
+ * @return {boolean} Whether something occurred.
+ */
+function PR_someMethod(obj) {
+  // ...
+}</pre></div>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Property Comments</span>
+          <div class=""><pre>/** @constructor */
+project.MyClass = function() {
+  /**
+   * Maximum number of things per pane.
+   * @type {number}
+   */
+  this.someProperty = 4;
+}</pre></div>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">JSDoc Tag Reference</span>
+          <a name="JSDoc_Tag_Reference"></a>
+          <p></p>
+          <table style="border-collapse:collapse" border="1" cellpadding="4">
+            
+              <tbody><tr>
+                <th>Tag</th>
+                <th>Template &amp; Examples</th>
+                <th>Description</th>
+              </tr>
+            
+            
+              <tr>
+                <td>
+                  <a name="tag-author">@author</a>
+                  
+                </td>
+                <td>
+                  <code>@author username@google.com (first last)</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * @fileoverview Utilities for handling textareas.
+ * @author kuth@google.com (Uthur Pendragon)
+ */</pre></div>
+                </td>
+                <td>
+                  Document the author of a file or the owner of a test,
+                  generally only used in the <code>@fileoverview</code> comment.
+                  
+                </td>
+              </tr>
+
+              
+
+              <tr>
+                <td><a name="tag-code">@code</a></td>
+                <td>
+                  <code>{@code ...}</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * Moves to the next position in the selection.
+ * Throws {@code goog.iter.StopIteration} when it
+ * passes the end of the range.
+ * @return {Node} The node at the next position.
+ */
+goog.dom.RangeIterator.prototype.next = function() {
+  // ...
+};</pre></div>
+                </td>
+                <td>
+                  Indicates that a term in a JSDoc description is code so it may
+                  be correctly formatted in generated documentation.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-const">@const</a></td>
+                <td>
+                  <code>@const</code><br>
+                  <code>@const {type}</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/** @const */ var MY_BEER = 'stout';
+
+/**
+ * My namespace's favorite kind of beer.
+ * @const {string}
+ */
+mynamespace.MY_BEER = 'stout';
+
+/** @const */ MyClass.MY_BEER = 'stout';
+
+/**
+ * Initializes the request.
+ * @const
+ */
+mynamespace.Request.prototype.initialize = function() {
+  // This method cannot be overridden in a subclass.
+};</pre></div>
+                </td>
+                <td>
+                  <p>Marks a variable (or property) as read-only and suitable
+                  for inlining.</p>
+
+                  <p>A <code>@const</code> variable is an immutable pointer to
+                  a value.  If a variable or property marked as
+                  <code>@const</code> is overwritten, JSCompiler will give
+                  warnings.</p>
+
+                  <p>The type declaration of a constant value can be omitted
+                    if it can be clearly inferred. An additional comment about
+                    the variable is optional.</p>
+
+                  <p>When <code>@const</code> is applied to a method, it
+                    implies the method is not only not overwritable, but also
+                    that the method is <em>finalized</em> —
+                    not overridable in subclasses.</p>
+
+                  <p>For more on <code>@const</code>, see the
+                    <a href="#Constants">Constants</a> section.</p>
+
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-constructor">@constructor</a></td>
+                <td>
+                  <code>@constructor</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * A rectangle.
+ * @constructor
+ */
+function GM_Rect() {
+  ...
+}</pre></div>
+                </td>
+                <td>
+                  Used in a class's documentation to indicate the constructor.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-define">@define</a></td>
+                <td>
+                  <code>@define {Type} description</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/** @define {boolean} */
+var TR_FLAGS_ENABLE_DEBUG = true;
+
+/**
+ * @define {boolean} Whether we know at compile-time that
+ *     the browser is IE.
+ */
+goog.userAgent.ASSUME_IE = false;</pre></div>
+                </td>
+                <td>
+                  Indicates a constant that can be overridden by the compiler at
+                  compile-time. In the example, the compiler flag
+                  <code>--define='goog.userAgent.ASSUME_IE=true'</code>
+                  could be specified in the BUILD file to indicate that the
+                  constant <code>goog.userAgent.ASSUME_IE</code> should be replaced
+                  with <code>true</code>.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-deprecated">@deprecated</a></td>
+                <td>
+                  <code>@deprecated Description</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * Determines whether a node is a field.
+ * @return {boolean} True if the contents of
+ *     the element are editable, but the element
+ *     itself is not.
+ * @deprecated Use isField().
+ */
+BN_EditUtil.isTopEditableField = function(node) {
+  // ...
+};</pre></div>
+                </td>
+                <td>
+                  Used to tell that a function, method or property should not be
+                  used any more.  Always provide instructions on what callers
+                  should use instead.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-dict">@dict</a></td>
+                <td>
+                  <code>@dict Description</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * @constructor
+ * @dict
+ */
+function Foo(x) {
+  this['x'] = x;
+}
+var obj = new Foo(123);
+var num = obj.x;  // warning
+
+(/** @dict */ { x: 1 }).x = 123;  // warning</pre></div>
+                </td>
+                <td>
+                  When a constructor (<code>Foo</code> in the example) is
+                  annotated with <code>@dict</code>, you can only use the
+                  bracket notation to access the properties of <code>Foo</code>
+                  objects.
+                  The annotation can also be used directly on object literals.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-enum">@enum</a></td>
+                <td>
+                  <code>@enum {Type}</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * Enum for tri-state values.
+ * @enum {number}
+ */
+project.TriState = {
+  TRUE: 1,
+  FALSE: -1,
+  MAYBE: 0
+};</pre></div>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-export">@export</a></td>
+                <td>
+                  <code>@export</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/** @export */
+foo.MyPublicClass.prototype.myPublicMethod = function() {
+  // ...
+};</pre></div>
+                </td>
+                <td>
+                  <p>Given the code on the left, when the compiler is run with
+                  the <code>--generate_exports</code> flag, it will generate the
+                  code:</p>
+                  <div class=""><pre>goog.exportSymbol('foo.MyPublicClass.prototype.myPublicMethod',
+    foo.MyPublicClass.prototype.myPublicMethod);</pre></div>
+                  <p>which will export the symbols to uncompiled code.
+                  Code that uses the <code>@export</code> annotation must either</p>
+                  <ol>
+                    <li>include <code>//javascript/closure/base.js</code>, or</li>
+                    <li>define both <code>goog.exportSymbol</code> and
+                      <code>goog.exportProperty</code> with the same method
+                      signature in their own codebase.</li>
+                  </ol>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-expose">@expose</a></td>
+                <td>
+                  <code>@expose</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/** @expose */
+MyClass.prototype.exposedProperty = 3;</pre></div>
+                </td>
+                <td>
+                  <p>
+                    Declares an exposed property. Exposed properties
+                    will not be removed, or renamed, or collapsed,
+                    or optimized in any way by the compiler. No properties
+                    with the same name will be able to be optimized either.
+                  </p>
+
+                  <p>
+                    <code>@expose</code> should never be used in library code,
+                    because it will prevent that property from ever getting
+                    removed.
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-extends">@extends</a></td>
+                <td>
+                  <code>
+                    @extends Type<br>
+                    @extends {Type}
+                  </code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * Immutable empty node list.
+ * @constructor
+ * @extends goog.ds.BasicNodeList
+ */
+goog.ds.EmptyNodeList = function() {
+  ...
+};</pre></div>
+                </td>
+                <td>
+                  Used with <code>@constructor</code> to indicate that a class
+                  inherits from another class. Curly braces around the type are
+                  optional.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-externs">@externs</a></td>
+                <td>
+                  <code>@externs</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * @fileoverview This is an externs file.
+ * @externs
+ */
+
+var document;</pre></div>
+                </td>
+                <td>
+                  <p>
+                    Declares an
+                    
+                    externs file.
+                  </p>
+
+                  
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-fileoverview">@fileoverview</a></td>
+                <td>
+                  <code>@fileoverview Description</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * @fileoverview Utilities for doing things that require this very long
+ * but not indented comment.
+ * @author kuth@google.com (Uthur Pendragon)
+ */</pre></div>
+                </td>
+                <td>Makes the comment block provide file level information.</td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-implements">@implements</a></td>
+                <td>
+                  <code>
+                    @implements Type<br>
+                    @implements {Type}
+                  </code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * A shape.
+ * @interface
+ */
+function Shape() {};
+Shape.prototype.draw = function() {};
+
+/**
+ * @constructor
+ * @implements {Shape}
+ */
+function Square() {};
+Square.prototype.draw = function() {
+  ...
+};</pre></div>
+                </td>
+                <td>
+                  Used with <code>@constructor</code> to indicate that a class
+                  implements an interface. Curly braces around the type are
+                  optional.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-inheritDoc">@inheritDoc</a></td>
+                <td>
+                  <code>@inheritDoc</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/** @inheritDoc */
+project.SubClass.prototype.toString() {
+  // ...
+};</pre></div>
+                </td>
+                <td>
+                  <p style="font-weight:bold">Deprecated. Use
+                    <code>@override</code> instead.</p>
+
+                  Indicates that a method or property of a subclass
+                  intentionally hides a method or property of the superclass,
+                  and has exactly the same documentation. Notice that
+                  <code>@inheritDoc</code> implies <code>@override</code>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-interface">@interface</a></td>
+                <td>
+                  <code>@interface</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * A shape.
+ * @interface
+ */
+function Shape() {};
+Shape.prototype.draw = function() {};
+
+/**
+ * A polygon.
+ * @interface
+ * @extends {Shape}
+ */
+function Polygon() {};
+Polygon.prototype.getSides = function() {};</pre></div>
+                </td>
+                <td>
+                  Used to indicate that the function defines an interface.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-lends">@lends</a></td>
+                <td>
+                  <code>@lends objectName</code><br>
+                  <code>@lends {objectName}</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>goog.object.extend(
+    Button.prototype,
+    /** @lends {Button.prototype} */ {
+      isButton: function() { return true; }
+    });</pre></div>
+                </td>
+                <td>
+                  Indicates that the keys of an object literal should
+                  be treated as properties of some other object. This annotation
+                  should only appear on object literals.<p></p>
+
+                  Notice that the name in braces is not a type name like
+                  in other annotations. It's an object name. It names
+                  the object on which the properties are "lent".
+                  For example, <code>@type {Foo}</code> means "an instance of Foo",
+                  but <code>@lends {Foo}</code> means "the constructor Foo".<p></p>
+
+                  The <a href="http://code.google.com/p/jsdoc-toolkit/wiki/TagLends">
+                  JSDoc Toolkit docs</a> have more information on this
+                  annotation.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-license">@license</a> or
+                  <a name="tag-preserve">@preserve</a></td>
+                <td>
+                  <code>@license Description</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * @preserve Copyright 2009 SomeThirdParty.
+ * Here is the full license text and copyright
+ * notice for this file. Note that the notice can span several
+ * lines and is only terminated by the closing star and slash:
+ */</pre></div>
+                </td>
+                <td>
+                  Anything marked by <code>@license</code> or
+                  <code>@preserve</code> will be retained by the compiler and
+                  output at the top of the compiled code for that file. This
+                  annotation allows important notices (such as legal licenses or
+                  copyright text) to survive compilation unchanged. Line breaks
+                  are preserved.
+                </td>
+              </tr>
+
+              
+
+              
+
+              <tr>
+                <td><a name="tag-noalias">@noalias</a></td>
+                <td>
+                  <code>@noalias</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/** @noalias */
+function Range() {}</pre></div>
+                </td>
+                <td>
+                  Used in an externs file to indicate to the compiler that the
+                  variable or function should not be aliased as part of the
+                  alias externals pass of the compiler.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-nocompile">@nocompile</a></td>
+                <td>
+                  <code>@nocompile</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/** @nocompile */
+
+// JavaScript code</pre></div>
+                </td>
+                <td>
+                  Used at the top of a file to tell the compiler to parse this
+                  file but not compile it.
+                  Code that is not meant for compilation and should be omitted
+                  from compilation tests (such as bootstrap code) uses this
+                  annotation.
+                  Use sparingly.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-nosideeffects">@nosideeffects</a></td>
+                <td>
+                  <code>@nosideeffects</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/** @nosideeffects */
+function noSideEffectsFn1() {
+  // ...
+}
+
+/** @nosideeffects */
+var noSideEffectsFn2 = function() {
+  // ...
+};
+
+/** @nosideeffects */
+a.prototype.noSideEffectsFn3 = function() {
+  // ...
+};</pre></div>
+                </td>
+                <td>
+                  This annotation can be used as part of function and
+                  constructor declarations to indicate that calls to the
+                  declared function have no side-effects.  This annotation
+                  allows the compiler to remove calls to these functions if the
+                  return value is not used.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-override">@override</a></td>
+                <td>
+                  <code>@override</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * @return {string} Human-readable representation of project.SubClass.
+ * @override
+ */
+project.SubClass.prototype.toString = function() {
+  // ...
+};</pre></div>
+                </td>
+                <td>
+                  Indicates that a method or property of a subclass
+                  intentionally hides a method or property of the superclass. If
+                  no other documentation is included, the method or property
+                  also inherits documentation from its superclass.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-param">@param</a></td>
+                <td>
+                  <code>@param {Type} varname Description</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * Queries a Baz for items.
+ * @param {number} groupNum Subgroup id to query.
+ * @param {string|number|null} term An itemName,
+ *     or itemId, or null to search everything.
+ */
+goog.Baz.prototype.query = function(groupNum, term) {
+  // ...
+};</pre></div>
+                </td>
+                <td>
+                  Used with method, function and constructor calls to document
+                  the arguments of a function.<p></p>
+
+                  <a href="#JsTypes">Type</a>
+                  names must be enclosed in curly braces. If the type
+                  is omitted, the compiler will not type-check the parameter.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-private">@private</a></td>
+                <td>
+                  <code>@private</code><br>
+                  <code>@private {type}</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * Handlers that are listening to this logger.
+ * @private {!Array.&lt;Function&gt;}
+ */
+this.handlers_ = [];</pre></div>
+                </td>
+                <td>
+                  Used in conjunction with a trailing underscore on the method
+                  or property name to indicate that the member is
+                  <a href="#Visibility__private_and_protected_fields_">private</a> and final.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-protected">@protected</a></td>
+                <td>
+                  <code>@protected</code><br>
+                  <code>@protected {type}</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * Sets the component's root element to the given element.
+ * @param {Element} element Root element for the component.
+ * @protected
+ */
+goog.ui.Component.prototype.setElementInternal = function(element) {
+  // ...
+};</pre></div>
+                </td>
+                <td>
+                  Used to indicate that the member or property is
+                  <a href="#Visibility__private_and_protected_fields_">protected</a>.
+                  Should be used in conjunction with names with no trailing
+                  underscore.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-public">@public</a></td>
+                <td>
+                  <code>@public</code><br>
+                  <code>@public {type}</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * Whether to cancel the event in internal capture/bubble processing.
+ * @public {boolean}
+ * @suppress {visiblity} Referencing this outside this package is strongly
+ * discouraged.
+ */
+ goog.events.Event.prototype.propagationStopped_ = false;</pre></div>
+                </td>
+                <td>
+                  Used to indicate that the member or property is public. Variables and
+                  properties are public by default, so this annotation is rarely necessary.
+                  Should only be used in legacy code that cannot be easily changed to
+                  override the visibility of members that were named as private variables.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-return">@return</a></td>
+                <td>
+                  <code>@return {Type} Description</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * @return {string} The hex ID of the last item.
+ */
+goog.Baz.prototype.getLastId = function() {
+  // ...
+  return id;
+};</pre></div>
+                </td>
+                <td>
+                  Used with method and function calls to document the return
+                  type.  When writing descriptions for boolean parameters,
+                  prefer "Whether the component is visible" to "True if the
+                  component is visible, false otherwise". If there is no return
+                  value, do not use an <code>@return</code> tag.<p></p>
+
+                  <a href="#JsTypes">Type</a>
+                  names must be enclosed in curly braces. If the type
+                  is omitted, the compiler will not type-check the return value.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-see">@see</a></td>
+                <td>
+                  <code>@see Link</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * Adds a single item, recklessly.
+ * @see #addSafely
+ * @see goog.Collect
+ * @see goog.RecklessAdder#add
+ ...</pre></div>
+                </td>
+                <td>Reference a lookup to another class function or method.</td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-struct">@struct</a></td>
+                <td>
+                  <code>@struct Description</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * @constructor
+ * @struct
+ */
+function Foo(x) {
+  this.x = x;
+}
+var obj = new Foo(123);
+var num = obj['x'];  // warning
+obj.y = "asdf";  // warning
+
+Foo.prototype = /** @struct */ {
+  method1: function() {}
+};
+Foo.prototype.method2 = function() {};  // warning</pre></div>
+                </td>
+                <td>
+                  When a constructor (<code>Foo</code> in the example) is
+                  annotated with <code>@struct</code>, you can only use the dot
+                  notation to access the properties of <code>Foo</code> objects.
+                  Also, you cannot add new properties to <code>Foo</code>
+                  objects after they have been created.
+                  The annotation can also be used directly on object literals.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-supported">@supported</a></td>
+                <td>
+                  <code>@supported Description</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * @fileoverview Event Manager
+ * Provides an abstracted interface to the
+ * browsers' event systems.
+ * @supported So far tested in IE6 and FF1.5
+ */</pre></div>
+                </td>
+                <td>
+                  Used in a fileoverview to indicate what browsers are supported
+                  by the file.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-suppress">@suppress</a></td>
+                <td>
+                  <code>
+                    @suppress {warning1|warning2}
+                  </code>
+                  <code>
+                    @suppress {warning1,warning2}
+                  </code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * @suppress {deprecated}
+ */
+function f() {
+  deprecatedVersionOfF();
+}</pre></div>
+                </td>
+                <td>
+                  Suppresses warnings from tools. Warning categories are
+                  separated by <code>|</code> or <code>,</code>.
+                  
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-template">@template</a></td>
+                <td>
+                  <code>@template</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * @param {function(this:T, ...)} fn
+ * @param {T} thisObj
+ * @param {...*} var_args
+ * @template T
+ */
+goog.bind = function(fn, thisObj, var_args) {
+   ...
+};</pre></div>
+                </td>
+                <td>
+                  This annotation can be used to declare a
+                  <a href="#Template_types">template typename</a>.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-this">@this</a></td>
+                <td>
+                  <code>
+                    @this Type<br>
+                    @this {Type}
+                  </code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>pinto.chat.RosterWidget.extern('getRosterElement',
+/**
+ * Returns the roster widget element.
+ * @this pinto.chat.RosterWidget
+ * @return {Element}
+ */
+function() {
+  return this.getWrappedComponent_().getElement();
+});</pre></div>
+                </td>
+                <td>
+                  The type of the object in whose context a particular method is
+                  called. Required when the <code>this</code> keyword is referenced
+                  from a function that is not a prototype method.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-type">@type</a></td>
+                <td>
+                  <code>
+                    @type Type<br>
+                    @type {Type}
+                  </code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/**
+ * The message hex ID.
+ * @type {string}
+ */
+var hexId = hexId;</pre></div>
+                </td>
+                <td>
+                  Identifies the <a href="#JsTypes">type</a> of a variable,
+                  property, or expression. Curly braces are not required around
+                  most types, but some projects mandate them for all types, for
+                  consistency.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tag-typedef">@typedef</a></td>
+                <td>
+                  <code>@typedef</code>
+                  <p><i>For example:</i></p>
+                  <div class=""><pre>/** @typedef {(string|number)} */
+goog.NumberLike;
+
+/** @param {goog.NumberLike} x A number or a string. */
+goog.readNumber = function(x) {
+  ...
+}</pre></div>
+                </td>
+                <td>
+                  This annotation can be used to declare an alias of a more
+                  <a href="#Typedefs">complex type</a>.
+                </td>
+              </tr>
+
+              
+
+            
+          </tbody></table>
+
+          
+
+          <p>
+            You may also see other types of JSDoc annotations in third-party
+            code. These annotations appear in the
+            <a href="http://code.google.com/p/jsdoc-toolkit/wiki/TagReference">
+              JSDoc Toolkit Tag Reference
+            </a>
+            but are currently discouraged in Google code. You should consider
+            them "reserved" names for future use. These include:
+            <ul>
+              <li>@augments</li>
+              <li>@argument</li>
+              <li>@borrows</li>
+              <li>@class</li>
+              <li>@constant</li>
+              <li>@constructs</li>
+              <li>@default</li>
+              <li>@event</li>
+              <li>@example</li>
+              <li>@field</li>
+              <li>@function</li>
+              <li>@ignore</li>
+              <li>@inner</li>
+              <li>@link</li>
+              <li>@memberOf</li>
+              <li>@name</li>
+              <li>@namespace</li>
+              <li>@property</li>
+              <li>@public</li>
+              <li>@requires</li>
+              <li>@returns</li>
+              <li>@since</li>
+              <li>@static</li>
+              <li>@version</li>
+            </ul>
+          </p>
+        </p>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Providing_Dependencies_With_goog.provide" name="Providing_Dependencies_With_goog.provide">Providing Dependencies With goog.provide</a></h3><span name="link-Providing_Dependencies_With_goog.provide__button" id="link-Providing_Dependencies_With_goog.provide__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Providing_Dependencies_With_goog.provide#Providing_Dependencies_With_goog.provide">
+          link
+        </a></span><span id="Providing_Dependencies_With_goog.provide__button" name="Providing_Dependencies_With_goog.provide__button" onclick="javascript:ShowHideByName('Providing_Dependencies_With_goog.provide')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">
+        Only provide top-level symbols.
+      </div>
+      <div class=""><div style="display: none" id="Providing_Dependencies_With_goog.provide__body" name="Providing_Dependencies_With_goog.provide__body" class="stylepoint_body">
+        <p>
+          All members defined on a class should be in the same file. So, only
+          top-level classes should be provided in a file that contains multiple
+          members defined on the same class (e.g. enums, inner classes, etc).
+        </p>
+        <p>Do this:</p>
+        <div class=""><pre>goog.provide('namespace.MyClass');</pre></div>
+        <p>Not this:</p>
+        <div class=""><pre class="badcode">goog.provide('namespace.MyClass');
+goog.provide('namespace.MyClass.Enum');
+goog.provide('namespace.MyClass.InnerClass');
+goog.provide('namespace.MyClass.TypeDef');
+goog.provide('namespace.MyClass.CONSTANT');
+goog.provide('namespace.MyClass.staticMethod');</pre></div>
+        <p>
+          Members on namespaces may also be provided:
+        </p>
+        <div class=""><pre>goog.provide('foo.bar');
+goog.provide('foo.bar.method');
+goog.provide('foo.bar.CONSTANT');</pre></div>
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Compiling" name="Compiling">Compiling</a></h3><span name="link-Compiling__button" id="link-Compiling__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Compiling#Compiling">
+          link
+        </a></span><span id="Compiling__button" name="Compiling__button" onclick="javascript:ShowHideByName('Compiling')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">Required</div>
+      <div class=""><div style="display: none" id="Compiling__body" name="Compiling__body" class="stylepoint_body">
+        
+
+        <p>Use of JS compilers such as the
+          <a href="http://code.google.com/closure/compiler/">Closure Compiler</a>
+          is required for all customer-facing code.</p>
+
+        
+
+        
+      </div></div>
+    </div>
+
+    <div class=""><h3><a id="Tips_and_Tricks" name="Tips_and_Tricks">Tips and Tricks</a></h3><span name="link-Tips_and_Tricks__button" id="link-Tips_and_Tricks__button" class="link_button"><a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml?showone=Tips_and_Tricks#Tips_and_Tricks">
+          link
+        </a></span><span id="Tips_and_Tricks__button" name="Tips_and_Tricks__button" onclick="javascript:ShowHideByName('Tips_and_Tricks')" class="showhide_button">▶</span>
+      <div class="" style="display:inline;">JavaScript tidbits</div>
+      <div class=""><div style="display: none" id="Tips_and_Tricks__body" name="Tips_and_Tricks__body" class="stylepoint_body">
+        <p class=""><span class="stylepoint_subsection">True and False Boolean Expressions</span>
+          <p>The following are all false in boolean expressions:</p>
+          <ul>
+            <li><code>null</code></li>
+            <li><code>undefined</code></li>
+            <li><code>''</code> the empty string</li>
+            <li><code>0</code> the number</li>
+          </ul>
+          <p>But be careful, because these are all true:</p>
+          <ul>
+            <li><code>'0'</code> the string</li>
+            <li><code>[]</code> the empty array</li>
+            <li><code>{}</code> the empty object</li>
+          </ul>
+
+          <p>This means that instead of this:</p>
+          <div class=""><pre class="badcode">while (x != null) {</pre></div>
+          <p>you can write this shorter code (as long as you don't expect x to
+            be 0, or the empty string, or false):</p>
+          <div class=""><pre>while (x) {</pre></div>
+
+          <p>And if you want to check a string to see if it is null or empty,
+            you could do this:</p>
+          <div class=""><pre class="badcode">if (y != null &amp;&amp; y != '') {</pre></div>
+          <p>But this is shorter and nicer:</p>
+          <div class=""><pre>if (y) {</pre></div>
+
+          <p>Caution: There are many unintuitive things about
+            boolean expressions.  Here are some of them:</p>
+          <ul>
+            <li><code>
+              Boolean('0') == true<br>
+              '0' != true</code></li>
+            <li><code>
+              0 != null<br>
+              0 == []<br>
+              0 == false</code></li>
+            <li><code>
+              Boolean(null) == false<br>
+              null != true<br>
+              null != false</code></li>
+            <li><code>
+              Boolean(undefined) == false<br>
+              undefined != true<br>
+              undefined != false</code></li>
+            <li><code>
+              Boolean([]) == true<br>
+              [] != true<br>
+              [] == false</code></li>
+            <li><code>
+              Boolean({}) == true<br>
+              {} != true<br>
+              {} != false</code></li>
+          </ul>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Conditional (Ternary) Operator (?:)</span>
+          <p>Instead of this:</p>
+          <div class=""><pre>if (val) {
+  return foo();
+} else {
+  return bar();
+}</pre></div>
+          <p>you can write this:</p>
+          <div class=""><pre>return val ? foo() : bar();</pre></div>
+
+          <p>The ternary conditional is also useful when generating HTML:</p>
+          <div class=""><pre>var html = '&lt;input type="checkbox"' +
+    (isChecked ? ' checked' : '') +
+    (isEnabled ? '' : ' disabled') +
+    ' name="foo"&gt;';</pre></div>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">&amp;&amp; and ||</span>
+          <p>These binary boolean operators are short-circuited, and evaluate
+            to the last evaluated term.</p>
+
+          <p>"||" has been called the 'default' operator, because instead of
+            writing this:</p>
+          <div class=""><pre class="badcode">/** @param {*=} opt_win */
+function foo(opt_win) {
+  var win;
+  if (opt_win) {
+    win = opt_win;
+  } else {
+    win = window;
+  }
+  // ...
+}</pre></div>
+          <p>you can write this:</p>
+          <div class=""><pre>/** @param {*=} opt_win */
+function foo(opt_win) {
+  var win = opt_win || window;
+  // ...
+}</pre></div>
+
+          <p>"&amp;&amp;" is also useful for shortening code. For instance,
+            instead of this:</p>
+          <div class=""><pre class="badcode">if (node) {
+  if (node.kids) {
+    if (node.kids[index]) {
+      foo(node.kids[index]);
+    }
+  }
+}</pre></div>
+
+          <p>you could do this:</p>
+          <div class=""><pre>if (node &amp;&amp; node.kids &amp;&amp; node.kids[index]) {
+  foo(node.kids[index]);
+}</pre></div>
+
+          <p>or this:</p>
+          <div class=""><pre>var kid = node &amp;&amp; node.kids &amp;&amp; node.kids[index];
+if (kid) {
+  foo(kid);
+}</pre></div>
+
+          <p>However, this is going a little too far:</p>
+          <div class=""><pre class="badcode">node &amp;&amp; node.kids &amp;&amp; node.kids[index] &amp;&amp; foo(node.kids[index]);</pre></div>
+        </p>
+
+        <p class=""><span class="stylepoint_subsection">Iterating over Node Lists</span>
+          <p>Node lists are often implemented as node iterators with a filter.
+            This means that getting a property like length is O(n), and
+            iterating over the list by re-checking the length will be
+            O(n^2).</p>
+          <div class=""><pre class="badcode">var paragraphs = document.getElementsByTagName('p');
+for (var i = 0; i &lt; paragraphs.length; i++) {
+  doSomething(paragraphs[i]);
+}</pre></div>
+
+          <p>It is better to do this instead:</p>
+          <div class=""><pre>var paragraphs = document.getElementsByTagName('p');
+for (var i = 0, paragraph; paragraph = paragraphs[i]; i++) {
+  doSomething(paragraph);
+}</pre></div>
+
+          <p>This works well for all collections and arrays as long as the array
+            does not contain things that are treated as boolean false.</p>
+
+          <p>In cases where you are iterating over the childNodes you can also
+            use the firstChild and nextSibling properties.</p>
+          <div class=""><pre>var parentNode = document.getElementById('foo');
+for (var child = parentNode.firstChild; child; child = child.nextSibling) {
+  doSomething(child);
+}</pre></div>
+        </p>
+      </div></div>
+    </div>
+  </div>
+
+  
+
+  <h2>Parting Words</h2>
+    <p>
+      <em>BE CONSISTENT</em>.
+    </p>
+
+    <p>
+      If you're editing code, take a few minutes to look at the code
+      around you and determine its style.  If they use spaces around
+      all their arithmetic operators, you should too.  If their
+      comments have little boxes of hash marks around them, make your
+      comments have little boxes of hash marks around them too.
+    </p>
+
+    <p>
+      The point of having style guidelines is to have a common vocabulary
+      of coding so people can concentrate on what you're saying rather
+      than on how you're saying it.  We present global style rules here so
+      people know the vocabulary, but local style is also important.  If
+      code you add to a file looks drastically different from the existing
+      code around it, it throws readers out of their rhythm when they go to
+      read it.  Avoid this.
+    </p>
+
+  
+
+  <p align="right">
+    Revision 2.93
+  </p>
+
+  
+  <address>
+    Aaron Whyte<br>
+    Bob Jervis<br>
+    Dan Pupius<br>
+    Erik Arvidsson<br>
+    Fritz Schneider<br>
+    Robby Walker<br>
+  </address>
+</body></html>
