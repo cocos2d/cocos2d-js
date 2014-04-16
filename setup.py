@@ -524,7 +524,7 @@ class SetEnvVar(object):
     def _get_ant_path(self):
         print("  ->Find command ant in system...")
         ret = None
-        if self._is_mac():
+        if not self._isWindows():
             import commands
             state, result = commands.getstatusoutput("which ant")
             if state == 0:
