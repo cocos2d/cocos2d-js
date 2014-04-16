@@ -551,35 +551,6 @@ cc.PointZero = function () {
     return cc.p(0, 0);
 };
 
-/**
- * Calculates sum of two points.
- * @param {cc.Point} v1
- * @param {cc.Point} v2
- * @return {cc.Point}
- */
-cc.pAdd = function (v1, v2) {
-    return cc.p(v1.x + v2.x, v1.y + v2.y);
-};
-
-/**
- * Calculates difference of two points.
- * @param {cc.Point} v1
- * @param {cc.Point} v2
- * @return {cc.Point}
- */
-cc.pSub = function (v1, v2) {
-    return cc.p(v1.x - v2.x, v1.y - v2.y);
-};
-
-/**
- * Returns point multiplied by given factor.
- * @param {cc.Point} point
- * @param {Number} floatVar
- * @return {cc.Point}
- */
-cc.pMult = function (point, floatVar) {
-    return cc.p(point.x * floatVar, point.y * floatVar);
-};
 
 /**
  * Unrotates two points.
