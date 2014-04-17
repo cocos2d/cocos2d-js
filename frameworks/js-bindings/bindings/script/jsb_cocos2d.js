@@ -1586,6 +1586,18 @@ cc.EventListenerKeyboard.prototype.clone = function() {
     return ret;
 };
 
+cc.EventMouse.prototype.getLocation = function(){
+    return { x: this.getLocationX(), y: this.getLocationY() };
+};
+
+cc.Touch.prototype.getLocationX = function(){
+    return this.getLocation().x;
+};
+
+cc.Touch.prototype.getLocationY = function(){
+    return this.getLocation().y;
+};
+
 cc.director = cc.Director.getInstance();
 
 cc.Director.EVENT_PROJECTION_CHANGED = "director_projection_changed";
