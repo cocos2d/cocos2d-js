@@ -81,9 +81,6 @@ cc.TEXTURE_PIXELFORMAT_DEFAULT = cc.TEXTURE_PIXELFORMAT_RGBA8888;
 cc.IMAGE_FORMAT_JPEG = 0;
 cc.IMAGE_FORMAT_PNG = 0;
 
-cc.PROGRESS_TIMER_TYPE_RADIAL = 0;
-cc.PROGRESS_TIMER_TYPE_BAR = 1;
-
 cc.TOUCH_ALL_AT_ONCE = 0;
 cc.TOUCH_ONE_BY_ONE = 1;
 
@@ -230,15 +227,15 @@ cc.ParticleSystem.TEXTURE_MODE = 1;
 cc.ParticleSystem.STAR_SHAPE = 0;
 cc.ParticleSystem.BALL_SHAPE = 1;
 
-cc.PROGRESS_TEXTURE_COORDS_COUNT = 4;       //CCProgressTimer.js
-cc.PROGRESS_TEXTURE_COORDS = 0x4b;
+cc.ProgressTimer.TEXTURE_COORDS_COUNT = 4;       //CCProgressTimer.js
+cc.ProgressTimer.TEXTURE_COORDS = 0x4b;
 
 cc.IMAGE_FORMAT_RAWDATA = 2;           //CCRenderTexture.js
 
-cc.TMX_LAYER_ATTRIB_NONE = 1 << 0;            //CCTMXXMLParser.js
-cc.TMX_LAYER_ATTRIB_BASE64 = 1 << 1;
-cc.TMX_LAYER_ATTRIB_GZIP = 1 << 2;
-cc.TMX_LAYER_ATTRIB_ZLIB = 1 << 3;
+cc.TMXLayerInfo.ATTRIB_NONE = 1 << 0;            //CCTMXXMLParser.js
+cc.TMXLayerInfo.ATTRIB_BASE64 = 1 << 1;
+cc.TMXLayerInfo.ATTRIB_GZIP = 1 << 2;
+cc.TMXLayerInfo.ATTRIB_ZLIB = 1 << 3;
 cc.TMX_PROPERTY_NONE = 0;
 cc.TMX_PROPERTY_MAP = 1;
 cc.TMX_PROPERTY_LAYER = 2;
