@@ -1946,3 +1946,15 @@ cc.DrawNode = cc._DrawNode.extend({
 cc.DrawNode.create = function () {
 	return new cc.DrawNode();
 };
+
+cc.TMXTiledMap.prototype.allLayers = function(){
+    var retArr = [],
+        locChildren = this.getChildren(),
+        length = locChildren.length;
+    for(var i = 0; i< length; i++){
+        var layer = locChildren[i];
+        if(layer && layer instanceof cc.TMXLayer)
+            retArr.push(layer);
+    }
+    return retArr;
+}
