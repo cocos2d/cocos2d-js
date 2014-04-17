@@ -123,7 +123,8 @@ var GameLayer = cc.Layer.extend({
                 cc.eventManager.addListener({
                     event: cc.EventListener.MOUSE,
                     onMouseMove: function(event){
-                        event.getCurrentTarget().processEvent(event);
+                        if(event.getButton() != undefined)
+                            event.getCurrentTarget().processEvent(event);
                     }
                 }, this);
 
