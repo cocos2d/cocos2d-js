@@ -164,15 +164,15 @@ cc.CONTROL_STEPPER_LABELFONT = "CourierNewPSMT";
 cc.AUTOREPEAT_DELTATIME = 0.15;
 cc.AUTOREPEAT_INCREASETIME_INCREMENT = 12;
 
-cc.POSITIONS_CENTRE = 0;                //CCScale9Sprite.js
-cc.POSITIONS_TOP = 1;
-cc.POSITIONS_LEFT = 2;
-cc.POSITIONS_RIGHT = 3;
-cc.POSITIONS_BOTTOM = 4;
-cc.POSITIONS_TOPRIGHT = 5;
-cc.POSITIONS_TOPLEFT = 6;
-cc.POSITIONS_BOTTOMRIGHT = 7;
-cc.POSITIONS_BOTTOMLEFT = 8;
+cc.Scale9Sprite.POSITIONS_CENTRE = 0;                //CCScale9Sprite.js
+cc.Scale9Sprite.POSITIONS_TOP = 1;
+cc.Scale9Sprite.POSITIONS_LEFT = 2;
+cc.Scale9Sprite.POSITIONS_RIGHT = 3;
+cc.Scale9Sprite.POSITIONS_BOTTOM = 4;
+cc.Scale9Sprite.POSITIONS_TOPRIGHT = 5;
+cc.Scale9Sprite.POSITIONS_TOPLEFT = 6;
+cc.Scale9Sprite.POSITIONS_BOTTOMRIGHT = 7;
+cc.Scale9Sprite.POSITIONS_BOTTOMLEFT = 8;
 
 // PhysicsDebugNode
 cc.PhysicsDebugNode.create = function( space ) {
