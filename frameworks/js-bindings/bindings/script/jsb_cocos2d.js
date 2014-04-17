@@ -1951,7 +1951,7 @@ cc.TMXTiledMap.prototype.allLayers = function(){
     var retArr = [],
         locChildren = this.getChildren(),
         length = locChildren.length;
-    for(var i = 0, len = length;i< len;i++){
+    for(var i = 0; i< length; i++){
         var layer = locChildren[i];
         if(layer && layer instanceof cc.TMXLayer)
             retArr.push(layer);
