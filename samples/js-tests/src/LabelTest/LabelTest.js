@@ -1523,6 +1523,9 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
         }
     },
     onMouseMove:function (touch) {
+        if(event.getButton() == undefined)
+            return;
+
         var location = touch.getLocation();
         var winSize = director.getWinSize();
 

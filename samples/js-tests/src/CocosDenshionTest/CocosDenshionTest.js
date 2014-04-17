@@ -180,7 +180,8 @@ var CocosDenshionTest = cc.LayerGradient.extend({
              cc.eventManager.addListener({
                 event: cc.EventListener.MOUSE,
                  onMouseMove: function(event){
-                     event.getCurrentTarget().moveMenu(event.getDelta());
+                     if(event.getButton() != undefined)
+                        event.getCurrentTarget().moveMenu(event.getDelta());
                  }
              }, this);
 
