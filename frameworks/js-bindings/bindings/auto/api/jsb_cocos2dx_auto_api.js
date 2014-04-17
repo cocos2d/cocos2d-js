@@ -17814,6 +17814,16 @@ getMouseButton : function (
 },
 
 /**
+ * @method getScrollY
+ * @return {float}
+ */
+getScrollY : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setScrollData
  * @param {float} arg0
  * @param {float} arg1
@@ -17823,6 +17833,16 @@ float,
 float 
 )
 {
+},
+
+/**
+ * @method getCursorY
+ * @return {float}
+ */
+getCursorY : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -17836,13 +17856,15 @@ int
 },
 
 /**
- * @method getScrollY
- * @return {float}
+ * @method setCursorPosition
+ * @param {float} arg0
+ * @param {float} arg1
  */
-getScrollY : function (
+setCursorPosition : function (
+float, 
+float 
 )
 {
-    return 0;
 },
 
 /**
@@ -17863,28 +17885,6 @@ getCursorX : function (
 )
 {
     return 0;
-},
-
-/**
- * @method getCursorY
- * @return {float}
- */
-getCursorY : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setCursorPosition
- * @param {float} arg0
- * @param {float} arg1
- */
-setCursorPosition : function (
-float, 
-float 
-)
-{
 },
 
 /**
