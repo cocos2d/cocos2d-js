@@ -190,6 +190,66 @@ cc.SELECTED_TAG = 8802;
 cc.DISABLE_TAG = 8803;
 
 
+cc.stencilBits = -1;           //CCClippingNode.js
+
+cc.g_NumberOfDraws = 0;        //CCDirector.js
+
+cc.PRIORITY_NON_SYSTEM = cc.PRIORITY_SYSTEM + 1;          //CCScheduler.js
+
+cc.Node.ON_ENTER = 0;          //CCNode.js
+cc.Node.ON_EXIT = 1;
+cc.Node.ON_ENTER_TRANSITION_DID_FINISH = 2;
+cc.Node.ON_EXIT_TRANSITOIN_DID_START = 3;
+cc.Node.ON_CLEAN_UP = 4;
+cc.s_globalOrderOfArrival = 1;
+
+cc.Event.TOUCH = 0;                  //CCEvent.js
+cc.Event.KEYBOARD = 1;
+cc.Event.ACCELERATION = 2;
+cc.Event.MOUSE = 3;
+cc.Event.CUSTOM = 4;
+cc.EventMouse.NONE = 0;
+cc.EventMouse.DOWN = 1;
+cc.EventMouse.UP = 2;
+cc.EventMouse.MOVE = 3;
+cc.EventMouse.SCROLL = 4;
+cc.EventMouse.BUTTON_LEFT = 0;
+cc.EventMouse.BUTTON_RIGHT = 2;
+cc.EventMouse.BUTTON_MIDDLE = 1;
+cc.EventMouse.BUTTON_4 = 3;
+cc.EventMouse.BUTTON_5 = 4;
+cc.EventMouse.BUTTON_6 = 5;
+cc.EventMouse.BUTTON_7 = 6;
+cc.EventMouse.BUTTON_8 = 7;
+cc.EventTouch.MAX_TOUCHES = 5;
+
+cc.DEFAULT_SPRITE_BATCH_CAPACITY = 29;                  //CCSpriteBatchNode.js
+
+cc.ParticleSystem.SHAPE_MODE = 0;            //CCParticleSystem.js
+cc.ParticleSystem.TEXTURE_MODE = 1;
+cc.ParticleSystem.STAR_SHAPE = 0;
+cc.ParticleSystem.BALL_SHAPE = 1;
+
+cc.PROGRESS_TEXTURE_COORDS_COUNT = 4;       //CCProgressTimer.js
+cc.PROGRESS_TEXTURE_COORDS = 0x4b;
+
+cc.IMAGE_FORMAT_RAWDATA = 2;           //CCRenderTexture.js
+
+cc.TMX_LAYER_ATTRIB_NONE = 1 << 0;            //CCTMXXMLParser.js
+cc.TMX_LAYER_ATTRIB_BASE64 = 1 << 1;
+cc.TMX_LAYER_ATTRIB_GZIP = 1 << 2;
+cc.TMX_LAYER_ATTRIB_ZLIB = 1 << 3;
+cc.TMX_PROPERTY_NONE = 0;
+cc.TMX_PROPERTY_MAP = 1;
+cc.TMX_PROPERTY_LAYER = 2;
+cc.TMX_PROPERTY_OBJECTGROUP = 3;
+cc.TMX_PROPERTY_OBJECT = 4;
+cc.TMX_PROPERTY_TILE = 5;
+
+cc.SCENE_FADE = 4208917214;             //CCTransition.js
+
+cc.SCENE_RADIAL = 0xc001;               //CCTransitionProgress.js
+
 //
 // CCMacro.js export
 //
