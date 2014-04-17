@@ -1947,7 +1947,7 @@ cc.DrawNode.create = function () {
 	return new cc.DrawNode();
 };
 
-cc.TMXTiledMap..prototype.allLayers = function(){
+cc.TMXTiledMap.prototype.allLayers = function(){
     var retArr = [],
         locChildren = this.getChildren(),
         length = locChildren.length;
