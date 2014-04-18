@@ -156,8 +156,8 @@ var TestController = cc.LayerGradient.extend({
             cc.eventManager.addListener({
                 event: cc.EventListener.MOUSE,
                 onMouseMove: function (event) {
-                    event.getCurrentTarget().moveMenu(event.getDelta());
-                    return true;
+                    if(event.getButton() != undefined)
+                        event.getCurrentTarget().moveMenu(event.getDelta());
                 },
                 onMouseScroll: function (event) {
                     var delta = event.getScrollY();
