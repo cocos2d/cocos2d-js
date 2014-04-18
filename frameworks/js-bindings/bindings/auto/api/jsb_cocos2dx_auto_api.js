@@ -13006,16 +13006,6 @@ getTextureAtlas : function (
 },
 
 /**
- * @method setCullingEnabled
- * @param {bool} arg0
- */
-setCullingEnabled : function (
-bool 
-)
-{
-},
-
-/**
  * @method initWithSpriteFrame
  * @param {cc.SpriteFrame} arg0
  * @return {bool}
