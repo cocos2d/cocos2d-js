@@ -74,13 +74,12 @@ var UIScrollViewTest_Vertical = UIScene.extend({
             button_scale9.setScale9Enabled(true);
             button_scale9.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
             button_scale9.width = 100;
-	        button_scale9.height = button_scale9.height;
+	        button_scale9.height = 32;
             button_scale9.x = innerWidth / 2;
             button_scale9.y = textButton.getBottomInParent() - textButton.height;
             scrollView.addChild(button_scale9);
 
             imageView.x = innerWidth / 2;
-
             imageView.y = imageView.height / 2;
             scrollView.addChild(imageView);
 
@@ -144,7 +143,7 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
             button_scale9.setScale9Enabled(true);
             button_scale9.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
             button_scale9.width = 100;
-            button_scale9.height = button_scale9.getContentSize().height;
+            button_scale9.height = 32;
             button_scale9.x = textButton.getRightInParent() + textButton.width / 2;
             button_scale9.y = textButton.getBottomInParent() - textButton.height;
             scrollView.addChild(button_scale9);

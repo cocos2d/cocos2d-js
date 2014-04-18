@@ -50,9 +50,11 @@ var TileDemo = BaseTestLayer.extend({
             cc.eventManager.addListener({
                 event: cc.EventListener.MOUSE,
                 onMouseMove: function(event){
-                    var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
-                    node.x += event.getDeltaX();
-                    node.y += event.getDeltaY();
+                    if(event.getButton() != undefined){
+                        var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
+                        node.x += event.getDeltaX();
+                        node.y += event.getDeltaY();
+                    }
                 }
             }, this);
     },
@@ -218,11 +220,11 @@ var TMXOrthoTest2 = TileDemo.extend({
     },
     onEnter:function () {
         this._super();
-        director.setProjection(cc.DIRECTOR_PROJECTION_3D);
+        director.setProjection(cc.Director.PROJECTION_3D);
     },
     onExit:function () {
         this._super();
-        director.setProjection(cc.DIRECTOR_PROJECTION_2D);
+        director.setProjection(cc.Director.PROJECTION_2D);
     },
 
     // Automation
@@ -1112,14 +1114,14 @@ var TMXIsoVertexZ = TileDemo.extend({
     onEnter:function () {
         this._super();
         // TIP: 2d projection should be used
-        director.setProjection(cc.DIRECTOR_PROJECTION_2D);
+        director.setProjection(cc.Director.PROJECTION_2D);
         // do nothing in draw of LayerGradient at this Testcase.
         this.draw = function () {
         };
     },
     onExit:function () {
         // At exit use any other projection.
-        //	director.setProjection:cc.DIRECTOR_PROJECTION_3D);
+        //	director.setProjection:cc.Director.PROJECTION_3D);
         this._super();
     },
     repositionSprite:function (dt) {
@@ -1189,14 +1191,14 @@ var TMXOrthoVertexZ = TileDemo.extend({
         this._super();
 
         // TIP: 2d projection should be used
-        director.setProjection(cc.DIRECTOR_PROJECTION_2D);
+        director.setProjection(cc.Director.PROJECTION_2D);
         // do nothing in draw of LayerGradient at this Testcase.
         this.draw = function () {
         };
     },
     onExit:function () {
         // At exit use any other projection.
-        //	director.setProjection:cc.DIRECTOR_PROJECTION_3D);
+        //	director.setProjection:cc.Director.PROJECTION_3D);
         this._super();
     },
     repositionSprite:function (dt) {

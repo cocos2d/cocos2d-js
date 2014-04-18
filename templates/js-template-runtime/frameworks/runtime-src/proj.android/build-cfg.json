@@ -18,14 +18,16 @@
         {
             "from": "../../../main.js",
             "to": ""
+        }
+    ],
+    "must_copy_resources": [
+        {
+            "from": "../../js-bindings/bindings/script",
+            "to": ""
         },
         {
             "from": "../../../project.json",
             "to": ""
-        },
-        {
-            "from": "../../js-bindings/bindings/script",
-            "to": ""
-        }
+        } 
     ]
 }

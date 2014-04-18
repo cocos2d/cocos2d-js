@@ -2010,6 +2010,16 @@ getArmatureData : function (
 },
 
 /**
+ * @method getBoundingBox
+ * @return {RectObject}
+ */
+getBoundingBox : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method getVersion
  * @return {float}
  */

@@ -6,7 +6,73 @@
          "append_h5_engine":{
             "from":"frameworks/cocos2d-html5",
             "to":"frameworks/cocos2d-html5"
-         }
+         },
+         "append_dir":[
+            {
+               "from":"frameworks/js-bindings",
+               "to":"frameworks/js-bindings",
+               "exclude":[
+                  "cocos2d-x",
+                  "bindings/proj.win32/Debug.win32",
+                  "bindings/proj.win32/Release.win32",
+                  "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/project.xcworkspace",
+                  "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/xcuserdata"
+               ]
+            },
+            {
+               "from":"frameworks/js-bindings/bindings/script",
+               "to":"runtime/mac/PrebuiltRuntimeJs.app/Contents/Resources",
+               "exclude":[]
+            },
+            {
+               "from":"frameworks/js-bindings/bindings/script",
+               "to":"runtime/ios/PrebuiltRuntimeJs.app",
+               "exclude":[]
+            },
+            {
+               "from":"frameworks/js-bindings/bindings/script",
+               "to":"runtime/win32",
+               "exclude":[]
+            }
+         ],
+         "append_file":[
+            {
+               "from":"templates/js-template-runtime/project.json",
+               "to":"runtime/ios/PrebuiltRuntimeJs.app/project.json"
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/gles/prebuilt/glew32.dll",
+               "to":"runtime/win32/glew32.dll"
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/zlib/prebuilt/zlib1.dll",
+               "to":"runtime/win32/zlib1.dll"
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/icon/prebuilt/iconv.dll",
+               "to":"runtime/win32/iconv.dll"
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/curl/prebuilt/win32/libcurl.dll",
+               "to":"runtime/win32/libcurl.dll"
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/sqlite3/libraries/win32/sqlite3.dll",
+               "to":"runtime/win32/sqlite3.dll"
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/websockets/prebuilt/win32/websockets.dll",
+               "to":"runtime/win32/websockets.dll"
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/tiff/prebuilt/win32/libtiff.dll",
+               "to":"runtime/win32/libtiff.dll"
+            },
+            {
+               "from":"frameworks/js-bindings/external/spidermonkey/prebuilt/win32/mozjs-27.dll",
+               "to":"runtime/win32/mozjs-27.dll"
+            }
+         ]
       },
       "do_add_native_support":{
          "append_from_template":{
@@ -25,14 +91,12 @@
          },
          "append_dir":[
              {
-                "from":"frameworks/js-bindings",
-                "to":"frameworks/js-bindings",
+                "from":"tools",
+                "to":"tools",
                 "exclude":[
-                   "cocos2d-x",
-                   "bindings/proj.win32/Debug.win32",
-                   "bindings/proj.win32/Release.win32",
-                   "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/project.xcworkspace",
-                   "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/xcuserdata"
+                   "cocos2d-console",
+                   "make-package",
+                   "travis-scripts"
                 ]
              }
          ],

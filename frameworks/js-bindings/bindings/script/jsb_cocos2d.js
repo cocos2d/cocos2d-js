@@ -2,6 +2,8 @@
 // cocos2d constants
 //
 
+cc.ENGINE_VERSION = "Cocos2d-JS-v3.0 alpha 2";
+
 cc.TARGET_PLATFORM = {
     WINDOWS:0,
     LINUX:1,
@@ -53,8 +55,16 @@ cc.LANGUAGE_HUNGARIAN  = 9;
 cc.LANGUAGE_PORTUGUESE = 10;
 cc.LANGUAGE_ARABIC     = 11;
 
-cc.DIRECTOR_PROJECTION_2D = 0;
-cc.DIRECTOR_PROJECTION_3D = 1;
+cc.Director.PROJECTION_2D = 0;
+cc.Director.PROJECTION_3D = 1;
+cc.Director.PROJECTION_CUSTOM = 3;
+cc.Director.PROJECTION_DEFAULT = cc.Director.PROJECTION_3D;
+
+cc.DEVICE_ORIENTATION_PORTRAIT = 0;
+cc.DEVICE_ORIENTATION_LANDSCAPE_LEFT = 1;
+cc.DEVICE_ORIENTATION_PORTRAIT_UPSIDE_DOWN = 2;
+cc.DEVICE_ORIENTATION_LANDSCAPE_RIGHT = 3;
+cc.DEVICE_MAX_ORIENTATIONS = 2;
 
 cc.TEXTURE_PIXELFORMAT_RGBA8888 = 0;
 cc.TEXTURE_PIXELFORMAT_RGB888 = 1;
@@ -70,9 +80,6 @@ cc.TEXTURE_PIXELFORMAT_DEFAULT = cc.TEXTURE_PIXELFORMAT_RGBA8888;
 
 cc.IMAGE_FORMAT_JPEG = 0;
 cc.IMAGE_FORMAT_PNG = 0;
-
-cc.PROGRESS_TIMER_TYPE_RADIAL = 0;
-cc.PROGRESS_TIMER_TYPE_BAR = 1;
 
 cc.TOUCH_ALL_AT_ONCE = 0;
 cc.TOUCH_ONE_BY_ONE = 1;
@@ -90,6 +97,8 @@ cc.WHITE = {r:255, g:255, b:255};
 cc.YELLOW = {r:255, g:255, b:0};
 
 cc.POINT_ZERO = {x:0, y:0};
+
+cc.PARTICLE_DEFAULT_CAPACITY = 500;
 
 // XXX: This definition is different than cocos2d-html5
 // cc.REPEAT_FOREVER = - 1;
@@ -137,6 +146,106 @@ cc.ONE_MINUS_DST_COLOR = 0x0307;
 cc.ONE_MINUS_CONSTANT_ALPHA	= 0x8004;
 cc.ONE_MINUS_CONSTANT_COLOR	= 0x8002;
 
+cc.VERTEX_ATTRIB_FLAG_NONE = 0;
+cc.VERTEX_ATTRIB_FLAG_POSITION = 1 << 0;
+cc.VERTEX_ATTRIB_FLAG_COLOR = 1 << 1;
+cc.VERTEX_ATTRIB_FLAG_TEX_COORDS = 1 << 2;
+cc.VERTEX_ATTRIB_FLAG_POS_COLOR_TEX = ( cc.VERTEX_ATTRIB_FLAG_POSITION | cc.VERTEX_ATTRIB_FLAG_COLOR | cc.VERTEX_ATTRIB_FLAG_TEX_COORDS );
+cc.GL_ALL = 0;
+
+cc.VERTEX_ATTRIB_POSITION = 0;
+cc.VERTEX_ATTRIB_COLOR = 1;
+cc.VERTEX_ATTRIB_TEX_COORDS = 2;
+cc.VERTEX_ATTRIB_MAX = 3;
+
+cc.UNIFORM_PMATRIX = 0;
+cc.UNIFORM_MVMATRIX = 1;
+cc.UNIFORM_MVPMATRIX = 2;
+cc.UNIFORM_TIME = 3;
+cc.UNIFORM_SINTIME = 4;
+cc.UNIFORM_COSTIME = 5;
+cc.UNIFORM_RANDOM01 = 6;
+cc.UNIFORM_SAMPLER = 7;
+cc.UNIFORM_MAX = 8;
+
+cc.UNIFORM_PMATRIX_S = "CC_PMatrix";
+cc.UNIFORM_MVMATRIX_S = "CC_MVMatrix";
+cc.UNIFORM_MVPMATRIX_S = "CC_MVPMatrix";
+cc.UNIFORM_TIME_S = "CC_Time";
+cc.UNIFORM_SINTIME_S = "CC_SinTime";
+cc.UNIFORM_COSTIME_S = "CC_CosTime";
+cc.UNIFORM_RANDOM01_S = "CC_Random01";
+cc.UNIFORM_SAMPLER_S = "CC_Texture0";
+cc.UNIFORM_ALPHA_TEST_VALUE_S = "CC_alpha_value";
+
+cc.ITEM_SIZE = 32;
+
+cc.CURRENT_ITEM = 0xc0c05001;
+cc.ZOOM_ACTION_TAG = 0xc0c05002;
+cc.NORMAL_TAG = 8801;
+cc.SELECTED_TAG = 8802;
+cc.DISABLE_TAG = 8803;
+
+
+cc.stencilBits = -1;           //CCClippingNode.js
+
+cc.g_NumberOfDraws = 0;        //CCDirector.js
+
+cc.PRIORITY_NON_SYSTEM = cc.PRIORITY_SYSTEM + 1;          //CCScheduler.js
+
+cc.Node.ON_ENTER = 0;          //CCNode.js
+cc.Node.ON_EXIT = 1;
+cc.Node.ON_ENTER_TRANSITION_DID_FINISH = 2;
+cc.Node.ON_EXIT_TRANSITOIN_DID_START = 3;
+cc.Node.ON_CLEAN_UP = 4;
+cc.s_globalOrderOfArrival = 1;
+
+cc.Event.TOUCH = 0;                  //CCEvent.js
+cc.Event.KEYBOARD = 1;
+cc.Event.ACCELERATION = 2;
+cc.Event.MOUSE = 3;
+cc.Event.CUSTOM = 4;
+cc.EventMouse.NONE = 0;
+cc.EventMouse.DOWN = 1;
+cc.EventMouse.UP = 2;
+cc.EventMouse.MOVE = 3;
+cc.EventMouse.SCROLL = 4;
+cc.EventMouse.BUTTON_LEFT = 0;
+cc.EventMouse.BUTTON_RIGHT = 2;
+cc.EventMouse.BUTTON_MIDDLE = 1;
+cc.EventMouse.BUTTON_4 = 3;
+cc.EventMouse.BUTTON_5 = 4;
+cc.EventMouse.BUTTON_6 = 5;
+cc.EventMouse.BUTTON_7 = 6;
+cc.EventMouse.BUTTON_8 = 7;
+cc.EventTouch.MAX_TOUCHES = 5;
+
+cc.DEFAULT_SPRITE_BATCH_CAPACITY = 29;                  //CCSpriteBatchNode.js
+
+cc.ParticleSystem.SHAPE_MODE = 0;            //CCParticleSystem.js
+cc.ParticleSystem.TEXTURE_MODE = 1;
+cc.ParticleSystem.STAR_SHAPE = 0;
+cc.ParticleSystem.BALL_SHAPE = 1;
+
+cc.ProgressTimer.TEXTURE_COORDS_COUNT = 4;       //CCProgressTimer.js
+cc.ProgressTimer.TEXTURE_COORDS = 0x4b;
+
+cc.IMAGE_FORMAT_RAWDATA = 2;           //CCRenderTexture.js
+
+cc.TMXLayerInfo.ATTRIB_NONE = 1 << 0;            //CCTMXXMLParser.js
+cc.TMXLayerInfo.ATTRIB_BASE64 = 1 << 1;
+cc.TMXLayerInfo.ATTRIB_GZIP = 1 << 2;
+cc.TMXLayerInfo.ATTRIB_ZLIB = 1 << 3;
+cc.TMX_PROPERTY_NONE = 0;
+cc.TMX_PROPERTY_MAP = 1;
+cc.TMX_PROPERTY_LAYER = 2;
+cc.TMX_PROPERTY_OBJECTGROUP = 3;
+cc.TMX_PROPERTY_OBJECT = 4;
+cc.TMX_PROPERTY_TILE = 5;
+
+cc.SCENE_FADE = 4208917214;             //CCTransition.js
+
+cc.SCENE_RADIAL = 0xc001;               //CCTransitionProgress.js
 
 //
 // CCMacro.js export
@@ -499,35 +608,6 @@ cc.PointZero = function () {
     return cc.p(0, 0);
 };
 
-/**
- * Calculates sum of two points.
- * @param {cc.Point} v1
- * @param {cc.Point} v2
- * @return {cc.Point}
- */
-cc.pAdd = function (v1, v2) {
-    return cc.p(v1.x + v2.x, v1.y + v2.y);
-};
-
-/**
- * Calculates difference of two points.
- * @param {cc.Point} v1
- * @param {cc.Point} v2
- * @return {cc.Point}
- */
-cc.pSub = function (v1, v2) {
-    return cc.p(v1.x - v2.x, v1.y - v2.y);
-};
-
-/**
- * Returns point multiplied by given factor.
- * @param {cc.Point} point
- * @param {Number} floatVar
- * @return {cc.Point}
- */
-cc.pMult = function (point, floatVar) {
-    return cc.p(point.x * floatVar, point.y * floatVar);
-};
 
 /**
  * Unrotates two points.
@@ -1269,6 +1349,7 @@ cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
 cc.LayerColor.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
+cc.SpriteFrame.extend = cc.Class.extend;
 cc.Menu.extend = cc.Class.extend;
 cc.MenuItem.extend = cc.Class.extend;
 cc.MenuItemFont.extend = cc.Class.extend;
@@ -1276,6 +1357,21 @@ cc.MenuItemToggle.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
 cc.Component.extend = cc.Class.extend;
+cc.GridBase.extend = cc.Class.extend;
+cc.Grid3D.extend = cc.Class.extend;
+cc.TiledGrid3D.extend = cc.Class.extend;
+cc.MotionStreak.extend = cc.Class.extend;
+cc.ParticleBatchNode.extend = cc.Class.extend;
+cc.ParticleSystem.extend = cc.Class.extend;
+cc.PhysicsSprite.extend = cc.Class.extend;
+cc.TextFieldTTF.extend = cc.Class.extend;
+cc.RenderTexture.extend = cc.Class.extend;
+cc.TileMapAtlas.extend = cc.Class.extend;
+cc.TMXLayer.extend = cc.Class.extend;
+cc.TMXTiledMap.extend = cc.Class.extend;
+cc.TMXMapInfo.extend = cc.Class.extend;
+cc.TransitionScene.extend = cc.Class.extend;
+ccs.Armature.extend = cc.Class.extend;
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
@@ -1488,6 +1584,18 @@ cc.EventListenerKeyboard.prototype.clone = function() {
     ret.onKeyPressed = this.onKeyPressed;
     ret.onKeyReleased = this.onKeyReleased;
     return ret;
+};
+
+cc.EventMouse.prototype.getLocation = function(){
+    return { x: this.getLocationX(), y: this.getLocationY() };
+};
+
+cc.Touch.prototype.getLocationX = function(){
+    return this.getLocation().x;
+};
+
+cc.Touch.prototype.getLocationY = function(){
+    return this.getLocation().y;
 };
 
 cc.director = cc.Director.getInstance();
@@ -1847,3 +1955,15 @@ cc.DrawNode = cc._DrawNode.extend({
 cc.DrawNode.create = function () {
 	return new cc.DrawNode();
 };
+
+cc.TMXTiledMap.prototype.allLayers = function(){
+    var retArr = [],
+        locChildren = this.getChildren(),
+        length = locChildren.length;
+    for(var i = 0; i< length; i++){
+        var layer = locChildren[i];
+        if(layer && layer instanceof cc.TMXLayer)
+            retArr.push(layer);
+    }
+    return retArr;
+}

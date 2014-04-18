@@ -1,5 +1,120 @@
-cocos2d-js Feb.?? 2014
-[All]
-     [NEW]
+Cocos2d-JS-v3.0 alpha2 @ April.14, 2014
+* Minimize the size of core from 254k to 113k after google closure advanced compiling.
+* Make engine classes can be constructed via `new` with the same parameters as create functions.
+* Make engine classes extendable directly via ctor.
+* Made cc.DrawNode support some DrawingPrimitive's drawing function on WebGL mode.
+* cc.Sprite supports creating a sprite through external URL.
+* Add SocketIO to framework's external.
+* Add the warning information to notice developers that their project.json cannot be loaded or parsed.
+* Add retina display support to cc.Editbox.
+* cc.Node's pauseSchedulerAndActions and resumeSchedulerAndActions are deprecated, please use pause and resume instead.
+* Add render mode checking to 3D action classes.
+* Use undefined check in cc.loader for better performance.
+* Sync cc.eventManager to the latest version of Cocos2d-x v3.0 final.
+* ccui.Layout's doLayout function has been set to private function "_doLayout".
+* Rename all Uppercase functions to lowercase in CCMacro.js.
+* Add more necessary GL constants in engine.
+* Rename ccs.comAttribute's `getCString` function to `getString`.
+* [JSB]Make engine classes extendable via ctor in JSB.
+* [JSB]Fix cc.DrawNode API inconsistence between Cocos2d-html5 and JSB.
+* [JSB]Rebind cc.fileUtils for JSB only APIs.
+* [JSB]Make JS level subclass of cc.Component support override of onEnter/onExit/update functions.
+* [JSB]Update precompiled SpiderMonkey to support iOS 64 bit devices.
+* [JSB]Fix constants inconsistence between Cocos2d-html5 and JSB.
+* [JSB]Add macro functions in CCMacro.js into JSB.
+* [JSB]Add `tag` property to cc.Action.
+* [JSB]Add `boundingBox` function to ccs.Armature.
+* [JSB]Add `textureLoaded` function to cc.Sprite.
 
-     [FIX]
+* Bugs fix:
+    1. Fixed ccs.comAttribute API incompatible issue
+    2. Fixed a bug of CocoStudio's data reader that getting isTween value is incorrect when the attribute value is false.
+    3. Fixed a bug of Sprite that it stops to work when its texture doesn't preload and its parent is a SpriteBatchNode
+    4. Fixed a bug in CCBoot.js that console.error is invalid on firefox.
+    5. Fixed a bug of cc.LabelBMFont that it's multiline works incorrectly.
+    6. Fixed a bug that Touches event doesn't work in release mode on IE browser.
+    7. Fixed a bug that cc.winSize has not been reset after cc.view.setDesignResolutionSize.
+    8. Fixed typo error in ccui.Widget.TOUCH_BEGAN
+    9. Fixed a bug of cc.MenuItemSprite.create that its can't create item when the length of arguments equals 4.
+    10. Fixed a bug of cc.loader that it need to set value before calling the callback.
+    11. Fixed a bug of cc.log that it doesn't work in IE9
+    12. Fixed IE incompatible issue with __lookupGetter__
+    13. Fixed a bug of cc.Node that it returns a reference of _position in getPosition
+    14. Fixed a bug of cc.ClippingNode that its _super is undefined
+    15. Fixed a bug of inputManager's touch event in IE browser
+    16. Add callback null check to avoid bugs in cc.textureCache.addImage.
+    17. [JSB]Fix ccui.Widget's addNode function no longer exists bug in JSB.
+    18. [JSB]Fix a bug that main loop get stated twice.
+    19. [JSB]API inconsistence of ccs.ArmatureAnimation.play fixed.
+    20. [JSB]Fix JSB compiling issues by removing `DEBUG` preprocessor macro.
+    21. Fixed some comment errors of framework.
+
+* Known Issues:
+    1. [JSB]Property's getter/setter functions can not be overrided automatically in custom subclasses.
+    2. [JSB]CocoStudio's scene reloading can cause memory release issues and crash.
+    3. [JSB]OpenGL test is not functionnable in JSB.
+    4. EventListener is not extendable.
+    5. [JSB]PhysicsSprite is not updating with physics node.
+    6. [JSB]ccui.TextField's is not responding to keyboard backspace button.
+
+Cocos2d-JS-v3.0 alpha @ March.15, 2014
+* Refactor some properties of all rendering classes with getter setter for providing javascript user friendly APIs.
+* Provide `attr` function for cc.Node and its descendants to permit modify multiple properties at the same time with a key-value object.
+* Refactor foundational data structures for better maintainability.
+* Add event manager to cocos2d-html5, all events are dispatched via cc.eventManager to event listener.
+* Refactor cc.Application to cc.game.
+* Refactor singleton Classes to javascript object.
+* Refactor all createWithXXX functions into unified create function with different parameters.
+* Use `moduleConfig.json` to config the paths of engine scripts.
+* `cocos2d.js` is replaced with `project.json`.
+* Refactoring cc.loader.
+* CocoStudio GUI updated to 3.0, and ccs prefix of UI widgets have been changed to ccui.
+* CocoStudio v1.3.0 has been supported in v3.0.
+* richText has been supported in v3.0.
+* Use `cc.BuilderReader.registerController` to register controller of ccb.
+* Add `cc.path` to handle operations of file path.
+* Add `cc.async` to handle async operations.
+* Add cc.NodeGrid in v3.0.
+* Replace `replaceWithScene` and `runWithScene` with `runScene`.
+* move sys.xxx to cc.sys.xxx.
+* Refactor CCEGLView.js for better maintainability.
+* Refactor CCScheduler.js for better maintainability.
+* Remove arguments.callee which is forbidden in ECMAScript strict mode.
+* Refactor Array clean function for better performance.
+* Refactor some functions about array operation.
+* Refactor FadeIn/FadeOut to fix a bug that it always start from/to 255.
+* Rewrite functions in CCNS.js with regex.
+* Move CCFormatHelper and CCNS content into CCCommon.js.
+* Refactor cc.Screen to support all browsers.
+* Add retina display support for Apple devices to cc.view.
+* Add "allLayers" function to cc.TMXTiledMap.
+* Make cc.p and cc.size support two types of parameters.
+* cc.DrawNode supports all functions of cc.DrawingPrimitive on Canvas mode.
+* WebAudioEngine is supported on iOS now.
+* Use event on cc.canvas to make full screen.
+* Add a browser white list that support multiple audio playback at the same time.
+* Removed in/hasOwnProperty usage in engine for better performance.
+* Refactoring CCCommon.js, delete some unused functions, rename some functions for better maintainability.
+* Add analytics plugin protocol ,Flurry plugin and ProtocolAds.js plugin protocol.
+* Arguments length check replaced by undefined check for better performance.
+* Fix legacy Function.prototype.bind support.
+
+* Bugs fix:
+    1. Avoid CCLabelTTF enter in infinite loop while character's width larger than the dimension width
+    2. Add jsDoc Flags to cc.NodeRGBA and cc.LayerRGBA
+    3. Fixed a bug that Schedule doesn't restart when widget is re-added after being removed
+    4. Correction of split logic in CCLabelTTF
+    5. Fixed a bug that armature animation does not display correctly on canvas mode
+    6. Correct gui widget clone functions
+    7. Fixed a bug of cc.SpriteFrameCache that filePath is needed in `loadedFileNames`
+    8. Add a condition check to avoid texture out of range bug
+    9. Fixed a bug of cc.Editbox that its position is incorrect when its parent node isn't root node.
+    10. Fixed a SimpleAudioEngine's state error.
+    11. Fixed a bug of cc.TMXTileMap that its `_tileProperties` should be a dictionary object
+    12. Fixed a bug of cc.DrawNode that it need to deep-copy verts in `drawPoly`
+    13. Fixed a bug of UILabelBMFont that variable `_strStringValue` should be `_stringValue`
+    14. Fixed a bug in SceneReader's `setPropertyFromJsonDict` function
+    15. Fixed a bug when margin not set in ccs.Margin
+    16. Fixed a bug of cc.TMXLayer that its `removeChild` works incorrectly.
+
+* Known Issues:

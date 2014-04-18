@@ -1,6 +1,6 @@
 <img src="http://www.cocos2d-x.org/attachments/801/cocos2dx_portrait.png" width=200>
 
-cocos2d-js
+Cocos2d-JS
 ===========
 
 Cocos2d-JS is Cocos2d-x engine's javascript version. It support full Cocos2d-x features with a set of simplified javascript friendly APIs.
@@ -9,80 +9,102 @@ Cocos2d-JS provides a consistent development experience for whichever platform y
 
 Furthermore, javascript friendly API makes your game development experience a breeze, easy to code, test and distribute. Cocos2d-JS also offers Cocos Console, a script tool, to simplify the creation of projects and let you start coding right away. You can use it to create a new project and publish it to android, iOS, Mac OS or web.
 
-##Setup
+## API Reference
 
-First step, you need to setup before using this tool. Please clone Cocos2d-JS repository and update all submodule. Open console in Cocos2d-JS folder, then just run `./setup.py` on console. You may need to provide your NDK, Android SDK and ANT's path during the setup. Note that this tool is developed with python, so you will need python (32bit) 2.7.5 or later installed on your machine (but it doesn't support Python3).
+[Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0alpha2/index.html)
 
-Some useful links:
+And you can download it from
+[Cocos2d-html5_v3.0_Alpha2_API_Doc.zip](http://cdn.cocos2d-x.org/Cocos2d-html5_v3.0_Alpha2_API_Doc.zip)
 
-* [Android SDK](https://developer.android.com/sdk/index.html?hl=sk)
-* [NDK](https://developer.android.com/tools/sdk/ndk/index.html)
-* [Ant binary release](http://ant.apache.org/)
-    - Download Ant.
-    - Uncompress the downloaded file into a directory.
-    - Set environmental variables JAVA_HOME to your Java environment, ANT_HOME to the directory you uncompressed Ant to, and add ${ANT_HOME}/bin (Unix) or %ANT_HOME%/bin (Windows) to your PATH.
+##How to Start a New Game
+
+1. Download the code from [Cocos2d download site](http://www.cocos2d-x.org/download)
+2. Run `setup.py`
+3. Run the `cocos` script
+
+Example:
+
+    $ cd cocos2d-js
+    $ ./setup.py
+    $ source FILE_TO_SAVE_SYSTEM_VARIABLE
     
-    ```
-    // Example: Execute in console or add into .bash_profile(Mac)
-    export ANT_ROOT=/usr/local/ant/bin
-    export JAVA_HOME=/usr/local/jdk1.7.0_51
-    ```
+    $ cocos new MyGame -l js -d /directory/to/project
+    $ cd /directory/to/project/MyGame
+    
+    
 
-##Usage
+    
 
-After setup correctly done, you can start to use `cocos` command in your console.
 
-###Create a new project
 
-* Create a project contains Cocos2d-x JSB and Cocos2d-html5:
-
-	```
-	cocos new projectName -l js
-	```
-
-* Create a project contains Cocos2d-html5 only:
-
-	```
-	cocos new projectName -l js --no-native
-	```
-
-* Create a project in a specified directory:
-
-	```
-	cocos new projectName -l js -d ./Projects
-	```
-
-###Run the project
+###Run the project under the game directory
 
 * Run Cocos2d-html5 project with a Websever:
 
 	```
-	cd directory/to/project
 	cocos run -p web
 	```
 
 * Compile and run project in Cocos2d-JSB :
 
 	```
-	cd directory/to/project
 	cocos compile -p ios|mac|android|web
-	cocos run -p ios|mac|android
+	cocos run -p ios|mac|android|web
 	```
 
-* Useful options
+You may need to provide your NDK, Android SDK and ANT's path during the setup. Note that this tool is developed with python, so you will need python (32bit) 2.7.5 or later installed on your machine (but it doesn't support Python3). Please refer to [Cocos Console document](http://www.cocos2d-x.org/docs/manual/framework/html5/cocos-console/en).
 
-	```
-	-p platform : The platform can be ios|mac|android|web.
-	-s source   : Your project directory, if not specified the current directory will be used.
-	-q          : Quiet mode, remove log messages.
-	-m mode     : Mode debug or release, debug is default
-	--source-map: General source-map file. (Web platform only)
-	```
+And if you have any doubt about the usage, please use `-h` with any command to have some help messages. 
 
-###Help
+###Built-in Projects
 
-And if you have any doubt about the usage, please use `-h` with any command to have some help messages. Here are all three commands:
+There are two prebuilt projects in Cocos2d-JS repo:
 
-* `new` for create
-* `compile` for compile
-* `run` for run
+- Test cases, located in `samples/js-tests`
+
+ ```
+ cd samples/js-tests
+ run -p ios|mac|android|web
+ ```
+- Game sample : Moon Warriors, located in `samples/js-moonwarriors`
+
+```
+cd samples/js-moonwarriors
+run -p ios|mac|android|web
+```
+And they share the same project file which located in `build` folder, there are Xcode and Visual Studio projects.
+
+Main features
+-------------
+   * Support All modern browsers and native platforms
+   * Scene management (workflow)
+   * Transitions between scenes
+   * Sprites and Sprite Sheets
+   * Effects: Lens, Ripple, Waves, Liquid, etc.
+   * Actions (behaviours):
+     * Trasformation Actions: Move, Rotate, Scale, Fade, Tint, etc.
+     * Composable actions: Sequence, Spawn, Repeat, Reverse
+     * Ease Actions: Exp, Sin, Cubic, Elastic, etc.
+     * Misc actions: CallFunc, OrbitCamera, Follow, Tween
+   * Basic menus and buttons
+   * Integrated with physics engines: [Box2d][5] and [Chipmunk][6]
+   * Particle system
+   * Skeleton Animations: [Spine][7] and Armature support
+   * Fonts:
+     * Fast font rendering using Fixed and Variable width fonts
+     * Support for .ttf fonts
+   * Tile Map support: Orthogonal, Isometric and Hexagonal
+   * Parallax scrolling
+   * Motion Streak
+   * Render To Texture
+   * Touch/Accelerometer on mobile devices
+   * Touch/Mouse/Keyboard on desktop
+   * Sound Engine support (CocosDenshion library) based on OpenAL or WebAudio on web
+   * Integrated Slow motion/Fast forward
+   * Fast and compressed textures: PVR compressed and uncompressed textures, ETC1 compressed textures, and more
+   * Resolution Independence
+   * Modularized engine for customization
+   * Open Source Commercial Friendly: Compatible with open and closed source projects
+   * OpenGL ES 2.0 (mobile) / OpenGL 2.1 (desktop) based
+   * Full WebGL support and auto canvas fallback
+   

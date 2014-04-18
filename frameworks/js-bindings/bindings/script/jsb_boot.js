@@ -496,7 +496,7 @@ cc.loader = {
      * @param {Function} cb     callback
      */
     loadAliases : function(url, cb){
-        cc.FileUtils.getInstance().loadFilenameLookup(url);
+        cc.fileUtils.loadFilenameLookup(url);
         if(cb) cb();
     },
 
@@ -576,6 +576,13 @@ cc.view.isRetinaEnabled = function() {
 cc.view.adjustViewPort = function() {};
 cc.view.resizeWithBrowserSize = function () {return;};
 cc.view.setResizeCallback = function() {return;};
+cc.view.enableAutoFullScreen = function () {return;};
+cc.view.isAutoFullScreenEnabled = function() {return true;};
+cc.view._setDesignResolutionSize = cc.view.setDesignResolutionSize;
+cc.view.setDesignResolutionSize = function(width,height,resolutionPolicy){
+    cc.view._setDesignResolutionSize(width,height,resolutionPolicy);
+    cc.winSize = cc.director.getWinSize();
+}
 
 cc.eventManager = cc.director.getEventDispatcher();
 cc.audioEngine = cc.AudioEngine.getInstance();
@@ -600,6 +607,9 @@ cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
 cc.plistParser = cc.PlistParser.getInstance();
 //cc.tiffReader;
 //cc.imeDispatcher;
+
+// File utils (only in JSB)
+cc.fileUtils = cc.FileUtils.getInstance();
 
 cc.screen = {
     init: function() {},

@@ -1009,7 +1009,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
     onEnter:function () {
         this._super();
         if ("opengl" in cc.sys.capabilities) {
-            director.setProjection(cc.DIRECTOR_PROJECTION_3D);
+            director.setProjection(cc.Director.PROJECTION_3D);
             gl.enable(gl.DEPTH_TEST);
 
             // Avoid Z-fighting with menu and title
@@ -1023,7 +1023,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
     },
     onExit:function () {
         if ("opengl" in cc.sys.capabilities) {
-            director.setProjection(cc.DIRECTOR_PROJECTION_2D);
+            director.setProjection(cc.Director.PROJECTION_2D);
             gl.disable(gl.DEPTH_TEST);
         }
         this._super();
@@ -1130,7 +1130,7 @@ var SpriteBatchNodeZVertex = SpriteTestDemo.extend({
         this._super();
 
         if ("opengl" in cc.sys.capabilities) {
-            director.setProjection(cc.DIRECTOR_PROJECTION_3D);
+            director.setProjection(cc.Director.PROJECTION_3D);
             gl.enable(gl.DEPTH_TEST);
 
             // Avoid Z-fighting with menu and title
@@ -1145,7 +1145,7 @@ var SpriteBatchNodeZVertex = SpriteTestDemo.extend({
     },
     onExit:function () {
         if ("opengl" in cc.sys.capabilities) {
-            director.setProjection(cc.DIRECTOR_PROJECTION_2D);
+            director.setProjection(cc.Director.PROJECTION_2D);
             gl.disable(gl.DEPTH_TEST);
         }
         this._super();

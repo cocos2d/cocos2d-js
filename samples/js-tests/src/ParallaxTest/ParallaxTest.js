@@ -177,9 +177,11 @@ Parallax2 = ParallaxDemo.extend({
             cc.eventManager.addListener({
                 event: cc.EventListener.MOUSE,
                 onMouseMove: function(event){
-                    var node = event.getCurrentTarget().getChildByTag(TAG_NODE);
-                    node.x += event.getDeltaX();
-                    node.y += event.getDeltaY();
+                    if(event.getButton() != undefined){
+                        var node = event.getCurrentTarget().getChildByTag(TAG_NODE);
+                        node.x += event.getDeltaX();
+                        node.y += event.getDeltaY();
+                    }
                 }
             }, this);
         }
