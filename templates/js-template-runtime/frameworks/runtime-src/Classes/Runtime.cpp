@@ -257,8 +257,8 @@ bool reloadScript(const string& file,bool reloadAll)
     }
     FileUtils::getInstance()->purgeCachedEntries();
 
-    director->getScheduler()->unscheduleAll();
-    director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
+    //director->getScheduler()->unscheduleAll();
+    //director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     
     string modulefile = file;
     if (modulefile.empty())
