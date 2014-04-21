@@ -256,7 +256,7 @@ std::string getCurAppPath(void)
 
 - (IBAction) onReloadScript:(id)sender
 {
-    reloadScript("");
+    reloadScript("",true);
 }
 
 

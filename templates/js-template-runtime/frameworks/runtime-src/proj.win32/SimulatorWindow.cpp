@@ -240,7 +240,7 @@ LRESULT CALLBACK SNewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
                 break;
 
             case ID_CONTROL_RELOAD:
-                reloadScript("");
+                reloadScript("",true);
                 break;
 
             case ID_HELP_ABOUT:
