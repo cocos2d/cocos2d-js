@@ -25,4 +25,4 @@ For more informations please see [Cocos2d-JS github site](https://github.com/coc
 
 ### More information ###
 
-Read more about all the new features at [Cocos2d-JS v3.0 alpha2 changelog](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.0a2/changelog/en) and [Cocos2d-JS v3.0 alpha2 upgrade guide](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.0a2/upgrade-guide/en)
+Read more about all the new features at [Cocos2d-JS v3.0 alpha2 changelog](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.0a2/changelog/en) and [Cocos2d-JS v3.0 alpha2 upgrade guide](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.0a/upgrade-guide/en)
