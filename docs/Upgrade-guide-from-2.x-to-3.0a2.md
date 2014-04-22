@@ -1,4 +1,4 @@
-#Cocos2d-html5 upgrade guide from v2.2.2 to v3.0a2
+#Upgrade guide from Cocos2d-html5 v2.2.x to Cocos2d-JS v3.0 alpha2
 
 
 ##1. Event Manager
@@ -204,9 +204,54 @@ ccs.ObjectFactory.getInstance()             --> ccs.objectFactory
 [Detialed documentation](../../../v3.0/singleton-objs/en.md).
 
 
-##7. GUI widgets
+##7. **[New in alpha 2]** Object creation and class inheritance
 
-* **7.1** GUI widgets of Cocostudio extension have been removed from Cocostudio and have been put into ccui package, so their prefix have also changed from `ccs.` to `ccui.`. The reason is that they are some useful widget components that can not only be used for Cocostudio but also for any other purpose. All classes and functions that have been refactored is listed below :
+In Cocos2d-html5 2.2.x, to create an engine object like cc.Sprite, developers need to use the correct `create` functions, like this example :
+
+```
+var sprite = cc.Sprite.create(filename, rect);
+var sprite = cc.Sprite.createWithTexture(texture, rect);
+var sprite = cc.Sprite.createWithSpriteFrameName(spriteFrameName);
+```
+
+In Cocos2d-JS v3.0 alpha, we have made a great improvement, we merged all `createXXX` functions into one unified `create` function :
+
+```
+var sprite = cc.Sprite.create(filename, rect);
+var sprite = cc.Sprite.create(texture, rect);
+var sprite = cc.Sprite.create(spriteFrameName);
+```
+
+This changement affect not only cc.Sprite, but all similar classes, all classes and details about create function refactoration can be found in [this document](../../../v3.0/create-api/en.md).
+
+As we never stop to improve our engine, in Cocos2d-JS v3.0 alpha2, we have made the `new` construction possible ! They share exactly the same parameters as `create` functions :
+
+```
+var sprite = new cc.Sprite(filename, rect);
+var sprite = new cc.Sprite(texture, rect);
+var sprite = new cc.Sprite(spriteFrameName);
+```
+
+In the meantime, for backward compatibility, we have kept all `create` functions also, so it's totally your choice. What's more important with this improvement is that the inheritance is much easier than before. Developers can now completely ignore all `initXXX` functions, you can simply override `ctor` function and call `this._super` with correct parameters, then your object will be correctly initialized:
+
+```
+var Enemy = cc.Sprite.extend({
+    hp: 0,
+    fileName: "enemy.png"
+    ctor: function (hp) {
+        this._super(fileName);
+        this.hp = hp;
+    }
+});
+var enemy1 = new Enemy(100);
+```
+
+As you can see, there isn't a single `init` function call, very convenient to use. All cocos2d (no extension) classes have been refactored to support this style, and JSB support it too. [This document](../../../v3.0/inheritance/en) discuss the `new` constructor and the inheritance in detail.
+
+
+##8. GUI widgets
+
+* **8.1** GUI widgets of Cocostudio extension have been removed from Cocostudio and have been put into ccui package, so their prefix have also changed from `ccs.` to `ccui.`. The reason is that they are some useful widget components that can not only be used for Cocostudio but also for any other purpose. All classes and functions that have been refactored is listed below :
 
     ```
     ccs.Layout                  --> ccui.Layout
@@ -229,9 +274,9 @@ ccs.ObjectFactory.getInstance()             --> ccs.objectFactory
     ccs.UILayer                 --> deleted
     ```
 
-* **7.2** A new ui widget `ccui.RichText` has been added to v3.0a.
+* **8.2** A new ui widget `ccui.RichText` has been added to v3.0a.
 
-* **7.3** `ccs.UILayer` has been deleted from v3.0a, please add to node directly, for example:
+* **8.3** `ccs.UILayer` has been deleted from v3.0a, please add to node directly, for example:
 
 	```
 	// usage in v2.2.2: A widget object need to through ccs.UILayer.addWidget to add to node object
@@ -246,7 +291,7 @@ ccs.ObjectFactory.getInstance()             --> ccs.objectFactory
 	node .addChild(aWidget);	
 	```
 
-##8. NodeGrid
+##9. NodeGrid
 
 A new node `cc.NodeGrid` have been added to version 3.0a. This node should be used to host a target node and permit it to have the ability to run ActionGrid type action. In v2.2.2, cc.Node can directly play such actions, but this ability will be removed to keep cc.Node as simple as possible. So the comparaision between v2.2.2 and v3.0a is like the example below :
 
@@ -267,7 +312,7 @@ nodeGrid.runAction( shaky );
 Note: In Cocos2d-html5 v3.0 version web, the old way still work fine, but if you want your game to be ported to native plateform with JSB, only the new way is supported.
 
 
-##9. JSB related
+##10. JSB related
 
 We found that there are different needs for web app developers and JSB native app developers, and there are things that we can't perfectly merge, so here are those JSB only APIs, if you want to use them, please check the platform first.
 
@@ -277,7 +322,7 @@ if (cc.sys.isNative) {
 }
 ```
 
-* **9.1** C++ Macros
+* **10.1** C++ Macros
 
     In JSB project, there are some macros can only be modified in C++ level, whatever you do in JS can't modify them. These macros are listed below, they can be found in ccMacros.h and ccConfig.h:
     
@@ -305,7 +350,7 @@ if (cc.sys.isNative) {
     CC_ENABLE_SCRIPT_BINDING
     ```
     
-* **9.2** **[New in alpha 2]** cc.fileUtils
+* **10.2** **[New in alpha 2]** cc.fileUtils
 
     As cc.FileUtils have been replaced by cc.loader in Cocos2d-html5, but in JSB project, there are still some needs that can't be accomplished by cc.loader, so we decided to make cc.FileUtils a JSB only API. And to follow the singleton object API style, you don't need to call `cc.FileUtils.getInstance()`, `cc.fileUtils` is referring directly to the FileUtils singleton object. Detailed APIs are listed below:
     
@@ -327,7 +372,7 @@ if (cc.sys.isNative) {
     
     All functions about search path configuration have been removed, because this will due to code inconsistence between Cocos2d-html5 and Cocos2d-JSB and eventually a high cost of maintainbility.
 
-* **9.3** cc.AssetsManager
+* **10.3** cc.AssetsManager
 
     cc.AssetsManager is a class serves for managing and using remote resources on your server. It can also manage versions of resources and update them to most recent versions. Detailed APIs are listed below:
     
@@ -348,11 +393,11 @@ if (cc.sys.isNative) {
     ```
 
 
-##10. Other API changements
+##11. Other API changements
 
-* **10.1** `cc.Broswser` and `sys` are replaced with `cc.sys`: [documentation](../../../v3.0/cc-sys/en.md).
+* **11.1** `cc.Broswser` and `sys` are replaced with `cc.sys`: [documentation](../../../v3.0/cc-sys/en.md).
 
-* **10.2** Some functions of `cc.AudioEngine` have been deleted :
+* **11.2** Some functions of `cc.AudioEngine` have been deleted :
 
     ```
     preloadMusic
@@ -361,7 +406,7 @@ if (cc.sys.isNative) {
     preloadSound
     ```
 
-* **10.3** cc.SAXParser
+* **11.3** cc.SAXParser
 
 	These functions of `cc.SAXParser` have been deleted :
 
@@ -376,7 +421,7 @@ if (cc.sys.isNative) {
 
 	And `cc.PlistParser` is added to parse plist files: [cc.SAXParser documentation](../../../v3.0/cc-saxparser/en.md)
 
-* **10.4** `addImageAsync` is merged into `addImage` of `cc.textureCache`.
+* **11.4** `addImageAsync` is merged into `addImage` of `cc.textureCache`.
 
     ```
     addImage(url)                           --> addImage(url)
@@ -385,14 +430,14 @@ if (cc.sys.isNative) {
     
     **[New in alpha 2]** The new `addImage` have been synced in JSB.
 
-* **10.5** Two of `MenuItemFont`'s functions have been refactored to fit the standard API sytle:
+* **11.5** Two of `MenuItemFont`'s functions have been refactored to fit the standard API sytle:
 
     ```
     fontName    --> getFontName
     fontSize    --> getFontSize
     ```
 
-* **9.6** cc.view
+* **11.6** cc.view
     
     Retina display have been supported for Apple devices, you can disable or enable it with `cc.view.enableRetina(enableOrNot)`, you can also detect whether retina display is currently on or not with `cc.view.isRetinaEnabled()`. At last, you can retrieve the retina display's pixel ratio by using `cc.view.getDevicePixelRat io()`, on Apple devices, it will return 2 when retina display is applied. By default, retina display is automatically activated for your game on Apply devices. If you want to change it, note that after you enable or disable retina display, you have to call `cc.view.setDesignResolutionSize(width, height, policy)` to make it applied to your game.
     
@@ -403,7 +448,7 @@ if (cc.sys.isNative) {
     cc.view.isAutoFullScreenEnabled(); // this will return the current value
     ```
 
-* **10.7** Global APIs deleted :
+* **11.7** Global APIs deleted :
 
     ```
     cc.IS_SHOW_DEBUG_ON_PAGE
@@ -429,7 +474,7 @@ if (cc.sys.isNative) {
     ccs.UILayer
     ```
 
-* **10.8** Global APIs added :
+* **11.8** Global APIs added :
 
     ```
     cc.warn
@@ -438,7 +483,7 @@ if (cc.sys.isNative) {
     cc.BuilderReader.registerController
     ```
 
-* **10.9** Global APIs refactored :
+* **11.9** Global APIs refactored :
 
     ```
     cc.Assert                       --> cc.assert
@@ -455,35 +500,35 @@ if (cc.sys.isNative) {
     cc.ArrayContainsObject(arr, findObj)            --> arr.indexOf(findObj) != -1
     
     // Upper case functions have been renamed to lower case to fit the API style
-    cc.SWAP                         --> cc.swap **[New in alpha 2]**
-    cc.RANDOM_MINUS1_1              --> cc.randomMinus1To1 **[New in alpha 2]**
-    cc.RANDOM_0_1                   --> cc.random0To1 **[New in alpha 2]**
-    cc.DEGREES_TO_RADIANS           --> cc.degreesToRadians **[New in alpha 2]**
-    cc.RADIANS_TO_DEGREES           --> cc.radiansToDegress **[New in alpha 2]**
-    cc.NODE_DRAW_SETUP              --> cc.nodeDrawSetup **[New in alpha 2]**
-    cc.ENABLE_DEFAULT_GL_STATES     --> cc.enableDefaultGLStates **[New in alpha 2]**
-    cc.DISABLE_DEFAULT_GL_STATES    --> cc.disableDefaultGLStates **[New in alpha 2]**
-    cc.INCREMENT_GL_DRAWS           --> cc.incrementGLDraws **[New in alpha 2]**
-    cc.CONTENT_SCALE_FACTOR         --> cc.contentScaleFactor **[New in alpha 2]**
-    cc.POINT_POINTS_TO_PIXELS       --> cc.pointPointsToPixels **[New in alpha 2]**
-    cc.SIZE_POINTS_TO_PIXELS        --> cc.sizePointsToPixels **[New in alpha 2]**
-    cc.SIZE_PIXELS_TO_POINTS        --> cc.sizePixelsToPoints **[New in alpha 2]**
-    cc._SIZE_PIXELS_TO_POINTS_OUT   --> cc._sizePixelsToPointsOut **[New in alpha 2]**
-    cc.POINT_PIXELS_TO_POINTS       --> cc.pointPixelsToPoints **[New in alpha 2]**
-    cc._POINT_PIXELS_TO_POINTS_OUT  --> cc._pointPixelsToPointsOut **[New in alpha 2]**
-    cc.RECT_PIXELS_TO_POINTS        --> cc.rectPixelsToPoints **[New in alpha 2]**
-    cc.RECT_POINTS_TO_PIXELS        --> cc.rectPointsToPixels **[New in alpha 2]**
-    cc.CHECK_GL_ERROR_DEBUG         --> cc.checkGLErrorDebug **[New in alpha 2]**
+    cc.SWAP                         --> cc.swap // [New in alpha 2]
+    cc.RANDOM_MINUS1_1              --> cc.randomMinus1To1 // [New in alpha 2]
+    cc.RANDOM_0_1                   --> cc.random0To1 // [New in alpha 2]
+    cc.DEGREES_TO_RADIANS           --> cc.degreesToRadians // [New in alpha 2]
+    cc.RADIANS_TO_DEGREES           --> cc.radiansToDegress // [New in alpha 2]
+    cc.NODE_DRAW_SETUP              --> cc.nodeDrawSetup // [New in alpha 2]
+    cc.ENABLE_DEFAULT_GL_STATES     --> cc.enableDefaultGLStates // [New in alpha 2]
+    cc.DISABLE_DEFAULT_GL_STATES    --> cc.disableDefaultGLStates // [New in alpha 2]
+    cc.INCREMENT_GL_DRAWS           --> cc.incrementGLDraws // [New in alpha 2]
+    cc.CONTENT_SCALE_FACTOR         --> cc.contentScaleFactor // [New in alpha 2]
+    cc.POINT_POINTS_TO_PIXELS       --> cc.pointPointsToPixels // [New in alpha 2]
+    cc.SIZE_POINTS_TO_PIXELS        --> cc.sizePointsToPixels // [New in alpha 2]
+    cc.SIZE_PIXELS_TO_POINTS        --> cc.sizePixelsToPoints // [New in alpha 2]
+    cc._SIZE_PIXELS_TO_POINTS_OUT   --> cc._sizePixelsToPointsOut // [New in alpha 2]
+    cc.POINT_PIXELS_TO_POINTS       --> cc.pointPixelsToPoints // [New in alpha 2]
+    cc._POINT_PIXELS_TO_POINTS_OUT  --> cc._pointPixelsToPointsOut // [New in alpha 2]
+    cc.RECT_PIXELS_TO_POINTS        --> cc.rectPixelsToPoints // [New in alpha 2]
+    cc.RECT_POINTS_TO_PIXELS        --> cc.rectPointsToPixels // [New in alpha 2]
+    cc.CHECK_GL_ERROR_DEBUG         --> cc.checkGLErrorDebug // [New in alpha 2]
 
-    cc.CardinalSplineAt	            --> cc.cardinalSplineAt **[New in alpha 2]**
+    cc.CardinalSplineAt	            --> cc.cardinalSplineAt // [New in alpha 2]
 
     // Constants
     cc.PRIORITY_SYSTEM                      --> cc.Scheduler.PRIORITY_SYSTEM
-    cc.SPRITE_INDEX_NOT_INITIALIZED         --> cc.Sprite.INDEX_NOT_INITIALIZED **[New in alpha 2]**
-    cc.DIRECTOR_PROJECTION_2D               --> cc.Director.PROJECTION_2D **[New in alpha 2]**
-    cc.DIRECTOR_PROJECTION_3D               --> cc.Director.PROJECTION_3D **[New in alpha 2]**
-    cc.DIRECTOR_PROJECTION_CUSTOM           --> cc.Director.PROJECTION_CUSTOM **[New in alpha 2]**
-    cc.DIRECTOR_PROJECTION_DEFAULT          --> cc.Director.PROJECTION_DEFAULT **[New in alpha 2]**
+    cc.SPRITE_INDEX_NOT_INITIALIZED         --> cc.Sprite.INDEX_NOT_INITIALIZED // [New in alpha 2]
+    cc.DIRECTOR_PROJECTION_2D               --> cc.Director.PROJECTION_2D // [New in alpha 2]
+    cc.DIRECTOR_PROJECTION_3D               --> cc.Director.PROJECTION_3D // [New in alpha 2]
+    cc.DIRECTOR_PROJECTION_CUSTOM           --> cc.Director.PROJECTION_CUSTOM // [New in alpha 2]
+    cc.DIRECTOR_PROJECTION_DEFAULT          --> cc.Director.PROJECTION_DEFAULT // [New in alpha 2]
     cc.TEXTURE_2D_PIXEL_FORMAT_RGBA8888     --> cc.Texture2D.PIXEL_FORMAT_RGBA8888
     cc.TEXTURE_2D_PIXEL_FORMAT_RGB888       --> cc.Texture2D.PIXEL_FORMAT_RGB888
     cc.TEXTURE_2D_PIXEL_FORMAT_RGB565       --> cc.Texture2D.PIXEL_FORMAT_RGB565
@@ -524,7 +569,7 @@ if (cc.sys.isNative) {
     
     ```
     
-* **10.10** **[New in alpha 2]** Other changes in alpha 2
+* **11.10** **[New in alpha 2]** Other changes in alpha 2
 
     - cc.Node refactoration :
     
