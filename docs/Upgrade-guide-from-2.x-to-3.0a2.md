@@ -246,7 +246,7 @@ var Enemy = cc.Sprite.extend({
 var enemy1 = new Enemy(100);
 ```
 
-As you can see, there isn't a single `init` function call, very convenient to use. All cocos2d (no extension) classes have been refactored to support this style, and JSB support it too. Document which discuss the `new` constructor and the inheritance will be pulished very soon.
+As you can see, there isn't a single `init` function call, very convenient to use. All cocos2d (no extension) classes have been refactored to support this style, and JSB support it too. [This document](../../../v3.0/inheritance/en) discuss the `new` constructor and the inheritance in detail.
 
 
 ##8. GUI widgets
