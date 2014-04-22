@@ -33,7 +33,8 @@
 #  define MOZ_UTF16_HELPER(s) L##s
 #  define _CHAR16T
 #  ifdef __cplusplus
-     typedef wchar_t char16_t;
+     //typedef wchar_t char16_t;
+     typedef unsigned short char16_t;
 #  else
      typedef unsigned short char16_t;
 #  endif
