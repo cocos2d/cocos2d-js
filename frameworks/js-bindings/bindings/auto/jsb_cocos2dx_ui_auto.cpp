@@ -670,7 +670,7 @@ bool js_cocos2dx_ui_Widget_setFlippedY(JSContext *cx, uint32_t argc, jsval *vp)
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_setFlippedY : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_setFlippedY : Error processing arguments");
 		cobj->setFlippedY(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -690,7 +690,7 @@ bool js_cocos2dx_ui_Widget_setFlippedX(JSContext *cx, uint32_t argc, jsval *vp)
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_setFlippedX : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_setFlippedX : Error processing arguments");
 		cobj->setFlippedX(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1061,7 +1061,7 @@ bool js_cocos2dx_ui_Widget_setFocused(JSContext *cx, uint32_t argc, jsval *vp)
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_setFocused : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_setFocused : Error processing arguments");
 		cobj->setFocused(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1081,7 +1081,7 @@ bool js_cocos2dx_ui_Widget_setTouchEnabled(JSContext *cx, uint32_t argc, jsval *
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_setTouchEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_setTouchEnabled : Error processing arguments");
 		cobj->setTouchEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1142,7 +1142,7 @@ bool js_cocos2dx_ui_Widget_setEnabled(JSContext *cx, uint32_t argc, jsval *vp)
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1447,7 +1447,7 @@ bool js_cocos2dx_ui_Widget_ignoreContentAdaptWithSize(JSContext *cx, uint32_t ar
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_ignoreContentAdaptWithSize : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_ignoreContentAdaptWithSize : Error processing arguments");
 		cobj->ignoreContentAdaptWithSize(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1611,7 +1611,7 @@ bool js_cocos2dx_ui_Widget_setBright(JSContext *cx, uint32_t argc, jsval *vp)
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_setBright : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_setBright : Error processing arguments");
 		cobj->setBright(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2094,7 +2094,7 @@ bool js_cocos2dx_ui_Layout_setClippingEnabled(JSContext *cx, uint32_t argc, jsva
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_setClippingEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Layout_setClippingEnabled : Error processing arguments");
 		cobj->setClippingEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2290,7 +2290,7 @@ bool js_cocos2dx_ui_Layout_setBackGroundImageScale9Enabled(JSContext *cx, uint32
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_setBackGroundImageScale9Enabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Layout_setBackGroundImageScale9Enabled : Error processing arguments");
 		cobj->setBackGroundImageScale9Enabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2527,7 +2527,7 @@ bool js_cocos2dx_ui_Button_setScale9Enabled(JSContext *cx, uint32_t argc, jsval 
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_setScale9Enabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Button_setScale9Enabled : Error processing arguments");
 		cobj->setScale9Enabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3008,7 +3008,7 @@ bool js_cocos2dx_ui_Button_setPressedActionEnabled(JSContext *cx, uint32_t argc,
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_setPressedActionEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Button_setPressedActionEnabled : Error processing arguments");
 		cobj->setPressedActionEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3515,7 +3515,7 @@ bool js_cocos2dx_ui_CheckBox_setSelectedState(JSContext *cx, uint32_t argc, jsva
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_CheckBox_setSelectedState : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_CheckBox_setSelectedState : Error processing arguments");
 		cobj->setSelectedState(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3840,7 +3840,7 @@ bool js_cocos2dx_ui_ImageView_setScale9Enabled(JSContext *cx, uint32_t argc, jsv
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ImageView_setScale9Enabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ImageView_setScale9Enabled : Error processing arguments");
 		cobj->setScale9Enabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -4156,7 +4156,7 @@ bool js_cocos2dx_ui_Text_setTouchScaleChangeEnabled(JSContext *cx, uint32_t argc
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_setTouchScaleChangeEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Text_setTouchScaleChangeEnabled : Error processing arguments");
 		cobj->setTouchScaleChangeEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -4921,7 +4921,7 @@ bool js_cocos2dx_ui_LoadingBar_setScale9Enabled(JSContext *cx, uint32_t argc, js
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LoadingBar_setScale9Enabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LoadingBar_setScale9Enabled : Error processing arguments");
 		cobj->setScale9Enabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5218,7 +5218,7 @@ bool js_cocos2dx_ui_ScrollView_scrollToTop(JSContext *cx, uint32_t argc, jsval *
 		double arg0;
 		bool arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToTop : Error processing arguments");
 		cobj->scrollToTop(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5242,7 +5242,7 @@ bool js_cocos2dx_ui_ScrollView_scrollToPercentHorizontal(JSContext *cx, uint32_t
 		bool arg2;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
-		ok &= JS_ValueToBoolean(cx, argv[2], &arg2);
+		arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToPercentHorizontal : Error processing arguments");
 		cobj->scrollToPercentHorizontal(arg0, arg1, arg2);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5283,7 +5283,7 @@ bool js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection(JSContext *cx, uint3
 		bool arg2;
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
-		ok &= JS_ValueToBoolean(cx, argv[2], &arg2);
+		arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection : Error processing arguments");
 		cobj->scrollToPercentBothDirection(arg0, arg1, arg2);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5322,7 +5322,7 @@ bool js_cocos2dx_ui_ScrollView_scrollToBottomLeft(JSContext *cx, uint32_t argc, 
 		double arg0;
 		bool arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToBottomLeft : Error processing arguments");
 		cobj->scrollToBottomLeft(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5403,7 +5403,7 @@ bool js_cocos2dx_ui_ScrollView_scrollToTopLeft(JSContext *cx, uint32_t argc, jsv
 		double arg0;
 		bool arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToTopLeft : Error processing arguments");
 		cobj->scrollToTopLeft(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5527,7 +5527,7 @@ bool js_cocos2dx_ui_ScrollView_setInertiaScrollEnabled(JSContext *cx, uint32_t a
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_setInertiaScrollEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_setInertiaScrollEnabled : Error processing arguments");
 		cobj->setInertiaScrollEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5597,7 +5597,7 @@ bool js_cocos2dx_ui_ScrollView_setBounceEnabled(JSContext *cx, uint32_t argc, js
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_setBounceEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_setBounceEnabled : Error processing arguments");
 		cobj->setBounceEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5634,7 +5634,7 @@ bool js_cocos2dx_ui_ScrollView_scrollToLeft(JSContext *cx, uint32_t argc, jsval 
 		double arg0;
 		bool arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToLeft : Error processing arguments");
 		cobj->scrollToLeft(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5678,7 +5678,7 @@ bool js_cocos2dx_ui_ScrollView_scrollToPercentVertical(JSContext *cx, uint32_t a
 		bool arg2;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
-		ok &= JS_ValueToBoolean(cx, argv[2], &arg2);
+		arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToPercentVertical : Error processing arguments");
 		cobj->scrollToPercentVertical(arg0, arg1, arg2);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5700,7 +5700,7 @@ bool js_cocos2dx_ui_ScrollView_scrollToBottom(JSContext *cx, uint32_t argc, jsva
 		double arg0;
 		bool arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToBottom : Error processing arguments");
 		cobj->scrollToBottom(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5722,7 +5722,7 @@ bool js_cocos2dx_ui_ScrollView_scrollToBottomRight(JSContext *cx, uint32_t argc,
 		double arg0;
 		bool arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToBottomRight : Error processing arguments");
 		cobj->scrollToBottomRight(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5759,7 +5759,7 @@ bool js_cocos2dx_ui_ScrollView_scrollToRight(JSContext *cx, uint32_t argc, jsval
 		double arg0;
 		bool arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToRight : Error processing arguments");
 		cobj->scrollToRight(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5796,7 +5796,7 @@ bool js_cocos2dx_ui_ScrollView_scrollToTopRight(JSContext *cx, uint32_t argc, js
 		double arg0;
 		bool arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToTopRight : Error processing arguments");
 		cobj->scrollToTopRight(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -6710,7 +6710,7 @@ bool js_cocos2dx_ui_Slider_setScale9Enabled(JSContext *cx, uint32_t argc, jsval 
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_setScale9Enabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Slider_setScale9Enabled : Error processing arguments");
 		cobj->setScale9Enabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -6978,7 +6978,7 @@ bool js_cocos2dx_ui_TextField_setAttachWithIME(JSContext *cx, uint32_t argc, jsv
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_setAttachWithIME : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_TextField_setAttachWithIME : Error processing arguments");
 		cobj->setAttachWithIME(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -7120,7 +7120,7 @@ bool js_cocos2dx_ui_TextField_setInsertText(JSContext *cx, uint32_t argc, jsval 
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_setInsertText : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_TextField_setInsertText : Error processing arguments");
 		cobj->setInsertText(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -7244,7 +7244,7 @@ bool js_cocos2dx_ui_TextField_setPasswordEnabled(JSContext *cx, uint32_t argc, j
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_setPasswordEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_TextField_setPasswordEnabled : Error processing arguments");
 		cobj->setPasswordEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -7281,7 +7281,7 @@ bool js_cocos2dx_ui_TextField_setMaxLengthEnabled(JSContext *cx, uint32_t argc, 
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_setMaxLengthEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_TextField_setMaxLengthEnabled : Error processing arguments");
 		cobj->setMaxLengthEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -7321,7 +7321,7 @@ bool js_cocos2dx_ui_TextField_setDeleteBackward(JSContext *cx, uint32_t argc, js
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_setDeleteBackward : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_TextField_setDeleteBackward : Error processing arguments");
 		cobj->setDeleteBackward(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -7452,7 +7452,7 @@ bool js_cocos2dx_ui_TextField_setDetachWithIME(JSContext *cx, uint32_t argc, jsv
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_setDetachWithIME : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_TextField_setDetachWithIME : Error processing arguments");
 		cobj->setDetachWithIME(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -7492,7 +7492,7 @@ bool js_cocos2dx_ui_TextField_setTouchAreaEnabled(JSContext *cx, uint32_t argc, 
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_setTouchAreaEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_TextField_setTouchAreaEnabled : Error processing arguments");
 		cobj->setTouchAreaEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -8033,7 +8033,7 @@ bool js_cocos2dx_ui_PageView_addWidgetToPage(JSContext *cx, uint32_t argc, jsval
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
 		ok &= jsval_to_ssize(cx, argv[1], &arg1);
-		ok &= JS_ValueToBoolean(cx, argv[2], &arg2);
+		arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_PageView_addWidgetToPage : Error processing arguments");
 		cobj->addWidgetToPage(arg0, arg1, arg2);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
