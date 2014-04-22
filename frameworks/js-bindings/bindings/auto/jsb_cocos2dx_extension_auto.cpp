@@ -268,8 +268,7 @@ bool js_cocos2dx_extension_Scale9Sprite_initWithBatchNode(JSContext *cx, uint32_
 			ok &= jsval_to_ccrect(cx, argv[1], &arg1);
 			if (!ok) { ok = true; break; }
 			bool arg2;
-			ok &= JS_ValueToBoolean(cx, argv[2], &arg2);
-			if (!ok) { ok = true; break; }
+			arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
 			cocos2d::Rect arg3;
 			ok &= jsval_to_ccrect(cx, argv[3], &arg3);
 			if (!ok) { ok = true; break; }
@@ -340,7 +339,7 @@ bool js_cocos2dx_extension_Scale9Sprite_updateWithBatchNode(JSContext *cx, uint3
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
 		ok &= jsval_to_ccrect(cx, argv[1], &arg1);
-		ok &= JS_ValueToBoolean(cx, argv[2], &arg2);
+		arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
 		ok &= jsval_to_ccrect(cx, argv[3], &arg3);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_Scale9Sprite_updateWithBatchNode : Error processing arguments");
 		bool ret = cobj->updateWithBatchNode(arg0, arg1, arg2, arg3);
@@ -987,7 +986,7 @@ bool js_cocos2dx_extension_Control_setEnabled(JSContext *cx, uint32_t argc, jsva
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_Control_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_Control_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1044,7 +1043,7 @@ bool js_cocos2dx_extension_Control_setSelected(JSContext *cx, uint32_t argc, jsv
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_Control_setSelected : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_Control_setSelected : Error processing arguments");
 		cobj->setSelected(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1159,7 +1158,7 @@ bool js_cocos2dx_extension_Control_setHighlighted(JSContext *cx, uint32_t argc, 
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_Control_setHighlighted : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_Control_setHighlighted : Error processing arguments");
 		cobj->setHighlighted(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1365,7 +1364,7 @@ bool js_cocos2dx_extension_ControlButton_setSelected(JSContext *cx, uint32_t arg
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlButton_setSelected : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlButton_setSelected : Error processing arguments");
 		cobj->setSelected(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1414,7 +1413,7 @@ bool js_cocos2dx_extension_ControlButton_setAdjustBackgroundImage(JSContext *cx,
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlButton_setAdjustBackgroundImage : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlButton_setAdjustBackgroundImage : Error processing arguments");
 		cobj->setAdjustBackgroundImage(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1434,7 +1433,7 @@ bool js_cocos2dx_extension_ControlButton_setHighlighted(JSContext *cx, uint32_t 
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlButton_setHighlighted : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlButton_setHighlighted : Error processing arguments");
 		cobj->setHighlighted(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1454,7 +1453,7 @@ bool js_cocos2dx_extension_ControlButton_setZoomOnTouchDown(JSContext *cx, uint3
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlButton_setZoomOnTouchDown : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlButton_setZoomOnTouchDown : Error processing arguments");
 		cobj->setZoomOnTouchDown(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1692,7 +1691,7 @@ bool js_cocos2dx_extension_ControlButton_setEnabled(JSContext *cx, uint32_t argc
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlButton_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlButton_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2539,7 +2538,7 @@ bool js_cocos2dx_extension_ControlHuePicker_setEnabled(JSContext *cx, uint32_t a
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlHuePicker_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlHuePicker_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3015,7 +3014,7 @@ bool js_cocos2dx_extension_ControlSaturationBrightnessPicker_setEnabled(JSContex
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlSaturationBrightnessPicker_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlSaturationBrightnessPicker_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3251,7 +3250,7 @@ bool js_cocos2dx_extension_ControlColourPicker_setEnabled(JSContext *cx, uint32_
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlColourPicker_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlColourPicker_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -4395,7 +4394,7 @@ bool js_cocos2dx_extension_ControlSlider_setEnabled(JSContext *cx, uint32_t argc
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlSlider_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlSlider_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5087,7 +5086,7 @@ bool js_cocos2dx_extension_ControlStepper_setWraps(JSContext *cx, uint32_t argc,
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlStepper_setWraps : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlStepper_setWraps : Error processing arguments");
 		cobj->setWraps(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5170,7 +5169,7 @@ bool js_cocos2dx_extension_ControlStepper_setValueWithSendingEvent(JSContext *cx
 		double arg0;
 		bool arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlStepper_setValueWithSendingEvent : Error processing arguments");
 		cobj->setValueWithSendingEvent(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5657,7 +5656,7 @@ bool js_cocos2dx_extension_ControlSwitch_setEnabled(JSContext *cx, uint32_t argc
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlSwitch_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlSwitch_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5681,8 +5680,7 @@ bool js_cocos2dx_extension_ControlSwitch_setOn(JSContext *cx, uint32_t argc, jsv
 	do {
 		if (argc == 1) {
 			bool arg0;
-			ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
-			if (!ok) { ok = true; break; }
+			arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 			cobj->setOn(arg0);
 			JS_SET_RVAL(cx, vp, JSVAL_VOID);
 			return true;
@@ -5692,11 +5690,9 @@ bool js_cocos2dx_extension_ControlSwitch_setOn(JSContext *cx, uint32_t argc, jsv
 	do {
 		if (argc == 2) {
 			bool arg0;
-			ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
-			if (!ok) { ok = true; break; }
+			arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 			bool arg1;
-			ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
-			if (!ok) { ok = true; break; }
+			arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 			cobj->setOn(arg0, arg1);
 			JS_SET_RVAL(cx, vp, JSVAL_VOID);
 			return true;
@@ -6239,7 +6235,7 @@ bool js_cocos2dx_extension_ScrollView_setBounceable(JSContext *cx, uint32_t argc
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_setBounceable : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ScrollView_setBounceable : Error processing arguments");
 		cobj->setBounceable(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -6469,7 +6465,7 @@ bool js_cocos2dx_extension_ScrollView_setContentOffset(JSContext *cx, uint32_t a
 		cocos2d::Point arg0;
 		bool arg1;
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ScrollView_setContentOffset : Error processing arguments");
 		cobj->setContentOffset(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -6540,7 +6536,7 @@ bool js_cocos2dx_extension_ScrollView_setTouchEnabled(JSContext *cx, uint32_t ar
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_setTouchEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ScrollView_setTouchEnabled : Error processing arguments");
 		cobj->setTouchEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -6604,7 +6600,7 @@ bool js_cocos2dx_extension_ScrollView_setClippingToBounds(JSContext *cx, uint32_
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_setClippingToBounds : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ScrollView_setClippingToBounds : Error processing arguments");
 		cobj->setClippingToBounds(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -6748,8 +6744,7 @@ bool js_cocos2dx_extension_ScrollView_setZoomScale(JSContext *cx, uint32_t argc,
 			ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 			if (!ok) { ok = true; break; }
 			bool arg1;
-			ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
-			if (!ok) { ok = true; break; }
+			arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 			cobj->setZoomScale(arg0, arg1);
 			JS_SET_RVAL(cx, vp, JSVAL_VOID);
 			return true;

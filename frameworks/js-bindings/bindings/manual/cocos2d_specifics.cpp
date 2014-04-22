@@ -1834,7 +1834,7 @@ bool js_CCScheduler_scheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsval 
         bool paused = false;
         
         if( argc >= 3 ) {
-            ok &= JS_ValueToBoolean(cx,  argv[2], &paused);
+            paused = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
         }
         
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1955,7 +1955,7 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         bool paused = false;
         
         if( argc >= 6 ) {
-            ok &= JS_ValueToBoolean(cx,  argv[5], &paused);
+            paused = JS::ToBoolean(JS::RootedValue(cx,  argv[5]));
         }
         
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -4248,7 +4248,6 @@ bool jsval_to_TTFConfig(JSContext *cx, jsval v, TTFConfig* ret) {
 
     std::string fontFilePath,customGlyphs;
     double fontSize, glyphs;
-    bool distanceFieldEnable;
 
     bool ok = v.isObject() &&
         JS_ValueToObject(cx, JS::RootedValue(cx, v), &tmp) &&
@@ -4259,9 +4258,9 @@ bool jsval_to_TTFConfig(JSContext *cx, jsval v, TTFConfig* ret) {
         JS_GetProperty(cx, tmp, "distanceFieldEnable", &js_distanceFieldEnable) &&
         JS::ToNumber(cx, js_fontSize, &fontSize) &&
         JS::ToNumber(cx, js_glyphs, &glyphs) &&
-        JS_ValueToBoolean(cx,js_distanceFieldEnable,&distanceFieldEnable) &&
         jsval_to_std_string(cx,js_fontFilePath,&ret->fontFilePath) &&
         jsval_to_std_string(cx,js_customGlyphs,&customGlyphs);
+    bool distanceFieldEnable = JS::ToBoolean(js_distanceFieldEnable);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
