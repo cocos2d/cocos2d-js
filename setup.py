@@ -602,7 +602,7 @@ class SetEnvVar(object):
         self.set_console_root()
 
         if self._isWindows():
-            print('->Configuration for Android platform only\n')
+            print('->Configuration for Android platform only, you can also skip and manually edit your environment variables\n')
         else:
             print('->Configuration for Android platform only, you can also skip and manually edit "%s"\n' % self.file_used_for_setup)
 
