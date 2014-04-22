@@ -3,7 +3,7 @@
 Cocos2d-JS
 ===========
 
-Cocos2d-JS is Cocos2d-x engine's javascript version. It support full Cocos2d-x features with a set of simplified javascript friendly APIs.
+Cocos2d-JS is Cocos2d-x engine's javascript version which include Cocos2d-html5 and Cocos2d-x JSBinding. It support full Cocos2d-x features with a set of simplified javascript friendly APIs.
 
 Cocos2d-JS provides a consistent development experience for whichever platform you want to distribute to, both web and native. "Code once, run everywhere" is incredibly easy and natural in Cocos2d-JS. With one single javascript code base, you can run your game on both web browsers and native platform including Mac OS, Windows, iOS, Android. This will bring your game great opportunities in almost all canals of distribution.
 
