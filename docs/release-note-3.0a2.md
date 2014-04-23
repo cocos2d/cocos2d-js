@@ -17,11 +17,12 @@ For more informations please see [Cocos2d-JS github site](https://github.com/coc
 ## Highlights
 
 * **[Alpha2 Feature]** Provided a download page for web developers to choose modules and download customized Cocos2d-JS web engine, in one single file, compressed or not, [Online link](http://www.cocos2d-x.org/jsbuilder).
-* **[Alpha2 Feature]** Supported `new` operator for engine classes, constructor started to accept the same parameters as create functions, and developer can pass initilization parameters in `ctor` while extend engine classes, [document reference](http://www.cocos2d-x.org/docs/manual/framework/html5/v3.0/inheritance/en)
-* Provided a python tool which make the development of Html5 and JSB application much simpler and more convenient, [Cocos Console document](http://www.cocos2d-x.org/docs/manual/framework/html5/cocos-console/en).
+* **[Alpha2 Feature]** Supported `new` operator for engine classes, constructor started to accept the same parameters as create functions, and developer can pass initilization parameters in `ctor` while extend engine classes, [document reference](http://www.cocos2d-x.org/docs/manual/framework/html5/v3.0/inheritance/en).
+* **[Alpha2 Feature]** Added Cocos Console support to test cases and Moon Warriors game sample.
+* Provided a console tool which make the development of HTML5 and JSB application much simpler and more convenient, [Cocos Console document](http://www.cocos2d-x.org/docs/manual/framework/html5/cocos-console/en).
 * Incredibly simplified game creation process via cc.game which replaced old cc.Application, [cc.game document](http://www.cocos2d-x.org/docs/manual/framework/html5/v3.0/cc-game/en).
 * Refactored some properties of all rendering classes with getter setter for providing a new set of Javascript user friendly APIs, and provided `attr` function for cc.Node to modify multiple properties, [property APIs document](http://www.cocos2d-x.org/docs/manual/framework/html5/v3.0/getter-setter-api/en).
-* Added new event manager to cocos2d-html5, all events are dispatched via cc.eventManager with several types of event listener including custom event listener, [event manager document](http://www.cocos2d-x.org/docs/manual/framework/html5/v3.0/eventManager/en).
+* Added new event manager to Cocos2d-JS, all events are dispatched via cc.eventManager with several types of event listener including custom event listener, [event manager document](http://www.cocos2d-x.org/docs/manual/framework/html5/v3.0/eventManager/en).
 
 ### More information ###
 
