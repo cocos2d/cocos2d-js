@@ -124,6 +124,7 @@ void AppDelegate::applicationDidEnterBackground()
     Director::getInstance()->stopAnimation();
     SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
     SimpleAudioEngine::getInstance()->pauseAllEffects();
+    Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("game_on_hide");
 }
 
 // this function will be called when the app is active again
@@ -132,4 +133,5 @@ void AppDelegate::applicationWillEnterForeground()
     Director::getInstance()->startAnimation();
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     SimpleAudioEngine::getInstance()->resumeAllEffects();
+    Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("game_on_show");
 }
