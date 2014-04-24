@@ -41,7 +41,9 @@
                 "exclude":[
                    "cocos2d-console",
                    "make-package",
-                   "travis-scripts"
+                   "travis-scripts",
+                   "bindings-generator/.git",
+                   "bindings-generator/.gitignore"
                 ]
              }
          ],
