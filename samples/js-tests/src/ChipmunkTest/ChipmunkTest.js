@@ -192,8 +192,10 @@ ChipmunkSprite.prototype.onEnter = function () {
 	//cc.base(this, 'onEnter');
 
 	this.scheduleUpdate();
-	for(var i=0; i<10; i++) {
-		this.addSprite( cp.v(winSize.width/2, winSize.height/2) );
+	for(var i = 0, varx = vary = 0; i<10; i++) {
+        varx = cc.random0To1();
+        vary = cc.random0To1();
+		this.addSprite( cp.v(winSize.width/2 + varx, winSize.height/2 + vary) );
 	}
 
     if( 'touches' in cc.sys.capabilities ){
