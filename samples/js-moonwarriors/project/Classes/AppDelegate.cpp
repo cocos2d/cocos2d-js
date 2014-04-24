@@ -92,8 +92,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 void AppDelegate::applicationDidEnterBackground()
 {
     auto director = Director::getInstance();
-	director->stopAnimation();
-	director->getEventDispatcher()->dispatchCustomEvent("game_on_hide");
+    director->stopAnimation();
+    director->getEventDispatcher()->dispatchCustomEvent("game_on_hide");
     SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
     SimpleAudioEngine::getInstance()->pauseAllEffects();	
 }
@@ -102,8 +102,8 @@ void AppDelegate::applicationDidEnterBackground()
 void AppDelegate::applicationWillEnterForeground()
 {
     auto director = Director::getInstance();
-	director->startAnimation();
-	director->getEventDispatcher()->dispatchCustomEvent("game_on_show");
+    director->startAnimation();
+    director->getEventDispatcher()->dispatchCustomEvent("game_on_show");
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     SimpleAudioEngine::getInstance()->resumeAllEffects();
 }
