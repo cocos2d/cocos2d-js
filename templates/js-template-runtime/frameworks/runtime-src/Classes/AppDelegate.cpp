@@ -13,6 +13,7 @@
 #include "localstorage/js_bindings_system_registration.h"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
+#include "network/XMLHTTPRequest.h"
 #include "Runtime.h"
 
 USING_NS_CC;
@@ -56,6 +57,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_chipmunk);
+    sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     
 #ifdef COCOS2D_DEBUG
     if (startRuntime())
