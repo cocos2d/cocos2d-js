@@ -15889,6 +15889,86 @@ getInstance : function (
 cc.GLViewProtocol = {
 
 /**
+ * @method setFrameSize
+ * @param {float} arg0
+ * @param {float} arg1
+ */
+setFrameSize : function (
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method getViewPortRect
+ * @return {RectObject}
+ */
+getViewPortRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method setIMEKeyboardState
+ * @param {bool} arg0
+ */
+setIMEKeyboardState : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getViewName
+ * @return {String}
+ */
+getViewName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method isOpenGLReady
+ * @return {bool}
+ */
+isOpenGLReady : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method end
+ */
+end : function (
+)
+{
+},
+
+/**
+ * @method getScaleY
+ * @return {float}
+ */
+getScaleY : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getScaleX
+ * @return {float}
+ */
+getScaleX : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getVisibleOrigin
  * @return {PointObject}
  */
@@ -15896,6 +15976,26 @@ getVisibleOrigin : function (
 )
 {
     return cc.Point;
+},
+
+/**
+ * @method getFrameSize
+ * @return {SizeObject}
+ */
+getFrameSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method getDesignResolutionSize
+ * @return {SizeObject}
+ */
+getDesignResolutionSize : function (
+)
+{
+    return cc.Size;
 },
 
 /**
@@ -15910,6 +16010,52 @@ float,
 resolutionpolicy 
 )
 {
+},
+
+/**
+ * @method getResolutionPolicy
+ * @return {ResolutionPolicy}
+ */
+getResolutionPolicy : function (
+)
+{
+    return ResolutionPolicy;
+},
+
+/**
+ * @method setViewPortInPoints
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ */
+setViewPortInPoints : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method setViewName
+ * @param {String} arg0
+ */
+setViewName : function (
+str 
+)
+{
+},
+
+/**
+ * @method getVisibleRect
+ * @return {RectObject}
+ */
+getVisibleRect : function (
+)
+{
+    return cc.Rect;
 },
 
 /**
