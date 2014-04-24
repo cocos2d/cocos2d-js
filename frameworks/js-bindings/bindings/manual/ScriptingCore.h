@@ -124,10 +124,14 @@ public:
 	bool runScript(const char *path, JSObject* global = NULL, JSContext* cx = NULL);
 
     /**
-     *will reload the specified string
-     *@param string The path of the script to reload
+     * will clean script object the specified string
      */
-    bool reloadScript(const char *path,bool reloadAll=false);
+    void cleanScript(const char *path);
+    
+     /**
+     * will clean all script object
+     */
+    void cleanAllScript();
     
 	/**
 	 * initialize everything
