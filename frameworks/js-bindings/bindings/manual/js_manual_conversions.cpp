@@ -274,7 +274,7 @@ jsval longlong_to_jsval( JSContext *cx, long long number )
 
 bool jsval_to_charptr( JSContext *cx, jsval vp, const char **ret )
 {
-    JSString *jsstr = JS_ValueToString( cx, vp );
+    JSString *jsstr = JS::ToString( cx, JS::RootedValue(cx, vp) );
     JSB_PRECONDITION2( jsstr, cx, false, "invalid string" );
 
     // root it
@@ -450,7 +450,7 @@ bool jsval_to_long( JSContext *cx, jsval vp, long *r )
 #ifdef __LP64__
 	// compatibility check
 	assert( sizeof(long)==8);
-	JSString *jsstr = JS_ValueToString(cx, vp);
+	JSString *jsstr = JS::ToString(cx, JS::RootedValue(cx, vp));
 	JSB_PRECONDITION2(jsstr, cx, false, "Error converting value to string");
     
 	char *str = JS_EncodeString(cx, jsstr);
@@ -506,7 +506,7 @@ bool jsval_to_long_long(JSContext *cx, jsval vp, long long* r)
 }
 
 bool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
-    JSString *tmp = JS_ValueToString(cx, v);
+    JSString *tmp = JS::ToString(cx, JS::RootedValue(cx, v));
     JSB_PRECONDITION3(tmp, cx, false, "Error processing arguments");
     
     JSStringWrapper str(tmp);
@@ -645,12 +645,8 @@ bool jsvals_variadic_to_ccvaluevector( JSContext *cx, jsval *vp, int argc, cocos
         }
         else if (JSVAL_IS_BOOLEAN(value))
         {
-            bool boolVal = false;
-            bool ok = JS_ValueToBoolean(cx, value, &boolVal);
-            if (ok)
-            {
-                ret->push_back(Value(boolVal));
-            }
+            bool boolVal = JS::ToBoolean(JS::RootedValue(cx, value));
+            ret->push_back(Value(boolVal));
         }
         else
         {
@@ -887,12 +883,9 @@ bool jsval_to_ccarray(JSContext* cx, jsval v, __Array** ret)
                 }
             }
             else if (JSVAL_IS_BOOLEAN(value)) {
-                bool boolVal = false;
-                ok = JS_ValueToBoolean(cx, value, &boolVal);
-                if (ok) {
-                    arr->addObject(Bool::create(boolVal));
-                    // CCLOG("iterate object: value = %d", boolVal);
-                }
+                bool boolVal = JS::ToBoolean(value);
+                arr->addObject(Bool::create(boolVal));
+                // CCLOG("iterate object: value = %d", boolVal);
             }
             else {
                 CCASSERT(false, "not supported type");
@@ -944,11 +937,8 @@ bool jsval_to_ccvalue(JSContext* cx, jsval v, cocos2d::Value* ret)
     }
     else if (JSVAL_IS_BOOLEAN(v))
     {
-        bool boolVal = false;
-        bool ok = JS_ValueToBoolean(cx, v, &boolVal);
-        if (ok) {
-            *ret = Value(boolVal);
-        }
+        bool boolVal = JS::ToBoolean(JS::RootedValue(cx, v));
+        *ret = Value(boolVal);
     }
     else {
         CCASSERT(false, "not supported type");
@@ -1035,12 +1025,9 @@ bool jsval_to_ccvaluemap(JSContext* cx, jsval v, cocos2d::ValueMap* ret)
         }
         else if (JSVAL_IS_BOOLEAN(value))
         {
-            bool boolVal = false;
-            bool ok = JS_ValueToBoolean(cx, value, &boolVal);
-            if (ok) {
-                dict[keyWrapper.get()] = Value(boolVal);
-                // CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
-            }
+            bool boolVal = JS::ToBoolean(value);
+            dict[keyWrapper.get()] = Value(boolVal);
+            // CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
         }
         else {
             CCASSERT(false, "not supported type");
@@ -1126,11 +1113,8 @@ bool jsval_to_ccvaluemapintkey(JSContext* cx, jsval v, cocos2d::ValueMapIntKey* 
         }
         else if (JSVAL_IS_BOOLEAN(value))
         {
-            bool boolVal = false;
-            bool ok = JS_ValueToBoolean(cx, value, &boolVal);
-            if (ok) {
-                dict[keyVal] = Value(boolVal);
-            }
+            bool boolVal = JS::ToBoolean(value);
+            dict[keyVal] = Value(boolVal);
         }
         else {
             CCASSERT(false, "not supported type");
@@ -1196,12 +1180,8 @@ bool jsval_to_ccvaluevector(JSContext* cx, jsval v, cocos2d::ValueVector* ret)
             }
             else if (JSVAL_IS_BOOLEAN(value))
             {
-                bool boolVal = false;
-                ok = JS_ValueToBoolean(cx, value, &boolVal);
-                if (ok)
-                {
-                    ret->push_back(Value(boolVal));
-                }
+                bool boolVal = JS::ToBoolean(value);
+                ret->push_back(Value(boolVal));
             }
             else
             {
@@ -1472,12 +1452,9 @@ bool jsval_to_ccdictionary(JSContext* cx, jsval v, __Dictionary** ret)
             }
         }
         else if (JSVAL_IS_BOOLEAN(value)) {
-            bool boolVal = false;
-            bool ok = JS_ValueToBoolean(cx, value, &boolVal);
-            if (ok) {
-                dict->setObject(Bool::create(boolVal), keyWrapper.get());
-                //                CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
-            }
+            bool boolVal = JS::ToBoolean(value);
+            dict->setObject(Bool::create(boolVal), keyWrapper.get());
+            // CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
         }
         else {
             CCASSERT(false, "not supported type");
@@ -1746,7 +1723,7 @@ bool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     // font name
     JS::RootedValue jsr(cx);
     JS_GetProperty(cx, jsobj, "fontName", &jsr);
-    JS_ValueToString(cx, jsr);
+    JS::ToString(cx, jsr);
     JSStringWrapper wrapper(jsr);
     const char* fontName = wrapper.get();
     
