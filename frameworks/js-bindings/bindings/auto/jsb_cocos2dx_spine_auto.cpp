@@ -86,7 +86,7 @@ bool js_cocos2dx_spine_Skeleton_onDraw(JSContext *cx, uint32_t argc, jsval *vp)
 		kmMat4 arg0;
 		bool arg1;
 		#pragma warning NO CONVERSION TO NATIVE FOR kmMat4;
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_Skeleton_onDraw : Error processing arguments");
 		cobj->onDraw(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -398,8 +398,7 @@ bool js_cocos2dx_spine_Skeleton_constructor(JSContext *cx, uint32_t argc, jsval 
 			#pragma warning NO CONVERSION TO NATIVE FOR spSkeletonData*;
 			if (!ok) { ok = true; break; }
 			bool arg1;
-			ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
-			if (!ok) { ok = true; break; }
+			arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 			cobj = new spine::Skeleton(arg0, arg1);
 			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
 			if (_ccobj) {
