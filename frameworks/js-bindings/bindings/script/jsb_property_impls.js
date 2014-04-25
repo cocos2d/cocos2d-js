@@ -1,5 +1,4 @@
 /*
- * Created by Huabin LING
  * Copyright (c) 2014 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
