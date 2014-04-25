@@ -568,6 +568,10 @@ cc.view.getDevicePixelRatio = function () {
     var sys = cc.sys;
     return (sys.os == sys.OS_IOS || sys.os == sys.OS_OSX) ? 2 : 1;
 };
+cc.view.convertToLocationInView = function (tx, ty, relatedPos) {
+    var _devicePixelRatio = cc.view.getDevicePixelRatio();
+    return {x: _devicePixelRatio * (tx - relatedPos.left), y: _devicePixelRatio * (relatedPos.top + relatedPos.height - ty)};
+};
 cc.view.enableRetina = function(enabled) {};
 cc.view.isRetinaEnabled = function() {
     var sys = cc.sys;
@@ -582,7 +586,14 @@ cc.view._setDesignResolutionSize = cc.view.setDesignResolutionSize;
 cc.view.setDesignResolutionSize = function(width,height,resolutionPolicy){
     cc.view._setDesignResolutionSize(width,height,resolutionPolicy);
     cc.winSize = cc.director.getWinSize();
-}
+};
+cc.view.setResolutionPolicy = function(resolutionPolicy){
+    var size = cc.view.getDesignResolutionSize()
+    cc.view.setDesignResolutionSize(size.width,size.height,resolutionPolicy);
+};
+cc.view.setContentTranslateLeftTop = function(){return;};
+cc.view.getContentTranslateLeftTop = function(){return null;};
+cc.view.setFrameZoomFactor = function(){return;};
 
 cc.eventManager = cc.director.getEventDispatcher();
 cc.audioEngine = cc.AudioEngine.getInstance();
@@ -903,6 +914,9 @@ cc.game = {
     DEBUG_MODE_INFO_FOR_WEB_PAGE : 4,
     DEBUG_MODE_WARN_FOR_WEB_PAGE : 5,
     DEBUG_MODE_ERROR_FOR_WEB_PAGE : 6,
+
+    EVENT_HIDE: "game_on_hide",
+    EVENT_SHOW: "game_on_show",
     
     /**
      * Key of config
