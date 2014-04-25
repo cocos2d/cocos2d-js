@@ -13,6 +13,7 @@
 #include "localstorage/js_bindings_system_registration.h"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
+#include "network/XMLHTTPRequest.h"
 #include "Runtime.h"
 
 USING_NS_CC;
@@ -31,11 +32,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
-	auto glview = director->getOpenGLView();
-	if(!glview) {
-		glview = GLView::createWithRect("HelloJavascript", Rect(0,0,900,640));
-		director->setOpenGLView(glview);
-	}
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        glview = GLView::createWithRect("HelloJavascript", Rect(0,0,900,640));
+        director->setOpenGLView(glview);
+    }
 
     // turn on display FPS
     director->setDisplayStats(true);
@@ -49,22 +50,24 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
     sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
-	sc->addRegisterCallback(register_all_cocos2dx_ui);
-	sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
-	sc->addRegisterCallback(register_all_cocos2dx_studio);
-	sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
+    sc->addRegisterCallback(register_all_cocos2dx_ui);
+    sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
+    sc->addRegisterCallback(register_all_cocos2dx_studio);
+    sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_chipmunk);
-    sc->start();
+    sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     
 #ifdef COCOS2D_DEBUG
-    startRuntime();
-#else
-    ScriptEngineProtocol *engine = ScriptingCore::getInstance();
-	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->runScript("main.js");
+    if (startRuntime())
+        return true;
 #endif
+
+    ScriptingCore::getInstance()->start();
+    auto engine = ScriptingCore::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    ScriptingCore::getInstance()->runScript("main.js");
     
     return true;
 }
@@ -72,15 +75,19 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    Director::getInstance()->stopAnimation();
+    auto director = Director::getInstance();
+    director->stopAnimation();
+    director->getEventDispatcher()->dispatchCustomEvent("game_on_hide");
     SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-    SimpleAudioEngine::getInstance()->pauseAllEffects();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();    
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    Director::getInstance()->startAnimation();
+    auto director = Director::getInstance();
+    director->startAnimation();
+    director->getEventDispatcher()->dispatchCustomEvent("game_on_show");
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

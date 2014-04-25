@@ -862,6 +862,10 @@ GenericNaN()
   return mozilla::SpecificNaN(0, 0x8000000000000ULL);
 }
 
+/* MSVC with PGO miscompiles this function. */
+#if defined(_MSC_VER)
+# pragma optimize("g", off)
+#endif
 static inline double
 CanonicalizeNaN(double d)
 {
@@ -869,6 +873,9 @@ CanonicalizeNaN(double d)
         return GenericNaN();
     return d;
 }
+#if defined(_MSC_VER)
+# pragma optimize("", on)
+#endif
 
 /*
  * JS::Value is the interface for a single JavaScript Engine value.  A few
@@ -952,10 +959,6 @@ class Value
     void setString(JSString *str) {
         MOZ_ASSERT(!IsPoisonedPtr(str));
         data = STRING_TO_JSVAL_IMPL(str);
-    }
-
-    void setString(const JS::Anchor<JSString *> &str) {
-        setString(str.get());
     }
 
     void setObject(JSObject &obj) {
@@ -1321,6 +1324,22 @@ BooleanValue(bool boo)
 }
 
 static inline Value
+TrueValue()
+{
+    Value v;
+    v.setBoolean(true);
+    return v;
+}
+
+static inline Value
+FalseValue()
+{
+    Value v;
+    v.setBoolean(false);
+    return v;
+}
+
+static inline Value
 ObjectValue(JSObject &obj)
 {
     Value v;
@@ -1504,7 +1523,6 @@ template <> struct GCMethods<JS::Value>
 #endif
 };
 
-template <class Outer> class UnbarrieredMutableValueOperations;
 template <class Outer> class MutableValueOperations;
 
 /*
@@ -1516,7 +1534,6 @@ template <class Outer> class MutableValueOperations;
 template <class Outer>
 class ValueOperations
 {
-    friend class UnbarrieredMutableValueOperations<Outer>;
     friend class MutableValueOperations<Outer>;
 
     const JS::Value * value() const { return static_cast<const Outer*>(this)->extract(); }
@@ -1557,16 +1574,14 @@ class ValueOperations
 };
 
 /*
- * A class designed for CRTP use in implementing the mutating parts of the Value
- * interface in Value-like classes that don't need post barriers.  Outer must be
- * a class inheriting UnbarrieredMutableValueOperations<Outer> with visible
- * extractMutable() and extract() methods returning the const Value* and Value*
- * abstracted by Outer.
+ * A class designed for CRTP use in implementing all the mutating parts of the
+ * Value interface in Value-like classes.  Outer must be a class inheriting
+ * MutableValueOperations<Outer> with visible extractMutable() and extract()
+ * methods returning the const Value* and Value* abstracted by Outer.
  */
 template <class Outer>
-class UnbarrieredMutableValueOperations : public ValueOperations<Outer>
+class MutableValueOperations : public ValueOperations<Outer>
 {
-    friend class MutableValueOperations<Outer>;
     JS::Value * value() { return static_cast<Outer*>(this)->extractMutable(); }
 
   public:
@@ -1579,20 +1594,7 @@ class UnbarrieredMutableValueOperations : public ValueOperations<Outer>
     void setMagic(JSWhyMagic why) { value()->setMagic(why); }
     bool setNumber(uint32_t ui) { return value()->setNumber(ui); }
     bool setNumber(double d) { return value()->setNumber(d); }
-};
-
-/*
- * A class designed for CRTP use in implementing all the mutating parts of the
- * Value interface in Value-like classes.  Outer must be a class inheriting
- * MutableValueOperations<Outer> with visible extractMutable() and extract()
- * methods returning the const Value* and Value* abstracted by Outer.
- */
-template <class Outer>
-class MutableValueOperations : public UnbarrieredMutableValueOperations<Outer>
-{
-  public:
     void setString(JSString *str) { this->value()->setString(str); }
-    void setString(const JS::Anchor<JSString *> &str) { this->value()->setString(str); }
     void setObject(JSObject &obj) { this->value()->setObject(obj); }
     void setObjectOrNull(JSObject *arg) { this->value()->setObjectOrNull(arg); }
 };
@@ -1602,32 +1604,49 @@ class MutableValueOperations : public UnbarrieredMutableValueOperations<Outer>
  * type-querying, value-extracting, and mutating operations.
  */
 template <>
-class HeapBase<JS::Value> : public UnbarrieredMutableValueOperations<JS::Heap<JS::Value> >
+class HeapBase<JS::Value> : public ValueOperations<JS::Heap<JS::Value> >
 {
     typedef JS::Heap<JS::Value> Outer;
 
     friend class ValueOperations<Outer>;
-    friend class UnbarrieredMutableValueOperations<Outer>;
 
     const JS::Value * extract() const { return static_cast<const Outer*>(this)->address(); }
-    JS::Value * extractMutable() { return static_cast<Outer*>(this)->unsafeGet(); }
 
-    /*
-     * Setters that potentially change the value to a GC thing from a non-GC
-     * thing must call JS::Heap::set() to trigger the post barrier.
-     *
-     * Changing from a GC thing to a non-GC thing value will leave the heap
-     * value in the store buffer, but it will be ingored so this is not a
-     * problem.
-     */
     void setBarriered(const JS::Value &v) {
         static_cast<JS::Heap<JS::Value> *>(this)->set(v);
     }
 
   public:
+    void setNull() { setBarriered(JS::NullValue()); }
+    void setUndefined() { setBarriered(JS::UndefinedValue()); }
+    void setInt32(int32_t i) { setBarriered(JS::Int32Value(i)); }
+    void setDouble(double d) { setBarriered(JS::DoubleValue(d)); }
+    void setNaN() { setDouble(JS::GenericNaN()); }
+    void setBoolean(bool b) { setBarriered(JS::BooleanValue(b)); }
+    void setMagic(JSWhyMagic why) { setBarriered(JS::MagicValue(why)); }
     void setString(JSString *str) { setBarriered(JS::StringValue(str)); }
-    void setString(const JS::Anchor<JSString *> &str) { setBarriered(JS::StringValue(str.get())); }
     void setObject(JSObject &obj) { setBarriered(JS::ObjectValue(obj)); }
+
+    bool setNumber(uint32_t ui) {
+        if (ui > JSVAL_INT_MAX) {
+            setDouble((double)ui);
+            return false;
+        } else {
+            setInt32((int32_t)ui);
+            return true;
+        }
+    }
+
+    bool setNumber(double d) {
+        int32_t i;
+        if (mozilla::DoubleIsInt32(d, &i)) {
+            setInt32(i);
+            return true;
+        }
+
+        setDouble(d);
+        return false;
+    }
 
     void setObjectOrNull(JSObject *arg) {
         if (arg)
@@ -1662,7 +1681,6 @@ class MutableHandleBase<JS::Value> : public MutableValueOperations<JS::MutableHa
         return static_cast<const JS::MutableHandle<JS::Value>*>(this)->address();
     }
 
-    friend class UnbarrieredMutableValueOperations<JS::MutableHandle<JS::Value> >;
     friend class MutableValueOperations<JS::MutableHandle<JS::Value> >;
     JS::Value * extractMutable() {
         return static_cast<JS::MutableHandle<JS::Value>*>(this)->address();
@@ -1681,7 +1699,6 @@ class RootedBase<JS::Value> : public MutableValueOperations<JS::Rooted<JS::Value
         return static_cast<const JS::Rooted<JS::Value>*>(this)->address();
     }
 
-    friend class UnbarrieredMutableValueOperations<JS::Rooted<JS::Value> >;
     friend class MutableValueOperations<JS::Rooted<JS::Value> >;
     JS::Value * extractMutable() {
         return static_cast<JS::Rooted<JS::Value>*>(this)->address();

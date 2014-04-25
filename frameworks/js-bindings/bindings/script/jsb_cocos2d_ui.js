@@ -94,7 +94,7 @@ ccui.Widget.LOCAL_TEXTURE = 0;
 ccui.Widget.PLIST_TEXTURE = 1;
 
 //touch event type
-ccui.Widget.TOUCH_BAGAN = 0;
+ccui.Widget.TOUCH_BEGAN = 0;
 ccui.Widget.TOUCH_MOVED = 1;
 ccui.Widget.TOUCH_ENDED = 2;
 ccui.Widget.TOUCH_CANCELED = 3;
@@ -277,3 +277,10 @@ ccui.Margin = cc.Class.extend({
 ccui.MarginZero = function(){
     return new ccui.Margin(0,0,0,0);
 };
+
+
+/*
+ * UIWidget temporary solution to addChild
+ * addNode and addChild function should be merged in ccui.Widget
+ */
+ccui.Widget.prototype.addNode = ccui.Widget.prototype.addChild;

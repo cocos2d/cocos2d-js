@@ -70,10 +70,10 @@ var UISliderTest_Scale9 = UIScene.extend({
             // Create the slider
             var slider = ccui.Slider.create();
             slider.setTouchEnabled(true);
+            slider.setScale9Enabled(true);
             slider.loadBarTexture("res/cocosui/sliderTrack2.png");
             slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
             slider.loadProgressBarTexture("res/cocosui/slider_bar_active_9patch.png");
-            slider.setScale9Enabled(true);
             slider.setCapInsets(cc.rect(0, 0, 0, 0));
             slider.setSize(cc.size(250, 10));
             slider.x = widgetSize.width / 2.0;

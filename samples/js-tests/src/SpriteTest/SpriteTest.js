@@ -1009,7 +1009,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
     onEnter:function () {
         this._super();
         if ("opengl" in cc.sys.capabilities) {
-            director.setProjection(cc.DIRECTOR_PROJECTION_3D);
+            director.setProjection(cc.Director.PROJECTION_3D);
             gl.enable(gl.DEPTH_TEST);
 
             // Avoid Z-fighting with menu and title
@@ -1023,7 +1023,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
     },
     onExit:function () {
         if ("opengl" in cc.sys.capabilities) {
-            director.setProjection(cc.DIRECTOR_PROJECTION_2D);
+            director.setProjection(cc.Director.PROJECTION_2D);
             gl.disable(gl.DEPTH_TEST);
         }
         this._super();
@@ -1130,7 +1130,7 @@ var SpriteBatchNodeZVertex = SpriteTestDemo.extend({
         this._super();
 
         if ("opengl" in cc.sys.capabilities) {
-            director.setProjection(cc.DIRECTOR_PROJECTION_3D);
+            director.setProjection(cc.Director.PROJECTION_3D);
             gl.enable(gl.DEPTH_TEST);
 
             // Avoid Z-fighting with menu and title
@@ -1145,7 +1145,7 @@ var SpriteBatchNodeZVertex = SpriteTestDemo.extend({
     },
     onExit:function () {
         if ("opengl" in cc.sys.capabilities) {
-            director.setProjection(cc.DIRECTOR_PROJECTION_2D);
+            director.setProjection(cc.Director.PROJECTION_2D);
             gl.disable(gl.DEPTH_TEST);
         }
         this._super();
@@ -4760,7 +4760,7 @@ var DoubleSprite = cc.Sprite.extend({
     setContentSize:function (size) {
         var newSize = cc.size(size.width, size.height);
         // If Retina Display and Texture is in HD then scale the vertex rect
-        if (cc.CONTENT_SCALE_FACTOR() == 2 && !this.HD) {
+        if (cc.contentScaleFactor() == 2 && !this.HD) {
             newSize.width *= 2;
             newSize.height *= 2;
         }
@@ -4768,14 +4768,14 @@ var DoubleSprite = cc.Sprite.extend({
     },
 	_setWidth:function (value) {
 		// If Retina Display and Texture is in HD then scale the vertex rect
-		if (cc.CONTENT_SCALE_FACTOR() == 2 && !this.HD) {
+		if (cc.contentScaleFactor() == 2 && !this.HD) {
 			value *= 2;
 		}
 		this._super(value);
 	},
 	_setHeight:function (value) {
 		// If Retina Display and Texture is in HD then scale the vertex rect
-		if (cc.CONTENT_SCALE_FACTOR() == 2 && !this.HD) {
+		if (cc.contentScaleFactor() == 2 && !this.HD) {
 			value *= 2;
 		}
 		this._super(value);
@@ -4783,7 +4783,7 @@ var DoubleSprite = cc.Sprite.extend({
 
     setVertexRect:function (rect) {
         // If Retina Display and Texture is in HD then scale the vertex rect
-        if (cc.CONTENT_SCALE_FACTOR() == 2 && !this.HD) {
+        if (cc.contentScaleFactor() == 2 && !this.HD) {
             rect.width *= 2;
             rect.height *= 2;
         }

@@ -229,7 +229,7 @@ void js_log(const char *format, ...) {
     va_end(vl);
     if (len > 0)
     {
-        CCLOG("JS: %s\n", _js_log_buf);
+        CCLOG("JS: %s", _js_log_buf);
     }
 }
 
@@ -396,7 +396,8 @@ void ScriptingCore::string_report(jsval val) {
         LOGD("val : (return value is false");
         // return 1;
     } else if (JSVAL_IS_STRING(val)) {
-        JSString *str = JS_ValueToString(this->getGlobalContext(), val);
+        JSContext* cx = this->getGlobalContext();
+        JSString *str = JS::ToString(cx, JS::RootedValue(cx, val));
         if (NULL == str) {
             LOGD("val : return string is NULL");
         } else {
@@ -423,7 +424,7 @@ bool ScriptingCore::evalString(const char *string, jsval *outVal, const char *fi
     
     JSAutoCompartment ac(cx, global);
     
-    JSScript* script = JS_CompileScript(cx, global, string, strlen(string), filename, 1);
+    JSScript* script = JS_CompileScript(cx, JS::RootedObject(cx, global), string, strlen(string), JS::CompileOptions(cx));
     if (script)
     {
         bool evaluatedOK = JS_ExecuteScript(cx, global, script, outVal);
@@ -596,6 +597,21 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
 	}
 }
 
+void ScriptingCore::cleanScript(const char *path)
+{
+    auto it = filename_script.find(path);
+    if (it != filename_script.end())
+    {
+        filename_script.erase(it);
+    }
+
+}
+
+void ScriptingCore::cleanAllScript()
+{
+    filename_script.clear();
+}
+
 bool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
 {
 	if (global == NULL) {
@@ -710,7 +726,7 @@ bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc >= 1) {
         jsval* argv = JS_ARGV(cx, vp);
-        JSString* str = JS_ValueToString(cx, argv[0]);
+        JSString* str = JS::ToString(cx, JS::RootedValue(cx, argv[0]));
         JSStringWrapper path(str);
         bool res = false;
         if (argc == 2 && argv[1].isString()) {

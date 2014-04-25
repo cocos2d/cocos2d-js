@@ -153,6 +153,27 @@ cc.CONTROL_STATE_DISABLED = 1 << 2; // Disabled state of a control. This state i
 cc.CONTROL_STATE_SELECTED = 1 << 3;  // Selected state of a control. This state indicates that the control is currently selected. You can retrieve and set this value through the selected property.
 cc.CONTROL_STATE_INITIAL = 1 << 3;
 
+cc.CONTROL_ZOOM_ACTION_TAG = 0xCCCB0001;       //CCControlButton.js
+
+cc.CONTROL_STEPPER_PARTMINUS = 0;               //CCControlStepper.js
+cc.CONTROL_STEPPER_PARTPLUS = 1;
+cc.CONTROL_STEPPER_PARTNONE = 2;
+cc.CONTROL_STEPPER_LABELCOLOR_ENABLED = cc.color(55, 55, 55);
+cc.CONTROL_STEPPER_LABELCOLOR_DISABLED = cc.color(147, 147, 147);
+cc.CONTROL_STEPPER_LABELFONT = "CourierNewPSMT";
+cc.AUTOREPEAT_DELTATIME = 0.15;
+cc.AUTOREPEAT_INCREASETIME_INCREMENT = 12;
+
+cc.Scale9Sprite.POSITIONS_CENTRE = 0;                //CCScale9Sprite.js
+cc.Scale9Sprite.POSITIONS_TOP = 1;
+cc.Scale9Sprite.POSITIONS_LEFT = 2;
+cc.Scale9Sprite.POSITIONS_RIGHT = 3;
+cc.Scale9Sprite.POSITIONS_BOTTOM = 4;
+cc.Scale9Sprite.POSITIONS_TOPRIGHT = 5;
+cc.Scale9Sprite.POSITIONS_TOPLEFT = 6;
+cc.Scale9Sprite.POSITIONS_BOTTOMRIGHT = 7;
+cc.Scale9Sprite.POSITIONS_BOTTOMLEFT = 8;
+
 // PhysicsDebugNode
 cc.PhysicsDebugNode.create = function( space ) {
     var s = space;

@@ -46,7 +46,7 @@ var UIButtonTest = UIScene.extend({
 
     touchEvent: function (sender, type) {
         switch (type) {
-            case ccui.Widget.TOUCH_BAGAN:
+            case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setText("Touch Down");
                 break;
 
@@ -81,7 +81,7 @@ var UIButtonTest_Scale9 = UIScene.extend({
             button.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
             button.x = this._widget.width / 2.0;
             button.y = this._widget.height / 2.0;
-            button.setSize(cc.size(150, button.height * 1.5));
+            button.setSize(cc.size(150, 48));
             button.addTouchEventListener(this.touchEvent ,this);
             this._mainNode.addChild(button);
 
@@ -92,7 +92,7 @@ var UIButtonTest_Scale9 = UIScene.extend({
 
     touchEvent: function (sender, type) {
         switch (type) {
-            case ccui.Widget.TOUCH_BAGAN:
+            case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setText("Touch Down");
                 break;
             case ccui.Widget.TOUCH_MOVED:
@@ -135,7 +135,7 @@ var UIButtonTest_PressedAction = UIScene.extend({
 
     touchEvent: function (sender, type) {
         switch (type) {
-            case ccui.Widget.TOUCH_BAGAN:
+            case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setText("Touch Down");
                 break;
             case ccui.Widget.TOUCH_MOVED:
@@ -178,7 +178,7 @@ var UIButtonTest_Title = UIScene.extend({
 
     touchEvent: function (sender, type) {
         switch (type) {
-            case ccui.Widget.TOUCH_BAGAN:
+            case ccui.Widget.TOUCH_BEGAN:
                 this._topDisplayLabel.setText("Touch Down");
                 break;
             case ccui.Widget.TOUCH_MOVED:

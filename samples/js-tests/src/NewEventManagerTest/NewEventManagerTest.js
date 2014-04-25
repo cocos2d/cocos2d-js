@@ -71,9 +71,11 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
 
+        var containerForSprite1 = cc.Node.create();
         var sprite1 = cc.Sprite.create("res/Images/CyanSquare.png");
         sprite1.setPosition(origin.x + size.width/2 - 80, origin.y + size.height/2 + 80);
-        this.addChild(sprite1, 10);
+        containerForSprite1.addChild(sprite1);
+        this.addChild(containerForSprite1, 10);
 
         var sprite2 = cc.Sprite.create("res/Images/MagentaSquare.png");
         sprite2.setPosition(origin.x + size.width/2, origin.y + size.height/2);
@@ -112,9 +114,9 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
                 cc.log("sprite onTouchesEnded.. ");
                 target.setOpacity(255);
                 if (target == sprite2) {
-                    sprite1.setLocalZOrder(100);
+                    containerForSprite1.setLocalZOrder(100);
                 } else if (target == sprite1) {
-                    sprite1.setLocalZOrder(0);
+                    containerForSprite1.setLocalZOrder(0);
                 }
             }
         });
@@ -224,6 +226,10 @@ var TouchableSprite = cc.Sprite.extend({
 
     removeListenerOnTouchEnded: function(toRemove){
         this._removeListenerOnTouchEnded = toRemove;
+    },
+
+    getListener: function() {
+        return this._listener;
     }
 });
 
@@ -765,7 +771,7 @@ var DirectorEventTest =  EventDispatcherTestDemo.extend({
     update:function(dt){
         this._time += dt;
         if(this._time > 0.5) {
-            cc.director.setProjection(cc.DIRECTOR_PROJECTION_2D);
+            cc.director.setProjection(cc.Director.PROJECTION_2D);
             this._time = 0;
         }
     },
@@ -1067,14 +1073,15 @@ var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
         sprite2.y = origin.y + size.height / 2;
         this.addChild(sprite2, 1);
 
-        var sprite3 = TouchableSprite.create();
+        var sprite3 = TouchableSprite.create(100);      // Sprite3 uses fixed priority listener
         sprite3.setTexture("res/Images/YellowSquare.png");
         sprite3.x = 0;
         sprite3.y = 0;
-        sprite2.addChild(sprite3, 20);
+        sprite2.addChild(sprite3, -1);
 
         var _this = this;
         var popup = cc.MenuItemFont.create("Popup", function(sender){
+            sprite3.getListener().setEnabled(false);
             cc.eventManager.pauseTarget(_this, true);
             var colorLayer = cc.LayerColor.create(cc.color(0, 0, 255, 100));
             _this.addChild(colorLayer, 999); //set colorLayer to top
@@ -1098,6 +1105,7 @@ var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
             controlButton.addTargetWithActionForControlEvents(this, function(){
                 colorLayer.removeFromParent();
                 cc.eventManager.resumeTarget(_this, true);
+                sprite3.getListener().setEnabled(true);
             }, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
 
             // Add the black background
@@ -1124,7 +1132,7 @@ var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
     },
 
     subtitle: function() {
-        return "";
+        return "Yellow block uses fixed priority";
     }
 });
 

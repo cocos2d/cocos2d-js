@@ -91,7 +91,7 @@ var DrawNewAPITest2 = DrawTestDemo.extend({
         }
         //drawCircle
         draw.drawCircle(cc.p(winSize.width / 2, winSize.height / 2), 100, 0, 10, false, 6, cc.color(0, 255, 0, 255));
-        draw.drawCircle(cc.p(winSize.width / 2, winSize.height / 2), 50, cc.DEGREES_TO_RADIANS(90), 50, true, 2, cc.color(0, 255, 255, 255));
+        draw.drawCircle(cc.p(winSize.width / 2, winSize.height / 2), 50, cc.degreesToRadians(90), 50, true, 2, cc.color(0, 255, 255, 255));
 
         //draw poly
         //not fill

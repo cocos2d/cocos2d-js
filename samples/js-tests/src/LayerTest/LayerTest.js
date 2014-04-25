@@ -102,7 +102,8 @@ var LayerTest1 = LayerTest.extend({
             cc.eventManager.addListener({
                 event: cc.EventListener.MOUSE,
                 onMouseMove: function(event){
-                    event.getCurrentTarget().updateSize(event.getLocation());
+                    if(event.getButton() != undefined)
+                        event.getCurrentTarget().updateSize(event.getLocation());
                 }
             }, this);
 
@@ -450,7 +451,8 @@ var LayerGradient = LayerTest.extend({
                     event.getCurrentTarget().updateGradient(event.getLocation());
                 },
                 onMouseMove: function(event){
-                    event.getCurrentTarget().updateGradient(event.getLocation());
+                    if(event.getButton() != undefined)
+                        event.getCurrentTarget().updateGradient(event.getLocation());
                 }
             }, this);
         }

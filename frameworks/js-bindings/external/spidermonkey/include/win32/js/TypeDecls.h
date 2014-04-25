@@ -42,7 +42,7 @@ class JSString;
 //
 
 // Needed for cocos2d-js
-#define JS_NO_JSVAL_JSID_STRUCT_TYPES 
+#define JS_NO_JSVAL_JSID_STRUCT_TYPES
 
 #if defined(DEBUG) && !defined(JS_NO_JSVAL_JSID_STRUCT_TYPES)
 # define JS_USE_JSID_STRUCT_TYPES
@@ -54,13 +54,15 @@ struct jsid;
 typedef ptrdiff_t jsid;
 #endif
 
-typedef wchar_t jschar;
+typedef char16_t jschar;
 
 namespace JS {
 
 class Value;
 template <typename T> class Handle;
 template <typename T> class MutableHandle;
+template <typename T> class Rooted;
+template <typename T> class PersistentRooted;
 
 typedef Handle<JSFunction*> HandleFunction;
 typedef Handle<jsid>        HandleId;
@@ -75,6 +77,20 @@ typedef MutableHandle<JSObject*>   MutableHandleObject;
 typedef MutableHandle<JSScript*>   MutableHandleScript;
 typedef MutableHandle<JSString*>   MutableHandleString;
 typedef MutableHandle<Value>       MutableHandleValue;
+
+typedef Rooted<JSObject*>       RootedObject;
+typedef Rooted<JSFunction*>     RootedFunction;
+typedef Rooted<JSScript*>       RootedScript;
+typedef Rooted<JSString*>       RootedString;
+typedef Rooted<jsid>            RootedId;
+typedef Rooted<JS::Value>       RootedValue;
+
+typedef PersistentRooted<JSFunction*> PersistentRootedFunction;
+typedef PersistentRooted<jsid>        PersistentRootedId;
+typedef PersistentRooted<JSObject*>   PersistentRootedObject;
+typedef PersistentRooted<JSScript*>   PersistentRootedScript;
+typedef PersistentRooted<JSString*>   PersistentRootedString;
+typedef PersistentRooted<Value>       PersistentRootedValue;
 
 } // namespace JS
 

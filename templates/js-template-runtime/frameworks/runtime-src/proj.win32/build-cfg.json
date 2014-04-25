@@ -1,9 +1,26 @@
 {
-    "copy_files" :[
-        "../../../src",
-        "../../../res",
-        "../../../main.js",
-        "../../../project.json",
-        "../../js-bindings/bindings/script/"
-    ]
+    "copy_resources": [
+        {
+            "from": "../../../src",
+            "to": "src"
+        },
+        {
+            "from": "../../../res",
+            "to": "res"
+        },
+        {
+            "from": "../../../main.js",
+            "to": ""
+        },
+        {
+            "from": "../../../project.json",
+            "to": ""
+        }
+    ],
+    "must_copy_resources": [
+        {
+            "from": "../../js-bindings/bindings/script",
+            "to": ""
+        }
+    ]	
 }

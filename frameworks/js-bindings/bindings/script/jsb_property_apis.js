@@ -12,8 +12,11 @@ cc.Node.prototype.attr = function(attrs) {
 	}
 };
 
+var _proto = cc.Action.prototype;
+cc.defineGetterSetter(_proto, "tag", _proto.getTag, _proto.setTag);
+
 // Overrides
-var _proto = cc.AtlasNode.prototype;
+_proto = cc.AtlasNode.prototype;
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
 cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
 cc.defineGetterSetter(_proto, "color", _proto.getColor, _proto.setColor);
@@ -96,8 +99,8 @@ cc.defineGetterSetter(_proto, "zIndex", _proto.getLocalZOrder, _proto.setLocalZO
 _proto = ccui.Widget.prototype;
 cc.defineGetterSetter(_proto, "x", _proto.getPositionX, _proto.setPositionX);
 cc.defineGetterSetter(_proto, "y", _proto.getPositionY, _proto.setPositionY);
-//cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
-//cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
+cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
+cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
 cc.defineGetterSetter(_proto, "flippedX", _proto.isFlippedX, _proto.setFlippedX);
 cc.defineGetterSetter(_proto, "flippedY", _proto.isFlippedY, _proto.setFlippedY);
 cc.defineGetterSetter(_proto, "children", _proto.getChildren);
@@ -109,8 +112,6 @@ cc.defineGetterSetter(_proto, "childrenCount", _proto.getChildrenCount);
 cc.defineGetterSetter(_proto, "layoutType", _proto.getLayoutType, _proto.setLayoutType);
 
 _proto = ccui.Button.prototype;
-//cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
-//cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
 //cc.defineGetterSetter(_proto, "anchorX", _proto._getAnchorX, _proto._setAnchorX);
 //cc.defineGetterSetter(_proto, "anchorY", _proto._getAnchorY, _proto._setAnchorY);
 cc.defineGetterSetter(_proto, "flippedX", _proto.isFlippedX, _proto.setFlippedX);
@@ -509,6 +510,8 @@ cc.defineGetterSetter(_proto, "clippingType", _proto.setClippingType);
 cc.defineGetterSetter(_proto, "layoutType", _proto.getLayoutType, _proto.setLayoutType);
 
 _proto = ccui.Button.prototype;
+cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
+cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
 cc.defineGetterSetter(_proto, "titleText", _proto.getTitleText, _proto.setTitleText);
 cc.defineGetterSetter(_proto, "titleFont", _proto._getTitleFont, _proto._setTitleFont);
 cc.defineGetterSetter(_proto, "titleFontSize", _proto.getTitleFontSize, _proto.setTitleFontSize);
