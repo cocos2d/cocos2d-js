@@ -37,6 +37,10 @@
          ],
          "append_file":[
             {
+               "from":"templates/js-template-runtime/project.json",
+               "to":"runtime/ios/PrebuiltRuntimeJs.app/project.json"
+            },
+            {
                "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/gles/prebuilt/glew32.dll",
                "to":"runtime/win32/glew32.dll"
             },
@@ -92,7 +96,9 @@
                 "exclude":[
                    "cocos2d-console",
                    "make-package",
-                   "travis-scripts"
+                   "travis-scripts",
+                   "bindings-generator/.git",
+                   "bindings-generator/.gitignore"
                 ]
              }
          ],
@@ -125,6 +131,7 @@
                "frameworks/runtime-src/proj.android/res/values/strings.xml",
                "frameworks/runtime-src/proj.ios_mac/ios/main.m",
                "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
+               "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",
                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
                "frameworks/runtime-src/Classes/AppDelegate.cpp"
             ]

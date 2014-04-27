@@ -89,6 +89,9 @@
 #  define MOZ_HAVE_NEVER_INLINE          __attribute__((noinline))
 #  define MOZ_HAVE_NORETURN              __attribute__((noreturn))
 #elif defined(_MSC_VER)
+#  if _MSC_VER >= 1800
+#    define MOZ_HAVE_CXX11_DELETE
+#  endif
 #  if _MSC_VER >= 1700
 #    define MOZ_HAVE_CXX11_FINAL         final
 #  else
@@ -406,15 +409,29 @@
  *   class uses this class, or if another class inherits from this class, then
  *   it is considered to be a non-heap class as well, although this attribute
  *   need not be provided in such cases.
+ * MOZ_HEAP_ALLOCATOR: Applies to any function. This indicates that the return
+ *   value is allocated on the heap, and will as a result check such allocations
+ *   during MOZ_STACK_CLASS and MOZ_NONHEAP_CLASS annotation checking.
  */
 #ifdef MOZ_CLANG_PLUGIN
-# define MOZ_MUST_OVERRIDE __attribute__((annotate("moz_must_override")))
-# define MOZ_STACK_CLASS __attribute__((annotate("moz_stack_class")))
-# define MOZ_NONHEAP_CLASS __attribute__((annotate("moz_nonheap_class")))
+#  define MOZ_MUST_OVERRIDE __attribute__((annotate("moz_must_override")))
+#  define MOZ_STACK_CLASS __attribute__((annotate("moz_stack_class")))
+#  define MOZ_NONHEAP_CLASS __attribute__((annotate("moz_nonheap_class")))
+/*
+ * It turns out that clang doesn't like void func() __attribute__ {} without a
+ * warning, so use pragmas to disable the warning. This code won't work on GCC
+ * anyways, so the warning is safe to ignore.
+ */
+#  define MOZ_HEAP_ALLOCATOR \
+    _Pragma("clang diagnostic push") \
+    _Pragma("clang diagnostic ignored \"-Wgcc-compat\"") \
+    __attribute__((annotate("moz_heap_allocator"))) \
+    _Pragma("clang diagnostic pop")
 #else
-# define MOZ_MUST_OVERRIDE /* nothing */
-# define MOZ_STACK_CLASS /* nothing */
-# define MOZ_NONHEAP_CLASS /* nothing */
+#  define MOZ_MUST_OVERRIDE /* nothing */
+#  define MOZ_STACK_CLASS /* nothing */
+#  define MOZ_NONHEAP_CLASS /* nothing */
+#  define MOZ_HEAP_ALLOCATOR /* nothing */
 #endif /* MOZ_CLANG_PLUGIN */
 
 /*

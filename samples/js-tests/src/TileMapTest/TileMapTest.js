@@ -50,9 +50,11 @@ var TileDemo = BaseTestLayer.extend({
             cc.eventManager.addListener({
                 event: cc.EventListener.MOUSE,
                 onMouseMove: function(event){
-                    var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
-                    node.x += event.getDeltaX();
-                    node.y += event.getDeltaY();
+                    if(event.getButton() != undefined){
+                        var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
+                        node.x += event.getDeltaX();
+                        node.y += event.getDeltaY();
+                    }
                 }
             }, this);
     },

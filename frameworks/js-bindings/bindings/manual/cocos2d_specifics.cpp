@@ -1,3 +1,26 @@
+/*
+ * Copyright (c) 2012 Zynga Inc.
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 #include "cocos2d_specifics.hpp"
 #include "cocos2d.h"
 #include <typeinfo>
@@ -1834,7 +1857,7 @@ bool js_CCScheduler_scheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsval 
         bool paused = false;
         
         if( argc >= 3 ) {
-            ok &= JS_ValueToBoolean(cx,  argv[2], &paused);
+            paused = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
         }
         
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1955,7 +1978,7 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         bool paused = false;
         
         if( argc >= 6 ) {
-            ok &= JS_ValueToBoolean(cx,  argv[5], &paused);
+            paused = JS::ToBoolean(JS::RootedValue(cx,  argv[5]));
         }
         
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -4248,7 +4271,6 @@ bool jsval_to_TTFConfig(JSContext *cx, jsval v, TTFConfig* ret) {
 
     std::string fontFilePath,customGlyphs;
     double fontSize, glyphs;
-    bool distanceFieldEnable;
 
     bool ok = v.isObject() &&
         JS_ValueToObject(cx, JS::RootedValue(cx, v), &tmp) &&
@@ -4259,9 +4281,9 @@ bool jsval_to_TTFConfig(JSContext *cx, jsval v, TTFConfig* ret) {
         JS_GetProperty(cx, tmp, "distanceFieldEnable", &js_distanceFieldEnable) &&
         JS::ToNumber(cx, js_fontSize, &fontSize) &&
         JS::ToNumber(cx, js_glyphs, &glyphs) &&
-        JS_ValueToBoolean(cx,js_distanceFieldEnable,&distanceFieldEnable) &&
         jsval_to_std_string(cx,js_fontFilePath,&ret->fontFilePath) &&
         jsval_to_std_string(cx,js_customGlyphs,&customGlyphs);
+    bool distanceFieldEnable = JS::ToBoolean(js_distanceFieldEnable);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 

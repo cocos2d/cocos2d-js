@@ -327,16 +327,6 @@ getBottomInParent : function (
 },
 
 /**
- * @method getActionTag
- * @return {int}
- */
-getActionTag : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getLayoutParameter
  * @param {ccui.LayoutParameterType} arg0
  * @return {ccui.LayoutParameter}
@@ -401,6 +391,16 @@ isFocused : function (
 },
 
 /**
+ * @method getVirtualRendererSize
+ * @return {SizeObject}
+ */
+getVirtualRendererSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
  * @method isTouchEnabled
  * @return {bool}
  */
@@ -411,13 +411,13 @@ isTouchEnabled : function (
 },
 
 /**
- * @method getContentSize
- * @return {SizeObject}
+ * @method getActionTag
+ * @return {int}
  */
-getContentSize : function (
+getActionTag : function (
 )
 {
-    return cc.Size;
+    return 0;
 },
 
 /**
@@ -1010,18 +1010,6 @@ getBackGroundStartColor : function (
 )
 {
     return cc.Color3B;
-},
-
-/**
- * @method hitTest
- * @param {PointObject} arg0
- * @return {bool}
- */
-hitTest : function (
-point 
-)
-{
-    return false;
 },
 
 /**
@@ -1894,6 +1882,14 @@ getStringValue : function (
 )
 {
     return ;
+},
+
+/**
+ * @method adaptRenderers
+ */
+adaptRenderers : function (
+)
+{
 },
 
 /**

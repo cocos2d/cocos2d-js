@@ -56,6 +56,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libJSBinding", "libJSBindin
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libGUI", "..\..\js-bindings\cocos2d-x\cocos\ui\proj.win32\libGUI.vcxproj", "{7E06E92C-537A-442B-9E4A-4761C84F8A1A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libNetwork", "..\..\js-bindings\cocos2d-x\cocos\network\proj.win32\libNetwork.vcxproj", "{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -130,6 +132,10 @@ Global
 		{7E06E92C-537A-442B-9E4A-4761C84F8A1A}.Debug|Win32.Build.0 = Debug|Win32
 		{7E06E92C-537A-442B-9E4A-4761C84F8A1A}.Release|Win32.ActiveCfg = Release|Win32
 		{7E06E92C-537A-442B-9E4A-4761C84F8A1A}.Release|Win32.Build.0 = Release|Win32
+		{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}.Debug|Win32.Build.0 = Debug|Win32
+		{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}.Release|Win32.ActiveCfg = Release|Win32
+		{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

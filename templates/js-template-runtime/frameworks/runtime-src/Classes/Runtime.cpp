@@ -245,7 +245,7 @@ bool startScript()
     return ScriptingCore::getInstance()->runScript("main.js");
 }
 
-bool reloadScript(const string& file)
+bool reloadScript(const string& file,bool reloadAll)
 {
 
     auto director = Director::getInstance();
@@ -257,23 +257,21 @@ bool reloadScript(const string& file)
     }
     FileUtils::getInstance()->purgeCachedEntries();
 
-    director->getScheduler()->unscheduleAll();
-    director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
+    //director->getScheduler()->unscheduleAll();
+    //director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     
     string modulefile = file;
-    bool reloadAll = false;
     if (modulefile.empty())
     {
         modulefile = "main.js";
-        reloadAll = true;
+        ScriptingCore::getInstance()->cleanScript(modulefile.c_str());
     }
+    if (reloadAll)
+    {
+        ScriptingCore::getInstance()->cleanAllScript();
+    }
+    return ScriptingCore::getInstance()->runScript(modulefile.c_str());
     
-    return ScriptingCore::getInstance()->reloadScript(modulefile.c_str(),reloadAll);
-    
-    /*auto core = ScriptingCore::getInstance();
-    core->reset();
-    ScriptingCore::getInstance()->enableDebugger();
-    return core->runScript(modulefile.c_str());*/
 }
 
 
@@ -829,10 +827,29 @@ public:
                     
                 }else if(strcmp(strcmd.c_str(),"precompile")==0)
                 {
-                    vector<std::string> fileInfoList = searchFileList(g_resourcePath,"*.js","runtime|frameworks|");
-                    for (unsigned i = 0; i < fileInfoList.size(); i++)
+                    bool compileAll = false;
+                    if (dArgParse.HasMember("modulefiles"))
                     {
-                        ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
+                        rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                        const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
+                        for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
+                        {
+                            ScriptingCore::getInstance()->cleanScript(objectfiles[i].GetString());
+                            ScriptingCore::getInstance()->compileScript(objectfiles[i].GetString());
+                        }
+                        if (0 == objectfiles.Size()) {
+                            compileAll = true;
+                        }
+                    }else{
+                        compileAll = true;
+                    }
+                    if (compileAll) {
+                        vector<std::string> fileInfoList = searchFileList(g_resourcePath,"*.js","runtime|frameworks|");
+                        for (unsigned i = 0; i < fileInfoList.size(); i++)
+                        {
+                            ScriptingCore::getInstance()->cleanScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
+                            ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
+                        }
                     }
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }else if(strcmp(strcmd.c_str(),"reload")==0)
@@ -851,6 +868,9 @@ public:
                             reloadScript("");
                         }
                         dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    }else
+                    {
+                        reloadScript("");
                     }
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }else if(strcmp(strcmd.c_str(),"getversion")==0)
@@ -868,7 +888,7 @@ public:
                     }
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
-                    
+                   
                 }else if(strcmp(strcmd.c_str(),"getIP")==0)
                 {
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
@@ -896,14 +916,19 @@ public:
                         const rapidjson::Value& objectfiles = dArgParse["files"];
                         for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
                         {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
+                            ScriptingCore::getInstance()->cleanScript(objectfiles[i].GetString());
+#else
                             string filename(g_resourcePath);
                             filename.append("/");
                             filename.append(objectfiles[i].GetString());
-                            if (FileUtils::getInstance()->isFileExist(filename)) {
+                            if (FileUtils::getInstance()->isFileExist(filename))
+                            {
                                 if(remove(filename.c_str())==0)
                                 {
                                     if (g_filecfgjson.HasMember(objectfiles[i].GetString())) {
                                         g_filecfgjson.RemoveMember(objectfiles[i].GetString());
+                                        ScriptingCore::getInstance()->cleanScript(objectfiles[i].GetString());
                                     }
                                 }
                                 else
@@ -914,7 +939,7 @@ public:
                             {
                                 bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
                             }
-                            
+#endif                            
                         }
                         dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                         updateResFileInfo();
