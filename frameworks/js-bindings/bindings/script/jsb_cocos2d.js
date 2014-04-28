@@ -1989,3 +1989,8 @@ cc.TMXTiledMap.prototype.allLayers = function(){
     }
     return retArr;
 }
+cc.TMXLayer.prototype._getTileAt = cc.TMXLayer.prototype.getTileAt
+cc.TMXLayer.prototype.getTileAt = function(x,y){
+    var pos = y !== undefined ? cc.p(x, y) : x;
+    return cc.TMXLayer.prototype._getTileAt(pos);
+}
