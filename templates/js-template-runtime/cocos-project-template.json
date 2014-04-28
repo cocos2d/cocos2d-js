@@ -69,8 +69,8 @@
                "to":"runtime/win32/libtiff.dll"
             },
             {
-               "from":"frameworks/js-bindings/external/spidermonkey/prebuilt/win32/mozjs-27.dll",
-               "to":"runtime/win32/mozjs-27.dll"
+               "from":"frameworks/js-bindings/external/spidermonkey/prebuilt/win32/mozjs-28.dll",
+               "to":"runtime/win32/mozjs-28.dll"
             }
          ]
       },
