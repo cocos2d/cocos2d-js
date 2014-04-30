@@ -33,7 +33,6 @@ cc.loader.register(["png", "jpg", "bmp","jpeg","gif"], cc._imgLoader);
 
 cc._plistLoader = {
     load : function(realUrl, url){
-        // var data = cc.FileUtils.getInstance().getStringFromFile(realUrl);
         return cc.plistParser.parse(realUrl);
     }
 }
