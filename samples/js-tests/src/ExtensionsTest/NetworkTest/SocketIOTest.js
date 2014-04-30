@@ -1,5 +1,7 @@
 /****************************************************************************
- Copyright (c) 2014 cocos2d-x.org http://www.cocos2d-x.org
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  Created by Chris Hannon 2014 http://www.channon.us
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
