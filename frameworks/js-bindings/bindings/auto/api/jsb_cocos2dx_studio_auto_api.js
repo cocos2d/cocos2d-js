@@ -619,10 +619,10 @@ getColliderBodyList : function (
 
 /**
  * @method updateTransform
- * @param {kmMat4} arg0
+ * @param {cc.math::Matrix} arg0
  */
 updateTransform : function (
-kmmat4 
+matrix 
 )
 {
 },
@@ -795,12 +795,12 @@ getDisplayRenderNode : function (
 
 /**
  * @method getAnchorPointInPoints
- * @return {PointObject}
+ * @return {cc.math::Vector2}
  */
 getAnchorPointInPoints : function (
 )
 {
-    return cc.Point;
+    return cc.math::Vector2;
 },
 
 /**
@@ -889,7 +889,7 @@ int
 
 /**
  * @method containPoint
-* @param {float|PointObject} float
+* @param {float|cc.math::Vector2} float
 * @param {float} float
 * @return {bool|bool}
 */
@@ -969,12 +969,12 @@ getCurrentDisplayIndex : function (
 
 /**
  * @method getAnchorPoint
- * @return {PointObject}
+ * @return {cc.math::Vector2}
  */
 getAnchorPoint : function (
 )
 {
-    return cc.Point;
+    return cc.math::Vector2;
 },
 
 /**
@@ -1333,12 +1333,12 @@ armature
 
 /**
  * @method getNodeToArmatureTransform
- * @return {kmMat4}
+ * @return {cc.math::Matrix}
  */
 getNodeToArmatureTransform : function (
 )
 {
-    return kmMat4;
+    return cc.math::Matrix;
 },
 
 /**
@@ -2091,12 +2091,12 @@ getBone : function (
 
 /**
  * @method getNodeToWorldTransformAR
- * @return {kmMat4}
+ * @return {cc.math::Matrix}
  */
 getNodeToWorldTransformAR : function (
 )
 {
-    return kmMat4;
+    return cc.math::Matrix;
 },
 
 /**

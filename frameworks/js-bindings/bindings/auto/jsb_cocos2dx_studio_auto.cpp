@@ -1719,8 +1719,15 @@ bool js_cocos2dx_studio_ColliderDetector_updateTransform(JSContext *cx, uint32_t
 	cocostudio::ColliderDetector* cobj = (cocostudio::ColliderDetector *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ColliderDetector_updateTransform : Invalid Native Object");
 	if (argc == 1) {
-		kmMat4 arg0;
-		#pragma warning NO CONVERSION TO NATIVE FOR kmMat4;
+		cocos2d::math::Matrix arg0;
+		do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::math::Matrix&)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ColliderDetector_updateTransform : Error processing arguments");
 		cobj->updateTransform(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2275,9 +2282,16 @@ bool js_cocos2dx_studio_DisplayManager_getAnchorPointInPoints(JSContext *cx, uin
 	cocostudio::DisplayManager* cobj = (cocostudio::DisplayManager *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_DisplayManager_getAnchorPointInPoints : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Point ret = cobj->getAnchorPointInPoints();
+		cocos2d::math::Vector2 ret = cobj->getAnchorPointInPoints();
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		do {
+			if (ret) {
+				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::math::Vector2>(cx, (cocos2d::math::Vector2)ret);
+				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+			} else {
+				jsret = JSVAL_NULL;
+			}
+		} while (0);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -2517,8 +2531,15 @@ bool js_cocos2dx_studio_DisplayManager_containPoint(JSContext *cx, uint32_t argc
 
 	do {
 		if (argc == 1) {
-			cocos2d::Point arg0;
-			ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+			cocos2d::math::Vector2 arg0;
+			do {
+				if (!argv[0].isObject()) { ok = false; break; }
+				js_proxy_t *jsProxy;
+				JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+				jsProxy = jsb_get_js_proxy(tmpObj);
+				arg0 = (cocos2d::math::Vector2&)(jsProxy ? jsProxy->ptr : NULL);
+				JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+			} while (0);
 			if (!ok) { ok = true; break; }
 			bool ret = cobj->containPoint(arg0);
 			jsval jsret = JSVAL_NULL;
@@ -2672,9 +2693,16 @@ bool js_cocos2dx_studio_DisplayManager_getAnchorPoint(JSContext *cx, uint32_t ar
 	cocostudio::DisplayManager* cobj = (cocostudio::DisplayManager *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_DisplayManager_getAnchorPoint : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Point ret = cobj->getAnchorPoint();
+		cocos2d::math::Vector2 ret = cobj->getAnchorPoint();
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		do {
+			if (ret) {
+				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::math::Vector2>(cx, (cocos2d::math::Vector2)ret);
+				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+			} else {
+				jsret = JSVAL_NULL;
+			}
+		} while (0);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -3552,9 +3580,16 @@ bool js_cocos2dx_studio_Bone_getNodeToArmatureTransform(JSContext *cx, uint32_t 
 	cocostudio::Bone* cobj = (cocostudio::Bone *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Bone_getNodeToArmatureTransform : Invalid Native Object");
 	if (argc == 0) {
-		kmMat4 ret = cobj->getNodeToArmatureTransform();
+		cocos2d::math::Matrix ret = cobj->getNodeToArmatureTransform();
 		jsval jsret = JSVAL_NULL;
-		#pragma warning NO CONVERSION FROM NATIVE FOR kmMat4;
+		do {
+			if (ret) {
+				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::math::Matrix>(cx, (cocos2d::math::Matrix)ret);
+				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+			} else {
+				jsret = JSVAL_NULL;
+			}
+		} while (0);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -5732,9 +5767,16 @@ bool js_cocos2dx_studio_Skin_getNodeToWorldTransformAR(JSContext *cx, uint32_t a
 	cocostudio::Skin* cobj = (cocostudio::Skin *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Skin_getNodeToWorldTransformAR : Invalid Native Object");
 	if (argc == 0) {
-		kmMat4 ret = cobj->getNodeToWorldTransformAR();
+		cocos2d::math::Matrix ret = cobj->getNodeToWorldTransformAR();
 		jsval jsret = JSVAL_NULL;
-		#pragma warning NO CONVERSION FROM NATIVE FOR kmMat4;
+		do {
+			if (ret) {
+				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::math::Matrix>(cx, (cocos2d::math::Matrix)ret);
+				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+			} else {
+				jsret = JSVAL_NULL;
+			}
+		} while (0);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}

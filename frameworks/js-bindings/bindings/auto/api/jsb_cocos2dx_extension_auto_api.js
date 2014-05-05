@@ -413,13 +413,13 @@ bool
 /**
  * @method getTouchLocation
  * @param {cc.Touch} arg0
- * @return {PointObject}
+ * @return {cc.math::Vector2}
  */
 getTouchLocation : function (
 touch 
 )
 {
-    return cc.Point;
+    return cc.math::Vector2;
 },
 
 /**
@@ -534,22 +534,22 @@ state
 
 /**
  * @method setLabelAnchorPoint
- * @param {PointObject} arg0
+ * @param {cc.math::Vector2} arg0
  */
 setLabelAnchorPoint : function (
-point 
+array 
 )
 {
 },
 
 /**
  * @method getLabelAnchorPoint
- * @return {PointObject}
+ * @return {cc.math::Vector2}
  */
 getLabelAnchorPoint : function (
 )
 {
-    return cc.Point;
+    return cc.math::Vector2;
 },
 
 /**
@@ -965,12 +965,12 @@ bool
 /**
  * @method initWithTargetAndPos
  * @param {cc.Node} arg0
- * @param {PointObject} arg1
+ * @param {cc.math::Vector2} arg1
  * @return {bool}
  */
 initWithTargetAndPos : function (
 node, 
-point 
+array 
 )
 {
     return false;
@@ -988,12 +988,12 @@ float
 
 /**
  * @method getStartPos
- * @return {PointObject}
+ * @return {cc.math::Vector2}
  */
 getStartPos : function (
 )
 {
-    return cc.Point;
+    return cc.math::Vector2;
 },
 
 /**
@@ -1069,12 +1069,12 @@ sprite
 /**
  * @method create
  * @param {cc.Node} arg0
- * @param {PointObject} arg1
+ * @param {cc.math::Vector2} arg1
  * @return {cc.ControlHuePicker}
  */
 create : function (
 node, 
-point 
+array 
 )
 {
     return cc.ControlHuePicker;
@@ -1109,12 +1109,12 @@ getShadow : function (
 /**
  * @method initWithTargetAndPos
  * @param {cc.Node} arg0
- * @param {PointObject} arg1
+ * @param {cc.math::Vector2} arg1
  * @return {bool}
  */
 initWithTargetAndPos : function (
 node, 
-point 
+array 
 )
 {
     return false;
@@ -1122,12 +1122,12 @@ point
 
 /**
  * @method getStartPos
- * @return {PointObject}
+ * @return {cc.math::Vector2}
  */
 getStartPos : function (
 )
 {
-    return cc.Point;
+    return cc.math::Vector2;
 },
 
 /**
@@ -1193,12 +1193,12 @@ getBrightness : function (
 /**
  * @method create
  * @param {cc.Node} arg0
- * @param {PointObject} arg1
+ * @param {cc.math::Vector2} arg1
  * @return {cc.ControlSaturationBrightnessPicker}
  */
 create : function (
 node, 
-point 
+array 
 )
 {
     return cc.ControlSaturationBrightnessPicker;
@@ -1352,10 +1352,10 @@ cc.ControlPotentiometer = {
 
 /**
  * @method setPreviousLocation
- * @param {PointObject} arg0
+ * @param {cc.math::Vector2} arg0
  */
 setPreviousLocation : function (
-point 
+array 
 )
 {
 },
@@ -1392,17 +1392,17 @@ getMaximumValue : function (
 
 /**
  * @method angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint
- * @param {PointObject} arg0
- * @param {PointObject} arg1
- * @param {PointObject} arg2
- * @param {PointObject} arg3
+ * @param {cc.math::Vector2} arg0
+ * @param {cc.math::Vector2} arg1
+ * @param {cc.math::Vector2} arg2
+ * @param {cc.math::Vector2} arg3
  * @return {float}
  */
 angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint : function (
-point, 
-point, 
-point, 
-point 
+array, 
+array, 
+array, 
+array 
 )
 {
     return 0;
@@ -1410,10 +1410,10 @@ point
 
 /**
  * @method potentiometerBegan
- * @param {PointObject} arg0
+ * @param {cc.math::Vector2} arg0
  */
 potentiometerBegan : function (
-point 
+array 
 )
 {
 },
@@ -1460,23 +1460,23 @@ getValue : function (
 
 /**
  * @method getPreviousLocation
- * @return {PointObject}
+ * @return {cc.math::Vector2}
  */
 getPreviousLocation : function (
 )
 {
-    return cc.Point;
+    return cc.math::Vector2;
 },
 
 /**
  * @method distanceBetweenPointAndPoint
- * @param {PointObject} arg0
- * @param {PointObject} arg1
+ * @param {cc.math::Vector2} arg0
+ * @param {cc.math::Vector2} arg1
  * @return {float}
  */
 distanceBetweenPointAndPoint : function (
-point, 
-point 
+array, 
+array 
 )
 {
     return 0;
@@ -1484,10 +1484,10 @@ point
 
 /**
  * @method potentiometerEnded
- * @param {PointObject} arg0
+ * @param {cc.math::Vector2} arg0
  */
 potentiometerEnded : function (
-point 
+array 
 )
 {
 },
@@ -1540,10 +1540,10 @@ sprite
 
 /**
  * @method potentiometerMoved
- * @param {PointObject} arg0
+ * @param {cc.math::Vector2} arg0
  */
 potentiometerMoved : function (
-point 
+array 
 )
 {
 },
@@ -1593,13 +1593,13 @@ getSelectedThumbSprite : function (
 /**
  * @method locationFromTouch
  * @param {cc.Touch} arg0
- * @return {PointObject}
+ * @return {cc.math::Vector2}
  */
 locationFromTouch : function (
 touch 
 )
 {
-    return cc.Point;
+    return cc.math::Vector2;
 },
 
 /**
@@ -1906,10 +1906,10 @@ getMinusSprite : function (
 
 /**
  * @method updateLayoutUsingTouchLocation
- * @param {PointObject} arg0
+ * @param {cc.math::Vector2} arg0
  */
 updateLayoutUsingTouchLocation : function (
-point 
+array 
 )
 {
 },
@@ -2163,13 +2163,13 @@ hasMoved : function (
 /**
  * @method locationFromTouch
  * @param {cc.Touch} arg0
- * @return {PointObject}
+ * @return {cc.math::Vector2}
  */
 locationFromTouch : function (
 touch 
 )
 {
-    return cc.Point;
+    return cc.math::Vector2;
 },
 
 /**
@@ -2232,11 +2232,11 @@ node
 
 /**
  * @method setContentOffsetInDuration
- * @param {PointObject} arg0
+ * @param {cc.math::Vector2} arg0
  * @param {float} arg1
  */
 setContentOffsetInDuration : function (
-point, 
+array, 
 float 
 )
 {
@@ -2360,11 +2360,11 @@ init : function (
 
 /**
  * @method setContentOffset
- * @param {PointObject} arg0
+ * @param {cc.math::Vector2} arg0
  * @param {bool} arg1
  */
 setContentOffset : function (
-point, 
+array, 
 bool 
 )
 {
@@ -2412,12 +2412,12 @@ bool
 
 /**
  * @method getContentOffset
- * @return {PointObject}
+ * @return {cc.math::Vector2}
  */
 getContentOffset : function (
 )
 {
-    return cc.Point;
+    return cc.math::Vector2;
 },
 
 /**
@@ -2462,12 +2462,12 @@ getViewSize : function (
 
 /**
  * @method maxContainerOffset
- * @return {PointObject}
+ * @return {cc.math::Vector2}
  */
 maxContainerOffset : function (
 )
 {
-    return cc.Point;
+    return cc.math::Vector2;
 },
 
 /**
@@ -2494,12 +2494,12 @@ node
 
 /**
  * @method minContainerOffset
- * @return {PointObject}
+ * @return {cc.math::Vector2}
  */
 minContainerOffset : function (
 )
 {
-    return cc.Point;
+    return cc.math::Vector2;
 },
 
 /**
