@@ -660,6 +660,18 @@ cc.screen = {
     }
 };
 
+cc.reflection = {
+    callStaticMethod : function(){
+        cc.log("not supported on current platform");
+    }
+}
+if(sys.os == sys.OS_ANDROID){
+    cc.reflection = new JavascriptJavaBridge();
+}
+else if(sys.os == sys.OS_IOS){
+    //TODO
+}
+
 // GUI
 ccui.helper = ccui.Helper;
 
