@@ -19,14 +19,11 @@ using namespace std;
 #define JSJ_ERR_VM_THREAD_DETACHED (-5)
 #define JSJ_ERR_VM_FAILURE         (-6)
 
-#define  LOG_TAG    "CCJavascriptJavaBridge"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-
 class JavascriptJavaBridge
 {
 
 private:
-    typedef enum
+    typedef enum : char
     {
         TypeInvalid = -1,
         TypeVoid    = 0,
@@ -89,6 +86,14 @@ private:
             return m_argumentsCount;
         }
 
+        ValueType getReturnValueType(){
+        	return m_returnType;
+        }
+
+        ReturnValue getReturnValue(){
+        	return m_ret;
+        }
+
         bool execute(void);
         bool executeWithArgs(jvalue *args);
 
@@ -116,10 +121,7 @@ private:
         ValueType checkType(const string& sig, size_t *pos);
     };
 
-
-    bool callJavaStaticMethod(const char* className, const char* methodName, const char* signature, jvalue *args);
-    bool callJavaStaticMethod(CallInfo &call, jvalue *args);
-
+    JS::Value convertReturnValue(JSContext *cx, ReturnValue retValue, ValueType type);
 public:
     
     JS_BINDED_CLASS_GLUE(JavascriptJavaBridge);
