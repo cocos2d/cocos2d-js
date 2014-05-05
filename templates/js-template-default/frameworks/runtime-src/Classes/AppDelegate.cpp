@@ -14,6 +14,9 @@
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
 #include "network/XMLHTTPRequest.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "platform/android/CCJavascriptJavaBridge.h"
+#endif
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -57,6 +60,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_chipmunk);
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
+    #endif
     sc->start();
     
 
