@@ -15,6 +15,7 @@
 #include "jsb_opengl_registration.h"
 #include "network/XMLHTTPRequest.h"
 #include "Runtime.h"
+#include "ConfigParser.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -30,12 +31,25 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+
+#if (COCOS2D_DEBUG>0)
+    initRuntime();
+#endif
+    
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::createWithRect("HelloJavascript", Rect(0,0,900,640));
+        ConfigParser::getInstance()->readConfig();
+        Size viewSize = ConfigParser::getInstance()->getInitViewSize();
+        string title = ConfigParser::getInstance()->getInitViewName();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        extern void createSimulator(const char* viewName, float width, float height,float frameZoomFactor = 1.0f);
+        createSimulator(title.c_str(),viewSize.width,viewSize.height);
+#else
+        glview = GLView::createWithRect(title.c_str(), Rect(0,0,viewSize.width,viewSize.height));
         director->setOpenGLView(glview);
+#endif
     }
 
     // turn on display FPS
@@ -59,7 +73,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_chipmunk);
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     
-#ifdef COCOS2D_DEBUG
+#if (COCOS2D_DEBUG>0)
     if (startRuntime())
         return true;
 #endif

@@ -183,6 +183,7 @@ xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Classes\ConfigParser.cpp" />
     <ClCompile Include="..\Classes\Runtime.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
@@ -190,6 +191,7 @@ xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
     <ClCompile Include="SimulatorWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Classes\ConfigParser.h" />
     <ClInclude Include="..\Classes\Runtime.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />

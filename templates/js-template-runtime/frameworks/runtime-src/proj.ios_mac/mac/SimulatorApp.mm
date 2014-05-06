@@ -44,6 +44,8 @@ bool g_landscape=false;
 cocos2d::Size g_screenSize;
 GLView* g_eglView=NULL;
 
+static AppController* g_nsAppDelegate=nullptr;
+
 using namespace std;
 using namespace cocos2d;
 
@@ -72,9 +74,8 @@ std::string getCurAppPath(void)
         extern std::string g_resourcePath;
         g_resourcePath = [[args objectAtIndex:1]UTF8String];
     }
-
+    g_nsAppDelegate =self;
     AppDelegate app;
-    [self createSimulator:[NSString stringWithUTF8String:"HelloJavascript"] viewWidth:960 viewHeight:640 factor:1.0];
     Application::getInstance()->run();
     
     // After run, application needs to be terminated immediately.
@@ -114,6 +115,14 @@ std::string getCurAppPath(void)
     [window makeKeyAndOrderFront:self];
 }
 
+void createSimulator(const char* viewName, float width, float height,float frameZoomFactor)
+{
+    if(g_nsAppDelegate)
+    {
+        [g_nsAppDelegate createSimulator:[NSString stringWithUTF8String:viewName] viewWidth:width viewHeight:height factor:frameZoomFactor];
+    }
+    
+}
 
 - (void) createViewMenu
 {
@@ -149,7 +158,7 @@ std::string getCurAppPath(void)
         [itemLandscape setState:NSOffState];
     }
 
-    int scale = 100;
+    int scale = g_eglView->getFrameZoomFactor()*100;
 
     NSMenuItem *itemZoom100 = [menuScreen itemWithTitle:@"Actual (100%)"];
     NSMenuItem *itemZoom75 = [menuScreen itemWithTitle:@"Zoom Out (75%)"];
@@ -278,6 +287,7 @@ std::string getCurAppPath(void)
     if ([sender state] == NSOnState) return;
     float scale = (float)[sender tag] / 100.0f;
     g_eglView->setFrameZoomFactor(scale);
+    [self updateView];
 }
 
 
