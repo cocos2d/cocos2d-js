@@ -179,6 +179,9 @@ bool jsval_to_ccvaluevector(JSContext* cx, jsval v, cocos2d::ValueVector* ret);
 bool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* ret);
 bool jsval_to_std_vector_string( JSContext *cx, jsval vp, std::vector<std::string>* ret);
 bool jsval_to_std_vector_int( JSContext *cx, jsval vp, std::vector<int>* ret);
+bool jsval_to_matrix(JSContext *cx, jsval vp, cocos2d::math::Matrix* ret);
+bool jsval_to_vector2(JSContext *cx, jsval vp, cocos2d::math::Vector2* ret);
+bool jsval_to_vector3(JSContext *cx, jsval vp, cocos2d::math::Vector3* ret);
 
 template <class T>
 bool jsval_to_ccmap_string_key(JSContext *cx, jsval v, cocos2d::Map<std::string, T>* ret)
@@ -320,6 +323,11 @@ jsval ccvaluemap_to_jsval(JSContext* cx, const cocos2d::ValueMap& v);
 jsval ccvaluemapintkey_to_jsval(JSContext* cx, const cocos2d::ValueMapIntKey& v);
 jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v);
 jsval ssize_to_jsval(JSContext *cx, ssize_t v);
+jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>& v);
+jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v);
+jsval matrix_to_jsval(JSContext *cx, const cocos2d::math::Matrix& v);
+jsval vector2_to_jsval(JSContext *cx, const cocos2d::math::Vector2& v);
+jsval vector3_to_jsval(JSContext *cx, const cocos2d::math::Vector3& v);
 
 #endif /* __JS_MANUAL_CONVERSIONS_H__ */
 
