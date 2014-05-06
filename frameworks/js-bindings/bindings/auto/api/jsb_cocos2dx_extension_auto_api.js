@@ -413,13 +413,13 @@ bool
 /**
  * @method getTouchLocation
  * @param {cc.Touch} arg0
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 getTouchLocation : function (
 touch 
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
@@ -534,7 +534,7 @@ state
 
 /**
  * @method setLabelAnchorPoint
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  */
 setLabelAnchorPoint : function (
 array 
@@ -544,12 +544,12 @@ array
 
 /**
  * @method getLabelAnchorPoint
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 getLabelAnchorPoint : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
@@ -965,7 +965,7 @@ bool
 /**
  * @method initWithTargetAndPos
  * @param {cc.Node} arg0
- * @param {cc.math::Vector2} arg1
+ * @param {Array} arg1
  * @return {bool}
  */
 initWithTargetAndPos : function (
@@ -988,12 +988,12 @@ float
 
 /**
  * @method getStartPos
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 getStartPos : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
@@ -1069,7 +1069,7 @@ sprite
 /**
  * @method create
  * @param {cc.Node} arg0
- * @param {cc.math::Vector2} arg1
+ * @param {Array} arg1
  * @return {cc.ControlHuePicker}
  */
 create : function (
@@ -1109,7 +1109,7 @@ getShadow : function (
 /**
  * @method initWithTargetAndPos
  * @param {cc.Node} arg0
- * @param {cc.math::Vector2} arg1
+ * @param {Array} arg1
  * @return {bool}
  */
 initWithTargetAndPos : function (
@@ -1122,12 +1122,12 @@ array
 
 /**
  * @method getStartPos
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 getStartPos : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
@@ -1193,7 +1193,7 @@ getBrightness : function (
 /**
  * @method create
  * @param {cc.Node} arg0
- * @param {cc.math::Vector2} arg1
+ * @param {Array} arg1
  * @return {cc.ControlSaturationBrightnessPicker}
  */
 create : function (
@@ -1352,7 +1352,7 @@ cc.ControlPotentiometer = {
 
 /**
  * @method setPreviousLocation
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  */
 setPreviousLocation : function (
 array 
@@ -1392,10 +1392,10 @@ getMaximumValue : function (
 
 /**
  * @method angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint
- * @param {cc.math::Vector2} arg0
- * @param {cc.math::Vector2} arg1
- * @param {cc.math::Vector2} arg2
- * @param {cc.math::Vector2} arg3
+ * @param {Array} arg0
+ * @param {Array} arg1
+ * @param {Array} arg2
+ * @param {Array} arg3
  * @return {float}
  */
 angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint : function (
@@ -1410,7 +1410,7 @@ array
 
 /**
  * @method potentiometerBegan
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  */
 potentiometerBegan : function (
 array 
@@ -1460,18 +1460,18 @@ getValue : function (
 
 /**
  * @method getPreviousLocation
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 getPreviousLocation : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
  * @method distanceBetweenPointAndPoint
- * @param {cc.math::Vector2} arg0
- * @param {cc.math::Vector2} arg1
+ * @param {Array} arg0
+ * @param {Array} arg1
  * @return {float}
  */
 distanceBetweenPointAndPoint : function (
@@ -1484,7 +1484,7 @@ array
 
 /**
  * @method potentiometerEnded
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  */
 potentiometerEnded : function (
 array 
@@ -1540,7 +1540,7 @@ sprite
 
 /**
  * @method potentiometerMoved
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  */
 potentiometerMoved : function (
 array 
@@ -1593,13 +1593,13 @@ getSelectedThumbSprite : function (
 /**
  * @method locationFromTouch
  * @param {cc.Touch} arg0
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 locationFromTouch : function (
 touch 
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
@@ -1906,7 +1906,7 @@ getMinusSprite : function (
 
 /**
  * @method updateLayoutUsingTouchLocation
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  */
 updateLayoutUsingTouchLocation : function (
 array 
@@ -2163,13 +2163,13 @@ hasMoved : function (
 /**
  * @method locationFromTouch
  * @param {cc.Touch} arg0
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 locationFromTouch : function (
 touch 
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
@@ -2232,7 +2232,7 @@ node
 
 /**
  * @method setContentOffsetInDuration
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  * @param {float} arg1
  */
 setContentOffsetInDuration : function (
@@ -2360,7 +2360,7 @@ init : function (
 
 /**
  * @method setContentOffset
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  * @param {bool} arg1
  */
 setContentOffset : function (
@@ -2412,12 +2412,12 @@ bool
 
 /**
  * @method getContentOffset
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 getContentOffset : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
@@ -2462,12 +2462,12 @@ getViewSize : function (
 
 /**
  * @method maxContainerOffset
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 maxContainerOffset : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
@@ -2494,12 +2494,12 @@ node
 
 /**
  * @method minContainerOffset
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 minContainerOffset : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**

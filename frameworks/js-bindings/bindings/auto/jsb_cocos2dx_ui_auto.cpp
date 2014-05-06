@@ -632,7 +632,7 @@ bool js_cocos2dx_ui_Widget_setSizePercent(JSContext *cx, uint32_t argc, jsval *v
 	cocos2d::ui::Widget* cobj = (cocos2d::ui::Widget *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_setSizePercent : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_setSizePercent : Error processing arguments");
 		cobj->setSizePercent(arg0);
@@ -724,7 +724,7 @@ bool js_cocos2dx_ui_Widget_getTouchEndPos(JSContext *cx, uint32_t argc, jsval *v
 	cocos2d::ui::Widget* cobj = (cocos2d::ui::Widget *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getTouchEndPos : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getTouchEndPos();
+		const cocos2d::Vector2& ret = cobj->getTouchEndPos();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -743,7 +743,7 @@ bool js_cocos2dx_ui_Widget_setPositionPercent(JSContext *cx, uint32_t argc, jsva
 	cocos2d::ui::Widget* cobj = (cocos2d::ui::Widget *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_setPositionPercent : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_setPositionPercent : Error processing arguments");
 		cobj->setPositionPercent(arg0);
@@ -1026,7 +1026,7 @@ bool js_cocos2dx_ui_Widget_getWorldPosition(JSContext *cx, uint32_t argc, jsval 
 	cocos2d::ui::Widget* cobj = (cocos2d::ui::Widget *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getWorldPosition : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector2 ret = cobj->getWorldPosition();
+		cocos2d::Vector2 ret = cobj->getWorldPosition();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -1122,7 +1122,7 @@ bool js_cocos2dx_ui_Widget_getTouchMovePos(JSContext *cx, uint32_t argc, jsval *
 	cocos2d::ui::Widget* cobj = (cocos2d::ui::Widget *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getTouchMovePos : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getTouchMovePos();
+		const cocos2d::Vector2& ret = cobj->getTouchMovePos();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -1250,7 +1250,7 @@ bool js_cocos2dx_ui_Widget_getSizePercent(JSContext *cx, uint32_t argc, jsval *v
 	cocos2d::ui::Widget* cobj = (cocos2d::ui::Widget *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getSizePercent : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getSizePercent();
+		const cocos2d::Vector2& ret = cobj->getSizePercent();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -1267,7 +1267,7 @@ bool js_cocos2dx_ui_Widget_getTouchStartPos(JSContext *cx, uint32_t argc, jsval 
 	cocos2d::ui::Widget* cobj = (cocos2d::ui::Widget *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getTouchStartPos : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getTouchStartPos();
+		const cocos2d::Vector2& ret = cobj->getTouchStartPos();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -1323,7 +1323,7 @@ bool js_cocos2dx_ui_Widget_clippingParentAreaContainPoint(JSContext *cx, uint32_
 	cocos2d::ui::Widget* cobj = (cocos2d::ui::Widget *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_clippingParentAreaContainPoint : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_clippingParentAreaContainPoint : Error processing arguments");
 		bool ret = cobj->clippingParentAreaContainPoint(arg0);
@@ -1464,7 +1464,7 @@ bool js_cocos2dx_ui_Widget_getPositionPercent(JSContext *cx, uint32_t argc, jsva
 	cocos2d::ui::Widget* cobj = (cocos2d::ui::Widget *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getPositionPercent : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getPositionPercent();
+		const cocos2d::Vector2& ret = cobj->getPositionPercent();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -1483,7 +1483,7 @@ bool js_cocos2dx_ui_Widget_hitTest(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::ui::Widget* cobj = (cocos2d::ui::Widget *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_hitTest : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_hitTest : Error processing arguments");
 		bool ret = cobj->hitTest(arg0);
@@ -1561,7 +1561,7 @@ bool js_cocos2dx_ui_Widget_checkChildInfo(JSContext *cx, uint32_t argc, jsval *v
 	if (argc == 3) {
 		int arg0;
 		cocos2d::ui::Widget* arg1;
-		cocos2d::math::Vector2 arg2;
+		cocos2d::Vector2 arg2;
 		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
 		do {
 			if (!argv[1].isObject()) { ok = false; break; }
@@ -1792,7 +1792,7 @@ bool js_cocos2dx_ui_Layout_setBackGroundColorVector(JSContext *cx, uint32_t argc
 	cocos2d::ui::Layout* cobj = (cocos2d::ui::Layout *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_setBackGroundColorVector : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Layout_setBackGroundColorVector : Error processing arguments");
 		cobj->setBackGroundColorVector(arg0);
@@ -1870,7 +1870,7 @@ bool js_cocos2dx_ui_Layout_getBackGroundColorVector(JSContext *cx, uint32_t argc
 	cocos2d::ui::Layout* cobj = (cocos2d::ui::Layout *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getBackGroundColorVector : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getBackGroundColorVector();
+		const cocos2d::Vector2& ret = cobj->getBackGroundColorVector();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -5278,7 +5278,7 @@ bool js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection(JSContext *cx, uint3
 	cocos2d::ui::ScrollView* cobj = (cocos2d::ui::ScrollView *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection : Invalid Native Object");
 	if (argc == 3) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		double arg1;
 		bool arg2;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
@@ -5653,7 +5653,7 @@ bool js_cocos2dx_ui_ScrollView_jumpToPercentBothDirection(JSContext *cx, uint32_
 	cocos2d::ui::ScrollView* cobj = (cocos2d::ui::ScrollView *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_jumpToPercentBothDirection : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_jumpToPercentBothDirection : Error processing arguments");
 		cobj->jumpToPercentBothDirection(arg0);
@@ -7511,7 +7511,7 @@ bool js_cocos2dx_ui_TextField_hitTest(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::ui::TextField* cobj = (cocos2d::ui::TextField *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_hitTest : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_TextField_hitTest : Error processing arguments");
 		bool ret = cobj->hitTest(arg0);

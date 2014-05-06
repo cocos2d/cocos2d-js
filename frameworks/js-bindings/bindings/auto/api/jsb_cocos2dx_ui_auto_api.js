@@ -208,7 +208,7 @@ ccui.Widget = {
 
 /**
  * @method setSizePercent
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  */
 setSizePercent : function (
 array 
@@ -258,17 +258,17 @@ getLeftInParent : function (
 
 /**
  * @method getTouchEndPos
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 getTouchEndPos : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
  * @method setPositionPercent
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  */
 setPositionPercent : function (
 array 
@@ -422,12 +422,12 @@ getActionTag : function (
 
 /**
  * @method getWorldPosition
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 getWorldPosition : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
@@ -470,12 +470,12 @@ clone : function (
 
 /**
  * @method getTouchMovePos
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 getTouchMovePos : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
@@ -530,22 +530,22 @@ layoutparameter
 
 /**
  * @method getSizePercent
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 getSizePercent : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
  * @method getTouchStartPos
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 getTouchStartPos : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
@@ -570,7 +570,7 @@ isBright : function (
 
 /**
  * @method clippingParentAreaContainPoint
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  * @return {bool}
  */
 clippingParentAreaContainPoint : function (
@@ -642,17 +642,17 @@ bool
 
 /**
  * @method getPositionPercent
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 getPositionPercent : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
  * @method hitTest
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  * @return {bool}
  */
 hitTest : function (
@@ -696,7 +696,7 @@ sizetype
  * @method checkChildInfo
  * @param {int} arg0
  * @param {ccui.Widget} arg1
- * @param {cc.math::Vector2} arg2
+ * @param {Array} arg2
  */
 checkChildInfo : function (
 int, 
@@ -754,7 +754,7 @@ ccui.Layout = {
 
 /**
  * @method setBackGroundColorVector
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  */
 setBackGroundColorVector : function (
 array 
@@ -794,12 +794,12 @@ color3b
 
 /**
  * @method getBackGroundColorVector
- * @return {cc.math::Vector2}
+ * @return {Array}
  */
 getBackGroundColorVector : function (
 )
 {
-    return cc.math::Vector2;
+    return new Array();
 },
 
 /**
@@ -2118,7 +2118,7 @@ isInertiaScrollEnabled : function (
 
 /**
  * @method scrollToPercentBothDirection
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  * @param {float} arg1
  * @param {bool} arg2
  */
@@ -2316,7 +2316,7 @@ bool
 
 /**
  * @method jumpToPercentBothDirection
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  */
 jumpToPercentBothDirection : function (
 array 
@@ -3130,7 +3130,7 @@ bool
 
 /**
  * @method hitTest
- * @param {cc.math::Vector2} arg0
+ * @param {Array} arg0
  * @return {bool}
  */
 hitTest : function (

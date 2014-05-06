@@ -667,7 +667,7 @@ bool js_cocos2dx_GLProgram_setUniformsForBuiltins(JSContext *cx, uint32_t argc, 
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgram_setUniformsForBuiltins : Invalid Native Object");
 	do {
 		if (argc == 1) {
-			cocos2d::math::Matrix arg0;
+			cocos2d::Matrix arg0;
 			ok &= jsval_to_matrix(cx, argv[0], &arg0);
 			if (!ok) { ok = true; break; }
 			cobj->setUniformsForBuiltins(arg0);
@@ -1115,7 +1115,7 @@ bool js_cocos2dx_Touch_getPreviousLocationInView(JSContext *cx, uint32_t argc, j
 	cocos2d::Touch* cobj = (cocos2d::Touch *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Touch_getPreviousLocationInView : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector2 ret = cobj->getPreviousLocationInView();
+		cocos2d::Vector2 ret = cobj->getPreviousLocationInView();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -1132,7 +1132,7 @@ bool js_cocos2dx_Touch_getLocation(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Touch* cobj = (cocos2d::Touch *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Touch_getLocation : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector2 ret = cobj->getLocation();
+		cocos2d::Vector2 ret = cobj->getLocation();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -1149,7 +1149,7 @@ bool js_cocos2dx_Touch_getDelta(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Touch* cobj = (cocos2d::Touch *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Touch_getDelta : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector2 ret = cobj->getDelta();
+		cocos2d::Vector2 ret = cobj->getDelta();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -1166,7 +1166,7 @@ bool js_cocos2dx_Touch_getStartLocationInView(JSContext *cx, uint32_t argc, jsva
 	cocos2d::Touch* cobj = (cocos2d::Touch *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Touch_getStartLocationInView : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector2 ret = cobj->getStartLocationInView();
+		cocos2d::Vector2 ret = cobj->getStartLocationInView();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -1183,7 +1183,7 @@ bool js_cocos2dx_Touch_getStartLocation(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Touch* cobj = (cocos2d::Touch *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Touch_getStartLocation : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector2 ret = cobj->getStartLocation();
+		cocos2d::Vector2 ret = cobj->getStartLocation();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -1241,7 +1241,7 @@ bool js_cocos2dx_Touch_getLocationInView(JSContext *cx, uint32_t argc, jsval *vp
 	cocos2d::Touch* cobj = (cocos2d::Touch *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Touch_getLocationInView : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector2 ret = cobj->getLocationInView();
+		cocos2d::Vector2 ret = cobj->getLocationInView();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -1258,7 +1258,7 @@ bool js_cocos2dx_Touch_getPreviousLocation(JSContext *cx, uint32_t argc, jsval *
 	cocos2d::Touch* cobj = (cocos2d::Touch *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Touch_getPreviousLocation : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector2 ret = cobj->getPreviousLocation();
+		cocos2d::Vector2 ret = cobj->getPreviousLocation();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -2302,7 +2302,7 @@ bool js_cocos2dx_Texture2D_drawAtPoint(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Texture2D* cobj = (cocos2d::Texture2D *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Texture2D_drawAtPoint : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Texture2D_drawAtPoint : Error processing arguments");
 		cobj->drawAtPoint(arg0);
@@ -3486,10 +3486,10 @@ bool js_cocos2dx_Node_convertToWorldSpaceAR(JSContext *cx, uint32_t argc, jsval 
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_convertToWorldSpaceAR : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_convertToWorldSpaceAR : Error processing arguments");
-		cocos2d::math::Vector2 ret = cobj->convertToWorldSpaceAR(arg0);
+		cocos2d::Vector2 ret = cobj->convertToWorldSpaceAR(arg0);
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -3729,7 +3729,7 @@ bool js_cocos2dx_Node_getNodeToWorldTransform(JSContext *cx, uint32_t argc, jsva
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getNodeToWorldTransform : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Matrix ret = cobj->getNodeToWorldTransform();
+		cocos2d::Matrix ret = cobj->getNodeToWorldTransform();
 		jsval jsret = JSVAL_NULL;
 		jsret = matrix_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -3746,7 +3746,7 @@ bool js_cocos2dx_Node_getPosition3D(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getPosition3D : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector3 ret = cobj->getPosition3D();
+		cocos2d::Vector3 ret = cobj->getPosition3D();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector3_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -3809,10 +3809,10 @@ bool js_cocos2dx_Node_convertToWorldSpace(JSContext *cx, uint32_t argc, jsval *v
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_convertToWorldSpace : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_convertToWorldSpace : Error processing arguments");
-		cocos2d::math::Vector2 ret = cobj->convertToWorldSpace(arg0);
+		cocos2d::Vector2 ret = cobj->convertToWorldSpace(arg0);
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -3946,7 +3946,7 @@ bool js_cocos2dx_Node_convertTouchToNodeSpace(JSContext *cx, uint32_t argc, jsva
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_convertTouchToNodeSpace : Error processing arguments");
-		cocos2d::math::Vector2 ret = cobj->convertTouchToNodeSpace(arg0);
+		cocos2d::Vector2 ret = cobj->convertTouchToNodeSpace(arg0);
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -4056,7 +4056,7 @@ bool js_cocos2dx_Node_getRotation3D(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getRotation3D : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector3 ret = cobj->getRotation3D();
+		cocos2d::Vector3 ret = cobj->getRotation3D();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector3_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -4073,7 +4073,7 @@ bool js_cocos2dx_Node_getNodeToParentTransform(JSContext *cx, uint32_t argc, jsv
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getNodeToParentTransform : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Matrix& ret = cobj->getNodeToParentTransform();
+		const cocos2d::Matrix& ret = cobj->getNodeToParentTransform();
 		jsval jsret = JSVAL_NULL;
 		jsret = matrix_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -4102,7 +4102,7 @@ bool js_cocos2dx_Node_convertTouchToNodeSpaceAR(JSContext *cx, uint32_t argc, js
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_convertTouchToNodeSpaceAR : Error processing arguments");
-		cocos2d::math::Vector2 ret = cobj->convertTouchToNodeSpaceAR(arg0);
+		cocos2d::Vector2 ret = cobj->convertTouchToNodeSpaceAR(arg0);
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -4121,10 +4121,10 @@ bool js_cocos2dx_Node_convertToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_convertToNodeSpace : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_convertToNodeSpace : Error processing arguments");
-		cocos2d::math::Vector2 ret = cobj->convertToNodeSpace(arg0);
+		cocos2d::Vector2 ret = cobj->convertToNodeSpace(arg0);
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -4251,7 +4251,7 @@ bool js_cocos2dx_Node_setRotation3D(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_setRotation3D : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector3 arg0;
+		cocos2d::Vector3 arg0;
 		ok &= jsval_to_vector3(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setRotation3D : Error processing arguments");
 		cobj->setRotation3D(arg0);
@@ -4291,7 +4291,7 @@ bool js_cocos2dx_Node_setNodeToParentTransform(JSContext *cx, uint32_t argc, jsv
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_setNodeToParentTransform : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Matrix arg0;
+		cocos2d::Matrix arg0;
 		ok &= jsval_to_matrix(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setNodeToParentTransform : Error processing arguments");
 		cobj->setNodeToParentTransform(arg0);
@@ -4309,7 +4309,7 @@ bool js_cocos2dx_Node_getAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getAnchorPoint : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getAnchorPoint();
+		const cocos2d::Vector2& ret = cobj->getAnchorPoint();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -4394,10 +4394,10 @@ bool js_cocos2dx_Node_convertToNodeSpaceAR(JSContext *cx, uint32_t argc, jsval *
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_convertToNodeSpaceAR : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_convertToNodeSpaceAR : Error processing arguments");
-		cocos2d::math::Vector2 ret = cobj->convertToNodeSpaceAR(arg0);
+		cocos2d::Vector2 ret = cobj->convertToNodeSpaceAR(arg0);
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -4467,7 +4467,7 @@ bool js_cocos2dx_Node_visit(JSContext *cx, uint32_t argc, jsval *vp)
 				JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
-			cocos2d::math::Matrix arg1;
+			cocos2d::Matrix arg1;
 			ok &= jsval_to_matrix(cx, argv[1], &arg1);
 			if (!ok) { ok = true; break; }
 			bool arg2;
@@ -4532,7 +4532,7 @@ bool js_cocos2dx_Node_getAnchorPointInPoints(JSContext *cx, uint32_t argc, jsval
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getAnchorPointInPoints : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getAnchorPointInPoints();
+		const cocos2d::Vector2& ret = cobj->getAnchorPointInPoints();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -4744,13 +4744,13 @@ bool js_cocos2dx_Node_setAdditionalTransform(JSContext *cx, uint32_t argc, jsval
 
 	do {
 		if (argc == 1) {
-			cocos2d::math::Matrix* arg0;
+			cocos2d::Matrix* arg0;
 			do {
 				if (!argv[0].isObject()) { ok = false; break; }
 				js_proxy_t *jsProxy;
 				JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
 				jsProxy = jsb_get_js_proxy(tmpObj);
-				arg0 = (cocos2d::math::Matrix*)(jsProxy ? jsProxy->ptr : NULL);
+				arg0 = (cocos2d::Matrix*)(jsProxy ? jsProxy->ptr : NULL);
 				JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
@@ -4933,7 +4933,7 @@ bool js_cocos2dx_Node_getPosition(JSContext *cx, uint32_t argc, jsval *vp)
 
 	do {
 		if (argc == 0) {
-			const cocos2d::math::Vector2& ret = cobj->getPosition();
+			const cocos2d::Vector2& ret = cobj->getPosition();
 			jsval jsret = JSVAL_NULL;
 			jsret = vector2_to_jsval(cx, ret);
 			JS_SET_RVAL(cx, vp, jsret);
@@ -5140,7 +5140,7 @@ bool js_cocos2dx_Node_getParentToNodeTransform(JSContext *cx, uint32_t argc, jsv
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getParentToNodeTransform : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Matrix& ret = cobj->getParentToNodeTransform();
+		const cocos2d::Matrix& ret = cobj->getParentToNodeTransform();
 		jsval jsret = JSVAL_NULL;
 		jsret = matrix_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -5573,7 +5573,7 @@ bool js_cocos2dx_Node_draw(JSContext *cx, uint32_t argc, jsval *vp)
 				JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
-			cocos2d::math::Matrix arg1;
+			cocos2d::Matrix arg1;
 			ok &= jsval_to_matrix(cx, argv[1], &arg1);
 			if (!ok) { ok = true; break; }
 			bool arg2;
@@ -5655,7 +5655,7 @@ bool js_cocos2dx_Node_setPosition3D(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_setPosition3D : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector3 arg0;
+		cocos2d::Vector3 arg0;
 		ok &= jsval_to_vector3(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setPosition3D : Error processing arguments");
 		cobj->setPosition3D(arg0);
@@ -5708,7 +5708,7 @@ bool js_cocos2dx_Node_getWorldToNodeTransform(JSContext *cx, uint32_t argc, jsva
 	cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getWorldToNodeTransform : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Matrix ret = cobj->getWorldToNodeTransform();
+		cocos2d::Matrix ret = cobj->getWorldToNodeTransform();
 		jsval jsret = JSVAL_NULL;
 		jsret = matrix_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -7068,7 +7068,7 @@ bool js_cocos2dx_Director_loadMatrix(JSContext *cx, uint32_t argc, jsval *vp)
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_loadMatrix : Invalid Native Object");
 	if (argc == 2) {
 		cocos2d::MATRIX_STACK_TYPE arg0;
-		cocos2d::math::Matrix arg1;
+		cocos2d::Matrix arg1;
 		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
 		ok &= jsval_to_matrix(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_loadMatrix : Error processing arguments");
@@ -7184,7 +7184,7 @@ bool js_cocos2dx_Director_getVisibleOrigin(JSContext *cx, uint32_t argc, jsval *
 	cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_getVisibleOrigin : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector2 ret = cobj->getVisibleOrigin();
+		cocos2d::Vector2 ret = cobj->getVisibleOrigin();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -7272,10 +7272,10 @@ bool js_cocos2dx_Director_convertToUI(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_convertToUI : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_convertToUI : Error processing arguments");
-		cocos2d::math::Vector2 ret = cobj->convertToUI(arg0);
+		cocos2d::Vector2 ret = cobj->convertToUI(arg0);
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -7545,10 +7545,10 @@ bool js_cocos2dx_Director_convertToGL(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_convertToGL : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_convertToGL : Error processing arguments");
-		cocos2d::math::Vector2 ret = cobj->convertToGL(arg0);
+		cocos2d::Vector2 ret = cobj->convertToGL(arg0);
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -7688,7 +7688,7 @@ bool js_cocos2dx_Director_getMatrix(JSContext *cx, uint32_t argc, jsval *vp)
 		cocos2d::MATRIX_STACK_TYPE arg0;
 		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_getMatrix : Error processing arguments");
-		cocos2d::math::Matrix ret = cobj->getMatrix(arg0);
+		cocos2d::Matrix ret = cobj->getMatrix(arg0);
 		jsval jsret = JSVAL_NULL;
 		jsret = matrix_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -8001,7 +8001,7 @@ bool js_cocos2dx_Director_multiplyMatrix(JSContext *cx, uint32_t argc, jsval *vp
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_multiplyMatrix : Invalid Native Object");
 	if (argc == 2) {
 		cocos2d::MATRIX_STACK_TYPE arg0;
-		cocos2d::math::Matrix arg1;
+		cocos2d::Matrix arg1;
 		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
 		ok &= jsval_to_matrix(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_multiplyMatrix : Error processing arguments");
@@ -8465,23 +8465,6 @@ bool js_cocos2dx_FileUtils_getValueVectorFromFile(JSContext *cx, uint32_t argc, 
 	JS_ReportError(cx, "js_cocos2dx_FileUtils_getValueVectorFromFile : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
-bool js_cocos2dx_FileUtils_getSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_getSearchPaths : Invalid Native Object");
-	if (argc == 0) {
-		const std::vector<std::string>& ret = cobj->getSearchPaths();
-		jsval jsret = JSVAL_NULL;
-		jsret = std_vector_string_to_jsval(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_FileUtils_getSearchPaths : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
 bool js_cocos2dx_FileUtils_writeToFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -8526,46 +8509,6 @@ bool js_cocos2dx_FileUtils_getValueMapFromFile(JSContext *cx, uint32_t argc, jsv
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_FileUtils_getValueMapFromFile : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
-bool js_cocos2dx_FileUtils_setSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_setSearchPaths : Invalid Native Object");
-	if (argc == 1) {
-		std::vector<std::string> arg0;
-		ok &= jsval_to_std_vector_string(cx, argv[0], &arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_setSearchPaths : Error processing arguments");
-		cobj->setSearchPaths(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_FileUtils_setSearchPaths : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
-bool js_cocos2dx_FileUtils_addSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_addSearchPath : Invalid Native Object");
-	if (argc == 1) {
-		std::string arg0;
-		ok &= jsval_to_std_string(cx, argv[0], &arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_addSearchPath : Error processing arguments");
-		cobj->addSearchPath(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_FileUtils_addSearchPath : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 bool js_cocos2dx_FileUtils_isFileExist(JSContext *cx, uint32_t argc, jsval *vp)
@@ -8697,11 +8640,8 @@ void js_register_cocos2dx_FileUtils(JSContext *cx, JSObject *global) {
 		JS_FN("loadFilenameLookup", js_cocos2dx_FileUtils_loadFilenameLookupDictionaryFromFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isPopupNotify", js_cocos2dx_FileUtils_isPopupNotify, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getValueVectorFromFile", js_cocos2dx_FileUtils_getValueVectorFromFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getSearchPaths", js_cocos2dx_FileUtils_getSearchPaths, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("writeToFile", js_cocos2dx_FileUtils_writeToFile, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getValueMapFromFile", js_cocos2dx_FileUtils_getValueMapFromFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setSearchPaths", js_cocos2dx_FileUtils_setSearchPaths, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("addSearchPath", js_cocos2dx_FileUtils_addSearchPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isFileExist", js_cocos2dx_FileUtils_isFileExist, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("purgeCachedEntries", js_cocos2dx_FileUtils_purgeCachedEntries, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("fullPathFromRelativeFile", js_cocos2dx_FileUtils_fullPathFromRelativeFile, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -10798,7 +10738,7 @@ bool js_cocos2dx_SpriteFrame_initWithTexture(JSContext *cx, uint32_t argc, jsval
 			if (!ok) { ok = true; break; }
 			bool arg2;
 			arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
-			cocos2d::math::Vector2 arg3;
+			cocos2d::Vector2 arg3;
 			ok &= jsval_to_vector2(cx, argv[3], &arg3);
 			if (!ok) { ok = true; break; }
 			cocos2d::Size arg4;
@@ -10908,7 +10848,7 @@ bool js_cocos2dx_SpriteFrame_setOffsetInPixels(JSContext *cx, uint32_t argc, jsv
 	cocos2d::SpriteFrame* cobj = (cocos2d::SpriteFrame *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteFrame_setOffsetInPixels : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteFrame_setOffsetInPixels : Error processing arguments");
 		cobj->setOffsetInPixels(arg0);
@@ -11002,7 +10942,7 @@ bool js_cocos2dx_SpriteFrame_setOffset(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::SpriteFrame* cobj = (cocos2d::SpriteFrame *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteFrame_setOffset : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteFrame_setOffset : Error processing arguments");
 		cobj->setOffset(arg0);
@@ -11020,7 +10960,7 @@ bool js_cocos2dx_SpriteFrame_getOffset(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::SpriteFrame* cobj = (cocos2d::SpriteFrame *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteFrame_getOffset : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getOffset();
+		const cocos2d::Vector2& ret = cobj->getOffset();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -11068,7 +11008,7 @@ bool js_cocos2dx_SpriteFrame_initWithTextureFilename(JSContext *cx, uint32_t arg
 			if (!ok) { ok = true; break; }
 			bool arg2;
 			arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
-			cocos2d::math::Vector2 arg3;
+			cocos2d::Vector2 arg3;
 			ok &= jsval_to_vector2(cx, argv[3], &arg3);
 			if (!ok) { ok = true; break; }
 			cocos2d::Size arg4;
@@ -11128,7 +11068,7 @@ bool js_cocos2dx_SpriteFrame_getOffsetInPixels(JSContext *cx, uint32_t argc, jsv
 	cocos2d::SpriteFrame* cobj = (cocos2d::SpriteFrame *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteFrame_getOffsetInPixels : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getOffsetInPixels();
+		const cocos2d::Vector2& ret = cobj->getOffsetInPixels();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -11171,7 +11111,7 @@ bool js_cocos2dx_SpriteFrame_create(JSContext *cx, uint32_t argc, jsval *vp)
 			bool arg2;
 			arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
 			if (!ok) { ok = true; break; }
-			cocos2d::math::Vector2 arg3;
+			cocos2d::Vector2 arg3;
 			ok &= jsval_to_vector2(cx, argv[3], &arg3);
 			if (!ok) { ok = true; break; }
 			cocos2d::Size arg4;
@@ -11240,7 +11180,7 @@ bool js_cocos2dx_SpriteFrame_createWithTexture(JSContext *cx, uint32_t argc, jsv
 			bool arg2;
 			arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
 			if (!ok) { ok = true; break; }
-			cocos2d::math::Vector2 arg3;
+			cocos2d::Vector2 arg3;
 			ok &= jsval_to_vector2(cx, argv[3], &arg3);
 			if (!ok) { ok = true; break; }
 			cocos2d::Size arg4;
@@ -13241,7 +13181,7 @@ bool js_cocos2dx_RotateBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *
 			double arg0;
 			ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 			if (!ok) { ok = true; break; }
-			cocos2d::math::Vector3 arg1;
+			cocos2d::Vector3 arg1;
 			ok &= jsval_to_vector3(cx, argv[1], &arg1);
 			if (!ok) { ok = true; break; }
 			bool ret = cobj->initWithDuration(arg0, arg1);
@@ -13314,7 +13254,7 @@ bool js_cocos2dx_RotateBy_create(JSContext *cx, uint32_t argc, jsval *vp)
 			double arg0;
 			ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 			if (!ok) { ok = true; break; }
-			cocos2d::math::Vector3 arg1;
+			cocos2d::Vector3 arg1;
 			ok &= jsval_to_vector3(cx, argv[1], &arg1);
 			if (!ok) { ok = true; break; }
 			cocos2d::RotateBy* ret = cocos2d::RotateBy::create(arg0, arg1);
@@ -13436,7 +13376,7 @@ bool js_cocos2dx_MoveBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_MoveBy_initWithDuration : Invalid Native Object");
 	if (argc == 2) {
 		double arg0;
-		cocos2d::math::Vector2 arg1;
+		cocos2d::Vector2 arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MoveBy_initWithDuration : Error processing arguments");
@@ -13456,7 +13396,7 @@ bool js_cocos2dx_MoveBy_create(JSContext *cx, uint32_t argc, jsval *vp)
 	bool ok = true;
 	if (argc == 2) {
 		double arg0;
-		cocos2d::math::Vector2 arg1;
+		cocos2d::Vector2 arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MoveBy_create : Error processing arguments");
@@ -13579,7 +13519,7 @@ bool js_cocos2dx_MoveTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_MoveTo_initWithDuration : Invalid Native Object");
 	if (argc == 2) {
 		double arg0;
-		cocos2d::math::Vector2 arg1;
+		cocos2d::Vector2 arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MoveTo_initWithDuration : Error processing arguments");
@@ -13599,7 +13539,7 @@ bool js_cocos2dx_MoveTo_create(JSContext *cx, uint32_t argc, jsval *vp)
 	bool ok = true;
 	if (argc == 2) {
 		double arg0;
-		cocos2d::math::Vector2 arg1;
+		cocos2d::Vector2 arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MoveTo_create : Error processing arguments");
@@ -14016,7 +13956,7 @@ bool js_cocos2dx_JumpBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_JumpBy_initWithDuration : Invalid Native Object");
 	if (argc == 4) {
 		double arg0;
-		cocos2d::math::Vector2 arg1;
+		cocos2d::Vector2 arg1;
 		double arg2;
 		int arg3;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
@@ -14040,7 +13980,7 @@ bool js_cocos2dx_JumpBy_create(JSContext *cx, uint32_t argc, jsval *vp)
 	bool ok = true;
 	if (argc == 4) {
 		double arg0;
-		cocos2d::math::Vector2 arg1;
+		cocos2d::Vector2 arg1;
 		double arg2;
 		int arg3;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
@@ -14163,7 +14103,7 @@ bool js_cocos2dx_JumpTo_create(JSContext *cx, uint32_t argc, jsval *vp)
 	bool ok = true;
 	if (argc == 4) {
 		double arg0;
-		cocos2d::math::Vector2 arg1;
+		cocos2d::Vector2 arg1;
 		double arg2;
 		int arg3;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
@@ -16316,7 +16256,7 @@ bool js_cocos2dx_ActionCamera_setEye(JSContext *cx, uint32_t argc, jsval *vp)
 
 	do {
 		if (argc == 1) {
-			cocos2d::math::Vector3 arg0;
+			cocos2d::Vector3 arg0;
 			ok &= jsval_to_vector3(cx, argv[0], &arg0);
 			if (!ok) { ok = true; break; }
 			cobj->setEye(arg0);
@@ -16335,7 +16275,7 @@ bool js_cocos2dx_ActionCamera_getEye(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::ActionCamera* cobj = (cocos2d::ActionCamera *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionCamera_getEye : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector3& ret = cobj->getEye();
+		const cocos2d::Vector3& ret = cobj->getEye();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector3_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -16354,7 +16294,7 @@ bool js_cocos2dx_ActionCamera_setUp(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::ActionCamera* cobj = (cocos2d::ActionCamera *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionCamera_setUp : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector3 arg0;
+		cocos2d::Vector3 arg0;
 		ok &= jsval_to_vector3(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ActionCamera_setUp : Error processing arguments");
 		cobj->setUp(arg0);
@@ -16372,7 +16312,7 @@ bool js_cocos2dx_ActionCamera_getCenter(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::ActionCamera* cobj = (cocos2d::ActionCamera *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionCamera_getCenter : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector3& ret = cobj->getCenter();
+		const cocos2d::Vector3& ret = cobj->getCenter();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector3_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -16391,7 +16331,7 @@ bool js_cocos2dx_ActionCamera_setCenter(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::ActionCamera* cobj = (cocos2d::ActionCamera *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionCamera_setCenter : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector3 arg0;
+		cocos2d::Vector3 arg0;
 		ok &= jsval_to_vector3(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ActionCamera_setCenter : Error processing arguments");
 		cobj->setCenter(arg0);
@@ -16409,7 +16349,7 @@ bool js_cocos2dx_ActionCamera_getUp(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::ActionCamera* cobj = (cocos2d::ActionCamera *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionCamera_getUp : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector3& ret = cobj->getUp();
+		const cocos2d::Vector3& ret = cobj->getUp();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector3_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -22950,7 +22890,7 @@ bool js_cocos2dx_Place_initWithPosition(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Place* cobj = (cocos2d::Place *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Place_initWithPosition : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Place_initWithPosition : Error processing arguments");
 		bool ret = cobj->initWithPosition(arg0);
@@ -22968,7 +22908,7 @@ bool js_cocos2dx_Place_create(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Place_create : Error processing arguments");
 		cocos2d::Place* ret = cocos2d::Place::create(arg0);
@@ -24183,7 +24123,7 @@ bool js_cocos2dx_Lens3D_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp
 	if (argc == 4) {
 		double arg0;
 		cocos2d::Size arg1;
-		cocos2d::math::Vector2 arg2;
+		cocos2d::Vector2 arg2;
 		double arg3;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 		ok &= jsval_to_ccsize(cx, argv[1], &arg1);
@@ -24246,7 +24186,7 @@ bool js_cocos2dx_Lens3D_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Lens3D* cobj = (cocos2d::Lens3D *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Lens3D_setPosition : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Lens3D_setPosition : Error processing arguments");
 		cobj->setPosition(arg0);
@@ -24264,7 +24204,7 @@ bool js_cocos2dx_Lens3D_getPosition(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Lens3D* cobj = (cocos2d::Lens3D *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Lens3D_getPosition : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getPosition();
+		const cocos2d::Vector2& ret = cobj->getPosition();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -24281,7 +24221,7 @@ bool js_cocos2dx_Lens3D_create(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 4) {
 		double arg0;
 		cocos2d::Size arg1;
-		cocos2d::math::Vector2 arg2;
+		cocos2d::Vector2 arg2;
 		double arg3;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 		ok &= jsval_to_ccsize(cx, argv[1], &arg1);
@@ -24433,7 +24373,7 @@ bool js_cocos2dx_Ripple3D_initWithDuration(JSContext *cx, uint32_t argc, jsval *
 	if (argc == 6) {
 		double arg0;
 		cocos2d::Size arg1;
-		cocos2d::math::Vector2 arg2;
+		cocos2d::Vector2 arg2;
 		double arg3;
 		unsigned int arg4;
 		double arg5;
@@ -24517,7 +24457,7 @@ bool js_cocos2dx_Ripple3D_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Ripple3D* cobj = (cocos2d::Ripple3D *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Ripple3D_setPosition : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Ripple3D_setPosition : Error processing arguments");
 		cobj->setPosition(arg0);
@@ -24535,7 +24475,7 @@ bool js_cocos2dx_Ripple3D_getPosition(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Ripple3D* cobj = (cocos2d::Ripple3D *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Ripple3D_getPosition : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getPosition();
+		const cocos2d::Vector2& ret = cobj->getPosition();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -24552,7 +24492,7 @@ bool js_cocos2dx_Ripple3D_create(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 6) {
 		double arg0;
 		cocos2d::Size arg1;
-		cocos2d::math::Vector2 arg2;
+		cocos2d::Vector2 arg2;
 		double arg3;
 		unsigned int arg4;
 		double arg5;
@@ -25326,7 +25266,7 @@ bool js_cocos2dx_Twirl_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 5) {
 		double arg0;
 		cocos2d::Size arg1;
-		cocos2d::math::Vector2 arg2;
+		cocos2d::Vector2 arg2;
 		unsigned int arg3;
 		double arg4;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
@@ -25408,7 +25348,7 @@ bool js_cocos2dx_Twirl_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Twirl* cobj = (cocos2d::Twirl *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Twirl_setPosition : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Twirl_setPosition : Error processing arguments");
 		cobj->setPosition(arg0);
@@ -25426,7 +25366,7 @@ bool js_cocos2dx_Twirl_getPosition(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::Twirl* cobj = (cocos2d::Twirl *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Twirl_getPosition : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getPosition();
+		const cocos2d::Vector2& ret = cobj->getPosition();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -25443,7 +25383,7 @@ bool js_cocos2dx_Twirl_create(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 5) {
 		double arg0;
 		cocos2d::Size arg1;
-		cocos2d::math::Vector2 arg2;
+		cocos2d::Vector2 arg2;
 		unsigned int arg3;
 		double arg4;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
@@ -26260,7 +26200,7 @@ bool js_cocos2dx_ShuffleTiles_placeTile(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::ShuffleTiles* cobj = (cocos2d::ShuffleTiles *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ShuffleTiles_placeTile : Invalid Native Object");
 	if (argc == 2) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		cocos2d::Tile* arg1;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		#pragma warning NO CONVERSION TO NATIVE FOR Tile*;
@@ -26476,7 +26416,7 @@ bool js_cocos2dx_FadeOutTRTiles_turnOnTile(JSContext *cx, uint32_t argc, jsval *
 	cocos2d::FadeOutTRTiles* cobj = (cocos2d::FadeOutTRTiles *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FadeOutTRTiles_turnOnTile : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FadeOutTRTiles_turnOnTile : Error processing arguments");
 		cobj->turnOnTile(arg0);
@@ -26496,7 +26436,7 @@ bool js_cocos2dx_FadeOutTRTiles_turnOffTile(JSContext *cx, uint32_t argc, jsval 
 	cocos2d::FadeOutTRTiles* cobj = (cocos2d::FadeOutTRTiles *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FadeOutTRTiles_turnOffTile : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FadeOutTRTiles_turnOffTile : Error processing arguments");
 		cobj->turnOffTile(arg0);
@@ -26516,7 +26456,7 @@ bool js_cocos2dx_FadeOutTRTiles_transformTile(JSContext *cx, uint32_t argc, jsva
 	cocos2d::FadeOutTRTiles* cobj = (cocos2d::FadeOutTRTiles *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FadeOutTRTiles_transformTile : Invalid Native Object");
 	if (argc == 2) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		double arg1;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
@@ -26750,7 +26690,7 @@ bool js_cocos2dx_FadeOutUpTiles_transformTile(JSContext *cx, uint32_t argc, jsva
 	cocos2d::FadeOutUpTiles* cobj = (cocos2d::FadeOutUpTiles *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FadeOutUpTiles_transformTile : Invalid Native Object");
 	if (argc == 2) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		double arg1;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
@@ -26957,7 +26897,7 @@ bool js_cocos2dx_TurnOffTiles_turnOnTile(JSContext *cx, uint32_t argc, jsval *vp
 	cocos2d::TurnOffTiles* cobj = (cocos2d::TurnOffTiles *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TurnOffTiles_turnOnTile : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TurnOffTiles_turnOnTile : Error processing arguments");
 		cobj->turnOnTile(arg0);
@@ -26977,7 +26917,7 @@ bool js_cocos2dx_TurnOffTiles_turnOffTile(JSContext *cx, uint32_t argc, jsval *v
 	cocos2d::TurnOffTiles* cobj = (cocos2d::TurnOffTiles *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TurnOffTiles_turnOffTile : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TurnOffTiles_turnOffTile : Error processing arguments");
 		cobj->turnOffTile(arg0);
@@ -28106,7 +28046,7 @@ bool js_cocos2dx_CardinalSplineTo_updatePosition(JSContext *cx, uint32_t argc, j
 	cocos2d::CardinalSplineTo* cobj = (cocos2d::CardinalSplineTo *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CardinalSplineTo_updatePosition : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CardinalSplineTo_updatePosition : Error processing arguments");
 		cobj->updatePosition(arg0);
@@ -28526,9 +28466,9 @@ bool js_cocos2dx_DrawNode_drawTriangle(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::DrawNode* cobj = (cocos2d::DrawNode *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_drawTriangle : Invalid Native Object");
 	if (argc == 4) {
-		cocos2d::math::Vector2 arg0;
-		cocos2d::math::Vector2 arg1;
-		cocos2d::math::Vector2 arg2;
+		cocos2d::Vector2 arg0;
+		cocos2d::Vector2 arg1;
+		cocos2d::Vector2 arg2;
 		cocos2d::Color4F arg3;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		ok &= jsval_to_vector2(cx, argv[1], &arg1);
@@ -28552,7 +28492,7 @@ bool js_cocos2dx_DrawNode_onDraw(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::DrawNode* cobj = (cocos2d::DrawNode *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_onDraw : Invalid Native Object");
 	if (argc == 2) {
-		cocos2d::math::Matrix arg0;
+		cocos2d::Matrix arg0;
 		bool arg1;
 		ok &= jsval_to_matrix(cx, argv[0], &arg0);
 		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
@@ -28606,7 +28546,7 @@ bool js_cocos2dx_DrawNode_drawDot(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::DrawNode* cobj = (cocos2d::DrawNode *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_drawDot : Invalid Native Object");
 	if (argc == 3) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		double arg1;
 		cocos2d::Color4F arg2;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
@@ -28630,9 +28570,9 @@ bool js_cocos2dx_DrawNode_drawQuadraticBezier(JSContext *cx, uint32_t argc, jsva
 	cocos2d::DrawNode* cobj = (cocos2d::DrawNode *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_drawQuadraticBezier : Invalid Native Object");
 	if (argc == 5) {
-		cocos2d::math::Vector2 arg0;
-		cocos2d::math::Vector2 arg1;
-		cocos2d::math::Vector2 arg2;
+		cocos2d::Vector2 arg0;
+		cocos2d::Vector2 arg1;
+		cocos2d::Vector2 arg2;
 		unsigned int arg3;
 		cocos2d::Color4F arg4;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
@@ -28658,10 +28598,10 @@ bool js_cocos2dx_DrawNode_drawCubicBezier(JSContext *cx, uint32_t argc, jsval *v
 	cocos2d::DrawNode* cobj = (cocos2d::DrawNode *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_drawCubicBezier : Invalid Native Object");
 	if (argc == 6) {
-		cocos2d::math::Vector2 arg0;
-		cocos2d::math::Vector2 arg1;
-		cocos2d::math::Vector2 arg2;
-		cocos2d::math::Vector2 arg3;
+		cocos2d::Vector2 arg0;
+		cocos2d::Vector2 arg1;
+		cocos2d::Vector2 arg2;
+		cocos2d::Vector2 arg3;
 		unsigned int arg4;
 		cocos2d::Color4F arg5;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
@@ -28688,8 +28628,8 @@ bool js_cocos2dx_DrawNode_drawSegment(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::DrawNode* cobj = (cocos2d::DrawNode *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_drawSegment : Invalid Native Object");
 	if (argc == 4) {
-		cocos2d::math::Vector2 arg0;
-		cocos2d::math::Vector2 arg1;
+		cocos2d::Vector2 arg0;
+		cocos2d::Vector2 arg1;
 		double arg2;
 		cocos2d::Color4F arg3;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
@@ -30726,7 +30666,7 @@ bool js_cocos2dx_Label_setBMFontFilePath(JSContext *cx, uint32_t argc, jsval *vp
 	}
 	if (argc == 2) {
 		std::string arg0;
-		cocos2d::math::Vector2 arg1;
+		cocos2d::Vector2 arg1;
 		ok &= jsval_to_std_string(cx, argv[0], &arg0);
 		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_setBMFontFilePath : Error processing arguments");
@@ -31333,7 +31273,7 @@ bool js_cocos2dx_Label_createWithBMFont(JSContext *cx, uint32_t argc, jsval *vp)
 		std::string arg1;
 		cocos2d::TextHAlignment arg2;
 		int arg3;
-		cocos2d::math::Vector2 arg4;
+		cocos2d::Vector2 arg4;
 		ok &= jsval_to_std_string(cx, argv[0], &arg0);
 		ok &= jsval_to_std_string(cx, argv[1], &arg1);
 		ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
@@ -31874,7 +31814,7 @@ bool js_cocos2dx_LabelBMFont_initWithString(JSContext *cx, uint32_t argc, jsval 
 		std::string arg1;
 		double arg2;
 		cocos2d::TextHAlignment arg3;
-		cocos2d::math::Vector2 arg4;
+		cocos2d::Vector2 arg4;
 		ok &= jsval_to_std_string(cx, argv[0], &arg0);
 		ok &= jsval_to_std_string(cx, argv[1], &arg1);
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[2]), &arg2);
@@ -31946,7 +31886,7 @@ bool js_cocos2dx_LabelBMFont_setFntFile(JSContext *cx, uint32_t argc, jsval *vp)
 	}
 	if (argc == 2) {
 		std::string arg0;
-		cocos2d::math::Vector2 arg1;
+		cocos2d::Vector2 arg1;
 		ok &= jsval_to_std_string(cx, argv[0], &arg0);
 		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_LabelBMFont_setFntFile : Error processing arguments");
@@ -32109,7 +32049,7 @@ bool js_cocos2dx_LabelBMFont_create(JSContext *cx, uint32_t argc, jsval *vp)
 			cocos2d::TextHAlignment arg3;
 			ok &= jsval_to_int32(cx, argv[3], (int32_t *)&arg3);
 			if (!ok) { ok = true; break; }
-			cocos2d::math::Vector2 arg4;
+			cocos2d::Vector2 arg4;
 			ok &= jsval_to_vector2(cx, argv[4], &arg4);
 			if (!ok) { ok = true; break; }
 			cocos2d::LabelBMFont* ret = cocos2d::LabelBMFont::create(arg0, arg1, arg2, arg3, arg4);
@@ -32806,7 +32746,7 @@ bool js_cocos2dx_LayerGradient_setVector(JSContext *cx, uint32_t argc, jsval *vp
 	cocos2d::LayerGradient* cobj = (cocos2d::LayerGradient *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_LayerGradient_setVector : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_LayerGradient_setVector : Error processing arguments");
 		cobj->setVector(arg0);
@@ -32884,7 +32824,7 @@ bool js_cocos2dx_LayerGradient_getVector(JSContext *cx, uint32_t argc, jsval *vp
 	cocos2d::LayerGradient* cobj = (cocos2d::LayerGradient *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_LayerGradient_getVector : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getVector();
+		const cocos2d::Vector2& ret = cobj->getVector();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -32950,7 +32890,7 @@ bool js_cocos2dx_LayerGradient_initWithColor(JSContext *cx, uint32_t argc, jsval
 			cocos2d::Color4B arg1;
 			ok &= jsval_to_cccolor4b(cx, argv[1], &arg1);
 			if (!ok) { ok = true; break; }
-			cocos2d::math::Vector2 arg2;
+			cocos2d::Vector2 arg2;
 			ok &= jsval_to_vector2(cx, argv[2], &arg2);
 			if (!ok) { ok = true; break; }
 			bool ret = cobj->initWithColor(arg0, arg1, arg2);
@@ -33087,7 +33027,7 @@ bool js_cocos2dx_LayerGradient_create(JSContext *cx, uint32_t argc, jsval *vp)
 			cocos2d::Color4B arg1;
 			ok &= jsval_to_cccolor4b(cx, argv[1], &arg1);
 			if (!ok) { ok = true; break; }
-			cocos2d::math::Vector2 arg2;
+			cocos2d::Vector2 arg2;
 			ok &= jsval_to_vector2(cx, argv[2], &arg2);
 			if (!ok) { ok = true; break; }
 			cocos2d::LayerGradient* ret = cocos2d::LayerGradient::create(arg0, arg1, arg2);
@@ -41474,7 +41414,7 @@ bool js_cocos2dx_Sprite_getOffsetPosition(JSContext *cx, uint32_t argc, jsval *v
 	cocos2d::Sprite* cobj = (cocos2d::Sprite *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Sprite_getOffsetPosition : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getOffsetPosition();
+		const cocos2d::Vector2& ret = cobj->getOffsetPosition();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -42380,7 +42320,7 @@ bool js_cocos2dx_ProgressTimer_setBarChangeRate(JSContext *cx, uint32_t argc, js
 	cocos2d::ProgressTimer* cobj = (cocos2d::ProgressTimer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ProgressTimer_setBarChangeRate : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ProgressTimer_setBarChangeRate : Error processing arguments");
 		cobj->setBarChangeRate(arg0);
@@ -42485,7 +42425,7 @@ bool js_cocos2dx_ProgressTimer_setMidpoint(JSContext *cx, uint32_t argc, jsval *
 	cocos2d::ProgressTimer* cobj = (cocos2d::ProgressTimer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ProgressTimer_setMidpoint : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ProgressTimer_setMidpoint : Error processing arguments");
 		cobj->setMidpoint(arg0);
@@ -42503,7 +42443,7 @@ bool js_cocos2dx_ProgressTimer_getBarChangeRate(JSContext *cx, uint32_t argc, js
 	cocos2d::ProgressTimer* cobj = (cocos2d::ProgressTimer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ProgressTimer_getBarChangeRate : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector2 ret = cobj->getBarChangeRate();
+		cocos2d::Vector2 ret = cobj->getBarChangeRate();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -42554,7 +42494,7 @@ bool js_cocos2dx_ProgressTimer_getMidpoint(JSContext *cx, uint32_t argc, jsval *
 	cocos2d::ProgressTimer* cobj = (cocos2d::ProgressTimer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ProgressTimer_getMidpoint : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector2 ret = cobj->getMidpoint();
+		cocos2d::Vector2 ret = cobj->getMidpoint();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -42749,7 +42689,7 @@ bool js_cocos2dx_RenderTexture_setVirtualViewport(JSContext *cx, uint32_t argc, 
 	cocos2d::RenderTexture* cobj = (cocos2d::RenderTexture *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_RenderTexture_setVirtualViewport : Invalid Native Object");
 	if (argc == 3) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		cocos2d::Rect arg1;
 		cocos2d::Rect arg2;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
@@ -44328,7 +44268,7 @@ bool js_cocos2dx_ParticleSystem_setPosVar(JSContext *cx, uint32_t argc, jsval *v
 	cocos2d::ParticleSystem* cobj = (cocos2d::ParticleSystem *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_setPosVar : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParticleSystem_setPosVar : Error processing arguments");
 		cobj->setPosVar(arg0);
@@ -44608,7 +44548,7 @@ bool js_cocos2dx_ParticleSystem_getGravity(JSContext *cx, uint32_t argc, jsval *
 	cocos2d::ParticleSystem* cobj = (cocos2d::ParticleSystem *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_getGravity : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getGravity();
+		const cocos2d::Vector2& ret = cobj->getGravity();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -44805,7 +44745,7 @@ bool js_cocos2dx_ParticleSystem_getPosVar(JSContext *cx, uint32_t argc, jsval *v
 	cocos2d::ParticleSystem* cobj = (cocos2d::ParticleSystem *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_getPosVar : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getPosVar();
+		const cocos2d::Vector2& ret = cobj->getPosVar();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -44906,7 +44846,7 @@ bool js_cocos2dx_ParticleSystem_getSourcePosition(JSContext *cx, uint32_t argc, 
 	cocos2d::ParticleSystem* cobj = (cocos2d::ParticleSystem *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_getSourcePosition : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getSourcePosition();
+		const cocos2d::Vector2& ret = cobj->getSourcePosition();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -44986,7 +44926,7 @@ bool js_cocos2dx_ParticleSystem_updateQuadWithParticle(JSContext *cx, uint32_t a
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_updateQuadWithParticle : Invalid Native Object");
 	if (argc == 2) {
 		cocos2d::sParticle* arg0;
-		cocos2d::math::Vector2 arg1;
+		cocos2d::Vector2 arg1;
 		#pragma warning NO CONVERSION TO NATIVE FOR sParticle*;
 		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParticleSystem_updateQuadWithParticle : Error processing arguments");
@@ -45338,7 +45278,7 @@ bool js_cocos2dx_ParticleSystem_setSourcePosition(JSContext *cx, uint32_t argc, 
 	cocos2d::ParticleSystem* cobj = (cocos2d::ParticleSystem *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_setSourcePosition : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParticleSystem_setSourcePosition : Error processing arguments");
 		cobj->setSourcePosition(arg0);
@@ -45726,7 +45666,7 @@ bool js_cocos2dx_ParticleSystem_setGravity(JSContext *cx, uint32_t argc, jsval *
 	cocos2d::ParticleSystem* cobj = (cocos2d::ParticleSystem *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_setGravity : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParticleSystem_setGravity : Error processing arguments");
 		cobj->setGravity(arg0);
@@ -46523,6 +46463,26 @@ bool js_cocos2dx_ParticleSystemQuad_create(JSContext *cx, uint32_t argc, jsval *
 	do {
 		if (argc == 0) {
 			cocos2d::ParticleSystemQuad* ret = cocos2d::ParticleSystemQuad::create();
+			jsval jsret = JSVAL_NULL;
+			do {
+				if (ret) {
+					js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ParticleSystemQuad>(cx, (cocos2d::ParticleSystemQuad*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+				} else {
+					jsret = JSVAL_NULL;
+				}
+			} while (0);
+			JS_SET_RVAL(cx, vp, jsret);
+			return true;
+		}
+	} while (0);
+	
+	do {
+		if (argc == 1) {
+			cocos2d::ValueMap arg0;
+			ok &= jsval_to_ccvaluemap(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			cocos2d::ParticleSystemQuad* ret = cocos2d::ParticleSystemQuad::create(arg0);
 			jsval jsret = JSVAL_NULL;
 			do {
 				if (ret) {
@@ -48711,7 +48671,7 @@ bool js_cocos2dx_GridBase_getStep(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::GridBase* cobj = (cocos2d::GridBase *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GridBase_getStep : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getStep();
+		const cocos2d::Vector2& ret = cobj->getStep();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -48745,7 +48705,7 @@ bool js_cocos2dx_GridBase_setStep(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::GridBase* cobj = (cocos2d::GridBase *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GridBase_setStep : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GridBase_setStep : Error processing arguments");
 		cobj->setStep(arg0);
@@ -49929,7 +49889,7 @@ bool js_cocos2dx_GLViewProtocol_getVisibleOrigin(JSContext *cx, uint32_t argc, j
 	cocos2d::GLViewProtocol* cobj = (cocos2d::GLViewProtocol *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLViewProtocol_getVisibleOrigin : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::math::Vector2 ret = cobj->getVisibleOrigin();
+		cocos2d::Vector2 ret = cobj->getVisibleOrigin();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -51998,8 +51958,8 @@ bool js_cocos2dx_ParallaxNode_addChild(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 4) {
 		cocos2d::Node* arg0;
 		int arg1;
-		cocos2d::math::Vector2 arg2;
-		cocos2d::math::Vector2 arg3;
+		cocos2d::Vector2 arg2;
+		cocos2d::Vector2 arg3;
 		do {
 			if (!argv[0].isObject()) { ok = false; break; }
 			js_proxy_t *jsProxy;
@@ -52158,7 +52118,7 @@ bool js_cocos2dx_TMXObjectGroup_setPositionOffset(JSContext *cx, uint32_t argc, 
 	cocos2d::TMXObjectGroup* cobj = (cocos2d::TMXObjectGroup *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXObjectGroup_setPositionOffset : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXObjectGroup_setPositionOffset : Error processing arguments");
 		cobj->setPositionOffset(arg0);
@@ -52198,7 +52158,7 @@ bool js_cocos2dx_TMXObjectGroup_getPositionOffset(JSContext *cx, uint32_t argc, 
 	cocos2d::TMXObjectGroup* cobj = (cocos2d::TMXObjectGroup *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXObjectGroup_getPositionOffset : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::math::Vector2& ret = cobj->getPositionOffset();
+		const cocos2d::Vector2& ret = cobj->getPositionOffset();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -53585,7 +53545,7 @@ bool js_cocos2dx_TMXLayer_getTileGIDAt(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::TMXLayer* cobj = (cocos2d::TMXLayer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXLayer_getTileGIDAt : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXLayer_getTileGIDAt : Error processing arguments");
 		unsigned int ret = cobj->getTileGIDAt(arg0);
@@ -53595,7 +53555,7 @@ bool js_cocos2dx_TMXLayer_getTileGIDAt(JSContext *cx, uint32_t argc, jsval *vp)
 		return true;
 	}
 	if (argc == 2) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		cocos2d::TMXTileFlags_* arg1;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		#pragma warning NO CONVERSION TO NATIVE FOR TMXTileFlags_*;
@@ -53619,10 +53579,10 @@ bool js_cocos2dx_TMXLayer_getPositionAt(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::TMXLayer* cobj = (cocos2d::TMXLayer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXLayer_getPositionAt : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXLayer_getPositionAt : Error processing arguments");
-		cocos2d::math::Vector2 ret = cobj->getPositionAt(arg0);
+		cocos2d::Vector2 ret = cobj->getPositionAt(arg0);
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -53790,7 +53750,7 @@ bool js_cocos2dx_TMXLayer_removeTileAt(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::TMXLayer* cobj = (cocos2d::TMXLayer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXLayer_removeTileAt : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXLayer_removeTileAt : Error processing arguments");
 		cobj->removeTileAt(arg0);
@@ -53879,7 +53839,7 @@ bool js_cocos2dx_TMXLayer_setTileGID(JSContext *cx, uint32_t argc, jsval *vp)
 			unsigned int arg0;
 			ok &= jsval_to_uint32(cx, argv[0], &arg0);
 			if (!ok) { ok = true; break; }
-			cocos2d::math::Vector2 arg1;
+			cocos2d::Vector2 arg1;
 			ok &= jsval_to_vector2(cx, argv[1], &arg1);
 			if (!ok) { ok = true; break; }
 			cocos2d::TMXTileFlags_ arg2;
@@ -53896,7 +53856,7 @@ bool js_cocos2dx_TMXLayer_setTileGID(JSContext *cx, uint32_t argc, jsval *vp)
 			unsigned int arg0;
 			ok &= jsval_to_uint32(cx, argv[0], &arg0);
 			if (!ok) { ok = true; break; }
-			cocos2d::math::Vector2 arg1;
+			cocos2d::Vector2 arg1;
 			ok &= jsval_to_vector2(cx, argv[1], &arg1);
 			if (!ok) { ok = true; break; }
 			cobj->setTileGID(arg0, arg1);
@@ -54078,7 +54038,7 @@ bool js_cocos2dx_TMXLayer_getTileAt(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::TMXLayer* cobj = (cocos2d::TMXLayer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXLayer_getTileAt : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXLayer_getTileAt : Error processing arguments");
 		cocos2d::Sprite* ret = cobj->getTileAt(arg0);
@@ -54902,7 +54862,7 @@ bool js_cocos2dx_TileMapAtlas_getTileAt(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::TileMapAtlas* cobj = (cocos2d::TileMapAtlas *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TileMapAtlas_getTileAt : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::math::Vector2 arg0;
+		cocos2d::Vector2 arg0;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TileMapAtlas_getTileAt : Error processing arguments");
 		cocos2d::Color3B ret = cobj->getTileAt(arg0);
@@ -54925,7 +54885,7 @@ bool js_cocos2dx_TileMapAtlas_setTile(JSContext *cx, uint32_t argc, jsval *vp)
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TileMapAtlas_setTile : Invalid Native Object");
 	if (argc == 2) {
 		cocos2d::Color3B arg0;
-		cocos2d::math::Vector2 arg1;
+		cocos2d::Vector2 arg1;
 		ok &= jsval_to_cccolor3b(cx, argv[0], &arg0);
 		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TileMapAtlas_setTile : Error processing arguments");
