@@ -85,14 +85,7 @@ bool js_cocos2dx_spine_Skeleton_onDraw(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 2) {
 		cocos2d::math::Matrix arg0;
 		bool arg1;
-		do {
-			if (!argv[0].isObject()) { ok = false; break; }
-			js_proxy_t *jsProxy;
-			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-			jsProxy = jsb_get_js_proxy(tmpObj);
-			arg0 = (const cocos2d::math::Matrix&)(jsProxy ? jsProxy->ptr : NULL);
-			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-		} while (0);
+		ok &= jsval_to_matrix(cx, argv[0], &arg0);
 		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_Skeleton_onDraw : Error processing arguments");
 		cobj->onDraw(arg0, arg1);

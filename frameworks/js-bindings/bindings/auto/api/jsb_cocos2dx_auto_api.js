@@ -3448,6 +3448,16 @@ str
 },
 
 /**
+ * @method getSearchPaths
+ * @return {Array}
+ */
+getSearchPaths : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method writeToFile
  * @param {MapObject} arg0
  * @param {String} arg1
@@ -3471,6 +3481,26 @@ str
 )
 {
     return map_object;
+},
+
+/**
+ * @method setSearchPaths
+ * @param {Array} arg0
+ */
+setSearchPaths : function (
+array 
+)
+{
+},
+
+/**
+ * @method addSearchPath
+ * @param {String} arg0
+ */
+addSearchPath : function (
+str 
+)
+{
 },
 
 /**
