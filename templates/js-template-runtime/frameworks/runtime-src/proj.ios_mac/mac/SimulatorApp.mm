@@ -35,6 +35,7 @@
 #include "glfw3.h"
 #include "glfw3native.h"
 #include "Runtime.h"
+#include "ConfigParser.h"
 
 #include "cocos2d.h"
 
@@ -42,7 +43,7 @@ using namespace cocos2d;
 
 bool g_landscape=false;
 cocos2d::Size g_screenSize;
-GLView* g_eglView=NULL;
+GLView* g_eglView = nullptr;
 
 static AppController* g_nsAppDelegate=nullptr;
 
@@ -129,9 +130,9 @@ void createSimulator(const char* viewName, float width, float height,float frame
     
     NSMenu *submenu = [[[window menu] itemWithTitle:@"View"] submenu];
 
-    for (int i = SimulatorConfig::getInstance()->getScreenSizeCount() - 1; i >= 0; --i)
+    for (int i = ConfigParser::getInstance()->getScreenSizeCount() - 1; i >= 0; --i)
     {
-        SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(i);
+        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(i);
         NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:[NSString stringWithCString:size.title.c_str() encoding:NSUTF8StringEncoding]
                                                        action:@selector(onViewChangeFrameSize:)
                                                 keyEquivalent:@""] autorelease];
@@ -194,11 +195,11 @@ void createSimulator(const char* viewName, float width, float height,float frame
         height = w;
     }
     
-    int count = SimulatorConfig::getInstance()->getScreenSizeCount();
+    int count = ConfigParser::getInstance()->getScreenSizeCount();
     for (int i = 0; i < count; ++i)
     {
         bool bSel = false;
-        SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(i);
+        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(i);
         if (size.width == width && size.height == height)
         {
             bSel = true;
@@ -272,9 +273,9 @@ void createSimulator(const char* viewName, float width, float height,float frame
 - (IBAction) onViewChangeFrameSize:(id)sender
 {
     NSInteger index = [sender tag];
-    if (index >= 0 && index < SimulatorConfig::getInstance()->getScreenSizeCount())
+    if (index >= 0 && index < ConfigParser::getInstance()->getScreenSizeCount())
     {
-        SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(index);
+        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(index);
         g_screenSize.width = size.width;
         g_screenSize.height = size.height;
         [self updateView];
