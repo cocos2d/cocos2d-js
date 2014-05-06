@@ -28,11 +28,11 @@ blendfunc
 
 /**
  * @method onDraw
- * @param {kmMat4} arg0
+ * @param {cc.Matrix} arg0
  * @param {bool} arg1
  */
 onDraw : function (
-kmmat4, 
+matrix, 
 bool 
 )
 {
