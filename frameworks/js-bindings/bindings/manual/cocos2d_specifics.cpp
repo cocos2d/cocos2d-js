@@ -3039,11 +3039,11 @@ bool js_cocos2dx_ccpNormalize(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argv = JS_ARGV(cx, vp);
     bool ok = true;
 	if (argc == 1) {
-		cocos2d::Point arg0;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+		cocos2d::Vector2 ret;
+		ok &= jsval_to_vector2(cx, argv[0], &ret);
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
-		Point ret = arg0.normalize();
+		ret.normalize();
 		
 		jsval jsret = ccpoint_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);

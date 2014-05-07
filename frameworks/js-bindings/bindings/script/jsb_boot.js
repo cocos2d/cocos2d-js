@@ -660,6 +660,12 @@ cc.screen = {
     }
 };
 
+cc.reflection = {
+    callStaticMethod : function(){
+        cc.log("not supported on current platform");
+    }
+}
+
 // GUI
 ccui.helper = ccui.Helper;
 
@@ -1090,4 +1096,17 @@ cc.game = {
     }
 };
 cc.game._initConfig();
+
 //+++++++++++++++++++++++++something about CCGame end+++++++++++++++++++++++++++++
+
+//+++++++++++++++++++++++++other initializations+++++++++++++++++++++++++++++
+
+// JS to Native bridges
+if(cc.sys.os == cc.sys.OS_ANDROID){
+    cc.reflection = new JavascriptJavaBridge();
+}
+else if(cc.sys.os == cc.sys.OS_IOS){
+    //TODO
+}
+
+//+++++++++++++++++++++++++other initializations end+++++++++++++++++++++++++++++

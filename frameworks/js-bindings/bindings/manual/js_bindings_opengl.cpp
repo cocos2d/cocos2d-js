@@ -22,7 +22,7 @@
 
 #include "js_bindings_opengl.h"
 
-void GLNode::draw(cocos2d::Renderer *renderer, const kmMat4& transform, bool transformUpdated) {
+void GLNode::draw(cocos2d::Renderer *renderer, const cocos2d::kmMat4& transform, bool transformUpdated) {
     js_proxy_t* proxy = NULL;
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     proxy = js_get_or_create_proxy<cocos2d::Node>(cx, this);

@@ -16,6 +16,9 @@
 #include "network/XMLHTTPRequest.h"
 #include "Runtime.h"
 #include "ConfigParser.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "platform/android/CCJavascriptJavaBridge.h"
+#endif
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -72,6 +75,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_chipmunk);
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
+    #endif
     
 #if (COCOS2D_DEBUG>0)
     if (startRuntime())

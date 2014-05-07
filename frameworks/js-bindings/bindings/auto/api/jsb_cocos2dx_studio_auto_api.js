@@ -619,10 +619,10 @@ getColliderBodyList : function (
 
 /**
  * @method updateTransform
- * @param {kmMat4} arg0
+ * @param {cc.Matrix} arg0
  */
 updateTransform : function (
-kmmat4 
+matrix 
 )
 {
 },
@@ -795,12 +795,12 @@ getDisplayRenderNode : function (
 
 /**
  * @method getAnchorPointInPoints
- * @return {PointObject}
+ * @return {Array}
  */
 getAnchorPointInPoints : function (
 )
 {
-    return cc.Point;
+    return new Array();
 },
 
 /**
@@ -889,7 +889,7 @@ int
 
 /**
  * @method containPoint
-* @param {float|PointObject} float
+* @param {float|Array} float
 * @param {float} float
 * @return {bool|bool}
 */
@@ -969,12 +969,12 @@ getCurrentDisplayIndex : function (
 
 /**
  * @method getAnchorPoint
- * @return {PointObject}
+ * @return {Array}
  */
 getAnchorPoint : function (
 )
 {
-    return cc.Point;
+    return new Array();
 },
 
 /**
@@ -1333,12 +1333,12 @@ armature
 
 /**
  * @method getNodeToArmatureTransform
- * @return {kmMat4}
+ * @return {cc.Matrix}
  */
 getNodeToArmatureTransform : function (
 )
 {
-    return kmMat4;
+    return cc.Matrix;
 },
 
 /**
@@ -2091,12 +2091,12 @@ getBone : function (
 
 /**
  * @method getNodeToWorldTransformAR
- * @return {kmMat4}
+ * @return {cc.Matrix}
  */
 getNodeToWorldTransformAR : function (
 )
 {
-    return kmMat4;
+    return cc.Matrix;
 },
 
 /**
