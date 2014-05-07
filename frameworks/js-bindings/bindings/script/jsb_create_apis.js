@@ -262,7 +262,7 @@ _p._ctor = function(plistFile){
     if (typeof(plistFile) === "number") {
         var ton = plistFile || 100;
         this.initWithTotalParticles(ton);
-    }else{
+    }else if(typeof(plistFile) === "string"){
         this.initWithFile(plistFile);
     }
 };
