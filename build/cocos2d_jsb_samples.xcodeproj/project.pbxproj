@@ -218,6 +218,7 @@
 		BA623DF2191A14EB00761F37 /* libPluginUmeng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DEE191A14BD00761F37 /* libPluginUmeng.a */; };
 		BA623DF3191A14EB00761F37 /* libPluginWeibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DE8191A141A00761F37 /* libPluginWeibo.a */; };
 		BA623DFA191A150A00761F37 /* libPluginProtocol.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DF9191A14F800761F37 /* libPluginProtocol.a */; };
+		BA623E1B191A198900761F37 /* jsb_pluginx.js in Resources */ = {isa = PBXBuildFile; fileRef = BA623E1A191A198900761F37 /* jsb_pluginx.js */; };
 		BAA7DED518C74AE500D9A10E /* jsb_property_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */; };
 		BAA7DED618C74AE500D9A10E /* jsb_property_impls.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */; };
 		BAA7DEDE18C7560500D9A10E /* jsb_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */; };
@@ -602,6 +603,7 @@
 		BA623DE3191A141A00761F37 /* PluginWeibo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginWeibo.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/weibo/proj.ios/PluginWeibo.xcodeproj"; sourceTree = "<group>"; };
 		BA623DE9191A14BD00761F37 /* PluginUmeng.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginUmeng.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/umeng/proj.ios/PluginUmeng.xcodeproj"; sourceTree = "<group>"; };
 		BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginProtocol.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/protocols/proj.ios/PluginProtocol.xcodeproj"; sourceTree = "<group>"; };
+		BA623E1A191A198900761F37 /* jsb_pluginx.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_pluginx.js; path = "../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/script/jsb_pluginx.js"; sourceTree = "<group>"; };
 		BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_create_apis.js; path = "../frameworks/js-bindings/bindings/script/jsb_create_apis.js"; sourceTree = "<group>"; };
 		BAA7DEE218C84F5000D9A10E /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../samples/js-tests/main.js"; sourceTree = "<group>"; };
 		BAA7DEE318C84F5000D9A10E /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = "../samples/js-tests/project.json"; sourceTree = "<group>"; };
@@ -815,6 +817,7 @@
 				1A487B4A18BF3E7F007EEB98 /* jsb_opengl_constants.js */,
 				BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */,
 				BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */,
+				BA623E1A191A198900761F37 /* jsb_pluginx.js */,
 			);
 			name = "JS Common";
 			sourceTree = "<group>";
@@ -1383,6 +1386,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA623E1B191A198900761F37 /* jsb_pluginx.js in Resources */,
 				1AB5E63F18D05DE60088DAA4 /* jsb_cocos2d_ui.js in Resources */,
 				BAA7DEDF18C7561100D9A10E /* jsb_create_apis.js in Resources */,
 				BAA7DED518C74AE500D9A10E /* jsb_property_apis.js in Resources */,
@@ -1772,7 +1776,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/protocols/include $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/plugins/** $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/auto $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/manual";
 			};
 			name = Debug;
 		};
@@ -1797,7 +1801,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/protocols/include $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/plugins/** $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/auto $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/manual";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
