@@ -87,8 +87,11 @@ var extensionsTestItemNames = [
         testScene:function () {
             runSocketIOTest();
         }
-    },
-    {
+    }
+];
+
+if (cc.sys.os == cc.sys.OS_IOS) {
+    extensionsTestItemNames.push({
         itemTitle:"PluginXTest",
         testScene:function () {
             var testScene = new PluginXTestScene();
@@ -96,8 +99,8 @@ var extensionsTestItemNames = [
                 cc.director.runScene(testScene);
             }
         }
-    }
-];
+    });
+}
 
 var ExtensionsMainLayer = cc.Layer.extend({
     onEnter:function () {

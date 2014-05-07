@@ -59,6 +59,10 @@ var UMENG_KEY_IOS       =    "50d2b18c5270152187000097";
 var UMENG_KEY_ANDROID   =    "";          // umeng key for android is setted in AndroidManifest.xml
 
 
+if (!plugin) {
+    var plugin = {};
+}
+
 plugin.onApplicationDidEnterBackground = function() {
     if (g_pAnalytics != null) {
         cc.log("plugin.onApplicationDidEnterBackground.");

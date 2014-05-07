@@ -38,6 +38,9 @@ require('jsb_chipmunk.js');
 require('jsb_opengl_constants.js');
 require('jsb_opengl.js');
 require('jsb_cocosbuilder.js');
-require('jsb_pluginx.js');
 require('jsb_deprecated.js');
 require('jsb_loaders.js');
+
+if (cc.sys.os == cc.sys.OS_IOS) {
+    require('jsb_pluginx.js');
+}
