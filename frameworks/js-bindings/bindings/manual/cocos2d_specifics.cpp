@@ -4158,7 +4158,7 @@ bool js_PlistParser_getInstance(JSContext *cx, unsigned argc, JS::Value *vp) {
     
     return true;
 }
-// cc.PlistParser.getInstance().parse(filepath)
+// cc.PlistParser.getInstance().parse(text)
 bool js_PlistParser_parse(JSContext *cx, unsigned argc, JS::Value *vp) {
     __JSPlistDelegator* delegator = __JSPlistDelegator::getInstance();
     
@@ -4169,7 +4169,7 @@ bool js_PlistParser_parse(JSContext *cx, unsigned argc, JS::Value *vp) {
         ok &= jsval_to_std_string(cx, argv[0], &arg0);
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
-        std::string parsedStr = delegator->parse(arg0);
+        std::string parsedStr = delegator->parseText(arg0);
         jsval strVal = std_string_to_jsval(cx, parsedStr);
         // create a new js obj of the parsed string
         JS::RootedValue outVal(cx);
@@ -4206,6 +4206,19 @@ std::string __JSPlistDelegator::parse(const std::string& path) {
 
 __JSPlistDelegator::~__JSPlistDelegator(){
     CCLOGINFO("deallocing __JSSAXDelegator: %p", this);
+}
+
+std::string __JSPlistDelegator::parseText(const std::string& text){
+	 _result.clear();
+    
+    SAXParser parser;
+    if (false != parser.init("UTF-8") )
+    {
+        parser.setDelegator(this);
+		parser.parse(text.c_str(), text.size());
+    }
+    
+    return _result;
 }
 
 void __JSPlistDelegator::startElement(void *ctx, const char *name, const char **atts) {
