@@ -22,6 +22,8 @@
 #include "network/jsb_websocket.h"
 #include "network/jsb_socketio.h"
 #include "cocosbuilder/js_bindings_ccbreader.h"
+#include "jsb_cocos2dx_pluginx_auto.hpp"
+#include "jsb_pluginx_extension_registration.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -103,6 +105,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->addRegisterCallback(register_all_cocos2dx_spine);
     sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
+    
+    sc->addRegisterCallback(register_all_pluginx_protocols);
+    sc->addRegisterCallback(register_pluginx_js_extensions);
     
     sc->start();
     
