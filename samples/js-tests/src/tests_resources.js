@@ -1013,3 +1013,9 @@ var g_tilemaps = [
     "res/TileMaps/ortho-tile-property.tmx",
     "res/TileMaps/ortho-rotation-test.tmx"
 ];
+
+var g_spine = [
+    "res/skeletons/spineboy.atlas",
+    "res/skeletons/spineboy.json",
+    "res/skeletons/spineboy.png"
+];
