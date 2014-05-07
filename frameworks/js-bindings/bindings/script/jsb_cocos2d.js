@@ -2023,3 +2023,31 @@ cc.TMXLayer.prototype.getPositonAt = function(x, y){
     var pos = y !== undefined ? cc.p(x, y) : x;
     return this._getPositionAt(pos);
 };
+
+
+var protoHasBlend = [cc.AtlasNode.prototype,
+                     cc.DrawNode.prototype,
+                     cc.LabelTTF.prototype,
+                     cc.SpriteBatchNode.prototype,
+                     cc.LabelBMFont.prototype,
+                     cc.LayerColor.prototype,
+                     cc.MotionStreak.prototype,
+                     cc.Sprite.prototype,
+                     cc.ParticleBatchNode.prototype,
+                     cc.ParticleSystem.prototype];
+
+var templateSetBlendFunc = function(src, dst) {
+    var blendf;
+    if (dst === undefined)
+        blendf = src;
+    else
+        blendf = {src: src, dst: dst};
+    this._setBlendFunc(blendf);
+    var b = this.getBlendFunc();
+    cc.log((b.src == src) + ", " + (b.dst == dst));
+}
+for (var i = 0, l = protoHasBlend.length; i < l; i++) {
+    var proto = protoHasBlend[i];
+    proto._setBlendFunc = proto.setBlendFunc;
+    proto.setBlendFunc = templateSetBlendFunc;
+}
