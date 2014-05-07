@@ -7,6 +7,10 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
 
+pushd $COCOS2DX_ROOT
+git submodule update --init --recursive
+popd
+
 mkdir -p $HOME/bin
 cd $HOME/bin
 
