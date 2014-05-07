@@ -3474,6 +3474,16 @@ str
 },
 
 /**
+ * @method addSearchPath
+ * @param {String} arg0
+ */
+addSearchPath : function (
+str 
+)
+{
+},
+
+/**
  * @method isFileExist
  * @param {String} arg0
  * @return {bool}
