@@ -466,5 +466,65 @@ void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_ui_Helper_seekWidgetByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Helper_seekActionWidgetByActionTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Helper_seekWidgetByName(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_RichElement_class;
+extern JSObject *jsb_cocos2d_ui_RichElement_prototype;
+
+bool js_cocos2dx_ui_RichElement_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_RichElement_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_RichElement(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_RichElement_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElement_RichElement(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_RichElementText_class;
+extern JSObject *jsb_cocos2d_ui_RichElementText_prototype;
+
+bool js_cocos2dx_ui_RichElementText_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_RichElementText_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_RichElementText(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_RichElementText_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElementText_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElementText_RichElementText(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_RichElementImage_class;
+extern JSObject *jsb_cocos2d_ui_RichElementImage_prototype;
+
+bool js_cocos2dx_ui_RichElementImage_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_RichElementImage_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_RichElementImage(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_RichElementImage_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElementImage_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElementImage_RichElementImage(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_RichElementCustomNode_class;
+extern JSObject *jsb_cocos2d_ui_RichElementCustomNode_prototype;
+
+bool js_cocos2dx_ui_RichElementCustomNode_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_RichElementCustomNode_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_RichElementCustomNode(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_RichElementCustomNode_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElementCustomNode_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElementCustomNode_RichElementCustomNode(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_RichText_class;
+extern JSObject *jsb_cocos2d_ui_RichText_prototype;
+
+bool js_cocos2dx_ui_RichText_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_RichText_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_RichText(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_RichText_insertElement(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_setAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_pushBackElement(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_ignoreContentAdaptWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_setVerticalSpace(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_formatText(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_removeElement(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_RichText(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 
