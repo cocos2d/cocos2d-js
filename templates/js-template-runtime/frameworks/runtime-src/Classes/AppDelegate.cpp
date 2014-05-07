@@ -43,12 +43,17 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        ConfigParser::getInstance()->readConfig();
+        
+        if (!ConfigParser::getInstance()->isInit()) {
+            ConfigParser::getInstance()->readConfig();
+        }
+
         Size viewSize = ConfigParser::getInstance()->getInitViewSize();
         string title = ConfigParser::getInstance()->getInitViewName();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         extern void createSimulator(const char* viewName, float width, float height,float frameZoomFactor = 1.0f);
-        createSimulator(title.c_str(),viewSize.width,viewSize.height);
+        bool isLanscape = ConfigParser::getInstance()->isLanscape();
+        createSimulator(title.c_str(),viewSize.width,viewSize.height,isLanscape);
 #else
         glview = GLView::createWithRect(title.c_str(), Rect(0,0,viewSize.width,viewSize.height));
         director->setOpenGLView(glview);
