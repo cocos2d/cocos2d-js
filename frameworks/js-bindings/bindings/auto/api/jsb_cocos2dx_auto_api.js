@@ -2558,6 +2558,16 @@ textureatlas
 },
 
 /**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
  * @method getTextureAtlas
  * @return {cc.TextureAtlas}
  */
@@ -2565,6 +2575,16 @@ getTextureAtlas : function (
 )
 {
     return cc.TextureAtlas;
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
 },
 
 /**
@@ -3471,6 +3491,16 @@ str
 )
 {
     return map_object;
+},
+
+/**
+ * @method addSearchPath
+ * @param {String} arg0
+ */
+addSearchPath : function (
+str 
+)
+{
 },
 
 /**
@@ -9244,6 +9274,16 @@ color4f
 },
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method onDraw
  * @param {cc.Matrix} arg0
  * @param {bool} arg1
@@ -9259,6 +9299,16 @@ bool
  * @method clear
  */
 clear : function (
+)
+{
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
 )
 {
 },
@@ -9816,6 +9866,16 @@ sprite
 },
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method initWithTexture
  * @param {cc.Texture2D} arg0
  * @param {long} arg1
@@ -9863,6 +9923,16 @@ long
 )
 {
     return false;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
 },
 
 /**
@@ -10647,6 +10717,26 @@ cc.LayerColor = {
 changeWidthAndHeight : function (
 float, 
 float 
+)
+{
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
 )
 {
 },
@@ -12909,6 +12999,16 @@ color3b
 },
 
 /**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
  * @method setStartingPositionInitialized
  * @param {bool} arg0
  */
@@ -12916,6 +13016,16 @@ setStartingPositionInitialized : function (
 bool 
 )
 {
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
 },
 
 /**
@@ -13177,6 +13287,16 @@ spritebatchnode
 },
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method setDisplayFrameWithAnimationName
  * @param {String} arg0
  * @param {long} arg1
@@ -13270,6 +13390,16 @@ rect
 )
 {
     return false;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
 },
 
 /**
@@ -13960,6 +14090,16 @@ int
 },
 
 /**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
  * @method removeAllChildrenWithCleanup
  * @param {bool} arg0
  */
@@ -13977,6 +14117,16 @@ getTextureAtlas : function (
 )
 {
     return cc.TextureAtlas;
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
 },
 
 /**
@@ -14996,6 +15146,16 @@ getStartRadiusVar : function (
 },
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method setStartColorVar
  * @param {Color4FObject} arg0
  */
@@ -15065,6 +15225,16 @@ getTotalParticles : function (
  */
 setStartRadiusVar : function (
 float 
+)
+{
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
 )
 {
 },

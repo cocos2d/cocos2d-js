@@ -1046,6 +1046,16 @@ isTransformDirty : function (
 },
 
 /**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
  * @method isIgnoreMovementBoneData
  * @return {bool}
  */
@@ -1223,6 +1233,16 @@ setIgnoreMovementBoneData : function (
 bool 
 )
 {
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
 },
 
 /**
@@ -1978,6 +1998,16 @@ batchnode
 },
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method setName
  * @param {String} arg0
  */
@@ -2037,6 +2067,16 @@ getAnimation : function (
 )
 {
     return ccs.ArmatureAnimation;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
 },
 
 /**
