@@ -219,6 +219,11 @@
 		BA623DF3191A14EB00761F37 /* libPluginWeibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DE8191A141A00761F37 /* libPluginWeibo.a */; };
 		BA623DFA191A150A00761F37 /* libPluginProtocol.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DF9191A14F800761F37 /* libPluginProtocol.a */; };
 		BA623E1B191A198900761F37 /* jsb_pluginx.js in Resources */ = {isa = PBXBuildFile; fileRef = BA623E1A191A198900761F37 /* jsb_pluginx.js */; };
+		BA623E1D191A220400761F37 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623E1C191A220400761F37 /* SystemConfiguration.framework */; };
+		BA623E1F191A220B00761F37 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623E1E191A220B00761F37 /* StoreKit.framework */; };
+		BA623E21191A221100761F37 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623E20191A221100761F37 /* AdSupport.framework */; };
+		BA623E23191A221800761F37 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623E22191A221800761F37 /* MessageUI.framework */; };
+		BA623E25191A221D00761F37 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623E24191A221D00761F37 /* MediaPlayer.framework */; };
 		BAA7DED518C74AE500D9A10E /* jsb_property_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */; };
 		BAA7DED618C74AE500D9A10E /* jsb_property_impls.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */; };
 		BAA7DEDE18C7560500D9A10E /* jsb_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */; };
@@ -604,6 +609,11 @@
 		BA623DE9191A14BD00761F37 /* PluginUmeng.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginUmeng.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/umeng/proj.ios/PluginUmeng.xcodeproj"; sourceTree = "<group>"; };
 		BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginProtocol.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/protocols/proj.ios/PluginProtocol.xcodeproj"; sourceTree = "<group>"; };
 		BA623E1A191A198900761F37 /* jsb_pluginx.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_pluginx.js; path = "../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/script/jsb_pluginx.js"; sourceTree = "<group>"; };
+		BA623E1C191A220400761F37 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		BA623E1E191A220B00761F37 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
+		BA623E20191A221100761F37 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
+		BA623E22191A221800761F37 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
+		BA623E24191A221D00761F37 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_create_apis.js; path = "../frameworks/js-bindings/bindings/script/jsb_create_apis.js"; sourceTree = "<group>"; };
 		BAA7DEE218C84F5000D9A10E /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../samples/js-tests/main.js"; sourceTree = "<group>"; };
 		BAA7DEE318C84F5000D9A10E /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = "../samples/js-tests/project.json"; sourceTree = "<group>"; };
@@ -662,6 +672,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA623E25191A221D00761F37 /* MediaPlayer.framework in Frameworks */,
+				BA623E23191A221800761F37 /* MessageUI.framework in Frameworks */,
+				BA623E21191A221100761F37 /* AdSupport.framework in Frameworks */,
+				BA623E1F191A220B00761F37 /* StoreKit.framework in Frameworks */,
+				BA623E1D191A220400761F37 /* SystemConfiguration.framework in Frameworks */,
 				BA623DFA191A150A00761F37 /* libPluginProtocol.a in Frameworks */,
 				BA623DEF191A14EB00761F37 /* libPluginAdmob.a in Frameworks */,
 				BA623DF0191A14EB00761F37 /* libPluginFlurry.a in Frameworks */,
@@ -939,6 +954,11 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BA623E24191A221D00761F37 /* MediaPlayer.framework */,
+				BA623E22191A221800761F37 /* MessageUI.framework */,
+				BA623E20191A221100761F37 /* AdSupport.framework */,
+				BA623E1E191A220B00761F37 /* StoreKit.framework */,
+				BA623E1C191A220400761F37 /* SystemConfiguration.framework */,
 				D60AE43317F7FFE100757E4B /* CoreMotion.framework */,
 				A035A71117822E9E00987F6C /* libsqlite3.dylib */,
 				1A9F808C177E98A600D9A1CB /* libcurl.dylib */,
@@ -1773,6 +1793,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../samples/js-tests/project/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1798,6 +1819,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../samples/js-tests/project/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
