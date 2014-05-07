@@ -23,6 +23,11 @@
 #include "network/jsb_socketio.h"
 #include "cocosbuilder/js_bindings_ccbreader.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "jsb_cocos2dx_pluginx_auto.hpp"
+#include "jsb_pluginx_extension_registration.h"
+#endif
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace CocosDenshion;
@@ -103,6 +108,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->addRegisterCallback(register_all_cocos2dx_spine);
     sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    sc->addRegisterCallback(register_all_pluginx_protocols);
+    sc->addRegisterCallback(register_pluginx_js_extensions);
+#endif
     
     sc->start();
     
