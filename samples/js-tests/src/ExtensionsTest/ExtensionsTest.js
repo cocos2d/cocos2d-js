@@ -87,6 +87,15 @@ var extensionsTestItemNames = [
         testScene:function () {
             runSocketIOTest();
         }
+    },
+    {
+        itemTitle:"PluginXTest",
+        testScene:function () {
+            var testScene = new PluginXTestScene();
+            if (testScene) {
+                cc.director.runScene(testScene);
+            }
+        }
     }
 ];
 
