@@ -110,21 +110,13 @@ var loadAnalyticsPlugin = function() {
     g_pAnalytics.setCaptureUncaughtException(true);
 
     g_pAnalytics.callFuncWithParam("updateOnlineConfig", null);
-    cc.log("==========1============" + plugin.PluginParam.ParamType.TypeBool);
     g_pAnalytics.callFuncWithParam("setReportLocation", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeBool, true));
-    cc.log("==========2============");
     g_pAnalytics.callFuncWithParam("logPageView", null);
-    cc.log("==========3============");
     g_pAnalytics.callFuncWithParam("setVersionName", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "1.1"));
-    cc.log("==========4============");
     g_pAnalytics.callFuncWithParam("setAge", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeInt, 20));
-    cc.log("==========5============");
     g_pAnalytics.callFuncWithParam("setGender", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeInt, 1));
-    cc.log("==========6============");
     g_pAnalytics.callFuncWithParam("setUserId", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "123456"));
-    cc.log("==========7============");
     g_pAnalytics.callFuncWithParam("setUseHttps", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeBool, false));
-    cc.log("==========8============");
 };
 
 
@@ -304,17 +296,8 @@ var PluginXTestScene = cc.Scene.extend({
     },
 
     onEnter:function () {
-
-        cc.log("===================");
-        cc.log("LOADED-=====");
-        cc.log("===================");
         this._super();
         loadAnalyticsPlugin();
-
-
-        cc.log("===================");
-        cc.log("LOADED");
-        cc.log("===================");
 
         var layer = new PluginXTestLayer();
         layer.init();
