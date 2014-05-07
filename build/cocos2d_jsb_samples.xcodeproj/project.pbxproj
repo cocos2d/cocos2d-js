@@ -212,6 +212,12 @@
 		A63D2ED018C8B37100B29B8F /* jsb_loaders.js in Resources */ = {isa = PBXBuildFile; fileRef = A63D2ECD18C8B36600B29B8F /* jsb_loaders.js */; };
 		BA175BB418C5A2DA0040EA39 /* jsb_property_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */; };
 		BA175BB518C5A2DA0040EA39 /* jsb_property_impls.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */; };
+		BA623DEF191A14EB00761F37 /* libPluginAdmob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DD6191A13DC00761F37 /* libPluginAdmob.a */; };
+		BA623DF0191A14EB00761F37 /* libPluginFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DDC191A13F300761F37 /* libPluginFlurry.a */; };
+		BA623DF1191A14EB00761F37 /* libPluginTwitter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DE2191A140400761F37 /* libPluginTwitter.a */; };
+		BA623DF2191A14EB00761F37 /* libPluginUmeng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DEE191A14BD00761F37 /* libPluginUmeng.a */; };
+		BA623DF3191A14EB00761F37 /* libPluginWeibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DE8191A141A00761F37 /* libPluginWeibo.a */; };
+		BA623DFA191A150A00761F37 /* libPluginProtocol.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DF9191A14F800761F37 /* libPluginProtocol.a */; };
 		BAA7DED518C74AE500D9A10E /* jsb_property_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */; };
 		BAA7DED618C74AE500D9A10E /* jsb_property_impls.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */; };
 		BAA7DEDE18C7560500D9A10E /* jsb_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */; };
@@ -449,6 +455,48 @@
 			remoteGlobalIDString = A07A4F9F178387730073F6A7;
 			remoteInfo = "CocosDenshion iOS";
 		};
+		BA623DD5191A13DC00761F37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FADC44A7176EA82000B2D5ED;
+			remoteInfo = PluginAdmob;
+		};
+		BA623DDB191A13F300761F37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA09A372168AFD41008C1C7B;
+			remoteInfo = PluginFlurry;
+		};
+		BA623DE1191A140400761F37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DDD191A140400761F37 /* PluginTwitter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FACAD8881762C1B500D75ADE;
+			remoteInfo = PluginTwitter;
+		};
+		BA623DE7191A141A00761F37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DE3191A141A00761F37 /* PluginWeibo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FAE27530175D9D2900F5DA8E;
+			remoteInfo = PluginWeibo;
+		};
+		BA623DED191A14BD00761F37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DE9191A14BD00761F37 /* PluginUmeng.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA09A301168ADAEC008C1C7B;
+			remoteInfo = PluginUmeng;
+		};
+		BA623DF8191A14F800761F37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA09A321168ADBC2008C1C7B;
+			remoteInfo = PluginProtocol;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -548,6 +596,12 @@
 		A63D2ECD18C8B36600B29B8F /* jsb_loaders.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_loaders.js; path = "../frameworks/js-bindings/bindings/script/jsb_loaders.js"; sourceTree = "<group>"; };
 		BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_property_apis.js; path = "../frameworks/js-bindings/bindings/script/jsb_property_apis.js"; sourceTree = "<group>"; };
 		BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_property_impls.js; path = "../frameworks/js-bindings/bindings/script/jsb_property_impls.js"; sourceTree = "<group>"; };
+		BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginAdmob.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/admob/proj.ios/PluginAdmob.xcodeproj"; sourceTree = "<group>"; };
+		BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFlurry.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/flurry/proj.ios/PluginFlurry.xcodeproj"; sourceTree = "<group>"; };
+		BA623DDD191A140400761F37 /* PluginTwitter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginTwitter.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/twitter/proj.ios/PluginTwitter.xcodeproj"; sourceTree = "<group>"; };
+		BA623DE3191A141A00761F37 /* PluginWeibo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginWeibo.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/weibo/proj.ios/PluginWeibo.xcodeproj"; sourceTree = "<group>"; };
+		BA623DE9191A14BD00761F37 /* PluginUmeng.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginUmeng.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/umeng/proj.ios/PluginUmeng.xcodeproj"; sourceTree = "<group>"; };
+		BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginProtocol.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/protocols/proj.ios/PluginProtocol.xcodeproj"; sourceTree = "<group>"; };
 		BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_create_apis.js; path = "../frameworks/js-bindings/bindings/script/jsb_create_apis.js"; sourceTree = "<group>"; };
 		BAA7DEE218C84F5000D9A10E /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../samples/js-tests/main.js"; sourceTree = "<group>"; };
 		BAA7DEE318C84F5000D9A10E /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = "../samples/js-tests/project.json"; sourceTree = "<group>"; };
@@ -606,6 +660,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA623DFA191A150A00761F37 /* libPluginProtocol.a in Frameworks */,
+				BA623DEF191A14EB00761F37 /* libPluginAdmob.a in Frameworks */,
+				BA623DF0191A14EB00761F37 /* libPluginFlurry.a in Frameworks */,
+				BA623DF1191A14EB00761F37 /* libPluginTwitter.a in Frameworks */,
+				BA623DF2191A14EB00761F37 /* libPluginUmeng.a in Frameworks */,
+				BA623DF3191A14EB00761F37 /* libPluginWeibo.a in Frameworks */,
 				1A604FC018BF1EFC00CC9A93 /* libchipmunk iOS.a in Frameworks */,
 				1A604FC118BF1EFC00CC9A93 /* libcocos2dx iOS.a in Frameworks */,
 				1A604FC218BF1EFC00CC9A93 /* libcocos2dx-extensions iOS.a in Frameworks */,
@@ -861,6 +921,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				BA623DCC191A13C600761F37 /* pluginx */,
 				1A604F2518BF1D2000CC9A93 /* cocos2d_js_bindings.xcodeproj */,
 				1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -893,6 +954,67 @@
 				15C64832165F3AFD007D4F18 /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA623DCC191A13C600761F37 /* pluginx */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */,
+				BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */,
+				BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */,
+				BA623DDD191A140400761F37 /* PluginTwitter.xcodeproj */,
+				BA623DE3191A141A00761F37 /* PluginWeibo.xcodeproj */,
+				BA623DE9191A14BD00761F37 /* PluginUmeng.xcodeproj */,
+			);
+			name = pluginx;
+			sourceTree = "<group>";
+		};
+		BA623DD2191A13DB00761F37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DD6191A13DC00761F37 /* libPluginAdmob.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA623DD8191A13F300761F37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DDC191A13F300761F37 /* libPluginFlurry.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA623DDE191A140400761F37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DE2191A140400761F37 /* libPluginTwitter.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA623DE4191A141A00761F37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DE8191A141A00761F37 /* libPluginWeibo.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA623DEA191A14BD00761F37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DEE191A14BD00761F37 /* libPluginUmeng.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA623DF5191A14F800761F37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DF9191A14F800761F37 /* libPluginProtocol.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1016,6 +1138,30 @@
 					ProductGroup = 1A604F0318BF1D1C00CC9A93 /* Products */;
 					ProjectRef = 1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */;
 				},
+				{
+					ProductGroup = BA623DD2191A13DB00761F37 /* Products */;
+					ProjectRef = BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */;
+				},
+				{
+					ProductGroup = BA623DD8191A13F300761F37 /* Products */;
+					ProjectRef = BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */;
+				},
+				{
+					ProductGroup = BA623DF5191A14F800761F37 /* Products */;
+					ProjectRef = BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */;
+				},
+				{
+					ProductGroup = BA623DDE191A140400761F37 /* Products */;
+					ProjectRef = BA623DDD191A140400761F37 /* PluginTwitter.xcodeproj */;
+				},
+				{
+					ProductGroup = BA623DEA191A14BD00761F37 /* Products */;
+					ProjectRef = BA623DE9191A14BD00761F37 /* PluginUmeng.xcodeproj */;
+				},
+				{
+					ProductGroup = BA623DE4191A141A00761F37 /* Products */;
+					ProjectRef = BA623DE3191A141A00761F37 /* PluginWeibo.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1110,6 +1256,48 @@
 			fileType = archive.ar;
 			path = "libjsbindings iOS.a";
 			remoteRef = 1A604F2C18BF1D2000CC9A93 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA623DD6191A13DC00761F37 /* libPluginAdmob.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginAdmob.a;
+			remoteRef = BA623DD5191A13DC00761F37 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA623DDC191A13F300761F37 /* libPluginFlurry.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginFlurry.a;
+			remoteRef = BA623DDB191A13F300761F37 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA623DE2191A140400761F37 /* libPluginTwitter.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginTwitter.a;
+			remoteRef = BA623DE1191A140400761F37 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA623DE8191A141A00761F37 /* libPluginWeibo.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginWeibo.a;
+			remoteRef = BA623DE7191A141A00761F37 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA623DEE191A14BD00761F37 /* libPluginUmeng.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginUmeng.a;
+			remoteRef = BA623DED191A14BD00761F37 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA623DF9191A14F800761F37 /* libPluginProtocol.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginProtocol.a;
+			remoteRef = BA623DF8191A14F800761F37 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
