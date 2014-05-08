@@ -71,6 +71,8 @@
 		C026DCC718928A1A00B3EDE8 /* Runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C026DCC518928A1A00B3EDE8 /* Runtime.cpp */; };
 		C026DCC918928A2400B3EDE8 /* Runtime_ios-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = C026DCC818928A2400B3EDE8 /* Runtime_ios-mac.mm */; };
 		C026DCCA18928A2400B3EDE8 /* Runtime_ios-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = C026DCC818928A2400B3EDE8 /* Runtime_ios-mac.mm */; };
+		C033B524191B36AE00D06937 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C033B522191B36AE00D06937 /* VisibleRect.cpp */; };
+		C033B525191B36AE00D06937 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C033B522191B36AE00D06937 /* VisibleRect.cpp */; };
 		C03780EB18BEE0E400FE4F13 /* src in Resources */ = {isa = PBXBuildFile; fileRef = C03780EA18BEE0E400FE4F13 /* src */; };
 		C03780EC18BEE0E400FE4F13 /* src in Resources */ = {isa = PBXBuildFile; fileRef = C03780EA18BEE0E400FE4F13 /* src */; };
 		C037820C18BF77C500FE4F13 /* libjsbindings iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C037820918BF76AF00FE4F13 /* libjsbindings iOS.a */; };
@@ -328,6 +330,8 @@
 		C014EAEB188EA65400753BDC /* Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Runtime.h; sourceTree = "<group>"; };
 		C026DCC518928A1A00B3EDE8 /* Runtime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Runtime.cpp; sourceTree = "<group>"; };
 		C026DCC818928A2400B3EDE8 /* Runtime_ios-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "Runtime_ios-mac.mm"; sourceTree = SOURCE_ROOT; };
+		C033B522191B36AE00D06937 /* VisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisibleRect.cpp; sourceTree = "<group>"; };
+		C033B523191B36AE00D06937 /* VisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisibleRect.h; sourceTree = "<group>"; };
 		C03780EA18BEE0E400FE4F13 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../../../src; sourceTree = "<group>"; };
 		C037820118BF76AF00FE4F13 /* cocos2d_js_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_js_bindings.xcodeproj; path = "../../js-bindings/bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj"; sourceTree = "<group>"; };
 		C03C8B4818A770DD00723415 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -575,6 +579,8 @@
 		D4545214156E28EF00887EB5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C033B522191B36AE00D06937 /* VisibleRect.cpp */,
+				C033B523191B36AE00D06937 /* VisibleRect.h */,
 				C06C37861918E81100617BED /* ConfigParser.cpp */,
 				C06C37871918E81100617BED /* ConfigParser.h */,
 				C026DCC818928A2400B3EDE8 /* Runtime_ios-mac.mm */,
@@ -853,6 +859,7 @@
 				509D4A8117EBB24E00697056 /* AppDelegate.cpp in Sources */,
 				C0C2F37418AA0C66003976DA /* SimulatorApp.mm in Sources */,
 				C026DCCA18928A2400B3EDE8 /* Runtime_ios-mac.mm in Sources */,
+				C033B525191B36AE00D06937 /* VisibleRect.cpp in Sources */,
 				C03C8B4B18A770DD00723415 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -865,6 +872,7 @@
 				D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */,
 				C06C37881918E81100617BED /* ConfigParser.cpp in Sources */,
 				509D4AC817EBB2AB00697056 /* main.m in Sources */,
+				C033B524191B36AE00D06937 /* VisibleRect.cpp in Sources */,
 				509D4ABC17EBB2AB00697056 /* AppController.mm in Sources */,
 				C026DCC918928A2400B3EDE8 /* Runtime_ios-mac.mm in Sources */,
 				C026DCC618928A1A00B3EDE8 /* Runtime.cpp in Sources */,

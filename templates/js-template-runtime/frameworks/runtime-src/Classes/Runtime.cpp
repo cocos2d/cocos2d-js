@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "json/filestream.h"
 #include "json/stringbuffer.h"
 #include "json/writer.h"
+#include "VisibleRect.h"
 
 #ifdef _WIN32
 #define realpath(dir,fuldir) _fullpath(fuldir,dir,_MAX_PATH_)
@@ -58,7 +59,8 @@ using namespace std;
 using namespace cocos2d;
 
 std::string g_resourcePath;
-static rapidjson::Document g_filecfgjson; 
+static rapidjson::Document g_filecfgjson;
+static string g_entryfile;
 extern string getDotWaitFilePath();
 extern string getProjSearchPath();
 extern string getIPAddress();
@@ -235,14 +237,14 @@ vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const 
 
 const char* getRuntimeVersion()
 {
-    return "0.0.1";
+    return "1.1";
 }
 
 bool startScript()
 {
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    return ScriptingCore::getInstance()->runScript("main.js");
+    return ScriptingCore::getInstance()->runScript(g_entryfile.c_str());
 }
 
 bool reloadScript(const string& file,bool reloadAll)
@@ -263,7 +265,7 @@ bool reloadScript(const string& file,bool reloadAll)
     string modulefile = file;
     if (modulefile.empty())
     {
-        modulefile = "main.js";
+        modulefile = g_entryfile;
         ScriptingCore::getInstance()->cleanScript(modulefile.c_str());
     }
     if (reloadAll)
@@ -272,95 +274,6 @@ bool reloadScript(const string& file,bool reloadAll)
     }
     return ScriptingCore::getInstance()->runScript(modulefile.c_str());
     
-}
-
-
-class VisibleRect
-{
-public:
-    static Rect getVisibleRect();
-    
-    static Point left();
-    static Point right();
-    static Point top();
-    static Point bottom();
-    static Point center();
-    static Point leftTop();
-    static Point rightTop();
-    static Point leftBottom();
-    static Point rightBottom();
-private:
-    static void lazyInit();
-    static Rect s_visibleRect;
-};
-
-Rect VisibleRect::s_visibleRect;
-
-void VisibleRect::lazyInit()
-{
-    // no lazy init
-    // Useful if we change the resolution in runtime
-    s_visibleRect = Director::getInstance()->getOpenGLView()->getVisibleRect();
-}
-
-Rect VisibleRect::getVisibleRect()
-{
-    lazyInit();
-    return s_visibleRect;
-}
-
-Point VisibleRect::left()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height/2);
-}
-
-Point VisibleRect::right()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height/2);
-}
-
-Point VisibleRect::top()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height);
-}
-
-Point VisibleRect::bottom()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y);
-}
-
-Point VisibleRect::center()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height/2);
-}
-
-Point VisibleRect::leftTop()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height);
-}
-
-Point VisibleRect::rightTop()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height);
-}
-
-Point VisibleRect::leftBottom()
-{
-    lazyInit();
-    return s_visibleRect.origin;
-}
-
-Point VisibleRect::rightBottom()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y);
 }
 
 class ConnectWaitLayer: public Layer
@@ -972,8 +885,23 @@ private:
     FileServer* _fileserver;
 };
 
-bool initRuntime()
+bool initRuntime(string& entryfile)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifndef _DEBUG
+    return false;
+#endif
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#ifdef NDEBUG
+    return false;
+#endif
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#ifndef COCOS2D_DEBUG
+    return false;
+#endif
+#endif
+
+    g_entryfile = entryfile;
     vector<string> searchPathArray;
     searchPathArray=FileUtils::getInstance()->getSearchPaths();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -996,6 +924,11 @@ bool initRuntime()
 #endif
     
     g_resourcePath=replaceAll(g_resourcePath,"\\","/");
+    if (g_resourcePath.at(g_resourcePath.length()-1) != '/')
+    {
+        g_resourcePath.append("/");
+    }
+    
     searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
 
