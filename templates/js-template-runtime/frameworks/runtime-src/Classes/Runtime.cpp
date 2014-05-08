@@ -996,6 +996,11 @@ bool initRuntime()
 #endif
     
     g_resourcePath=replaceAll(g_resourcePath,"\\","/");
+    if (g_resourcePath.at(g_resourcePath.length()-1) != '/')
+    {
+        g_resourcePath.append("/");
+    }
+    
     searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
 
