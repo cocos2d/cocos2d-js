@@ -34,9 +34,9 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-
+    string entryfile ="main.js";
 #if (COCOS2D_DEBUG>0)
-    initRuntime();
+    initRuntime(entryfile);
 #endif
     
     // initialize director
@@ -51,7 +51,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         Size viewSize = ConfigParser::getInstance()->getInitViewSize();
         string title = ConfigParser::getInstance()->getInitViewName();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        extern void createSimulator(const char* viewName, float width, float height,float frameZoomFactor = 1.0f);
+        extern void createSimulator(const char* viewName, float width, float height,bool isLandscape = true, float frameZoomFactor = 1.0f);
         bool isLanscape = ConfigParser::getInstance()->isLanscape();
         createSimulator(title.c_str(),viewSize.width,viewSize.height,isLanscape);
 #else
