@@ -14,6 +14,11 @@
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
 #include "network/XMLHTTPRequest.h"
+#include "network/jsb_websocket.h"
+#include "network/jsb_socketio.h"
+#include "jsb_cocos2dx_spine_auto.hpp"
+#include "spine/jsb_cocos2dx_spine_manual.h"
+
 #include "Runtime.h"
 #include "ConfigParser.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -70,15 +75,24 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
+    sc->addRegisterCallback(jsb_register_chipmunk);
+    sc->addRegisterCallback(JSB_register_opengl);
+    sc->addRegisterCallback(jsb_register_system);
+    sc->addRegisterCallback(register_jsb_websocket);
+    sc->addRegisterCallback(register_jsb_socketio);
+    
     sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
+    
     sc->addRegisterCallback(register_all_cocos2dx_ui);
     sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
     sc->addRegisterCallback(register_all_cocos2dx_studio);
     sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
-    sc->addRegisterCallback(jsb_register_system);
-    sc->addRegisterCallback(JSB_register_opengl);
-    sc->addRegisterCallback(jsb_register_chipmunk);
+    
+    sc->addRegisterCallback(register_all_cocos2dx_spine);
+    sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
+    
+    
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
@@ -92,7 +106,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore::getInstance()->start();
     auto engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    ScriptingCore::getInstance()->runScript("main.js");
+    ScriptingCore::getInstance()->runScript(entryfile.c_str());
     
     return true;
 }
