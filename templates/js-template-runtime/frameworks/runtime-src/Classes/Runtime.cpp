@@ -885,9 +885,23 @@ private:
     FileServer* _fileserver;
 };
 
-bool initRuntime(string& execufile)
+bool initRuntime(string& entryfile)
 {
-    g_entryfile = execufile;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifndef _DEBUG
+    return false;
+#endif
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#ifdef NDEBUG
+    return false;
+#endif
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#ifndef COCOS2D_DEBUG
+    return false;
+#endif
+#endif
+
+    g_entryfile = entryfile;
     vector<string> searchPathArray;
     searchPathArray=FileUtils::getInstance()->getSearchPaths();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)

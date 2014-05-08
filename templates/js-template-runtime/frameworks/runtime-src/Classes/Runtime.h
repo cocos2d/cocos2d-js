@@ -31,7 +31,7 @@ using namespace std;
 
 #define _MAX_PATH_ 512
 
-bool initRuntime(string& execufile);
+bool initRuntime(string& entryfile);
 
 bool startRuntime();
 
