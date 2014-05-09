@@ -84,18 +84,16 @@ var loadAnalyticsPlugin = function() {
     var umengKey  = "";
     var flurryKey = "";
 
-    var targetDevice = cc.Application.getInstance().getTargetPlatform();
-    if (targetDevice == 1)
+    if (cc.sys.os == cc.sys.OS_IOS)
     {
         umengKey  = UMENG_KEY_IOS;
         flurryKey = FLURRY_KEY_IOS;
     }
-    else if (targetDevice == 2)
+    else if (cc.sys.os == cc.sys.OS_ANDROID)
     {
         umengKey  = UMENG_KEY_ANDROID;
         flurryKey = FLURRY_KEY_ANDROID;
     }
-
 
     var pluginManager = plugin.PluginManager.getInstance();
     if (cc.LANGUAGE_CHINESE == langType)
