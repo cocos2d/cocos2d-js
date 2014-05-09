@@ -9,7 +9,7 @@ HOST_NAME=""
 
 pushd $COCOS2DX_ROOT
 git submodule update --init --recursive
-./download-deps.py
+./../../frameworks/js-bindings/cocos2d-x/download-deps.py
 popd
 
 mkdir -p $HOME/bin
