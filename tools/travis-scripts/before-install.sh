@@ -4,12 +4,11 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-COCOS2DX_ROOT="$DIR"/../..
+COCOS2DJS_ROOT="$DIR"/../..
 HOST_NAME=""
 
-pushd $COCOS2DX_ROOT
-git submodule update --init --recursive
-./../../frameworks/js-bindings/cocos2d-x/download-deps.py
+pushd $COCOS2DJS_ROOT
+python frameworks/js-bindings/cocos2d-x/download-deps.py -r=yes
 popd
 
 mkdir -p $HOME/bin
@@ -62,7 +61,7 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.6
     sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 90 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7
     g++ --version
-    bash $COCOS2DX_ROOT/build/install-deps-linux.sh
+    bash $COCOS2DJS_ROOT/build/install-deps-linux.sh
     install_android_ndk
 elif [ "$PLATFORM"x = "nacl"x ]; then
     install_nacl_sdk
