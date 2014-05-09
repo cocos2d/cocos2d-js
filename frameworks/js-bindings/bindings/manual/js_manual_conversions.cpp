@@ -1371,6 +1371,27 @@ bool jsval_to_vector3(JSContext *cx, jsval vp, cocos2d::Vector3* ret)
     return true;
 }
 
+bool jsval_to_blendfunc(JSContext *cx, jsval vp, cocos2d::BlendFunc* ret)
+{
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jssrc(cx);
+    JS::RootedValue jsdst(cx);
+    double src, dst;
+    bool ok = vp.isObject() &&
+    JS_ValueToObject(cx, JS::RootedValue(cx, vp), &tmp) &&
+    JS_GetProperty(cx, tmp, "src", &jssrc) &&
+    JS_GetProperty(cx, tmp, "dst", &jsdst) &&
+    JS::ToNumber(cx, jssrc, &src) &&
+    JS::ToNumber(cx, jsdst, &dst);
+    
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+    
+    ret->src = (unsigned int)src;
+    ret->dst = (unsigned int)dst;
+    return true;
+    return true;
+}
+
 // native --> jsval
 
 jsval ccarray_to_jsval(JSContext* cx, __Array *arr)
@@ -2391,6 +2412,18 @@ jsval vector3_to_jsval(JSContext *cx, const cocos2d::Vector3& v)
     bool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(v.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "y", DOUBLE_TO_JSVAL(v.y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "z", DOUBLE_TO_JSVAL(v.z), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if (ok) {
+        return OBJECT_TO_JSVAL(tmp);
+    }
+    return JSVAL_NULL;
+}
+
+jsval blendfunc_to_jsval(JSContext *cx, const cocos2d::BlendFunc& v)
+{
+    JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
+    if (!tmp) return JSVAL_NULL;
+    bool ok = JS_DefineProperty(cx, tmp, "src", uint32_to_jsval(cx, v.src), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "dst", uint32_to_jsval(cx, v.dst), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }

@@ -241,6 +241,7 @@ public:
     cocos2d::SAXParser* getParser();
     
     std::string parse(const std::string& path);
+	std::string parseText(const std::string& text);
     
     // implement pure virtual methods of SAXDelegator
     void startElement(void *ctx, const char *name, const char **atts);

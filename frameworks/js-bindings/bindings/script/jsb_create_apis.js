@@ -281,10 +281,10 @@ _p._ctor = function(fileImage, capacity){
 
 _p = cc.ParticleSystem.prototype;
 _p._ctor = function(plistFile){
-    if (!plistFile || typeof(plistFile) === "number") {
-        var ton = plistFile || 100;
+    if (typeof(plistFile) === "number") {
+        var ton = plistFile;
         this.initWithTotalParticles(ton);
-    }else{
+    } else if (plistFile) {
         this.initWithFile(plistFile);
     }
 };

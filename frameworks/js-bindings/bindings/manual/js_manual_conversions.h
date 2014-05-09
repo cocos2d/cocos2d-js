@@ -182,6 +182,7 @@ bool jsval_to_std_vector_int( JSContext *cx, jsval vp, std::vector<int>* ret);
 bool jsval_to_matrix(JSContext *cx, jsval vp, cocos2d::Matrix* ret);
 bool jsval_to_vector2(JSContext *cx, jsval vp, cocos2d::Vector2* ret);
 bool jsval_to_vector3(JSContext *cx, jsval vp, cocos2d::Vector3* ret);
+bool jsval_to_blendfunc(JSContext *cx, jsval vp, cocos2d::BlendFunc* ret);
 
 template <class T>
 bool jsval_to_ccmap_string_key(JSContext *cx, jsval v, cocos2d::Map<std::string, T>* ret)
@@ -328,6 +329,7 @@ jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v);
 jsval matrix_to_jsval(JSContext *cx, const cocos2d::Matrix& v);
 jsval vector2_to_jsval(JSContext *cx, const cocos2d::Vector2& v);
 jsval vector3_to_jsval(JSContext *cx, const cocos2d::Vector3& v);
+jsval blendfunc_to_jsval(JSContext *cx, const cocos2d::BlendFunc& v);
 
 #endif /* __JS_MANUAL_CONVERSIONS_H__ */
 

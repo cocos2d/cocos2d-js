@@ -212,6 +212,18 @@
 		A63D2ED018C8B37100B29B8F /* jsb_loaders.js in Resources */ = {isa = PBXBuildFile; fileRef = A63D2ECD18C8B36600B29B8F /* jsb_loaders.js */; };
 		BA175BB418C5A2DA0040EA39 /* jsb_property_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */; };
 		BA175BB518C5A2DA0040EA39 /* jsb_property_impls.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */; };
+		BA623DEF191A14EB00761F37 /* libPluginAdmob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DD6191A13DC00761F37 /* libPluginAdmob.a */; };
+		BA623DF0191A14EB00761F37 /* libPluginFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DDC191A13F300761F37 /* libPluginFlurry.a */; };
+		BA623DF1191A14EB00761F37 /* libPluginTwitter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DE2191A140400761F37 /* libPluginTwitter.a */; };
+		BA623DF2191A14EB00761F37 /* libPluginUmeng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DEE191A14BD00761F37 /* libPluginUmeng.a */; };
+		BA623DF3191A14EB00761F37 /* libPluginWeibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DE8191A141A00761F37 /* libPluginWeibo.a */; };
+		BA623DFA191A150A00761F37 /* libPluginProtocol.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DF9191A14F800761F37 /* libPluginProtocol.a */; };
+		BA623E1B191A198900761F37 /* jsb_pluginx.js in Resources */ = {isa = PBXBuildFile; fileRef = BA623E1A191A198900761F37 /* jsb_pluginx.js */; };
+		BA623E1D191A220400761F37 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623E1C191A220400761F37 /* SystemConfiguration.framework */; };
+		BA623E1F191A220B00761F37 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623E1E191A220B00761F37 /* StoreKit.framework */; };
+		BA623E21191A221100761F37 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623E20191A221100761F37 /* AdSupport.framework */; };
+		BA623E23191A221800761F37 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623E22191A221800761F37 /* MessageUI.framework */; };
+		BA623E25191A221D00761F37 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623E24191A221D00761F37 /* MediaPlayer.framework */; };
 		BAA7DED518C74AE500D9A10E /* jsb_property_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */; };
 		BAA7DED618C74AE500D9A10E /* jsb_property_impls.js in Resources */ = {isa = PBXBuildFile; fileRef = BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */; };
 		BAA7DEDE18C7560500D9A10E /* jsb_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */; };
@@ -449,6 +461,48 @@
 			remoteGlobalIDString = A07A4F9F178387730073F6A7;
 			remoteInfo = "CocosDenshion iOS";
 		};
+		BA623DD5191A13DC00761F37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FADC44A7176EA82000B2D5ED;
+			remoteInfo = PluginAdmob;
+		};
+		BA623DDB191A13F300761F37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA09A372168AFD41008C1C7B;
+			remoteInfo = PluginFlurry;
+		};
+		BA623DE1191A140400761F37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DDD191A140400761F37 /* PluginTwitter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FACAD8881762C1B500D75ADE;
+			remoteInfo = PluginTwitter;
+		};
+		BA623DE7191A141A00761F37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DE3191A141A00761F37 /* PluginWeibo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FAE27530175D9D2900F5DA8E;
+			remoteInfo = PluginWeibo;
+		};
+		BA623DED191A14BD00761F37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DE9191A14BD00761F37 /* PluginUmeng.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA09A301168ADAEC008C1C7B;
+			remoteInfo = PluginUmeng;
+		};
+		BA623DF8191A14F800761F37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA09A321168ADBC2008C1C7B;
+			remoteInfo = PluginProtocol;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -548,6 +602,18 @@
 		A63D2ECD18C8B36600B29B8F /* jsb_loaders.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_loaders.js; path = "../frameworks/js-bindings/bindings/script/jsb_loaders.js"; sourceTree = "<group>"; };
 		BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_property_apis.js; path = "../frameworks/js-bindings/bindings/script/jsb_property_apis.js"; sourceTree = "<group>"; };
 		BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_property_impls.js; path = "../frameworks/js-bindings/bindings/script/jsb_property_impls.js"; sourceTree = "<group>"; };
+		BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginAdmob.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/admob/proj.ios/PluginAdmob.xcodeproj"; sourceTree = "<group>"; };
+		BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFlurry.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/flurry/proj.ios/PluginFlurry.xcodeproj"; sourceTree = "<group>"; };
+		BA623DDD191A140400761F37 /* PluginTwitter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginTwitter.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/twitter/proj.ios/PluginTwitter.xcodeproj"; sourceTree = "<group>"; };
+		BA623DE3191A141A00761F37 /* PluginWeibo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginWeibo.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/weibo/proj.ios/PluginWeibo.xcodeproj"; sourceTree = "<group>"; };
+		BA623DE9191A14BD00761F37 /* PluginUmeng.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginUmeng.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/umeng/proj.ios/PluginUmeng.xcodeproj"; sourceTree = "<group>"; };
+		BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginProtocol.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/protocols/proj.ios/PluginProtocol.xcodeproj"; sourceTree = "<group>"; };
+		BA623E1A191A198900761F37 /* jsb_pluginx.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_pluginx.js; path = "../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/script/jsb_pluginx.js"; sourceTree = "<group>"; };
+		BA623E1C191A220400761F37 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		BA623E1E191A220B00761F37 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
+		BA623E20191A221100761F37 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
+		BA623E22191A221800761F37 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
+		BA623E24191A221D00761F37 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		BAA7DEDB18C755FB00D9A10E /* jsb_create_apis.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_create_apis.js; path = "../frameworks/js-bindings/bindings/script/jsb_create_apis.js"; sourceTree = "<group>"; };
 		BAA7DEE218C84F5000D9A10E /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../samples/js-tests/main.js"; sourceTree = "<group>"; };
 		BAA7DEE318C84F5000D9A10E /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = "../samples/js-tests/project.json"; sourceTree = "<group>"; };
@@ -606,6 +672,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA623E25191A221D00761F37 /* MediaPlayer.framework in Frameworks */,
+				BA623E23191A221800761F37 /* MessageUI.framework in Frameworks */,
+				BA623E21191A221100761F37 /* AdSupport.framework in Frameworks */,
+				BA623E1F191A220B00761F37 /* StoreKit.framework in Frameworks */,
+				BA623E1D191A220400761F37 /* SystemConfiguration.framework in Frameworks */,
+				BA623DFA191A150A00761F37 /* libPluginProtocol.a in Frameworks */,
+				BA623DEF191A14EB00761F37 /* libPluginAdmob.a in Frameworks */,
+				BA623DF0191A14EB00761F37 /* libPluginFlurry.a in Frameworks */,
+				BA623DF1191A14EB00761F37 /* libPluginTwitter.a in Frameworks */,
+				BA623DF2191A14EB00761F37 /* libPluginUmeng.a in Frameworks */,
+				BA623DF3191A14EB00761F37 /* libPluginWeibo.a in Frameworks */,
 				1A604FC018BF1EFC00CC9A93 /* libchipmunk iOS.a in Frameworks */,
 				1A604FC118BF1EFC00CC9A93 /* libcocos2dx iOS.a in Frameworks */,
 				1A604FC218BF1EFC00CC9A93 /* libcocos2dx-extensions iOS.a in Frameworks */,
@@ -755,6 +832,7 @@
 				1A487B4A18BF3E7F007EEB98 /* jsb_opengl_constants.js */,
 				BA175BAE18C5A2CA0040EA39 /* jsb_property_apis.js */,
 				BA175BAF18C5A2CA0040EA39 /* jsb_property_impls.js */,
+				BA623E1A191A198900761F37 /* jsb_pluginx.js */,
 			);
 			name = "JS Common";
 			sourceTree = "<group>";
@@ -861,6 +939,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				BA623DCC191A13C600761F37 /* pluginx */,
 				1A604F2518BF1D2000CC9A93 /* cocos2d_js_bindings.xcodeproj */,
 				1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -875,6 +954,11 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BA623E24191A221D00761F37 /* MediaPlayer.framework */,
+				BA623E22191A221800761F37 /* MessageUI.framework */,
+				BA623E20191A221100761F37 /* AdSupport.framework */,
+				BA623E1E191A220B00761F37 /* StoreKit.framework */,
+				BA623E1C191A220400761F37 /* SystemConfiguration.framework */,
 				D60AE43317F7FFE100757E4B /* CoreMotion.framework */,
 				A035A71117822E9E00987F6C /* libsqlite3.dylib */,
 				1A9F808C177E98A600D9A1CB /* libcurl.dylib */,
@@ -893,6 +977,67 @@
 				15C64832165F3AFD007D4F18 /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA623DCC191A13C600761F37 /* pluginx */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */,
+				BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */,
+				BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */,
+				BA623DDD191A140400761F37 /* PluginTwitter.xcodeproj */,
+				BA623DE3191A141A00761F37 /* PluginWeibo.xcodeproj */,
+				BA623DE9191A14BD00761F37 /* PluginUmeng.xcodeproj */,
+			);
+			name = pluginx;
+			sourceTree = "<group>";
+		};
+		BA623DD2191A13DB00761F37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DD6191A13DC00761F37 /* libPluginAdmob.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA623DD8191A13F300761F37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DDC191A13F300761F37 /* libPluginFlurry.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA623DDE191A140400761F37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DE2191A140400761F37 /* libPluginTwitter.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA623DE4191A141A00761F37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DE8191A141A00761F37 /* libPluginWeibo.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA623DEA191A14BD00761F37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DEE191A14BD00761F37 /* libPluginUmeng.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA623DF5191A14F800761F37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA623DF9191A14F800761F37 /* libPluginProtocol.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1016,6 +1161,30 @@
 					ProductGroup = 1A604F0318BF1D1C00CC9A93 /* Products */;
 					ProjectRef = 1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */;
 				},
+				{
+					ProductGroup = BA623DD2191A13DB00761F37 /* Products */;
+					ProjectRef = BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */;
+				},
+				{
+					ProductGroup = BA623DD8191A13F300761F37 /* Products */;
+					ProjectRef = BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */;
+				},
+				{
+					ProductGroup = BA623DF5191A14F800761F37 /* Products */;
+					ProjectRef = BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */;
+				},
+				{
+					ProductGroup = BA623DDE191A140400761F37 /* Products */;
+					ProjectRef = BA623DDD191A140400761F37 /* PluginTwitter.xcodeproj */;
+				},
+				{
+					ProductGroup = BA623DEA191A14BD00761F37 /* Products */;
+					ProjectRef = BA623DE9191A14BD00761F37 /* PluginUmeng.xcodeproj */;
+				},
+				{
+					ProductGroup = BA623DE4191A141A00761F37 /* Products */;
+					ProjectRef = BA623DE3191A141A00761F37 /* PluginWeibo.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1112,6 +1281,48 @@
 			remoteRef = 1A604F2C18BF1D2000CC9A93 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		BA623DD6191A13DC00761F37 /* libPluginAdmob.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginAdmob.a;
+			remoteRef = BA623DD5191A13DC00761F37 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA623DDC191A13F300761F37 /* libPluginFlurry.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginFlurry.a;
+			remoteRef = BA623DDB191A13F300761F37 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA623DE2191A140400761F37 /* libPluginTwitter.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginTwitter.a;
+			remoteRef = BA623DE1191A140400761F37 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA623DE8191A141A00761F37 /* libPluginWeibo.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginWeibo.a;
+			remoteRef = BA623DE7191A141A00761F37 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA623DEE191A14BD00761F37 /* libPluginUmeng.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginUmeng.a;
+			remoteRef = BA623DED191A14BD00761F37 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA623DF9191A14F800761F37 /* libPluginProtocol.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginProtocol.a;
+			remoteRef = BA623DF8191A14F800761F37 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1195,6 +1406,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA623E1B191A198900761F37 /* jsb_pluginx.js in Resources */,
 				1AB5E63F18D05DE60088DAA4 /* jsb_cocos2d_ui.js in Resources */,
 				BAA7DEDF18C7561100D9A10E /* jsb_create_apis.js in Resources */,
 				BAA7DED518C74AE500D9A10E /* jsb_property_apis.js in Resources */,
@@ -1581,10 +1793,11 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../samples/js-tests/project/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/protocols/include $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/plugins/** $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/auto $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/manual";
 			};
 			name = Debug;
 		};
@@ -1606,10 +1819,11 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../samples/js-tests/project/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/protocols/include $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/plugins/** $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/auto $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/manual";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
