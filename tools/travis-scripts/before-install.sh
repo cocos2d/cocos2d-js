@@ -5,10 +5,11 @@ set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DJS_ROOT="$DIR"/../..
+COCOS2DX_ROOT="$DIR"/../../frameworks/js-bindings/cocos2d-x
 HOST_NAME=""
 
-pushd $COCOS2DJS_ROOT
-python frameworks/js-bindings/cocos2d-x/download-deps.py -r=yes
+pushd $COCOS2DX_ROOT
+python download-deps.py -r=yes
 popd
 
 mkdir -p $HOME/bin
