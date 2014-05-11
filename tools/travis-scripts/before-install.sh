@@ -10,6 +10,7 @@ HOST_NAME=""
 
 pushd $COCOS2DX_ROOT
 python download-deps.py -r=yes
+git submodule update --init --recursive
 popd
 
 mkdir -p $HOME/bin
