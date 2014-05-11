@@ -222,6 +222,8 @@ if __name__ == '__main__':
             pluginxjsb = os.path.join(cocos_root,"plugin/jsbindings")
             if os.path.isdir(pluginxjsb):
                 print "plugin/jsbindings"
+            else:
+                print "no plugin-x folder"
             if os.path.isfile(os.path.join(pluginxjsb,"Android.mk")):
                 print "Android.mk exist"
             else:
