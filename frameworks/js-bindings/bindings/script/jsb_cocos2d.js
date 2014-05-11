@@ -2051,3 +2051,47 @@ for (var i = 0, l = protoHasBlend.length; i < l; i++) {
     proto._setBlendFunc = proto.setBlendFunc;
     proto.setBlendFunc = templateSetBlendFunc;
 }
+
+/**
+ * Creates an animation.
+ * @param {Array} frames
+ * @param {Number} delay
+ * @param {Number} [loops=1]
+ * @return {cc.Animation}
+ * @example
+ * 1.
+ * //Creates an empty animation
+ * var animation1 = cc.Animation.create();
+ *
+ * 2.
+ * //Create an animation with sprite frames , delay and loops.
+ * var spriteFrames = [];
+ * var frame = cache.getSpriteFrame("grossini_dance_01.png");
+ * spriteFrames.push(frame);
+ * var animation1 = cc.Animation.create(spriteFrames);
+ * var animation2 = cc.Animation.create(spriteFrames, 0.2);
+ * var animation2 = cc.Animation.create(spriteFrames, 0.2, 2);
+ *
+ * 3.
+ * //Create an animation with animation frames , delay and loops.
+ * var animationFrames = [];
+ * var frame =  new cc.AnimationFrame();
+ * animationFrames.push(frame);
+ * var animation1 = cc.Animation.create(animationFrames);
+ * var animation2 = cc.Animation.create(animationFrames, 0.2);
+ * var animation3 = cc.Animation.create(animationFrames, 0.2, 2);
+ */
+cc.Animation.create = function (frames, delay, loops) {
+    if(frames === undefined){
+        return cc.Animation.createWithAnimationFrames();
+    }
+    else if(frames[0] && frames[0] instanceof cc.AnimationFrame){
+        if(delay !== undefined)
+            return cc.Animation.createWithAnimationFrames.apply(this, arguments);
+        else 
+            return cc.Animation.createWithAnimationFrames.call(this, frames, 0);
+    }
+    else if(frames[0] && frames[0] instanceof cc.SpriteFrame){
+        return cc.Animation.createWithSpriteFrames.apply(this,arguments);
+    }
+};
