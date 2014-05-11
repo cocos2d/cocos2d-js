@@ -3145,10 +3145,7 @@ bool js_cocos2dx_Application_constructor(JSContext *cx, uint32_t argc, jsval *vp
 void js_cocos2dx_Application_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_Application(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_Application_getTargetPlatform(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Application_getCurrentLanguageCode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Application_getCurrentLanguage(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Application_setAnimationInterval(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Application_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_GLViewProtocol_class;
