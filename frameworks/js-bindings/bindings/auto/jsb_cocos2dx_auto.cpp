@@ -9749,6 +9749,198 @@ void js_register_cocos2dx_EventListenerCustom(JSContext *cx, JSObject *global) {
 	}
 }
 
+JSClass  *jsb_cocos2d_EventFocus_class;
+JSObject *jsb_cocos2d_EventFocus_prototype;
+
+bool js_cocos2dx_EventFocus_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::ui::Widget* arg0;
+    cocos2d::ui::Widget* arg1;
+    do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::ui::Widget*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
+    do {
+			if (!argv[1].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg1 = (cocos2d::ui::Widget*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+		} while (0);
+    JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventFocus_constructor : Error processing arguments");
+    cocos2d::EventFocus* cobj = new cocos2d::EventFocus(arg0, arg1);
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::EventFocus> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EventFocus");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
+
+extern JSObject *jsb_cocos2d_Event_prototype;
+
+void js_cocos2d_EventFocus_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (EventFocus)", obj);
+}
+
+void js_register_cocos2dx_EventFocus(JSContext *cx, JSObject *global) {
+	jsb_cocos2d_EventFocus_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_EventFocus_class->name = "EventFocus";
+	jsb_cocos2d_EventFocus_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_EventFocus_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_EventFocus_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_EventFocus_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_EventFocus_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_EventFocus_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_EventFocus_class->convert = JS_ConvertStub;
+	jsb_cocos2d_EventFocus_class->finalize = js_cocos2d_EventFocus_finalize;
+	jsb_cocos2d_EventFocus_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+	static JSPropertySpec properties[] = {
+		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+	};
+
+	static JSFunctionSpec funcs[] = {
+        JS_FS_END
+	};
+
+	JSFunctionSpec *st_funcs = NULL;
+
+	jsb_cocos2d_EventFocus_prototype = JS_InitClass(
+		cx, global,
+		jsb_cocos2d_Event_prototype,
+		jsb_cocos2d_EventFocus_class,
+		js_cocos2dx_EventFocus_constructor, 0, // constructor
+		properties,
+		funcs,
+		NULL, // no static properties
+		st_funcs);
+	// make the class enumerable in the registered namespace
+//	bool found;
+//FIXME: Removed in Firefox v27	
+//	JS_SetPropertyAttributes(cx, global, "EventFocus", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+	// add the proto and JSClass to the type->js info hash table
+	TypeTest<cocos2d::EventFocus> t;
+	js_type_class_t *p;
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
+		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+		p->jsclass = jsb_cocos2d_EventFocus_class;
+		p->proto = jsb_cocos2d_EventFocus_prototype;
+		p->parentProto = jsb_cocos2d_Event_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
+	}
+}
+
+JSClass  *jsb_cocos2d_EventListenerFocus_class;
+JSObject *jsb_cocos2d_EventListenerFocus_prototype;
+
+bool js_cocos2dx_EventListenerFocus_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 0) {
+		cocos2d::EventListenerFocus* ret = cocos2d::EventListenerFocus::create();
+		jsval jsret = JSVAL_NULL;
+		do {
+		if (ret) {
+			js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::EventListenerFocus>(cx, (cocos2d::EventListenerFocus*)ret);
+			jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+		} else {
+			jsret = JSVAL_NULL;
+		}
+	} while (0);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+	JS_ReportError(cx, "js_cocos2dx_EventListenerFocus_create : wrong number of arguments");
+	return false;
+}
+
+
+extern JSObject *jsb_cocos2d_EventListener_prototype;
+
+void js_cocos2d_EventListenerFocus_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (EventListenerFocus)", obj);
+}
+
+void js_register_cocos2dx_EventListenerFocus(JSContext *cx, JSObject *global) {
+	jsb_cocos2d_EventListenerFocus_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_EventListenerFocus_class->name = "EventListenerFocus";
+	jsb_cocos2d_EventListenerFocus_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_EventListenerFocus_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_EventListenerFocus_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_EventListenerFocus_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_EventListenerFocus_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_EventListenerFocus_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_EventListenerFocus_class->convert = JS_ConvertStub;
+	jsb_cocos2d_EventListenerFocus_class->finalize = js_cocos2d_EventListenerFocus_finalize;
+	jsb_cocos2d_EventListenerFocus_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+	static JSPropertySpec properties[] = {
+		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+	};
+
+	static JSFunctionSpec funcs[] = {
+        JS_FS_END
+	};
+
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", js_cocos2dx_EventListenerFocus_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	jsb_cocos2d_EventListenerFocus_prototype = JS_InitClass(
+		cx, global,
+		jsb_cocos2d_EventListener_prototype,
+		jsb_cocos2d_EventListenerFocus_class,
+		dummy_constructor<cocos2d::EventListenerFocus>, 0, // no constructor
+		properties,
+		funcs,
+		NULL, // no static properties
+		st_funcs);
+	// make the class enumerable in the registered namespace
+//	bool found;
+//FIXME: Removed in Firefox v27	
+//	JS_SetPropertyAttributes(cx, global, "EventListenerFocus", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+	// add the proto and JSClass to the type->js info hash table
+	TypeTest<cocos2d::EventListenerFocus> t;
+	js_type_class_t *p;
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
+		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+		p->jsclass = jsb_cocos2d_EventListenerFocus_class;
+		p->proto = jsb_cocos2d_EventListenerFocus_prototype;
+		p->parentProto = jsb_cocos2d_EventListener_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
+	}
+}
+
 JSClass  *jsb_cocos2d_Action_class;
 JSObject *jsb_cocos2d_Action_prototype;
 
@@ -57030,7 +57222,7 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
 	js_register_cocos2dx_TransitionSplitRows(cx, obj);
 	js_register_cocos2dx_Device(cx, obj);
 	js_register_cocos2dx_TransitionProgressRadialCCW(cx, obj);
-	js_register_cocos2dx_ScaleTo(cx, obj);
+	js_register_cocos2dx_EventListenerFocus(cx, obj);
 	js_register_cocos2dx_TransitionPageTurn(cx, obj);
 	js_register_cocos2dx_BezierBy(cx, obj);
 	js_register_cocos2dx_BezierTo(cx, obj);
@@ -57039,13 +57231,15 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
 	js_register_cocos2dx_ActionManager(cx, obj);
 	js_register_cocos2dx_TransitionFade(cx, obj);
 	js_register_cocos2dx_TransitionZoomFlipX(cx, obj);
+	js_register_cocos2dx_EventFocus(cx, obj);
 	js_register_cocos2dx_EaseQuinticActionInOut(cx, obj);
 	js_register_cocos2dx_SpriteFrameCache(cx, obj);
 	js_register_cocos2dx_TransitionCrossFade(cx, obj);
 	js_register_cocos2dx_Ripple3D(cx, obj);
 	js_register_cocos2dx_Lens3D(cx, obj);
-	js_register_cocos2dx_EaseQuarticActionInOut(cx, obj);
+	js_register_cocos2dx_ScaleTo(cx, obj);
 	js_register_cocos2dx_Spawn(cx, obj);
+	js_register_cocos2dx_EaseQuarticActionInOut(cx, obj);
 	js_register_cocos2dx_ShakyTiles3D(cx, obj);
 	js_register_cocos2dx_PageTurn3D(cx, obj);
 	js_register_cocos2dx_TransitionSlideInL(cx, obj);
