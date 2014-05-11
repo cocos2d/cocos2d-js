@@ -217,6 +217,15 @@ if __name__ == '__main__':
         sys.exit(1)
     else:
         try:
+            project_root = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
+            cocos_root = os.path.join(project_root, "frameworks/js-bindings/cocos2d-x")
+            pluginxjsb = os.path.join(cocos_root,"plugin/jsbindings")
+            if os.path.isdir(pluginxjsb):
+                print "plugin/jsbindings"
+            if os.path.isfile(os.path.join(pluginxjsb,"Android.mk")):
+                print "Android.mk exist"
+            else:
+                print "no Android.mk"
             build(args, opts.ndk_build_param,opts.android_platform,opts.build_mode)
         except Exception as e:
             print e
