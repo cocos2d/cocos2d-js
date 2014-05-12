@@ -699,6 +699,8 @@ bool js_cocos2dx_Animation_getDelayPerUnit(JSContext *cx, uint32_t argc, jsval *
 bool js_cocos2dx_Animation_initWithSpriteFrames(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Animation_getRestoreOriginalFrame(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Animation_addSpriteFrameWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Animation_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Animation_createWithSpriteFrames(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Animation_Animation(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_ActionInterval_class;

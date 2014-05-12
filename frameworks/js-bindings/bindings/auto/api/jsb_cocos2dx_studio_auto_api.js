@@ -255,7 +255,7 @@ ccs.BaseData = {
 
 /**
  * @method getColor
- * @return {color4b_object}
+ * @return {Color4BObject}
  */
 getColor : function (
 )
@@ -265,7 +265,7 @@ getColor : function (
 
 /**
  * @method setColor
- * @param {color4b_object} arg0
+ * @param {Color4BObject} arg0
  */
 setColor : function (
 color4b 
@@ -619,7 +619,7 @@ getColliderBodyList : function (
 
 /**
  * @method updateTransform
- * @param {matrix_object} arg0
+ * @param {cc.Matrix} arg0
  */
 updateTransform : function (
 matrix 
@@ -795,7 +795,7 @@ getDisplayRenderNode : function (
 
 /**
  * @method getAnchorPointInPoints
- * @return {vector2_object}
+ * @return {Array}
  */
 getAnchorPointInPoints : function (
 )
@@ -857,7 +857,7 @@ bone
 
 /**
  * @method getContentSize
- * @return {size_object}
+ * @return {SizeObject}
  */
 getContentSize : function (
 )
@@ -867,7 +867,7 @@ getContentSize : function (
 
 /**
  * @method getBoundingBox
- * @return {rect_object}
+ * @return {RectObject}
  */
 getBoundingBox : function (
 )
@@ -889,7 +889,7 @@ int
 
 /**
  * @method containPoint
-* @param {float|vector2_object} float
+* @param {float|Array} float
 * @param {float} float
 * @return {bool|bool}
 */
@@ -969,7 +969,7 @@ getCurrentDisplayIndex : function (
 
 /**
  * @method getAnchorPoint
- * @return {vector2_object}
+ * @return {Array}
  */
 getAnchorPoint : function (
 )
@@ -1353,7 +1353,7 @@ armature
 
 /**
  * @method getNodeToArmatureTransform
- * @return {matrix_object}
+ * @return {cc.Matrix}
  */
 getNodeToArmatureTransform : function (
 )
@@ -1618,7 +1618,7 @@ ccs.ArmatureDataManager = {
 
 /**
  * @method getAnimationDatas
- * @return {map_object}
+ * @return {MapObject}
  */
 getAnimationDatas : function (
 )
@@ -1746,7 +1746,7 @@ str
 
 /**
  * @method getArmatureDatas
- * @return {map_object}
+ * @return {MapObject}
  */
 getArmatureDatas : function (
 )
@@ -2041,7 +2041,7 @@ getArmatureData : function (
 
 /**
  * @method getBoundingBox
- * @return {rect_object}
+ * @return {RectObject}
  */
 getBoundingBox : function (
 )
@@ -2081,7 +2081,7 @@ blendfunc
 
 /**
  * @method getBoneDic
- * @return {map_object}
+ * @return {MapObject}
  */
 getBoneDic : function (
 )
@@ -2131,7 +2131,7 @@ getBone : function (
 
 /**
  * @method getNodeToWorldTransformAR
- * @return {matrix_object}
+ * @return {cc.Matrix}
  */
 getNodeToWorldTransformAR : function (
 )
