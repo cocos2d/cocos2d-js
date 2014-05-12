@@ -6310,7 +6310,7 @@ bool js_cocos2dx_AtlasNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_AtlasNode_setBlendFunc : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::BlendFunc arg0;
-		ok &= jsval_to_blendfunc(cx, argv[0], &arg0);
+		#pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AtlasNode_setBlendFunc : Error processing arguments");
 		cobj->setBlendFunc(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -6353,7 +6353,7 @@ bool js_cocos2dx_AtlasNode_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 0) {
 		const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
 		jsval jsret = JSVAL_NULL;
-		jsret = blendfunc_to_jsval(cx, ret);
+		#pragma warning NO CONVERSION FROM NATIVE FOR BlendFunc;
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -28885,7 +28885,7 @@ bool js_cocos2dx_DrawNode_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 0) {
 		const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
 		jsval jsret = JSVAL_NULL;
-		jsret = blendfunc_to_jsval(cx, ret);
+		#pragma warning NO CONVERSION FROM NATIVE FOR BlendFunc;
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -28940,7 +28940,7 @@ bool js_cocos2dx_DrawNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_setBlendFunc : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::BlendFunc arg0;
-		ok &= jsval_to_blendfunc(cx, argv[0], &arg0);
+		#pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_DrawNode_setBlendFunc : Error processing arguments");
 		cobj->setBlendFunc(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -29565,7 +29565,7 @@ bool js_cocos2dx_LabelTTF_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 0) {
 		const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
 		jsval jsret = JSVAL_NULL;
-		jsret = blendfunc_to_jsval(cx, ret);
+		#pragma warning NO CONVERSION FROM NATIVE FOR BlendFunc;
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -29708,7 +29708,7 @@ bool js_cocos2dx_LabelTTF_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_LabelTTF_setBlendFunc : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::BlendFunc arg0;
-		ok &= jsval_to_blendfunc(cx, argv[0], &arg0);
+		#pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_LabelTTF_setBlendFunc : Error processing arguments");
 		cobj->setBlendFunc(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -30380,7 +30380,7 @@ bool js_cocos2dx_SpriteBatchNode_getBlendFunc(JSContext *cx, uint32_t argc, jsva
 	if (argc == 0) {
 		const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
 		jsval jsret = JSVAL_NULL;
-		jsret = blendfunc_to_jsval(cx, ret);
+		#pragma warning NO CONVERSION FROM NATIVE FOR BlendFunc;
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -30509,7 +30509,7 @@ bool js_cocos2dx_SpriteBatchNode_setBlendFunc(JSContext *cx, uint32_t argc, jsva
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_setBlendFunc : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::BlendFunc arg0;
-		ok &= jsval_to_blendfunc(cx, argv[0], &arg0);
+		#pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_setBlendFunc : Error processing arguments");
 		cobj->setBlendFunc(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -32119,7 +32119,7 @@ bool js_cocos2dx_LabelBMFont_getBlendFunc(JSContext *cx, uint32_t argc, jsval *v
 	if (argc == 0) {
 		const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
 		jsval jsret = JSVAL_NULL;
-		jsret = blendfunc_to_jsval(cx, ret);
+		#pragma warning NO CONVERSION FROM NATIVE FOR BlendFunc;
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -32200,7 +32200,7 @@ bool js_cocos2dx_LabelBMFont_setBlendFunc(JSContext *cx, uint32_t argc, jsval *v
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_LabelBMFont_setBlendFunc : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::BlendFunc arg0;
-		ok &= jsval_to_blendfunc(cx, argv[0], &arg0);
+		#pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_LabelBMFont_setBlendFunc : Error processing arguments");
 		cobj->setBlendFunc(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -32888,7 +32888,7 @@ bool js_cocos2dx_LayerColor_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp
 	if (argc == 0) {
 		const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
 		jsval jsret = JSVAL_NULL;
-		jsret = blendfunc_to_jsval(cx, ret);
+		#pragma warning NO CONVERSION FROM NATIVE FOR BlendFunc;
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -32906,7 +32906,7 @@ bool js_cocos2dx_LayerColor_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_LayerColor_setBlendFunc : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::BlendFunc arg0;
-		ok &= jsval_to_blendfunc(cx, argv[0], &arg0);
+		#pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_LayerColor_setBlendFunc : Error processing arguments");
 		cobj->setBlendFunc(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -41309,7 +41309,7 @@ bool js_cocos2dx_MotionStreak_setBlendFunc(JSContext *cx, uint32_t argc, jsval *
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_MotionStreak_setBlendFunc : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::BlendFunc arg0;
-		ok &= jsval_to_blendfunc(cx, argv[0], &arg0);
+		#pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MotionStreak_setBlendFunc : Error processing arguments");
 		cobj->setBlendFunc(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -41348,7 +41348,7 @@ bool js_cocos2dx_MotionStreak_getBlendFunc(JSContext *cx, uint32_t argc, jsval *
 	if (argc == 0) {
 		const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
 		jsval jsret = JSVAL_NULL;
-		jsret = blendfunc_to_jsval(cx, ret);
+		#pragma warning NO CONVERSION FROM NATIVE FOR BlendFunc;
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -42148,7 +42148,7 @@ bool js_cocos2dx_Sprite_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 0) {
 		const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
 		jsval jsret = JSVAL_NULL;
-		jsret = blendfunc_to_jsval(cx, ret);
+		#pragma warning NO CONVERSION FROM NATIVE FOR BlendFunc;
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -42373,7 +42373,7 @@ bool js_cocos2dx_Sprite_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Sprite_setBlendFunc : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::BlendFunc arg0;
-		ok &= jsval_to_blendfunc(cx, argv[0], &arg0);
+		#pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Sprite_setBlendFunc : Error processing arguments");
 		cobj->setBlendFunc(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -44425,7 +44425,7 @@ bool js_cocos2dx_ParticleBatchNode_setBlendFunc(JSContext *cx, uint32_t argc, js
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleBatchNode_setBlendFunc : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::BlendFunc arg0;
-		ok &= jsval_to_blendfunc(cx, argv[0], &arg0);
+		#pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParticleBatchNode_setBlendFunc : Error processing arguments");
 		cobj->setBlendFunc(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -44488,7 +44488,7 @@ bool js_cocos2dx_ParticleBatchNode_getBlendFunc(JSContext *cx, uint32_t argc, js
 	if (argc == 0) {
 		const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
 		jsval jsret = JSVAL_NULL;
-		jsret = blendfunc_to_jsval(cx, ret);
+		#pragma warning NO CONVERSION FROM NATIVE FOR BlendFunc;
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -46561,7 +46561,7 @@ bool js_cocos2dx_ParticleSystem_getBlendFunc(JSContext *cx, uint32_t argc, jsval
 	if (argc == 0) {
 		const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
 		jsval jsret = JSVAL_NULL;
-		jsret = blendfunc_to_jsval(cx, ret);
+		#pragma warning NO CONVERSION FROM NATIVE FOR BlendFunc;
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -46736,7 +46736,7 @@ bool js_cocos2dx_ParticleSystem_setBlendFunc(JSContext *cx, uint32_t argc, jsval
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_setBlendFunc : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::BlendFunc arg0;
-		ok &= jsval_to_blendfunc(cx, argv[0], &arg0);
+		#pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParticleSystem_setBlendFunc : Error processing arguments");
 		cobj->setBlendFunc(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
