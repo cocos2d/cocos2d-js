@@ -2479,6 +2479,38 @@ bool js_cocos2dx_CCTMXLayer_getTiles(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 
+// Actions
+bool js_cocos2dx_ActionInterval_repeat(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::ActionInterval* cobj = (cocos2d::ActionInterval *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionInterval_repeat : Invalid Native Object");
+    
+    JS::CallArgs argv = JS::CallArgsFromVp(argc, vp);
+	if (argc == 1) {
+        double times;
+        if( ! JS::ToNumber(cx, argv[0], &times) ) {
+            return false;
+        }
+        
+        cocos2d::Repeat* action = cocos2d::Repeat::create(cobj, times);
+        // Unbind current proxy binding
+        JS_RemoveObjectRoot(cx, &proxy->obj);
+        jsb_remove_proxy(jsb_get_native_proxy(cobj), proxy);
+        // Rebind js obj with new action
+        js_proxy_t* newProxy = jsb_new_proxy(action, obj);
+        JS_AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::Repeat");
+        
+		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+		return true;
+	}
+    
+	JS_ReportError(cx, "js_cocos2dx_ActionInterval_getAmplitudeRate : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+
+
 template<class T>
 bool js_BezierActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS::CallArgs argv = JS::CallArgsFromVp(argc, vp);
@@ -4466,6 +4498,8 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 	JS_DefineFunction(cx, jsb_cocos2d_MenuItem_prototype, "setCallback", js_cocos2dx_CCMenuItem_setCallback, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_TMXLayer_prototype, "getTileFlagsAt", js_cocos2dx_CCTMXLayer_tileFlagsAt, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_TMXLayer_prototype, "getTiles", js_cocos2dx_CCTMXLayer_getTiles, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    JS_DefineFunction(cx, jsb_cocos2d_ActionInterval_prototype, "repeat", js_cocos2dx_ActionInterval_repeat, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.Menu; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenu_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
