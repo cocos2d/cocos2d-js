@@ -170,13 +170,13 @@ var SpriteEase = EaseSpriteDemo.extend({
         var seq3 = cc.Sequence.create(move_ease_out, delay.clone(), move_ease_out_back, delay.clone());
 
 
-        var a2 = this._grossini.runAction(cc.RepeatForever.create(seq1));
+        var a2 = this._grossini.runAction(seq1.repeatForever());
         a2.tag = 1;
 
-        var a1 = this._tamara.runAction(cc.RepeatForever.create(seq2));
+        var a1 = this._tamara.runAction(seq2.repeatForever());
         a1.tag = 1;
 
-        var a = this._kathia.runAction(cc.RepeatForever.create(seq3));
+        var a = this._kathia.runAction(seq3.repeatForever());
         a.tag = 1;
 
         this.scheduleOnce(this.testStopAction, 4.1);
@@ -246,9 +246,9 @@ var SpriteEaseInOut = EaseSpriteDemo.extend({
         var seq2 = cc.Sequence.create(move_ease_inout2, delay.clone(), move_ease_inout_back2, delay.clone());
         var seq3 = cc.Sequence.create(move_ease_inout3, delay.clone(), move_ease_inout_back3, delay.clone());
 
-        this._tamara.runAction(cc.RepeatForever.create(seq1));
-        this._kathia.runAction(cc.RepeatForever.create(seq2));
-        this._grossini.runAction(cc.RepeatForever.create(seq3));
+        this._tamara.runAction(seq1.repeatForever());
+        this._kathia.runAction(seq2.repeatForever());
+        this._grossini.runAction(seq3.repeatForever());
         //----end1----
     },
     title:function () {
@@ -286,9 +286,9 @@ var SpriteEaseExponential = EaseSpriteDemo.extend({
         var seq3 = cc.Sequence.create(move_ease_out, delay.clone(), move_ease_out_back, delay.clone());
 
 
-        this._grossini.runAction(cc.RepeatForever.create(seq1));
-        this._tamara.runAction(cc.RepeatForever.create(seq2));
-        this._kathia.runAction(cc.RepeatForever.create(seq3));
+        this._grossini.runAction(seq1.repeatForever());
+        this._tamara.runAction(seq2.repeatForever());
+        this._kathia.runAction(seq3.repeatForever());
         //----end2-----
     },
     title:function () {
@@ -322,8 +322,8 @@ var SpriteEaseExponentialInOut = EaseSpriteDemo.extend({
 
         this.positionForTwo();
 
-        this._grossini.runAction(cc.RepeatForever.create(seq1));
-        this._tamara.runAction(cc.RepeatForever.create(seq2));
+        this._grossini.runAction(seq1.repeatForever());
+        this._tamara.runAction(seq2.repeatForever());
         //----end3----
     },
     title:function () {
@@ -363,9 +363,9 @@ var SpriteEaseSine = EaseSpriteDemo.extend({
         var seq3 = cc.Sequence.create(move_ease_out, delay, move_ease_out_back, delay.clone());
 
 
-        this._grossini.runAction(cc.RepeatForever.create(seq1));
-        this._tamara.runAction(cc.RepeatForever.create(seq2));
-        this._kathia.runAction(cc.RepeatForever.create(seq3));
+        this._grossini.runAction(seq1.repeatForever());
+        this._tamara.runAction(seq2.repeatForever());
+        this._kathia.runAction(seq3.repeatForever());
         //----end4----
     },
     title:function () {
@@ -399,8 +399,8 @@ var SpriteEaseSineInOut = EaseSpriteDemo.extend({
 
         this.positionForTwo();
 
-        this._grossini.runAction(cc.RepeatForever.create(seq1));
-        this._tamara.runAction(cc.RepeatForever.create(seq2));
+        this._grossini.runAction(seq1.repeatForever());
+        this._tamara.runAction(seq2.repeatForever());
         //----end5----
     },
     title:function () {
@@ -439,9 +439,9 @@ var SpriteEaseElastic = EaseSpriteDemo.extend({
         var seq2 = cc.Sequence.create(move_ease_in, delay.clone(), move_ease_in_back, delay.clone());
         var seq3 = cc.Sequence.create(move_ease_out, delay.clone(), move_ease_out_back, delay.clone());
 
-        this._grossini.runAction(cc.RepeatForever.create(seq1));
-        this._tamara.runAction(cc.RepeatForever.create(seq2));
-        this._kathia.runAction(cc.RepeatForever.create(seq3));
+        this._grossini.runAction(seq1.repeatForever());
+        this._tamara.runAction(seq2.repeatForever());
+        this._kathia.runAction(seq3.repeatForever());
         //----end6----
     },
     title:function () {
@@ -485,9 +485,9 @@ var SpriteEaseElasticInOut = EaseSpriteDemo.extend({
         var seq2 = cc.Sequence.create(move_ease_inout2, delay.clone(), move_ease_inout_back2, delay.clone());
         var seq3 = cc.Sequence.create(move_ease_inout3, delay.clone(), move_ease_inout_back3, delay.clone());
 
-        this._tamara.runAction(cc.RepeatForever.create(seq1));
-        this._kathia.runAction(cc.RepeatForever.create(seq2));
-        this._grossini.runAction(cc.RepeatForever.create(seq3));
+        this._tamara.runAction(seq1.repeatForever());
+        this._kathia.runAction(seq2.repeatForever());
+        this._grossini.runAction(seq3.repeatForever());
         //----end7----
     },
     title:function () {
@@ -526,9 +526,9 @@ var SpriteEaseBounce = EaseSpriteDemo.extend({
         var seq2 = cc.Sequence.create(move_ease_in, delay.clone(), move_ease_in_back, delay.clone());
         var seq3 = cc.Sequence.create(move_ease_out, delay.clone(), move_ease_out_back, delay.clone());
 
-        this._grossini.runAction(cc.RepeatForever.create(seq1));
-        this._tamara.runAction(cc.RepeatForever.create(seq2));
-        this._kathia.runAction(cc.RepeatForever.create(seq3));
+        this._grossini.runAction(seq1.repeatForever());
+        this._tamara.runAction(seq2.repeatForever());
+        this._kathia.runAction(seq3.repeatForever());
         //----end8----
     },
     title:function () {
@@ -562,8 +562,8 @@ var SpriteEaseBounceInOut = EaseSpriteDemo.extend({
 
         this.positionForTwo();
 
-        this._grossini.runAction(cc.RepeatForever.create(seq1));
-        this._tamara.runAction(cc.RepeatForever.create(seq2));
+        this._grossini.runAction(seq1.repeatForever());
+        this._tamara.runAction(seq2.repeatForever());
         //----end9----
     },
     title:function () {
@@ -602,9 +602,9 @@ var SpriteEaseBack = EaseSpriteDemo.extend({
         var seq2 = cc.Sequence.create(move_ease_in, delay.clone(), move_ease_in_back, delay.clone());
         var seq3 = cc.Sequence.create(move_ease_out, delay.clone(), move_ease_out_back, delay.clone());
 
-        this._grossini.runAction(cc.RepeatForever.create(seq1));
-        this._tamara.runAction(cc.RepeatForever.create(seq2));
-        this._kathia.runAction(cc.RepeatForever.create(seq3));
+        this._grossini.runAction(seq1.repeatForever());
+        this._tamara.runAction(seq2.repeatForever());
+        this._kathia.runAction(seq3.repeatForever());
         //----end10----
     },
     title:function () {
@@ -638,8 +638,8 @@ var SpriteEaseBackInOut = EaseSpriteDemo.extend({
 
         this.positionForTwo();
 
-        this._grossini.runAction(cc.RepeatForever.create(seq1));
-        this._tamara.runAction(cc.RepeatForever.create(seq2));
+        this._grossini.runAction(seq1.repeatForever());
+        this._tamara.runAction(seq2.repeatForever());
         //----end11----
     },
     title:function () {
@@ -662,10 +662,7 @@ var SpeedTest = EaseSpriteDemo.extend({
         var seq3_2 = cc.Sequence.create(rot1, rot2);
         var spawn = cc.Spawn.create(seq3_1, seq3_2);
 
-        //old api
-        //var action = cc.Speed.create(cc.RepeatForever.create(spawn), 1.0);
-
-        var action = cc.RepeatForever.create(spawn).speed(2);
+        var action = spawn.repeatForever().speed(2);
         action.tag = TAG_ACTION1_EASE_ACTIONS;
 
         var action2 = action.clone();
@@ -690,11 +687,6 @@ var SpeedTest = EaseSpriteDemo.extend({
         var action1 = this._grossini.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
         var action2 = this._tamara.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
         var action3 = this._kathia.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
-
-        //old api
-        //action1.setSpeed(Math.random() * 2);
-        //action2.setSpeed(Math.random() * 2);
-        //action3.setSpeed(Math.random() * 2);
 
         action1.speed(Math.random() * 2);
         action2.speed(Math.random() * 2);
@@ -730,7 +722,7 @@ var SchedulerTest = EaseSpriteDemo.extend({
         var seq3_1 = cc.Sequence.create(jump2, jump1);
         var seq3_2 = cc.Sequence.create(rot1, rot2);
         var spawn = cc.Spawn.create(seq3_1, seq3_2);
-        var action = cc.RepeatForever.create(spawn);
+        var action = spawn.repeatForever();
 
         var action2 = action.clone();
         var action3 = action.clone();

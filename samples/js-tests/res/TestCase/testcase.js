@@ -195,6 +195,8 @@
 
         _hiddenOtherHover: function(testNum, sceneNum){
             var sceneList = this.list[sceneNum];
+            if(!sceneList[1]) return;
+
             var aArray = sceneList[1].getElementsByTagName("a");
             Array.prototype.forEach.call(aArray, function(a, i){
                 if(i == testNum){

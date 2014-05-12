@@ -94,7 +94,7 @@ IntervalLayer = cc.LayerGradient.extend({
         var jump = cc.JumpBy.create(3, cc.p(s.width - 80, 0), 50, 4);
 
         this.addChild(sprite);
-        sprite.runAction(cc.RepeatForever.create(cc.Sequence.create(jump, jump.reverse())));
+        sprite.runAction(cc.Sequence.create(jump, jump.reverse()).repeatForever());
 
         // pause button
         var item1 = cc.MenuItemFont.create("Pause", this.onPause, this);

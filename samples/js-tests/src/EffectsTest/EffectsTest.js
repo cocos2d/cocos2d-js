@@ -85,7 +85,7 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
         var sc = cc.ScaleBy.create(2, 5);
         var sc_back = sc.reverse();
         var seq = cc.Sequence.create( sc, sc_back );
-        var repeat = cc.RepeatForever.create( seq );
+        var repeat = seq.repeatForever();
 
         sister1.runAction( repeat );
         sister2.runAction( repeat.clone() );

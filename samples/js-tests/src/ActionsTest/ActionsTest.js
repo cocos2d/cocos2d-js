@@ -585,9 +585,9 @@ var ActionJump = ActionsDemo.extend({
 
         this._tamara.runAction(actionTo);
         this._grossini.runAction(cc.Sequence.create(actionBy, delay, actionByBack));
-        this._kathia.runAction(cc.RepeatForever.create(
-            cc.Sequence.create(actionUp, delay.clone() )
-                ) );
+
+        var action = cc.Sequence.create(actionUp, delay.clone()).repeatForever();
+        this._kathia.runAction(action);
         //----end7----
     },
     title:function () {
@@ -647,10 +647,7 @@ var ActionBezier = ActionsDemo.extend({
                                 cc.p(300, 100) ];
 
         var bezierForward = cc.BezierBy.create(2, controlPoints);
-        var rep = cc.RepeatForever.create(
-            cc.Sequence.create(
-                bezierForward, delay, bezierForward.reverse(), delay.clone()
-            ));
+        var rep = cc.Sequence.create(bezierForward, delay, bezierForward.reverse(), delay.clone()).repeatForever();
 
         // sprite 2
         this._tamara.x = 80;
@@ -790,8 +787,7 @@ var Issue1008 = ActionsDemo.extend({
         var trace = cc.CallFunc.create(this.onTrace, this);
         var delay = cc.DelayTime.create(0.25);
 
-        var rep = cc.RepeatForever.create(cc.Sequence.create(bz1, bz2, trace,delay));
-
+        var rep = cc.Sequence.create(bz1, bz2, trace,delay).repeatForever();
         this._grossini.runAction(rep);
 
         //----end10----
@@ -1366,7 +1362,7 @@ var ActionRepeatForever = ActionsDemo.extend({
 
     },
     repeatForever:function (sender) {
-        var repeat = cc.RepeatForever.create(cc.RotateBy.create(1, 360));
+        var repeat = cc.RotateBy.create(1, 360).repeatForever();
         sender.runAction(repeat);
     },
     title:function () {
@@ -1406,8 +1402,9 @@ var ActionRotateToRepeat = ActionsDemo.extend({
         var act1 = cc.RotateTo.create(0.5, 90);
         var act2 = cc.RotateTo.create(0.5, 0);
         var seq = cc.Sequence.create(act1, act2);
-        var rep1 = cc.RepeatForever.create(seq);
-        var rep2 = cc.Repeat.create((seq.clone()), 4);
+
+        var rep1 = seq.repeatForever();
+        var rep2 = seq.clone().repeat(4);
 
         this._tamara.runAction(rep1);
         this._kathia.runAction(rep2);
@@ -1450,9 +1447,8 @@ var ActionRotateJerk = ActionsDemo.extend({
             cc.RotateTo.create(0.5, -20),
             cc.RotateTo.create(0.5, 20));
 
-        var rep1 = cc.Repeat.create(seq, 10);
-        var rep2 = cc.RepeatForever.create((seq.clone()));
-
+        var rep1 = seq.repeat(10);
+        var rep2 = seq.clone().repeatForever();
         this._tamara.runAction(rep1);
         this._kathia.runAction(rep2);
         //----end24----
@@ -1591,9 +1587,8 @@ var ActionReverseSequence2 = ActionsDemo.extend({
         var tog1 = cc.ToggleVisibility.create();
         var tog2 = cc.ToggleVisibility.create();
         var seq = cc.Sequence.create(move1, tog1, move2, tog2, move1.reverse());
-        var action = cc.Repeat.create(
-            cc.Sequence.create(seq, seq.reverse()), 3
-        );
+
+        var action = cc.Sequence.create(seq, seq.reverse()).repeat(3);
 
 
         // Test:
@@ -1625,12 +1620,9 @@ var ActionRepeat = ActionsDemo.extend({
 
 
         var a1 = cc.MoveBy.create(1, cc.p(150, 0));
-        var action1 = cc.Repeat.create(
-            cc.Sequence.create(cc.Place.create(cc.p(60, 60)), a1),
-            3);
-        var action2 = cc.RepeatForever.create(
-            cc.Sequence.create( a1.clone(), a1.reverse(), cc.DelayTime.create(0.25) )
-        );
+
+        var action1 = cc.Sequence.create(cc.Place.create(cc.p(60, 60)), a1).repeat(3);
+        var action2 = cc.Sequence.create( a1.clone(), a1.reverse(), cc.DelayTime.create(0.25)).repeatForever();
 
         this._kathia.runAction(action1);
         this._tamara.runAction(action2);
@@ -1680,14 +1672,16 @@ var ActionOrbit = ActionsDemo.extend({
             orbit3,
             orbit3.reverse());
 
-        this._kathia.runAction(cc.RepeatForever.create(action1));
-        this._tamara.runAction(cc.RepeatForever.create(action2));
-        this._grossini.runAction(cc.RepeatForever.create(action3));
+        this._kathia.runAction(action1.repeatForever());
+        this._tamara.runAction(action2.repeatForever());
+        this._grossini.runAction(action3.repeatForever());
 
         var move = cc.MoveBy.create(3, cc.p(100, -100));
         var move_back = move.reverse();
         var seq = cc.Sequence.create(move, move_back);
-        var rfe = cc.RepeatForever.create(seq);
+
+        var rfe = seq.repeatForever();
+
         this._kathia.runAction(rfe);
         this._tamara.runAction((rfe.clone()));
         this._grossini.runAction((rfe.clone()));
@@ -1715,7 +1709,8 @@ var ActionFollow = ActionsDemo.extend({
         var move = cc.MoveBy.create(2, cc.p(s.width * 3, 0));
         var move_back = move.reverse();
         var seq = cc.Sequence.create(move, move_back);
-        var rep = cc.RepeatForever.create(seq);
+
+        var rep = seq.repeatForever();
 
         this._grossini.runAction(rep);
 
@@ -2037,7 +2032,8 @@ var ActionTargeted = ActionsDemo.extend({
         var t2 = cc.TargetedAction.create(this._kathia, rot2);
 
         var seq = cc.Sequence.create(jump1, t1, rot1, t2);
-        var always = cc.RepeatForever.create(seq);
+
+        var always = seq.repeat();
 
         this._tamara.runAction(always);
         //----end31----
@@ -2099,14 +2095,14 @@ var ActionStackableMove = ActionsDemo.extend({
         var move_back = move.reverse();
         var delay = cc.DelayTime.create(0.25);
         var move_seq = cc.Sequence.create( move, move_back );
-        var move_rep = cc.RepeatForever.create( move_seq );
+        var move_rep = move_seq.repeatForever();
         this._grossini.runAction( move_rep );
 
         // move
         var action = cc.MoveBy.create(2, cc.p(winSize.width - 80, 0));
         var back = action.reverse();
         var seq = cc.Sequence.create(action, back);
-        var repeat = cc.RepeatForever.create(seq);
+        var repeat = seq.repeatForever();
         this._grossini.runAction(repeat);
         //----end33----
 
@@ -2159,14 +2155,14 @@ var ActionStackableJump = ActionsDemo.extend({
         var move = cc.MoveBy.create(0.05, cc.p(8, 8));
         var move_back = move.reverse();
         var move_seq = cc.Sequence.create(move, move_back);
-        var move_rep = cc.RepeatForever.create(move_seq);
+        var move_rep = move_seq.repeatForever();
         this._grossini.runAction(move_rep);
 
         // jump
         var action = cc.JumpBy.create(2, cc.p(winSize.width - 80, 0), 90, 5);
         var back = action.reverse();
         var seq = cc.Sequence.create(action, back);
-        var repeat = cc.RepeatForever.create(seq);
+        var repeat = seq.repeatForever();
         this._grossini.runAction(repeat);
         //--end34----
 
@@ -2197,7 +2193,7 @@ var ActionStackableBezier = ActionsDemo.extend({
         var move = cc.MoveBy.create(0.05, cc.p(8, 8));
         var move_back = move.reverse();
         var move_seq = cc.Sequence.create(move, move_back);
-        var move_rep = cc.RepeatForever.create(move_seq);
+        var move_rep = move_seq.repeatForever();
         this._grossini.runAction(move_rep);
 
         // Bezier
@@ -2206,8 +2202,7 @@ var ActionStackableBezier = ActionsDemo.extend({
             cc.p(winSize.width - 80, 100) ];
 
         var bezierForward = cc.BezierBy.create(3, controlPoints);
-        var repeat = cc.RepeatForever.create(
-            cc.Sequence.create(bezierForward, bezierForward.reverse()));
+        var repeat = cc.Sequence.create(bezierForward, bezierForward.reverse()).repeatForever();
         this._grossini.runAction(repeat);
         //----end35----
 
@@ -2238,7 +2233,7 @@ var ActionStackableCatmullRom = ActionsDemo.extend({
         var move = cc.MoveBy.create(0.05, cc.p(8, 8));
         var move_back = move.reverse();
         var move_seq = cc.Sequence.create(move, move_back);
-        var move_rep = cc.RepeatForever.create(move_seq);
+        var move_rep = move_seq.repeatForever();
         this._grossini.runAction(move_rep);
 
         // CatmullRom
@@ -2255,7 +2250,7 @@ var ActionStackableCatmullRom = ActionsDemo.extend({
         var action1 = cc.CatmullRomBy.create(6, array);
         var reverse1 = action1.reverse();
         var seq1 = cc.Sequence.create(action1, reverse1);
-        var repeat = cc.RepeatForever.create(seq1);
+        var repeat = seq1.repeatForever();
         this._grossini.runAction(repeat);
         //----end36----
     },
@@ -2285,7 +2280,7 @@ var ActionStackableCardinalSpline = ActionsDemo.extend({
         var move = cc.MoveBy.create(0.05, cc.p(8, 8));
         var move_back = move.reverse();
         var move_seq = cc.Sequence.create(move, move_back);
-        var move_rep = cc.RepeatForever.create(move_seq);
+        var move_rep = move_seq.repeatForever();
         this._grossini.runAction(move_rep);
 
         // CardinalSpline
@@ -2302,7 +2297,7 @@ var ActionStackableCardinalSpline = ActionsDemo.extend({
         var action1 = cc.CardinalSplineBy.create(6, array, 0.9);
         var reverse1 = action1.reverse();
         var seq1 = cc.Sequence.create(action1, reverse1);
-        var repeat = cc.RepeatForever.create(seq1);
+        var repeat = seq1.repeatForever();
         this._grossini.runAction(repeat);
         //----end37----
     },
@@ -2326,9 +2321,9 @@ var PauseResumeActions = ActionsDemo.extend({
         this._super();
         this.centerSprites(2);
 
-        this._tamara.runAction(cc.RepeatForever.create(cc.RotateBy.create(3, 360)));
-        this._grossini.runAction(cc.RepeatForever.create(cc.RotateBy.create(3, -360)));
-        this._kathia.runAction(cc.RepeatForever.create(cc.RotateBy.create(3, 360)));
+        this._tamara.runAction(cc.RotateBy.create(3, 360).repeatForever());
+        this._grossini.runAction(cc.RotateBy.create(3, -360).repeatForever());
+        this._kathia.runAction(cc.RotateBy.create(3, 360).repeatForever());
 
         this.schedule(this.pause, 3, false, 0);
         this.schedule(this.resume, 5, false, 0);
@@ -2465,7 +2460,7 @@ var Issue1288 = ActionsDemo.extend({
         var act1 = cc.MoveBy.create(0.5, cc.p(100, 0));
         var act2 = act1.reverse();
         var act3 = cc.Sequence.create(act1, act2);
-        var act4 = cc.Repeat.create(act3, 2);
+        var act4 = act3.repeat(2);
 
         spr.runAction(act4);
         //----end41----
@@ -2495,7 +2490,7 @@ var Issue1288_2 = ActionsDemo.extend({
         this.addChild(spr);
 
         var act1 = cc.MoveBy.create(0.5, cc.p(100, 0));
-        spr.runAction(cc.Repeat.create(act1, 1));
+        spr.runAction(act1.repeat(1));
         //----end42----
     },
     title:function () {

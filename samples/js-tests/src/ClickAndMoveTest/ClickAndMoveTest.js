@@ -73,7 +73,7 @@ var MainLayer = cc.Layer.extend({
 
         var fadeIn = cc.FadeIn.create(1);
         var fadeOut = cc.FadeOut.create(1);
-        var forever = cc.RepeatForever.create(cc.Sequence.create(fadeIn, fadeOut));
+        var forever = cc.Sequence.create(fadeIn, fadeOut).repeatForever();
         layer.runAction(forever);
     },
 

@@ -76,7 +76,7 @@ var SpriteProgressToRadial = SpriteDemo.extend({
         this.addChild(left);
         left.x = 200;
         left.y = winSize.height / 2;
-        left.runAction(cc.RepeatForever.create(to1));
+        left.runAction(to1.repeatForever());
 
         var right = cc.ProgressTimer.create(cc.Sprite.create(s_pathBlock));
         right.type = cc.ProgressTimer.TYPE_RADIAL;
@@ -84,7 +84,7 @@ var SpriteProgressToRadial = SpriteDemo.extend({
         this.addChild(right);
         right.x = winSize.width - 200;
         right.y = winSize.height / 2;
-        right.runAction(cc.RepeatForever.create(to2));
+        right.runAction(to2.repeatForever());
         //----end0----
     },
 
@@ -110,7 +110,7 @@ var SpriteProgressToHorizontal = SpriteDemo.extend({
         this.addChild(left);
         left.x = 200;
         left.y = winSize.height / 2;
-        left.runAction(cc.RepeatForever.create(to1));
+        left.runAction(to1.repeatForever());
 
         var right = cc.ProgressTimer.create(cc.Sprite.create(s_pathSister2));
         right.type = cc.ProgressTimer.TYPE_BAR;
@@ -121,7 +121,7 @@ var SpriteProgressToHorizontal = SpriteDemo.extend({
         this.addChild(right);
         right.x = winSize.width - 200;
         right.y = winSize.height / 2;
-        right.runAction(cc.RepeatForever.create(to2));
+        right.runAction(to2.repeatForever());
         //----end1----
     },
     title:function () {
@@ -146,7 +146,7 @@ var SpriteProgressToVertical = SpriteDemo.extend({
         this.addChild(left);
         left.x = 200;
         left.y = winSize.height / 2;
-        left.runAction(cc.RepeatForever.create(to1));
+        left.runAction(to1.repeatForever());
 
         var right = cc.ProgressTimer.create(cc.Sprite.create(s_pathSister2));
         right.type = cc.ProgressTimer.TYPE_BAR;
@@ -157,7 +157,7 @@ var SpriteProgressToVertical = SpriteDemo.extend({
         this.addChild(right);
         right.x = winSize.width - 200;
         right.y = winSize.height / 2;
-        right.runAction(cc.RepeatForever.create(to2));
+        right.runAction(to2.repeatForever());
         //----end2----
     },
     title:function () {
@@ -181,7 +181,7 @@ var SpriteProgressToRadialMidpointChanged = SpriteDemo.extend({
         left.midPoint = cc.p(0.25, 0.75);
         left.x = 200;
         left.y = winSize.height / 2;
-        left.runAction(cc.RepeatForever.create(action.clone()));
+        left.runAction(action.clone().repeatForever());
 
         /**
          *  Our image on the left should be a radial progress indicator, counter clockwise
@@ -196,7 +196,7 @@ var SpriteProgressToRadialMidpointChanged = SpriteDemo.extend({
         this.addChild(right);
         right.x = winSize.width - 200;
         right.y = winSize.height / 2;
-        right.runAction(cc.RepeatForever.create(action.clone()));
+        right.runAction(action.clone().repeatForever());
         //----end3----
     },
 
@@ -222,7 +222,7 @@ var SpriteProgressBarVarious = SpriteDemo.extend({
         this.addChild(left);
         left.x = 150;
         left.y = winSize.height / 2;
-        left.runAction(cc.RepeatForever.create(to.clone()));
+        left.runAction(to.clone().repeatForever());
 
         var middle = cc.ProgressTimer.create(cc.Sprite.create(s_pathSister2));
         middle.type = cc.ProgressTimer.TYPE_BAR;
@@ -233,7 +233,7 @@ var SpriteProgressBarVarious = SpriteDemo.extend({
         this.addChild(middle);
         middle.x = winSize.width / 2;
         middle.y = winSize.height / 2;
-        middle.runAction(cc.RepeatForever.create(to.clone()));
+        middle.runAction(to.clone().repeatForever());
 
         var right = cc.ProgressTimer.create(cc.Sprite.create(s_pathSister2));
         right.type = cc.ProgressTimer.TYPE_BAR;
@@ -244,7 +244,7 @@ var SpriteProgressBarVarious = SpriteDemo.extend({
         this.addChild(right);
         right.x = winSize.width - 150;
         right.y = winSize.height / 2;
-        right.runAction(cc.RepeatForever.create(to.clone()));
+        right.runAction(to.clone().repeatForever());
         //----end4----
     },
 
@@ -275,8 +275,8 @@ var SpriteProgressBarTintAndFade = SpriteDemo.extend({
         this.addChild(left);
         left.x = 150;
         left.y = winSize.height / 2;
-        left.runAction(cc.RepeatForever.create(to.clone()));
-        left.runAction(cc.RepeatForever.create(tint.clone()));
+        left.runAction(to.clone().repeatForever());
+        left.runAction(tint.clone().repeatForever());
 
         left.addChild(cc.LabelTTF.create("Tint", "Marker Felt", 20.0));
 
@@ -289,8 +289,8 @@ var SpriteProgressBarTintAndFade = SpriteDemo.extend({
         this.addChild(middle);
         middle.x = winSize.width / 2;
         middle.y = winSize.height / 2;
-        middle.runAction(cc.RepeatForever.create(to.clone()));
-        middle.runAction(cc.RepeatForever.create(fade.clone()));
+        middle.runAction(to.clone().repeatForever());
+        middle.runAction(fade.clone().repeatForever());
 
         middle.addChild(cc.LabelTTF.create("Fade", "Marker Felt", 20.0));
 
@@ -303,9 +303,9 @@ var SpriteProgressBarTintAndFade = SpriteDemo.extend({
         this.addChild(right);
         right.x = winSize.width - 150;
         right.y = winSize.height / 2;
-        right.runAction(cc.RepeatForever.create(to.clone()));
-        right.runAction(cc.RepeatForever.create(tint.clone()));
-        right.runAction(cc.RepeatForever.create(fade.clone()));
+        right.runAction(to.clone().repeatForever());
+        right.runAction(tint.clone().repeatForever());
+        right.runAction(fade.clone().repeatForever());
 
         right.addChild(cc.LabelTTF.create("Tint and Fade", "Marker Felt", 20.0));
         //----end5----
@@ -334,7 +334,7 @@ var SpriteProgressWithSpriteFrame = SpriteDemo.extend({
         this.addChild(left);
         left.x = 150;
         left.y = winSize.height / 2;
-        left.runAction(cc.RepeatForever.create(to.clone()));
+        left.runAction(to.clone().repeatForever());
 
         var middle = cc.ProgressTimer.create(cc.Sprite.create("#grossini_dance_02.png"));
         middle.type = cc.ProgressTimer.TYPE_BAR;
@@ -345,7 +345,7 @@ var SpriteProgressWithSpriteFrame = SpriteDemo.extend({
         this.addChild(middle);
         middle.x = winSize.width / 2;
         middle.y = winSize.height / 2;
-        middle.runAction(cc.RepeatForever.create(to.clone()));
+        middle.runAction(to.clone().repeatForever());
 
         var right = cc.ProgressTimer.create(cc.Sprite.create("#grossini_dance_03.png"));
         right.type = cc.ProgressTimer.TYPE_RADIAL;
@@ -356,7 +356,7 @@ var SpriteProgressWithSpriteFrame = SpriteDemo.extend({
         this.addChild(right);
         right.x = winSize.width - 150;
         right.y = winSize.height / 2;
-        right.runAction(cc.RepeatForever.create(to.clone()));
+        right.runAction(to.clone().repeatForever());
         //----end6----
     },
 

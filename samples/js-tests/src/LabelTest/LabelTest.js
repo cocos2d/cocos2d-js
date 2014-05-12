@@ -180,7 +180,7 @@ var LabelAtlasOpacityColorTest = AtlasDemo.extend({
         var fade_in = fade.reverse();
         var delay = cc.DelayTime.create(0.25);
         var seq = cc.Sequence.create(fade, delay, fade_in, delay.clone());
-        var repeat = cc.RepeatForever.create(seq);
+        var repeat = seq.repeatForever();
         label2.runAction(repeat);
 
         this.time = 0;
@@ -307,7 +307,7 @@ var BMFontOpacityColorAlignmentTest = AtlasDemo.extend({
         var fade = cc.FadeOut.create(1.0);
         var fade_in = fade.reverse();
         var seq = cc.Sequence.create(fade, cc.DelayTime.create(0.25), fade_in);
-        var repeat = cc.RepeatForever.create(seq);
+        var repeat = seq.repeatForever();
         label1.runAction(repeat);
 
         // VERY IMPORTANT
@@ -423,29 +423,29 @@ var BMFontSubSpriteTest = AtlasDemo.extend({
 
         if(autoTestEnabled) {
             var jump = cc.JumpBy.create(0.5, cc.p(0,0), 60, 1);
-            var jump_4ever = cc.RepeatForever.create(cc.Sequence.create(jump, cc.DelayTime.create(0.25)));
+            var jump_4ever = cc.Sequence.create(jump, cc.DelayTime.create(0.25)).repeatForever();
             var fade_out = cc.FadeOut.create(0.5);
             var rotate = cc.RotateBy.create(0.5, 180);
-            var rot_4ever = cc.RepeatForever.create(cc.Sequence.create(rotate, cc.DelayTime.create(0.25), rotate.clone()));
+            var rot_4ever = cc.Sequence.create(rotate, cc.DelayTime.create(0.25), rotate.clone()).repeatForever();
 
             var scale = cc.ScaleBy.create(0.5, 1.5);
         } else {
             var jump = cc.JumpBy.create(4, cc.p(0,0), 60, 1);
-            var jump_4ever = cc.RepeatForever.create(jump);
+            var jump_4ever = jump.repeatForever();
             var fade_out = cc.FadeOut.create(1);
             var rotate = cc.RotateBy.create(2, 360);
-            var rot_4ever = cc.RepeatForever.create(rotate);
+            var rot_4ever = rotate.repeatForever();
 
             var scale = cc.ScaleBy.create(2, 1.5);
         }
 
         var scale_back = scale.reverse();
         var scale_seq = cc.Sequence.create(scale, cc.DelayTime.create(0.25), scale_back);
-        var scale_4ever = cc.RepeatForever.create(scale_seq);
+        var scale_4ever = scale_seq.repeatForever();
 
         var fade_in = cc.FadeIn.create(1);
         var seq = cc.Sequence.create(fade_out, cc.DelayTime.create(0.25), fade_in);
-        var fade_4ever = cc.RepeatForever.create(seq);
+        var fade_4ever = seq.repeatForever();
 
         BChar.runAction(rot_4ever);
         BChar.runAction(scale_4ever);
@@ -1623,7 +1623,7 @@ var LabelTTFA8Test = AtlasDemo.extend({
         var fadeOut = cc.FadeOut.create(2);
         var fadeIn = cc.FadeIn.create(2);
         var seq = cc.Sequence.create(fadeOut, fadeIn);
-        var forever = cc.RepeatForever.create(seq);
+        var forever = seq.repeatForever();
         label1.runAction(forever);
         //----end22----
     },

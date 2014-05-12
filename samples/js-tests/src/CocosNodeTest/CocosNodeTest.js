@@ -94,9 +94,8 @@ var CCNodeTest2 = TestNodeDemo.extend({
         var a2 = cc.ScaleBy.create(2, 2);
         var delay = cc.DelayTime.create(0.2);
 
-        var action1 = cc.RepeatForever.create(cc.Sequence.create(a1, a2, delay, a2.reverse()));
-        var action2 = cc.RepeatForever.create(cc.Sequence.create(
-            a1.clone(), a2.clone(), delay.clone(), a2.reverse()));
+        var action1 = cc.Sequence.create(a1, a2, delay, a2.reverse()).repeatForever();
+        var action2 = cc.Sequence.create(a1.clone(), a2.clone(), delay.clone(), a2.reverse()).repeatForever();
 
         sp2.anchorX = 0;
         sp2.anchorY = 0;
@@ -192,7 +191,7 @@ var CCNodeTest5 = TestNodeDemo.extend({
 
         var rot = cc.RotateBy.create(2, 360);
         var rot_back = rot.reverse();
-        var forever = cc.RepeatForever.create(cc.Sequence.create(rot, rot_back));
+        var forever = cc.Sequence.create(rot, rot_back).repeatForever();
         var forever2 = forever.clone();
         forever.tag = 101;
         forever2.tag = 102;
@@ -271,7 +270,7 @@ var CCNodeTest6 = TestNodeDemo.extend({
 
         var rot = cc.RotateBy.create(2, 360);
         var rot_back = rot.reverse();
-        var forever1 = cc.RepeatForever.create(cc.Sequence.create(rot, rot_back));
+        var forever1 = cc.Sequence.create(rot, rot_back).repeatForever();
         var forever11 = forever1.clone();
 
         var forever2 = forever1.clone();
@@ -409,7 +408,7 @@ var StressTest2 = TestNodeDemo.extend({
         var move_ease_inout3 = cc.EaseInOut.create(move.clone(), 2.0);
         var move_ease_inout_back3 = move_ease_inout3.reverse();
         var seq3 = cc.Sequence.create(move_ease_inout3, move_ease_inout_back3);
-        sp1.runAction(cc.RepeatForever.create(seq3));
+        sp1.runAction(seq3.repeatForever());
         sublayer.addChild(sp1, 1);
 
         var fire = cc.ParticleFire.create();
@@ -419,7 +418,7 @@ var StressTest2 = TestNodeDemo.extend({
 
         var copy_seq3 = seq3.clone();
 
-        fire.runAction(cc.RepeatForever.create(copy_seq3));
+        fire.runAction(copy_seq3.repeatForever());
         sublayer.addChild(fire, 2);
 
         this.schedule(this.shouldNotLeak, 6.0);
@@ -460,13 +459,13 @@ var NodeToWorld = TestNodeDemo.extend({
 
         var rot = cc.RotateBy.create(3, 360);
         var delay = cc.DelayTime.create(0.3);
-        var fe = cc.RepeatForever.create(cc.Sequence.create(rot, delay));
+        var fe = cc.Sequence.create(rot, delay).repeatForever();
         item.runAction(fe);
 
         var move = cc.MoveBy.create(3, cc.p(200, 0));
         var move_back = move.reverse();
         var seq = cc.Sequence.create(move, delay.clone(), move_back);
-        var fe2 = cc.RepeatForever.create(seq);
+        var fe2 = seq.repeatForever();
         back.runAction(fe2);
 
         //Automation parameters
@@ -518,7 +517,7 @@ var CameraOrbitTest = TestNodeDemo.extend({
         sprite.x = sw / 4;
         sprite.y = sh / 2;
         var orbit = cc.OrbitCamera.create(2, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // CENTER
         sprite = cc.Sprite.create(s_pathGrossini);
@@ -527,7 +526,7 @@ var CameraOrbitTest = TestNodeDemo.extend({
         sprite.x = sw / 4 * 2;
         sprite.y = sh / 2;
         orbit = cc.OrbitCamera.create(2, 1, 0, 0, 360, 45, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // RIGHT
         sprite = cc.Sprite.create(s_pathGrossini);
@@ -536,11 +535,11 @@ var CameraOrbitTest = TestNodeDemo.extend({
         sprite.x = sw / 4 * 3;
         sprite.y = sh / 2;
         orbit = cc.OrbitCamera.create(2, 1, 0, 0, 360, 90, -45);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // PARENT
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 90);
-        p.runAction(cc.RepeatForever.create(orbit));
+        p.runAction(orbit.repeatForever());
 
         this.scale = 1;
         //----end11----
@@ -666,7 +665,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         sprite.color = cc.color.RED;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         var orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // LEFT-BOTTOM
         sprite = cc.Sprite.create(s_texture512);
@@ -676,7 +675,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         sprite.color = cc.color.BLUE;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // RIGHT-TOP
         sprite = cc.Sprite.create(s_texture512);
@@ -686,7 +685,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         sprite.color = cc.color.YELLOW;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // RIGHT-BOTTOM
         sprite = cc.Sprite.create(s_texture512);
@@ -696,7 +695,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         sprite.color = cc.color.GREEN;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // CENTER
         sprite = cc.Sprite.create(s_texture512);
@@ -706,7 +705,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         sprite.color = cc.color.WHITE;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
         //----end10----
     },
 
@@ -780,7 +779,7 @@ var ConvertToNode = TestNodeDemo.extend({
             }, this);
 
         var rotate = cc.RotateBy.create(10, 360);
-        var action = cc.RepeatForever.create(rotate);
+        var action = rotate.repeatForever();
         for (var i = 0; i < 3; i++) {
             var sprite = cc.Sprite.create(s_pathGrossini);
             sprite.x = winSize.width / 4 * (i + 1);

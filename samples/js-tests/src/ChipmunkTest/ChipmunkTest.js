@@ -592,7 +592,7 @@ var ChipmunkSpriteAnchorPoint = function() {
 		var scaledown = cc.ScaleBy.create(0.5, 0.5);
 		var scaleup = scaledown.reverse();
 		var seq = cc.Sequence.create( scaledown, scaleup);
-		var repeat = cc.RepeatForever.create( seq );
+		var repeat = seq.repeatForever();
 
 		sprite1.runAction( repeat );
 		sprite2.runAction( repeat.clone() );
