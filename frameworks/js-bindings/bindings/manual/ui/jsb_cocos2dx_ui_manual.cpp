@@ -52,9 +52,8 @@ JSStudioEventListenerWrapper::~JSStudioEventListenerWrapper()
 {
     if (m_bNeedUnroot)
     {
-        JSObject *thisObj = JSVAL_TO_OBJECT(_jsThisObj);
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_RemoveObjectRoot(cx, &thisObj);
+        JS_RemoveValueRoot(cx, &_jsThisObj);
     }
 }
 
@@ -67,8 +66,8 @@ void JSStudioEventListenerWrapper::setJSCallbackThis(jsval jsThisObj)
     if (!p)
     {
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_AddObjectRoot(cx, &thisObj);
         m_bNeedUnroot = true;
+        m_bNeedUnroot &= JS_AddValueRoot(cx, &jsThisObj);
     }
 }
 
