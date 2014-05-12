@@ -1,7 +1,7 @@
 /****************************************************************************
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2011      Zynga Inc.
 
  http://www.cocos2d-x.org
 
@@ -69,9 +69,16 @@ var CurrentLanguageTest = cc.Layer.extend({
 
 var CurrentLanguageTestScene = TestScene.extend({
     runThisTest:function () {
+
+        window.sidebar && window.sidebar.changeTest(0, 8);
+
         var layer = new CurrentLanguageTest();
         this.addChild(layer);
 
         cc.director.runScene(this);
     }
 });
+
+var arrayOfCurrentLanguageTest = [
+    'current language'
+];

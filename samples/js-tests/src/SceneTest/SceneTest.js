@@ -1,7 +1,7 @@
 /****************************************************************************
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2011      Zynga Inc.
 
  http://www.cocos2d-x.org
 
@@ -33,6 +33,7 @@ var MID_GOBACK = 105;
 
 var SceneTestLayer1 = cc.Layer.extend({
     ctor:function () {
+        //----start0----Scene1-ctor
         this._super();
         this.init();
 
@@ -54,6 +55,8 @@ var SceneTestLayer1 = cc.Layer.extend({
         var rotate = cc.RotateBy.create(2, 360);
         var repeat = cc.RepeatForever.create(rotate);
         sprite.runAction(repeat);
+        //----end0----
+
         //cc.schedule(this.testDealloc);
     },
 
@@ -97,6 +100,7 @@ var SceneTestLayer2 = cc.Layer.extend({
     timeCounter:0,
 
     ctor:function () {
+        //----start0----Scene2-ctor
         this._super();
         this.init();
 
@@ -120,6 +124,7 @@ var SceneTestLayer2 = cc.Layer.extend({
         var rotate = cc.RotateBy.create(2, 360);
         var repeat = cc.RepeatForever.create(rotate);
         sprite.runAction(repeat);
+        //----end0----
 
         //cc.schedule(this.testDealloc);
     },
@@ -153,6 +158,8 @@ var SceneTestLayer2 = cc.Layer.extend({
 var SceneTestLayer3 = cc.LayerColor.extend({
     
     ctor:function () {
+
+        //----start0----Scene3-ctor
         this._super();
         this.init( cc.color(0,128,255,255) );
 
@@ -171,6 +178,7 @@ var SceneTestLayer3 = cc.LayerColor.extend({
         var rotate = cc.RotateBy.create(2, 360);
         var repeat = cc.RepeatForever.create(rotate);
         sprite.runAction(repeat);
+        //----end0----
     },
     
     onEnterTransitionDidFinish: function () {
@@ -207,3 +215,7 @@ SceneTestScene = TestScene.extend({
 
     }
 });
+
+var arrayOfSceneTest = [
+    'Scene Layer'
+];

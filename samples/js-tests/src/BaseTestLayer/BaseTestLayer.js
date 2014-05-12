@@ -1,7 +1,8 @@
 /****************************************************************************
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-html5.org
+ http://www.cocos2d-iphone.org
+ http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -111,6 +112,7 @@ var BaseTestLayer = cc.LayerGradient.extend({
 
         var st = this.getSubtitle();
         if (st) {
+            console.log(1);
             var l = cc.LabelTTF.create(st.toString(), "Thonburi", 16);
             this.addChild(l, 101, BASE_TEST_SUBTITLE_TAG);
             l.x = winSize.width / 2;

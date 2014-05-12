@@ -1,7 +1,7 @@
 /****************************************************************************
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2011      Zynga Inc.
 
  http://www.cocos2d-x.org
 
@@ -36,6 +36,9 @@ var ClickAndMoveTestScene = TestScene.extend({
 
 var MainLayer = cc.Layer.extend({
     ctor:function () {
+
+        window.sidebar && window.sidebar.changeTest(0, 4);
+
         this._super();
 
         this.init();
@@ -92,3 +95,5 @@ var MainLayer = cc.Layer.extend({
         sprite.runAction(cc.RotateTo.create(1, at));
     }
 });
+
+var arrayOfClickMoveTest = ['Click on the screen'];

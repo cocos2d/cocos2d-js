@@ -1,7 +1,6 @@
 /****************************************************************************
+ Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
  Copyright (c) 2012 Pierre-David Bélanger
 
  http://www.cocos2d-x.org
@@ -723,6 +722,9 @@ if ( cc.sys.isNative){
 var nextClippingNodeTest = function () {
     clippingNodeTestSceneIdx++;
     clippingNodeTestSceneIdx = clippingNodeTestSceneIdx % arrayOfClippingNodeTest.length;
+
+    window.sidebar && window.sidebar.changeTest(clippingNodeTestSceneIdx, 5);
+
     return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 };
 
@@ -730,6 +732,9 @@ var previousClippingNodeTest = function () {
     clippingNodeTestSceneIdx--;
     if (clippingNodeTestSceneIdx < 0)
         clippingNodeTestSceneIdx += arrayOfClippingNodeTest.length;
+
+    window.sidebar && window.sidebar.changeTest(clippingNodeTestSceneIdx, 5);
+
     return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 };
 
@@ -738,8 +743,8 @@ var restartClippingNodeTest = function () {
 };
 
 var ClippingNodeTestScene = TestScene.extend({
-    runThisTest:function () {
-        clippingNodeTestSceneIdx = -1;
+    runThisTest:function (num) {
+        clippingNodeTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         cc.director.runScene(this);
 	    var layer = nextClippingNodeTest();
 	    this.addChild(layer);

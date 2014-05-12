@@ -1,7 +1,7 @@
 /****************************************************************************
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2011      Zynga Inc.
 
  http://www.cocos2d-x.org
 
@@ -65,6 +65,7 @@ var SpriteDemo = BaseTestLayer.extend({
 
 var SpriteProgressToRadial = SpriteDemo.extend({
     onEnter:function () {
+        //----start0----onEnter
         this._super();
 
         var to1 = cc.ProgressTo.create(2, 100);
@@ -84,6 +85,7 @@ var SpriteProgressToRadial = SpriteDemo.extend({
         right.x = winSize.width - 200;
         right.y = winSize.height / 2;
         right.runAction(cc.RepeatForever.create(to2));
+        //----end0----
     },
 
     title:function () {
@@ -93,6 +95,7 @@ var SpriteProgressToRadial = SpriteDemo.extend({
 
 var SpriteProgressToHorizontal = SpriteDemo.extend({
     onEnter:function () {
+        //----start1----onEnter
         this._super();
 
         var to1 = cc.ProgressTo.create(2, 100);
@@ -119,6 +122,7 @@ var SpriteProgressToHorizontal = SpriteDemo.extend({
         right.x = winSize.width - 200;
         right.y = winSize.height / 2;
         right.runAction(cc.RepeatForever.create(to2));
+        //----end1----
     },
     title:function () {
         return "ProgressTo Horizontal";
@@ -127,6 +131,7 @@ var SpriteProgressToHorizontal = SpriteDemo.extend({
 
 var SpriteProgressToVertical = SpriteDemo.extend({
     onEnter:function () {
+        //----start2----onEnter
         this._super();
 
         var to1 = cc.ProgressTo.create(2, 100);
@@ -153,6 +158,7 @@ var SpriteProgressToVertical = SpriteDemo.extend({
         right.x = winSize.width - 200;
         right.y = winSize.height / 2;
         right.runAction(cc.RepeatForever.create(to2));
+        //----end2----
     },
     title:function () {
         return "ProgressTo Vertical";
@@ -161,6 +167,7 @@ var SpriteProgressToVertical = SpriteDemo.extend({
 
 var SpriteProgressToRadialMidpointChanged = SpriteDemo.extend({
     onEnter:function () {
+        //----start3----onEnter
         this._super();
 
         var action = cc.ProgressTo.create(2, 100);
@@ -190,6 +197,7 @@ var SpriteProgressToRadialMidpointChanged = SpriteDemo.extend({
         right.x = winSize.width - 200;
         right.y = winSize.height / 2;
         right.runAction(cc.RepeatForever.create(action.clone()));
+        //----end3----
     },
 
     title:function () {
@@ -199,6 +207,7 @@ var SpriteProgressToRadialMidpointChanged = SpriteDemo.extend({
 
 var SpriteProgressBarVarious = SpriteDemo.extend({
     onEnter:function () {
+        //----start4----onEnter
         this._super();
 
         var to = cc.ProgressTo.create(2, 100);
@@ -236,6 +245,7 @@ var SpriteProgressBarVarious = SpriteDemo.extend({
         right.x = winSize.width - 150;
         right.y = winSize.height / 2;
         right.runAction(cc.RepeatForever.create(to.clone()));
+        //----end4----
     },
 
     title:function () {
@@ -245,6 +255,7 @@ var SpriteProgressBarVarious = SpriteDemo.extend({
 
 var SpriteProgressBarTintAndFade = SpriteDemo.extend({
     onEnter:function () {
+        //----start5----onEnter
         this._super();
 
         var to = cc.ProgressTo.create(6, 100);
@@ -297,6 +308,7 @@ var SpriteProgressBarTintAndFade = SpriteDemo.extend({
         right.runAction(cc.RepeatForever.create(fade.clone()));
 
         right.addChild(cc.LabelTTF.create("Tint and Fade", "Marker Felt", 20.0));
+        //----end5----
     },
 
     title:function () {
@@ -306,6 +318,7 @@ var SpriteProgressBarTintAndFade = SpriteDemo.extend({
 
 var SpriteProgressWithSpriteFrame = SpriteDemo.extend({
     onEnter:function () {
+        //----start6----onEnter
         this._super();
 
         var to = cc.ProgressTo.create(6, 100);
@@ -344,6 +357,7 @@ var SpriteProgressWithSpriteFrame = SpriteDemo.extend({
         right.x = winSize.width - 150;
         right.y = winSize.height / 2;
         right.runAction(cc.RepeatForever.create(to.clone()));
+        //----end6----
     },
 
     title:function () {
@@ -353,8 +367,8 @@ var SpriteProgressWithSpriteFrame = SpriteDemo.extend({
 
 var ProgressActionsTestScene = TestScene.extend({
 
-    runThisTest:function () {
-        ProgressTestSceneIdx = -1;
+    runThisTest:function (num) {
+        ProgressTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextProgressTest());
         director.runScene(this);
     }
@@ -375,12 +389,16 @@ var nextProgressTest = function () {
     ProgressTestSceneIdx++;
     ProgressTestSceneIdx = ProgressTestSceneIdx % arrayOfProgressTest.length;
 
+    window.sidebar && window.sidebar.changeTest(ProgressTestSceneIdx, 30);
+
     return new arrayOfProgressTest[ProgressTestSceneIdx]();
 };
 var previousProgressTest = function () {
     ProgressTestSceneIdx--;
     if (ProgressTestSceneIdx < 0)
         ProgressTestSceneIdx += arrayOfProgressTest.length;
+
+    window.sidebar && window.sidebar.changeTest(ProgressTestSceneIdx, 30);
 
     return new arrayOfProgressTest[ProgressTestSceneIdx]();
 };

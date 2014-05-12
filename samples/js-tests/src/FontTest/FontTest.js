@@ -1,7 +1,7 @@
 /****************************************************************************
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2011      Zynga Inc.
 
  http://www.cocos2d-x.org
 
@@ -59,6 +59,9 @@ var fontList = [
 function nextFontTestAction() {
     fontIdx++;
     fontIdx = fontIdx % fontList.length;
+
+    window.sidebar && window.sidebar.changeTest(fontIdx, 16);
+
     return fontList[fontIdx];
 }
 
@@ -68,6 +71,8 @@ function backFontTestAction() {
         fontIdx += fontList.length;
     }
 
+    window.sidebar && window.sidebar.changeTest(fontIdx, 16);
+
     return fontList[fontIdx];
 }
 
@@ -76,7 +81,10 @@ function restartFontTestAction() {
 }
 FontTestScene = TestScene.extend({
 
-    runThisTest:function () {
+    runThisTest:function (num) {
+
+        fontIdx = num || fontIdx;
+
         var layer = FontTest.create();
         this.addChild(layer);
 

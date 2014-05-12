@@ -1,7 +1,7 @@
 /****************************************************************************
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2011      Zynga Inc.
 
  http://www.cocos2d-x.org
 
@@ -39,6 +39,7 @@ var MenuLayerMainMenu = cc.Layer.extend({
     _touchListener: null,
 
     ctor:function () {
+        //----start0----ctor
         this._super();
 
         // Font Item
@@ -115,6 +116,7 @@ var MenuLayerMainMenu = cc.Layer.extend({
         this.addChild(menu);
         menu.x = winSize.width/2;
         menu.y = winSize.height/2;
+        //----end0----
     },
 
     onMenuCallback:function (sender) {
@@ -525,3 +527,5 @@ var MenuTestScene = TestScene.extend({
         director.runScene(this);
     }
 });
+
+var arrayOfMenuTest = ["Menu scene test"];

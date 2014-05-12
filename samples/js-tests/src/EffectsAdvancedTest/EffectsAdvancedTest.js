@@ -1,7 +1,7 @@
 /****************************************************************************
+ Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2011      Zynga Inc.
 
  http://www.cocos2d-x.org
 
@@ -376,6 +376,9 @@ if (!cc.sys.isNative)
 var nextEffectAdvanceAction = function () {
     sceneIndex++;
     sceneIndex = sceneIndex % arrayOfEffectsAdvancedTest.length;
+
+    window.sidebar && window.sidebar.changeTest(sceneIndex, 15);
+
     return new arrayOfEffectsAdvancedTest[sceneIndex]();
 };
 
@@ -383,6 +386,9 @@ var backEffectAdvanceAction = function () {
     sceneIndex--;
     if (sceneIndex < 0)
         sceneIndex += arrayOfEffectsAdvancedTest.length;
+
+    window.sidebar && window.sidebar.changeTest(sceneIndex, 15);
+
     return new arrayOfEffectsAdvancedTest[sceneIndex]();
 };
 

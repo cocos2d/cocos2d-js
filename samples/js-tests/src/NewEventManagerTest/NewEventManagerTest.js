@@ -1,7 +1,5 @@
 /****************************************************************************
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2010-2014 cocos2d-x.org
 
  http://www.cocos2d-x.org
 
@@ -68,6 +66,7 @@ var EventDispatcherTestDemo = BaseTestLayer.extend({
 
 var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
     onEnter:function(){
+        //----start0----onEnter
         this._super();
 
         var origin = director.getVisibleOrigin();
@@ -155,6 +154,7 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
         menu.setPosition(0, 0);
         menu.setAnchorPoint(0, 0);
         this.addChild(menu);
+        //----end0----
     },
 
     title:function(){
@@ -243,6 +243,7 @@ TouchableSprite.create = function(priority){
 
 var FixedPriorityTest =  EventDispatcherTestDemo.extend({
     onEnter:function(){
+        //----start1----onEnter
         this._super();
 
         var origin = director.getVisibleOrigin();
@@ -265,6 +266,7 @@ var FixedPriorityTest =  EventDispatcherTestDemo.extend({
         sprite3.x = 0;
         sprite3.y = 0;
         sprite2.addChild(sprite3, 1);
+        //----end1----
     },
 
     title:function(){
@@ -284,6 +286,7 @@ FixedPriorityTest.create = function(){
 
 var RemoveListenerWhenDispatching =  EventDispatcherTestDemo.extend({
     onEnter:function(){
+        //----start2----onEnter
         this._super();
 
         var origin = director.getVisibleOrigin();
@@ -341,6 +344,7 @@ var RemoveListenerWhenDispatching =  EventDispatcherTestDemo.extend({
         menu.setPosition(0, 0);
         menu.setAnchorPoint(0, 0);
         this.addChild(menu, 1);
+        //----end2----
     },
 
     title:function(){
@@ -365,6 +369,7 @@ var CustomEventTest =  EventDispatcherTestDemo.extend({
     _item2Count: 0,
 
     onEnter:function(){
+        //----start3----onEnter
         this._super();
 
         var origin = director.getVisibleOrigin(), size = director.getVisibleSize(), selfPointer = this;
@@ -417,12 +422,15 @@ var CustomEventTest =  EventDispatcherTestDemo.extend({
         menu.setPosition(0, 0);
         menu.setAnchorPoint(0, 0);
         this.addChild(menu, 1);
+        //----end3----
     },
 
     onExit:function(){
+        //----start3----onExit
         cc.eventManager.removeListener(this._listener1);
         cc.eventManager.removeListener(this._listener2);
         this._super();
+        //----end3----
     },
 
     title:function(){
@@ -442,6 +450,7 @@ CustomEventTest.create = function(){
 
 var LabelKeyboardEventTest =  EventDispatcherTestDemo.extend({
     onEnter:function(){
+        //----start4----onEnter
         this._super();
 
         var origin = director.getVisibleOrigin();
@@ -462,6 +471,7 @@ var LabelKeyboardEventTest =  EventDispatcherTestDemo.extend({
                 label.setString("Key " + String.fromCharCode(keyCode) + "(" + keyCode.toString()  + ") was released!");
             }
         }, statusLabel);
+        //----end4----
     },
 
     title:function(){
@@ -481,6 +491,7 @@ LabelKeyboardEventTest.create = function(){
 
 var SpriteAccelerationEventTest =  EventDispatcherTestDemo.extend({
     onEnter:function(){
+        //----start5----onEnter
         this._super();
 
         var origin = director.getVisibleOrigin();
@@ -507,11 +518,14 @@ var SpriteAccelerationEventTest =  EventDispatcherTestDemo.extend({
                     (cc.visibleRect.bottom.y + ballSize.height / 2.0), (cc.visibleRect.top.y - ballSize.height / 2.0));
             }
         }, sprite);
+        //----end5----
     },
 
     onExit:function(){
+        //----start5----onEnter
         cc.inputManager.setAccelerometerEnabled(false);
         this._super();
+        //----end----
     },
 
     title:function(){
@@ -543,6 +557,7 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
     _spriteSaved:false,
 
     onEnter:function(){
+        //----start6----onEnter
         this._super();
 
         var origin = director.getVisibleOrigin();
@@ -599,12 +614,15 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
                 this._sprite.release();
             }, this)
         ));
+        //----end6----
     },
 
     onExit:function(){
+        //----start6----onExit
         this._super();
         if (this._spriteSaved)
             this._sprite.release();
+        //----end6----
     },
 
     title:function(){
@@ -624,6 +642,7 @@ RemoveAndRetainNodeTest.create = function(){
 
 var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
     onEnter:function(){
+        //----start7----onEnter
         this._super();
         var selfPointer = this;
         var item1 = cc.MenuItemFont.create("Click Me 1", function(sender){
@@ -684,6 +703,7 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
         menu.setPosition(cc.visibleRect.bottomLeft);
         menu.setAnchorPoint(0, 0);
         this.addChild(menu);
+        //----end7----
     },
 
     title:function(){
@@ -717,6 +737,7 @@ var DirectorEventTest =  EventDispatcherTestDemo.extend({
     _time:0,
 
     onEnter:function(){
+        //----start8----onEnter
         this._super();
         var s = director.getWinSize(), selfPointer = this;
 
@@ -756,6 +777,7 @@ var DirectorEventTest =  EventDispatcherTestDemo.extend({
     },
 
     onExit:function(){
+        //----start8----onExit
         this._super();
 
         var eventManager = cc.eventManager;
@@ -768,22 +790,29 @@ var DirectorEventTest =  EventDispatcherTestDemo.extend({
         this._event2.release();
         this._event3.release();
         this._event4.release();
+        //----end8----
     },
 
     update:function(dt){
+        //----start8----update
         this._time += dt;
         if(this._time > 0.5) {
             cc.director.setProjection(cc.Director.PROJECTION_2D);
             this._time = 0;
         }
+        //----end8----
     },
 
     onEvent1:function(event){
+        //----start8----onExit
         this._label1.setString("Update: " + this._count1++);
+        //----end8----
     },
 
     onEvent2:function(event){
+        //----start8----onExit
         this._label2.setString("Visit: " + this._count2++);
+        //----end8----
     },
 
     title:function(){
@@ -882,6 +911,7 @@ GlobalZTouchTest.create = function(){
 
 var StopPropagationTest = EventDispatcherTestDemo.extend({
     ctor:function(){
+        //----start9----ctor
         this._super();
 
         var touchOneByOneListener = cc.EventListener.create({
@@ -986,16 +1016,21 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
             sprite2.x = cc.visibleRect.left.x + visibleSize.width / (SPRITE_COUNT - 1) * i;
             sprite2.y = cc.visibleRect.center.y - sprite2.getContentSize().height / 2 - 10;
         }
+        //----end9----
     },
 
     _isPointInNode: function (pt, node) {
+        //----start9----_isPointInNode
         var s = node.getContentSize();
         return cc.rectContainsPoint(cc.rect(0, 0, s.width, s.height), node.convertToNodeSpace(pt));
+        //----end9----
     },
 
     _isPointInTopHalfAreaOfScreen: function(pt){
+        //----start9----_isPointInTopHalfAreaOfScreen
         var winSize = cc.director.getWinSize();
         return (pt.y >= winSize.height/2);
+        //----end9----
     },
 
     title: function(){
@@ -1017,6 +1052,7 @@ StopPropagationTest.create = function(){
 
 var Issue4160 = EventDispatcherTestDemo.extend({
     ctor: function(){
+        //----start10----ctor
         this._super();
         var origin = cc.director.getVisibleOrigin();
         var size = cc.director.getVisibleSize();
@@ -1039,6 +1075,7 @@ var Issue4160 = EventDispatcherTestDemo.extend({
         sprite3.x = 0;
         sprite3.y = 0;
         sprite2.addChild(sprite3, 21);
+        //----end10----
     },
 
     title: function(){
@@ -1058,6 +1095,7 @@ Issue4160.create = function(){
 
 var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
     ctor: function () {
+        //----start11----ctor
         this._super();
 
         var origin = cc.director.getVisibleOrigin();
@@ -1127,6 +1165,7 @@ var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
         menu.setPosition(0, 0);
 
         this.addChild(menu);
+        //----end11----
     },
 
     title: function(){
@@ -1145,8 +1184,8 @@ PauseResumeTargetTest.create = function(){
 };
 
 var EventDispatcherTestScene = TestScene.extend({
-    runThisTest:function () {
-        eventDispatcherSceneIdx = -1;
+    runThisTest:function (num) {
+        eventDispatcherSceneIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextDispatcherTest());
         director.runScene(this);
     }
@@ -1171,12 +1210,18 @@ var arrayOfEventDispatcherTest = [
 var nextDispatcherTest = function () {
     eventDispatcherSceneIdx++;
     eventDispatcherSceneIdx = eventDispatcherSceneIdx % arrayOfEventDispatcherTest.length;
+
+    window.sidebar && window.sidebar.changeTest(eventDispatcherSceneIdx, 11);
+
     return new arrayOfEventDispatcherTest[eventDispatcherSceneIdx]();
 };
 var previousDispatcherTest = function () {
     eventDispatcherSceneIdx--;
     if (eventDispatcherSceneIdx < 0)
         eventDispatcherSceneIdx += arrayOfEventDispatcherTest.length;
+
+    window.sidebar && window.sidebar.changeTest(eventDispatcherSceneIdx, 11);
+
     return new arrayOfEventDispatcherTest[eventDispatcherSceneIdx]();
 };
 var restartDispatcherTest = function () {
