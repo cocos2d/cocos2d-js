@@ -268,8 +268,7 @@ bool js_cocos2dx_extension_Scale9Sprite_initWithBatchNode(JSContext *cx, uint32_
 			ok &= jsval_to_ccrect(cx, argv[1], &arg1);
 			if (!ok) { ok = true; break; }
 			bool arg2;
-			ok &= JS_ValueToBoolean(cx, argv[2], &arg2);
-			if (!ok) { ok = true; break; }
+			arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
 			cocos2d::Rect arg3;
 			ok &= jsval_to_ccrect(cx, argv[3], &arg3);
 			if (!ok) { ok = true; break; }
@@ -340,7 +339,7 @@ bool js_cocos2dx_extension_Scale9Sprite_updateWithBatchNode(JSContext *cx, uint3
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
 		ok &= jsval_to_ccrect(cx, argv[1], &arg1);
-		ok &= JS_ValueToBoolean(cx, argv[2], &arg2);
+		arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
 		ok &= jsval_to_ccrect(cx, argv[3], &arg3);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_Scale9Sprite_updateWithBatchNode : Error processing arguments");
 		bool ret = cobj->updateWithBatchNode(arg0, arg1, arg2, arg3);
@@ -987,7 +986,7 @@ bool js_cocos2dx_extension_Control_setEnabled(JSContext *cx, uint32_t argc, jsva
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_Control_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_Control_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1044,7 +1043,7 @@ bool js_cocos2dx_extension_Control_setSelected(JSContext *cx, uint32_t argc, jsv
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_Control_setSelected : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_Control_setSelected : Error processing arguments");
 		cobj->setSelected(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1159,7 +1158,7 @@ bool js_cocos2dx_extension_Control_setHighlighted(JSContext *cx, uint32_t argc, 
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_Control_setHighlighted : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_Control_setHighlighted : Error processing arguments");
 		cobj->setHighlighted(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1188,9 +1187,9 @@ bool js_cocos2dx_extension_Control_getTouchLocation(JSContext *cx, uint32_t argc
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_Control_getTouchLocation : Error processing arguments");
-		cocos2d::Point ret = cobj->getTouchLocation(arg0);
+		cocos2d::Vector2 ret = cobj->getTouchLocation(arg0);
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -1365,7 +1364,7 @@ bool js_cocos2dx_extension_ControlButton_setSelected(JSContext *cx, uint32_t arg
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlButton_setSelected : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlButton_setSelected : Error processing arguments");
 		cobj->setSelected(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1414,7 +1413,7 @@ bool js_cocos2dx_extension_ControlButton_setAdjustBackgroundImage(JSContext *cx,
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlButton_setAdjustBackgroundImage : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlButton_setAdjustBackgroundImage : Error processing arguments");
 		cobj->setAdjustBackgroundImage(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1434,7 +1433,7 @@ bool js_cocos2dx_extension_ControlButton_setHighlighted(JSContext *cx, uint32_t 
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlButton_setHighlighted : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlButton_setHighlighted : Error processing arguments");
 		cobj->setHighlighted(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1454,7 +1453,7 @@ bool js_cocos2dx_extension_ControlButton_setZoomOnTouchDown(JSContext *cx, uint3
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlButton_setZoomOnTouchDown : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlButton_setZoomOnTouchDown : Error processing arguments");
 		cobj->setZoomOnTouchDown(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1495,8 +1494,8 @@ bool js_cocos2dx_extension_ControlButton_setLabelAnchorPoint(JSContext *cx, uint
 	cocos2d::extension::ControlButton* cobj = (cocos2d::extension::ControlButton *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlButton_setLabelAnchorPoint : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::Point arg0;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+		cocos2d::Vector2 arg0;
+		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlButton_setLabelAnchorPoint : Error processing arguments");
 		cobj->setLabelAnchorPoint(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1513,9 +1512,9 @@ bool js_cocos2dx_extension_ControlButton_getLabelAnchorPoint(JSContext *cx, uint
 	cocos2d::extension::ControlButton* cobj = (cocos2d::extension::ControlButton *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlButton_getLabelAnchorPoint : Invalid Native Object");
 	if (argc == 0) {
-		const cocos2d::Point& ret = cobj->getLabelAnchorPoint();
+		const cocos2d::Vector2& ret = cobj->getLabelAnchorPoint();
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -1692,7 +1691,7 @@ bool js_cocos2dx_extension_ControlButton_setEnabled(JSContext *cx, uint32_t argc
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlButton_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlButton_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2539,7 +2538,7 @@ bool js_cocos2dx_extension_ControlHuePicker_setEnabled(JSContext *cx, uint32_t a
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlHuePicker_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlHuePicker_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2559,7 +2558,7 @@ bool js_cocos2dx_extension_ControlHuePicker_initWithTargetAndPos(JSContext *cx, 
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlHuePicker_initWithTargetAndPos : Invalid Native Object");
 	if (argc == 2) {
 		cocos2d::Node* arg0;
-		cocos2d::Point arg1;
+		cocos2d::Vector2 arg1;
 		do {
 			if (!argv[0].isObject()) { ok = false; break; }
 			js_proxy_t *jsProxy;
@@ -2568,7 +2567,7 @@ bool js_cocos2dx_extension_ControlHuePicker_initWithTargetAndPos(JSContext *cx, 
 			arg0 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
-		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
+		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlHuePicker_initWithTargetAndPos : Error processing arguments");
 		bool ret = cobj->initWithTargetAndPos(arg0, arg1);
 		jsval jsret = JSVAL_NULL;
@@ -2607,9 +2606,9 @@ bool js_cocos2dx_extension_ControlHuePicker_getStartPos(JSContext *cx, uint32_t 
 	cocos2d::extension::ControlHuePicker* cobj = (cocos2d::extension::ControlHuePicker *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlHuePicker_getStartPos : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Point ret = cobj->getStartPos();
+		cocos2d::Vector2 ret = cobj->getStartPos();
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -2779,7 +2778,7 @@ bool js_cocos2dx_extension_ControlHuePicker_create(JSContext *cx, uint32_t argc,
 	bool ok = true;
 	if (argc == 2) {
 		cocos2d::Node* arg0;
-		cocos2d::Point arg1;
+		cocos2d::Vector2 arg1;
 		do {
 			if (!argv[0].isObject()) { ok = false; break; }
 			js_proxy_t *jsProxy;
@@ -2788,7 +2787,7 @@ bool js_cocos2dx_extension_ControlHuePicker_create(JSContext *cx, uint32_t argc,
 			arg0 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
-		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
+		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlHuePicker_create : Error processing arguments");
 		cocos2d::extension::ControlHuePicker* ret = cocos2d::extension::ControlHuePicker::create(arg0, arg1);
 		jsval jsret = JSVAL_NULL;
@@ -2943,7 +2942,7 @@ bool js_cocos2dx_extension_ControlSaturationBrightnessPicker_initWithTargetAndPo
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlSaturationBrightnessPicker_initWithTargetAndPos : Invalid Native Object");
 	if (argc == 2) {
 		cocos2d::Node* arg0;
-		cocos2d::Point arg1;
+		cocos2d::Vector2 arg1;
 		do {
 			if (!argv[0].isObject()) { ok = false; break; }
 			js_proxy_t *jsProxy;
@@ -2952,7 +2951,7 @@ bool js_cocos2dx_extension_ControlSaturationBrightnessPicker_initWithTargetAndPo
 			arg0 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
-		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
+		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlSaturationBrightnessPicker_initWithTargetAndPos : Error processing arguments");
 		bool ret = cobj->initWithTargetAndPos(arg0, arg1);
 		jsval jsret = JSVAL_NULL;
@@ -2971,9 +2970,9 @@ bool js_cocos2dx_extension_ControlSaturationBrightnessPicker_getStartPos(JSConte
 	cocos2d::extension::ControlSaturationBrightnessPicker* cobj = (cocos2d::extension::ControlSaturationBrightnessPicker *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlSaturationBrightnessPicker_getStartPos : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Point ret = cobj->getStartPos();
+		cocos2d::Vector2 ret = cobj->getStartPos();
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -3015,7 +3014,7 @@ bool js_cocos2dx_extension_ControlSaturationBrightnessPicker_setEnabled(JSContex
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlSaturationBrightnessPicker_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlSaturationBrightnessPicker_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3113,7 +3112,7 @@ bool js_cocos2dx_extension_ControlSaturationBrightnessPicker_create(JSContext *c
 	bool ok = true;
 	if (argc == 2) {
 		cocos2d::Node* arg0;
-		cocos2d::Point arg1;
+		cocos2d::Vector2 arg1;
 		do {
 			if (!argv[0].isObject()) { ok = false; break; }
 			js_proxy_t *jsProxy;
@@ -3122,7 +3121,7 @@ bool js_cocos2dx_extension_ControlSaturationBrightnessPicker_create(JSContext *c
 			arg0 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
-		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
+		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlSaturationBrightnessPicker_create : Error processing arguments");
 		cocos2d::extension::ControlSaturationBrightnessPicker* ret = cocos2d::extension::ControlSaturationBrightnessPicker::create(arg0, arg1);
 		jsval jsret = JSVAL_NULL;
@@ -3251,7 +3250,7 @@ bool js_cocos2dx_extension_ControlColourPicker_setEnabled(JSContext *cx, uint32_
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlColourPicker_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlColourPicker_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3622,8 +3621,8 @@ bool js_cocos2dx_extension_ControlPotentiometer_setPreviousLocation(JSContext *c
 	cocos2d::extension::ControlPotentiometer* cobj = (cocos2d::extension::ControlPotentiometer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlPotentiometer_setPreviousLocation : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::Point arg0;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+		cocos2d::Vector2 arg0;
+		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlPotentiometer_setPreviousLocation : Error processing arguments");
 		cobj->setPreviousLocation(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3703,14 +3702,14 @@ bool js_cocos2dx_extension_ControlPotentiometer_angleInDegreesBetweenLineFromPoi
 	cocos2d::extension::ControlPotentiometer* cobj = (cocos2d::extension::ControlPotentiometer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlPotentiometer_angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint : Invalid Native Object");
 	if (argc == 4) {
-		cocos2d::Point arg0;
-		cocos2d::Point arg1;
-		cocos2d::Point arg2;
-		cocos2d::Point arg3;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
-		ok &= jsval_to_ccpoint(cx, argv[2], &arg2);
-		ok &= jsval_to_ccpoint(cx, argv[3], &arg3);
+		cocos2d::Vector2 arg0;
+		cocos2d::Vector2 arg1;
+		cocos2d::Vector2 arg2;
+		cocos2d::Vector2 arg3;
+		ok &= jsval_to_vector2(cx, argv[0], &arg0);
+		ok &= jsval_to_vector2(cx, argv[1], &arg1);
+		ok &= jsval_to_vector2(cx, argv[2], &arg2);
+		ok &= jsval_to_vector2(cx, argv[3], &arg3);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlPotentiometer_angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint : Error processing arguments");
 		double ret = cobj->angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(arg0, arg1, arg2, arg3);
 		jsval jsret = JSVAL_NULL;
@@ -3731,8 +3730,8 @@ bool js_cocos2dx_extension_ControlPotentiometer_potentiometerBegan(JSContext *cx
 	cocos2d::extension::ControlPotentiometer* cobj = (cocos2d::extension::ControlPotentiometer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlPotentiometer_potentiometerBegan : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::Point arg0;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+		cocos2d::Vector2 arg0;
+		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlPotentiometer_potentiometerBegan : Error processing arguments");
 		cobj->potentiometerBegan(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3830,9 +3829,9 @@ bool js_cocos2dx_extension_ControlPotentiometer_getPreviousLocation(JSContext *c
 	cocos2d::extension::ControlPotentiometer* cobj = (cocos2d::extension::ControlPotentiometer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlPotentiometer_getPreviousLocation : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Point ret = cobj->getPreviousLocation();
+		cocos2d::Vector2 ret = cobj->getPreviousLocation();
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -3849,10 +3848,10 @@ bool js_cocos2dx_extension_ControlPotentiometer_distanceBetweenPointAndPoint(JSC
 	cocos2d::extension::ControlPotentiometer* cobj = (cocos2d::extension::ControlPotentiometer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlPotentiometer_distanceBetweenPointAndPoint : Invalid Native Object");
 	if (argc == 2) {
-		cocos2d::Point arg0;
-		cocos2d::Point arg1;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
+		cocos2d::Vector2 arg0;
+		cocos2d::Vector2 arg1;
+		ok &= jsval_to_vector2(cx, argv[0], &arg0);
+		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlPotentiometer_distanceBetweenPointAndPoint : Error processing arguments");
 		double ret = cobj->distanceBetweenPointAndPoint(arg0, arg1);
 		jsval jsret = JSVAL_NULL;
@@ -3873,8 +3872,8 @@ bool js_cocos2dx_extension_ControlPotentiometer_potentiometerEnded(JSContext *cx
 	cocos2d::extension::ControlPotentiometer* cobj = (cocos2d::extension::ControlPotentiometer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlPotentiometer_potentiometerEnded : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::Point arg0;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+		cocos2d::Vector2 arg0;
+		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlPotentiometer_potentiometerEnded : Error processing arguments");
 		cobj->potentiometerEnded(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -4011,8 +4010,8 @@ bool js_cocos2dx_extension_ControlPotentiometer_potentiometerMoved(JSContext *cx
 	cocos2d::extension::ControlPotentiometer* cobj = (cocos2d::extension::ControlPotentiometer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlPotentiometer_potentiometerMoved : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::Point arg0;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+		cocos2d::Vector2 arg0;
+		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlPotentiometer_potentiometerMoved : Error processing arguments");
 		cobj->potentiometerMoved(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -4203,9 +4202,9 @@ bool js_cocos2dx_extension_ControlSlider_locationFromTouch(JSContext *cx, uint32
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlSlider_locationFromTouch : Error processing arguments");
-		cocos2d::Point ret = cobj->locationFromTouch(arg0);
+		cocos2d::Vector2 ret = cobj->locationFromTouch(arg0);
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -4395,7 +4394,7 @@ bool js_cocos2dx_extension_ControlSlider_setEnabled(JSContext *cx, uint32_t argc
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlSlider_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlSlider_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5087,7 +5086,7 @@ bool js_cocos2dx_extension_ControlStepper_setWraps(JSContext *cx, uint32_t argc,
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlStepper_setWraps : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlStepper_setWraps : Error processing arguments");
 		cobj->setWraps(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5147,8 +5146,8 @@ bool js_cocos2dx_extension_ControlStepper_updateLayoutUsingTouchLocation(JSConte
 	cocos2d::extension::ControlStepper* cobj = (cocos2d::extension::ControlStepper *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlStepper_updateLayoutUsingTouchLocation : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::Point arg0;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+		cocos2d::Vector2 arg0;
+		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlStepper_updateLayoutUsingTouchLocation : Error processing arguments");
 		cobj->updateLayoutUsingTouchLocation(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5170,7 +5169,7 @@ bool js_cocos2dx_extension_ControlStepper_setValueWithSendingEvent(JSContext *cx
 		double arg0;
 		bool arg1;
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlStepper_setValueWithSendingEvent : Error processing arguments");
 		cobj->setValueWithSendingEvent(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5657,7 +5656,7 @@ bool js_cocos2dx_extension_ControlSwitch_setEnabled(JSContext *cx, uint32_t argc
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ControlSwitch_setEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlSwitch_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5681,8 +5680,7 @@ bool js_cocos2dx_extension_ControlSwitch_setOn(JSContext *cx, uint32_t argc, jsv
 	do {
 		if (argc == 1) {
 			bool arg0;
-			ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
-			if (!ok) { ok = true; break; }
+			arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 			cobj->setOn(arg0);
 			JS_SET_RVAL(cx, vp, JSVAL_VOID);
 			return true;
@@ -5692,11 +5690,9 @@ bool js_cocos2dx_extension_ControlSwitch_setOn(JSContext *cx, uint32_t argc, jsv
 	do {
 		if (argc == 2) {
 			bool arg0;
-			ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
-			if (!ok) { ok = true; break; }
+			arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 			bool arg1;
-			ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
-			if (!ok) { ok = true; break; }
+			arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 			cobj->setOn(arg0, arg1);
 			JS_SET_RVAL(cx, vp, JSVAL_VOID);
 			return true;
@@ -5893,9 +5889,9 @@ bool js_cocos2dx_extension_ControlSwitch_locationFromTouch(JSContext *cx, uint32
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ControlSwitch_locationFromTouch : Error processing arguments");
-		cocos2d::Point ret = cobj->locationFromTouch(arg0);
+		cocos2d::Vector2 ret = cobj->locationFromTouch(arg0);
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -6194,9 +6190,9 @@ bool js_cocos2dx_extension_ScrollView_setContentOffsetInDuration(JSContext *cx, 
 	cocos2d::extension::ScrollView* cobj = (cocos2d::extension::ScrollView *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_setContentOffsetInDuration : Invalid Native Object");
 	if (argc == 2) {
-		cocos2d::Point arg0;
+		cocos2d::Vector2 arg0;
 		double arg1;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ScrollView_setContentOffsetInDuration : Error processing arguments");
 		cobj->setContentOffsetInDuration(arg0, arg1);
@@ -6239,7 +6235,7 @@ bool js_cocos2dx_extension_ScrollView_setBounceable(JSContext *cx, uint32_t argc
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_setBounceable : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ScrollView_setBounceable : Error processing arguments");
 		cobj->setBounceable(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -6458,18 +6454,18 @@ bool js_cocos2dx_extension_ScrollView_setContentOffset(JSContext *cx, uint32_t a
 	cocos2d::extension::ScrollView* cobj = (cocos2d::extension::ScrollView *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_setContentOffset : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::Point arg0;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+		cocos2d::Vector2 arg0;
+		ok &= jsval_to_vector2(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ScrollView_setContentOffset : Error processing arguments");
 		cobj->setContentOffset(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
 	if (argc == 2) {
-		cocos2d::Point arg0;
+		cocos2d::Vector2 arg0;
 		bool arg1;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		ok &= jsval_to_vector2(cx, argv[0], &arg0);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ScrollView_setContentOffset : Error processing arguments");
 		cobj->setContentOffset(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -6540,7 +6536,7 @@ bool js_cocos2dx_extension_ScrollView_setTouchEnabled(JSContext *cx, uint32_t ar
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_setTouchEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ScrollView_setTouchEnabled : Error processing arguments");
 		cobj->setTouchEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -6557,9 +6553,9 @@ bool js_cocos2dx_extension_ScrollView_getContentOffset(JSContext *cx, uint32_t a
 	cocos2d::extension::ScrollView* cobj = (cocos2d::extension::ScrollView *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_getContentOffset : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Point ret = cobj->getContentOffset();
+		cocos2d::Vector2 ret = cobj->getContentOffset();
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -6604,7 +6600,7 @@ bool js_cocos2dx_extension_ScrollView_setClippingToBounds(JSContext *cx, uint32_
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_setClippingToBounds : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ScrollView_setClippingToBounds : Error processing arguments");
 		cobj->setClippingToBounds(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -6658,9 +6654,9 @@ bool js_cocos2dx_extension_ScrollView_maxContainerOffset(JSContext *cx, uint32_t
 	cocos2d::extension::ScrollView* cobj = (cocos2d::extension::ScrollView *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_maxContainerOffset : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Point ret = cobj->maxContainerOffset();
+		cocos2d::Vector2 ret = cobj->maxContainerOffset();
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -6721,9 +6717,9 @@ bool js_cocos2dx_extension_ScrollView_minContainerOffset(JSContext *cx, uint32_t
 	cocos2d::extension::ScrollView* cobj = (cocos2d::extension::ScrollView *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_minContainerOffset : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Point ret = cobj->minContainerOffset();
+		cocos2d::Vector2 ret = cobj->minContainerOffset();
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -6748,8 +6744,7 @@ bool js_cocos2dx_extension_ScrollView_setZoomScale(JSContext *cx, uint32_t argc,
 			ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 			if (!ok) { ok = true; break; }
 			bool arg1;
-			ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
-			if (!ok) { ok = true; break; }
+			arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 			cobj->setZoomScale(arg0, arg1);
 			JS_SET_RVAL(cx, vp, JSVAL_VOID);
 			return true;

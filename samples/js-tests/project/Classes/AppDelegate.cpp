@@ -23,6 +23,11 @@
 #include "network/jsb_socketio.h"
 #include "cocosbuilder/js_bindings_ccbreader.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "jsb_cocos2dx_pluginx_auto.hpp"
+#include "jsb_pluginx_extension_registration.h"
+#endif
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace CocosDenshion;
@@ -104,6 +109,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_spine);
     sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    sc->addRegisterCallback(register_all_pluginx_protocols);
+    sc->addRegisterCallback(register_pluginx_js_extensions);
+#endif
+    
     sc->start();
     
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
@@ -121,15 +131,19 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    Director::getInstance()->stopAnimation();
+    auto director = Director::getInstance();
+    director->stopAnimation();
+    director->getEventDispatcher()->dispatchCustomEvent("game_on_hide");
     SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-    SimpleAudioEngine::getInstance()->pauseAllEffects();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();    
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    Director::getInstance()->startAnimation();
+    auto director = Director::getInstance();
+    director->startAnimation();
+    director->getEventDispatcher()->dispatchCustomEvent("game_on_show");
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

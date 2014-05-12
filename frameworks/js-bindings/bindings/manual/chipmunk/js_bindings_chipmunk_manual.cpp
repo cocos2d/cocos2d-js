@@ -1,7 +1,6 @@
 /*
- * JS Bindings: https://github.com/zynga/jsbindings
- *
  * Copyright (c) 2012 Zynga Inc.
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -153,11 +152,7 @@ bool JSPROXY_CCPhysicsSprite_setIgnoreBodyRotation_(JSContext *cx, uint32_t argc
 	TEST_NATIVE_OBJECT(cx, real)
     
 	jsval *argvp = JS_ARGV(cx,vp);
-	bool ok = true;
-	bool arg0;
-    
-	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
-	if( ! ok ) return false;
+	bool arg0 = JS::ToBoolean( JS::RootedValue(cx, *argvp++) );
     
 	real->setIgnoreBodyRotation((bool)arg0);
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);

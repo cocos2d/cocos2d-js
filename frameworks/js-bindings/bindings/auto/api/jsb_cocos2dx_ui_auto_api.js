@@ -208,17 +208,17 @@ ccui.Widget = {
 
 /**
  * @method setSizePercent
- * @param {PointObject} arg0
+ * @param {vector2_object} arg0
  */
 setSizePercent : function (
-point 
+array 
 )
 {
 },
 
 /**
  * @method getCustomSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getCustomSize : function (
 )
@@ -247,6 +247,18 @@ bool
 },
 
 /**
+ * @method onFocusChange
+ * @param {ccui.Widget} arg0
+ * @param {ccui.Widget} arg1
+ */
+onFocusChange : function (
+widget, 
+widget 
+)
+{
+},
+
+/**
  * @method getLeftInParent
  * @return {float}
  */
@@ -258,32 +270,42 @@ getLeftInParent : function (
 
 /**
  * @method getTouchEndPos
- * @return {PointObject}
+ * @return {vector2_object}
  */
 getTouchEndPos : function (
 )
 {
-    return cc.Point;
+    return new Array();
 },
 
 /**
  * @method setPositionPercent
- * @param {PointObject} arg0
+ * @param {vector2_object} arg0
  */
 setPositionPercent : function (
-point 
+array 
 )
 {
 },
 
 /**
  * @method getLayoutSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getLayoutSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method setHighlighted
+ * @param {bool} arg0
+ */
+setHighlighted : function (
+bool 
+)
+{
 },
 
 /**
@@ -327,13 +349,13 @@ getBottomInParent : function (
 },
 
 /**
- * @method getActionTag
- * @return {int}
+ * @method isHighlighted
+ * @return {bool}
  */
-getActionTag : function (
+isHighlighted : function (
 )
 {
-    return 0;
+    return false;
 },
 
 /**
@@ -401,6 +423,30 @@ isFocused : function (
 },
 
 /**
+ * @method getVirtualRendererSize
+ * @return {size_object}
+ */
+getVirtualRendererSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method findNextFocusedWidget
+ * @param {ccui.FocusDirection} arg0
+ * @param {ccui.Widget} arg1
+ * @return {ccui.Widget}
+ */
+findNextFocusedWidget : function (
+focusdirection, 
+widget 
+)
+{
+    return ccui.Widget;
+},
+
+/**
  * @method isTouchEnabled
  * @return {bool}
  */
@@ -411,23 +457,23 @@ isTouchEnabled : function (
 },
 
 /**
- * @method getContentSize
- * @return {SizeObject}
+ * @method getActionTag
+ * @return {int}
  */
-getContentSize : function (
+getActionTag : function (
 )
 {
-    return cc.Size;
+    return 0;
 },
 
 /**
  * @method getWorldPosition
- * @return {PointObject}
+ * @return {vector2_object}
  */
 getWorldPosition : function (
 )
 {
-    return cc.Point;
+    return new Array();
 },
 
 /**
@@ -470,12 +516,12 @@ clone : function (
 
 /**
  * @method getTouchMovePos
- * @return {PointObject}
+ * @return {vector2_object}
  */
 getTouchMovePos : function (
 )
 {
-    return cc.Point;
+    return new Array();
 },
 
 /**
@@ -496,6 +542,18 @@ getVirtualRenderer : function (
 )
 {
     return cc.Node;
+},
+
+/**
+ * @method dispatchFocusEvent
+ * @param {ccui.Widget} arg0
+ * @param {ccui.Widget} arg1
+ */
+dispatchFocusEvent : function (
+widget, 
+widget 
+)
+{
 },
 
 /**
@@ -530,22 +588,32 @@ layoutparameter
 
 /**
  * @method getSizePercent
- * @return {PointObject}
+ * @return {vector2_object}
  */
 getSizePercent : function (
 )
 {
-    return cc.Point;
+    return new Array();
 },
 
 /**
  * @method getTouchStartPos
- * @return {PointObject}
+ * @return {vector2_object}
  */
 getTouchStartPos : function (
 )
 {
-    return cc.Point;
+    return new Array();
+},
+
+/**
+ * @method setFocusEnabled
+ * @param {bool} arg0
+ */
+setFocusEnabled : function (
+bool 
+)
+{
 },
 
 /**
@@ -570,14 +638,26 @@ isBright : function (
 
 /**
  * @method clippingParentAreaContainPoint
- * @param {PointObject} arg0
+ * @param {vector2_object} arg0
  * @return {bool}
  */
 clippingParentAreaContainPoint : function (
-point 
+array 
 )
 {
     return false;
+},
+
+/**
+ * @method getCurrentFocusedWidget
+ * @param {bool} arg0
+ * @return {ccui.Widget}
+ */
+getCurrentFocusedWidget : function (
+bool 
+)
+{
+    return ccui.Widget;
 },
 
 /**
@@ -591,8 +671,16 @@ getTopInParent : function (
 },
 
 /**
+ * @method requestFocus
+ */
+requestFocus : function (
+)
+{
+},
+
+/**
  * @method updateSizeAndPosition
-* @param {SizeObject} size
+* @param {size_object} size
 */
 updateSizeAndPosition : function(
 size 
@@ -602,7 +690,7 @@ size
 
 /**
  * @method getSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getSize : function (
 )
@@ -642,21 +730,21 @@ bool
 
 /**
  * @method getPositionPercent
- * @return {PointObject}
+ * @return {vector2_object}
  */
 getPositionPercent : function (
 )
 {
-    return cc.Point;
+    return new Array();
 },
 
 /**
  * @method hitTest
- * @param {PointObject} arg0
+ * @param {vector2_object} arg0
  * @return {bool}
  */
 hitTest : function (
-point 
+array 
 )
 {
     return false;
@@ -696,19 +784,19 @@ sizetype
  * @method checkChildInfo
  * @param {int} arg0
  * @param {ccui.Widget} arg1
- * @param {PointObject} arg2
+ * @param {vector2_object} arg2
  */
 checkChildInfo : function (
 int, 
 widget, 
-point 
+array 
 )
 {
 },
 
 /**
  * @method setSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setSize : function (
 size 
@@ -724,6 +812,16 @@ setBright : function (
 bool 
 )
 {
+},
+
+/**
+ * @method isFocusEnabled
+ * @return {bool}
+ */
+isFocusEnabled : function (
+)
+{
+    return false;
 },
 
 /**
@@ -754,10 +852,10 @@ ccui.Layout = {
 
 /**
  * @method setBackGroundColorVector
- * @param {PointObject} arg0
+ * @param {vector2_object} arg0
  */
 setBackGroundColorVector : function (
-point 
+array 
 )
 {
 },
@@ -783,8 +881,18 @@ layoutbackgroundcolortype
 },
 
 /**
+ * @method setLoopFocus
+ * @param {bool} arg0
+ */
+setLoopFocus : function (
+bool 
+)
+{
+},
+
+/**
  * @method setBackGroundImageColor
- * @param {Color3BObject} arg0
+ * @param {color3b_object} arg0
  */
 setBackGroundImageColor : function (
 color3b 
@@ -794,12 +902,12 @@ color3b
 
 /**
  * @method getBackGroundColorVector
- * @return {PointObject}
+ * @return {vector2_object}
  */
 getBackGroundColorVector : function (
 )
 {
-    return cc.Point;
+    return new Array();
 },
 
 /**
@@ -810,6 +918,16 @@ getClippingType : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method isLoopFocus
+ * @return {bool}
+ */
+isLoopFocus : function (
+)
+{
+    return false;
 },
 
 /**
@@ -864,8 +982,8 @@ texturerestype
 
 /**
  * @method setBackGroundColor
-* @param {Color3BObject|Color3BObject} color3b
-* @param {Color3BObject} color3b
+* @param {color3b_object|color3b_object} color3b
+* @param {color3b_object} color3b
 */
 setBackGroundColor : function(
 color3b,
@@ -884,7 +1002,7 @@ requestDoLayout : function (
 
 /**
  * @method getBackGroundImageCapInsets
- * @return {RectObject}
+ * @return {rect_object}
  */
 getBackGroundImageCapInsets : function (
 )
@@ -894,7 +1012,7 @@ getBackGroundImageCapInsets : function (
 
 /**
  * @method getBackGroundColor
- * @return {Color3BObject}
+ * @return {color3b_object}
  */
 getBackGroundColor : function (
 )
@@ -914,7 +1032,7 @@ bool
 
 /**
  * @method getBackGroundImageColor
- * @return {Color3BObject}
+ * @return {color3b_object}
  */
 getBackGroundImageColor : function (
 )
@@ -944,7 +1062,7 @@ getBackGroundColorType : function (
 
 /**
  * @method getBackGroundEndColor
- * @return {Color3BObject}
+ * @return {color3b_object}
  */
 getBackGroundEndColor : function (
 )
@@ -973,8 +1091,18 @@ getBackGroundImageOpacity : function (
 },
 
 /**
+ * @method isPassFocusToChild
+ * @return {bool}
+ */
+isPassFocusToChild : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setBackGroundImageCapInsets
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setBackGroundImageCapInsets : function (
 rect 
@@ -984,7 +1112,7 @@ rect
 
 /**
  * @method getBackGroundImageTextureSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getBackGroundImageTextureSize : function (
 )
@@ -1003,25 +1131,23 @@ getLayoutType : function (
 },
 
 /**
+ * @method setPassFocusToChild
+ * @param {bool} arg0
+ */
+setPassFocusToChild : function (
+bool 
+)
+{
+},
+
+/**
  * @method getBackGroundStartColor
- * @return {Color3BObject}
+ * @return {color3b_object}
  */
 getBackGroundStartColor : function (
 )
 {
     return cc.Color3B;
-},
-
-/**
- * @method hitTest
- * @param {PointObject} arg0
- * @return {bool}
- */
-hitTest : function (
-point 
-)
-{
-    return false;
 },
 
 /**
@@ -1112,7 +1238,7 @@ bool
 
 /**
  * @method getCapInsetsDisabledRenderer
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsetsDisabledRenderer : function (
 )
@@ -1122,7 +1248,7 @@ getCapInsetsDisabledRenderer : function (
 
 /**
  * @method setTitleColor
- * @param {Color3BObject} arg0
+ * @param {color3b_object} arg0
  */
 setTitleColor : function (
 color3b 
@@ -1132,7 +1258,7 @@ color3b
 
 /**
  * @method setCapInsetsDisabledRenderer
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsetsDisabledRenderer : function (
 rect 
@@ -1142,7 +1268,7 @@ rect
 
 /**
  * @method setCapInsets
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsets : function (
 rect 
@@ -1192,7 +1318,7 @@ str
 
 /**
  * @method setCapInsetsNormalRenderer
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsetsNormalRenderer : function (
 rect 
@@ -1224,7 +1350,7 @@ str
 
 /**
  * @method getCapInsetsNormalRenderer
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsetsNormalRenderer : function (
 )
@@ -1234,7 +1360,7 @@ getCapInsetsNormalRenderer : function (
 
 /**
  * @method getCapInsetsPressedRenderer
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsetsPressedRenderer : function (
 )
@@ -1282,7 +1408,7 @@ texturerestype
 
 /**
  * @method setCapInsetsPressedRenderer
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsetsPressedRenderer : function (
 rect 
@@ -1312,7 +1438,7 @@ getTitleFontName : function (
 
 /**
  * @method getTitleColor
- * @return {Color3BObject}
+ * @return {color3b_object}
  */
 getTitleColor : function (
 )
@@ -1582,7 +1708,7 @@ bool
 
 /**
  * @method setTextureRect
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setTextureRect : function (
 rect 
@@ -1592,7 +1718,7 @@ rect
 
 /**
  * @method setCapInsets
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsets : function (
 rect 
@@ -1602,7 +1728,7 @@ rect
 
 /**
  * @method getCapInsets
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsets : function (
 )
@@ -1758,7 +1884,7 @@ getTextHorizontalAlignment : function (
 
 /**
  * @method getTextAreaSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getTextAreaSize : function (
 )
@@ -1818,7 +1944,7 @@ getFontName : function (
 
 /**
  * @method setTextAreaSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setTextAreaSize : function (
 size 
@@ -1894,6 +2020,14 @@ getStringValue : function (
 )
 {
     return ;
+},
+
+/**
+ * @method adaptRenderers
+ */
+adaptRenderers : function (
+)
+{
 },
 
 /**
@@ -1996,7 +2130,7 @@ bool
 
 /**
  * @method setCapInsets
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsets : function (
 rect 
@@ -2016,7 +2150,7 @@ getDirection : function (
 
 /**
  * @method getCapInsets
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsets : function (
 )
@@ -2122,12 +2256,12 @@ isInertiaScrollEnabled : function (
 
 /**
  * @method scrollToPercentBothDirection
- * @param {PointObject} arg0
+ * @param {vector2_object} arg0
  * @param {float} arg1
  * @param {bool} arg2
  */
 scrollToPercentBothDirection : function (
-point, 
+array, 
 float, 
 bool 
 )
@@ -2214,7 +2348,7 @@ jumpToBottomLeft : function (
 
 /**
  * @method setInnerContainerSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setInnerContainerSize : function (
 size 
@@ -2224,7 +2358,7 @@ size
 
 /**
  * @method getInnerContainerSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getInnerContainerSize : function (
 )
@@ -2320,10 +2454,10 @@ bool
 
 /**
  * @method jumpToPercentBothDirection
- * @param {PointObject} arg0
+ * @param {vector2_object} arg0
  */
 jumpToPercentBothDirection : function (
-point 
+array 
 )
 {
 },
@@ -2720,7 +2854,7 @@ texturerestype
 
 /**
  * @method setCapInsetProgressBarRebderer
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsetProgressBarRebderer : function (
 rect 
@@ -2730,7 +2864,7 @@ rect
 
 /**
  * @method setCapInsetsBarRenderer
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsetsBarRenderer : function (
 rect 
@@ -2740,7 +2874,7 @@ rect
 
 /**
  * @method getCapInsetsProgressBarRebderer
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsetsProgressBarRebderer : function (
 )
@@ -2760,7 +2894,7 @@ bool
 
 /**
  * @method setCapInsets
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsets : function (
 rect 
@@ -2792,7 +2926,7 @@ isScale9Enabled : function (
 
 /**
  * @method getCapInsetsBarRenderer
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsetsBarRenderer : function (
 )
@@ -2976,7 +3110,7 @@ getFontName : function (
 
 /**
  * @method setTextAreaSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setTextAreaSize : function (
 size 
@@ -3134,11 +3268,11 @@ bool
 
 /**
  * @method hitTest
- * @param {PointObject} arg0
+ * @param {vector2_object} arg0
  * @return {bool}
  */
 hitTest : function (
-point 
+array 
 )
 {
     return false;
@@ -3156,7 +3290,7 @@ int
 
 /**
  * @method setTouchSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setTouchSize : function (
 size 
@@ -3166,7 +3300,7 @@ size
 
 /**
  * @method getTouchSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getTouchSize : function (
 )
@@ -3468,6 +3602,298 @@ char
 )
 {
     return ccui.Widget;
+},
+
+};
+
+/**
+ * @class RichElement
+ */
+ccui.RichElement = {
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @return {bool}
+ */
+init : function (
+int, 
+color3b, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method RichElement
+ * @constructor
+ */
+RichElement : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RichElementText
+ */
+ccui.RichElementText = {
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @param {char} arg3
+ * @param {char} arg4
+ * @param {float} arg5
+ * @return {bool}
+ */
+init : function (
+int, 
+color3b, 
+char, 
+char, 
+char, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @param {char} arg3
+ * @param {char} arg4
+ * @param {float} arg5
+ * @return {ccui.RichElementText}
+ */
+create : function (
+int, 
+color3b, 
+char, 
+char, 
+char, 
+float 
+)
+{
+    return ccui.RichElementText;
+},
+
+/**
+ * @method RichElementText
+ * @constructor
+ */
+RichElementText : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RichElementImage
+ */
+ccui.RichElementImage = {
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @param {char} arg3
+ * @return {bool}
+ */
+init : function (
+int, 
+color3b, 
+char, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @param {char} arg3
+ * @return {ccui.RichElementImage}
+ */
+create : function (
+int, 
+color3b, 
+char, 
+char 
+)
+{
+    return ccui.RichElementImage;
+},
+
+/**
+ * @method RichElementImage
+ * @constructor
+ */
+RichElementImage : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RichElementCustomNode
+ */
+ccui.RichElementCustomNode = {
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @param {cc.Node} arg3
+ * @return {bool}
+ */
+init : function (
+int, 
+color3b, 
+char, 
+node 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @param {cc.Node} arg3
+ * @return {ccui.RichElementCustomNode}
+ */
+create : function (
+int, 
+color3b, 
+char, 
+node 
+)
+{
+    return ccui.RichElementCustomNode;
+},
+
+/**
+ * @method RichElementCustomNode
+ * @constructor
+ */
+RichElementCustomNode : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RichText
+ */
+ccui.RichText = {
+
+/**
+ * @method insertElement
+ * @param {ccui.RichElement} arg0
+ * @param {int} arg1
+ */
+insertElement : function (
+richelement, 
+int 
+)
+{
+},
+
+/**
+ * @method setAnchorPoint
+ * @param {vector2_object} arg0
+ */
+setAnchorPoint : function (
+array 
+)
+{
+},
+
+/**
+ * @method pushBackElement
+ * @param {ccui.RichElement} arg0
+ */
+pushBackElement : function (
+richelement 
+)
+{
+},
+
+/**
+ * @method ignoreContentAdaptWithSize
+ * @param {bool} arg0
+ */
+ignoreContentAdaptWithSize : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setVerticalSpace
+ * @param {float} arg0
+ */
+setVerticalSpace : function (
+float 
+)
+{
+},
+
+/**
+ * @method formatText
+ */
+formatText : function (
+)
+{
+},
+
+/**
+ * @method removeElement
+* @param {ccui.RichElement|int} richelement
+*/
+removeElement : function(
+int 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccui.RichText}
+ */
+create : function (
+)
+{
+    return ccui.RichText;
+},
+
+/**
+ * @method RichText
+ * @constructor
+ */
+RichText : function (
+)
+{
 },
 
 };

@@ -1,9 +1,26 @@
-//
-//  jsb_cocos2dx_ui_manual.h
-//
-//  Created by LinWenhai on 17/11/13.
-//
-//
+/*
+ * Created by LinWenhai on 17/11/13.
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 #include "jsb_cocos2dx_ui_manual.h"
 #include "ScriptingCore.h"
 #include "cocos2d_specifics.hpp"
@@ -35,9 +52,8 @@ JSStudioEventListenerWrapper::~JSStudioEventListenerWrapper()
 {
     if (m_bNeedUnroot)
     {
-        JSObject *thisObj = JSVAL_TO_OBJECT(_jsThisObj);
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_RemoveObjectRoot(cx, &thisObj);
+        JS_RemoveValueRoot(cx, &_jsThisObj);
     }
 }
 
@@ -50,8 +66,8 @@ void JSStudioEventListenerWrapper::setJSCallbackThis(jsval jsThisObj)
     if (!p)
     {
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_AddObjectRoot(cx, &thisObj);
         m_bNeedUnroot = true;
+        m_bNeedUnroot &= JS_AddValueRoot(cx, &jsThisObj);
     }
 }
 

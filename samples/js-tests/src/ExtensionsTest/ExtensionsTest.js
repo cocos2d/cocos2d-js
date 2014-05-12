@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -89,6 +89,18 @@ var extensionsTestItemNames = [
         }
     }
 ];
+
+if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {
+    extensionsTestItemNames.push({
+        itemTitle:"PluginXTest",
+        testScene:function () {
+            var testScene = new PluginXTestScene();
+            if (testScene) {
+                cc.director.runScene(testScene);
+            }
+        }
+    });
+}
 
 var ExtensionsMainLayer = cc.Layer.extend({
     onEnter:function () {

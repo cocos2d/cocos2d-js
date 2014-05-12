@@ -1,3 +1,25 @@
+/*
+ * Copyright (c) 2014 Chukong Technologies Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 /************************************************************
  *
  * Constructors with built in init function
@@ -259,10 +281,10 @@ _p._ctor = function(fileImage, capacity){
 
 _p = cc.ParticleSystem.prototype;
 _p._ctor = function(plistFile){
-    if (!plistFile || typeof(plistFile) === "number") {
-        var ton = plistFile || 100;
+    if (typeof(plistFile) === "number") {
+        var ton = plistFile;
         this.initWithTotalParticles(ton);
-    }else{
+    } else if (plistFile) {
         this.initWithFile(plistFile);
     }
 };
@@ -1101,3 +1123,43 @@ cc.LabelAtlas.create = function( a,b,c,d,e ) {
 
 // LayerMultiplex
 cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
+
+/**
+ * Creates an animation.
+ * @param {Array} frames
+ * @param {Number} delay
+ * @param {Number} [loops=1]
+ * @return {cc.Animation}
+ * @example
+ *
+ * 1.Creates an empty animation
+ * var animation1 = cc.Animation.create();
+ *
+ * 2.Create an animation with sprite frames , delay and loops.
+ * var spriteFrames = [];
+ * var frame = cache.getSpriteFrame("grossini_dance_01.png");
+ * spriteFrames.push(frame);
+ * var animation1 = cc.Animation.create(spriteFrames);
+ * var animation2 = cc.Animation.create(spriteFrames, 0.2);
+ * var animation2 = cc.Animation.create(spriteFrames, 0.2, 2);
+ *
+ * 3.Create an animation with animation frames , delay and loops.
+ * var animationFrames = [];
+ * var frame =  new cc.AnimationFrame();
+ * animationFrames.push(frame);
+ * var animation1 = cc.Animation.create(animationFrames);
+ * var animation2 = cc.Animation.create(animationFrames, 0.2);
+ * var animation3 = cc.Animation.create(animationFrames, 0.2, 2);
+ */
+cc.Animation.create = function (frames, delay, loops) {
+    if(frames === undefined){
+        return cc.Animation.createWithAnimationFrames();
+    }
+    else if(frames[0] && frames[0] instanceof cc.AnimationFrame){
+        return cc.Animation.createWithAnimationFrames.apply(this, arguments);
+    }
+    else if(frames[0] && frames[0] instanceof cc.SpriteFrame){
+        delay = delay || 0;
+        return cc.Animation.createWithSpriteFrames.apply(this, arguments);
+    }
+};

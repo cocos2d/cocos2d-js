@@ -3,7 +3,7 @@
 Cocos2d-JS
 ===========
 
-Cocos2d-JS is Cocos2d-x engine's javascript version. It support full Cocos2d-x features with a set of simplified javascript friendly APIs.
+Cocos2d-JS is Cocos2d-x engine's javascript version which include Cocos2d-html5 and Cocos2d-x JSBinding. It support full Cocos2d-x features with a set of simplified javascript friendly APIs.
 
 Cocos2d-JS provides a consistent development experience for whichever platform you want to distribute to, both web and native. "Code once, run everywhere" is incredibly easy and natural in Cocos2d-JS. With one single javascript code base, you can run your game on both web browsers and native platform including Mac OS, Windows, iOS, Android. This will bring your game great opportunities in almost all canals of distribution.
 
@@ -30,12 +30,6 @@ Example:
     
     $ cocos new MyGame -l js -d /directory/to/project
     $ cd /directory/to/project/MyGame
-    
-    
-
-    
-
-
 
 ###Run the project under the game directory
 
@@ -54,9 +48,25 @@ Example:
 
 You may need to provide your NDK, Android SDK and ANT's path during the setup. Note that this tool is developed with python, so you will need python (32bit) 2.7.5 or later installed on your machine (but it doesn't support Python3). Please refer to [Cocos Console document](http://www.cocos2d-x.org/docs/manual/framework/html5/cocos-console/en).
 
-And if you have any doubt about the usage, please use `-h` with any command to have some help messages. 
+And if you have any doubt about the usage, please use `-h` with any command to have some help messages.
 
-###Built-in Projects
+You can also use prebuilt Xcode or Visual Studio project which is located in `Game/frameworks/runtime-src/proj.xxx`
+
+##Folder structure
+
+- frameworks
+    - cocos2d-html5     : Cocos2d-JS html5 engine source
+    - js-bindings       : JSB engine source (include Cocos2d-x and JSB)
+    - runtime-src       : IDE projects (android, ios, mac, win32)
+- publish               : Published apps
+- runtime               : Debug app files
+- tools                 : JS Bindings generator
+- res                   : Your game resource folder for images, sounds, etc
+- src                   : Your game's js files folder
+- main.js               : The entrance of your game logic
+- index.html            : The web page for hosting your game in web version
+
+##Built-in Projects
 
 There are two prebuilt projects in Cocos2d-JS repo:
 
@@ -74,8 +84,8 @@ run -p ios|mac|android|web
 ```
 And they share the same project file which located in `build` folder, there are Xcode and Visual Studio projects.
 
-Main features
--------------
+##Main features
+
    * Support All modern browsers and native platforms
    * Scene management (workflow)
    * Transitions between scenes

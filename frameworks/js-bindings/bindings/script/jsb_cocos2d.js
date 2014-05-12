@@ -1,3 +1,25 @@
+/*
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 //
 // cocos2d constants
 //
@@ -1966,4 +1988,66 @@ cc.TMXTiledMap.prototype.allLayers = function(){
             retArr.push(layer);
     }
     return retArr;
+};
+cc.TMXLayer.prototype._getTileAt = cc.TMXLayer.prototype.getTileAt;
+cc.TMXLayer.prototype.getTileAt = function(x, y){
+    var pos = y !== undefined ? cc.p(x, y) : x;
+    return this._getTileAt(pos);
+};
+cc.TMXLayer.prototype._getTileGIDAt = cc.TMXLayer.prototype.getTileGIDAt;
+cc.TMXLayer.prototype.getTileGIDAt = function(x, y){
+    var pos = y !== undefined ? cc.p(x, y) : x;
+    return this._getTileGIDAt(pos);
+};
+cc.TMXLayer.prototype._setTileGID = cc.TMXLayer.prototype.setTileGID;
+cc.TMXLayer.prototype.setTileGID = function(gid, posOrX, flagsOrY, flags){
+    var pos;
+    if (flags !== undefined) {
+        pos = cc.p(posOrX, flagsOrY);
+        this._setTileGID(gid, pos, flags);
+    } else if(flagsOrY != undefined){
+        pos = posOrX;
+        flags = flagsOrY;
+        this._setTileGID(gid, pos, flags);
+    } else {
+        this._setTileGID(gid, posOrX);
+    }
+};
+cc.TMXLayer.prototype._removeTileAt = cc.TMXLayer.prototype.removeTileAt;
+cc.TMXLayer.prototype.removeTileAt = function(x, y){
+    var pos = y !== undefined ? cc.p(x, y) : x;
+    this._removeTileAt(pos);
+};
+cc.TMXLayer.prototype._getPositionAt = cc.TMXLayer.prototype.getPositonAt;
+cc.TMXLayer.prototype.getPositonAt = function(x, y){
+    var pos = y !== undefined ? cc.p(x, y) : x;
+    return this._getPositionAt(pos);
+};
+
+
+var protoHasBlend = [cc.AtlasNode.prototype,
+                     cc.DrawNode.prototype,
+                     cc.LabelTTF.prototype,
+                     cc.SpriteBatchNode.prototype,
+                     cc.LabelBMFont.prototype,
+                     cc.LayerColor.prototype,
+                     cc.MotionStreak.prototype,
+                     cc.Sprite.prototype,
+                     cc.ParticleBatchNode.prototype,
+                     cc.ParticleSystem.prototype];
+
+var templateSetBlendFunc = function(src, dst) {
+    var blendf;
+    if (dst === undefined)
+        blendf = src;
+    else
+        blendf = {src: src, dst: dst};
+    this._setBlendFunc(blendf);
+    var b = this.getBlendFunc();
+    cc.log((b.src == src) + ", " + (b.dst == dst));
+}
+for (var i = 0, l = protoHasBlend.length; i < l; i++) {
+    var proto = protoHasBlend[i];
+    proto._setBlendFunc = proto.setBlendFunc;
+    proto.setBlendFunc = templateSetBlendFunc;
 }

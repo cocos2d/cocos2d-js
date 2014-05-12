@@ -5,20 +5,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /*
- * Miscellaneous uncategorized functionality.  Please add new functionality to
- * new headers, or to other appropriate existing headers, not here.
+ * Implements various helper functions related to arrays.
  */
 
-#ifndef mozilla_Util_h
-#define mozilla_Util_h
+#ifndef mozilla_ArrayUtils_h
+#define mozilla_ArrayUtils_h
 
 #include "mozilla/Assertions.h"
 #include "mozilla/Attributes.h"
-#include "mozilla/Types.h"
+
+#include <stddef.h>
 
 #ifdef __cplusplus
 
-#include "mozilla/Alignment.h"
+#include "mozilla/Array.h"
 
 namespace mozilla {
 
@@ -49,6 +49,13 @@ ArrayLength(T (&arr)[N])
   return N;
 }
 
+template<typename T, size_t N>
+MOZ_CONSTEXPR size_t
+ArrayLength(const Array<T, N>& arr)
+{
+  return N;
+}
+
 /*
  * Compute the address one past the last element of a constant-length array.
  *
@@ -59,6 +66,20 @@ MOZ_CONSTEXPR T*
 ArrayEnd(T (&arr)[N])
 {
   return arr + ArrayLength(arr);
+}
+
+template<typename T, size_t N>
+MOZ_CONSTEXPR T*
+ArrayEnd(Array<T, N>& arr)
+{
+  return &arr[0] + ArrayLength(arr);
+}
+
+template<typename T, size_t N>
+MOZ_CONSTEXPR const T*
+ArrayEnd(const Array<T, N>& arr)
+{
+  return &arr[0] + ArrayLength(arr);
 }
 
 } /* namespace mozilla */
@@ -76,4 +97,4 @@ ArrayEnd(T (&arr)[N])
 #  define MOZ_ARRAY_LENGTH(array)   (sizeof(array)/sizeof((array)[0]))
 #endif
 
-#endif /* mozilla_Util_h */
+#endif /* mozilla_ArrayUtils_h */

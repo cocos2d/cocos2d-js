@@ -1,7 +1,27 @@
-//
-//  Created by Rohan Kuruvilla
-//  Copyright (c) 2012 Zynga Inc. All rights reserved.
-//
+/*
+ * Created by Rohan Kuruvilla
+ * Copyright (c) 2012 Zynga Inc.
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 #ifndef __JS_MANUAL_CONVERSIONS_H__
 #define __JS_MANUAL_CONVERSIONS_H__
 
@@ -159,6 +179,10 @@ bool jsval_to_ccvaluevector(JSContext* cx, jsval v, cocos2d::ValueVector* ret);
 bool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* ret);
 bool jsval_to_std_vector_string( JSContext *cx, jsval vp, std::vector<std::string>* ret);
 bool jsval_to_std_vector_int( JSContext *cx, jsval vp, std::vector<int>* ret);
+bool jsval_to_matrix(JSContext *cx, jsval vp, cocos2d::Matrix* ret);
+bool jsval_to_vector2(JSContext *cx, jsval vp, cocos2d::Vector2* ret);
+bool jsval_to_vector3(JSContext *cx, jsval vp, cocos2d::Vector3* ret);
+bool jsval_to_blendfunc(JSContext *cx, jsval vp, cocos2d::BlendFunc* ret);
 
 template <class T>
 bool jsval_to_ccmap_string_key(JSContext *cx, jsval v, cocos2d::Map<std::string, T>* ret)
@@ -300,6 +324,12 @@ jsval ccvaluemap_to_jsval(JSContext* cx, const cocos2d::ValueMap& v);
 jsval ccvaluemapintkey_to_jsval(JSContext* cx, const cocos2d::ValueMapIntKey& v);
 jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v);
 jsval ssize_to_jsval(JSContext *cx, ssize_t v);
+jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>& v);
+jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v);
+jsval matrix_to_jsval(JSContext *cx, const cocos2d::Matrix& v);
+jsval vector2_to_jsval(JSContext *cx, const cocos2d::Vector2& v);
+jsval vector3_to_jsval(JSContext *cx, const cocos2d::Vector3& v);
+jsval blendfunc_to_jsval(JSContext *cx, const cocos2d::BlendFunc& v);
 
 #endif /* __JS_MANUAL_CONVERSIONS_H__ */
 

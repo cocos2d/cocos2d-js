@@ -33,44 +33,68 @@
                "from":"frameworks/js-bindings/bindings/script",
                "to":"runtime/win32",
                "exclude":[]
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/gles/prebuilt",
+               "to":"runtime/win32",
+               "include": [
+                  "*.dll"
+               ]
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/zlib/prebuilt",
+               "to":"runtime/win32",
+               "include": [
+                  "*.dll"
+               ]
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/icon/prebuilt",
+               "to":"runtime/win32",
+               "include": [
+                  "*.dll"
+               ]
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/curl/prebuilt/win32",
+               "to":"runtime/win32",
+               "include": [
+                  "*.dll"
+               ]
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/sqlite3/libraries/win32",
+               "to":"runtime/win32",
+               "include": [
+                  "*.dll"
+               ]
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/websockets/prebuilt/win32",
+               "to":"runtime/win32",
+               "include": [
+                  "*.dll"
+               ]
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/tiff/prebuilt/win32",
+               "to":"runtime/win32",
+               "include": [
+                  "*.dll"
+               ]
+            },
+            {
+               "from":"frameworks/js-bindings/external/spidermonkey/prebuilt/win32",
+               "to":"runtime/win32",
+               "include": [
+                  "*.dll"
+               ]
             }
          ],
          "append_file":[
             {
                "from":"templates/js-template-runtime/project.json",
                "to":"runtime/ios/PrebuiltRuntimeJs.app/project.json"
-            },
-            {
-               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/gles/prebuilt/glew32.dll",
-               "to":"runtime/win32/glew32.dll"
-            },
-            {
-               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/zlib/prebuilt/zlib1.dll",
-               "to":"runtime/win32/zlib1.dll"
-            },
-            {
-               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/icon/prebuilt/iconv.dll",
-               "to":"runtime/win32/iconv.dll"
-            },
-            {
-               "from":"frameworks/js-bindings/cocos2d-x/external/curl/prebuilt/win32/libcurl.dll",
-               "to":"runtime/win32/libcurl.dll"
-            },
-            {
-               "from":"frameworks/js-bindings/cocos2d-x/external/sqlite3/libraries/win32/sqlite3.dll",
-               "to":"runtime/win32/sqlite3.dll"
-            },
-            {
-               "from":"frameworks/js-bindings/cocos2d-x/external/websockets/prebuilt/win32/websockets.dll",
-               "to":"runtime/win32/websockets.dll"
-            },
-            {
-               "from":"frameworks/js-bindings/cocos2d-x/external/tiff/prebuilt/win32/libtiff.dll",
-               "to":"runtime/win32/libtiff.dll"
-            },
-            {
-               "from":"frameworks/js-bindings/external/spidermonkey/prebuilt/win32/mozjs-27.dll",
-               "to":"runtime/win32/mozjs-27.dll"
             }
          ]
       },
@@ -96,7 +120,9 @@
                 "exclude":[
                    "cocos2d-console",
                    "make-package",
-                   "travis-scripts"
+                   "travis-scripts",
+                   "bindings-generator/.git",
+                   "bindings-generator/.gitignore"
                 ]
              }
          ],
@@ -129,6 +155,7 @@
                "frameworks/runtime-src/proj.android/res/values/strings.xml",
                "frameworks/runtime-src/proj.ios_mac/ios/main.m",
                "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
+               "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",
                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
                "frameworks/runtime-src/Classes/AppDelegate.cpp"
             ]

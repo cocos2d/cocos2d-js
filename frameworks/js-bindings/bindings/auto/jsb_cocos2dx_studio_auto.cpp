@@ -355,7 +355,7 @@ bool js_cocos2dx_studio_ActionObject_setLoop(JSContext *cx, uint32_t argc, jsval
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionObject_setLoop : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionObject_setLoop : Error processing arguments");
 		cobj->setLoop(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -936,7 +936,7 @@ bool js_cocos2dx_studio_ProcessBase_setIsComplete(JSContext *cx, uint32_t argc, 
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ProcessBase_setIsComplete : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ProcessBase_setIsComplete : Error processing arguments");
 		cobj->setIsComplete(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1042,7 +1042,7 @@ bool js_cocos2dx_studio_ProcessBase_setIsPause(JSContext *cx, uint32_t argc, jsv
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ProcessBase_setIsPause : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ProcessBase_setIsPause : Error processing arguments");
 		cobj->setIsPause(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1133,7 +1133,7 @@ bool js_cocos2dx_studio_ProcessBase_setIsPlaying(JSContext *cx, uint32_t argc, j
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ProcessBase_setIsPlaying : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ProcessBase_setIsPlaying : Error processing arguments");
 		cobj->setIsPlaying(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1719,8 +1719,8 @@ bool js_cocos2dx_studio_ColliderDetector_updateTransform(JSContext *cx, uint32_t
 	cocostudio::ColliderDetector* cobj = (cocostudio::ColliderDetector *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ColliderDetector_updateTransform : Invalid Native Object");
 	if (argc == 1) {
-		kmMat4 arg0;
-		#pragma warning NO CONVERSION TO NATIVE FOR kmMat4;
+		cocos2d::Matrix arg0;
+		ok &= jsval_to_matrix(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ColliderDetector_updateTransform : Error processing arguments");
 		cobj->updateTransform(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1799,7 +1799,7 @@ bool js_cocos2dx_studio_ColliderDetector_setActive(JSContext *cx, uint32_t argc,
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ColliderDetector_setActive : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ColliderDetector_setActive : Error processing arguments");
 		cobj->setActive(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2275,9 +2275,9 @@ bool js_cocos2dx_studio_DisplayManager_getAnchorPointInPoints(JSContext *cx, uin
 	cocostudio::DisplayManager* cobj = (cocostudio::DisplayManager *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_DisplayManager_getAnchorPointInPoints : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Point ret = cobj->getAnchorPointInPoints();
+		cocos2d::Vector2 ret = cobj->getAnchorPointInPoints();
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -2359,7 +2359,7 @@ bool js_cocos2dx_studio_DisplayManager_setForceChangeDisplay(JSContext *cx, uint
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_DisplayManager_setForceChangeDisplay : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_DisplayManager_setForceChangeDisplay : Error processing arguments");
 		cobj->setForceChangeDisplay(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2517,8 +2517,8 @@ bool js_cocos2dx_studio_DisplayManager_containPoint(JSContext *cx, uint32_t argc
 
 	do {
 		if (argc == 1) {
-			cocos2d::Point arg0;
-			ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+			cocos2d::Vector2 arg0;
+			ok &= jsval_to_vector2(cx, argv[0], &arg0);
 			if (!ok) { ok = true; break; }
 			bool ret = cobj->containPoint(arg0);
 			jsval jsret = JSVAL_NULL;
@@ -2570,7 +2570,7 @@ bool js_cocos2dx_studio_DisplayManager_changeDisplayWithIndex(JSContext *cx, uin
 		int arg0;
 		bool arg1;
 		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_DisplayManager_changeDisplayWithIndex : Error processing arguments");
 		cobj->changeDisplayWithIndex(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2592,7 +2592,7 @@ bool js_cocos2dx_studio_DisplayManager_changeDisplayWithName(JSContext *cx, uint
 		std::string arg0;
 		bool arg1;
 		ok &= jsval_to_std_string(cx, argv[0], &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_DisplayManager_changeDisplayWithName : Error processing arguments");
 		cobj->changeDisplayWithName(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2672,9 +2672,9 @@ bool js_cocos2dx_studio_DisplayManager_getAnchorPoint(JSContext *cx, uint32_t ar
 	cocostudio::DisplayManager* cobj = (cocostudio::DisplayManager *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_DisplayManager_getAnchorPoint : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Point ret = cobj->getAnchorPoint();
+		cocos2d::Vector2 ret = cobj->getAnchorPoint();
 		jsval jsret = JSVAL_NULL;
-		jsret = ccpoint_to_jsval(cx, ret);
+		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -2726,7 +2726,7 @@ bool js_cocos2dx_studio_DisplayManager_setVisible(JSContext *cx, uint32_t argc, 
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_DisplayManager_setVisible : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_DisplayManager_setVisible : Error processing arguments");
 		cobj->setVisible(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2895,6 +2895,26 @@ bool js_cocos2dx_studio_Bone_isTransformDirty(JSContext *cx, uint32_t argc, jsva
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_studio_Bone_isTransformDirty : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+bool js_cocos2dx_studio_Bone_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocostudio::Bone* cobj = (cocostudio::Bone *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Bone_setBlendFunc : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::BlendFunc arg0;
+		ok &= jsval_to_blendfunc(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Bone_setBlendFunc : Error processing arguments");
+		cobj->setBlendFunc(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_studio_Bone_setBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 bool js_cocos2dx_studio_Bone_isIgnoreMovementBoneData(JSContext *cx, uint32_t argc, jsval *vp)
@@ -3111,7 +3131,7 @@ bool js_cocos2dx_studio_Bone_setTransformDirty(JSContext *cx, uint32_t argc, jsv
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Bone_setTransformDirty : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Bone_setTransformDirty : Error processing arguments");
 		cobj->setTransformDirty(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3300,7 +3320,7 @@ bool js_cocos2dx_studio_Bone_setIgnoreMovementBoneData(JSContext *cx, uint32_t a
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Bone_setIgnoreMovementBoneData : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Bone_setIgnoreMovementBoneData : Error processing arguments");
 		cobj->setIgnoreMovementBoneData(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3308,6 +3328,23 @@ bool js_cocos2dx_studio_Bone_setIgnoreMovementBoneData(JSContext *cx, uint32_t a
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_studio_Bone_setIgnoreMovementBoneData : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_studio_Bone_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocostudio::Bone* cobj = (cocostudio::Bone *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Bone_getBlendFunc : Invalid Native Object");
+	if (argc == 0) {
+		cocos2d::BlendFunc ret = cobj->getBlendFunc();
+		jsval jsret = JSVAL_NULL;
+		jsret = blendfunc_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_studio_Bone_getBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_cocos2dx_studio_Bone_setName(JSContext *cx, uint32_t argc, jsval *vp)
@@ -3340,7 +3377,7 @@ bool js_cocos2dx_studio_Bone_removeFromParent(JSContext *cx, uint32_t argc, jsva
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Bone_removeFromParent : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Bone_removeFromParent : Error processing arguments");
 		cobj->removeFromParent(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3410,7 +3447,7 @@ bool js_cocos2dx_studio_Bone_changeDisplayWithIndex(JSContext *cx, uint32_t argc
 		int arg0;
 		bool arg1;
 		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Bone_changeDisplayWithIndex : Error processing arguments");
 		cobj->changeDisplayWithIndex(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3432,7 +3469,7 @@ bool js_cocos2dx_studio_Bone_changeDisplayWithName(JSContext *cx, uint32_t argc,
 		std::string arg0;
 		bool arg1;
 		ok &= jsval_to_std_string(cx, argv[0], &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Bone_changeDisplayWithName : Error processing arguments");
 		cobj->changeDisplayWithName(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3479,7 +3516,7 @@ bool js_cocos2dx_studio_Bone_setBlendDirty(JSContext *cx, uint32_t argc, jsval *
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Bone_setBlendDirty : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Bone_setBlendDirty : Error processing arguments");
 		cobj->setBlendDirty(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3508,7 +3545,7 @@ bool js_cocos2dx_studio_Bone_removeChildBone(JSContext *cx, uint32_t argc, jsval
 			arg0 = (cocostudio::Bone*)(jsProxy ? jsProxy->ptr : NULL);
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Bone_removeChildBone : Error processing arguments");
 		cobj->removeChildBone(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3552,9 +3589,9 @@ bool js_cocos2dx_studio_Bone_getNodeToArmatureTransform(JSContext *cx, uint32_t 
 	cocostudio::Bone* cobj = (cocostudio::Bone *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Bone_getNodeToArmatureTransform : Invalid Native Object");
 	if (argc == 0) {
-		kmMat4 ret = cobj->getNodeToArmatureTransform();
+		cocos2d::Matrix ret = cobj->getNodeToArmatureTransform();
 		jsval jsret = JSVAL_NULL;
-		#pragma warning NO CONVERSION FROM NATIVE FOR kmMat4;
+		jsret = matrix_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -3707,6 +3744,7 @@ void js_register_cocos2dx_studio_Bone(JSContext *cx, JSObject *global) {
 
 	static JSFunctionSpec funcs[] = {
 		JS_FN("isTransformDirty", js_cocos2dx_studio_Bone_isTransformDirty, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setBlendFunc", js_cocos2dx_studio_Bone_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isIgnoreMovementBoneData", js_cocos2dx_studio_Bone_isIgnoreMovementBoneData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("updateZOrder", js_cocos2dx_studio_Bone_updateZOrder, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getDisplayRenderNode", js_cocos2dx_studio_Bone_getDisplayRenderNode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -3725,6 +3763,7 @@ void js_register_cocos2dx_studio_Bone(JSContext *cx, JSObject *global) {
 		JS_FN("setParentBone", js_cocos2dx_studio_Bone_setParentBone, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("addDisplay", js_cocos2dx_studio_Bone_addDisplay, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setIgnoreMovementBoneData", js_cocos2dx_studio_Bone_setIgnoreMovementBoneData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getBlendFunc", js_cocos2dx_studio_Bone_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setName", js_cocos2dx_studio_Bone_setName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("removeFromParent", js_cocos2dx_studio_Bone_removeFromParent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getColliderDetector", js_cocos2dx_studio_Bone_getColliderDetector, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -3975,7 +4014,7 @@ bool js_cocos2dx_studio_ArmatureAnimation_playWithIndexes(JSContext *cx, uint32_
 		bool arg2;
 		ok &= jsval_to_std_vector_int(cx, argv[0], &arg0);
 		ok &= jsval_to_int32(cx, argv[1], (int32_t *)&arg1);
-		ok &= JS_ValueToBoolean(cx, argv[2], &arg2);
+		arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ArmatureAnimation_playWithIndexes : Error processing arguments");
 		cobj->playWithIndexes(arg0, arg1, arg2);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -4208,7 +4247,7 @@ bool js_cocos2dx_studio_ArmatureAnimation_playWithNames(JSContext *cx, uint32_t 
 		bool arg2;
 		ok &= jsval_to_std_vector_string(cx, argv[0], &arg0);
 		ok &= jsval_to_int32(cx, argv[1], (int32_t *)&arg1);
-		ok &= JS_ValueToBoolean(cx, argv[2], &arg2);
+		arg2 = JS::ToBoolean(JS::RootedValue(cx, argv[2]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ArmatureAnimation_playWithNames : Error processing arguments");
 		cobj->playWithNames(arg0, arg1, arg2);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5178,7 +5217,7 @@ bool js_cocos2dx_studio_Armature_removeBone(JSContext *cx, uint32_t argc, jsval 
 			arg0 = (cocostudio::Bone*)(jsProxy ? jsProxy->ptr : NULL);
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Armature_removeBone : Error processing arguments");
 		cobj->removeBone(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5348,6 +5387,23 @@ bool js_cocos2dx_studio_Armature_setBatchNode(JSContext *cx, uint32_t argc, jsva
 	JS_ReportError(cx, "js_cocos2dx_studio_Armature_setBatchNode : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
+bool js_cocos2dx_studio_Armature_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocostudio::Armature* cobj = (cocostudio::Armature *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Armature_getBlendFunc : Invalid Native Object");
+	if (argc == 0) {
+		const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
+		jsval jsret = JSVAL_NULL;
+		jsret = blendfunc_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_studio_Armature_getBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
 bool js_cocos2dx_studio_Armature_setName(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -5477,6 +5533,26 @@ bool js_cocos2dx_studio_Armature_getAnimation(JSContext *cx, uint32_t argc, jsva
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_studio_Armature_getAnimation : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+bool js_cocos2dx_studio_Armature_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocostudio::Armature* cobj = (cocostudio::Armature *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Armature_setBlendFunc : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::BlendFunc arg0;
+		ok &= jsval_to_blendfunc(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Armature_setBlendFunc : Error processing arguments");
+		cobj->setBlendFunc(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_studio_Armature_setBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 bool js_cocos2dx_studio_Armature_getBoneDic(JSContext *cx, uint32_t argc, jsval *vp)
@@ -5654,12 +5730,14 @@ void js_register_cocos2dx_studio_Armature(JSContext *cx, JSObject *global) {
 		JS_FN("setParentBone", js_cocos2dx_studio_Armature_setParentBone, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("drawContour", js_cocos2dx_studio_Armature_drawContour, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setBatchNode", js_cocos2dx_studio_Armature_setBatchNode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getBlendFunc", js_cocos2dx_studio_Armature_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setName", js_cocos2dx_studio_Armature_setName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("addBone", js_cocos2dx_studio_Armature_addBone, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getArmatureData", js_cocos2dx_studio_Armature_getArmatureData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("boundingBox", js_cocos2dx_studio_Armature_getBoundingBox, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getVersion", js_cocos2dx_studio_Armature_getVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getAnimation", js_cocos2dx_studio_Armature_getAnimation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setBlendFunc", js_cocos2dx_studio_Armature_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getBoneDic", js_cocos2dx_studio_Armature_getBoneDic, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocostudio_Armature_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -5732,9 +5810,9 @@ bool js_cocos2dx_studio_Skin_getNodeToWorldTransformAR(JSContext *cx, uint32_t a
 	cocostudio::Skin* cobj = (cocostudio::Skin *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Skin_getNodeToWorldTransformAR : Invalid Native Object");
 	if (argc == 0) {
-		kmMat4 ret = cobj->getNodeToWorldTransformAR();
+		cocos2d::Matrix ret = cobj->getNodeToWorldTransformAR();
 		jsval jsret = JSVAL_NULL;
-		#pragma warning NO CONVERSION FROM NATIVE FOR kmMat4;
+		jsret = matrix_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
@@ -6101,7 +6179,7 @@ bool js_cocos2dx_studio_ComAttribute_getBool(JSContext *cx, uint32_t argc, jsval
 		std::string arg0;
 		bool arg1;
 		ok &= jsval_to_std_string(cx, argv[0], &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ComAttribute_getBool : Error processing arguments");
 		bool ret = cobj->getBool(arg0, arg1);
 		jsval jsret = JSVAL_NULL;
@@ -6203,7 +6281,7 @@ bool js_cocos2dx_studio_ComAttribute_setBool(JSContext *cx, uint32_t argc, jsval
 		std::string arg0;
 		bool arg1;
 		ok &= jsval_to_std_string(cx, argv[0], &arg0);
-		ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
+		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ComAttribute_setBool : Error processing arguments");
 		cobj->setBool(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -6450,8 +6528,7 @@ bool js_cocos2dx_studio_ComAudio_stopBackgroundMusic(JSContext *cx, uint32_t arg
 	do {
 		if (argc == 1) {
 			bool arg0;
-			ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
-			if (!ok) { ok = true; break; }
+			arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 			cobj->stopBackgroundMusic(arg0);
 			JS_SET_RVAL(cx, vp, JSVAL_VOID);
 			return true;
@@ -6588,8 +6665,7 @@ bool js_cocos2dx_studio_ComAudio_playBackgroundMusic(JSContext *cx, uint32_t arg
 			std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
 			if (!ok) { ok = true; break; }
 			bool arg1;
-			ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
-			if (!ok) { ok = true; break; }
+			arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 			cobj->playBackgroundMusic(arg0, arg1);
 			JS_SET_RVAL(cx, vp, JSVAL_VOID);
 			return true;
@@ -6637,8 +6713,7 @@ bool js_cocos2dx_studio_ComAudio_playEffect(JSContext *cx, uint32_t argc, jsval 
 			std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
 			if (!ok) { ok = true; break; }
 			bool arg1;
-			ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
-			if (!ok) { ok = true; break; }
+			arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
 			unsigned int ret = cobj->playEffect(arg0, arg1);
 			jsval jsret = JSVAL_NULL;
 			jsret = uint32_to_jsval(cx, ret);
@@ -6690,7 +6765,7 @@ bool js_cocos2dx_studio_ComAudio_setLoop(JSContext *cx, uint32_t argc, jsval *vp
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ComAudio_setLoop : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ComAudio_setLoop : Error processing arguments");
 		cobj->setLoop(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -6985,7 +7060,7 @@ bool js_cocos2dx_studio_InputDelegate_setKeypadEnabled(JSContext *cx, uint32_t a
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_InputDelegate_setKeypadEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_InputDelegate_setKeypadEnabled : Error processing arguments");
 		cobj->setKeypadEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -7022,7 +7097,7 @@ bool js_cocos2dx_studio_InputDelegate_setAccelerometerEnabled(JSContext *cx, uin
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_InputDelegate_setAccelerometerEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_InputDelegate_setAccelerometerEnabled : Error processing arguments");
 		cobj->setAccelerometerEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -7113,7 +7188,7 @@ bool js_cocos2dx_studio_InputDelegate_setTouchEnabled(JSContext *cx, uint32_t ar
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_InputDelegate_setTouchEnabled : Invalid Native Object");
 	if (argc == 1) {
 		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_InputDelegate_setTouchEnabled : Error processing arguments");
 		cobj->setTouchEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);

@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -43,22 +43,20 @@ var TestScene = cc.Scene.extend({
     ctor:function (bPortrait) {
         this._super();
         this.init();
-    },
 
-    // callbacks
-    onEnter:function () {
-        this._super();
         var label = cc.LabelTTF.create("Main Menu", "Arial", 20);
         var menuItem = cc.MenuItemLabel.create(label, this.onMainMenuCallback, this);
 
         var menu = cc.Menu.create(menuItem);
         menu.x = 0;
-	    menu.y = 0;
+        menu.y = 0;
         menuItem.x = winSize.width - 50;
-	    menuItem.y = 25;
+        menuItem.y = 25;
 
         this.addChild(menu, 1);
     },
+
+    // callbacks
     onMainMenuCallback:function () {
         var scene = cc.Scene.create();
         var layer = new TestController();
@@ -471,7 +469,8 @@ var testNames = [
     },
     {
         title:"Spine Test",
-        platforms: PLATFORM_JSB,
+        resource: g_spine,
+        platforms: PLATFORM_ALL,
         testScene:function () {
             return new SpineTestScene();
         }

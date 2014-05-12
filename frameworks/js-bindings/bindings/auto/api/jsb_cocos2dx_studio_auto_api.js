@@ -255,7 +255,7 @@ ccs.BaseData = {
 
 /**
  * @method getColor
- * @return {Color4BObject}
+ * @return {color4b_object}
  */
 getColor : function (
 )
@@ -265,7 +265,7 @@ getColor : function (
 
 /**
  * @method setColor
- * @param {Color4BObject} arg0
+ * @param {color4b_object} arg0
  */
 setColor : function (
 color4b 
@@ -619,10 +619,10 @@ getColliderBodyList : function (
 
 /**
  * @method updateTransform
- * @param {kmMat4} arg0
+ * @param {matrix_object} arg0
  */
 updateTransform : function (
-kmmat4 
+matrix 
 )
 {
 },
@@ -795,12 +795,12 @@ getDisplayRenderNode : function (
 
 /**
  * @method getAnchorPointInPoints
- * @return {PointObject}
+ * @return {vector2_object}
  */
 getAnchorPointInPoints : function (
 )
 {
-    return cc.Point;
+    return new Array();
 },
 
 /**
@@ -857,7 +857,7 @@ bone
 
 /**
  * @method getContentSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getContentSize : function (
 )
@@ -867,7 +867,7 @@ getContentSize : function (
 
 /**
  * @method getBoundingBox
- * @return {RectObject}
+ * @return {rect_object}
  */
 getBoundingBox : function (
 )
@@ -889,7 +889,7 @@ int
 
 /**
  * @method containPoint
-* @param {float|PointObject} float
+* @param {float|vector2_object} float
 * @param {float} float
 * @return {bool|bool}
 */
@@ -969,12 +969,12 @@ getCurrentDisplayIndex : function (
 
 /**
  * @method getAnchorPoint
- * @return {PointObject}
+ * @return {vector2_object}
  */
 getAnchorPoint : function (
 )
 {
-    return cc.Point;
+    return new Array();
 },
 
 /**
@@ -1043,6 +1043,16 @@ isTransformDirty : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
 },
 
 /**
@@ -1226,6 +1236,16 @@ bool
 },
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method setName
  * @param {String} arg0
  */
@@ -1333,12 +1353,12 @@ armature
 
 /**
  * @method getNodeToArmatureTransform
- * @return {kmMat4}
+ * @return {matrix_object}
  */
 getNodeToArmatureTransform : function (
 )
 {
-    return kmMat4;
+    return cc.Matrix;
 },
 
 /**
@@ -1598,7 +1618,7 @@ ccs.ArmatureDataManager = {
 
 /**
  * @method getAnimationDatas
- * @return {MapObject}
+ * @return {map_object}
  */
 getAnimationDatas : function (
 )
@@ -1726,7 +1746,7 @@ str
 
 /**
  * @method getArmatureDatas
- * @return {MapObject}
+ * @return {map_object}
  */
 getArmatureDatas : function (
 )
@@ -1978,6 +1998,16 @@ batchnode
 },
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method setName
  * @param {String} arg0
  */
@@ -2011,7 +2041,7 @@ getArmatureData : function (
 
 /**
  * @method getBoundingBox
- * @return {RectObject}
+ * @return {rect_object}
  */
 getBoundingBox : function (
 )
@@ -2040,8 +2070,18 @@ getAnimation : function (
 },
 
 /**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
  * @method getBoneDic
- * @return {MapObject}
+ * @return {map_object}
  */
 getBoneDic : function (
 )
@@ -2091,12 +2131,12 @@ getBone : function (
 
 /**
  * @method getNodeToWorldTransformAR
- * @return {kmMat4}
+ * @return {matrix_object}
  */
 getNodeToWorldTransformAR : function (
 )
 {
-    return kmMat4;
+    return cc.Matrix;
 },
 
 /**

@@ -13,7 +13,12 @@
 #include "localstorage/js_bindings_system_registration.h"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
+#include "network/XMLHTTPRequest.h"
 #include "Runtime.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "platform/android/CCJavascriptJavaBridge.h"
+#endif
+
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -56,6 +61,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_chipmunk);
+    sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
+    #endif
     
 #ifdef COCOS2D_DEBUG
     if (startRuntime())
@@ -73,15 +82,19 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    Director::getInstance()->stopAnimation();
+    auto director = Director::getInstance();
+    director->stopAnimation();
+    director->getEventDispatcher()->dispatchCustomEvent("game_on_hide");
     SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-    SimpleAudioEngine::getInstance()->pauseAllEffects();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();    
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    Director::getInstance()->startAnimation();
+    auto director = Director::getInstance();
+    director->startAnimation();
+    director->getEventDispatcher()->dispatchCustomEvent("game_on_show");
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

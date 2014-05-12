@@ -1,8 +1,7 @@
 /****************************************************************************
-
- http://www.cocos2d-html5.org
- http://www.cocos2d-iphone.org
- http://www.cocos2d-x.org
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
