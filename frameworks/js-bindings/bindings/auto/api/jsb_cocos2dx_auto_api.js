@@ -4726,6 +4726,38 @@ rect
 },
 
 /**
+ * @method create
+* @param {Array} array
+* @param {float} float
+* @param {unsigned int} int
+* @return {cc.Animation|cc.Animation}
+*/
+create : function(
+array,
+float,
+int 
+)
+{
+    return cc.Animation;
+},
+
+/**
+ * @method createWithSpriteFrames
+ * @param {Array} arg0
+ * @param {float} arg1
+ * @param {unsigned int} arg2
+ * @return {cc.Animation}
+ */
+createWithSpriteFrames : function (
+array, 
+float, 
+int 
+)
+{
+    return cc.Animation;
+},
+
+/**
  * @method Animation
  * @constructor
  */
@@ -16356,26 +16388,6 @@ char
 cc.Application = {
 
 /**
- * @method getTargetPlatform
- * @return {cc.ApplicationProtocol::Platform}
- */
-getTargetPlatform : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getCurrentLanguageCode
- * @return {char}
- */
-getCurrentLanguageCode : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getCurrentLanguage
  * @return {cc.LanguageType}
  */
@@ -16383,16 +16395,6 @@ getCurrentLanguage : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setAnimationInterval
- * @param {double} arg0
- */
-setAnimationInterval : function (
-double 
-)
-{
 },
 
 /**
