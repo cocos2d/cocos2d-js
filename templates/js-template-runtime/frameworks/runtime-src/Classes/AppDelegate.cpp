@@ -39,9 +39,9 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    string entryfile ="main.js";
+    
 #if (COCOS2D_DEBUG>0)
-    initRuntime(entryfile);
+    initRuntime();
 #endif
     
     // initialize director
@@ -106,7 +106,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore::getInstance()->start();
     auto engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    ScriptingCore::getInstance()->runScript(entryfile.c_str());
+    ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
     
     return true;
 }
