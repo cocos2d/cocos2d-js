@@ -10,7 +10,7 @@ cc.Scale9Sprite = {
 
 /**
  * @method resizableSpriteWithCapInsets
- * @param {rect_object} arg0
+ * @param {RectObject} arg0
  * @return {cc.Scale9Sprite}
  */
 resizableSpriteWithCapInsets : function (
@@ -33,7 +33,7 @@ float
 /**
  * @method initWithSpriteFrameName
 * @param {String|String} str
-* @param {rect_object} rect
+* @param {RectObject} rect
 * @return {bool|bool}
 */
 initWithSpriteFrameName : function(
@@ -66,7 +66,7 @@ init : function (
 
 /**
  * @method setPreferredSize
- * @param {size_object} arg0
+ * @param {SizeObject} arg0
  */
 setPreferredSize : function (
 size 
@@ -87,9 +87,9 @@ spriteframe
 /**
  * @method initWithBatchNode
 * @param {cc.SpriteBatchNode|cc.SpriteBatchNode} spritebatchnode
-* @param {rect_object|rect_object} rect
-* @param {rect_object|bool} rect
-* @param {rect_object} rect
+* @param {RectObject|RectObject} rect
+* @param {RectObject|bool} rect
+* @param {RectObject} rect
 * @return {bool|bool}
 */
 initWithBatchNode : function(
@@ -114,7 +114,7 @@ getInsetBottom : function (
 
 /**
  * @method getCapInsets
- * @return {rect_object}
+ * @return {RectObject}
  */
 getCapInsets : function (
 )
@@ -125,9 +125,9 @@ getCapInsets : function (
 /**
  * @method updateWithBatchNode
  * @param {cc.SpriteBatchNode} arg0
- * @param {rect_object} arg1
+ * @param {RectObject} arg1
  * @param {bool} arg2
- * @param {rect_object} arg3
+ * @param {RectObject} arg3
  * @return {bool}
  */
 updateWithBatchNode : function (
@@ -152,7 +152,7 @@ getInsetRight : function (
 
 /**
  * @method getOriginalSize
- * @return {size_object}
+ * @return {SizeObject}
  */
 getOriginalSize : function (
 )
@@ -162,9 +162,9 @@ getOriginalSize : function (
 
 /**
  * @method initWithFile
-* @param {String|String|rect_object|String} str
-* @param {rect_object|rect_object|String} rect
-* @param {rect_object} rect
+* @param {String|String|RectObject|String} str
+* @param {RectObject|RectObject|String} rect
+* @param {RectObject} rect
 * @return {bool|bool|bool|bool}
 */
 initWithFile : function(
@@ -199,7 +199,7 @@ float
 /**
  * @method initWithSpriteFrame
 * @param {cc.SpriteFrame|cc.SpriteFrame} spriteframe
-* @param {rect_object} rect
+* @param {RectObject} rect
 * @return {bool|bool}
 */
 initWithSpriteFrame : function(
@@ -212,7 +212,7 @@ rect
 
 /**
  * @method getPreferredSize
- * @return {size_object}
+ * @return {SizeObject}
  */
 getPreferredSize : function (
 )
@@ -222,7 +222,7 @@ getPreferredSize : function (
 
 /**
  * @method setCapInsets
- * @param {rect_object} arg0
+ * @param {RectObject} arg0
  */
 setCapInsets : function (
 rect 
@@ -252,9 +252,9 @@ float
 
 /**
  * @method create
-* @param {String|rect_object|String|String} str
-* @param {rect_object|String|rect_object} rect
-* @param {rect_object} rect
+* @param {String|RectObject|String|String} str
+* @param {RectObject|String|RectObject} rect
+* @param {RectObject} rect
 * @return {cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite}
 */
 create : function(
@@ -269,7 +269,7 @@ rect
 /**
  * @method createWithSpriteFrameName
 * @param {String|String} str
-* @param {rect_object} rect
+* @param {RectObject} rect
 * @return {cc.Scale9Sprite|cc.Scale9Sprite}
 */
 createWithSpriteFrameName : function(
@@ -283,7 +283,7 @@ rect
 /**
  * @method createWithSpriteFrame
 * @param {cc.SpriteFrame|cc.SpriteFrame} spriteframe
-* @param {rect_object} rect
+* @param {RectObject} rect
 * @return {cc.Scale9Sprite|cc.Scale9Sprite}
 */
 createWithSpriteFrame : function(
@@ -413,7 +413,7 @@ bool
 /**
  * @method getTouchLocation
  * @param {cc.Touch} arg0
- * @return {vector2_object}
+ * @return {Array}
  */
 getTouchLocation : function (
 touch 
@@ -534,7 +534,7 @@ state
 
 /**
  * @method setLabelAnchorPoint
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  */
 setLabelAnchorPoint : function (
 array 
@@ -544,7 +544,7 @@ array
 
 /**
  * @method getLabelAnchorPoint
- * @return {vector2_object}
+ * @return {Array}
  */
 getLabelAnchorPoint : function (
 )
@@ -612,7 +612,7 @@ node
 
 /**
  * @method setPreferredSize
- * @param {size_object} arg0
+ * @param {SizeObject} arg0
  */
 setPreferredSize : function (
 size 
@@ -622,7 +622,7 @@ size
 
 /**
  * @method getCurrentTitleColor
- * @return {color3b_object}
+ * @return {Color3BObject}
  */
 getCurrentTitleColor : function (
 )
@@ -741,7 +741,7 @@ getBackgroundSprite : function (
 /**
  * @method getTitleColorForState
  * @param {cc.Control::State} arg0
- * @return {color3b_object}
+ * @return {Color3BObject}
  */
 getTitleColorForState : function (
 state 
@@ -752,7 +752,7 @@ state
 
 /**
  * @method setTitleColorForState
- * @param {color3b_object} arg0
+ * @param {Color3BObject} arg0
  * @param {cc.Control::State} arg1
  */
 setTitleColorForState : function (
@@ -832,7 +832,7 @@ getTitleLabel : function (
 
 /**
  * @method getPreferredSize
- * @return {size_object}
+ * @return {SizeObject}
  */
 getPreferredSize : function (
 )
@@ -965,7 +965,7 @@ bool
 /**
  * @method initWithTargetAndPos
  * @param {cc.Node} arg0
- * @param {vector2_object} arg1
+ * @param {Array} arg1
  * @return {bool}
  */
 initWithTargetAndPos : function (
@@ -988,7 +988,7 @@ float
 
 /**
  * @method getStartPos
- * @return {vector2_object}
+ * @return {Array}
  */
 getStartPos : function (
 )
@@ -1069,7 +1069,7 @@ sprite
 /**
  * @method create
  * @param {cc.Node} arg0
- * @param {vector2_object} arg1
+ * @param {Array} arg1
  * @return {cc.ControlHuePicker}
  */
 create : function (
@@ -1109,7 +1109,7 @@ getShadow : function (
 /**
  * @method initWithTargetAndPos
  * @param {cc.Node} arg0
- * @param {vector2_object} arg1
+ * @param {Array} arg1
  * @return {bool}
  */
 initWithTargetAndPos : function (
@@ -1122,7 +1122,7 @@ array
 
 /**
  * @method getStartPos
- * @return {vector2_object}
+ * @return {Array}
  */
 getStartPos : function (
 )
@@ -1193,7 +1193,7 @@ getBrightness : function (
 /**
  * @method create
  * @param {cc.Node} arg0
- * @param {vector2_object} arg1
+ * @param {Array} arg1
  * @return {cc.ControlSaturationBrightnessPicker}
  */
 create : function (
@@ -1242,7 +1242,7 @@ getHuePicker : function (
 
 /**
  * @method setColor
- * @param {color3b_object} arg0
+ * @param {Color3BObject} arg0
  */
 setColor : function (
 color3b 
@@ -1352,7 +1352,7 @@ cc.ControlPotentiometer = {
 
 /**
  * @method setPreviousLocation
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  */
 setPreviousLocation : function (
 array 
@@ -1392,10 +1392,10 @@ getMaximumValue : function (
 
 /**
  * @method angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint
- * @param {vector2_object} arg0
- * @param {vector2_object} arg1
- * @param {vector2_object} arg2
- * @param {vector2_object} arg3
+ * @param {Array} arg0
+ * @param {Array} arg1
+ * @param {Array} arg2
+ * @param {Array} arg3
  * @return {float}
  */
 angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint : function (
@@ -1410,7 +1410,7 @@ array
 
 /**
  * @method potentiometerBegan
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  */
 potentiometerBegan : function (
 array 
@@ -1460,7 +1460,7 @@ getValue : function (
 
 /**
  * @method getPreviousLocation
- * @return {vector2_object}
+ * @return {Array}
  */
 getPreviousLocation : function (
 )
@@ -1470,8 +1470,8 @@ getPreviousLocation : function (
 
 /**
  * @method distanceBetweenPointAndPoint
- * @param {vector2_object} arg0
- * @param {vector2_object} arg1
+ * @param {Array} arg0
+ * @param {Array} arg1
  * @return {float}
  */
 distanceBetweenPointAndPoint : function (
@@ -1484,7 +1484,7 @@ array
 
 /**
  * @method potentiometerEnded
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  */
 potentiometerEnded : function (
 array 
@@ -1540,7 +1540,7 @@ sprite
 
 /**
  * @method potentiometerMoved
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  */
 potentiometerMoved : function (
 array 
@@ -1593,7 +1593,7 @@ getSelectedThumbSprite : function (
 /**
  * @method locationFromTouch
  * @param {cc.Touch} arg0
- * @return {vector2_object}
+ * @return {Array}
  */
 locationFromTouch : function (
 touch 
@@ -1906,7 +1906,7 @@ getMinusSprite : function (
 
 /**
  * @method updateLayoutUsingTouchLocation
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  */
 updateLayoutUsingTouchLocation : function (
 array 
@@ -2163,7 +2163,7 @@ hasMoved : function (
 /**
  * @method locationFromTouch
  * @param {cc.Touch} arg0
- * @return {vector2_object}
+ * @return {Array}
  */
 locationFromTouch : function (
 touch 
@@ -2232,7 +2232,7 @@ node
 
 /**
  * @method setContentOffsetInDuration
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  * @param {float} arg1
  */
 setContentOffsetInDuration : function (
@@ -2316,7 +2316,7 @@ updateInset : function (
 
 /**
  * @method initWithViewSize
- * @param {size_object} arg0
+ * @param {SizeObject} arg0
  * @param {cc.Node} arg1
  * @return {bool}
  */
@@ -2360,7 +2360,7 @@ init : function (
 
 /**
  * @method setContentOffset
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  * @param {bool} arg1
  */
 setContentOffset : function (
@@ -2412,7 +2412,7 @@ bool
 
 /**
  * @method getContentOffset
- * @return {vector2_object}
+ * @return {Array}
  */
 getContentOffset : function (
 )
@@ -2442,7 +2442,7 @@ bool
 
 /**
  * @method setViewSize
- * @param {size_object} arg0
+ * @param {SizeObject} arg0
  */
 setViewSize : function (
 size 
@@ -2452,7 +2452,7 @@ size
 
 /**
  * @method getViewSize
- * @return {size_object}
+ * @return {SizeObject}
  */
 getViewSize : function (
 )
@@ -2462,7 +2462,7 @@ getViewSize : function (
 
 /**
  * @method maxContainerOffset
- * @return {vector2_object}
+ * @return {Array}
  */
 maxContainerOffset : function (
 )
@@ -2494,7 +2494,7 @@ node
 
 /**
  * @method minContainerOffset
- * @return {vector2_object}
+ * @return {Array}
  */
 minContainerOffset : function (
 )
@@ -2516,7 +2516,7 @@ bool
 
 /**
  * @method create
-* @param {size_object} size
+* @param {SizeObject} size
 * @param {cc.Node} node
 * @return {cc.ScrollView|cc.ScrollView}
 */
@@ -2658,7 +2658,7 @@ long
 
 /**
  * @method initWithViewSize
- * @param {size_object} arg0
+ * @param {SizeObject} arg0
  * @param {cc.Node} arg1
  * @return {bool}
  */
@@ -2798,7 +2798,7 @@ inputmode
 
 /**
  * @method setPlaceholderFontColor
- * @param {color3b_object} arg0
+ * @param {Color3BObject} arg0
  */
 setPlaceholderFontColor : function (
 color3b 
@@ -2808,7 +2808,7 @@ color3b
 
 /**
  * @method setFontColor
- * @param {color3b_object} arg0
+ * @param {Color3BObject} arg0
  */
 setFontColor : function (
 color3b 
@@ -2840,7 +2840,7 @@ int
 
 /**
  * @method initWithSizeAndBackgroundSprite
- * @param {size_object} arg0
+ * @param {SizeObject} arg0
  * @param {cc.Scale9Sprite} arg1
  * @return {bool}
  */
@@ -2926,7 +2926,7 @@ int
 
 /**
  * @method create
- * @param {size_object} arg0
+ * @param {SizeObject} arg0
  * @param {cc.Scale9Sprite} arg1
  * @param {cc.Scale9Sprite} arg2
  * @param {cc.Scale9Sprite} arg3
