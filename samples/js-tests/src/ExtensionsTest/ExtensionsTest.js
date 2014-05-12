@@ -90,6 +90,18 @@ var extensionsTestItemNames = [
     }
 ];
 
+if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {
+    extensionsTestItemNames.push({
+        itemTitle:"PluginXTest",
+        testScene:function () {
+            var testScene = new PluginXTestScene();
+            if (testScene) {
+                cc.director.runScene(testScene);
+            }
+        }
+    });
+}
+
 var ExtensionsMainLayer = cc.Layer.extend({
     onEnter:function () {
         this._super();

@@ -247,6 +247,18 @@ bool
 },
 
 /**
+ * @method onFocusChange
+ * @param {ccui.Widget} arg0
+ * @param {ccui.Widget} arg1
+ */
+onFocusChange : function (
+widget, 
+widget 
+)
+{
+},
+
+/**
  * @method getLeftInParent
  * @return {float}
  */
@@ -287,6 +299,16 @@ getLayoutSize : function (
 },
 
 /**
+ * @method setHighlighted
+ * @param {bool} arg0
+ */
+setHighlighted : function (
+bool 
+)
+{
+},
+
+/**
  * @method setPositionType
  * @param {ccui.PositionType} arg0
  */
@@ -324,6 +346,16 @@ getBottomInParent : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method isHighlighted
+ * @return {bool}
+ */
+isHighlighted : function (
+)
+{
+    return false;
 },
 
 /**
@@ -398,6 +430,20 @@ getVirtualRendererSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method findNextFocusedWidget
+ * @param {ccui.FocusDirection} arg0
+ * @param {ccui.Widget} arg1
+ * @return {ccui.Widget}
+ */
+findNextFocusedWidget : function (
+focusdirection, 
+widget 
+)
+{
+    return ccui.Widget;
 },
 
 /**
@@ -499,6 +545,18 @@ getVirtualRenderer : function (
 },
 
 /**
+ * @method dispatchFocusEvent
+ * @param {ccui.Widget} arg0
+ * @param {ccui.Widget} arg1
+ */
+dispatchFocusEvent : function (
+widget, 
+widget 
+)
+{
+},
+
+/**
  * @method setBrightStyle
  * @param {ccui.BrightStyle} arg0
  */
@@ -549,6 +607,16 @@ getTouchStartPos : function (
 },
 
 /**
+ * @method setFocusEnabled
+ * @param {bool} arg0
+ */
+setFocusEnabled : function (
+bool 
+)
+{
+},
+
+/**
  * @method setActionTag
  * @param {int} arg0
  */
@@ -581,6 +649,18 @@ array
 },
 
 /**
+ * @method getCurrentFocusedWidget
+ * @param {bool} arg0
+ * @return {ccui.Widget}
+ */
+getCurrentFocusedWidget : function (
+bool 
+)
+{
+    return ccui.Widget;
+},
+
+/**
  * @method getTopInParent
  * @return {float}
  */
@@ -588,6 +668,14 @@ getTopInParent : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method requestFocus
+ */
+requestFocus : function (
+)
+{
 },
 
 /**
@@ -727,6 +815,16 @@ bool
 },
 
 /**
+ * @method isFocusEnabled
+ * @return {bool}
+ */
+isFocusEnabled : function (
+)
+{
+    return false;
+},
+
+/**
  * @method create
  * @return {ccui.Widget}
  */
@@ -783,6 +881,16 @@ layoutbackgroundcolortype
 },
 
 /**
+ * @method setLoopFocus
+ * @param {bool} arg0
+ */
+setLoopFocus : function (
+bool 
+)
+{
+},
+
+/**
  * @method setBackGroundImageColor
  * @param {Color3BObject} arg0
  */
@@ -810,6 +918,16 @@ getClippingType : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method isLoopFocus
+ * @return {bool}
+ */
+isLoopFocus : function (
+)
+{
+    return false;
 },
 
 /**
@@ -973,6 +1091,16 @@ getBackGroundImageOpacity : function (
 },
 
 /**
+ * @method isPassFocusToChild
+ * @return {bool}
+ */
+isPassFocusToChild : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setBackGroundImageCapInsets
  * @param {RectObject} arg0
  */
@@ -1000,6 +1128,16 @@ getLayoutType : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setPassFocusToChild
+ * @param {bool} arg0
+ */
+setPassFocusToChild : function (
+bool 
+)
+{
 },
 
 /**
@@ -3464,6 +3602,298 @@ char
 )
 {
     return ccui.Widget;
+},
+
+};
+
+/**
+ * @class RichElement
+ */
+ccui.RichElement = {
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @param {Color3BObject} arg1
+ * @param {unsigned char} arg2
+ * @return {bool}
+ */
+init : function (
+int, 
+color3b, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method RichElement
+ * @constructor
+ */
+RichElement : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RichElementText
+ */
+ccui.RichElementText = {
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @param {Color3BObject} arg1
+ * @param {unsigned char} arg2
+ * @param {char} arg3
+ * @param {char} arg4
+ * @param {float} arg5
+ * @return {bool}
+ */
+init : function (
+int, 
+color3b, 
+char, 
+char, 
+char, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {int} arg0
+ * @param {Color3BObject} arg1
+ * @param {unsigned char} arg2
+ * @param {char} arg3
+ * @param {char} arg4
+ * @param {float} arg5
+ * @return {ccui.RichElementText}
+ */
+create : function (
+int, 
+color3b, 
+char, 
+char, 
+char, 
+float 
+)
+{
+    return ccui.RichElementText;
+},
+
+/**
+ * @method RichElementText
+ * @constructor
+ */
+RichElementText : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RichElementImage
+ */
+ccui.RichElementImage = {
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @param {Color3BObject} arg1
+ * @param {unsigned char} arg2
+ * @param {char} arg3
+ * @return {bool}
+ */
+init : function (
+int, 
+color3b, 
+char, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {int} arg0
+ * @param {Color3BObject} arg1
+ * @param {unsigned char} arg2
+ * @param {char} arg3
+ * @return {ccui.RichElementImage}
+ */
+create : function (
+int, 
+color3b, 
+char, 
+char 
+)
+{
+    return ccui.RichElementImage;
+},
+
+/**
+ * @method RichElementImage
+ * @constructor
+ */
+RichElementImage : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RichElementCustomNode
+ */
+ccui.RichElementCustomNode = {
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @param {Color3BObject} arg1
+ * @param {unsigned char} arg2
+ * @param {cc.Node} arg3
+ * @return {bool}
+ */
+init : function (
+int, 
+color3b, 
+char, 
+node 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {int} arg0
+ * @param {Color3BObject} arg1
+ * @param {unsigned char} arg2
+ * @param {cc.Node} arg3
+ * @return {ccui.RichElementCustomNode}
+ */
+create : function (
+int, 
+color3b, 
+char, 
+node 
+)
+{
+    return ccui.RichElementCustomNode;
+},
+
+/**
+ * @method RichElementCustomNode
+ * @constructor
+ */
+RichElementCustomNode : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RichText
+ */
+ccui.RichText = {
+
+/**
+ * @method insertElement
+ * @param {ccui.RichElement} arg0
+ * @param {int} arg1
+ */
+insertElement : function (
+richelement, 
+int 
+)
+{
+},
+
+/**
+ * @method setAnchorPoint
+ * @param {Array} arg0
+ */
+setAnchorPoint : function (
+array 
+)
+{
+},
+
+/**
+ * @method pushBackElement
+ * @param {ccui.RichElement} arg0
+ */
+pushBackElement : function (
+richelement 
+)
+{
+},
+
+/**
+ * @method ignoreContentAdaptWithSize
+ * @param {bool} arg0
+ */
+ignoreContentAdaptWithSize : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setVerticalSpace
+ * @param {float} arg0
+ */
+setVerticalSpace : function (
+float 
+)
+{
+},
+
+/**
+ * @method formatText
+ */
+formatText : function (
+)
+{
+},
+
+/**
+ * @method removeElement
+* @param {ccui.RichElement|int} richelement
+*/
+removeElement : function(
+int 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccui.RichText}
+ */
+create : function (
+)
+{
+    return ccui.RichText;
+},
+
+/**
+ * @method RichText
+ * @constructor
+ */
+RichText : function (
+)
+{
 },
 
 };
