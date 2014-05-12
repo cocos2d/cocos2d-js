@@ -16356,26 +16356,6 @@ char
 cc.Application = {
 
 /**
- * @method getTargetPlatform
- * @return {cc.ApplicationProtocol::Platform}
- */
-getTargetPlatform : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getCurrentLanguageCode
- * @return {char}
- */
-getCurrentLanguageCode : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getCurrentLanguage
  * @return {cc.LanguageType}
  */
@@ -16383,16 +16363,6 @@ getCurrentLanguage : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setAnimationInterval
- * @param {double} arg0
- */
-setAnimationInterval : function (
-double 
-)
-{
 },
 
 /**
