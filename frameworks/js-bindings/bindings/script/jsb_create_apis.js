@@ -1131,12 +1131,11 @@ cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
  * @param {Number} [loops=1]
  * @return {cc.Animation}
  * @example
- * 1.
- * //Creates an empty animation
+ *
+ * 1.Creates an empty animation
  * var animation1 = cc.Animation.create();
  *
- * 2.
- * //Create an animation with sprite frames , delay and loops.
+ * 2.Create an animation with sprite frames , delay and loops.
  * var spriteFrames = [];
  * var frame = cache.getSpriteFrame("grossini_dance_01.png");
  * spriteFrames.push(frame);
@@ -1144,8 +1143,7 @@ cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
  * var animation2 = cc.Animation.create(spriteFrames, 0.2);
  * var animation2 = cc.Animation.create(spriteFrames, 0.2, 2);
  *
- * 3.
- * //Create an animation with animation frames , delay and loops.
+ * 3.Create an animation with animation frames , delay and loops.
  * var animationFrames = [];
  * var frame =  new cc.AnimationFrame();
  * animationFrames.push(frame);
