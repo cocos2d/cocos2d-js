@@ -1978,6 +1978,11 @@ cc.DrawNode.create = function () {
 	return new cc.DrawNode();
 };
 
+
+//
+// TMX classes JS API Wrapper
+//
+
 cc.TMXTiledMap.prototype.allLayers = function(){
     var retArr = [],
         locChildren = this.getChildren(),
@@ -2025,6 +2030,10 @@ cc.TMXLayer.prototype.getPositonAt = function(x, y){
 };
 
 
+//
+// setBlendFunc JS API Wrapper
+//
+
 var protoHasBlend = [cc.AtlasNode.prototype,
                      cc.DrawNode.prototype,
                      cc.LabelTTF.prototype,
@@ -2045,9 +2054,48 @@ var templateSetBlendFunc = function(src, dst) {
     this._setBlendFunc(blendf);
     var b = this.getBlendFunc();
     cc.log((b.src == src) + ", " + (b.dst == dst));
-}
+};
 for (var i = 0, l = protoHasBlend.length; i < l; i++) {
     var proto = protoHasBlend[i];
     proto._setBlendFunc = proto.setBlendFunc;
     proto.setBlendFunc = templateSetBlendFunc;
+}
+
+
+//
+// Ease actions JS API Wrapper
+//
+
+var easeActions = {
+    easeExponentialIn : 3,
+    easeExponentialOut : 4,
+    easeExponentialInOut : 5,
+    easeSineIn : 6,
+    easeSineOut : 7,
+    easeSineInOut : 8,
+    easeBounceIn : 12,
+    easeBounceOut : 13,
+    easeBounceInOut : 14,
+    easeBackIn : 15,
+    easeBackOut : 16,
+    easeBackInOut : 17
+};
+var easeActionsWithParam = {
+    easeIn : 0,
+    easeOut : 1,
+    easeInOut : 2,
+    easeElasticIn : 9,
+    easeElasticOut : 10,
+    easeElasticInOut : 11,
+};
+
+for (var a in easeActions) {
+    cc[a] = function() {
+        return {tag: easeActions[a]};
+    };
+}
+for (var a in easeActionsWithParam) {
+    cc[a] = function(param) {
+        return {tag: easeActions[a], parameter: param};
+    };
 }
