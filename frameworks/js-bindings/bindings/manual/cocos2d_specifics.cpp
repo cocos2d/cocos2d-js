@@ -2599,18 +2599,19 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject tmp(cx);
     JS::RootedValue jsTag(cx);
     JS::RootedValue jsParam(cx);
+    double tag;
+    double parameter;
     for (int i = 0; i < argc; i++)
     {
         jsval vpi = argv[i];
-        double tag;
-        double parameter;
         bool ok = vpi.isObject() &&
             JS_ValueToObject(cx, JS::RootedValue(cx, vpi), &tmp) &&
             JS_GetProperty(cx, tmp, "tag", &jsTag) &&
             JS::ToNumber(cx, jsTag, &tag);
+        JS_GetProperty(cx, tmp, "parameter", &jsParam) && JS::ToNumber(cx, jsParam, &parameter);
+        bool hasParam = (parameter == parameter);
         if (!ok) continue;
 
-        bool hasParam = JS_GetProperty(cx, tmp, "parameter", &jsParam) && JS::ToNumber(cx, jsParam, &parameter);
         cocos2d::ActionEase* action;
         ok = true;
         if (tag == EASE_IN)
