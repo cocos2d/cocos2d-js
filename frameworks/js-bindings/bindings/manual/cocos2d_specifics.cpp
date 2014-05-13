@@ -2488,7 +2488,8 @@ bool js_cocos2dx_ActionInterval_repeat(JSContext *cx, uint32_t argc, jsval *vp)
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionInterval_repeat : Invalid Native Object");
     
     JS::CallArgs argv = JS::CallArgsFromVp(argc, vp);
-	if (argc == 1) {
+	if (argc == 1)
+    {
         double times;
         if( ! JS::ToNumber(cx, argv[0], &times) ) {
             return false;
@@ -2532,6 +2533,159 @@ bool js_cocos2dx_ActionInterval_repeatForever(JSContext *cx, uint32_t argc, jsva
     
 	JS_ReportError(cx, "js_cocos2dx_ActionInterval_repeatForever : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
+}
+
+bool js_cocos2dx_ActionInterval_speed(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::ActionInterval* cobj = (cocos2d::ActionInterval *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionInterval_speed : Invalid Native Object");
+    
+    JS::CallArgs argv = JS::CallArgsFromVp(argc, vp);
+	if (argc == 1)
+    {
+        double speed;
+        if( ! JS::ToNumber(cx, argv[0], &speed) ) {
+            return false;
+        }
+        
+        cocos2d::Speed* action = cocos2d::Speed::create(cobj, speed);
+        // Unbind current proxy binding
+        JS_RemoveObjectRoot(cx, &proxy->obj);
+        jsb_remove_proxy(jsb_get_native_proxy(cobj), proxy);
+        // Rebind js obj with new action
+        js_proxy_t* newProxy = jsb_new_proxy(action, obj);
+        JS_AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::Speed");
+        
+		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+		return true;
+	}
+    
+	JS_ReportError(cx, "js_cocos2dx_ActionInterval_speed : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+
+enum ACTION_TAG {
+    EASE_IN = 0,
+    EASE_OUT,
+    EASE_INOUT,
+    EASE_EXPONENTIAL_IN,
+    EASE_EXPONENTIAL_OUT,
+    EASE_EXPONENTIAL_INOUT,
+    EASE_SINE_IN,
+    EASE_SINE_OUT,
+    EASE_SINE_INOUT,
+    EASE_ELASTIC_IN,
+    EASE_ELASTIC_OUT,
+    EASE_ELASTIC_INOUT,
+    EASE_BOUNCE_IN,
+    EASE_BOUNCE_OUT,
+    EASE_BOUNCE_INOUT,
+    EASE_BACK_IN,
+    EASE_BACK_OUT,
+    EASE_BACK_INOUT
+};
+
+bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::ActionInterval* cobj = (cocos2d::ActionInterval *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionInterval_easing : Invalid Native Object");
+    
+    cocos2d::ActionInterval* currentAction = cobj;
+    JS::CallArgs argv = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jsTag(cx);
+    JS::RootedValue jsParam(cx);
+    for (int i = 0; i < argc; i++)
+    {
+        jsval vpi = argv[i];
+        double tag;
+        double parameter;
+        bool ok = vpi.isObject() &&
+            JS_ValueToObject(cx, JS::RootedValue(cx, vpi), &tmp) &&
+            JS_GetProperty(cx, tmp, "tag", &jsTag) &&
+            JS::ToNumber(cx, jsTag, &tag);
+        if (!ok) continue;
+
+        bool hasParam = JS_GetProperty(cx, tmp, "parameter", &jsParam) && JS::ToNumber(cx, jsParam, &parameter);
+        cocos2d::ActionEase* action;
+        ok = true;
+        if (tag == EASE_IN)
+        {
+            if (!hasParam) ok = false;
+            action = cocos2d::EaseIn::create(currentAction, parameter);
+        }
+        else if (tag == EASE_OUT)
+        {
+            if (!hasParam) ok = false;
+            action = cocos2d::EaseOut::create(currentAction, parameter);
+        }
+        else if (tag == EASE_INOUT)
+        {
+            if (!hasParam) ok = false;
+            action = cocos2d::EaseInOut::create(currentAction, parameter);
+        }
+        else if (tag == EASE_EXPONENTIAL_IN)
+            action = cocos2d::EaseExponentialIn::create(currentAction);
+        else if (tag == EASE_EXPONENTIAL_OUT)
+            action = cocos2d::EaseExponentialOut::create(currentAction);
+        else if (tag == EASE_EXPONENTIAL_INOUT)
+            action = cocos2d::EaseExponentialInOut::create(currentAction);
+        else if (tag == EASE_SINE_IN)
+            action = cocos2d::EaseSineIn::create(currentAction);
+        else if (tag == EASE_SINE_OUT)
+            action = cocos2d::EaseSineOut::create(currentAction);
+        else if (tag == EASE_SINE_INOUT)
+            action = cocos2d::EaseSineInOut::create(currentAction);
+        else if (tag == EASE_ELASTIC_IN)
+        {
+            if (!hasParam) ok = false;
+            action = cocos2d::EaseElasticIn::create(currentAction, parameter);
+        }
+        else if (tag == EASE_ELASTIC_OUT)
+        {
+            if (!hasParam) ok = false;
+            action = cocos2d::EaseElasticOut::create(currentAction, parameter);
+        }
+        else if (tag == EASE_ELASTIC_INOUT)
+        {
+            if (!hasParam) ok = false;
+            action = cocos2d::EaseElasticInOut::create(currentAction, parameter);
+        }
+        else if (tag == EASE_BOUNCE_IN)
+            action = cocos2d::EaseBounceIn::create(currentAction);
+        else if (tag == EASE_BOUNCE_OUT)
+            action = cocos2d::EaseBounceOut::create(currentAction);
+        else if (tag == EASE_BOUNCE_INOUT)
+            action = cocos2d::EaseBounceInOut::create(currentAction);
+        else if (tag == EASE_BACK_IN)
+            action = cocos2d::EaseBackIn::create(currentAction);
+        else if (tag == EASE_BACK_OUT)
+            action = cocos2d::EaseBackOut::create(currentAction);
+        else if (tag == EASE_BACK_INOUT)
+            action = cocos2d::EaseBackInOut::create(currentAction);
+        else
+            continue;
+        
+        if (!ok || !action) {
+            JS_ReportError(cx, "js_cocos2dx_ActionInterval_easing : Invalid action: At least one action was expecting parameter");
+            return false;
+        }
+        
+        currentAction = action;
+    }
+    
+    // Unbind current proxy binding
+    JS_RemoveObjectRoot(cx, &proxy->obj);
+    jsb_remove_proxy(jsb_get_native_proxy(cobj), proxy);
+    // Rebind js obj with new action
+    js_proxy_t* newProxy = jsb_new_proxy(currentAction, obj);
+    JS_AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::EaseAction");
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    return true;
 }
 
 
@@ -4525,6 +4679,8 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     
     JS_DefineFunction(cx, jsb_cocos2d_ActionInterval_prototype, "repeat", js_cocos2dx_ActionInterval_repeat, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_ActionInterval_prototype, "repeatForever", js_cocos2dx_ActionInterval_repeatForever, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_ActionInterval_prototype, "speed", js_cocos2dx_ActionInterval_speed, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_ActionInterval_prototype, "easing", js_cocos2dx_ActionInterval_easing, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.Menu; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenu_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
