@@ -2067,12 +2067,18 @@ for (var i = 0, l = protoHasBlend.length; i < l; i++) {
 //
 
 var easeActions = {
+    easeIn : 0,
+    easeOut : 1,
+    easeInOut : 2,
     easeExponentialIn : 3,
     easeExponentialOut : 4,
     easeExponentialInOut : 5,
     easeSineIn : 6,
     easeSineOut : 7,
     easeSineInOut : 8,
+    easeElasticIn : 9,
+    easeElasticOut : 10,
+    easeElasticInOut : 11,
     easeBounceIn : 12,
     easeBounceOut : 13,
     easeBounceInOut : 14,
@@ -2080,22 +2086,14 @@ var easeActions = {
     easeBackOut : 16,
     easeBackInOut : 17
 };
-var easeActionsWithParam = {
-    easeIn : 0,
-    easeOut : 1,
-    easeInOut : 2,
-    easeElasticIn : 9,
-    easeElasticOut : 10,
-    easeElasticInOut : 11,
-};
+
+function templateEaseActions(actionTag) {
+    return function(param) {
+        return {tag: actionTag, parameter: param};
+    }
+}
 
 for (var a in easeActions) {
-    cc[a] = function() {
-        return {tag: easeActions[a]};
-    };
-}
-for (var a in easeActionsWithParam) {
-    cc[a] = function(param) {
-        return {tag: easeActions[a], parameter: param};
-    };
+    var actionTag = easeActions[a];
+    cc[a] = templateEaseActions(actionTag);
 }
