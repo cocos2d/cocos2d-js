@@ -7,6 +7,12 @@
             "from":"frameworks/cocos2d-html5",
             "to":"frameworks/cocos2d-html5"
          },
+         "project_replace_project_name":{
+            "src_project_name":"HelloJavascript",
+            "files":[
+               "res/config.json",
+               ".project"]
+            },
          "append_dir":[
             {
                "from":"frameworks/js-bindings",
