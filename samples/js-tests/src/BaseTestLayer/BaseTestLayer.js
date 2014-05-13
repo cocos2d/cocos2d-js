@@ -34,7 +34,7 @@ var BASE_TEST_SUBTITLE_TAG = 12;
 var autoTestEnabled = autoTestEnabled || false;
 var autoTestCurrentTestName = autoTestCurrentTestName || "N/A";
 
-var BaseTestLayer = cc.LayerGradient.extend({
+var BaseTestLayerProps = {
 
     ctor:function(colorA, colorB ) {
 
@@ -55,7 +55,7 @@ var BaseTestLayer = cc.LayerGradient.extend({
             b = cc.color(0,0,0,255);
         }
 
-	    this._super( a, b );
+        this._super( a, b );
 
         // Update winsize in case it was resized
         winSize = director.getWinSize();
@@ -233,23 +233,23 @@ var BaseTestLayer = cc.LayerGradient.extend({
 
     containsPixel: function(arr, pix, approx, range) {
 
-	range = range || 50.0;
-	approx = approx || false;
+    range = range || 50.0;
+    approx = approx || false;
 
         var abs = function(a,b) {
-	    return ((a-b) > 0) ? (a-b) : (b-a);
-	};
+        return ((a-b) > 0) ? (a-b) : (b-a);
+    };
 
-	var pixelEqual = function(pix1, pix2) {
-	    if(approx && abs(pix1, pix2) < range) return true;
-	    else if(!approx && pix1 == pix2) return true;
-	    return false;
-	};
+    var pixelEqual = function(pix1, pix2) {
+        if(approx && abs(pix1, pix2) < range) return true;
+        else if(!approx && pix1 == pix2) return true;
+        return false;
+    };
 
 
         for(var i=0; i < arr.length; i += 4) {
-	    if(pixelEqual(arr[i], pix[0]) && pixelEqual(arr[i + 1], pix[1]) &&
-	       pixelEqual(arr[i + 2], pix[2]) && pixelEqual(arr[i + 3], pix[3])) {
+        if(pixelEqual(arr[i], pix[0]) && pixelEqual(arr[i + 1], pix[1]) &&
+           pixelEqual(arr[i + 2], pix[2]) && pixelEqual(arr[i + 3], pix[3])) {
                 return true;
             }
         }
@@ -289,4 +289,6 @@ var BaseTestLayer = cc.LayerGradient.extend({
         }
         return sorted;
     }
-});
+};
+
+var BaseTestLayer = cc.LayerGradient.extend(BaseTestLayerProps);
