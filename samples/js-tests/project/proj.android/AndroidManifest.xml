@@ -28,10 +28,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data android:value="50d2af93527015338b000052" android:name="UMENG_APPKEY"></meta-data>
     </application>
     <supports-screens android:anyDensity="true"
                       android:smallScreens="true"
                       android:normalScreens="true"
                       android:largeScreens="true"
                       android:xlargeScreens="true"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
 </manifest>

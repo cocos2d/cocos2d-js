@@ -208,7 +208,7 @@ ccui.Widget = {
 
 /**
  * @method setSizePercent
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  */
 setSizePercent : function (
 array 
@@ -218,7 +218,7 @@ array
 
 /**
  * @method getCustomSize
- * @return {size_object}
+ * @return {SizeObject}
  */
 getCustomSize : function (
 )
@@ -270,7 +270,7 @@ getLeftInParent : function (
 
 /**
  * @method getTouchEndPos
- * @return {vector2_object}
+ * @return {Array}
  */
 getTouchEndPos : function (
 )
@@ -280,7 +280,7 @@ getTouchEndPos : function (
 
 /**
  * @method setPositionPercent
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  */
 setPositionPercent : function (
 array 
@@ -290,7 +290,7 @@ array
 
 /**
  * @method getLayoutSize
- * @return {size_object}
+ * @return {SizeObject}
  */
 getLayoutSize : function (
 )
@@ -424,7 +424,7 @@ isFocused : function (
 
 /**
  * @method getVirtualRendererSize
- * @return {size_object}
+ * @return {SizeObject}
  */
 getVirtualRendererSize : function (
 )
@@ -468,7 +468,7 @@ getActionTag : function (
 
 /**
  * @method getWorldPosition
- * @return {vector2_object}
+ * @return {Array}
  */
 getWorldPosition : function (
 )
@@ -516,7 +516,7 @@ clone : function (
 
 /**
  * @method getTouchMovePos
- * @return {vector2_object}
+ * @return {Array}
  */
 getTouchMovePos : function (
 )
@@ -588,7 +588,7 @@ layoutparameter
 
 /**
  * @method getSizePercent
- * @return {vector2_object}
+ * @return {Array}
  */
 getSizePercent : function (
 )
@@ -598,7 +598,7 @@ getSizePercent : function (
 
 /**
  * @method getTouchStartPos
- * @return {vector2_object}
+ * @return {Array}
  */
 getTouchStartPos : function (
 )
@@ -638,7 +638,7 @@ isBright : function (
 
 /**
  * @method clippingParentAreaContainPoint
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  * @return {bool}
  */
 clippingParentAreaContainPoint : function (
@@ -680,7 +680,7 @@ requestFocus : function (
 
 /**
  * @method updateSizeAndPosition
-* @param {size_object} size
+* @param {SizeObject} size
 */
 updateSizeAndPosition : function(
 size 
@@ -690,7 +690,7 @@ size
 
 /**
  * @method getSize
- * @return {size_object}
+ * @return {SizeObject}
  */
 getSize : function (
 )
@@ -730,7 +730,7 @@ bool
 
 /**
  * @method getPositionPercent
- * @return {vector2_object}
+ * @return {Array}
  */
 getPositionPercent : function (
 )
@@ -740,7 +740,7 @@ getPositionPercent : function (
 
 /**
  * @method hitTest
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  * @return {bool}
  */
 hitTest : function (
@@ -784,7 +784,7 @@ sizetype
  * @method checkChildInfo
  * @param {int} arg0
  * @param {ccui.Widget} arg1
- * @param {vector2_object} arg2
+ * @param {Array} arg2
  */
 checkChildInfo : function (
 int, 
@@ -796,7 +796,7 @@ array
 
 /**
  * @method setSize
- * @param {size_object} arg0
+ * @param {SizeObject} arg0
  */
 setSize : function (
 size 
@@ -852,7 +852,7 @@ ccui.Layout = {
 
 /**
  * @method setBackGroundColorVector
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  */
 setBackGroundColorVector : function (
 array 
@@ -892,7 +892,7 @@ bool
 
 /**
  * @method setBackGroundImageColor
- * @param {color3b_object} arg0
+ * @param {Color3BObject} arg0
  */
 setBackGroundImageColor : function (
 color3b 
@@ -902,7 +902,7 @@ color3b
 
 /**
  * @method getBackGroundColorVector
- * @return {vector2_object}
+ * @return {Array}
  */
 getBackGroundColorVector : function (
 )
@@ -982,8 +982,8 @@ texturerestype
 
 /**
  * @method setBackGroundColor
-* @param {color3b_object|color3b_object} color3b
-* @param {color3b_object} color3b
+* @param {Color3BObject|Color3BObject} color3b
+* @param {Color3BObject} color3b
 */
 setBackGroundColor : function(
 color3b,
@@ -1002,7 +1002,7 @@ requestDoLayout : function (
 
 /**
  * @method getBackGroundImageCapInsets
- * @return {rect_object}
+ * @return {RectObject}
  */
 getBackGroundImageCapInsets : function (
 )
@@ -1012,7 +1012,7 @@ getBackGroundImageCapInsets : function (
 
 /**
  * @method getBackGroundColor
- * @return {color3b_object}
+ * @return {Color3BObject}
  */
 getBackGroundColor : function (
 )
@@ -1032,7 +1032,7 @@ bool
 
 /**
  * @method getBackGroundImageColor
- * @return {color3b_object}
+ * @return {Color3BObject}
  */
 getBackGroundImageColor : function (
 )
@@ -1062,7 +1062,7 @@ getBackGroundColorType : function (
 
 /**
  * @method getBackGroundEndColor
- * @return {color3b_object}
+ * @return {Color3BObject}
  */
 getBackGroundEndColor : function (
 )
@@ -1102,7 +1102,7 @@ isPassFocusToChild : function (
 
 /**
  * @method setBackGroundImageCapInsets
- * @param {rect_object} arg0
+ * @param {RectObject} arg0
  */
 setBackGroundImageCapInsets : function (
 rect 
@@ -1112,7 +1112,7 @@ rect
 
 /**
  * @method getBackGroundImageTextureSize
- * @return {size_object}
+ * @return {SizeObject}
  */
 getBackGroundImageTextureSize : function (
 )
@@ -1142,7 +1142,7 @@ bool
 
 /**
  * @method getBackGroundStartColor
- * @return {color3b_object}
+ * @return {Color3BObject}
  */
 getBackGroundStartColor : function (
 )
@@ -1238,7 +1238,7 @@ bool
 
 /**
  * @method getCapInsetsDisabledRenderer
- * @return {rect_object}
+ * @return {RectObject}
  */
 getCapInsetsDisabledRenderer : function (
 )
@@ -1248,7 +1248,7 @@ getCapInsetsDisabledRenderer : function (
 
 /**
  * @method setTitleColor
- * @param {color3b_object} arg0
+ * @param {Color3BObject} arg0
  */
 setTitleColor : function (
 color3b 
@@ -1258,7 +1258,7 @@ color3b
 
 /**
  * @method setCapInsetsDisabledRenderer
- * @param {rect_object} arg0
+ * @param {RectObject} arg0
  */
 setCapInsetsDisabledRenderer : function (
 rect 
@@ -1268,7 +1268,7 @@ rect
 
 /**
  * @method setCapInsets
- * @param {rect_object} arg0
+ * @param {RectObject} arg0
  */
 setCapInsets : function (
 rect 
@@ -1318,7 +1318,7 @@ str
 
 /**
  * @method setCapInsetsNormalRenderer
- * @param {rect_object} arg0
+ * @param {RectObject} arg0
  */
 setCapInsetsNormalRenderer : function (
 rect 
@@ -1350,7 +1350,7 @@ str
 
 /**
  * @method getCapInsetsNormalRenderer
- * @return {rect_object}
+ * @return {RectObject}
  */
 getCapInsetsNormalRenderer : function (
 )
@@ -1360,7 +1360,7 @@ getCapInsetsNormalRenderer : function (
 
 /**
  * @method getCapInsetsPressedRenderer
- * @return {rect_object}
+ * @return {RectObject}
  */
 getCapInsetsPressedRenderer : function (
 )
@@ -1408,7 +1408,7 @@ texturerestype
 
 /**
  * @method setCapInsetsPressedRenderer
- * @param {rect_object} arg0
+ * @param {RectObject} arg0
  */
 setCapInsetsPressedRenderer : function (
 rect 
@@ -1438,7 +1438,7 @@ getTitleFontName : function (
 
 /**
  * @method getTitleColor
- * @return {color3b_object}
+ * @return {Color3BObject}
  */
 getTitleColor : function (
 )
@@ -1708,7 +1708,7 @@ bool
 
 /**
  * @method setTextureRect
- * @param {rect_object} arg0
+ * @param {RectObject} arg0
  */
 setTextureRect : function (
 rect 
@@ -1718,7 +1718,7 @@ rect
 
 /**
  * @method setCapInsets
- * @param {rect_object} arg0
+ * @param {RectObject} arg0
  */
 setCapInsets : function (
 rect 
@@ -1728,7 +1728,7 @@ rect
 
 /**
  * @method getCapInsets
- * @return {rect_object}
+ * @return {RectObject}
  */
 getCapInsets : function (
 )
@@ -1884,7 +1884,7 @@ getTextHorizontalAlignment : function (
 
 /**
  * @method getTextAreaSize
- * @return {size_object}
+ * @return {SizeObject}
  */
 getTextAreaSize : function (
 )
@@ -1944,7 +1944,7 @@ getFontName : function (
 
 /**
  * @method setTextAreaSize
- * @param {size_object} arg0
+ * @param {SizeObject} arg0
  */
 setTextAreaSize : function (
 size 
@@ -2130,7 +2130,7 @@ bool
 
 /**
  * @method setCapInsets
- * @param {rect_object} arg0
+ * @param {RectObject} arg0
  */
 setCapInsets : function (
 rect 
@@ -2150,7 +2150,7 @@ getDirection : function (
 
 /**
  * @method getCapInsets
- * @return {rect_object}
+ * @return {RectObject}
  */
 getCapInsets : function (
 )
@@ -2256,7 +2256,7 @@ isInertiaScrollEnabled : function (
 
 /**
  * @method scrollToPercentBothDirection
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  * @param {float} arg1
  * @param {bool} arg2
  */
@@ -2348,7 +2348,7 @@ jumpToBottomLeft : function (
 
 /**
  * @method setInnerContainerSize
- * @param {size_object} arg0
+ * @param {SizeObject} arg0
  */
 setInnerContainerSize : function (
 size 
@@ -2358,7 +2358,7 @@ size
 
 /**
  * @method getInnerContainerSize
- * @return {size_object}
+ * @return {SizeObject}
  */
 getInnerContainerSize : function (
 )
@@ -2454,7 +2454,7 @@ bool
 
 /**
  * @method jumpToPercentBothDirection
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  */
 jumpToPercentBothDirection : function (
 array 
@@ -2854,7 +2854,7 @@ texturerestype
 
 /**
  * @method setCapInsetProgressBarRebderer
- * @param {rect_object} arg0
+ * @param {RectObject} arg0
  */
 setCapInsetProgressBarRebderer : function (
 rect 
@@ -2864,7 +2864,7 @@ rect
 
 /**
  * @method setCapInsetsBarRenderer
- * @param {rect_object} arg0
+ * @param {RectObject} arg0
  */
 setCapInsetsBarRenderer : function (
 rect 
@@ -2874,7 +2874,7 @@ rect
 
 /**
  * @method getCapInsetsProgressBarRebderer
- * @return {rect_object}
+ * @return {RectObject}
  */
 getCapInsetsProgressBarRebderer : function (
 )
@@ -2894,7 +2894,7 @@ bool
 
 /**
  * @method setCapInsets
- * @param {rect_object} arg0
+ * @param {RectObject} arg0
  */
 setCapInsets : function (
 rect 
@@ -2926,7 +2926,7 @@ isScale9Enabled : function (
 
 /**
  * @method getCapInsetsBarRenderer
- * @return {rect_object}
+ * @return {RectObject}
  */
 getCapInsetsBarRenderer : function (
 )
@@ -3110,7 +3110,7 @@ getFontName : function (
 
 /**
  * @method setTextAreaSize
- * @param {size_object} arg0
+ * @param {SizeObject} arg0
  */
 setTextAreaSize : function (
 size 
@@ -3268,7 +3268,7 @@ bool
 
 /**
  * @method hitTest
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  * @return {bool}
  */
 hitTest : function (
@@ -3290,7 +3290,7 @@ int
 
 /**
  * @method setTouchSize
- * @param {size_object} arg0
+ * @param {SizeObject} arg0
  */
 setTouchSize : function (
 size 
@@ -3300,7 +3300,7 @@ size
 
 /**
  * @method getTouchSize
- * @return {size_object}
+ * @return {SizeObject}
  */
 getTouchSize : function (
 )
@@ -3614,7 +3614,7 @@ ccui.RichElement = {
 /**
  * @method init
  * @param {int} arg0
- * @param {color3b_object} arg1
+ * @param {Color3BObject} arg1
  * @param {unsigned char} arg2
  * @return {bool}
  */
@@ -3646,7 +3646,7 @@ ccui.RichElementText = {
 /**
  * @method init
  * @param {int} arg0
- * @param {color3b_object} arg1
+ * @param {Color3BObject} arg1
  * @param {unsigned char} arg2
  * @param {char} arg3
  * @param {char} arg4
@@ -3668,7 +3668,7 @@ float
 /**
  * @method create
  * @param {int} arg0
- * @param {color3b_object} arg1
+ * @param {Color3BObject} arg1
  * @param {unsigned char} arg2
  * @param {char} arg3
  * @param {char} arg4
@@ -3706,7 +3706,7 @@ ccui.RichElementImage = {
 /**
  * @method init
  * @param {int} arg0
- * @param {color3b_object} arg1
+ * @param {Color3BObject} arg1
  * @param {unsigned char} arg2
  * @param {char} arg3
  * @return {bool}
@@ -3724,7 +3724,7 @@ char
 /**
  * @method create
  * @param {int} arg0
- * @param {color3b_object} arg1
+ * @param {Color3BObject} arg1
  * @param {unsigned char} arg2
  * @param {char} arg3
  * @return {ccui.RichElementImage}
@@ -3758,7 +3758,7 @@ ccui.RichElementCustomNode = {
 /**
  * @method init
  * @param {int} arg0
- * @param {color3b_object} arg1
+ * @param {Color3BObject} arg1
  * @param {unsigned char} arg2
  * @param {cc.Node} arg3
  * @return {bool}
@@ -3776,7 +3776,7 @@ node
 /**
  * @method create
  * @param {int} arg0
- * @param {color3b_object} arg1
+ * @param {Color3BObject} arg1
  * @param {unsigned char} arg2
  * @param {cc.Node} arg3
  * @return {ccui.RichElementCustomNode}
@@ -3821,7 +3821,7 @@ int
 
 /**
  * @method setAnchorPoint
- * @param {vector2_object} arg0
+ * @param {Array} arg0
  */
 setAnchorPoint : function (
 array 
