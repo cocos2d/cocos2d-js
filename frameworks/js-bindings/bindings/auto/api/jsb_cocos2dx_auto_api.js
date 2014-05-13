@@ -2558,6 +2558,16 @@ textureatlas
 },
 
 /**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
  * @method getTextureAtlas
  * @return {cc.TextureAtlas}
  */
@@ -2565,6 +2575,16 @@ getTextureAtlas : function (
 )
 {
     return cc.TextureAtlas;
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
 },
 
 /**
@@ -3474,6 +3494,16 @@ str
 },
 
 /**
+ * @method addSearchPath
+ * @param {String} arg0
+ */
+addSearchPath : function (
+str 
+)
+{
+},
+
+/**
  * @method isFileExist
  * @param {String} arg0
  * @return {bool}
@@ -3780,6 +3810,43 @@ func
 EventListenerCustom : function (
 )
 {
+},
+
+};
+
+/**
+ * @class EventFocus
+ */
+cc.EventFocus = {
+
+/**
+ * @method EventFocus
+ * @constructor
+ * @param {ccui.Widget} arg0
+ * @param {ccui.Widget} arg1
+ */
+EventFocus : function (
+widget, 
+widget 
+)
+{
+},
+
+};
+
+/**
+ * @class EventListenerFocus
+ */
+cc.EventListenerFocus = {
+
+/**
+ * @method create
+ * @return {cc.EventListenerFocus}
+ */
+create : function (
+)
+{
+    return cc.EventListenerFocus;
 },
 
 };
@@ -4656,6 +4723,38 @@ texture2d,
 rect 
 )
 {
+},
+
+/**
+ * @method create
+* @param {Array} array
+* @param {float} float
+* @param {unsigned int} int
+* @return {cc.Animation|cc.Animation}
+*/
+create : function(
+array,
+float,
+int 
+)
+{
+    return cc.Animation;
+},
+
+/**
+ * @method createWithSpriteFrames
+ * @param {Array} arg0
+ * @param {float} arg1
+ * @param {unsigned int} arg2
+ * @return {cc.Animation}
+ */
+createWithSpriteFrames : function (
+array, 
+float, 
+int 
+)
+{
+    return cc.Animation;
 },
 
 /**
@@ -9244,6 +9343,16 @@ color4f
 },
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method onDraw
  * @param {cc.Matrix} arg0
  * @param {bool} arg1
@@ -9259,6 +9368,16 @@ bool
  * @method clear
  */
 clear : function (
+)
+{
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
 )
 {
 },
@@ -9816,6 +9935,16 @@ sprite
 },
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method initWithTexture
  * @param {cc.Texture2D} arg0
  * @param {long} arg1
@@ -9863,6 +9992,16 @@ long
 )
 {
     return false;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
 },
 
 /**
@@ -10647,6 +10786,26 @@ cc.LayerColor = {
 changeWidthAndHeight : function (
 float, 
 float 
+)
+{
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
 )
 {
 },
@@ -12909,6 +13068,16 @@ color3b
 },
 
 /**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
  * @method setStartingPositionInitialized
  * @param {bool} arg0
  */
@@ -12916,6 +13085,16 @@ setStartingPositionInitialized : function (
 bool 
 )
 {
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
 },
 
 /**
@@ -13177,6 +13356,16 @@ spritebatchnode
 },
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method setDisplayFrameWithAnimationName
  * @param {String} arg0
  * @param {long} arg1
@@ -13270,6 +13459,16 @@ rect
 )
 {
     return false;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
 },
 
 /**
@@ -13960,6 +14159,16 @@ int
 },
 
 /**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
  * @method removeAllChildrenWithCleanup
  * @param {bool} arg0
  */
@@ -13977,6 +14186,16 @@ getTextureAtlas : function (
 )
 {
     return cc.TextureAtlas;
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
 },
 
 /**
@@ -14996,6 +15215,16 @@ getStartRadiusVar : function (
 },
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method setStartColorVar
  * @param {Color4FObject} arg0
  */
@@ -15065,6 +15294,16 @@ getTotalParticles : function (
  */
 setStartRadiusVar : function (
 float 
+)
+{
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
 )
 {
 },
@@ -16149,26 +16388,6 @@ char
 cc.Application = {
 
 /**
- * @method getTargetPlatform
- * @return {cc.ApplicationProtocol::Platform}
- */
-getTargetPlatform : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getCurrentLanguageCode
- * @return {char}
- */
-getCurrentLanguageCode : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getCurrentLanguage
  * @return {cc.LanguageType}
  */
@@ -16176,16 +16395,6 @@ getCurrentLanguage : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setAnimationInterval
- * @param {double} arg0
- */
-setAnimationInterval : function (
-double 
-)
-{
 },
 
 /**

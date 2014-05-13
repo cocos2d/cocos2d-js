@@ -23,7 +23,6 @@
     ], 
     "ndk_module_path": [
         "../../../../frameworks/js-bindings", 
-        "../../../../frameworks/js-bindings/external", 
         "../../../../frameworks/js-bindings/cocos2d-x", 
         "../../../../frameworks/js-bindings/cocos2d-x/cocos", 
         "../../../../frameworks/js-bindings/cocos2d-x/external"

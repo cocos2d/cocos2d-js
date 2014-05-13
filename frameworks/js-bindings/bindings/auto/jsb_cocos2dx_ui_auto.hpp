@@ -58,14 +58,17 @@ bool js_cocos2dx_ui_Widget_setSizePercent(JSContext *cx, uint32_t argc, jsval *v
 bool js_cocos2dx_ui_Widget_getCustomSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setFlippedY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setFlippedX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Widget_onFocusChange(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getLeftInParent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getTouchEndPos(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setPositionPercent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getLayoutSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Widget_setHighlighted(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setPositionType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_isIgnoreContentAdaptWithSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getBottomInParent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Widget_isHighlighted(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getLayoutParameter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getPositionType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getWidgetType(JSContext *cx, uint32_t argc, jsval *vp);
@@ -73,6 +76,7 @@ bool js_cocos2dx_ui_Widget_getChildByName(JSContext *cx, uint32_t argc, jsval *v
 bool js_cocos2dx_ui_Widget_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_isFocused(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getVirtualRendererSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Widget_findNextFocusedWidget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_isTouchEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getActionTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getWorldPosition(JSContext *cx, uint32_t argc, jsval *vp);
@@ -83,15 +87,19 @@ bool js_cocos2dx_ui_Widget_clone(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getTouchMovePos(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getVirtualRenderer(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Widget_dispatchFocusEvent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setBrightStyle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setLayoutParameter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getSizePercent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getTouchStartPos(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Widget_setFocusEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setActionTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_isBright(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_clippingParentAreaContainPoint(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Widget_getCurrentFocusedWidget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getTopInParent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Widget_requestFocus(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_updateSizeAndPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_getRightInParent(JSContext *cx, uint32_t argc, jsval *vp);
@@ -105,6 +113,7 @@ bool js_cocos2dx_ui_Widget_setSizeType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_checkChildInfo(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setBright(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Widget_isFocusEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_Widget(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -118,9 +127,11 @@ void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_ui_Layout_setBackGroundColorVector(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_setClippingType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_setBackGroundColorType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Layout_setLoopFocus(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_setBackGroundImageColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_getBackGroundColorVector(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_getClippingType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Layout_isLoopFocus(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_removeBackGroundImage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_getBackGroundColorOpacity(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_isClippingEnabled(JSContext *cx, uint32_t argc, jsval *vp);
@@ -137,9 +148,11 @@ bool js_cocos2dx_ui_Layout_getBackGroundColorType(JSContext *cx, uint32_t argc, 
 bool js_cocos2dx_ui_Layout_getBackGroundEndColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_setBackGroundColorOpacity(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_getBackGroundImageOpacity(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Layout_isPassFocusToChild(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_setBackGroundImageCapInsets(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_getBackGroundImageTextureSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_getLayoutType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Layout_setPassFocusToChild(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_getBackGroundStartColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_setBackGroundImageScale9Enabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Layout_setLayoutType(JSContext *cx, uint32_t argc, jsval *vp);
@@ -466,5 +479,65 @@ void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_ui_Helper_seekWidgetByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Helper_seekActionWidgetByActionTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Helper_seekWidgetByName(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_RichElement_class;
+extern JSObject *jsb_cocos2d_ui_RichElement_prototype;
+
+bool js_cocos2dx_ui_RichElement_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_RichElement_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_RichElement(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_RichElement_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElement_RichElement(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_RichElementText_class;
+extern JSObject *jsb_cocos2d_ui_RichElementText_prototype;
+
+bool js_cocos2dx_ui_RichElementText_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_RichElementText_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_RichElementText(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_RichElementText_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElementText_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElementText_RichElementText(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_RichElementImage_class;
+extern JSObject *jsb_cocos2d_ui_RichElementImage_prototype;
+
+bool js_cocos2dx_ui_RichElementImage_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_RichElementImage_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_RichElementImage(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_RichElementImage_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElementImage_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElementImage_RichElementImage(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_RichElementCustomNode_class;
+extern JSObject *jsb_cocos2d_ui_RichElementCustomNode_prototype;
+
+bool js_cocos2dx_ui_RichElementCustomNode_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_RichElementCustomNode_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_RichElementCustomNode(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_RichElementCustomNode_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElementCustomNode_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElementCustomNode_RichElementCustomNode(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_RichText_class;
+extern JSObject *jsb_cocos2d_ui_RichText_prototype;
+
+bool js_cocos2dx_ui_RichText_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_RichText_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_RichText(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_RichText_insertElement(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_setAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_pushBackElement(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_ignoreContentAdaptWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_setVerticalSpace(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_formatText(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_removeElement(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_RichText(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 
