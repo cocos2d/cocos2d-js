@@ -64,7 +64,7 @@ bool js_cocos2dx_spine_Skeleton_setBlendFunc(JSContext *cx, uint32_t argc, jsval
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_Skeleton_setBlendFunc : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::BlendFunc arg0;
-		ok &= jsval_to_blendfunc(cx, argv[0], &arg0);
+		#pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_Skeleton_setBlendFunc : Error processing arguments");
 		cobj->setBlendFunc(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -144,7 +144,7 @@ bool js_cocos2dx_spine_Skeleton_getBlendFunc(JSContext *cx, uint32_t argc, jsval
 	if (argc == 0) {
 		const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
 		jsval jsret = JSVAL_NULL;
-		jsret = blendfunc_to_jsval(cx, ret);
+		#pragma warning NO CONVERSION FROM NATIVE FOR BlendFunc;
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
