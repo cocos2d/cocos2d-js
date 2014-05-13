@@ -2494,8 +2494,12 @@ bool js_cocos2dx_ActionInterval_repeat(JSContext *cx, uint32_t argc, jsval *vp)
         if( ! JS::ToNumber(cx, argv[0], &times) ) {
             return false;
         }
+        int timesInt = (int)times;
+        if (timesInt <= 0) {
+            JS_ReportError(cx, "js_cocos2dx_ActionInterval_repeat : Repeat times must be greater than 0");
+        }
         
-        cocos2d::Repeat* action = cocos2d::Repeat::create(cobj, times);
+        cocos2d::Repeat* action = cocos2d::Repeat::create(cobj, timesInt);
         // Unbind current proxy binding
         JS_RemoveObjectRoot(cx, &proxy->obj);
         jsb_remove_proxy(jsb_get_native_proxy(cobj), proxy);
@@ -2548,6 +2552,9 @@ bool js_cocos2dx_ActionInterval_speed(JSContext *cx, uint32_t argc, jsval *vp)
         double speed;
         if( ! JS::ToNumber(cx, argv[0], &speed) ) {
             return false;
+        }
+        if (speed <= 0) {
+            JS_ReportError(cx, "js_cocos2dx_ActionInterval_repeat : Speed must be greater than 0");
         }
         
         cocos2d::Speed* action = cocos2d::Speed::create(cobj, speed);
