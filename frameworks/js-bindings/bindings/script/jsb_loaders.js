@@ -55,7 +55,13 @@ cc.loader.register(["png", "jpg", "bmp","jpeg","gif"], cc._imgLoader);
 
 cc._plistLoader = {
     load : function(realUrl, url){
-        return cc.plistParser.parse(realUrl);
+        var content = "";
+        cc.loader.loadTxt(url, function(err, txt){
+            content = txt;
+        });
+        if (content == "")
+            throw "Plist loader: file load failed";
+        return cc.plistParser.parse(content);
     }
 }
 cc.loader.register(["plist"], cc._plistLoader);
