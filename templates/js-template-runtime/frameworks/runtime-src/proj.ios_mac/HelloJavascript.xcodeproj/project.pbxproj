@@ -79,6 +79,8 @@
 		C037820F18BF77DE00FE4F13 /* libjsbindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C037820718BF76AF00FE4F13 /* libjsbindings Mac.a */; };
 		C03C8B4B18A770DD00723415 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C03C8B4818A770DD00723415 /* main.m */; };
 		C03C8B4C18A770DD00723415 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C03C8B4918A770DD00723415 /* MainMenu.xib */; };
+		C05D1C171923467600B808A4 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = C05D1C161923467600B808A4 /* config.json */; };
+		C05D1C181923467600B808A4 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = C05D1C161923467600B808A4 /* config.json */; };
 		C06C37881918E81100617BED /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C06C37861918E81100617BED /* ConfigParser.cpp */; };
 		C06C37891918E81100617BED /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C06C37861918E81100617BED /* ConfigParser.cpp */; };
 		C0799CB918BAE62000E9C828 /* res in Resources */ = {isa = PBXBuildFile; fileRef = C0799CB518BAE62000E9C828 /* res */; };
@@ -336,6 +338,7 @@
 		C037820118BF76AF00FE4F13 /* cocos2d_js_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_js_bindings.xcodeproj; path = "../../js-bindings/bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj"; sourceTree = "<group>"; };
 		C03C8B4818A770DD00723415 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C03C8B4918A770DD00723415 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		C05D1C161923467600B808A4 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = config.json; path = ../../../config.json; sourceTree = "<group>"; };
 		C06C37861918E81100617BED /* ConfigParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigParser.cpp; sourceTree = "<group>"; };
 		C06C37871918E81100617BED /* ConfigParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigParser.h; sourceTree = "<group>"; };
 		C0799CB518BAE62000E9C828 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../../res; sourceTree = "<group>"; };
@@ -417,6 +420,7 @@
 		15628F5B15F0F5C2000CF24B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C05D1C161923467600B808A4 /* config.json */,
 				1A1A081B18C9DF05005C6854 /* project.json */,
 				1A6BF21418C9DB5900FB0E1C /* main.js */,
 				C0799CB518BAE62000E9C828 /* res */,
@@ -782,6 +786,7 @@
 				C0F9A1C418C6D1FC00C75ABD /* jsb_opengl_constants.js in Resources */,
 				C0F9A1C218C6D1FC00C75ABD /* jsb_deprecated.js in Resources */,
 				C0F9A1BA18C6D1FC00C75ABD /* jsb_cocos2d_studio.js in Resources */,
+				C05D1C181923467600B808A4 /* config.json in Resources */,
 				C0F9A1B818C6D1FC00C75ABD /* jsb_cocos2d_ui.js in Resources */,
 				C0F9A1C618C6D1FC00C75ABD /* jsb_opengl.js in Resources */,
 				C0F9A1CA18C6D1FC00C75ABD /* jsb_property_impls.js in Resources */,
@@ -822,6 +827,7 @@
 				C0F9A1B318C6D1FC00C75ABD /* jsb_cocos2d_constants.js in Resources */,
 				C0F9A1C518C6D1FC00C75ABD /* jsb_opengl.js in Resources */,
 				C0F9A1C118C6D1FC00C75ABD /* jsb_deprecated.js in Resources */,
+				C05D1C171923467600B808A4 /* config.json in Resources */,
 				C0F9A1B118C6D1FC00C75ABD /* jsb_chipmunk.js in Resources */,
 				C0F9A1CD18C6D1FC00C75ABD /* jsb.js in Resources */,
 				C0F9A1BF18C6D1FC00C75ABD /* jsb_debugger.js in Resources */,

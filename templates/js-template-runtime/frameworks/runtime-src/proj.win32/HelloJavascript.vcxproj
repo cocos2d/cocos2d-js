@@ -118,6 +118,7 @@ xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\Resource" /e /
 xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
 copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\Resource\main.js" /Y
 copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\Resource\project.json" /Y
+copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
 xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -178,6 +179,7 @@ xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\Resource" /e /
 xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
 copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\Resource\main.js" /Y
 copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\Resource\project.json" /Y
+copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
 xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
