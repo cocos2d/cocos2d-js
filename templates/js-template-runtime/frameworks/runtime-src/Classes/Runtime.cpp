@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include "json/stringbuffer.h"
 #include "json/writer.h"
 #include "VisibleRect.h"
+#include "ConfigParser.h"
 
 #ifdef _WIN32
 #define realpath(dir,fuldir) _fullpath(fuldir,dir,_MAX_PATH_)
@@ -59,15 +60,9 @@ using namespace std;
 using namespace cocos2d;
 
 std::string g_resourcePath;
-static rapidjson::Document g_filecfgjson;
-static string g_entryfile;
-extern string getDotWaitFilePath();
-extern string getProjSearchPath();
+static rapidjson::Document g_filecfgjson; 
 extern string getIPAddress();
-extern vector<string> getSearchPath();
 extern bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<std::string> &fileList);
-
-
 /*@brief   use "|" splite string  */
 vector<string> splitFilter(const char *str)
 {
@@ -244,7 +239,7 @@ bool startScript()
 {
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    return ScriptingCore::getInstance()->runScript(g_entryfile.c_str());
+    return ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
 }
 
 bool reloadScript(const string& file,bool reloadAll)
@@ -265,7 +260,7 @@ bool reloadScript(const string& file,bool reloadAll)
     string modulefile = file;
     if (modulefile.empty())
     {
-        modulefile = g_entryfile;
+        modulefile = ConfigParser::getInstance()->getEntryFile().c_str();
         ScriptingCore::getInstance()->cleanScript(modulefile.c_str());
     }
     if (reloadAll)
@@ -802,6 +797,14 @@ public:
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                    
+                }else if (strcmp(strcmd.c_str(),"getEntryfile")==0)
+                {
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                    rapidjson::Value entryFileValue(rapidjson::kStringType);
+                    entryFileValue.SetString(ConfigParser::getInstance()->getEntryFile().c_str(),dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("entryfile",entryFileValue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }else if(strcmp(strcmd.c_str(),"getIP")==0)
                 {
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
@@ -885,7 +888,7 @@ private:
     FileServer* _fileserver;
 };
 
-bool initRuntime(string& entryfile)
+bool initRuntime()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #ifndef _DEBUG
@@ -901,7 +904,6 @@ bool initRuntime(string& entryfile)
 #endif
 #endif
 
-    g_entryfile = entryfile;
     vector<string> searchPathArray;
     searchPathArray=FileUtils::getInstance()->getSearchPaths();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)

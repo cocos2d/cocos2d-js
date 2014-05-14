@@ -39,20 +39,19 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    string entryfile ="main.js";
+    
 #if (COCOS2D_DEBUG>0)
-    initRuntime(entryfile);
+    initRuntime();
 #endif
     
-    // initialize director
-    auto director = Director::getInstance();
-    auto glview = director->getOpenGLView();
-    if(!glview) {
-        
-        if (!ConfigParser::getInstance()->isInit()) {
+    if (!ConfigParser::getInstance()->isInit()) {
             ConfigParser::getInstance()->readConfig();
         }
 
+    // initialize director
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();    
+    if(!glview) {
         Size viewSize = ConfigParser::getInstance()->getInitViewSize();
         string title = ConfigParser::getInstance()->getInitViewName();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -106,7 +105,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore::getInstance()->start();
     auto engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    ScriptingCore::getInstance()->runScript(entryfile.c_str());
+    ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
     
     return true;
 }

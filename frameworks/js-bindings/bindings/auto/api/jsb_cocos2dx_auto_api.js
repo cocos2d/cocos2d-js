@@ -3815,6 +3815,43 @@ EventListenerCustom : function (
 };
 
 /**
+ * @class EventFocus
+ */
+cc.EventFocus = {
+
+/**
+ * @method EventFocus
+ * @constructor
+ * @param {ccui.Widget} arg0
+ * @param {ccui.Widget} arg1
+ */
+EventFocus : function (
+widget, 
+widget 
+)
+{
+},
+
+};
+
+/**
+ * @class EventListenerFocus
+ */
+cc.EventListenerFocus = {
+
+/**
+ * @method create
+ * @return {cc.EventListenerFocus}
+ */
+create : function (
+)
+{
+    return cc.EventListenerFocus;
+},
+
+};
+
+/**
  * @class Action
  */
 cc.Action = {
@@ -4686,6 +4723,38 @@ texture2d,
 rect 
 )
 {
+},
+
+/**
+ * @method create
+* @param {Array} array
+* @param {float} float
+* @param {unsigned int} int
+* @return {cc.Animation|cc.Animation}
+*/
+create : function(
+array,
+float,
+int 
+)
+{
+    return cc.Animation;
+},
+
+/**
+ * @method createWithSpriteFrames
+ * @param {Array} arg0
+ * @param {float} arg1
+ * @param {unsigned int} arg2
+ * @return {cc.Animation}
+ */
+createWithSpriteFrames : function (
+array, 
+float, 
+int 
+)
+{
+    return cc.Animation;
 },
 
 /**
@@ -16319,26 +16388,6 @@ char
 cc.Application = {
 
 /**
- * @method getTargetPlatform
- * @return {cc.ApplicationProtocol::Platform}
- */
-getTargetPlatform : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getCurrentLanguageCode
- * @return {char}
- */
-getCurrentLanguageCode : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getCurrentLanguage
  * @return {cc.LanguageType}
  */
@@ -16346,16 +16395,6 @@ getCurrentLanguage : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setAnimationInterval
- * @param {double} arg0
- */
-setAnimationInterval : function (
-double 
-)
-{
 },
 
 /**
