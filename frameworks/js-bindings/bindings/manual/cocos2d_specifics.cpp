@@ -4333,11 +4333,11 @@ bool js_PlistParser_parse(JSContext *cx, unsigned argc, JS::Value *vp) {
             JS_SET_RVAL(cx, vp, outVal);
         else {
             JS_SET_RVAL(cx, vp, JSVAL_NULL);
-            JS_ReportError(cx, "js_SAXParser_parse : parse error");
+            JS_ReportError(cx, "js_PlistParser_parse : parse error");
         }
         return true;
     }
-    JS_ReportError(cx, "js_SAXParser_parse : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_PlistParser_parse : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 
