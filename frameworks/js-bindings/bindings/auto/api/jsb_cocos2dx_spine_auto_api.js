@@ -28,7 +28,7 @@ blendfunc
 
 /**
  * @method onDraw
- * @param {cc.Matrix} arg0
+ * @param {matrix_object} arg0
  * @param {bool} arg1
  */
 onDraw : function (
