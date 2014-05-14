@@ -31,11 +31,8 @@
             "to": ""
         },
         {
-            "from": "../../../res",
-            "to": "res",
-            "include": [
-                "config.json"
-            ]
+            "from": "../../../config.json",
+            "to": ""
         },
         {
             "from": "../../../project.json",
