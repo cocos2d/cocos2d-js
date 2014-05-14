@@ -60,7 +60,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->setAnimationInterval(1.0 / 60);
 
     auto fileUtils = FileUtils::getInstance();
-    std::vector<std::string> searchPaths;
+    std::vector<std::string> searchPaths = fileUtils->getSearchPaths();
     searchPaths.push_back("script");
     searchPaths.push_back("src");
     

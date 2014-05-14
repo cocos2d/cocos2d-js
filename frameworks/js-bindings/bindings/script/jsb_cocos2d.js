@@ -2076,6 +2076,11 @@ cc.DrawNode.create = function () {
 	return new cc.DrawNode();
 };
 
+
+//
+// TMX classes JS API Wrapper
+//
+
 cc.TMXTiledMap.prototype.allLayers = function(){
     var retArr = [],
         locChildren = this.getChildren(),
@@ -2123,6 +2128,10 @@ cc.TMXLayer.prototype.getPositonAt = function(x, y){
 };
 
 
+//
+// setBlendFunc JS API Wrapper
+//
+
 var protoHasBlend = [cc.AtlasNode.prototype,
                      cc.DrawNode.prototype,
                      cc.LabelTTF.prototype,
@@ -2143,9 +2152,91 @@ var templateSetBlendFunc = function(src, dst) {
     this._setBlendFunc(blendf);
     var b = this.getBlendFunc();
     cc.log((b.src == src) + ", " + (b.dst == dst));
-}
+};
 for (var i = 0, l = protoHasBlend.length; i < l; i++) {
     var proto = protoHasBlend[i];
     proto._setBlendFunc = proto.setBlendFunc;
     proto.setBlendFunc = templateSetBlendFunc;
 }
+
+
+//
+// Ease actions JS API Wrapper
+//
+
+var easeActions = {
+    easeIn : 0,
+    easeOut : 1,
+    easeInOut : 2,
+    easeExponentialIn : 3,
+    easeExponentialOut : 4,
+    easeExponentialInOut : 5,
+    easeSineIn : 6,
+    easeSineOut : 7,
+    easeSineInOut : 8,
+    easeElasticIn : 9,
+    easeElasticOut : 10,
+    easeElasticInOut : 11,
+    easeBounceIn : 12,
+    easeBounceOut : 13,
+    easeBounceInOut : 14,
+    easeBackIn : 15,
+    easeBackOut : 16,
+    easeBackInOut : 17
+};
+
+function templateEaseActions(actionTag) {
+    return function(param) {
+        return {tag: actionTag, parameter: param};
+    }
+}
+
+for (var a in easeActions) {
+    var actionTag = easeActions[a];
+    cc[a] = templateEaseActions(actionTag);
+}
+
+cc.action = cc.Action.create;
+cc.speed = cc.Speed.create;
+cc.follow = cc.Follow.create;
+cc.orbitCamera = cc.OrbitCamera.create;
+cc.cardinalSplineTo = cc.CardinalSplineTo.create;
+cc.cardinalSplineBy = cc.CardinalSplineBy.create;
+cc.catmullRomTo = cc.CatmullRomTo.create;
+cc.catmullRomBy = cc.CatmullRomBy.create;
+cc.show = cc.Show.create;
+cc.hide = cc.Hide.create;
+cc.toggleVisibility = cc.ToggleVisibility.create;
+cc.removeSelf = cc.RemoveSelf.create;
+cc.flipX = cc.FlipX.create;
+cc.flipY = cc.FlipY.create;
+cc.place = cc.Place.create;
+cc.callFunc = cc.CallFunc.create;
+cc.actionInterval = cc.ActionInterval.create;
+cc.sequence = cc.Sequence.create;
+cc.repeat = cc.Repeat.create;
+cc.repeatForever = cc.RepeatForever.create;
+cc.spawn = cc.Spawn.create;
+cc.rotateTo = cc.RotateTo.create;
+cc.rotateBy = cc.RotateBy.create;
+cc.moveBy = cc.MoveBy.create;
+cc.moveTo = cc.MoveTo.create;
+cc.skewTo = cc.SkewTo.create;
+cc.skewBy = cc.SkewBy.create;
+cc.jumpBy = cc.JumpBy.create;
+cc.jumpTo = cc.JumpTo.create;
+cc.bezierBy = cc.BezierBy.create;
+cc.bezierTo = cc.BezierTo.create;
+cc.scaleTo = cc.ScaleTo.create;
+cc.scaleBy = cc.ScaleBy.create;
+cc.blink = cc.Blink.create;
+cc.fadeTo = cc.FadeTo.create;
+cc.fadeIn = cc.FadeIn.create;
+cc.fadeOut = cc.FadeOut.create;
+cc.tintTo = cc.TintTo.create;
+cc.tintBy = cc.TintBy.create;
+cc.delayTime = cc.DelayTime.create;
+//cc.reverseTime = cc.ReverseTime.create;
+cc.animate = cc.Animate.create;
+cc.targetedAction = cc.TargetedAction.create;
+cc.actionTween = cc.ActionTween.create;
