@@ -32,7 +32,7 @@ Cu.import("resource://gre/modules/devtools/SourceMap.jsm");
 loadSubScript.call(this, "resource://gre/modules/devtools/DevToolsUtils.js");
 */
 
-let wantLogging = true;
+var wantLogging = false;
 let debuggerServer = null;
 const promptConnections = true;
 

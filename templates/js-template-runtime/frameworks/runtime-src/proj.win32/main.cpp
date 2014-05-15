@@ -1,6 +1,6 @@
 #include "main.h"
 #include "AppDelegate.h"
-#include "SimulatorWindow.h"
+#include "cocos2d.h"
 #include <shellapi.h>
 
 USING_NS_CC;
@@ -16,20 +16,20 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-	LPWSTR *szArgList=nullptr;
-	int argCount=0;
+    LPWSTR *szArgList=nullptr;
+    int argCount=0;
 
-	szArgList = CommandLineToArgvW(GetCommandLine(),&argCount);
-	if (argCount >=2 )
-	{
-		int iLen = 2*wcslen(szArgList[1]);    
-		char* chRtn = new char[iLen+1];    
-		wcstombs(chRtn,szArgList[1],iLen+1);
-		extern std::string g_resourcePath;
-		g_resourcePath = chRtn;
-		delete [] chRtn;
-	}
-	LocalFree(szArgList);
+    szArgList = CommandLineToArgvW(GetCommandLine(),&argCount);
+    if (argCount >=2 )
+    {
+        int iLen = 2*wcslen(szArgList[1]);    
+        char* chRtn = new char[iLen+1];    
+        wcstombs(chRtn,szArgList[1],iLen+1);
+        extern std::string g_resourcePath;
+        g_resourcePath = chRtn;
+        delete [] chRtn;
+    }
+    LocalFree(szArgList);
 
 #ifdef USE_WIN32_CONSOLE
     AllocConsole();
@@ -40,7 +40,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-	createSimulator("HelloJavascript",960,640);
+
     int ret = Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE
@@ -52,24 +52,24 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 std::string getCurAppPath(void)
 {
-	TCHAR szAppDir[MAX_PATH]={0};
-	if (!GetModuleFileName(NULL,szAppDir,MAX_PATH))
-		return "";
+    TCHAR szAppDir[MAX_PATH]={0};
+    if (!GetModuleFileName(NULL,szAppDir,MAX_PATH))
+        return "";
 
-	int nEnd=0;
-	for (int i=0;szAppDir[i];i++)
-	{
-		if(szAppDir[i]=='\\')
-			nEnd = i;
-	}
-	szAppDir[nEnd] = 0;
-	int iLen = 2*wcslen(szAppDir);    
-	char* chRtn = new char[iLen+1];    
-	wcstombs(chRtn,szAppDir,iLen+1);
-	std::string strPath = chRtn;
-	delete [] chRtn;
-	chRtn=NULL;
-	char fuldir[MAX_PATH]={0};
-	_fullpath(fuldir,strPath.c_str(),MAX_PATH);
-	return fuldir;    
+    int nEnd=0;
+    for (int i=0;szAppDir[i];i++)
+    {
+        if(szAppDir[i]=='\\')
+            nEnd = i;
+    }
+    szAppDir[nEnd] = 0;
+    int iLen = 2*wcslen(szAppDir);    
+    char* chRtn = new char[iLen+1];    
+    wcstombs(chRtn,szAppDir,iLen+1);
+    std::string strPath = chRtn;
+    delete [] chRtn;
+    chRtn=NULL;
+    char fuldir[MAX_PATH]={0};
+    _fullpath(fuldir,strPath.c_str(),MAX_PATH);
+    return fuldir;    
 }
