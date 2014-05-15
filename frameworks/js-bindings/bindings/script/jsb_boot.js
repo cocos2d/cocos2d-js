@@ -1104,6 +1104,7 @@ cc.game._initConfig();
 // JS to Native bridges
 if(cc.sys.os == cc.sys.OS_ANDROID){
     cc.reflection = new JavascriptJavaBridge();
+    cc.sys.capabilities["keyboard"] = true;
 }
 else if(cc.sys.os == cc.sys.OS_IOS){
     //TODO
