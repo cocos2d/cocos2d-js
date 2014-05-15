@@ -124,7 +124,7 @@ Parallax1 = ParallaxDemo.extend({
         var goDown = goUp.reverse();
         var goLeft = goRight.reverse();
         var seq = cc.Sequence.create(goUp, goRight, delay, goDown, goLeft);
-        this._parentNode.runAction((cc.RepeatForever.create(seq) ));
+        this._parentNode.runAction(seq.repeatForever());
 
         this.addChild(this._parentNode);
     },

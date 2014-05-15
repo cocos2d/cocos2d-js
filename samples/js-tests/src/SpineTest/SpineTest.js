@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+var sp = sp || {};
+
 var ANIMATION_TYPE = {
     ANIMATION_START:      0,
     ANIMATION_END:        1,
@@ -32,9 +34,11 @@ var ANIMATION_TYPE = {
 };
 
 SpineTestScene = TestScene.extend({
+
     runThisTest:function () {
         var layer = SpineTest.create();
         this.addChild(layer);
+
         director.runScene(this);
     }
 });
@@ -86,14 +90,13 @@ SpineTest = BaseTestLayer.extend({
         this.addChild(spineBoy, 4);
         this._spineboy = spineBoy;
     },
-
     onBackCallback:function (sender) {
     },
     onRestartCallback:function (sender) {
     },
     onNextCallback:function (sender) {
         touchcount++;
-        this._spineboy.setAnimation(0, ['walk', 'jump'][touchcount % 2], true);
+        spineboy.setAnimation(0, ['walk', 'jump'][touchcount % 2], true);
     },
     subtitle:function () {
         return "Spine test";
@@ -124,7 +127,7 @@ SpineTest = BaseTestLayer.extend({
                 break;
         }
     },
-
+    
     // automation
     numberOfPendingTests:function() {
         return 1;
@@ -132,6 +135,7 @@ SpineTest = BaseTestLayer.extend({
     getTestNumber:function() {
         return 0;
     }
+
 });
 
 SpineTest.create = function () {

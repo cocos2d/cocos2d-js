@@ -69,9 +69,16 @@ var CurrentLanguageTest = cc.Layer.extend({
 
 var CurrentLanguageTestScene = TestScene.extend({
     runThisTest:function () {
+
+        window.sidebar && window.sidebar.changeTest(0, 8);
+
         var layer = new CurrentLanguageTest();
         this.addChild(layer);
 
         cc.director.runScene(this);
     }
 });
+
+var arrayOfCurrentLanguageTest = [
+    'current language'
+];

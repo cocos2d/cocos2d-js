@@ -281,10 +281,9 @@ var TextFieldTTFActionTest = KeyboardNotificationLayer.extend({
         this._super();
 
         this._charLimit = 20;
-        this._textFieldAction = cc.RepeatForever.create(
-            cc.Sequence.create(
+        this._textFieldAction = cc.Sequence.create(
                 cc.FadeOut.create(0.25),
-                cc.FadeIn.create(0.25)));
+                cc.FadeIn.create(0.25)).repeatForever();
         this._action = false;
 
         // add CCTextFieldTTF

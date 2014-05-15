@@ -29,6 +29,9 @@ var audioEngine = cc.audioEngine;
 var MUSIC_FILE = "res/Sound/background.mp3";
 var EFFECT_FILE = "res/Sound/effect2.mp3";
 
+var _DenshionTests = [
+    'Music Test'
+];
 var DenshionTests = [
     {
         title:"Play Music",
@@ -215,6 +218,7 @@ var CocosDenshionTest = cc.LayerGradient.extend({
 
 var CocosDenshionTestScene = TestScene.extend({
     runThisTest:function () {
+
         audioEngine = cc.audioEngine;
         var layer = new CocosDenshionTest();
         this.addChild(layer);

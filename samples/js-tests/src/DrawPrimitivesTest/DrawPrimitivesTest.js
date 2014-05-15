@@ -74,6 +74,7 @@ var DrawNewAPITest2 = DrawTestDemo.extend({
     _title: "cc.DrawNode",
     _subtitle: "Testing cc.DrawNode API 2",
     ctor: function () {
+        //----start0----ctor
         this._super();
         var draw = cc.DrawNode.create();
         this.addChild(draw, 10);
@@ -125,8 +126,12 @@ var DrawNewAPITest2 = DrawTestDemo.extend({
             cc.p(centerPos.x - 130, centerPos.y - 130)
         ];
         draw.drawCardinalSpline(vertices4, 0.5, 100, 2, cc.color(255, 255, 255, 255));
+        //----end0----
     }
 });
+DrawNewAPITest2.prototype.title = function(){
+    return 'cc.DrawNode 2';
+};
 
 //------------------------------------------------------------------
 //
@@ -138,6 +143,7 @@ var DrawNewAPITest = DrawTestDemo.extend({
     _subtitle : "Testing cc.DrawNode API",
 
     ctor:function() {
+        //----start1----ctor
         this._super();
 
         var draw = cc.DrawNode.create();
@@ -184,14 +190,19 @@ var DrawNewAPITest = DrawTestDemo.extend({
         //
         draw.drawSegment( cc.p(20,winSize.height), cc.p(20,winSize.height/2), 10, cc.color(0, 255, 0, 255) );
         draw.drawSegment( cc.p(10,winSize.height/2), cc.p(winSize.width/2, winSize.height/2), 40, cc.color(255, 0, 255, 128) );
+        //----end1----
     }
 });
+
+DrawNewAPITest.prototype.title = function(){
+    return 'cc.DrawNode 1';
+};
 
 //
 //
 var DrawPrimitivesTestScene = TestScene.extend({
-    runThisTest:function () {
-        drawTestSceneIdx = -1;
+    runThisTest:function (num) {
+        drawTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextDrawTest();
         this.addChild(layer);
 
@@ -212,12 +223,16 @@ var nextDrawTest = function () {
     drawTestSceneIdx++;
     drawTestSceneIdx = drawTestSceneIdx % arrayOfDrawTest.length;
 
+    window.sidebar && window.sidebar.changeTest(drawTestSceneIdx, 9);
+
     return new arrayOfDrawTest[drawTestSceneIdx]();
 };
 var previousDrawTest = function () {
     drawTestSceneIdx--;
     if (drawTestSceneIdx < 0)
         drawTestSceneIdx += arrayOfDrawTest.length;
+
+    window.sidebar && window.sidebar.changeTest(drawTestSceneIdx, 9);
 
     return new arrayOfDrawTest[drawTestSceneIdx]();
 };

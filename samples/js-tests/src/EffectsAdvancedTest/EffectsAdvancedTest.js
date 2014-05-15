@@ -77,7 +77,7 @@ var EffectAdvanceTextLayer = cc.Layer.extend({
         grossini.y = winSize.height / 2;
         var sc = cc.ScaleBy.create(2, 5);
         var sc_back = sc.reverse();
-        grossini.runAction(cc.RepeatForever.create(cc.Sequence.create(sc, sc_back)));
+        grossini.runAction(cc.Sequence.create(sc, sc_back).repeatForever());
 
         var tamara = cc.Sprite.create(s_pathSister1);
 	    var tamaraGrid = cc.NodeGrid.create();
@@ -87,7 +87,7 @@ var EffectAdvanceTextLayer = cc.Layer.extend({
         tamara.y = winSize.height / 2;
         var sc2 = cc.ScaleBy.create(2, 5);
         var sc2_back = sc2.reverse();
-        tamara.runAction(cc.RepeatForever.create(cc.Sequence.create(sc2, sc2_back)));
+        tamara.runAction(cc.Sequence.create(sc2, sc2_back).repeatForever());
 
         var label = cc.LabelTTF.create(this.title(), "Arial", 28);
         label.x = cc.visibleRect.center.x;
@@ -173,7 +173,7 @@ var Effect1 = EffectAdvanceTextLayer.extend({
         var orbit = cc.OrbitCamera.create(5, 1, 2, 0, 180, 0, -90);
         var orbit_back = orbit.reverse();
 
-        target.runAction(cc.RepeatForever.create(cc.Sequence.create(orbit, orbit_back)));
+        target.runAction(cc.Sequence.create(orbit, orbit_back).repeatForever());
         target.runAction(cc.Sequence.create(lens, delay, reuse, waves));
     }
 });
@@ -227,12 +227,12 @@ var Effect3 = EffectAdvanceTextLayer.extend({
         var waves = cc.Waves.create(5, cc.size(15, 10), 5, 20, true, false);
         var shaky = cc.Shaky3D.create(5, cc.size(15, 10), 4, false);
 
-	    target1.runAction(cc.RepeatForever.create(waves));
-	    target2.runAction(cc.RepeatForever.create(shaky));
+	    target1.runAction(waves.repeatForever());
+	    target2.runAction(shaky.repeatForever());
 
         // moving background. Testing issue #244
         var move = cc.MoveBy.create(3, cc.p(200, 0));
-        bg.runAction(cc.RepeatForever.create(cc.Sequence.create(move, move.reverse())));
+        bg.runAction(cc.Sequence.create(move, move.reverse()).repeatForever());
     }
 });
 
@@ -358,7 +358,7 @@ var Issue631 = EffectAdvanceTextLayer.extend({
 	    nodeGrid.addChild(layer2);
         this.addChild(nodeGrid, 1);
 
-	    nodeGrid.runAction(cc.RepeatForever.create(effect));
+	    nodeGrid.runAction(effect.repeatForever());
     }
 });
 
@@ -376,6 +376,9 @@ if (!cc.sys.isNative)
 var nextEffectAdvanceAction = function () {
     sceneIndex++;
     sceneIndex = sceneIndex % arrayOfEffectsAdvancedTest.length;
+
+    window.sidebar && window.sidebar.changeTest(sceneIndex, 15);
+
     return new arrayOfEffectsAdvancedTest[sceneIndex]();
 };
 
@@ -383,6 +386,9 @@ var backEffectAdvanceAction = function () {
     sceneIndex--;
     if (sceneIndex < 0)
         sceneIndex += arrayOfEffectsAdvancedTest.length;
+
+    window.sidebar && window.sidebar.changeTest(sceneIndex, 15);
+
     return new arrayOfEffectsAdvancedTest[sceneIndex]();
 };
 
