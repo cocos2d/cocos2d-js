@@ -55,7 +55,8 @@ cc.loader.register(["png", "jpg", "bmp","jpeg","gif"], cc._imgLoader);
 
 cc._plistLoader = {
     load : function(realUrl, url){
-        return cc.plistParser.parse(realUrl);
+        var content = cc.fileUtils.getStringFromFile(realUrl);
+        return cc.plistParser.parse(content);
     }
 }
 cc.loader.register(["plist"], cc._plistLoader);

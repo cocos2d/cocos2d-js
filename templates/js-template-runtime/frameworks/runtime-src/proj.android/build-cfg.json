@@ -8,11 +8,17 @@
     "copy_resources": [
         {
             "from": "../../../src",
-            "to": "src"
+            "to": "src",
+             "exclude": [
+                "*.gz"
+            ]
         },
         {
             "from": "../../../res",
-            "to": "res"
+            "to": "res",
+            "exclude": [
+                "*.gz"
+            ]
         },
         {
             "from": "../../../main.js",
@@ -22,6 +28,10 @@
     "must_copy_resources": [
         {
             "from": "../../js-bindings/bindings/script",
+            "to": ""
+        },
+        {
+            "from": "../../../config.json",
             "to": ""
         },
         {

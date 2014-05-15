@@ -3,6 +3,7 @@
         "src",
         "res",
         "main.js",
-        "project.json"
+        "project.json",
+        "config.json"
     ]
 }
