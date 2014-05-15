@@ -424,8 +424,8 @@ var KeyboardTest = EventTest.extend({
 
 
 var EventTestScene = TestScene.extend({
-    runThisTest:function () {
-        sceneIdx = -1;
+    runThisTest:function (num) {
+        sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextEventsTest();
         // var menu = new EventTest();
         // menu.addKeyboardNotificationLayer( layer );
@@ -450,12 +450,16 @@ var nextEventsTest = function () {
     sceneIdx++;
     sceneIdx = sceneIdx % arrayOfEventsTest.length;
 
+    window.sidebar && window.sidebar.changeTest(sceneIdx, 12);
+
     return new arrayOfEventsTest[sceneIdx]();
 };
 var previousEventsTest = function () {
     sceneIdx--;
     if (sceneIdx < 0)
         sceneIdx += arrayOfEventsTest.length;
+
+    window.sidebar && window.sidebar.changeTest(sceneIdx, 12);
 
     return new arrayOfEventsTest[sceneIdx]();
 };

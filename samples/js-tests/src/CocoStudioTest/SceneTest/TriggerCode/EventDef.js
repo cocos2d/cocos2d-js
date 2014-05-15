@@ -1,4 +1,5 @@
 /****************************************************************************
+ Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
 
@@ -22,7 +23,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 var TRIGGER_EVENT_ENTERSCENE = 0;
 var TRIGGER_EVENT_LEAVESCENE = 1;
 var TRIGGER_EVENT_INITSCENE = 2;

@@ -39,6 +39,7 @@ var MenuLayerMainMenu = cc.Layer.extend({
     _touchListener: null,
 
     ctor:function () {
+        //----start0----ctor
         this._super();
 
         // Font Item
@@ -86,7 +87,7 @@ var MenuLayerMainMenu = cc.Layer.extend({
         var color_action = cc.TintBy.create(0.5, 0, -255, -255);
         var color_back = color_action.reverse();
         var seq = cc.Sequence.create(color_action, color_back);
-        item8.runAction(cc.RepeatForever.create(seq));
+        item8.runAction(seq.repeatForever());
 
         var menu = cc.Menu.create( item1, item2, item3, item4, item5, item7, item8, item9);
         menu.alignItemsVertically();
@@ -115,6 +116,7 @@ var MenuLayerMainMenu = cc.Layer.extend({
         this.addChild(menu);
         menu.x = winSize.width/2;
         menu.y = winSize.height/2;
+        //----end0----
     },
 
     onMenuCallback:function (sender) {
@@ -309,14 +311,14 @@ var MenuLayer3 = cc.Layer.extend({
         item3.y = s.height / 2 - 100;
 
         var jump = cc.JumpBy.create(3, cc.p(400, 0), 50, 4);
-        item2.runAction(cc.RepeatForever.create(cc.Sequence.create(jump, jump.reverse())));
+        item2.runAction(cc.Sequence.create(jump, jump.reverse()).repeatForever());
         var spin1 = cc.RotateBy.create(3, 360);
         var spin2 = spin1.clone();
         var spin3 = spin1.clone();
 
-        item1.runAction(cc.RepeatForever.create(spin1));
-        item2.runAction(cc.RepeatForever.create(spin2));
-        item3.runAction(cc.RepeatForever.create(spin3));
+        item1.runAction(spin1.repeatForever());
+        item2.runAction(spin2.repeatForever());
+        item3.runAction(spin3.repeatForever());
 
         this.addChild(menu);
         menu.x = 0;
@@ -525,3 +527,5 @@ var MenuTestScene = TestScene.extend({
         director.runScene(this);
     }
 });
+
+var arrayOfMenuTest = ["Menu scene test"];

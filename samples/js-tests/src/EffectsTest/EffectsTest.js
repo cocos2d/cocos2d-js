@@ -84,7 +84,7 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
         var sc = cc.ScaleBy.create(2, 5);
         var sc_back = sc.reverse();
         var seq = cc.Sequence.create( sc, sc_back );
-        var repeat = cc.RepeatForever.create( seq );
+        var repeat = seq.repeatForever();
 
         sister1.runAction( repeat );
         sister2.runAction( repeat.clone() );
@@ -421,8 +421,8 @@ var PageTurn3DTest = EffecstsBaseLayer.extend({
 // Order of tests
 //
 var EffectsTestScene = TestScene.extend({
-    runThisTest:function () {
-        effectsTestSceneIdx = -1;
+    runThisTest:function (num) {
+        effectsTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextEffectsTest();
         this.addChild(layer);
 
@@ -462,12 +462,16 @@ var nextEffectsTest = function () {
     effectsTestSceneIdx++;
     effectsTestSceneIdx = effectsTestSceneIdx % arrayOfEffectsTest.length;
 
+    window.sidebar && window.sidebar.changeTest(effectsTestSceneIdx, 14);
+
     return new arrayOfEffectsTest[effectsTestSceneIdx]();
 };
 var previousEffectsTest = function () {
     effectsTestSceneIdx--;
     if (effectsTestSceneIdx < 0)
         effectsTestSceneIdx += arrayOfEffectsTest.length;
+
+    window.sidebar && window.sidebar.changeTest(effectsTestSceneIdx, 14);
 
     return new arrayOfEffectsTest[effectsTestSceneIdx]();
 };

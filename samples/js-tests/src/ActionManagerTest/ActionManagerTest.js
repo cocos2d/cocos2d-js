@@ -84,11 +84,12 @@ var CrashTest = ActionManagerTest.extend({
         return "Test 1. Should not crash";
     },
     onEnter:function () {
+        //----start0----onEnter
         this._super();
 
         var child = cc.Sprite.create(s_pathGrossini);
         child.x = 200;
-	    child.y = 200;
+        child.y = 200;
         this.addChild(child, 1);
 
         //Sum of all action's duration is 1.5 second.
@@ -99,15 +100,18 @@ var CrashTest = ActionManagerTest.extend({
         );
 
         //After 1.5 second, self will be removed.
-        this.runAction(cc.Sequence.create(
-            cc.DelayTime.create(1.4),
-            cc.CallFunc.create(this.onRemoveThis, this))
-        );
+        //this.runAction(cc.Sequence.create(
+        //    cc.DelayTime.create(1.4),
+        //    cc.CallFunc.create(this.onRemoveThis, this))
+        //);
+        //----end0----
     },
 
     onRemoveThis:function () {
+        //----start0----onRemoveThis
         this.parent.removeChild(this);
         this.onNextCallback(this);
+        //----end0----
     },
 
     //
@@ -133,6 +137,7 @@ var LogicTest = ActionManagerTest.extend({
         return "Logic test";
     },
     onEnter:function () {
+        //----start1----onEnter
         this._super();
 
         var grossini = cc.Sprite.create(s_pathGrossini);
@@ -152,11 +157,13 @@ var LogicTest = ActionManagerTest.extend({
         if ( autoTestEnabled ) {
             this._grossini = grossini;
         }
-
+        //----end1----
     },
     onBugMe:function (node) {
+        //----start1----onBugMe
         node.stopAllActions(); //After this stop next action not working, if remove this stop everything is working
         node.runAction(cc.ScaleTo.create(2, 2));
+        //----end1----
     },
 
     //
@@ -183,6 +190,7 @@ var PauseTest = ActionManagerTest.extend({
         return "Pause Test";
     },
     onEnter:function () {
+        //----start2----onEnter
         //
         // This test MUST be done in 'onEnter' and not on 'init'
         // otherwise the paused action will be resumed at 'onEnter' time
@@ -218,12 +226,15 @@ var PauseTest = ActionManagerTest.extend({
             this.scheduleOnce(this.checkControl2, 4.5);
             this._grossini = grossini;
         }
+        //----end2----
     },
 
     onUnpause:function (dt) {
+        //----start2----onUnpause
         this.unschedule(this.onUnpause);
         var node = this.getChildByTag(TAG_GROSSINI);
         director.getActionManager().resumeTarget(node);
+        //----end2----
     },
 
     //
@@ -256,6 +267,7 @@ var RemoveTest = ActionManagerTest.extend({
         return "Remove Test";
     },
     onEnter:function () {
+        //----start3----onEnter
         this._super();
 
         var s = director.getWinSize();
@@ -275,11 +287,14 @@ var RemoveTest = ActionManagerTest.extend({
 
         this.addChild(child, 1, TAG_GROSSINI);
         child.runAction(sequence);
+        //----end3----
     },
 
     stopAction:function () {
+        //----start3----onEnter
         var sprite = this.getChildByTag(TAG_GROSSINI);
         sprite.stopActionByTag(TAG_SEQUENCE);
+        //----end3----
     },
 
     //
@@ -304,6 +319,7 @@ var ResumeTest = ActionManagerTest.extend({
         return "Resume Test";
     },
     onEnter:function () {
+        //----start4----onEnter
         this._super();
 
         var s = director.getWinSize();
@@ -324,13 +340,16 @@ var ResumeTest = ActionManagerTest.extend({
         grossini.runAction(cc.RotateBy.create(2, 360));
 
         this.schedule(this.resumeGrossini, 3.0);
+        //----end4----
 
     },
     resumeGrossini:function (time) {
+        //----start4----resumeGrossini
         this.unschedule(this.resumeGrossini);
 
         var grossini = this.getChildByTag(TAG_GROSSINI);
         director.getActionManager().resumeTarget(grossini);
+        //----end4----
     },
 
     //
@@ -362,8 +381,8 @@ var ResumeTest = ActionManagerTest.extend({
 });
 
 var ActionManagerTestScene = TestScene.extend({
-    runThisTest:function () {
-        ActionMgrTestIdx = -1;
+    runThisTest:function (num) {
+        ActionMgrTestIdx = (num || 0) - 1;
         this.addChild(nextActionMgrTest());
         director.runScene(this);
     }
@@ -382,9 +401,14 @@ var arrayOfActionMgrTest = [
     ResumeTest
 ];
 
-var nextActionMgrTest = function () {
+var nextActionMgrTest = function (num) {
+
+    ActionMgrTestIdx = num ? num - 1 : ActionMgrTestIdx;
+
     ActionMgrTestIdx++;
     ActionMgrTestIdx = ActionMgrTestIdx % arrayOfActionMgrTest.length;
+
+    window.sidebar && window.sidebar.changeTest(ActionMgrTestIdx, 0);
 
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 };
@@ -393,8 +417,12 @@ var previousActionMgrTest = function () {
     if (ActionMgrTestIdx < 0)
         ActionMgrTestIdx += arrayOfActionMgrTest.length;
 
+    window.sidebar && window.sidebar.changeTest(ActionMgrTestIdx, 0);
+
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 };
 var restartActionMgrTest = function () {
+
+
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 };

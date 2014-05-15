@@ -33,6 +33,7 @@ require('jsb_cocos2d_ui.js');
 require('jsb_property_impls.js');
 require('jsb_property_apis.js');
 require('jsb_create_apis.js');
+require('jsb_ext_create_apis.js');
 require('jsb_chipmunk_constants.js');
 require('jsb_chipmunk.js');
 require('jsb_opengl_constants.js');
@@ -41,6 +42,8 @@ require('jsb_cocosbuilder.js');
 require('jsb_deprecated.js');
 require('jsb_loaders.js');
 
-if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {
-    require('jsb_pluginx.js');
+if (cc.FileUtils.getInstance().isFileExist('jsb_pluginx.js')) {
+    if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {
+        require('jsb_pluginx.js');
+    }
 }

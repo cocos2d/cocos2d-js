@@ -69,6 +69,7 @@ var TestNodeDemo = BaseTestLayer.extend({
 
 var CCNodeTest2 = TestNodeDemo.extend({
     onEnter:function () {
+        //----start0----onEnter
         this._super();
 
         var sp1 = cc.Sprite.create(s_pathSister1);
@@ -93,15 +94,15 @@ var CCNodeTest2 = TestNodeDemo.extend({
         var a2 = cc.ScaleBy.create(2, 2);
         var delay = cc.DelayTime.create(0.2);
 
-        var action1 = cc.RepeatForever.create(cc.Sequence.create(a1, a2, delay, a2.reverse()));
-        var action2 = cc.RepeatForever.create(cc.Sequence.create(
-            a1.clone(), a2.clone(), delay.clone(), a2.reverse()));
+        var action1 = cc.Sequence.create(a1, a2, delay, a2.reverse()).repeatForever();
+        var action2 = cc.Sequence.create(a1.clone(), a2.clone(), delay.clone(), a2.reverse()).repeatForever();
 
         sp2.anchorX = 0;
         sp2.anchorY = 0;
 
         sp1.runAction(action1);
         sp2.runAction(action2);
+        //----end0----
     },
     title:function () {
         return "anchorPoint and children";
@@ -129,6 +130,7 @@ var SID_DELAY2 = 1;
 var SID_DELAY4 = 2;
 var CCNodeTest4 = TestNodeDemo.extend({
     ctor:function () {
+        //----start1----ctor
         this._super();
         var sp1 = cc.Sprite.create(s_pathSister1);
         var sp2 = cc.Sprite.create(s_pathSister2);
@@ -145,15 +147,20 @@ var CCNodeTest4 = TestNodeDemo.extend({
 
         //Automation param
         this.autoParam = sp1;
+        //----end1----
     },
     delay2:function (dt) {
-        var node = this.getChildByTag(2);
+        //----start1----ctor
+        var node = this.delay2(2);
         var action1 = cc.RotateBy.create(1, 360);
         node.runAction(action1);
+        //----end1----
     },
     delay4:function (dt) {
+        //----start1----delay4
         this.unschedule(this.delay4);
         this.removeChildByTag(3, false);
+        //----end1----
     },
     title:function () {
         return "tags";
@@ -173,6 +180,7 @@ var CCNodeTest4 = TestNodeDemo.extend({
 
 var CCNodeTest5 = TestNodeDemo.extend({
     ctor:function () {
+        //----start2----ctor
         this._super();
         var sp1 = cc.Sprite.create(s_pathSister1);
         var sp2 = cc.Sprite.create(s_pathSister2);
@@ -183,7 +191,7 @@ var CCNodeTest5 = TestNodeDemo.extend({
 
         var rot = cc.RotateBy.create(2, 360);
         var rot_back = rot.reverse();
-        var forever = cc.RepeatForever.create(cc.Sequence.create(rot, rot_back));
+        var forever = cc.Sequence.create(rot, rot_back).repeatForever();
         var forever2 = forever.clone();
         forever.tag = 101;
         forever2.tag = 102;
@@ -195,8 +203,10 @@ var CCNodeTest5 = TestNodeDemo.extend({
         sp2.runAction(forever2);
 
         this.schedule(this.onAddAndRemove, 2.0);
+        //----end2----
     },
     onAddAndRemove:function (dt) {
+        //----start2----onAddAndRemove
         var sp1 = this.getChildByTag(TAG_SPRITE1);
         var sp2 = this.getChildByTag(TAG_SPRITE2);
 
@@ -216,6 +226,7 @@ var CCNodeTest5 = TestNodeDemo.extend({
         // hack for JSB.
         sp1.release();
         sp2.release();
+        //----end2----
     },
     title:function () {
         return "remove and cleanup";
@@ -244,6 +255,7 @@ var CCNodeTest5 = TestNodeDemo.extend({
 
 var CCNodeTest6 = TestNodeDemo.extend({
     ctor:function () {
+        //----start3----ctor
         this._super();
         var sp1 = cc.Sprite.create(s_pathSister1);
         var sp11 = cc.Sprite.create(s_pathSister1);
@@ -258,7 +270,7 @@ var CCNodeTest6 = TestNodeDemo.extend({
 
         var rot = cc.RotateBy.create(2, 360);
         var rot_back = rot.reverse();
-        var forever1 = cc.RepeatForever.create(cc.Sequence.create(rot, rot_back));
+        var forever1 = cc.Sequence.create(rot, rot_back).repeatForever();
         var forever11 = forever1.clone();
 
         var forever2 = forever1.clone();
@@ -275,8 +287,10 @@ var CCNodeTest6 = TestNodeDemo.extend({
         sp21.runAction(forever21);
 
         this.schedule(this.onAddAndRemove, 2.0);
+        //----end3----
     },
     onAddAndRemove:function (dt) {
+        //----start3----onAddAndRemove
         var sp1 = this.getChildByTag(TAG_SPRITE1);
         var sp2 = this.getChildByTag(TAG_SPRITE2);
 
@@ -297,6 +311,7 @@ var CCNodeTest6 = TestNodeDemo.extend({
         // hack for JSB.
         sp1.release();
         sp2.release();
+        //----end3----
 
     },
     title:function () {
@@ -318,6 +333,7 @@ var CCNodeTest6 = TestNodeDemo.extend({
 
 var StressTest1 = TestNodeDemo.extend({
     ctor:function () {
+        //----start4----ctor
         this._super();
 
         var sp1 = cc.Sprite.create(s_pathSister1);
@@ -329,8 +345,10 @@ var StressTest1 = TestNodeDemo.extend({
         sp1.y = winSize.height / 2;
 
         this.schedule(this.onShouldNotCrash, 1.0);
+        //----end4----
     },
     onShouldNotCrash:function (dt) {
+        //----start4----onShouldNotCrash
         this.unschedule(this.onShouldNotCrash);
 
         // if the node has timers, it crashes
@@ -345,14 +363,17 @@ var StressTest1 = TestNodeDemo.extend({
             cc.CallFunc.create(this.onRemoveMe, this)));
 
         this.addChild(explosion);
+        //----end4----
     },
     onRemoveMe:function (node) {
+        //----start4----onRemoveMe
         if (autoTestEnabled) {
             this.testPass = true;
             return;
         }
         this.parent.removeChild(node, true);
         this.onNextCallback(this);
+        //----end4----
     },
     title:function () {
         return "stress test #1: no crashes";
@@ -374,6 +395,7 @@ var StressTest1 = TestNodeDemo.extend({
 
 var StressTest2 = TestNodeDemo.extend({
     ctor:function () {
+        //----start5----ctor
         this._super();
 
         var sublayer = cc.Layer.create();
@@ -386,7 +408,7 @@ var StressTest2 = TestNodeDemo.extend({
         var move_ease_inout3 = cc.EaseInOut.create(move.clone(), 2.0);
         var move_ease_inout_back3 = move_ease_inout3.reverse();
         var seq3 = cc.Sequence.create(move_ease_inout3, move_ease_inout_back3);
-        sp1.runAction(cc.RepeatForever.create(seq3));
+        sp1.runAction(seq3.repeatForever());
         sublayer.addChild(sp1, 1);
 
         var fire = cc.ParticleFire.create();
@@ -396,17 +418,20 @@ var StressTest2 = TestNodeDemo.extend({
 
         var copy_seq3 = seq3.clone();
 
-        fire.runAction(cc.RepeatForever.create(copy_seq3));
+        fire.runAction(copy_seq3.repeatForever());
         sublayer.addChild(fire, 2);
 
         this.schedule(this.shouldNotLeak, 6.0);
 
         this.addChild(sublayer, 0, TAG_SPRITE1);
+        //----end5----
     },
     shouldNotLeak:function (dt) {
+        //----start5----shouleNotLeak
         this.unschedule(this.shouldNotLeak);
         var sublayer = this.getChildByTag(TAG_SPRITE1);
         sublayer.removeAllChildren();
+        //----end5----
     },
     title:function () {
         return "stress test #2: no leaks";
@@ -415,7 +440,7 @@ var StressTest2 = TestNodeDemo.extend({
 
 var NodeToWorld = TestNodeDemo.extend({
     ctor:function () {
-        //
+        //----start6----ctor
         // This code tests that nodeToParent works OK:
         //  - It tests different anchor Points
         //  - It tests different children anchor points
@@ -434,20 +459,23 @@ var NodeToWorld = TestNodeDemo.extend({
 
         var rot = cc.RotateBy.create(3, 360);
         var delay = cc.DelayTime.create(0.3);
-        var fe = cc.RepeatForever.create(cc.Sequence.create(rot, delay));
+        var fe = cc.Sequence.create(rot, delay).repeatForever();
         item.runAction(fe);
 
         var move = cc.MoveBy.create(3, cc.p(200, 0));
         var move_back = move.reverse();
         var seq = cc.Sequence.create(move, delay.clone(), move_back);
-        var fe2 = cc.RepeatForever.create(seq);
+        var fe2 = seq.repeatForever();
         back.runAction(fe2);
 
         //Automation parameters
         this.autoParam = item;
+        //----end6----
     },
     onClicked:function () {
+        //----start6----ctor
         cc.log("On clicked");
+        //----end6----
     },
     title:function () {
         return "nodeToParent transform";
@@ -472,6 +500,7 @@ var NodeToWorld = TestNodeDemo.extend({
 
 var CameraOrbitTest = TestNodeDemo.extend({
     ctor:function () {
+        //----start11----ctor
         this._super();
 
         var p = cc.Sprite.create(s_back3);
@@ -488,7 +517,7 @@ var CameraOrbitTest = TestNodeDemo.extend({
         sprite.x = sw / 4;
         sprite.y = sh / 2;
         var orbit = cc.OrbitCamera.create(2, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // CENTER
         sprite = cc.Sprite.create(s_pathGrossini);
@@ -497,7 +526,7 @@ var CameraOrbitTest = TestNodeDemo.extend({
         sprite.x = sw / 4 * 2;
         sprite.y = sh / 2;
         orbit = cc.OrbitCamera.create(2, 1, 0, 0, 360, 45, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // RIGHT
         sprite = cc.Sprite.create(s_pathGrossini);
@@ -506,21 +535,26 @@ var CameraOrbitTest = TestNodeDemo.extend({
         sprite.x = sw / 4 * 3;
         sprite.y = sh / 2;
         orbit = cc.OrbitCamera.create(2, 1, 0, 0, 360, 90, -45);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // PARENT
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 90);
-        p.runAction(cc.RepeatForever.create(orbit));
+        p.runAction(orbit.repeatForever());
 
         this.scale = 1;
+        //----end11----
     },
     onEnter:function () {
+        //----start11----onEnter
         this._super();
         director.setProjection(cc.Director.PROJECTION_3D);
+        //----end11----
     },
     onExit:function () {
+        //----start11----onExit
         director.setProjection(cc.Director.PROJECTION_2D);
         this._super();
+        //----end11----
     },
     title:function () {
         return "Camera Orbit test";
@@ -530,6 +564,7 @@ var CameraOrbitTest = TestNodeDemo.extend({
 var CameraZoomTest = TestNodeDemo.extend({
     _z:0,
     ctor:function () {
+        //----start12----ctor
         this._super();
 
         // LEFT
@@ -565,8 +600,10 @@ var CameraZoomTest = TestNodeDemo.extend({
 
         //Automation parameters
         this.autoParam = sprite;
+        //----end12----
     },
     update:function (dt) {
+        //----start12----update
         if (!("opengl" in cc.sys.capabilities))
             return;
 
@@ -578,16 +615,21 @@ var CameraZoomTest = TestNodeDemo.extend({
         sprite = this.getChildByTag(40);
         cam = sprite.getCamera();
         cam.setEye(0, 0, -this._z);
+        //----end12----
     },
     onEnter:function () {
-        this._super();
         //TODO
+        //----start12----onEnter
+        this._super();
         director.setProjection(cc.Director.PROJECTION_3D);
+        //----end12----
     },
     onExit:function () {
         //TODO
+        //----start12----onExit
         director.setProjection(cc.Director.PROJECTION_2D);
         this._super();
+        //----end12----
     },
     title:function () {
         return "Camera Zoom test";
@@ -612,6 +654,7 @@ var CameraZoomTest = TestNodeDemo.extend({
 
 var CameraCenterTest = TestNodeDemo.extend({
     ctor:function () {
+        //----start10----ctor
         this._super();
 
         // LEFT-TOP
@@ -622,7 +665,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         sprite.color = cc.color.RED;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         var orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // LEFT-BOTTOM
         sprite = cc.Sprite.create(s_texture512);
@@ -632,7 +675,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         sprite.color = cc.color.BLUE;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // RIGHT-TOP
         sprite = cc.Sprite.create(s_texture512);
@@ -642,7 +685,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         sprite.color = cc.color.YELLOW;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // RIGHT-BOTTOM
         sprite = cc.Sprite.create(s_texture512);
@@ -652,7 +695,7 @@ var CameraCenterTest = TestNodeDemo.extend({
         sprite.color = cc.color.GREEN;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
 
         // CENTER
         sprite = cc.Sprite.create(s_texture512);
@@ -662,17 +705,22 @@ var CameraCenterTest = TestNodeDemo.extend({
         sprite.color = cc.color.WHITE;
         sprite.setTextureRect(cc.rect(0, 0, 120, 50));
         orbit = cc.OrbitCamera.create(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(cc.RepeatForever.create(orbit));
+        sprite.runAction(orbit.repeatForever());
+        //----end10----
     },
 
     onEnter:function(){
+        //----start10----onEnter
         this._super();
         cc.director.setProjection(cc.Director.PROJECTION_3D);
+        //----end10----
     },
 
     onExit:function(){
+        //----start10----onExit
         cc.director.setProjection(cc.Director.PROJECTION_2D);
         this._super();
+        //----end10----
     },
 
     title:function () {
@@ -708,6 +756,7 @@ var CameraCenterTest = TestNodeDemo.extend({
 //
 var ConvertToNode = TestNodeDemo.extend({
     ctor:function () {
+        //----start9----ctor
         this._super();
         if ('touches' in cc.sys.capabilities){
             cc.eventManager.addListener(cc.EventListener.create({
@@ -730,7 +779,7 @@ var ConvertToNode = TestNodeDemo.extend({
             }, this);
 
         var rotate = cc.RotateBy.create(10, 360);
-        var action = cc.RepeatForever.create(rotate);
+        var action = rotate.repeatForever();
         for (var i = 0; i < 3; i++) {
             var sprite = cc.Sprite.create(s_pathGrossini);
             sprite.x = winSize.width / 4 * (i + 1);
@@ -763,8 +812,10 @@ var ConvertToNode = TestNodeDemo.extend({
             sprite.runAction(copy);
             this.addChild(sprite, i);
         }
+        //----end9----
     },
     processEvent:function (location) {
+        //----start9----processEvent
         this.testP1 = [];
         this.testP2 = [];
         for (var i = 0; i < 3; i++) {
@@ -778,6 +829,7 @@ var ConvertToNode = TestNodeDemo.extend({
             this.testP1.push({"x":p1.x, "y":p1.y});
             this.testP2.push({"x":p2.x, "y":p2.y});
         }
+        //----end9----
     },
 
     title:function () {
@@ -818,6 +870,7 @@ var ConvertToNode = TestNodeDemo.extend({
 //
 var BoundingBoxTest = TestNodeDemo.extend({
     ctor:function () {
+        //----start8----ctor
         this._super();
         var sprite = cc.Sprite.create(s_pathGrossini);
         this.addChild(sprite);
@@ -831,6 +884,7 @@ var BoundingBoxTest = TestNodeDemo.extend({
         cc.log('size = [ ' + bb.width + "," + bb.height + "]");
 
         this.testBB = bb;
+        //----end8----
     },
     title:function () {
         return "Bounding Box Test";
@@ -855,22 +909,30 @@ var BoundingBoxTest = TestNodeDemo.extend({
 
 var SchedulerTest1 = TestNodeDemo.extend({
     ctor:function () {
+        //----start7----ctor
         this._super();
         var layer = cc.Layer.create();
-        //UXLOG("retain count after init is %d", layer->retainCount());                // 1
+        //UXLOG("retain count after init is %d", layer->retainCount());
+        // 1
 
         this.addChild(layer, 0);
-        //UXLOG("retain count after addChild is %d", layer->retainCount());      // 2
+        //UXLOG("retain count after addChild is %d", layer->retainCount());
+        // 2
 
         layer.schedule(this.doSomething);
-        //UXLOG("retain count after schedule is %d", layer->retainCount());      // 3 : (object-c viersion), but win32 version is still 2, because CCTimer class don't save target.
+        //UXLOG("retain count after schedule is %d", layer->retainCount());
+        // 3 : (object-c viersion), but win32 version is still 2, because CCTimer class don't save target.
 
         layer.unschedule(this.doSomething);
-        //UXLOG("retain count after unschedule is %d", layer->retainCount());        // STILL 3!  (win32 is '2')
+        //UXLOG("retain count after unschedule is %d", layer->retainCount());
+        // STILL 3!  (win32 is '2')
+        //----end7----
     },
 
     doSomething:function (dt) {
+        //----start7----doSomething
         this.testBool = false;
+        //----end7----
     },
 
     title:function () {
@@ -891,6 +953,7 @@ var SchedulerTest1 = TestNodeDemo.extend({
 
 var NodeOpaqueTest = TestNodeDemo.extend({
     ctor:function () {
+        //----start13----ctor
         this._super();
         var winSize = cc.director.getWinSize();
         var background;
@@ -901,6 +964,7 @@ var NodeOpaqueTest = TestNodeDemo.extend({
             background.y = winSize.height / 2;
             this.addChild(background);
         }
+        //----end13----
     },
 
     title:function () {
@@ -914,6 +978,7 @@ var NodeOpaqueTest = TestNodeDemo.extend({
 
 var NodeNonOpaqueTest = TestNodeDemo.extend({
     ctor:function () {
+        //----start14----ctor
         this._super();
         var winSize = cc.director.getWinSize();
         var background;
@@ -924,6 +989,7 @@ var NodeNonOpaqueTest = TestNodeDemo.extend({
             background.y = winSize.height / 2;
             this.addChild(background);
         }
+        //----end14----
     },
     title:function () {
         return "Node Non Opaque Test";
@@ -938,8 +1004,8 @@ var NodeNonOpaqueTest = TestNodeDemo.extend({
 // MAIN ENTRY POINT
 //
 var NodeTestScene = TestScene.extend({
-    runThisTest:function () {
-        nodeTestSceneIdx = -1;
+    runThisTest:function (num) {
+        nodeTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         MAX_LAYER = 9;
         var layer = nextNodeTest();
         this.addChild(layer);
@@ -977,12 +1043,16 @@ var nextNodeTest = function () {
     nodeTestSceneIdx++;
     nodeTestSceneIdx = nodeTestSceneIdx % arrayOfNodeTest.length;
 
+    window.sidebar && window.sidebar.changeTest(nodeTestSceneIdx, 24);
+
     return new arrayOfNodeTest[nodeTestSceneIdx]();
 };
 var previousNodeTest = function () {
     nodeTestSceneIdx--;
     if (nodeTestSceneIdx < 0)
         nodeTestSceneIdx += arrayOfNodeTest.length;
+
+    window.sidebar && window.sidebar.changeTest(nodeTestSceneIdx, 24);
 
     return new arrayOfNodeTest[nodeTestSceneIdx]();
 };
@@ -991,3 +1061,4 @@ var restartNodeTest = function () {
 };
 
 
+new RegExp()
