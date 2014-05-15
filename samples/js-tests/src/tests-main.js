@@ -55,8 +55,6 @@ var TestScene = cc.Scene.extend({
 
         this.addChild(menu, 1);
     },
-
-    // callbacks
     onMainMenuCallback:function () {
         var scene = cc.Scene.create();
         var layer = new TestController();

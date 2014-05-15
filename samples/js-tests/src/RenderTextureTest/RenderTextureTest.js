@@ -604,7 +604,7 @@ var Issue1464 = RenderTextureBaseLayer.extend({
         var fadein = fadeout.reverse();
         var delay = cc.DelayTime.create(0.25);
         var seq = cc.Sequence.create(fadeout, delay, fadein, delay.clone());
-        var fe = cc.RepeatForever.create(seq);
+        var fe = seq.repeatForever();
         rend.getSprite().runAction(fe);
 
         if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {

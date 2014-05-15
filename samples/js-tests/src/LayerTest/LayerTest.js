@@ -30,8 +30,8 @@ var LAYERTEST2_LAYER1_TAG = 1;
 var LAYERTEST2_LAYER2_TAG = 2;
 
 var LayerTestScene = TestScene.extend({
-    runThisTest:function () {
-        layerTestSceneIdx = -1;
+    runThisTest:function (num) {
+        layerTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextLayerTest());
         director.runScene(this);
     }
@@ -89,6 +89,7 @@ var LayerTest = BaseTestLayer.extend({
 //------------------------------------------------------------------
 var LayerTest1 = LayerTest.extend({
     onEnter:function () {
+        //----start0----onEnter
         this._super();
 
         if( 'touches' in cc.sys.capabilities )
@@ -114,16 +115,19 @@ var LayerTest1 = LayerTest.extend({
         layer.x = s.width / 2;
         layer.y = s.height / 2;
         this.addChild(layer, 1, cc.TAG_LAYER);
+        //----end0----
     },
     title:function () {
         return "ColorLayer resize (tap & move)";
     },
 
     updateSize:function (location) {
+        //----start0----updateSize
         var l = this.getChildByTag(cc.TAG_LAYER);
 
         l.width = Math.abs(location.x - winSize.width / 2) * 2;
 	    l.height = Math.abs(location.y - winSize.height / 2) * 2;
+        //----end0----
     },
 
     //
@@ -150,6 +154,7 @@ var LayerTest1 = LayerTest.extend({
 
 var IgnoreAnchorpointTest1 = LayerTest.extend({
     onEnter:function () {
+        //----start3----onEnter
         this._super();
         //create layer
         var ws = director.getWinSize();
@@ -161,6 +166,7 @@ var IgnoreAnchorpointTest1 = LayerTest.extend({
         layer1.x = ws.width / 2;
         layer1.y = ws.height / 2;
         this.addChild(layer1);
+        //----end3----
     },
     title:function () {
         return "ignore Anchorpoint Test #1";
@@ -197,6 +203,7 @@ var IgnoreAnchorpointTest1 = LayerTest.extend({
 });
 var IgnoreAnchorpointTest2 = LayerTest.extend({
     onEnter:function () {
+        //----start4----onEnter
         this._super();
         //create layer
         var ws = director.getWinSize();
@@ -208,6 +215,7 @@ var IgnoreAnchorpointTest2 = LayerTest.extend({
         layer1.x = ws.width / 2;
         layer1.y = ws.height / 2;
         this.addChild(layer1);
+        //----end4----
     },
     title:function () {
         return "ignore Anchorpoint Test #2";
@@ -245,6 +253,7 @@ var IgnoreAnchorpointTest2 = LayerTest.extend({
 
 var IgnoreAnchorpointTest3 = LayerTest.extend({
     onEnter:function () {
+        //----start5----onEnter
         this._super();
         //create layer
         var ws = director.getWinSize();
@@ -256,6 +265,7 @@ var IgnoreAnchorpointTest3 = LayerTest.extend({
         layer1.x = ws.width / 2;
         layer1.y = ws.height / 2;
         this.addChild(layer1);
+        //----end5----
     },
     title:function () {
         return "ignore Anchorpoint Test #3";
@@ -267,6 +277,7 @@ var IgnoreAnchorpointTest3 = LayerTest.extend({
 
 var IgnoreAnchorpointTest4 = LayerTest.extend({
     onEnter:function () {
+        //----start6----onEnter
         this._super();
         //create layer
         var ws = director.getWinSize();
@@ -278,6 +289,7 @@ var IgnoreAnchorpointTest4 = LayerTest.extend({
         layer1.x = ws.width / 2;
         layer1.y = ws.height / 2;
         this.addChild(layer1);
+        //----end6----
     },
     title:function () {
         return "ignore Anchorpoint Test #4";
@@ -296,6 +308,7 @@ var IgnoreAnchorpointTest4 = LayerTest.extend({
 var LayerTest2 = LayerTest.extend({
 
     onEnter:function () {
+        //----start1----onEnter
         this._super();
 
         var s = director.getWinSize();
@@ -327,6 +340,7 @@ var LayerTest2 = LayerTest.extend({
 
         layer1.runAction(seq1);
         layer2.runAction(seq2);
+        //----end1----
     },
     title:function () {
         return "ColorLayer: fade and tint";
@@ -375,6 +389,7 @@ var LayerTestBlend = LayerTest.extend({
     _blend:true,
 
     ctor:function () {
+        //----start2----ctor
         this._super();
         var layer1 = cc.LayerColor.create(cc.color(255, 255, 255, 80));
 
@@ -400,8 +415,10 @@ var LayerTestBlend = LayerTest.extend({
 
         this.schedule(this.onNewBlend, 1.0);
         this._blend = true;
+        //----end2----
     },
     onNewBlend:function (dt) {
+        //----start2----onNewBlend
         var layer = this.getChildByTag(cc.TAG_LAYER);
 
         var src;
@@ -416,6 +433,7 @@ var LayerTestBlend = LayerTest.extend({
         }
         layer.setBlendFunc( src, dst );
         this._blend = ! this._blend;
+        //----end2----
     },
     title:function () {
         return "ColorLayer: blend";
@@ -430,6 +448,7 @@ var LayerTestBlend = LayerTest.extend({
 var LayerGradient = LayerTest.extend({
     _isPressed:false,
     ctor:function () {
+        //----start7----onEnter
         this._super();
         var layer1 = cc.LayerGradient.create(cc.color(255, 0, 0, 255), cc.color(0, 255, 0, 255), cc.p(0.9, 0.9));
         this.addChild(layer1, 0, cc.TAG_LAYER);
@@ -467,19 +486,24 @@ var LayerGradient = LayerTest.extend({
          this.addChild(menu);
          menu.x = winSize.width / 2;
          menu.y = 100;
+        //----end7----
     },
 
     updateGradient:function(pos) {
+        //----start7----updateGradient
         var diff = cc.pSub(cc.p(winSize.width / 2, winSize.height / 2), pos);
         diff = cc.pNormalize(diff);
 
         var gradient = this.getChildByTag(1);
         gradient.setVector(diff);
+        //----end7----
     },
 
     onToggleItem:function (sender) {
+        //----start7----onToggleItem
         var gradient = this.getChildByTag(cc.TAG_LAYER);
         gradient.setCompressedInterpolation(!gradient.isCompressedInterpolation());
+        //----end7----
     },
 
     title:function () {
@@ -533,12 +557,16 @@ var nextLayerTest = function () {
     layerTestSceneIdx++;
     layerTestSceneIdx = layerTestSceneIdx % arrayOfLayerTest.length;
 
+    window.sidebar && window.sidebar.changeTest(layerTestSceneIdx, 20);
+
     return new arrayOfLayerTest[layerTestSceneIdx]();
 };
 var previousLayerTest = function () {
     layerTestSceneIdx--;
     if (layerTestSceneIdx < 0)
         layerTestSceneIdx += arrayOfLayerTest.length;
+
+    window.sidebar && window.sidebar.changeTest(layerTestSceneIdx, 20);
 
     return new arrayOfLayerTest[layerTestSceneIdx]();
 };

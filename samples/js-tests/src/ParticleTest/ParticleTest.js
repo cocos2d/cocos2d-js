@@ -312,7 +312,7 @@ var ParticleDemo = BaseTestLayer.extend({
         var move_back = move.reverse();
 
         var seq = cc.Sequence.create(move, move_back);
-        this._background.runAction(cc.RepeatForever.create(seq));
+        this._background.runAction(seq.repeatForever());
 
         this.scheduleUpdate();
     },
@@ -885,7 +885,7 @@ var ParallaxParticle = ParticleDemo.extend({
         var move = cc.MoveBy.create(4, cc.p(300, 0));
         var move_back = move.reverse();
         var seq = cc.Sequence.create(move, move_back);
-        p.runAction(cc.RepeatForever.create(seq));
+        p.runAction(seq.repeatForever());
     },
     title:function () {
         return "Parallax + Particles";
@@ -1157,7 +1157,7 @@ var Issue704 = ParticleDemo.extend({
         this._emitter.setBlendAdditive(false);
 
         var rot = cc.RotateBy.create(16, 360);
-        this._emitter.runAction(cc.RepeatForever.create(rot));
+        this._emitter.runAction(rot.repeatForever());
     },
     title:function () {
         return "Issue 704. Free + Rot";
