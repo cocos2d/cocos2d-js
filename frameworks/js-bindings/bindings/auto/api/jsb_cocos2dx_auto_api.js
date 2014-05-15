@@ -215,299 +215,251 @@ getInstance : function (
 };
 
 /**
- * @class GLProgram
+ * @class EventListener
  */
-cc.GLProgram = {
+cc.EventListener = {
 
 /**
- * @method getFragmentShaderLog
- * @return {String}
+ * @method setEnabled
+ * @param {bool} arg0
  */
-getFragmentShaderLog : function (
-)
-{
-    return ;
-},
-
-/**
- * @method bindAttribLocation
- * @param {char} arg0
- * @param {unsigned int} arg1
- */
-bindAttribLocation : function (
-char, 
-int 
+setEnabled : function (
+bool 
 )
 {
 },
 
 /**
- * @method setUniformLocationWithMatrix4fv
- * @param {int} arg0
- * @param {float} arg1
- * @param {unsigned int} arg2
+ * @method clone
+ * @return {cc.EventListener}
  */
-setUniformLocationWithMatrix4fv : function (
-int, 
-float, 
-int 
+clone : function (
 )
 {
+    return cc.EventListener;
 },
 
 /**
- * @method getUniformLocationForName
- * @param {char} arg0
- * @return {int}
- */
-getUniformLocationForName : function (
-char 
-)
-{
-    return 0;
-},
-
-/**
- * @method use
- */
-use : function (
-)
-{
-},
-
-/**
- * @method getVertexShaderLog
- * @return {String}
- */
-getVertexShaderLog : function (
-)
-{
-    return ;
-},
-
-/**
- * @method initWithByteArrays
- * @param {char} arg0
- * @param {char} arg1
+ * @method isEnabled
  * @return {bool}
  */
-initWithByteArrays : function (
-char, 
-char 
+isEnabled : function (
 )
 {
     return false;
 },
 
 /**
- * @method initWithFilenames
- * @param {String} arg0
- * @param {String} arg1
+ * @method checkAvailable
  * @return {bool}
  */
-initWithFilenames : function (
+checkAvailable : function (
+)
+{
+    return false;
+},
+
+};
+
+/**
+ * @class Event
+ */
+cc.Event = {
+
+/**
+ * @method isStopped
+ * @return {bool}
+ */
+isStopped : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getType
+ * @return {cc.Event::Type}
+ */
+getType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getCurrentTarget
+ * @return {cc.Node}
+ */
+getCurrentTarget : function (
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method stopPropagation
+ */
+stopPropagation : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EventDispatcher
+ */
+cc.EventDispatcher = {
+
+/**
+ * @method setEnabled
+ * @param {bool} arg0
+ */
+setEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method removeAllEventListeners
+ */
+removeAllEventListeners : function (
+)
+{
+},
+
+/**
+ * @method addEventListenerWithSceneGraphPriority
+ * @param {cc.EventListener} arg0
+ * @param {cc.Node} arg1
+ */
+addEventListenerWithSceneGraphPriority : function (
+eventlistener, 
+node 
+)
+{
+},
+
+/**
+ * @method addCustomEventListener
+ * @param {String} arg0
+ * @param {function} arg1
+ * @return {cc.EventListenerCustom}
+ */
+addCustomEventListener : function (
 str, 
+func 
+)
+{
+    return cc.EventListenerCustom;
+},
+
+/**
+ * @method addEventListenerWithFixedPriority
+ * @param {cc.EventListener} arg0
+ * @param {int} arg1
+ */
+addEventListenerWithFixedPriority : function (
+eventlistener, 
+int 
+)
+{
+},
+
+/**
+ * @method removeEventListenersForTarget
+* @param {cc.Node|cc.EventListener::Type} node
+* @param {bool} bool
+*/
+removeEventListenersForTarget : function(
+node,
+bool 
+)
+{
+},
+
+/**
+ * @method resumeEventListenersForTarget
+ * @param {cc.Node} arg0
+ * @param {bool} arg1
+ */
+resumeEventListenersForTarget : function (
+node, 
+bool 
+)
+{
+},
+
+/**
+ * @method setPriority
+ * @param {cc.EventListener} arg0
+ * @param {int} arg1
+ */
+setPriority : function (
+eventlistener, 
+int 
+)
+{
+},
+
+/**
+ * @method dispatchEvent
+ * @param {cc.Event} arg0
+ */
+dispatchEvent : function (
+event 
+)
+{
+},
+
+/**
+ * @method pauseEventListenersForTarget
+ * @param {cc.Node} arg0
+ * @param {bool} arg1
+ */
+pauseEventListenersForTarget : function (
+node, 
+bool 
+)
+{
+},
+
+/**
+ * @method removeCustomEventListeners
+ * @param {String} arg0
+ */
+removeCustomEventListeners : function (
 str 
 )
 {
-    return false;
 },
 
 /**
- * @method setUniformsForBuiltins
-* @param {matrix_object} matrix
-*/
-setUniformsForBuiltins : function(
-matrix 
-)
-{
-},
-
-/**
- * @method setUniformLocationWith3i
- * @param {int} arg0
- * @param {int} arg1
- * @param {int} arg2
- * @param {int} arg3
+ * @method removeEventListener
+ * @param {cc.EventListener} arg0
  */
-setUniformLocationWith3i : function (
-int, 
-int, 
-int, 
-int 
+removeEventListener : function (
+eventlistener 
 )
 {
 },
 
 /**
- * @method setUniformLocationWith3iv
- * @param {int} arg0
- * @param {int} arg1
- * @param {unsigned int} arg2
- */
-setUniformLocationWith3iv : function (
-int, 
-int, 
-int 
-)
-{
-},
-
-/**
- * @method updateUniforms
- */
-updateUniforms : function (
-)
-{
-},
-
-/**
- * @method setUniformLocationWith4iv
- * @param {int} arg0
- * @param {int} arg1
- * @param {unsigned int} arg2
- */
-setUniformLocationWith4iv : function (
-int, 
-int, 
-int 
-)
-{
-},
-
-/**
- * @method getUniformLocation
- * @param {char} arg0
- * @return {int}
- */
-getUniformLocation : function (
-char 
-)
-{
-    return 0;
-},
-
-/**
- * @method link
+ * @method isEnabled
  * @return {bool}
  */
-link : function (
+isEnabled : function (
 )
 {
     return false;
 },
 
 /**
- * @method setUniformLocationWith2iv
- * @param {int} arg0
- * @param {int} arg1
- * @param {unsigned int} arg2
- */
-setUniformLocationWith2iv : function (
-int, 
-int, 
-int 
-)
-{
-},
-
-/**
- * @method setUniformLocationWithMatrix3fv
- * @param {int} arg0
- * @param {float} arg1
- * @param {unsigned int} arg2
- */
-setUniformLocationWithMatrix3fv : function (
-int, 
-float, 
-int 
-)
-{
-},
-
-/**
- * @method reset
- */
-reset : function (
-)
-{
-},
-
-/**
- * @method getAttribLocation
- * @param {char} arg0
- * @return {int}
- */
-getAttribLocation : function (
-char 
-)
-{
-    return 0;
-},
-
-/**
- * @method setUniformLocationWithMatrix2fv
- * @param {int} arg0
- * @param {float} arg1
- * @param {unsigned int} arg2
- */
-setUniformLocationWithMatrix2fv : function (
-int, 
-float, 
-int 
-)
-{
-},
-
-/**
- * @method setUniformLocationWith4i
- * @param {int} arg0
- * @param {int} arg1
- * @param {int} arg2
- * @param {int} arg3
- * @param {int} arg4
- */
-setUniformLocationWith4i : function (
-int, 
-int, 
-int, 
-int, 
-int 
-)
-{
-},
-
-/**
- * @method setUniformLocationWith1i
- * @param {int} arg0
- * @param {int} arg1
- */
-setUniformLocationWith1i : function (
-int, 
-int 
-)
-{
-},
-
-/**
- * @method setUniformLocationWith2i
- * @param {int} arg0
- * @param {int} arg1
- * @param {int} arg2
- */
-setUniformLocationWith2i : function (
-int, 
-int, 
-int 
-)
-{
-},
-
-/**
- * @method GLProgram
+ * @method EventDispatcher
  * @constructor
  */
-GLProgram : function (
+EventDispatcher : function (
 )
 {
 },
@@ -625,51 +577,6 @@ Touch : function (
 };
 
 /**
- * @class Event
- */
-cc.Event = {
-
-/**
- * @method isStopped
- * @return {bool}
- */
-isStopped : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getType
- * @return {cc.Event::Type}
- */
-getType : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getCurrentTarget
- * @return {cc.Node}
- */
-getCurrentTarget : function (
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method stopPropagation
- */
-stopPropagation : function (
-)
-{
-},
-
-};
-
-/**
  * @class EventTouch
  */
 cc.EventTouch = {
@@ -731,16 +638,6 @@ bool
 cc.Texture2D = {
 
 /**
- * @method getShaderProgram
- * @return {cc.GLProgram}
- */
-getShaderProgram : function (
-)
-{
-    return cc.GLProgram;
-},
-
-/**
  * @method getMaxT
  * @return {float}
  */
@@ -772,16 +669,6 @@ pixelformat
 )
 {
     return false;
-},
-
-/**
- * @method setShaderProgram
- * @param {cc.GLProgram} arg0
- */
-setShaderProgram : function (
-glprogram 
-)
-{
 },
 
 /**
@@ -953,6 +840,16 @@ getPixelFormat : function (
 },
 
 /**
+ * @method setGLProgram
+ * @param {cc.GLProgram} arg0
+ */
+setGLProgram : function (
+glprogram 
+)
+{
+},
+
+/**
  * @method getContentSizeInPixels
  * @return {size_object}
  */
@@ -980,6 +877,16 @@ drawAtPoint : function (
 array 
 )
 {
+},
+
+/**
+ * @method getGLProgram
+ * @return {cc.GLProgram}
+ */
+getGLProgram : function (
+)
+{
+    return cc.GLProgram;
 },
 
 /**
@@ -1044,213 +951,6 @@ Texture2D : function (
 };
 
 /**
- * @class EventListener
- */
-cc.EventListener = {
-
-/**
- * @method setEnabled
- * @param {bool} arg0
- */
-setEnabled : function (
-bool 
-)
-{
-},
-
-/**
- * @method clone
- * @return {cc.EventListener}
- */
-clone : function (
-)
-{
-    return cc.EventListener;
-},
-
-/**
- * @method isEnabled
- * @return {bool}
- */
-isEnabled : function (
-)
-{
-    return false;
-},
-
-/**
- * @method checkAvailable
- * @return {bool}
- */
-checkAvailable : function (
-)
-{
-    return false;
-},
-
-};
-
-/**
- * @class EventDispatcher
- */
-cc.EventDispatcher = {
-
-/**
- * @method setEnabled
- * @param {bool} arg0
- */
-setEnabled : function (
-bool 
-)
-{
-},
-
-/**
- * @method removeAllEventListeners
- */
-removeAllEventListeners : function (
-)
-{
-},
-
-/**
- * @method addEventListenerWithSceneGraphPriority
- * @param {cc.EventListener} arg0
- * @param {cc.Node} arg1
- */
-addEventListenerWithSceneGraphPriority : function (
-eventlistener, 
-node 
-)
-{
-},
-
-/**
- * @method addCustomEventListener
- * @param {String} arg0
- * @param {function} arg1
- * @return {cc.EventListenerCustom}
- */
-addCustomEventListener : function (
-str, 
-func 
-)
-{
-    return cc.EventListenerCustom;
-},
-
-/**
- * @method addEventListenerWithFixedPriority
- * @param {cc.EventListener} arg0
- * @param {int} arg1
- */
-addEventListenerWithFixedPriority : function (
-eventlistener, 
-int 
-)
-{
-},
-
-/**
- * @method removeEventListenersForTarget
-* @param {cc.Node|cc.EventListener::Type} node
-* @param {bool} bool
-*/
-removeEventListenersForTarget : function(
-node,
-bool 
-)
-{
-},
-
-/**
- * @method resumeEventListenersForTarget
- * @param {cc.Node} arg0
- * @param {bool} arg1
- */
-resumeEventListenersForTarget : function (
-node, 
-bool 
-)
-{
-},
-
-/**
- * @method setPriority
- * @param {cc.EventListener} arg0
- * @param {int} arg1
- */
-setPriority : function (
-eventlistener, 
-int 
-)
-{
-},
-
-/**
- * @method dispatchEvent
- * @param {cc.Event} arg0
- */
-dispatchEvent : function (
-event 
-)
-{
-},
-
-/**
- * @method pauseEventListenersForTarget
- * @param {cc.Node} arg0
- * @param {bool} arg1
- */
-pauseEventListenersForTarget : function (
-node, 
-bool 
-)
-{
-},
-
-/**
- * @method removeCustomEventListeners
- * @param {String} arg0
- */
-removeCustomEventListeners : function (
-str 
-)
-{
-},
-
-/**
- * @method removeEventListener
- * @param {cc.EventListener} arg0
- */
-removeEventListener : function (
-eventlistener 
-)
-{
-},
-
-/**
- * @method isEnabled
- * @return {bool}
- */
-isEnabled : function (
-)
-{
-    return false;
-},
-
-/**
- * @method EventDispatcher
- * @constructor
- */
-EventDispatcher : function (
-)
-{
-},
-
-};
-
-/**
  * @class Node
  */
 cc.Node = {
@@ -1289,16 +989,6 @@ setPhysicsBody : function (
 physicsbody 
 )
 {
-},
-
-/**
- * @method getShaderProgram
-* @return {cc.GLProgram|cc.GLProgram}
-*/
-getShaderProgram : function(
-)
-{
-    return cc.GLProgram;
 },
 
 /**
@@ -1480,13 +1170,13 @@ getTag : function (
 },
 
 /**
- * @method getNodeToWorldAffineTransform
- * @return {cc.AffineTransform}
+ * @method getGLProgram
+ * @return {cc.GLProgram}
  */
-getNodeToWorldAffineTransform : function (
+getGLProgram : function (
 )
 {
-    return cc.AffineTransform;
+    return cc.GLProgram;
 },
 
 /**
@@ -1564,11 +1254,11 @@ float
 },
 
 /**
- * @method setSkewY
- * @param {float} arg0
+ * @method setGLProgramState
+ * @param {cc.GLProgramState} arg0
  */
-setSkewY : function (
-float 
+setGLProgramState : function (
+glprogramstate 
 )
 {
 },
@@ -1730,6 +1420,16 @@ bool
 },
 
 /**
+ * @method setSkewY
+ * @param {float} arg0
+ */
+setSkewY : function (
+float 
+)
+{
+},
+
+/**
  * @method setRotation3D
  * @param {vector3_object} arg0
  */
@@ -1846,13 +1546,13 @@ bool
 },
 
 /**
- * @method setShaderProgram
- * @param {cc.GLProgram} arg0
+ * @method isOpacityModifyRGB
+ * @return {bool}
  */
-setShaderProgram : function (
-glprogram 
+isOpacityModifyRGB : function (
 )
 {
+    return false;
 },
 
 /**
@@ -1895,6 +1595,16 @@ setPositionZ : function (
 float 
 )
 {
+},
+
+/**
+ * @method getGLProgramState
+ * @return {cc.GLProgramState}
+ */
+getGLProgramState : function (
+)
+{
+    return cc.GLProgramState;
 },
 
 /**
@@ -2100,6 +1810,16 @@ setPositionY : function (
 float 
 )
 {
+},
+
+/**
+ * @method getNodeToWorldAffineTransform
+ * @return {cc.AffineTransform}
+ */
+getNodeToWorldAffineTransform : function (
+)
+{
+    return cc.AffineTransform;
 },
 
 /**
@@ -2399,6 +2119,16 @@ getWorldToNodeTransform : function (
 },
 
 /**
+ * @method setGLProgram
+ * @param {cc.GLProgram} arg0
+ */
+setGLProgram : function (
+glprogram 
+)
+{
+},
+
+/**
  * @method getScale
  * @return {float}
  */
@@ -2443,16 +2173,6 @@ int
  * @return {bool}
  */
 isCascadeColorEnabled : function (
-)
-{
-    return false;
-},
-
-/**
- * @method isOpacityModifyRGB
- * @return {bool}
- */
-isOpacityModifyRGB : function (
 )
 {
     return false;
@@ -9808,6 +9528,358 @@ LabelTTF : function (
 };
 
 /**
+ * @class GLProgram
+ */
+cc.GLProgram = {
+
+/**
+ * @method getFragmentShaderLog
+ * @return {String}
+ */
+getFragmentShaderLog : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method bindAttribLocation
+ * @param {String} arg0
+ * @param {unsigned int} arg1
+ */
+bindAttribLocation : function (
+str, 
+int 
+)
+{
+},
+
+/**
+ * @method setUniformLocationWithMatrix4fv
+ * @param {int} arg0
+ * @param {float} arg1
+ * @param {unsigned int} arg2
+ */
+setUniformLocationWithMatrix4fv : function (
+int, 
+float, 
+int 
+)
+{
+},
+
+/**
+ * @method getUniformLocationForName
+ * @param {char} arg0
+ * @return {int}
+ */
+getUniformLocationForName : function (
+char 
+)
+{
+    return 0;
+},
+
+/**
+ * @method use
+ */
+use : function (
+)
+{
+},
+
+/**
+ * @method getVertexShaderLog
+ * @return {String}
+ */
+getVertexShaderLog : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getUniform
+ * @param {String} arg0
+ * @return {cc.Uniform}
+ */
+getUniform : function (
+str 
+)
+{
+    return cc.Uniform;
+},
+
+/**
+ * @method initWithByteArrays
+ * @param {char} arg0
+ * @param {char} arg1
+ * @return {bool}
+ */
+initWithByteArrays : function (
+char, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithFilenames
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+initWithFilenames : function (
+str, 
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method setUniformsForBuiltins
+* @param {matrix_object} matrix
+*/
+setUniformsForBuiltins : function(
+matrix 
+)
+{
+},
+
+/**
+ * @method setUniformLocationWith3i
+ * @param {int} arg0
+ * @param {int} arg1
+ * @param {int} arg2
+ * @param {int} arg3
+ */
+setUniformLocationWith3i : function (
+int, 
+int, 
+int, 
+int 
+)
+{
+},
+
+/**
+ * @method setUniformLocationWith3iv
+ * @param {int} arg0
+ * @param {int} arg1
+ * @param {unsigned int} arg2
+ */
+setUniformLocationWith3iv : function (
+int, 
+int, 
+int 
+)
+{
+},
+
+/**
+ * @method updateUniforms
+ */
+updateUniforms : function (
+)
+{
+},
+
+/**
+ * @method setUniformLocationWith4iv
+ * @param {int} arg0
+ * @param {int} arg1
+ * @param {unsigned int} arg2
+ */
+setUniformLocationWith4iv : function (
+int, 
+int, 
+int 
+)
+{
+},
+
+/**
+ * @method getUniformLocation
+ * @param {String} arg0
+ * @return {int}
+ */
+getUniformLocation : function (
+str 
+)
+{
+    return 0;
+},
+
+/**
+ * @method link
+ * @return {bool}
+ */
+link : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setUniformLocationWith2iv
+ * @param {int} arg0
+ * @param {int} arg1
+ * @param {unsigned int} arg2
+ */
+setUniformLocationWith2iv : function (
+int, 
+int, 
+int 
+)
+{
+},
+
+/**
+ * @method setUniformLocationWithMatrix3fv
+ * @param {int} arg0
+ * @param {float} arg1
+ * @param {unsigned int} arg2
+ */
+setUniformLocationWithMatrix3fv : function (
+int, 
+float, 
+int 
+)
+{
+},
+
+/**
+ * @method reset
+ */
+reset : function (
+)
+{
+},
+
+/**
+ * @method getAttribLocation
+ * @param {String} arg0
+ * @return {int}
+ */
+getAttribLocation : function (
+str 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getVertexAttrib
+ * @param {String} arg0
+ * @return {cc.VertexAttrib}
+ */
+getVertexAttrib : function (
+str 
+)
+{
+    return cc.VertexAttrib;
+},
+
+/**
+ * @method setUniformLocationWithMatrix2fv
+ * @param {int} arg0
+ * @param {float} arg1
+ * @param {unsigned int} arg2
+ */
+setUniformLocationWithMatrix2fv : function (
+int, 
+float, 
+int 
+)
+{
+},
+
+/**
+ * @method setUniformLocationWith4i
+ * @param {int} arg0
+ * @param {int} arg1
+ * @param {int} arg2
+ * @param {int} arg3
+ * @param {int} arg4
+ */
+setUniformLocationWith4i : function (
+int, 
+int, 
+int, 
+int, 
+int 
+)
+{
+},
+
+/**
+ * @method setUniformLocationWith1i
+ * @param {int} arg0
+ * @param {int} arg1
+ */
+setUniformLocationWith1i : function (
+int, 
+int 
+)
+{
+},
+
+/**
+ * @method setUniformLocationWith2i
+ * @param {int} arg0
+ * @param {int} arg1
+ * @param {int} arg2
+ */
+setUniformLocationWith2i : function (
+int, 
+int, 
+int 
+)
+{
+},
+
+/**
+ * @method createWithByteArrays
+ * @param {char} arg0
+ * @param {char} arg1
+ * @return {cc.GLProgram}
+ */
+createWithByteArrays : function (
+char, 
+char 
+)
+{
+    return cc.GLProgram;
+},
+
+/**
+ * @method createWithFilenames
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {cc.GLProgram}
+ */
+createWithFilenames : function (
+str, 
+str 
+)
+{
+    return cc.GLProgram;
+},
+
+/**
+ * @method GLProgram
+ * @constructor
+ */
+GLProgram : function (
+)
+{
+},
+
+};
+
+/**
  * @class SpriteBatchNode
  */
 cc.SpriteBatchNode = {
@@ -16639,80 +16711,6 @@ str
 )
 {
     return cc.GLView;
-},
-
-};
-
-/**
- * @class ShaderCache
- */
-cc.ShaderCache = {
-
-/**
- * @method reloadDefaultShaders
- */
-reloadDefaultShaders : function (
-)
-{
-},
-
-/**
- * @method addProgram
- * @param {cc.GLProgram} arg0
- * @param {String} arg1
- */
-addProgram : function (
-glprogram, 
-str 
-)
-{
-},
-
-/**
- * @method getProgram
- * @param {String} arg0
- * @return {cc.GLProgram}
- */
-getProgram : function (
-str 
-)
-{
-    return cc.GLProgram;
-},
-
-/**
- * @method loadDefaultShaders
- */
-loadDefaultShaders : function (
-)
-{
-},
-
-/**
- * @method destroyInstance
- */
-destroyInstance : function (
-)
-{
-},
-
-/**
- * @method getInstance
- * @return {cc.ShaderCache}
- */
-getInstance : function (
-)
-{
-    return cc.ShaderCache;
-},
-
-/**
- * @method ShaderCache
- * @constructor
- */
-ShaderCache : function (
-)
-{
 },
 
 };
