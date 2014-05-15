@@ -6,7 +6,7 @@
 
 "use strict";
 // Components.utils.import("resource://gre/modules/NetUtil.jsm");
-let wantLogging = true;
+//let wantLogging = true;
 /**
  * An adapter that handles data transfers between the debugger client and
  * server. It can work with both nsIPipe and nsIServerSocket transports so
@@ -91,7 +91,9 @@ DebuggerTransport.prototype = {
     if (this._outgoing.length > 0) {
       // var threadManager = Cc["@mozilla.org/thread-manager;1"].getService();
       // this._output.asyncWait(this, 0, 0, threadManager.currentThread);
-      log("outgoing: " + this._outgoing);//.substring(0, 200));
+      if (wantLogging) {
+        log("outgoing: " + this._outgoing);//.substring(0, 200));
+      };
       _bufferWrite(this._outgoing);
     }
   },

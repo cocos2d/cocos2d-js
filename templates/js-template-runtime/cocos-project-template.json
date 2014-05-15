@@ -7,6 +7,12 @@
             "from":"frameworks/cocos2d-html5",
             "to":"frameworks/cocos2d-html5"
          },
+         "project_replace_project_name":{
+            "src_project_name":"HelloJavascript",
+            "files":[
+               "res/config.json",
+               ".project"]
+            },
          "append_dir":[
             {
                "from":"frameworks/js-bindings",
@@ -143,6 +149,8 @@
          "project_replace_project_name":{
             "src_project_name":"HelloJavascript",
             "files":[
+               "res/config.json",
+               ".project",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
@@ -157,7 +165,8 @@
                "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
                "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",
                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
-               "frameworks/runtime-src/Classes/AppDelegate.cpp"
+               "frameworks/runtime-src/Classes/AppDelegate.cpp",
+               "frameworks/runtime-src/Classes/ConfigParser.cpp"
             ]
          },
          "project_replace_package_name":{
