@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -237,18 +238,14 @@ var s_testArray = [
         func: function () {
             return new UIWidgetAddNodeTest();
         }
+    },
+    {
+        title: "UIRichTextTest",
+        func: function () {
+            return new UIRichTextTest();
+        }
     }
 ];
-if (!cc.sys.isNative) {
-	s_testArray.push(
-		{
-			title: "UIRichTextTest",
-			func: function () {
-				return new UIRichTextTest();
-			}
-		}
-	);
-}
 
 UISceneManager = cc.Class.extend({
     _currentUISceneId: 0,

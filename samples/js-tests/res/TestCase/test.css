@@ -40,11 +40,13 @@ header .btn li{
     line-height: 28px;
 }
 
-header .btn a{
+header .btn a, header .btn a:visited{
     cursor: pointer;
     border-radius: 5px;
     display: block;
     padding: 0 14px;
+    color: #000;
+    text-decoration: none;
 }
 
 header .btn a:hover{
