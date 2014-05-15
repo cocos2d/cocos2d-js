@@ -30,7 +30,7 @@ var tileTestSceneIdx = -1;
 // TileDemo
 //
 //------------------------------------------------------------------
-var TileDemo = BaseTestLayer.extend({
+var TileDemoProps = {
     ctor:function () {
         this._super();
 
@@ -42,8 +42,8 @@ var TileDemo = BaseTestLayer.extend({
                     var delta = touch.getDelta();
             
                     var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
-            	    node.x += delta.x;
-            	    node.y += delta.y;
+                    node.x += delta.x;
+                    node.y += delta.y;
                 }
             }, this);
         } else if ('mouse' in cc.sys.capabilities)
@@ -88,7 +88,13 @@ var TileDemo = BaseTestLayer.extend({
     getTestNumber:function () {
         return tileTestSceneIdx;
     }
-});
+};
+var TileDemo = BaseTestLayer.extend(TileDemoProps);
+
+/******************for vertexz bug**************/
+var FixBugBaseTest = cc.Layer.extend(BaseTestLayerProps);
+var TMXFixBugLayer = FixBugBaseTest.extend(TileDemoProps);
+/***********************************************************/
 
 var TileMapTest = TileDemo.extend({
     ctor:function () {
@@ -1074,9 +1080,8 @@ var TMXOrthoZorder = TileDemo.extend({
 // TMXIsoVertexZ
 //
 //------------------------------------------------------------------
-var TMXIsoVertexZ = TileDemo.extend({
+var TMXIsoVertexZ = TMXFixBugLayer.extend({
     tamara:null,
-    tamara1:null,
     ctor:function () {
         this._super();
         var map = cc.TMXTiledMap.create(s_resprefix + "TileMaps/iso-test-vertexz.tmx");
@@ -1115,9 +1120,6 @@ var TMXIsoVertexZ = TileDemo.extend({
         this._super();
         // TIP: 2d projection should be used
         director.setProjection(cc.Director.PROJECTION_2D);
-        // do nothing in draw of LayerGradient at this Testcase.
-        this.draw = function () {
-        };
     },
     onExit:function () {
         // At exit use any other projection.
@@ -1151,7 +1153,7 @@ var TMXIsoVertexZ = TileDemo.extend({
 // TMXOrthoVertexZ
 //
 //------------------------------------------------------------------
-var TMXOrthoVertexZ = TileDemo.extend({
+var TMXOrthoVertexZ = TMXFixBugLayer.extend({
     tamara:null,
     ctor:function () {
         this._super();
@@ -1192,9 +1194,6 @@ var TMXOrthoVertexZ = TileDemo.extend({
 
         // TIP: 2d projection should be used
         director.setProjection(cc.Director.PROJECTION_2D);
-        // do nothing in draw of LayerGradient at this Testcase.
-        this.draw = function () {
-        };
     },
     onExit:function () {
         // At exit use any other projection.

@@ -120,7 +120,7 @@ str
 
 /**
  * @method getRootContainerSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getRootContainerSize : function (
 )
@@ -155,7 +155,7 @@ str
 /**
  * @method getContainerSize
  * @param {cc.Node} arg0
- * @return {SizeObject}
+ * @return {size_object}
  */
 getContainerSize : function (
 node 
@@ -228,7 +228,7 @@ getDocumentCallbackControlEvents : function (
 
 /**
  * @method setRootContainerSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setRootContainerSize : function (
 size 
