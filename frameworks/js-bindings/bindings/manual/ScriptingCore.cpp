@@ -522,7 +522,7 @@ void ScriptingCore::createGlobalContext() {
 //    JS_SetOptions(this->_cx, JSOPTION_TYPE_INFERENCE);
     JS::ContextOptionsRef(_cx).setTypeInference(true);
     JS::ContextOptionsRef(_cx).setIon(true);
-	JS::ContextOptionsRef(_cx).setBaseline(true);
+    JS::ContextOptionsRef(_cx).setBaseline(true);
 
 //    JS_SetVersion(this->_cx, JSVERSION_LATEST);
     
