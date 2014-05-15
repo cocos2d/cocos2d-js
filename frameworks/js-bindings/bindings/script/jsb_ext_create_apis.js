@@ -35,7 +35,6 @@ ccui.CheckBox.prototype.init = function(){
     this.setSelectedState(false);
     this.setTouchEnabled(true);
 };
-ccui.ImageView.prototype.init = ccui.ImageView.prototype._init;
 ccui.LoadingBar.prototype.init = function(){
     ccui.Widget.prototype.init.call(this);
 };
@@ -59,10 +58,6 @@ ccui.TextField.prototype.init = function(){
     ccui.Widget.prototype.init.call(this);
     this.setTouchEnabled(true);
 };
-ccui.Layout.prototype.init = ccui.Layout.prototype._init;
-ccui.ListView.prototype.init = ccui.ListView.prototype._init;
-ccui.PageView.prototype.init = ccui.PageView.prototype._init;
-ccui.ScrollView.prototype.init = ccui.ScrollView.prototype._init;
 
 var _p = {};
 _p._ctor = function(){

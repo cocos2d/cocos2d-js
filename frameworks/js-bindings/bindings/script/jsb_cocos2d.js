@@ -1492,6 +1492,21 @@ cc.TMXTiledMap.extend = cc.Class.extend;
 cc.TMXMapInfo.extend = cc.Class.extend;
 cc.TransitionScene.extend = cc.Class.extend;
 ccs.Armature.extend = cc.Class.extend;
+ccui.Widget.extend = cc.Class.extend;
+ccui.Button.extend = cc.Class.extend;
+ccui.CheckBox.extend = cc.Class.extend;
+ccui.ImageView.extend = cc.Class.extend;
+ccui.LoadingBar.extend = cc.Class.extend;
+ccui.RichText.extend = cc.Class.extend;
+ccui.Slider.extend = cc.Class.extend;
+ccui.Text.extend = cc.Class.extend;
+ccui.TextAtlas.extend = cc.Class.extend;
+ccui.TextBMFont.extend = cc.Class.extend;
+ccui.TextField.extend = cc.Class.extend;
+ccui.Layout.extend = cc.Class.extend;
+ccui.ListView.extend = cc.Class.extend;
+ccui.PageView.extend = cc.Class.extend;
+ccui.ScrollView.extend = cc.Class.extend;
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
