@@ -140,8 +140,6 @@
         "src/XHRTest/XHRTest.js",
 
         "src/Box2dTest/Box2dTest.js",
-        "src/ChipmunkTest/ChipmunkTest.js",
-
-        "res/TestCase/testcase.js"
+        "src/ChipmunkTest/ChipmunkTest.js"
     ]
 }
