@@ -130,8 +130,63 @@
         init: function(){
 
             this._testNameList = [
-                arrayOfActionMgrTest
-                ,arrayOfActionsTest
+                [
+                    "should not crash",
+                    "Sequence logic",
+                    "Pause",
+                    "Remove",
+                    "Resume"
+                ]//arrayOfActionMgrTest - actionManager
+                ,[
+                    "Sprite properties",
+                    "cc.MoveTo / cc.MoveBy",
+                    "cc.ScaleTo / cc.ScaleBy",
+                    "cc.RotateTo / cc.RotateBy",
+                    "cc.RotateTo / cc.RotateBy",
+                    "cc.SkewTo / cc.SkewBy",
+                    "Skew + Rotate + Scale",
+                    "cc.JumpTo / cc.JumpBy",
+                    "cc.BezierTo / cc.BezierBy",
+                    "cc.BezierTo copy",
+                    null,
+                    "CardinalSplineAt / CardinalSplineBy",
+                    "CatmullRomTo / CatmullRomTo",
+                    "cc.Blink",
+                    "cc.FadeIn / cc.FadeOut",
+                    "cc.TintTo / cc.TintBy",
+                    "cc.Sequence: Move + Rotate",
+                    "Sequence of InstantActions",
+                    "cc.Spawn: Jump + Rotate",
+                    "Reverse Jump action",
+                    "DelayTime: m + delay + m",
+                    "Repeat / RepeatForever actions",
+                    "cc.CallFunc + cc.RepeatForever",
+                    "Repeat / RepeatForever + RotateTo",
+                    "RepeatForever / Repeat + Rotate",
+                    "Callbacks: CallFunc and friends",
+                    "cc.CallFunc + auto remove",
+                    "cc.CallFunc + parameters",
+                    "Reverse a sequence",
+                    null,
+                    "Follow action",
+                    "ActionTargeted",
+                    "Testing copy on TargetedAction",
+                    "Stackable actions: MoveBy + MoveBy",
+                    "Stackable actions: MoveBy + JumpBy",
+                    "Stackable actions: MoveBy + BezierBy",
+                    "Stackable actions: MoveBy + CatmullRomBy",
+                    "Stackable actions: MoveBy + CardinalSplineBy",
+                    "PauseResumeActions",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    "Animation 1",
+                    null,
+                    null,
+                    "OrbitCamera action"
+                ]//arrayOfActionsTest - action
                 ,null//arrayOfBox2DTest
                 ,null//arrayOfChipmunkTest
                 ,arrayOfClickMoveTest
@@ -139,9 +194,40 @@
                 ,_DenshionTests
                 ,null//cocostudio
                 ,arrayOfCurrentLanguageTest
-                ,arrayOfDrawTest
-                ,arrayOfEaseActionsTest
-                ,arrayOfEventDispatcherTest
+                ,[
+                    "cc.DrawNode 1",
+                    "cc.DrawNode 2"
+                ]
+                ,[
+                    "EaseIn - EaseOut",
+                    "EaseInOut and rates",
+                    "ExpIn - ExpOut actions",
+                    "EaseExponentialInOut action",
+                    "EaseSineIn - EaseSineOut",
+                    "EaseSineInOut action",
+                    "Elastic In - Out actions",
+                    "EaseElasticInOut action",
+                    "Bounce In - Out actions",
+                    "EaseBounceInOut action",
+                    "Back In - Out actions",
+                    "EaseBackInOut action",
+                    "Speed action",
+                    "Scheduler scaleTime Test"
+                ]//arrayOfEaseActionsTest
+                ,[
+                    "Touchable Sprite",
+                    "Fixed priority",
+                    "Add and remove listener",
+                    "Send custom event",
+                    "Label Receives Keyboard Event",
+                    "Sprite Receives Acceleration Event",
+                    "RemoveAndRetainNodeTest",
+                    "RemoveListenerAfterAddingTest",
+                    "Testing Director Events",
+                    "Stop Propagation",
+                    null,
+                    "PauseResumeTarget"
+                ]//arrayOfEventDispatcherTest
                 ,arrayOfEventsTest
                 ,null//extensions
                 ,arrayOfEffectsTest
@@ -221,18 +307,8 @@
                     var html = '';
                     sidebar._testNameList[i].forEach(function(o, j){
                         var title = '';
-                        if(o.prototype && o.prototype.__title){
-                            title = o.prototype.__title();
-                        }else if(o.prototype && o.prototype.title){
-                            title = o.prototype.title();
-                        }else if(o.prototype && typeof o.prototype._title == 'string'){
-                            title = o.prototype._title;
-                        }else{
-                            if(o.title){
-                                title = o.title;
-                            }else{
-                                title = o;
-                            }
+                        if(typeof o === 'string'){
+                            title = o;
                         }
                         html += '<li><a data-num="'+ j +'">'+ title +'</a></li>'
                     });

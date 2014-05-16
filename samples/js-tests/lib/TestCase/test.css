@@ -167,6 +167,7 @@ section .canvas{
     float: right;
     width: 800px;
     height:450px;
+    border-radius: 5px;
 }
 
 section .code{
