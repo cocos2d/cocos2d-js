@@ -132,8 +132,8 @@
             this._testNameList = [
                 arrayOfActionMgrTest
                 ,arrayOfActionsTest
-                ,arrayOfBox2DTest
-                ,arrayOfChipmunkTest
+                ,null//arrayOfBox2DTest
+                ,null//arrayOfChipmunkTest
                 ,arrayOfClickMoveTest
                 ,arrayOfClippingNodeTest
                 ,_DenshionTests
@@ -193,6 +193,7 @@
             this.createBtnDOM();
             this.bindBtnEvent();
             this.upAndDownEvent();
+            this._hiddenOtherUl(0);
         },
 
         /**
@@ -280,8 +281,14 @@
                 if(btnArray[1]){
                     if(i == num){
                         btnArray[1].style.display = "block";
+                        var span = btnArray[0].getElementsByTagName('span');
+                        if(span)
+                            span[0].className = "hitarea active";
                     }else{
                         btnArray[1].style.display = "none";
+                        var span = btnArray[0].getElementsByTagName('span');
+                        if(span)
+                            span[0].className = "hitarea";
                     }
                 }
             });

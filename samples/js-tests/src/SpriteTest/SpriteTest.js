@@ -3476,7 +3476,7 @@ var SpriteBatchNodeChildrenZ = SpriteTestDemo.extend({
         batch.addChild(sprite1, -10);
         batch.addChild(sprite2, -5);
         batch.addChild(sprite3, -2);
-        //----end20----
+        //----end30----
     },
     //
     // Automation
