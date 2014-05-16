@@ -26,7 +26,7 @@ header .logo{
     position: absolute;
     top: 10px;
     left: 0;
-    background: url("./logo.png") no-repeat;
+    background: url("logo.png") no-repeat;
 }
 
 header .btn{
@@ -123,7 +123,7 @@ section a:hover{
 }
 
 section .hitarea{
-    background: url("./tree.png") 0 0 no-repeat;
+    background: url("tree.png") 0 0 no-repeat;
     position: absolute;
     left: 20px;
     height: 26px;

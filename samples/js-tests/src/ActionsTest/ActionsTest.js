@@ -2164,7 +2164,7 @@ var ActionStackableJump = ActionsDemo.extend({
         var seq = cc.Sequence.create(action, back);
         var repeat = seq.repeatForever();
         this._grossini.runAction(repeat);
-        //--end34----
+        //----end34----
 
     },
     title:function () {
