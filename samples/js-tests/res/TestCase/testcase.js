@@ -1,50 +1,47 @@
 (function(){
 
 
-    //sidebar function
-    var sidebar = {
+    //show code function
+    var code = {
 
-        _sceneNum: 0,
-        _testNum: 0,
-
-        _testNameList: [
-            arrayOfActionMgrTest
-            ,arrayOfActionsTest
-            ,arrayOfBox2DTest
-            ,arrayOfChipmunkTest
-            ,arrayOfClickMoveTest
-            ,arrayOfClippingNodeTest
-            ,_DenshionTests
-            ,null//cocostudio
-            ,arrayOfCurrentLanguageTest
-            ,arrayOfDrawTest
-            ,arrayOfEaseActionsTest
-            ,arrayOfEventDispatcherTest
-            ,arrayOfEventsTest
-            ,null//extensions
-            ,arrayOfEffectsTest
-            ,arrayOfEffectsAdvancedTest
-            ,fontList
+        list: [
+            'src/ActionManagerTest/ActionManagerTest.js'
+            ,'src/ActionsTest/ActionsTest.js'
+            ,'src/Box2dTest/Box2dTest.js'
+            ,'src/ChipmunkTest/ChipmunkTest.js'
+            ,'src/ClickAndMoveTest/ClickAndMoveTest.js'
+            ,'src/ClippingNodeTest/ClippingNodeTest.js'
+            ,'src/CocosDenshionTest/CocosDenshionTest.js'
+            ,null
+            ,'src/CurrentLanguageTest/CurrentLanguageTest.js'
+            ,'src/DrawPrimitivesTest/DrawPrimitivesTest.js'
+            ,'src/EaseActionsTest/EaseActionsTest.js'
+            ,'src/NewEventManagerTest/NewEventManagerTest.js'
+            ,'src/EventTest/EventTest.js'
+            ,null
+            ,'src/EffectsTest/EffectsTest.js'
+            ,'src/EffectsAdvancedTest/EffectsAdvancedTest.js'
+            ,'src/FontTest/FontTest.js'
             ,null//UI
             ,null//Interval
-            ,arrayOfLabelTest
-            ,arrayOfLayerTest//layer
+            ,'src/LabelTest/LabelTest.js'//Label
+            ,'src/LayerTest/LayerTest.js'//layer
             ,null//loader
-            ,arrayOfMenuTest//menu
+            ,'src/MenuTest/MenuTest.js'//menu
             ,null//motionstreak
-            ,arrayOfNodeTest
+            ,'src/CocosNodeTest/CocosNodeTest.js'//node
             ,null//opengl
             ,null//parallax
             ,null//particle
             ,null//path
             ,null//performance
-            ,arrayOfProgressTest//progressActions
+            ,'src/ProgressActionsTest/ProgressActionsTest.js'//progressActions
             ,null//RenderTexture
             ,null//rotateWorld
-            ,arrayOfSceneTest//scene
-            ,arrayOfSchedulerTest//scheduler
+            ,'src/SceneTest/SceneTest.js'//scene
+            ,'src/SchedulerTest/SchedulerTest.js'//scheduler
             ,null//spine
-            ,arrayOfSpriteTest//sprite
+            ,'src/SpriteTest/SpriteTest.js'//sprite
             ,null//scale9sprite
             ,null//textinput
             ,null//texturecache
@@ -57,17 +54,136 @@
             ,null//xmlhttprequest
         ],
 
+        cache: {},
+
+        init: function(){
+            this._dom = document.getElementById('code');
+
+            if(!this._dom) return;
+            code.showCode(0, 0);
+        },
+
+        showCode: function(s, t){
+
+            code.getJson(code.list[s], function(err, text){
+                if(err){
+                    return;
+                }
+                var result = text.match(new RegExp('//----start'+t+'----(.|\r\n|\r|\n)*?//----end'+t+'----', "g"));
+                if(!result){
+                    document.getElementById('code').innerHTML = 'The corresponding code not found.';
+                    return;
+                }
+                var list = {};
+                result.forEach(function(_data){
+                    var on;
+                    _data = _data.replace(new RegExp('//----start'+t+'----'), '').replace(new RegExp('//----end'+t+'----'), '');
+                    _data = _data.replace(/\S*/, function(name){
+                        on = name;
+                        return '';
+                    });
+                    list[on] = _data;
+
+                });
+                var html = '';
+                for(var p in list){
+                    html += '<div>' + p + '</div>';
+                    html += list[p].replace(/^\s*?(\r\n|\r|\n)/, '<pre class="brush: javascript;">').replace(/(\r\n|\r|\n)\s*?(\r\n|\r|\n)?$/, '</pre>');
+                }
+                document.getElementById('code').innerHTML = html;
+                SyntaxHighlighter.highlight();
+            });
+        },
+
+        getJson: function(url, cb){
+            //check cache
+            if(code.cache[url]){
+                typeof cb === 'function' && cb(false, code.cache[url]);
+                return;
+            }
+            var request = new XMLHttpRequest();
+            request.open('GET', url);
+            request.onreadystatechange = function() {
+                if (request.readyState == 4 && request.status == 200) {
+
+                    typeof cb === 'function' && cb(false, request.responseText);
+                    //add cache
+                    code.cache[url] = request.responseText;
+
+                }else{
+                    document.getElementById('code').innerHTML = 'The corresponding code not found.';
+                }
+            };
+            request.send(null);
+        }
+    };
+
+    //sidebar function
+    var sidebar = {
+
+        _sceneNum: 0,
+        _testNum: 0,
+
         /**
          * init sidebar
          */
         init: function(){
+
+            this._testNameList = [
+                arrayOfActionMgrTest
+                ,arrayOfActionsTest
+                ,arrayOfBox2DTest
+                ,arrayOfChipmunkTest
+                ,arrayOfClickMoveTest
+                ,arrayOfClippingNodeTest
+                ,_DenshionTests
+                ,null//cocostudio
+                ,arrayOfCurrentLanguageTest
+                ,arrayOfDrawTest
+                ,arrayOfEaseActionsTest
+                ,arrayOfEventDispatcherTest
+                ,arrayOfEventsTest
+                ,null//extensions
+                ,arrayOfEffectsTest
+                ,arrayOfEffectsAdvancedTest
+                ,fontList
+                ,null//UI
+                ,null//Interval
+                ,arrayOfLabelTest
+                ,arrayOfLayerTest//layer
+                ,null//loader
+                ,arrayOfMenuTest//menu
+                ,null//motionstreak
+                ,arrayOfNodeTest
+                ,null//opengl
+                ,null//parallax
+                ,null//particle
+                ,null//path
+                ,null//performance
+                ,arrayOfProgressTest//progressActions
+                ,null//RenderTexture
+                ,null//rotateWorld
+                ,arrayOfSceneTest//scene
+                ,arrayOfSchedulerTest//scheduler
+                ,null//spine
+                ,arrayOfSpriteTest//sprite
+                ,null//scale9sprite
+                ,null//textinput
+                ,null//texturecache
+                ,null//tilemap
+                ,null//touches
+                ,null//transitions
+                ,null//unit
+                ,null//sys
+                ,null//cocos2d js presentation
+                ,null//xmlhttprequest
+            ];
+
             this._sidebar = document.getElementById('sidebar');
 
             if(!this._sidebar){
                 return;
             }
-
-            window.sidebar = this;
 
             this.list = Array.prototype.map.call(this._sidebar.children, function($li){ return $li.children; });
             this._upbtn = document.getElementById('upBtn');
@@ -242,129 +358,15 @@
                 count = 0;
                 delayDown();
             }, false);
+        },
+        start: function(){
+            this.defaultScene();
+            sidebar.init();
+            code.init();
         }
     };
 
-    sidebar.init();
-
-    //show code function
-    var code = {
-
-        list: [
-            'src/ActionManagerTest/ActionManagerTest.js'
-            ,'src/ActionsTest/ActionsTest.js'
-            ,'src/Box2dTest/Box2dTest.js'
-            ,'src/ChipmunkTest/ChipmunkTest.js'
-            ,'src/ClickAndMoveTest/ClickAndMoveTest.js'
-            ,'src/ClippingNodeTest/ClippingNodeTest.js'
-            ,'src/CocosDenshionTest/CocosDenshionTest.js'
-            ,null
-            ,'src/CurrentLanguageTest/CurrentLanguageTest.js'
-            ,'src/DrawPrimitivesTest/DrawPrimitivesTest.js'
-            ,'src/EaseActionsTest/EaseActionsTest.js'
-            ,'src/NewEventManagerTest/NewEventManagerTest.js'
-            ,'src/EventTest/EventTest.js'
-            ,null
-            ,'src/EffectsTest/EffectsTest.js'
-            ,'src/EffectsAdvancedTest/EffectsAdvancedTest.js'
-            ,'src/FontTest/FontTest.js'
-            ,null//UI
-            ,null//Interval
-            ,'src/LabelTest/LabelTest.js'//Label
-            ,'src/LayerTest/LayerTest.js'//layer
-            ,null//loader
-            ,'src/MenuTest/MenuTest.js'//menu
-            ,null//motionstreak
-            ,'src/CocosNodeTest/CocosNodeTest.js'//node
-            ,null//opengl
-            ,null//parallax
-            ,null//particle
-            ,null//path
-            ,null//performance
-            ,'src/ProgressActionsTest/ProgressActionsTest.js'//progressActions
-            ,null//RenderTexture
-            ,null//rotateWorld
-            ,'src/SceneTest/SceneTest.js'//scene
-            ,'src/SchedulerTest/SchedulerTest.js'//scheduler
-            ,null//spine
-            ,'src/SpriteTest/SpriteTest.js'//sprite
-            ,null//scale9sprite
-            ,null//textinput
-            ,null//texturecache
-            ,null//tilemap
-            ,null//touches
-            ,null//transitions
-            ,null//unit
-            ,null//sys
-            ,null//cocos2d js presentation
-            ,null//xmlhttprequest
-        ],
-
-        cache: {},
-
-        init: function(){
-            this._dom = document.getElementById('code');
-
-            if(!this._dom) return;
-            code.showCode(0, 0);
-        },
-
-        showCode: function(s, t){
-
-            code.getJson(code.list[s], function(err, text){
-                if(err){
-                    return;
-                }
-                var result = text.match(new RegExp('//----start'+t+'----(.|\r\n|\r|\n)*?//----end'+t+'----', "g"));
-                if(!result){
-                    document.getElementById('code').innerHTML = 'The corresponding code not found.';
-                    return;
-                }
-                var list = {};
-                result.forEach(function(_data){
-                    var on;
-                    _data = _data.replace(new RegExp('//----start'+t+'----'), '').replace(new RegExp('//----end'+t+'----'), '');
-                    _data = _data.replace(/\S*/, function(name){
-                        on = name;
-                        return '';
-                    });
-                    list[on] = _data;
-
-                });
-                var html = '';
-                for(var p in list){
-                    html += '<div>' + p + '</div>';
-                    html += list[p].replace(/^\s*?(\r\n|\r|\n)/, '<pre class="brush: javascript;">').replace(/(\r\n|\r|\n)\s*?(\r\n|\r|\n)?$/, '</pre>');
-                }
-                document.getElementById('code').innerHTML = html;
-                SyntaxHighlighter.highlight();
-            });
-        },
-
-        getJson: function(url, cb){
-            //check cache
-            if(code.cache[url]){
-                typeof cb === 'function' && cb(false, code.cache[url]);
-                return;
-            }
-            var request = new XMLHttpRequest();
-            request.open('GET', url);
-            request.onreadystatechange = function() {
-                if (request.readyState == 4 && request.status == 200) {
-
-                    typeof cb === 'function' && cb(false, request.responseText);
-                    //add cache
-                    code.cache[url] = request.responseText;
-
-                }else{
-                    document.getElementById('code').innerHTML = 'The corresponding code not found.';
-                }
-            };
-            request.send(null);
-        }
-    };
-
-    code.init();
+    window.sidebar = sidebar;
 
 
 })(window);
