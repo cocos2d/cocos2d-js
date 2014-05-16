@@ -31,6 +31,8 @@ using namespace std;
 
 #define _MAX_PATH_ 512
 
+void showCurRcvFile(string fileName);
+
 bool initRuntime();
 
 bool startRuntime();
