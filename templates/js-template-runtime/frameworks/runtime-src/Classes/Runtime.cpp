@@ -237,6 +237,7 @@ const char* getRuntimeVersion()
 
 bool startScript()
 {
+    hideRcvFile();
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     return ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
@@ -319,17 +320,9 @@ public:
     void showCurRcvFile(string fileName) {
         pLabelUploadFile->setString(fileName);
     }
-
-    void clearRcvFile() {
-        if(NULL != pLabelUploadFile) {
-            this->removeChild(pLabelUploadFile);
-            pLabelUploadFile = NULL;
-        }
-    }
-
 };
 
-ConnectWaitLayer* g_pConnectLayer;
+static ConnectWaitLayer* s_pConnectLayer;
 
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
@@ -562,7 +555,7 @@ bool FileServer::receiveFile(int fd)
         string file(fullfilename);
         file=replaceAll(file,"\\","/");
         sprintf(fullfilename, "%s", file.c_str());
-        showCurRcvFile(fullfilename);
+        showCurRcvFile(filename.c_str());
         cocos2d::log("recv fullfilename = %s",fullfilename);
         CreateDir(file.substr(0,file.find_last_of("/")).c_str());
         FILE *fp =fopen(fullfilename, "wb");
@@ -979,15 +972,19 @@ bool startRuntime()
 
     readResFileFinfo();
     auto scene = Scene::create();
-    g_pConnectLayer = new ConnectWaitLayer();
-    g_pConnectLayer->autorelease();
+    s_pConnectLayer = new ConnectWaitLayer();
+    s_pConnectLayer->autorelease();
     auto director = Director::getInstance();
-    scene->addChild(g_pConnectLayer);
+    scene->addChild(s_pConnectLayer);
     director->runWithScene(scene);
     return true;
 }
 
 void showCurRcvFile(string fileName) {
-    if (NULL == g_pConnectLayer) return;
-    g_pConnectLayer->showCurRcvFile(fileName);
+    if (NULL == s_pConnectLayer) return;
+    s_pConnectLayer->showCurRcvFile(fileName);
+}
+
+void hideRcvFile() {
+    s_pConnectLayer = nullptr;
 }
