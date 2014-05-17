@@ -117,7 +117,7 @@ var TileMapTest = TileDemo.extend({
 
         var seq = cc.Sequence.create(scale, scaleBack);
 
-        map.runAction(cc.RepeatForever.create(seq));
+        map.runAction(seq.repeatForever());
     },
     title:function () {
         return "TileMapAtlas";
@@ -970,7 +970,7 @@ var TMXIsoZorder = TileDemo.extend({
         var back = move.reverse();
         var delay = cc.DelayTime.create(0.5);
         var seq = cc.Sequence.create(move, delay, back);
-        this.tamara.runAction(cc.RepeatForever.create(seq));
+        this.tamara.runAction(seq.repeatForever());
 
         this.schedule(this.repositionSprite);
     },
@@ -1032,7 +1032,7 @@ var TMXOrthoZorder = TileDemo.extend({
         var move = cc.MoveBy.create(5, cc.pMult(cc.p(400, 450), 0.58));
         var back = move.reverse();
         var seq = cc.Sequence.create(move, back);
-        this.tamara.runAction(cc.RepeatForever.create(seq));
+        this.tamara.runAction(seq.repeatForever());
 
         this.schedule(this.repositionSprite);
     },
@@ -1099,7 +1099,7 @@ var TMXIsoVertexZ = TMXFixBugLayer.extend({
         var back = move.reverse();
         var delay = cc.DelayTime.create(0.5);
         var seq = cc.Sequence.create(move, delay, back);
-        this.tamara.runAction(cc.RepeatForever.create(seq));
+        this.tamara.runAction(seq.repeatForever());
 
         if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
             var label = cc.LabelTTF.create("Not supported on HTML5-canvas", "Times New Roman", 30);
@@ -1170,7 +1170,7 @@ var TMXOrthoVertexZ = TMXFixBugLayer.extend({
         var back = move.reverse();
         var delay = cc.DelayTime.create(0.5);
         var seq = cc.Sequence.create(move, delay, back);
-        this.tamara.runAction(cc.RepeatForever.create(seq));
+        this.tamara.runAction(seq.repeatForever());
 
         if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
             var label = cc.LabelTTF.create("Not supported on HTML5-canvas", "Times New Roman", 30);

@@ -53,10 +53,10 @@ var TestScene = cc.Scene.extend({
         menuItem.x = winSize.width - 50;
         menuItem.y = 25;
 
-        this.addChild(menu, 1);
+        if(!window.sidebar){
+            this.addChild(menu, 1);
+        }
     },
-
-    // callbacks
     onMainMenuCallback:function () {
         var scene = cc.Scene.create();
         var layer = new TestController();

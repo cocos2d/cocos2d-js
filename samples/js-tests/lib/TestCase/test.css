@@ -1,0 +1,174 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif,'Lucida Grande', 'Lucida Sans Unicode',sans-serif;
+    color: #333333;
+}
+
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/*header*/
+header{
+    width: 820px;
+    height: 90px;
+    padding-left: 140px;
+    margin: 0 auto;
+    position: relative;
+}
+
+header .logo{
+    width: 93px;
+    height: 127px;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    background: url("logo.png") no-repeat;
+}
+
+header .btn{
+    padding: 32px 0 0 0;
+}
+
+header .btn li{
+    float: left;
+    font-size: 14px;
+    padding: 0 1px;
+    line-height: 28px;
+}
+
+header .btn a, header .btn a:visited{
+    cursor: pointer;
+    border-radius: 5px;
+    display: block;
+    padding: 0 14px;
+    color: #000;
+    text-decoration: none;
+}
+
+header .btn a:hover{
+    background: #349FD0;
+    color: #FFF;
+}
+
+/*main*/
+section{
+    margin: 0 auto 0;
+    width: 1080px;
+}
+
+/*side list*/
+section .up{
+    display: block;
+    height:30px;
+    width: 60px;
+    margin:0 auto;
+    background: url("button.png") 0 -74px no-repeat;
+    cursor: pointer;
+}
+
+section .down{
+    display: block;
+    height:30px;
+    width: 60px;
+    margin:0 auto;
+    background: url("button.png") 0 -74px no-repeat;
+    cursor: pointer;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+section .sidebar{
+    padding-top: 90px;
+    width: 256px;
+    overflow-x: hidden;
+    float: left;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+#sidebar{
+    width: 250px;
+    position: absolute;
+    top:0;
+}
+
+section #sidebar-overflow{
+    height: 480px;
+    width: 280px;
+    overflow-y: auto;
+    position: relative;
+    border-top:#CCC solid 1px;
+    border-bottom:#CCC solid 1px;
+}
+
+.sidebar a{
+    position: relative;
+    padding: 0 0 0 36px;
+    font-size: 14px;
+    line-height: 30px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+section a:hover{
+    color: #4183C4;
+}
+
+section .hitarea{
+    background: url("tree.png") 0 0 no-repeat;
+    position: absolute;
+    left: 20px;
+    height: 26px;
+    width: 8px;
+    cursor: pointer;
+}
+
+section .active{
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+section ul .list{
+    padding: 0 0 0 20px;
+    display: none;
+}
+
+section ul .list li{
+    padding: 0 0 0 36px;
+}
+
+section ul .list a{
+    padding:0;
+    width: 100%;
+    overflow: hidden;
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+section ul .list a.hover{
+    color:#4183C4;
+}
+
+
+/*canvas*/
+section .canvas{
+    float: right;
+    width: 800px;
+    height:450px;
+}
+
+section .code{
+    margin: 20px 0 0 0;
+}

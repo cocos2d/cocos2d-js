@@ -77,11 +77,11 @@ var SpriteLayer = cc.Layer.extend({
         var rot1 = cc.RotateBy.create(4, 360 * 2);
         var rot2 = rot1.reverse();
 
-        spriteSister1.runAction(cc.Repeat.create(cc.Sequence.create(jump2, jump1), 5));
-        spriteSister2.runAction(cc.Repeat.create(cc.Sequence.create(jump1.clone(), jump2.clone()), 5));
+        spriteSister1.runAction(cc.Sequence.create(jump2, jump1).repeat(5));
+        spriteSister2.runAction(cc.Sequence.create(jump1.clone(), jump2.clone()).repeat(5));
 
         spriteSister1.runAction(cc.Repeat.create(cc.Sequence.create(rot1, rot2), 5));
-        spriteSister2.runAction(cc.Repeat.create(cc.Sequence.create(rot2.clone(), rot1.clone()), 5));
+        spriteSister2.runAction(cc.Sequence.create(rot2.clone(), rot1.clone()).repeat(5));
     }
 });
 

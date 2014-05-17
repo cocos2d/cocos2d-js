@@ -1,7 +1,6 @@
 /****************************************************************************
+ Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
  Copyright (c) 2012 Pierre-David Bélanger
 
  http://www.cocos2d-x.org
@@ -106,12 +105,12 @@ var BasicTest = BaseClippingNodeTest.extend({
     },
 
     actionRotate:function () {
-        return cc.RepeatForever.create(cc.RotateBy.create(1.0, 90.0));
+        return cc.RotateBy.create(1.0, 90.0).repeatForever();
     },
 
     actionScale:function () {
         var scale = cc.ScaleBy.create(1.33, 1.5);
-        return cc.RepeatForever.create(cc.Sequence.create(scale, scale.reverse()));
+        return cc.Sequence.create(scale, scale.reverse()).repeatForever();
     },
 
     shape:function () {
@@ -267,7 +266,7 @@ var NestedTest = BaseClippingNodeTest.extend({
 	            y: parent.height / 2
             });
             clipper.alphaThreshold = 0.05;
-            clipper.runAction(cc.RepeatForever.create(cc.RotateBy.create((i % 3) ? 1.33 : 1.66, (i % 2) ? 90 : -90)));
+            clipper.runAction(cc.RotateBy.create((i % 3) ? 1.33 : 1.66, (i % 2) ? 90 : -90).repeatForever());
             parent.addChild(clipper);
 
             var stencil = cc.Sprite.create(s_pathGrossini);
@@ -319,7 +318,7 @@ var HoleDemo = BaseClippingNodeTest.extend({
         this._outerClipper.anchorY = 0.5;
         this._outerClipper.x = this.width * 0.5;
 	    this._outerClipper.y = this.height * 0.5;
-        this._outerClipper.runAction(cc.RepeatForever.create(cc.RotateBy.create(1, 45)));
+        this._outerClipper.runAction(cc.RotateBy.create(1, 45).repeatForever());
 
         this._outerClipper.stencil = stencil;
 
@@ -411,7 +410,7 @@ var ScrollViewDemo = BaseClippingNodeTest.extend({
         clipper.anchorY = 0.5;
         clipper.x = this.width / 2;
         clipper.y = this.height / 2;
-        clipper.runAction(cc.RepeatForever.create(cc.RotateBy.create(1, 45)));
+        clipper.runAction(cc.RotateBy.create(1, 45).repeatForever());
         this.addChild(clipper);
 
         var stencil = cc.DrawNode.create();
@@ -723,6 +722,9 @@ if ( cc.sys.isNative){
 var nextClippingNodeTest = function () {
     clippingNodeTestSceneIdx++;
     clippingNodeTestSceneIdx = clippingNodeTestSceneIdx % arrayOfClippingNodeTest.length;
+
+    window.sidebar && window.sidebar.changeTest(clippingNodeTestSceneIdx, 5);
+
     return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 };
 
@@ -730,6 +732,9 @@ var previousClippingNodeTest = function () {
     clippingNodeTestSceneIdx--;
     if (clippingNodeTestSceneIdx < 0)
         clippingNodeTestSceneIdx += arrayOfClippingNodeTest.length;
+
+    window.sidebar && window.sidebar.changeTest(clippingNodeTestSceneIdx, 5);
+
     return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 };
 
@@ -738,8 +743,8 @@ var restartClippingNodeTest = function () {
 };
 
 var ClippingNodeTestScene = TestScene.extend({
-    runThisTest:function () {
-        clippingNodeTestSceneIdx = -1;
+    runThisTest:function (num) {
+        clippingNodeTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         cc.director.runScene(this);
 	    var layer = nextClippingNodeTest();
 	    this.addChild(layer);
