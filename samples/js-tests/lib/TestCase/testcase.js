@@ -228,31 +228,169 @@
                     null,
                     "PauseResumeTarget"
                 ]//arrayOfEventDispatcherTest
-                ,arrayOfEventsTest
+                ,[
+                    'Touches One by One. Touch the left / right and see console',
+                    'Touches All At Once. Touch and see console',
+                    'Accelerometer test. Move device and see console',
+                    'Mouse test. Move mouse and see console',
+                    'Keyboard test. Press keyboard and see console'
+                ]//arrayOfEventsTest
                 ,null//extensions
                 ,arrayOfEffectsTest
                 ,arrayOfEffectsAdvancedTest
                 ,fontList
                 ,null//UI
                 ,null//Interval
-                ,arrayOfLabelTest
-                ,arrayOfLayerTest//layer
+                ,[
+                    "LabelAtlas Opacity",
+                    "LabelAtlas Opacity Color",
+                    "LabelAtlas with Retina Display",
+                    "cc.LabelBMFont",
+                    "cc.LabelBMFont BMFontSubSpriteTest",
+                    "cc.LabelBMFont BMFontPaddingTest",
+                    "cc.LabelBMFont",
+                    "cc.LabelBMFont BMFontTintTest",
+                    "cc.LabelBMFont",
+                    "cc.LabelBMFont BMFontMultiLineTest",
+                    "cc.LabelBMFont BMFontMultiLine2Test",
+                    "Typesetting",
+                    "cc.LabelBMFont with one texture",
+                    "cc.LabelBMFont with Unicode support",
+                    "cc.LabelBMFont init",
+                    "cc.LabelBMFont color parent / child",
+                    "Testing Retina Display BMFont",
+                    "Testing Glyph Designer",
+                    "Testing cc.LabelBMFont with Chinese character",
+                    "Testing cc.LabelTTF",
+                    "Testing cc.LabelTTF Word Wrap",
+                    "Testing cc.LabelTTF with Chinese character",
+                    "Testing A8 Format",
+                    "cc.LabelTTF init",
+                    "cc.LabelTTF alignment",
+                    "Testing empty labels",
+                    "Testing cc.LabelTTF + shadow and stroke"
+                ]//arrayOfLabelTest
+                ,[
+                    "ColorLayer resize (tap & move)",
+                    "ColorLayer: fade and tint",
+                    "ColorLayer: blend",
+                    "ignore Anchorpoint Test #1",
+                    "ignore Anchorpoint Test #2",
+                    "ignore Anchorpoint Test #3",
+                    "ignore Anchorpoint Test #4",
+                    "LayerGradient"
+                ]//arrayOfLayerTest//layer
                 ,null//loader
                 ,arrayOfMenuTest//menu
                 ,null//motionstreak
-                ,arrayOfNodeTest
+                ,[
+                    "anchorPoint and children",
+                    "tags",
+                    "remove and cleanup",
+                    "remove/cleanup with children",
+                    "stress test #1: no crashes",
+                    "stress test #2: no leaks",
+                    "nodeToParent transform",
+                    "cocosnode scheduler test #1",
+                    "Bounding Box Test",
+                    "Convert To Node Space",
+                    "Camera Center test",
+                    "Camera Orbit test",
+                    "Camera Zoom test",
+                    "Node Opaque Test",
+                    "Node Non Opaque Test"
+                ]//arrayOfNodeTest
                 ,null//opengl
                 ,null//parallax
                 ,null//particle
                 ,null//path
                 ,null//performance
-                ,arrayOfProgressTest//progressActions
+                ,[
+                    "ProgressTo Radial",
+                    "ProgressTo Horizontal",
+                    "ProgressTo Vertical",
+                    "Radial w/ Different Midpoints",
+                    "ProgressTo Bar Mid",
+                    "ProgressTo Bar Mid",
+                    "Progress With Sprite Frame",
+                    "Progress With Sprite Frame"
+                ]//arrayOfProgressTest//progressActions
                 ,null//RenderTexture
                 ,null//rotateWorld
                 ,arrayOfSceneTest//scene
-                ,arrayOfSchedulerTest//scheduler
+                ,[
+                    "Self-remove an scheduler",
+                    "Pause / Resume",
+                    "Unschedule All callbacks",
+                    "Unschedule All callbacks #2",
+                    "Schedule from Schedule",
+                    "Schedule update with priority",
+                    "Schedule Update + custom callback",
+                    "Schedule Update in 2 sec",
+                    "Reschedule Callback",
+                    "Schedule / Unschedule using Scheduler"
+                ]//arrayOfSchedulerTest//scheduler
                 ,null//spine
-                ,arrayOfSpriteTest//sprite
+                ,[
+                    "Non Batched Sprite ",
+                    "Batched Sprite ",
+                    "Sprite vs. SpriteBatchNode animation",
+                    "SpriteFrame Alias Name",
+                    "Sprite: anchor point",
+                    "SpriteBatchNode: anchor point",
+                    "Sprite offset + anchor + rot",
+                    "SpriteBatchNode offset + anchor + rot",
+                    "Sprite offset + anchor + scale",
+                    "SpriteBatchNode offset + anchor + scale",
+                    "Sprite: Animation + flip",
+                    "Sprite: Color & Opacity",
+                    "SpriteBatchNode: Color & Opacity",
+                    "Sprite: Z order",
+                    "SpriteBatch: Z order",
+                    "SpriteBatchNode: reorder #1",
+                    "SpriteBatchNode: reorder issue #744",
+                    "SpriteBatchNode: reorder issue #766",
+                    "SpriteBatchNode: reorder issue #767",
+                    "Sprite: openGL Z vertex",
+                    "SpriteBatchNode: openGL Z vertex",
+                    "SpriteBatchNode transformation",
+                    "Sprite Flip X & Y",
+                    "SpriteBatchNode Flip X & Y",
+                    "Sprite Aliased",
+                    "SpriteBatchNode Aliased",
+                    "Sprite New texture (tap)",
+                    "SpriteBatchNode new texture (tap)",
+                    "Hybrid.Sprite* sprite Test",
+                    "SpriteBatchNode Grand Children",
+                    "SpriteBatchNode Children Z",
+                    "Sprite & SpriteBatchNode Visibility",
+                    "Sprite & SpriteBatchNode Visibility",
+                    "Sprite: children + anchor",
+                    "SpriteBatchNode: children + anchor",
+                    "Sprite/BatchNode + child + scale + rot",
+                    "Sprite multiple levels of children",
+                    "SpriteBatchNode multiple levels of children",
+                    "Sprite without texture",
+                    "Sprite subclass",
+                    "AnimationCache",
+                    "Sprite offset + anchor + skew",
+                    "SpriteBatchNode offset + anchor + skew",
+                    "Sprite anchor + skew + scale",
+                    "SpriteBatchNode anchor + skew + scale",
+                    "Sprite offset + anchor + flip",
+                    "SpriteBatchNode offset + anchor + flip",
+                    "SpriteBatchNodeReorder same index",
+                    "SpriteBatchNode reorder 1 child",
+                    "node sort same index",
+                    "Sprite + children + skew",
+                    "SpriteBatchNode + children + skew",
+                    "Sprite Double resolution",
+                    "SpriteBatch - Bug 1217",
+                    "AnimationCache - Load file",
+                    "Texture Color Cache Issue Test",
+                    "Texture Color Cache Issue Test #2",
+                    "Sub Sprite (rotated source)"
+                ]//arrayOfSpriteTest//sprite
                 ,null//scale9sprite
                 ,null//textinput
                 ,null//texturecache
@@ -371,6 +509,25 @@
         },
 
         changeTest: function(testNum, sceneNum){
+            if(sidebar._sceneNum == sceneNum){
+
+                if(sidebar._testNum < testNum){
+                    while(this._testNameList[sceneNum][testNum] == null){
+                        testNum++;
+                        if(testNum >= this._testNameList[sceneNum].length){
+                            testNum = 0;
+                        }
+                    }
+                }else{
+                    while(this._testNameList[sceneNum][testNum] == null){
+                        testNum--;
+                        if(testNum < 0){
+                            testNum = this._testNameList[sceneNum].length - 1;
+                        }
+                    }
+                }
+            }
+
             sidebar._sceneNum = sceneNum;
             sidebar._testNum = testNum;
 
@@ -390,6 +547,7 @@
 
             //show code
             code && code.showCode && code.showCode(sceneNum, testNum);
+            return testNum;
         },
 
         _hiddenOtherHover: function(testNum, sceneNum){

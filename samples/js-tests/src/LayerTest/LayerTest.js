@@ -557,7 +557,9 @@ var nextLayerTest = function () {
     layerTestSceneIdx++;
     layerTestSceneIdx = layerTestSceneIdx % arrayOfLayerTest.length;
 
-    window.sidebar && window.sidebar.changeTest(layerTestSceneIdx, 20);
+    if(window.sidebar){
+        layerTestSceneIdx = window.sidebar.changeTest(layerTestSceneIdx, 20);
+    }
 
     return new arrayOfLayerTest[layerTestSceneIdx]();
 };
@@ -566,7 +568,9 @@ var previousLayerTest = function () {
     if (layerTestSceneIdx < 0)
         layerTestSceneIdx += arrayOfLayerTest.length;
 
-    window.sidebar && window.sidebar.changeTest(layerTestSceneIdx, 20);
+    if(window.sidebar){
+        layerTestSceneIdx = window.sidebar.changeTest(layerTestSceneIdx, 20);
+    }
 
     return new arrayOfLayerTest[layerTestSceneIdx]();
 };

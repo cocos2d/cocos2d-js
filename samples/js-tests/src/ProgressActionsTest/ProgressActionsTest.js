@@ -389,7 +389,9 @@ var nextProgressTest = function () {
     ProgressTestSceneIdx++;
     ProgressTestSceneIdx = ProgressTestSceneIdx % arrayOfProgressTest.length;
 
-    window.sidebar && window.sidebar.changeTest(ProgressTestSceneIdx, 30);
+    if(window.sidebar){
+        ProgressTestSceneIdx = window.sidebar.changeTest(ProgressTestSceneIdx, 30);
+    }
 
     return new arrayOfProgressTest[ProgressTestSceneIdx]();
 };
@@ -398,7 +400,9 @@ var previousProgressTest = function () {
     if (ProgressTestSceneIdx < 0)
         ProgressTestSceneIdx += arrayOfProgressTest.length;
 
-    window.sidebar && window.sidebar.changeTest(ProgressTestSceneIdx, 30);
+    if(window.sidebar){
+        ProgressTestSceneIdx = window.sidebar.changeTest(ProgressTestSceneIdx, 30);
+    }
 
     return new arrayOfProgressTest[ProgressTestSceneIdx]();
 };

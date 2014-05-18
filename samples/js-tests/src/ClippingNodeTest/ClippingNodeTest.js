@@ -723,7 +723,9 @@ var nextClippingNodeTest = function () {
     clippingNodeTestSceneIdx++;
     clippingNodeTestSceneIdx = clippingNodeTestSceneIdx % arrayOfClippingNodeTest.length;
 
-    window.sidebar && window.sidebar.changeTest(clippingNodeTestSceneIdx, 5);
+    if(window.sidebar){
+        clippingNodeTestSceneIdx = window.sidebar.changeTest(clippingNodeTestSceneIdx, 5);
+    }
 
     return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 };
@@ -733,7 +735,9 @@ var previousClippingNodeTest = function () {
     if (clippingNodeTestSceneIdx < 0)
         clippingNodeTestSceneIdx += arrayOfClippingNodeTest.length;
 
-    window.sidebar && window.sidebar.changeTest(clippingNodeTestSceneIdx, 5);
+    if(window.sidebar){
+        clippingNodeTestSceneIdx = window.sidebar.changeTest(clippingNodeTestSceneIdx, 5);
+    }
 
     return new arrayOfClippingNodeTest[clippingNodeTestSceneIdx]();
 };
