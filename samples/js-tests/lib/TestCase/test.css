@@ -92,6 +92,7 @@ section .sidebar{
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
+    padding-bottom: 40px;
 }
 
 #sidebar{
@@ -166,7 +167,10 @@ section ul .list a.hover{
 section .canvas{
     float: right;
     width: 800px;
-    height:450px;
+    padding-bottom: 40px;
+}
+
+section .canvas canvas{
     border-radius: 5px;
 }
 
