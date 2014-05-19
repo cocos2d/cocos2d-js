@@ -2491,3 +2491,53 @@ cc.AffineTransformInvert = function (t) {
     return {a: determinant * t.d, b: -determinant * t.b, c: -determinant * t.c, d: determinant * t.a,
         tx: determinant * (t.c * t.ty - t.d * t.tx), ty: determinant * (t.b * t.tx - t.a * t.ty)};
 };
+
+/** returns a "world" axis aligned bounding box of the node. <br/>
+ * @return {cc.Rect}
+ */
+cc.Node.prototype.getBoundingBoxToWorld = function () {
+    var contentSize = this.getContentSize();
+    var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
+    var matrix = this.getNodeToWorldTransform();
+    var trans = cc.AffineTransformMake(matrix[0], matrix[4], matrix[1], matrix[5], matrix[12], matrix[13]);  
+    rect = cc.RectApplyAffineTransform(rect, trans);
+
+    //query child's BoundingBox
+    if (!this.getChildren())
+        return rect;
+
+    var locChildren = this.getChildren();
+    for (var i = 0; i < locChildren.length; i++) {
+        var child = locChildren[i];
+        if (child && child.isVisible()) {
+            var childRect = child._getBoundingBoxToCurrentNode(trans);
+            if (childRect)
+                rect = cc.rectUnion(rect, childRect);
+        }
+    }
+    return rect;
+};
+
+cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
+    var contentSize = this.getContentSize();
+    var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
+    var matrix = this.getNodeToParentTransform();
+    var _trans = cc.AffineTransformMake(matrix[0], matrix[4], matrix[1], matrix[5], matrix[12], matrix[13]); 
+    var trans = (parentTransform == null) ? _trans : cc.AffineTransformConcat(_trans, parentTransform);
+    rect = cc.RectApplyAffineTransform(rect, trans);
+
+    //query child's BoundingBox
+    if (!this.getChildren())
+        return rect;
+
+    var locChildren = this.getChildren();
+    for (var i = 0; i < locChildren.length; i++) {
+        var child = locChildren[i];
+        if (child && child.isVisible()) {
+            var childRect = child._getBoundingBoxToCurrentNode(trans);
+            if (childRect)
+                rect = cc.rectUnion(rect, childRect);
+        }
+    }
+    return rect;
+};
