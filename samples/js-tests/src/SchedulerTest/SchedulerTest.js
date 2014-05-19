@@ -563,7 +563,9 @@ var nextSchedulerTest = function () {
     schedulerTestSceneIdx++;
     schedulerTestSceneIdx = schedulerTestSceneIdx % arrayOfSchedulerTest.length;
 
-    window.sidebar && window.sidebar.changeTest(schedulerTestSceneIdx, 34);
+    if(window.sidebar){
+        schedulerTestSceneIdx = window.sidebar.changeTest(schedulerTestSceneIdx, 34);
+    }
 
     return new arrayOfSchedulerTest[schedulerTestSceneIdx]();
 };
@@ -572,7 +574,9 @@ var previousSchedulerTest = function () {
     if (schedulerTestSceneIdx < 0)
         schedulerTestSceneIdx += arrayOfSchedulerTest.length;
 
-    window.sidebar && window.sidebar.changeTest(schedulerTestSceneIdx, 34);
+    if(window.sidebar){
+        schedulerTestSceneIdx = window.sidebar.changeTest(schedulerTestSceneIdx, 34);
+    }
 
     return new arrayOfSchedulerTest[schedulerTestSceneIdx]();
 };

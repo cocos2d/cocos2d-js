@@ -1043,7 +1043,9 @@ var nextNodeTest = function () {
     nodeTestSceneIdx++;
     nodeTestSceneIdx = nodeTestSceneIdx % arrayOfNodeTest.length;
 
-    window.sidebar && window.sidebar.changeTest(nodeTestSceneIdx, 24);
+    if(window.sidebar){
+        nodeTestSceneIdx = window.sidebar.changeTest(nodeTestSceneIdx, 24);
+    }
 
     return new arrayOfNodeTest[nodeTestSceneIdx]();
 };
@@ -1052,7 +1054,9 @@ var previousNodeTest = function () {
     if (nodeTestSceneIdx < 0)
         nodeTestSceneIdx += arrayOfNodeTest.length;
 
-    window.sidebar && window.sidebar.changeTest(nodeTestSceneIdx, 24);
+    if(window.sidebar){
+        nodeTestSceneIdx = window.sidebar.changeTest(nodeTestSceneIdx, 24);
+    }
 
     return new arrayOfNodeTest[nodeTestSceneIdx]();
 };
