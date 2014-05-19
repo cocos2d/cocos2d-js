@@ -1539,7 +1539,9 @@ var nextChipmunkTest = function () {
     chipmunkTestSceneIdx++;
     chipmunkTestSceneIdx = chipmunkTestSceneIdx % arrayOfChipmunkTest.length;
 
-    window.sidebar && window.sidebar.changeTest(chipmunkTestSceneIdx, 3);
+    if(window.sidebar){
+        chipmunkTestSceneIdx = window.sidebar.changeTest(chipmunkTestSceneIdx, 3);
+    }
 
     return new arrayOfChipmunkTest[chipmunkTestSceneIdx]();
 };
@@ -1548,7 +1550,9 @@ var previousChipmunkTest = function () {
     if (chipmunkTestSceneIdx < 0)
         chipmunkTestSceneIdx += arrayOfChipmunkTest.length;
 
-    window.sidebar && window.sidebar.changeTest(chipmunkTestSceneIdx, 3);
+    if(window.sidebar){
+        chipmunkTestSceneIdx = window.sidebar.changeTest(chipmunkTestSceneIdx, 3);
+    }
 
     return new arrayOfChipmunkTest[chipmunkTestSceneIdx]();
 };

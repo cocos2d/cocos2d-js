@@ -408,7 +408,9 @@ var nextActionMgrTest = function (num) {
     ActionMgrTestIdx++;
     ActionMgrTestIdx = ActionMgrTestIdx % arrayOfActionMgrTest.length;
 
-    window.sidebar && window.sidebar.changeTest(ActionMgrTestIdx, 0);
+    if(window.sidebar){
+        ActionMgrTestIdx = window.sidebar.changeTest(ActionMgrTestIdx, 0);
+    }
 
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 };
@@ -417,7 +419,9 @@ var previousActionMgrTest = function () {
     if (ActionMgrTestIdx < 0)
         ActionMgrTestIdx += arrayOfActionMgrTest.length;
 
-    window.sidebar && window.sidebar.changeTest(ActionMgrTestIdx, 0);
+    if(window.sidebar){
+        ActionMgrTestIdx = window.sidebar.changeTest(ActionMgrTestIdx, 0);
+    }
 
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 };

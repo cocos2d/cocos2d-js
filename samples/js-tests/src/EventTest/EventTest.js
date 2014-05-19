@@ -450,7 +450,9 @@ var nextEventsTest = function () {
     sceneIdx++;
     sceneIdx = sceneIdx % arrayOfEventsTest.length;
 
-    window.sidebar && window.sidebar.changeTest(sceneIdx, 12);
+    if(window.sidebar){
+        sceneIdx = window.sidebar.changeTest(sceneIdx, 12);
+    }
 
     return new arrayOfEventsTest[sceneIdx]();
 };
@@ -459,7 +461,9 @@ var previousEventsTest = function () {
     if (sceneIdx < 0)
         sceneIdx += arrayOfEventsTest.length;
 
-    window.sidebar && window.sidebar.changeTest(sceneIdx, 12);
+    if(window.sidebar){
+        sceneIdx = window.sidebar.changeTest(sceneIdx, 12);
+    }
 
     return new arrayOfEventsTest[sceneIdx]();
 };
