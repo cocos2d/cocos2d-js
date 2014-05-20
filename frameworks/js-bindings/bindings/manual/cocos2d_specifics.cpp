@@ -3257,7 +3257,7 @@ bool js_cocos2dx_ccpNormalize(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argv = JS_ARGV(cx, vp);
     bool ok = true;
 	if (argc == 1) {
-		cocos2d::Vector2 ret;
+		cocos2d::Vec2 ret;
 		ok &= jsval_to_vector2(cx, argv[0], &ret);
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
