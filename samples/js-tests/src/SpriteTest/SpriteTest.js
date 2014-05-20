@@ -3476,7 +3476,7 @@ var SpriteBatchNodeChildrenZ = SpriteTestDemo.extend({
         batch.addChild(sprite1, -10);
         batch.addChild(sprite2, -5);
         batch.addChild(sprite3, -2);
-        //----end20----
+        //----end30----
     },
     //
     // Automation
@@ -5388,7 +5388,9 @@ var nextSpriteTest = function () {
     spriteTestIdx++;
     spriteTestIdx = spriteTestIdx % arrayOfSpriteTest.length;
 
-    window.sidebar && window.sidebar.changeTest(spriteTestIdx, 36);
+    if(window.sidebar){
+        spriteTestIdx = window.sidebar.changeTest(spriteTestIdx, 36);
+    }
 
     return new arrayOfSpriteTest[spriteTestIdx ]();
 };
@@ -5397,7 +5399,9 @@ var previousSpriteTest = function () {
     if (spriteTestIdx < 0)
         spriteTestIdx += arrayOfSpriteTest.length;
 
-    window.sidebar && window.sidebar.changeTest(spriteTestIdx, 36);
+    if(window.sidebar){
+        spriteTestIdx = window.sidebar.changeTest(spriteTestIdx, 36);
+    }
 
     return new arrayOfSpriteTest[spriteTestIdx ]();
 };

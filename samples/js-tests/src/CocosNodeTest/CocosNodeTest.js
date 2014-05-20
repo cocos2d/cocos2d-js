@@ -150,8 +150,8 @@ var CCNodeTest4 = TestNodeDemo.extend({
         //----end1----
     },
     delay2:function (dt) {
-        //----start1----ctor
-        var node = this.delay2(2);
+        //----start1----delay2
+        var node = this.getChildByTag(2);
         var action1 = cc.RotateBy.create(1, 360);
         node.runAction(action1);
         //----end1----
@@ -1043,7 +1043,9 @@ var nextNodeTest = function () {
     nodeTestSceneIdx++;
     nodeTestSceneIdx = nodeTestSceneIdx % arrayOfNodeTest.length;
 
-    window.sidebar && window.sidebar.changeTest(nodeTestSceneIdx, 24);
+    if(window.sidebar){
+        nodeTestSceneIdx = window.sidebar.changeTest(nodeTestSceneIdx, 24);
+    }
 
     return new arrayOfNodeTest[nodeTestSceneIdx]();
 };
@@ -1052,7 +1054,9 @@ var previousNodeTest = function () {
     if (nodeTestSceneIdx < 0)
         nodeTestSceneIdx += arrayOfNodeTest.length;
 
-    window.sidebar && window.sidebar.changeTest(nodeTestSceneIdx, 24);
+    if(window.sidebar){
+        nodeTestSceneIdx = window.sidebar.changeTest(nodeTestSceneIdx, 24);
+    }
 
     return new arrayOfNodeTest[nodeTestSceneIdx]();
 };

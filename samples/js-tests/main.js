@@ -29,7 +29,7 @@ cc.game.onStart = function(){
     cc.LoaderScene.preload(g_resources, function () {
 
         if(window.sidebar){
-            sidebar.defaultScene();
+            sidebar.start();
         }else{
             cc.director.runScene(new TestController());
         }

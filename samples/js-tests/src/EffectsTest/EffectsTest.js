@@ -462,7 +462,9 @@ var nextEffectsTest = function () {
     effectsTestSceneIdx++;
     effectsTestSceneIdx = effectsTestSceneIdx % arrayOfEffectsTest.length;
 
-    window.sidebar && window.sidebar.changeTest(effectsTestSceneIdx, 14);
+    if(window.sidebar){
+        effectsTestSceneIdx = window.sidebar.changeTest(effectsTestSceneIdx, 14);
+    }
 
     return new arrayOfEffectsTest[effectsTestSceneIdx]();
 };
@@ -471,7 +473,9 @@ var previousEffectsTest = function () {
     if (effectsTestSceneIdx < 0)
         effectsTestSceneIdx += arrayOfEffectsTest.length;
 
-    window.sidebar && window.sidebar.changeTest(effectsTestSceneIdx, 14);
+    if(window.sidebar){
+        effectsTestSceneIdx = window.sidebar.changeTest(effectsTestSceneIdx, 14);
+    }
 
     return new arrayOfEffectsTest[effectsTestSceneIdx]();
 };

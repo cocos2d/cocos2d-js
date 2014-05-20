@@ -2164,7 +2164,7 @@ var ActionStackableJump = ActionsDemo.extend({
         var seq = cc.Sequence.create(action, back);
         var repeat = seq.repeatForever();
         this._grossini.runAction(repeat);
-        //--end34----
+        //----end34----
 
     },
     title:function () {
@@ -2705,7 +2705,9 @@ var nextActionsTest = function () {
     actionsTestIdx++;
     actionsTestIdx = actionsTestIdx % arrayOfActionsTest.length;
 
-    window.sidebar && window.sidebar.changeTest(actionsTestIdx, 1);
+    if(window.sidebar){
+        actionsTestIdx = window.sidebar.changeTest(actionsTestIdx, 1);
+    }
 
     return new arrayOfActionsTest[actionsTestIdx]();
 };
@@ -2714,7 +2716,9 @@ var previousActionsTest = function () {
     if (actionsTestIdx < 0)
         actionsTestIdx += arrayOfActionsTest.length;
 
-    window.sidebar && window.sidebar.changeTest(actionsTestIdx, 1);
+    if(window.sidebar){
+        actionsTestIdx = window.sidebar.changeTest(actionsTestIdx, 1);
+    }
 
     return new arrayOfActionsTest[actionsTestIdx]();
 };

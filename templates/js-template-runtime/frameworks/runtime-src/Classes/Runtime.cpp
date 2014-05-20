@@ -61,6 +61,8 @@ using namespace cocos2d;
 
 std::string g_resourcePath;
 static rapidjson::Document g_filecfgjson; 
+class ConnectWaitLayer;
+static ConnectWaitLayer* s_pConnectLayer;
 extern string getIPAddress();
 extern bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<std::string> &fileList);
 /*@brief   use "|" splite string  */
@@ -235,8 +237,13 @@ const char* getRuntimeVersion()
     return "1.1";
 }
 
+void hideRcvFile() {
+    s_pConnectLayer = nullptr;
+}
+
 bool startScript()
 {
+    hideRcvFile();
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     return ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
@@ -273,6 +280,8 @@ bool reloadScript(const string& file,bool reloadAll)
 
 class ConnectWaitLayer: public Layer
 {
+private:
+    LabelTTF* pLabelUploadFile;
 public:
 
     ConnectWaitLayer()
@@ -295,8 +304,11 @@ public:
         auto labelwait = LabelTTF::create(strShowMsg.c_str(), "Arial", 22);
         addChild(labelwait, 10000);
         labelwait->setPosition( Point(VisibleRect::center().x, VisibleRect::center().y) );
-        
-        
+
+        pLabelUploadFile  = LabelTTF::create("", "Arial", 22);
+        addChild(pLabelUploadFile, 10000);
+        pLabelUploadFile->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
+
         auto labelPlay = LabelTTF::create("play", "Arial", 36);
         auto menuItem = MenuItemLabel::create(labelPlay, CC_CALLBACK_1(ConnectWaitLayer::playerCallback, this));
         auto menu = Menu::create(menuItem, NULL);
@@ -311,8 +323,15 @@ public:
         startScript();
     }
 
+    void showCurRcvFile(string fileName) {
+        pLabelUploadFile->setString(fileName);
+    }
 };
 
+void showCurRcvFile(string fileName) {
+    if (NULL == s_pConnectLayer) return;
+    s_pConnectLayer->showCurRcvFile(fileName);
+}
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <io.h>
@@ -544,6 +563,7 @@ bool FileServer::receiveFile(int fd)
         string file(fullfilename);
         file=replaceAll(file,"\\","/");
         sprintf(fullfilename, "%s", file.c_str());
+        showCurRcvFile(filename.c_str());
         cocos2d::log("recv fullfilename = %s",fullfilename);
         CreateDir(file.substr(0,file.find_last_of("/")).c_str());
         FILE *fp =fopen(fullfilename, "wb");
@@ -960,11 +980,10 @@ bool startRuntime()
 
     readResFileFinfo();
     auto scene = Scene::create();
-    auto layer = new ConnectWaitLayer();
-    layer->autorelease();
+    s_pConnectLayer = new ConnectWaitLayer();
+    s_pConnectLayer->autorelease();
     auto director = Director::getInstance();
-    scene->addChild(layer);
+    scene->addChild(s_pConnectLayer);
     director->runWithScene(scene);
     return true;
 }
-

@@ -26,7 +26,7 @@ header .logo{
     position: absolute;
     top: 10px;
     left: 0;
-    background: url("./logo.png") no-repeat;
+    background: url("logo.png") no-repeat;
 }
 
 header .btn{
@@ -92,6 +92,7 @@ section .sidebar{
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
+    padding-bottom: 40px;
 }
 
 #sidebar{
@@ -123,7 +124,7 @@ section a:hover{
 }
 
 section .hitarea{
-    background: url("./tree.png") 0 0 no-repeat;
+    background: url("tree.png") 0 0 no-repeat;
     position: absolute;
     left: 20px;
     height: 26px;
@@ -166,7 +167,20 @@ section ul .list a.hover{
 section .canvas{
     float: right;
     width: 800px;
-    height:450px;
+    padding-bottom: 40px;
+}
+
+section .canvas .function{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+section .canvas .syntaxhighlighter  {
+    font-size: 14px !important;
+}
+
+section .canvas canvas{
+    border-radius: 5px;
 }
 
 section .code{

@@ -32,7 +32,9 @@ Box2DTestLayer = cc.Layer.extend({
 
     ctor:function () {
 
-        window.sidebar && window.sidebar.changeTest(0, 2);
+        if(window.sidebar){
+            window.sidebar.changeTest(0, 2);
+        }
         //----start0----ctor
         this._super();
 

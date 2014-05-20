@@ -37,7 +37,9 @@ var ClickAndMoveTestScene = TestScene.extend({
 var MainLayer = cc.Layer.extend({
     ctor:function () {
 
-        window.sidebar && window.sidebar.changeTest(0, 4);
+        if(window.sidebar){
+            window.sidebar.changeTest(0, 4);
+        }
 
         this._super();
 
