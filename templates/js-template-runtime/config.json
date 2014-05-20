@@ -1,7 +1,7 @@
 {
     "init_cfg":{
        "isLandscape": true,
-       "name": "HelloLua",
+       "name": "HelloJavascript",
        "width": 960,
        "height": 640,
        "entry": "main.js"
