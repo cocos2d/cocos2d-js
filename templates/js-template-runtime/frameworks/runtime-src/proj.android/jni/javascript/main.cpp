@@ -26,4 +26,13 @@ extern "C"
         }
         return ConfigParser::getInstance()->isLanscape();
     }
+
+    bool Java_org_cocos2dx_javascript_AppActivity_nativeIsDebug(JNIEnv *env, jobject thisz)
+    {
+        #ifdef NDEBUG 
+            return false;
+        #else
+            return true;    
+        #endif
+    }
 }
