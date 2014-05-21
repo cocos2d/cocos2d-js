@@ -1403,8 +1403,8 @@ var ActionRotateToRepeat = ActionsDemo.extend({
         var act2 = cc.RotateTo.create(0.5, 0);
         var seq = cc.Sequence.create(act1, act2);
 
-        var rep1 = seq.repeatForever();
         var rep2 = seq.clone().repeat(4);
+        var rep1 = seq.repeatForever();
 
         this._tamara.runAction(rep1);
         this._kathia.runAction(rep2);
