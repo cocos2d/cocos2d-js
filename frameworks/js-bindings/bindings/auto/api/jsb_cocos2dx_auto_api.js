@@ -16399,6 +16399,80 @@ TiledGrid3D : function (
 };
 
 /**
+ * @class GLProgramCache
+ */
+cc.ShaderCache = {
+
+/**
+ * @method reloadDefaultGLPrograms
+ */
+reloadDefaultGLPrograms : function (
+)
+{
+},
+
+/**
+ * @method addGLProgram
+ * @param {cc.GLProgram} arg0
+ * @param {String} arg1
+ */
+addGLProgram : function (
+glprogram, 
+str 
+)
+{
+},
+
+/**
+ * @method getGLProgram
+ * @param {String} arg0
+ * @return {cc.GLProgram}
+ */
+getGLProgram : function (
+str 
+)
+{
+    return cc.GLProgram;
+},
+
+/**
+ * @method loadDefaultGLPrograms
+ */
+loadDefaultGLPrograms : function (
+)
+{
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {cc.GLProgramCache}
+ */
+getInstance : function (
+)
+{
+    return cc.GLProgramCache;
+},
+
+/**
+ * @method GLProgramCache
+ * @constructor
+ */
+GLProgramCache : function (
+)
+{
+},
+
+};
+
+/**
  * @class TextureCache
  */
 cc.TextureCache = {
