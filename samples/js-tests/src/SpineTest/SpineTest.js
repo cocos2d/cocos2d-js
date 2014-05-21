@@ -96,7 +96,7 @@ SpineTest = BaseTestLayer.extend({
     },
     onNextCallback:function (sender) {
         touchcount++;
-        spineboy.setAnimation(0, ['walk', 'jump'][touchcount % 2], true);
+        this._spineboy.setAnimation(0, ['walk', 'jump'][touchcount % 2], true);
     },
     subtitle:function () {
         return "Spine test";
