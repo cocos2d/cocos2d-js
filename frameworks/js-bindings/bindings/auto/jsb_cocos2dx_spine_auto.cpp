@@ -83,7 +83,7 @@ bool js_cocos2dx_spine_Skeleton_onDraw(JSContext *cx, uint32_t argc, jsval *vp)
 	spine::Skeleton* cobj = (spine::Skeleton *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_Skeleton_onDraw : Invalid Native Object");
 	if (argc == 2) {
-		cocos2d::Matrix arg0;
+		cocos2d::Mat4 arg0;
 		bool arg1;
 		ok &= jsval_to_matrix(cx, argv[0], &arg0);
 		arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
