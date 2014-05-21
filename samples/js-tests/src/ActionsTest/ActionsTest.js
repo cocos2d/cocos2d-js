@@ -2031,7 +2031,7 @@ var ActionTargeted = ActionsDemo.extend({
 
         var seq = cc.Sequence.create(jump1, t1, rot1, t2);
 
-        var always = seq.repeat();
+        var always = seq.repeatForever();
 
         this._tamara.runAction(always);
         //----end31----
