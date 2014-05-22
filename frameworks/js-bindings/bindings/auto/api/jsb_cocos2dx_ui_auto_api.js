@@ -208,10 +208,10 @@ ccui.Widget = {
 
 /**
  * @method setSizePercent
- * @param {vector2_object} arg0
+ * @param {cc.Vec2} arg0
  */
 setSizePercent : function (
-array 
+vec2 
 )
 {
 },
@@ -268,20 +268,20 @@ getLeftInParent : function (
 
 /**
  * @method getTouchEndPos
- * @return {vector2_object}
+ * @return {cc.Vec2}
  */
 getTouchEndPos : function (
 )
 {
-    return new Array();
+    return cc.Vec2;
 },
 
 /**
  * @method setPositionPercent
- * @param {vector2_object} arg0
+ * @param {cc.Vec2} arg0
  */
 setPositionPercent : function (
-array 
+vec2 
 )
 {
 },
@@ -456,20 +456,12 @@ getActionTag : function (
 
 /**
  * @method getWorldPosition
- * @return {vector2_object}
+ * @return {cc.Vec2}
  */
 getWorldPosition : function (
 )
 {
-    return new Array();
-},
-
-/**
- * @method didNotSelectSelf
- */
-didNotSelectSelf : function (
-)
-{
+    return cc.Vec2;
 },
 
 /**
@@ -504,12 +496,12 @@ clone : function (
 
 /**
  * @method getTouchMovePos
- * @return {vector2_object}
+ * @return {cc.Vec2}
  */
 getTouchMovePos : function (
 )
 {
-    return new Array();
+    return cc.Vec2;
 },
 
 /**
@@ -576,22 +568,22 @@ layoutparameter
 
 /**
  * @method getSizePercent
- * @return {vector2_object}
+ * @return {cc.Vec2}
  */
 getSizePercent : function (
 )
 {
-    return new Array();
+    return cc.Vec2;
 },
 
 /**
  * @method getTouchStartPos
- * @return {vector2_object}
+ * @return {cc.Vec2}
  */
 getTouchStartPos : function (
 )
 {
-    return new Array();
+    return cc.Vec2;
 },
 
 /**
@@ -626,11 +618,11 @@ isBright : function (
 
 /**
  * @method clippingParentAreaContainPoint
- * @param {vector2_object} arg0
+ * @param {cc.Vec2} arg0
  * @return {bool}
  */
 clippingParentAreaContainPoint : function (
-array 
+vec2 
 )
 {
     return false;
@@ -730,21 +722,21 @@ bool
 
 /**
  * @method getPositionPercent
- * @return {vector2_object}
+ * @return {cc.Vec2}
  */
 getPositionPercent : function (
 )
 {
-    return new Array();
+    return cc.Vec2;
 },
 
 /**
  * @method hitTest
- * @param {vector2_object} arg0
+ * @param {cc.Vec2} arg0
  * @return {bool}
  */
 hitTest : function (
-array 
+vec2 
 )
 {
     return false;
@@ -784,12 +776,12 @@ sizetype
  * @method checkChildInfo
  * @param {int} arg0
  * @param {ccui.Widget} arg1
- * @param {vector2_object} arg2
+ * @param {cc.Vec2} arg2
  */
 checkChildInfo : function (
 int, 
 widget, 
-array 
+vec2 
 )
 {
 },
@@ -852,10 +844,10 @@ ccui.Layout = {
 
 /**
  * @method setBackGroundColorVector
- * @param {vector2_object} arg0
+ * @param {cc.Vec2} arg0
  */
 setBackGroundColorVector : function (
-array 
+vec2 
 )
 {
 },
@@ -902,12 +894,12 @@ color3b
 
 /**
  * @method getBackGroundColorVector
- * @return {vector2_object}
+ * @return {cc.Vec2}
  */
 getBackGroundColorVector : function (
 )
 {
-    return new Array();
+    return cc.Vec2;
 },
 
 /**
@@ -1837,20 +1829,20 @@ getTextVerticalAlignment : function (
 },
 
 /**
- * @method getStringValue
+ * @method getString
  * @return {String}
  */
-getStringValue : function (
+getString : function (
 )
 {
     return ;
 },
 
 /**
- * @method setText
+ * @method setString
  * @param {String} arg0
  */
-setText : function (
+setString : function (
 str 
 )
 {
@@ -1883,6 +1875,16 @@ getTextHorizontalAlignment : function (
 },
 
 /**
+ * @method setTextVerticalAlignment
+ * @param {cc.TextVAlignment} arg0
+ */
+setTextVerticalAlignment : function (
+textvalignment 
+)
+{
+},
+
+/**
  * @method getTextAreaSize
  * @return {size_object}
  */
@@ -1893,11 +1895,11 @@ getTextAreaSize : function (
 },
 
 /**
- * @method setTextVerticalAlignment
- * @param {cc.TextVAlignment} arg0
+ * @method setTextHorizontalAlignment
+ * @param {cc.TextHAlignment} arg0
  */
-setTextVerticalAlignment : function (
-textvalignment 
+setTextHorizontalAlignment : function (
+texthalignment 
 )
 {
 },
@@ -1923,13 +1925,13 @@ isTouchScaleChangeEnabled : function (
 },
 
 /**
- * @method setTextHorizontalAlignment
- * @param {cc.TextHAlignment} arg0
+ * @method getType
+ * @return {ccui.Text::Type}
  */
-setTextHorizontalAlignment : function (
-texthalignment 
+getType : function (
 )
 {
+    return 0;
 },
 
 /**
@@ -1995,6 +1997,36 @@ Text : function (
 ccui.TextAtlas = {
 
 /**
+ * @method getStringLength
+ * @return {long}
+ */
+getStringLength : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getString
+ * @return {String}
+ */
+getString : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setString
+ * @param {String} arg0
+ */
+setString : function (
+str 
+)
+{
+},
+
+/**
  * @method setProperty
  * @param {String} arg0
  * @param {String} arg1
@@ -2013,29 +2045,9 @@ str
 },
 
 /**
- * @method getStringValue
- * @return {String}
- */
-getStringValue : function (
-)
-{
-    return ;
-},
-
-/**
  * @method adaptRenderers
  */
 adaptRenderers : function (
-)
-{
-},
-
-/**
- * @method setStringValue
- * @param {String} arg0
- */
-setStringValue : function (
-str 
 )
 {
 },
@@ -2087,11 +2099,11 @@ TextAtlas : function (
 ccui.LoadingBar = {
 
 /**
- * @method setBarDirection
- * @param {ccui.LoadingBar::Direction} arg0
+ * @method setPercent
+ * @param {float} arg0
  */
-setBarDirection : function (
-direction 
+setPercent : function (
+float 
 )
 {
 },
@@ -2109,11 +2121,11 @@ texturerestype
 },
 
 /**
- * @method setPercent
- * @param {float} arg0
+ * @method setDirection
+ * @param {ccui.LoadingBar::Direction} arg0
  */
-setPercent : function (
-float 
+setDirection : function (
+direction 
 )
 {
 },
@@ -2139,13 +2151,23 @@ rect
 },
 
 /**
- * @method getBarDirection
+ * @method getDirection
  * @return {ccui.LoadingBar::Direction}
  */
-getBarDirection : function (
+getDirection : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getCapInsets
+ * @return {rect_object}
+ */
+getCapInsets : function (
+)
+{
+    return cc.Rect;
 },
 
 /**
@@ -2166,16 +2188,6 @@ getPercent : function (
 )
 {
     return 0;
-},
-
-/**
- * @method getCapInsets
- * @return {rect_object}
- */
-getCapInsets : function (
-)
-{
-    return cc.Rect;
 },
 
 /**
@@ -2256,12 +2268,12 @@ isInertiaScrollEnabled : function (
 
 /**
  * @method scrollToPercentBothDirection
- * @param {vector2_object} arg0
+ * @param {cc.Vec2} arg0
  * @param {float} arg1
  * @param {bool} arg2
  */
 scrollToPercentBothDirection : function (
-array, 
+vec2, 
 float, 
 bool 
 )
@@ -2454,10 +2466,10 @@ bool
 
 /**
  * @method jumpToPercentBothDirection
- * @param {vector2_object} arg0
+ * @param {cc.Vec2} arg0
  */
 jumpToPercentBothDirection : function (
-array 
+vec2 
 )
 {
 },
@@ -3268,11 +3280,11 @@ bool
 
 /**
  * @method hitTest
- * @param {vector2_object} arg0
+ * @param {cc.Vec2} arg0
  * @return {bool}
  */
 hitTest : function (
-array 
+vec2 
 )
 {
     return false;
@@ -3361,23 +3373,33 @@ str
 },
 
 /**
- * @method getStringValue
- * @return {String}
+ * @method getStringLength
+ * @return {long}
  */
-getStringValue : function (
+getStringLength : function (
 )
 {
-    return ;
+    return 0;
 },
 
 /**
- * @method setText
+ * @method setString
  * @param {String} arg0
  */
-setText : function (
+setString : function (
 str 
 )
 {
+},
+
+/**
+ * @method getString
+ * @return {String}
+ */
+getString : function (
+)
+{
+    return ;
 },
 
 /**
@@ -3821,10 +3843,10 @@ int
 
 /**
  * @method setAnchorPoint
- * @param {vector2_object} arg0
+ * @param {cc.Vec2} arg0
  */
 setAnchorPoint : function (
-array 
+vec2 
 )
 {
 },

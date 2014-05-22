@@ -688,9 +688,9 @@ var SpeedTest = EaseSpriteDemo.extend({
         var action2 = this._tamara.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
         var action3 = this._kathia.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
 
-        action1.speed(Math.random() * 2);
-        action2.speed(Math.random() * 2);
-        action3.speed(Math.random() * 2);
+        action1.setSpeed(Math.random() * 2);
+        action2.setSpeed(Math.random() * 2);
+        action3.setSpeed(Math.random() * 2);
         //----end12----
     },
     // automation
