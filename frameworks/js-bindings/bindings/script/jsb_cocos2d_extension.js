@@ -196,6 +196,19 @@ cc.Scale9Sprite.POSITIONS_TOPLEFT = 6;
 cc.Scale9Sprite.POSITIONS_BOTTOMRIGHT = 7;
 cc.Scale9Sprite.POSITIONS_BOTTOMLEFT = 8;
 
+
+cc.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST = 0;
+cc.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST = 1;
+cc.EventAssetsManager.ERROR_PARSE_MANIFEST = 2;
+cc.EventAssetsManager.NEW_VERSION_FOUND = 3;
+cc.EventAssetsManager.ALREADY_UP_TO_DATE = 4;
+cc.EventAssetsManager.UPDATE_PROGRESSION = 5;
+cc.EventAssetsManager.ASSET_UPDATED = 6;
+cc.EventAssetsManager.ERROR_UPDATING = 7;
+cc.EventAssetsManager.UPDATE_FINISHED = 8;
+// TODO: For next version
+    // UNCOMPRESS_ERROR
+
 // PhysicsDebugNode
 cc.PhysicsDebugNode.create = function( space ) {
     var s = space;
