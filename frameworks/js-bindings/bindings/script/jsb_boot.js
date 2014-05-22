@@ -633,7 +633,7 @@ cc.textureCache.addImage = function(url, cb, target) {
     else
         return this._addImage(url);
 };
-//cc.shaderCache = cc.ShaderCache.getInstance();
+cc.shaderCache = cc.ShaderCache.getInstance();
 cc.animationCache = cc.AnimationCache.getInstance();
 cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
 //cc.saxParser

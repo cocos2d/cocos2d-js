@@ -1719,7 +1719,7 @@ bool js_cocos2dx_studio_ColliderDetector_updateTransform(JSContext *cx, uint32_t
 	cocostudio::ColliderDetector* cobj = (cocostudio::ColliderDetector *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ColliderDetector_updateTransform : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::Matrix arg0;
+		cocos2d::Mat4 arg0;
 		ok &= jsval_to_matrix(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ColliderDetector_updateTransform : Error processing arguments");
 		cobj->updateTransform(arg0);
@@ -2275,7 +2275,7 @@ bool js_cocos2dx_studio_DisplayManager_getAnchorPointInPoints(JSContext *cx, uin
 	cocostudio::DisplayManager* cobj = (cocostudio::DisplayManager *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_DisplayManager_getAnchorPointInPoints : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Vector2 ret = cobj->getAnchorPointInPoints();
+		cocos2d::Vec2 ret = cobj->getAnchorPointInPoints();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -2517,7 +2517,7 @@ bool js_cocos2dx_studio_DisplayManager_containPoint(JSContext *cx, uint32_t argc
 
 	do {
 		if (argc == 1) {
-			cocos2d::Vector2 arg0;
+			cocos2d::Vec2 arg0;
 			ok &= jsval_to_vector2(cx, argv[0], &arg0);
 			if (!ok) { ok = true; break; }
 			bool ret = cobj->containPoint(arg0);
@@ -2672,7 +2672,7 @@ bool js_cocos2dx_studio_DisplayManager_getAnchorPoint(JSContext *cx, uint32_t ar
 	cocostudio::DisplayManager* cobj = (cocostudio::DisplayManager *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_DisplayManager_getAnchorPoint : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Vector2 ret = cobj->getAnchorPoint();
+		cocos2d::Vec2 ret = cobj->getAnchorPoint();
 		jsval jsret = JSVAL_NULL;
 		jsret = vector2_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -3589,7 +3589,7 @@ bool js_cocos2dx_studio_Bone_getNodeToArmatureTransform(JSContext *cx, uint32_t 
 	cocostudio::Bone* cobj = (cocostudio::Bone *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Bone_getNodeToArmatureTransform : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Matrix ret = cobj->getNodeToArmatureTransform();
+		cocos2d::Mat4 ret = cobj->getNodeToArmatureTransform();
 		jsval jsret = JSVAL_NULL;
 		jsret = matrix_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -5810,7 +5810,7 @@ bool js_cocos2dx_studio_Skin_getNodeToWorldTransformAR(JSContext *cx, uint32_t a
 	cocostudio::Skin* cobj = (cocostudio::Skin *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Skin_getNodeToWorldTransformAR : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Matrix ret = cobj->getNodeToWorldTransformAR();
+		cocos2d::Mat4 ret = cobj->getNodeToWorldTransformAR();
 		jsval jsret = JSVAL_NULL;
 		jsret = matrix_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);

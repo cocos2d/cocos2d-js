@@ -1287,7 +1287,7 @@ bool jsval_to_std_vector_int( JSContext *cx, jsval vp, std::vector<int>* ret)
     return true;
 }
 
-bool jsval_to_matrix(JSContext *cx, jsval vp, cocos2d::Matrix* ret)
+bool jsval_to_matrix(JSContext *cx, jsval vp, cocos2d::Mat4* ret)
 {
     JS::RootedObject jsobj(cx);
     bool ok = vp.isObject() && JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj );
@@ -1327,7 +1327,7 @@ bool jsval_to_matrix(JSContext *cx, jsval vp, cocos2d::Matrix* ret)
     return true;
 }
 
-bool jsval_to_vector2(JSContext *cx, jsval vp, cocos2d::Vector2* ret)
+bool jsval_to_vector2(JSContext *cx, jsval vp, cocos2d::Vec2* ret)
 {
     JS::RootedObject tmp(cx);
     JS::RootedValue jsx(cx);
@@ -1347,7 +1347,7 @@ bool jsval_to_vector2(JSContext *cx, jsval vp, cocos2d::Vector2* ret)
     return true;
 }
 
-bool jsval_to_vector3(JSContext *cx, jsval vp, cocos2d::Vector3* ret)
+bool jsval_to_vector3(JSContext *cx, jsval vp, cocos2d::Vec3* ret)
 {
     JS::RootedObject tmp(cx);
     JS::RootedValue jsx(cx);
@@ -2377,7 +2377,7 @@ jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v)
     return OBJECT_TO_JSVAL(jsretArr);
 }
 
-jsval matrix_to_jsval(JSContext *cx, const cocos2d::Matrix& v)
+jsval matrix_to_jsval(JSContext *cx, const cocos2d::Mat4& v)
 {
     JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
     
@@ -2393,7 +2393,7 @@ jsval matrix_to_jsval(JSContext *cx, const cocos2d::Matrix& v)
     return OBJECT_TO_JSVAL(jsretArr);
 }
 
-jsval vector2_to_jsval(JSContext *cx, const cocos2d::Vector2& v)
+jsval vector2_to_jsval(JSContext *cx, const cocos2d::Vec2& v)
 {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
@@ -2405,7 +2405,7 @@ jsval vector2_to_jsval(JSContext *cx, const cocos2d::Vector2& v)
     return JSVAL_NULL;
 }
 
-jsval vector3_to_jsval(JSContext *cx, const cocos2d::Vector3& v)
+jsval vector3_to_jsval(JSContext *cx, const cocos2d::Vec3& v)
 {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
