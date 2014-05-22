@@ -28,11 +28,11 @@ blendfunc
 
 /**
  * @method onDraw
- * @param {matrix_object} arg0
+ * @param {cc.Mat4} arg0
  * @param {bool} arg1
  */
 onDraw : function (
-matrix, 
+mat4, 
 bool 
 )
 {

@@ -28,8 +28,8 @@
             },
          "append_dir":[
             {
-                "from": "frameworks/js-bindings/cocos2d-x/cocos/2d/platform/android/java",
-                "to": "frameworks/js-bindings/cocos2d-x/cocos/2d/platform/android/java"
+                "from": "frameworks/js-bindings/cocos2d-x/cocos/platform/android/java",
+                "to": "frameworks/js-bindings/cocos2d-x/cocos/platform/android/java"
             },
             {
                "from":"frameworks/js-bindings",
