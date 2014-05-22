@@ -170,6 +170,15 @@ section .canvas{
     padding-bottom: 40px;
 }
 
+section .canvas .function{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+section .canvas .syntaxhighlighter  {
+    font-size: 14px !important;
+}
+
 section .canvas canvas{
     border-radius: 5px;
 }

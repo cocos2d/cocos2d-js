@@ -150,8 +150,8 @@ var CCNodeTest4 = TestNodeDemo.extend({
         //----end1----
     },
     delay2:function (dt) {
-        //----start1----ctor
-        var node = this.delay2(2);
+        //----start1----delay2
+        var node = this.getChildByTag(2);
         var action1 = cc.RotateBy.create(1, 360);
         node.runAction(action1);
         //----end1----

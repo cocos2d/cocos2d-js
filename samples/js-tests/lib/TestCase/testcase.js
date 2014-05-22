@@ -87,7 +87,7 @@
                 });
                 var html = '';
                 for(var p in list){
-                    html += '<div>' + p + '</div>';
+                    html += '<div class="function">' + '<span style="font-weight: normal;">function</span> ' + p + '</div>';
                     html += list[p].replace(/^\s*?(\r\n|\r|\n)/, '<pre class="brush: javascript;">').replace(/(\r\n|\r|\n)\s*?(\r\n|\r|\n)?$/, '</pre>');
                 }
                 document.getElementById('code').innerHTML = html;
@@ -334,7 +334,7 @@
                 ,[
                     "Non Batched Sprite ",
                     "Batched Sprite ",
-                    "Sprite vs. SpriteBatchNode animation",
+                    null,//"Sprite vs. SpriteBatchNode animation",
                     "SpriteFrame Alias Name",
                     "Sprite: anchor point",
                     "SpriteBatchNode: anchor point",
@@ -348,9 +348,9 @@
                     "Sprite: Z order",
                     "SpriteBatch: Z order",
                     "SpriteBatchNode: reorder #1",
-                    "SpriteBatchNode: reorder issue #744",
-                    "SpriteBatchNode: reorder issue #766",
-                    "SpriteBatchNode: reorder issue #767",
+                    null,//"SpriteBatchNode: reorder issue #744",
+                    null,//"SpriteBatchNode: reorder issue #766",
+                    null,//"SpriteBatchNode: reorder issue #767",
                     "Sprite: openGL Z vertex",
                     "SpriteBatchNode: openGL Z vertex",
                     "SpriteBatchNode transformation",
@@ -378,17 +378,17 @@
                     "Sprite anchor + skew + scale",
                     "SpriteBatchNode anchor + skew + scale",
                     "Sprite offset + anchor + flip",
-                    "SpriteBatchNode offset + anchor + flip",
-                    "SpriteBatchNodeReorder same index",
+                    null,//"SpriteBatchNode offset + anchor + flip",
+                    null,//"SpriteBatchNodeReorder same index",
                     "SpriteBatchNode reorder 1 child",
                     "node sort same index",
                     "Sprite + children + skew",
                     "SpriteBatchNode + children + skew",
                     "Sprite Double resolution",
-                    "SpriteBatch - Bug 1217",
+                    null,//"SpriteBatch - Bug 1217",
                     "AnimationCache - Load file",
-                    "Texture Color Cache Issue Test",
-                    "Texture Color Cache Issue Test #2",
+                    null,//"Texture Color Cache Issue Test",
+                    null,//"Texture Color Cache Issue Test #2",
                     "Sub Sprite (rotated source)"
                 ]//arrayOfSpriteTest//sprite
                 ,null//scale9sprite
