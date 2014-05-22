@@ -1076,7 +1076,19 @@ bool ScriptingCore::handleTouchEvent(void* nativeObj, cocos2d::EventTouch::Event
         else
         {
             jsval retval;
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, &retval);
+            executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, &retval);
+            if(JSVAL_IS_NULL(retval))
+            {
+                ret = false;
+            }
+            else if(JSVAL_IS_BOOLEAN(retval))
+            {
+                ret = JSVAL_TO_BOOLEAN(retval);
+            }
+            else
+            {
+                ret = false;
+            }
         }
     } while(false);
 
