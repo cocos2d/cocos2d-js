@@ -1405,7 +1405,7 @@ var ActionRotateToRepeat = ActionsDemo.extend({
         var seq2 = seq.clone();
 
         this._tamara.runAction(seq.repeatForever());
-        this._kathia.runAction(seq.repeat(4));
+        this._kathia.runAction(seq2.repeat(4));
         //----end23----
 
     },
