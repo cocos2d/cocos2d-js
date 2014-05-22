@@ -2608,6 +2608,7 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedValue jsParam(cx);
     double tag;
     double parameter;
+
     for (int i = 0; i < argc; i++)
     {
         jsval vpi = argv[i];
@@ -2623,12 +2624,12 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
         ok = true;
         if (tag == EASE_IN)
         {
-            if (!hasParam) ok = false;
+            if (!hasParam) parameter = 0.3;
             action = cocos2d::EaseIn::create(currentAction, parameter);
         }
         else if (tag == EASE_OUT)
         {
-            if (!hasParam) ok = false;
+			if (!hasParam) parameter = 0.3;
             action = cocos2d::EaseOut::create(currentAction, parameter);
         }
         else if (tag == EASE_INOUT)
@@ -2650,17 +2651,17 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
             action = cocos2d::EaseSineInOut::create(currentAction);
         else if (tag == EASE_ELASTIC_IN)
         {
-            if (!hasParam) ok = false;
+            if (!hasParam) parameter = 0.3;
             action = cocos2d::EaseElasticIn::create(currentAction, parameter);
         }
         else if (tag == EASE_ELASTIC_OUT)
         {
-            if (!hasParam) ok = false;
+            if (!hasParam) parameter = 0.3;
             action = cocos2d::EaseElasticOut::create(currentAction, parameter);
         }
         else if (tag == EASE_ELASTIC_INOUT)
         {
-            if (!hasParam) ok = false;
+            if (!hasParam) parameter = 0.3;
             action = cocos2d::EaseElasticInOut::create(currentAction, parameter);
         }
         else if (tag == EASE_BOUNCE_IN)
