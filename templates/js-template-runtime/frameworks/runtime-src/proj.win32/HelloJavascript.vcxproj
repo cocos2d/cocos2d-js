@@ -114,8 +114,10 @@ if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource\src"
 mkdir "$(OutDir)\Resource\res"
+mkdir "$(OutDir)\Resource\rtres"
 xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\Resource" /e /Y
 xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
+xcopy "$(ProjectDir)..\..\..\runtime\rtres" "$(OutDir)\Resource\rtres" /e /Y
 copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\Resource\main.js" /Y
 copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\Resource\project.json" /Y
 copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
@@ -175,8 +177,10 @@ if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource\src"
 mkdir "$(OutDir)\Resource\res"
+mkdir "$(OutDir)\Resource\rtres"
 xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\Resource" /e /Y
 xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
+xcopy "$(ProjectDir)..\..\..\runtime\rtres" "$(OutDir)\Resource\rtres" /e /Y
 copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\Resource\main.js" /Y
 copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\Resource\project.json" /Y
 copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
