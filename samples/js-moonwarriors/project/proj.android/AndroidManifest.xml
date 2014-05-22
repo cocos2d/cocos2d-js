@@ -10,15 +10,13 @@
     <application android:label="@string/app_name"
         android:icon="@drawable/icon">
 
+        <!-- Tell NativeActivity the name of our .so -->
+        <meta-data android:name="android.app.lib_name" android:value="js_moonwarriors" />
         <activity android:name=".AppActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
                   android:configChanges="orientation">
-
-            <!-- Tell NativeActivity the name of our .so -->
-            <meta-data android:name="android.app.lib_name"
-                       android:value="js_moonwarriors" />
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
