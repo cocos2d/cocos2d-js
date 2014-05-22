@@ -47,8 +47,6 @@
             "to": "../libs"
         }
     ], 
-    "key_store": "/Users/cocos2d-x/Desktop/for_sign/punchbox.keystore", 
-    "key_store_pass": "w3297825w", 
     "ndk_module_path": [
         "../../../../frameworks/js-bindings", 
         "../../../../frameworks/js-bindings/cocos2d-x", 
