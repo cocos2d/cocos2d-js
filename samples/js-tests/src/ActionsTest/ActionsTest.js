@@ -1405,7 +1405,7 @@ var ActionRotateToRepeat = ActionsDemo.extend({
         var seq2 = seq.clone();
 
         this._tamara.runAction(seq.repeatForever());
-        this._kathia.runAction(seq.repeat(4));
+        this._kathia.runAction(seq2.repeat(4));
         //----end23----
 
     },
@@ -2031,7 +2031,7 @@ var ActionTargeted = ActionsDemo.extend({
 
         var seq = cc.Sequence.create(jump1, t1, rot1, t2);
 
-        var always = seq.repeat();
+        var always = seq.repeatForever();
 
         this._tamara.runAction(always);
         //----end31----

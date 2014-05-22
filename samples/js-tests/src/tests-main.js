@@ -187,7 +187,7 @@ var TestController = cc.LayerGradient.extend({
         }, this);
     },
     onCloseCallback:function () {
-        history.go(-1);
+        history && history.go(-1);
     },
     onToggleAutoTest:function() {
         autoTestEnabled = !autoTestEnabled;
