@@ -98,7 +98,7 @@ public:
     virtual void onClose(SIOClient* client) {
 		CCLOG("JSB SocketIO::SIODelegate->onClose method called from native");
         
-		this->fireEventToScript(client, "disconnect", "");
+		//this->fireEventToScript(client, "disconnect", "");
 
 	}
 
