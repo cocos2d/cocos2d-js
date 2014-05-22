@@ -2651,7 +2651,7 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
             action = cocos2d::EaseSineInOut::create(currentAction);
         else if (tag == EASE_ELASTIC_IN)
         {
-			if (!hasParam) parameter = 0.3;
+            if (!hasParam) parameter = 0.3;
             action = cocos2d::EaseElasticIn::create(currentAction, parameter);
         }
         else if (tag == EASE_ELASTIC_OUT)
