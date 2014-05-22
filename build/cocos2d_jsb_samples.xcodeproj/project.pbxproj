@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		051FF7B9192CA26800C43A06 /* libPluginIAP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 051FF7B4192CA1E400C43A06 /* libPluginIAP.a */; };
+		05F48C13192C9178008FB408 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F48C12192C9178008FB408 /* Security.framework */; };
+		05F48C15192C9180008FB408 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F48C14192C9180008FB408 /* CoreTelephony.framework */; };
 		1A2B735018D2952200ED9E74 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F1618BF1D1D00CC9A93 /* libchipmunk Mac.a */; };
 		1A2B735118D2952200ED9E74 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F1218BF1D1D00CC9A93 /* libcocos2dx Mac.a */; };
 		1A2B735218D2952200ED9E74 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F1418BF1D1D00CC9A93 /* libcocos2dx-extensions Mac.a */; };
@@ -225,6 +228,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		051FF7B3192CA1E400C43A06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 051FF7A9192CA1E400C43A06 /* PluginIAP.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 05A9357E19260E2E00F08DC0;
+			remoteInfo = PluginIAP;
+		};
 		1A2B732018D2952200ED9E74 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1A604F2518BF1D2000CC9A93 /* cocos2d_js_bindings.xcodeproj */;
@@ -494,6 +504,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		051FF7A9192CA1E400C43A06 /* PluginIAP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginIAP.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/iosiap/proj.ios/PluginIAP.xcodeproj"; sourceTree = "<group>"; };
+		05F48C12192C9178008FB408 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		05F48C14192C9180008FB408 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		15C64824165F3934007D4F18 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		15C64826165F394E007D4F18 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -662,12 +675,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05F48C15192C9180008FB408 /* CoreTelephony.framework in Frameworks */,
+				05F48C13192C9178008FB408 /* Security.framework in Frameworks */,
 				BA623E25191A221D00761F37 /* MediaPlayer.framework in Frameworks */,
 				BA623E23191A221800761F37 /* MessageUI.framework in Frameworks */,
 				BA623E21191A221100761F37 /* AdSupport.framework in Frameworks */,
 				BA623E1F191A220B00761F37 /* StoreKit.framework in Frameworks */,
 				BA623E1D191A220400761F37 /* SystemConfiguration.framework in Frameworks */,
 				BA623DFA191A150A00761F37 /* libPluginProtocol.a in Frameworks */,
+				051FF7B9192CA26800C43A06 /* libPluginIAP.a in Frameworks */,
 				BA623DEF191A14EB00761F37 /* libPluginAdmob.a in Frameworks */,
 				BA623DF0191A14EB00761F37 /* libPluginFlurry.a in Frameworks */,
 				BA623DF1191A14EB00761F37 /* libPluginTwitter.a in Frameworks */,
@@ -718,6 +734,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		051FF7AA192CA1E400C43A06 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				051FF7B4192CA1E400C43A06 /* libPluginIAP.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -946,6 +970,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				05F48C14192C9180008FB408 /* CoreTelephony.framework */,
+				05F48C12192C9178008FB408 /* Security.framework */,
 				BA623E24191A221D00761F37 /* MediaPlayer.framework */,
 				BA623E22191A221800761F37 /* MessageUI.framework */,
 				BA623E20191A221100761F37 /* AdSupport.framework */,
@@ -975,6 +1001,7 @@
 			isa = PBXGroup;
 			children = (
 				BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */,
+				051FF7A9192CA1E400C43A06 /* PluginIAP.xcodeproj */,
 				BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */,
 				BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */,
 				BA623DDD191A140400761F37 /* PluginTwitter.xcodeproj */,
@@ -1129,7 +1156,12 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
+				TargetAttributes = {
+					A01E16C01784C06E00B0CA4A = {
+						DevelopmentTeam = T829Q4LDUZ;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d_jsb_samples" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1162,6 +1194,10 @@
 					ProjectRef = BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */;
 				},
 				{
+					ProductGroup = 051FF7AA192CA1E400C43A06 /* Products */;
+					ProjectRef = 051FF7A9192CA1E400C43A06 /* PluginIAP.xcodeproj */;
+				},
+				{
 					ProductGroup = BA623DF5191A14F800761F37 /* Products */;
 					ProjectRef = BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */;
 				},
@@ -1189,6 +1225,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		051FF7B4192CA1E400C43A06 /* libPluginIAP.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginIAP.a;
+			remoteRef = 051FF7B3192CA1E400C43A06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		1A604F1218BF1D1D00CC9A93 /* libcocos2dx Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1704,7 +1747,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1731,7 +1773,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1758,8 +1799,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 武雄 陈 (34SSE3CZWN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 武雄 陈 (34SSE3CZWN)";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1785,8 +1826,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 武雄 陈 (34SSE3CZWN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 武雄 陈 (34SSE3CZWN)";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1852,7 +1893,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1879,7 +1919,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COMBINE_HIDPI_IMAGES = YES;
