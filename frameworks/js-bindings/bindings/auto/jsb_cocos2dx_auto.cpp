@@ -50182,6 +50182,220 @@ void js_register_cocos2dx_TiledGrid3D(JSContext *cx, JSObject *global) {
 	}
 }
 
+JSClass  *jsb_cocos2d_GLProgramCache_class;
+JSObject *jsb_cocos2d_GLProgramCache_prototype;
+
+bool js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::GLProgramCache* cobj = (cocos2d::GLProgramCache *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms : Invalid Native Object");
+	if (argc == 0) {
+		cobj->reloadDefaultGLPrograms();
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+bool js_cocos2dx_GLProgramCache_addGLProgram(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::GLProgramCache* cobj = (cocos2d::GLProgramCache *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramCache_addGLProgram : Invalid Native Object");
+	if (argc == 2) {
+		cocos2d::GLProgram* arg0;
+		std::string arg1;
+		do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::GLProgram*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
+		ok &= jsval_to_std_string(cx, argv[1], &arg1);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgramCache_addGLProgram : Error processing arguments");
+		cobj->addGLProgram(arg0, arg1);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_GLProgramCache_addGLProgram : wrong number of arguments: %d, was expecting %d", argc, 2);
+	return false;
+}
+bool js_cocos2dx_GLProgramCache_getGLProgram(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::GLProgramCache* cobj = (cocos2d::GLProgramCache *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramCache_getGLProgram : Invalid Native Object");
+	if (argc == 1) {
+		std::string arg0;
+		ok &= jsval_to_std_string(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgramCache_getGLProgram : Error processing arguments");
+		cocos2d::GLProgram* ret = cobj->getGLProgram(arg0);
+		jsval jsret = JSVAL_NULL;
+		do {
+			if (ret) {
+				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::GLProgram>(cx, (cocos2d::GLProgram*)ret);
+				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+			} else {
+				jsret = JSVAL_NULL;
+			}
+		} while (0);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_GLProgramCache_getGLProgram : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_GLProgramCache_loadDefaultGLPrograms(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::GLProgramCache* cobj = (cocos2d::GLProgramCache *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramCache_loadDefaultGLPrograms : Invalid Native Object");
+	if (argc == 0) {
+		cobj->loadDefaultGLPrograms();
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_GLProgramCache_loadDefaultGLPrograms : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+bool js_cocos2dx_GLProgramCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 0) {
+		cocos2d::GLProgramCache::destroyInstance();
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+	JS_ReportError(cx, "js_cocos2dx_GLProgramCache_destroyInstance : wrong number of arguments");
+	return false;
+}
+
+bool js_cocos2dx_GLProgramCache_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 0) {
+		cocos2d::GLProgramCache* ret = cocos2d::GLProgramCache::getInstance();
+		jsval jsret = JSVAL_NULL;
+		do {
+		if (ret) {
+			js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::GLProgramCache>(cx, (cocos2d::GLProgramCache*)ret);
+			jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+		} else {
+			jsret = JSVAL_NULL;
+		}
+	} while (0);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+	JS_ReportError(cx, "js_cocos2dx_GLProgramCache_getInstance : wrong number of arguments");
+	return false;
+}
+
+bool js_cocos2dx_GLProgramCache_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::GLProgramCache* cobj = new cocos2d::GLProgramCache();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::GLProgramCache> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::GLProgramCache");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
+
+
+void js_cocos2d_GLProgramCache_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (GLProgramCache)", obj);
+}
+
+void js_register_cocos2dx_GLProgramCache(JSContext *cx, JSObject *global) {
+	jsb_cocos2d_GLProgramCache_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_GLProgramCache_class->name = "ShaderCache";
+	jsb_cocos2d_GLProgramCache_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_GLProgramCache_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_GLProgramCache_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_GLProgramCache_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_GLProgramCache_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_GLProgramCache_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_GLProgramCache_class->convert = JS_ConvertStub;
+	jsb_cocos2d_GLProgramCache_class->finalize = js_cocos2d_GLProgramCache_finalize;
+	jsb_cocos2d_GLProgramCache_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+	static JSPropertySpec properties[] = {
+		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+	};
+
+	static JSFunctionSpec funcs[] = {
+		JS_FN("reloadDefaultShaders", js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("addProgram", js_cocos2dx_GLProgramCache_addGLProgram, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getProgram", js_cocos2dx_GLProgramCache_getGLProgram, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("loadDefaultShaders", js_cocos2dx_GLProgramCache_loadDefaultGLPrograms, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+	};
+
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("destroyInstance", js_cocos2dx_GLProgramCache_destroyInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getInstance", js_cocos2dx_GLProgramCache_getInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	jsb_cocos2d_GLProgramCache_prototype = JS_InitClass(
+		cx, global,
+		NULL, // parent proto
+		jsb_cocos2d_GLProgramCache_class,
+		js_cocos2dx_GLProgramCache_constructor, 0, // constructor
+		properties,
+		funcs,
+		NULL, // no static properties
+		st_funcs);
+	// make the class enumerable in the registered namespace
+//	bool found;
+//FIXME: Removed in Firefox v27	
+//	JS_SetPropertyAttributes(cx, global, "ShaderCache", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+	// add the proto and JSClass to the type->js info hash table
+	TypeTest<cocos2d::GLProgramCache> t;
+	js_type_class_t *p;
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
+		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+		p->jsclass = jsb_cocos2d_GLProgramCache_class;
+		p->proto = jsb_cocos2d_GLProgramCache_prototype;
+		p->parentProto = NULL;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
+	}
+}
+
 JSClass  *jsb_cocos2d_TextureCache_class;
 JSObject *jsb_cocos2d_TextureCache_prototype;
 
@@ -57495,6 +57709,7 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
 	js_register_cocos2dx_MenuItemAtlasFont(cx, obj);
 	js_register_cocos2dx_Liquid(cx, obj);
 	js_register_cocos2dx_OrbitCamera(cx, obj);
+	js_register_cocos2dx_ParallaxNode(cx, obj);
 	js_register_cocos2dx_ParticleBatchNode(cx, obj);
 	js_register_cocos2dx_Component(cx, obj);
 	js_register_cocos2dx_EaseCubicActionOut(cx, obj);
@@ -57524,7 +57739,7 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
 	js_register_cocos2dx_EaseBounceInOut(cx, obj);
 	js_register_cocos2dx_TransitionSlideInR(cx, obj);
 	js_register_cocos2dx___NodeRGBA(cx, obj);
-	js_register_cocos2dx_ParallaxNode(cx, obj);
+	js_register_cocos2dx_GLProgramCache(cx, obj);
 	js_register_cocos2dx_EaseQuadraticActionIn(cx, obj);
 	js_register_cocos2dx_WavesTiles3D(cx, obj);
 	js_register_cocos2dx_TransitionSlideInB(cx, obj);
