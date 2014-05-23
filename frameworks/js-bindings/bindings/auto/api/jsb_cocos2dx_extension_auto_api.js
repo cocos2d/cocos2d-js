@@ -2952,3 +2952,171 @@ EditBox : function (
 },
 
 };
+
+/**
+ * @class EventAssetsManager
+ */
+cc.EventAssetsManager = {
+
+/**
+ * @method getAssetsManager
+ * @return {cc.AssetsManager}
+ */
+getAssetsManager : function (
+)
+{
+    return cc.AssetsManager;
+},
+
+/**
+ * @method getAssetId
+ * @return {String}
+ */
+getAssetId : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getMessage
+ * @return {String}
+ */
+getMessage : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getEventCode
+ * @return {cc.EventAssetsManager::EventCode}
+ */
+getEventCode : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPercent
+ * @return {float}
+ */
+getPercent : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method EventAssetsManager
+ * @constructor
+ * @param {String} arg0
+ * @param {cc.AssetsManager} arg1
+ * @param {cc.EventAssetsManager::EventCode} arg2
+ * @param {float} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ */
+EventAssetsManager : function (
+str, 
+assetsmanager, 
+eventcode, 
+float, 
+str, 
+str 
+)
+{
+},
+
+};
+
+/**
+ * @class AssetsManager
+ */
+cc.AssetsManager = {
+
+/**
+ * @method getState
+ * @return {cc.AssetsManager::State}
+ */
+getState : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method checkUpdate
+ */
+checkUpdate : function (
+)
+{
+},
+
+/**
+ * @method getStoragePath
+ * @return {String}
+ */
+getStoragePath : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method update
+ */
+update : function (
+)
+{
+},
+
+/**
+ * @method getLocalManifest
+ * @return {cc.Manifest}
+ */
+getLocalManifest : function (
+)
+{
+    return cc.Manifest;
+},
+
+/**
+ * @method getRemoteManifest
+ * @return {cc.Manifest}
+ */
+getRemoteManifest : function (
+)
+{
+    return cc.Manifest;
+},
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {cc.AssetsManager}
+ */
+create : function (
+str, 
+str 
+)
+{
+    return cc.AssetsManager;
+},
+
+/**
+ * @method AssetsManager
+ * @constructor
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+AssetsManager : function (
+str, 
+str 
+)
+{
+},
+
+};
