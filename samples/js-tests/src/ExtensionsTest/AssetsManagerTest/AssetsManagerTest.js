@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-cc.loader.resPath = "res/";
+
 
 var sceneManifests = ["Manifests/AMTestScene1/project.manifest", "Manifests/AMTestScene2/project.manifest", "Manifests/AMTestScene3/project.manifest"];
 var storagePaths = ["JSBTests/AssetsManagerTest/scene1/", "JSBTests/AssetsManagerTest/scene2/", "JSBTests/AssetsManagerTest/scene3"];
@@ -39,6 +39,7 @@ var AssetsManagerTestLayer = BaseTestLayer.extend({
     ctor : function (spritePath) {
         this._super();
         this._spritePath = spritePath;
+        cc.loader.resPath = "res/";
     },
 
     getTitle : function() {
@@ -51,6 +52,10 @@ var AssetsManagerTestLayer = BaseTestLayer.extend({
         this.addChild(this._background, 1);
         this._background.x = cc.winSize.width/2;
         this._background.y = cc.winSize.height/2;
+    },
+
+    onExit : function(){
+        cc.loader.resPath = "";
     },
 
     onNextCallback : function () {
