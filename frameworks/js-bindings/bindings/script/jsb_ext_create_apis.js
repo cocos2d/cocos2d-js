@@ -62,7 +62,7 @@ ccui.TextField.prototype.init = function(){
 var _p = {};
 _p._ctor = function(){
     this.init();
-}
+};
 ccui.Widget.prototype._ctor = ccui.Button.prototype._ctor
                             = ccui.CheckBox.prototype._ctor 
                             = ccui.ImageView.prototype._ctor
@@ -77,4 +77,8 @@ ccui.Widget.prototype._ctor = ccui.Button.prototype._ctor
                             = ccui.ListView.prototype._ctor
                             = ccui.PageView.prototype._ctor
                             = ccui.ScrollView.prototype._ctor
-                            = _p._ctor; 
+                            = _p._ctor;
+
+cc.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callback) {
+    callback && this.init(assetsManager, callback);
+};
