@@ -31,6 +31,11 @@ Box2DTestLayer = cc.Layer.extend({
     //GLESDebugDraw *m_debugDraw;
 
     ctor:function () {
+
+        if(window.sidebar){
+            window.sidebar.changeTest(0, 2);
+        }
+        //----start0----ctor
         this._super();
 
         cc.eventManager.addListener(cc.EventListener.create({
@@ -106,9 +111,11 @@ Box2DTestLayer = cc.Layer.extend({
         label.y = screenSize.height - 50;
 
         this.scheduleUpdate();
+        //----end0----
     },
 
     addNewSpriteWithCoords:function (p) {
+        //----start0----addNewSpriteWithCoords
         //UXLog(L"Add sprite %0.2f x %02.f",p.x,p.y);
         var batch = this.getChildByTag(TAG_SPRITE_MANAGER);
 
@@ -145,9 +152,10 @@ Box2DTestLayer = cc.Layer.extend({
         fixtureDef.density = 1.0;
         fixtureDef.friction = 0.3;
         body.CreateFixture(fixtureDef);
-
+        //----end0----
     },
     update:function (dt) {
+        //----start0----update
         //It is recommended that a fixed time step is used with Box2D for stability
         //of the simulation, however, we are using a variable time step here.
         //You need to make an informed choice, the following URL is useful
@@ -167,10 +175,10 @@ Box2DTestLayer = cc.Layer.extend({
                 var myActor = b.GetUserData();
                 myActor.x = b.GetPosition().x * PTM_RATIO;
                 myActor.y = b.GetPosition().y * PTM_RATIO;
-                myActor.rotation = -1 * cc.radiansToDegress(b.GetAngle());
+                myActor.rotation = -1 * cc.radiansToDegrees(b.GetAngle());
             }
         }
-
+        //----end0----
     }
     //CREATE_NODE(Box2DTestLayer);
 });
@@ -183,3 +191,7 @@ Box2DTestScene = TestScene.extend({
         cc.director.runScene(this);
     }
 });
+
+var arrayOfBox2DTest = [
+    'Physical block test'
+];

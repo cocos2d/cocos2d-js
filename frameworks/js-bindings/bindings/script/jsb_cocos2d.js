@@ -269,6 +269,104 @@ cc.SCENE_FADE = 4208917214;             //CCTransition.js
 
 cc.SCENE_RADIAL = 0xc001;               //CCTransitionProgress.js
 
+
+cc.KEY = {
+    //android
+    back:8,
+    menu:4199,
+    //desktop
+    backspace:7,
+    tab:8,
+    enter:32,
+    shift:12,
+    ctrl:13,
+    alt:14,
+    pause:1,
+    capslock:11,
+    escape:6,
+    pageup:35,
+    pagedown:41,
+    end:21,
+    home:33,
+    left:23,
+    up:25,
+    right:24,
+    down:26,
+    insert:17,
+    Delete:20,
+    0:73,
+    1:74,
+    2:75,
+    3:76,
+    4:77,
+    5:78,
+    6:79,
+    7:80,
+    8:81,
+    9:82,
+    a:121,
+    b:122,
+    c:123,
+    d:124,
+    e:125,
+    f:126,
+    g:127,
+    h:128,
+    i:129,
+    j:130,
+    k:131,
+    l:132,
+    m:133,
+    n:134,
+    o:135,
+    p:136,
+    q:137,
+    r:138,
+    s:139,
+    t:140,
+    u:141,
+    v:142,
+    w:143,
+    x:144,
+    y:145,
+    z:146,
+    '*':30,
+    '+':28,
+    '-':29,
+    'numdel':71,
+    '/':31,
+    f1:44,
+    f2:45,
+    f3:46,
+    f4:47,
+    f5:48,
+    f6:49,
+    f7:50,
+    f8:51,
+    f9:52,
+    f10:53,
+    f11:54,
+    f12:55,
+    numlock:27,
+    scrolllock:2,
+    semicolon:84,
+    ',':69,
+    equal:86,
+    '=':86,
+    ';':84,
+    comma:69,
+    '.':71,
+    period:71,
+    forwardslash:72,
+    grave:120,
+    '[':116,
+    openbracket:116,
+    ']':118,
+    closebracket:118,
+    backslash:117,
+    quote:58,
+    space:56
+};
 //
 // CCMacro.js export
 //
@@ -1394,6 +1492,21 @@ cc.TMXTiledMap.extend = cc.Class.extend;
 cc.TMXMapInfo.extend = cc.Class.extend;
 cc.TransitionScene.extend = cc.Class.extend;
 ccs.Armature.extend = cc.Class.extend;
+ccui.Widget.extend = cc.Class.extend;
+ccui.Button.extend = cc.Class.extend;
+ccui.CheckBox.extend = cc.Class.extend;
+ccui.ImageView.extend = cc.Class.extend;
+ccui.LoadingBar.extend = cc.Class.extend;
+ccui.RichText.extend = cc.Class.extend;
+ccui.Slider.extend = cc.Class.extend;
+ccui.Text.extend = cc.Class.extend;
+ccui.TextAtlas.extend = cc.Class.extend;
+ccui.TextBMFont.extend = cc.Class.extend;
+ccui.TextField.extend = cc.Class.extend;
+ccui.Layout.extend = cc.Class.extend;
+ccui.ListView.extend = cc.Class.extend;
+ccui.PageView.extend = cc.Class.extend;
+ccui.ScrollView.extend = cc.Class.extend;
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
@@ -1978,6 +2091,11 @@ cc.DrawNode.create = function () {
 	return new cc.DrawNode();
 };
 
+
+//
+// TMX classes JS API Wrapper
+//
+
 cc.TMXTiledMap.prototype.allLayers = function(){
     var retArr = [],
         locChildren = this.getChildren(),
@@ -2022,4 +2140,404 @@ cc.TMXLayer.prototype._getPositionAt = cc.TMXLayer.prototype.getPositonAt;
 cc.TMXLayer.prototype.getPositonAt = function(x, y){
     var pos = y !== undefined ? cc.p(x, y) : x;
     return this._getPositionAt(pos);
+};
+
+
+//
+// setBlendFunc JS API Wrapper
+//
+
+var protoHasBlend = [cc.AtlasNode.prototype,
+                     cc.DrawNode.prototype,
+                     cc.LabelTTF.prototype,
+                     cc.SpriteBatchNode.prototype,
+                     cc.LabelBMFont.prototype,
+                     cc.LayerColor.prototype,
+                     cc.MotionStreak.prototype,
+                     cc.Sprite.prototype,
+                     cc.ParticleBatchNode.prototype,
+                     cc.ParticleSystem.prototype];
+
+var templateSetBlendFunc = function(src, dst) {
+    var blendf;
+    if (dst === undefined)
+        blendf = src;
+    else
+        blendf = {src: src, dst: dst};
+    this._setBlendFunc(blendf);
+    var b = this.getBlendFunc();
+    cc.log((b.src == src) + ", " + (b.dst == dst));
+};
+for (var i = 0, l = protoHasBlend.length; i < l; i++) {
+    var proto = protoHasBlend[i];
+    proto._setBlendFunc = proto.setBlendFunc;
+    proto.setBlendFunc = templateSetBlendFunc;
+}
+
+
+//
+// Ease actions JS API Wrapper
+//
+
+var easeActions = {
+    easeIn : 0,
+    easeOut : 1,
+    easeInOut : 2,
+    easeExponentialIn : 3,
+    easeExponentialOut : 4,
+    easeExponentialInOut : 5,
+    easeSineIn : 6,
+    easeSineOut : 7,
+    easeSineInOut : 8,
+    easeElasticIn : 9,
+    easeElasticOut : 10,
+    easeElasticInOut : 11,
+    easeBounceIn : 12,
+    easeBounceOut : 13,
+    easeBounceInOut : 14,
+    easeBackIn : 15,
+    easeBackOut : 16,
+    easeBackInOut : 17
+};
+
+function templateEaseActions(actionTag) {
+    return function(param) {
+        return {tag: actionTag, parameter: param};
+    }
+}
+
+for (var a in easeActions) {
+    var actionTag = easeActions[a];
+    cc[a] = templateEaseActions(actionTag);
+}
+
+cc.action = cc.Action.create;
+cc.speed = cc.Speed.create;
+cc.follow = cc.Follow.create;
+cc.orbitCamera = cc.OrbitCamera.create;
+cc.cardinalSplineTo = cc.CardinalSplineTo.create;
+cc.cardinalSplineBy = cc.CardinalSplineBy.create;
+cc.catmullRomTo = cc.CatmullRomTo.create;
+cc.catmullRomBy = cc.CatmullRomBy.create;
+cc.show = cc.Show.create;
+cc.hide = cc.Hide.create;
+cc.toggleVisibility = cc.ToggleVisibility.create;
+cc.removeSelf = cc.RemoveSelf.create;
+cc.flipX = cc.FlipX.create;
+cc.flipY = cc.FlipY.create;
+cc.place = cc.Place.create;
+cc.callFunc = cc.CallFunc.create;
+cc.actionInterval = cc.ActionInterval.create;
+cc.sequence = cc.Sequence.create;
+cc.repeat = cc.Repeat.create;
+cc.repeatForever = cc.RepeatForever.create;
+cc.spawn = cc.Spawn.create;
+cc.rotateTo = cc.RotateTo.create;
+cc.rotateBy = cc.RotateBy.create;
+cc.moveBy = cc.MoveBy.create;
+cc.moveTo = cc.MoveTo.create;
+cc.skewTo = cc.SkewTo.create;
+cc.skewBy = cc.SkewBy.create;
+cc.jumpBy = cc.JumpBy.create;
+cc.jumpTo = cc.JumpTo.create;
+cc.bezierBy = cc.BezierBy.create;
+cc.bezierTo = cc.BezierTo.create;
+cc.scaleTo = cc.ScaleTo.create;
+cc.scaleBy = cc.ScaleBy.create;
+cc.blink = cc.Blink.create;
+cc.fadeTo = cc.FadeTo.create;
+cc.fadeIn = cc.FadeIn.create;
+cc.fadeOut = cc.FadeOut.create;
+cc.tintTo = cc.TintTo.create;
+cc.tintBy = cc.TintBy.create;
+cc.delayTime = cc.DelayTime.create;
+//cc.reverseTime = cc.ReverseTime.create;
+cc.animate = cc.Animate.create;
+cc.targetedAction = cc.TargetedAction.create;
+cc.actionTween = cc.ActionTween.create;
+
+
+//AffineTransform API
+
+/**
+ * @memberOf cc
+ * @function
+ * @param {Number} a
+ * @param {Number} b
+ * @param {Number} c
+ * @param {Number} d
+ * @param {Number} tx
+ * @param {Number} ty
+ */
+cc.AffineTransform = function (a, b, c, d, tx, ty) {
+    this.a = a;
+    this.b = b;
+    this.c = c;
+    this.d = d;
+    this.tx = tx;
+    this.ty = ty;
+};
+
+/**
+ * @memberOf cc
+ * @function
+ * @param {Number} a
+ * @param {Number} b
+ * @param {Number} c
+ * @param {Number} d
+ * @param {Number} tx
+ * @param {Number} ty
+ * @return {cc.AffineTransform}
+ * Constructor
+ */
+cc.AffineTransformMake = function (a, b, c, d, tx, ty) {
+    return {a: a, b: b, c: c, d: d, tx: tx, ty: ty};
+};
+
+/**
+ * @memberOf cc
+ * @function
+ * @param {cc.Point} point
+ * @param {cc.AffineTransform} t
+ * @return {cc.Point}
+ * Constructor
+ */
+cc.PointApplyAffineTransform = function (point, t) {
+    return {x: t.a * point.x + t.c * point.y + t.tx, y: t.b * point.x + t.d * point.y + t.ty};
+};
+
+cc._PointApplyAffineTransform = function (x, y, t) {
+    return {x: t.a * x + t.c * y + t.tx,
+        y: t.b * x + t.d * y + t.ty};
+};
+
+/**
+ * @memberOf cc
+ * @function
+ * @param {cc.Size} size
+ * @param {cc.AffineTransform} t
+ * @return {cc.Size}
+ * Constructor
+ */
+cc.SizeApplyAffineTransform = function (size, t) {
+    return {width: t.a * size.width + t.c * size.height, height: t.b * size.width + t.d * size.height};
+};
+
+/**
+ * @memberOf cc
+ * @function
+ * @return {cc.AffineTransform}
+ * Constructor
+ */
+cc.AffineTransformMakeIdentity = function () {
+    return {a: 1.0, b: 0.0, c: 0.0, d: 1.0, tx: 0.0, ty: 0.0};
+};
+
+/**
+ * @memberOf cc
+ * @function
+ * @return {cc.AffineTransform}
+ * Constructor
+ */
+cc.AffineTransformIdentity = function () {
+    return {a: 1.0, b: 0.0, c: 0.0, d: 1.0, tx: 0.0, ty: 0.0};
+};
+
+/**
+ * @memberOf cc
+ * @function
+ * @param {cc.Rect} rect
+ * @param {cc.AffineTransform} anAffineTransform
+ * @return {cc.Rect}
+ * Constructor
+ */
+cc.RectApplyAffineTransform = function (rect, anAffineTransform) {
+    var top = cc.rectGetMinY(rect);
+    var left = cc.rectGetMinX(rect);
+    var right = cc.rectGetMaxX(rect);
+    var bottom = cc.rectGetMaxY(rect);
+
+    var topLeft = cc._PointApplyAffineTransform(left, top, anAffineTransform);
+    var topRight = cc._PointApplyAffineTransform(right, top, anAffineTransform);
+    var bottomLeft = cc._PointApplyAffineTransform(left, bottom, anAffineTransform);
+    var bottomRight = cc._PointApplyAffineTransform(right, bottom, anAffineTransform);
+
+    var minX = Math.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
+    var maxX = Math.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
+    var minY = Math.min(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y);
+    var maxY = Math.max(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y);
+
+    return cc.rect(minX, minY, (maxX - minX), (maxY - minY));
+};
+
+cc._RectApplyAffineTransformIn = function(rect, anAffineTransform){
+    var top = cc.rectGetMinY(rect);
+    var left = cc.rectGetMinX(rect);
+    var right = cc.rectGetMaxX(rect);
+    var bottom = cc.rectGetMaxY(rect);
+
+    var topLeft = cc._PointApplyAffineTransform(left, top, anAffineTransform);
+    var topRight = cc._PointApplyAffineTransform(right, top, anAffineTransform);
+    var bottomLeft = cc._PointApplyAffineTransform(left, bottom, anAffineTransform);
+    var bottomRight = cc._PointApplyAffineTransform(right, bottom, anAffineTransform);
+
+    var minX = Math.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
+    var maxX = Math.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
+    var minY = Math.min(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y);
+    var maxY = Math.max(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y);
+
+    rect.x = minX;
+    rect.y = minY;
+    rect.width = maxX - minX;
+    rect.height = maxY - minY;
+    return rect;
+};
+
+/**
+ * @memberOf cc
+ * @function
+ * @param {cc.AffineTransform} t
+ * @param {Number} tx
+ * @param {Number}ty
+ * @return {cc.AffineTransform}
+ * Constructor
+ */
+cc.AffineTransformTranslate = function (t, tx, ty) {
+    return {
+        a: t.a,
+        b: t.b,
+        c: t.c,
+        d: t.d,
+        tx: t.tx + t.a * tx + t.c * ty,
+        ty: t.ty + t.b * tx + t.d * ty
+    };
+};
+
+/**
+ * @memberOf cc
+ * @function
+ * @param {cc.AffineTransform} t
+ * @param {Number} sx
+ * @param {Number} sy
+ * @return {cc.AffineTransform}
+ * Constructor
+ */
+cc.AffineTransformScale = function (t, sx, sy) {
+    return {a: t.a * sx, b: t.b * sx, c: t.c * sy, d: t.d * sy, tx: t.tx, ty: t.ty};
+};
+
+/**
+ * @memberOf cc
+ * @function
+ * @param {cc.AffineTransform} aTransform
+ * @param {Number} anAngle
+ * @return {cc.AffineTransform}
+ * Constructor
+ */
+cc.AffineTransformRotate = function (aTransform, anAngle) {
+    var fSin = Math.sin(anAngle);
+    var fCos = Math.cos(anAngle);
+
+    return {a: aTransform.a * fCos + aTransform.c * fSin,
+        b: aTransform.b * fCos + aTransform.d * fSin,
+        c: aTransform.c * fCos - aTransform.a * fSin,
+        d: aTransform.d * fCos - aTransform.b * fSin,
+        tx: aTransform.tx,
+        ty: aTransform.ty};
+};
+
+/**
+ * Concatenate `t2' to `t1' and return the result:<br/>
+ * t' = t1 * t2
+ * @memberOf cc
+ * @function
+ * @param {cc.AffineTransform} t1
+ * @param {cc.AffineTransform} t2
+ * @return {cc.AffineTransform}
+ * Constructor
+ */
+cc.AffineTransformConcat = function (t1, t2) {
+    return {a: t1.a * t2.a + t1.b * t2.c,                          //a
+        b: t1.a * t2.b + t1.b * t2.d,                               //b
+        c: t1.c * t2.a + t1.d * t2.c,                               //c
+        d: t1.c * t2.b + t1.d * t2.d,                               //d
+        tx: t1.tx * t2.a + t1.ty * t2.c + t2.tx,                    //tx
+        ty: t1.tx * t2.b + t1.ty * t2.d + t2.ty};                   //ty
+};
+
+/**
+ * Return true if `t1' and `t2' are equal, false otherwise.
+ * @memberOf cc
+ * @function
+ * @param {cc.AffineTransform} t1
+ * @param {cc.AffineTransform} t2
+ * @return {Boolean}
+ * Constructor
+ */
+cc.AffineTransformEqualToTransform = function (t1, t2) {
+    return ((t1.a === t2.a) && (t1.b === t2.b) && (t1.c === t2.c) && (t1.d === t2.d) && (t1.tx === t2.tx) && (t1.ty === t2.ty));
+};
+
+/**
+ * Get the invert value of an AffineTransform object
+ * @memberOf cc
+ * @function
+ * @param {cc.AffineTransform} t
+ * @return {cc.AffineTransform}
+ * Constructor
+ */
+cc.AffineTransformInvert = function (t) {
+    var determinant = 1 / (t.a * t.d - t.b * t.c);
+    return {a: determinant * t.d, b: -determinant * t.b, c: -determinant * t.c, d: determinant * t.a,
+        tx: determinant * (t.c * t.ty - t.d * t.tx), ty: determinant * (t.b * t.tx - t.a * t.ty)};
+};
+
+/** returns a "world" axis aligned bounding box of the node. <br/>
+ * @return {cc.Rect}
+ */
+cc.Node.prototype.getBoundingBoxToWorld = function () {
+    var contentSize = this.getContentSize();
+    var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
+    var matrix = this.getNodeToWorldTransform();
+    var trans = cc.AffineTransformMake(matrix[0], matrix[4], matrix[1], matrix[5], matrix[12], matrix[13]);  
+    rect = cc.RectApplyAffineTransform(rect, trans);
+
+    //query child's BoundingBox
+    if (!this.getChildren())
+        return rect;
+
+    var locChildren = this.getChildren();
+    for (var i = 0; i < locChildren.length; i++) {
+        var child = locChildren[i];
+        if (child && child.isVisible()) {
+            var childRect = child._getBoundingBoxToCurrentNode(trans);
+            if (childRect)
+                rect = cc.rectUnion(rect, childRect);
+        }
+    }
+    return rect;
+};
+
+cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
+    var contentSize = this.getContentSize();
+    var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
+    var matrix = this.getNodeToParentTransform();
+    var _trans = cc.AffineTransformMake(matrix[0], matrix[4], matrix[1], matrix[5], matrix[12], matrix[13]); 
+    var trans = (parentTransform == null) ? _trans : cc.AffineTransformConcat(_trans, parentTransform);
+    rect = cc.RectApplyAffineTransform(rect, trans);
+
+    //query child's BoundingBox
+    if (!this.getChildren())
+        return rect;
+
+    var locChildren = this.getChildren();
+    for (var i = 0; i < locChildren.length; i++) {
+        var child = locChildren[i];
+        if (child && child.isVisible()) {
+            var childRect = child._getBoundingBoxToCurrentNode(trans);
+            if (childRect)
+                rect = cc.rectUnion(rect, childRect);
+        }
+    }
+    return rect;
 };

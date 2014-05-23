@@ -10,7 +10,7 @@ cc.Scale9Sprite = {
 
 /**
  * @method resizableSpriteWithCapInsets
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  * @return {cc.Scale9Sprite}
  */
 resizableSpriteWithCapInsets : function (
@@ -33,7 +33,7 @@ float
 /**
  * @method initWithSpriteFrameName
 * @param {String|String} str
-* @param {RectObject} rect
+* @param {rect_object} rect
 * @return {bool|bool}
 */
 initWithSpriteFrameName : function(
@@ -66,7 +66,7 @@ init : function (
 
 /**
  * @method setPreferredSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setPreferredSize : function (
 size 
@@ -87,9 +87,9 @@ spriteframe
 /**
  * @method initWithBatchNode
 * @param {cc.SpriteBatchNode|cc.SpriteBatchNode} spritebatchnode
-* @param {RectObject|RectObject} rect
-* @param {RectObject|bool} rect
-* @param {RectObject} rect
+* @param {rect_object|rect_object} rect
+* @param {rect_object|bool} rect
+* @param {rect_object} rect
 * @return {bool|bool}
 */
 initWithBatchNode : function(
@@ -114,7 +114,7 @@ getInsetBottom : function (
 
 /**
  * @method getCapInsets
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsets : function (
 )
@@ -125,9 +125,9 @@ getCapInsets : function (
 /**
  * @method updateWithBatchNode
  * @param {cc.SpriteBatchNode} arg0
- * @param {RectObject} arg1
+ * @param {rect_object} arg1
  * @param {bool} arg2
- * @param {RectObject} arg3
+ * @param {rect_object} arg3
  * @return {bool}
  */
 updateWithBatchNode : function (
@@ -152,7 +152,7 @@ getInsetRight : function (
 
 /**
  * @method getOriginalSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getOriginalSize : function (
 )
@@ -162,9 +162,9 @@ getOriginalSize : function (
 
 /**
  * @method initWithFile
-* @param {String|String|RectObject|String} str
-* @param {RectObject|RectObject|String} rect
-* @param {RectObject} rect
+* @param {String|String|rect_object|String} str
+* @param {rect_object|rect_object|String} rect
+* @param {rect_object} rect
 * @return {bool|bool|bool|bool}
 */
 initWithFile : function(
@@ -199,7 +199,7 @@ float
 /**
  * @method initWithSpriteFrame
 * @param {cc.SpriteFrame|cc.SpriteFrame} spriteframe
-* @param {RectObject} rect
+* @param {rect_object} rect
 * @return {bool|bool}
 */
 initWithSpriteFrame : function(
@@ -212,7 +212,7 @@ rect
 
 /**
  * @method getPreferredSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getPreferredSize : function (
 )
@@ -222,7 +222,7 @@ getPreferredSize : function (
 
 /**
  * @method setCapInsets
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsets : function (
 rect 
@@ -252,9 +252,9 @@ float
 
 /**
  * @method create
-* @param {String|RectObject|String|String} str
-* @param {RectObject|String|RectObject} rect
-* @param {RectObject} rect
+* @param {String|rect_object|String|String} str
+* @param {rect_object|String|rect_object} rect
+* @param {rect_object} rect
 * @return {cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite}
 */
 create : function(
@@ -269,7 +269,7 @@ rect
 /**
  * @method createWithSpriteFrameName
 * @param {String|String} str
-* @param {RectObject} rect
+* @param {rect_object} rect
 * @return {cc.Scale9Sprite|cc.Scale9Sprite}
 */
 createWithSpriteFrameName : function(
@@ -283,7 +283,7 @@ rect
 /**
  * @method createWithSpriteFrame
 * @param {cc.SpriteFrame|cc.SpriteFrame} spriteframe
-* @param {RectObject} rect
+* @param {rect_object} rect
 * @return {cc.Scale9Sprite|cc.Scale9Sprite}
 */
 createWithSpriteFrame : function(
@@ -413,13 +413,13 @@ bool
 /**
  * @method getTouchLocation
  * @param {cc.Touch} arg0
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 getTouchLocation : function (
 touch 
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
@@ -534,22 +534,22 @@ state
 
 /**
  * @method setLabelAnchorPoint
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  */
 setLabelAnchorPoint : function (
-point 
+vec2 
 )
 {
 },
 
 /**
  * @method getLabelAnchorPoint
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 getLabelAnchorPoint : function (
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
@@ -612,7 +612,7 @@ node
 
 /**
  * @method setPreferredSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setPreferredSize : function (
 size 
@@ -622,7 +622,7 @@ size
 
 /**
  * @method getCurrentTitleColor
- * @return {Color3BObject}
+ * @return {color3b_object}
  */
 getCurrentTitleColor : function (
 )
@@ -741,7 +741,7 @@ getBackgroundSprite : function (
 /**
  * @method getTitleColorForState
  * @param {cc.Control::State} arg0
- * @return {Color3BObject}
+ * @return {color3b_object}
  */
 getTitleColorForState : function (
 state 
@@ -752,7 +752,7 @@ state
 
 /**
  * @method setTitleColorForState
- * @param {Color3BObject} arg0
+ * @param {color3b_object} arg0
  * @param {cc.Control::State} arg1
  */
 setTitleColorForState : function (
@@ -832,7 +832,7 @@ getTitleLabel : function (
 
 /**
  * @method getPreferredSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getPreferredSize : function (
 )
@@ -965,12 +965,12 @@ bool
 /**
  * @method initWithTargetAndPos
  * @param {cc.Node} arg0
- * @param {PointObject} arg1
+ * @param {cc.Vec2} arg1
  * @return {bool}
  */
 initWithTargetAndPos : function (
 node, 
-point 
+vec2 
 )
 {
     return false;
@@ -988,12 +988,12 @@ float
 
 /**
  * @method getStartPos
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 getStartPos : function (
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
@@ -1069,12 +1069,12 @@ sprite
 /**
  * @method create
  * @param {cc.Node} arg0
- * @param {PointObject} arg1
+ * @param {cc.Vec2} arg1
  * @return {cc.ControlHuePicker}
  */
 create : function (
 node, 
-point 
+vec2 
 )
 {
     return cc.ControlHuePicker;
@@ -1109,12 +1109,12 @@ getShadow : function (
 /**
  * @method initWithTargetAndPos
  * @param {cc.Node} arg0
- * @param {PointObject} arg1
+ * @param {cc.Vec2} arg1
  * @return {bool}
  */
 initWithTargetAndPos : function (
 node, 
-point 
+vec2 
 )
 {
     return false;
@@ -1122,12 +1122,12 @@ point
 
 /**
  * @method getStartPos
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 getStartPos : function (
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
@@ -1193,12 +1193,12 @@ getBrightness : function (
 /**
  * @method create
  * @param {cc.Node} arg0
- * @param {PointObject} arg1
+ * @param {cc.Vec2} arg1
  * @return {cc.ControlSaturationBrightnessPicker}
  */
 create : function (
 node, 
-point 
+vec2 
 )
 {
     return cc.ControlSaturationBrightnessPicker;
@@ -1242,7 +1242,7 @@ getHuePicker : function (
 
 /**
  * @method setColor
- * @param {Color3BObject} arg0
+ * @param {color3b_object} arg0
  */
 setColor : function (
 color3b 
@@ -1352,10 +1352,10 @@ cc.ControlPotentiometer = {
 
 /**
  * @method setPreviousLocation
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  */
 setPreviousLocation : function (
-point 
+vec2 
 )
 {
 },
@@ -1392,17 +1392,17 @@ getMaximumValue : function (
 
 /**
  * @method angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint
- * @param {PointObject} arg0
- * @param {PointObject} arg1
- * @param {PointObject} arg2
- * @param {PointObject} arg3
+ * @param {cc.Vec2} arg0
+ * @param {cc.Vec2} arg1
+ * @param {cc.Vec2} arg2
+ * @param {cc.Vec2} arg3
  * @return {float}
  */
 angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint : function (
-point, 
-point, 
-point, 
-point 
+vec2, 
+vec2, 
+vec2, 
+vec2 
 )
 {
     return 0;
@@ -1410,10 +1410,10 @@ point
 
 /**
  * @method potentiometerBegan
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  */
 potentiometerBegan : function (
-point 
+vec2 
 )
 {
 },
@@ -1460,23 +1460,23 @@ getValue : function (
 
 /**
  * @method getPreviousLocation
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 getPreviousLocation : function (
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
  * @method distanceBetweenPointAndPoint
- * @param {PointObject} arg0
- * @param {PointObject} arg1
+ * @param {cc.Vec2} arg0
+ * @param {cc.Vec2} arg1
  * @return {float}
  */
 distanceBetweenPointAndPoint : function (
-point, 
-point 
+vec2, 
+vec2 
 )
 {
     return 0;
@@ -1484,10 +1484,10 @@ point
 
 /**
  * @method potentiometerEnded
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  */
 potentiometerEnded : function (
-point 
+vec2 
 )
 {
 },
@@ -1540,10 +1540,10 @@ sprite
 
 /**
  * @method potentiometerMoved
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  */
 potentiometerMoved : function (
-point 
+vec2 
 )
 {
 },
@@ -1593,13 +1593,13 @@ getSelectedThumbSprite : function (
 /**
  * @method locationFromTouch
  * @param {cc.Touch} arg0
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 locationFromTouch : function (
 touch 
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
@@ -1906,10 +1906,10 @@ getMinusSprite : function (
 
 /**
  * @method updateLayoutUsingTouchLocation
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  */
 updateLayoutUsingTouchLocation : function (
-point 
+vec2 
 )
 {
 },
@@ -2163,13 +2163,13 @@ hasMoved : function (
 /**
  * @method locationFromTouch
  * @param {cc.Touch} arg0
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 locationFromTouch : function (
 touch 
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
@@ -2232,11 +2232,11 @@ node
 
 /**
  * @method setContentOffsetInDuration
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  * @param {float} arg1
  */
 setContentOffsetInDuration : function (
-point, 
+vec2, 
 float 
 )
 {
@@ -2316,7 +2316,7 @@ updateInset : function (
 
 /**
  * @method initWithViewSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  * @param {cc.Node} arg1
  * @return {bool}
  */
@@ -2360,11 +2360,11 @@ init : function (
 
 /**
  * @method setContentOffset
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  * @param {bool} arg1
  */
 setContentOffset : function (
-point, 
+vec2, 
 bool 
 )
 {
@@ -2412,12 +2412,12 @@ bool
 
 /**
  * @method getContentOffset
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 getContentOffset : function (
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
@@ -2442,7 +2442,7 @@ bool
 
 /**
  * @method setViewSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setViewSize : function (
 size 
@@ -2452,7 +2452,7 @@ size
 
 /**
  * @method getViewSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getViewSize : function (
 )
@@ -2462,12 +2462,12 @@ getViewSize : function (
 
 /**
  * @method maxContainerOffset
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 maxContainerOffset : function (
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
@@ -2494,12 +2494,12 @@ node
 
 /**
  * @method minContainerOffset
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 minContainerOffset : function (
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
@@ -2516,7 +2516,7 @@ bool
 
 /**
  * @method create
-* @param {SizeObject} size
+* @param {size_object} size
 * @param {cc.Node} node
 * @return {cc.ScrollView|cc.ScrollView}
 */
@@ -2658,7 +2658,7 @@ long
 
 /**
  * @method initWithViewSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  * @param {cc.Node} arg1
  * @return {bool}
  */
@@ -2798,7 +2798,7 @@ inputmode
 
 /**
  * @method setPlaceholderFontColor
- * @param {Color3BObject} arg0
+ * @param {color3b_object} arg0
  */
 setPlaceholderFontColor : function (
 color3b 
@@ -2808,7 +2808,7 @@ color3b
 
 /**
  * @method setFontColor
- * @param {Color3BObject} arg0
+ * @param {color3b_object} arg0
  */
 setFontColor : function (
 color3b 
@@ -2840,7 +2840,7 @@ int
 
 /**
  * @method initWithSizeAndBackgroundSprite
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  * @param {cc.Scale9Sprite} arg1
  * @return {bool}
  */
@@ -2926,7 +2926,7 @@ int
 
 /**
  * @method create
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  * @param {cc.Scale9Sprite} arg1
  * @param {cc.Scale9Sprite} arg2
  * @param {cc.Scale9Sprite} arg3
@@ -2954,96 +2954,138 @@ EditBox : function (
 };
 
 /**
- * @class AssetsManager
+ * @class EventAssetsManager
  */
-cc.AssetsManager = {
+cc.EventAssetsManager = {
 
 /**
- * @method setStoragePath
- * @param {char} arg0
+ * @method getAssetsManager
+ * @return {cc.AssetsManager}
  */
-setStoragePath : function (
-char 
+getAssetsManager : function (
+)
+{
+    return cc.AssetsManager;
+},
+
+/**
+ * @method getAssetId
+ * @return {String}
+ */
+getAssetId : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getMessage
+ * @return {String}
+ */
+getMessage : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getEventCode
+ * @return {cc.EventAssetsManager::EventCode}
+ */
+getEventCode : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPercent
+ * @return {float}
+ */
+getPercent : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method EventAssetsManager
+ * @constructor
+ * @param {String} arg0
+ * @param {cc.AssetsManager} arg1
+ * @param {cc.EventAssetsManager::EventCode} arg2
+ * @param {float} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ */
+EventAssetsManager : function (
+str, 
+assetsmanager, 
+eventcode, 
+float, 
+str, 
+str 
 )
 {
 },
 
+};
+
 /**
- * @method setPackageUrl
- * @param {char} arg0
+ * @class Manifest
  */
-setPackageUrl : function (
-char 
+cc.Manifest = {
+
+/**
+ * @method getAsset
+ * @param {String} arg0
+ * @return {cc.Manifest::Asset}
+ */
+getAsset : function (
+str 
 )
 {
+    return cc.Manifest::Asset;
 },
 
 /**
- * @method checkUpdate
+ * @method getManifestFileUrl
+ * @return {String}
+ */
+getManifestFileUrl : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method isVersionLoaded
  * @return {bool}
  */
-checkUpdate : function (
+isVersionLoaded : function (
 )
 {
     return false;
 },
 
 /**
- * @method getStoragePath
- * @return {char}
+ * @method isLoaded
+ * @return {bool}
  */
-getStoragePath : function (
+isLoaded : function (
 )
 {
-    return 0;
-},
-
-/**
- * @method update
- */
-update : function (
-)
-{
-},
-
-/**
- * @method setConnectionTimeout
- * @param {unsigned int} arg0
- */
-setConnectionTimeout : function (
-int 
-)
-{
-},
-
-/**
- * @method setVersionFileUrl
- * @param {char} arg0
- */
-setVersionFileUrl : function (
-char 
-)
-{
+    return false;
 },
 
 /**
  * @method getPackageUrl
- * @return {char}
+ * @return {String}
  */
 getPackageUrl : function (
 )
 {
-    return 0;
-},
-
-/**
- * @method getConnectionTimeout
- * @return {unsigned int}
- */
-getConnectionTimeout : function (
-)
-{
-    return 0;
+    return ;
 },
 
 /**
@@ -3058,42 +3100,146 @@ getVersion : function (
 
 /**
  * @method getVersionFileUrl
- * @return {char}
+ * @return {String}
  */
 getVersionFileUrl : function (
+)
+{
+    return ;
+},
+
+};
+
+/**
+ * @class AssetsManager
+ */
+cc.AssetsManager = {
+
+/**
+ * @method getState
+ * @return {cc.AssetsManager::State}
+ */
+getState : function (
 )
 {
     return 0;
 },
 
 /**
- * @method deleteVersion
+ * @method checkUpdate
  */
-deleteVersion : function (
+checkUpdate : function (
 )
 {
 },
 
 /**
+ * @method getStoragePath
+ * @return {String}
+ */
+getStoragePath : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method update
+ */
+update : function (
+)
+{
+},
+
+/**
+ * @method getLocalManifest
+ * @return {cc.Manifest}
+ */
+getLocalManifest : function (
+)
+{
+    return cc.Manifest;
+},
+
+/**
+ * @method getRemoteManifest
+ * @return {cc.Manifest}
+ */
+getRemoteManifest : function (
+)
+{
+    return cc.Manifest;
+},
+
+/**
  * @method create
- * @param {char} arg0
- * @param {char} arg1
- * @param {char} arg2
- * @param {function} arg3
- * @param {function} arg4
- * @param {function} arg5
+ * @param {String} arg0
+ * @param {String} arg1
  * @return {cc.AssetsManager}
  */
 create : function (
-char, 
-char, 
-char, 
-func, 
-func, 
-func 
+str, 
+str 
 )
 {
     return cc.AssetsManager;
+},
+
+/**
+ * @method AssetsManager
+ * @constructor
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+AssetsManager : function (
+str, 
+str 
+)
+{
+},
+
+};
+
+/**
+ * @class EventListenerAssetsManager
+ */
+cc.EventListenerAssetsManager = {
+
+/**
+ * @method init
+ * @param {cc.AssetsManager} arg0
+ * @param {function} arg1
+ * @return {bool}
+ */
+init : function (
+assetsmanager, 
+func 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {cc.AssetsManager} arg0
+ * @param {function} arg1
+ * @return {cc.EventListenerAssetsManager}
+ */
+create : function (
+assetsmanager, 
+func 
+)
+{
+    return cc.EventListenerAssetsManager;
+},
+
+/**
+ * @method EventListenerAssetsManager
+ * @constructor
+ */
+EventListenerAssetsManager : function (
+)
+{
 },
 
 };

@@ -1,24 +1,29 @@
 #include "AppDelegate.h"
 
-#include "cocosbuilder/js_bindings_ccbreader.h"
 #include "SimpleAudioEngine.h"
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_cocos2dx_ui_auto.hpp"
 #include "jsb_cocos2dx_studio_auto.hpp"
-#include "jsb_cocos2dx_extension_auto.hpp"
 #include "jsb_cocos2dx_builder_auto.hpp"
+#include "jsb_cocos2dx_spine_auto.hpp"
+#include "jsb_cocos2dx_extension_auto.hpp"
 #include "ui/jsb_cocos2dx_ui_manual.h"
-#include "extension/jsb_cocos2dx_extension_manual.h"
 #include "cocostudio/jsb_cocos2dx_studio_manual.h"
+#include "cocosbuilder/js_bindings_ccbreader.h"
+#include "spine/jsb_cocos2dx_spine_manual.h"
+#include "extension/jsb_cocos2dx_extension_manual.h"
 #include "localstorage/js_bindings_system_registration.h"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
 #include "network/XMLHTTPRequest.h"
-#include "Runtime.h"
+#include "network/jsb_websocket.h"
+#include "network/jsb_socketio.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCJavascriptJavaBridge.h"
 #endif
 
+#include "Runtime.h"
+#include "ConfigParser.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -34,12 +39,29 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+    
+#if (COCOS2D_DEBUG>0)
+    initRuntime();
+#endif
+    
+    if (!ConfigParser::getInstance()->isInit()) {
+            ConfigParser::getInstance()->readConfig();
+        }
+
     // initialize director
     auto director = Director::getInstance();
-    auto glview = director->getOpenGLView();
+    auto glview = director->getOpenGLView();    
     if(!glview) {
-        glview = GLView::createWithRect("HelloJavascript", Rect(0,0,900,640));
+        Size viewSize = ConfigParser::getInstance()->getInitViewSize();
+        string title = ConfigParser::getInstance()->getInitViewName();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        extern void createSimulator(const char* viewName, float width, float height,bool isLandscape = true, float frameZoomFactor = 1.0f);
+        bool isLanscape = ConfigParser::getInstance()->isLanscape();
+        createSimulator(title.c_str(),viewSize.width,viewSize.height,isLanscape);
+#else
+        glview = GLView::createWithRect(title.c_str(), Rect(0,0,viewSize.width,viewSize.height));
         director->setOpenGLView(glview);
+#endif
     }
 
     // turn on display FPS
@@ -52,21 +74,30 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
+    sc->addRegisterCallback(jsb_register_chipmunk);
+    sc->addRegisterCallback(jsb_register_system);
+    sc->addRegisterCallback(JSB_register_opengl);
+    
     sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
+    
     sc->addRegisterCallback(register_all_cocos2dx_ui);
     sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
     sc->addRegisterCallback(register_all_cocos2dx_studio);
     sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
-    sc->addRegisterCallback(jsb_register_system);
-    sc->addRegisterCallback(JSB_register_opengl);
-    sc->addRegisterCallback(jsb_register_chipmunk);
+    
+    sc->addRegisterCallback(register_all_cocos2dx_spine);
+    sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
+    
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
+    sc->addRegisterCallback(register_jsb_websocket);
+	sc->addRegisterCallback(register_jsb_socketio);
+    
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
     #endif
     
-#ifdef COCOS2D_DEBUG
+#if (COCOS2D_DEBUG>0)
     if (startRuntime())
         return true;
 #endif
@@ -74,7 +105,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore::getInstance()->start();
     auto engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    ScriptingCore::getInstance()->runScript("main.js");
+    ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
     
     return true;
 }

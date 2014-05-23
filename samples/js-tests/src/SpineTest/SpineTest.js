@@ -46,23 +46,49 @@ SpineTestScene = TestScene.extend({
 touchcount = 0;
 
 SpineTest = BaseTestLayer.extend({
+    _spineboy:null,
+    _debugMode: 0,
     ctor:function () {
         this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
-        size = director.getWinSize();
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesBegan: function(touches, event){
+                var target = event.getCurrentTarget();
+                target._debugMode ++;
+                target._debugMode = target._debugMode % 3;
+                if (target._debugMode == 0) {
+                    target._spineboy.setDebugBones(false);
+                    target._spineboy.setDebugSolots(false);
+                    return;
+                }
+
+                if (target._debugMode == 1) {
+                    target._spineboy.setDebugBones(true);
+                    target._spineboy.setDebugSolots(false);
+                    return;
+                }
+
+                if (target._debugMode == 2) {
+                    target._spineboy.setDebugBones(false);
+                    target._spineboy.setDebugSolots(true);
+                }
+            }
+        }, this);
+        var size = director.getWinSize();
 
         /////////////////////////////
         // Make Spine's Animated skeleton Node
         // You need 'json + atlas + image' resource files to make it.
         // No JS binding for spine-c in this version. So, only file loading is supported.
-        spineboy = sp.SkeletonAnimation.createWithFile('res/skeletons/spineboy.json', 'res/skeletons/spineboy.atlas');
-        spineboy.x = size.width / 2;
-	    spineboy.y = size.height / 2 - 150;
-        spineboy.setAnimation(0, 'walk', true);
-        spineboy.setMix('walk', 'jump', 0.2);
-        spineboy.setMix('jump', 'walk', 0.4);
-        spineboy.setAnimationListener(this, this.animationStateEvent);
-        this.addChild(spineboy, 4);
+        var spineBoy = sp.SkeletonAnimation.create('res/skeletons/spineboy.json', 'res/skeletons/spineboy.atlas');
+        spineBoy.setPosition(cc.p(size.width / 2, size.height / 2 - 150));
+        spineBoy.setAnimation(0, 'walk', true);
+        spineBoy.setMix('walk', 'jump', 0.2);
+        spineBoy.setMix('jump', 'walk', 0.4);
+        spineBoy.setAnimationListener(this, this.animationStateEvent);
+        this.addChild(spineBoy, 4);
+        this._spineboy = spineBoy;
     },
     onBackCallback:function (sender) {
     },
@@ -70,7 +96,7 @@ SpineTest = BaseTestLayer.extend({
     },
     onNextCallback:function (sender) {
         touchcount++;
-        spineboy.setAnimation(0, ['walk', 'jump'][touchcount % 2], true);
+        this._spineboy.setAnimation(0, ['walk', 'jump'][touchcount % 2], true);
     },
     subtitle:function () {
         return "Spine test";
@@ -80,7 +106,7 @@ SpineTest = BaseTestLayer.extend({
     },
 
     animationStateEvent: function(obj, trackIndex, type, event, loopCount) {
-        var entry = spineboy.getCurrent();
+        var entry = this._spineboy.getCurrent();
         var animationName = (entry && entry.animation) ? entry.animation.name : 0;
 
         switch(type)

@@ -20,7 +20,7 @@ clone : function (
 
 /**
  * @method getLayoutType
- * @return {ccui.LayoutParameterType}
+ * @return {ccui.LayoutParameter::Type}
  */
 getLayoutType : function (
 )
@@ -76,7 +76,7 @@ ccui.LinearLayoutParameter = {
 
 /**
  * @method setGravity
- * @param {ccui.LinearGravity} arg0
+ * @param {ccui.LinearLayoutParameter::LinearGravity} arg0
  */
 setGravity : function (
 lineargravity 
@@ -86,7 +86,7 @@ lineargravity
 
 /**
  * @method getGravity
- * @return {ccui.LinearGravity}
+ * @return {ccui.LinearLayoutParameter::LinearGravity}
  */
 getGravity : function (
 )
@@ -122,7 +122,7 @@ ccui.RelativeLayoutParameter = {
 
 /**
  * @method setAlign
- * @param {ccui.RelativeAlign} arg0
+ * @param {ccui.RelativeLayoutParameter::RelativeAlign} arg0
  */
 setAlign : function (
 relativealign 
@@ -132,47 +132,47 @@ relativealign
 
 /**
  * @method setRelativeToWidgetName
- * @param {char} arg0
+ * @param {String} arg0
  */
 setRelativeToWidgetName : function (
-char 
+str 
 )
 {
 },
 
 /**
  * @method getRelativeName
- * @return {char}
+ * @return {String}
  */
 getRelativeName : function (
 )
 {
-    return 0;
+    return ;
 },
 
 /**
  * @method getRelativeToWidgetName
- * @return {char}
+ * @return {String}
  */
 getRelativeToWidgetName : function (
 )
 {
-    return 0;
+    return ;
 },
 
 /**
  * @method setRelativeName
- * @param {char} arg0
+ * @param {String} arg0
  */
 setRelativeName : function (
-char 
+str 
 )
 {
 },
 
 /**
  * @method getAlign
- * @return {ccui.RelativeAlign}
+ * @return {ccui.RelativeLayoutParameter::RelativeAlign}
  */
 getAlign : function (
 )
@@ -208,17 +208,17 @@ ccui.Widget = {
 
 /**
  * @method setSizePercent
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  */
 setSizePercent : function (
-point 
+vec2 
 )
 {
 },
 
 /**
  * @method getCustomSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getCustomSize : function (
 )
@@ -247,6 +247,16 @@ bool
 },
 
 /**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
  * @method getLeftInParent
  * @return {float}
  */
@@ -258,27 +268,27 @@ getLeftInParent : function (
 
 /**
  * @method getTouchEndPos
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 getTouchEndPos : function (
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
  * @method setPositionPercent
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  */
 setPositionPercent : function (
-point 
+vec2 
 )
 {
 },
 
 /**
  * @method getLayoutSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getLayoutSize : function (
 )
@@ -287,8 +297,18 @@ getLayoutSize : function (
 },
 
 /**
+ * @method setHighlighted
+ * @param {bool} arg0
+ */
+setHighlighted : function (
+bool 
+)
+{
+},
+
+/**
  * @method setPositionType
- * @param {ccui.PositionType} arg0
+ * @param {ccui.Widget::PositionType} arg0
  */
 setPositionType : function (
 positiontype 
@@ -298,12 +318,12 @@ positiontype
 
 /**
  * @method getName
- * @return {char}
+ * @return {String}
  */
 getName : function (
 )
 {
-    return 0;
+    return ;
 },
 
 /**
@@ -327,12 +347,22 @@ getBottomInParent : function (
 },
 
 /**
+ * @method isHighlighted
+ * @return {bool}
+ */
+isHighlighted : function (
+)
+{
+    return false;
+},
+
+/**
  * @method getLayoutParameter
- * @param {ccui.LayoutParameterType} arg0
+ * @param {ccui.LayoutParameter::Type} arg0
  * @return {ccui.LayoutParameter}
  */
 getLayoutParameter : function (
-layoutparametertype 
+type 
 )
 {
     return ccui.LayoutParameter;
@@ -340,7 +370,7 @@ layoutparametertype
 
 /**
  * @method getPositionType
- * @return {ccui.PositionType}
+ * @return {ccui.Widget::PositionType}
  */
 getPositionType : function (
 )
@@ -349,22 +379,12 @@ getPositionType : function (
 },
 
 /**
- * @method getWidgetType
- * @return {ccui.WidgetType}
- */
-getWidgetType : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getChildByName
- * @param {char} arg0
+ * @param {String} arg0
  * @return {ccui.Widget}
  */
 getChildByName : function (
-char 
+str 
 )
 {
     return ccui.Widget;
@@ -392,12 +412,26 @@ isFocused : function (
 
 /**
  * @method getVirtualRendererSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getVirtualRendererSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method findNextFocusedWidget
+ * @param {ccui.Widget::FocusDirection} arg0
+ * @param {ccui.Widget} arg1
+ * @return {ccui.Widget}
+ */
+findNextFocusedWidget : function (
+focusdirection, 
+widget 
+)
+{
+    return ccui.Widget;
 },
 
 /**
@@ -422,20 +456,12 @@ getActionTag : function (
 
 /**
  * @method getWorldPosition
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 getWorldPosition : function (
 )
 {
-    return cc.Point;
-},
-
-/**
- * @method didNotSelectSelf
- */
-didNotSelectSelf : function (
-)
-{
+    return cc.Vec2;
 },
 
 /**
@@ -470,12 +496,12 @@ clone : function (
 
 /**
  * @method getTouchMovePos
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 getTouchMovePos : function (
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
@@ -499,8 +525,20 @@ getVirtualRenderer : function (
 },
 
 /**
+ * @method dispatchFocusEvent
+ * @param {ccui.Widget} arg0
+ * @param {ccui.Widget} arg1
+ */
+dispatchFocusEvent : function (
+widget, 
+widget 
+)
+{
+},
+
+/**
  * @method setBrightStyle
- * @param {ccui.BrightStyle} arg0
+ * @param {ccui.Widget::BrightStyle} arg0
  */
 setBrightStyle : function (
 brightstyle 
@@ -510,10 +548,10 @@ brightstyle
 
 /**
  * @method setName
- * @param {char} arg0
+ * @param {String} arg0
  */
 setName : function (
-char 
+str 
 )
 {
 },
@@ -530,22 +568,32 @@ layoutparameter
 
 /**
  * @method getSizePercent
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 getSizePercent : function (
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
  * @method getTouchStartPos
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 getTouchStartPos : function (
 )
 {
-    return cc.Point;
+    return cc.Vec2;
+},
+
+/**
+ * @method setFocusEnabled
+ * @param {bool} arg0
+ */
+setFocusEnabled : function (
+bool 
+)
+{
 },
 
 /**
@@ -570,14 +618,26 @@ isBright : function (
 
 /**
  * @method clippingParentAreaContainPoint
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  * @return {bool}
  */
 clippingParentAreaContainPoint : function (
-point 
+vec2 
 )
 {
     return false;
+},
+
+/**
+ * @method getCurrentFocusedWidget
+ * @param {bool} arg0
+ * @return {ccui.Widget}
+ */
+getCurrentFocusedWidget : function (
+bool 
+)
+{
+    return ccui.Widget;
 },
 
 /**
@@ -591,8 +651,16 @@ getTopInParent : function (
 },
 
 /**
+ * @method requestFocus
+ */
+requestFocus : function (
+)
+{
+},
+
+/**
  * @method updateSizeAndPosition
-* @param {SizeObject} size
+* @param {size_object} size
 */
 updateSizeAndPosition : function(
 size 
@@ -602,12 +670,24 @@ size
 
 /**
  * @method getSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method onFocusChange
+ * @param {ccui.Widget} arg0
+ * @param {ccui.Widget} arg1
+ */
+onFocusChange : function (
+widget, 
+widget 
+)
+{
 },
 
 /**
@@ -622,7 +702,7 @@ getRightInParent : function (
 
 /**
  * @method getSizeType
- * @return {ccui.SizeType}
+ * @return {ccui.Widget::SizeType}
  */
 getSizeType : function (
 )
@@ -642,21 +722,21 @@ bool
 
 /**
  * @method getPositionPercent
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 getPositionPercent : function (
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
  * @method hitTest
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  * @return {bool}
  */
 hitTest : function (
-point 
+vec2 
 )
 {
     return false;
@@ -684,7 +764,7 @@ isFlippedY : function (
 
 /**
  * @method setSizeType
- * @param {ccui.SizeType} arg0
+ * @param {ccui.Widget::SizeType} arg0
  */
 setSizeType : function (
 sizetype 
@@ -696,19 +776,19 @@ sizetype
  * @method checkChildInfo
  * @param {int} arg0
  * @param {ccui.Widget} arg1
- * @param {PointObject} arg2
+ * @param {cc.Vec2} arg2
  */
 checkChildInfo : function (
 int, 
 widget, 
-point 
+vec2 
 )
 {
 },
 
 /**
  * @method setSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setSize : function (
 size 
@@ -724,6 +804,16 @@ setBright : function (
 bool 
 )
 {
+},
+
+/**
+ * @method isFocusEnabled
+ * @return {bool}
+ */
+isFocusEnabled : function (
+)
+{
+    return false;
 },
 
 /**
@@ -754,37 +844,47 @@ ccui.Layout = {
 
 /**
  * @method setBackGroundColorVector
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  */
 setBackGroundColorVector : function (
-point 
+vec2 
 )
 {
 },
 
 /**
  * @method setClippingType
- * @param {ccui.LayoutClippingType} arg0
+ * @param {ccui.Layout::ClippingType} arg0
  */
 setClippingType : function (
-layoutclippingtype 
+clippingtype 
 )
 {
 },
 
 /**
  * @method setBackGroundColorType
- * @param {ccui.LayoutBackGroundColorType} arg0
+ * @param {ccui.Layout::BackGroundColorType} arg0
  */
 setBackGroundColorType : function (
-layoutbackgroundcolortype 
+backgroundcolortype 
+)
+{
+},
+
+/**
+ * @method setLoopFocus
+ * @param {bool} arg0
+ */
+setLoopFocus : function (
+bool 
 )
 {
 },
 
 /**
  * @method setBackGroundImageColor
- * @param {Color3BObject} arg0
+ * @param {color3b_object} arg0
  */
 setBackGroundImageColor : function (
 color3b 
@@ -794,22 +894,32 @@ color3b
 
 /**
  * @method getBackGroundColorVector
- * @return {PointObject}
+ * @return {cc.Vec2}
  */
 getBackGroundColorVector : function (
 )
 {
-    return cc.Point;
+    return cc.Vec2;
 },
 
 /**
  * @method getClippingType
- * @return {ccui.LayoutClippingType}
+ * @return {ccui.Layout::ClippingType}
  */
 getClippingType : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method isLoopFocus
+ * @return {bool}
+ */
+isLoopFocus : function (
+)
+{
+    return false;
 },
 
 /**
@@ -853,7 +963,7 @@ char
 /**
  * @method setBackGroundImage
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 setBackGroundImage : function (
 str, 
@@ -864,8 +974,8 @@ texturerestype
 
 /**
  * @method setBackGroundColor
-* @param {Color3BObject|Color3BObject} color3b
-* @param {Color3BObject} color3b
+* @param {color3b_object|color3b_object} color3b
+* @param {color3b_object} color3b
 */
 setBackGroundColor : function(
 color3b,
@@ -884,7 +994,7 @@ requestDoLayout : function (
 
 /**
  * @method getBackGroundImageCapInsets
- * @return {RectObject}
+ * @return {rect_object}
  */
 getBackGroundImageCapInsets : function (
 )
@@ -894,7 +1004,7 @@ getBackGroundImageCapInsets : function (
 
 /**
  * @method getBackGroundColor
- * @return {Color3BObject}
+ * @return {color3b_object}
  */
 getBackGroundColor : function (
 )
@@ -914,7 +1024,7 @@ bool
 
 /**
  * @method getBackGroundImageColor
- * @return {Color3BObject}
+ * @return {color3b_object}
  */
 getBackGroundImageColor : function (
 )
@@ -934,7 +1044,7 @@ isBackGroundImageScale9Enabled : function (
 
 /**
  * @method getBackGroundColorType
- * @return {ccui.LayoutBackGroundColorType}
+ * @return {ccui.Layout::BackGroundColorType}
  */
 getBackGroundColorType : function (
 )
@@ -944,7 +1054,7 @@ getBackGroundColorType : function (
 
 /**
  * @method getBackGroundEndColor
- * @return {Color3BObject}
+ * @return {color3b_object}
  */
 getBackGroundEndColor : function (
 )
@@ -973,8 +1083,18 @@ getBackGroundImageOpacity : function (
 },
 
 /**
+ * @method isPassFocusToChild
+ * @return {bool}
+ */
+isPassFocusToChild : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setBackGroundImageCapInsets
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setBackGroundImageCapInsets : function (
 rect 
@@ -984,7 +1104,7 @@ rect
 
 /**
  * @method getBackGroundImageTextureSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getBackGroundImageTextureSize : function (
 )
@@ -994,7 +1114,7 @@ getBackGroundImageTextureSize : function (
 
 /**
  * @method getLayoutType
- * @return {ccui.LayoutType}
+ * @return {ccui.Layout::Type}
  */
 getLayoutType : function (
 )
@@ -1003,8 +1123,18 @@ getLayoutType : function (
 },
 
 /**
+ * @method setPassFocusToChild
+ * @param {bool} arg0
+ */
+setPassFocusToChild : function (
+bool 
+)
+{
+},
+
+/**
  * @method getBackGroundStartColor
- * @return {Color3BObject}
+ * @return {color3b_object}
  */
 getBackGroundStartColor : function (
 )
@@ -1024,10 +1154,10 @@ bool
 
 /**
  * @method setLayoutType
- * @param {ccui.LayoutType} arg0
+ * @param {ccui.Layout::Type} arg0
  */
 setLayoutType : function (
-layouttype 
+type 
 )
 {
 },
@@ -1100,7 +1230,7 @@ bool
 
 /**
  * @method getCapInsetsDisabledRenderer
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsetsDisabledRenderer : function (
 )
@@ -1110,7 +1240,7 @@ getCapInsetsDisabledRenderer : function (
 
 /**
  * @method setTitleColor
- * @param {Color3BObject} arg0
+ * @param {color3b_object} arg0
  */
 setTitleColor : function (
 color3b 
@@ -1120,7 +1250,7 @@ color3b
 
 /**
  * @method setCapInsetsDisabledRenderer
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsetsDisabledRenderer : function (
 rect 
@@ -1130,7 +1260,7 @@ rect
 
 /**
  * @method setCapInsets
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsets : function (
 rect 
@@ -1141,7 +1271,7 @@ rect
 /**
  * @method loadTextureDisabled
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadTextureDisabled : function (
 str, 
@@ -1155,7 +1285,7 @@ texturerestype
  * @param {String} arg0
  * @param {String} arg1
  * @param {String} arg2
- * @param {ccui.TextureResType} arg3
+ * @param {ccui.Widget::TextureResType} arg3
  * @return {bool}
  */
 init : function (
@@ -1180,7 +1310,7 @@ str
 
 /**
  * @method setCapInsetsNormalRenderer
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsetsNormalRenderer : function (
 rect 
@@ -1191,7 +1321,7 @@ rect
 /**
  * @method loadTexturePressed
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadTexturePressed : function (
 str, 
@@ -1212,7 +1342,7 @@ str
 
 /**
  * @method getCapInsetsNormalRenderer
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsetsNormalRenderer : function (
 )
@@ -1222,7 +1352,7 @@ getCapInsetsNormalRenderer : function (
 
 /**
  * @method getCapInsetsPressedRenderer
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsetsPressedRenderer : function (
 )
@@ -1235,7 +1365,7 @@ getCapInsetsPressedRenderer : function (
  * @param {String} arg0
  * @param {String} arg1
  * @param {String} arg2
- * @param {ccui.TextureResType} arg3
+ * @param {ccui.Widget::TextureResType} arg3
  */
 loadTextures : function (
 str, 
@@ -1259,7 +1389,7 @@ isScale9Enabled : function (
 /**
  * @method loadTextureNormal
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadTextureNormal : function (
 str, 
@@ -1270,7 +1400,7 @@ texturerestype
 
 /**
  * @method setCapInsetsPressedRenderer
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsetsPressedRenderer : function (
 rect 
@@ -1300,7 +1430,7 @@ getTitleFontName : function (
 
 /**
  * @method getTitleColor
- * @return {Color3BObject}
+ * @return {color3b_object}
  */
 getTitleColor : function (
 )
@@ -1323,7 +1453,7 @@ bool
 * @param {String} str
 * @param {String} str
 * @param {String} str
-* @param {ccui.TextureResType} texturerestype
+* @param {ccui.Widget::TextureResType} texturerestype
 * @return {ccui.Button|ccui.Button}
 */
 create : function(
@@ -1375,7 +1505,7 @@ getSelectedState : function (
 /**
  * @method loadTextureBackGroundSelected
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadTextureBackGroundSelected : function (
 str, 
@@ -1387,7 +1517,7 @@ texturerestype
 /**
  * @method loadTextureBackGroundDisabled
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadTextureBackGroundDisabled : function (
 str, 
@@ -1399,7 +1529,7 @@ texturerestype
 /**
  * @method loadTextureFrontCross
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadTextureFrontCross : function (
 str, 
@@ -1415,7 +1545,7 @@ texturerestype
  * @param {String} arg2
  * @param {String} arg3
  * @param {String} arg4
- * @param {ccui.TextureResType} arg5
+ * @param {ccui.Widget::TextureResType} arg5
  * @return {bool}
  */
 init : function (
@@ -1437,7 +1567,7 @@ texturerestype
  * @param {String} arg2
  * @param {String} arg3
  * @param {String} arg4
- * @param {ccui.TextureResType} arg5
+ * @param {ccui.Widget::TextureResType} arg5
  */
 loadTextures : function (
 str, 
@@ -1453,7 +1583,7 @@ texturerestype
 /**
  * @method loadTextureBackGround
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadTextureBackGround : function (
 str, 
@@ -1475,7 +1605,7 @@ bool
 /**
  * @method loadTextureFrontCrossDisabled
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadTextureFrontCrossDisabled : function (
 str, 
@@ -1491,7 +1621,7 @@ texturerestype
 * @param {String} str
 * @param {String} str
 * @param {String} str
-* @param {ccui.TextureResType} texturerestype
+* @param {ccui.Widget::TextureResType} texturerestype
 * @return {ccui.CheckBox|ccui.CheckBox}
 */
 create : function(
@@ -1535,7 +1665,7 @@ ccui.ImageView = {
 /**
  * @method loadTexture
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadTexture : function (
 str, 
@@ -1547,7 +1677,7 @@ texturerestype
 /**
  * @method init
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  * @return {bool}
  */
 init : function (
@@ -1570,7 +1700,7 @@ bool
 
 /**
  * @method setTextureRect
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setTextureRect : function (
 rect 
@@ -1580,7 +1710,7 @@ rect
 
 /**
  * @method setCapInsets
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsets : function (
 rect 
@@ -1590,7 +1720,7 @@ rect
 
 /**
  * @method getCapInsets
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsets : function (
 )
@@ -1611,7 +1741,7 @@ isScale9Enabled : function (
 /**
  * @method create
 * @param {String} str
-* @param {ccui.TextureResType} texturerestype
+* @param {ccui.Widget::TextureResType} texturerestype
 * @return {ccui.ImageView|ccui.ImageView}
 */
 create : function(
@@ -1699,20 +1829,20 @@ getTextVerticalAlignment : function (
 },
 
 /**
- * @method getStringValue
+ * @method getString
  * @return {String}
  */
-getStringValue : function (
+getString : function (
 )
 {
     return ;
 },
 
 /**
- * @method setText
+ * @method setString
  * @param {String} arg0
  */
-setText : function (
+setString : function (
 str 
 )
 {
@@ -1745,8 +1875,18 @@ getTextHorizontalAlignment : function (
 },
 
 /**
+ * @method setTextVerticalAlignment
+ * @param {cc.TextVAlignment} arg0
+ */
+setTextVerticalAlignment : function (
+textvalignment 
+)
+{
+},
+
+/**
  * @method getTextAreaSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getTextAreaSize : function (
 )
@@ -1755,11 +1895,11 @@ getTextAreaSize : function (
 },
 
 /**
- * @method setTextVerticalAlignment
- * @param {cc.TextVAlignment} arg0
+ * @method setTextHorizontalAlignment
+ * @param {cc.TextHAlignment} arg0
  */
-setTextVerticalAlignment : function (
-textvalignment 
+setTextHorizontalAlignment : function (
+texthalignment 
 )
 {
 },
@@ -1785,13 +1925,13 @@ isTouchScaleChangeEnabled : function (
 },
 
 /**
- * @method setTextHorizontalAlignment
- * @param {cc.TextHAlignment} arg0
+ * @method getType
+ * @return {ccui.Text::Type}
  */
-setTextHorizontalAlignment : function (
-texthalignment 
+getType : function (
 )
 {
+    return 0;
 },
 
 /**
@@ -1806,7 +1946,7 @@ getFontName : function (
 
 /**
  * @method setTextAreaSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setTextAreaSize : function (
 size 
@@ -1857,6 +1997,36 @@ Text : function (
 ccui.TextAtlas = {
 
 /**
+ * @method getStringLength
+ * @return {long}
+ */
+getStringLength : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getString
+ * @return {String}
+ */
+getString : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setString
+ * @param {String} arg0
+ */
+setString : function (
+str 
+)
+{
+},
+
+/**
  * @method setProperty
  * @param {String} arg0
  * @param {String} arg1
@@ -1875,29 +2045,9 @@ str
 },
 
 /**
- * @method getStringValue
- * @return {String}
- */
-getStringValue : function (
-)
-{
-    return ;
-},
-
-/**
  * @method adaptRenderers
  */
 adaptRenderers : function (
-)
-{
-},
-
-/**
- * @method setStringValue
- * @param {String} arg0
- */
-setStringValue : function (
-str 
 )
 {
 },
@@ -1950,10 +2100,10 @@ ccui.LoadingBar = {
 
 /**
  * @method setPercent
- * @param {int} arg0
+ * @param {float} arg0
  */
 setPercent : function (
-int 
+float 
 )
 {
 },
@@ -1961,7 +2111,7 @@ int
 /**
  * @method loadTexture
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadTexture : function (
 str, 
@@ -1972,10 +2122,10 @@ texturerestype
 
 /**
  * @method setDirection
- * @param {ccui.LoadingBarType} arg0
+ * @param {ccui.LoadingBar::Direction} arg0
  */
 setDirection : function (
-loadingbartype 
+direction 
 )
 {
 },
@@ -1992,7 +2142,7 @@ bool
 
 /**
  * @method setCapInsets
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsets : function (
 rect 
@@ -2002,7 +2152,7 @@ rect
 
 /**
  * @method getDirection
- * @return {int}
+ * @return {ccui.LoadingBar::Direction}
  */
 getDirection : function (
 )
@@ -2012,7 +2162,7 @@ getDirection : function (
 
 /**
  * @method getCapInsets
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsets : function (
 )
@@ -2032,7 +2182,7 @@ isScale9Enabled : function (
 
 /**
  * @method getPercent
- * @return {int}
+ * @return {float}
  */
 getPercent : function (
 )
@@ -2043,12 +2193,12 @@ getPercent : function (
 /**
  * @method create
 * @param {String} str
-* @param {int} int
+* @param {float} float
 * @return {ccui.LoadingBar|ccui.LoadingBar}
 */
 create : function(
 str,
-int 
+float 
 )
 {
     return ccui.LoadingBar;
@@ -2118,12 +2268,12 @@ isInertiaScrollEnabled : function (
 
 /**
  * @method scrollToPercentBothDirection
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  * @param {float} arg1
  * @param {bool} arg2
  */
 scrollToPercentBothDirection : function (
-point, 
+vec2, 
 float, 
 bool 
 )
@@ -2132,7 +2282,7 @@ bool
 
 /**
  * @method getDirection
- * @return {ccui.SCROLLVIEW_DIR}
+ * @return {ccui.ScrollView::Direction}
  */
 getDirection : function (
 )
@@ -2172,10 +2322,10 @@ jumpToBottom : function (
 
 /**
  * @method setDirection
- * @param {ccui.SCROLLVIEW_DIR} arg0
+ * @param {ccui.ScrollView::Direction} arg0
  */
 setDirection : function (
-scrollview_dir 
+direction 
 )
 {
 },
@@ -2210,7 +2360,7 @@ jumpToBottomLeft : function (
 
 /**
  * @method setInnerContainerSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setInnerContainerSize : function (
 size 
@@ -2220,7 +2370,7 @@ size
 
 /**
  * @method getInnerContainerSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getInnerContainerSize : function (
 )
@@ -2316,10 +2466,10 @@ bool
 
 /**
  * @method jumpToPercentBothDirection
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  */
 jumpToPercentBothDirection : function (
-point 
+vec2 
 )
 {
 },
@@ -2460,10 +2610,10 @@ removeAllItems : function (
 
 /**
  * @method setGravity
- * @param {ccui.ListViewGravity} arg0
+ * @param {ccui.ListView::Gravity} arg0
  */
 setGravity : function (
-listviewgravity 
+gravity 
 )
 {
 },
@@ -2653,7 +2803,7 @@ int
 /**
  * @method loadSlidBallTextureDisabled
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadSlidBallTextureDisabled : function (
 str, 
@@ -2665,7 +2815,7 @@ texturerestype
 /**
  * @method loadSlidBallTextureNormal
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadSlidBallTextureNormal : function (
 str, 
@@ -2677,7 +2827,7 @@ texturerestype
 /**
  * @method loadBarTexture
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadBarTexture : function (
 str, 
@@ -2689,7 +2839,7 @@ texturerestype
 /**
  * @method loadProgressBarTexture
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadProgressBarTexture : function (
 str, 
@@ -2703,7 +2853,7 @@ texturerestype
  * @param {String} arg0
  * @param {String} arg1
  * @param {String} arg2
- * @param {ccui.TextureResType} arg3
+ * @param {ccui.Widget::TextureResType} arg3
  */
 loadSlidBallTextures : function (
 str, 
@@ -2716,7 +2866,7 @@ texturerestype
 
 /**
  * @method setCapInsetProgressBarRebderer
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsetProgressBarRebderer : function (
 rect 
@@ -2726,7 +2876,7 @@ rect
 
 /**
  * @method setCapInsetsBarRenderer
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsetsBarRenderer : function (
 rect 
@@ -2736,7 +2886,7 @@ rect
 
 /**
  * @method getCapInsetsProgressBarRebderer
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsetsProgressBarRebderer : function (
 )
@@ -2756,7 +2906,7 @@ bool
 
 /**
  * @method setCapInsets
- * @param {RectObject} arg0
+ * @param {rect_object} arg0
  */
 setCapInsets : function (
 rect 
@@ -2767,7 +2917,7 @@ rect
 /**
  * @method loadSlidBallTexturePressed
  * @param {String} arg0
- * @param {ccui.TextureResType} arg1
+ * @param {ccui.Widget::TextureResType} arg1
  */
 loadSlidBallTexturePressed : function (
 str, 
@@ -2788,7 +2938,7 @@ isScale9Enabled : function (
 
 /**
  * @method getCapInsetsBarRenderer
- * @return {RectObject}
+ * @return {rect_object}
  */
 getCapInsetsBarRenderer : function (
 )
@@ -2972,7 +3122,7 @@ getFontName : function (
 
 /**
  * @method setTextAreaSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setTextAreaSize : function (
 size 
@@ -3130,11 +3280,11 @@ bool
 
 /**
  * @method hitTest
- * @param {PointObject} arg0
+ * @param {cc.Vec2} arg0
  * @return {bool}
  */
 hitTest : function (
-point 
+vec2 
 )
 {
     return false;
@@ -3152,7 +3302,7 @@ int
 
 /**
  * @method setTouchSize
- * @param {SizeObject} arg0
+ * @param {size_object} arg0
  */
 setTouchSize : function (
 size 
@@ -3162,7 +3312,7 @@ size
 
 /**
  * @method getTouchSize
- * @return {SizeObject}
+ * @return {size_object}
  */
 getTouchSize : function (
 )
@@ -3223,23 +3373,33 @@ str
 },
 
 /**
- * @method getStringValue
- * @return {String}
+ * @method getStringLength
+ * @return {long}
  */
-getStringValue : function (
+getStringLength : function (
 )
 {
-    return ;
+    return 0;
 },
 
 /**
- * @method setText
+ * @method setString
  * @param {String} arg0
  */
-setText : function (
+setString : function (
 str 
 )
 {
+},
+
+/**
+ * @method getString
+ * @return {String}
+ */
+getString : function (
+)
+{
+    return ;
 },
 
 /**
@@ -3455,15 +3615,307 @@ int
 /**
  * @method seekWidgetByName
  * @param {ccui.Widget} arg0
- * @param {char} arg1
+ * @param {String} arg1
  * @return {ccui.Widget}
  */
 seekWidgetByName : function (
 widget, 
-char 
+str 
 )
 {
     return ccui.Widget;
+},
+
+};
+
+/**
+ * @class RichElement
+ */
+ccui.RichElement = {
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @return {bool}
+ */
+init : function (
+int, 
+color3b, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method RichElement
+ * @constructor
+ */
+RichElement : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RichElementText
+ */
+ccui.RichElementText = {
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {float} arg5
+ * @return {bool}
+ */
+init : function (
+int, 
+color3b, 
+char, 
+str, 
+str, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {float} arg5
+ * @return {ccui.RichElementText}
+ */
+create : function (
+int, 
+color3b, 
+char, 
+str, 
+str, 
+float 
+)
+{
+    return ccui.RichElementText;
+},
+
+/**
+ * @method RichElementText
+ * @constructor
+ */
+RichElementText : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RichElementImage
+ */
+ccui.RichElementImage = {
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @param {String} arg3
+ * @return {bool}
+ */
+init : function (
+int, 
+color3b, 
+char, 
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @param {String} arg3
+ * @return {ccui.RichElementImage}
+ */
+create : function (
+int, 
+color3b, 
+char, 
+str 
+)
+{
+    return ccui.RichElementImage;
+},
+
+/**
+ * @method RichElementImage
+ * @constructor
+ */
+RichElementImage : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RichElementCustomNode
+ */
+ccui.RichElementCustomNode = {
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @param {cc.Node} arg3
+ * @return {bool}
+ */
+init : function (
+int, 
+color3b, 
+char, 
+node 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {int} arg0
+ * @param {color3b_object} arg1
+ * @param {unsigned char} arg2
+ * @param {cc.Node} arg3
+ * @return {ccui.RichElementCustomNode}
+ */
+create : function (
+int, 
+color3b, 
+char, 
+node 
+)
+{
+    return ccui.RichElementCustomNode;
+},
+
+/**
+ * @method RichElementCustomNode
+ * @constructor
+ */
+RichElementCustomNode : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RichText
+ */
+ccui.RichText = {
+
+/**
+ * @method insertElement
+ * @param {ccui.RichElement} arg0
+ * @param {int} arg1
+ */
+insertElement : function (
+richelement, 
+int 
+)
+{
+},
+
+/**
+ * @method setAnchorPoint
+ * @param {cc.Vec2} arg0
+ */
+setAnchorPoint : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method pushBackElement
+ * @param {ccui.RichElement} arg0
+ */
+pushBackElement : function (
+richelement 
+)
+{
+},
+
+/**
+ * @method ignoreContentAdaptWithSize
+ * @param {bool} arg0
+ */
+ignoreContentAdaptWithSize : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setVerticalSpace
+ * @param {float} arg0
+ */
+setVerticalSpace : function (
+float 
+)
+{
+},
+
+/**
+ * @method formatText
+ */
+formatText : function (
+)
+{
+},
+
+/**
+ * @method removeElement
+* @param {ccui.RichElement|int} richelement
+*/
+removeElement : function(
+int 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccui.RichText}
+ */
+create : function (
+)
+{
+    return ccui.RichText;
+},
+
+/**
+ * @method RichText
+ * @constructor
+ */
+RichText : function (
+)
+{
 },
 
 };

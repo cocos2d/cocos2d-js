@@ -59,6 +59,11 @@ var fontList = [
 function nextFontTestAction() {
     fontIdx++;
     fontIdx = fontIdx % fontList.length;
+
+    if(window.sidebar){
+        fontIdx = window.sidebar.changeTest(fontIdx, 16);
+    }
+
     return fontList[fontIdx];
 }
 
@@ -66,6 +71,10 @@ function backFontTestAction() {
     fontIdx--;
     if (fontIdx < 0) {
         fontIdx += fontList.length;
+    }
+
+    if(window.sidebar){
+        fontIdx = window.sidebar.changeTest(fontIdx, 16);
     }
 
     return fontList[fontIdx];
@@ -76,7 +85,10 @@ function restartFontTestAction() {
 }
 FontTestScene = TestScene.extend({
 
-    runThisTest:function () {
+    runThisTest:function (num) {
+
+        fontIdx = num || fontIdx;
+
         var layer = FontTest.create();
         this.addChild(layer);
 

@@ -53,10 +53,10 @@ var TestScene = cc.Scene.extend({
         menuItem.x = winSize.width - 50;
         menuItem.y = 25;
 
-        this.addChild(menu, 1);
+        if(!window.sidebar){
+            this.addChild(menu, 1);
+        }
     },
-
-    // callbacks
     onMainMenuCallback:function () {
         var scene = cc.Scene.create();
         var layer = new TestController();
@@ -187,7 +187,7 @@ var TestController = cc.LayerGradient.extend({
         }, this);
     },
     onCloseCallback:function () {
-        history.go(-1);
+        history && history.go(-1);
     },
     onToggleAutoTest:function() {
         autoTestEnabled = !autoTestEnabled;
@@ -469,7 +469,8 @@ var testNames = [
     },
     {
         title:"Spine Test",
-        platforms: PLATFORM_JSB,
+        resource: g_spine,
+        platforms: PLATFORM_ALL,
         testScene:function () {
             return new SpineTestScene();
         }

@@ -38,6 +38,8 @@ THE SOFTWARE.
 #include "json/filestream.h"
 #include "json/stringbuffer.h"
 #include "json/writer.h"
+#include "VisibleRect.h"
+#include "ConfigParser.h"
 
 #ifdef _WIN32
 #define realpath(dir,fuldir) _fullpath(fuldir,dir,_MAX_PATH_)
@@ -59,13 +61,10 @@ using namespace cocos2d;
 
 std::string g_resourcePath;
 static rapidjson::Document g_filecfgjson; 
-extern string getDotWaitFilePath();
-extern string getProjSearchPath();
+class ConnectWaitLayer;
+static ConnectWaitLayer* s_pConnectLayer;
 extern string getIPAddress();
-extern vector<string> getSearchPath();
 extern bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<std::string> &fileList);
-
-
 /*@brief   use "|" splite string  */
 vector<string> splitFilter(const char *str)
 {
@@ -235,14 +234,19 @@ vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const 
 
 const char* getRuntimeVersion()
 {
-    return "0.0.1";
+    return "1.1";
+}
+
+void hideRcvFile() {
+    s_pConnectLayer = nullptr;
 }
 
 bool startScript()
 {
+    hideRcvFile();
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    return ScriptingCore::getInstance()->runScript("main.js");
+    return ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
 }
 
 bool reloadScript(const string& file,bool reloadAll)
@@ -263,7 +267,7 @@ bool reloadScript(const string& file,bool reloadAll)
     string modulefile = file;
     if (modulefile.empty())
     {
-        modulefile = "main.js";
+        modulefile = ConfigParser::getInstance()->getEntryFile().c_str();
         ScriptingCore::getInstance()->cleanScript(modulefile.c_str());
     }
     if (reloadAll)
@@ -274,97 +278,10 @@ bool reloadScript(const string& file,bool reloadAll)
     
 }
 
-
-class VisibleRect
-{
-public:
-    static Rect getVisibleRect();
-    
-    static Point left();
-    static Point right();
-    static Point top();
-    static Point bottom();
-    static Point center();
-    static Point leftTop();
-    static Point rightTop();
-    static Point leftBottom();
-    static Point rightBottom();
-private:
-    static void lazyInit();
-    static Rect s_visibleRect;
-};
-
-Rect VisibleRect::s_visibleRect;
-
-void VisibleRect::lazyInit()
-{
-    // no lazy init
-    // Useful if we change the resolution in runtime
-    s_visibleRect = Director::getInstance()->getOpenGLView()->getVisibleRect();
-}
-
-Rect VisibleRect::getVisibleRect()
-{
-    lazyInit();
-    return s_visibleRect;
-}
-
-Point VisibleRect::left()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height/2);
-}
-
-Point VisibleRect::right()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height/2);
-}
-
-Point VisibleRect::top()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height);
-}
-
-Point VisibleRect::bottom()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y);
-}
-
-Point VisibleRect::center()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height/2);
-}
-
-Point VisibleRect::leftTop()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height);
-}
-
-Point VisibleRect::rightTop()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height);
-}
-
-Point VisibleRect::leftBottom()
-{
-    lazyInit();
-    return s_visibleRect.origin;
-}
-
-Point VisibleRect::rightBottom()
-{
-    lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y);
-}
-
 class ConnectWaitLayer: public Layer
 {
+private:
+    LabelTTF* pLabelUploadFile;
 public:
 
     ConnectWaitLayer()
@@ -387,9 +304,12 @@ public:
         auto labelwait = LabelTTF::create(strShowMsg.c_str(), "Arial", 22);
         addChild(labelwait, 10000);
         labelwait->setPosition( Point(VisibleRect::center().x, VisibleRect::center().y) );
-        
-        
-        auto labelPlay = LabelTTF::create("play", "Arial", 20);
+
+        pLabelUploadFile  = LabelTTF::create("", "Arial", 22);
+        addChild(pLabelUploadFile, 10000);
+        pLabelUploadFile->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
+
+        auto labelPlay = LabelTTF::create("play", "Arial", 36);
         auto menuItem = MenuItemLabel::create(labelPlay, CC_CALLBACK_1(ConnectWaitLayer::playerCallback, this));
         auto menu = Menu::create(menuItem, NULL);
         
@@ -403,8 +323,15 @@ public:
         startScript();
     }
 
+    void showCurRcvFile(string fileName) {
+        pLabelUploadFile->setString(fileName);
+    }
 };
 
+void showCurRcvFile(string fileName) {
+    if (NULL == s_pConnectLayer) return;
+    s_pConnectLayer->showCurRcvFile(fileName);
+}
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <io.h>
@@ -636,6 +563,7 @@ bool FileServer::receiveFile(int fd)
         string file(fullfilename);
         file=replaceAll(file,"\\","/");
         sprintf(fullfilename, "%s", file.c_str());
+        showCurRcvFile(filename.c_str());
         cocos2d::log("recv fullfilename = %s",fullfilename);
         CreateDir(file.substr(0,file.find_last_of("/")).c_str());
         FILE *fp =fopen(fullfilename, "wb");
@@ -889,6 +817,14 @@ public:
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                    
+                }else if (strcmp(strcmd.c_str(),"getEntryfile")==0)
+                {
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                    rapidjson::Value entryFileValue(rapidjson::kStringType);
+                    entryFileValue.SetString(ConfigParser::getInstance()->getEntryFile().c_str(),dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("entryfile",entryFileValue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }else if(strcmp(strcmd.c_str(),"getIP")==0)
                 {
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
@@ -972,7 +908,7 @@ private:
     FileServer* _fileserver;
 };
 
-bool startRuntime()
+bool initRuntime()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #ifndef _DEBUG
@@ -1003,15 +939,39 @@ bool startRuntime()
         resourcePath =replaceAll(resourcePath,"\\","/");
         g_resourcePath = resourcePath;
     }
-
+    
 #else
     g_resourcePath = FileUtils::getInstance()->getWritablePath();
-    
+    g_resourcePath += "debugruntime/";
 #endif
     
     g_resourcePath=replaceAll(g_resourcePath,"\\","/");
+    if (g_resourcePath.at(g_resourcePath.length()-1) != '/')
+    {
+        g_resourcePath.append("/");
+    }
+    
     searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
+
+    return true;
+}
+bool startRuntime()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifndef _DEBUG
+    return false;
+#endif
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#ifdef NDEBUG
+    return false;
+#endif
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#ifndef COCOS2D_DEBUG
+    return false;
+#endif
+#endif
+
     static ConsoleCustomCommand s_customCommand;
     ScriptingCore::getInstance()->start();
     ScriptingCore::getInstance()->enableDebugger();
@@ -1020,48 +980,10 @@ bool startRuntime()
 
     readResFileFinfo();
     auto scene = Scene::create();
-    auto layer = new ConnectWaitLayer();
-    layer->autorelease();
+    s_pConnectLayer = new ConnectWaitLayer();
+    s_pConnectLayer->autorelease();
     auto director = Director::getInstance();
-    scene->addChild(layer);
+    scene->addChild(s_pConnectLayer);
     director->runWithScene(scene);
     return true;
-}
-
-
-// SimulatorConfig
-SimulatorConfig *SimulatorConfig::s_sharedInstance = NULL;
-SimulatorConfig *SimulatorConfig::getInstance(void)
-{
-    if (!s_sharedInstance)
-    {
-        s_sharedInstance = new SimulatorConfig();
-    }
-    return s_sharedInstance;
-}
-
-SimulatorConfig::SimulatorConfig(void)
-{
-    m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 3Gs (480x320)", 480, 320));
-    m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 4 (960x640)", 960, 640));
-    m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 5 (1136x640)", 1136, 640));
-    m_screenSizeArray.push_back(SimulatorScreenSize("iPad (1024x768)", 1024, 768));
-    m_screenSizeArray.push_back(SimulatorScreenSize("iPad Retina (2048x1536)", 2048, 1536));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (800x480)", 800, 480));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (854x480)", 854, 480));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (960x540)", 960, 540));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (1024x600)", 1024, 600));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (1280x720)", 1280, 720));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (1280x800)", 1280, 800));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (1920x1080)", 1920, 1080));
-}
-
-int SimulatorConfig::getScreenSizeCount(void)
-{
-    return (int)m_screenSizeArray.size();
-}
-
-const SimulatorScreenSize SimulatorConfig::getScreenSize(int index)
-{
-    return m_screenSizeArray.at(index);
 }

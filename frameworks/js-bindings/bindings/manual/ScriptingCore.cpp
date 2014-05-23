@@ -521,7 +521,9 @@ void ScriptingCore::createGlobalContext() {
     // Removed in Firefox v27
 //    JS_SetOptions(this->_cx, JSOPTION_TYPE_INFERENCE);
     JS::ContextOptionsRef(_cx).setTypeInference(true);
-    
+    JS::ContextOptionsRef(_cx).setIon(true);
+    JS::ContextOptionsRef(_cx).setBaseline(true);
+
 //    JS_SetVersion(this->_cx, JSVERSION_LATEST);
     
     // Only disable METHODJIT on iOS.
@@ -1074,7 +1076,19 @@ bool ScriptingCore::handleTouchEvent(void* nativeObj, cocos2d::EventTouch::Event
         else
         {
             jsval retval;
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, &retval);
+            executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, &retval);
+            if(JSVAL_IS_NULL(retval))
+            {
+                ret = false;
+            }
+            else if(JSVAL_IS_BOOLEAN(retval))
+            {
+                ret = JSVAL_TO_BOOLEAN(retval);
+            }
+            else
+            {
+                ret = false;
+            }
         }
     } while(false);
 

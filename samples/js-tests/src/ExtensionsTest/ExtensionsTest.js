@@ -90,6 +90,41 @@ var extensionsTestItemNames = [
     }
 ];
 
+if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {
+     extensionsTestItemNames.push({
+        itemTitle:"PluginXTest",
+        testScene:function () {
+            var testScene = new PluginXTestScene();
+            if (testScene) {
+                cc.director.runScene(testScene);
+            }
+        }
+    });
+}
+//if (cc.sys.os == cc.sys.OS_IOS) {
+//    extensionsTestItemNames.push({
+//        itemTitle:"IOSIAPTest",
+//        testScene:function () {
+//            var testScene = new IOSIAPTest();
+//            if (testScene) {
+//                cc.director.runScene(testScene);
+//            }
+//        }
+//    });
+//}
+
+if (cc.sys.isNative) {
+    extensionsTestItemNames.push({
+        itemTitle:"AssetsManagerTest",
+        testScene:function () {
+            var testScene = new AssetsManagerLoaderScene();
+            if (testScene) {
+                testScene.runThisTest();
+            }
+        }
+    });
+}
+
 var ExtensionsMainLayer = cc.Layer.extend({
     onEnter:function () {
         this._super();
