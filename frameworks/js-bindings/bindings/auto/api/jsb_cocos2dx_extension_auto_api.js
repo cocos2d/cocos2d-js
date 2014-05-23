@@ -3032,6 +3032,85 @@ str
 };
 
 /**
+ * @class Manifest
+ */
+cc.Manifest = {
+
+/**
+ * @method getAsset
+ * @param {String} arg0
+ * @return {cc.Manifest::Asset}
+ */
+getAsset : function (
+str 
+)
+{
+    return cc.Manifest::Asset;
+},
+
+/**
+ * @method getManifestFileUrl
+ * @return {String}
+ */
+getManifestFileUrl : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method isVersionLoaded
+ * @return {bool}
+ */
+isVersionLoaded : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isLoaded
+ * @return {bool}
+ */
+isLoaded : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getPackageUrl
+ * @return {String}
+ */
+getPackageUrl : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getVersion
+ * @return {String}
+ */
+getVersion : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getVersionFileUrl
+ * @return {String}
+ */
+getVersionFileUrl : function (
+)
+{
+    return ;
+},
+
+};
+
+/**
  * @class AssetsManager
  */
 cc.AssetsManager = {
@@ -3115,6 +3194,50 @@ str
 AssetsManager : function (
 str, 
 str 
+)
+{
+},
+
+};
+
+/**
+ * @class EventListenerAssetsManager
+ */
+cc.EventListenerAssetsManager = {
+
+/**
+ * @method init
+ * @param {cc.AssetsManager} arg0
+ * @param {function} arg1
+ * @return {bool}
+ */
+init : function (
+assetsmanager, 
+func 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {cc.AssetsManager} arg0
+ * @param {function} arg1
+ * @return {cc.EventListenerAssetsManager}
+ */
+create : function (
+assetsmanager, 
+func 
+)
+{
+    return cc.EventListenerAssetsManager;
+},
+
+/**
+ * @method EventListenerAssetsManager
+ * @constructor
+ */
+EventListenerAssetsManager : function (
 )
 {
 },

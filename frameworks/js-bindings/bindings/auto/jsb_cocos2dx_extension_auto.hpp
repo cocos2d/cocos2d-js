@@ -395,6 +395,21 @@ bool js_cocos2dx_extension_EventAssetsManager_getEventCode(JSContext *cx, uint32
 bool js_cocos2dx_extension_EventAssetsManager_getPercent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_EventAssetsManager_EventAssetsManager(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_extension_Manifest_class;
+extern JSObject *jsb_cocos2d_extension_Manifest_prototype;
+
+bool js_cocos2dx_extension_Manifest_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_extension_Manifest_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_extension_Manifest(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_extension_Manifest_getAsset(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Manifest_getManifestFileUrl(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Manifest_isVersionLoaded(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Manifest_isLoaded(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Manifest_getPackageUrl(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Manifest_getVersion(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Manifest_getVersionFileUrl(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_extension_AssetsManager_class;
 extern JSObject *jsb_cocos2d_extension_AssetsManager_prototype;
 
@@ -410,5 +425,16 @@ bool js_cocos2dx_extension_AssetsManager_getLocalManifest(JSContext *cx, uint32_
 bool js_cocos2dx_extension_AssetsManager_getRemoteManifest(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManager_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManager_AssetsManager(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_extension_EventListenerAssetsManager_class;
+extern JSObject *jsb_cocos2d_extension_EventListenerAssetsManager_prototype;
+
+bool js_cocos2dx_extension_EventListenerAssetsManager_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_extension_EventListenerAssetsManager_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_extension_EventListenerAssetsManager(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_extension_EventListenerAssetsManager_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventListenerAssetsManager_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventListenerAssetsManager_EventListenerAssetsManager(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 
