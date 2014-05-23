@@ -1,4 +1,4 @@
-<img src="http://www.cocos2d-x.org/attachments/801/cocos2dx_portrait.png" width=200>
+<img src="http://www.cocos2d-x.org/attachments/1508/2dh5-logo.png" width=200>
 
 Cocos2d-JS
 ===========
@@ -11,10 +11,15 @@ Furthermore, javascript friendly API makes your game development experience a br
 
 ## API Reference
 
-[Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0alpha2/index.html)
+- API Reference: [Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0beta/index.html)
 
-And you can download it from
-[Cocos2d-html5_v3.0_Alpha2_API_Doc.zip](http://cdn.cocos2d-x.org/Cocos2d-html5_v3.0_Alpha2_API_Doc.zip)
+- And you can download it from
+[Cocos2d-html5_v3.0_beta_API_Doc.zip](http://cdn.cocos2d-x.org/Cocos2d-html5_v3.0_beta_API_Doc.zip)
+
+## Online demo
+- [MoonWarriors](http://www.cocos2d-x.org/MoonWarriors/index.html)
+- [Testcase](http://www.cocos2d-x.org/js-tests/)
+
 
 ##How to Start a New Game
 
@@ -117,4 +122,9 @@ And they share the same project file which located in `build` folder, there are 
    * Open Source Commercial Friendly: Compatible with open and closed source projects
    * OpenGL ES 2.0 (mobile) / OpenGL 2.1 (desktop) based
    * Full WebGL support and auto canvas fallback
+   
+## Documentation
+- [Getting Started with Cocos2d-JS](http://cocos2d-x.org/wiki/Getting_Started_Cocos2d-JS)
+
+
    
