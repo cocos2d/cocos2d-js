@@ -380,5 +380,35 @@ bool js_cocos2dx_extension_EditBox_setMaxLength(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_extension_EditBox_setFont(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_EditBox_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_EditBox_EditBox(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_extension_EventAssetsManager_class;
+extern JSObject *jsb_cocos2d_extension_EventAssetsManager_prototype;
+
+bool js_cocos2dx_extension_EventAssetsManager_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_extension_EventAssetsManager_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_extension_EventAssetsManager(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_extension_EventAssetsManager_getAssetsManager(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManager_getAssetId(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManager_getMessage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManager_getEventCode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManager_getPercent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManager_EventAssetsManager(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_extension_AssetsManager_class;
+extern JSObject *jsb_cocos2d_extension_AssetsManager_prototype;
+
+bool js_cocos2dx_extension_AssetsManager_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_extension_AssetsManager_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_extension_AssetsManager(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_extension_AssetsManager_getState(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManager_checkUpdate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManager_getStoragePath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManager_update(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManager_getLocalManifest(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManager_getRemoteManifest(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManager_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManager_AssetsManager(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 
