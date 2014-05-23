@@ -1,4 +1,4 @@
-<img src="http://www.cocos2d-x.org/attachments/801/cocos2dx_portrait.png" width=200>
+<img src="http://www.cocos2d-x.org/attachments/1508/2dh5-logo.png" width=200>
 
 Cocos2d-JS
 ===========
@@ -11,10 +11,10 @@ Furthermore, javascript friendly API makes your game development experience a br
 
 ## API Reference
 
-[Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0alpha2/index.html)
+[Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0beta/index.html)
 
 And you can download it from
-[Cocos2d-html5_v3.0_Alpha2_API_Doc.zip](http://cdn.cocos2d-x.org/Cocos2d-html5_v3.0_Alpha2_API_Doc.zip)
+[Cocos2d-html5_v3.0_beta_API_Doc.zip](http://cdn.cocos2d-x.org/Cocos2d-html5_v3.0_beta_API_Doc.zip)
 
 ##How to Start a New Game
 
