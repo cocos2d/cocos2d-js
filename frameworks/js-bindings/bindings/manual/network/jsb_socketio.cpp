@@ -124,7 +124,7 @@ public:
 			args = std_string_to_jsval(cx, data);
 		}
 
-		ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), eventName.c_str(), 1, &args);
+		//ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), eventName.c_str(), 1, &args);
 		
 		JSB_SIOEventRegistry::iterator it = _eventRegistry.find(eventName);
 		

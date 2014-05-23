@@ -67,6 +67,7 @@
         "src/OpenGLTest/OpenGLTest.js",
 
         "src/ExtensionsTest/ExtensionsTest.js",
+        "src/ExtensionsTest/AssetsManagerTest/AssetsManagerTest.js",
         "src/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.js",
         "src/ExtensionsTest/ControlExtensionTest/CCControlScene.js",
         "src/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.js",
@@ -92,6 +93,7 @@
         "src/ExtensionsTest/NetworkTest/WebSocketTest.js",
         "src/ExtensionsTest/NetworkTest/SocketIOTest.js",
         "src/ExtensionsTest/PluginXTest/PluginXTest.js",
+        "src/ExtensionsTest/PluginXTest/IOSIAPTest.js",
         "src/CocoStudioTest/ArmatureTest/ArmatureTest.js",
         "src/CocoStudioTest/ComponentsTest/ComponentsTestScene.js",
         "src/CocoStudioTest/ComponentsTest/EnemyController.js",
@@ -140,6 +142,8 @@
         "src/XHRTest/XHRTest.js",
 
         "src/Box2dTest/Box2dTest.js",
-        "src/ChipmunkTest/ChipmunkTest.js"
+        "src/ChipmunkTest/ChipmunkTest.js",
+
+        "src/Presentation/Presentation.js"
     ]
 }
