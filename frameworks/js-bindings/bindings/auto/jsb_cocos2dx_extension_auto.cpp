@@ -8138,30 +8138,6 @@ void js_register_cocos2dx_extension_EditBox(JSContext *cx, JSObject *global) {
 JSClass  *jsb_cocos2d_extension_EventAssetsManager_class;
 JSObject *jsb_cocos2d_extension_EventAssetsManager_prototype;
 
-bool js_cocos2dx_extension_EventAssetsManager_getAssetsManager(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::extension::EventAssetsManager* cobj = (cocos2d::extension::EventAssetsManager *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getAssetsManager : Invalid Native Object");
-	if (argc == 0) {
-		cocos2d::extension::AssetsManager* ret = cobj->getAssetsManager();
-		jsval jsret = JSVAL_NULL;
-		do {
-			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::extension::AssetsManager>(cx, (cocos2d::extension::AssetsManager*)ret);
-				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-			} else {
-				jsret = JSVAL_NULL;
-			}
-		} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getAssetsManager : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
 bool js_cocos2dx_extension_EventAssetsManager_getAssetId(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -8196,21 +8172,28 @@ bool js_cocos2dx_extension_EventAssetsManager_getMessage(JSContext *cx, uint32_t
 	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getMessage : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_cocos2dx_extension_EventAssetsManager_getEventCode(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_extension_EventAssetsManager_getAssetsManager(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::extension::EventAssetsManager* cobj = (cocos2d::extension::EventAssetsManager *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getEventCode : Invalid Native Object");
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getAssetsManager : Invalid Native Object");
 	if (argc == 0) {
-		int ret = (int)cobj->getEventCode();
+		cocos2d::extension::AssetsManager* ret = cobj->getAssetsManager();
 		jsval jsret = JSVAL_NULL;
-		jsret = int32_to_jsval(cx, ret);
+		do {
+			if (ret) {
+				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::extension::AssetsManager>(cx, (cocos2d::extension::AssetsManager*)ret);
+				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+			} else {
+				jsret = JSVAL_NULL;
+			}
+		} while (0);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getEventCode : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getAssetsManager : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_cocos2dx_extension_EventAssetsManager_getPercent(JSContext *cx, uint32_t argc, jsval *vp)
@@ -8230,46 +8213,23 @@ bool js_cocos2dx_extension_EventAssetsManager_getPercent(JSContext *cx, uint32_t
 	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getPercent : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_cocos2dx_extension_EventAssetsManager_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_extension_EventAssetsManager_getEventCode(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-    std::string arg0;
-    cocos2d::extension::AssetsManager* arg1;
-    cocos2d::extension::EventAssetsManager::EventCode arg2;
-    ok &= jsval_to_std_string(cx, argv[0], &arg0);
-    do {
-			if (!argv[1].isObject()) { ok = false; break; }
-			js_proxy_t *jsProxy;
-			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
-			jsProxy = jsb_get_js_proxy(tmpObj);
-			arg1 = (cocos2d::extension::AssetsManager*)(jsProxy ? jsProxy->ptr : NULL);
-			JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
-		} while (0);
-    ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
-    JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_EventAssetsManager_constructor : Error processing arguments");
-    cocos2d::extension::EventAssetsManager* cobj = new cocos2d::extension::EventAssetsManager(arg0, arg1, arg2);
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::extension::EventAssetsManager> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::extension::EventAssetsManager");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
-    return true;
-}
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::extension::EventAssetsManager* cobj = (cocos2d::extension::EventAssetsManager *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getEventCode : Invalid Native Object");
+	if (argc == 0) {
+		int ret = (int)cobj->getEventCode();
+		jsval jsret = JSVAL_NULL;
+		jsret = int32_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
 
+	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getEventCode : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
 
 extern JSObject *jsb_cocos2d_EventCustom_prototype;
 
@@ -8296,11 +8256,11 @@ void js_register_cocos2dx_extension_EventAssetsManager(JSContext *cx, JSObject *
 	};
 
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getAssetsManager", js_cocos2dx_extension_EventAssetsManager_getAssetsManager, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getAssetId", js_cocos2dx_extension_EventAssetsManager_getAssetId, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getMessage", js_cocos2dx_extension_EventAssetsManager_getMessage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getEventCode", js_cocos2dx_extension_EventAssetsManager_getEventCode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getAssetsManager", js_cocos2dx_extension_EventAssetsManager_getAssetsManager, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getPercent", js_cocos2dx_extension_EventAssetsManager_getPercent, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getEventCode", js_cocos2dx_extension_EventAssetsManager_getEventCode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -8310,7 +8270,7 @@ void js_register_cocos2dx_extension_EventAssetsManager(JSContext *cx, JSObject *
 		cx, global,
 		jsb_cocos2d_EventCustom_prototype,
 		jsb_cocos2d_extension_EventAssetsManager_class,
-		js_cocos2dx_extension_EventAssetsManager_constructor, 0, // constructor
+		dummy_constructor<cocos2d::extension::EventAssetsManager>, 0, // no constructor
 		properties,
 		funcs,
 		NULL, // no static properties
