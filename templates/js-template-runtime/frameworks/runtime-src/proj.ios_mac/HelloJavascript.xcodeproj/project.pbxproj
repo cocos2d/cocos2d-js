@@ -82,43 +82,24 @@
 		C0B29017192EEBB300D5DE97 /* rtres in Resources */ = {isa = PBXBuildFile; fileRef = C0B29016192EEBB300D5DE97 /* rtres */; };
 		C0B29018192EEBB300D5DE97 /* rtres in Resources */ = {isa = PBXBuildFile; fileRef = C0B29016192EEBB300D5DE97 /* rtres */; };
 		C0C2F37418AA0C66003976DA /* SimulatorApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0C2F37318AA0C66003976DA /* SimulatorApp.mm */; };
-		C0E05756192B5EDB00D818D0 /* jsb_boot.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05743192B5EDB00D818D0 /* jsb_boot.js */; };
 		C0E05757192B5EDB00D818D0 /* jsb_boot.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05743192B5EDB00D818D0 /* jsb_boot.js */; };
-		C0E05758192B5EDB00D818D0 /* jsb_chipmunk_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05744192B5EDB00D818D0 /* jsb_chipmunk_constants.js */; };
 		C0E05759192B5EDB00D818D0 /* jsb_chipmunk_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05744192B5EDB00D818D0 /* jsb_chipmunk_constants.js */; };
-		C0E0575A192B5EDB00D818D0 /* jsb_chipmunk.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05745192B5EDB00D818D0 /* jsb_chipmunk.js */; };
 		C0E0575B192B5EDB00D818D0 /* jsb_chipmunk.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05745192B5EDB00D818D0 /* jsb_chipmunk.js */; };
-		C0E0575C192B5EDB00D818D0 /* jsb_cocos2d_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05746192B5EDB00D818D0 /* jsb_cocos2d_constants.js */; };
 		C0E0575D192B5EDB00D818D0 /* jsb_cocos2d_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05746192B5EDB00D818D0 /* jsb_cocos2d_constants.js */; };
-		C0E0575E192B5EDB00D818D0 /* jsb_cocos2d_extension.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05747192B5EDB00D818D0 /* jsb_cocos2d_extension.js */; };
 		C0E0575F192B5EDB00D818D0 /* jsb_cocos2d_extension.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05747192B5EDB00D818D0 /* jsb_cocos2d_extension.js */; };
-		C0E05760192B5EDB00D818D0 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05748192B5EDB00D818D0 /* jsb_cocos2d_studio.js */; };
 		C0E05761192B5EDB00D818D0 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05748192B5EDB00D818D0 /* jsb_cocos2d_studio.js */; };
-		C0E05762192B5EDB00D818D0 /* jsb_cocos2d_ui.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05749192B5EDB00D818D0 /* jsb_cocos2d_ui.js */; };
 		C0E05763192B5EDB00D818D0 /* jsb_cocos2d_ui.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05749192B5EDB00D818D0 /* jsb_cocos2d_ui.js */; };
-		C0E05764192B5EDB00D818D0 /* jsb_cocos2d.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E0574A192B5EDB00D818D0 /* jsb_cocos2d.js */; };
 		C0E05765192B5EDB00D818D0 /* jsb_cocos2d.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E0574A192B5EDB00D818D0 /* jsb_cocos2d.js */; };
-		C0E05766192B5EDB00D818D0 /* jsb_cocosbuilder.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E0574B192B5EDB00D818D0 /* jsb_cocosbuilder.js */; };
 		C0E05767192B5EDB00D818D0 /* jsb_cocosbuilder.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E0574B192B5EDB00D818D0 /* jsb_cocosbuilder.js */; };
-		C0E05768192B5EDB00D818D0 /* jsb_create_apis.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E0574C192B5EDB00D818D0 /* jsb_create_apis.js */; };
 		C0E05769192B5EDB00D818D0 /* jsb_create_apis.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E0574C192B5EDB00D818D0 /* jsb_create_apis.js */; };
-		C0E0576A192B5EDB00D818D0 /* jsb_debugger.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E0574D192B5EDB00D818D0 /* jsb_debugger.js */; };
 		C0E0576B192B5EDB00D818D0 /* jsb_debugger.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E0574D192B5EDB00D818D0 /* jsb_debugger.js */; };
-		C0E0576C192B5EDB00D818D0 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E0574E192B5EDB00D818D0 /* jsb_deprecated.js */; };
 		C0E0576D192B5EDB00D818D0 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E0574E192B5EDB00D818D0 /* jsb_deprecated.js */; };
-		C0E0576E192B5EDB00D818D0 /* jsb_ext_create_apis.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E0574F192B5EDB00D818D0 /* jsb_ext_create_apis.js */; };
 		C0E0576F192B5EDB00D818D0 /* jsb_ext_create_apis.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E0574F192B5EDB00D818D0 /* jsb_ext_create_apis.js */; };
-		C0E05770192B5EDB00D818D0 /* jsb_loaders.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05750192B5EDB00D818D0 /* jsb_loaders.js */; };
 		C0E05771192B5EDB00D818D0 /* jsb_loaders.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05750192B5EDB00D818D0 /* jsb_loaders.js */; };
-		C0E05772192B5EDB00D818D0 /* jsb_opengl_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05751192B5EDB00D818D0 /* jsb_opengl_constants.js */; };
 		C0E05773192B5EDB00D818D0 /* jsb_opengl_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05751192B5EDB00D818D0 /* jsb_opengl_constants.js */; };
-		C0E05774192B5EDB00D818D0 /* jsb_opengl.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05752192B5EDB00D818D0 /* jsb_opengl.js */; };
 		C0E05775192B5EDB00D818D0 /* jsb_opengl.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05752192B5EDB00D818D0 /* jsb_opengl.js */; };
-		C0E05776192B5EDB00D818D0 /* jsb_property_apis.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05753192B5EDB00D818D0 /* jsb_property_apis.js */; };
 		C0E05777192B5EDB00D818D0 /* jsb_property_apis.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05753192B5EDB00D818D0 /* jsb_property_apis.js */; };
-		C0E05778192B5EDB00D818D0 /* jsb_property_impls.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05754192B5EDB00D818D0 /* jsb_property_impls.js */; };
 		C0E05779192B5EDB00D818D0 /* jsb_property_impls.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05754192B5EDB00D818D0 /* jsb_property_impls.js */; };
-		C0E0577A192B5EDB00D818D0 /* jsb.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05755192B5EDB00D818D0 /* jsb.js */; };
 		C0E0577B192B5EDB00D818D0 /* jsb.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05755192B5EDB00D818D0 /* jsb.js */; };
 		C0E0577C192B5EF200D818D0 /* jsb_boot.js in Resources */ = {isa = PBXBuildFile; fileRef = C0E05743192B5EDB00D818D0 /* jsb_boot.js */; };
 		C0E0577D192B5EF200D818D0 /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = C0E05744192B5EDB00D818D0 /* jsb_chipmunk_constants.js */; };
@@ -943,32 +924,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0E05766192B5EDB00D818D0 /* jsb_cocosbuilder.js in Sources */,
 				509D4AC917EBB2AB00697056 /* RootViewController.mm in Sources */,
-				C0E05758192B5EDB00D818D0 /* jsb_chipmunk_constants.js in Sources */,
 				D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */,
-				C0E0577A192B5EDB00D818D0 /* jsb.js in Sources */,
 				C06C37881918E81100617BED /* ConfigParser.cpp in Sources */,
-				C0E05778192B5EDB00D818D0 /* jsb_property_impls.js in Sources */,
-				C0E05764192B5EDB00D818D0 /* jsb_cocos2d.js in Sources */,
 				509D4AC817EBB2AB00697056 /* main.m in Sources */,
-				C0E05756192B5EDB00D818D0 /* jsb_boot.js in Sources */,
-				C0E05762192B5EDB00D818D0 /* jsb_cocos2d_ui.js in Sources */,
-				C0E0575A192B5EDB00D818D0 /* jsb_chipmunk.js in Sources */,
 				C033B524191B36AE00D06937 /* VisibleRect.cpp in Sources */,
-				C0E05774192B5EDB00D818D0 /* jsb_opengl.js in Sources */,
-				C0E05770192B5EDB00D818D0 /* jsb_loaders.js in Sources */,
-				C0E05776192B5EDB00D818D0 /* jsb_property_apis.js in Sources */,
-				C0E0576C192B5EDB00D818D0 /* jsb_deprecated.js in Sources */,
-				C0E05768192B5EDB00D818D0 /* jsb_create_apis.js in Sources */,
 				509D4ABC17EBB2AB00697056 /* AppController.mm in Sources */,
 				C026DCC918928A2400B3EDE8 /* Runtime_ios-mac.mm in Sources */,
-				C0E0576A192B5EDB00D818D0 /* jsb_debugger.js in Sources */,
-				C0E0576E192B5EDB00D818D0 /* jsb_ext_create_apis.js in Sources */,
-				C0E05772192B5EDB00D818D0 /* jsb_opengl_constants.js in Sources */,
-				C0E05760192B5EDB00D818D0 /* jsb_cocos2d_studio.js in Sources */,
-				C0E0575E192B5EDB00D818D0 /* jsb_cocos2d_extension.js in Sources */,
-				C0E0575C192B5EDB00D818D0 /* jsb_cocos2d_constants.js in Sources */,
 				C026DCC618928A1A00B3EDE8 /* Runtime.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
