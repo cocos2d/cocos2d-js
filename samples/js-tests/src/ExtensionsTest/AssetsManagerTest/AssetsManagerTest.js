@@ -98,7 +98,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
 
     runThisTest : function () {
         var manifestPath = sceneManifests[currentScene];
-        var storagePath = cc.fileUtils ? cc.fileUtils.getWritablePath() : "/" + storagePaths[currentScene];
+        var storagePath = ((cc.fileUtils ? cc.fileUtils.getWritablePath() : "/") + storagePaths[currentScene]);
 
         var layer = new cc.Layer();
         this.addChild(layer);
