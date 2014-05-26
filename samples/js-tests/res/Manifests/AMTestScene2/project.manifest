@@ -9,7 +9,8 @@
 			"md5" : "..."
 		}
 	},
-    
+
     "searchPaths" : [
+        "res/"
     ]
 }

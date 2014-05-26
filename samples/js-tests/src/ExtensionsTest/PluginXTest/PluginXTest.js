@@ -152,20 +152,13 @@ var PluginXTestLayer = cc.Layer.extend({
 
         cc.log("ENTERED");
 
-        /////////////////////////////
-        // 2. add a menu item with "X" image, which is clicked to quit the program
-        //    you may modify it.
+        // Back Menu
+        var itemBack = cc.MenuItemFont.create("Back", this.toExtensionsMainLayer, this);
+        itemBack.x = winSize.width - 50;
+        itemBack.y = 25;
 
-        // add a "close" icon to exit the progress. it's an autorelease object
-        var pCloseItem = cc.MenuItemImage.create(
-            "CloseNormal.png",
-            "CloseSelected.png",
-            this.menuCloseCallback,
-            this);
-        pCloseItem.setPosition( cc.p(size.width - 20, 20) );
 
-        // create menu, it's an autorelease object
-        var pMenu = cc.Menu.create(pCloseItem);
+        var pMenu = cc.Menu.create(itemBack);
         pMenu.setPosition( cc.p(0, 0) );
         this.addChild(pMenu, 1);
 
@@ -190,6 +183,11 @@ var PluginXTestLayer = cc.Layer.extend({
         pMenuItem.setAnchorPoint(cc.p(0.5, 0));
         pMenu.addChild(pMenuItem, 0);
         pMenuItem.setPosition( cc.p(size.width / 2, 0));
+    },
+
+    toExtensionsMainLayer:function (sender) {
+        var scene = new ExtensionsTestScene();
+        scene.runThisTest();
     },
 
     reloadPluginMenuCallback: function(pSender) {
