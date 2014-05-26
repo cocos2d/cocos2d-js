@@ -28,8 +28,8 @@ var UILabelAtlasTest = UIScene.extend({
     init: function () {
         if (this._super()) {
             //init text
-            this._topDisplayLabel.setText("");
-            this._bottomDisplayLabel.setText("LabelAtlas");
+            this._topDisplayLabel.setString("");
+            this._bottomDisplayLabel.setString("LabelAtlas");
 
             // Create the label atlas
             var textAtlas = ccui.TextAtlas.create();
