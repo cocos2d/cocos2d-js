@@ -2959,16 +2959,6 @@ EditBox : function (
 cc.EventAssetsManager = {
 
 /**
- * @method getAssetsManager
- * @return {cc.AssetsManager}
- */
-getAssetsManager : function (
-)
-{
-    return cc.AssetsManager;
-},
-
-/**
  * @method getAssetId
  * @return {String}
  */
@@ -2989,13 +2979,13 @@ getMessage : function (
 },
 
 /**
- * @method getEventCode
- * @return {cc.EventAssetsManager::EventCode}
+ * @method getAssetsManager
+ * @return {cc.AssetsManager}
  */
-getEventCode : function (
+getAssetsManager : function (
 )
 {
-    return 0;
+    return cc.AssetsManager;
 },
 
 /**
@@ -3009,24 +2999,13 @@ getPercent : function (
 },
 
 /**
- * @method EventAssetsManager
- * @constructor
- * @param {String} arg0
- * @param {cc.AssetsManager} arg1
- * @param {cc.EventAssetsManager::EventCode} arg2
- * @param {float} arg3
- * @param {String} arg4
- * @param {String} arg5
+ * @method getEventCode
+ * @return {cc.EventAssetsManager::EventCode}
  */
-EventAssetsManager : function (
-str, 
-assetsmanager, 
-eventcode, 
-float, 
-str, 
-str 
+getEventCode : function (
 )
 {
+    return 0;
 },
 
 };
