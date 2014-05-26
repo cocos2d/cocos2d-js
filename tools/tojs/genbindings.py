@@ -142,6 +142,15 @@ def main():
             command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
             _run_cmd(command)
 
+        output_dir = '%s/frameworks/custom/auto' % project_root
+        custom_cmd_args = {}
+        for key in custom_cmd_args.keys():
+            args = custom_cmd_args[key]
+            cfg = '%s/%s' % (tojs_root, key)
+            print 'Generating bindings for %s...' % (key[:-4])
+            command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
+            _run_cmd(command)
+
         if platform == 'win32':
             with _pushd(output_dir):
                 _run_cmd('dos2unix *')

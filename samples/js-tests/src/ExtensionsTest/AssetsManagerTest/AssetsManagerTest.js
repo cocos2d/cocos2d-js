@@ -95,6 +95,8 @@ var AssetsManagerTestScene = TestScene.extend({
 
 var AssetsManagerLoaderScene = TestScene.extend({
     _am : null,
+    _progress : null,
+    _percent : 0,
 
     runThisTest : function () {
         var manifestPath = sceneManifests[currentScene];
@@ -108,10 +110,10 @@ var AssetsManagerLoaderScene = TestScene.extend({
         icon.y = cc.winSize.height/2;
         layer.addChild(icon);
 
-        var progress = new cc.LabelTTF("0%", "Arial", 30);
-        progress.x = cc.winSize.width/2;
-        progress.y = cc.winSize.height/2 + 50;
-        layer.addChild(progress);
+        this._progress = new cc.LabelTTF("0%", "Arial", 30);
+        this._progress.x = cc.winSize.width/2;
+        this._progress.y = cc.winSize.height/2 + 50;
+        layer.addChild(this._progress);
 
         this._am = new cc.AssetsManager(manifestPath, storagePath);
         this._am.retain();
@@ -124,6 +126,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
         }
         else
         {
+            var that = this;
             var listener = new cc.EventListenerAssetsManager(this._am, function(event) {
                 var scene;
                 switch (event.getEventCode())
@@ -135,8 +138,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
                         scene.release();
                         break;
                     case cc.EventAssetsManager.UPDATE_PROGRESSION:
-                        var percent = event.getPercent();
-                        progress.string = ""+percent;
+                        that._percent = event.getPercent();
                         break;
                     case cc.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
                     case cc.EventAssetsManager.ERROR_PARSE_MANIFEST:
@@ -166,6 +168,12 @@ var AssetsManagerLoaderScene = TestScene.extend({
 
             cc.director.runScene(this);
         }
+
+        this.schedule(this.updateProgress, 0.5);
+    },
+
+    updateProgress : function(dt){
+        this._progress.string = "" + this._percent;
     },
 
     onExit : function () {
