@@ -58,6 +58,7 @@ var UIListViewTest_Vertical = UIScene.extend({
             var default_item = ccui.Layout.create();
             default_item.setTouchEnabled(true);
             default_item.setSize(default_button.getSize());
+            default_item.width = listView.width;
             default_button.x = default_item.width / 2;
             default_button.y = default_item.height / 2;
             default_item.addChild(default_button);
@@ -86,6 +87,7 @@ var UIListViewTest_Vertical = UIScene.extend({
 
                 var custom_item = ccui.Layout.create();
                 custom_item.setSize(custom_button.getSize());
+                custom_item.width = listView.width;
                 custom_button.x = custom_item.width / 2;
                 custom_button.y = custom_item.height / 2;
                 custom_item.addChild(custom_button);
@@ -105,6 +107,7 @@ var UIListViewTest_Vertical = UIScene.extend({
 
                 var custom_item = ccui.Layout.create();
                 custom_item.setSize(custom_button.getSize());
+                custom_item.width = listView.width;
                 custom_button.x = custom_item.width / 2;
                 custom_button.y = custom_item.height / 2;
                 custom_item.addChild(custom_button);
