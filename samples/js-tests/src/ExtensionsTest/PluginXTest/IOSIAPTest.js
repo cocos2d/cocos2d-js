@@ -81,7 +81,7 @@ plugin.onApplicationWillEnterForeground = function () {
 var loadIAPPlugin = function () {
     var pluginManager = plugin.PluginManager.getInstance();
     g_IOSIAP = pluginManager.loadPlugin("IOSIAP");
-    cc.log("i am in loadIAPPlugin,g_IOSIAP is "+g_IOSIAP);
+    cc.log("i am in loadIAPPlugin,g_IOSIAP is " + g_IOSIAP);
 };
 
 
@@ -183,12 +183,11 @@ var IOSIAPTestLayer = cc.Layer.extend({
                 break;
             case TAG_LOG_ONLINE_CONFIG:
             {
-                var array= ["001","002"];
+                var array = ["001", "002"];
                 var temp = {};
                 temp["ids"] = array.toString();
                 temp["str"] = "is just a string";
                 cc.log("in TAG_LOG_ONLINE_CONFIG functions");
-                g_IOSIAP.callFuncWithParam("initIAPInfo");
 //                g_IOSIAP.callStringFuncWithParam("requestProducts", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, temp));
                 g_IOSIAP.callFuncWithParam("requestProducts", plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, array.toString()));
             }
@@ -278,9 +277,12 @@ var IOSIAPTest = cc.Scene.extend({
 });
 
 plugin.IAPListener = cc.Class.extend({
-    onPayResult: function(ret, msg, productInfo) {
+    onPayResult: function (ret, msg, productInfo) {
         cc.log("---------onPayResult callback begin-----------------");
-        cc.log("onPayResult="+ ret + ";msg=" +msg + ";productinfo="+productInfo);
+        cc.log("onPayResult=" + ret + ";msg=" + msg + ";productinfo=" + productInfo);
         cc.log("---------onPayResult callback end-----------------");
+    },
+    onRequestProductResult: function (ret, productInfo) {
+        cc.log("ret is "+ret+" productInfo is "+productInfo.productList[0].productId);
     }
 })
