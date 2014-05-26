@@ -23,6 +23,10 @@
     ],
     "must_copy_resources": [
         {
+            "from": "../../../runtime/rtres",
+            "to": "rtres"
+        },
+        {
             "from": "../../js-bindings/bindings/script",
             "to": ""
         }

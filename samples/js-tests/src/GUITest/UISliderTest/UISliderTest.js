@@ -28,8 +28,8 @@ var UISliderTest = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getSize();
             //init text
-            this._topDisplayLabel.setText("Move the slider thumb");
-            this._bottomDisplayLabel.setText("Slider");
+            this._topDisplayLabel.setString("Move the slider thumb");
+            this._bottomDisplayLabel.setString("Slider");
 
             // Create the slider
             var slider = ccui.Slider.create();
@@ -52,7 +52,7 @@ var UISliderTest = UIScene.extend({
             case ccui.Slider.EVENT_PERCENT_CHANGED:
                 var slider = sender;
                 var percent = slider.getPercent();
-                this._topDisplayLabel.setText("Percent " + percent.toFixed(0));
+                this._topDisplayLabel.setString("Percent " + percent.toFixed(0));
                 break;
             default:
                 break;
@@ -65,8 +65,8 @@ var UISliderTest_Scale9 = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getSize();
             //init text
-            this._topDisplayLabel.setText("Move the slider thumb");
-            this._bottomDisplayLabel.setText("Slider scale9 render");
+            this._topDisplayLabel.setString("Move the slider thumb");
+            this._bottomDisplayLabel.setString("Slider scale9 render");
 
             // Create the slider
             var slider = ccui.Slider.create();
@@ -92,7 +92,7 @@ var UISliderTest_Scale9 = UIScene.extend({
             case ccui.Slider.EVENT_PERCENT_CHANGED:
                 var slider = sender;
                 var percent = slider.getPercent();
-                this._topDisplayLabel.setText("Percent " + percent.toFixed(0));
+                this._topDisplayLabel.setString("Percent " + percent.toFixed(0));
                 break;
             default:
                 break;

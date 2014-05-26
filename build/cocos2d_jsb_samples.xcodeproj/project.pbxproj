@@ -1677,7 +1677,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../samples/js-moonwarriors/project/proj.mac/Info.plist";
 				PRODUCT_NAME = "js-moonwarriors Mac";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/mac $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/platform/mac $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/mac";
 			};
 			name = Debug;
 		};
@@ -1697,7 +1697,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../samples/js-moonwarriors/project/proj.mac/Info.plist";
 				PRODUCT_NAME = "js-moonwarriors Mac";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/mac $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/platform/mac $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1724,7 +1724,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
@@ -1749,7 +1749,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
