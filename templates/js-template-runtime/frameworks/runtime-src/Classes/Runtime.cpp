@@ -238,13 +238,9 @@ const char* getRuntimeVersion()
     return "1.1";
 }
 
-void hideRcvFile() {
-    s_pConnectLayer = nullptr;
-}
 
 bool startScript()
 {
-    hideRcvFile();
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     return ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
@@ -398,10 +394,6 @@ public:
     } 
 };
 
-void showCurRcvFile(string fileName) {
-    if (NULL == s_pConnectLayer) return;
-    s_pConnectLayer->showCurRcvFile(fileName);
-}
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <io.h>
