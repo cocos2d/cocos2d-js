@@ -56,6 +56,7 @@ var AssetsManagerTestLayer = BaseTestLayer.extend({
 
     onExit : function(){
         cc.loader.resPath = "";
+        this._super();
     },
 
     onNextCallback : function () {
