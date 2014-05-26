@@ -46,19 +46,19 @@ var UIButtonEditorTest = UIBaseLayer.extend({
     touchEvent: function (sender, type) {
         switch (type) {
             case ccui.Widget.TOUCH_BEGAN:
-                this._topDisplayText.setText("Touch Down");
+                this._topDisplayText.setString("Touch Down");
                 break;
 
             case ccui.Widget.TOUCH_MOVED:
-                this._topDisplayText.setText("Touch Move");
+                this._topDisplayText.setString("Touch Move");
                 break;
 
             case ccui.Widget.TOUCH_ENDED:
-                this._topDisplayText.setText("Touch Up");
+                this._topDisplayText.setString("Touch Up");
                 break;
 
             case ccui.Widget.TOUCH_CANCELED:
-                this._topDisplayText.setText("Touch Cancelled");
+                this._topDisplayText.setString("Touch Cancelled");
                 break;
 
             default:
