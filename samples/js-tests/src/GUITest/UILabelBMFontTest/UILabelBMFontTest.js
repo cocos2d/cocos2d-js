@@ -28,8 +28,8 @@ var UILabelBMFontTest = UIScene.extend({
     init: function () {
         if (this._super()) {
             //init text
-            this._topDisplayLabel.setText("");
-            this._bottomDisplayLabel.setText("LabelBMFont");
+            this._topDisplayLabel.setString("");
+            this._bottomDisplayLabel.setString("LabelBMFont");
 
             // Create the LabelBMFont
             var labelBMFont = ccui.TextBMFont.create();

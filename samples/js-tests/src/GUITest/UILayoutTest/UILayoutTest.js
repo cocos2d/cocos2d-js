@@ -32,8 +32,8 @@ var UILayoutTestBase = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getSize();
             //init text
-            this._topDisplayLabel.setText("");
-            this._bottomDisplayLabel.setText(this.getText());
+            this._topDisplayLabel.setString("");
+            this._bottomDisplayLabel.setString(this.getText());
             this._bottomDisplayLabel.x = widgetSize.width / 2;
             this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 

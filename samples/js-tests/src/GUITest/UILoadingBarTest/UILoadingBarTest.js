@@ -34,8 +34,8 @@ var UILoadingBarTest = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getSize();
             //init text
-            this._topDisplayLabel.setText("");
-            this._bottomDisplayLabel.setText("LoadingBar");
+            this._topDisplayLabel.setString("");
+            this._bottomDisplayLabel.setString("LoadingBar");
 
             this.createLoadingBar();
 

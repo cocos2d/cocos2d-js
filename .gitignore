@@ -48,7 +48,7 @@ local.properties
 build_*_xcode/
 build_*_vc10/
 
-# Ignore files build by xcode
+# Ignore files build by Xcode
 *.mode*v*
 *.pbxuser
 *.xcbkptlist
@@ -61,7 +61,7 @@ xcschememanagement.plist
 xcuserdata/
 DerivedData/
 
-# Ignore files built by AppCode
+# Ignore files built by WebStorm
 .idea/
 
 # Ignore files built by bada
