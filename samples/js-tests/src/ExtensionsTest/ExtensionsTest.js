@@ -117,6 +117,7 @@ if (cc.sys.isNative) {
     extensionsTestItemNames.push({
         itemTitle:"AssetsManagerTest",
         testScene:function () {
+            cc.fileUtils.addSearchPath("res/");
             var testScene = new AssetsManagerLoaderScene();
             if (testScene) {
                 testScene.runThisTest();
