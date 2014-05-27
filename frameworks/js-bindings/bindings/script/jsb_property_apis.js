@@ -588,7 +588,7 @@ _proto = cc.EditBox.prototype;
 cc.defineGetterSetter(_proto, "font", null, _proto._setFont);
 cc.defineGetterSetter(_proto, "fontName", null, _proto.setFontName);
 cc.defineGetterSetter(_proto, "fontSize", null, _proto.setFontSize);
-cc.defineGetterSetter(_proto, "string", _proto.getText, _proto.setText);
+cc.defineGetterSetter(_proto, "string", _proto.getString, _proto.setString);
 cc.defineGetterSetter(_proto, "maxLength", _proto.getMaxLength, _proto.setMaxLength);
 
 _proto = cc.Control.prototype;
