@@ -14,7 +14,7 @@ Furthermore, javascript friendly API makes your game development experience a br
 - API Reference: [Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0beta/index.html)
 
 - And you can download it from
-[Cocos2d-html5_v3.0_beta_API_Doc.zip](http://cdn.cocos2d-x.org/Cocos2d-html5_v3.0_beta_API_Doc.zip)
+[Cocos2d-JS-v3.0-beta-API.zip](http://www.cocos2d-x.org/filedown/Cocos2d-JS-v3.0-beta-API.zip)
 
 ## Online demo
 - [MoonWarriors](http://www.cocos2d-x.org/MoonWarriors/index.html)
@@ -57,7 +57,7 @@ And if you have any doubt about the usage, please use `-h` with any command to h
 
 You can also use prebuilt Xcode or Visual Studio project which is located in `Game/frameworks/runtime-src/proj.xxx`
 
-##Folder structure
+##Folder structure of new project
 
 - frameworks
     - cocos2d-html5     : Cocos2d-JS html5 engine source
