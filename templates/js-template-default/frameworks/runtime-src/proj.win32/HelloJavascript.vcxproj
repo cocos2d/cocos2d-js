@@ -21,6 +21,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -28,6 +30,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -216,6 +220,9 @@ xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
     <ProjectReference Include="..\..\js-bindings\bindings\proj.win32\libJSBindingForNetwork.vcxproj">
       <Project>{3bec13f5-e227-4d80-bc77-1c857f83bcfc}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\js-bindings\bindings\proj.win32\libJSBindingForSpine.vcxproj">
+      <Project>{e78cdc6b-f37d-48d2-ad91-1db549497e32}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\js-bindings\bindings\proj.win32\libJSBindingForStudio.vcxproj">
       <Project>{79d34511-e54e-410a-8bba-ef175ad6c695}</Project>
     </ProjectReference>
@@ -230,6 +237,9 @@ xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
     </ProjectReference>
     <ProjectReference Include="..\..\js-bindings\cocos2d-x\cocos\editor-support\cocostudio\proj.win32\libCocosStudio.vcxproj">
       <Project>{b57cf53f-2e49-4031-9822-047cc0e6bde2}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\js-bindings\cocos2d-x\cocos\editor-support\spine\proj.win32\libSpine.vcxproj">
+      <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\js-bindings\cocos2d-x\cocos\network\proj.win32\libNetwork.vcxproj">
       <Project>{df2638c0-8128-4847-867c-6eafe3dee7b5}</Project>

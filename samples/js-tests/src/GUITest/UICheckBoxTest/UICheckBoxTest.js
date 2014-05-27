@@ -27,8 +27,8 @@ var UICheckBoxTest = UIScene.extend({
     init: function () {
         if (this._super()) {
             //init text
-            this._topDisplayLabel.setText("No Event");
-            this._bottomDisplayLabel.setText("CheckBox");
+            this._topDisplayLabel.setString("No Event");
+            this._bottomDisplayLabel.setString("CheckBox");
 
             var widgetSize = this._widget.getSize();
             // Create the checkbox
@@ -52,10 +52,10 @@ var UICheckBoxTest = UIScene.extend({
     selectedStateEvent: function (sender, type) {
         switch (type) {
             case  ccui.CheckBox.EVENT_UNSELECTED:
-                this._topDisplayLabel.setText("Unselected");
+                this._topDisplayLabel.setString("Unselected");
                 break;
             case ccui.CheckBox.EVENT_SELECTED:
-                this._topDisplayLabel.setText("Selected");
+                this._topDisplayLabel.setString("Selected");
                 break;
 
             default:

@@ -67,6 +67,7 @@
         "src/OpenGLTest/OpenGLTest.js",
 
         "src/ExtensionsTest/ExtensionsTest.js",
+        "src/ExtensionsTest/AssetsManagerTest/AssetsManagerTest.js",
         "src/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.js",
         "src/ExtensionsTest/ControlExtensionTest/CCControlScene.js",
         "src/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.js",

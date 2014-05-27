@@ -2747,6 +2747,16 @@ getText : function (
 },
 
 /**
+ * @method setFontSize
+ * @param {int} arg0
+ */
+setFontSize : function (
+int 
+)
+{
+},
+
+/**
  * @method setPlaceholderFontName
  * @param {char} arg0
  */
@@ -2771,6 +2781,16 @@ getPlaceHolder : function (
  * @param {char} arg0
  */
 setFontName : function (
+char 
+)
+{
+},
+
+/**
+ * @method setText
+ * @param {char} arg0
+ */
+setText : function (
 char 
 )
 {
@@ -2823,16 +2843,6 @@ color3b
  */
 setPlaceholderFont : function (
 char, 
-int 
-)
-{
-},
-
-/**
- * @method setFontSize
- * @param {int} arg0
- */
-setFontSize : function (
 int 
 )
 {
@@ -2893,16 +2903,6 @@ getMaxLength : function (
 },
 
 /**
- * @method setText
- * @param {char} arg0
- */
-setText : function (
-char 
-)
-{
-},
-
-/**
  * @method setMaxLength
  * @param {int} arg0
  */
@@ -2947,6 +2947,276 @@ scale9sprite
  * @constructor
  */
 EditBox : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EventAssetsManager
+ */
+cc.EventAssetsManager = {
+
+/**
+ * @method getAssetId
+ * @return {String}
+ */
+getAssetId : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getMessage
+ * @return {String}
+ */
+getMessage : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getAssetsManager
+ * @return {cc.AssetsManager}
+ */
+getAssetsManager : function (
+)
+{
+    return cc.AssetsManager;
+},
+
+/**
+ * @method getPercent
+ * @return {float}
+ */
+getPercent : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getEventCode
+ * @return {cc.EventAssetsManager::EventCode}
+ */
+getEventCode : function (
+)
+{
+    return 0;
+},
+
+};
+
+/**
+ * @class Manifest
+ */
+cc.Manifest = {
+
+/**
+ * @method getAsset
+ * @param {String} arg0
+ * @return {cc.Manifest::Asset}
+ */
+getAsset : function (
+str 
+)
+{
+    return cc.Manifest::Asset;
+},
+
+/**
+ * @method getManifestFileUrl
+ * @return {String}
+ */
+getManifestFileUrl : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method isVersionLoaded
+ * @return {bool}
+ */
+isVersionLoaded : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isLoaded
+ * @return {bool}
+ */
+isLoaded : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getPackageUrl
+ * @return {String}
+ */
+getPackageUrl : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getVersion
+ * @return {String}
+ */
+getVersion : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getVersionFileUrl
+ * @return {String}
+ */
+getVersionFileUrl : function (
+)
+{
+    return ;
+},
+
+};
+
+/**
+ * @class AssetsManager
+ */
+cc.AssetsManager = {
+
+/**
+ * @method getState
+ * @return {cc.AssetsManager::State}
+ */
+getState : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method checkUpdate
+ */
+checkUpdate : function (
+)
+{
+},
+
+/**
+ * @method getStoragePath
+ * @return {String}
+ */
+getStoragePath : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method update
+ */
+update : function (
+)
+{
+},
+
+/**
+ * @method getLocalManifest
+ * @return {cc.Manifest}
+ */
+getLocalManifest : function (
+)
+{
+    return cc.Manifest;
+},
+
+/**
+ * @method getRemoteManifest
+ * @return {cc.Manifest}
+ */
+getRemoteManifest : function (
+)
+{
+    return cc.Manifest;
+},
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {cc.AssetsManager}
+ */
+create : function (
+str, 
+str 
+)
+{
+    return cc.AssetsManager;
+},
+
+/**
+ * @method AssetsManager
+ * @constructor
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+AssetsManager : function (
+str, 
+str 
+)
+{
+},
+
+};
+
+/**
+ * @class EventListenerAssetsManager
+ */
+cc.EventListenerAssetsManager = {
+
+/**
+ * @method init
+ * @param {cc.AssetsManager} arg0
+ * @param {function} arg1
+ * @return {bool}
+ */
+init : function (
+assetsmanager, 
+func 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {cc.AssetsManager} arg0
+ * @param {function} arg1
+ * @return {cc.EventListenerAssetsManager}
+ */
+create : function (
+assetsmanager, 
+func 
+)
+{
+    return cc.EventListenerAssetsManager;
+},
+
+/**
+ * @method EventListenerAssetsManager
+ * @constructor
+ */
+EventListenerAssetsManager : function (
 )
 {
 },

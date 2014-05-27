@@ -113,6 +113,18 @@ if (cc.sys.os == cc.sys.OS_IOS) {
     });
 }
 
+if (cc.sys.isNative) {
+    extensionsTestItemNames.push({
+        itemTitle:"AssetsManagerTest",
+        testScene:function () {
+            var testScene = new AssetsManagerLoaderScene();
+            if (testScene) {
+                testScene.runThisTest();
+            }
+        }
+    });
+}
+
 var ExtensionsMainLayer = cc.Layer.extend({
     onEnter:function () {
         this._super();

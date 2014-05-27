@@ -221,8 +221,6 @@
 		BAC50CBD1924AEFF00C57B6B /* jsb_ext_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BAC50CBB1924AEFF00C57B6B /* jsb_ext_create_apis.js */; };
 		BAC50CBE1924AEFF00C57B6B /* jsb_ext_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BAC50CBB1924AEFF00C57B6B /* jsb_ext_create_apis.js */; };
 		BAC50CBF1924AEFF00C57B6B /* jsb_ext_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BAC50CBB1924AEFF00C57B6B /* jsb_ext_create_apis.js */; };
-		BAD138DF191F1BB0007733DD /* project.manifest in Resources */ = {isa = PBXBuildFile; fileRef = BAD138DE191F1BB0007733DD /* project.manifest */; };
-		BAD138E0191F1BB0007733DD /* project.manifest in Resources */ = {isa = PBXBuildFile; fileRef = BAD138DE191F1BB0007733DD /* project.manifest */; };
 		D60AE43817F9143D00757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		ED743D1717D099F10004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 /* End PBXBuildFile section */
@@ -501,6 +499,48 @@
 			remoteGlobalIDString = FA09A321168ADBC2008C1C7B;
 			remoteInfo = PluginProtocol;
 		};
+		BA83C3E919345CD300130AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA09A320168ADBC2008C1C7B;
+			remoteInfo = PluginProtocol;
+		};
+		BA83C3EB19345CD300130AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA09A371168AFD41008C1C7B;
+			remoteInfo = PluginFlurry;
+		};
+		BA83C3ED19345CD300130AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FADC44A6176EA82000B2D5ED;
+			remoteInfo = PluginAdmob;
+		};
+		BA83C3EF19345CD300130AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DDD191A140400761F37 /* PluginTwitter.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FACAD8871762C1B500D75ADE;
+			remoteInfo = PluginTwitter;
+		};
+		BA83C3F119345CD300130AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DE3191A141A00761F37 /* PluginWeibo.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FAE2752F175D9D2900F5DA8E;
+			remoteInfo = PluginWeibo;
+		};
+		BA83C3F319345CD300130AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DE9191A14BD00761F37 /* PluginUmeng.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA09A300168ADAEC008C1C7B;
+			remoteInfo = PluginUmeng;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -619,7 +659,6 @@
 		BAA7DEE218C84F5000D9A10E /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../samples/js-tests/main.js"; sourceTree = "<group>"; };
 		BAA7DEE318C84F5000D9A10E /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = "../samples/js-tests/project.json"; sourceTree = "<group>"; };
 		BAC50CBB1924AEFF00C57B6B /* jsb_ext_create_apis.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_ext_create_apis.js; path = "../frameworks/js-bindings/bindings/script/jsb_ext_create_apis.js"; sourceTree = "<group>"; };
-		BAD138DE191F1BB0007733DD /* project.manifest */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = project.manifest; path = "../samples/js-tests/project.manifest"; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -881,7 +920,6 @@
 		1A604F2E18BF1D3300CC9A93 /* js-tests */ = {
 			isa = PBXGroup;
 			children = (
-				BAD138DE191F1BB0007733DD /* project.manifest */,
 				BAA7DEE218C84F5000D9A10E /* main.js */,
 				1A2B72DA18D294AE00ED9E74 /* project */,
 				BAA7DEE318C84F5000D9A10E /* project.json */,
@@ -1117,6 +1155,12 @@
 			buildRules = (
 			);
 			dependencies = (
+				BA83C3EA19345CD300130AD4 /* PBXTargetDependency */,
+				BA83C3EC19345CD300130AD4 /* PBXTargetDependency */,
+				BA83C3EE19345CD300130AD4 /* PBXTargetDependency */,
+				BA83C3F019345CD300130AD4 /* PBXTargetDependency */,
+				BA83C3F219345CD300130AD4 /* PBXTargetDependency */,
+				BA83C3F419345CD300130AD4 /* PBXTargetDependency */,
 				1A604FB718BF1EF400CC9A93 /* PBXTargetDependency */,
 				1A604FB918BF1EF400CC9A93 /* PBXTargetDependency */,
 				1A604FBB18BF1EF400CC9A93 /* PBXTargetDependency */,
@@ -1473,7 +1517,6 @@
 				A63D2EC818C856BE00B29B8F /* jsb_boot.js in Resources */,
 				A63D2ECF18C8B36600B29B8F /* jsb_loaders.js in Resources */,
 				BAA7DEE518C84F5000D9A10E /* main.js in Resources */,
-				BAD138E0191F1BB0007733DD /* project.manifest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1489,7 +1532,6 @@
 				BAA7DEE618C84F5000D9A10E /* project.json in Resources */,
 				1A487B6C18BF3EDF007EEB98 /* jsb.js in Resources */,
 				1A487B6D18BF3EDF007EEB98 /* jsb_chipmunk.js in Resources */,
-				BAD138DF191F1BB0007733DD /* project.manifest in Resources */,
 				1A487B6E18BF3EDF007EEB98 /* jsb_chipmunk_constants.js in Resources */,
 				1A487B6F18BF3EDF007EEB98 /* jsb_cocos2d.js in Resources */,
 				1A487B7018BF3EDF007EEB98 /* jsb_cocos2d_constants.js in Resources */,
@@ -1658,6 +1700,36 @@
 			name = "CocosDenshion iOS";
 			targetProxy = 1A604FBE18BF1EF400CC9A93 /* PBXContainerItemProxy */;
 		};
+		BA83C3EA19345CD300130AD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginProtocol;
+			targetProxy = BA83C3E919345CD300130AD4 /* PBXContainerItemProxy */;
+		};
+		BA83C3EC19345CD300130AD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginFlurry;
+			targetProxy = BA83C3EB19345CD300130AD4 /* PBXContainerItemProxy */;
+		};
+		BA83C3EE19345CD300130AD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginAdmob;
+			targetProxy = BA83C3ED19345CD300130AD4 /* PBXContainerItemProxy */;
+		};
+		BA83C3F019345CD300130AD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginTwitter;
+			targetProxy = BA83C3EF19345CD300130AD4 /* PBXContainerItemProxy */;
+		};
+		BA83C3F219345CD300130AD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginWeibo;
+			targetProxy = BA83C3F119345CD300130AD4 /* PBXContainerItemProxy */;
+		};
+		BA83C3F419345CD300130AD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginUmeng;
+			targetProxy = BA83C3F319345CD300130AD4 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1713,7 +1785,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../samples/js-moonwarriors/project/proj.mac/Info.plist";
 				PRODUCT_NAME = "js-moonwarriors Mac";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/mac $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/platform/mac $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/mac";
 			};
 			name = Debug;
 		};
@@ -1733,7 +1805,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../samples/js-moonwarriors/project/proj.mac/Info.plist";
 				PRODUCT_NAME = "js-moonwarriors Mac";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/mac $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/platform/mac $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1760,7 +1832,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
@@ -1785,7 +1857,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

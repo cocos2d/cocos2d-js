@@ -28,8 +28,8 @@ var UITextFieldTest = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getSize();
             //init text
-            this._topDisplayLabel.setText("No Event");
-            this._bottomDisplayLabel.setText("TextField");
+            this._topDisplayLabel.setString("No Event");
+            this._bottomDisplayLabel.setString("TextField");
 
             // Create the textfield
             var textField = ccui.TextField.create();
@@ -54,19 +54,19 @@ var UITextFieldTest = UIScene.extend({
                 var widgetSize = this._widget.getSize();
                 textField.runAction(cc.MoveTo.create(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
-                this._topDisplayLabel.setText("attach with IME");
+                this._topDisplayLabel.setString("attach with IME");
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_ME:
                 var textField = sender;
                 var widgetSize = this._widget.getSize();
                 textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
-                this._topDisplayLabel.setText("detach with IME");
+                this._topDisplayLabel.setString("detach with IME");
                 break;
             case ccui.TextField.EVENT_INSERT_TEXT:
-                this._topDisplayLabel.setText("insert words");
+                this._topDisplayLabel.setString("insert words");
                 break;
             case ccui.TextField.EVENT_DELETE_BACKWARD:
-                this._topDisplayLabel.setText("delete word");
+                this._topDisplayLabel.setString("delete word");
                 break;
             default:
                 break;
@@ -79,8 +79,8 @@ var UITextFieldTest_MaxLength = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getSize();
             //init text
-            this._topDisplayLabel.setText("No Event");
-            this._bottomDisplayLabel.setText("TextField max length");
+            this._topDisplayLabel.setString("No Event");
+            this._bottomDisplayLabel.setString("TextField max length");
 
             // Create the textfield
             var textField = ccui.TextField.create();
@@ -107,17 +107,17 @@ var UITextFieldTest_MaxLength = UIScene.extend({
             case ccui.TextField.EVENT_ATTACH_WITH_ME:
                 textField.runAction(cc.MoveTo.create(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
-                this._topDisplayLabel.setText("attach with IME max length:" + textField.getMaxLength());
+                this._topDisplayLabel.setString("attach with IME max length:" + textField.getMaxLength());
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_ME:
                 textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
-                this._topDisplayLabel.setText("detach with IME max length:" + textField.getMaxLength());
+                this._topDisplayLabel.setString("detach with IME max length:" + textField.getMaxLength());
                 break;
             case ccui.TextField.EVENT_INSERT_TEXT:
-                this._topDisplayLabel.setText("insert with IME max length:" + textField.getMaxLength());
+                this._topDisplayLabel.setString("insert with IME max length:" + textField.getMaxLength());
                 break;
             case ccui.TextField.EVENT_DELETE_BACKWARD:
-                this._topDisplayLabel.setText("delete with IME max length:" + textField.getMaxLength());
+                this._topDisplayLabel.setString("delete with IME max length:" + textField.getMaxLength());
                 break;
             default:
                 break;
@@ -130,8 +130,8 @@ var UITextFieldTest_Password = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getSize();
             //init text
-            this._topDisplayLabel.setText("No Event");
-            this._bottomDisplayLabel.setText("TextField max length");
+            this._topDisplayLabel.setString("No Event");
+            this._bottomDisplayLabel.setString("TextField max length");
 
             // Create the textfield
             var textField = ccui.TextField.create();
@@ -158,19 +158,19 @@ var UITextFieldTest_Password = UIScene.extend({
                 var widgetSize = this._widget.getSize();
                 textField.runAction(cc.MoveTo.create(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
-                this._topDisplayLabel.setText("attach with IME IME password");
+                this._topDisplayLabel.setString("attach with IME IME password");
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_ME:
                 var textField = sender;
                 var widgetSize = this._widget.getSize();
                 textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
-                this._topDisplayLabel.setText("detach with IME password");
+                this._topDisplayLabel.setString("detach with IME password");
                 break;
             case ccui.TextField.EVENT_INSERT_TEXT:
-                this._topDisplayLabel.setText("insert with IME password");
+                this._topDisplayLabel.setString("insert with IME password");
                 break;
             case ccui.TextField.EVENT_DELETE_BACKWARD:
-                this._topDisplayLabel.setText("delete with IME password");
+                this._topDisplayLabel.setString("delete with IME password");
                 break;
             default:
                 break;

@@ -67,6 +67,8 @@
 		A922754C1517C094001B78AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922754B1517C094001B78AA /* UIKit.framework */; };
 		A922754E1517C094001B78AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922754D1517C094001B78AA /* Foundation.framework */; };
 		A92275501517C094001B78AA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922754F1517C094001B78AA /* CoreGraphics.framework */; };
+		BA6FEC4C19335FF300F5D174 /* jsb_ext_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA6FEC4B19335FF300F5D174 /* jsb_ext_create_apis.js */; };
+		BA6FEC4D19335FF300F5D174 /* jsb_ext_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA6FEC4B19335FF300F5D174 /* jsb_ext_create_apis.js */; };
 		C03780EB18BEE0E400FE4F13 /* src in Resources */ = {isa = PBXBuildFile; fileRef = C03780EA18BEE0E400FE4F13 /* src */; };
 		C03780EC18BEE0E400FE4F13 /* src in Resources */ = {isa = PBXBuildFile; fileRef = C03780EA18BEE0E400FE4F13 /* src */; };
 		C037820C18BF77C500FE4F13 /* libjsbindings iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C037820918BF76AF00FE4F13 /* libjsbindings iOS.a */; };
@@ -317,6 +319,7 @@
 		A922754B1517C094001B78AA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A922754D1517C094001B78AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A922754F1517C094001B78AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BA6FEC4B19335FF300F5D174 /* jsb_ext_create_apis.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_ext_create_apis.js; path = "../../js-bindings/bindings/script/jsb_ext_create_apis.js"; sourceTree = "<group>"; };
 		C03780EA18BEE0E400FE4F13 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../../../src; sourceTree = "<group>"; };
 		C037820118BF76AF00FE4F13 /* cocos2d_js_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_js_bindings.xcodeproj; path = "../../js-bindings/bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj"; sourceTree = "<group>"; };
 		C06E23CB18CEFE680093C81A /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -524,6 +527,7 @@
 				C0F9A1A218C6D1FC00C75ABD /* jsb_cocos2d_studio.js */,
 				C0F9A1A418C6D1FC00C75ABD /* jsb_cocosbuilder.js */,
 				1AC34A0E18C99CA5007834C9 /* jsb_create_apis.js */,
+				BA6FEC4B19335FF300F5D174 /* jsb_ext_create_apis.js */,
 				C0F9A1A518C6D1FC00C75ABD /* jsb_debugger.js */,
 				C0F9A1A618C6D1FC00C75ABD /* jsb_deprecated.js */,
 				1AC34A0F18C99CA5007834C9 /* jsb_loaders.js */,
@@ -747,6 +751,7 @@
 				1AD7E0A918C9DBE3004817A6 /* main.js in Resources */,
 				1AD7E0A118C9DB84004817A6 /* jsb_boot.js in Resources */,
 				1AD7E0A218C9DB84004817A6 /* jsb_create_apis.js in Resources */,
+				BA6FEC4D19335FF300F5D174 /* jsb_ext_create_apis.js in Resources */,
 				1AD7E0A318C9DB84004817A6 /* jsb_loaders.js in Resources */,
 				C0F9A1BC18C6D1FC00C75ABD /* jsb_cocos2d.js in Resources */,
 				C0F9A1C418C6D1FC00C75ABD /* jsb_opengl_constants.js in Resources */,
@@ -778,6 +783,7 @@
 				1AD7E0A818C9DB93004817A6 /* main.js in Resources */,
 				1AC34A1618C99CCC007834C9 /* jsb_boot.js in Resources */,
 				1AC34A1718C99CCC007834C9 /* jsb_create_apis.js in Resources */,
+				BA6FEC4C19335FF300F5D174 /* jsb_ext_create_apis.js in Resources */,
 				1AC34A1818C99CCC007834C9 /* jsb_loaders.js in Resources */,
 				509D4ABE17EBB2AB00697056 /* Default.png in Resources */,
 				C0F9A1AF18C6D1FC00C75ABD /* jsb_chipmunk_constants.js in Resources */,
@@ -913,7 +919,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../js-bindings/cocos2d-x/cocos/2d/platform/mac $(SRCROOT)/../../js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../../js-bindings/external/spidermonkey/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../js-bindings/cocos2d-x/cocos/platform/mac $(SRCROOT)/../../js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../../js-bindings/external/spidermonkey/include/mac";
 			};
 			name = Debug;
 		};
@@ -934,7 +940,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../js-bindings/cocos2d-x/cocos/2d/platform/mac $(SRCROOT)/../../js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../../js-bindings/external/spidermonkey/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../js-bindings/cocos2d-x/cocos/platform/mac $(SRCROOT)/../../js-bindings/cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../../js-bindings/external/spidermonkey/include/mac";
 			};
 			name = Release;
 		};
@@ -1006,7 +1012,7 @@
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../../js-bindings/external/spidermonkey/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../js-bindings/cocos2d-x/cocos/platform/ios $(SRCROOT)/../../js-bindings/external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
@@ -1029,7 +1035,7 @@
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../js-bindings/cocos2d-x/cocos/2d/platform/ios $(SRCROOT)/../../js-bindings/external/spidermonkey/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../js-bindings/cocos2d-x/cocos/platform/ios $(SRCROOT)/../../js-bindings/external/spidermonkey/include/ios";
 			};
 			name = Release;
 		};

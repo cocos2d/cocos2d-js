@@ -21,6 +21,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -28,6 +30,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -114,8 +118,10 @@ if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource\src"
 mkdir "$(OutDir)\Resource\res"
+mkdir "$(OutDir)\Resource\rtres"
 xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\Resource" /e /Y
 xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
+xcopy "$(ProjectDir)..\..\..\runtime\rtres" "$(OutDir)\Resource\rtres" /e /Y
 copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\Resource\main.js" /Y
 copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\Resource\project.json" /Y
 copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
@@ -175,8 +181,10 @@ if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource\src"
 mkdir "$(OutDir)\Resource\res"
+mkdir "$(OutDir)\Resource\rtres"
 xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\Resource" /e /Y
 xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
+xcopy "$(ProjectDir)..\..\..\runtime\rtres" "$(OutDir)\Resource\rtres" /e /Y
 copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\Resource\main.js" /Y
 copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\Resource\project.json" /Y
 copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y

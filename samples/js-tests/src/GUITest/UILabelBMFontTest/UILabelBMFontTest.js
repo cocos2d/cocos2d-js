@@ -28,13 +28,13 @@ var UILabelBMFontTest = UIScene.extend({
     init: function () {
         if (this._super()) {
             //init text
-            this._topDisplayLabel.setText("");
-            this._bottomDisplayLabel.setText("LabelBMFont");
+            this._topDisplayLabel.setString("");
+            this._bottomDisplayLabel.setString("LabelBMFont");
 
             // Create the LabelBMFont
             var labelBMFont = ccui.TextBMFont.create();
             labelBMFont.setFntFile("res/cocosui/bitmapFontTest2.fnt");
-            labelBMFont.setText("BMFont");
+            labelBMFont.setString("BMFont");
             labelBMFont.x = this._widget.width / 2;
 	        labelBMFont.y = this._widget.height / 2.0 + labelBMFont.height / 8.0;
             this._mainNode.addChild(labelBMFont);
