@@ -28,8 +28,8 @@ var UIRichTextTest = UIScene.extend({
     init: function () {
         if (this._super()) {
             //init text
-            this._topDisplayLabel.setText("");
-            this._bottomDisplayLabel.setText("RichText");
+            this._topDisplayLabel.setString("");
+            this._bottomDisplayLabel.setString("RichText");
 
             var widgetSize = this._widget.getSize();
             var button = ccui.Button.create();

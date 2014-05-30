@@ -96,7 +96,7 @@ UIScene = cc.Layer.extend({
         return false;
     },
     setSceneTitle: function (title) {
-        this._sceneTitle.setText(title);
+        this._sceneTitle.setString(title);
     },
     toExtensionsMainLayer: function (sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {

@@ -41,7 +41,7 @@ var UIPageViewEditorTest = UIBaseLayer.extend({
         switch (type) {
             case ccui.PageView.EVENT_TURNING:
                 var pageView = sender;
-                this._topDisplayText.setText("page = " + (pageView.getCurPageIndex() + 1));
+                this._topDisplayText.setString("page = " + (pageView.getCurPageIndex() + 1));
                 break;
             default:
                 break;

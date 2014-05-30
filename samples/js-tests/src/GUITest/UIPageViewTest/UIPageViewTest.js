@@ -28,10 +28,10 @@ var UIPageViewTest = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getSize();
             //init text
-            this._topDisplayLabel.setText("Move by horizontal direction");
+            this._topDisplayLabel.setString("Move by horizontal direction");
             this._topDisplayLabel.x = widgetSize.width / 2.0;
             this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
-            this._bottomDisplayLabel.setText("PageView");
+            this._bottomDisplayLabel.setString("PageView");
             this._bottomDisplayLabel.x = widgetSize.width / 2;
             this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
@@ -81,7 +81,7 @@ var UIPageViewTest = UIScene.extend({
         switch (type) {
             case ccui.PageView.EVENT_TURNING:
                 var pageView = sender;
-                this._topDisplayLabel.setText("page = " + (pageView.getCurPageIndex() + 1));
+                this._topDisplayLabel.setString("page = " + (pageView.getCurPageIndex() + 1));
                 break;
             default:
                 break;

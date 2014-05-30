@@ -123,8 +123,15 @@ And they share the same project file which located in `build` folder, there are 
    * OpenGL ES 2.0 (mobile) / OpenGL 2.1 (desktop) based
    * Full WebGL support and auto canvas fallback
    
-## Documentation
-- [Getting Started with Cocos2d-JS](http://cocos2d-x.org/wiki/Getting_Started_Cocos2d-JS)
+## Documentations
 
+- [Getting Started with Cocos2d-JS](http://www.cocos2d-x.org/docs/manual/framework/html5/en)
 
-   
+##Github note
+
+If you fork our github repository or download the package from github, you will need to do some extra tasks:
+
+- Run `frameworks/js-bindings/cocos2d-x/download-deps.py` to download external dependencies for Cocos2d-x
+- Run `tools/cocos2d-console/download-bin.py` to download bin files for some cocos2d-console plugins like Google Closure Compiler, JSC Compiler.
+
+Otherwise, you will fail to compile your JSB projects.

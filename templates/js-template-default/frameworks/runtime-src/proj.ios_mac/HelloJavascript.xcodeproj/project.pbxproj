@@ -67,7 +67,7 @@
 		A922754C1517C094001B78AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922754B1517C094001B78AA /* UIKit.framework */; };
 		A922754E1517C094001B78AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922754D1517C094001B78AA /* Foundation.framework */; };
 		A92275501517C094001B78AA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922754F1517C094001B78AA /* CoreGraphics.framework */; };
-		BA6FEC4C19335FF300F5D174 /* jsb_ext_create_apis.js in Sources */ = {isa = PBXBuildFile; fileRef = BA6FEC4B19335FF300F5D174 /* jsb_ext_create_apis.js */; };
+		BA6FEC4C19335FF300F5D174 /* jsb_ext_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA6FEC4B19335FF300F5D174 /* jsb_ext_create_apis.js */; };
 		BA6FEC4D19335FF300F5D174 /* jsb_ext_create_apis.js in Resources */ = {isa = PBXBuildFile; fileRef = BA6FEC4B19335FF300F5D174 /* jsb_ext_create_apis.js */; };
 		C03780EB18BEE0E400FE4F13 /* src in Resources */ = {isa = PBXBuildFile; fileRef = C03780EA18BEE0E400FE4F13 /* src */; };
 		C03780EC18BEE0E400FE4F13 /* src in Resources */ = {isa = PBXBuildFile; fileRef = C03780EA18BEE0E400FE4F13 /* src */; };
@@ -783,6 +783,7 @@
 				1AD7E0A818C9DB93004817A6 /* main.js in Resources */,
 				1AC34A1618C99CCC007834C9 /* jsb_boot.js in Resources */,
 				1AC34A1718C99CCC007834C9 /* jsb_create_apis.js in Resources */,
+				BA6FEC4C19335FF300F5D174 /* jsb_ext_create_apis.js in Resources */,
 				1AC34A1818C99CCC007834C9 /* jsb_loaders.js in Resources */,
 				509D4ABE17EBB2AB00697056 /* Default.png in Resources */,
 				C0F9A1AF18C6D1FC00C75ABD /* jsb_chipmunk_constants.js in Resources */,
@@ -841,7 +842,6 @@
 				D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */,
 				509D4AC817EBB2AB00697056 /* main.m in Sources */,
 				509D4ABC17EBB2AB00697056 /* AppController.mm in Sources */,
-				BA6FEC4C19335FF300F5D174 /* jsb_ext_create_apis.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

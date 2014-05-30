@@ -28,8 +28,8 @@ var UIWidgetAddNodeTest = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getSize();
             //init text
-            this._topDisplayLabel.setText("");
-            this._bottomDisplayLabel.setText("NodeContainer");
+            this._topDisplayLabel.setString("");
+            this._bottomDisplayLabel.setString("NodeContainer");
 
             // Create the ui node container
             var nodeContainer = ccui.Widget.create();
