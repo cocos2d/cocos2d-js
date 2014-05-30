@@ -2747,6 +2747,16 @@ getText : function (
 },
 
 /**
+ * @method setFontSize
+ * @param {int} arg0
+ */
+setFontSize : function (
+int 
+)
+{
+},
+
+/**
  * @method setPlaceholderFontName
  * @param {char} arg0
  */
@@ -2771,6 +2781,16 @@ getPlaceHolder : function (
  * @param {char} arg0
  */
 setFontName : function (
+char 
+)
+{
+},
+
+/**
+ * @method setText
+ * @param {char} arg0
+ */
+setText : function (
 char 
 )
 {
@@ -2829,16 +2849,6 @@ int
 },
 
 /**
- * @method setFontSize
- * @param {int} arg0
- */
-setFontSize : function (
-int 
-)
-{
-},
-
-/**
  * @method initWithSizeAndBackgroundSprite
  * @param {size_object} arg0
  * @param {cc.Scale9Sprite} arg1
@@ -2890,16 +2900,6 @@ getMaxLength : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setText
- * @param {char} arg0
- */
-setText : function (
-char 
-)
-{
 },
 
 /**
