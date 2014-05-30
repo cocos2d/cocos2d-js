@@ -190,7 +190,12 @@ xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\ConfigParser.cpp" />
-    <ClCompile Include="..\Classes\Runtime.cpp" />
+    <ClCompile Include="..\Classes\runtime\Landscape_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\PlayDisable_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\PlayEnable_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\Portrait_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\Runtime.cpp" />
+    <ClCompile Include="..\Classes\runtime\Shine_png.cpp" />
     <ClCompile Include="..\Classes\VisibleRect.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
@@ -199,7 +204,8 @@ xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\ConfigParser.h" />
-    <ClInclude Include="..\Classes\Runtime.h" />
+    <ClInclude Include="..\Classes\runtime\ResData.h" />
+    <ClInclude Include="..\Classes\runtime\Runtime.h" />
     <ClInclude Include="..\Classes\VisibleRect.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
