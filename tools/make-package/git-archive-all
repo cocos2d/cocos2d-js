@@ -294,7 +294,7 @@ class GitArchiver(object):
                 archive_file.extractall(tmp_dir)
                 archive_file.close()
 
-            out_file_name = path.splitext(output_path)[0]
+            out_file_name = path.splitext(path.basename(output_path))[0]
             unpack_path = os.path.join(tmp_dir, out_file_name)
             print("engine unpacked path is : %s" % unpack_path)
 
@@ -309,7 +309,7 @@ class GitArchiver(object):
             tmp_archive_file = os.path.join(tmp_dir, archive_file_name)
             if output_format == 'zip':
                 import zipfile
-                tmp_archive = ZipFile(tmp_archive_file, 'w')
+                tmp_archive = ZipFile(tmp_archive_file, 'w', allowZip64=True)
                 self.add_folder_to_zip(tmp_archive, unpack_path, tmp_dir)
                 tmp_archive.close()
             elif output_format in ['tar', 'bz2', 'gz', 'tgz']:
