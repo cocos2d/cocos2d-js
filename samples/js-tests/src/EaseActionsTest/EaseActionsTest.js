@@ -757,6 +757,416 @@ var SchedulerTest = EaseSpriteDemo.extend({
 });
 
 //
+// SpriteEaseBezier action
+//
+var SpriteEaseBezierTest = EaseSpriteDemo.extend({
+
+    onEnter: function(){
+        this._super();
+        //----start14----onEnter
+
+        var size = director.getWinSize();
+
+        //
+        // startPosition can be any coordinate, but since the movement
+        // is relative to the Bezier curve, make it (0,0)
+        //
+
+        this._grossini.setPosition( cc.p(size.width/2, size.height/2));
+        this._tamara.setPosition( cc.p(size.width/4, size.height/2));
+        this._kathia.setPosition( cc.p(3 * size.width/4, size.height/2));
+
+        // sprite 1
+        var bezier = [
+            cc.p(0, size.height / 2),
+            cc.p(300 / 480 * 800, -size.height / 2),
+            cc.p(300 / 480 * 800, 100 / 320 * 450)
+        ];
+        var bezierForward = cc.BezierBy.create(3, bezier);
+        //var bezierEaseForward = cc.EaseBezierAction.create(bezierForward);
+        //bezierEaseForward.setBezierParamer(0.5, 0.5, 1.0, 1.0);
+        var bezierEaseForward = bezierForward.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
+
+        var bezierEaseBack = bezierEaseForward.reverse();
+        var bezierEaseTo = cc.Sequence.create(bezierEaseForward, bezierEaseBack).repeatForever();
+
+        // sprite 2
+        this._tamara.setPosition(cc.p(135,225));
+        var bezier2 = [
+            cc.p(100 / 480 * 800, size.height / 2),
+            cc.p(200 / 480 * 800, -size.height / 2),
+            cc.p(200 / 480 * 800, 160 / 320 * 450)
+        ];
+        var bezierTo1 = cc.BezierTo.create(2, bezier2);
+        //var bezierEaseTo1 = cc.EaseBezierAction.create(bezierTo1);
+        //bezierEaseTo1.setBezierParamer(0.5, 0.5, 1.0, 1.0);
+        var bezierEaseTo1 = bezierTo1.easing(cc.easeBezierAction(0.5, 0.5, 1.0, 1.0));
+
+        // sprite 3
+        this._kathia.setPosition(cc.p(667, 225));
+        var bezierTo2 = cc.BezierTo.create(2, bezier2);
+        //var bezierEaseTo2 = cc.EaseBezierAction.create(bezierTo2);
+        //bezierEaseTo2.setBezierParamer(0.0, 0.5, -5.0, 1.0);
+        var bezierEaseTo2 = bezierTo2.easing(cc.easeBezierAction(0.0, 0.5, -5.0, 1.0));
+
+
+        this._grossini.runAction(bezierEaseTo);
+        this._tamara.runAction(bezierEaseTo1);
+        this._kathia.runAction(bezierEaseTo2);
+
+        //----end14----
+    },
+    title: function(){
+        return "SpriteEaseBezier action";
+    }
+});
+
+
+//
+// SpriteEaseQuadratic
+//
+var SpriteEaseQuadraticTest = EaseSpriteDemo.extend({
+
+    onEnter: function(){
+        this._super();
+        //----start15----onEnter
+
+        var move = cc.MoveBy.create(3, cc.p(winSize.width - 130, 0));
+        var move_back = move.reverse();
+
+        //var move_ease_in = cc.EaseQuadraticActionIn.create(move.clone());
+        var move_ease_in = move.clone().easing(cc.easeQuadraticActionIn());
+        var move_ease_in_back = move_ease_in.reverse();
+
+        //var move_ease_out = cc.EaseQuadraticActionOut.create(move.clone());
+        var move_ease_out = move.clone().easing(cc.easeQuadraticActionOut());
+        var move_ease_out_back = move_ease_out.reverse();
+
+        var delay = cc.DelayTime.create(0.25);
+
+        var seq1 = cc.Sequence.create(move, delay, move_back, delay.clone());
+        var seq2 = cc.Sequence.create(move_ease_in, delay.clone(), move_ease_in_back, delay.clone());
+        var seq3 = cc.Sequence.create(move_ease_out, delay.clone(), move_ease_out_back, delay.clone());
+
+        this._grossini.runAction( seq1.repeatForever() );
+        this._tamara.runAction( seq2.repeatForever() );
+        this._kathia.runAction( seq3.repeatForever() );
+
+        //----end15----
+    },
+    title: function(){
+        return "SpriteEaseQuadratic action";
+    }
+});
+
+//
+// SpriteEaseQuadraticInOut
+//
+var SpriteEaseQuadraticInOutTest = EaseSpriteDemo.extend({
+
+    onEnter: function(){
+        this._super();
+        //----start16----onEnter
+
+        var move = cc.MoveBy.create(3, cc.p(winSize.width - 130, 0));
+        var move_back = move.reverse();
+
+        //var move_ease = cc.EaseQuadraticActionInOut.create(move.clone());
+        var move_ease = move.clone().easing(cc.easeQuadraticActionInOut());
+        var move_ease_back = move_ease.reverse();
+
+        var delay = cc.DelayTime.create(0.25);
+
+        var seq1 = cc.Sequence.create(move, delay, move_back, delay.clone()).repeatForever();
+        var seq2 = cc.Sequence.create(move_ease, delay.clone(), move_ease_back, delay.clone()).repeatForever();
+
+        this.positionForTwo();
+
+        this._grossini.runAction( seq1 );
+        this._tamara.runAction( seq2 );
+        //----end16----
+    },
+    title: function(){
+        return "SpriteEaseQuadraticInOut action";
+    }
+});
+
+//
+// SpriteEaseQuartic
+//
+var SpriteEaseQuarticTest = EaseSpriteDemo.extend({
+
+    onEnter: function(){
+        this._super();
+        //----start17----onEnter
+
+        var move = cc.MoveBy.create(3, cc.p(winSize.width - 130, 0));
+        var move_back = move.reverse();
+
+        //var move_ease_in = cc.EaseQuarticActionIn.create(move.clone() );
+        var move_ease_in = move.clone().easing(cc.easeQuarticActionIn());
+        var move_ease_in_back = move_ease_in.reverse();
+
+        //var move_ease_out = cc.EaseQuarticActionOut.create(move.clone() );
+        var move_ease_out = move.clone().easing(cc.easeQuarticActionOut());
+        var move_ease_out_back = move_ease_out.reverse();
+
+        var delay = cc.DelayTime.create(0.25);
+
+        var seq1 = cc.Sequence.create(move, delay, move_back, delay.clone());
+        var seq2 = cc.Sequence.create(move_ease_in, delay.clone(), move_ease_in_back, delay.clone());
+        var seq3 = cc.Sequence.create(move_ease_out, delay.clone(), move_ease_out_back, delay.clone());
+
+        this._grossini.runAction( seq1.repeatForever() );
+        this._tamara.runAction( seq2.repeatForever() );
+        this._kathia.runAction( seq3.repeatForever() );
+        //----end17----
+    },
+    title: function(){
+        return "SpriteEaseQuartic action";
+    }
+});
+
+//
+// SpriteEaseQuarticInOut
+//
+var SpriteEaseQuarticInOutTest = EaseSpriteDemo.extend({
+    onEnter: function(){
+        this._super();
+        //----start18----onEnter
+
+        var move = cc.MoveBy.create(3, cc.p(winSize.width - 130, 0));
+        var move_back = move.reverse();
+
+        //var move_ease = cc.EaseQuarticActionInOut.create(move.clone() );
+        var move_ease = move.clone().easing(cc.easeQuarticActionInOut());
+        var move_ease_back = move_ease.reverse();
+
+        var delay = cc.DelayTime.create(0.25);
+
+        var seq1 = cc.Sequence.create(move, delay, move_back, delay.clone());
+        var seq2 = cc.Sequence.create(move_ease, delay.clone(), move_ease_back, delay.clone());
+
+        this.positionForTwo();
+
+        this._grossini.runAction( seq1.repeatForever() );
+        this._tamara.runAction( seq2.repeatForever() );
+
+        //----end18----
+    },
+    title: function(){
+        return "SpriteEaseQuarticInOut action";
+    }
+});
+
+//
+// SpriteEaseQuintic
+//
+var SpriteEaseQuinticTest = EaseSpriteDemo.extend({
+    onEnter: function(){
+        this._super();
+        //----start19----onEnter
+
+        var move = cc.MoveBy.create(3, cc.p(winSize.width - 130, 0));
+        var move_back = move.reverse();
+
+        //var move_ease_in = cc.EaseQuinticActionIn.create(move.clone() );
+        var move_ease_in = move.clone().easing(cc.easeQuinticActionIn());
+        var move_ease_in_back = move_ease_in.reverse();
+
+        //var move_ease_out = cc.EaseQuinticActionOut.create(move.clone() );
+        var move_ease_out = move.clone().easing(cc.easeQuinticActionOut());
+        var move_ease_out_back = move_ease_out.reverse();
+
+        var delay = cc.DelayTime.create(0.25);
+
+        var seq1 = cc.Sequence.create(move, delay, move_back, delay.clone());
+        var seq2 = cc.Sequence.create(move_ease_in, delay.clone(), move_ease_in_back, delay.clone());
+        var seq3 = cc.Sequence.create(move_ease_out, delay.clone(), move_ease_out_back, delay.clone());
+
+        this._grossini.runAction( seq1.repeatForever() );
+        this._tamara.runAction( seq2.repeatForever() );
+        this._kathia.runAction( seq3.repeatForever() );
+
+
+        //----end19----
+    },
+    title: function(){
+        return "SpriteEaseQuintic action";
+    }
+});
+
+//
+// SpriteEaseQuinticInOut
+//
+var SpriteEaseQuinticInOutTest = EaseSpriteDemo.extend({
+    onEnter: function(){
+        this._super();
+        //----start20----onEnter
+
+        var move = cc.MoveBy.create(3, cc.p(winSize.width - 130, 0));
+        var move_back = move.reverse();
+
+        //var move_ease = cc.EaseQuinticActionInOut.create(move.clone() );
+        var move_ease = move.clone().easing(cc.easeQuinticActionInOut());
+        var move_ease_back = move_ease.reverse();
+
+        var delay = cc.DelayTime.create(0.25);
+
+        var seq1 = cc.Sequence.create(move, delay, move_back, delay.clone());
+        var seq2 = cc.Sequence.create(move_ease, delay.clone(), move_ease_back, delay.clone());
+
+        this.positionForTwo();
+
+        this._grossini.runAction( seq1.repeatForever() );
+        this._tamara.runAction( seq2.repeatForever() );
+
+        //----end20----
+    },
+    title: function(){
+        return "SpriteEaseQuinticInOut action";
+    }
+});
+
+//
+// SpriteEaseCircle
+//
+var SpriteEaseCircleTest = EaseSpriteDemo.extend({
+    onEnter: function(){
+        this._super();
+        //----start21----onEnter
+
+        var move = cc.MoveBy.create(3, cc.p(winSize.width - 130, 0));
+        var move_back = move.reverse();
+
+        //var move_ease_in = cc.EaseCircleActionIn.create(move.clone() );
+        var move_ease_in = move.clone().easing(cc.easeCircleActionIn());
+        var move_ease_in_back = move_ease_in.reverse();
+
+        //var move_ease_out = cc.EaseCircleActionOut.create(move.clone() );
+        var move_ease_out = move.clone().easing(cc.easeCircleActionOut());
+        var move_ease_out_back = move_ease_out.reverse();
+
+        var delay = cc.DelayTime.create(0.25);
+
+        var seq1 = cc.Sequence.create(move, delay, move_back, delay.clone());
+        var seq2 = cc.Sequence.create(move_ease_in, delay.clone(), move_ease_in_back, delay.clone());
+        var seq3 = cc.Sequence.create(move_ease_out, delay.clone(), move_ease_out_back, delay.clone());
+
+        this._grossini.runAction( seq1.repeatForever() );
+        this._tamara.runAction( seq2.repeatForever() );
+        this._kathia.runAction( seq3.repeatForever() );
+
+        //----end21----
+    },
+    title: function(){
+        return "SpriteEaseCircle action";
+    }
+});
+
+//
+// SpriteEaseCircleInOut
+//
+var SpriteEaseCircleInOutTest = EaseSpriteDemo.extend({
+    onEnter: function(){
+        this._super();
+        //----start22----onEnter
+
+        var move = cc.MoveBy.create(3, cc.p(winSize.width - 130, 0));
+        var move_back = move.reverse();
+
+        //var move_ease = cc.EaseCircleActionInOut.create(move.clone() );
+        var move_ease = move.clone().easing(cc.easeCircleActionInOut());
+        var move_ease_back = move_ease.reverse();
+
+        var delay = cc.DelayTime.create(0.25);
+
+        var seq1 = cc.Sequence.create(move, delay, move_back, delay.clone());
+        var seq2 = cc.Sequence.create(move_ease, delay.clone(), move_ease_back, delay.clone());
+
+        this.positionForTwo();
+
+        this._grossini.runAction( seq1.repeatForever() );
+        this._tamara.runAction( seq2.repeatForever() );
+
+        //----end22----
+    },
+    title: function(){
+        return "SpriteEaseCircleInOut action";
+    }
+});
+
+//
+// SpriteEaseCubic
+//
+var SpriteEaseCubicTest = EaseSpriteDemo.extend({
+    onEnter: function(){
+        this._super();
+        //----start23----onEnter
+
+        var move = cc.MoveBy.create(3, cc.p(winSize.width - 130, 0));
+        var move_back = move.reverse();
+
+        //var move_ease_in = cc.EaseCubicActionIn.create(move.clone() );
+        var move_ease_in = move.clone().easing(cc.easeCubicActionIn());
+        var move_ease_in_back = move_ease_in.reverse();
+
+        //var move_ease_out = cc.EaseCubicActionOut.create(move.clone() );
+        var move_ease_out = move.clone().easing(cc.easeCubicActionOut());
+        var move_ease_out_back = move_ease_out.reverse();
+
+        var delay = cc.DelayTime.create(0.25);
+
+        var seq1 = cc.Sequence.create(move, delay, move_back, delay.clone());
+        var seq2 = cc.Sequence.create(move_ease_in, delay.clone(), move_ease_in_back, delay.clone());
+        var seq3 = cc.Sequence.create(move_ease_out, delay.clone(), move_ease_out_back, delay.clone());
+
+        this._grossini.runAction( seq1.repeatForever() );
+        this._tamara.runAction( seq2.repeatForever() );
+        this._kathia.runAction( seq3.repeatForever() );
+
+
+        //----end23----
+    },
+    title: function(){
+        return "SpriteEaseCubic action";
+    }
+});
+
+//
+// SpriteEaseCubicInOut
+//
+var SpriteEaseCubicInOutTest = EaseSpriteDemo.extend({
+    onEnter: function(){
+        this._super();
+        //----start24----onEnter
+
+        var move = cc.MoveBy.create(3, cc.p(winSize.width - 130, 0));
+        var move_back = move.reverse();
+
+        //var move_ease = cc.EaseCubicActionInOut.create(move.clone() );
+        var move_ease = move.clone().easing(cc.easeCubicActionInOut());
+        var move_ease_back = move_ease.reverse();
+
+        var delay = cc.DelayTime.create(0.25);
+
+        var seq1 = cc.Sequence.create(move, delay, move_back, delay.clone());
+        var seq2 = cc.Sequence.create(move_ease, delay.clone(), move_ease_back, delay.clone());
+
+        this.positionForTwo();
+
+        this._grossini.runAction( seq1.repeatForever() );
+        this._tamara.runAction( seq2.repeatForever() );
+
+
+        //----end24----
+    },
+    title: function(){
+        return "SpriteEaseCubicInOut action";
+    }
+});
+
+//
 // Flow control
 //
 var arrayOfEaseActionsTest = [
@@ -773,7 +1183,18 @@ var arrayOfEaseActionsTest = [
     SpriteEaseBack,
     SpriteEaseBackInOut,
     SpeedTest,
-    SchedulerTest
+    SchedulerTest,
+    SpriteEaseBezierTest,
+    SpriteEaseQuadraticTest,
+    SpriteEaseQuadraticInOutTest,
+    SpriteEaseQuarticTest,
+    SpriteEaseQuarticInOutTest,
+    SpriteEaseQuinticTest,
+    SpriteEaseQuinticInOutTest,
+    SpriteEaseCircleTest,
+    SpriteEaseCircleInOutTest,
+    SpriteEaseCubicTest,
+    SpriteEaseCubicInOutTest
 ];
 
 var nextEaseActionsTest = function () {
