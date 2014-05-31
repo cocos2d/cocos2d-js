@@ -35,7 +35,7 @@
 /* #undef JS_HAVE_SYS_ISA_DEFS_H */
 
 /* MOZILLA JSAPI version number components */
-#define MOZJS_MAJOR_VERSION 27
+#define MOZJS_MAJOR_VERSION 28
 #define MOZJS_MINOR_VERSION 0
 
 #endif /* js_config_h */
