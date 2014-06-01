@@ -272,5 +272,5 @@ add_subdirectory(frameworks/js-bindings/bindings/manual/network)
 add_subdirectory(frameworks/js-bindings/bindings/manual/ui)
 
 if(BUILD_JSTests)
-add_subdirectory(samples/js-tests/project)
+add_subdirectory(samples/js-tests)
 endif(BUILD_JSTests)
