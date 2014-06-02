@@ -33,19 +33,6 @@ project (Cocos2djs)
 
 include(build/BuildHelpers.CMakeLists.txt)
 
-if(WIN32 OR APPLE)
-
-option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
-option(USE_BOX2D "Use box2d for physics library" OFF)
-option(DEBUG_MODE "Debug or release?" ON)
-option(BUILD_LIBS_LUA "Build lua libraries" OFF)
-option(BUILD_EXTENSIONS "Build extension library" ON)
-option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
-option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
-option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
-
-option(BUILD_JSTests "Only build TestCpp sample" ON)
-else()#temp
 
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
@@ -56,8 +43,8 @@ option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 
-option(BUILD_JSTests "Only build TestCpp sample" ON)
-endif()#temp
+option(BUILD_JSTests "build TestJS sample" ON)
+option(BUILD_JSMOONWARRIORS "build MoonWarriors sample" ON)
 
 
 if(DEBUG_MODE)
@@ -271,6 +258,13 @@ add_subdirectory(frameworks/js-bindings/bindings/manual/network)
 #jsbinding_ui library
 add_subdirectory(frameworks/js-bindings/bindings/manual/ui)
 
+#js-tests sample
 if(BUILD_JSTests)
 add_subdirectory(samples/js-tests)
 endif(BUILD_JSTests)
+
+#js-moonwarriors sample
+if(BUILD_JSMOONWARRIORS)
+add_subdirectory(samples/js-moonwarriors)
+endif(BUILD_JSMOONWARRIORS)
+
