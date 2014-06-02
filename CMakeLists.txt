@@ -31,7 +31,7 @@ project (Cocos2djs)
 #set(Cocos2djsSamples_VERSION_MAJOR 3)
 #set(Cocos2djsSamples_VERSION_MINOR 0)
 
-include(build/BuildHelpers.CMakeLists.txt)
+include(frameworks/js-bindings/cocos2d-x/build/BuildHelpers.CMakeLists.txt)
 
 
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
