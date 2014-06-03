@@ -119,7 +119,7 @@ var IAPTestLayer = cc.Layer.extend({
         pMenu.setPosition(cc.p(0, 0));
         this.addChild(pMenu, 1);
     },
-    closeFunction:function(sender){
+    closeFunction: function (sender) {
         var scene = new ExtensionsTestScene();
         scene.runThisTest();
         cc.director.runScene(scene);
@@ -156,8 +156,8 @@ var IAPTestLayer = cc.Layer.extend({
             //replace these ids to your own productIdentifiers
             var pidList = ["001", "002"];
             this.PluginIAP.callFuncWithParam("requestProducts", plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, pidList.toString()));
-        }else if(sender.tag  == TAG_PAYMENT){
-            if(!this.product){
+        } else if (sender.tag == TAG_PAYMENT) {
+            if (!this.product) {
                 var label = this.getChildByTag(TAG_PAYMENT_RESULT);
                 if (label) {
                     label.setString("please call requestProducts first");
@@ -171,15 +171,15 @@ var IAPTestLayer = cc.Layer.extend({
 
     onPayResult: function (ret, msg, productInfo) {
         this.toggleToast(false);
-        cc.log("onPayResult productInfo is "+productInfo.productId);
+        cc.log("onPayResult ret is " + ret);
         var str = "";
-        if (ret == 0) {
-            str = "payment Success pid is "+productInfo.productId;
-        }else if(ret == 4){
+        if (ret == plugin.ProtocolIAP.PayResultCode.PaySuccess) {
+            str = "payment Success pid is " + productInfo.productId;
+        } else if (ret == plugin.ProtocolIAP.PayResultCode.VierfyFromServer) {
             str = "payment verify from server";
             this.postServerData(msg);
-        }else if(ret == 1){
-            str == "";
+        } else if (ret == plugin.ProtocolIAP.PayResultCode.PayFail) {
+            str = "payment fail";
         }
         var label = this.getChildByTag(TAG_PAYMENT_RESULT);
         if (label) {
@@ -188,21 +188,20 @@ var IAPTestLayer = cc.Layer.extend({
     },
     onRequestProductResult: function (ret, productInfo) {
         var msgStr = "";
-        if (ret == 0) {
+        if (ret == plugin.ProtocolIAP.RequestProductCode.RequestFail) {
             msgStr = "request error";
             this.toggleToast(false);
-        } else if (ret == 1) {
-            cc.log("request RequestSuccees "+productInfo[0].productName);
+        } else if (ret == plugin.ProtocolIAP.RequestProductCode.RequestSuccess) {
+            cc.log("request RequestSuccees " + productInfo[0].productName);
             this.product = productInfo;
             msgStr = "list: [";
-            for (var i = 0;i<productInfo.length;i++) {
+            for (var i = 0; i < productInfo.length; i++) {
                 var product = productInfo[i];
-                cc.log(product.productId)
                 msgStr += product.productName + " ";
             }
             msgStr += " ]";
             this.toggleToast(false);
-        } else if (ret == 2) {
+        } else if (ret == plugin.ProtocolIAP.RequestProductCode.RequestSending) {
             msgStr = "request RequestSending";
         }
         var label = this.getChildByTag(TAG_GETPRODUCTLIST_RESULT);
