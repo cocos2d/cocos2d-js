@@ -212,7 +212,18 @@
                     "Back In - Out actions",
                     "EaseBackInOut action",
                     "Speed action",
-                    "Scheduler scaleTime Test"
+                    "Scheduler scaleTime Test",
+                    "SpriteEaseBezier action",
+                    "SpriteEaseQuadratic action",
+                    "SpriteEaseQuadraticInOut action",
+                    "SpriteEaseQuartic action",
+                    "SpriteEaseQuarticInOut action",
+                    "SpriteEaseQuintic action",
+                    "SpriteEaseQuinticInOut action",
+                    "SpriteEaseCircle action",
+                    "SpriteEaseCircleInOut action",
+                    "SpriteEaseCubic action",
+                    "SpriteEaseCubicInOut action"
                 ]//arrayOfEaseActionsTest
                 ,[
                     "Touchable Sprite",

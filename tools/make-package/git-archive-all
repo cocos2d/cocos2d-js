@@ -7,9 +7,18 @@ from __future__ import unicode_literals
 __version__ = "1.7"
 
 import sys
+import os
+import shutil
+import traceback
+
 from os import path, extsep
 from subprocess import Popen, PIPE, CalledProcessError
 
+class UnrecognizedFormat:
+    def __init__(self, prompt):
+        self._prompt = prompt
+    def __str__(self):
+        return self._prompt
 
 class GitArchiver(object):
     """
@@ -21,6 +30,13 @@ class GitArchiver(object):
 
     Automatically detects output format extension: zip, tar, bz2, or gz.
     """
+
+    IGNORED_RULES = [
+        "*.idea/*",
+        "frameworks/js-bindings/cocos2d-x/tools/*",
+        "frameworks/js-bindings/cocos2d-x/templates/*",
+        "frameworks/js-bindings/cocos2d-x/tests/*"
+    ]
 
     def __init__(self, prefix='', verbose=False, exclude=True, force_sub=False, extra=None, main_repo_abspath=None):
         """
@@ -70,6 +86,91 @@ class GitArchiver(object):
         self.extra = extra
         self.force_sub = force_sub
         self.main_repo_abspath = main_repo_abspath
+        self.ignore_rules = self.convert_rules(GitArchiver.IGNORED_RULES)
+
+    def load_json_file(self, file_path):
+        import json
+        if not path.isfile(file_path):
+            raise Exception("Could not find (%s)" % (file_path))
+
+        with open(file_path) as data_file:
+            data = json.load(data_file)
+        return data
+
+    def ensure_directory(self, target):
+        if not os.path.exists(target):
+            os.makedirs(target)
+
+    def unpack_zipfile(self, zip_file_path, extract_dir):
+        """Unpack zip `filename` to `extract_dir`
+
+        Raises ``UnrecognizedFormat`` if `filename` is not a zipfile (as determined
+        by ``zipfile.is_zipfile()``).
+        """
+
+        import zipfile
+        if not zipfile.is_zipfile(zip_file_path):
+            raise UnrecognizedFormat("%s is not a zip file" % zip_file_path)
+
+        file_paths = []
+        print("==> Extracting files, please wait ...")
+        z = zipfile.ZipFile(zip_file_path)
+        try:
+            for info in z.infolist():
+                name = info.filename
+
+                # don't extract absolute paths or ones with .. in them
+                if name.startswith('/') or '..' in name:
+                    continue
+
+                target = os.path.join(extract_dir, *name.split('/'))
+                if not target:
+                    continue
+                if name.endswith('/'):
+                    # directory
+                    self.ensure_directory(target)
+                else:
+                    # file
+                    data = z.read(info.filename)
+                    file_dir = os.path.dirname(target)
+                    if not os.path.exists(file_dir):
+                        os.makedirs(file_dir)
+                    f = open(target,'wb')
+                    try:
+                        f.write(data)
+                    finally:
+                        f.close()
+                        del data
+                unix_attributes = info.external_attr >> 16
+                if unix_attributes:
+                    os.chmod(target, unix_attributes)
+        finally:
+            z.close()
+            print("==> Extraction done!")
+        return file_paths
+
+    def convert_rules(self, rules):
+        ret_rules = []
+        for rule in rules:
+            ret = rule.replace('.', '\\.')
+            ret = ret.replace('*', '.*')
+            ret = "%s" % ret
+            ret_rules.append(ret)
+
+        return ret_rules
+
+    def is_in_ignore_rules(self, rel_path):
+        if self.ignore_rules is None or len(self.ignore_rules) == 0:
+            return False
+
+        import re
+        ret = False
+        path_str = rel_path.replace("\\", "/")
+        for rule in self.ignore_rules:
+            if re.match(rule, path_str):
+                ret = True
+
+        return ret
 
     def create(self, output_path, dry_run=False, output_format=None):
         """
@@ -114,6 +215,7 @@ class GitArchiver(object):
         else:
             raise RuntimeError("Unknown format: {f}".format(f=output_format))
 
+        print("Making archive: (%s) , please wait ..." % output_path)
         for file_path in self.extra:
             if not dry_run:
                 if self.verbose:
@@ -125,6 +227,9 @@ class GitArchiver(object):
                                           a=path.join(self.prefix, file_path)))
 
         for file_path in self.list_files():
+            if self.is_in_ignore_rules(file_path):
+                continue
+
             if not dry_run:
                 if self.verbose:
                     print("Compressing {f} => {a}...".format(f=path.join(self.main_repo_abspath, file_path),
@@ -134,8 +239,116 @@ class GitArchiver(object):
                 print("{f} => {a}".format(f=path.join(self.main_repo_abspath, file_path),
                                           a=path.join(self.prefix, file_path)))
 
+
+        # Execute download-deps.py in root folder
+        import subprocess
+        repo_x_path = path.join(self.main_repo_abspath, "frameworks", "js-bindings", "cocos2d-x")
+        subprocess.call("python %s -d -f" % (path.join(repo_x_path, "download-deps.py")), shell=True, cwd=repo_x_path)
+
+        # Execute download-bin.py in cocos2d-console folder
+        console_path = path.join(self.main_repo_abspath, "tools", "cocos2d-console")
+        subprocess.call("python %s -d -f" % (path.join(console_path, "download-bin.py")), shell=True, cwd=console_path)
+
+        # Check config.json to insert a zip file content to the final generated zip file
+        extra_folders = []
+        config_data = self.load_json_file("config.json")
+
+        for zip_file in config_data["extra_zip_files"]:
+            zip_config = self.load_json_file(zip_file["zip_config_path"])
+            zip_file_name = zip_config["version"] + '.zip'
+            extra_to_zip_file = zip_file["extract_to_zip_path"]
+            zip_file_path = os.path.join(zip_file["zip_file_path"], zip_file_name)
+            # 'v' letter was swallowed by github, so we need to substring it from the 2nd letter
+            extra_folder_name = zip_config["repo_name"] + '-' + zip_config["version"][1:]
+            extra_folder_path = os.path.join(self.main_repo_abspath, extra_folder_name)
+            extra_folders.append(extra_folder_path)
+            extra_file_paths = self.unpack_zipfile(zip_file_path, self.main_repo_abspath)
+            for file_path in extra_file_paths:
+                if file_path.find(extra_folder_path) == -1:
+                    raise Exception("Couldn't find extra folder path (%s) in (%s)!" % (extra_folder_path, file_path))
+
+                path_in_zip = extra_to_zip_file + file_path[(len(extra_folder_path)):]
+                add(file_path, path_in_zip)
+
         if not dry_run:
             archive.close()
+
+        for extra_folder in extra_folders:
+            if os.path.exists(extra_folder):
+                shutil.rmtree(extra_folder)
+
+        if not dry_run:
+            # unpack the archive file
+            import tempfile
+            tmp_dir = os.path.join(tempfile.gettempdir(), "cocos2d-js")
+            if os.path.exists(tmp_dir):
+                shutil.rmtree(tmp_dir)
+            os.makedirs(tmp_dir)
+            print("tmp dir is : %s" % tmp_dir)
+
+            if output_format == 'zip':
+                self.unpack_zipfile(path.abspath(output_path), tmp_dir)
+            elif output_format in ['tar', 'bz2', 'gz', 'tgz']:
+                import tarfile
+                archive_file = tarfile.open(path.abspath(output_path), "r")
+                archive_file.extractall(tmp_dir)
+                archive_file.close()
+
+            out_file_name = path.splitext(path.basename(output_path))[0]
+            unpack_path = os.path.join(tmp_dir, out_file_name)
+            print("engine unpacked path is : %s" % unpack_path)
+
+            # run ant tasks
+            ant_cmd_path = os.path.join(unpack_path, "frameworks", "cocos2d-html5", "tools")
+            if os.path.isdir(ant_cmd_path):
+                self.run_shell("ant compile", ant_cmd_path)
+                self.run_shell("ant compile_core", ant_cmd_path)
+
+            # re-pack the archive file
+            archive_file_name = os.path.basename(output_path)
+            tmp_archive_file = os.path.join(tmp_dir, archive_file_name)
+            if output_format == 'zip':
+                import zipfile
+                tmp_archive = ZipFile(tmp_archive_file, 'w', allowZip64=True)
+                self.add_folder_to_zip(tmp_archive, unpack_path, tmp_dir)
+                tmp_archive.close()
+            elif output_format in ['tar', 'bz2', 'gz', 'tgz']:
+                import tarfile
+
+                if output_format == 'tar':
+                    t_mode = 'w'
+                elif output_format == 'tgz':
+                    t_mode = 'w:gz'
+                else:
+                    t_mode = 'w:{f}'.format(f=output_format)
+                tmp_archive = tarfile.open(tmp_archive_file, t_mode)
+                self.add_folder_to_tar(tmp_archive, unpack_path, tmp_dir)
+                tmp_archive.close()
+
+            # move the re-packed file to target path
+            os.remove(path.abspath(output_path))
+            shutil.copy(tmp_archive_file, os.path.dirname(path.abspath(output_path)))
+            shutil.rmtree(tmp_dir)
+
+    def add_folder_to_tar(self, target_tar_file, folder, base_dir):
+        for file in os.listdir(folder):
+            abs_path = os.path.join(folder, file)
+            if os.path.isfile(abs_path):
+                import tarfile
+                rel_path = os.path.relpath(abs_path, base_dir)
+                target_tar_file.add(abs_path, rel_path)
+            elif os.path.isdir(abs_path):
+                self.add_folder_to_tar(target_tar_file, abs_path, base_dir)
+
+    def add_folder_to_zip(self, target_zip_file, folder, base_dir):
+        for file in os.listdir(folder):
+            abs_path = os.path.join(folder, file)
+            if os.path.isfile(abs_path):
+                import zipfile
+                rel_path = os.path.relpath(abs_path, base_dir)
+                target_zip_file.write(abs_path, rel_path, zipfile.ZIP_DEFLATED)
+            elif os.path.isdir(abs_path):
+                self.add_folder_to_zip(target_zip_file, abs_path, base_dir)
 
     def get_path_components(self, repo_abspath, abspath):
         """
@@ -459,6 +672,7 @@ if __name__ == '__main__':
                                options.extra)
         archiver.create(output_file_path, options.dry_run)
     except Exception as e:
+        traceback.print_exc()
         parser.exit(2, "{exception}\n".format(exception=e))
 
     sys.exit(0)
