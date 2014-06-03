@@ -715,7 +715,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA623E1F191A220B00761F37 /* StoreKit.framework in Frameworks */,
-				051FF7FF192EF68900C43A06 /* libPluginIAP.a in Frameworks */,
 				05F48C15192C9180008FB408 /* CoreTelephony.framework in Frameworks */,
 				05F48C13192C9178008FB408 /* Security.framework in Frameworks */,
 				BA623E25191A221D00761F37 /* MediaPlayer.framework in Frameworks */,
@@ -728,6 +727,7 @@
 				BA623DF1191A14EB00761F37 /* libPluginTwitter.a in Frameworks */,
 				BA623DF2191A14EB00761F37 /* libPluginUmeng.a in Frameworks */,
 				BA623DF3191A14EB00761F37 /* libPluginWeibo.a in Frameworks */,
+				051FF7FF192EF68900C43A06 /* libPluginIAP.a in Frameworks */,
 				1A604FC018BF1EFC00CC9A93 /* libchipmunk iOS.a in Frameworks */,
 				1A604FC118BF1EFC00CC9A93 /* libcocos2dx iOS.a in Frameworks */,
 				1A604FC218BF1EFC00CC9A93 /* libcocos2dx-extensions iOS.a in Frameworks */,
