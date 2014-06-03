@@ -8,12 +8,19 @@ LOCAL_MODULE_FILENAME := libcocos2djs
 
 LOCAL_SRC_FILES := javascript/main.cpp \
                    javascript/Runtime_android.cpp \
+                   ../../Classes/runtime/Landscape_png.cpp \
+                   ../../Classes/runtime/PlayDisable_png.cpp \
+                   ../../Classes/runtime/PlayEnable_png.cpp \
+                   ../../Classes/runtime/Portrait_png.cpp \
+                   ../../Classes/runtime/Shine_png.cpp \
+                   ../../Classes/runtime/Runtime.cpp \
                    ../../Classes/VisibleRect.cpp \
                    ../../Classes/AppDelegate.cpp \
-                   ../../Classes/ConfigParser.cpp \
-                   ../../Classes/Runtime.cpp
+                   ../../Classes/ConfigParser.cpp
+                   
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
+                    $(LOCAL_PATH)/../../Classes/runtime
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_jsb_static
 LOCAL_WHOLE_STATIC_LIBRARIES += jsb_chipmunk_static
