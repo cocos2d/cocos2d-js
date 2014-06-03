@@ -1,7 +1,5 @@
 #/****************************************************************************
 # Copyright (c) 2014 Chukong Technologies Inc.
-# Copyright (c) 2013 cocos2d-x.org
-# Copyright (c) 2012-2013 martell malone
 # 
 # http://www.cocos2d-x.org
 #
