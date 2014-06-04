@@ -206,8 +206,8 @@ cc.EventAssetsManager.UPDATE_PROGRESSION = 5;
 cc.EventAssetsManager.ASSET_UPDATED = 6;
 cc.EventAssetsManager.ERROR_UPDATING = 7;
 cc.EventAssetsManager.UPDATE_FINISHED = 8;
-// TODO: For next version
-    // UNCOMPRESS_ERROR
+cc.EventAssetsManager.UPDATE_FAILED = 9;
+cc.EventAssetsManager.ERROR_DECOMPRESS = 10;
 
 // PhysicsDebugNode
 cc.PhysicsDebugNode.create = function( space ) {
