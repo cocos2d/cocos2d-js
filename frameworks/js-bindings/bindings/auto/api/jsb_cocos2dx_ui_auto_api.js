@@ -208,7 +208,7 @@ ccui.Widget = {
 
 /**
  * @method setSizePercent
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  */
 setSizePercent : function (
 vec2 
@@ -268,7 +268,7 @@ getLeftInParent : function (
 
 /**
  * @method getTouchEndPos
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getTouchEndPos : function (
 )
@@ -278,7 +278,7 @@ getTouchEndPos : function (
 
 /**
  * @method setPositionPercent
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  */
 setPositionPercent : function (
 vec2 
@@ -456,7 +456,7 @@ getActionTag : function (
 
 /**
  * @method getWorldPosition
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getWorldPosition : function (
 )
@@ -496,7 +496,7 @@ clone : function (
 
 /**
  * @method getTouchMovePos
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getTouchMovePos : function (
 )
@@ -568,7 +568,7 @@ layoutparameter
 
 /**
  * @method getSizePercent
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getSizePercent : function (
 )
@@ -578,7 +578,7 @@ getSizePercent : function (
 
 /**
  * @method getTouchStartPos
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getTouchStartPos : function (
 )
@@ -618,7 +618,7 @@ isBright : function (
 
 /**
  * @method clippingParentAreaContainPoint
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  * @return {bool}
  */
 clippingParentAreaContainPoint : function (
@@ -722,7 +722,7 @@ bool
 
 /**
  * @method getPositionPercent
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getPositionPercent : function (
 )
@@ -732,7 +732,7 @@ getPositionPercent : function (
 
 /**
  * @method hitTest
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  * @return {bool}
  */
 hitTest : function (
@@ -776,7 +776,7 @@ sizetype
  * @method checkChildInfo
  * @param {int} arg0
  * @param {ccui.Widget} arg1
- * @param {cc.Vec2} arg2
+ * @param {vec2_object} arg2
  */
 checkChildInfo : function (
 int, 
@@ -844,7 +844,7 @@ ccui.Layout = {
 
 /**
  * @method setBackGroundColorVector
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  */
 setBackGroundColorVector : function (
 vec2 
@@ -894,7 +894,7 @@ color3b
 
 /**
  * @method getBackGroundColorVector
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getBackGroundColorVector : function (
 )
@@ -2268,7 +2268,7 @@ isInertiaScrollEnabled : function (
 
 /**
  * @method scrollToPercentBothDirection
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  * @param {float} arg1
  * @param {bool} arg2
  */
@@ -2466,7 +2466,7 @@ bool
 
 /**
  * @method jumpToPercentBothDirection
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  */
 jumpToPercentBothDirection : function (
 vec2 
@@ -3280,7 +3280,7 @@ bool
 
 /**
  * @method hitTest
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  * @return {bool}
  */
 hitTest : function (
@@ -3843,7 +3843,7 @@ int
 
 /**
  * @method setAnchorPoint
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  */
 setAnchorPoint : function (
 vec2 
