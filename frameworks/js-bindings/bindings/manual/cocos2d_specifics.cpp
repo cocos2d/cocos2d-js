@@ -455,59 +455,6 @@ bool js_cocos2dx_CCMenuItemSprite_create(JSContext *cx, uint32_t argc, jsval *vp
 	return false;
 }
 
-// "create" in JS
-// cc.MenuItemImage.create( normalImage, selectedImage, [disabledImage], callback_fn, [this] 
-bool js_cocos2dx_CCMenuItemImage_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	if (argc >= 2 && argc <= 5) {
-		jsval *argv = JS_ARGV(cx, vp);
-		JSStringWrapper arg0(argv[0]);
-		JSStringWrapper arg1(argv[1]);
-		JSStringWrapper arg2;
-
-		bool thirdArgIsString = true;
-
-		jsval jsCallback = JSVAL_VOID;
-		jsval jsThis = JSVAL_VOID;
-
-		int last = 2;
-		if (argc >= 3) {
-			thirdArgIsString = argv[2].isString();
-			if (thirdArgIsString) {
-				arg2.set(argv[2], cx);
-				last = 3;
-			}
-		}
-		cocos2d::MenuItemImage* ret = cocos2d::MenuItemImage::create(arg0.get(), arg1.get(), std::string(arg2.get()));
-
-		if (argc >= 3) { 
-			if (!thirdArgIsString) {
-				//cc.MenuItemImage.create( normalImage, selectedImage, callback_fn, [this] )
-				jsCallback = argv[last++];
-				if (argc == 4) {
-					jsThis = argv[last];
-				}
-			}
-			else { 
-				//cc.MenuItemImage.create( normalImage, selectedImage, disabledImage, callback_fn, [this] )
-				if (argc >= 4) {
-					jsCallback = argv[last++];
-					if (argc == 5) {
-						jsThis = argv[last];
-					}
-				}
-			}
-		}
-
-        JSObject *obj = bind_menu_item<cocos2d::MenuItemImage>(cx, ret, jsCallback, jsThis);
-
-		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-		return true;
-	}
-    JS_ReportError(cx, "Invalid number of arguments. Expecting: 2 <= args <= 5");
-	return false;
-}
-
 // "create" in JS:
 // cc.MenuItemLabel.create( label, callback_fn, [this] );
 bool js_cocos2dx_CCMenuItemLabel_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -4697,8 +4644,6 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItem_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.MenuItemSprite; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemSprite_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.MenuItemImage; })()"));
-	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemImage_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.MenuItemLabel; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemLabel_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.MenuItemAtlasFont; })()"));
