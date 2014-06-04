@@ -42,7 +42,7 @@ _p._ctor = function(color, w, h) {
 	w = w === undefined ? cc.winSize.width : w;
 	h = h === undefined ? cc.winSize.height : h;
 
-	this.init(color, w, h);
+	cc.LayerColor.prototype.init.call(this, color, w, h);
 };
 
 
@@ -58,7 +58,7 @@ _p._ctor = function(start, end, v) {
 
 _p = cc.LayerMultiplex.prototype;
 _p._ctor = function(layers) {
-	layers && layers.length ? this.initWithArray(layers) : this.init();
+	layers && layers.length ? this.initWithArray(layers) : cc.LayerMultiplex.prototype.init.call(this);
 };
 
 
@@ -273,7 +273,7 @@ _p = cc.ParticleBatchNode.prototype;
 _p._ctor = function(fileImage, capacity){
     capacity = capacity || cc.PARTICLE_DEFAULT_CAPACITY;
     if (typeof(fileImage) == "string") {
-        this.init(fileImage, capacity);
+        cc.ParticleBatchNode.prototype.init.call(this, fileImage, capacity);
     } else if (fileImage instanceof cc.Texture2D) {
         this.initWithTexture(fileImage, capacity);
     }
@@ -499,7 +499,7 @@ cc.Waves3D.prototype._ctor = function(duration, gridSize, waves, amplitude) {
 };
 
 cc.RemoveSelf.prototype._ctor = function(isNeedCleanUp) {
-	isNeedCleanUp !== undefined && this.init(isNeedCleanUp);
+	isNeedCleanUp !== undefined && cc.RemoveSelf.prototype.init.call(this, isNeedCleanUp);
 };
 
 cc.FlipX.prototype._ctor = function(flip) {
@@ -729,7 +729,7 @@ cc.ClippingNode.prototype._ctor = function(stencil) {
 };
 
 cc.DrawNode.prototype._ctor = function() {
-	this.init();
+    cc.DrawNode.prototype.init.call(this);
 };
 
 cc.LabelAtlas.prototype._ctor = function(strText, charMapFile, itemWidth, itemHeight, startCharMap) {
@@ -769,7 +769,7 @@ cc.LabelTTF.prototype._ctor = function(text, fontName, fontSize, dimensions, hAl
 /************************  Other classes  *************************/
 
 cc.GLProgram.prototype._ctor = function(vShaderFileName, fShaderFileName) {
-	vShaderFileName && fShaderFileName && this.init(vShaderFileName, fShaderFileName);
+	vShaderFileName && fShaderFileName && cc.GLProgram.prototype.init.call(this, vShaderFileName, fShaderFileName);
 };
 
 
