@@ -122,15 +122,6 @@ cc.POINT_ZERO = {x:0, y:0};
 
 cc.PARTICLE_DEFAULT_CAPACITY = 500;
 
-// XXX: This definition is different than cocos2d-html5
-// cc.REPEAT_FOREVER = - 1;
-// We can't assign -1 to cc.REPEAT_FOREVER, since it will be a very big double value after
-// converting it to double by JS_ValueToNumber on android.
-// Then cast it to unsigned int, the value will be 0. The schedule will not be able to work.
-// I don't know why this occurs only on android.
-// So instead of passing -1 to it, I assign it with max value of unsigned int in c++.
-cc.REPEAT_FOREVER = 0xffffffff;
-
 cc.MENU_STATE_WAITING = 0;
 cc.MENU_STATE_TRACKING_TOUCH = 1;
 cc.MENU_HANDLER_PRIORITY = -128;

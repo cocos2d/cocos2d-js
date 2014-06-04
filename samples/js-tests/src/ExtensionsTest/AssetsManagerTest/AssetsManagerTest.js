@@ -148,6 +148,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
                         break;
                     case cc.EventAssetsManager.ALREADY_UP_TO_DATE:
                     case cc.EventAssetsManager.UPDATE_FINISHED:
+                    case cc.EventAssetsManager.UPDATE_FAILED:
                         cc.log("Update finished.");
                         scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
                         cc.director.runScene(scene);
