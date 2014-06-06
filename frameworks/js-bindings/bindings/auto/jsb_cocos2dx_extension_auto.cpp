@@ -8462,7 +8462,7 @@ void js_register_cocos2dx_extension_Manifest(JSContext *cx, JSObject *global) {
 		cx, global,
 		NULL, // parent proto
 		jsb_cocos2d_extension_Manifest_class,
-		dummy_constructor<cocos2d::extension::Manifest>, 0, // no constructor
+		empty_constructor, 0,
 		properties,
 		funcs,
 		NULL, // no static properties
