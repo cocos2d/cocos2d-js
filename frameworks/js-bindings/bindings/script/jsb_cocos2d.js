@@ -263,8 +263,8 @@ cc.SCENE_RADIAL = 0xc001;               //CCTransitionProgress.js
 
 cc.KEY = {
     //android
-    back:8,
-    menu:4199,
+    back:6,
+    menu:15,
     //desktop
     backspace:7,
     tab:8,
