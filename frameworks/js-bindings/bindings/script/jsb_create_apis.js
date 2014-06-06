@@ -186,23 +186,23 @@ _p._ctor = function(normalSprite, selectedSprite, three, four, five) {
 	if (selectedSprite) {
 		normalSprite = normalSprite;
 		selectedSprite = selectedSprite;
-		var disabledImage, target, callback;
+		var disabledSprite, target, callback;
 		if (five) {
-			disabledImage = three;
+            disabledSprite = three;
 			callback = four;
 			target = five;
 		} else if (four && typeof four === "function") {
-			disabledImage = three;
+            disabledSprite = three;
 			callback = four;
 		} else if (four && typeof three === "function") {
 			target = four;
 			callback = three;
-            disabledImage = normalSprite;
+            disabledSprite = normalSprite;
 		} else if (three === undefined) {
-			disabledImage = normalSprite;
+            disabledSprite = normalSprite;
 		}
 		callback = callback ? callback.bind(target) : null;
-		this.initWithNormalSprite(normalSprite, selectedSprite, disabledImage, callback);
+        this.initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, callback);
 	}
 };
 
@@ -229,7 +229,13 @@ _p._ctor = function(normalImage, selectedImage, three, four, five) {
 			target = five;
 		}
 		callback = callback ? callback.bind(target) : null;
-		this.initWithNormalImage(normalImage, selectedImage, disabledImage, callback);
+        this.initWithCallback(callback);
+
+        this.setNormalImage(new cc.Sprite(normalImage));
+        this.setSelectedImage(new cc.Sprite(selectedImage));
+        if (disabledImage)
+            this.setDisabledImage(new cc.Sprite(disabledImage));
+        else this.setDisabledImage(new cc.Sprite(normalImage));
 	}
 };
 
@@ -1079,6 +1085,12 @@ cc.TMXTiledMap.create = function (tmxFile, resourcePath) {
     }
     return null;
 };
+
+
+// MenuItemImage
+cc.MenuItemImage.create = function(normalImage, selectedImage, three, four, five) {
+    return new cc.MenuItemImage(normalImage, selectedImage, three, four, five);
+}
 
 
 // MenuItemToggle
