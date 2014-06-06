@@ -68,6 +68,7 @@ var s_IAPResultItem = [
     {name: "didn't call payFunction yet", tag: TAG_PAYMENT_RESULT}
 ];
 var IAPTestLayer = cc.Layer.extend({
+    _serverMode: false,
     ctor: function () {
         this._super();
         cc.associateWithNative(this, cc.Layer);
@@ -148,6 +149,7 @@ var IAPTestLayer = cc.Layer.extend({
         if (sender.tag === TAG_SETSERVERMODE) {
             this.PluginIAP.callFuncWithParam("setServerMode");
             var label = this.getChildByTag(TAG_SETSERVERMODE_RESULT);
+            this._serverMode = true;
             if (label) {
                 label.setString("true");
                 this.toggleToast(false);
@@ -175,9 +177,12 @@ var IAPTestLayer = cc.Layer.extend({
         var str = "";
         if (ret == plugin.ProtocolIAP.PayResultCode.PaySuccess) {
             str = "payment Success pid is " + productInfo.productId;
-        } else if (ret == plugin.ProtocolIAP.PayResultCode.VierfyFromServer) {
-            str = "payment verify from server";
-            this.postServerData(msg);
+            //if you use server mode get the receive message and post to your server
+            if (this._serverMode && msg) {
+                str = "payment verify from server";
+                cc.log(str);
+                this.postServerData(msg);
+            }
         } else if (ret == plugin.ProtocolIAP.PayResultCode.PayFail) {
             str = "payment fail";
         }
@@ -201,8 +206,6 @@ var IAPTestLayer = cc.Layer.extend({
             }
             msgStr += " ]";
             this.toggleToast(false);
-        } else if (ret == plugin.ProtocolIAP.RequestProductCode.RequestSending) {
-            msgStr = "request RequestSending";
         }
         var label = this.getChildByTag(TAG_GETPRODUCTLIST_RESULT);
         if (label) {
@@ -213,7 +216,7 @@ var IAPTestLayer = cc.Layer.extend({
         var that = this;
         var xhr = cc.loader.getXMLHttpRequest();
         //replace to your own server address
-        xhr.open("POST", "http://192.168.52.37:8888/start");
+        xhr.open("POST", "http://192.168.52.22:8888/start");
         that.toggleToast(true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
