@@ -486,7 +486,7 @@ cc.radiansToDegress = function (angle) {
  * @constant
  * @type Number
  */
-cc.REPEAT_FOREVER = Number.MAX_VALUE - 1;
+cc.REPEAT_FOREVER = 0xffffffff;
 
 /**
  * default gl blend src function. Compatible with premultiplied alpha images.
@@ -1579,7 +1579,7 @@ var setInterval = function (code, delay) {
     var target = new WindowTimeFun(code);
     if (arguments.length > 2)
         target._args = Array.prototype.slice.call(arguments, 2);
-    cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, cc.REPEAT_FOREVER, 0, false);
+    cc.director.getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, cc.REPEAT_FOREVER, 0, false);
     _windowTimeFunHash[target._intervalId] = target;
     return target._intervalId;
 };
