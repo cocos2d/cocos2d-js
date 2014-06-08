@@ -2959,6 +2959,16 @@ EditBox : function (
 cc.EventAssetsManager = {
 
 /**
+ * @method getAssetsManager
+ * @return {cc.AssetsManager}
+ */
+getAssetsManager : function (
+)
+{
+    return cc.AssetsManager;
+},
+
+/**
  * @method getAssetId
  * @return {String}
  */
@@ -2966,6 +2976,16 @@ getAssetId : function (
 )
 {
     return ;
+},
+
+/**
+ * @method getCURLECode
+ * @return {int}
+ */
+getCURLECode : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -2979,20 +2999,10 @@ getMessage : function (
 },
 
 /**
- * @method getAssetsManager
- * @return {cc.AssetsManager}
+ * @method getCURLMCode
+ * @return {int}
  */
-getAssetsManager : function (
-)
-{
-    return cc.AssetsManager;
-},
-
-/**
- * @method getPercent
- * @return {float}
- */
-getPercent : function (
+getCURLMCode : function (
 )
 {
     return 0;
@@ -3008,24 +3018,22 @@ getEventCode : function (
     return 0;
 },
 
+/**
+ * @method getPercent
+ * @return {float}
+ */
+getPercent : function (
+)
+{
+    return 0;
+},
+
 };
 
 /**
  * @class Manifest
  */
 cc.Manifest = {
-
-/**
- * @method getAsset
- * @param {String} arg0
- * @return {cc.Manifest::Asset}
- */
-getAsset : function (
-str 
-)
-{
-    return cc.Manifest::Asset;
-},
 
 /**
  * @method getManifestFileUrl
@@ -3148,6 +3156,14 @@ getRemoteManifest : function (
 )
 {
     return cc.Manifest;
+},
+
+/**
+ * @method downloadFailedAssets
+ */
+downloadFailedAssets : function (
+)
+{
 },
 
 /**
