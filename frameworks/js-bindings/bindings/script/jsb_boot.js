@@ -1086,7 +1086,7 @@ cc.game = {
      */
     prepare : function(cb){
         var self = this, config = self.config, CONFIG_KEY = self.CONFIG_KEY, loader = cc.loader;
-        require("jsb.js");
+        require("script/jsb.js");
         self._prepareCalled = true;
         loader.loadJsWithImg("", config[CONFIG_KEY.jsList] || [], function(err){
             if(err) throw err;
