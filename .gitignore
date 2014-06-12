@@ -100,3 +100,6 @@ samples/*/publish/
 samples/*/runtime/
 build/build/
 frameworks/js-bindings/bindings/proj.ios_mac/build/
+
+# Ignore files copied in compilation
+samples/*/project/proj.android/src
