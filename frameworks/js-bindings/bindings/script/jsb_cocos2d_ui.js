@@ -306,3 +306,8 @@ ccui.MarginZero = function(){
  * addNode and addChild function should be merged in ccui.Widget
  */
 ccui.Widget.prototype.addNode = ccui.Widget.prototype.addChild;
+
+/*
+ * UITextField temporary solution to getString, wait for -x patch
+ */
+ccui.TextField.prototype.getString = ccui.TextField.prototype.getStringValue;
