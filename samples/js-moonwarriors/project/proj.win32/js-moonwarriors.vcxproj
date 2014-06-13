@@ -116,9 +116,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonk
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\js-moonwarriors-res" rd /s /q "$(OutDir)\js-moonwarriors-res"
 mkdir "$(OutDir)\js-moonwarriors-res"
+mkdir "$(OutDir)\js-moonwarriors-res\script"
 mkdir "$(OutDir)\js-moonwarriors-res\src"
 mkdir "$(OutDir)\js-moonwarriors-res\res"
-xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-moonwarriors-res\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-moonwarriors-res\script" /e /Y
 xcopy "$(ProjectDir)..\..\src" "$(OutDir)\js-moonwarriors-res\src\" /e /Y
 xcopy "$(ProjectDir)..\..\res" "$(OutDir)\js-moonwarriors-res\res\" /e /Y
 copy "$(ProjectDir)..\..\main.js" "$(OutDir)\js-moonwarriors-res"
@@ -174,9 +175,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonk
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\js-moonwarriors-res" rd /s /q "$(OutDir)\js-moonwarriors-res"
 mkdir "$(OutDir)\js-moonwarriors-res"
+mkdir "$(OutDir)\js-moonwarriors-res\script"
 mkdir "$(OutDir)\js-moonwarriors-res\src"
 mkdir "$(OutDir)\js-moonwarriors-res\res"
-xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-moonwarriors-res\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-moonwarriors-res\script" /e /Y
 xcopy "$(ProjectDir)..\..\src" "$(OutDir)\js-moonwarriors-res\src\" /e /Y
 xcopy "$(ProjectDir)..\..\res" "$(OutDir)\js-moonwarriors-res\res\" /e /Y
 copy "$(ProjectDir)..\..\main.js" "$(OutDir)\js-moonwarriors-res"
