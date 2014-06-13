@@ -200,14 +200,14 @@ set_target_properties(${APP_NAME} PROPERTIES
      RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
 
 pre_build(${APP_NAME}
-  COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/debugger
+  COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/script
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/res
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/src
   COMMAND ${CMAKE_COMMAND} -E remove ${APP_BIN_DIR}/*.js
   COMMAND ${CMAKE_COMMAND} -E remove ${APP_BIN_DIR}/*.json
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/res ${APP_BIN_DIR}/res
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src ${APP_BIN_DIR}/src
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/bindings/script ${APP_BIN_DIR}
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/bindings/script ${APP_BIN_DIR}/script
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/main.js ${APP_BIN_DIR}/main.js
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/project.json ${APP_BIN_DIR}/project.json
 )
