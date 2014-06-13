@@ -547,7 +547,7 @@ cc.defineGetterSetter(_proto, "selected", _proto.getSelectedState, _proto.setSel
 _proto = ccui.Text.prototype;
 cc.defineGetterSetter(_proto, "boundingWidth", _proto._getBoundingWidth, _proto._setBoundingWidth);
 cc.defineGetterSetter(_proto, "boundingHeight", _proto._getBoundingHeight, _proto._setBoundingHeight);
-cc.defineGetterSetter(_proto, "string", _proto.getStringValue, _proto.setText);
+cc.defineGetterSetter(_proto, "string", _proto.getString, _proto.setString);
 cc.defineGetterSetter(_proto, "stringLength", _proto.getStringLength);
 cc.defineGetterSetter(_proto, "font", _proto._getFont, _proto._setFont);
 cc.defineGetterSetter(_proto, "fontName", _proto.getFontName, _proto.setFontName);
@@ -557,10 +557,10 @@ cc.defineGetterSetter(_proto, "verticalAlign", _proto.getVerticalAlignment, _pro
 cc.defineGetterSetter(_proto, "touchScaleEnabled", _proto.getTouchScaleEnabled, _proto.setTouchScaleEnabled);
 
 _proto = ccui.TextAtlas.prototype;
-cc.defineGetterSetter(_proto, "string", _proto.getStringValue, _proto.setStringValue);
+cc.defineGetterSetter(_proto, "string", _proto.getString, _proto.setString);
 
 _proto = ccui.TextBMFont.prototype;
-cc.defineGetterSetter(_proto, "string", _proto.getStringValue, _proto.setStringValue);
+cc.defineGetterSetter(_proto, "string", _proto.getString, _proto.setString);
 
 _proto = ccui.LoadingBar.prototype;
 cc.defineGetterSetter(_proto, "direction", _proto.getDirection, _proto.setDirection);
@@ -573,7 +573,7 @@ _proto = ccui.TextField.prototype;
 cc.defineGetterSetter(_proto, "maxLengthEnabled", _proto.isMaxLengthEnabled, _proto.setMaxLengthEnabled);
 cc.defineGetterSetter(_proto, "maxLength", _proto.getMaxLength, _proto.setMaxLength);
 cc.defineGetterSetter(_proto, "passwordEnabled", _proto.isPasswordEnabled, _proto.setPasswordEnabled);
-cc.defineGetterSetter(_proto, "string", _proto.getStringValue, _proto.setText);
+cc.defineGetterSetter(_proto, "string", _proto.getString, _proto.setString);
 cc.defineGetterSetter(_proto, "font", _proto._getFont, _proto._setFont);
 cc.defineGetterSetter(_proto, "fontSize", _proto.getFontSize, _proto.setFontSize);
 cc.defineGetterSetter(_proto, "fontName", _proto.getFontName, _proto.setFontName);
@@ -588,7 +588,7 @@ _proto = cc.EditBox.prototype;
 cc.defineGetterSetter(_proto, "font", null, _proto._setFont);
 cc.defineGetterSetter(_proto, "fontName", null, _proto.setFontName);
 cc.defineGetterSetter(_proto, "fontSize", null, _proto.setFontSize);
-cc.defineGetterSetter(_proto, "string", _proto.getText, _proto.setText);
+cc.defineGetterSetter(_proto, "string", _proto.getString, _proto.setString);
 cc.defineGetterSetter(_proto, "maxLength", _proto.getMaxLength, _proto.setMaxLength);
 
 _proto = cc.Control.prototype;

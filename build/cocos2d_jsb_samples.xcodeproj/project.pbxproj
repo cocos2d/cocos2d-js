@@ -491,6 +491,48 @@
 			remoteGlobalIDString = FA09A321168ADBC2008C1C7B;
 			remoteInfo = PluginProtocol;
 		};
+		BA83C3E919345CD300130AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA09A320168ADBC2008C1C7B;
+			remoteInfo = PluginProtocol;
+		};
+		BA83C3EB19345CD300130AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA09A371168AFD41008C1C7B;
+			remoteInfo = PluginFlurry;
+		};
+		BA83C3ED19345CD300130AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FADC44A6176EA82000B2D5ED;
+			remoteInfo = PluginAdmob;
+		};
+		BA83C3EF19345CD300130AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DDD191A140400761F37 /* PluginTwitter.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FACAD8871762C1B500D75ADE;
+			remoteInfo = PluginTwitter;
+		};
+		BA83C3F119345CD300130AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DE3191A141A00761F37 /* PluginWeibo.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FAE2752F175D9D2900F5DA8E;
+			remoteInfo = PluginWeibo;
+		};
+		BA83C3F319345CD300130AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA623DE9191A14BD00761F37 /* PluginUmeng.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA09A300168ADAEC008C1C7B;
+			remoteInfo = PluginUmeng;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -1094,6 +1136,12 @@
 			buildRules = (
 			);
 			dependencies = (
+				BA83C3EA19345CD300130AD4 /* PBXTargetDependency */,
+				BA83C3EC19345CD300130AD4 /* PBXTargetDependency */,
+				BA83C3EE19345CD300130AD4 /* PBXTargetDependency */,
+				BA83C3F019345CD300130AD4 /* PBXTargetDependency */,
+				BA83C3F219345CD300130AD4 /* PBXTargetDependency */,
+				BA83C3F419345CD300130AD4 /* PBXTargetDependency */,
 				1A604FB718BF1EF400CC9A93 /* PBXTargetDependency */,
 				1A604FB918BF1EF400CC9A93 /* PBXTargetDependency */,
 				1A604FBB18BF1EF400CC9A93 /* PBXTargetDependency */,
@@ -1621,6 +1669,36 @@
 			isa = PBXTargetDependency;
 			name = "CocosDenshion iOS";
 			targetProxy = 1A604FBE18BF1EF400CC9A93 /* PBXContainerItemProxy */;
+		};
+		BA83C3EA19345CD300130AD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginProtocol;
+			targetProxy = BA83C3E919345CD300130AD4 /* PBXContainerItemProxy */;
+		};
+		BA83C3EC19345CD300130AD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginFlurry;
+			targetProxy = BA83C3EB19345CD300130AD4 /* PBXContainerItemProxy */;
+		};
+		BA83C3EE19345CD300130AD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginAdmob;
+			targetProxy = BA83C3ED19345CD300130AD4 /* PBXContainerItemProxy */;
+		};
+		BA83C3F019345CD300130AD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginTwitter;
+			targetProxy = BA83C3EF19345CD300130AD4 /* PBXContainerItemProxy */;
+		};
+		BA83C3F219345CD300130AD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginWeibo;
+			targetProxy = BA83C3F119345CD300130AD4 /* PBXContainerItemProxy */;
+		};
+		BA83C3F419345CD300130AD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginUmeng;
+			targetProxy = BA83C3F319345CD300130AD4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

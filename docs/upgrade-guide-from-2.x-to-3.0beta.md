@@ -374,23 +374,45 @@ if (cc.sys.isNative) {
 
 * **10.3** cc.AssetsManager
 
-    cc.AssetsManager is a class serves for managing and using remote resources on your server. It can also manage versions of resources and update them to most recent versions. Detailed APIs are listed below:
+    cc.AssetsManager is a class serves for managing and using remote resources on your server. It can also manage versions of resources and update them to most recent versions. Usage of cc.AssetsManager is showing below:
     
     ```
-    var assetsMgr = cc.AssetsManager.create(packageUrl, versionFileUrl, storagePath, errorCallback, progressCallback, successCallback);
-    assetsMgr.setStoragePath(storagePath)
-    assetsMgr.setPackageUrl(packageUrl)
-    assetsMgr.checkUpdate()
-    assetsMgr.getStoragePath()
-    assetsMgr.update()
-    assetsMgr.setConnectionTimeout(timeout)
-    assetsMgr.setVersionFileUrl(versionFileUrl)
-    assetsMgr.getPackageUrl()
-    assetsMgr.getConnectionTimeout()
-    assetsMgr.getVersion()
-    assetsMgr.getVersionFileUrl()
-    assetsMgr.deleteVersion()
+    var manager = new cc.AssetsManager(manifestPath, storagePath);
+    // As the process is asynchronised, you need to retain the assets manager to make sure it won't be released before the process is ended.
+    manager.retain();
+
+    if (!manager.getLocalManifest().isLoaded()) {
+        cc.log("Fail to update assets, step skipped.");
+    }
+    else {
+        var listener = new cc.EventListenerAssetsManager(manager, function(event) {
+            switch (event.getEventCode())
+            {
+                case cc.EventAssetsManager.UPDATE_PROGRESSION:
+                    var percent = event.getPercent();
+                    cc.log("Download percent : " + percent);
+                    break;
+                case cc.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
+                case cc.EventAssetsManager.ERROR_PARSE_MANIFEST:
+                    cc.log("Fail to download manifest file, update skipped.");
+                    break;
+                case cc.EventAssetsManager.ALREADY_UP_TO_DATE:
+                case cc.EventAssetsManager.UPDATE_FINISHED:
+                    cc.log("Update finished.");
+                    // You need to release the assets manager while you are sure you don't need it any more
+                    manager.release();
+                    break;
+                case cc.EventAssetsManager.ERROR_UPDATING:
+                    cc.log("Asset update error: " + event.getAssetId() + ", " + event.getMessage());
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
     ```
+    
+    For more details, you can refer to this [documentation](../../../v3.0/assets-manager/en.md).
 
 
 ##11. Other API changements
@@ -678,6 +700,43 @@ var anAction = cc.Sequence.create(
 	 cc.EaseBackIn.create(action)		 | action.easing(cc.easeBackIn())
 	 cc.EaseBackOut.create(action)		 | action.easing(cc.easeBackOut())
 	 cc.EaseBackInOut.create(action)		 | action.easing(cc.easeBackInOut())     
+
+##13.[New in Beta]Changed setText，getText to unified API of SetString, getString
+
+* ccui.Text refactoration :
+
+    
+  ```
+  setText --> setString
+  getStringValue --> getString
+  ```
+
+* ccui.TextAtlas
+ 
+  ```
+  getStringValue ==> getString
+  ```
+
+* ccui.TextBMFont
+
+   ```
+  setText --> setString
+  getStringValue --> getString
+  ```
+
+* ccui.TextField
+
+   ```
+  setText --> setString
+  getStringValue --> getString
+  ```
+
+* cc.EditBox
+
+  ```
+  setText --> setString
+  getText --> getString
+  ```
        
 
 ####Other documentation can be found here:

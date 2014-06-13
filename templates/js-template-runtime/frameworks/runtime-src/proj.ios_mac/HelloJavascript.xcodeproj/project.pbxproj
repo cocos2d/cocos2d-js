@@ -61,8 +61,18 @@
 		A922754C1517C094001B78AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922754B1517C094001B78AA /* UIKit.framework */; };
 		A922754E1517C094001B78AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922754D1517C094001B78AA /* Foundation.framework */; };
 		A92275501517C094001B78AA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922754F1517C094001B78AA /* CoreGraphics.framework */; };
-		C026DCC618928A1A00B3EDE8 /* Runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C026DCC518928A1A00B3EDE8 /* Runtime.cpp */; };
-		C026DCC718928A1A00B3EDE8 /* Runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C026DCC518928A1A00B3EDE8 /* Runtime.cpp */; };
+		C00FD4B21938628E00C6382D /* Landscape_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4AA1938628E00C6382D /* Landscape_png.cpp */; };
+		C00FD4B31938628E00C6382D /* Landscape_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4AA1938628E00C6382D /* Landscape_png.cpp */; };
+		C00FD4B41938628E00C6382D /* PlayDisable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4AB1938628E00C6382D /* PlayDisable_png.cpp */; };
+		C00FD4B51938628E00C6382D /* PlayDisable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4AB1938628E00C6382D /* PlayDisable_png.cpp */; };
+		C00FD4B61938628E00C6382D /* PlayEnable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4AC1938628E00C6382D /* PlayEnable_png.cpp */; };
+		C00FD4B71938628E00C6382D /* PlayEnable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4AC1938628E00C6382D /* PlayEnable_png.cpp */; };
+		C00FD4B81938628E00C6382D /* Portrait_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4AD1938628E00C6382D /* Portrait_png.cpp */; };
+		C00FD4B91938628E00C6382D /* Portrait_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4AD1938628E00C6382D /* Portrait_png.cpp */; };
+		C00FD4BA1938628E00C6382D /* Runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4AF1938628E00C6382D /* Runtime.cpp */; };
+		C00FD4BB1938628E00C6382D /* Runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4AF1938628E00C6382D /* Runtime.cpp */; };
+		C00FD4BC1938628E00C6382D /* Shine_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4B11938628E00C6382D /* Shine_png.cpp */; };
+		C00FD4BD1938628E00C6382D /* Shine_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4B11938628E00C6382D /* Shine_png.cpp */; };
 		C026DCC918928A2400B3EDE8 /* Runtime_ios-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = C026DCC818928A2400B3EDE8 /* Runtime_ios-mac.mm */; };
 		C026DCCA18928A2400B3EDE8 /* Runtime_ios-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = C026DCC818928A2400B3EDE8 /* Runtime_ios-mac.mm */; };
 		C033B524191B36AE00D06937 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C033B522191B36AE00D06937 /* VisibleRect.cpp */; };
@@ -79,8 +89,6 @@
 		C06C37891918E81100617BED /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C06C37861918E81100617BED /* ConfigParser.cpp */; };
 		C0799CB918BAE62000E9C828 /* res in Resources */ = {isa = PBXBuildFile; fileRef = C0799CB518BAE62000E9C828 /* res */; };
 		C0799CBA18BAE62000E9C828 /* res in Resources */ = {isa = PBXBuildFile; fileRef = C0799CB518BAE62000E9C828 /* res */; };
-		C0B29017192EEBB300D5DE97 /* rtres in Resources */ = {isa = PBXBuildFile; fileRef = C0B29016192EEBB300D5DE97 /* rtres */; };
-		C0B29018192EEBB300D5DE97 /* rtres in Resources */ = {isa = PBXBuildFile; fileRef = C0B29016192EEBB300D5DE97 /* rtres */; };
 		C0C2F37418AA0C66003976DA /* SimulatorApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0C2F37318AA0C66003976DA /* SimulatorApp.mm */; };
 		C0E05757192B5EDB00D818D0 /* jsb_boot.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05743192B5EDB00D818D0 /* jsb_boot.js */; };
 		C0E05759192B5EDB00D818D0 /* jsb_chipmunk_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = C0E05744192B5EDB00D818D0 /* jsb_chipmunk_constants.js */; };
@@ -349,8 +357,14 @@
 		A922754B1517C094001B78AA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A922754D1517C094001B78AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A922754F1517C094001B78AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		C014EAEB188EA65400753BDC /* Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Runtime.h; sourceTree = "<group>"; };
-		C026DCC518928A1A00B3EDE8 /* Runtime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Runtime.cpp; sourceTree = "<group>"; };
+		C00FD4AA1938628E00C6382D /* Landscape_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Landscape_png.cpp; sourceTree = "<group>"; };
+		C00FD4AB1938628E00C6382D /* PlayDisable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayDisable_png.cpp; sourceTree = "<group>"; };
+		C00FD4AC1938628E00C6382D /* PlayEnable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayEnable_png.cpp; sourceTree = "<group>"; };
+		C00FD4AD1938628E00C6382D /* Portrait_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Portrait_png.cpp; sourceTree = "<group>"; };
+		C00FD4AE1938628E00C6382D /* ResData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResData.h; sourceTree = "<group>"; };
+		C00FD4AF1938628E00C6382D /* Runtime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Runtime.cpp; sourceTree = "<group>"; };
+		C00FD4B01938628E00C6382D /* Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Runtime.h; sourceTree = "<group>"; };
+		C00FD4B11938628E00C6382D /* Shine_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shine_png.cpp; sourceTree = "<group>"; };
 		C026DCC818928A2400B3EDE8 /* Runtime_ios-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "Runtime_ios-mac.mm"; sourceTree = SOURCE_ROOT; };
 		C033B522191B36AE00D06937 /* VisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisibleRect.cpp; sourceTree = "<group>"; };
 		C033B523191B36AE00D06937 /* VisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisibleRect.h; sourceTree = "<group>"; };
@@ -362,7 +376,6 @@
 		C06C37861918E81100617BED /* ConfigParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigParser.cpp; sourceTree = "<group>"; };
 		C06C37871918E81100617BED /* ConfigParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigParser.h; sourceTree = "<group>"; };
 		C0799CB518BAE62000E9C828 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../../res; sourceTree = "<group>"; };
-		C0B29016192EEBB300D5DE97 /* rtres */ = {isa = PBXFileReference; lastKnownFileType = folder; name = rtres; path = ../../../runtime/rtres; sourceTree = "<group>"; };
 		C0C2F37218AA0C66003976DA /* SimulatorApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorApp.h; sourceTree = "<group>"; };
 		C0C2F37318AA0C66003976DA /* SimulatorApp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimulatorApp.mm; sourceTree = "<group>"; };
 		C0E05743192B5EDB00D818D0 /* jsb_boot.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_boot.js; path = "../../js-bindings/bindings/script/jsb_boot.js"; sourceTree = "<group>"; };
@@ -445,7 +458,6 @@
 		15628F5B15F0F5C2000CF24B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C0B29016192EEBB300D5DE97 /* rtres */,
 				C05D1C161923467600B808A4 /* config.json */,
 				1A1A081B18C9DF05005C6854 /* project.json */,
 				1A6BF21418C9DB5900FB0E1C /* main.js */,
@@ -553,6 +565,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C00FD4A91938628E00C6382D /* runtime */ = {
+			isa = PBXGroup;
+			children = (
+				C00FD4AA1938628E00C6382D /* Landscape_png.cpp */,
+				C00FD4AB1938628E00C6382D /* PlayDisable_png.cpp */,
+				C00FD4AC1938628E00C6382D /* PlayEnable_png.cpp */,
+				C00FD4AD1938628E00C6382D /* Portrait_png.cpp */,
+				C00FD4AE1938628E00C6382D /* ResData.h */,
+				C00FD4AF1938628E00C6382D /* Runtime.cpp */,
+				C00FD4B01938628E00C6382D /* Runtime.h */,
+				C00FD4B11938628E00C6382D /* Shine_png.cpp */,
+			);
+			path = runtime;
+			sourceTree = "<group>";
+		};
 		C037820218BF76AF00FE4F13 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -610,13 +637,12 @@
 		D4545214156E28EF00887EB5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C00FD4A91938628E00C6382D /* runtime */,
 				C033B522191B36AE00D06937 /* VisibleRect.cpp */,
 				C033B523191B36AE00D06937 /* VisibleRect.h */,
 				C06C37861918E81100617BED /* ConfigParser.cpp */,
 				C06C37871918E81100617BED /* ConfigParser.h */,
 				C026DCC818928A2400B3EDE8 /* Runtime_ios-mac.mm */,
-				C026DCC518928A1A00B3EDE8 /* Runtime.cpp */,
-				C014EAEB188EA65400753BDC /* Runtime.h */,
 				D4545215156E28EF00887EB5 /* AppDelegate.cpp */,
 				D4545216156E28EF00887EB5 /* AppDelegate.h */,
 			);
@@ -817,7 +843,6 @@
 				C0E05786192B5EF200D818D0 /* jsb_debugger.js in Resources */,
 				C0E05787192B5EF200D818D0 /* jsb_deprecated.js in Resources */,
 				C0E05788192B5EF200D818D0 /* jsb_ext_create_apis.js in Resources */,
-				C0B29018192EEBB300D5DE97 /* rtres in Resources */,
 				C0E05789192B5EF200D818D0 /* jsb_loaders.js in Resources */,
 				C0E0578A192B5EF200D818D0 /* jsb_opengl_constants.js in Resources */,
 				C0E0578B192B5EF200D818D0 /* jsb_opengl.js in Resources */,
@@ -866,7 +891,6 @@
 				5091731F17ECDF7A00D62437 /* Icon-100.png in Resources */,
 				509D4AC117EBB2AB00697056 /* Icon-72.png in Resources */,
 				509D4AC017EBB2AB00697056 /* Icon-57.png in Resources */,
-				C0B29017192EEBB300D5DE97 /* rtres in Resources */,
 				5091731A17ECDF7A00D62437 /* Icon-29.png in Resources */,
 				C03780EB18BEE0E400FE4F13 /* src in Resources */,
 				C0F9A1AD18C6D1FC00C75ABD /* debugger in Resources */,
@@ -895,11 +919,14 @@
 				C0E05763192B5EDB00D818D0 /* jsb_cocos2d_ui.js in Sources */,
 				C0E05759192B5EDB00D818D0 /* jsb_chipmunk_constants.js in Sources */,
 				C0E05757192B5EDB00D818D0 /* jsb_boot.js in Sources */,
+				C00FD4B51938628E00C6382D /* PlayDisable_png.cpp in Sources */,
 				C06C37891918E81100617BED /* ConfigParser.cpp in Sources */,
-				C026DCC718928A1A00B3EDE8 /* Runtime.cpp in Sources */,
 				C0E05771192B5EDB00D818D0 /* jsb_loaders.js in Sources */,
 				509D4A8117EBB24E00697056 /* AppDelegate.cpp in Sources */,
+				C00FD4B71938628E00C6382D /* PlayEnable_png.cpp in Sources */,
 				C0E0575B192B5EDB00D818D0 /* jsb_chipmunk.js in Sources */,
+				C00FD4B91938628E00C6382D /* Portrait_png.cpp in Sources */,
+				C00FD4BD1938628E00C6382D /* Shine_png.cpp in Sources */,
 				C0E05769192B5EDB00D818D0 /* jsb_create_apis.js in Sources */,
 				C0E0575D192B5EDB00D818D0 /* jsb_cocos2d_constants.js in Sources */,
 				C0C2F37418AA0C66003976DA /* SimulatorApp.mm in Sources */,
@@ -911,12 +938,14 @@
 				C0E05775192B5EDB00D818D0 /* jsb_opengl.js in Sources */,
 				C0E05761192B5EDB00D818D0 /* jsb_cocos2d_studio.js in Sources */,
 				C0E05765192B5EDB00D818D0 /* jsb_cocos2d.js in Sources */,
+				C00FD4BB1938628E00C6382D /* Runtime.cpp in Sources */,
 				C0E0575F192B5EDB00D818D0 /* jsb_cocos2d_extension.js in Sources */,
 				C03C8B4B18A770DD00723415 /* main.m in Sources */,
 				C0E0576B192B5EDB00D818D0 /* jsb_debugger.js in Sources */,
 				C0E05777192B5EDB00D818D0 /* jsb_property_apis.js in Sources */,
 				C0E0576F192B5EDB00D818D0 /* jsb_ext_create_apis.js in Sources */,
 				C0E05779192B5EDB00D818D0 /* jsb_property_impls.js in Sources */,
+				C00FD4B31938628E00C6382D /* Landscape_png.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -924,14 +953,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C00FD4B81938628E00C6382D /* Portrait_png.cpp in Sources */,
 				509D4AC917EBB2AB00697056 /* RootViewController.mm in Sources */,
+				C00FD4B21938628E00C6382D /* Landscape_png.cpp in Sources */,
 				D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */,
+				C00FD4BA1938628E00C6382D /* Runtime.cpp in Sources */,
 				C06C37881918E81100617BED /* ConfigParser.cpp in Sources */,
+				C00FD4B61938628E00C6382D /* PlayEnable_png.cpp in Sources */,
+				C00FD4B41938628E00C6382D /* PlayDisable_png.cpp in Sources */,
+				C00FD4BC1938628E00C6382D /* Shine_png.cpp in Sources */,
 				509D4AC817EBB2AB00697056 /* main.m in Sources */,
 				C033B524191B36AE00D06937 /* VisibleRect.cpp in Sources */,
 				509D4ABC17EBB2AB00697056 /* AppController.mm in Sources */,
 				C026DCC918928A2400B3EDE8 /* Runtime_ios-mac.mm in Sources */,
-				C026DCC618928A1A00B3EDE8 /* Runtime.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
