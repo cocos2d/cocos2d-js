@@ -28,7 +28,7 @@
     "must_copy_resources": [
         {
             "from": "../../js-bindings/bindings/script",
-            "to": ""
+            "to": "script"
         },
         {
             "from": "../../../runtime/rtres",
