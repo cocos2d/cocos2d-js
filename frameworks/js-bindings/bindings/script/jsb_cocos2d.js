@@ -2261,7 +2261,9 @@ cc.targetedAction = cc.TargetedAction.create;
 cc.actionTween = cc.ActionTween.create;
 
 
+//
 //AffineTransform API
+//
 
 /**
  * @memberOf cc
