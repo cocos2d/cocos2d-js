@@ -664,7 +664,7 @@ cc.reflection = {
     callStaticMethod : function(){
         cc.log("not supported on current platform");
     }
-}
+};
 
 // GUI
 ccui.helper = ccui.Helper;
@@ -683,6 +683,19 @@ ccs.sceneReader.version = function() {
 };
 
 //+++++++++++++++++++++++Define singleton objects end+++++++++++++++++++++++++++
+
+
+//+++++++++++++++++++++++++Redefine JSB only APIs+++++++++++++++++++++++++++
+
+var jsb = jsb || {};
+jsb.fileUtils = cc.fileUtils;
+delete cc.FileUtils;
+delete cc.fileUtils;
+jsb.AssetsManager = cc.AssetsManager;
+delete cc.AssetsManager;
+
+//+++++++++++++++++++++++++Redefine JSB only APIs+++++++++++++++++++++++++++++
+
 
 //+++++++++++++++++++++++++something about window events begin+++++++++++++++++++++++++++
 cc.winEvents = {//TODO register hidden and show callback for window
