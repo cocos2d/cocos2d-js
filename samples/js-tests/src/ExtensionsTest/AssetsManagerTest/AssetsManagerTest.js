@@ -100,7 +100,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
 
     runThisTest : function () {
         var manifestPath = sceneManifests[currentScene];
-        var storagePath = ((cc.fileUtils ? cc.fileUtils.getWritablePath() : "/") + storagePaths[currentScene]);
+        var storagePath = ((jsb.fileUtils ? jsb.fileUtils.getWritablePath() : "/") + storagePaths[currentScene]);
 
         var layer = new cc.Layer();
         this.addChild(layer);
@@ -115,13 +115,13 @@ var AssetsManagerLoaderScene = TestScene.extend({
         this._progress.y = cc.winSize.height/2 + 50;
         layer.addChild(this._progress);
 
-        this._am = new cc.AssetsManager(manifestPath, storagePath);
+        this._am = new jsb.AssetsManager(manifestPath, storagePath);
         this._am.retain();
 
         if (!this._am.getLocalManifest().isLoaded())
         {
             cc.log("Fail to update assets, step skipped.");
-            var scene = new cc.AssetsManagerTestScene(backgroundPaths[currentScene]);
+            var scene = new jsb.AssetsManagerTestScene(backgroundPaths[currentScene]);
             cc.director.runScene(scene);
         }
         else
