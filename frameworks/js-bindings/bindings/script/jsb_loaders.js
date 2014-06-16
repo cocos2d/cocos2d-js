@@ -28,14 +28,14 @@
 
 cc._txtLoader = {
     load : function(realUrl, url){
-        return cc.FileUtils.getInstance().getStringFromFile(realUrl);
+        return jsb.fileUtils.getStringFromFile(realUrl);
     }
 }
 cc.loader.register(["txt", "xml", "vsh", "fsh", "tmx", "tsx"], cc._txtLoader);
 
 cc._jsonLoader = {
     load : function(realUrl, url){
-        var data = cc.FileUtils.getInstance().getStringFromFile(realUrl);
+        var data = jsb.fileUtils.getStringFromFile(realUrl);
         try{
             return JSON.parse(data);
         }catch(e){
@@ -55,7 +55,7 @@ cc.loader.register(["png", "jpg", "bmp","jpeg","gif"], cc._imgLoader);
 
 cc._plistLoader = {
     load : function(realUrl, url){
-        var content = cc.fileUtils.getStringFromFile(realUrl);
+        var content = jsb.fileUtils.getStringFromFile(realUrl);
         return cc.plistParser.parse(content);
     }
 }
@@ -155,7 +155,7 @@ cc._fntLoader = {
     },
 
     load : function(realUrl, url){
-        var data = cc.FileUtils.getInstance().getStringFromFile(realUrl);
+        var data = jsb.fileUtils.getStringFromFile(realUrl);
         return this.parseFnt(data, url);
     }
 };

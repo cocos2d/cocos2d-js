@@ -363,7 +363,7 @@ cc.loader = {
      * @param {function} cb arguments are : err, txt
      */
     loadTxt : function(url, cb){
-        cb(null, cc.FileUtils.getInstance().getStringFromFile(url));
+        cb(null, jsb.fileUtils.getStringFromFile(url));
     },
     
     loadJson : function(url, cb){
@@ -417,10 +417,10 @@ cc.loader = {
      * @param {Function} cb
      */
     loadBinary : function(url, cb){
-        cb(null, cc.FileUtils.getInstance().getDataFromFile(url));
+        cb(null, jsb.fileUtils.getDataFromFile(url));
     },
     loadBinarySync : function(url){
-        return cc.FileUtils.getInstance().getDataFromFile(url);
+        return jsb.fileUtils.getDataFromFile(url);
     },
     
     /**
@@ -518,7 +518,7 @@ cc.loader = {
      * @param {Function} cb     callback
      */
     loadAliases : function(url, cb){
-        cc.fileUtils.loadFilenameLookup(url);
+        jsb.fileUtils.loadFilenameLookup(url);
         if(cb) cb();
     },
 
@@ -569,13 +569,13 @@ cc.defineGetterSetter(cc.loader, "resPath", function(){
     return this._resPath;
 }, function(resPath){
     this._resPath = resPath || "";
-    cc.FileUtils.getInstance().addSearchPath(this._resPath);
+    jsb.fileUtils.addSearchPath(this._resPath);
 });
 cc.defineGetterSetter(cc.loader, "audioPath", function(){
     return this._audioPath;
 }, function(audioPath){
     this._audioPath = audioPath || "";
-    cc.FileUtils.getInstance().addSearchPath(this._audioPath);
+    jsb.fileUtils.addSearchPath(this._audioPath);
 });
 
 //+++++++++++++++++++++++++something about loader end+++++++++++++++++++++++++++++
@@ -1061,7 +1061,7 @@ cc.game = {
             return cfg;
         };
         try{
-            var txt = cc.FileUtils.getInstance().getStringFromFile("project.json");
+            var txt = jsb.fileUtils.getStringFromFile("project.json");
             var data = JSON.parse(txt);
             this.config = _init(data || {});
         }catch(e){
