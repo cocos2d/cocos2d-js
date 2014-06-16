@@ -1044,6 +1044,8 @@ cc.game = {
             cfg[CONFIG_KEY.debugMode] = cfg[CONFIG_KEY.debugMode] || 0;
             cfg[CONFIG_KEY.frameRate] = cfg[CONFIG_KEY.frameRate] || 60;
             cfg[CONFIG_KEY.renderMode] = cfg[CONFIG_KEY.renderMode] || 0;
+            cc.log(cfg[CONFIG_KEY.showFPS]);
+            cfg[CONFIG_KEY.showFPS] = cfg[CONFIG_KEY.showFPS] === false ? false : true;
             return cfg;
         };
         try{
@@ -1055,6 +1057,8 @@ cc.game = {
             this.config = _init({});
         }
 //        cc._initDebugSetting(this.config[CONFIG_KEY.debugMode]);
+        cc.log(this.config[CONFIG_KEY.showFPS]);
+        cc.director.setDisplayStats(this.config[CONFIG_KEY.showFPS]);
         cc._initSys(this.config, CONFIG_KEY);
     },
     
