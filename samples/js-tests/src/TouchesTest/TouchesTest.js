@@ -118,6 +118,5 @@ var PongLayer = cc.Layer.extend({
             this.resetAndScoreBallForPlayer(LOW_PLAYER);
         else if (this._ball.y < -this._ball.radius())
             this.resetAndScoreBallForPlayer(HIGH_PLAYER);
-        this._ball.draw();
     }
 });

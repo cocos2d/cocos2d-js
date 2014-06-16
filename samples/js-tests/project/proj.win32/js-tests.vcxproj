@@ -116,9 +116,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\cocos2d-x\external\
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\js-tests-res" rd /s /q "$(OutDir)\js-tests-res"
 mkdir "$(OutDir)\js-tests-res"
+mkdir "$(OutDir)\js-tests-res\script"
 mkdir "$(OutDir)\js-tests-res\src"
 mkdir "$(OutDir)\js-tests-res\res"
-xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-tests-res\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-tests-res\script" /e /Y
 xcopy "$(ProjectDir)..\..\src" "$(OutDir)\js-tests-res\src\" /e /Y
 xcopy "$(ProjectDir)..\..\res" "$(OutDir)\js-tests-res\res\" /e /Y
 copy "$(ProjectDir)..\..\main.js" "$(OutDir)\js-tests-res"
@@ -176,9 +177,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\cocos2d-x\external\
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\js-tests-res" rd /s /q "$(OutDir)\js-tests-res"
 mkdir "$(OutDir)\js-tests-res"
+mkdir "$(OutDir)\js-tests-res\script"
 mkdir "$(OutDir)\js-tests-res\src"
 mkdir "$(OutDir)\js-tests-res\res"
-xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-tests-res\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-tests-res\script" /e /Y
 xcopy "$(ProjectDir)..\..\src" "$(OutDir)\js-tests-res\src\" /e /Y
 xcopy "$(ProjectDir)..\..\res" "$(OutDir)\js-tests-res\res\" /e /Y
 copy "$(ProjectDir)..\..\main.js" "$(OutDir)\js-tests-res"

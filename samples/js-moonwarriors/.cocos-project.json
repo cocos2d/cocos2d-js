@@ -24,5 +24,6 @@
         "project_path": "",
         "run_root_dir": "../../",
         "sub_url": "/samples/js-moonwarriors/"
-    }
+    },
+    "engine_dir": "../../"
 }

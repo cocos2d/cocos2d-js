@@ -116,10 +116,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\js-bindings\cocos2d-x\external\websockets\prebui
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource"
+mkdir "$(OutDir)\Resource\script"
 mkdir "$(OutDir)\Resource\src"
 mkdir "$(OutDir)\Resource\res"
 mkdir "$(OutDir)\Resource\rtres"
-xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\Resource" /e /Y
+xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\Resource\script" /e /Y
 xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
 xcopy "$(ProjectDir)..\..\..\runtime\rtres" "$(OutDir)\Resource\rtres" /e /Y
 copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\Resource\main.js" /Y
@@ -179,10 +180,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\js-bindings\cocos2d-x\external\websockets\prebui
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource"
+mkdir "$(OutDir)\Resource\script"
 mkdir "$(OutDir)\Resource\src"
 mkdir "$(OutDir)\Resource\res"
 mkdir "$(OutDir)\Resource\rtres"
-xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\Resource" /e /Y
+xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\Resource\script" /e /Y
 xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
 xcopy "$(ProjectDir)..\..\..\runtime\rtres" "$(OutDir)\Resource\rtres" /e /Y
 copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\Resource\main.js" /Y
