@@ -29,11 +29,11 @@ blendfunc
 /**
  * @method onDraw
  * @param {mat4_object} arg0
- * @param {bool} arg1
+ * @param {unsigned int} arg1
  */
 onDraw : function (
 mat4, 
-bool 
+int 
 )
 {
 },
