@@ -1027,6 +1027,45 @@ bool initRuntime()
 
     return true;
 }
+
+bool runtime_FileUtils_addSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "cocos2dx_FileUtils_addSearchPath : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "cocos2dx_FileUtils_addSearchPath : Error processing arguments");
+        if (!FileUtils::getInstance()->isAbsolutePath(arg0))
+            arg0 = g_resourcePath + arg0;
+        cobj->addSearchPath(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "cocos2dx_FileUtils_addSearchPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
+void register_FileUtils(JSContext *cx, JSObject *global) {
+    JS::RootedValue  nsval(cx);
+    JS::RootedObject ns(cx);
+    JS_GetProperty(cx, global, "cc", &nsval);
+    if (nsval == JSVAL_VOID) {
+        return;
+    } else {
+        JS_ValueToObject(cx, nsval, &ns);
+    }
+    global = ns;
+
+    JSObject  *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.FileUtils.getInstance(); })()"));
+    JS_DefineFunction(cx, tmpObj, "addSearchPath", runtime_FileUtils_addSearchPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+}
+
 bool startRuntime()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -1042,6 +1081,8 @@ bool startRuntime()
     return false;
 #endif
 #endif
+
+    ScriptingCore::getInstance()->addRegisterCallback(register_FileUtils);
 
     static ConsoleCustomCommand s_customCommand;
     ScriptingCore::getInstance()->start();
