@@ -123,8 +123,6 @@ var CrashTest = ActionManagerTest.extend({
     getCurrentResult:function() {
         return NOT_CRASHED_CONST;
     }
-
-
 });
 
 //------------------------------------------------------------------
@@ -426,7 +424,5 @@ var previousActionMgrTest = function () {
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 };
 var restartActionMgrTest = function () {
-
-
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 };
