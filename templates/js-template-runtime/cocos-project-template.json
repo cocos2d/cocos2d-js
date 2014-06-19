@@ -3,14 +3,6 @@
          "exclude_from_template":[
             "frameworks/runtime-src"
          ],
-         "append_from_template": {
-            "from": "frameworks/runtime-src/proj.android",
-            "to": "frameworks/runtime-src/proj.android",
-            "exclude": [
-                "bin",
-                "assets"
-            ]
-         },
          "append_h5_engine":{
             "from":"frameworks/cocos2d-html5",
             "to":"frameworks/cocos2d-html5"
@@ -19,18 +11,10 @@
             "src_project_name":"HelloJavascript",
             "files":[
                "config.json",
-               ".project",
-               "frameworks/runtime-src/proj.android/.project",
-               "frameworks/runtime-src/proj.android/AndroidManifest.xml",
-               "frameworks/runtime-src/proj.android/build.xml",
-               "frameworks/runtime-src/proj.android/res/values/strings.xml"
+               ".project"
                ]
             },
          "append_dir":[
-            {
-                "from": "frameworks/js-bindings/cocos2d-x/cocos/platform/android/java",
-                "to": "frameworks/js-bindings/cocos2d-x/cocos/platform/android/java"
-            },
             {
                "from":"frameworks/js-bindings",
                "to":"frameworks/js-bindings",
@@ -141,7 +125,8 @@
             "from":"frameworks/runtime-src",
             "to":"frameworks/runtime-src",
             "exclude":[
-               "proj.android",
+               "proj.android/bin",
+               "proj.android/assets",
                "proj.ios_mac/HelloJavascript.xcodeproj/project.xcworkspace",
                "proj.ios_mac/HelloJavascript.xcodeproj/xcuserdata",
                "proj.win32/Debug.win32",
@@ -187,6 +172,10 @@
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
                "frameworks/runtime-src/proj.win32/main.cpp",
                "frameworks/runtime-src/proj.win32/Runtime_win32.cpp",
+               "frameworks/runtime-src/proj.android/.project",
+               "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+               "frameworks/runtime-src/proj.android/build.xml",
+               "frameworks/runtime-src/proj.android/res/values/strings.xml",
                "frameworks/runtime-src/proj.ios_mac/ios/main.m",
                "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
                "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",

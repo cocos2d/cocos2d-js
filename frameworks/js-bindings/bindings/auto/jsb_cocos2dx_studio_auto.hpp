@@ -56,6 +56,19 @@ bool js_cocos2dx_studio_BaseData_setColor(JSContext *cx, uint32_t argc, jsval *v
 bool js_cocos2dx_studio_BaseData_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_BaseData_BaseData(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocostudio_AnimationData_class;
+extern JSObject *jsb_cocostudio_AnimationData_prototype;
+
+bool js_cocos2dx_studio_AnimationData_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_AnimationData_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_AnimationData(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_AnimationData_getMovement(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_AnimationData_getMovementCount(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_AnimationData_addMovement(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_AnimationData_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_AnimationData_AnimationData(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocostudio_ProcessBase_class;
 extern JSObject *jsb_cocostudio_ProcessBase_prototype;
 
@@ -248,8 +261,10 @@ bool js_cocos2dx_studio_ArmatureAnimation_gotoAndPause(JSContext *cx, uint32_t a
 bool js_cocos2dx_studio_ArmatureAnimation_resume(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ArmatureAnimation_stop(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ArmatureAnimation_update(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ArmatureAnimation_getAnimationData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ArmatureAnimation_playWithIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ArmatureAnimation_getCurrentMovementID(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ArmatureAnimation_setAnimationData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ArmatureAnimation_gotoAndPlay(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ArmatureAnimation_playWithNames(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ArmatureAnimation_getMovementCount(JSContext *cx, uint32_t argc, jsval *vp);

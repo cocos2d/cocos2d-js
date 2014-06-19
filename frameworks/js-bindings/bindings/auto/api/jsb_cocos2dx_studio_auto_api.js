@@ -295,6 +295,64 @@ BaseData : function (
 };
 
 /**
+ * @class AnimationData
+ */
+ccs.AnimationData = {
+
+/**
+ * @method getMovement
+ * @param {String} arg0
+ * @return {ccs.MovementData}
+ */
+getMovement : function (
+str 
+)
+{
+    return ccs.MovementData;
+},
+
+/**
+ * @method getMovementCount
+ * @return {long}
+ */
+getMovementCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method addMovement
+ * @param {ccs.MovementData} arg0
+ */
+addMovement : function (
+movementdata 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.AnimationData}
+ */
+create : function (
+)
+{
+    return ccs.AnimationData;
+},
+
+/**
+ * @method AnimationData
+ * @constructor
+ */
+AnimationData : function (
+)
+{
+},
+
+};
+
+/**
  * @class ProcessBase
  */
 ccs.ProcessBase = {
@@ -1531,6 +1589,16 @@ float
 },
 
 /**
+ * @method getAnimationData
+ * @return {ccs.AnimationData}
+ */
+getAnimationData : function (
+)
+{
+    return ccs.AnimationData;
+},
+
+/**
  * @method playWithIndex
  * @param {int} arg0
  * @param {int} arg1
@@ -1552,6 +1620,16 @@ getCurrentMovementID : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setAnimationData
+ * @param {ccs.AnimationData} arg0
+ */
+setAnimationData : function (
+animationdata 
+)
+{
 },
 
 /**
