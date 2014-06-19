@@ -413,7 +413,7 @@ bool
 /**
  * @method getTouchLocation
  * @param {cc.Touch} arg0
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getTouchLocation : function (
 touch 
@@ -534,7 +534,7 @@ state
 
 /**
  * @method setLabelAnchorPoint
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  */
 setLabelAnchorPoint : function (
 vec2 
@@ -544,7 +544,7 @@ vec2
 
 /**
  * @method getLabelAnchorPoint
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getLabelAnchorPoint : function (
 )
@@ -965,7 +965,7 @@ bool
 /**
  * @method initWithTargetAndPos
  * @param {cc.Node} arg0
- * @param {cc.Vec2} arg1
+ * @param {vec2_object} arg1
  * @return {bool}
  */
 initWithTargetAndPos : function (
@@ -988,7 +988,7 @@ float
 
 /**
  * @method getStartPos
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getStartPos : function (
 )
@@ -1069,7 +1069,7 @@ sprite
 /**
  * @method create
  * @param {cc.Node} arg0
- * @param {cc.Vec2} arg1
+ * @param {vec2_object} arg1
  * @return {cc.ControlHuePicker}
  */
 create : function (
@@ -1109,7 +1109,7 @@ getShadow : function (
 /**
  * @method initWithTargetAndPos
  * @param {cc.Node} arg0
- * @param {cc.Vec2} arg1
+ * @param {vec2_object} arg1
  * @return {bool}
  */
 initWithTargetAndPos : function (
@@ -1122,7 +1122,7 @@ vec2
 
 /**
  * @method getStartPos
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getStartPos : function (
 )
@@ -1193,7 +1193,7 @@ getBrightness : function (
 /**
  * @method create
  * @param {cc.Node} arg0
- * @param {cc.Vec2} arg1
+ * @param {vec2_object} arg1
  * @return {cc.ControlSaturationBrightnessPicker}
  */
 create : function (
@@ -1352,7 +1352,7 @@ cc.ControlPotentiometer = {
 
 /**
  * @method setPreviousLocation
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  */
 setPreviousLocation : function (
 vec2 
@@ -1392,10 +1392,10 @@ getMaximumValue : function (
 
 /**
  * @method angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint
- * @param {cc.Vec2} arg0
- * @param {cc.Vec2} arg1
- * @param {cc.Vec2} arg2
- * @param {cc.Vec2} arg3
+ * @param {vec2_object} arg0
+ * @param {vec2_object} arg1
+ * @param {vec2_object} arg2
+ * @param {vec2_object} arg3
  * @return {float}
  */
 angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint : function (
@@ -1410,7 +1410,7 @@ vec2
 
 /**
  * @method potentiometerBegan
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  */
 potentiometerBegan : function (
 vec2 
@@ -1460,7 +1460,7 @@ getValue : function (
 
 /**
  * @method getPreviousLocation
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getPreviousLocation : function (
 )
@@ -1470,8 +1470,8 @@ getPreviousLocation : function (
 
 /**
  * @method distanceBetweenPointAndPoint
- * @param {cc.Vec2} arg0
- * @param {cc.Vec2} arg1
+ * @param {vec2_object} arg0
+ * @param {vec2_object} arg1
  * @return {float}
  */
 distanceBetweenPointAndPoint : function (
@@ -1484,7 +1484,7 @@ vec2
 
 /**
  * @method potentiometerEnded
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  */
 potentiometerEnded : function (
 vec2 
@@ -1540,7 +1540,7 @@ sprite
 
 /**
  * @method potentiometerMoved
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  */
 potentiometerMoved : function (
 vec2 
@@ -1593,7 +1593,7 @@ getSelectedThumbSprite : function (
 /**
  * @method locationFromTouch
  * @param {cc.Touch} arg0
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 locationFromTouch : function (
 touch 
@@ -1906,7 +1906,7 @@ getMinusSprite : function (
 
 /**
  * @method updateLayoutUsingTouchLocation
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  */
 updateLayoutUsingTouchLocation : function (
 vec2 
@@ -2163,7 +2163,7 @@ hasMoved : function (
 /**
  * @method locationFromTouch
  * @param {cc.Touch} arg0
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 locationFromTouch : function (
 touch 
@@ -2232,7 +2232,7 @@ node
 
 /**
  * @method setContentOffsetInDuration
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  * @param {float} arg1
  */
 setContentOffsetInDuration : function (
@@ -2360,7 +2360,7 @@ init : function (
 
 /**
  * @method setContentOffset
- * @param {cc.Vec2} arg0
+ * @param {vec2_object} arg0
  * @param {bool} arg1
  */
 setContentOffset : function (
@@ -2412,7 +2412,7 @@ bool
 
 /**
  * @method getContentOffset
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getContentOffset : function (
 )
@@ -2462,7 +2462,7 @@ getViewSize : function (
 
 /**
  * @method maxContainerOffset
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 maxContainerOffset : function (
 )
@@ -2494,7 +2494,7 @@ node
 
 /**
  * @method minContainerOffset
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 minContainerOffset : function (
 )
@@ -2959,6 +2959,16 @@ EditBox : function (
 cc.EventAssetsManager = {
 
 /**
+ * @method getAssetsManager
+ * @return {cc.AssetsManager}
+ */
+getAssetsManager : function (
+)
+{
+    return cc.AssetsManager;
+},
+
+/**
  * @method getAssetId
  * @return {String}
  */
@@ -2966,6 +2976,16 @@ getAssetId : function (
 )
 {
     return ;
+},
+
+/**
+ * @method getCURLECode
+ * @return {int}
+ */
+getCURLECode : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -2979,20 +2999,10 @@ getMessage : function (
 },
 
 /**
- * @method getAssetsManager
- * @return {cc.AssetsManager}
+ * @method getCURLMCode
+ * @return {int}
  */
-getAssetsManager : function (
-)
-{
-    return cc.AssetsManager;
-},
-
-/**
- * @method getPercent
- * @return {float}
- */
-getPercent : function (
+getCURLMCode : function (
 )
 {
     return 0;
@@ -3008,24 +3018,22 @@ getEventCode : function (
     return 0;
 },
 
+/**
+ * @method getPercent
+ * @return {float}
+ */
+getPercent : function (
+)
+{
+    return 0;
+},
+
 };
 
 /**
  * @class Manifest
  */
 cc.Manifest = {
-
-/**
- * @method getAsset
- * @param {String} arg0
- * @return {cc.Manifest::Asset}
- */
-getAsset : function (
-str 
-)
-{
-    return cc.Manifest::Asset;
-},
 
 /**
  * @method getManifestFileUrl
@@ -3148,6 +3156,14 @@ getRemoteManifest : function (
 )
 {
     return cc.Manifest;
+},
+
+/**
+ * @method downloadFailedAssets
+ */
+downloadFailedAssets : function (
+)
+{
 },
 
 /**

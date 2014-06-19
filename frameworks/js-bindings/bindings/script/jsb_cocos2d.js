@@ -122,15 +122,6 @@ cc.POINT_ZERO = {x:0, y:0};
 
 cc.PARTICLE_DEFAULT_CAPACITY = 500;
 
-// XXX: This definition is different than cocos2d-html5
-// cc.REPEAT_FOREVER = - 1;
-// We can't assign -1 to cc.REPEAT_FOREVER, since it will be a very big double value after
-// converting it to double by JS_ValueToNumber on android.
-// Then cast it to unsigned int, the value will be 0. The schedule will not be able to work.
-// I don't know why this occurs only on android.
-// So instead of passing -1 to it, I assign it with max value of unsigned int in c++.
-cc.REPEAT_FOREVER = 0xffffffff;
-
 cc.MENU_STATE_WAITING = 0;
 cc.MENU_STATE_TRACKING_TOUCH = 1;
 cc.MENU_HANDLER_PRIORITY = -128;
@@ -272,8 +263,8 @@ cc.SCENE_RADIAL = 0xc001;               //CCTransitionProgress.js
 
 cc.KEY = {
     //android
-    back:8,
-    menu:4199,
+    back:6,
+    menu:15,
     //desktop
     backspace:7,
     tab:8,
@@ -495,7 +486,7 @@ cc.radiansToDegress = function (angle) {
  * @constant
  * @type Number
  */
-cc.REPEAT_FOREVER = Number.MAX_VALUE - 1;
+cc.REPEAT_FOREVER = 0xffffffff;
 
 /**
  * default gl blend src function. Compatible with premultiplied alpha images.
@@ -1169,15 +1160,28 @@ cc.Color = function (r, g, b, a) {
     this.r = r || 0;
     this.g = g || 0;
     this.b = b || 0;
-    this.a = a || 0;
+    this.a = a || 255;
 };
 
 /**
+ * Generate a color object based on multiple forms of parameters
+ * @example
+ *
+ * // 1. All channels seperately as parameters
+ * var color1 = cc.color(255, 255, 255, 255);
+ *
+ * // 2. Convert a hex string to a color
+ * var color2 = cc.color("#000000");
+ *
+ * // 3. An color object as parameter
+ * var color3 = cc.color({r: 255, g: 255, b: 255, a: 255});
+ *
+ * Alpha channel is optional. Default value is 255
  *
  * @param {Number|String|cc.Color} r
  * @param {Number} g
  * @param {Number} b
- * @param {Number} a
+ * @param {Number} [a=255]
  * @returns {cc.Color}
  */
 cc.color = function (r, g, b, a) {
@@ -1186,8 +1190,8 @@ cc.color = function (r, g, b, a) {
     if (typeof r === "string")
         return cc.hexToColor(r);
     if (typeof r === "object")
-        return {r: r.r, g: r.g, b: r.b, a: r.a};
-    return  {r: r, g: g, b: b, a: a };
+        return {r: r.r, g: r.g, b: r.b, a: r.a || 255};
+    return  {r: r, g: g, b: b, a: a || 255};
 };
 
 /**
@@ -1588,7 +1592,7 @@ var setInterval = function (code, delay) {
     var target = new WindowTimeFun(code);
     if (arguments.length > 2)
         target._args = Array.prototype.slice.call(arguments, 2);
-    cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, cc.REPEAT_FOREVER, 0, false);
+    cc.director.getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, cc.REPEAT_FOREVER, 0, false);
     _windowTimeFunHash[target._intervalId] = target;
     return target._intervalId;
 };
@@ -2257,7 +2261,9 @@ cc.targetedAction = cc.TargetedAction.create;
 cc.actionTween = cc.ActionTween.create;
 
 
+//
 //AffineTransform API
+//
 
 /**
  * @memberOf cc
@@ -2522,7 +2528,7 @@ cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
     var contentSize = this.getContentSize();
     var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
     var matrix = this.getNodeToParentTransform();
-    var _trans = cc.AffineTransformMake(matrix[0], matrix[4], matrix[1], matrix[5], matrix[12], matrix[13]); 
+    var _trans = cc.AffineTransformMake(matrix[0], matrix[1], matrix[4], matrix[5], matrix[12], matrix[13]); 
     var trans = (parentTransform == null) ? _trans : cc.AffineTransformConcat(_trans, parentTransform);
     rect = cc.RectApplyAffineTransform(rect, trans);
 

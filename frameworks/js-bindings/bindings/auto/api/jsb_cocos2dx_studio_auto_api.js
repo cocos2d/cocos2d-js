@@ -295,6 +295,64 @@ BaseData : function (
 };
 
 /**
+ * @class AnimationData
+ */
+ccs.AnimationData = {
+
+/**
+ * @method getMovement
+ * @param {String} arg0
+ * @return {ccs.MovementData}
+ */
+getMovement : function (
+str 
+)
+{
+    return ccs.MovementData;
+},
+
+/**
+ * @method getMovementCount
+ * @return {long}
+ */
+getMovementCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method addMovement
+ * @param {ccs.MovementData} arg0
+ */
+addMovement : function (
+movementdata 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.AnimationData}
+ */
+create : function (
+)
+{
+    return ccs.AnimationData;
+},
+
+/**
+ * @method AnimationData
+ * @constructor
+ */
+AnimationData : function (
+)
+{
+},
+
+};
+
+/**
  * @class ProcessBase
  */
 ccs.ProcessBase = {
@@ -619,7 +677,7 @@ getColliderBodyList : function (
 
 /**
  * @method updateTransform
- * @param {cc.Mat4} arg0
+ * @param {mat4_object} arg0
  */
 updateTransform : function (
 mat4 
@@ -795,7 +853,7 @@ getDisplayRenderNode : function (
 
 /**
  * @method getAnchorPointInPoints
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getAnchorPointInPoints : function (
 )
@@ -889,7 +947,7 @@ int
 
 /**
  * @method containPoint
-* @param {float|cc.Vec2} float
+* @param {float|vec2_object} float
 * @param {float} float
 * @return {bool|bool}
 */
@@ -969,7 +1027,7 @@ getCurrentDisplayIndex : function (
 
 /**
  * @method getAnchorPoint
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getAnchorPoint : function (
 )
@@ -1353,7 +1411,7 @@ armature
 
 /**
  * @method getNodeToArmatureTransform
- * @return {cc.Mat4}
+ * @return {mat4_object}
  */
 getNodeToArmatureTransform : function (
 )
@@ -1531,6 +1589,16 @@ float
 },
 
 /**
+ * @method getAnimationData
+ * @return {ccs.AnimationData}
+ */
+getAnimationData : function (
+)
+{
+    return ccs.AnimationData;
+},
+
+/**
  * @method playWithIndex
  * @param {int} arg0
  * @param {int} arg1
@@ -1552,6 +1620,16 @@ getCurrentMovementID : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setAnimationData
+ * @param {ccs.AnimationData} arg0
+ */
+setAnimationData : function (
+animationdata 
+)
+{
 },
 
 /**
@@ -2131,7 +2209,7 @@ getBone : function (
 
 /**
  * @method getNodeToWorldTransformAR
- * @return {cc.Mat4}
+ * @return {mat4_object}
  */
 getNodeToWorldTransformAR : function (
 )

@@ -363,7 +363,7 @@ cc.loader = {
      * @param {function} cb arguments are : err, txt
      */
     loadTxt : function(url, cb){
-        cb(null, cc.FileUtils.getInstance().getStringFromFile(url));
+        cb(null, jsb.fileUtils.getStringFromFile(url));
     },
     
     loadJson : function(url, cb){
@@ -417,10 +417,10 @@ cc.loader = {
      * @param {Function} cb
      */
     loadBinary : function(url, cb){
-        cb(null, cc.FileUtils.getInstance().getDataFromFile(url));
+        cb(null, jsb.fileUtils.getDataFromFile(url));
     },
     loadBinarySync : function(url){
-        return cc.FileUtils.getInstance().getDataFromFile(url);
+        return jsb.fileUtils.getDataFromFile(url);
     },
     
     /**
@@ -518,7 +518,7 @@ cc.loader = {
      * @param {Function} cb     callback
      */
     loadAliases : function(url, cb){
-        cc.fileUtils.loadFilenameLookup(url);
+        jsb.fileUtils.loadFilenameLookup(url);
         if(cb) cb();
     },
 
@@ -569,13 +569,13 @@ cc.defineGetterSetter(cc.loader, "resPath", function(){
     return this._resPath;
 }, function(resPath){
     this._resPath = resPath || "";
-    cc.FileUtils.getInstance().addSearchPath(this._resPath);
+    jsb.fileUtils.addSearchPath(this._resPath);
 });
 cc.defineGetterSetter(cc.loader, "audioPath", function(){
     return this._audioPath;
 }, function(audioPath){
     this._audioPath = audioPath || "";
-    cc.FileUtils.getInstance().addSearchPath(this._audioPath);
+    jsb.fileUtils.addSearchPath(this._audioPath);
 });
 
 //+++++++++++++++++++++++++something about loader end+++++++++++++++++++++++++++++
@@ -664,7 +664,7 @@ cc.reflection = {
     callStaticMethod : function(){
         cc.log("not supported on current platform");
     }
-}
+};
 
 // GUI
 ccui.helper = ccui.Helper;
@@ -683,6 +683,19 @@ ccs.sceneReader.version = function() {
 };
 
 //+++++++++++++++++++++++Define singleton objects end+++++++++++++++++++++++++++
+
+
+//+++++++++++++++++++++++++Redefine JSB only APIs+++++++++++++++++++++++++++
+
+var jsb = jsb || {};
+jsb.fileUtils = cc.fileUtils;
+delete cc.FileUtils;
+delete cc.fileUtils;
+jsb.AssetsManager = cc.AssetsManager;
+delete cc.AssetsManager;
+
+//+++++++++++++++++++++++++Redefine JSB only APIs+++++++++++++++++++++++++++++
+
 
 //+++++++++++++++++++++++++something about window events begin+++++++++++++++++++++++++++
 cc.winEvents = {//TODO register hidden and show callback for window
@@ -1044,10 +1057,11 @@ cc.game = {
             cfg[CONFIG_KEY.debugMode] = cfg[CONFIG_KEY.debugMode] || 0;
             cfg[CONFIG_KEY.frameRate] = cfg[CONFIG_KEY.frameRate] || 60;
             cfg[CONFIG_KEY.renderMode] = cfg[CONFIG_KEY.renderMode] || 0;
+            cfg[CONFIG_KEY.showFPS] = cfg[CONFIG_KEY.showFPS] === false ? false : true;
             return cfg;
         };
         try{
-            var txt = cc.FileUtils.getInstance().getStringFromFile("project.json");
+            var txt = jsb.fileUtils.getStringFromFile("project.json");
             var data = JSON.parse(txt);
             this.config = _init(data || {});
         }catch(e){
@@ -1055,6 +1069,7 @@ cc.game = {
             this.config = _init({});
         }
 //        cc._initDebugSetting(this.config[CONFIG_KEY.debugMode]);
+        cc.director.setDisplayStats(this.config[CONFIG_KEY.showFPS]);
         cc._initSys(this.config, CONFIG_KEY);
     },
     
@@ -1086,7 +1101,7 @@ cc.game = {
      */
     prepare : function(cb){
         var self = this, config = self.config, CONFIG_KEY = self.CONFIG_KEY, loader = cc.loader;
-        require("jsb.js");
+        require("script/jsb.js");
         self._prepareCalled = true;
         loader.loadJsWithImg("", config[CONFIG_KEY.jsList] || [], function(err){
             if(err) throw err;
