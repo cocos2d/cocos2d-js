@@ -1737,8 +1737,6 @@ cc.Touch.prototype.getLocationY = function(){
     return this.getLocation().y;
 };
 
-cc.director = cc.Director.getInstance();
-
 cc.Director.EVENT_PROJECTION_CHANGED = "director_projection_changed";
 cc.Director.EVENT_AFTER_DRAW = "director_after_draw";
 cc.Director.EVENT_AFTER_VISIT = "director_after_visit";
@@ -1754,104 +1752,58 @@ cc.Director.prototype.runScene = function(scene){
 };
 
 cc.visibleRect = {
-    _topLeft:cc.p(0,0),
-    _topRight:cc.p(0,0),
-    _top:cc.p(0,0),
-    _bottomLeft:cc.p(0,0),
-    _bottomRight:cc.p(0,0),
-    _bottom:cc.p(0,0),
-    _center:cc.p(0,0),
-    _left:cc.p(0,0),
-    _right:cc.p(0,0),
-    _width:0,
-    _height:0,
-    _isInitialized: false,
+    topLeft:cc.p(0,0),
+    topRight:cc.p(0,0),
+    top:cc.p(0,0),
+    bottomLeft:cc.p(0,0),
+    bottomRight:cc.p(0,0),
+    bottom:cc.p(0,0),
+    center:cc.p(0,0),
+    left:cc.p(0,0),
+    right:cc.p(0,0),
+    width:0,
+    height:0,
+
     init:function(){
-
-        var director = cc.Director.getInstance();
-        var origin = director.getVisibleOrigin();
-        var size = director.getVisibleSize();
-
-        this._width = size.width;
-        this._height = size.height;
-
-        var w = this._width;
-        var h = this._height;
+        var origin = cc.director.getVisibleOrigin();
+        var size = cc.director.getVisibleSize();
+        var w = this.width = size.width;
+        var h = this.height = size.height;
+        var l = origin.x,
+            b = origin.y,
+            t = b + h,
+            r = l + w;
 
         //top
-        this._topLeft.y = h;
-        this._topRight.x = w;
-        this._topRight.y = h;
-        this._top.x = w/2;
-        this._top.y = h;
+        this.topLeft.x = l;
+        this.topLeft.y = t;
+        this.topRight.x = r;
+        this.topRight.y = t;
+        this.top.x = l + w/2;
+        this.top.y = t;
 
         //bottom
-        this._bottomRight.x = w;
-        this._bottom.x = w/2;
+        this.bottomLeft.x = l;
+        this.bottomLeft.y = b;
+        this.bottomRight.x = r;
+        this.bottomRight.y = b;
+        this.bottom.x = l + w/2;
+        this.bottom.y = b;
 
         //center
-        this._center.x = w/2;
-        this._center.y = h/2;
+        this.center.x = l + w/2;
+        this.center.y = b + h/2;
 
         //left
-        this._left.y = h/2;
+        this.left.x = l;
+        this.left.y = b + h/2;
 
         //right
-        this._right.x = w;
-        this._right.y = h/2;
-    },
-    lazyInit: function(){
-        if (!this._isInitialized) {
-            this.init();
-            this._isInitialized = true;
-        }
+        this.right.x = r;
+        this.right.y = b + h/2;
     }
 };
-
-cc.defineGetterSetter(cc.visibleRect, "width", function(){
-    this.lazyInit();
-    return this._width;
-});
-cc.defineGetterSetter(cc.visibleRect, "height", function(){
-    this.lazyInit();
-    return this._height;
-});
-cc.defineGetterSetter(cc.visibleRect, "topLeft", function(){
-    this.lazyInit();
-    return this._topLeft;
-});
-cc.defineGetterSetter(cc.visibleRect, "topRight", function(){
-    this.lazyInit();
-    return this._topRight;
-});
-cc.defineGetterSetter(cc.visibleRect, "top", function(){
-    this.lazyInit();
-    return this._top;
-});
-cc.defineGetterSetter(cc.visibleRect, "bottomLeft", function(){
-    this.lazyInit();
-    return this._bottomLeft;
-});
-cc.defineGetterSetter(cc.visibleRect, "bottomRight", function(){
-    this.lazyInit();
-    return this._bottomRight;
-});
-cc.defineGetterSetter(cc.visibleRect, "bottom", function(){
-    this.lazyInit();
-    return this._bottom;
-});
-cc.defineGetterSetter(cc.visibleRect, "center", function(){
-    this.lazyInit();
-    return this._center;
-});
-cc.defineGetterSetter(cc.visibleRect, "left", function(){
-    this.lazyInit();
-    return this._left;
-});
-cc.defineGetterSetter(cc.visibleRect, "right", function(){
-    this.lazyInit();
-    return this._right;
-});
+cc.visibleRect.init();
 
 // Predefined font definition
 cc.FontDefinition = function () {
