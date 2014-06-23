@@ -31,8 +31,11 @@ LOCAL_SRC_FILES := \
 javascript/Runtime_android.cpp \
 javascript/main.cpp
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
-                    $(LOCAL_PATH)/../../Classes/runtime
+LOCAL_C_INCLUDES := \
+$(LOCAL_PATH)/../../Classes/runtime \
+$(LOCAL_PATH)/../../Classes/protobuf-lite \
+$(LOCAL_PATH)/../../Classes
+                    
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_jsb_static
 LOCAL_WHOLE_STATIC_LIBRARIES += jsb_chipmunk_static

@@ -62,13 +62,24 @@ using namespace std;
 using namespace cocos2d;
 
 std::string g_resourcePath;
-static rapidjson::Document g_filecfgjson; 
 
-static string s_strFile;
-static std::mutex s_FileNameMutex;
+//1M size 
+#define MAXPROTOLENGTH 1048576
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#define usleep(t) Sleep(t)
+#else
+#include <unistd.h>
+#define usleep(t) usleep(t)
+#endif
+
 extern string getIPAddress();
 extern bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<std::string> &fileList);
 /*@brief   use "|" splite string  */
+const char* getRuntimeVersion()
+{
+    return "1.2";
+}
+
 vector<string> splitFilter(const char *str)
 {
     vector<string> filterArray;
@@ -123,6 +134,7 @@ bool wildcardMatches(const char *wildcard, const char *str)
 
 
 #ifndef _WIN32
+#pragma warning(disable:4099)
 /*
 *@brief iterator directory and process file.
 */
@@ -234,12 +246,6 @@ vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const 
     dir =fulldir;
     return _lfileList;
 }
-
-const char* getRuntimeVersion()
-{
-    return "1.2";
-}
-
 
 bool startScript()
 {
@@ -528,7 +534,7 @@ bool CreateDir(const char *sPathName)
             if(access(DirName,   NULL)!=0   )
             {
 #ifdef _WIN32
-                if(mkdir(DirName/*,   0755*/)==-1)
+                if(_mkdir(DirName/*,   0755*/)==-1)
 #else
                 if(mkdir(DirName,   0755)==-1)
 #endif
@@ -552,7 +558,7 @@ void recvBuf(int fd,char *pbuf,int bufsize)
     
         int recvlen = recv(fd, pbuf+bufsize-startFlagLen,startFlagLen ,0);
         if (recvlen<=0) {
-            sleep(1);
+            usleep(1);
             continue;
         }
         startFlagLen -= recvlen;
@@ -579,7 +585,7 @@ void FileServer::loopReceiveFile()
     }
     
         union 
-    {
+        {
             char char_type[3];
             unsigned short uint16_type;
         }protonum;
@@ -600,8 +606,8 @@ void FileServer::loopReceiveFile()
         }else{
             if (_recvErrorFile == recvDataBuf.fileProto.file_name()){
                 continue;
-    }
-}
+            }
+        }
         int contentSize = recvDataBuf.fileProto.content_size();
         if (contentSize>0){  
             Bytef *contentbuf= new Bytef[contentSize+1];
@@ -614,12 +620,12 @@ void FileServer::loopReceiveFile()
                 memset(_protoBuf,0,MAXPROTOLENGTH);
                 int result= recv(fd, _protoBuf, recvLen,0);
                 if (result<=0) {
-                    sleep(1);
+                    usleep(1);
                     continue;
                 }
                 memcpy(contentbuf+contentSize-recvTotalLen,_protoBuf,result);
                 recvTotalLen -= result;
-    }
+             }
         
             if (recvDataBuf.fileProto.compress_type() == runtime::FileSendProtos_CompressType::FileSendProtos_CompressType_ZIP){
                 unsigned long uncompressSize = recvDataBuf.fileProto.uncompress_size();
@@ -641,18 +647,18 @@ void FileServer::loopReceiveFile()
             _recvBufListMutex.lock();
             _recvBufList.push_back(recvDataBuf);
             _recvBufListMutex.unlock();
-    }
-    }
+            }
+        }
     }
     
 void FileServer::loopWriteFile()
-    {
+{
      while(!_endThread) { 
          _recvBufListMutex.lock();
          int recvSize = _recvBufList.size();
          _recvBufListMutex.unlock();
          if(0 == recvSize){
-             sleep(500);
+             usleep(500);
              continue;
          }
          _recvBufListMutex.lock();
@@ -685,9 +691,10 @@ void FileServer::loopWriteFile()
          if (fp){
              if (0 == fwrite(recvDataBuf.contentBuf.c_str(), sizeof(char), recvDataBuf.contentBuf.size(),fp)){
                  addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FWRITE_ERROR,errno);
+                 fclose(fp);
+                 continue;
              }
-        fclose(fp);
-            continue;
+             fclose(fp);
          }
 
          if (recvDataBuf.fileProto.package_seq() == recvDataBuf.fileProto.package_sum()){
@@ -698,11 +705,10 @@ void FileServer::loopWriteFile()
     }
 
 void FileServer::addResponse(int fd, string filename,int errortype,int errornum)
-    {
+{
     
     switch (errortype)
-    
-{
+    {
     case runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_UNCOMPRESS_ERROR:
     case runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_RECV_ERROR:
         _recvErrorFile = filename;
@@ -727,12 +733,6 @@ void FileServer::addResponse(int fd, string filename,int errortype,int errornum)
 
 void FileServer::loopResponse()
 {
-
-
-
-
-    /* 0.016 seconds. Wake up once per frame at 60PFS */
-
     while(!_endThread) {
 
         _responseBufListMutex.lock();
@@ -740,7 +740,7 @@ void FileServer::loopResponse()
         _responseBufListMutex.unlock();
 
         if(0 == responseSize){
-            sleep(500);
+            usleep(500);
             /* error */
             continue;
         }
@@ -753,6 +753,7 @@ void FileServer::loopResponse()
         runtime::FileSendComplete  fileSendProtoComplete;
         fileSendProtoComplete.set_file_name(responseBuf.fileResponseProto.file_name());
         fileSendProtoComplete.set_result(responseBuf.fileResponseProto.result());
+        fileSendProtoComplete.set_error_num(responseBuf.fileResponseProto.error_num());
         fileSendProtoComplete.SerializeToString(&responseString);
         char dataBuf[1024] ={0};
         struct ResponseStruct 
@@ -769,7 +770,7 @@ void FileServer::loopResponse()
         memcpy(dataBuf+sizeof(responseData),responseString.c_str(),responseString.size());
         cocos2d::log("responseFile:%s,result:%d",fileSendProtoComplete.file_name().c_str(),fileSendProtoComplete.result());
         int sendLen = send(responseBuf.fd, dataBuf, sizeof(responseData)+responseString.size(),0);
-        }
+    }
 }
 
 class ConnectWaitLayer: public Layer
@@ -816,19 +817,22 @@ public:
         shineSprite->setOpacity(0);
         shineSprite->setPosition(Vec2(lanscaptX,lanscaptY));
         Vector<FiniteTimeAction*> arrayOfActions;
-        arrayOfActions.pushBack(DelayTime::create(0.4));
+        arrayOfActions.pushBack(DelayTime::create(0.4f));
         arrayOfActions.pushBack(FadeTo::create(0.8f,200));
         arrayOfActions.pushBack(FadeTo::create(0.8f,255));
         arrayOfActions.pushBack(FadeTo::create(0.8f,200));
         arrayOfActions.pushBack(FadeTo::create(0.8f,0));
-        arrayOfActions.pushBack(DelayTime::create(0.4));
+        arrayOfActions.pushBack(DelayTime::create(0.4f));
         Sequence * arrayAction = Sequence::create(arrayOfActions);
         shineSprite->runAction(RepeatForever::create(Sequence::create(arrayOfActions)));
         addChild(shineSprite,9998);
         string strip = getIPAddress();
         char szIPAddress[512]={0};
         sprintf(szIPAddress, "IP: %s",strip.c_str());
-        auto IPlabel = Label::create(szIPAddress, fontName.c_str(), 72);
+        auto IPlabel = Label::create();
+        IPlabel->setString(szIPAddress);
+        IPlabel->setSystemFontName(fontName.c_str());
+        IPlabel->setSystemFontSize(72);
         IPlabel->setAnchorPoint(Vec2(0,0));
         int spaceSizex = 72;
         int spaceSizey = 200;
@@ -840,14 +844,20 @@ public:
         }
         char szVersion[1024]={0};
         sprintf(szVersion,"runtimeVersion:%s \ncocos2dVersion:%s",getRuntimeVersion(),cocos2dVersion());
-        Label* verLable = Label::create(szVersion, fontName.c_str(), 24);
+        Label* verLable = Label::create();
+        verLable->setString(szVersion);
+        verLable->setSystemFontName(fontName.c_str());
+        verLable->setSystemFontSize(24);
         verLable->setAnchorPoint(Vec2(0,0));
         int width = verLable->getBoundingBox().size.width;
         int height = verLable->getBoundingBox().size.height;
         verLable->setPosition( Point(VisibleRect::right().x-width, VisibleRect::rightBottom().y) );
         verLable->setAlignment(TextHAlignment::LEFT);
         addChild(verLable, 9002);
-        _labelUploadFile = Label::create(_transferTip.c_str(), fontName.c_str(), 36);
+        _labelUploadFile = Label::create();
+        _labelUploadFile->setString(_transferTip);
+        _labelUploadFile->setSystemFontName(fontName.c_str());
+        _labelUploadFile->setSystemFontSize(36);
         _labelUploadFile->setAnchorPoint(Vec2(0,0));
         _labelUploadFile->setPosition( Point(VisibleRect::leftTop().x+spaceSizex, IPlabel->getPositionY()-spaceSizex) );
         _labelUploadFile->setAlignment(TextHAlignment::LEFT);
