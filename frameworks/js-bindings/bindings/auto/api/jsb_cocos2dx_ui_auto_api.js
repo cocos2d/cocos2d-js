@@ -3981,3 +3981,123 @@ RichText : function (
 },
 
 };
+
+/**
+ * @class HBox
+ */
+ccui.HBox = {
+
+/**
+ * @method initWithSize
+ * @param {size_object} arg0
+ * @return {bool}
+ */
+initWithSize : function (
+size 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {size_object} size
+* @return {ccui.HBox|ccui.HBox}
+*/
+create : function(
+size 
+)
+{
+    return ccui.HBox;
+},
+
+/**
+ * @method HBox
+ * @constructor
+ */
+HBox : function (
+)
+{
+},
+
+};
+
+/**
+ * @class VBox
+ */
+ccui.VBox = {
+
+/**
+ * @method initWithSize
+ * @param {size_object} arg0
+ * @return {bool}
+ */
+initWithSize : function (
+size 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {size_object} size
+* @return {ccui.VBox|ccui.VBox}
+*/
+create : function(
+size 
+)
+{
+    return ccui.VBox;
+},
+
+/**
+ * @method VBox
+ * @constructor
+ */
+VBox : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RelativeBox
+ */
+ccui.RelativeBox = {
+
+/**
+ * @method initWithSize
+ * @param {size_object} arg0
+ * @return {bool}
+ */
+initWithSize : function (
+size 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {size_object} size
+* @return {ccui.RelativeBox|ccui.RelativeBox}
+*/
+create : function(
+size 
+)
+{
+    return ccui.RelativeBox;
+},
+
+/**
+ * @method RelativeBox
+ * @constructor
+ */
+RelativeBox : function (
+)
+{
+},
+
+};

@@ -3173,6 +3173,18 @@ str
 },
 
 /**
+ * @method removeFile
+ * @param {String} arg0
+ * @return {bool}
+ */
+removeFile : function (
+str 
+)
+{
+    return false;
+},
+
+/**
  * @method isDirectory
  * @param {String} arg0
  * @return {bool}
@@ -3190,6 +3202,22 @@ str
  * @return {bool}
  */
 isAbsolutePath : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method renameFile
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @return {bool}
+ */
+renameFile : function (
+str, 
+str, 
 str 
 )
 {
@@ -3252,6 +3280,30 @@ str
 )
 {
     return map_object;
+},
+
+/**
+ * @method getFileSize
+ * @param {String} arg0
+ * @return {long}
+ */
+getFileSize : function (
+str 
+)
+{
+    return 0;
+},
+
+/**
+ * @method removeDirectory
+ * @param {String} arg0
+ * @return {bool}
+ */
+removeDirectory : function (
+str 
+)
+{
+    return false;
 },
 
 /**

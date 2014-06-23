@@ -17,6 +17,8 @@
         "src/PathTest/PathTest.js",
         "src/LoaderTest/LoaderTest.js",
 
+        "src/BakeLayerTest/BakeLayerTest.js",
+
         "src/TouchesTest/Ball.js",
         "src/TouchesTest/Paddle.js",
         "src/TouchesTest/TouchesTest.js",

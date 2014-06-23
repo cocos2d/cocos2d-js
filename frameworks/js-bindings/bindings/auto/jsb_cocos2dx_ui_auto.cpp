@@ -10255,6 +10255,531 @@ void js_register_cocos2dx_ui_RichText(JSContext *cx, JSObject *global) {
 	}
 }
 
+JSClass  *jsb_cocos2d_ui_HBox_class;
+JSObject *jsb_cocos2d_ui_HBox_prototype;
+
+bool js_cocos2dx_ui_HBox_initWithSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::ui::HBox* cobj = (cocos2d::ui::HBox *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_HBox_initWithSize : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::Size arg0;
+		ok &= jsval_to_ccsize(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_HBox_initWithSize : Error processing arguments");
+		bool ret = cobj->initWithSize(arg0);
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_ui_HBox_initWithSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_ui_HBox_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	
+	do {
+		if (argc == 1) {
+			cocos2d::Size arg0;
+			ok &= jsval_to_ccsize(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			cocos2d::ui::HBox* ret = cocos2d::ui::HBox::create(arg0);
+			jsval jsret = JSVAL_NULL;
+			do {
+				if (ret) {
+					js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ui::HBox>(cx, (cocos2d::ui::HBox*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+				} else {
+					jsret = JSVAL_NULL;
+				}
+			} while (0);
+			JS_SET_RVAL(cx, vp, jsret);
+			return true;
+		}
+	} while (0);
+	
+	do {
+		if (argc == 0) {
+			cocos2d::ui::HBox* ret = cocos2d::ui::HBox::create();
+			jsval jsret = JSVAL_NULL;
+			do {
+				if (ret) {
+					js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ui::HBox>(cx, (cocos2d::ui::HBox*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+				} else {
+					jsret = JSVAL_NULL;
+				}
+			} while (0);
+			JS_SET_RVAL(cx, vp, jsret);
+			return true;
+		}
+	} while (0);
+	JS_ReportError(cx, "js_cocos2dx_ui_HBox_create : wrong number of arguments");
+	return false;
+}
+bool js_cocos2dx_ui_HBox_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::ui::HBox* cobj = new cocos2d::ui::HBox();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::ui::HBox> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::ui::HBox");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
+
+extern JSObject *jsb_cocos2d_ui_Layout_prototype;
+
+void js_cocos2d_ui_HBox_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (HBox)", obj);
+}
+
+static bool js_cocos2d_ui_HBox_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::ui::HBox *nobj = new cocos2d::ui::HBox();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::ui::HBox");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
+void js_register_cocos2dx_ui_HBox(JSContext *cx, JSObject *global) {
+	jsb_cocos2d_ui_HBox_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_ui_HBox_class->name = "HBox";
+	jsb_cocos2d_ui_HBox_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_ui_HBox_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_ui_HBox_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_ui_HBox_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_ui_HBox_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_ui_HBox_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_ui_HBox_class->convert = JS_ConvertStub;
+	jsb_cocos2d_ui_HBox_class->finalize = js_cocos2d_ui_HBox_finalize;
+	jsb_cocos2d_ui_HBox_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+	static JSPropertySpec properties[] = {
+		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+	};
+
+	static JSFunctionSpec funcs[] = {
+		JS_FN("initWithSize", js_cocos2dx_ui_HBox_initWithSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_ui_HBox_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+	};
+
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", js_cocos2dx_ui_HBox_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	jsb_cocos2d_ui_HBox_prototype = JS_InitClass(
+		cx, global,
+		jsb_cocos2d_ui_Layout_prototype,
+		jsb_cocos2d_ui_HBox_class,
+		js_cocos2dx_ui_HBox_constructor, 0, // constructor
+		properties,
+		funcs,
+		NULL, // no static properties
+		st_funcs);
+	// make the class enumerable in the registered namespace
+//	bool found;
+//FIXME: Removed in Firefox v27	
+//	JS_SetPropertyAttributes(cx, global, "HBox", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+	// add the proto and JSClass to the type->js info hash table
+	TypeTest<cocos2d::ui::HBox> t;
+	js_type_class_t *p;
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
+		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+		p->jsclass = jsb_cocos2d_ui_HBox_class;
+		p->proto = jsb_cocos2d_ui_HBox_prototype;
+		p->parentProto = jsb_cocos2d_ui_Layout_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
+	}
+}
+
+JSClass  *jsb_cocos2d_ui_VBox_class;
+JSObject *jsb_cocos2d_ui_VBox_prototype;
+
+bool js_cocos2dx_ui_VBox_initWithSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::ui::VBox* cobj = (cocos2d::ui::VBox *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_VBox_initWithSize : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::Size arg0;
+		ok &= jsval_to_ccsize(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_VBox_initWithSize : Error processing arguments");
+		bool ret = cobj->initWithSize(arg0);
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_ui_VBox_initWithSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_ui_VBox_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	
+	do {
+		if (argc == 1) {
+			cocos2d::Size arg0;
+			ok &= jsval_to_ccsize(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			cocos2d::ui::VBox* ret = cocos2d::ui::VBox::create(arg0);
+			jsval jsret = JSVAL_NULL;
+			do {
+				if (ret) {
+					js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ui::VBox>(cx, (cocos2d::ui::VBox*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+				} else {
+					jsret = JSVAL_NULL;
+				}
+			} while (0);
+			JS_SET_RVAL(cx, vp, jsret);
+			return true;
+		}
+	} while (0);
+	
+	do {
+		if (argc == 0) {
+			cocos2d::ui::VBox* ret = cocos2d::ui::VBox::create();
+			jsval jsret = JSVAL_NULL;
+			do {
+				if (ret) {
+					js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ui::VBox>(cx, (cocos2d::ui::VBox*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+				} else {
+					jsret = JSVAL_NULL;
+				}
+			} while (0);
+			JS_SET_RVAL(cx, vp, jsret);
+			return true;
+		}
+	} while (0);
+	JS_ReportError(cx, "js_cocos2dx_ui_VBox_create : wrong number of arguments");
+	return false;
+}
+bool js_cocos2dx_ui_VBox_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::ui::VBox* cobj = new cocos2d::ui::VBox();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::ui::VBox> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::ui::VBox");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
+
+extern JSObject *jsb_cocos2d_ui_Layout_prototype;
+
+void js_cocos2d_ui_VBox_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (VBox)", obj);
+}
+
+static bool js_cocos2d_ui_VBox_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::ui::VBox *nobj = new cocos2d::ui::VBox();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::ui::VBox");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
+void js_register_cocos2dx_ui_VBox(JSContext *cx, JSObject *global) {
+	jsb_cocos2d_ui_VBox_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_ui_VBox_class->name = "VBox";
+	jsb_cocos2d_ui_VBox_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_ui_VBox_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_ui_VBox_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_ui_VBox_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_ui_VBox_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_ui_VBox_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_ui_VBox_class->convert = JS_ConvertStub;
+	jsb_cocos2d_ui_VBox_class->finalize = js_cocos2d_ui_VBox_finalize;
+	jsb_cocos2d_ui_VBox_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+	static JSPropertySpec properties[] = {
+		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+	};
+
+	static JSFunctionSpec funcs[] = {
+		JS_FN("initWithSize", js_cocos2dx_ui_VBox_initWithSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_ui_VBox_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+	};
+
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", js_cocos2dx_ui_VBox_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	jsb_cocos2d_ui_VBox_prototype = JS_InitClass(
+		cx, global,
+		jsb_cocos2d_ui_Layout_prototype,
+		jsb_cocos2d_ui_VBox_class,
+		js_cocos2dx_ui_VBox_constructor, 0, // constructor
+		properties,
+		funcs,
+		NULL, // no static properties
+		st_funcs);
+	// make the class enumerable in the registered namespace
+//	bool found;
+//FIXME: Removed in Firefox v27	
+//	JS_SetPropertyAttributes(cx, global, "VBox", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+	// add the proto and JSClass to the type->js info hash table
+	TypeTest<cocos2d::ui::VBox> t;
+	js_type_class_t *p;
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
+		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+		p->jsclass = jsb_cocos2d_ui_VBox_class;
+		p->proto = jsb_cocos2d_ui_VBox_prototype;
+		p->parentProto = jsb_cocos2d_ui_Layout_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
+	}
+}
+
+JSClass  *jsb_cocos2d_ui_RelativeBox_class;
+JSObject *jsb_cocos2d_ui_RelativeBox_prototype;
+
+bool js_cocos2dx_ui_RelativeBox_initWithSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::ui::RelativeBox* cobj = (cocos2d::ui::RelativeBox *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RelativeBox_initWithSize : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::Size arg0;
+		ok &= jsval_to_ccsize(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RelativeBox_initWithSize : Error processing arguments");
+		bool ret = cobj->initWithSize(arg0);
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_ui_RelativeBox_initWithSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_ui_RelativeBox_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	
+	do {
+		if (argc == 1) {
+			cocos2d::Size arg0;
+			ok &= jsval_to_ccsize(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			cocos2d::ui::RelativeBox* ret = cocos2d::ui::RelativeBox::create(arg0);
+			jsval jsret = JSVAL_NULL;
+			do {
+				if (ret) {
+					js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ui::RelativeBox>(cx, (cocos2d::ui::RelativeBox*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+				} else {
+					jsret = JSVAL_NULL;
+				}
+			} while (0);
+			JS_SET_RVAL(cx, vp, jsret);
+			return true;
+		}
+	} while (0);
+	
+	do {
+		if (argc == 0) {
+			cocos2d::ui::RelativeBox* ret = cocos2d::ui::RelativeBox::create();
+			jsval jsret = JSVAL_NULL;
+			do {
+				if (ret) {
+					js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ui::RelativeBox>(cx, (cocos2d::ui::RelativeBox*)ret);
+					jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+				} else {
+					jsret = JSVAL_NULL;
+				}
+			} while (0);
+			JS_SET_RVAL(cx, vp, jsret);
+			return true;
+		}
+	} while (0);
+	JS_ReportError(cx, "js_cocos2dx_ui_RelativeBox_create : wrong number of arguments");
+	return false;
+}
+bool js_cocos2dx_ui_RelativeBox_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::ui::RelativeBox* cobj = new cocos2d::ui::RelativeBox();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::ui::RelativeBox> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::ui::RelativeBox");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
+
+extern JSObject *jsb_cocos2d_ui_Layout_prototype;
+
+void js_cocos2d_ui_RelativeBox_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (RelativeBox)", obj);
+}
+
+static bool js_cocos2d_ui_RelativeBox_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::ui::RelativeBox *nobj = new cocos2d::ui::RelativeBox();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::ui::RelativeBox");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
+void js_register_cocos2dx_ui_RelativeBox(JSContext *cx, JSObject *global) {
+	jsb_cocos2d_ui_RelativeBox_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_ui_RelativeBox_class->name = "RelativeBox";
+	jsb_cocos2d_ui_RelativeBox_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_ui_RelativeBox_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_ui_RelativeBox_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_ui_RelativeBox_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_ui_RelativeBox_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_ui_RelativeBox_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_ui_RelativeBox_class->convert = JS_ConvertStub;
+	jsb_cocos2d_ui_RelativeBox_class->finalize = js_cocos2d_ui_RelativeBox_finalize;
+	jsb_cocos2d_ui_RelativeBox_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+	static JSPropertySpec properties[] = {
+		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+	};
+
+	static JSFunctionSpec funcs[] = {
+		JS_FN("initWithSize", js_cocos2dx_ui_RelativeBox_initWithSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_ui_RelativeBox_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+	};
+
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", js_cocos2dx_ui_RelativeBox_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	jsb_cocos2d_ui_RelativeBox_prototype = JS_InitClass(
+		cx, global,
+		jsb_cocos2d_ui_Layout_prototype,
+		jsb_cocos2d_ui_RelativeBox_class,
+		js_cocos2dx_ui_RelativeBox_constructor, 0, // constructor
+		properties,
+		funcs,
+		NULL, // no static properties
+		st_funcs);
+	// make the class enumerable in the registered namespace
+//	bool found;
+//FIXME: Removed in Firefox v27	
+//	JS_SetPropertyAttributes(cx, global, "RelativeBox", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+	// add the proto and JSClass to the type->js info hash table
+	TypeTest<cocos2d::ui::RelativeBox> t;
+	js_type_class_t *p;
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
+		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+		p->jsclass = jsb_cocos2d_ui_RelativeBox_class;
+		p->proto = jsb_cocos2d_ui_RelativeBox_prototype;
+		p->parentProto = jsb_cocos2d_ui_Layout_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
+	}
+}
+
 void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj) {
 	// first, try to get the ns
 	JS::RootedValue nsval(cx);
@@ -10270,12 +10795,14 @@ void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj) {
 	obj = ns;
 
 	js_register_cocos2dx_ui_Widget(cx, obj);
-	js_register_cocos2dx_ui_CheckBox(cx, obj);
 	js_register_cocos2dx_ui_Layout(cx, obj);
+	js_register_cocos2dx_ui_RelativeBox(cx, obj);
+	js_register_cocos2dx_ui_CheckBox(cx, obj);
 	js_register_cocos2dx_ui_TextAtlas(cx, obj);
 	js_register_cocos2dx_ui_TextBMFont(cx, obj);
 	js_register_cocos2dx_ui_LoadingBar(cx, obj);
 	js_register_cocos2dx_ui_TextField(cx, obj);
+	js_register_cocos2dx_ui_VBox(cx, obj);
 	js_register_cocos2dx_ui_RichElement(cx, obj);
 	js_register_cocos2dx_ui_RichElementCustomNode(cx, obj);
 	js_register_cocos2dx_ui_Slider(cx, obj);
@@ -10285,6 +10812,7 @@ void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj) {
 	js_register_cocos2dx_ui_LayoutParameter(cx, obj);
 	js_register_cocos2dx_ui_LinearLayoutParameter(cx, obj);
 	js_register_cocos2dx_ui_ImageView(cx, obj);
+	js_register_cocos2dx_ui_HBox(cx, obj);
 	js_register_cocos2dx_ui_RichElementText(cx, obj);
 	js_register_cocos2dx_ui_PageView(cx, obj);
 	js_register_cocos2dx_ui_Helper(cx, obj);
