@@ -459,7 +459,7 @@ bool FileServer::listenOnTCP(int port)
         if (::bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
             break;          /* success */
         
-        close(listenfd);    /* bind error, close and try next one */
+        _close(listenfd);    /* bind error, close and try next one */
     } while ( (res = res->ai_next) != NULL);
 
     if (res == NULL) {
@@ -531,12 +531,12 @@ bool CreateDir(const char *sPathName)
         if(DirName[i]=='/')
         {
             DirName[i]   =   0;
-            if(access(DirName,   NULL)!=0   )
+            if(_access(DirName,   NULL)!=0   )
             {
 #ifdef _WIN32
                 if(_mkdir(DirName/*,   0755*/)==-1)
 #else
-                if(mkdir(DirName,   0755)==-1)
+                if(_mkdir(DirName,   0755)==-1)
 #endif
                 {
                     perror("mkdir   error");
