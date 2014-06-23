@@ -169,17 +169,23 @@ xcopy /Y /Q "$(ProjectDir)..\..\js-bindings\cocos2d-x\external\websockets\prebui
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OutputFile>$(ProjectDir)../../../runtime/win32/$(TargetName)$(TargetExt)</OutputFile>
-      <ProgramDatabaseFile>$(ProjectDir)../../../runtime/win32/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>if not exist "$(ProjectDir)..\..\..\runtime\win32\" mkdir "$(ProjectDir)..\..\..\runtime\win32\"
-xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y</Command>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
+mkdir "$(OutDir)\Resource"
+mkdir "$(OutDir)\Resource\src"
+mkdir "$(OutDir)\Resource\res"
+mkdir "$(OutDir)\Resource\rtres"
+xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\Resource" /e /Y
+xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
+xcopy "$(ProjectDir)..\..\..\runtime\rtres" "$(OutDir)\Resource\rtres" /e /Y
+copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\Resource\main.js" /Y
+copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\Resource\project.json" /Y
+copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
+xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
-    <PostBuildEvent>
-      <Command>xcopy /Y /Q "$(OutDir)*.dll" "$(ProjectDir)..\..\..\runtime\win32\"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\ConfigParser.cpp" />
