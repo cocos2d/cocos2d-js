@@ -20,7 +20,7 @@
         }, 
         {
             "from": "../../../../frameworks/js-bindings/bindings/script", 
-            "to": ""
+            "to": "script"
         },
         {
             "from": "../../../../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/script", 

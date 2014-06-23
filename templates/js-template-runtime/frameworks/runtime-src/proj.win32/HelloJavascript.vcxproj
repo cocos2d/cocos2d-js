@@ -83,7 +83,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\base;$(EngineRoot)external;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)..\bindings\auto;$(EngineRoot)..\bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\base;$(EngineRoot)external;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)..\bindings\auto;$(EngineRoot)..\bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_DEBUG=1;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;GLFW_EXPOSE_NATIVE_WIN32;GLFW_EXPOSE_NATIVE_WGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -92,9 +92,9 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4267;4251;4244;4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4267;4251;4244;4800;4099;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <ProgramDataBaseFileName>$(ProjectDir)../../../runtime/win32/$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -116,8 +116,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\js-bindings\cocos2d-x\external\websockets\prebui
       <ProgramDatabaseFile>$(ProjectDir)../../../runtime/win32/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y</Command>
+      <Command>if not exist "$(ProjectDir)..\..\..\runtime\win32\script" mkdir "$(ProjectDir)..\..\..\runtime\win32\script"
+xcopy /s "$(ProjectDir)..\..\js-bindings\bindings\script" "$(ProjectDir)..\..\..\runtime\win32\script" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>
@@ -140,7 +140,7 @@ xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(ProjectDir)..\..\..\ru
       <ProxyFileName>game_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\base;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)..\bindings\auto;$(EngineRoot)..\bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\protobuf-lite;$(ProjectDir)..\Classes\runtime;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\base;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)..\bindings\auto;$(EngineRoot)..\bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;NDEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;GLFW_EXPOSE_NATIVE_WIN32;GLFW_EXPOSE_NATIVE_WGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -173,17 +173,33 @@ xcopy /Y /Q "$(ProjectDir)..\..\js-bindings\cocos2d-x\external\websockets\prebui
       <ProgramDatabaseFile>$(ProjectDir)../../../runtime/win32/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+      <Command>if not exist "$(ProjectDir)..\..\..\runtime\win32\" mkdir "$(ProjectDir)..\..\..\runtime\win32\"
 xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>xcopy /Y /Q "$(OutDir)*.dll" "$(ProjectDir)..\..\..\runtime\win32\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\ConfigParser.cpp" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\extension_set.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\message_lite.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\repeated_field.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\common.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\once.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\stringprintf.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite.cc" />
     <ClCompile Include="..\Classes\runtime\Landscape_png.cpp" />
     <ClCompile Include="..\Classes\runtime\PlayDisable_png.cpp" />
     <ClCompile Include="..\Classes\runtime\PlayEnable_png.cpp" />
     <ClCompile Include="..\Classes\runtime\Portrait_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\Protos.pb.cc" />
     <ClCompile Include="..\Classes\runtime\Runtime.cpp" />
     <ClCompile Include="..\Classes\runtime\Shine_png.cpp" />
     <ClCompile Include="..\Classes\VisibleRect.cpp" />
@@ -194,6 +210,30 @@ xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(ProjectDir)..\..\..\ru
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\ConfigParser.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\config.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\extension_set.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream_inl.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream_impl.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\message_lite.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\repeated_field.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\common.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\hash.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\map-util.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\once.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\platform_macros.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\stl_util.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\stringprintf.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\template_util.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\type_traits.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite_inl.h" />
+    <ClInclude Include="..\Classes\runtime\Protos.pb.h" />
     <ClInclude Include="..\Classes\runtime\ResData.h" />
     <ClInclude Include="..\Classes\runtime\Runtime.h" />
     <ClInclude Include="..\Classes\VisibleRect.h" />

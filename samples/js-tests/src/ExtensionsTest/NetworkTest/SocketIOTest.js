@@ -146,7 +146,7 @@ var SocketIOTestLayer = cc.Layer.extend({
     onMenuSIOClientClicked: function(sender) {
 
         //create a client by using this static method, url does not need to contain the protocol
-        var sioclient = SocketIO.connect("ws://channon.us:3000", {"force new connection" : true});
+        var sioclient = SocketIO.connect("ws://tools.itharbors.com:4000", {"force new connection" : true});
 
         //if you need to track multiple sockets it is best to store them with tags in your own array for now
         sioclient.tag = "Test Client";
@@ -186,7 +186,7 @@ var SocketIOTestLayer = cc.Layer.extend({
     onMenuSIOEndpointClicked: function(sender) {
 
         //repeat the same connection steps for the namespace "testpoint"
-        var sioendpoint = SocketIO.connect("ws://channon.us:3000/testpoint");
+        var sioendpoint = SocketIO.connect("ws://tools.itharbors.com:4000/testpoint");
 
         //a tag to differentiate in shared callbacks
         sioendpoint.tag = "Test Endpoint";

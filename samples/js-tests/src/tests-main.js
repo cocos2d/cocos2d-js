@@ -221,6 +221,13 @@ var testNames = [
         }
     },
     {
+        title:"Bake Layer Test",
+        platforms: PLATFORM_HTML5,
+        testScene:function () {
+            return new BakeLayerTestScene();
+        }
+    },
+    {
         title:"Box2D Test",
         resource:g_box2d,
         platforms: PLATFORM_HTML5,
