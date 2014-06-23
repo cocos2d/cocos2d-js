@@ -548,5 +548,38 @@ bool js_cocos2dx_ui_RichText_formatText(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_ui_RichText_removeElement(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_RichText_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_RichText_RichText(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_HBox_class;
+extern JSObject *jsb_cocos2d_ui_HBox_prototype;
+
+bool js_cocos2dx_ui_HBox_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_HBox_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_HBox(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_HBox_initWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_HBox_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_HBox_HBox(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_VBox_class;
+extern JSObject *jsb_cocos2d_ui_VBox_prototype;
+
+bool js_cocos2dx_ui_VBox_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_VBox_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_VBox(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_VBox_initWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_VBox_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_VBox_VBox(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_RelativeBox_class;
+extern JSObject *jsb_cocos2d_ui_RelativeBox_prototype;
+
+bool js_cocos2dx_ui_RelativeBox_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_RelativeBox_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_RelativeBox(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_RelativeBox_initWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RelativeBox_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RelativeBox_RelativeBox(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 
