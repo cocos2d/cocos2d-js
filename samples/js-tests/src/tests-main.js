@@ -32,8 +32,9 @@ var winSize = null;
 var PLATFORM_JSB = 1 << 0;
 var PLATFORM_HTML5 = 1 << 1;
 var PLATFORM_HTML5_WEBGL = 1 << 2;
+var PLATFROM_ANDROID = 1 << 3;
 var PLATFORM_JSB_AND_WEBGL =  PLATFORM_JSB | PLATFORM_HTML5_WEBGL;
-var PLATFORM_ALL = PLATFORM_JSB | PLATFORM_HTML5 | PLATFORM_HTML5_WEBGL;
+var PLATFORM_ALL = PLATFORM_JSB | PLATFORM_HTML5 | PLATFORM_HTML5_WEBGL | PLATFROM_ANDROID;
 
 // automation vars
 var autoTestEnabled = autoTestEnabled || false;
@@ -127,7 +128,12 @@ var TestController = cc.LayerGradient.extend({
                     menuItem.setEnabled( testNames[i].platforms & PLATFORM_HTML5 );
                 }
             } else {
-                menuItem.setEnabled( testNames[i].platforms & PLATFORM_JSB );
+                if(cc.sys.os == cc.sys.OS_ANDROID)
+                {
+                    menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFROM_ANDROID ) );
+                }else{
+                    menuItem.setEnabled( testNames[i].platforms & PLATFORM_JSB );
+                }
             }
         }
 
@@ -448,7 +454,7 @@ var testNames = [
     },
     {
         title:"Reflection Test",
-        platforms: PLATFORM_ALL,
+        platforms: PLATFROM_ANDROID,
         testScene:function () {
             return new ReflectionTestScene();
         }
