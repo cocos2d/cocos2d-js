@@ -3185,18 +3185,6 @@ str
 },
 
 /**
- * @method isDirectory
- * @param {String} arg0
- * @return {bool}
- */
-isDirectory : function (
-str 
-)
-{
-    return false;
-},
-
-/**
  * @method isAbsolutePath
  * @param {String} arg0
  * @return {bool}
@@ -3365,11 +3353,11 @@ str
 },
 
 /**
- * @method isExist
+ * @method isDirectoryExist
  * @param {String} arg0
  * @return {bool}
  */
-isExist : function (
+isDirectoryExist : function (
 str 
 )
 {
