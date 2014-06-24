@@ -447,6 +447,13 @@ var testNames = [
         }
     },
     {
+        title:"Reflection Test",
+        platforms: PLATFORM_ALL,
+        testScene:function () {
+            return new ReflectionTestScene();
+        }
+    },
+    {
         title:"RenderTexture Test",
         platforms: PLATFORM_ALL,
         testScene:function () {
