@@ -27,6 +27,7 @@ import org.cocos2dx.js_tests.R;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 import org.cocos2dx.lib.Cocos2dxJavascriptJavaBridge;
+import org.cocos2dx.plugin.PluginWrapper;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -48,6 +49,9 @@ public class AppActivity extends Cocos2dxActivity {
         // TestCpp should create stencil buffer
         glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
         
+        PluginWrapper.init(this);
+        PluginWrapper.setGLSurfaceView(glSurfaceView);
+
         return glSurfaceView;
     }
     
