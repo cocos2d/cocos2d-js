@@ -28,7 +28,7 @@
         },
         {
             "from": "../../../../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/script", 
-            "to": ""
+            "to": "script"
         },
         {
             "from": "../../../../frameworks/js-bindings/cocos2d-x/plugin/protocols/proj.android/src", 
