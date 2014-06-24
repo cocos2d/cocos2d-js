@@ -146,6 +146,7 @@
         "src/Box2dTest/Box2dTest.js",
         "src/ChipmunkTest/ChipmunkTest.js",
 
-        "src/Presentation/Presentation.js"
+        "src/Presentation/Presentation.js",
+        "src/ReflectionTest/ReflectionTest.js"
     ]
 }
