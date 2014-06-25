@@ -628,18 +628,19 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
         {
             _responseType = ResponseType::JSON;
         }
+        
+        {
+            auto requestType =
+              (_meth.compare("get") == 0 || _meth.compare("GET") == 0) ? cocos2d::network::HttpRequest::Type::GET : (
+              (_meth.compare("post") == 0 || _meth.compare("POST") == 0) ? cocos2d::network::HttpRequest::Type::POST : (
+              (_meth.compare("put") == 0 || _meth.compare("PUT") == 0) ? cocos2d::network::HttpRequest::Type::PUT : (
+              (_meth.compare("delete") == 0 || _meth.compare("DELETE") == 0) ? cocos2d::network::HttpRequest::Type::DELETE : (
+                cocos2d::network::HttpRequest::Type::UNKNOWN))));
 
-        if (_meth.compare("post") == 0 || _meth.compare("POST") == 0)
-        {
-            _httpRequest->setRequestType(cocos2d::network::HttpRequest::Type::POST);
+            _httpRequest->setRequestType(requestType);
+            _httpRequest->setUrl(_url.c_str());
         }
-        else
-        {
-            _httpRequest->setRequestType(cocos2d::network::HttpRequest::Type::GET);
-        }
-        
-        _httpRequest->setUrl(_url.c_str());
-        
+
         _isNetwork = true;
         _readyState = OPENED;
         
@@ -674,7 +675,9 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
     }
 
 
-    if (data.length() > 0 && (_meth.compare("post") == 0 || _meth.compare("POST") == 0))
+    if (data.length() > 0 &&
+        (_meth.compare("post") == 0 || _meth.compare("POST") == 0 || 
+         _meth.compare("put") == 0 || _meth.compare("PUT") == 0))
     {
         _httpRequest->setRequestData(data.c_str(), static_cast<unsigned int>(data.length()));
     }
