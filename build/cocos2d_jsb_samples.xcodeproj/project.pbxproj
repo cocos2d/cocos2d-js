@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05DB07CA195AD08600AFE6CE /* libPluginFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1BF835195A6C7E00B47F4E /* libPluginFacebook.a */; };
+		05DB07D1195AD30800AFE6CE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05DB07D0195AD30800AFE6CE /* FacebookSDK.framework */; };
 		05F48C13192C9178008FB408 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F48C12192C9178008FB408 /* Security.framework */; };
 		05F48C15192C9180008FB408 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F48C14192C9180008FB408 /* CoreTelephony.framework */; };
 		1A2B735018D2952200ED9E74 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A604F1618BF1D1D00CC9A93 /* libchipmunk Mac.a */; };
@@ -148,6 +150,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		05DB07C8195AD08600AFE6CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA1BF830195A6C7E00B47F4E /* PluginFacebook.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BA34A76D195AA8C7002D0ECD;
+			remoteInfo = PluginFacebookTests;
+		};
 		1A2B732018D2952200ED9E74 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1A604F2518BF1D2000CC9A93 /* cocos2d_js_bindings.xcodeproj */;
@@ -473,6 +482,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05DB07D0195AD30800AFE6CE /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/sdk/FacebookSDK.framework"; sourceTree = "<group>"; };
 		05F48C12192C9178008FB408 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		05F48C14192C9180008FB408 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
@@ -624,6 +634,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05DB07D1195AD30800AFE6CE /* FacebookSDK.framework in Frameworks */,
+				05DB07CA195AD08600AFE6CE /* libPluginFacebook.a in Frameworks */,
 				BA623E1F191A220B00761F37 /* StoreKit.framework in Frameworks */,
 				05F48C15192C9180008FB408 /* CoreTelephony.framework in Frameworks */,
 				05F48C13192C9178008FB408 /* Security.framework in Frameworks */,
@@ -881,6 +893,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				05DB07D0195AD30800AFE6CE /* FacebookSDK.framework */,
 				05F48C14192C9180008FB408 /* CoreTelephony.framework */,
 				05F48C12192C9178008FB408 /* Security.framework */,
 				BA623E24191A221D00761F37 /* MediaPlayer.framework */,
@@ -911,7 +924,8 @@
 		BA1BF831195A6C7E00B47F4E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BA1BF835195A6C7E00B47F4E /* libPluginFacebook.dylib */,
+				BA1BF835195A6C7E00B47F4E /* libPluginFacebook.a */,
+				05DB07C9195AD08600AFE6CE /* PluginFacebookTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1163,6 +1177,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		05DB07C9195AD08600AFE6CE /* PluginFacebookTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PluginFacebookTests.xctest;
+			remoteRef = 05DB07C8195AD08600AFE6CE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		1A604F1218BF1D1D00CC9A93 /* libcocos2dx Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1254,10 +1275,10 @@
 			remoteRef = BA1BF81C195A6A7400B47F4E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		BA1BF835195A6C7E00B47F4E /* libPluginFacebook.dylib */ = {
+		BA1BF835195A6C7E00B47F4E /* libPluginFacebook.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libPluginFacebook.dylib;
+			fileType = archive.ar;
+			path = libPluginFacebook.a;
 			remoteRef = BA1BF834195A6C7E00B47F4E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1702,6 +1723,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/wzm/Documents/software/tomcat/webapps/cocos2d-js-clean/frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/sdk",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1730,6 +1755,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/wzm/Documents/software/tomcat/webapps/cocos2d-js-clean/frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/sdk",
+				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
