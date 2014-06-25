@@ -411,8 +411,10 @@ void FileServer::addResFileInfo(const char* filename,uint64_t u64)
     if (_filecfgjson.HasMember(filename)){
         _filecfgjson.RemoveMember(filename);
     }
-    rapidjson::Value filetimeValue(rapidjson::kNumberType);
-    filetimeValue.SetUint64(u64);
+    char filetime[512]= {0};
+    sprintf(filetime,"%llu",u64);
+    rapidjson::Value filetimeValue(rapidjson::kStringType);
+    filetimeValue.SetString(filetime,_filecfgjson.GetAllocator());
     rapidjson::Value filenameValue(rapidjson::kStringType);
     filenameValue.SetString(filename,_filecfgjson.GetAllocator());
     _filecfgjson.AddMember(filenameValue.GetString(),filetimeValue,_filecfgjson.GetAllocator());
@@ -697,7 +699,7 @@ void FileServer::loopWriteFile()
              fclose(fp);
          }
 
-         if (recvDataBuf.fileProto.package_seq() == recvDataBuf.fileProto.package_sum()){
+         if (1 == recvDataBuf.fileProto.package_seq()){ // == recvDataBuf.fileProto.package_sum()
              addResFileInfo(filename.c_str(),recvDataBuf.fileProto.modified_time());
              addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_SUCCESS,0);
             }
@@ -1008,7 +1010,7 @@ public:
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
                     rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
                     for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
-                        bodyvalue.AddMember(it->name.GetString(),it->value.GetUint64(),dReplyParse.GetAllocator());
+                        bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
                     }
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
