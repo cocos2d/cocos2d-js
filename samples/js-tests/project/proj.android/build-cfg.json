@@ -23,8 +23,12 @@
             "to": "script"
         },
         {
+            "from": "../../../../frameworks/js-bindings/bindings/manual/platform/android/java/src", 
+            "to": "../src"
+        },
+        {
             "from": "../../../../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/script", 
-            "to": ""
+            "to": "script"
         },
         {
             "from": "../../../../frameworks/js-bindings/cocos2d-x/plugin/protocols/proj.android/src", 
