@@ -372,6 +372,20 @@
 			remoteGlobalIDString = A07A4F9F178387730073F6A7;
 			remoteInfo = "CocosDenshion iOS";
 		};
+		BA1BF81C195A6A7400B47F4E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BAF426F51948498A002B22EF /* PluginIAP.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 05A9357E19260E2E00F08DC0;
+			remoteInfo = PluginIAP;
+		};
+		BA1BF834195A6C7E00B47F4E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA1BF830195A6C7E00B47F4E /* PluginFacebook.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BA1BF80A195A6A7300B47F4E;
+			remoteInfo = PluginFacebook;
+		};
 		BA623DD5191A13DC00761F37 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */;
@@ -539,6 +553,7 @@
 		A07A52B91783AE900073F6A7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		BA1BF830195A6C7E00B47F4E /* PluginFacebook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFacebook.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/PluginFacebook.xcodeproj"; sourceTree = "<group>"; };
 		BA2350541948262700E17B2A /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = "../frameworks/js-bindings/bindings/script"; sourceTree = "<group>"; };
 		BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginAdmob.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/admob/proj.ios/PluginAdmob.xcodeproj"; sourceTree = "<group>"; };
 		BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFlurry.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/flurry/proj.ios/PluginFlurry.xcodeproj"; sourceTree = "<group>"; };
@@ -893,9 +908,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BA1BF831195A6C7E00B47F4E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA1BF835195A6C7E00B47F4E /* libPluginFacebook.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		BA623DCC191A13C600761F37 /* pluginx */ = {
 			isa = PBXGroup;
 			children = (
+				BA1BF830195A6C7E00B47F4E /* PluginFacebook.xcodeproj */,
 				BAF426F51948498A002B22EF /* PluginIAP.xcodeproj */,
 				BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */,
 				BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */,
@@ -957,6 +981,9 @@
 		};
 		BAF426F61948498A002B22EF /* Products */ = {
 			isa = PBXGroup;
+			children = (
+				BA1BF81D195A6A7400B47F4E /* libPluginIAP.a */,
+			);
 			name = Products;
 			sourceTree = "<group>";
 		};
@@ -1097,6 +1124,10 @@
 					ProjectRef = BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */;
 				},
 				{
+					ProductGroup = BA1BF831195A6C7E00B47F4E /* Products */;
+					ProjectRef = BA1BF830195A6C7E00B47F4E /* PluginFacebook.xcodeproj */;
+				},
+				{
 					ProductGroup = BA623DD8191A13F300761F37 /* Products */;
 					ProjectRef = BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */;
 				},
@@ -1214,6 +1245,20 @@
 			fileType = archive.ar;
 			path = "libjsbindings iOS.a";
 			remoteRef = 1A604F2C18BF1D2000CC9A93 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA1BF81D195A6A7400B47F4E /* libPluginIAP.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginIAP.a;
+			remoteRef = BA1BF81C195A6A7400B47F4E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA1BF835195A6C7E00B47F4E /* libPluginFacebook.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libPluginFacebook.dylib;
+			remoteRef = BA1BF834195A6C7E00B47F4E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		BA623DD6191A13DC00761F37 /* libPluginAdmob.a */ = {
