@@ -79,5 +79,9 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
+	<key>PluginUser</key>
+	<string>UserFacebook</string>
+	<key>PluginShare</key>
+	<string>ShareFacebook</string>
 </dict>
 </plist>

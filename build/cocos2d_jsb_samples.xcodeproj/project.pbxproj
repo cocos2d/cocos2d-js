@@ -124,10 +124,12 @@
 		A035A5E71782290400987F6C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		A035A5E81782290400987F6C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A035A71217822E9E00987F6C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
+		BA1BF912195AA72900B47F4E /* libPluginIAP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1BF81D195A6A7400B47F4E /* libPluginIAP.a */; };
 		BA2350551948262700E17B2A /* script in Resources */ = {isa = PBXBuildFile; fileRef = BA2350541948262700E17B2A /* script */; };
 		BA2350561948262700E17B2A /* script in Resources */ = {isa = PBXBuildFile; fileRef = BA2350541948262700E17B2A /* script */; };
 		BA2350571948262700E17B2A /* script in Resources */ = {isa = PBXBuildFile; fileRef = BA2350541948262700E17B2A /* script */; };
 		BA2350581948262700E17B2A /* script in Resources */ = {isa = PBXBuildFile; fileRef = BA2350541948262700E17B2A /* script */; };
+		BA34A7A2195AA960002D0ECD /* libPluginFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34A795195AA8DA002D0ECD /* libPluginFacebook.a */; };
 		BA623DEF191A14EB00761F37 /* libPluginAdmob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DD6191A13DC00761F37 /* libPluginAdmob.a */; };
 		BA623DF0191A14EB00761F37 /* libPluginFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DDC191A13F300761F37 /* libPluginFlurry.a */; };
 		BA623DF1191A14EB00761F37 /* libPluginTwitter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA623DE2191A140400761F37 /* libPluginTwitter.a */; };
@@ -379,11 +381,32 @@
 			remoteGlobalIDString = 05A9357E19260E2E00F08DC0;
 			remoteInfo = PluginIAP;
 		};
-		BA1BF834195A6C7E00B47F4E /* PBXContainerItemProxy */ = {
+		BA1BF84B195AA19100B47F4E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = BA1BF830195A6C7E00B47F4E /* PluginFacebook.xcodeproj */;
+			containerPortal = BAF426F51948498A002B22EF /* PluginIAP.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 05A9357D19260E2E00F08DC0;
+			remoteInfo = PluginIAP;
+		};
+		BA34A794195AA8DA002D0ECD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA34A78F195AA8DA002D0ECD /* PluginFacebook.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BA1BF80A195A6A7300B47F4E;
+			remoteGlobalIDString = BA34A75D195AA8C7002D0ECD;
+			remoteInfo = PluginFacebook;
+		};
+		BA34A796195AA8DA002D0ECD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA34A78F195AA8DA002D0ECD /* PluginFacebook.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BA34A76D195AA8C7002D0ECD;
+			remoteInfo = PluginFacebookTests;
+		};
+		BA34A7A0195AA959002D0ECD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA34A78F195AA8DA002D0ECD /* PluginFacebook.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BA34A75C195AA8C7002D0ECD;
 			remoteInfo = PluginFacebook;
 		};
 		BA623DD5191A13DC00761F37 /* PBXContainerItemProxy */ = {
@@ -553,8 +576,8 @@
 		A07A52B91783AE900073F6A7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		BA1BF830195A6C7E00B47F4E /* PluginFacebook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFacebook.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/PluginFacebook.xcodeproj"; sourceTree = "<group>"; };
 		BA2350541948262700E17B2A /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = "../frameworks/js-bindings/bindings/script"; sourceTree = "<group>"; };
+		BA34A78F195AA8DA002D0ECD /* PluginFacebook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFacebook.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/PluginFacebook.xcodeproj"; sourceTree = "<group>"; };
 		BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginAdmob.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/admob/proj.ios/PluginAdmob.xcodeproj"; sourceTree = "<group>"; };
 		BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFlurry.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/flurry/proj.ios/PluginFlurry.xcodeproj"; sourceTree = "<group>"; };
 		BA623DDD191A140400761F37 /* PluginTwitter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginTwitter.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/twitter/proj.ios/PluginTwitter.xcodeproj"; sourceTree = "<group>"; };
@@ -632,6 +655,8 @@
 				BA623E21191A221100761F37 /* AdSupport.framework in Frameworks */,
 				BA623E1D191A220400761F37 /* SystemConfiguration.framework in Frameworks */,
 				BA623DFA191A150A00761F37 /* libPluginProtocol.a in Frameworks */,
+				BA34A7A2195AA960002D0ECD /* libPluginFacebook.a in Frameworks */,
+				BA1BF912195AA72900B47F4E /* libPluginIAP.a in Frameworks */,
 				BA623DEF191A14EB00761F37 /* libPluginAdmob.a in Frameworks */,
 				BA623DF0191A14EB00761F37 /* libPluginFlurry.a in Frameworks */,
 				BA623DF1191A14EB00761F37 /* libPluginTwitter.a in Frameworks */,
@@ -908,10 +933,11 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		BA1BF831195A6C7E00B47F4E /* Products */ = {
+		BA34A790195AA8DA002D0ECD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BA1BF835195A6C7E00B47F4E /* libPluginFacebook.dylib */,
+				BA34A795195AA8DA002D0ECD /* libPluginFacebook.a */,
+				BA34A797195AA8DA002D0ECD /* PluginFacebookTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -919,9 +945,9 @@
 		BA623DCC191A13C600761F37 /* pluginx */ = {
 			isa = PBXGroup;
 			children = (
-				BA1BF830195A6C7E00B47F4E /* PluginFacebook.xcodeproj */,
-				BAF426F51948498A002B22EF /* PluginIAP.xcodeproj */,
 				BA623DF4191A14F800761F37 /* PluginProtocol.xcodeproj */,
+				BA34A78F195AA8DA002D0ECD /* PluginFacebook.xcodeproj */,
+				BAF426F51948498A002B22EF /* PluginIAP.xcodeproj */,
 				BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */,
 				BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */,
 				BA623DDD191A140400761F37 /* PluginTwitter.xcodeproj */,
@@ -1046,6 +1072,8 @@
 			);
 			dependencies = (
 				BA83C3EA19345CD300130AD4 /* PBXTargetDependency */,
+				BA34A7A1195AA959002D0ECD /* PBXTargetDependency */,
+				BA1BF84C195AA19100B47F4E /* PBXTargetDependency */,
 				BA83C3EC19345CD300130AD4 /* PBXTargetDependency */,
 				BA83C3EE19345CD300130AD4 /* PBXTargetDependency */,
 				BA83C3F019345CD300130AD4 /* PBXTargetDependency */,
@@ -1093,7 +1121,7 @@
 				LastUpgradeCheck = 0510;
 				TargetAttributes = {
 					A01E16C01784C06E00B0CA4A = {
-						DevelopmentTeam = T829Q4LDUZ;
+						DevelopmentTeam = NQ596S94Q5;
 					};
 				};
 			};
@@ -1124,8 +1152,8 @@
 					ProjectRef = BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */;
 				},
 				{
-					ProductGroup = BA1BF831195A6C7E00B47F4E /* Products */;
-					ProjectRef = BA1BF830195A6C7E00B47F4E /* PluginFacebook.xcodeproj */;
+					ProductGroup = BA34A790195AA8DA002D0ECD /* Products */;
+					ProjectRef = BA34A78F195AA8DA002D0ECD /* PluginFacebook.xcodeproj */;
 				},
 				{
 					ProductGroup = BA623DD8191A13F300761F37 /* Products */;
@@ -1254,11 +1282,18 @@
 			remoteRef = BA1BF81C195A6A7400B47F4E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		BA1BF835195A6C7E00B47F4E /* libPluginFacebook.dylib */ = {
+		BA34A795195AA8DA002D0ECD /* libPluginFacebook.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libPluginFacebook.dylib;
-			remoteRef = BA1BF834195A6C7E00B47F4E /* PBXContainerItemProxy */;
+			fileType = archive.ar;
+			path = libPluginFacebook.a;
+			remoteRef = BA34A794195AA8DA002D0ECD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA34A797195AA8DA002D0ECD /* PluginFacebookTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PluginFacebookTests.xctest;
+			remoteRef = BA34A796195AA8DA002D0ECD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		BA623DD6191A13DC00761F37 /* libPluginAdmob.a */ = {
@@ -1528,6 +1563,16 @@
 			isa = PBXTargetDependency;
 			name = "CocosDenshion iOS";
 			targetProxy = 1A604FBE18BF1EF400CC9A93 /* PBXContainerItemProxy */;
+		};
+		BA1BF84C195AA19100B47F4E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginIAP;
+			targetProxy = BA1BF84B195AA19100B47F4E /* PBXContainerItemProxy */;
+		};
+		BA34A7A1195AA959002D0ECD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginFacebook;
+			targetProxy = BA34A7A0195AA959002D0ECD /* PBXContainerItemProxy */;
 		};
 		BA83C3EA19345CD300130AD4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
