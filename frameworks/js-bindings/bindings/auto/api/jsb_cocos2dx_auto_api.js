@@ -3245,6 +3245,16 @@ str
 },
 
 /**
+ * @method getSearchPaths
+ * @return {Array}
+ */
+getSearchPaths : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method writeToFile
  * @param {map_object} arg0
  * @param {String} arg1
@@ -3295,6 +3305,16 @@ str
 },
 
 /**
+ * @method setSearchPaths
+ * @param {Array} arg0
+ */
+setSearchPaths : function (
+array 
+)
+{
+},
+
+/**
  * @method writeStringToFile
  * @param {String} arg0
  * @param {String} arg1
@@ -3306,6 +3326,26 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method setSearchResolutionsOrder
+ * @param {Array} arg0
+ */
+setSearchResolutionsOrder : function (
+array 
+)
+{
+},
+
+/**
+ * @method addSearchResolutionsOrder
+ * @param {String} arg0
+ */
+addSearchResolutionsOrder : function (
+str 
+)
+{
 },
 
 /**
@@ -3362,6 +3402,16 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method getSearchResolutionsOrder
+ * @return {Array}
+ */
+getSearchResolutionsOrder : function (
+)
+{
+    return new Array();
 },
 
 /**
