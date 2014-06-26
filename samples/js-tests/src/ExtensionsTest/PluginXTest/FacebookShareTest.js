@@ -22,6 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+var buttons = {
+    "Share link" : "onShareLink",
+    "Share open graph" : "onShareOG",
+    "Share photo" : "onSharePhoto",
+    "Link message" : "onLinkMsg",
+    "Open graph message" : "onOGMsg",
+    "Photo message" : "onPhotoMsg",
+    "App request" : "onRequest"
+};
+
 var FacebookShareTest = PluginXTest.extend({
     _title:"Plugin-x Test",
     _subtitle:"Facebook SDK",
@@ -33,28 +43,90 @@ var FacebookShareTest = PluginXTest.extend({
         var menu = cc.Menu.create();
         menu.setPosition( cc.p(0, 0) );
         menu.width = winSize.width;
-        menu.height = 50;
+        menu.height = winSize.height;
         this.addChild(menu, 1);
 
-        var login_label = cc.LabelTTF.create("login", "Arial", 24);
-        var login_item = cc.MenuItemLabel.create(login_label, this.onLoginClick, this);
-        login_item.setPosition(winSize.width / 2, winSize.height / 2);
-        menu.addChild(login_item);
+        var top = 50;
+        for (var action in buttons) {
+            var label = cc.LabelTTF.create(action, "Arial", 24);
+            var item = cc.MenuItemLabel.create(label, this[buttons[action]], this);
+            item.setPosition(winSize.width / 2, winSize.height - top);
+            menu.addChild(item);
+            top += 50;
+        }
 
         this._agentManager = plugin.AgentManager.getInstance();
     },
 
-    onLoginClick : function(){
-//        this._agentManager.login(function(code, msg){
-//            cc.log(msg);
-//        });
+    onShareLink : function(){
         var map = {
             "dialog" : "share_link",
             "name" : "Cocos2d-x is a great game engine",
             "link" : "http://www.cocos2d-x.org"
-        }
+        };
         this._agentManager.getSharePlugin().callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, map));
     },
+
+    onShareOG : function(){
+        var map = {
+            "dialog" : "share_open_graph",
+            "action_type" : "fbogsamplesd:dish",
+            "preview_property" : "dish",
+            "title" : "Roasted pumpkin seeds",
+            "image" : "http://i.imgur.com/g3Qc1HN.png",
+            "url" : "http://example.com/roasted_pumpkin_seeds", // Please change to your own action
+            "description" : "Crunchy pumpkin seeds roasted in butter and lightly salted."
+        };
+        this._agentManager.getSharePlugin().callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, map));
+    },
+
+    onSharePhoto : function(){
+        var map = {
+            "dialog" : "share_photo",
+            "photo" : "http://i.imgur.com/g3Qc1HN.png"
+        };
+        this._agentManager.getSharePlugin().callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, map));
+    },
+
+    onLinkMsg : function(){
+        var map = {
+            "dialog" : "message_link",
+            "name" : "Cocos2d-x is a great game engine",
+            "link" : "http://www.cocos2d-x.org"
+        };
+        this._agentManager.getSharePlugin().callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, map));
+    },
+
+    onOGMsg : function(){
+        var map = {
+            "dialog" : "message_open_graph",
+            "action_type" : "fbogsamplesd:dish",
+            "preview_property" : "dish",
+            "title" : "Roasted pumpkin seeds",
+            "image" : "http://i.imgur.com/g3Qc1HN.png",
+            "url" : "http://example.com/roasted_pumpkin_seeds", // Please change to your own action
+            "description" : "Crunchy pumpkin seeds roasted in butter and lightly salted."
+        };
+        this._agentManager.getSharePlugin().callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, map));
+    },
+
+    onPhotoMsg : function(){
+        var map = {
+            "dialog" : "message_photo",
+            "photo" : "http://i.imgur.com/g3Qc1HN.png"
+        };
+        this._agentManager.getSharePlugin().callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, map));
+    },
+
+    onRequest : function(){
+        var map = {
+            "dialog" : "apprequests",
+            "message" : "Cocos2d-x is a great game engine",
+            "link" : "http://www.cocos2d-x.org"
+        };
+        this._agentManager.getSharePlugin().callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, map));
+    },
+
     onNextCallback:function (sender) {
         var s = new PluginXTestScene();
         s.addChild(new PluginXTestLayer());
