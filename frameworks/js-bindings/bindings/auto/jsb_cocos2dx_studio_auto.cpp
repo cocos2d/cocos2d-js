@@ -850,6 +850,174 @@ void js_register_cocos2dx_studio_BaseData(JSContext *cx, JSObject *global) {
 	}
 }
 
+JSClass  *jsb_cocostudio_MovementData_class;
+JSObject *jsb_cocostudio_MovementData_prototype;
+
+bool js_cocos2dx_studio_MovementData_getMovementBoneData(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocostudio::MovementData* cobj = (cocostudio::MovementData *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_MovementData_getMovementBoneData : Invalid Native Object");
+	if (argc == 1) {
+		std::string arg0;
+		ok &= jsval_to_std_string(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_MovementData_getMovementBoneData : Error processing arguments");
+		cocostudio::MovementBoneData* ret = cobj->getMovementBoneData(arg0);
+		jsval jsret = JSVAL_NULL;
+		do {
+			if (ret) {
+				js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::MovementBoneData>(cx, (cocostudio::MovementBoneData*)ret);
+				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+			} else {
+				jsret = JSVAL_NULL;
+			}
+		} while (0);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_studio_MovementData_getMovementBoneData : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_studio_MovementData_addMovementBoneData(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocostudio::MovementData* cobj = (cocostudio::MovementData *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_MovementData_addMovementBoneData : Invalid Native Object");
+	if (argc == 1) {
+		cocostudio::MovementBoneData* arg0;
+		do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocostudio::MovementBoneData*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_MovementData_addMovementBoneData : Error processing arguments");
+		cobj->addMovementBoneData(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_studio_MovementData_addMovementBoneData : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_studio_MovementData_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 0) {
+		cocostudio::MovementData* ret = cocostudio::MovementData::create();
+		jsval jsret = JSVAL_NULL;
+		do {
+		if (ret) {
+			js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::MovementData>(cx, (cocostudio::MovementData*)ret);
+			jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+		} else {
+			jsret = JSVAL_NULL;
+		}
+	} while (0);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+	JS_ReportError(cx, "js_cocos2dx_studio_MovementData_create : wrong number of arguments");
+	return false;
+}
+
+bool js_cocos2dx_studio_MovementData_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocostudio::MovementData* cobj = new cocostudio::MovementData();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocostudio::MovementData> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::MovementData");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
+
+
+void js_cocostudio_MovementData_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (MovementData)", obj);
+}
+
+void js_register_cocos2dx_studio_MovementData(JSContext *cx, JSObject *global) {
+	jsb_cocostudio_MovementData_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocostudio_MovementData_class->name = "MovementData";
+	jsb_cocostudio_MovementData_class->addProperty = JS_PropertyStub;
+	jsb_cocostudio_MovementData_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocostudio_MovementData_class->getProperty = JS_PropertyStub;
+	jsb_cocostudio_MovementData_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocostudio_MovementData_class->enumerate = JS_EnumerateStub;
+	jsb_cocostudio_MovementData_class->resolve = JS_ResolveStub;
+	jsb_cocostudio_MovementData_class->convert = JS_ConvertStub;
+	jsb_cocostudio_MovementData_class->finalize = js_cocostudio_MovementData_finalize;
+	jsb_cocostudio_MovementData_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+	static JSPropertySpec properties[] = {
+		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+	};
+
+	static JSFunctionSpec funcs[] = {
+		JS_FN("getMovementBoneData", js_cocos2dx_studio_MovementData_getMovementBoneData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("addMovementBoneData", js_cocos2dx_studio_MovementData_addMovementBoneData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+	};
+
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", js_cocos2dx_studio_MovementData_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	jsb_cocostudio_MovementData_prototype = JS_InitClass(
+		cx, global,
+		NULL, // parent proto
+		jsb_cocostudio_MovementData_class,
+		js_cocos2dx_studio_MovementData_constructor, 0, // constructor
+		properties,
+		funcs,
+		NULL, // no static properties
+		st_funcs);
+	// make the class enumerable in the registered namespace
+//	bool found;
+//FIXME: Removed in Firefox v27	
+//	JS_SetPropertyAttributes(cx, global, "MovementData", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+	// add the proto and JSClass to the type->js info hash table
+	TypeTest<cocostudio::MovementData> t;
+	js_type_class_t *p;
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
+		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+		p->jsclass = jsb_cocostudio_MovementData_class;
+		p->proto = jsb_cocostudio_MovementData_prototype;
+		p->parentProto = NULL;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
+	}
+}
+
 JSClass  *jsb_cocostudio_AnimationData_class;
 JSObject *jsb_cocostudio_AnimationData_prototype;
 
@@ -8213,12 +8381,13 @@ void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj) {
 	}
 	obj = ns;
 
-	js_register_cocos2dx_studio_ColliderBody(cx, obj);
 	js_register_cocos2dx_studio_ProcessBase(cx, obj);
 	js_register_cocos2dx_studio_Tween(cx, obj);
 	js_register_cocos2dx_studio_SceneReader(cx, obj);
 	js_register_cocos2dx_studio_ComAudio(cx, obj);
+	js_register_cocos2dx_studio_MovementData(cx, obj);
 	js_register_cocos2dx_studio_ArmatureDataManager(cx, obj);
+	js_register_cocos2dx_studio_ColliderBody(cx, obj);
 	js_register_cocos2dx_studio_InputDelegate(cx, obj);
 	js_register_cocos2dx_studio_ComController(cx, obj);
 	js_register_cocos2dx_studio_DecorativeDisplay(cx, obj);
