@@ -2,19 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb1426774790893461</string>
-			</array>
-		</dict>
-	</array>
-	<key>FacebookDisplayName</key>
-	<string>myFc</string>
-	<key>FacebookAppID</key>
-	<string>1426774790893461</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
@@ -57,10 +44,27 @@
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb1450080185237589</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>FacebookAppID</key>
+	<string>1450080185237589</string>
+	<key>FacebookDisplayName</key>
+	<string>testFEEE</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>PluginShare</key>
+	<string>ShareFacebook</string>
+	<key>PluginUser</key>
+	<string>UserFacebook</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>res/fonts/A Damn Mess.ttf</string>
@@ -92,9 +96,5 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
-	<key>PluginUser</key>
-	<string>UserFacebook</string>
-	<key>PluginShare</key>
-	<string>ShareFacebook</string>
 </dict>
 </plist>
