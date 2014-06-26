@@ -67,7 +67,7 @@ var UIScrollViewTest_Vertical = UIScene.extend({
             textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
             textButton.setTitleText("Text Button");
             textButton.x = innerWidth / 2;
-            textButton.y = button.getBottomInParent() - button.height;
+            textButton.y = button.getBottomBoundary() - button.height;
             scrollView.addChild(textButton);
 
             var button_scale9 = ccui.Button.create();
@@ -77,7 +77,7 @@ var UIScrollViewTest_Vertical = UIScene.extend({
             button_scale9.width = 100;
 	        button_scale9.height = 32;
             button_scale9.x = innerWidth / 2;
-            button_scale9.y = textButton.getBottomInParent() - textButton.height;
+            button_scale9.y = textButton.getBottomBoundary() - textButton.height;
             scrollView.addChild(button_scale9);
 
             imageView.x = innerWidth / 2;
@@ -135,8 +135,8 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
             textButton.setTouchEnabled(true);
             textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
             textButton.setTitleText("Text Button");
-            textButton.x = button.getRightInParent() + button.width / 2;
-            textButton.y = button.getBottomInParent() - button.height;
+            textButton.x = button.getRightBoundary() + button.width / 2;
+            textButton.y = button.getBottomBoundary() - button.height;
             scrollView.addChild(textButton);
 
             var button_scale9 = ccui.Button.create();
@@ -145,12 +145,12 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
             button_scale9.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
             button_scale9.width = 100;
             button_scale9.height = 32;
-            button_scale9.x = textButton.getRightInParent() + textButton.width / 2;
-            button_scale9.y = textButton.getBottomInParent() - textButton.height;
+            button_scale9.x = textButton.getRightBoundary() + textButton.width / 2;
+            button_scale9.y = textButton.getBottomBoundary() - textButton.height;
             scrollView.addChild(button_scale9);
 
             imageView.x = innerWidth - imageView.width / 2;
-	        imageView.y = button_scale9.getBottomInParent() - button_scale9.height / 2;
+	        imageView.y = button_scale9.getBottomBoundary() - button_scale9.height / 2;
             scrollView.addChild(imageView);
 
             return true;
