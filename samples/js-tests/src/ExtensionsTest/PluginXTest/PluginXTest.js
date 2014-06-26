@@ -140,7 +140,11 @@ var s_EventMenuItem = [
     {id: "MakeMeCrash", tag: TAG_MAKE_ME_CRASH}
 ];
 
-var PluginXTestLayer = cc.Layer.extend({
+var PluginXTestLayer = BaseTestLayer.extend({
+
+    _title:"Plugin-x Test",
+    _subtitle: cc.LANGUAGE_CHINESE == cc.Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry",
+
     ctor:function() {
         this._super();
         cc.associateWithNative( this, cc.Layer );
@@ -150,15 +154,8 @@ var PluginXTestLayer = cc.Layer.extend({
         this._super();
         var size = cc.Director.getInstance().getWinSize();
 
-        cc.log("ENTERED");
 
-        // Back Menu
-        var itemBack = cc.MenuItemFont.create("Back", this.toExtensionsMainLayer, this);
-        itemBack.x = winSize.width - 50;
-        itemBack.y = 25;
-
-
-        var pMenu = cc.Menu.create(itemBack);
+        var pMenu = cc.Menu.create();
         pMenu.setPosition( cc.p(0, 0) );
         this.addChild(pMenu, 1);
 
@@ -185,13 +182,7 @@ var PluginXTestLayer = cc.Layer.extend({
         pMenuItem.setPosition( cc.p(size.width / 2, 0));
     },
 
-    toExtensionsMainLayer:function (sender) {
-        var scene = new ExtensionsTestScene();
-        scene.runThisTest();
-    },
-
     reloadPluginMenuCallback: function(pSender) {
-        cc.log("reloadPluginMenuCallback");
         plugin.PluginManager.getInstance().unloadPlugin("AnalyticsFlurry");
         plugin.PluginManager.getInstance().unloadPlugin("AnalyticsUmeng");
 
@@ -283,13 +274,20 @@ var PluginXTestLayer = cc.Layer.extend({
         }
     },
 
-    menuCloseCallback: function() {
-        cc.log("menuCloseCallback");
+    onNextCallback:function (sender) {
+        var s = new FacebookTest();
+        s.addChild(new FacebookLayer);
+        director.runScene(s);
+    },
+    onBackCallback:function (sender) {
+        var s = new FacebookTest();
+        s.addChild(new FacebookLayer);
+        director.runScene(s);
     }
 
 });
 
-var PluginXTestScene = cc.Scene.extend({
+var PluginXTestScene = TestScene.extend({
     ctor:function() {
         this._super();
         cc.associateWithNative( this, cc.Scene );
