@@ -22,45 +22,78 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var FacebookShareTest = PluginXTest.extend({
-    _title:"Plugin-x Test",
-    _subtitle:"Facebook SDK",
-    _agentManager:null,
-
-    ctor:function(title) {
+var FacebookUserTest = PluginXTest.extend({
+    _title: "Plugin-x Test",
+    _subtitle: "Facebook SDK",
+    _agentManager: null,
+    _isLogin: false,
+    ctor: function (title) {
         this._super(title);
 
-        var menu = cc.Menu.create();
-        menu.setPosition( cc.p(0, 0) );
-        menu.width = winSize.width;
-        menu.height = 50;
-        this.addChild(menu, 1);
-
         var login_label = cc.LabelTTF.create("login", "Arial", 24);
-        var login_item = cc.MenuItemLabel.create(login_label, this.onLoginClick, this);
-        login_item.setPosition(winSize.width / 2, winSize.height / 2);
-        menu.addChild(login_item);
+        var login_item = cc.MenuItemLabel.create(login_label, this.loginClick, this);
+        login_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 100)));
+
+        var logout_label = cc.LabelTTF.create("logout", "Arial", 24);
+        var logout_item = cc.MenuItemLabel.create(logout_label, this.logoutClick, this);
+        logout_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 50)));
+
+        var getUid_label = cc.LabelTTF.create("getUid", "Arial", 24);
+        var getUid_item = cc.MenuItemLabel.create(getUid_label, this.getUidClick, this);
+        getUid_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 0)));
+
+        var getToken_label = cc.LabelTTF.create("getToken", "Arial", 24);
+        var getToken_item = cc.MenuItemLabel.create(getToken_label, this.getTokenClick, this);
+        getToken_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, -50)));
+
+        this.result = cc.LabelTTF.create("You can see the result at this label", "Arial", 26);
+        this.result.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(100, 0)));
+        this.addChild(this.result, 1);
+
+
+        var menu = cc.Menu.create(login_item, logout_item, getUid_item, getToken_item);
+        menu.setPosition(cc.p(0, 0));
+        menu.anchorX = 0;
+        menu.anchorY = 0;
+        this.addChild(menu, 1);
 
         this._agentManager = plugin.AgentManager.getInstance();
     },
 
-    onLoginClick : function(){
-//        this._agentManager.login(function(code, msg){
-//            cc.log(msg);
-//        });
-        var map = {
-            "dialog" : "share_link",
-            "name" : "Cocos2d-x is a great game engine",
-            "link" : "http://www.cocos2d-x.org"
-        }
-        this._agentManager.getSharePlugin().callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, map));
+    loginClick: function (sender) {
+        this._agentManager.login(this.loginCallBack);
     },
-    onNextCallback:function (sender) {
+    loginCallBack: function (type, msg) {
+        this.result.setString("type is " + type + " msg is " + msg);
+        if (type == 0) {
+            this._isLogin = true;
+        }
+    },
+    logoutClick: function (sender) {
+        this._agentManager.logout();
+    },
+    getUidClick: function (sender) {
+        var uid = this._agentManager.getUserPlugin().callFuncWithParam("getUserId");
+        this.result.setString(uid);
+        if (this._isLogin == false) {
+            this.result.setString("please Login first");
+            return;
+        }
+    },
+    getTokenClick: function (sender) {
+        if (this._isLogin == false) {
+            this.result.setString("please Login first");
+            return;
+        }
+        var uid = this._agentManager.getUserPlugin().callFuncWithParam("getToken");
+        this.result.setString(uid);
+    },
+    onNextCallback: function (sender) {
         var s = new PluginXTestScene();
         s.addChild(new PluginXTestLayer());
         director.runScene(s);
     },
-    onBackCallback:function (sender) {
+    onBackCallback: function (sender) {
         var s = new PluginXTestScene();
         s.addChild(new PluginXTestLayer());
         director.runScene(s);
