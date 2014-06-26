@@ -56,6 +56,18 @@ bool js_cocos2dx_studio_BaseData_setColor(JSContext *cx, uint32_t argc, jsval *v
 bool js_cocos2dx_studio_BaseData_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_BaseData_BaseData(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocostudio_MovementData_class;
+extern JSObject *jsb_cocostudio_MovementData_prototype;
+
+bool js_cocos2dx_studio_MovementData_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_MovementData_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_MovementData(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_MovementData_getMovementBoneData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_MovementData_addMovementBoneData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_MovementData_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_MovementData_MovementData(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocostudio_AnimationData_class;
 extern JSObject *jsb_cocostudio_AnimationData_prototype;
 

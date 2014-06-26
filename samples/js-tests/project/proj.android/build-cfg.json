@@ -1,6 +1,4 @@
 {
-    "alias": "android123.keystore", 
-    "alias_pass": "w3297825w", 
     "copy_resources": [
         {
             "from": "../../src", 
@@ -21,29 +19,41 @@
         {
             "from": "../../../../frameworks/js-bindings/bindings/script", 
             "to": "script"
-        },
+        }, 
+        {
+            "from": "../../../../frameworks/js-bindings/bindings/manual/platform/android/java/src", 
+            "to": "../src"
+        }, 
         {
             "from": "../../../../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/script", 
-            "to": ""
-        },
+            "to": "script"
+        }, 
         {
             "from": "../../../../frameworks/js-bindings/cocos2d-x/plugin/protocols/proj.android/src", 
             "to": "../src"
-        },
+        }, 
         {
             "from": "../../../../frameworks/js-bindings/cocos2d-x/plugin/plugins/umeng/proj.android/src", 
             "to": "../src"
-        },
+        }, 
         {
             "from": "../../../../frameworks/js-bindings/cocos2d-x/plugin/plugins/umeng/proj.android/sdk", 
             "to": "../libs"
-        },
+        }, 
         {
             "from": "../../../../frameworks/js-bindings/cocos2d-x/plugin/plugins/flurry/proj.android/src", 
             "to": "../src"
-        },
+        }, 
         {
             "from": "../../../../frameworks/js-bindings/cocos2d-x/plugin/plugins/flurry/proj.android/sdk", 
+            "to": "../libs"
+        },
+        {
+            "from": "../../../../frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.android/src", 
+            "to": "../src"
+        }, 
+        {
+            "from": "../../../../frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.android/sdk", 
             "to": "../libs"
         }
     ], 

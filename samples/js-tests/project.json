@@ -96,6 +96,7 @@
         "src/ExtensionsTest/NetworkTest/SocketIOTest.js",
         "src/ExtensionsTest/PluginXTest/PluginXTest.js",
         "src/ExtensionsTest/PluginXTest/IOSIAPTest.js",
+        "src/ExtensionsTest/PluginXTest/FacebookTest.js",
         "src/CocoStudioTest/ArmatureTest/ArmatureTest.js",
         "src/CocoStudioTest/ComponentsTest/ComponentsTestScene.js",
         "src/CocoStudioTest/ComponentsTest/EnemyController.js",
@@ -146,6 +147,7 @@
         "src/Box2dTest/Box2dTest.js",
         "src/ChipmunkTest/ChipmunkTest.js",
 
-        "src/Presentation/Presentation.js"
+        "src/Presentation/Presentation.js",
+        "src/ReflectionTest/ReflectionTest.js"
     ]
 }
