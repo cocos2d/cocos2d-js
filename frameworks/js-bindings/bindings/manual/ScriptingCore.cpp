@@ -1547,7 +1547,7 @@ void ScriptingCore::enableDebugger()
         JS_DefineFunction(_cx, _debugGlobal, "_getEventLoopNestLevel", JSBDebug_getEventLoopNestLevel, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         
         
-        runScript("jsb_debugger.js", _debugGlobal);
+        runScript("script/jsb_debugger.js", _debugGlobal);
         
         // prepare the debugger
         jsval argv = OBJECT_TO_JSVAL(_global);
