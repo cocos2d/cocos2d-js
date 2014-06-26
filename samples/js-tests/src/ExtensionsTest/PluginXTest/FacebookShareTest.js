@@ -22,28 +22,38 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var FacebookLayer = BaseTestLayer.extend({
+var FacebookShareTest = PluginXTest.extend({
     _title:"Plugin-x Test",
     _subtitle:"Facebook SDK",
+    _agentManager:null,
 
-    ctor:function() {
-        this._super();
+    ctor:function(title) {
+        this._super(title);
 
         var menu = cc.Menu.create();
         menu.setPosition( cc.p(0, 0) );
+        menu.width = winSize.width;
+        menu.height = 50;
         this.addChild(menu, 1);
 
         var login_label = cc.LabelTTF.create("login", "Arial", 24);
         var login_item = cc.MenuItemLabel.create(login_label, this.onLoginClick, this);
-        login_item.setPosition(winSize.width / 2, winSize.height - 100);
+        login_item.setPosition(winSize.width / 2, winSize.height / 2);
         menu.addChild(login_item);
 
+        this._agentManager = plugin.AgentManager.getInstance();
     },
 
     onLoginClick : function(){
-        AgentManager.getInstance().login(function(code, msg){
-            cc.log(msg);
-        });
+//        this._agentManager.login(function(code, msg){
+//            cc.log(msg);
+//        });
+        var map = {
+            "dialog" : "share_link",
+            "name" : "Cocos2d-x is a great game engine",
+            "link" : "http://www.cocos2d-x.org"
+        }
+        this._agentManager.getSharePlugin().callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, map));
     },
     onNextCallback:function (sender) {
         var s = new PluginXTestScene();
@@ -54,12 +64,5 @@ var FacebookLayer = BaseTestLayer.extend({
         var s = new PluginXTestScene();
         s.addChild(new PluginXTestLayer());
         director.runScene(s);
-    }
-});
-
-var FacebookTest = TestScene.extend({
-    runThisTest:function () {
-        this.addChild(new FacebookLayer());
-        director.runScene(this);
     }
 });
