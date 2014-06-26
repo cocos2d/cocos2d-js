@@ -2,19 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb1426774790893461</string>
-			</array>
-		</dict>
-	</array>
-	<key>FacebookDisplayName</key>
-	<string>myFc</string>
-	<key>FacebookAppID</key>
-	<string>1426774790893461</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
@@ -96,5 +83,18 @@
 	<string>UserFacebook</string>
 	<key>PluginShare</key>
 	<string>ShareFacebook</string>
+	<key>FacebookAppID</key>
+	<string>1426774790893461</string>
+	<key>FacebookDisplayName</key>
+	<string>myFc</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb1426774790893461</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
