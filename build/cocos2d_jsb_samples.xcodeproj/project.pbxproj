@@ -146,6 +146,7 @@
 		BAA7DEE518C84F5000D9A10E /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEE218C84F5000D9A10E /* main.js */; };
 		BAA7DEE618C84F5000D9A10E /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEE318C84F5000D9A10E /* project.json */; };
 		BAA7DEE718C84F5000D9A10E /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEE318C84F5000D9A10E /* project.json */; };
+		BAC90566195C2E6D00307000 /* jsb_pluginx.js in Resources */ = {isa = PBXBuildFile; fileRef = BAC9055E195C2D2500307000 /* jsb_pluginx.js */; };
 		D60AE43817F9143D00757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		ED743D1717D099F10004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 /* End PBXBuildFile section */
@@ -578,7 +579,7 @@
 		A07A52B91783AE900073F6A7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		BA2350541948262700E17B2A /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = "../frameworks/js-bindings/bindings/script"; sourceTree = "<group>"; };
+		BA2350541948262700E17B2A /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = ../../../../bindings/script; sourceTree = "<group>"; };
 		BA34A78F195AA8DA002D0ECD /* PluginFacebook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFacebook.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/PluginFacebook.xcodeproj"; sourceTree = "<group>"; };
 		BA623DD1191A13DB00761F37 /* PluginAdmob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginAdmob.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/admob/proj.ios/PluginAdmob.xcodeproj"; sourceTree = "<group>"; };
 		BA623DD7191A13F300761F37 /* PluginFlurry.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFlurry.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/flurry/proj.ios/PluginFlurry.xcodeproj"; sourceTree = "<group>"; };
@@ -593,6 +594,7 @@
 		BA623E24191A221D00761F37 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		BAA7DEE218C84F5000D9A10E /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../samples/js-tests/main.js"; sourceTree = "<group>"; };
 		BAA7DEE318C84F5000D9A10E /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = "../samples/js-tests/project.json"; sourceTree = "<group>"; };
+		BAC9055E195C2D2500307000 /* jsb_pluginx.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_pluginx.js; sourceTree = "<group>"; };
 		BAF426F51948498A002B22EF /* PluginIAP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginIAP.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/iosiap/proj.ios/PluginIAP.xcodeproj"; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -898,7 +900,7 @@
 				1A604F2518BF1D2000CC9A93 /* cocos2d_js_bindings.xcodeproj */,
 				1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
-				BA2350541948262700E17B2A /* script */,
+				BAC9055D195C2D2500307000 /* script */,
 				1A604F2F18BF1D3900CC9A93 /* js-moonwarriors */,
 				1A604F2E18BF1D3300CC9A93 /* js-tests */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -1007,6 +1009,24 @@
 				BA623DF9191A14F800761F37 /* libPluginProtocol.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		BAC9055D195C2D2500307000 /* script */ = {
+			isa = PBXGroup;
+			children = (
+				BA2350541948262700E17B2A /* script */,
+				BAC90565195C2DD200307000 /* pluginx */,
+			);
+			name = script;
+			path = "../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/script";
+			sourceTree = "<group>";
+		};
+		BAC90565195C2DD200307000 /* pluginx */ = {
+			isa = PBXGroup;
+			children = (
+				BAC9055E195C2D2500307000 /* jsb_pluginx.js */,
+			);
+			name = pluginx;
 			sourceTree = "<group>";
 		};
 		BAF426F61948498A002B22EF /* Products */ = {
@@ -1384,6 +1404,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAC90566195C2E6D00307000 /* jsb_pluginx.js in Resources */,
 				BA2350561948262700E17B2A /* script in Resources */,
 				BAA7DEE718C84F5000D9A10E /* project.json in Resources */,
 				1A604F5518BF1D6000CC9A93 /* Icon-57.png in Resources */,
