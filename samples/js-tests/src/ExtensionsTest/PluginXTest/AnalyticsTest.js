@@ -121,6 +121,7 @@ var AnalyticsTestLayer = PluginXTest.extend({
         this._super();
         var size = cc.Director.getInstance().getWinSize();
 
+        loadAnalyticsPlugin();
 
         var pMenu = cc.Menu.create();
         pMenu.setPosition( cc.p(0, 0) );
