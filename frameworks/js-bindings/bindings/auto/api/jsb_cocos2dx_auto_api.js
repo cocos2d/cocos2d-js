@@ -3185,18 +3185,6 @@ str
 },
 
 /**
- * @method isDirectory
- * @param {String} arg0
- * @return {bool}
- */
-isDirectory : function (
-str 
-)
-{
-    return false;
-},
-
-/**
  * @method isAbsolutePath
  * @param {String} arg0
  * @return {bool}
@@ -3257,6 +3245,16 @@ str
 },
 
 /**
+ * @method getSearchPaths
+ * @return {Array}
+ */
+getSearchPaths : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method writeToFile
  * @param {map_object} arg0
  * @param {String} arg1
@@ -3307,6 +3305,16 @@ str
 },
 
 /**
+ * @method setSearchPaths
+ * @param {Array} arg0
+ */
+setSearchPaths : function (
+array 
+)
+{
+},
+
+/**
  * @method writeStringToFile
  * @param {String} arg0
  * @param {String} arg1
@@ -3318,6 +3326,26 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method setSearchResolutionsOrder
+ * @param {Array} arg0
+ */
+setSearchResolutionsOrder : function (
+array 
+)
+{
+},
+
+/**
+ * @method addSearchResolutionsOrder
+ * @param {String} arg0
+ */
+addSearchResolutionsOrder : function (
+str 
+)
+{
 },
 
 /**
@@ -3365,15 +3393,25 @@ str
 },
 
 /**
- * @method isExist
+ * @method isDirectoryExist
  * @param {String} arg0
  * @return {bool}
  */
-isExist : function (
+isDirectoryExist : function (
 str 
 )
 {
     return false;
+},
+
+/**
+ * @method getSearchResolutionsOrder
+ * @return {Array}
+ */
+getSearchResolutionsOrder : function (
+)
+{
+    return new Array();
 },
 
 /**
