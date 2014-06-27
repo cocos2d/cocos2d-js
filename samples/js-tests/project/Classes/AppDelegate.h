@@ -1,11 +1,3 @@
-//
-//  GCTestAppDelegate.h
-//  GCTest
-//
-//  Created by Rohan Kuruvilla on 06/08/2012.
-//  Copyright __MyCompanyName__ 2012. All rights reserved.
-//
-
 #ifndef  _APP_DELEGATE_H_
 #define  _APP_DELEGATE_H_
 
