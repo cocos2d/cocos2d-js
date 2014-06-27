@@ -98,6 +98,7 @@
         "src/ExtensionsTest/PluginXTest/PluginXTestsManager.js",
         "src/ExtensionsTest/PluginXTest/IOSIAPTest.js",
         "src/ExtensionsTest/PluginXTest/FacebookShareTest.js",
+        "src/ExtensionsTest/PluginXTest/FacebookUserTest.js",
         "src/ExtensionsTest/PluginXTest/AnalyticsTest.js",
         "src/CocoStudioTest/ArmatureTest/ArmatureTest.js",
         "src/CocoStudioTest/ComponentsTest/ComponentsTestScene.js",

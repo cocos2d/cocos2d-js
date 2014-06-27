@@ -24,14 +24,20 @@
 
 var pluginXTestItemNames = [
     {
-        itemTitle:"Facebook Share Test",
-        testLayer:function () {
+        itemTitle: "Facebook Share Test",
+        testLayer: function () {
             return new FacebookShareTest(this.itemTitle);
         }
     },
     {
-        itemTitle:"Analytics Test",
-        testLayer:function () {
+        itemTitle: "Facebook User Test",
+        testLayer: function () {
+            return new FacebookUserTest(this.itemTitle);
+        }
+    },
+    {
+        itemTitle: "Analytics Test",
+        testLayer: function () {
             return new AnalyticsTestLayer(this.itemTitle);
         }
     }
@@ -39,8 +45,8 @@ var pluginXTestItemNames = [
 
 if (cc.sys.isMobile && cc.sys.os == cc.sys.OS_IOS) {
     pluginXTestItemNames.push({
-        itemTitle:"iOS IAP Test",
-        testLayer:function () {
+        itemTitle: "iOS IAP Test",
+        testLayer: function () {
             return new IAPTestLayer(this.itemTitle);
         }
     });
@@ -49,19 +55,19 @@ if (cc.sys.isMobile && cc.sys.os == cc.sys.OS_IOS) {
 var pluginXSceneManager = {
     _currentPluginXSceneId: 0,
 
-    getCurrentPluginXSceneId:function () {
+    getCurrentPluginXSceneId: function () {
         return this._currentPluginXSceneId;
     },
-    setCurrentPluginXSceneId:function (currentPluginXSceneId) {
+    setCurrentPluginXSceneId: function (currentPluginXSceneId) {
         this._currentPluginXSceneId = currentPluginXSceneId
     },
 
-    nextPluginXScene:function () {
+    nextPluginXScene: function () {
         this._currentPluginXSceneId = (this._currentPluginXSceneId + 1) % pluginXTestItemNames.length;
         return this.currentPluginXScene();
     },
 
-    previousPluginXScene:function () {
+    previousPluginXScene: function () {
         this._currentPluginXSceneId = this._currentPluginXSceneId - 1;
         if (this._currentPluginXSceneId < 0) {
             this._currentPluginXSceneId = pluginXTestItemNames.length - 1;
@@ -70,7 +76,7 @@ var pluginXSceneManager = {
         return this.currentPluginXScene();
     },
 
-    currentPluginXScene:function () {
+    currentPluginXScene: function () {
         var scene = new cc.Scene();
         var layer = pluginXTestItemNames[this._currentPluginXSceneId].testLayer();
         scene.addChild(layer);
