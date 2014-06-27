@@ -104,6 +104,7 @@ private:
     cocos2d::network::HttpRequest*    _httpRequest;
     bool                              _isNetwork;
     bool                              _withCredentialsValue;
+    bool                              _errorFlag;
     std::unordered_map<std::string, std::string>          _httpHeader;
     std::unordered_map<std::string, std::string>          _requestHeader;
 };

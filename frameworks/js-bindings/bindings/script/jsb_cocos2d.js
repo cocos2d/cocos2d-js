@@ -24,7 +24,7 @@
 // cocos2d constants
 //
 
-cc.ENGINE_VERSION = "Cocos2d-JS v3.0 rc";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.0 rc0";
 
 cc.TARGET_PLATFORM = {
     WINDOWS:0,
