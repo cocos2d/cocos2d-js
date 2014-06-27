@@ -1147,9 +1147,14 @@ bool runtime_FileUtils_addSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
         std::string arg0;
         ok &= jsval_to_std_string(cx, argv[0], &arg0);
         JSB_PRECONDITION2(ok, cx, false, "cocos2dx_FileUtils_addSearchPath : Error processing arguments");
+        std::string argtmp = arg0;
         if (!FileUtils::getInstance()->isAbsolutePath(arg0))
             arg0 = g_resourcePath + arg0;
         cobj->addSearchPath(arg0);
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    if (!FileUtils::getInstance()->isAbsolutePath(argtmp))
+        cobj->addSearchPath(argtmp);
+#endif
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
@@ -1170,11 +1175,19 @@ bool runtime_FileUtils_setSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
         std::vector<std::string> arg0;
         ok &= jsval_to_std_vector_string(cx, argv[0], &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_setSearchPaths : Error processing arguments");
+
+        std::vector<std::string> argtmp;
         for (int i = 0; i < arg0.size(); i++)
         {
             if (!FileUtils::getInstance()->isAbsolutePath(arg0[i]))
+            {
+                argtmp.push_back(arg0[i]);
                 arg0[i] = g_resourcePath + arg0[i];
+            }
         }
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        arg0.insert(arg0.end(),argtmp.begin(),argtmp.end());
+#endif
         cobj->setSearchPaths(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
