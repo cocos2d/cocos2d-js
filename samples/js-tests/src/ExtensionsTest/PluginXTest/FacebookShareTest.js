@@ -61,8 +61,10 @@ var FacebookShareTest = PluginXTest.extend({
     onShareLink : function(){
         var map = {
             "dialog" : "share_link",
-            "name" : "Cocos2d-x is a great game engine",
-            "link" : "http://www.cocos2d-x.org"
+            "description" : "Cocos2d-x is a great game engine",
+            "title" : "Cocos2d-x",
+            "link" : "http://www.cocos2d-x.org",
+            "imageUrl" : "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
         this._agentManager.getSharePlugin().callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, map));
     },
@@ -73,7 +75,7 @@ var FacebookShareTest = PluginXTest.extend({
             "action_type" : "fbogsamplesd:dish",
             "preview_property" : "dish",
             "title" : "Roasted pumpkin seeds",
-            "image" : "http://i.imgur.com/g3Qc1HN.png",
+            "image" : "http://files.cocos2d-x.org/images/orgsite/logo.png",
             "url" : "http://example.com/roasted_pumpkin_seeds", // Please change to your own action
             "description" : "Crunchy pumpkin seeds roasted in butter and lightly salted."
         };
@@ -83,7 +85,7 @@ var FacebookShareTest = PluginXTest.extend({
     onSharePhoto : function(){
         var map = {
             "dialog" : "share_photo",
-            "photo" : "http://i.imgur.com/g3Qc1HN.png"
+            "photo" : "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
         this._agentManager.getSharePlugin().callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, map));
     },
@@ -91,8 +93,10 @@ var FacebookShareTest = PluginXTest.extend({
     onLinkMsg : function(){
         var map = {
             "dialog" : "message_link",
-            "name" : "Cocos2d-x is a great game engine",
-            "link" : "http://www.cocos2d-x.org"
+            "description" : "Cocos2d-x is a great game engine",
+            "title" : "Cocos2d-x",
+            "link" : "http://www.cocos2d-x.org",
+            "imageUrl" : "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
         this._agentManager.getSharePlugin().callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, map));
     },
@@ -103,7 +107,7 @@ var FacebookShareTest = PluginXTest.extend({
             "action_type" : "fbogsamplesd:dish",
             "preview_property" : "dish",
             "title" : "Roasted pumpkin seeds",
-            "image" : "http://i.imgur.com/g3Qc1HN.png",
+            "image" : "http://files.cocos2d-x.org/images/orgsite/logo.png",
             "url" : "http://example.com/roasted_pumpkin_seeds", // Please change to your own action
             "description" : "Crunchy pumpkin seeds roasted in butter and lightly salted."
         };
@@ -113,7 +117,7 @@ var FacebookShareTest = PluginXTest.extend({
     onPhotoMsg : function(){
         var map = {
             "dialog" : "message_photo",
-            "photo" : "http://i.imgur.com/g3Qc1HN.png"
+            "photo" : "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
         this._agentManager.getSharePlugin().callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, map));
     },
