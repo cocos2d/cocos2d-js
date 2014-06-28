@@ -1403,6 +1403,19 @@ cc.base = function(me, opt_methodName, var_args) {
 };
 
 
+var ClassManager = {
+    id : (0|(Math.random()*998)),
+
+    instanceId : (0|(Math.random()*998)),
+
+    getNewID : function(){
+        return this.id++;
+    },
+
+    getNewInstanceId : function(){
+        return this.instanceId++;
+    }
+};
 //
 // 2) Using "extend" subclassing
 // Simple JavaScript Inheritance By John Resig http://ejohn.org/
@@ -1455,6 +1468,13 @@ cc.Class.extend = function (prop) {
             }
         }
     }
+
+    var classId = ClassManager.getNewID();
+    ClassManager[classId] = _super;
+    var desc = { writable: true, enumerable: false, configurable: true };
+    Class.id = classId;
+    desc.value = classId;
+    Object.defineProperty(prototype, '__pid', desc);
 
     // Populate our constructed prototype object
     Class.prototype = prototype;
