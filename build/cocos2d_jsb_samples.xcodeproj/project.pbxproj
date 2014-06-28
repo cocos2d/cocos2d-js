@@ -488,13 +488,6 @@
 			remoteGlobalIDString = BA34A75D195AA8C7002D0ECD;
 			remoteInfo = PluginFacebook;
 		};
-		BAC904F8195ADA7600307000 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BA34A78F195AA8DA002D0ECD /* PluginFacebook.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BA34A76D195AA8C7002D0ECD;
-			remoteInfo = PluginFacebookTests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -943,7 +936,6 @@
 			isa = PBXGroup;
 			children = (
 				BAC904F7195ADA7600307000 /* libPluginFacebook.a */,
-				BAC904F9195ADA7600307000 /* PluginFacebookTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1348,13 +1340,6 @@
 			fileType = archive.ar;
 			path = libPluginFacebook.a;
 			remoteRef = BAC904F6195ADA7600307000 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		BAC904F9195ADA7600307000 /* PluginFacebookTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = PluginFacebookTests.xctest;
-			remoteRef = BAC904F8195ADA7600307000 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1769,9 +1754,7 @@
 				COMPRESS_PNG_FILES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/wzm/Documents/software/tomcat/webapps/cocos2d-js-clean/frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/sdk",
-					"/Users/panda/StudyWork/Cocos/cocos2d-js/frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/sdk",
-					/Users/wzm/Documents/FacebookSDK,
+					"$(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/sdk",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1803,9 +1786,7 @@
 				COMPRESS_PNG_FILES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/wzm/Documents/software/tomcat/webapps/cocos2d-js-clean/frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/sdk",
-					"/Users/panda/StudyWork/Cocos/cocos2d-js/frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/sdk",
-					/Users/wzm/Documents/FacebookSDK,
+					"$(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/sdk",
 				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
