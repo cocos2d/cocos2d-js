@@ -30,7 +30,7 @@ var UICheckBoxTest = UIScene.extend({
             this._topDisplayLabel.setString("No Event");
             this._bottomDisplayLabel.setString("CheckBox");
 
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             // Create the checkbox
             var checkBox = ccui.CheckBox.create();
             checkBox.setTouchEnabled(true);
