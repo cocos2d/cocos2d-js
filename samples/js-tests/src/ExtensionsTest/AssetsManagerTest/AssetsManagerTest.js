@@ -119,7 +119,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
         _loadingBar.y = cc.visibleRect.top.y - 40;
         layer.addChild(_loadingBar);
 
-        _fileLoadingBar = cocos2d::ui::LoadingBar::create("res/cocosui/sliderProgress.png");
+        _fileLoadingBar = new ccui.LoadingBar("res/cocosui/sliderProgress.png");
         _fileLoadingBar.x = cc.visibleRect.center.x;
         _fileLoadingBar.y = cc.visibleRect.top.y - 80;
         layer.addChild(_fileLoadingBar);
@@ -190,7 +190,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
                         scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
                         cc.director.runScene(scene);
                         break;
-                    case EventAssetsManager::EventCode::ERROR_DECOMPRESS:
+                    case cc.EventAssetsManager.ERROR_DECOMPRESS:
                         cc.log(event.getMessage());
                         break;
                     default:
