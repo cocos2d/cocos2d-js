@@ -682,6 +682,14 @@ getMaxS : function (
 },
 
 /**
+ * @method releaseGLTexture
+ */
+releaseGLTexture : function (
+)
+{
+},
+
+/**
  * @method hasPremultipliedAlpha
  * @return {bool}
  */
@@ -957,14 +965,14 @@ cc.Node = {
 
 /**
  * @method addChild
-* @param {cc.Node|cc.Node|cc.Node} node
-* @param {int|int} int
-* @param {int} int
+* @param {cc.Node|cc.Node|cc.Node|cc.Node} node
+* @param {int|int|int} int
+* @param {int|String} int
 */
 addChild : function(
 node,
 int,
-int 
+str 
 )
 {
 },
@@ -1069,6 +1077,18 @@ isIgnoreAnchorPointForPosition : function (
 )
 {
     return false;
+},
+
+/**
+ * @method getChildByName
+ * @param {String} arg0
+ * @return {cc.Node}
+ */
+getChildByName : function (
+str 
+)
+{
+    return cc.Node;
 },
 
 /**
@@ -1333,6 +1353,16 @@ setParent : function (
 node 
 )
 {
+},
+
+/**
+ * @method getName
+ * @return {String}
+ */
+getName : function (
+)
+{
+    return ;
 },
 
 /**
@@ -1608,6 +1638,18 @@ int
 },
 
 /**
+ * @method removeChildByName
+ * @param {String} arg0
+ * @param {bool} arg1
+ */
+removeChildByName : function (
+str, 
+bool 
+)
+{
+},
+
+/**
  * @method setPositionZ
  * @param {float} arg0
  */
@@ -1685,6 +1727,16 @@ int
 )
 {
     return cc.Action;
+},
+
+/**
+ * @method setName
+ * @param {String} arg0
+ */
+setName : function (
+str 
+)
+{
 },
 
 /**
@@ -2086,6 +2138,18 @@ int
  */
 setUserObject : function (
 ref 
+)
+{
+},
+
+/**
+ * @method enumerateChildren
+ * @param {String} arg0
+ * @param {function} arg1
+ */
+enumerateChildren : function (
+str, 
+func 
 )
 {
 },
@@ -10415,16 +10479,6 @@ getTextColor : function (
 },
 
 /**
- * @method getCommonLineHeight
- * @return {int}
- */
-getCommonLineHeight : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setWidth
  * @param {unsigned int} arg0
  */
@@ -10499,6 +10553,16 @@ vec2
 },
 
 /**
+ * @method setLineHeight
+ * @param {float} arg0
+ */
+setLineHeight : function (
+float 
+)
+{
+},
+
+/**
  * @method setSystemFontSize
  * @param {float} arg0
  */
@@ -10559,6 +10623,16 @@ int
 },
 
 /**
+ * @method getAdditionalKerning
+ * @return {float}
+ */
+getAdditionalKerning : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setCharMap
 * @param {cc.Texture2D|String|String} texture2d
 * @param {int|int} int
@@ -10614,6 +10688,16 @@ setVerticalAlignment : function (
 textvalignment 
 )
 {
+},
+
+/**
+ * @method getLineHeight
+ * @return {float}
+ */
+getLineHeight : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -10686,6 +10770,16 @@ int
 )
 {
     return cc.Sprite;
+},
+
+/**
+ * @method setAdditionalKerning
+ * @param {float} arg0
+ */
+setAdditionalKerning : function (
+float 
+)
+{
 },
 
 /**
@@ -18908,67 +19002,6 @@ str
 )
 {
     return cc.Component;
-},
-
-};
-
-/**
- * @class Sprite3D
- */
-cc.Sprite3D = {
-
-/**
- * @method setTexture
-* @param {cc.Texture2D|String} texture2d
-*/
-setTexture : function(
-str 
-)
-{
-},
-
-/**
- * @method getMesh
- * @return {cc.Mesh}
- */
-getMesh : function (
-)
-{
-    return cc.Mesh;
-},
-
-/**
- * @method getBlendFunc
- * @return {cc.BlendFunc}
- */
-getBlendFunc : function (
-)
-{
-    return cc.BlendFunc;
-},
-
-/**
- * @method setBlendFunc
- * @param {cc.BlendFunc} arg0
- */
-setBlendFunc : function (
-blendfunc 
-)
-{
-},
-
-/**
- * @method create
-* @param {String|String} str
-* @param {String} str
-* @return {cc.Sprite3D|cc.Sprite3D}
-*/
-create : function(
-str,
-str 
-)
-{
-    return cc.Sprite3D;
 },
 
 };

@@ -3009,6 +3009,16 @@ getCURLMCode : function (
 },
 
 /**
+ * @method getPercentByFile
+ * @return {float}
+ */
+getPercentByFile : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getEventCode
  * @return {cc.EventAssetsManager::EventCode}
  */
