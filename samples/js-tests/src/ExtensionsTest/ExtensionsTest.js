@@ -87,6 +87,12 @@ var extensionsTestItemNames = [
         testScene:function () {
             runSocketIOTest();
         }
+    },
+    {
+        itemTitle:"CCPoolTest",
+        testScene:function () {
+            runCCPoolTest();
+        }
     }
 ];
 
