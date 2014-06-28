@@ -620,7 +620,8 @@ cc.view.setFrameZoomFactor = function(){return;};
 cc.eventManager = cc.director.getEventDispatcher();
 cc.audioEngine = cc.AudioEngine.getInstance();
 cc.audioEngine.end = function(){
-    cc.AudioEngine.end();
+    this.stopMusic();
+    this.stopAllEffects();
 };
 cc.configuration = cc.Configuration.getInstance();
 cc.textureCache = cc.director.getTextureCache();
