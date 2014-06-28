@@ -6,8 +6,7 @@
     <LocalDebuggerCommand>$(OutDir)../../../../runtime/win32/$(TargetFileName)</LocalDebuggerCommand>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerWorkingDirectory>$(OutDir)../../../../runtime/win32/</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>$(OutDir)\Resource</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommand>$(OutDir)../../../../runtime/win32/$(TargetFileName)</LocalDebuggerCommand>
   </PropertyGroup>
 </Project>

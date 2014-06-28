@@ -411,8 +411,10 @@ void FileServer::addResFileInfo(const char* filename,uint64_t u64)
     if (_filecfgjson.HasMember(filename)){
         _filecfgjson.RemoveMember(filename);
     }
-    rapidjson::Value filetimeValue(rapidjson::kNumberType);
-    filetimeValue.SetUint64(u64);
+    char filetime[512]= {0};
+    sprintf(filetime,"%llu",u64);
+    rapidjson::Value filetimeValue(rapidjson::kStringType);
+    filetimeValue.SetString(filetime,_filecfgjson.GetAllocator());
     rapidjson::Value filenameValue(rapidjson::kStringType);
     filenameValue.SetString(filename,_filecfgjson.GetAllocator());
     _filecfgjson.AddMember(filenameValue.GetString(),filetimeValue,_filecfgjson.GetAllocator());
@@ -697,7 +699,7 @@ void FileServer::loopWriteFile()
              fclose(fp);
          }
 
-         if (recvDataBuf.fileProto.package_seq() == recvDataBuf.fileProto.package_sum()){
+         if (1 == recvDataBuf.fileProto.package_seq()){ // == recvDataBuf.fileProto.package_sum()
              addResFileInfo(filename.c_str(),recvDataBuf.fileProto.modified_time());
              addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_SUCCESS,0);
             }
@@ -1008,7 +1010,7 @@ public:
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
                     rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
                     for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
-                        bodyvalue.AddMember(it->name.GetString(),it->value.GetUint64(),dReplyParse.GetAllocator());
+                        bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
                     }
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
@@ -1145,14 +1147,53 @@ bool runtime_FileUtils_addSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
         std::string arg0;
         ok &= jsval_to_std_string(cx, argv[0], &arg0);
         JSB_PRECONDITION2(ok, cx, false, "cocos2dx_FileUtils_addSearchPath : Error processing arguments");
+        std::string argtmp = arg0;
         if (!FileUtils::getInstance()->isAbsolutePath(arg0))
             arg0 = g_resourcePath + arg0;
         cobj->addSearchPath(arg0);
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    if (!FileUtils::getInstance()->isAbsolutePath(argtmp))
+        cobj->addSearchPath(argtmp);
+#endif
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
 
     JS_ReportError(cx, "cocos2dx_FileUtils_addSearchPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
+bool runtime_FileUtils_setSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_setSearchPaths : Invalid Native Object");
+    if (argc == 1) {
+        std::vector<std::string> arg0;
+        ok &= jsval_to_std_vector_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_setSearchPaths : Error processing arguments");
+
+        std::vector<std::string> argtmp;
+        for (int i = 0; i < arg0.size(); i++)
+        {
+            if (!FileUtils::getInstance()->isAbsolutePath(arg0[i]))
+            {
+                argtmp.push_back(arg0[i]);
+                arg0[i] = g_resourcePath + arg0[i];
+            }
+        }
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        arg0.insert(arg0.end(),argtmp.begin(),argtmp.end());
+#endif
+        cobj->setSearchPaths(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_FileUtils_setSearchPaths : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 
@@ -1169,6 +1210,7 @@ void register_FileUtils(JSContext *cx, JSObject *global) {
 
     JSObject  *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.FileUtils.getInstance(); })()"));
     JS_DefineFunction(cx, tmpObj, "addSearchPath", runtime_FileUtils_addSearchPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, tmpObj, "setSearchPaths", runtime_FileUtils_setSearchPaths, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
 }
 
 bool startRuntime()

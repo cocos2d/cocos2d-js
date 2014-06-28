@@ -295,6 +295,54 @@ BaseData : function (
 };
 
 /**
+ * @class MovementData
+ */
+ccs.MovementData = {
+
+/**
+ * @method getMovementBoneData
+ * @param {String} arg0
+ * @return {ccs.MovementBoneData}
+ */
+getMovementBoneData : function (
+str 
+)
+{
+    return ccs.MovementBoneData;
+},
+
+/**
+ * @method addMovementBoneData
+ * @param {ccs.MovementBoneData} arg0
+ */
+addMovementBoneData : function (
+movementbonedata 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.MovementData}
+ */
+create : function (
+)
+{
+    return ccs.MovementData;
+},
+
+/**
+ * @method MovementData
+ * @constructor
+ */
+MovementData : function (
+)
+{
+},
+
+};
+
+/**
  * @class AnimationData
  */
 ccs.AnimationData = {
