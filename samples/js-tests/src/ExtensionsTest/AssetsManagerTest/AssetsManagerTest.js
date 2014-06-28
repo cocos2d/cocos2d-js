@@ -92,15 +92,19 @@ var AssetsManagerTestScene = TestScene.extend({
     }
 });
 
+var __failCount = 0;
 
 var AssetsManagerLoaderScene = TestScene.extend({
     _am : null,
     _progress : null,
     _percent : 0,
+    _loadingBar : null,
+    _fileLoadingBar : null,
 
     runThisTest : function () {
         var manifestPath = sceneManifests[currentScene];
         var storagePath = ((jsb.fileUtils ? jsb.fileUtils.getWritablePath() : "/") + storagePaths[currentScene]);
+        cc.log("Storage path for this test : " + storagePath);
 
         var layer = new cc.Layer();
         this.addChild(layer);
@@ -110,10 +114,15 @@ var AssetsManagerLoaderScene = TestScene.extend({
         icon.y = cc.winSize.height/2;
         layer.addChild(icon);
 
-        this._progress = new cc.LabelTTF("0%", "Arial", 30);
-        this._progress.x = cc.winSize.width/2;
-        this._progress.y = cc.winSize.height/2 + 50;
-        layer.addChild(this._progress);
+        _loadingBar = new ccui.LoadingBar("res/cocosui/sliderProgress.png");
+        _loadingBar.x = cc.visibleRect.center.x;
+        _loadingBar.y = cc.visibleRect.top.y - 40;
+        layer.addChild(_loadingBar);
+
+        _fileLoadingBar = cocos2d::ui::LoadingBar::create("res/cocosui/sliderProgress.png");
+        _fileLoadingBar.x = cc.visibleRect.center.x;
+        _fileLoadingBar.y = cc.visibleRect.top.y - 80;
+        layer.addChild(_fileLoadingBar);
 
         this._am = new jsb.AssetsManager(manifestPath, storagePath);
         this._am.retain();
@@ -135,10 +144,18 @@ var AssetsManagerLoaderScene = TestScene.extend({
                         cc.log("No local manifest file found, skip assets update.");
                         scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
                         cc.director.runScene(scene);
-                        scene.release();
                         break;
                     case cc.EventAssetsManager.UPDATE_PROGRESSION:
-                        that._percent = event.getPercent();
+                        var percent = event.getPercent();
+                        var percentByFile = event.getPercentByFile();
+                        _loadingBar.setPercent(percent);
+                        _fileLoadingBar.setPercent(percentByFile);
+                        cc.log(percent + "%");
+
+                        var msg = event.getMessage();
+                        if (msg) {
+                            cc.log(msg);
+                        }
                         break;
                     case cc.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
                     case cc.EventAssetsManager.ERROR_PARSE_MANIFEST:
@@ -148,15 +165,33 @@ var AssetsManagerLoaderScene = TestScene.extend({
                         break;
                     case cc.EventAssetsManager.ALREADY_UP_TO_DATE:
                     case cc.EventAssetsManager.UPDATE_FINISHED:
-                    case cc.EventAssetsManager.UPDATE_FAILED:
-                        cc.log("Update finished.");
+                        cc.log("Update finished. " + event.getMessage());
                         scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
                         cc.director.runScene(scene);
+                        break;
+                    case cc.EventAssetsManager.UPDATE_FAILED:
+                        cc.log("Update failed. " + event.getMessage());
+
+                        __failCount ++;
+                        if (__failCount < 5)
+                        {
+                            _am.downloadFailedAssets();
+                        }
+                        else
+                        {
+                            CCLOG("Reach maximum fail count, exit update process");
+                            __failCount = 0;
+                            scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
+                            cc.director.runScene(scene);
+                        }
                         break;
                     case cc.EventAssetsManager.ERROR_UPDATING:
                         cc.log("Asset update error: " + event.getAssetId() + ", " + event.getMessage());
                         scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
                         cc.director.runScene(scene);
+                        break;
+                    case EventAssetsManager::EventCode::ERROR_DECOMPRESS:
+                        cc.log(event.getMessage());
                         break;
                     default:
                         break;
