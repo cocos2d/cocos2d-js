@@ -131,7 +131,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     
     ScriptingCore::getInstance()->runScript("main.js");
-
+    
     return true;
 }
 
