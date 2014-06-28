@@ -2469,7 +2469,7 @@ cc.AffineTransformInvert = function (t) {
 
 
 //
-//AffineTransform API
+// Node API
 //
 
 cc.Node.prototype.setUserData = function (data) {
