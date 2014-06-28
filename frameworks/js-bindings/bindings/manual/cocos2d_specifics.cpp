@@ -2539,7 +2539,24 @@ enum ACTION_TAG {
     EASE_BOUNCE_INOUT,
     EASE_BACK_IN,
     EASE_BACK_OUT,
-    EASE_BACK_INOUT
+    EASE_BACK_INOUT,
+    
+    EASE_BEZIER_ACTION,
+    EASE_QUADRATIC_IN,
+    EASE_QUADRATIC_OUT,
+    EASE_QUADRATIC_INOUT,
+    EASE_QUARTIC_IN,
+    EASE_QUARTIC_OUT,
+    EASE_QUARTIC_INOUT,
+    EASE_QUINTIC_IN,
+    EASE_QUINTIC_OUT,
+    EASE_QUINTIC_INOUT,
+    EASE_CIRCLE_IN,
+    EASE_CIRCLE_OUT,
+    EASE_CIRCLE_INOUT,
+    EASE_CUBIC_IN,
+    EASE_CUBIC_OUT,
+    EASE_CUBIC_INOUT
 };
 
 bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
@@ -2624,6 +2641,42 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
             action = cocos2d::EaseBackOut::create(currentAction);
         else if (tag == EASE_BACK_INOUT)
             action = cocos2d::EaseBackInOut::create(currentAction);
+        
+        else if (tag == EASE_QUADRATIC_IN)
+            action = cocos2d::EaseQuadraticActionIn::create(currentAction);
+        else if (tag == EASE_QUADRATIC_OUT)
+            action = cocos2d::EaseQuadraticActionOut::create(currentAction);
+        else if (tag == EASE_QUADRATIC_INOUT)
+            action = cocos2d::EaseQuadraticActionInOut::create(currentAction);
+        else if (tag == EASE_QUARTIC_IN)
+            action = cocos2d::EaseQuarticActionIn::create(currentAction);
+        else if (tag == EASE_QUARTIC_OUT)
+            action = cocos2d::EaseQuarticActionOut::create(currentAction);
+        else if (tag == EASE_QUARTIC_INOUT)
+            action = cocos2d::EaseQuarticActionInOut::create(currentAction);
+        else if (tag == EASE_QUINTIC_IN)
+            action = cocos2d::EaseQuinticActionIn::create(currentAction);
+        else if (tag == EASE_QUINTIC_OUT)
+            action = cocos2d::EaseQuinticActionOut::create(currentAction);
+        else if (tag == EASE_QUINTIC_INOUT)
+            action = cocos2d::EaseQuinticActionInOut::create(currentAction);
+        else if (tag == EASE_CIRCLE_IN)
+            action = cocos2d::EaseCircleActionIn::create(currentAction);
+        else if (tag == EASE_CIRCLE_OUT)
+            action = cocos2d::EaseCircleActionOut::create(currentAction);
+        else if (tag == EASE_CIRCLE_INOUT)
+            action = cocos2d::EaseCircleActionInOut::create(currentAction);
+        else if (tag == EASE_CUBIC_IN)
+            action = cocos2d::EaseCubicActionIn::create(currentAction);
+        else if (tag == EASE_CUBIC_OUT)
+            action = cocos2d::EaseCubicActionOut::create(currentAction);
+        else if (tag == EASE_CUBIC_INOUT)
+            action = cocos2d::EaseCubicActionInOut::create(currentAction);
+        else if (tag == EASE_BEZIER_ACTION)
+        {
+            // TODO: Extra manipulation on parameters
+            action = cocos2d::EaseBezierAction::create(currentAction);
+        }
         else
             continue;
         
