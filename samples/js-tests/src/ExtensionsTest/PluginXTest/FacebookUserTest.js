@@ -61,7 +61,10 @@ var FacebookUserTest = PluginXTest.extend({
     },
 
     loginClick: function (sender) {
-        this._agentManager.login(this.loginCallBack);
+        var self = this;
+        this._agentManager.login(function(type,msg){
+            self.loginCallBack(type,msg);
+        });
     },
     loginCallBack: function (type, msg) {
         this.result.setString("type is " + type + " msg is " + msg);
