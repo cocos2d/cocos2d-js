@@ -61,7 +61,10 @@ var FacebookUserTest = PluginXTest.extend({
     },
 
     loginClick: function (sender) {
-        this._agentManager.login(this.loginCallBack);
+        var self = this;
+        this._agentManager.login(function(type,msg){
+            self.loginCallBack(type,msg);
+        });
     },
     loginCallBack: function (type, msg) {
         this.result.setString("type is " + type + " msg is " + msg);
@@ -73,19 +76,19 @@ var FacebookUserTest = PluginXTest.extend({
         this._agentManager.logout();
     },
     getUidClick: function (sender) {
-        var uid = this._agentManager.getUserPlugin().callFuncWithParam("getUserId");
-        this.result.setString(uid);
         if (this._isLogin == false) {
             this.result.setString("please Login first");
             return;
         }
+        var uid = this._agentManager.getUserPlugin().callStringFuncWithParam("getUserId");
+        this.result.setString(uid);
     },
     getTokenClick: function (sender) {
         if (this._isLogin == false) {
             this.result.setString("please Login first");
             return;
         }
-        var uid = this._agentManager.getUserPlugin().callFuncWithParam("getToken");
+        var uid = this._agentManager.getUserPlugin().callStringFuncWithParam("getToken");
         this.result.setString(uid);
     },
     onNextCallback: function (sender) {

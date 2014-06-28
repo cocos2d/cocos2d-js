@@ -90,6 +90,7 @@
         "src/ExtensionsTest/CocosBuilderTest/ScrollViewTest/ScrollViewTestLayer.js",
         "src/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.js",
         "src/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.js",
+        "src/ExtensionsTest/CCPoolTest/CCPoolTest.js",
         "src/ExtensionsTest/EditBoxTest/EditBoxTest.js",
         "src/ExtensionsTest/S9SpriteTest/S9SpriteTest.js",
         "src/ExtensionsTest/NetworkTest/WebSocketTest.js",
