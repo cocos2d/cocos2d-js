@@ -98,6 +98,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
     _am : null,
     _progress : null,
     _percent : 0,
+    _percentByFile : 0,
     _loadingBar : null,
     _fileLoadingBar : null,
 
@@ -114,15 +115,15 @@ var AssetsManagerLoaderScene = TestScene.extend({
         icon.y = cc.winSize.height/2;
         layer.addChild(icon);
 
-        _loadingBar = new ccui.LoadingBar("res/cocosui/sliderProgress.png");
-        _loadingBar.x = cc.visibleRect.center.x;
-        _loadingBar.y = cc.visibleRect.top.y - 40;
-        layer.addChild(_loadingBar);
+        this._loadingBar = ccui.LoadingBar.create("res/cocosui/sliderProgress.png");
+        this._loadingBar.x = cc.visibleRect.center.x;
+        this._loadingBar.y = cc.visibleRect.top.y - 40;
+        layer.addChild(this._loadingBar);
 
-        _fileLoadingBar = new ccui.LoadingBar("res/cocosui/sliderProgress.png");
-        _fileLoadingBar.x = cc.visibleRect.center.x;
-        _fileLoadingBar.y = cc.visibleRect.top.y - 80;
-        layer.addChild(_fileLoadingBar);
+        this._fileLoadingBar = ccui.LoadingBar.create("res/cocosui/sliderProgress.png");
+        this._fileLoadingBar.x = cc.visibleRect.center.x;
+        this._fileLoadingBar.y = cc.visibleRect.top.y - 80;
+        layer.addChild(this._fileLoadingBar);
 
         this._am = new jsb.AssetsManager(manifestPath, storagePath);
         this._am.retain();
@@ -146,11 +147,9 @@ var AssetsManagerLoaderScene = TestScene.extend({
                         cc.director.runScene(scene);
                         break;
                     case cc.EventAssetsManager.UPDATE_PROGRESSION:
-                        var percent = event.getPercent();
-                        var percentByFile = event.getPercentByFile();
-                        _loadingBar.setPercent(percent);
-                        _fileLoadingBar.setPercent(percentByFile);
-                        cc.log(percent + "%");
+                        that._percent = event.getPercent();
+                        that._percentByFile = event.getPercentByFile();
+                        cc.log(that._percent + "%");
 
                         var msg = event.getMessage();
                         if (msg) {
@@ -175,11 +174,11 @@ var AssetsManagerLoaderScene = TestScene.extend({
                         __failCount ++;
                         if (__failCount < 5)
                         {
-                            _am.downloadFailedAssets();
+                            that._am.downloadFailedAssets();
                         }
                         else
                         {
-                            CCLOG("Reach maximum fail count, exit update process");
+                            cc.log("Reach maximum fail count, exit update process");
                             __failCount = 0;
                             scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
                             cc.director.runScene(scene);
@@ -208,8 +207,10 @@ var AssetsManagerLoaderScene = TestScene.extend({
         this.schedule(this.updateProgress, 0.5);
     },
 
-    updateProgress : function(dt){
-        this._progress.string = "" + this._percent;
+    updateProgress : function () {
+        cc.log("What the fuck::: " + this._percent);
+        this._loadingBar.setPercent(this._percent);
+        this._fileLoadingBar.setPercent(this._percentByFile);
     },
 
     onExit : function () {
