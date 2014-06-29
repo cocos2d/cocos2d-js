@@ -115,6 +115,20 @@ getLoop : function (
 },
 
 /**
+ * @method initWithBinary
+ * @param {ccs.CocoLoader} arg0
+ * @param {ccs.stExpCocoNode} arg1
+ * @param {cc.Ref} arg2
+ */
+initWithBinary : function (
+cocoloader, 
+stexpcoconode, 
+ref 
+)
+{
+},
+
+/**
  * @method addActionNode
  * @param {ccs.ActionNode} arg0
  */
@@ -221,6 +235,22 @@ char
 },
 
 /**
+ * @method initWithBinary
+ * @param {char} arg0
+ * @param {cc.Ref} arg1
+ * @param {ccs.CocoLoader} arg2
+ * @param {ccs.stExpCocoNode} arg3
+ */
+initWithBinary : function (
+char, 
+ref, 
+cocoloader, 
+stexpcoconode 
+)
+{
+},
+
+/**
  * @method releaseActions
  */
 releaseActions : function (
@@ -288,6 +318,112 @@ create : function (
  * @constructor
  */
 BaseData : function (
+)
+{
+},
+
+};
+
+/**
+ * @class MovementData
+ */
+ccs.MovementData = {
+
+/**
+ * @method getMovementBoneData
+ * @param {String} arg0
+ * @return {ccs.MovementBoneData}
+ */
+getMovementBoneData : function (
+str 
+)
+{
+    return ccs.MovementBoneData;
+},
+
+/**
+ * @method addMovementBoneData
+ * @param {ccs.MovementBoneData} arg0
+ */
+addMovementBoneData : function (
+movementbonedata 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.MovementData}
+ */
+create : function (
+)
+{
+    return ccs.MovementData;
+},
+
+/**
+ * @method MovementData
+ * @constructor
+ */
+MovementData : function (
+)
+{
+},
+
+};
+
+/**
+ * @class AnimationData
+ */
+ccs.AnimationData = {
+
+/**
+ * @method getMovement
+ * @param {String} arg0
+ * @return {ccs.MovementData}
+ */
+getMovement : function (
+str 
+)
+{
+    return ccs.MovementData;
+},
+
+/**
+ * @method getMovementCount
+ * @return {long}
+ */
+getMovementCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method addMovement
+ * @param {ccs.MovementData} arg0
+ */
+addMovement : function (
+movementdata 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.AnimationData}
+ */
+create : function (
+)
+{
+    return ccs.AnimationData;
+},
+
+/**
+ * @method AnimationData
+ * @constructor
+ */
+AnimationData : function (
 )
 {
 },
@@ -619,7 +755,7 @@ getColliderBodyList : function (
 
 /**
  * @method updateTransform
- * @param {cc.Mat4} arg0
+ * @param {mat4_object} arg0
  */
 updateTransform : function (
 mat4 
@@ -795,7 +931,7 @@ getDisplayRenderNode : function (
 
 /**
  * @method getAnchorPointInPoints
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getAnchorPointInPoints : function (
 )
@@ -889,7 +1025,7 @@ int
 
 /**
  * @method containPoint
-* @param {float|cc.Vec2} float
+* @param {float|vec2_object} float
 * @param {float} float
 * @return {bool|bool}
 */
@@ -969,7 +1105,7 @@ getCurrentDisplayIndex : function (
 
 /**
  * @method getAnchorPoint
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getAnchorPoint : function (
 )
@@ -1142,16 +1278,6 @@ updateColor : function (
 },
 
 /**
- * @method getName
- * @return {String}
- */
-getName : function (
-)
-{
-    return ;
-},
-
-/**
  * @method setTransformDirty
  * @param {bool} arg0
  */
@@ -1243,16 +1369,6 @@ getBlendFunc : function (
 )
 {
     return cc.BlendFunc;
-},
-
-/**
- * @method setName
- * @param {String} arg0
- */
-setName : function (
-str 
-)
-{
 },
 
 /**
@@ -1353,7 +1469,7 @@ armature
 
 /**
  * @method getNodeToArmatureTransform
- * @return {cc.Mat4}
+ * @return {mat4_object}
  */
 getNodeToArmatureTransform : function (
 )
@@ -1531,6 +1647,16 @@ float
 },
 
 /**
+ * @method getAnimationData
+ * @return {ccs.AnimationData}
+ */
+getAnimationData : function (
+)
+{
+    return ccs.AnimationData;
+},
+
+/**
  * @method playWithIndex
  * @param {int} arg0
  * @param {int} arg1
@@ -1552,6 +1678,16 @@ getCurrentMovementID : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setAnimationData
+ * @param {ccs.AnimationData} arg0
+ */
+setAnimationData : function (
+animationdata 
+)
+{
 },
 
 /**
@@ -1914,16 +2050,6 @@ getParentBone : function (
 },
 
 /**
- * @method setArmatureData
- * @param {ccs.ArmatureData} arg0
- */
-setArmatureData : function (
-armaturedata 
-)
-{
-},
-
-/**
  * @method removeBone
  * @param {ccs.Bone} arg0
  * @param {bool} arg1
@@ -1943,16 +2069,6 @@ getBatchNode : function (
 )
 {
     return ccs.BatchNode;
-},
-
-/**
- * @method getName
- * @return {String}
- */
-getName : function (
-)
-{
-    return ;
 },
 
 /**
@@ -2008,11 +2124,11 @@ getBlendFunc : function (
 },
 
 /**
- * @method setName
- * @param {String} arg0
+ * @method setArmatureData
+ * @param {ccs.ArmatureData} arg0
  */
-setName : function (
-str 
+setArmatureData : function (
+armaturedata 
 )
 {
 },
@@ -2131,7 +2247,7 @@ getBone : function (
 
 /**
  * @method getNodeToWorldTransformAR
- * @return {cc.Mat4}
+ * @return {mat4_object}
  */
 getNodeToWorldTransformAR : function (
 )
@@ -2784,6 +2900,16 @@ char
 ccs.GUIReader = {
 
 /**
+ * @method setFilePath
+ * @param {String} arg0
+ */
+setFilePath : function (
+str 
+)
+{
+},
+
+/**
  * @method widgetFromJsonFile
  * @param {char} arg0
  * @return {ccui.Widget}
@@ -2803,6 +2929,18 @@ getFilePath : function (
 )
 {
     return ;
+},
+
+/**
+ * @method widgetFromBinaryFile
+ * @param {char} arg0
+ * @return {ccui.Widget}
+ */
+widgetFromBinaryFile : function (
+char 
+)
+{
+    return ccui.Widget;
 },
 
 /**

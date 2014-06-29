@@ -31,6 +31,7 @@
 
 using namespace std;
 
+
 //#pragma mark - MinXmlHttpRequest
 
 /**
@@ -181,16 +182,21 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
     if (!response->isSucceed())
     {
         CCLOG("Response failed, error buffer: %s", response->getErrorBuffer());
+        if (statusCode == 0)
+        {
+            _errorFlag = true;
+            _status = 0;
+            _statusText.clear();
+            return;
+        }
     }
     
     // set header
     std::vector<char> *headers = response->getResponseHeader();
     
-    char* concatHeader = (char*) malloc(headers->size() + 1);
     std::string header(headers->begin(), headers->end());
-    strcpy(concatHeader, header.c_str());
     
-    std::istringstream stream(concatHeader);
+    std::istringstream stream(header);
     std::string line;
     while(std::getline(stream, line)) {
         _gotHeader(line);
@@ -198,26 +204,16 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
     
     /** get the response data **/
     std::vector<char> *buffer = response->getResponseData();
-    
-    if (statusCode == 200)
-    {
-        //Succeeded
-        _status = 200;
-        _readyState = DONE;
+
+    _status = statusCode;
+    _readyState = DONE;
         
-        _dataSize = static_cast<uint32_t>(buffer->size());
-        CC_SAFE_FREE(_data);
-        _data = (char*) malloc(_dataSize + 1);
-        _data[_dataSize] = '\0';
-        memcpy((void*)_data, (const void*)buffer->data(), _dataSize);
-    }
-    else
-    {
-        _status = 0;
-    }
-    // Free Memory.
-    free((void*) concatHeader);
-    
+    _dataSize = static_cast<uint32_t>(buffer->size());
+    CC_SAFE_FREE(_data);
+    _data = (char*) malloc(_dataSize + 1);
+    _data[_dataSize] = '\0';
+    memcpy((void*)_data, (const void*)buffer->data(), _dataSize);
+
     js_proxy_t * p;
     void* ptr = (void*)this;
     p = jsb_get_native_proxy(ptr);
@@ -254,15 +250,26 @@ void MinXmlHttpRequest::_sendRequest(JSContext *cx)
  *
  */
 MinXmlHttpRequest::MinXmlHttpRequest()
-: _onreadystateCallback(nullptr)
-, _isNetwork(true)
+: _url()
+, _cx(ScriptingCore::getInstance()->getGlobalContext())
+, _meth()
+, _type()
 , _data(nullptr)
+, _dataSize()
+, _onreadystateCallback(nullptr)
+, _readyState(UNSENT)
+, _status(0)
+, _statusText()
+, _responseType()
+, _timeout()
+, _isAsync()
+, _httpRequest(new cocos2d::network::HttpRequest())
+, _isNetwork(true)
+, _withCredentialsValue(true)
+, _errorFlag(false)
+, _httpHeader()
+, _requestHeader()
 {
-    _httpHeader.clear();
-    _requestHeader.clear();
-    _withCredentialsValue = true;
-    _cx = ScriptingCore::getInstance()->getGlobalContext();
-    _httpRequest = new cocos2d::network::HttpRequest();
 }
 
 /**
@@ -271,9 +278,6 @@ MinXmlHttpRequest::MinXmlHttpRequest()
  */
 MinXmlHttpRequest::~MinXmlHttpRequest()
 {
-    _httpHeader.clear();
-    _requestHeader.clear();
-
     if (_onreadystateCallback != NULL)
     {
         JS_RemoveObjectRoot(_cx, &_onreadystateCallback);
@@ -569,30 +573,42 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseText)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
 {
-    
-    if (_responseType == ResponseType::JSON)
+    if (_responseType == ResponseType::STRING)
     {
-        JS::RootedValue outVal(cx);
-        
-        jsval strVal = std_string_to_jsval(cx, _data);
-        if (JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(strVal)), _dataSize, &outVal))
+        return _js_get_responseText(cx, id, vp);
+    }
+    else
+    {
+        if (_readyState != DONE || _errorFlag)
         {
+            vp.set(JSVAL_NULL);
+            return true;
+        }
+        
+        if (_responseType == ResponseType::JSON)
+        {
+            JS::RootedValue outVal(cx);
+            
+            jsval strVal = std_string_to_jsval(cx, _data);
+            if (JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(strVal)), _dataSize, &outVal))
+            {
+                vp.set(outVal);
+                return true;
+            }
+        }
+        else if (_responseType == ResponseType::ARRAY_BUFFER)
+        {
+            JSObject* tmp = JS_NewArrayBuffer(cx, _dataSize);
+            uint8_t* tmpData = JS_GetArrayBufferData(tmp);
+            memcpy((void*)tmpData, (const void*)_data, _dataSize);
+            jsval outVal = OBJECT_TO_JSVAL(tmp);
+
             vp.set(outVal);
             return true;
         }
+        // by default, return text
+        return _js_get_responseText(cx, id, vp);
     }
-    else if (_responseType == ResponseType::ARRAY_BUFFER)
-    {
-        JSObject* tmp = JS_NewArrayBuffer(cx, _dataSize);
-        uint8_t* tmpData = JS_GetArrayBufferData(tmp);
-        memcpy((void*)tmpData, (const void*)_data, _dataSize);
-        jsval outVal = OBJECT_TO_JSVAL(tmp);
-
-        vp.set(outVal);
-        return true;
-    }
-    // by default, return text
-    return _js_get_responseText(cx, id, vp);
 }
 
 /**
@@ -628,20 +644,22 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
         {
             _responseType = ResponseType::JSON;
         }
-
-        if (_meth.compare("post") == 0 || _meth.compare("POST") == 0)
-        {
-            _httpRequest->setRequestType(cocos2d::network::HttpRequest::Type::POST);
-        }
-        else
-        {
-            _httpRequest->setRequestType(cocos2d::network::HttpRequest::Type::GET);
-        }
         
-        _httpRequest->setUrl(_url.c_str());
+        {
+            auto requestType =
+              (_meth.compare("get") == 0 || _meth.compare("GET") == 0) ? cocos2d::network::HttpRequest::Type::GET : (
+              (_meth.compare("post") == 0 || _meth.compare("POST") == 0) ? cocos2d::network::HttpRequest::Type::POST : (
+              (_meth.compare("put") == 0 || _meth.compare("PUT") == 0) ? cocos2d::network::HttpRequest::Type::PUT : (
+              (_meth.compare("delete") == 0 || _meth.compare("DELETE") == 0) ? cocos2d::network::HttpRequest::Type::DELETE : (
+                cocos2d::network::HttpRequest::Type::UNKNOWN))));
+
+            _httpRequest->setRequestType(requestType);
+            _httpRequest->setUrl(_url.c_str());
+        }
         
         _isNetwork = true;
         _readyState = OPENED;
+        _status = 0;
         
         return true;
     }
@@ -662,6 +680,8 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
     
     // Clean up header map. New request, new headers!
     _httpHeader.clear();
+
+    _errorFlag = false;
     
     if (argc == 1)
     {
@@ -674,7 +694,9 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
     }
 
 
-    if (data.length() > 0 && (_meth.compare("post") == 0 || _meth.compare("POST") == 0))
+    if (data.length() > 0 &&
+        (_meth.compare("post") == 0 || _meth.compare("POST") == 0 ||
+         _meth.compare("put") == 0 || _meth.compare("PUT") == 0))
     {
         _httpRequest->setRequestData(data.c_str(), static_cast<unsigned int>(data.length()));
     }

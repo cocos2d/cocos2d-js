@@ -436,11 +436,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onReloadScript:</string>
+						<string key="label">onRelaunch:</string>
 						<reference key="source" ref="531342050"/>
 						<reference key="destination" ref="316884524"/>
 					</object>
-					<string key="id">ar6-Pq-fmZ</string>
+					<string key="id">6tF-KC-dzr</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">

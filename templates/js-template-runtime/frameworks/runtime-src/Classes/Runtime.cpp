@@ -61,8 +61,9 @@ using namespace cocos2d;
 
 std::string g_resourcePath;
 static rapidjson::Document g_filecfgjson; 
-class ConnectWaitLayer;
-static ConnectWaitLayer* s_pConnectLayer;
+
+static string s_strFile;
+static std::mutex s_FileNameMutex;
 extern string getIPAddress();
 extern bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<std::string> &fileList);
 /*@brief   use "|" splite string  */
@@ -237,13 +238,9 @@ const char* getRuntimeVersion()
     return "1.1";
 }
 
-void hideRcvFile() {
-    s_pConnectLayer = nullptr;
-}
 
 bool startScript()
 {
-    hideRcvFile();
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     return ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
@@ -380,7 +377,7 @@ public:
             };
             _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, playSprite);
         }
-        
+        this->scheduleUpdate();
     }
 
     void playerCallback(Object* sender)
@@ -388,15 +385,15 @@ public:
         startScript();
     }
 
-    void showCurRcvFile(string fileName) {
-        _labelUploadFile->setString(fileName);
-    }
+
+    void update( float fDelta )  
+    {  
+        s_FileNameMutex.lock();
+        _labelUploadFile->setString(s_strFile);
+        s_FileNameMutex.unlock();
+    } 
 };
 
-void showCurRcvFile(string fileName) {
-    if (NULL == s_pConnectLayer) return;
-    s_pConnectLayer->showCurRcvFile(fileName);
-}
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <io.h>
@@ -628,7 +625,10 @@ bool FileServer::receiveFile(int fd)
         string file(fullfilename);
         file=replaceAll(file,"\\","/");
         sprintf(fullfilename, "%s", file.c_str());
-        showCurRcvFile(filename.c_str());
+
+        s_FileNameMutex.lock();
+        s_strFile = filename;
+        s_FileNameMutex.unlock();
         cocos2d::log("recv fullfilename = %s",fullfilename);
         CreateDir(file.substr(0,file.find_last_of("/")).c_str());
         FILE *fp =fopen(fullfilename, "wb");
@@ -1045,10 +1045,10 @@ bool startRuntime()
 
     readResFileFinfo();
     auto scene = Scene::create();
-    s_pConnectLayer = new ConnectWaitLayer();
-    s_pConnectLayer->autorelease();
+    auto connectLayer = new ConnectWaitLayer();
+    connectLayer->autorelease();
     auto director = Director::getInstance();
-    scene->addChild(s_pConnectLayer);
+    scene->addChild(connectLayer);
     director->runWithScene(scene);
     return true;
 }

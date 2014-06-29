@@ -50,7 +50,9 @@ var MenuLayerMainMenu = cc.Layer.extend({
         var item1 = cc.MenuItemSprite.create(spriteNormal, spriteSelected, spriteDisabled, this.onMenuCallback, this);
 
         // Image Item
-        var item2 = cc.MenuItemImage.create(s_sendScore, s_pressSendScore, this.onMenuCallback2, this);
+        var sendScoreSF = cc.SpriteFrame.create(s_sendScore, cc.rect(0, 0, 145, 26));
+        cc.spriteFrameCache.addSpriteFrame(sendScoreSF, "send_score_sf");
+        var item2 = cc.MenuItemImage.create("#send_score_sf", s_pressSendScore, this.onMenuCallback2, this);
 
         // Label Item (LabelAtlas)
         var labelAtlas = cc.LabelAtlas.create("0123456789", s_fpsImages, 16, 24, '.');

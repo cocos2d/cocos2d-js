@@ -24,7 +24,7 @@
 // cocos2d constants
 //
 
-cc.ENGINE_VERSION = "Cocos2d-JS-v3.0 alpha 2";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.0 rc0";
 
 cc.TARGET_PLATFORM = {
     WINDOWS:0,
@@ -121,15 +121,6 @@ cc.YELLOW = {r:255, g:255, b:0};
 cc.POINT_ZERO = {x:0, y:0};
 
 cc.PARTICLE_DEFAULT_CAPACITY = 500;
-
-// XXX: This definition is different than cocos2d-html5
-// cc.REPEAT_FOREVER = - 1;
-// We can't assign -1 to cc.REPEAT_FOREVER, since it will be a very big double value after
-// converting it to double by JS_ValueToNumber on android.
-// Then cast it to unsigned int, the value will be 0. The schedule will not be able to work.
-// I don't know why this occurs only on android.
-// So instead of passing -1 to it, I assign it with max value of unsigned int in c++.
-cc.REPEAT_FOREVER = 0xffffffff;
 
 cc.MENU_STATE_WAITING = 0;
 cc.MENU_STATE_TRACKING_TOUCH = 1;
@@ -272,8 +263,8 @@ cc.SCENE_RADIAL = 0xc001;               //CCTransitionProgress.js
 
 cc.KEY = {
     //android
-    back:8,
-    menu:4199,
+    back:6,
+    menu:15,
     //desktop
     backspace:7,
     tab:8,
@@ -495,7 +486,7 @@ cc.radiansToDegress = function (angle) {
  * @constant
  * @type Number
  */
-cc.REPEAT_FOREVER = Number.MAX_VALUE - 1;
+cc.REPEAT_FOREVER = 0xffffffff;
 
 /**
  * default gl blend src function. Compatible with premultiplied alpha images.
@@ -1412,6 +1403,19 @@ cc.base = function(me, opt_methodName, var_args) {
 };
 
 
+var ClassManager = {
+    id : (0|(Math.random()*998)),
+
+    instanceId : (0|(Math.random()*998)),
+
+    getNewID : function(){
+        return this.id++;
+    },
+
+    getNewInstanceId : function(){
+        return this.instanceId++;
+    }
+};
 //
 // 2) Using "extend" subclassing
 // Simple JavaScript Inheritance By John Resig http://ejohn.org/
@@ -1464,6 +1468,13 @@ cc.Class.extend = function (prop) {
             }
         }
     }
+
+    var classId = ClassManager.getNewID();
+    ClassManager[classId] = _super;
+    var desc = { writable: true, enumerable: false, configurable: true };
+    Class.id = classId;
+    desc.value = classId;
+    Object.defineProperty(prototype, '__pid', desc);
 
     // Populate our constructed prototype object
     Class.prototype = prototype;
@@ -1601,7 +1612,7 @@ var setInterval = function (code, delay) {
     var target = new WindowTimeFun(code);
     if (arguments.length > 2)
         target._args = Array.prototype.slice.call(arguments, 2);
-    cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, cc.REPEAT_FOREVER, 0, false);
+    cc.director.getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, cc.REPEAT_FOREVER, 0, false);
     _windowTimeFunHash[target._intervalId] = target;
     return target._intervalId;
 };
@@ -1692,7 +1703,7 @@ cc.eventManager.dispatchCustomEvent = function (eventName, optionalUserData) {
     var ev = new cc.EventCustom(eventName);
     ev.setUserData(optionalUserData);
     this.dispatchEvent(ev);
-}
+};
 
 cc.EventCustom.prototype.setUserData = function(userData) {
     this._userData = userData;
@@ -1746,8 +1757,6 @@ cc.Touch.prototype.getLocationY = function(){
     return this.getLocation().y;
 };
 
-cc.director = cc.Director.getInstance();
-
 cc.Director.EVENT_PROJECTION_CHANGED = "director_projection_changed";
 cc.Director.EVENT_AFTER_DRAW = "director_after_draw";
 cc.Director.EVENT_AFTER_VISIT = "director_after_visit";
@@ -1763,104 +1772,58 @@ cc.Director.prototype.runScene = function(scene){
 };
 
 cc.visibleRect = {
-    _topLeft:cc.p(0,0),
-    _topRight:cc.p(0,0),
-    _top:cc.p(0,0),
-    _bottomLeft:cc.p(0,0),
-    _bottomRight:cc.p(0,0),
-    _bottom:cc.p(0,0),
-    _center:cc.p(0,0),
-    _left:cc.p(0,0),
-    _right:cc.p(0,0),
-    _width:0,
-    _height:0,
-    _isInitialized: false,
+    topLeft:cc.p(0,0),
+    topRight:cc.p(0,0),
+    top:cc.p(0,0),
+    bottomLeft:cc.p(0,0),
+    bottomRight:cc.p(0,0),
+    bottom:cc.p(0,0),
+    center:cc.p(0,0),
+    left:cc.p(0,0),
+    right:cc.p(0,0),
+    width:0,
+    height:0,
+
     init:function(){
-
-        var director = cc.Director.getInstance();
-        var origin = director.getVisibleOrigin();
-        var size = director.getVisibleSize();
-
-        this._width = size.width;
-        this._height = size.height;
-
-        var w = this._width;
-        var h = this._height;
+        var origin = cc.director.getVisibleOrigin();
+        var size = cc.director.getVisibleSize();
+        var w = this.width = size.width;
+        var h = this.height = size.height;
+        var l = origin.x,
+            b = origin.y,
+            t = b + h,
+            r = l + w;
 
         //top
-        this._topLeft.y = h;
-        this._topRight.x = w;
-        this._topRight.y = h;
-        this._top.x = w/2;
-        this._top.y = h;
+        this.topLeft.x = l;
+        this.topLeft.y = t;
+        this.topRight.x = r;
+        this.topRight.y = t;
+        this.top.x = l + w/2;
+        this.top.y = t;
 
         //bottom
-        this._bottomRight.x = w;
-        this._bottom.x = w/2;
+        this.bottomLeft.x = l;
+        this.bottomLeft.y = b;
+        this.bottomRight.x = r;
+        this.bottomRight.y = b;
+        this.bottom.x = l + w/2;
+        this.bottom.y = b;
 
         //center
-        this._center.x = w/2;
-        this._center.y = h/2;
+        this.center.x = l + w/2;
+        this.center.y = b + h/2;
 
         //left
-        this._left.y = h/2;
+        this.left.x = l;
+        this.left.y = b + h/2;
 
         //right
-        this._right.x = w;
-        this._right.y = h/2;
-    },
-    lazyInit: function(){
-        if (!this._isInitialized) {
-            this.init();
-            this._isInitialized = true;
-        }
+        this.right.x = r;
+        this.right.y = b + h/2;
     }
 };
-
-cc.defineGetterSetter(cc.visibleRect, "width", function(){
-    this.lazyInit();
-    return this._width;
-});
-cc.defineGetterSetter(cc.visibleRect, "height", function(){
-    this.lazyInit();
-    return this._height;
-});
-cc.defineGetterSetter(cc.visibleRect, "topLeft", function(){
-    this.lazyInit();
-    return this._topLeft;
-});
-cc.defineGetterSetter(cc.visibleRect, "topRight", function(){
-    this.lazyInit();
-    return this._topRight;
-});
-cc.defineGetterSetter(cc.visibleRect, "top", function(){
-    this.lazyInit();
-    return this._top;
-});
-cc.defineGetterSetter(cc.visibleRect, "bottomLeft", function(){
-    this.lazyInit();
-    return this._bottomLeft;
-});
-cc.defineGetterSetter(cc.visibleRect, "bottomRight", function(){
-    this.lazyInit();
-    return this._bottomRight;
-});
-cc.defineGetterSetter(cc.visibleRect, "bottom", function(){
-    this.lazyInit();
-    return this._bottom;
-});
-cc.defineGetterSetter(cc.visibleRect, "center", function(){
-    this.lazyInit();
-    return this._center;
-});
-cc.defineGetterSetter(cc.visibleRect, "left", function(){
-    this.lazyInit();
-    return this._left;
-});
-cc.defineGetterSetter(cc.visibleRect, "right", function(){
-    this.lazyInit();
-    return this._right;
-});
+cc.visibleRect.init();
 
 // Predefined font definition
 cc.FontDefinition = function () {
@@ -2210,7 +2173,24 @@ var easeActions = {
     easeBounceInOut : 14,
     easeBackIn : 15,
     easeBackOut : 16,
-    easeBackInOut : 17
+    easeBackInOut : 17,
+
+    easeBezierAction : 18,
+    easeQuadraticActionIn : 19,
+    easeQuadraticActionOut : 20,
+    easeQuadraticActionInOut : 21,
+    easeQuarticActionIn : 22,
+    easeQuarticActionOut : 23,
+    easeQuarticActionInOut : 24,
+    easeQuinticActionIn : 25,
+    easeQuinticActionOut : 26,
+    easeQuinticActionInOut : 27,
+    easeCircleActionIn : 28,
+    easeCircleActionOut : 29,
+    easeCircleActionInOut : 30,
+    easeCubicActionIn : 31,
+    easeCubicActionOut : 32,
+    easeCubicActionInOut : 33
 };
 
 function templateEaseActions(actionTag) {
@@ -2270,7 +2250,9 @@ cc.targetedAction = cc.TargetedAction.create;
 cc.actionTween = cc.ActionTween.create;
 
 
+//
 //AffineTransform API
+//
 
 /**
  * @memberOf cc
@@ -2505,6 +2487,18 @@ cc.AffineTransformInvert = function (t) {
         tx: determinant * (t.c * t.ty - t.d * t.tx), ty: determinant * (t.b * t.tx - t.a * t.ty)};
 };
 
+
+//
+// Node API
+//
+
+cc.Node.prototype.setUserData = function (data) {
+    this.userData = data;
+};
+cc.Node.prototype.getUserData = function () {
+    return this.userData;
+};
+
 /** returns a "world" axis aligned bounding box of the node. <br/>
  * @return {cc.Rect}
  */
@@ -2535,7 +2529,7 @@ cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
     var contentSize = this.getContentSize();
     var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
     var matrix = this.getNodeToParentTransform();
-    var _trans = cc.AffineTransformMake(matrix[0], matrix[4], matrix[1], matrix[5], matrix[12], matrix[13]); 
+    var _trans = cc.AffineTransformMake(matrix[0], matrix[1], matrix[4], matrix[5], matrix[12], matrix[13]); 
     var trans = (parentTransform == null) ? _trans : cc.AffineTransformConcat(_trans, parentTransform);
     rect = cc.RectApplyAffineTransform(rect, trans);
 

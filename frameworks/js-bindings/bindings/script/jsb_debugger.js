@@ -187,12 +187,12 @@ this._prepareDebugger = function (global) {
     require = global.require;
     cc = global.cc;
 
-    require('debugger/DevToolsUtils.js', "debug");
-    require('debugger/core/promise.js', "debug");
-    require('debugger/transport.js', "debug");
-    require('debugger/actors/root.js', "debug");
-    require('debugger/actors/script.js', "debug");
-    require('debugger/main.js', "debug");
+    require('script/debugger/DevToolsUtils.js', "debug");
+    require('script/debugger/core/promise.js', "debug");
+    require('script/debugger/transport.js', "debug");
+    require('script/debugger/actors/root.js', "debug");
+    require('script/debugger/actors/script.js', "debug");
+    require('script/debugger/main.js', "debug");
 
     promise = exports;
     //DebuggerServer.addTestGlobal = function(aGlobal) {

@@ -87,31 +87,26 @@ var extensionsTestItemNames = [
         testScene:function () {
             runSocketIOTest();
         }
+    },
+    {
+        itemTitle:"CCPoolTest",
+        testScene:function () {
+            runCCPoolTest();
+        }
     }
 ];
 
 if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {
      extensionsTestItemNames.push({
-        itemTitle:"PluginXTest",
+        itemTitle:"PluginTest",
         testScene:function () {
-            var testScene = new PluginXTestScene();
+            var testScene = pluginXSceneManager.currentPluginXScene();
             if (testScene) {
                 cc.director.runScene(testScene);
             }
         }
     });
 }
-//if (cc.sys.os == cc.sys.OS_IOS) {
-//    extensionsTestItemNames.push({
-//        itemTitle:"IOSIAPTest",
-//        testScene:function () {
-//            var testScene = new IOSIAPTest();
-//            if (testScene) {
-//                cc.director.runScene(testScene);
-//            }
-//        }
-//    });
-//}
 
 if (cc.sys.isNative) {
     extensionsTestItemNames.push({

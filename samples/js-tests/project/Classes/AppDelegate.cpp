@@ -28,6 +28,10 @@
 #include "jsb_pluginx_extension_registration.h"
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "platform/android/CCJavascriptJavaBridge.h"
+#endif
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace CocosDenshion;
@@ -114,6 +118,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_pluginx_js_extensions);
 #endif
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
+#endif
     sc->start();
     
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
@@ -124,7 +131,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     
     ScriptingCore::getInstance()->runScript("main.js");
-
+    
     return true;
 }
 

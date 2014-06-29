@@ -458,7 +458,7 @@ void ScriptingCore::start()
     // for now just this
     createGlobalContext();
     
-    runScript("jsb_boot.js");
+    runScript("script/jsb_boot.js");
 }
 
 void ScriptingCore::addRegisterCallback(sc_register_sth callback) {
@@ -525,12 +525,6 @@ void ScriptingCore::createGlobalContext() {
     JS::ContextOptionsRef(_cx).setBaseline(true);
 
 //    JS_SetVersion(this->_cx, JSVERSION_LATEST);
-    
-    // Only disable METHODJIT on iOS.
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-//    JS_SetOptions(this->_cx, JS_GetOptions(this->_cx) & ~JSOPTION_METHODJIT);
-//    JS_SetOptions(this->_cx, JS_GetOptions(this->_cx) & ~JSOPTION_METHODJIT_ALWAYS);
-#endif
     
     JS_SetErrorReporter(this->_cx, ScriptingCore::reportError);
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
@@ -1553,7 +1547,7 @@ void ScriptingCore::enableDebugger()
         JS_DefineFunction(_cx, _debugGlobal, "_getEventLoopNestLevel", JSBDebug_getEventLoopNestLevel, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         
         
-        runScript("jsb_debugger.js", _debugGlobal);
+        runScript("script/jsb_debugger.js", _debugGlobal);
         
         // prepare the debugger
         jsval argv = OBJECT_TO_JSVAL(_global);

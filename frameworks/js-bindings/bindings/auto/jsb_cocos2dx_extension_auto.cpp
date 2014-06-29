@@ -7567,6 +7567,26 @@ bool js_cocos2dx_extension_EditBox_getText(JSContext *cx, uint32_t argc, jsval *
 	JS_ReportError(cx, "js_cocos2dx_extension_EditBox_getText : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
+bool js_cocos2dx_extension_EditBox_setFontSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::extension::EditBox* cobj = (cocos2d::extension::EditBox *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EditBox_setFontSize : Invalid Native Object");
+	if (argc == 1) {
+		int arg0;
+		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_EditBox_setFontSize : Error processing arguments");
+		cobj->setFontSize(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_extension_EditBox_setFontSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
 bool js_cocos2dx_extension_EditBox_setPlaceholderFontName(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -7622,6 +7642,26 @@ bool js_cocos2dx_extension_EditBox_setFontName(JSContext *cx, uint32_t argc, jsv
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_extension_EditBox_setFontName : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_extension_EditBox_setText(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::extension::EditBox* cobj = (cocos2d::extension::EditBox *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EditBox_setText : Invalid Native Object");
+	if (argc == 1) {
+		const char* arg0;
+		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_EditBox_setText : Error processing arguments");
+		cobj->setText(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_extension_EditBox_setText : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 bool js_cocos2dx_extension_EditBox_setPlaceholderFontSize(JSContext *cx, uint32_t argc, jsval *vp)
@@ -7724,26 +7764,6 @@ bool js_cocos2dx_extension_EditBox_setPlaceholderFont(JSContext *cx, uint32_t ar
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_extension_EditBox_setPlaceholderFont : wrong number of arguments: %d, was expecting %d", argc, 2);
-	return false;
-}
-bool js_cocos2dx_extension_EditBox_setFontSize(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::extension::EditBox* cobj = (cocos2d::extension::EditBox *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EditBox_setFontSize : Invalid Native Object");
-	if (argc == 1) {
-		int arg0;
-		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_EditBox_setFontSize : Error processing arguments");
-		cobj->setFontSize(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_extension_EditBox_setFontSize : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 bool js_cocos2dx_extension_EditBox_initWithSizeAndBackgroundSprite(JSContext *cx, uint32_t argc, jsval *vp)
@@ -7852,26 +7872,6 @@ bool js_cocos2dx_extension_EditBox_getMaxLength(JSContext *cx, uint32_t argc, js
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_extension_EditBox_getMaxLength : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-bool js_cocos2dx_extension_EditBox_setText(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::extension::EditBox* cobj = (cocos2d::extension::EditBox *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EditBox_setText : Invalid Native Object");
-	if (argc == 1) {
-		const char* arg0;
-		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_EditBox_setText : Error processing arguments");
-		cobj->setText(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_extension_EditBox_setText : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 bool js_cocos2dx_extension_EditBox_setMaxLength(JSContext *cx, uint32_t argc, jsval *vp)
@@ -8081,22 +8081,22 @@ void js_register_cocos2dx_extension_EditBox(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getText", js_cocos2dx_extension_EditBox_getText, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getString", js_cocos2dx_extension_EditBox_getText, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setFontSize", js_cocos2dx_extension_EditBox_setFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setPlaceholderFontName", js_cocos2dx_extension_EditBox_setPlaceholderFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getPlaceHolder", js_cocos2dx_extension_EditBox_getPlaceHolder, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setFontName", js_cocos2dx_extension_EditBox_setFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setString", js_cocos2dx_extension_EditBox_setText, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setPlaceholderFontSize", js_cocos2dx_extension_EditBox_setPlaceholderFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setInputMode", js_cocos2dx_extension_EditBox_setInputMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setPlaceholderFontColor", js_cocos2dx_extension_EditBox_setPlaceholderFontColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setFontColor", js_cocos2dx_extension_EditBox_setFontColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setPlaceholderFont", js_cocos2dx_extension_EditBox_setPlaceholderFont, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setFontSize", js_cocos2dx_extension_EditBox_setFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("initWithSizeAndBackgroundSprite", js_cocos2dx_extension_EditBox_initWithSizeAndBackgroundSprite, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setPlaceHolder", js_cocos2dx_extension_EditBox_setPlaceHolder, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setReturnType", js_cocos2dx_extension_EditBox_setReturnType, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setInputFlag", js_cocos2dx_extension_EditBox_setInputFlag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getMaxLength", js_cocos2dx_extension_EditBox_getMaxLength, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setText", js_cocos2dx_extension_EditBox_setText, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setMaxLength", js_cocos2dx_extension_EditBox_setMaxLength, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setFont", js_cocos2dx_extension_EditBox_setFont, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -8138,40 +8138,6 @@ void js_register_cocos2dx_extension_EditBox(JSContext *cx, JSObject *global) {
 JSClass  *jsb_cocos2d_extension_EventAssetsManager_class;
 JSObject *jsb_cocos2d_extension_EventAssetsManager_prototype;
 
-bool js_cocos2dx_extension_EventAssetsManager_getAssetId(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::extension::EventAssetsManager* cobj = (cocos2d::extension::EventAssetsManager *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getAssetId : Invalid Native Object");
-	if (argc == 0) {
-		std::string ret = cobj->getAssetId();
-		jsval jsret = JSVAL_NULL;
-		jsret = std_string_to_jsval(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getAssetId : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-bool js_cocos2dx_extension_EventAssetsManager_getMessage(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::extension::EventAssetsManager* cobj = (cocos2d::extension::EventAssetsManager *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getMessage : Invalid Native Object");
-	if (argc == 0) {
-		std::string ret = cobj->getMessage();
-		jsval jsret = JSVAL_NULL;
-		jsret = std_string_to_jsval(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getMessage : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
 bool js_cocos2dx_extension_EventAssetsManager_getAssetsManager(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -8196,21 +8162,89 @@ bool js_cocos2dx_extension_EventAssetsManager_getAssetsManager(JSContext *cx, ui
 	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getAssetsManager : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_cocos2dx_extension_EventAssetsManager_getPercent(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_extension_EventAssetsManager_getAssetId(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::extension::EventAssetsManager* cobj = (cocos2d::extension::EventAssetsManager *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getPercent : Invalid Native Object");
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getAssetId : Invalid Native Object");
 	if (argc == 0) {
-		double ret = cobj->getPercent();
+		std::string ret = cobj->getAssetId();
+		jsval jsret = JSVAL_NULL;
+		jsret = std_string_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getAssetId : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+bool js_cocos2dx_extension_EventAssetsManager_getCURLECode(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::extension::EventAssetsManager* cobj = (cocos2d::extension::EventAssetsManager *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getCURLECode : Invalid Native Object");
+	if (argc == 0) {
+		int ret = cobj->getCURLECode();
+		jsval jsret = JSVAL_NULL;
+		jsret = int32_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getCURLECode : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+bool js_cocos2dx_extension_EventAssetsManager_getMessage(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::extension::EventAssetsManager* cobj = (cocos2d::extension::EventAssetsManager *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getMessage : Invalid Native Object");
+	if (argc == 0) {
+		std::string ret = cobj->getMessage();
+		jsval jsret = JSVAL_NULL;
+		jsret = std_string_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getMessage : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+bool js_cocos2dx_extension_EventAssetsManager_getCURLMCode(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::extension::EventAssetsManager* cobj = (cocos2d::extension::EventAssetsManager *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getCURLMCode : Invalid Native Object");
+	if (argc == 0) {
+		int ret = cobj->getCURLMCode();
+		jsval jsret = JSVAL_NULL;
+		jsret = int32_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getCURLMCode : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+bool js_cocos2dx_extension_EventAssetsManager_getPercentByFile(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::extension::EventAssetsManager* cobj = (cocos2d::extension::EventAssetsManager *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getPercentByFile : Invalid Native Object");
+	if (argc == 0) {
+		double ret = cobj->getPercentByFile();
 		jsval jsret = JSVAL_NULL;
 		jsret = DOUBLE_TO_JSVAL(ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getPercent : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getPercentByFile : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_cocos2dx_extension_EventAssetsManager_getEventCode(JSContext *cx, uint32_t argc, jsval *vp)
@@ -8228,6 +8262,23 @@ bool js_cocos2dx_extension_EventAssetsManager_getEventCode(JSContext *cx, uint32
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getEventCode : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+bool js_cocos2dx_extension_EventAssetsManager_getPercent(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::extension::EventAssetsManager* cobj = (cocos2d::extension::EventAssetsManager *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getPercent : Invalid Native Object");
+	if (argc == 0) {
+		double ret = cobj->getPercent();
+		jsval jsret = JSVAL_NULL;
+		jsret = DOUBLE_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getPercent : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 
@@ -8256,11 +8307,14 @@ void js_register_cocos2dx_extension_EventAssetsManager(JSContext *cx, JSObject *
 	};
 
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getAssetId", js_cocos2dx_extension_EventAssetsManager_getAssetId, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getMessage", js_cocos2dx_extension_EventAssetsManager_getMessage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getAssetsManager", js_cocos2dx_extension_EventAssetsManager_getAssetsManager, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getPercent", js_cocos2dx_extension_EventAssetsManager_getPercent, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getAssetId", js_cocos2dx_extension_EventAssetsManager_getAssetId, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getCURLECode", js_cocos2dx_extension_EventAssetsManager_getCURLECode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getMessage", js_cocos2dx_extension_EventAssetsManager_getMessage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getCURLMCode", js_cocos2dx_extension_EventAssetsManager_getCURLMCode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getPercentByFile", js_cocos2dx_extension_EventAssetsManager_getPercentByFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getEventCode", js_cocos2dx_extension_EventAssetsManager_getEventCode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getPercent", js_cocos2dx_extension_EventAssetsManager_getPercent, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -8297,28 +8351,6 @@ void js_register_cocos2dx_extension_EventAssetsManager(JSContext *cx, JSObject *
 JSClass  *jsb_cocos2d_extension_Manifest_class;
 JSObject *jsb_cocos2d_extension_Manifest_prototype;
 
-bool js_cocos2dx_extension_Manifest_getAsset(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::extension::Manifest* cobj = (cocos2d::extension::Manifest *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_Manifest_getAsset : Invalid Native Object");
-	if (argc == 1) {
-		std::string arg0;
-		ok &= jsval_to_std_string(cx, argv[0], &arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_Manifest_getAsset : Error processing arguments");
-		const cocos2d::extension::Manifest::Asset& ret = cobj->getAsset(arg0);
-		jsval jsret = JSVAL_NULL;
-		#pragma warning NO CONVERSION FROM NATIVE FOR Asset;
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_extension_Manifest_getAsset : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
 bool js_cocos2dx_extension_Manifest_getManifestFileUrl(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -8446,7 +8478,6 @@ void js_register_cocos2dx_extension_Manifest(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getAsset", js_cocos2dx_extension_Manifest_getAsset, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getManifestFileUrl", js_cocos2dx_extension_Manifest_getManifestFileUrl, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isVersionLoaded", js_cocos2dx_extension_Manifest_isVersionLoaded, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isLoaded", js_cocos2dx_extension_Manifest_isLoaded, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -8462,7 +8493,7 @@ void js_register_cocos2dx_extension_Manifest(JSContext *cx, JSObject *global) {
 		cx, global,
 		NULL, // parent proto
 		jsb_cocos2d_extension_Manifest_class,
-		dummy_constructor<cocos2d::extension::Manifest>, 0, // no constructor
+		empty_constructor, 0,
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -8601,6 +8632,21 @@ bool js_cocos2dx_extension_AssetsManager_getRemoteManifest(JSContext *cx, uint32
 	JS_ReportError(cx, "js_cocos2dx_extension_AssetsManager_getRemoteManifest : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
+bool js_cocos2dx_extension_AssetsManager_downloadFailedAssets(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::extension::AssetsManager* cobj = (cocos2d::extension::AssetsManager *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_AssetsManager_downloadFailedAssets : Invalid Native Object");
+	if (argc == 0) {
+		cobj->downloadFailedAssets();
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_extension_AssetsManager_downloadFailedAssets : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
 bool js_cocos2dx_extension_AssetsManager_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -8690,6 +8736,7 @@ void js_register_cocos2dx_extension_AssetsManager(JSContext *cx, JSObject *globa
 		JS_FN("update", js_cocos2dx_extension_AssetsManager_update, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getLocalManifest", js_cocos2dx_extension_AssetsManager_getLocalManifest, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getRemoteManifest", js_cocos2dx_extension_AssetsManager_getRemoteManifest, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("downloadFailedAssets", js_cocos2dx_extension_AssetsManager_downloadFailedAssets, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 

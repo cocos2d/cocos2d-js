@@ -14,7 +14,7 @@ Furthermore, javascript friendly API makes your game development experience a br
 - API Reference: [Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0beta/index.html)
 
 - And you can download it from
-[Cocos2d-html5_v3.0_beta_API_Doc.zip](http://cdn.cocos2d-x.org/Cocos2d-html5_v3.0_beta_API_Doc.zip)
+[Cocos2d-JS-v3.0-beta-API.zip](http://www.cocos2d-x.org/filedown/Cocos2d-JS-v3.0-beta-API.zip)
 
 ## Online demo
 - [MoonWarriors](http://www.cocos2d-x.org/MoonWarriors/index.html)
@@ -57,7 +57,7 @@ And if you have any doubt about the usage, please use `-h` with any command to h
 
 You can also use prebuilt Xcode or Visual Studio project which is located in `Game/frameworks/runtime-src/proj.xxx`
 
-##Folder structure
+##Folder structure of new project
 
 - frameworks
     - cocos2d-html5     : Cocos2d-JS html5 engine source
@@ -123,8 +123,15 @@ And they share the same project file which located in `build` folder, there are 
    * OpenGL ES 2.0 (mobile) / OpenGL 2.1 (desktop) based
    * Full WebGL support and auto canvas fallback
    
-## Documentation
-- [Getting Started with Cocos2d-JS](http://cocos2d-x.org/wiki/Getting_Started_Cocos2d-JS)
+## Documentations
 
+- [Getting Started with Cocos2d-JS](http://www.cocos2d-x.org/docs/manual/framework/html5/en)
 
-   
+##Github note
+
+If you fork our github repository or download the package from github, you will need to do some extra tasks:
+
+- Run `frameworks/js-bindings/cocos2d-x/download-deps.py` to download external dependencies for Cocos2d-x
+- Run `tools/cocos2d-console/download-bin.py` to download bin files for some cocos2d-console plugins like Google Closure Compiler, JSC Compiler.
+
+Otherwise, you will fail to compile your JSB projects.
