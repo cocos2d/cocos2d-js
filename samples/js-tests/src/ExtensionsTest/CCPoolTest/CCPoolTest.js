@@ -61,6 +61,13 @@ var CCPoolTest = cc.Layer.extend({
         this.addChild(this.directLabel);
         this.addChild(this.poolLabel);
         this.addChild(menu, 100);
+
+        // Back Menu
+        var itemBack = cc.MenuItemFont.create("Back", this.toExtensionsMainLayer, this);
+        itemBack.setPosition(cc.p(winSize.width - 50, 25));
+        var menuBack = cc.Menu.create(itemBack);
+        menuBack.setPosition(cc.p(0, 0));
+        this.addChild(menuBack);
     },
     setDirectLabel: function (time) {
         if (time == 0) {
@@ -124,6 +131,10 @@ var CCPoolTest = cc.Layer.extend({
         obj.EndTime = Date.now();
         obj.DeltaTime = obj.EndTime - obj.startTime;
         return obj.DeltaTime;
+    },
+    toExtensionsMainLayer: function (sender) {
+        var scene = new ExtensionsTestScene();
+        scene.runThisTest();
     }
 });
 
