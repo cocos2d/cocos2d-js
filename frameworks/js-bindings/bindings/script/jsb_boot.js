@@ -978,40 +978,6 @@ cc._initSys = function(config, CONFIG_KEY){
      * @type Boolean
      */
     locSys.isNative = true;
-    locSys.isMobile = __getPlatform() == "mobile";
-    locSys.language = (function(){
-        var language = cc.Application.getInstance().getCurrentLanguage();
-        switch(language){
-            case 0: return locSys.LANGUAGE_ENGLISH;
-            case 1: return locSys.LANGUAGE_CHINESE;
-            case 2: return locSys.LANGUAGE_FRENCH;
-            case 3: return locSys.LANGUAGE_ITALIAN;
-            case 4: return locSys.LANGUAGE_GERMAN;
-            case 5: return locSys.LANGUAGE_SPANISH;
-            case 6: return locSys.LANGUAGE_RUSSIAN;
-            case 7: return locSys.LANGUAGE_KOREAN;
-            case 8: return locSys.LANGUAGE_JAPANESE;
-            case 9: return locSys.LANGUAGE_HUNGARIAN;
-            case 10: return locSys.LANGUAGE_PORTUGUESE;
-            case 11: return locSys.LANGUAGE_ARABIC;
-            case 12: return locSys.LANGUAGE_NORWEGIAN;
-            case 13: return locSys.LANGUAGE_POLISH;
-            default : return locSys.LANGUAGE_ENGLISH;
-        }
-    })();
-
-    /** The type of browser */
-    locSys.browserType = null;//null in jsb
-
-    var capabilities = locSys.capabilities = {"opengl":true};
-    if( locSys.isMobile ) {
-        capabilities["accelerometer"] = true;
-        capabilities["touches"] = true;
-    } else {
-        // desktop
-        capabilities["keyboard"] = true;
-        capabilities["mouse"] = true;
-    }
 
     /** Get the os of system */
     locSys.os = __getOS();
@@ -1040,6 +1006,47 @@ cc._initSys = function(config, CONFIG_KEY){
         str += "capabilities : " + JSON.stringify(self.capabilities) + "\r\n";
         str += "os : " + self.os + "\r\n";
         cc.log(str);
+    }
+
+    locSys.isMobile = (locSys.os == locSys.OS_ANDROID || locSys.os == locSys.OS_IOS) ? true : false;
+
+    locSys.language = (function(){
+        var language = cc.Application.getInstance().getCurrentLanguage();
+        switch(language){
+            case 0: return locSys.LANGUAGE_ENGLISH;
+            case 1: return locSys.LANGUAGE_CHINESE;
+            case 2: return locSys.LANGUAGE_FRENCH;
+            case 3: return locSys.LANGUAGE_ITALIAN;
+            case 4: return locSys.LANGUAGE_GERMAN;
+            case 5: return locSys.LANGUAGE_SPANISH;
+            case 6: return locSys.LANGUAGE_RUSSIAN;
+            case 7: return locSys.LANGUAGE_KOREAN;
+            case 8: return locSys.LANGUAGE_JAPANESE;
+            case 9: return locSys.LANGUAGE_HUNGARIAN;
+            case 10: return locSys.LANGUAGE_PORTUGUESE;
+            case 11: return locSys.LANGUAGE_ARABIC;
+            case 12: return locSys.LANGUAGE_NORWEGIAN;
+            case 13: return locSys.LANGUAGE_POLISH;
+            default : return locSys.LANGUAGE_ENGLISH;
+        }
+    })();
+
+    /** The type of browser */
+    locSys.browserType = null;//null in jsb
+
+    var capabilities = locSys.capabilities = {"opengl":true};
+    cc.log("ISMOBILE : " + locSys.isMobile);
+    if( locSys.isMobile ) {
+        capabilities["accelerometer"] = true;
+        capabilities["touches"] = true;
+    } else {
+        // desktop
+        capabilities["keyboard"] = true;
+        capabilities["mouse"] = true;
+    }
+
+    if(locSys.os == locSys.OS_OSX) {
+        capabilities["touches"] = true;
     }
 };
 
