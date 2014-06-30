@@ -26,7 +26,7 @@
 var UITextFieldTest = UIScene.extend({
     init: function () {
         if (this._super()) {
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("No Event");
             this._bottomDisplayLabel.setString("TextField");
@@ -51,14 +51,14 @@ var UITextFieldTest = UIScene.extend({
         switch (type) {
             case ccui.TextField.EVENT_ATTACH_WITH_ME:
                 var textField = sender;
-                var widgetSize = this._widget.getSize();
+                var widgetSize = this._widget.getContentSize();
                 textField.runAction(cc.MoveTo.create(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME");
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_ME:
                 var textField = sender;
-                var widgetSize = this._widget.getSize();
+                var widgetSize = this._widget.getContentSize();
                 textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
                 this._topDisplayLabel.setString("detach with IME");
                 break;
@@ -77,7 +77,7 @@ var UITextFieldTest = UIScene.extend({
 var UITextFieldTest_MaxLength = UIScene.extend({
     init: function () {
         if (this._super()) {
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("No Event");
             this._bottomDisplayLabel.setString("TextField max length");
@@ -128,7 +128,7 @@ var UITextFieldTest_MaxLength = UIScene.extend({
 var UITextFieldTest_Password = UIScene.extend({
     init: function () {
         if (this._super()) {
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("No Event");
             this._bottomDisplayLabel.setString("TextField max length");

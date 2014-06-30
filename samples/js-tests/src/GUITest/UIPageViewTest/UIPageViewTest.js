@@ -26,7 +26,7 @@
 var UIPageViewTest = UIScene.extend({
     init: function () {
         if (this._super()) {
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("Move by horizontal direction");
             this._topDisplayLabel.x = widgetSize.width / 2.0;
@@ -40,20 +40,20 @@ var UIPageViewTest = UIScene.extend({
             // Create the page view
             var pageView = ccui.PageView.create();
             pageView.setTouchEnabled(true);
-            pageView.setSize(cc.size(240, 130));
+            pageView.setContentSize(cc.size(240, 130));
             pageView.x = (widgetSize.width - background.width) / 2 + (background.width - pageView.width) / 2;
             pageView.y = (widgetSize.height - background.height) / 2 + (background.height - pageView.height) / 2;
 
             for (var i = 0; i < 3; ++i) {
                 var layout = ccui.Layout.create();
-                layout.setSize(cc.size(240, 130));
-                var layoutRect = layout.getSize();
+                layout.setContentSize(cc.size(240, 130));
+                var layoutRect = layout.getContentSize();
 
                 var imageView = ccui.ImageView.create();
                 imageView.setTouchEnabled(true);
                 imageView.setScale9Enabled(true);
                 imageView.loadTexture("res/cocosui/scrollviewbg.png");
-                imageView.setSize(cc.size(240, 130));
+                imageView.setContentSize(cc.size(240, 130));
                 imageView.x = layoutRect.width / 2;
                 imageView.y = layoutRect.height / 2;
                 layout.addChild(imageView);

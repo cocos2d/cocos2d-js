@@ -26,7 +26,7 @@
 var UIWidgetAddNodeTest = UIScene.extend({
     init: function () {
         if (this._super()) {
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("NodeContainer");
