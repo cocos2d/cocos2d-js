@@ -37,7 +37,8 @@ var LoaderTestLayer = BaseTestLayer.extend({
 
         var winSize = cc.winSize;
         cc.loader.load(s_helloWorld, function(results){
-            cc.log(s_helloWorld + "--->", results[0]);
+            cc.log(s_helloWorld + "--->");
+            cc.log(results[0]);
             var bg = cc.Sprite.create(s_helloWorld);
             self.addChild(bg);
             bg.x = winSize.width/2;
@@ -45,8 +46,10 @@ var LoaderTestLayer = BaseTestLayer.extend({
         });
 
         cc.loader.load([s_Cowboy_plist, s_Cowboy_png], function(results){
-            cc.log(s_Cowboy_plist + "--->", results[0]);
-            cc.log(s_Cowboy_png + "--->", results[1]);
+            cc.log(s_Cowboy_plist + "--->");
+            cc.log(results[0]);
+            cc.log(s_Cowboy_png + "--->");
+            cc.log(results[1]);
             cc.spriteFrameCache.addSpriteFrames(s_Cowboy_plist);
             var frame = cc.Sprite.create("#testAnimationResource/1.png")
             self.addChild(frame);
