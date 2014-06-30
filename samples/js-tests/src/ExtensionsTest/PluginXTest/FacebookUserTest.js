@@ -76,7 +76,7 @@ var FacebookUserTest = PluginXTest.extend({
         this._agentManager.logout();
     },
     getUidClick: function (sender) {
-        if (this._isLogin == false) {
+        if (!this._agentManager.isLogined()) {
             this.result.setString("please Login first");
             return;
         }
@@ -84,7 +84,7 @@ var FacebookUserTest = PluginXTest.extend({
         this.result.setString(uid);
     },
     getTokenClick: function (sender) {
-        if (this._isLogin == false) {
+        if (!this._agentManager.isLogined()) {
             this.result.setString("please Login first");
             return;
         }

@@ -50,7 +50,7 @@ var UILabelTest = UIScene.extend({
 var UILabelTest_LineWrap = UIScene.extend({
     init: function () {
         if (this._super()) {
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.string = "";
             this._bottomDisplayLabel.string = "Label line wrap";
