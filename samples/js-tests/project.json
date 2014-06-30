@@ -12,20 +12,13 @@
 
         "common": {
             "user": "facebook",
-            "share": "facebook",
-            "iap": "facebook",
-            "social": "facebook",
-            "ads": "facebook"
+            "share": "facebook"
         },
 
         "facebook": {
-            "appId" : "472437549567003",
+            "appId" : "1426774790893461",
             "xfbml" : true,
             "version" : "v2.0"
-        },
-
-        "qzone": {
-            "appId": 0
         }
     },
 
