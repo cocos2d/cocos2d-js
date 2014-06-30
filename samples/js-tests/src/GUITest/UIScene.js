@@ -62,7 +62,7 @@ UIScene = cc.Layer.extend({
             right_button.addTouchEventListener(this.nextCallback ,this);
 
             //add topDisplayLabel
-            var widgetSize = widget.getSize();
+            var widgetSize = widget.getContentSize();
             var topDisplayText = ccui.Text.create();
             topDisplayText.attr({
 	            string: "",

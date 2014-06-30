@@ -51,7 +51,7 @@ plugin.onApplicationWillEnterForeground = function() {
 };
 
 var loadAnalyticsPlugin = function() {
-    var langType = cc.Application.getInstance().getCurrentLanguage();
+    var langType = cc.sys.language;//cc.Application.getInstance().getCurrentLanguage();
 
     var umengKey  = "";
     var flurryKey = "";
@@ -115,11 +115,11 @@ var s_EventMenuItem = [
 var AnalyticsTestLayer = PluginXTest.extend({
 
     _title:"Plugin-x Test",
-    _subtitle: cc.LANGUAGE_CHINESE == cc.Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry",
+    _subtitle: cc.LANGUAGE_CHINESE == cc.sys.language ? "umeng" : "flurry",//cc.Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry",
 
     onEnter: function() {
         this._super();
-        var size = cc.Director.getInstance().getWinSize();
+        var size = cc.director.getWinSize();
 
         loadAnalyticsPlugin();
 
