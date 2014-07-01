@@ -978,7 +978,38 @@ cc._initSys = function(config, CONFIG_KEY){
      * @type Boolean
      */
     locSys.isNative = true;
-    locSys.isMobile = __getPlatform() == "mobile";
+
+    /** Get the os of system */
+    locSys.os = __getOS();
+
+    // Forces the garbage collector
+    locSys.garbageCollect = function() {
+        __jsc__.garbageCollect();
+    };
+
+    // Dumps rooted objects
+    locSys.dumpRoot = function() {
+        __jsc__.dumpRoot();
+    };
+
+    // restarts the JS VM
+    locSys.restartVM = function() {
+        __restartVM();
+    };
+
+    locSys.dump = function(){
+        var self = this;
+        var str = "";
+        str += "isMobile : " + self.isMobile + "\r\n";
+        str += "language : " + self.language + "\r\n";
+        str += "browserType : " + self.browserType + "\r\n";
+        str += "capabilities : " + JSON.stringify(self.capabilities) + "\r\n";
+        str += "os : " + self.os + "\r\n";
+        cc.log(str);
+    }
+
+    locSys.isMobile = (locSys.os == locSys.OS_ANDROID || locSys.os == locSys.OS_IOS) ? true : false;
+
     locSys.language = (function(){
         var language = cc.Application.getInstance().getCurrentLanguage();
         switch(language){
@@ -1011,35 +1042,6 @@ cc._initSys = function(config, CONFIG_KEY){
         // desktop
         capabilities["keyboard"] = true;
         capabilities["mouse"] = true;
-    }
-
-    /** Get the os of system */
-    locSys.os = __getOS();
-
-    // Forces the garbage collector
-    locSys.garbageCollect = function() {
-        __jsc__.garbageCollect();
-    };
-
-    // Dumps rooted objects
-    locSys.dumpRoot = function() {
-        __jsc__.dumpRoot();
-    };
-
-    // restarts the JS VM
-    locSys.restartVM = function() {
-        __restartVM();
-    };
-
-    locSys.dump = function(){
-        var self = this;
-        var str = "";
-        str += "isMobile : " + self.isMobile + "\r\n";
-        str += "language : " + self.language + "\r\n";
-        str += "browserType : " + self.browserType + "\r\n";
-        str += "capabilities : " + JSON.stringify(self.capabilities) + "\r\n";
-        str += "os : " + self.os + "\r\n";
-        cc.log(str);
     }
 };
 
