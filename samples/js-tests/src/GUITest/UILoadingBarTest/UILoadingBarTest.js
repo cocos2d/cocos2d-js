@@ -32,7 +32,7 @@ var UILoadingBarTest = UIScene.extend({
     },
     init: function () {
         if (this._super()) {
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("LoadingBar");
@@ -74,7 +74,7 @@ var UILoadingBarTest = UIScene.extend({
 
 var UILoadingBarTest_Left = UILoadingBarTest.extend({
     createLoadingBar: function () {
-        var widgetSize = this._widget.getSize();
+        var widgetSize = this._widget.getContentSize();
         var loadingBar = ccui.LoadingBar.create();
         loadingBar.setName("LoadingBar");
         loadingBar.loadTexture("res/cocosui/sliderProgress.png");
@@ -88,7 +88,7 @@ var UILoadingBarTest_Left = UILoadingBarTest.extend({
 
 var UILoadingBarTest_Right = UILoadingBarTest.extend({
     createLoadingBar: function () {
-        var widgetSize = this._widget.getSize();
+        var widgetSize = this._widget.getContentSize();
         var loadingBar = ccui.LoadingBar.create();
         loadingBar.setName("LoadingBar");
         loadingBar.loadTexture("res/cocosui/sliderProgress.png");
@@ -103,13 +103,13 @@ var UILoadingBarTest_Right = UILoadingBarTest.extend({
 
 var UILoadingBarTest_Left_Scale9 = UILoadingBarTest.extend({
     createLoadingBar: function () {
-        var widgetSize = this._widget.getSize();
+        var widgetSize = this._widget.getContentSize();
         var loadingBar = ccui.LoadingBar.create();
         loadingBar.setName("LoadingBar");
         loadingBar.setScale9Enabled(true);
         loadingBar.loadTexture("res/cocosui/slider_bar_active_9patch.png");
         loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
-        loadingBar.setSize(cc.size(300, 30));
+        loadingBar.setContentSize(cc.size(300, 30));
         loadingBar.setPercent(0);
         loadingBar.x = widgetSize.width / 2;
         loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
@@ -120,13 +120,13 @@ var UILoadingBarTest_Left_Scale9 = UILoadingBarTest.extend({
 
 var UILoadingBarTest_Right_Scale9 = UILoadingBarTest.extend({
     createLoadingBar: function () {
-        var widgetSize = this._widget.getSize();
+        var widgetSize = this._widget.getContentSize();
         var loadingBar = ccui.LoadingBar.create();
         loadingBar.setName("LoadingBar");
         loadingBar.setScale9Enabled(true);
         loadingBar.loadTexture("res/cocosui/slider_bar_active_9patch.png");
         loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
-        loadingBar.setSize(cc.size(300, 30));
+        loadingBar.setContentSize(cc.size(300, 30));
         loadingBar.setDirection(ccui.LoadingBar.TYPE_RIGHT);
         loadingBar.setPercent(0);
         loadingBar.x = widgetSize.width / 2;

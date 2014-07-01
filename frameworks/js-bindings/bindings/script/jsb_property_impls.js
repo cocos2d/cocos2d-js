@@ -238,10 +238,10 @@ _forceExtend(ccui.Widget.prototype, {
     },
 
     _getWidth: function() {
-        return this.getSize().width;
+        return this.getContentSize().width;
     },
     _getHeight: function() {
-        return this.getSize().height;
+        return this.getContentSize().height;
     },
     _getWidthPercent: function() {
         return this.getSizePercent().width;
@@ -251,12 +251,12 @@ _forceExtend(ccui.Widget.prototype, {
     },
 
     _setWidth: function(w) {
-        var size = cc.size(w, this.getSize().height);
-        this.isIgnoreContentAdaptWithSize() ? this.setContentSize(size) : this.setSize(size);
+        var size = cc.size(w, this.getContentSize().height);
+        this.setContentSize(size);
     },
     _setHeight: function(h) {
-        var size = cc.size(this.getSize().width, h);
-        this.isIgnoreContentAdaptWithSize() ? this.setContentSize(size) : this.setSize(size);
+        var size = cc.size(this.getContentSize().width, h);
+        this.setContentSize(size);
     },
     _setWidthPercent: function(w) {
         var size = cc.size(w, this.getSizePercent().height);

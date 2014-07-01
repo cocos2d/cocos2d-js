@@ -8230,6 +8230,23 @@ bool js_cocos2dx_extension_EventAssetsManager_getCURLMCode(JSContext *cx, uint32
 	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getCURLMCode : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
+bool js_cocos2dx_extension_EventAssetsManager_getPercentByFile(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::extension::EventAssetsManager* cobj = (cocos2d::extension::EventAssetsManager *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventAssetsManager_getPercentByFile : Invalid Native Object");
+	if (argc == 0) {
+		double ret = cobj->getPercentByFile();
+		jsval jsret = JSVAL_NULL;
+		jsret = DOUBLE_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getPercentByFile : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
 bool js_cocos2dx_extension_EventAssetsManager_getEventCode(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -8295,6 +8312,7 @@ void js_register_cocos2dx_extension_EventAssetsManager(JSContext *cx, JSObject *
 		JS_FN("getCURLECode", js_cocos2dx_extension_EventAssetsManager_getCURLECode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getMessage", js_cocos2dx_extension_EventAssetsManager_getMessage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getCURLMCode", js_cocos2dx_extension_EventAssetsManager_getCURLMCode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getPercentByFile", js_cocos2dx_extension_EventAssetsManager_getPercentByFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getEventCode", js_cocos2dx_extension_EventAssetsManager_getEventCode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getPercent", js_cocos2dx_extension_EventAssetsManager_getPercent, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END

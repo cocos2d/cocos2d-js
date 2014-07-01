@@ -8,6 +8,20 @@
 
     "modules"       : ["cocos2d", "extensions", "external"],
 
+    "plugin": {
+
+        "common": {
+            "user": "facebook",
+            "share": "facebook"
+        },
+
+        "facebook": {
+            "appId" : "1426774790893461",
+            "xfbml" : true,
+            "version" : "v2.0"
+        }
+    },
+
     "jsList"        : [
         "src/BaseTestLayer/BaseTestLayer.js",
 
@@ -90,12 +104,17 @@
         "src/ExtensionsTest/CocosBuilderTest/ScrollViewTest/ScrollViewTestLayer.js",
         "src/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.js",
         "src/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.js",
+        "src/ExtensionsTest/CCPoolTest/CCPoolTest.js",
         "src/ExtensionsTest/EditBoxTest/EditBoxTest.js",
         "src/ExtensionsTest/S9SpriteTest/S9SpriteTest.js",
         "src/ExtensionsTest/NetworkTest/WebSocketTest.js",
         "src/ExtensionsTest/NetworkTest/SocketIOTest.js",
         "src/ExtensionsTest/PluginXTest/PluginXTest.js",
+        "src/ExtensionsTest/PluginXTest/PluginXTestsManager.js",
         "src/ExtensionsTest/PluginXTest/IOSIAPTest.js",
+        "src/ExtensionsTest/PluginXTest/FacebookShareTest.js",
+        "src/ExtensionsTest/PluginXTest/FacebookUserTest.js",
+        "src/ExtensionsTest/PluginXTest/AnalyticsTest.js",
         "src/CocoStudioTest/ArmatureTest/ArmatureTest.js",
         "src/CocoStudioTest/ComponentsTest/ComponentsTestScene.js",
         "src/CocoStudioTest/ComponentsTest/EnemyController.js",

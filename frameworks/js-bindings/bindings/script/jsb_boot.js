@@ -583,8 +583,34 @@ cc.defineGetterSetter(cc.loader, "audioPath", function(){
 //+++++++++++++++++++++++Define singleton objects begin+++++++++++++++++++++++++++
 
 // Define singleton objects
+/**
+ * @type {Object}
+ * @name cc.director
+ * <p>
+ *    cc.director is a singleton of DisplayLinkDirector type director.<br/>
+ *    Since the cc.director is a singleton, you don't need to call any constructor or create functions,<br/>
+ *    the standard way to use it is by calling:<br/>
+ *      - cc.director.methodName(); <br/>
+ *
+ *    It creates and handle the main Window and manages how and when to execute the Scenes.
+ * </p>
+ * <p>
+ *   With DisplayLinkDirector functionality, cc.director synchronizes timers with the refresh rate of the display.<br/>
+ *   Features and Limitations:<br/>
+ *      - Scheduled timers & drawing are synchronizes with the refresh rate of the display<br/>
+ *      - Only supports animation intervals of 1/60 1/30 & 1/15<br/>
+ * </p>
+ */
 cc.director = cc.Director.getInstance();
+/**
+ * @type {Object} cc.winSize is the alias object for the size of the current game window.
+ * @name cc.winSize
+ */
 cc.winSize = cc.director.getWinSize();
+/**
+ * @type {Object} cc.view is the shared view object.
+ * @name cc.view
+ */
 cc.view = cc.director.getOpenGLView();
 cc.view.getDevicePixelRatio = function () {
     var sys = cc.sys;
@@ -617,12 +643,35 @@ cc.view.setContentTranslateLeftTop = function(){return;};
 cc.view.getContentTranslateLeftTop = function(){return null;};
 cc.view.setFrameZoomFactor = function(){return;};
 
+/**
+ * @type {Object}
+ * @name cc.eventManager
+ * <p>
+ *  This class manages event listener subscriptions and event dispatching.                                      <br/>
+ *                                                                                                              <br/>
+ *  The EventListener list is managed in such a way that event listeners can be added and removed even          <br/>
+ *  from within an EventListener, while events are being dispatched.
+ * </p>
+ */
 cc.eventManager = cc.director.getEventDispatcher();
+/**
+ * @type {Object} A simple Audio Engine engine API.
+ * @name cc.audioEngine
+ */
 cc.audioEngine = cc.AudioEngine.getInstance();
 cc.audioEngine.end = function(){
-    cc.AudioEngine.end();
+    this.stopMusic();
+    this.stopAllEffects();
 };
+/**
+ * @type {Object} cc.configuration contains some openGL variables
+ * @name cc.configuration
+ */
 cc.configuration = cc.Configuration.getInstance();
+/**
+ * @type {Object} cc.textureCache is the global cache for cc.Texture2D
+ * @name cc.textureCache
+ */
 cc.textureCache = cc.director.getTextureCache();
 cc.textureCache._addImage = cc.textureCache.addImage;
 cc.textureCache.addImage = function(url, cb, target) {
@@ -633,17 +682,51 @@ cc.textureCache.addImage = function(url, cb, target) {
     else
         return this._addImage(url);
 };
+/**
+ * @type {Object} cc.shaderCache is a singleton object that stores manages GL shaders
+ * @name cc.shaderCache
+ */
 cc.shaderCache = cc.ShaderCache.getInstance();
+/**
+ * @type {Object}
+ * @name cc.animationCache
+ * <p>
+ *     cc.animationCache is a singleton that manages the Animations.<br/>
+ *     It saves in a cache the animations. You should use this class if you want to save your animations in a cache.<br/>
+ * <br/>
+ * example<br/>
+ * cc.animationCache.addAnimation(animation,"animation1");<br/>
+ * </p>
+ */
 cc.animationCache = cc.AnimationCache.getInstance();
+/**
+ * @type {Object}
+ * @name cc.spriteFrameCache
+ * <p>
+ * cc.spriteFrameCache is a singleton that handles the loading of the sprite frames. It saves in a cache the sprite frames.<br/>
+ * <br/>
+ * example<br/>
+ * // add SpriteFrames to spriteFrameCache With File<br/>
+ * cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);<br/>
+ * </p>
+ */
 cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
-//cc.saxParser
+/**
+ * @type {Object} A Plist Parser
+ * @name cc.plistParser
+ */
 cc.plistParser = cc.PlistParser.getInstance();
 //cc.tiffReader;
 //cc.imeDispatcher;
 
-// File utils (only in JSB)
+// File utils (Temporary, won't be accessible)
 cc.fileUtils = cc.FileUtils.getInstance();
 
+/**
+ * @type {Object} The fullscreen API provides an easy way for web content to be presented using the user's entire screen.
+ * It's invalid on safari,QQbrowser and android browser
+ * @name cc.screen
+ */
 cc.screen = {
     init: function() {},
     fullScreen: function() {
@@ -660,39 +743,84 @@ cc.screen = {
     }
 };
 
-cc.reflection = {
-    callStaticMethod : function(){
-        cc.log("not supported on current platform");
-    }
-};
-
 // GUI
+/**
+ * @type {Object}
+ * UI Helper
+ */
 ccui.helper = ccui.Helper;
 
 // In extension
+/**
+ * @type {Object} Base object for ccs.uiReader
+ * @name ccs.uiReader
+ */
 ccs.uiReader = ccs.GUIReader.getInstance();
+/**
+ * @type {Object} Format and manage armature configuration and armature animation
+ * @name ccs.armatureDataManager
+ */
 ccs.armatureDataManager = ccs.ArmatureDataManager.getInstance();
+/**
+ * @type {Object} Base singleton object for ccs.ActionManager
+ * @name ccs.actionManager
+ */
 ccs.actionManager = ccs.ActionManager.getInstance();
+/**
+ * @type {Object} Base singleton object for ccs.sceneReader
+ * @name ccs.sceneReader
+ */
 ccs.sceneReader = ccs.SceneReader.getInstance();
-//ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
-//ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
-
 ccs.sceneReader.clear = ccs.uiReader.clear = ccs.actionManager.clear = ccs.armatureDataManager.clear = function() {};
 ccs.sceneReader.version = function() {
     return ccs.SceneReader.sceneReaderVersion();
 };
+
+//ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
+//ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
 
 //+++++++++++++++++++++++Define singleton objects end+++++++++++++++++++++++++++
 
 
 //+++++++++++++++++++++++++Redefine JSB only APIs+++++++++++++++++++++++++++
 
+/**
+ * @namespace jsb
+ * @name jsb
+ */
 var jsb = jsb || {};
+/**
+ * @type {Object}
+ * @name jsb.fileUtils
+ * jsb.fileUtils is the native file utils singleton object,
+ * please refer to Cocos2d-x API to know how to use it.
+ * Only available in JSB
+ */
 jsb.fileUtils = cc.fileUtils;
 delete cc.FileUtils;
 delete cc.fileUtils;
+/**
+ * @type {Object}
+ * @name jsb.AssetsManager
+ * jsb.AssetsManager is the native AssetsManager for your game resources or scripts.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
+ * Only available in JSB
+ */
 jsb.AssetsManager = cc.AssetsManager;
 delete cc.AssetsManager;
+
+/**
+ * @type {Object}
+ * @name jsb.reflection
+ * jsb.reflection is a bridge to let you invoke Java static functions.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/reflection/en
+ * Only available on Android platform
+ */
+jsb.reflection = {
+    callStaticMethod : function(){
+        cc.log("not supported on current platform");
+    }
+};
 
 //+++++++++++++++++++++++++Redefine JSB only APIs+++++++++++++++++++++++++++++
 
@@ -945,6 +1073,8 @@ cc._initDebugSetting = function (mode) {
 //+++++++++++++++++++++++++something about CCGame begin+++++++++++++++++++++++++++
 
 /**
+ * @type {Object}
+ * @name cc.game
  * An object to boot the game.
  */
 cc.game = {
