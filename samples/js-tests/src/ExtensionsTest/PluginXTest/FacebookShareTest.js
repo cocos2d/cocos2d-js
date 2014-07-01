@@ -92,7 +92,7 @@ var FacebookShareTest = PluginXTest.extend({
 
     onSharePhoto : function(){
 
-        var img = this.screenshot();
+        var img = this.screenshot("facebookshare.jpg");
 
         var delay = cc.DelayTime.create(2);
         var share = cc.CallFunc.create(function(){
@@ -138,7 +138,7 @@ var FacebookShareTest = PluginXTest.extend({
     },
 
     onPhotoMsg : function(){
-        var img = this.screenshot();
+        var img = this.screenshot("facebookmessage.jpg");
 
         var delay = cc.DelayTime.create(2);
         var share = cc.CallFunc.create(function(){
@@ -176,7 +176,7 @@ var FacebookShareTest = PluginXTest.extend({
         director.runScene(s);
     },
 
-    screenshot:function(){
+    screenshot:function(fileName){
         var tex = cc.RenderTexture.create(winSize.width, winSize.height,cc.Texture2D.PIXEL_FORMAT_RGBA8888);
         tex.setPosition(cc.p(winSize.width / 2, winSize.height / 2));
         tex.begin();
@@ -187,12 +187,11 @@ var FacebookShareTest = PluginXTest.extend({
         if (imgPath.length == 0) {
             return;
         }
-        var imgName = "facebookmessage.jpg";
-        var result = tex.saveToFile(imgName,  cc.IMAGE_FORMAT_JPEG);
+        var result = tex.saveToFile(fileName,  cc.IMAGE_FORMAT_JPEG);
         if (result) {
-            imgPath += imgName;
+            imgPath += fileName;
             cc.log("save image:"+imgPath);
-            return imageName;
+            return imgPath;
         }
         return "";
     }
