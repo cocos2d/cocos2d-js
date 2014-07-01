@@ -22,32 +22,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-/****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
-
- http://www.cocos2d-x.org
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
-
 TAG_SETSERVERMODE = 0;
 TAG_GETPRODUCTLIST = 1;
 TAG_PAYMENT = 2;
@@ -67,12 +41,8 @@ var s_IAPResultItem = [
     {name: "[ ]", tag: TAG_GETPRODUCTLIST_RESULT},
     {name: "didn't call payFunction yet", tag: TAG_PAYMENT_RESULT}
 ];
-var IAPTestLayer = cc.Layer.extend({
+var IAPTestLayer = PluginXTest.extend({
     _serverMode: false,
-    ctor: function () {
-        this._super();
-        cc.associateWithNative(this, cc.Layer);
-    },
     onEnter: function () {
         this._super();
         this.addCloseBtn();
@@ -232,18 +202,5 @@ var IAPTestLayer = cc.Layer.extend({
     onExit: function () {
         this._super();
         this.toastLayer.release();
-    }
-});
-
-var IOSIAPTest = cc.Scene.extend({
-    ctor: function () {
-        this._super();
-        cc.associateWithNative(this, cc.Scene);
-    },
-
-    onEnter: function () {
-        this._super();
-        var layer = new IAPTestLayer();
-        this.addChild(layer);
     }
 });

@@ -31,7 +31,7 @@ var UIRichTextTest = UIScene.extend({
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
 
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             var button = ccui.Button.create();
             button.setTouchEnabled(true);
             button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
@@ -44,7 +44,7 @@ var UIRichTextTest = UIScene.extend({
             // RichText
             var richText = ccui.RichText.create();
             richText.ignoreContentAdaptWithSize(false);
-            richText.setSize(cc.size(120, 100));
+            richText.setContentSize(cc.size(120, 100));
 
             var re1 = ccui.RichElementText.create(1, cc.color.WHITE, 255, "This color is white. ", "Helvetica", 10);
             var re2 = ccui.RichElementText.create(2, cc.color.YELLOW, 255, "And this is yellow. ", "Helvetica", 10);
@@ -81,7 +81,7 @@ var UIRichTextTest = UIScene.extend({
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setSize(cc.size(120, 100));
+                this._richText.setContentSize(cc.size(120, 100));
             }
             else {
                 this._richText.ignoreContentAdaptWithSize(true);

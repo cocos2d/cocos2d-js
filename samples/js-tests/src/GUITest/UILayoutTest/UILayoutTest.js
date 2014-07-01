@@ -30,7 +30,7 @@ var UILayoutTestBase = UIScene.extend({
     button_scale9: null,
     init: function () {
         if (this._super()) {
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString(this.getText());
@@ -41,8 +41,8 @@ var UILayoutTestBase = UIScene.extend({
 
             // Create the layout
             this.layout = this.createLayout();
-            var  layoutRect = this.layout.getSize();
-            var backgroundRect = background.getSize();
+            var  layoutRect = this.layout.getContentSize();
+            var backgroundRect = background.getContentSize();
             this.layout.x = (widgetSize.width - backgroundRect.width) / 2 + (backgroundRect.width - layoutRect.width) / 2;
 	        this.layout.y = (widgetSize.height - backgroundRect.height) / 2 + (backgroundRect.height - layoutRect.height) / 2;
             this._mainNode.addChild(this.layout);
@@ -82,7 +82,7 @@ var UILayoutTestBase = UIScene.extend({
     },
     createLayout: function () {
         var layout = ccui.Layout.create();
-        layout.setSize(cc.size(280, 150));
+        layout.setContentSize(cc.size(280, 150));
         return layout;
     },
     setLayoutParameter: function () {
@@ -92,7 +92,7 @@ var UILayoutTestBase = UIScene.extend({
 var UILayoutTest = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
-        layout.setSize(cc.size(280, 150));
+        layout.setContentSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -104,7 +104,7 @@ var UILayoutTest_Color = UILayoutTestBase.extend({
         var layout = ccui.Layout.create();
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
         layout.setBackGroundColor(cc.color(128, 128, 128));
-        layout.setSize(cc.size(280, 150));
+        layout.setContentSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -116,7 +116,7 @@ var UILayoutTest_Gradient = UILayoutTestBase.extend({
         var layout = ccui.Layout.create();
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_GRADIENT);
         layout.setBackGroundColor(cc.color(64, 64, 64), cc.color(192, 192, 192));
-        layout.setSize(cc.size(280, 150));
+        layout.setContentSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -128,7 +128,7 @@ var UILayoutTest_BackGroundImage = UILayoutTestBase.extend({
         var layout = ccui.Layout.create();
         layout.setClippingEnabled(true);
         layout.setBackGroundImage("res/cocosui/Hello.png");
-        layout.setSize(cc.size(280, 150));
+        layout.setContentSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -141,7 +141,7 @@ var UILayoutTest_BackGroundImage_Scale9 = UILayoutTestBase.extend({
         var layout = ccui.Layout.create();
         layout.setBackGroundImageScale9Enabled(true);
         layout.setBackGroundImage("res/cocosui/green_edit.png");
-        layout.setSize(cc.size(280, 150));
+        layout.setContentSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -152,7 +152,7 @@ var UILayoutTest_Layout_Linear_Vertical = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
         layout.setLayoutType(ccui.Layout.LINEAR_VERTICAL);
-        layout.setSize(cc.size(280, 150));
+        layout.setContentSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -180,7 +180,7 @@ var UILayoutTest_Layout_Linear_Horizontal = UILayoutTestBase.extend({
         var layout = ccui.Layout.create();
         layout.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
         layout.setClippingEnabled(true);
-        layout.setSize(cc.size(280, 150));
+        layout.setContentSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -208,7 +208,7 @@ var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
         layout.setLayoutType(ccui.Layout.RELATIVE);
-        layout.setSize(cc.size(280, 150));
+        layout.setContentSize(cc.size(280, 150));
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
         layout.setBackGroundColor(cc.color.GREEN);
         return layout;
