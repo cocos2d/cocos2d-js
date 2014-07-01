@@ -50,7 +50,7 @@ var TileDemoProps = {
             cc.eventManager.addListener({
                 event: cc.EventListener.MOUSE,
                 onMouseMove: function(event){
-                    if(event.getButton() != undefined){
+                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT){
                         var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
                         node.x += event.getDeltaX();
                         node.y += event.getDeltaY();

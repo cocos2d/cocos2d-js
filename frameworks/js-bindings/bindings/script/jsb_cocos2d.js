@@ -1757,12 +1757,16 @@ cc.EventListenerMouse.prototype.clone = function() {
     return ret;
 };
 cc.EventListenerMouse.prototype.onMouseMove = function(event) {
+    if (!this._onMouseMove)
+        return;
     event._listener = this;
     this._onMouseMove(event);
     this._previousX = event.getLocationX();
     this._previousY = event.getLocationY();
 };
 cc.EventListenerMouse.prototype.onMouseDown = function(event) {
+    if (!this._onMouseDown)
+        return;
     event._listener = this;
     this._previousX = event.getLocationX();
     this._previousY = event.getLocationY();

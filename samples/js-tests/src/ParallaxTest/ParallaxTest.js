@@ -177,7 +177,7 @@ Parallax2 = ParallaxDemo.extend({
             cc.eventManager.addListener({
                 event: cc.EventListener.MOUSE,
                 onMouseMove: function(event){
-                    if(event.getButton() != undefined){
+                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT){
                         var node = event.getCurrentTarget().getChildByTag(TAG_NODE);
                         node.x += event.getDeltaX();
                         node.y += event.getDeltaY();
