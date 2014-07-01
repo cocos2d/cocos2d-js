@@ -1035,7 +1035,6 @@ cc._initSys = function(config, CONFIG_KEY){
     locSys.browserType = null;//null in jsb
 
     var capabilities = locSys.capabilities = {"opengl":true};
-    cc.log("ISMOBILE : " + locSys.isMobile);
     if( locSys.isMobile ) {
         capabilities["accelerometer"] = true;
         capabilities["touches"] = true;
@@ -1043,10 +1042,6 @@ cc._initSys = function(config, CONFIG_KEY){
         // desktop
         capabilities["keyboard"] = true;
         capabilities["mouse"] = true;
-    }
-
-    if(locSys.os == locSys.OS_OSX) {
-        capabilities["touches"] = true;
     }
 };
 
