@@ -8956,21 +8956,24 @@ bool js_cocos2dx_EventMouse_getMouseButton(JSContext *cx, uint32_t argc, jsval *
 	JS_ReportError(cx, "js_cocos2dx_EventMouse_getMouseButton : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_cocos2dx_EventMouse_getScrollY(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_EventMouse_setMouseButton(JSContext *cx, uint32_t argc, jsval *vp)
 {
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::EventMouse* cobj = (cocos2d::EventMouse *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EventMouse_getScrollY : Invalid Native Object");
-	if (argc == 0) {
-		double ret = cobj->getScrollY();
-		jsval jsret = JSVAL_NULL;
-		jsret = DOUBLE_TO_JSVAL(ret);
-		JS_SET_RVAL(cx, vp, jsret);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EventMouse_setMouseButton : Invalid Native Object");
+	if (argc == 1) {
+		int arg0;
+		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventMouse_setMouseButton : Error processing arguments");
+		cobj->setMouseButton(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_cocos2dx_EventMouse_getScrollY : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_cocos2dx_EventMouse_setMouseButton : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 bool js_cocos2dx_EventMouse_setScrollData(JSContext *cx, uint32_t argc, jsval *vp)
@@ -9012,24 +9015,38 @@ bool js_cocos2dx_EventMouse_getCursorY(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_cocos2dx_EventMouse_getCursorY : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_cocos2dx_EventMouse_setMouseButton(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_EventMouse_getCursorX(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::EventMouse* cobj = (cocos2d::EventMouse *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EventMouse_setMouseButton : Invalid Native Object");
-	if (argc == 1) {
-		int arg0;
-		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventMouse_setMouseButton : Error processing arguments");
-		cobj->setMouseButton(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EventMouse_getCursorX : Invalid Native Object");
+	if (argc == 0) {
+		double ret = cobj->getCursorX();
+		jsval jsret = JSVAL_NULL;
+		jsret = DOUBLE_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_cocos2dx_EventMouse_setMouseButton : wrong number of arguments: %d, was expecting %d", argc, 1);
+	JS_ReportError(cx, "js_cocos2dx_EventMouse_getCursorX : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+bool js_cocos2dx_EventMouse_getScrollY(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::EventMouse* cobj = (cocos2d::EventMouse *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EventMouse_getScrollY : Invalid Native Object");
+	if (argc == 0) {
+		double ret = cobj->getScrollY();
+		jsval jsret = JSVAL_NULL;
+		jsret = DOUBLE_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_EventMouse_getScrollY : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_cocos2dx_EventMouse_setCursorPosition(JSContext *cx, uint32_t argc, jsval *vp)
@@ -9069,23 +9086,6 @@ bool js_cocos2dx_EventMouse_getScrollX(JSContext *cx, uint32_t argc, jsval *vp)
 	}
 
 	JS_ReportError(cx, "js_cocos2dx_EventMouse_getScrollX : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-bool js_cocos2dx_EventMouse_getCursorX(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::EventMouse* cobj = (cocos2d::EventMouse *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EventMouse_getCursorX : Invalid Native Object");
-	if (argc == 0) {
-		double ret = cobj->getCursorX();
-		jsval jsret = JSVAL_NULL;
-		jsret = DOUBLE_TO_JSVAL(ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_cocos2dx_EventMouse_getCursorX : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_cocos2dx_EventMouse_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -9143,14 +9143,14 @@ void js_register_cocos2dx_EventMouse(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getMouseButton", js_cocos2dx_EventMouse_getMouseButton, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getScrollY", js_cocos2dx_EventMouse_getScrollY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getButton", js_cocos2dx_EventMouse_getMouseButton, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setButton", js_cocos2dx_EventMouse_setMouseButton, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setScrollData", js_cocos2dx_EventMouse_setScrollData, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getLocationY", js_cocos2dx_EventMouse_getCursorY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setMouseButton", js_cocos2dx_EventMouse_setMouseButton, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getLocationX", js_cocos2dx_EventMouse_getCursorX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getScrollY", js_cocos2dx_EventMouse_getScrollY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setLocation", js_cocos2dx_EventMouse_setCursorPosition, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getScrollX", js_cocos2dx_EventMouse_getScrollX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getLocationX", js_cocos2dx_EventMouse_getCursorX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -9187,26 +9187,6 @@ void js_register_cocos2dx_EventMouse(JSContext *cx, JSObject *global) {
 JSClass  *jsb_cocos2d_EventListenerMouse_class;
 JSObject *jsb_cocos2d_EventListenerMouse_prototype;
 
-bool js_cocos2dx_EventListenerMouse_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	if (argc == 0) {
-		cocos2d::EventListenerMouse* ret = cocos2d::EventListenerMouse::create();
-		jsval jsret = JSVAL_NULL;
-		do {
-		if (ret) {
-			js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::EventListenerMouse>(cx, (cocos2d::EventListenerMouse*)ret);
-			jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-		} else {
-			jsret = JSVAL_NULL;
-		}
-	} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-	JS_ReportError(cx, "js_cocos2dx_EventListenerMouse_create : wrong number of arguments");
-	return false;
-}
-
 
 extern JSObject *jsb_cocos2d_EventListener_prototype;
 
@@ -9236,10 +9216,7 @@ void js_register_cocos2dx_EventListenerMouse(JSContext *cx, JSObject *global) {
         JS_FS_END
 	};
 
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("create", js_cocos2dx_EventListenerMouse_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
+	JSFunctionSpec *st_funcs = NULL;
 
 	jsb_cocos2d_EventListenerMouse_prototype = JS_InitClass(
 		cx, global,
