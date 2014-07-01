@@ -1674,7 +1674,10 @@ cc.EventListener.create = function(argObj){
     }
 
     for(var key in argObj) {
-        listener[key] = argObj[key];
+        // Temporary fix for EventMouse to support getDelta functions (doesn't exist in Cocos2d-x)
+        if (key == "onMouseDown" || key == "onMouseMove")
+            listener["_" + key] = argObj[key];
+        else listener[key] = argObj[key];
     }
 
     return listener;
@@ -1745,8 +1748,58 @@ cc.EventListenerKeyboard.prototype.clone = function() {
     return ret;
 };
 
+cc.EventListenerMouse.prototype.clone = function() {
+    var ret = cc.EventListenerMouse.create();
+    ret._onMouseDown = this._onMouseDown;
+    ret._onMouseMove = this._onMouseMove;
+    ret.onMouseUp = this.onMouseUp;
+    ret.onMouseScroll = this.onMouseScroll;
+    return ret;
+};
+cc.EventListenerMouse.prototype.onMouseMove = function(event) {
+    event._listener = this;
+    this._onMouseMove(event);
+    this._previousX = event.getLocationX();
+    this._previousY = event.getLocationY();
+};
+cc.EventListenerMouse.prototype.onMouseDown = function(event) {
+    event._listener = this;
+    this._previousX = event.getLocationX();
+    this._previousY = event.getLocationY();
+    this._onMouseDown(event);
+};
+
 cc.EventMouse.prototype.getLocation = function(){
     return { x: this.getLocationX(), y: this.getLocationY() };
+};
+
+cc.EventMouse.prototype.getLocationInView = function() {
+    return {x: this.getLocationX(), y: cc.view.getDesignResolutionSize().height - this.getLocationY()};
+};
+
+// Temporary fix for EventMouse to support getDelta functions (doesn't exist in Cocos2d-x)
+cc.EventMouse.prototype.getDelta = function(){
+    if (isNaN(this._listener._previousX)) {
+        this._listener._previousX = this.getLocationX();
+        this._listener._previousY = this.getLocationY();
+    }
+    return { x: this.getLocationX() - this._listener._previousX, y: this.getLocationY() - this._listener._previousY };
+};
+
+cc.EventMouse.prototype.getDeltaX = function(){
+    if (isNaN(this._listener._previousX)) {
+        this._listener._previousX = this.getLocationX();
+        this._listener._previousY = this.getLocationY();
+    }
+    return this.getLocationX() - this._listener._previousX;
+};
+
+cc.EventMouse.prototype.getDeltaY = function(){
+    if (isNaN(this._listener._previousX)) {
+        this._listener._previousX = this.getLocationX();
+        this._listener._previousY = this.getLocationY();
+    }
+    return this.getLocationY() - this._listener._previousY;
 };
 
 cc.Touch.prototype.getLocationX = function(){
