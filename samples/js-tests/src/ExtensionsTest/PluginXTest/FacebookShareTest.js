@@ -92,28 +92,13 @@ var FacebookShareTest = PluginXTest.extend({
 
     onSharePhoto : function(){
 
-        var tex = cc.RenderTexture.create(winSize.width, winSize.height,cc.Texture2D.PIXEL_FORMAT_RGBA8888);
-        tex.setPosition(cc.p(winSize.width / 2, winSize.height / 2));
-        tex.begin();
-        cc.director.getRunningScene().visit();
-        tex.end();
-
-        var imgPath = jsb.fileUtils.getWritablePath();
-        if (imgPath.length == 0) {
-            return;
-        }
-        var imgName = "facebookshare.jpg";
-        var result = tex.saveToFile(imgName,  cc.IMAGE_FORMAT_JPEG);
-        if (result) {
-            imgPath += imgName;
-            cc.log("save image:"+imgPath);
-        }
+        var img = this.screenshot();
 
         var delay = cc.DelayTime.create(2);
         var share = cc.CallFunc.create(function(){
             var map = {
                 "dialog" : "share_photo",
-                "photo" : imgPath
+                "photo" : img
             };
             plugin.AgentManager.getInstance().dialog(map, function(resultcode, msg) {
                 cc.log(msg);
@@ -153,13 +138,20 @@ var FacebookShareTest = PluginXTest.extend({
     },
 
     onPhotoMsg : function(){
-        var map = {
-            "dialog" : "message_photo",
-            "photo" : "http://files.cocos2d-x.org/images/orgsite/logo.png"
-        };
-        this._agentManager.dialog(map, function(resultcode, msg) {
-            cc.log(msg);
+        var img = this.screenshot();
+
+        var delay = cc.DelayTime.create(2);
+        var share = cc.CallFunc.create(function(){
+            var map = {
+                "dialog" : "message_photo",
+                "photo" : img
+            };
+            plugin.AgentManager.getInstance().dialog(map, function(resultcode, msg) {
+                cc.log(msg);
+            });
         });
+        var seq = cc.Sequence.create(delay, share);
+        this.runAction(seq);
     },
 
     onRequest : function(){
@@ -182,5 +174,26 @@ var FacebookShareTest = PluginXTest.extend({
         var s = new PluginXTestScene();
         s.addChild(new PluginXTestLayer());
         director.runScene(s);
+    },
+
+    screenshot:function(){
+        var tex = cc.RenderTexture.create(winSize.width, winSize.height,cc.Texture2D.PIXEL_FORMAT_RGBA8888);
+        tex.setPosition(cc.p(winSize.width / 2, winSize.height / 2));
+        tex.begin();
+        cc.director.getRunningScene().visit();
+        tex.end();
+
+        var imgPath = jsb.fileUtils.getWritablePath();
+        if (imgPath.length == 0) {
+            return;
+        }
+        var imgName = "facebookmessage.jpg";
+        var result = tex.saveToFile(imgName,  cc.IMAGE_FORMAT_JPEG);
+        if (result) {
+            imgPath += imgName;
+            cc.log("save image:"+imgPath);
+            return imageName;
+        }
+        return "";
     }
 });
