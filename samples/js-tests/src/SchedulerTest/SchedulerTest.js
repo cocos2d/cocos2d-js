@@ -563,8 +563,8 @@ var nextSchedulerTest = function () {
     schedulerTestSceneIdx++;
     schedulerTestSceneIdx = schedulerTestSceneIdx % arrayOfSchedulerTest.length;
 
-    if(window.sidebar){
-        schedulerTestSceneIdx = window.sidebar.changeTest(schedulerTestSceneIdx, 34);
+    if(window.sideIndexBar){
+        schedulerTestSceneIdx = window.sideIndexBar.changeTest(schedulerTestSceneIdx, 34);
     }
 
     return new arrayOfSchedulerTest[schedulerTestSceneIdx]();
@@ -574,8 +574,8 @@ var previousSchedulerTest = function () {
     if (schedulerTestSceneIdx < 0)
         schedulerTestSceneIdx += arrayOfSchedulerTest.length;
 
-    if(window.sidebar){
-        schedulerTestSceneIdx = window.sidebar.changeTest(schedulerTestSceneIdx, 34);
+    if(window.sideIndexBar){
+        schedulerTestSceneIdx = window.sideIndexBar.changeTest(schedulerTestSceneIdx, 34);
     }
 
     return new arrayOfSchedulerTest[schedulerTestSceneIdx]();

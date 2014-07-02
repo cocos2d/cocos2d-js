@@ -1900,8 +1900,8 @@ var nextLabelTest = function () {
     labelTestIdx++;
     labelTestIdx = labelTestIdx % arrayOfLabelTest.length;
 
-    if(window.sidebar){
-        labelTestIdx = window.sidebar.changeTest(labelTestIdx, 19);
+    if(window.sideIndexBar){
+        labelTestIdx = window.sideIndexBar.changeTest(labelTestIdx, 19);
     }
 
     return new arrayOfLabelTest[labelTestIdx]();
@@ -1911,8 +1911,8 @@ var previousLabelTest = function () {
     if (labelTestIdx < 0)
         labelTestIdx += arrayOfLabelTest.length;
 
-    if(window.sidebar){
-        labelTestIdx = window.sidebar.changeTest(labelTestIdx, 19);
+    if(window.sideIndexBar){
+        labelTestIdx = window.sideIndexBar.changeTest(labelTestIdx, 19);
     }
 
     return new arrayOfLabelTest[labelTestIdx]();

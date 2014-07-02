@@ -2703,8 +2703,8 @@ var nextActionsTest = function () {
     actionsTestIdx++;
     actionsTestIdx = actionsTestIdx % arrayOfActionsTest.length;
 
-    if(window.sidebar){
-        actionsTestIdx = window.sidebar.changeTest(actionsTestIdx, 1);
+    if(window.sideIndexBar){
+        actionsTestIdx = window.sideIndexBar.changeTest(actionsTestIdx, 1);
     }
 
     return new arrayOfActionsTest[actionsTestIdx]();
@@ -2714,8 +2714,8 @@ var previousActionsTest = function () {
     if (actionsTestIdx < 0)
         actionsTestIdx += arrayOfActionsTest.length;
 
-    if(window.sidebar){
-        actionsTestIdx = window.sidebar.changeTest(actionsTestIdx, 1);
+    if(window.sideIndexBar){
+        actionsTestIdx = window.sideIndexBar.changeTest(actionsTestIdx, 1);
     }
 
     return new arrayOfActionsTest[actionsTestIdx]();

@@ -1043,8 +1043,8 @@ var nextNodeTest = function () {
     nodeTestSceneIdx++;
     nodeTestSceneIdx = nodeTestSceneIdx % arrayOfNodeTest.length;
 
-    if(window.sidebar){
-        nodeTestSceneIdx = window.sidebar.changeTest(nodeTestSceneIdx, 24);
+    if(window.sideIndexBar){
+        nodeTestSceneIdx = window.sideIndexBar.changeTest(nodeTestSceneIdx, 24);
     }
 
     return new arrayOfNodeTest[nodeTestSceneIdx]();
@@ -1054,8 +1054,8 @@ var previousNodeTest = function () {
     if (nodeTestSceneIdx < 0)
         nodeTestSceneIdx += arrayOfNodeTest.length;
 
-    if(window.sidebar){
-        nodeTestSceneIdx = window.sidebar.changeTest(nodeTestSceneIdx, 24);
+    if(window.sideIndexBar){
+        nodeTestSceneIdx = window.sideIndexBar.changeTest(nodeTestSceneIdx, 24);
     }
 
     return new arrayOfNodeTest[nodeTestSceneIdx]();

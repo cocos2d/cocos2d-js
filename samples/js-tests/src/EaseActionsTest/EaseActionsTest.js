@@ -1201,8 +1201,8 @@ var nextEaseActionsTest = function () {
     easeActionsTestIdx++;
     easeActionsTestIdx = easeActionsTestIdx % arrayOfEaseActionsTest.length;
 
-    if(window.sidebar){
-        easeActionsTestIdx = window.sidebar.changeTest(easeActionsTestIdx, 10);
+    if(window.sideIndexBar){
+        easeActionsTestIdx = window.sideIndexBar.changeTest(easeActionsTestIdx, 10);
     }
 
     return new arrayOfEaseActionsTest[easeActionsTestIdx]();
@@ -1212,8 +1212,8 @@ var previousEaseActionsTest = function () {
     if (easeActionsTestIdx < 0)
         easeActionsTestIdx += arrayOfEaseActionsTest.length;
 
-    if(window.sidebar){
-        easeActionsTestIdx = window.sidebar.changeTest(easeActionsTestIdx, 10);
+    if(window.sideIndexBar){
+        easeActionsTestIdx = window.sideIndexBar.changeTest(easeActionsTestIdx, 10);
     }
 
     return new arrayOfEaseActionsTest[easeActionsTestIdx]();
