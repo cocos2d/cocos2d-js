@@ -59,7 +59,7 @@ var FacebookShareTest = PluginXTest.extend({
         logo.setPosition(winSize.width * 2/3, winSize.height / 2);
         this.addChild(logo);
 
-        this._agentManager = plugin.AgentManager.getInstance();
+        this._agentManager = plugin.agentManager;
     },
 
     onShareLink : function(){

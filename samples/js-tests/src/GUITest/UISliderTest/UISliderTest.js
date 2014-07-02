@@ -76,7 +76,7 @@ var UISliderTest_Scale9 = UIScene.extend({
             slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
             slider.loadProgressBarTexture("res/cocosui/slider_bar_active_9patch.png");
             slider.setCapInsets(cc.rect(0, 0, 0, 0));
-            slider.setContentSize(cc.size(250, 10));
+            slider.setSize(cc.size(250, 10));
             slider.x = widgetSize.width / 2.0;
             slider.y = widgetSize.height / 2.0;
             slider.addEventListenerSlider(this.sliderEvent, this);

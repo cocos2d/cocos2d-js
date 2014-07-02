@@ -42,7 +42,7 @@ var UIListViewTest_Vertical = UIScene.extend({
             listView.setBounceEnabled(true);
             listView.setBackGroundImage("res/cocosui/green_edit.png");
             listView.setBackGroundImageScale9Enabled(true);
-            listView.setContentSize(cc.size(240, 130));
+            listView.setSize(cc.size(240, 130));
             listView.x = (widgetSize.width - background.width) / 2 + (background.width - listView.width) / 2;
             listView.y = (widgetSize.height - background.height) / 2 + (background.height - listView.height) / 2;
             listView.addEventListenerListView(this.selectedItemEvent, this);
@@ -57,7 +57,7 @@ var UIListViewTest_Vertical = UIScene.extend({
 
             var default_item = ccui.Layout.create();
             default_item.setTouchEnabled(true);
-            default_item.setContentSize(default_button.getContentSize());
+            default_item.setSize(default_button.getContentSize());
             default_item.width = listView.width;
             default_button.x = default_item.width / 2;
             default_button.y = default_item.height / 2;
@@ -83,10 +83,10 @@ var UIListViewTest_Vertical = UIScene.extend({
                 custom_button.setTouchEnabled(true);
                 custom_button.setScale9Enabled(true);
                 custom_button.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
-                custom_button.setContentSize(default_button.getContentSize());
+                custom_button.setSize(default_button.getContentSize());
 
                 var custom_item = ccui.Layout.create();
-                custom_item.setContentSize(custom_button.getContentSize());
+                custom_item.setSize(custom_button.getContentSize());
                 custom_item.width = listView.width;
                 custom_button.x = custom_item.width / 2;
                 custom_button.y = custom_item.height / 2;
@@ -103,10 +103,10 @@ var UIListViewTest_Vertical = UIScene.extend({
                 custom_button.setTouchEnabled(true);
                 custom_button.setScale9Enabled(true);
                 custom_button.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
-                custom_button.setContentSize(default_button.getContentSize());
+                custom_button.setSize(default_button.getContentSize());
 
                 var custom_item = ccui.Layout.create();
-                custom_item.setContentSize(custom_button.getContentSize());
+                custom_item.setSize(custom_button.getContentSize());
                 custom_item.width = listView.width;
                 custom_button.x = custom_item.width / 2;
                 custom_button.y = custom_item.height / 2;
@@ -174,7 +174,7 @@ var UIListViewTest_Horizontal = UIScene.extend({
             listView.setBounceEnabled(true);
             listView.setBackGroundImage("res/cocosui/green_edit.png");
             listView.setBackGroundImageScale9Enabled(true);
-            listView.setContentSize(cc.size(240, 130));
+            listView.setSize(cc.size(240, 130));
             listView.x = (widgetSize.width - background.width) / 2 + (background.width - listView.width) / 2;
             listView.y = (widgetSize.height - background.height) / 2 + (background.height - listView.height) / 2;
             listView.addEventListenerListView(this.selectedItemEvent, this);
@@ -189,7 +189,7 @@ var UIListViewTest_Horizontal = UIScene.extend({
 
             var default_item = ccui.Layout.create();
             default_item.setTouchEnabled(true);
-            default_item.setContentSize(default_button.getContentSize());
+            default_item.setSize(default_button.getContentSize());
             default_button.x = default_item.width / 2;
             default_button.y = default_item.height / 2;
             default_item.addChild(default_button);
@@ -214,10 +214,10 @@ var UIListViewTest_Horizontal = UIScene.extend({
                 custom_button.setTouchEnabled(true);
                 custom_button.setScale9Enabled(true);
                 custom_button.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
-                custom_button.setContentSize(default_button.getContentSize());
+                custom_button.setSize(default_button.getContentSize());
 
                 var custom_item = ccui.Layout.create();
-                custom_item.setContentSize(custom_button.getContentSize());
+                custom_item.setSize(custom_button.getContentSize());
                 custom_button.x = custom_item.width / 2;
                 custom_button.y = custom_item.height / 2;
                 custom_item.addChild(custom_button);
@@ -233,10 +233,10 @@ var UIListViewTest_Horizontal = UIScene.extend({
                 custom_button.setTouchEnabled(true);
                 custom_button.setScale9Enabled(true);
                 custom_button.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
-                custom_button.setContentSize(default_button.getContentSize());
+                custom_button.setSize(default_button.getContentSize());
 
                 var custom_item = ccui.Layout.create();
-                custom_item.setContentSize(custom_button.getContentSize());
+                custom_item.setSize(custom_button.getContentSize());
                 custom_button.x = custom_item.width / 2;
                 custom_button.y = custom_item.height / 2;
                 custom_item.addChild(custom_button);
