@@ -4200,8 +4200,8 @@ function fetch(aURL, aOptions={ loadFromCache: true }) {
     case "chrome":
     case "resource":
       try {
-          let cc = globalDebuggee.cc;
-          let fileUtils = cc.FileUtils.getInstance();
+          let jsb = globalDebuggee.jsb;
+          let fileUtils = jsb.fileUtils;
           let source = fileUtils.getStringFromFile(filePath);//NetUtil.readInputStreamToString(aStream, aStream.available());
           if (!source)
           {

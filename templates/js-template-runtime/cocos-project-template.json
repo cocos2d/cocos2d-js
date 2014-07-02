@@ -28,32 +28,17 @@
             },
             {
                "from":"frameworks/js-bindings/bindings/script",
-               "to":"runtime/mac/PrebuiltRuntimeJs.app/Contents/Resources",
+               "to":"runtime/mac/PrebuiltRuntimeJs.app/Contents/Resources/script",
                "exclude":[]
             },
             {
                "from":"frameworks/js-bindings/bindings/script",
-               "to":"runtime/ios/PrebuiltRuntimeJs.app",
+               "to":"runtime/ios/PrebuiltRuntimeJs.app/script",
                "exclude":[]
             },
             {
                "from":"frameworks/js-bindings/bindings/script",
-               "to":"runtime/win32",
-               "exclude":[]
-            },
-            {
-               "from":"templates/js-template-runtime/runtime/rtres",
-               "to":"runtime/mac/PrebuiltRuntimeJs.app/Contents/Resources/rtres",
-               "exclude":[]
-            },
-            {
-               "from":"templates/js-template-runtime/runtime/rtres",
-               "to":"runtime/ios/PrebuiltRuntimeJs.app/rtres",
-               "exclude":[]
-            },
-            {
-               "from":"templates/js-template-runtime/runtime/rtres",
-               "to":"runtime/win32/rtres",
+               "to":"runtime/win32/script",
                "exclude":[]
             },
             {

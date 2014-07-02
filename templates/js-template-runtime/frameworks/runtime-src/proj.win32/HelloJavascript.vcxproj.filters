@@ -11,6 +11,12 @@
     <Filter Include="Classes">
       <UniqueIdentifier>{e93a77e1-af1e-4400-87d3-504b62ebdbb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\runtime">
+      <UniqueIdentifier>{e10ac93f-7947-473c-a7c0-e3b5faf5d234}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\runtime\protobuf-lite">
+      <UniqueIdentifier>{ed8064b7-5a41-45ea-b836-1d26386322de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -22,9 +28,6 @@
     <ClCompile Include="SimulatorWindow.cpp">
       <Filter>win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Runtime.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Runtime_win32.cpp">
       <Filter>win32</Filter>
     </ClCompile>
@@ -33,6 +36,63 @@
     </ClCompile>
     <ClCompile Include="..\Classes\VisibleRect.cpp">
       <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\Landscape_png.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\PlayDisable_png.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\PlayEnable_png.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\Portrait_png.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\Runtime.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\Shine_png.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\extension_set.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\message_lite.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\repeated_field.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\common.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\once.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\stringprintf.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\Protos.pb.cc">
+      <Filter>Classes\runtime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -46,14 +106,89 @@
     <ClInclude Include="SimulatorWindow.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Runtime.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ConfigParser.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\VisibleRect.h">
       <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\ResData.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\Runtime.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\extension_set.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream_inl.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream_impl.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\message_lite.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\repeated_field.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\common.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\hash.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\map-util.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\once.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\platform_macros.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\stl_util.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\stringprintf.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\template_util.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\type_traits.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite_inl.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\config.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\Protos.pb.h">
+      <Filter>Classes\runtime</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
