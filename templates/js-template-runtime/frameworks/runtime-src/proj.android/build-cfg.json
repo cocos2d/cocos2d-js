@@ -31,10 +31,6 @@
             "to": "script"
         },
         {
-            "from": "../../../runtime/rtres",
-            "to": "rtres"
-        },
-        {
             "from": "../../../config.json",
             "to": ""
         },
