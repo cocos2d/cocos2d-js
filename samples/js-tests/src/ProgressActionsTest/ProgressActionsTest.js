@@ -389,8 +389,8 @@ var nextProgressTest = function () {
     ProgressTestSceneIdx++;
     ProgressTestSceneIdx = ProgressTestSceneIdx % arrayOfProgressTest.length;
 
-    if(window.sidebar){
-        ProgressTestSceneIdx = window.sidebar.changeTest(ProgressTestSceneIdx, 30);
+    if(window.sideIndexBar){
+        ProgressTestSceneIdx = window.sideIndexBar.changeTest(ProgressTestSceneIdx, 30);
     }
 
     return new arrayOfProgressTest[ProgressTestSceneIdx]();
@@ -400,8 +400,8 @@ var previousProgressTest = function () {
     if (ProgressTestSceneIdx < 0)
         ProgressTestSceneIdx += arrayOfProgressTest.length;
 
-    if(window.sidebar){
-        ProgressTestSceneIdx = window.sidebar.changeTest(ProgressTestSceneIdx, 30);
+    if(window.sideIndexBar){
+        ProgressTestSceneIdx = window.sideIndexBar.changeTest(ProgressTestSceneIdx, 30);
     }
 
     return new arrayOfProgressTest[ProgressTestSceneIdx]();

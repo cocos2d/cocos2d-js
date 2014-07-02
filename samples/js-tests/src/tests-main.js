@@ -54,7 +54,7 @@ var TestScene = cc.Scene.extend({
         menuItem.x = winSize.width - 50;
         menuItem.y = 25;
 
-        if(!window.sidebar){
+        if(!window.sideIndexBar){
             this.addChild(menu, 1);
         }
     },

@@ -377,8 +377,8 @@ var nextEffectAdvanceAction = function () {
     sceneIndex++;
     sceneIndex = sceneIndex % arrayOfEffectsAdvancedTest.length;
 
-    if(window.sidebar){
-        sceneIndex = window.sidebar.changeTest(sceneIndex, 15);
+    if(window.sideIndexBar){
+        sceneIndex = window.sideIndexBar.changeTest(sceneIndex, 15);
     }
 
     return new arrayOfEffectsAdvancedTest[sceneIndex]();
@@ -389,8 +389,8 @@ var backEffectAdvanceAction = function () {
     if (sceneIndex < 0)
         sceneIndex += arrayOfEffectsAdvancedTest.length;
 
-    if(window.sidebar){
-        sceneIndex = window.sidebar.changeTest(sceneIndex, 15);
+    if(window.sideIndexBar){
+        sceneIndex = window.sideIndexBar.changeTest(sceneIndex, 15);
     }
 
     return new arrayOfEffectsAdvancedTest[sceneIndex]();

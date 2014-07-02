@@ -5388,8 +5388,8 @@ var nextSpriteTest = function () {
     spriteTestIdx++;
     spriteTestIdx = spriteTestIdx % arrayOfSpriteTest.length;
 
-    if(window.sidebar){
-        spriteTestIdx = window.sidebar.changeTest(spriteTestIdx, 36);
+    if(window.sideIndexBar){
+        spriteTestIdx = window.sideIndexBar.changeTest(spriteTestIdx, 36);
     }
 
     return new arrayOfSpriteTest[spriteTestIdx ]();
@@ -5399,8 +5399,8 @@ var previousSpriteTest = function () {
     if (spriteTestIdx < 0)
         spriteTestIdx += arrayOfSpriteTest.length;
 
-    if(window.sidebar){
-        spriteTestIdx = window.sidebar.changeTest(spriteTestIdx, 36);
+    if(window.sideIndexBar){
+        spriteTestIdx = window.sideIndexBar.changeTest(spriteTestIdx, 36);
     }
 
     return new arrayOfSpriteTest[spriteTestIdx ]();
