@@ -36,7 +36,7 @@ var UIRichTextTest = UIScene.extend({
             button.setTouchEnabled(true);
             button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getSize().height * 2.5));
+            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
