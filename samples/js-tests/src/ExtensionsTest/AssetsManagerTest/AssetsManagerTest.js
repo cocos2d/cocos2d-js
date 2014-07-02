@@ -208,7 +208,6 @@ var AssetsManagerLoaderScene = TestScene.extend({
     },
 
     updateProgress : function () {
-        cc.log("What the fuck::: " + this._percent);
         this._loadingBar.setPercent(this._percent);
         this._fileLoadingBar.setPercent(this._percentByFile);
     },

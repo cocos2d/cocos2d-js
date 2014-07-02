@@ -96,7 +96,7 @@ var extensionsTestItemNames = [
     }
 ];
 
-if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID || true) {
+if (cc.sys.isMobile || !cc.sys.isNative) {
      extensionsTestItemNames.push({
         itemTitle:"PluginTest",
         testScene:function () {
