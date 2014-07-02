@@ -60,7 +60,7 @@ var FacebookShareTest = PluginXTest.extend({
         logo.setPosition(winSize.width * 2 / 3, winSize.height / 2);
         this.addChild(logo);
 
-        this._agentManager = plugin.AgentManager.getInstance();
+        this._agentManager = plugin.agentManager;
 
         this.tipsLabel = cc.LabelTTF.create("This share function is not available on web version of Facebook plugin", "Arial", 20);
         this.tipsLabel.setDimensions(cc.size(350, 120));
