@@ -3581,13 +3581,13 @@ getMouseButton : function (
 },
 
 /**
- * @method getScrollY
- * @return {float}
+ * @method setMouseButton
+ * @param {int} arg0
  */
-getScrollY : function (
+setMouseButton : function (
+int 
 )
 {
-    return 0;
 },
 
 /**
@@ -3613,13 +3613,23 @@ getCursorY : function (
 },
 
 /**
- * @method setMouseButton
- * @param {int} arg0
+ * @method getCursorX
+ * @return {float}
  */
-setMouseButton : function (
-int 
+getCursorX : function (
 )
 {
+    return 0;
+},
+
+/**
+ * @method getScrollY
+ * @return {float}
+ */
+getScrollY : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -3645,16 +3655,6 @@ getScrollX : function (
 },
 
 /**
- * @method getCursorX
- * @return {float}
- */
-getCursorX : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method EventMouse
  * @constructor
  * @param {cc.EventMouse::MouseEventType} arg0
@@ -3671,16 +3671,6 @@ mouseeventtype
  * @class EventListenerMouse
  */
 cc.EventListenerMouse = {
-
-/**
- * @method create
- * @return {cc.EventListenerMouse}
- */
-create : function (
-)
-{
-    return cc.EventListenerMouse;
-},
 
 };
 

@@ -185,6 +185,29 @@ static std::string getTouchFuncName(EventTouch::EventCode eventCode)
     return funcName;
 }
 
+static std::string getMouseFuncName(EventMouse::MouseEventType eventType)
+{
+    std::string funcName;
+    switch(eventType) {
+        case EventMouse::MouseEventType::MOUSE_DOWN:
+            funcName = "onMouseDown";
+            break;
+        case EventMouse::MouseEventType::MOUSE_UP:
+            funcName = "onMouseUp";
+            break;
+        case EventMouse::MouseEventType::MOUSE_MOVE:
+            funcName = "onMouseMove";
+            break;
+        case EventMouse::MouseEventType::MOUSE_SCROLL:
+            funcName = "onMouseScroll";
+            break;
+        default:
+            CCASSERT(false, "Invalid event code!");
+    }
+    
+    return funcName;
+}
+
 static void rootObject(JSContext *cx, JSObject *obj) {
     JS_AddNamedObjectRoot(cx, &obj, "unnamed");
 }
@@ -1092,6 +1115,49 @@ bool ScriptingCore::handleTouchEvent(void* nativeObj, cocos2d::EventTouch::Event
     return ret;
 }
 
+bool ScriptingCore::handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, jsval* jsvalRet/* = nullptr*/)
+{
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
+    std::string funcName = getMouseFuncName(eventType);
+    bool ret = false;
+    
+    do
+    {
+        js_proxy_t * p = jsb_get_native_proxy(nativeObj);
+        if (!p) break;
+        
+        jsval dataVal[1];
+        dataVal[0] = getJSObject(_cx, event);
+        
+        if (jsvalRet != nullptr)
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 1, dataVal, jsvalRet);
+        }
+        else
+        {
+            jsval retval;
+            executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 1, dataVal, &retval);
+            if(JSVAL_IS_NULL(retval))
+            {
+                ret = false;
+            }
+            else if(JSVAL_IS_BOOLEAN(retval))
+            {
+                ret = JSVAL_TO_BOOLEAN(retval);
+            }
+            else
+            {
+                ret = false;
+            }
+        }
+    } while(false);
+    
+    removeJSObject(_cx, event);
+    
+    return ret;
+}
+
 bool ScriptingCore::executeFunctionWithObjectData(void* nativeObj, const char *name, JSObject *obj) {
 
     js_proxy_t * p = jsb_get_native_proxy(nativeObj);
@@ -1497,7 +1563,7 @@ static void serverEntryPoint(void)
             
             char buf[1024] = {0};
             int readBytes = 0;
-            while ((readBytes = ::recv(clientSocket, buf, sizeof(buf), 0)) > 0)
+            while ((readBytes = (int)::recv(clientSocket, buf, sizeof(buf), 0)) > 0)
             {
                 buf[readBytes] = '\0';
                 // TRACE_DEBUGGER_SERVER("debug server : received command >%s", buf);

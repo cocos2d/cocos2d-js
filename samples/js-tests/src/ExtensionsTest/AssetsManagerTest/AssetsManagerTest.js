@@ -131,7 +131,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
         if (!this._am.getLocalManifest().isLoaded())
         {
             cc.log("Fail to update assets, step skipped.");
-            var scene = new jsb.AssetsManagerTestScene(backgroundPaths[currentScene]);
+            var scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
             cc.director.runScene(scene);
         }
         else
@@ -208,7 +208,6 @@ var AssetsManagerLoaderScene = TestScene.extend({
     },
 
     updateProgress : function () {
-        cc.log("What the fuck::: " + this._percent);
         this._loadingBar.setPercent(this._percent);
         this._fileLoadingBar.setPercent(this._percentByFile);
     },

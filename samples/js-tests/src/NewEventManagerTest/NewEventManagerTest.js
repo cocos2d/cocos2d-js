@@ -211,8 +211,10 @@ var TouchableSprite = cc.Sprite.extend({
             },
             onTouchEnded: function (touch, event) {
                 selfPointer.setColor(cc.color.WHITE);
-                if(selfPointer._removeListenerOnTouchEnded)
+                if(selfPointer._removeListenerOnTouchEnded) {
                     cc.eventManager.removeListener(selfPointer._listener);
+                    selfPointer._listener = null;
+                }
             }
         });
 
@@ -224,7 +226,7 @@ var TouchableSprite = cc.Sprite.extend({
     },
 
     onExit: function(){
-        cc.eventManager.removeListener(this._listener);
+        this._listener && cc.eventManager.removeListener(this._listener);
         this._super();
     },
 

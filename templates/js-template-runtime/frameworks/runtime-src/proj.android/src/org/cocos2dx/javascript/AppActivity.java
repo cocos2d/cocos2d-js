@@ -30,6 +30,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+import java.util.ArrayList;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
@@ -72,7 +73,7 @@ public class AppActivity extends Cocos2dxActivity{
 		// Check the wifi is opened when the native is debug.
 		if(nativeIsDebug())
 		{
-			if(!isWifiConnected())
+			if(!isNetworkConnected())
 			{
 				AlertDialog.Builder builder=new AlertDialog.Builder(this);
 				builder.setTitle("Warning");
@@ -92,17 +93,31 @@ public class AppActivity extends Cocos2dxActivity{
 		}
 		hostIPAdress = getHostIpAddress();
 	}
-	 private boolean isWifiConnected() {  
-	        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);  
-	        if (cm != null) {  
-	            NetworkInfo networkInfo = cm.getActiveNetworkInfo();  
-	            if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {  
-	                return true;  
-	            }  
-	        }  
-	        return false;  
-	    } 
-	 
+	
+	private boolean isNetworkConnected() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		if (cm != null) {
+			NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+			ArrayList networkTypes = new ArrayList();
+			networkTypes.add(ConnectivityManager.TYPE_WIFI);
+			//We need to use getDeclaredField as TYPE_ETHERNET is only available from API level 13 (3.2)
+			//networkTypes.add(ConnectivityManager.TYPE_ETHERNET); // will not compile
+			try {
+				networkTypes.add(ConnectivityManager.class.getDeclaredField("TYPE_ETHERNET").getInt(null));
+			} catch (NoSuchFieldException nsfe) {
+				//Ignore on older API levels
+				//throw new RuntimeException(nsfe);
+			}
+			catch (IllegalAccessException iae) {
+				throw new RuntimeException(iae);
+			}
+			if (networkInfo != null && networkTypes.contains(networkInfo.getType())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public String getHostIpAddress() {
 		WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
 		WifiInfo wifiInfo = wifiMgr.getConnectionInfo();

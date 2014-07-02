@@ -203,6 +203,7 @@ var s_extensions_button = "res/extensions/button.png";
 var s_extensions_buttonHighlighted = "res/extensions/buttonHighlighted.png";
 var s_extensions_ribbon = "res/extensions/ribbon.png";
 var s_image_icon = "res/Images/Icon.png";
+var s_html5_logo = "res/Images/cocos-html5.png";
 
 var g_resources = [
     //global
