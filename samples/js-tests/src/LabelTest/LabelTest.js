@@ -1582,7 +1582,7 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
         }
     },
     onMouseMove:function (touch) {
-        if(event.getButton == undefined || event.getButton() == undefined)
+        if(!event.getButton || event.getButton() != cc.EventMouse.BUTTON_LEFT)
             return;
 
         var location = touch.getLocation();

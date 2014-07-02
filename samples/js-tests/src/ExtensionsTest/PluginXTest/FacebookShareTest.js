@@ -50,10 +50,14 @@ var FacebookShareTest = PluginXTest.extend({
         for (var action in buttons) {
             var label = cc.LabelTTF.create(action, "Arial", 24);
             var item = cc.MenuItemLabel.create(label, this[buttons[action]], this);
-            item.setPosition(winSize.width / 2, winSize.height - top);
+            item.setPosition(winSize.width * 1/3 , winSize.height - top);
             menu.addChild(item);
             top += 50;
         }
+
+        var logo = cc.Sprite.create(s_html5_logo);
+        logo.setPosition(winSize.width * 2/3, winSize.height / 2);
+        this.addChild(logo);
 
         this._agentManager = plugin.AgentManager.getInstance();
     },
@@ -87,13 +91,22 @@ var FacebookShareTest = PluginXTest.extend({
     },
 
     onSharePhoto : function(){
-        var map = {
-            "dialog" : "share_photo",
-            "photo" : "http://files.cocos2d-x.org/images/orgsite/logo.png"
-        };
-        this._agentManager.dialog(map, function(resultcode, msg) {
-            cc.log(msg);
+
+        var img = this.screenshot("facebookshare.jpg");
+
+        var delay = cc.DelayTime.create(2);
+        var share = cc.CallFunc.create(function(){
+            var map = {
+                "dialog" : "share_photo",
+                "photo" : img
+            };
+            plugin.AgentManager.getInstance().dialog(map, function(resultcode, msg) {
+                cc.log(msg);
+            });
         });
+        var seq = cc.Sequence.create(delay, share);
+        this.runAction(seq);
+        
     },
 
     onLinkMsg : function(){
@@ -125,13 +138,20 @@ var FacebookShareTest = PluginXTest.extend({
     },
 
     onPhotoMsg : function(){
-        var map = {
-            "dialog" : "message_photo",
-            "photo" : "http://files.cocos2d-x.org/images/orgsite/logo.png"
-        };
-        this._agentManager.dialog(map, function(resultcode, msg) {
-            cc.log(msg);
+        var img = this.screenshot("facebookmessage.jpg");
+
+        var delay = cc.DelayTime.create(2);
+        var share = cc.CallFunc.create(function(){
+            var map = {
+                "dialog" : "message_photo",
+                "photo" : img
+            };
+            plugin.AgentManager.getInstance().dialog(map, function(resultcode, msg) {
+                cc.log(msg);
+            });
         });
+        var seq = cc.Sequence.create(delay, share);
+        this.runAction(seq);
     },
 
     onRequest : function(){
@@ -154,5 +174,25 @@ var FacebookShareTest = PluginXTest.extend({
         var s = new PluginXTestScene();
         s.addChild(new PluginXTestLayer());
         director.runScene(s);
+    },
+
+    screenshot:function(fileName){
+        var tex = cc.RenderTexture.create(winSize.width, winSize.height,cc.Texture2D.PIXEL_FORMAT_RGBA8888);
+        tex.setPosition(cc.p(winSize.width / 2, winSize.height / 2));
+        tex.begin();
+        cc.director.getRunningScene().visit();
+        tex.end();
+
+        var imgPath = jsb.fileUtils.getWritablePath();
+        if (imgPath.length == 0) {
+            return;
+        }
+        var result = tex.saveToFile(fileName,  cc.IMAGE_FORMAT_JPEG);
+        if (result) {
+            imgPath += fileName;
+            cc.log("save image:"+imgPath);
+            return imgPath;
+        }
+        return "";
     }
 });

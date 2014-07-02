@@ -197,7 +197,7 @@ var ParticleDemo = BaseTestLayer.extend({
                     event.getCurrentTarget()._moveToTouchPoint(event.getLocation());
                 },
                 onMouseMove: function(event){
-                    if(event.getButton() != undefined)
+                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget()._moveToTouchPoint(event.getLocation());
                 }
             }, this);

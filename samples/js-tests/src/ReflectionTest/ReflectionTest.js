@@ -34,7 +34,7 @@ var ReflectionTestLayer = BaseTestLayer.extend({
 
         var label = cc.LabelTTF.create("Show Alert Dialog", "Arial", 35);
         var menuItem = cc.MenuItemLabel.create(label, function(){
-            cc.reflection.callStaticMethod("org/cocos2dx/js_tests/AppActivity", "showAlertDialog", "(Ljava/lang/String;Ljava/lang/String;)V", "How are you ?", "I'm great !");
+            jsb.reflection.callStaticMethod("org/cocos2dx/js_tests/AppActivity", "showAlertDialog", "(Ljava/lang/String;Ljava/lang/String;)V", "How are you ?", "I'm great !");
         }, this);
         menuItem.x = winSize.width / 2;
         menuItem.y = winSize.height / 2;
