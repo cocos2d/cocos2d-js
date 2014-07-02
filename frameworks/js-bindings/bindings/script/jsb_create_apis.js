@@ -762,7 +762,7 @@ cc.LabelTTF.prototype._ctor = function(text, fontName, fontSize, dimensions, hAl
 		this.initWithStringAndTextDefinition(text, fontName);
 	}
 	else {
-		fontName = fontName || "Arial";
+		fontName = fontName || "";
 		fontSize = fontSize || 16;
 		dimensions = dimensions || cc.size(0,0);
 		hAlignment = hAlignment === undefined ? cc.TEXT_ALIGNMENT_LEFT : hAlignment;
@@ -927,7 +927,7 @@ cc.LabelTTF.create = function (text, fontName, fontSize, dimensions, hAlignment,
         label = cc.LabelTTF.createWithFontDefinition(text, fontName);
     }
     else {
-        fontName = fontName || "Arial";
+        fontName = fontName || "";
         fontSize = fontSize || 16;
         dimensions = dimensions || cc.size(0, 0);
         hAlignment = hAlignment == undefined ? cc.TEXT_ALIGNMENT_CENTER : hAlignment;

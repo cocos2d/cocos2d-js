@@ -131,7 +131,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
         if (!this._am.getLocalManifest().isLoaded())
         {
             cc.log("Fail to update assets, step skipped.");
-            var scene = new jsb.AssetsManagerTestScene(backgroundPaths[currentScene]);
+            var scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
             cc.director.runScene(scene);
         }
         else
