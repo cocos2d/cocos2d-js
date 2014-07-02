@@ -1542,8 +1542,8 @@ var nextChipmunkTest = function () {
     chipmunkTestSceneIdx++;
     chipmunkTestSceneIdx = chipmunkTestSceneIdx % arrayOfChipmunkTest.length;
 
-    if(window.sidebar){
-        chipmunkTestSceneIdx = window.sidebar.changeTest(chipmunkTestSceneIdx, 3);
+    if(window.sideIndexBar){
+        chipmunkTestSceneIdx = window.sideIndexBar.changeTest(chipmunkTestSceneIdx, 3);
     }
 
     return new arrayOfChipmunkTest[chipmunkTestSceneIdx]();
@@ -1553,8 +1553,8 @@ var previousChipmunkTest = function () {
     if (chipmunkTestSceneIdx < 0)
         chipmunkTestSceneIdx += arrayOfChipmunkTest.length;
 
-    if(window.sidebar){
-        chipmunkTestSceneIdx = window.sidebar.changeTest(chipmunkTestSceneIdx, 3);
+    if(window.sideIndexBar){
+        chipmunkTestSceneIdx = window.sideIndexBar.changeTest(chipmunkTestSceneIdx, 3);
     }
 
     return new arrayOfChipmunkTest[chipmunkTestSceneIdx]();

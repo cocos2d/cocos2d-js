@@ -60,8 +60,8 @@ function nextFontTestAction() {
     fontIdx++;
     fontIdx = fontIdx % fontList.length;
 
-    if(window.sidebar){
-        fontIdx = window.sidebar.changeTest(fontIdx, 16);
+    if(window.sideIndexBar){
+        fontIdx = window.sideIndexBar.changeTest(fontIdx, 16);
     }
 
     return fontList[fontIdx];
@@ -73,8 +73,8 @@ function backFontTestAction() {
         fontIdx += fontList.length;
     }
 
-    if(window.sidebar){
-        fontIdx = window.sidebar.changeTest(fontIdx, 16);
+    if(window.sideIndexBar){
+        fontIdx = window.sideIndexBar.changeTest(fontIdx, 16);
     }
 
     return fontList[fontIdx];

@@ -223,8 +223,8 @@ var nextDrawTest = function () {
     drawTestSceneIdx++;
     drawTestSceneIdx = drawTestSceneIdx % arrayOfDrawTest.length;
 
-    if(window.sidebar){
-        drawTestSceneIdx = window.sidebar.changeTest(drawTestSceneIdx, 9);
+    if(window.sideIndexBar){
+        drawTestSceneIdx = window.sideIndexBar.changeTest(drawTestSceneIdx, 9);
     }
 
     return new arrayOfDrawTest[drawTestSceneIdx]();
@@ -234,8 +234,8 @@ var previousDrawTest = function () {
     if (drawTestSceneIdx < 0)
         drawTestSceneIdx += arrayOfDrawTest.length;
 
-    if(window.sidebar){
-        drawTestSceneIdx = window.sidebar.changeTest(drawTestSceneIdx, 9);
+    if(window.sideIndexBar){
+        drawTestSceneIdx = window.sideIndexBar.changeTest(drawTestSceneIdx, 9);
     }
 
     return new arrayOfDrawTest[drawTestSceneIdx]();
