@@ -56,7 +56,7 @@ var UIImageViewTest_Scale9 = UIScene.extend({
             var imageView = ccui.ImageView.create();
             imageView.setScale9Enabled(true);
             imageView.loadTexture("res/cocosui/buttonHighlighted.png");
-            imageView.setContentSize(cc.size(200, 85));
+            imageView.setSize(cc.size(200, 85));
             imageView.x = widgetSize.width / 2;
 	        imageView.y = widgetSize.height / 2 + imageView.getContentSize().height / 4;
             this._mainNode.addChild(imageView);
