@@ -82,7 +82,7 @@ var UILayoutTestBase = UIScene.extend({
     },
     createLayout: function () {
         var layout = ccui.Layout.create();
-        layout.setContentSize(cc.size(280, 150));
+        layout.setSize(cc.size(280, 150));
         return layout;
     },
     setLayoutParameter: function () {
@@ -92,7 +92,7 @@ var UILayoutTestBase = UIScene.extend({
 var UILayoutTest = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
-        layout.setContentSize(cc.size(280, 150));
+        layout.setSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -104,7 +104,7 @@ var UILayoutTest_Color = UILayoutTestBase.extend({
         var layout = ccui.Layout.create();
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
         layout.setBackGroundColor(cc.color(128, 128, 128));
-        layout.setContentSize(cc.size(280, 150));
+        layout.setSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -116,7 +116,7 @@ var UILayoutTest_Gradient = UILayoutTestBase.extend({
         var layout = ccui.Layout.create();
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_GRADIENT);
         layout.setBackGroundColor(cc.color(64, 64, 64), cc.color(192, 192, 192));
-        layout.setContentSize(cc.size(280, 150));
+        layout.setSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -128,7 +128,7 @@ var UILayoutTest_BackGroundImage = UILayoutTestBase.extend({
         var layout = ccui.Layout.create();
         layout.setClippingEnabled(true);
         layout.setBackGroundImage("res/cocosui/Hello.png");
-        layout.setContentSize(cc.size(280, 150));
+        layout.setSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -141,7 +141,7 @@ var UILayoutTest_BackGroundImage_Scale9 = UILayoutTestBase.extend({
         var layout = ccui.Layout.create();
         layout.setBackGroundImageScale9Enabled(true);
         layout.setBackGroundImage("res/cocosui/green_edit.png");
-        layout.setContentSize(cc.size(280, 150));
+        layout.setSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -152,7 +152,7 @@ var UILayoutTest_Layout_Linear_Vertical = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
         layout.setLayoutType(ccui.Layout.LINEAR_VERTICAL);
-        layout.setContentSize(cc.size(280, 150));
+        layout.setSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -161,17 +161,17 @@ var UILayoutTest_Layout_Linear_Vertical = UILayoutTestBase.extend({
     setLayoutParameter: function () {
         var lp1 = ccui.LinearLayoutParameter.create();
         this.button.setLayoutParameter(lp1);
-        lp1.setGravity(ccui.LINEAR_GRAVITY_CENTER_HORIZONTAL);
+        lp1.setGravity(ccui.LinearLayoutParameter.CENTER_HORIZONTAL);
         lp1.setMargin(new ccui.Margin(0, 5, 0, 10));
 
         var lp2 = ccui.LinearLayoutParameter.create();
         this.textButton.setLayoutParameter(lp2);
-        lp2.setGravity(ccui.LINEAR_GRAVITY_CENTER_HORIZONTAL);
+        lp2.setGravity(ccui..LinearLayoutParameter.CENTER_HORIZONTAL);
         lp2.setMargin(new ccui.Margin(0, 10, 0, 10));
 
         var lp3 = ccui.LinearLayoutParameter.create();
         this.button_scale9.setLayoutParameter(lp3);
-        lp3.setGravity(ccui.LINEAR_GRAVITY_CENTER_HORIZONTAL);
+        lp3.setGravity(ccui..LinearLayoutParameter.CENTER_HORIZONTAL);
         lp3.setMargin(new ccui.Margin(0, 10, 0, 10));
     }
 });
@@ -180,7 +180,7 @@ var UILayoutTest_Layout_Linear_Horizontal = UILayoutTestBase.extend({
         var layout = ccui.Layout.create();
         layout.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
         layout.setClippingEnabled(true);
-        layout.setContentSize(cc.size(280, 150));
+        layout.setSize(cc.size(280, 150));
         return layout;
     },
     getText: function () {
@@ -189,17 +189,17 @@ var UILayoutTest_Layout_Linear_Horizontal = UILayoutTestBase.extend({
     setLayoutParameter: function () {
         var lp1 = ccui.LinearLayoutParameter.create();
         this.button.setLayoutParameter(lp1);
-        lp1.setGravity(ccui.LINEAR_GRAVITY_CENTER_VERTICAL);
+        lp1.setGravity(ccui.LinearLayoutParameter.CENTER_VERTICAL);
         lp1.setMargin(new ccui.Margin(0, 10, 0, 10));
 
         var lp2 = ccui.LinearLayoutParameter.create();
         this.textButton.setLayoutParameter(lp2);
-        lp2.setGravity(ccui.LINEAR_GRAVITY_CENTER_VERTICAL);
+        lp2.setGravity(ccui.LinearLayoutParameter.CENTER_VERTICAL);
         lp2.setMargin(new ccui.Margin(0, 10, 0, 10));
 
         var lp3 = ccui.LinearLayoutParameter.create();
         this.button_scale9.setLayoutParameter(lp3);
-        lp3.setGravity(ccui.LINEAR_GRAVITY_CENTER_VERTICAL);
+        lp3.setGravity(ccui.LinearLayoutParameter.CENTER_VERTICAL);
         lp3.setMargin(new ccui.Margin(0, 10, 0, 10));
     }
 });
@@ -208,7 +208,7 @@ var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
         layout.setLayoutType(ccui.Layout.RELATIVE);
-        layout.setContentSize(cc.size(280, 150));
+        layout.setSize(cc.size(280, 150));
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
         layout.setBackGroundColor(cc.color.GREEN);
         return layout;
@@ -219,14 +219,14 @@ var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
     setLayoutParameter: function () {
         var lp1 = ccui.RelativeLayoutParameter.create();
         this.button.setLayoutParameter(lp1);
-        lp1.setGravity(ccui.RELATIVE_ALIGN_PARENT_LEFT_BOTTOM);
+        lp1.setGravity(ccui.RelativeLayoutParameter.PARENT_LEFT_BOTTOM);
 
         var lp2 = ccui.RelativeLayoutParameter.create();
         this.textButton.setLayoutParameter(lp2);
-        lp2.setGravity(ccui.RELATIVE_ALIGN_PARENT_LEFT_BOTTOM);
+        lp2.setGravity(ccui.RelativeLayoutParameter.PARENT_LEFT_BOTTOM);
 
         var lp3 = ccui.RelativeLayoutParameter.create();
         this.button_scale9.setLayoutParameter(lp3);
-        lp3.setGravity(ccui.RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL);
+        lp3.setGravity(ccui.RelativeLayoutParameter.PARENT_RIGHT_CENTER_VERTICAL);
     }
 });
