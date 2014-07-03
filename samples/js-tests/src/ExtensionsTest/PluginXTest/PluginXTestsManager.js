@@ -24,25 +24,29 @@
 
 var pluginXTestItemNames = [
     {
-        itemTitle: "Facebook Share Test",
-        testLayer: function () {
-            return new FacebookShareTest(this.itemTitle);
-        }
-    },
-    {
         itemTitle: "Facebook User Test",
         testLayer: function () {
             return new FacebookUserTest(this.itemTitle);
         }
     },
     {
+        itemTitle: "Facebook Share Test",
+        testLayer: function () {
+            return new FacebookShareTest(this.itemTitle);
+        }
+    }
+
+
+];
+
+if (cc.sys.isMobile && cc.sys.os == cc.sys.OS_IOS) {
+    pluginXTestItemNames.push({
         itemTitle: "Analytics Test",
         testLayer: function () {
             return new AnalyticsTestLayer(this.itemTitle);
         }
-    }
-];
-
+    });
+}
 if (cc.sys.isMobile && cc.sys.os == cc.sys.OS_IOS) {
     pluginXTestItemNames.push({
         itemTitle: "iOS IAP Test",
