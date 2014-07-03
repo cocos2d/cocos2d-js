@@ -8,20 +8,6 @@
 
     "modules"       : ["cocos2d", "extensions", "external"],
 
-    "plugin": {
-
-        "common": {
-            "user": "facebook",
-            "share": "facebook"
-        },
-
-        "facebook": {
-            "appId" : "1426774790893461",
-            "xfbml" : true,
-            "version" : "v2.0"
-        }
-    },
-
     "jsList"        : [
         "src/BaseTestLayer/BaseTestLayer.js",
 
