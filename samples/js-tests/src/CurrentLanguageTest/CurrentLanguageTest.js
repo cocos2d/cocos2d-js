@@ -69,8 +69,8 @@ var CurrentLanguageTest = cc.Layer.extend({
 
 var CurrentLanguageTestScene = TestScene.extend({
     runThisTest:function () {
-        if(window.sidebar){
-            window.sidebar.changeTest(0, 8);
+        if(window.sideIndexBar){
+            window.sideIndexBar.changeTest(0, 8);
         }
 
         var layer = new CurrentLanguageTest();
