@@ -57,7 +57,7 @@ var FacebookUserTest = PluginXTest.extend({
         menu.anchorY = 0;
         this.addChild(menu, 1);
 
-        this._agentManager = plugin.AgentManager.getInstance();
+        this._agentManager = plugin.agentManager;
     },
 
     loginClick: function (sender) {

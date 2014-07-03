@@ -196,7 +196,7 @@ var IAPTestLayer = PluginXTest.extend({
         var xhr = cc.loader.getXMLHttpRequest();
 
         //replace to your own server address
-        xhr.open("POST", "http://192.168.52.38:8888/start");
+        xhr.open("POST", "http://localhost/");
         that.toggleToast(true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {

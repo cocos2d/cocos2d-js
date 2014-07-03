@@ -618,7 +618,7 @@
         }
     };
 
-    window.sidebar = sidebar;
+    window.sideIndexBar = sidebar;
 
 
 })(window);

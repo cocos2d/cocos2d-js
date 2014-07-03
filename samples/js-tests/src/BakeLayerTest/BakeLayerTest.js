@@ -207,8 +207,8 @@ var nextBakeLayerTest = function (num) {
     _bakeLayerTestIdx++;
     _bakeLayerTestIdx = _bakeLayerTestIdx % arrayOfBakeLayerTest.length;
 
-    if(window.sidebar){
-        _bakeLayerTestIdx = window.sidebar.changeTest(_bakeLayerTestIdx, 0);
+    if(window.sideIndexBar){
+        _bakeLayerTestIdx = window.sideIndexBar.changeTest(_bakeLayerTestIdx, 0);
     }
     return new arrayOfBakeLayerTest[_bakeLayerTestIdx]();
 };
@@ -218,8 +218,8 @@ var previousBakeLayerTest = function () {
     if (_bakeLayerTestIdx < 0)
         _bakeLayerTestIdx += arrayOfBakeLayerTest.length;
 
-    if(window.sidebar){
-        _bakeLayerTestIdx = window.sidebar.changeTest(_bakeLayerTestIdx, 0);
+    if(window.sideIndexBar){
+        _bakeLayerTestIdx = window.sideIndexBar.changeTest(_bakeLayerTestIdx, 0);
     }
     return new arrayOfBakeLayerTest[_bakeLayerTestIdx]();
 };
