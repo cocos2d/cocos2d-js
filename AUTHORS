@@ -10,19 +10,42 @@ Current Core Developers of Cocos2d-x:
     Qingkui Hu (samuele3hu)
     Huabing Xu (dabingnn)
     Bo Yu (boyu0)
-    Wenhai Lin(Dhilan007)
+    Wenhai Lin (Dhilan007)
 
-Current Core Developers of Cocos2d-html5 & JSB:
+Current Core Developers of Cocos2d-JS:
     Shun Lin (Sean Lin)
     Hao Wu (WuHao)
     Dingping Lv (David Lv)
     Ricardo Quesada
-    Huabin LING
+    Huabin LING (pandamicro)
     Zhiming Wu
     Sijie Wang
     Jialong Zhai
 
 For the full list of all contributors and retired core developers, please refer to the authors list of cocos2d-x and cocos2d-html5.
+
+Contributors:
+Name                GithubID        Main contribution
+
+seobyeongky         @seobyeongky    XMLHTTPRequest bug fixes
+                                    GLProgram_setUniformLocationWith4f bug fixed
+
+Liang Wu            @akira-cn       No default font Arial on android bug fix
+
+slawo               @slawo          Adds support for debugging over ethernet in addition to WiFi
+
+hbb                 @hbbalfred      Supports arguments for setInterval and setTimeout
+                                    Load file data in plist loader bug fix
+
+lihex               @lihe757        Xcode project of template issue fix
+
+Chris Hannon        @hannon235      Add SocketIO to JSB including test case, manual bindings
+
+Ryeeeeee            @Ryeeeeee       anonEvaluate auto compartment missed bug fix
+
+garfield_ho         @HoGarfield     onTouchBegan return value bug fix
+
+Nat Weiss           @NatWeiss       Mimics the behavior of cc.p function
 
 Cocos2d-JS can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!
