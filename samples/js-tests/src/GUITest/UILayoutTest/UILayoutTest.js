@@ -166,7 +166,7 @@ var UILayoutTest_Layout_Linear_Vertical = UILayoutTestBase.extend({
 
         var lp2 = ccui.LinearLayoutParameter.create();
         this.textButton.setLayoutParameter(lp2);
-        lp2.setGravity(ccui..LinearLayoutParameter.CENTER_HORIZONTAL);
+        lp2.setGravity(ccui.LinearLayoutParameter.CENTER_HORIZONTAL);
         lp2.setMargin(new ccui.Margin(0, 10, 0, 10));
 
         var lp3 = ccui.LinearLayoutParameter.create();
