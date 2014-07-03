@@ -171,7 +171,7 @@ var UILayoutTest_Layout_Linear_Vertical = UILayoutTestBase.extend({
 
         var lp3 = ccui.LinearLayoutParameter.create();
         this.button_scale9.setLayoutParameter(lp3);
-        lp3.setGravity(ccui..LinearLayoutParameter.CENTER_HORIZONTAL);
+        lp3.setGravity(ccui.LinearLayoutParameter.CENTER_HORIZONTAL);
         lp3.setMargin(new ccui.Margin(0, 10, 0, 10));
     }
 });
