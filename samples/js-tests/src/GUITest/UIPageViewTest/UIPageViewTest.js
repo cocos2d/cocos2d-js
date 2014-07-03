@@ -40,20 +40,20 @@ var UIPageViewTest = UIScene.extend({
             // Create the page view
             var pageView = ccui.PageView.create();
             pageView.setTouchEnabled(true);
-            pageView.setContentSize(cc.size(240, 130));
+            pageView.setSize(cc.size(240, 130));
             pageView.x = (widgetSize.width - background.width) / 2 + (background.width - pageView.width) / 2;
             pageView.y = (widgetSize.height - background.height) / 2 + (background.height - pageView.height) / 2;
 
             for (var i = 0; i < 3; ++i) {
                 var layout = ccui.Layout.create();
-                layout.setContentSize(cc.size(240, 130));
+                layout.setSize(cc.size(240, 130));
                 var layoutRect = layout.getContentSize();
 
                 var imageView = ccui.ImageView.create();
                 imageView.setTouchEnabled(true);
                 imageView.setScale9Enabled(true);
                 imageView.loadTexture("res/cocosui/scrollviewbg.png");
-                imageView.setContentSize(cc.size(240, 130));
+                imageView.setSize(cc.size(240, 130));
                 imageView.x = layoutRect.width / 2;
                 imageView.y = layoutRect.height / 2;
                 layout.addChild(imageView);
