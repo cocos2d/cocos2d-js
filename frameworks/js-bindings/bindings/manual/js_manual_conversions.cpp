@@ -273,7 +273,7 @@ jsval ulong_to_jsval( JSContext *cx, unsigned long number )
 #endif
 }
 
-jsval longlong_to_jsval( JSContext *cx, long long number )
+jsval long_long_to_jsval( JSContext *cx, long long number )
 {
 #if JSB_REPRESENT_LONGLONG_AS_STR
 	char chr[128];
