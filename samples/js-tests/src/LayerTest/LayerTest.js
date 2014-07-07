@@ -109,9 +109,12 @@ var LayerTest1 = LayerTest.extend({
             }, this);
 
         var s = director.getWinSize();
-        var layer = new cc.LayerColor(cc.color(255, 0, 0, 128), 200, 200);
+        var layer = new cc.LayerColor(cc.color(255, 0, 0, 128));
 
         layer.ignoreAnchor = false;
+        layer.anchorX = 0.5;
+        layer.anchorY = 0.5;
+        layer.setContentSize(200, 200);
         layer.x = s.width / 2;
         layer.y = s.height / 2;
         this.addChild(layer, 1, cc.TAG_LAYER);
