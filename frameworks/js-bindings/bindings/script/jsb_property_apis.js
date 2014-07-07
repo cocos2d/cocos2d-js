@@ -361,6 +361,7 @@ cc.defineGetterSetter(_proto, "texture", _proto.getTexture, _proto.setTexture);
 _proto = cc.Texture2D.prototype;
 cc.defineGetterSetter(_proto, "name", _proto.getName);
 cc.defineGetterSetter(_proto, "pixelFormat", _proto.getPixelFormat);
+cc.defineGetterSetter(_proto, "defaultPixelFormat", _proto.getDefaultAlphaPixelFormat, _proto.setDefaultAlphaPixelFormat);
 cc.defineGetterSetter(_proto, "pixelsWidth", _proto.getPixelsWide);
 cc.defineGetterSetter(_proto, "pixelsHeight", _proto.getPixelsHigh);
 cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
