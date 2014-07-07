@@ -24,7 +24,7 @@
 // cocos2d constants
 //
 
-cc.ENGINE_VERSION = "Cocos2d-JS v3.0 rc0";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.0 RC0";
 
 cc.TARGET_PLATFORM = {
     WINDOWS:0,
@@ -2562,7 +2562,7 @@ cc.Node.prototype.getBoundingBoxToWorld = function () {
     var contentSize = this.getContentSize();
     var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
     var matrix = this.getNodeToWorldTransform();
-    var trans = cc.AffineTransformMake(matrix[0], matrix[4], matrix[1], matrix[5], matrix[12], matrix[13]);  
+    var trans = cc.AffineTransformMake(matrix[0], matrix[1], matrix[4], matrix[5], matrix[12], matrix[13]);  
     rect = cc.RectApplyAffineTransform(rect, trans);
 
     //query child's BoundingBox
