@@ -308,10 +308,10 @@ var HoleDemo = BaseClippingNodeTest.extend({
 
         this._outerClipper = cc.ClippingNode.create();
         this._outerClipper.retain();
-        var transform = cc.AffineTransformMakeIdentity();
-        transform = cc.AffineTransformScale(transform, target.scale, target.scale);
+        var transform = cc.affineTransformMakeIdentity();
+        transform = cc.affineTransformScale(transform, target.scale, target.scale);
 
-	    var ocsize = cc.SizeApplyAffineTransform(cc.size(target.width, target.height), transform);
+	    var ocsize = cc.sizeApplyAffineTransform(cc.size(target.width, target.height), transform);
         this._outerClipper.width = ocsize.width;
 	    this._outerClipper.height = ocsize.height;
         this._outerClipper.anchorX = 0.5;

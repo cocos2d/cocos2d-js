@@ -78,4 +78,3 @@ else
     echo "Unknown \$PLATFORM: '$PLATFORM'"
     exit 1
 fi
-
