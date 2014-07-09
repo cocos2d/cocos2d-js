@@ -1,12 +1,14 @@
 var GameControlMenu = cc.Layer.extend({
-
+    ctor:function(){
+        this.init();
+    },
     init:function () {
         var bRet = false;
         if (this._super()) {
             cc.MenuItemFont.setFontSize(18);
             cc.MenuItemFont.setFontName("Arial");
-            var systemMenu = cc.MenuItemFont.create("Main Menu", this.onSysMenu);
-            var menu = cc.Menu.create(systemMenu);
+            var systemMenu = new cc.MenuItemFont("Main Menu", this.onSysMenu);
+            var menu = new cc.Menu(systemMenu);
             menu.x = 0;
 	        menu.y = 0;
             systemMenu.attr({
@@ -24,16 +26,8 @@ var GameControlMenu = cc.Layer.extend({
     onSysMenu:function (pSender) {
         cc.audioEngine.stopMusic();
         cc.audioEngine.stopAllEffects();
-        var scene = cc.Scene.create();
-        scene.addChild(SysMenu.create());
-	    cc.director.runScene(cc.TransitionFade.create(1.2,scene));
+        var scene = new cc.Scene();
+        scene.addChild(new SysMenu());
+	    cc.director.runScene(new cc.TransitionFade(1.2,scene));
     }
 });
-
-GameControlMenu.create = function () {
-    var sg = new GameControlMenu();
-    if (sg && sg.init()) {
-        return sg;
-    }
-    return null;
-};

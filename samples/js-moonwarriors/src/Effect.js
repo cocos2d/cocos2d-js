@@ -10,21 +10,21 @@ var flareEffect = function (flare,target, callback) {
 		scale: 0.2
 	});
 
-    var opacityAnim = cc.FadeTo.create(0.5, 255);
-    var opacDim = cc.FadeTo.create(1, 0);
-    var biggeAnim = cc.ScaleBy.create(0.7, 1.2, 1.2);
-    var biggerEase = cc.EaseSineOut.create(biggeAnim);
-    var moveAnim = cc.MoveBy.create(0.5, cc.p(328, 0));
-    var easeMove = cc.EaseSineOut.create(moveAnim);
-    var rotateAnim = cc.RotateBy.create(2.5, 90);
-    var rotateEase = cc.EaseExponentialOut.create(rotateAnim);
-    var bigger = cc.ScaleTo.create(0.5, 1);
+    var opacityAnim = new cc.FadeTo(0.5, 255);
+    var opacDim = new cc.FadeTo(1, 0);
+    var biggeAnim = new cc.ScaleBy(0.7, 1.2, 1.2);
+    var biggerEase = new cc.EaseSineOut(biggeAnim);
+    var moveAnim = new cc.MoveBy(0.5, cc.p(328, 0));
+    var easeMove = new cc.EaseSineOut(moveAnim);
+    var rotateAnim = new cc.RotateBy(2.5, 90);
+    var rotateEase = new cc.EaseExponentialOut(rotateAnim);
+    var bigger = new cc.ScaleTo(0.5, 1);
 
-    var onComplete = cc.CallFunc.create(callback, target);
-    var killflare = cc.CallFunc.create(function () {
+    var onComplete = new cc.CallFunc(callback, target);
+    var killflare = new cc.CallFunc(function () {
         this.parent.removeChild(this,true);
     }, flare);
-    flare.runAction(cc.Sequence.create(opacityAnim, biggerEase, opacDim, killflare, onComplete));
+    flare.runAction(new cc.Sequence(opacityAnim, biggerEase, opacDim, killflare, onComplete));
     flare.runAction(easeMove);
     flare.runAction(rotateEase);
     flare.runAction(bigger);
@@ -39,9 +39,9 @@ var spark = function (x, y, parent, scale, duration) {
     scale = scale || 0.3;
     duration = duration || 0.5;
 
-    var one = cc.Sprite.create("#explode1.png");
-    var two = cc.Sprite.create("#explode2.png");
-    var three = cc.Sprite.create("#explode3.png");
+    var one = new cc.Sprite("#explode1.png");
+    var two = new cc.Sprite("#explode2.png");
+    var three = new cc.Sprite("#explode3.png");
 
     one.attr({
 	    x: x,
@@ -64,12 +64,12 @@ var spark = function (x, y, parent, scale, duration) {
     parent.addSpark(two);
     parent.addSpark(three);
 
-    var left = cc.RotateBy.create(duration, -45);
-    var right = cc.RotateBy.create(duration, 45);
-    var scaleBy = cc.ScaleBy.create(duration, 3, 3);
-    var fadeOut = cc.FadeOut.create(duration);
-    var remove = cc.CallFunc.create(removeFromParent, this);
-    var seq = cc.Sequence.create( fadeOut, remove );
+    var left = new cc.RotateBy(duration, -45);
+    var right = new cc.RotateBy(duration, 45);
+    var scaleBy = new cc.ScaleBy(duration, 3, 3);
+    var fadeOut = new cc.FadeOut(duration);
+    var remove = new cc.CallFunc(removeFromParent, this);
+    var seq = new cc.Sequence( fadeOut, remove );
 
     one.runAction(left);
     two.runAction(right);
