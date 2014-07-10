@@ -259,7 +259,8 @@ _p._ctor = function() {
 			if (arguments[i])
 				this.addSubItem(arguments[i]);
 		}
-		this.setCallback(callback, target);
+        if (callback)
+            target ? this.setCallback(callback, target) : this.setCallback(callback);
 	}
 	else {
 		callback = callback ? callback.bind(target) : null;
