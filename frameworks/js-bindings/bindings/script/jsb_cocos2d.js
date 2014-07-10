@@ -478,7 +478,7 @@ cc.degreesToRadians = function (angle) {
  * @return {Number}
  * @function
  */
-cc.radiansToDegress = function (angle) {
+cc.radiansToDegrees = function (angle) {
 	return angle * cc.DEG;
 };
 
