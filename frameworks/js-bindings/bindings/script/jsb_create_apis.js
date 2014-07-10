@@ -134,27 +134,27 @@ _p._ctor = function(gridSize, texture, flipped){
 
 _p = cc.Menu.prototype;
 _p._ctor = function(menuItems) {
-	if((arguments.length > 0) && (arguments[arguments.length-1] == null))
-		cc.log("parameters should not be ending with null in Javascript");
+    if((arguments.length > 0) && (arguments[arguments.length-1] == null))
+        cc.log("parameters should not be ending with null in Javascript");
 
-	var argc = arguments.length, items;
-	if (argc == 0) {
-		items = [];
-	} else if (argc == 1) {
-		if (menuItems instanceof Array) {
-			items = menuItems;
-		}
-		else items = [];
-	}
-	else if (argc > 1) {
-		var items = [];
-		for (var i = 0; i < argc; i++) {
-			if (arguments[i])
-				items.push(arguments[i]);
-		}
-	}
+    var argc = arguments.length,
+        items = [];
+    if (argc == 1) {
+        if (menuItems instanceof Array) {
+            items = menuItems;
+        }
+        else{
+            items.push(arguments[0]);
+        }
+    }
+    else if (argc > 1) {
+        for (var i = 0; i < argc; i++) {
+            if (arguments[i])
+                items.push(arguments[i]);
+        }
+    }
 
-	items && items.length > 0 && this.initWithArray(items);
+    items && items.length > 0 && this.initWithArray(items);
 };
 
 
