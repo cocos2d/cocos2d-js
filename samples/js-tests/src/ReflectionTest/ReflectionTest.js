@@ -26,7 +26,7 @@
 //
 //------------------------------------------------------------------
 var ReflectionTestLayer = BaseTestLayer.extend({
-    _title:"cc.reflection",
+    _title:"jsb.reflection",
     _subtitle:"call java methods in js",
 
     ctor:function() {
