@@ -96,7 +96,7 @@ var extensionsTestItemNames = [
     }
 ];
 
-if (cc.sys.isMobile || !cc.sys.isNative) {
+if (cc.sys.isMobile && cc.sys.isNative) {
      extensionsTestItemNames.push({
         itemTitle:"PluginTest",
         testScene:function () {

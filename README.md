@@ -11,10 +11,10 @@ Furthermore, javascript friendly API makes your game development experience a br
 
 ## API Reference
 
-- API Reference: [Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0beta/index.html)
+- API Reference: [Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0rc0/index.html)
 
 - And you can download it from
-[Cocos2d-JS-v3.0-beta-API.zip](http://www.cocos2d-x.org/filedown/Cocos2d-JS-v3.0-beta-API.zip)
+[Cocos2d-JS-v3.0-rc0-API.zip](http://www.cocos2d-x.org/filedown/Cocos2d-JS-v3.0-rc0-API.zip)
 
 ## Online demo
 - [MoonWarriors](http://www.cocos2d-x.org/MoonWarriors/index.html)

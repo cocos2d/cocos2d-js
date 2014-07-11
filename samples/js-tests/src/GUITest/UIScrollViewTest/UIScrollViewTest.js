@@ -41,7 +41,7 @@ var UIScrollViewTest_Vertical = UIScene.extend({
             var scrollView = ccui.ScrollView.create();
             scrollView.setDirection(ccui.ScrollView.DIR_VERTICAL);
             scrollView.setTouchEnabled(true);
-            scrollView.setContentSize(cc.size(280, 150));
+            scrollView.setSize(cc.size(280, 150));
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollView.width) / 2;
             scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollView.height) / 2;
@@ -108,7 +108,7 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
             var scrollView = ccui.ScrollView.create();
             scrollView.setDirection(ccui.ScrollView.DIR_HORIZONTAL);
             scrollView.setTouchEnabled(true);
-            scrollView.setContentSize(cc.size(280, 150));
+            scrollView.setSize(cc.size(280, 150));
             var scrollViewRect = scrollView.getContentSize();
             scrollView.setInnerContainerSize(cc.size(scrollViewRect.width,scrollViewRect.height));
 
@@ -180,7 +180,7 @@ var UIScrollViewTest_Both = UIScene.extend({
             scrollView.setBounceEnabled(true);
             scrollView.setBackGroundImageScale9Enabled(true);
             scrollView.setBackGroundImage("res/cocosui/green_edit.png");
-            scrollView.setContentSize(cc.size(210, 122));
+            scrollView.setSize(cc.size(210, 122));
             var scrollViewSize = scrollView.getContentSize();
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewSize.width) / 2;
@@ -220,7 +220,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection = UIScene.extend({
             scrollView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
             scrollView.setInnerContainerSize(cc.size(480, 320));
-            scrollView.setContentSize(cc.size(100, 100));
+            scrollView.setSize(cc.size(100, 100));
             var scrollViewSize = scrollView.getContentSize();
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewSize.width) / 2;
@@ -261,7 +261,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = UIScene.extend({
             scrollView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
             scrollView.setInnerContainerSize(cc.size(480, 320));
-            scrollView.setContentSize(cc.size(100, 100));
+            scrollView.setSize(cc.size(100, 100));
             var scrollViewSize = scrollView.getContentSize();
 
             scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollViewSize.width) / 2;

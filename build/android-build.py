@@ -89,7 +89,7 @@ def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,an
         raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")
     elif android_platform is not None:
           sdk_tool_path = os.path.join(sdk_root, "tools/android")
-          cocoslib_path = os.path.join(cocos_root, "cocos/2d/platform/android/java")
+          cocoslib_path = os.path.join(cocos_root, "cocos/platform/android/java")
           command = '%s update lib-project -t %s -p %s' % (sdk_tool_path,android_platform,cocoslib_path)
           if os.system(command) != 0:
                   raise Exception("update cocos lib-project [ " + cocoslib_path + " ] fails!")
@@ -124,8 +124,10 @@ def copy_resources(target, app_android_root):
 
     assets_res_dir = assets_dir + "/res";
     assets_scripts_dir = assets_dir + "/src";
+    assets_jsb_dir = assets_dir + "/script";
     os.mkdir(assets_res_dir);
     os.mkdir(assets_scripts_dir);
+    os.mkdir(assets_jsb_dir);
 
     if target in JS_SAMPLES:
         shutil.copy(os.path.join(app_android_root, "../../main.js"), assets_dir)
@@ -139,7 +141,7 @@ def copy_resources(target, app_android_root):
 
         # js project should copy js script
         resources_dir = os.path.join(app_android_root, "../../../../frameworks/js-bindings/bindings/script")
-        copy_files(resources_dir, assets_dir)
+        copy_files(resources_dir, assets_jsb_dir)
 
 def build(targets,ndk_build_param,android_platform,build_mode):
 

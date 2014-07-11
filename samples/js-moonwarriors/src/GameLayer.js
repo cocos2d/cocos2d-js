@@ -130,9 +130,13 @@ var GameLayer = cc.Layer.extend({
 
             if (cc.sys.capabilities.hasOwnProperty('touches')){
                 cc.eventManager.addListener({
+                    prevTouchId: -1,
                     event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                     onTouchesMoved:function (touches, event) {
-                        event.getCurrentTarget().processEvent(touches[0]);
+                        var touch = touches[0];
+                        if (this.prevTouchId != touch.getID())
+                            this.prevTouchId = touch.getId();
+                        else event.getCurrentTarget().processEvent(touches[0]);
                     }
                 }, this);
             }
