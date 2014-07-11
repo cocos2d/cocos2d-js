@@ -637,8 +637,12 @@ cc.FadeTo.prototype._ctor = function(duration, opacity) {
 	opacity !== undefined && this.initWithDuration(duration, opacity);
 };
 
-cc.FadeIn.prototype._ctor = cc.FadeOut.prototype._ctor = function(duration) {
-	duration !== undefined && this.initWithDuration(duration);
+cc.FadeIn.prototype._ctor = function(duration) {
+	duration !== undefined && this.initWithDuration(duration, 255);
+};
+
+cc.FadeOut.prototype._ctor = function(duration) {
+    duration !== undefined && this.initWithDuration(duration, 0);
 };
 
 cc.TintTo.prototype._ctor = cc.TintBy.prototype._ctor = function(duration, red, green, blue) {
