@@ -1227,8 +1227,9 @@ bool startRuntime()
 
     ScriptingCore::getInstance()->addRegisterCallback(register_FileUtils);
 
-    static ConsoleCustomCommand s_customCommand;
-    s_customCommand.init();
+    static ConsoleCustomCommand *g_customCommand;
+    g_customCommand = new ConsoleCustomCommand();
+    g_customCommand->init();
     ScriptingCore::getInstance()->start();
     ScriptingCore::getInstance()->enableDebugger();
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
