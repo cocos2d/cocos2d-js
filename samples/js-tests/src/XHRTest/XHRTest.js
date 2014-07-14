@@ -40,28 +40,13 @@ var XHRTestScene = TestScene.extend({
 });
 
 var XHRTestLayer = cc.Layer.extend({
-    init:function () {
-        if (!this._super()) {
-            return false;
-        }
-
-        var winSize = cc.director.getWinSize();
-
-        // Back Menu
-        var itemBack = cc.MenuItemFont.create("Back", this.toExtensionsMainLayer, this);
-        itemBack.x = winSize.width - 50;
-        itemBack.y = 25;
-        var menuBack = cc.Menu.create(itemBack);
-        menuBack.x = 0;
-        menuBack.y = 0;
-        this.addChild(menuBack);
-
-        return true;
+    ctor:function () {
+        this._super();
     },
 
     onEnter: function() {
         this._super();
-        var l = cc.LabelTTF.create("Get infos via XHR", "Thonburi", 16);
+        var l = new cc.LabelTTF("Get infos via XHR", "Thonburi", 16);
         this.addChild(l, 1);
         l.x = winSize.width / 2;
         l.y = winSize.height - 60;
@@ -73,7 +58,7 @@ var XHRTestLayer = cc.Layer.extend({
     sendGetRequest: function() {
         var that = this;
         var xhr = cc.loader.getXMLHttpRequest();
-        var statusGetLabel = cc.LabelTTF.create("Status:", "Thonburi", 18);
+        var statusGetLabel = new cc.LabelTTF("Status:", "Thonburi", 18);
         this.addChild(statusGetLabel, 1);
         statusGetLabel.x = winSize.width / 2;
         statusGetLabel.y = winSize.height - 100;
@@ -84,7 +69,7 @@ var XHRTestLayer = cc.Layer.extend({
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var httpStatus = xhr.statusText;
                 var response = xhr.responseText.substring(0, 50) + "...";
-                var responseLabel = cc.LabelTTF.create("GET Response (50 chars): \n" + response, "Thonburi", 16);
+                var responseLabel = new cc.LabelTTF("GET Response (50 chars): \n" + response, "Thonburi", 16);
                 that.addChild(responseLabel, 1);
                 responseLabel.anchorX = 0;
                 responseLabel.anchorY = 1;
@@ -101,7 +86,7 @@ var XHRTestLayer = cc.Layer.extend({
     sendPostRequest: function() {
         var that = this;
         var xhr = cc.loader.getXMLHttpRequest();
-        var statusPostLabel = cc.LabelTTF.create("Status:", "Thonburi", 18);
+        var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 18);
         this.addChild(statusPostLabel, 1);
 
         statusPostLabel.x = winSize.width / 2;
@@ -114,7 +99,7 @@ var XHRTestLayer = cc.Layer.extend({
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var httpStatus = xhr.statusText;
                 var response = xhr.responseText.substring(0, 50) + "...";
-                var responseLabel = cc.LabelTTF.create("POST Response (50 chars):  \n" + response, "Thonburi", 16);
+                var responseLabel = new cc.LabelTTF("POST Response (50 chars):  \n" + response, "Thonburi", 16);
                 that.addChild(responseLabel, 1);
                 responseLabel.anchorX = 0;
                 responseLabel.anchorY = 1;
@@ -128,28 +113,15 @@ var XHRTestLayer = cc.Layer.extend({
         xhr.send("test=ok");
     },
 
-    toExtensionsMainLayer:function (sender) {
-        var scene = new ExtensionsTestScene();
-        scene.runThisTest();
-    },
-
     scrollViewDidScroll:function (view) {
     },
     scrollViewDidZoom:function (view) {
     }
 });
 
-XHRTestLayer.create = function () {
-    var retObj = new XHRTestLayer();
-    if (retObj && retObj.init()) {
-        return retObj;
-    }
-    return null;
-};
-
 var runXHRTest = function () {
-    var pScene = cc.Scene.create();
-    var pLayer = XHRTestLayer.create();
+    var pScene = new cc.Scene();
+    var pLayer = new XHRTestLayer();
     pScene.addChild(pLayer);
     cc.director.runScene(pScene);
 };
