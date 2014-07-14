@@ -28,9 +28,9 @@ var Ship = cc.Sprite.extend({
         animFrames.push(frame1);
 
         // ship animate
-        var animation = cc.Animation.create(animFrames, 0.1);
-        var animate = cc.Animate.create(animation);
-        this.runAction(cc.RepeatForever.create(animate));
+        var animation = new cc.Animation(animFrames, 0.1);
+        var animate = new cc.Animate(animation);
+        this.runAction(new cc.RepeatForever(animate));
         this.schedule(this.shoot, 1 / 6);
 
         this.initBornSprite();
@@ -98,7 +98,7 @@ var Ship = cc.Sprite.extend({
         return cc.rect(x - w / 2, y - h / 2, w, h / 2);
     },
     initBornSprite:function () {
-        this.bornSprite = cc.Sprite.create("#ship03.png");
+        this.bornSprite = new cc.Sprite("#ship03.png");
         this.bornSprite.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
         this.bornSprite.x = this.width / 2;
 	    this.bornSprite.y = 12;
@@ -109,15 +109,15 @@ var Ship = cc.Sprite.extend({
         //revive effect
         this.canBeAttack = false;
         this.bornSprite.scale = 8;
-        this.bornSprite.runAction(cc.ScaleTo.create(0.5, 1, 1));
+        this.bornSprite.runAction(new cc.ScaleTo(0.5, 1, 1));
         this.bornSprite.visible = true;
-        var blinks = cc.Blink.create(3, 9);
-        var makeBeAttack = cc.CallFunc.create(function (t) {
+        var blinks = new cc.Blink(3, 9);
+        var makeBeAttack = new cc.CallFunc(function (t) {
             t.canBeAttack = true;
             t.visible = true;
             t.bornSprite.visible = false;
         }.bind(this));
-        this.runAction(cc.Sequence.create(cc.DelayTime.create(0.5), blinks, makeBeAttack));
+        this.runAction(new cc.Sequence(new cc.DelayTime(0.5), blinks, makeBeAttack));
 
         this.HP = 5;
         this._hurtColorLife = 0;

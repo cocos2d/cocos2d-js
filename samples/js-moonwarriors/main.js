@@ -31,7 +31,7 @@ cc.game.onStart = function(){
     cc.view.resizeWithBrowserSize(true);
     //load resources
     cc.LoaderScene.preload(g_mainmenu, function () {
-        cc.director.runScene(new SysMenu.scene());
+        cc.director.runScene(SysMenu.scene());
     }, this);
 };
 

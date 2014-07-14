@@ -23435,7 +23435,7 @@ void js_cocos2d_CallFunc_finalize(JSFreeOp *fop, JSObject *obj) {
 
 void js_register_cocos2dx_CallFunc(JSContext *cx, JSObject *global) {
 	jsb_cocos2d_CallFunc_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_cocos2d_CallFunc_class->name = "CallFunc";
+	jsb_cocos2d_CallFunc_class->name = "_CallFunc";
 	jsb_cocos2d_CallFunc_class->addProperty = JS_PropertyStub;
 	jsb_cocos2d_CallFunc_class->delProperty = JS_DeletePropertyStub;
 	jsb_cocos2d_CallFunc_class->getProperty = JS_PropertyStub;
@@ -23470,7 +23470,7 @@ void js_register_cocos2dx_CallFunc(JSContext *cx, JSObject *global) {
 	// make the class enumerable in the registered namespace
 //	bool found;
 //FIXME: Removed in Firefox v27	
-//	JS_SetPropertyAttributes(cx, global, "CallFunc", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+//	JS_SetPropertyAttributes(cx, global, "_CallFunc", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
 	// add the proto and JSClass to the type->js info hash table
 	TypeTest<cocos2d::CallFunc> t;
@@ -23482,6 +23482,94 @@ void js_register_cocos2dx_CallFunc(JSContext *cx, JSObject *global) {
 		p->jsclass = jsb_cocos2d_CallFunc_class;
 		p->proto = jsb_cocos2d_CallFunc_prototype;
 		p->parentProto = jsb_cocos2d_ActionInstant_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
+	}
+}
+
+JSClass  *jsb_cocos2d_CallFuncN_class;
+JSObject *jsb_cocos2d_CallFuncN_prototype;
+
+bool js_cocos2dx_CallFuncN_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::CallFuncN* cobj = new cocos2d::CallFuncN();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::CallFuncN> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::CallFuncN");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
+
+extern JSObject *jsb_cocos2d_CallFunc_prototype;
+
+void js_cocos2d_CallFuncN_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (CallFuncN)", obj);
+}
+
+void js_register_cocos2dx_CallFuncN(JSContext *cx, JSObject *global) {
+	jsb_cocos2d_CallFuncN_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_CallFuncN_class->name = "CallFunc";
+	jsb_cocos2d_CallFuncN_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_CallFuncN_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_CallFuncN_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_CallFuncN_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_CallFuncN_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_CallFuncN_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_CallFuncN_class->convert = JS_ConvertStub;
+	jsb_cocos2d_CallFuncN_class->finalize = js_cocos2d_CallFuncN_finalize;
+	jsb_cocos2d_CallFuncN_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+	static JSPropertySpec properties[] = {
+		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+	};
+
+	static JSFunctionSpec funcs[] = {
+        JS_FS_END
+	};
+
+	JSFunctionSpec *st_funcs = NULL;
+
+	jsb_cocos2d_CallFuncN_prototype = JS_InitClass(
+		cx, global,
+		jsb_cocos2d_CallFunc_prototype,
+		jsb_cocos2d_CallFuncN_class,
+		js_cocos2dx_CallFuncN_constructor, 0, // constructor
+		properties,
+		funcs,
+		NULL, // no static properties
+		st_funcs);
+	// make the class enumerable in the registered namespace
+//	bool found;
+//FIXME: Removed in Firefox v27	
+//	JS_SetPropertyAttributes(cx, global, "CallFunc", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+	// add the proto and JSClass to the type->js info hash table
+	TypeTest<cocos2d::CallFuncN> t;
+	js_type_class_t *p;
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
+		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+		p->jsclass = jsb_cocos2d_CallFuncN_class;
+		p->proto = jsb_cocos2d_CallFuncN_prototype;
+		p->parentProto = jsb_cocos2d_CallFunc_prototype;
 		_js_global_type_map.insert(std::make_pair(typeName, p));
 	}
 }
@@ -58115,6 +58203,7 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
 	js_register_cocos2dx_MenuItemSprite(cx, obj);
 	js_register_cocos2dx_MenuItemImage(cx, obj);
 	js_register_cocos2dx_ParticleFire(cx, obj);
+	js_register_cocos2dx_ProgressTo(cx, obj);
 	js_register_cocos2dx_TransitionZoomFlipAngular(cx, obj);
 	js_register_cocos2dx_EaseRateAction(cx, obj);
 	js_register_cocos2dx_EaseIn(cx, obj);
@@ -58265,7 +58354,7 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
 	js_register_cocos2dx_RotateBy(cx, obj);
 	js_register_cocos2dx_FileUtils(cx, obj);
 	js_register_cocos2dx_Sprite(cx, obj);
-	js_register_cocos2dx_ProgressTo(cx, obj);
+	js_register_cocos2dx_CallFuncN(cx, obj);
 	js_register_cocos2dx_TransitionProgressOutIn(cx, obj);
 	js_register_cocos2dx_CatmullRomBy(cx, obj);
 	js_register_cocos2dx_Sequence(cx, obj);

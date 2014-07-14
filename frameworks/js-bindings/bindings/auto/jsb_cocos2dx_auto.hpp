@@ -1495,6 +1495,15 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_CallFunc_execute(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_CallFunc_CallFunc(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_CallFuncN_class;
+extern JSObject *jsb_cocos2d_CallFuncN_prototype;
+
+bool js_cocos2dx_CallFuncN_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_CallFuncN_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_CallFuncN(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_CallFuncN_CallFuncN(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_GridAction_class;
 extern JSObject *jsb_cocos2d_GridAction_prototype;
 

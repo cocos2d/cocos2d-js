@@ -134,27 +134,27 @@ _p._ctor = function(gridSize, texture, flipped){
 
 _p = cc.Menu.prototype;
 _p._ctor = function(menuItems) {
-	if((arguments.length > 0) && (arguments[arguments.length-1] == null))
-		cc.log("parameters should not be ending with null in Javascript");
+    if((arguments.length > 0) && (arguments[arguments.length-1] == null))
+        cc.log("parameters should not be ending with null in Javascript");
 
-	var argc = arguments.length, items;
-	if (argc == 0) {
-		items = [];
-	} else if (argc == 1) {
-		if (menuItems instanceof Array) {
-			items = menuItems;
-		}
-		else items = [];
-	}
-	else if (argc > 1) {
-		var items = [];
-		for (var i = 0; i < argc; i++) {
-			if (arguments[i])
-				items.push(arguments[i]);
-		}
-	}
+    var argc = arguments.length,
+        items = [];
+    if (argc == 1) {
+        if (menuItems instanceof Array) {
+            items = menuItems;
+        }
+        else{
+            items.push(arguments[0]);
+        }
+    }
+    else if (argc > 1) {
+        for (var i = 0; i < argc; i++) {
+            if (arguments[i])
+                items.push(arguments[i]);
+        }
+    }
 
-	items && items.length > 0 && this.initWithArray(items);
+    items && items.length > 0 && this.initWithArray(items);
 };
 
 
@@ -259,7 +259,8 @@ _p._ctor = function() {
 			if (arguments[i])
 				this.addSubItem(arguments[i]);
 		}
-		this.setCallback(callback, target);
+        if (callback)
+            target ? this.setCallback(callback, target) : this.setCallback(callback);
 	}
 	else {
 		callback = callback ? callback.bind(target) : null;
@@ -636,8 +637,12 @@ cc.FadeTo.prototype._ctor = function(duration, opacity) {
 	opacity !== undefined && this.initWithDuration(duration, opacity);
 };
 
-cc.FadeIn.prototype._ctor = cc.FadeOut.prototype._ctor = function(duration) {
-	duration !== undefined && this.initWithDuration(duration);
+cc.FadeIn.prototype._ctor = function(duration) {
+	duration !== undefined && this.initWithDuration(duration, 255);
+};
+
+cc.FadeOut.prototype._ctor = function(duration) {
+    duration !== undefined && this.initWithDuration(duration, 0);
 };
 
 cc.TintTo.prototype._ctor = cc.TintBy.prototype._ctor = function(duration, red, green, blue) {

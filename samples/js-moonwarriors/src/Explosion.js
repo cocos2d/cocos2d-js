@@ -14,9 +14,9 @@ var Explosion = cc.Sprite.extend({
     },
     play:function(){
         //return;
-        this.runAction(cc.Sequence.create(
-            cc.Animate.create(this.animation),
-            cc.CallFunc.create(this.destroy, this)
+        this.runAction(new cc.Sequence(
+            new cc.Animate(this.animation),
+            new cc.CallFunc(this.destroy, this)
         ));
     },
     destroy:function () {
@@ -33,7 +33,7 @@ Explosion.sharedExplosion = function () {
         var frame = cc.spriteFrameCache.getSpriteFrame(str);
         animFrames.push(frame);
     }
-    var animation = cc.Animation.create(animFrames, 0.04);
+    var animation = new cc.Animation(animFrames, 0.04);
     cc.animationCache.addAnimation(animation, "Explosion");
 };
 
