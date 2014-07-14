@@ -11,8 +11,8 @@ var HitEffect = cc.Sprite.extend({
 	        rotation: rotation,
 	        scale: scale
         });
-        this.runAction(cc.ScaleBy.create(0.3, 2, 2));
-        this.runAction(cc.Sequence.create(cc.FadeOut.create(0.3), cc.CallFunc.create(this.destroy, this)));
+        this.runAction(new cc.ScaleBy(0.3, 2, 2));
+        this.runAction(new cc.Sequence(new cc.FadeOut(0.3), new cc.CallFunc(this.destroy, this)));
     },
     destroy:function () {
         this.visible = false;
