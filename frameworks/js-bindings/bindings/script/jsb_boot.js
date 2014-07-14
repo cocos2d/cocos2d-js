@@ -1253,8 +1253,8 @@ if(cc.sys.os == cc.sys.OS_ANDROID){
     jsb.reflection = new JavascriptJavaBridge();
     cc.sys.capabilities["keyboard"] = true;
 }
-else if(cc.sys.os == cc.sys.OS_IOS){
-    //TODO
+else if(cc.sys.os == cc.sys.OS_IOS||cc.sys.os == cc.sys.OS_OSX){
+    jsb.reflection = new JavaScriptObjCBridge();
 }
 
 //+++++++++++++++++++++++++other initializations end+++++++++++++++++++++++++++++

@@ -454,7 +454,7 @@ var testNames = [
     },
     {
         title:"Reflection Test",
-        platforms: PLATFROM_ANDROID,
+        platforms: PLATFORM_JSB,
         testScene:function () {
             return new ReflectionTestScene();
         }
