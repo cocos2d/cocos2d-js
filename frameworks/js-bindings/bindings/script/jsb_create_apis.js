@@ -154,7 +154,10 @@ _p._ctor = function(menuItems) {
         }
     }
 
-    items && items.length > 0 && this.initWithArray(items);
+    if(items && items.length > 0)
+        this.initWithArray(items);
+    else
+        this.init();
 };
 
 
