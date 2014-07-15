@@ -7461,7 +7461,7 @@ Place : function (
 /**
  * @class CallFunc
  */
-cc.CallFunc = {
+cc._CallFunc = {
 
 /**
  * @method execute
@@ -7476,6 +7476,22 @@ execute : function (
  * @constructor
  */
 CallFunc : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CallFuncN
+ */
+cc.CallFunc = {
+
+/**
+ * @method CallFuncN
+ * @constructor
+ */
+CallFuncN : function (
 )
 {
 },

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0541A74F1973876100E45470 /* JavaScriptObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 0541A74D1973876100E45470 /* JavaScriptObjCBridge.h */; };
+		0541A7501973876100E45470 /* JavaScriptObjCBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0541A74E1973876100E45470 /* JavaScriptObjCBridge.mm */; };
+		0541A75B19738AD200E45470 /* JavaScriptObjCBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0541A74E1973876100E45470 /* JavaScriptObjCBridge.mm */; };
 		1A119E8318BDF19200352BAA /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A119E2F18BDF19200352BAA /* jsb_cocos2dx_auto.cpp */; };
 		1A119E8418BDF19200352BAA /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A119E2F18BDF19200352BAA /* jsb_cocos2dx_auto.cpp */; };
 		1A119E8518BDF19200352BAA /* jsb_cocos2dx_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A119E3018BDF19200352BAA /* jsb_cocos2dx_auto.hpp */; };
@@ -157,6 +160,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0541A74D1973876100E45470 /* JavaScriptObjCBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JavaScriptObjCBridge.h; sourceTree = "<group>"; };
+		0541A74E1973876100E45470 /* JavaScriptObjCBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = JavaScriptObjCBridge.mm; sourceTree = "<group>"; };
 		1A119E2F18BDF19200352BAA /* jsb_cocos2dx_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_auto.cpp; sourceTree = "<group>"; };
 		1A119E3018BDF19200352BAA /* jsb_cocos2dx_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_auto.hpp; sourceTree = "<group>"; };
 		1A119E3218BDF19200352BAA /* jsb_cocos2dx_builder_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_builder_auto.cpp; sourceTree = "<group>"; };
@@ -271,6 +276,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0541A74C1973876100E45470 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				0541A74D1973876100E45470 /* JavaScriptObjCBridge.h */,
+				0541A74E1973876100E45470 /* JavaScriptObjCBridge.mm */,
+			);
+			name = ios;
+			path = platform/ios;
+			sourceTree = "<group>";
+		};
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
@@ -307,6 +322,7 @@
 		1A119E4118BDF19200352BAA /* manual */ = {
 			isa = PBXGroup;
 			children = (
+				0541A74C1973876100E45470 /* ios */,
 				1A119E4218BDF19200352BAA /* chipmunk */,
 				1A119E4E18BDF19200352BAA /* cocos2d_specifics.cpp */,
 				1A119E4F18BDF19200352BAA /* cocos2d_specifics.hpp */,
@@ -524,6 +540,7 @@
 				1A119EFD18BDF19200352BAA /* XMLHTTPRequest.h in Headers */,
 				1AB5E63518D05BF30088DAA4 /* jsb_cocos2dx_ui_manual.h in Headers */,
 				1A119EE318BDF19200352BAA /* jsb_opengl_functions.h in Headers */,
+				0541A74F1973876100E45470 /* JavaScriptObjCBridge.h in Headers */,
 				1AB5E62D18D05BC80088DAA4 /* jsb_cocos2dx_ui_auto.hpp in Headers */,
 				1A119ED918BDF19200352BAA /* js_bindings_opengl.h in Headers */,
 				1A119EC718BDF19200352BAA /* jsb_cocos2dx_studio_manual.h in Headers */,
@@ -660,6 +677,7 @@
 				1A119E8918BDF19200352BAA /* jsb_cocos2dx_builder_auto.cpp in Sources */,
 				1A119EAD18BDF19200352BAA /* js_bindings_chipmunk_functions.cpp in Sources */,
 				1A119EED18BDF19200352BAA /* js_bindings_system_functions.cpp in Sources */,
+				0541A7501973876100E45470 /* JavaScriptObjCBridge.mm in Sources */,
 				1A119EB318BDF19200352BAA /* js_bindings_chipmunk_manual.cpp in Sources */,
 				1A119EE918BDF19200352BAA /* jsb_opengl_registration.cpp in Sources */,
 				1A119EF718BDF19200352BAA /* jsb_websocket.cpp in Sources */,
@@ -693,6 +711,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0541A75B19738AD200E45470 /* JavaScriptObjCBridge.mm in Sources */,
 				1A119E8A18BDF19200352BAA /* jsb_cocos2dx_builder_auto.cpp in Sources */,
 				1A119EAE18BDF19200352BAA /* js_bindings_chipmunk_functions.cpp in Sources */,
 				1A119EEE18BDF19200352BAA /* js_bindings_system_functions.cpp in Sources */,

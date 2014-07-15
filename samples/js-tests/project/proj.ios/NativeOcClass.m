@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2012 Zynga Inc.
  * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,33 +20,29 @@
  * THE SOFTWARE.
  */
 
-
-#ifndef __jsb_opengl_manual
-#define __jsb_opengl_manual
-
-#include "js_bindings_config.h"
-#ifdef JSB_INCLUDE_OPENGL
-
-//#include <Availability.h>
-#include "jsapi.h"
-#include "jsfriendapi.h"
-
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-
-// compatible with iOS
-#define glClearDepthf glClearDepth
-#define glDepthRangef glDepthRange
-#ifndef glReleaseShaderCompiler
-	#define glReleaseShaderCompiler()
-#endif
-
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
-
-// forward declaration of new functions
-bool JSB_glGetSupportedExtensions(JSContext *cx, uint32_t argc, jsval *vp);
-
-
-#endif // JSB_INCLUDE_OPENGL
-
-#endif // __jsb_opengl_manual
+#import "NativeOcClass.h"
+#import <UIKit/UIKit.h>
+@implementation NativeOcClass
++(float) callNative:(NSNumber *)a andInt:(NSString *)str{
+    float b = [a floatValue]+111.3333;
+    NSLog(@"callNative string is %@ and int value is %f",str,b);
+    return b;
+}
++(void)callNativeWithParam:(NSString *)str{
+    NSLog(@"callNativeWithParam: str is %@ ",str);
+}
++(NSString *)callNativeWithReturnString{
+    return @"yes is a return string form objective-c";
+}
++(BOOL)callNativeWithReturnBool{
+    return true;
+}
++(int)callNativeWithAdd:(NSNumber *)num1 and:(NSNumber *)num2{
+    return [num1 intValue]+[num2 intValue];
+}
++(BOOL)callNativeUIWithTitle:(NSString *) title andContent:(NSString *)content{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:content delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    [alertView show];
+    return true;
+}
+@end
