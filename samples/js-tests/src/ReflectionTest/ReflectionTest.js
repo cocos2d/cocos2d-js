@@ -45,7 +45,7 @@ var ReflectionTestLayer = BaseTestLayer.extend({
         menuItem.x = winSize.width / 2;
         menuItem.y = winSize.height / 2;
 
-        var menu = cc.Menu.create(menuItem);
+        var menu = new cc.Menu(menuItem);
         menu.x = 0;
         menu.y = 0;
         

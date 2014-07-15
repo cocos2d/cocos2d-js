@@ -325,6 +325,12 @@ _p._ctor = function(fileName, rect){
     }
 };
 
+/************************  ProgressTimer  *************************/
+_p = cc.ProgressTimer.prototype;
+_p._ctor = function(sprite){
+    sprite && this.initWithSprite(sprite);
+};
+
 /************************  TextFieldTTF  *************************/
 _p = cc.TextFieldTTF.prototype;
 _p._ctor = function(placeholder, dimensions, alignment, fontName, fontSize){
