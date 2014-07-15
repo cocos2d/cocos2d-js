@@ -33,8 +33,10 @@ var PLATFORM_JSB = 1 << 0;
 var PLATFORM_HTML5 = 1 << 1;
 var PLATFORM_HTML5_WEBGL = 1 << 2;
 var PLATFROM_ANDROID = 1 << 3;
+var PLATFROM_IOS = 1 << 4;
 var PLATFORM_JSB_AND_WEBGL =  PLATFORM_JSB | PLATFORM_HTML5_WEBGL;
-var PLATFORM_ALL = PLATFORM_JSB | PLATFORM_HTML5 | PLATFORM_HTML5_WEBGL | PLATFROM_ANDROID;
+var PLATFORM_ALL = PLATFORM_JSB | PLATFORM_HTML5 | PLATFORM_HTML5_WEBGL | PLATFROM_ANDROID | PLATFROM_IOS;
+var PLATFROM_ANDROID_AND_IOS = PLATFROM_ANDROID | PLATFROM_IOS;
 
 // automation vars
 var autoTestEnabled = autoTestEnabled || false;
@@ -131,6 +133,8 @@ var TestController = cc.LayerGradient.extend({
                 if(cc.sys.os == cc.sys.OS_ANDROID)
                 {
                     menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFROM_ANDROID ) );
+                }else if(cc.sys.os == cc.sys.OS_IOS|| cc.sys.os == cc.sys.OS_OSX){
+                    menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFROM_IOS) );
                 }else{
                     menuItem.setEnabled( testNames[i].platforms & PLATFORM_JSB );
                 }
@@ -454,7 +458,7 @@ var testNames = [
     },
     {
         title:"Reflection Test",
-        platforms: PLATFROM_ANDROID,
+        platforms: PLATFROM_ANDROID_AND_IOS,
         testScene:function () {
             return new ReflectionTestScene();
         }

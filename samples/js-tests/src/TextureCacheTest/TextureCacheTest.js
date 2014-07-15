@@ -34,8 +34,8 @@ var TextureCacheTest = cc.Layer.extend({
 
         var size = cc.director.getWinSize();
 
-        this._labelLoading = cc.LabelTTF.create("loading...", "Arial", 15);
-        this._labelPercent = cc.LabelTTF.create("%0", "Arial", 15);
+        this._labelLoading = new cc.LabelTTF("loading...", "Arial", 15);
+        this._labelPercent = new cc.LabelTTF("%0", "Arial", 15);
 
         this._labelLoading.x = size.width / 2;
 
@@ -73,32 +73,32 @@ var TextureCacheTest = cc.Layer.extend({
         var size = cc.director.getWinSize();
 
         // create sprites
-        var bg = cc.Sprite.create("res/Images/HelloWorld.png");
+        var bg = new cc.Sprite("res/Images/HelloWorld.png");
         bg.x = size.width / 2;
         bg.y = size.height / 2;
         //bg.scale = 1.7;
 
-        var s1 = cc.Sprite.create("res/Images/grossini.png");
-        var s2 = cc.Sprite.create("res/Images/grossini_dance_01.png");
-        var s3 = cc.Sprite.create("res/Images/grossini_dance_02.png");
-        var s4 = cc.Sprite.create("res/Images/grossini_dance_03.png");
-        var s5 = cc.Sprite.create("res/Images/grossini_dance_04.png");
-        var s6 = cc.Sprite.create("res/Images/grossini_dance_05.png");
-        var s7 = cc.Sprite.create("res/Images/grossini_dance_06.png");
-        var s8 = cc.Sprite.create("res/Images/grossini_dance_07.png");
-        var s9 = cc.Sprite.create("res/Images/grossini_dance_08.png");
-        var s10 = cc.Sprite.create("res/Images/grossini_dance_09.png");
-        var s11 = cc.Sprite.create("res/Images/grossini_dance_10.png");
-        var s12 = cc.Sprite.create("res/Images/grossini_dance_11.png");
-        var s13 = cc.Sprite.create("res/Images/grossini_dance_12.png");
-        var s14 = cc.Sprite.create("res/Images/grossini_dance_13.png");
-        var s15 = cc.Sprite.create("res/Images/grossini_dance_14.png");
+        var s1 = new cc.Sprite("res/Images/grossini.png");
+        var s2 = new cc.Sprite("res/Images/grossini_dance_01.png");
+        var s3 = new cc.Sprite("res/Images/grossini_dance_02.png");
+        var s4 = new cc.Sprite("res/Images/grossini_dance_03.png");
+        var s5 = new cc.Sprite("res/Images/grossini_dance_04.png");
+        var s6 = new cc.Sprite("res/Images/grossini_dance_05.png");
+        var s7 = new cc.Sprite("res/Images/grossini_dance_06.png");
+        var s8 = new cc.Sprite("res/Images/grossini_dance_07.png");
+        var s9 = new cc.Sprite("res/Images/grossini_dance_08.png");
+        var s10 = new cc.Sprite("res/Images/grossini_dance_09.png");
+        var s11 = new cc.Sprite("res/Images/grossini_dance_10.png");
+        var s12 = new cc.Sprite("res/Images/grossini_dance_11.png");
+        var s13 = new cc.Sprite("res/Images/grossini_dance_12.png");
+        var s14 = new cc.Sprite("res/Images/grossini_dance_13.png");
+        var s15 = new cc.Sprite("res/Images/grossini_dance_14.png");
 
         // just loading textures to slow down
-        var s16 = cc.Sprite.create("res/Images/background1.png");
-        var s17 = cc.Sprite.create("res/Images/background2.png");
-        var s18 = cc.Sprite.create("res/Images/background3.png");
-        var s19 = cc.Sprite.create("res/Images/blocks.png");
+        var s16 = new cc.Sprite("res/Images/background1.png");
+        var s17 = new cc.Sprite("res/Images/background2.png");
+        var s18 = new cc.Sprite("res/Images/background3.png");
+        var s19 = new cc.Sprite("res/Images/blocks.png");
 
         s1.x = 50;
         s1.y = 50;

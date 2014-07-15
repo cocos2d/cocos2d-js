@@ -325,6 +325,12 @@ _p._ctor = function(fileName, rect){
     }
 };
 
+/************************  ProgressTimer  *************************/
+_p = cc.ProgressTimer.prototype;
+_p._ctor = function(sprite){
+    sprite && this.initWithSprite(sprite);
+};
+
 /************************  TextFieldTTF  *************************/
 _p = cc.TextFieldTTF.prototype;
 _p._ctor = function(placeholder, dimensions, alignment, fontName, fontSize){
@@ -388,6 +394,16 @@ _p = cc.TransitionScene.prototype;
 _p._ctor = function(t, scene){
     if(t !== undefined && scene !== undefined)
         this.initWithDuration(t, scene);
+};
+
+_p = cc.TransitionSceneOriented.prototype;
+_p._ctor = function(t, scene, orientation){
+    orientation != undefined && this.initWithDuration(t, scene, orientation);
+};
+
+_p = cc.TransitionPageTurn.prototype;
+_p._ctor = function(t, scene, backwards){
+    backwards != undefined && this.initWithDuration(t, scene, backwards);
 };
 
 /************************  Actions  *************************/
