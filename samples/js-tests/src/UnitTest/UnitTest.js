@@ -158,7 +158,7 @@ var RectUnitTest = UnitTestBase.extend({
         ret.push(rectA.height);
 
         this.log("Test 11: getBoundingBox()");
-        var node = cc.Node.create();
+        var node = new cc.Node();
         node.width = 99;
 	    node.height = 101;
         var bb = node.getBoundingBox();

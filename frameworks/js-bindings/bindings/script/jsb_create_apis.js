@@ -390,6 +390,16 @@ _p._ctor = function(t, scene){
         this.initWithDuration(t, scene);
 };
 
+_p = cc.TransitionSceneOriented.prototype;
+_p._ctor = function(t, scene, orientation){
+    orientation != undefined && this.initWithDuration(t, scene, orientation);
+};
+
+_p = cc.TransitionPageTurn.prototype;
+_p._ctor = function(t, scene, backwards){
+    backwards != undefined && this.initWithDuration(t, scene, backwards);
+};
+
 /************************  Actions  *************************/
 
 cc.Speed.prototype._ctor = function(action, speed) {
