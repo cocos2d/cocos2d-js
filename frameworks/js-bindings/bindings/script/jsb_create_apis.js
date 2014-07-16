@@ -766,7 +766,7 @@ cc.LabelAtlas.prototype._ctor = function(strText, charMapFile, itemWidth, itemHe
 	if (charMapFile) {
 		itemWidth = itemWidth || 0;
 		itemHeight = itemHeight || 0;
-		startCharMap = startCharMap || "";
+		startCharMap = startCharMap.charCodeAt(0) || 0;
 		cc.LabelAtlas.prototype.initWithString.call(this, strText, charMapFile, itemWidth, itemHeight, startCharMap);
 	}
 };
