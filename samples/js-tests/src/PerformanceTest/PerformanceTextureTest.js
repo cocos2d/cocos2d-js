@@ -51,7 +51,7 @@ var TextureMenuLayer = PerformBasicLayer.extend({
         var s = cc.director.getWinSize();
 
         // Title
-        var label = cc.LabelTTF.create(this.title(), "Arial", 40);
+        var label = new cc.LabelTTF(this.title(), "Arial", 40);
         this.addChild(label, 1);
         label.x = s.width / 2;
         label.y = s.height - 32;
@@ -60,7 +60,7 @@ var TextureMenuLayer = PerformBasicLayer.extend({
         // Subtitle
         var strSubTitle = this.subtitle();
         if (strSubTitle.length) {
-            var l = cc.LabelTTF.create(strSubTitle, "Thonburi", 16);
+            var l = new cc.LabelTTF(strSubTitle, "Thonburi", 16);
             this.addChild(l, 1);
             l.x = s.width / 2;
             l.y = s.height - 80;
@@ -166,7 +166,7 @@ var TextureTest = TextureMenuLayer.extend({
 });
 
 TextureTest.scene = function () {
-    var scene = cc.Scene.create();
+    var scene = new cc.Scene();
     var layer = new TextureTest(false, 1, s_nTexCurCase);
     scene.addChild(layer);
     return scene;
