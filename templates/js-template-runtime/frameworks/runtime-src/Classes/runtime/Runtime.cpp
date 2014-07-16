@@ -77,7 +77,7 @@ extern bool browseDir(const char *dir,const char *filespec,vector<string> &filte
 /*@brief   use "|" splite string  */
 const char* getRuntimeVersion()
 {
-    return "1.2";
+    return "1.3";
 }
 
 vector<string> splitFilter(const char *str)
@@ -392,7 +392,8 @@ void FileServer::readResFileFinfo()
     if(!_filecfgjson.IsObject()){
         _filecfgjson.SetObject();
     }
-#ifndef CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM
+
+    //save file info to disk every ten second
     Director::getInstance()->getScheduler()->schedule([&](float){
         rapidjson::StringBuffer buffer;
         rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
@@ -405,8 +406,7 @@ void FileServer::readResFileFinfo()
         if (!pFile) return ;
         fwrite(str,sizeof(char),strlen(str),pFile);
         fclose(pFile);
-    },this, 10.0f, false, "fileinfo");
-#endif
+    },this, 5.0f, false, "fileinfo");
 }
 void FileServer::addResFileInfo(const char* filename,uint64_t u64)
 {
@@ -521,7 +521,7 @@ string& replaceAll(string& str,const string& old_value,const string& new_value)
     return str;
 }
 
-bool CreateDir(const char *sPathName)
+static bool CreateDir(const char *sPathName)
 {
     char   DirName[256]={0};
     strcpy(DirName,   sPathName);
@@ -554,7 +554,7 @@ bool CreateDir(const char *sPathName)
     return   true;  
 }
 
-void recvBuf(int fd,char *pbuf,int bufsize)
+static void recvBuf(int fd,char *pbuf,int bufsize)
 {
 
     int startFlagLen = bufsize;
@@ -683,7 +683,7 @@ void FileServer::loopWriteFile()
          _fileNameMutex.lock();
          _strFileName = filename;
          _fileNameMutex.unlock();
-         cocos2d::log("WriteFile:: fullfilename = %s",filename.c_str());
+         //cocos2d::log("WriteFile:: fullfilename = %s",filename.c_str());
          CreateDir(fullfilename.substr(0,fullfilename.find_last_of("/")).c_str());
          FILE *fp= nullptr;
          if (1 == recvDataBuf.fileProto.package_seq()){
@@ -911,15 +911,19 @@ public:
         for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
             _console->addCommand(commands[i]);
         }
-        _console->listenOnTCP(6050);
+        _console->listenOnTCP(ConfigParser::getInstance()->getConsolePort());
         
+        _fileserver = nullptr;
+#if(CC_PLATFORM_MAC != CC_TARGET_PLATFORM && CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM)
         _fileserver= FileServer::getShareInstance();
         _fileserver->listenOnTCP(6060);
         _fileserver->readResFileFinfo();
+#endif
     }
     ~ConsoleCustomCommand()
     {
         Director::getInstance()->getConsole()->stop();
+        if(_fileserver)
         _fileserver->stop();
     }
 
@@ -1004,9 +1008,11 @@ public:
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }else if(strcmp(strcmd.c_str(),"getfileinfo")==0){
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                    if(_fileserver){
                     rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
                     for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
                         bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
+                        }
                     }
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
@@ -1226,7 +1232,8 @@ bool startRuntime()
 #endif
 
     ScriptingCore::getInstance()->addRegisterCallback(register_FileUtils);
-
+	// turn on display FPS
+    Director::getInstance()->setDisplayStats(true);
     static ConsoleCustomCommand *g_customCommand;
     g_customCommand = new ConsoleCustomCommand();
     g_customCommand->init();

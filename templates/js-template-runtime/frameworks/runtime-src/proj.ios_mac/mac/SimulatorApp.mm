@@ -22,7 +22,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "SimulatorApp.h"
 
 
 #include <sys/stat.h>
@@ -31,6 +30,7 @@
 #include <string>
 #include <vector>
 
+#import "SimulatorApp.h"
 #include "AppDelegate.h"
 #include "glfw3.h"
 #include "glfw3native.h"
@@ -42,6 +42,7 @@
 using namespace cocos2d;
 
 bool g_landscape=false;
+bool g_windTop = true;
 cocos2d::Size g_screenSize;
 GLView* g_eglView = nullptr;
 
@@ -103,7 +104,7 @@ std::string getCurAppPath(void)
         width = height;
         height = tmpvalue;
     }
-    
+    g_windTop = true;
     g_eglView = GLView::createWithRect([viewName cStringUsingEncoding:NSUTF8StringEncoding],cocos2d::Rect(0.0f,0.0f,width,height),frameZoomFactor);
     auto director = Director::getInstance();
     director->setOpenGLView(g_eglView);
@@ -170,6 +171,17 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
     {
         [itemPortait setState:NSOnState];
         [itemLandscape setState:NSOffState];
+    }
+    NSMenu *menuControl = [[[window menu] itemWithTitle:@"Control"] submenu];
+    NSMenuItem *itemTop = [menuControl itemWithTitle:@"Keep Window Top"];
+    if (g_windTop) {
+        [window setLevel:NSFloatingWindowLevel];
+        [itemTop setState:NSOnState];
+    }
+    else
+    {
+        [window setLevel:NSNormalWindowLevel];
+        [itemTop setState:NSOffState];
     }
 
     int scale = g_eglView->getFrameZoomFactor()*100;
@@ -255,6 +267,11 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
 - (void) windowWillClose:(NSNotification *)notification
 {
     [[NSRunningApplication currentApplication] terminate];
+}
+- (IBAction) onSetTop:(id)sender
+{
+    g_windTop = !g_windTop;
+    [self updateMenu];
 }
 
 

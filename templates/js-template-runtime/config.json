@@ -4,7 +4,8 @@
        "name": "HelloJavascript",
        "width": 960,
        "height": 640,
-       "entry": "main.js"
+       "entry": "main.js",
+       "consolePort": 6050
     },
     "simulator_screen_size": [
         {
