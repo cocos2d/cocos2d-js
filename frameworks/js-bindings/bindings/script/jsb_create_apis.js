@@ -154,7 +154,10 @@ _p._ctor = function(menuItems) {
         }
     }
 
-    items && items.length > 0 && this.initWithArray(items);
+    if(items && items.length > 0)
+        this.initWithArray(items);
+    else
+        this.init();
 };
 
 
@@ -296,6 +299,20 @@ _p._ctor = function(plistFile){
     }
 };
 
+cc.ParticleFire.prototype._ctor  = cc.ParticleFireworks.prototype._ctor
+                                      = cc.ParticleSun.prototype._ctor
+                                      = cc.ParticleGalaxy.prototype._ctor
+                                      = cc.ParticleMeteor.prototype._ctor
+                                      = cc.ParticleFlower.prototype._ctor
+                                      = cc.ParticleSpiral.prototype._ctor
+                                      = cc.ParticleExplosion.prototype._ctor
+                                      = cc.ParticleSmoke.prototype._ctor
+                                      = cc.ParticleRain.prototype._ctor
+                                      = cc.ParticleSnow.prototype._ctor
+                                      = function(){
+                                            this.init();
+                                      };
+
 /************************  PhysicsSprite  *************************/
 _p = cc.PhysicsSprite.prototype;
 _p._ctor = function(fileName, rect){
@@ -323,6 +340,12 @@ _p._ctor = function(fileName, rect){
             this.initWithSpriteFrame(fileName);
         }
     }
+};
+
+/************************  ProgressTimer  *************************/
+_p = cc.ProgressTimer.prototype;
+_p._ctor = function(sprite){
+    sprite && this.initWithSprite(sprite);
 };
 
 /************************  TextFieldTTF  *************************/
@@ -757,7 +780,7 @@ cc.LabelAtlas.prototype._ctor = function(strText, charMapFile, itemWidth, itemHe
 	if (charMapFile) {
 		itemWidth = itemWidth || 0;
 		itemHeight = itemHeight || 0;
-		startCharMap = startCharMap || "";
+		startCharMap = startCharMap.charCodeAt(0) || 0;
 		cc.LabelAtlas.prototype.initWithString.call(this, strText, charMapFile, itemWidth, itemHeight, startCharMap);
 	}
 };

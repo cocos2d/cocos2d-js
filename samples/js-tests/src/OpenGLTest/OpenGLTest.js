@@ -36,15 +36,14 @@ var OpenGLTestScene = TestScene.extend({
 });
 
 cc.GLNode = cc.Node.extend({
+    ctor:function(){
+        this._super();
+        this.init();
+    },
     draw:function(ctx){
         this._super(ctx);
     }
 });
-cc.GLNode.create = function(){
-    var node = new cc.GLNode();
-    node.init();
-    return node;
-};
 
 var OpenGLTestLayer = BaseTestLayer.extend({
     _grossini:null,
@@ -102,10 +101,10 @@ var GLReadPixelsTest = OpenGLTestLayer.extend({
             var x = winSize.width;
             var y = winSize.height;
 
-            var blue = cc.LayerColor.create(cc.color(0, 0, 255, 255));
-            var red = cc.LayerColor.create(cc.color(255, 0, 0, 255));
-            var green = cc.LayerColor.create(cc.color(0, 255, 0, 255));
-            var white = cc.LayerColor.create(cc.color(255, 255, 255, 255));
+            var blue = new cc.LayerColor(cc.color(0, 0, 255, 255));
+            var red = new cc.LayerColor(cc.color(255, 0, 0, 255));
+            var green = new cc.LayerColor(cc.color(0, 255, 0, 255));
+            var white = new cc.LayerColor(cc.color(255, 255, 255, 255));
 
             blue.scale = 0.5;
             blue.x = -x / 4;
@@ -186,7 +185,7 @@ var GLClearTest = OpenGLTestLayer.extend({
 
         if( 'opengl' in cc.sys.capabilities ) {
 
-            var blue = cc.LayerColor.create(cc.color(0, 0, 255, 255));
+            var blue = new cc.LayerColor(cc.color(0, 0, 255, 255));
             this.addChild( blue, 1 );
 
             var node = new cc.GLNode();
@@ -283,7 +282,7 @@ var GLNodeWebGLAPITest = OpenGLTestLayer.extend({
 
             this.initBuffers();
 
-            var glnode = cc.GLNode.create();
+            var glnode = new cc.GLNode();
             this.addChild(glnode,10);
             this.glnode = glnode;
 
@@ -436,7 +435,7 @@ var GLNodeCCAPITest = OpenGLTestLayer.extend({
         if( 'opengl' in cc.sys.capabilities ) {
 
 
-            var glnode = cc.GLNode.create();
+            var glnode = new cc.GLNode();
             this.addChild(glnode,10);
             this.glnode = glnode;
 
@@ -852,13 +851,13 @@ var ShaderRetroEffect = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var program = cc.GLProgram.create("res/Shaders/example_ColorBars.vsh", "res/Shaders/example_ColorBars.fsh");
+            var program = new cc.GLProgram("res/Shaders/example_ColorBars.vsh", "res/Shaders/example_ColorBars.fsh");
             program.addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION);
             program.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS);
             program.link();
             program.updateUniforms();
 
-            var label = cc.LabelBMFont.create("RETRO EFFECT","res/fonts/west_england-64.fnt");
+            var label = new cc.LabelBMFont("RETRO EFFECT","res/fonts/west_england-64.fnt");
             label.shaderProgram = program;
 
             label.x = winSize.width/2;
@@ -908,7 +907,7 @@ var GLGetActiveTest = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var sprite = this.sprite = cc.Sprite.create("res/Images/grossini.png");
+            var sprite = this.sprite = new cc.Sprite("res/Images/grossini.png");
             sprite.x = winSize.width/2;
             sprite.y = winSize.height/2;
             this.addChild( sprite );
@@ -959,7 +958,7 @@ var TexImage2DTest = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var glnode = cc.GLNode.create();
+            var glnode = new cc.GLNode();
             this.addChild(glnode,10);
             this.glnode = glnode;
             glnode.x = winSize.width/2;
