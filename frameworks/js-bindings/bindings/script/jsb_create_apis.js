@@ -299,6 +299,20 @@ _p._ctor = function(plistFile){
     }
 };
 
+cc.ParticleFire.prototype._ctor  = cc.ParticleFireworks.prototype._ctor
+                                      = cc.ParticleSun.prototype._ctor
+                                      = cc.ParticleGalaxy.prototype._ctor
+                                      = cc.ParticleMeteor.prototype._ctor
+                                      = cc.ParticleFlower.prototype._ctor
+                                      = cc.ParticleSpiral.prototype._ctor
+                                      = cc.ParticleExplosion.prototype._ctor
+                                      = cc.ParticleSmoke.prototype._ctor
+                                      = cc.ParticleRain.prototype._ctor
+                                      = cc.ParticleSnow.prototype._ctor
+                                      = function(){
+                                            this.init();
+                                      };
+
 /************************  PhysicsSprite  *************************/
 _p = cc.PhysicsSprite.prototype;
 _p._ctor = function(fileName, rect){
