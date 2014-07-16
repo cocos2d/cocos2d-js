@@ -75,7 +75,7 @@ Parallax1 = ParallaxDemo.extend({
         this._super();
 
         // Top Layer, a simple image
-        this._cocosimage = cc.Sprite.create(s_power);
+        this._cocosimage = new cc.Sprite(s_power);
         // scale the image (optional)
         this._cocosimage.scale = 1.5;
         // change the transform anchor point to 0,0 (optional)
@@ -84,7 +84,7 @@ Parallax1 = ParallaxDemo.extend({
 
         // Middle layer: a Tile map atlas
         //var tilemap = cc.TileMapAtlas.create(s_tilesPng, s_levelMapTga, 16, 16);
-        this._tilemap = cc.TMXTiledMap.create(s_resprefix + "TileMaps/orthogonal-test2.tmx");
+        this._tilemap = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test2.tmx");
 
         // change the transform anchor to 0,0 (optional)
         this._tilemap.anchorX = 0;
@@ -94,7 +94,7 @@ Parallax1 = ParallaxDemo.extend({
         //tilemap.texture.setAntiAliasTexParameters();
 
         // background layer: another image
-        this._background = cc.Sprite.create(s_back);
+        this._background = new cc.Sprite(s_back);
         // scale the image (optional)
         //background.scale = 1.5;
         // change the transform anchor point (optional)
@@ -102,7 +102,7 @@ Parallax1 = ParallaxDemo.extend({
         this._background.anchorY = 0;
 
         // create a void node, a parent node
-        this._parentNode = cc.ParallaxNode.create();
+        this._parentNode = new cc.ParallaxNode();
 
         // NOW add the 3 layers to the 'void' node
 
@@ -118,12 +118,12 @@ Parallax1 = ParallaxDemo.extend({
         // now create some actions that will move the '_parent' node
         // and the children of the '_parent' node will move at different
         // speed, thus, simulation the 3D environment
-        var goUp = cc.MoveBy.create(2, cc.p(0, 100));
-        var goRight = cc.MoveBy.create(2, cc.p(200, 0));
-        var delay = cc.DelayTime.create(2.0);
+        var goUp = new cc.MoveBy(2, cc.p(0, 100));
+        var goRight = new cc.MoveBy(2, cc.p(200, 0));
+        var delay = new cc.DelayTime(2.0);
         var goDown = goUp.reverse();
         var goLeft = goRight.reverse();
-        var seq = cc.Sequence.create(goUp, goRight, delay, goDown, goLeft);
+        var seq = new cc.Sequence(goUp, goRight, delay, goDown, goLeft);
         this._parentNode.runAction(seq.repeatForever());
 
         this.addChild(this._parentNode);
@@ -188,7 +188,7 @@ Parallax2 = ParallaxDemo.extend({
 
 
         // Top Layer, a simple image
-        var cocosImage = cc.Sprite.create(s_power);
+        var cocosImage = new cc.Sprite(s_power);
         // scale the image (optional)
         cocosImage.scale = 1.5;
         // change the transform anchor point to 0,0 (optional)
@@ -197,7 +197,7 @@ Parallax2 = ParallaxDemo.extend({
 
         // Middle layer: a Tile map atlas
         //var tilemap = cc.TileMapAtlas.create(s_tilesPng, s_levelMapTga, 16, 16);
-        var tilemap = cc.TMXTiledMap.create(s_resprefix + "TileMaps/orthogonal-test2.tmx");
+        var tilemap = new cc.TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test2.tmx");
 
         // change the transform anchor to 0,0 (optional)
         tilemap.anchorX = 0;
@@ -207,7 +207,7 @@ Parallax2 = ParallaxDemo.extend({
         //tilemap.texture.setAntiAliasTexParameters();
 
         // background layer: another image
-        var background = cc.Sprite.create(s_back);
+        var background = new cc.Sprite(s_back);
         // scale the image (optional)
         //background.scale = 1.5;
         // change the transform anchor point (optional)
@@ -215,7 +215,7 @@ Parallax2 = ParallaxDemo.extend({
         background.anchorY = 0;
 
         // create a void node, a parent node
-        var voidNode = cc.ParallaxNode.create();
+        var voidNode = new cc.ParallaxNode();
         // NOW add the 3 layers to the 'void' node
 
         // background image is moved at a ratio of 0.4x, 0.5y
