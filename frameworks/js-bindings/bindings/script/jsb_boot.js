@@ -1223,11 +1223,11 @@ cc.game._initConfig();
 //+++++++++++++++++++++++++other initializations+++++++++++++++++++++++++++++
 
 // JS to Native bridges
-if(cc.sys.os == cc.sys.OS_ANDROID){
+if(window.JavascriptJavaBridge && cc.sys.os == cc.sys.OS_ANDROID){
     jsb.reflection = new JavascriptJavaBridge();
     cc.sys.capabilities["keyboard"] = true;
 }
-else if(cc.sys.os == cc.sys.OS_IOS||cc.sys.os == cc.sys.OS_OSX){
+else if(window.JavaScriptObjCBridge && (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX)){
     jsb.reflection = new JavaScriptObjCBridge();
 }
 
