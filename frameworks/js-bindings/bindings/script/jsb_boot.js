@@ -584,32 +584,20 @@ cc.defineGetterSetter(cc.loader, "audioPath", function(){
 
 // Define singleton objects
 /**
- * @type {Object}
+ * @type {cc.Director}
  * @name cc.director
- * <p>
- *    cc.director is a singleton of DisplayLinkDirector type director.<br/>
- *    Since the cc.director is a singleton, you don't need to call any constructor or create functions,<br/>
- *    the standard way to use it is by calling:<br/>
- *      - cc.director.methodName(); <br/>
- *
- *    It creates and handle the main Window and manages how and when to execute the Scenes.
- * </p>
- * <p>
- *   With DisplayLinkDirector functionality, cc.director synchronizes timers with the refresh rate of the display.<br/>
- *   Features and Limitations:<br/>
- *      - Scheduled timers & drawing are synchronizes with the refresh rate of the display<br/>
- *      - Only supports animation intervals of 1/60 1/30 & 1/15<br/>
- * </p>
  */
 cc.director = cc.Director.getInstance();
 /**
- * @type {Object} cc.winSize is the alias object for the size of the current game window.
+ * @type {cc.Size}
  * @name cc.winSize
+ * cc.winSize is the alias object for the size of the current game window.
  */
 cc.winSize = cc.director.getWinSize();
 /**
- * @type {Object} cc.view is the shared view object.
+ * @type {cc.EGLView}
  * @name cc.view
+ * cc.view is the shared view object.
  */
 cc.view = cc.director.getOpenGLView();
 cc.view.getDevicePixelRatio = function () {
@@ -646,17 +634,12 @@ cc.view.setFrameZoomFactor = function(){return;};
 /**
  * @type {Object}
  * @name cc.eventManager
- * <p>
- *  This class manages event listener subscriptions and event dispatching.                                      <br/>
- *                                                                                                              <br/>
- *  The EventListener list is managed in such a way that event listeners can be added and removed even          <br/>
- *  from within an EventListener, while events are being dispatched.
- * </p>
  */
 cc.eventManager = cc.director.getEventDispatcher();
 /**
- * @type {Object} A simple Audio Engine engine API.
+ * @type {cc.AudioEngine}
  * @name cc.audioEngine
+ * A simple Audio Engine engine API.
  */
 cc.audioEngine = cc.AudioEngine.getInstance();
 cc.audioEngine.end = function(){
@@ -664,13 +647,15 @@ cc.audioEngine.end = function(){
     this.stopAllEffects();
 };
 /**
- * @type {Object} cc.configuration contains some openGL variables
+ * @type {Object}
  * @name cc.configuration
+ * cc.configuration contains some openGL variables
  */
 cc.configuration = cc.Configuration.getInstance();
 /**
- * @type {Object} cc.textureCache is the global cache for cc.Texture2D
+ * @type {Object}
  * @name cc.textureCache
+ * cc.textureCache is the global cache for cc.Texture2D
  */
 cc.textureCache = cc.director.getTextureCache();
 cc.textureCache._addImage = cc.textureCache.addImage;
@@ -683,37 +668,25 @@ cc.textureCache.addImage = function(url, cb, target) {
         return this._addImage(url);
 };
 /**
- * @type {Object} cc.shaderCache is a singleton object that stores manages GL shaders
+ * @type {Object}
  * @name cc.shaderCache
+ * cc.shaderCache is a singleton object that stores manages GL shaders
  */
 cc.shaderCache = cc.ShaderCache.getInstance();
 /**
  * @type {Object}
  * @name cc.animationCache
- * <p>
- *     cc.animationCache is a singleton that manages the Animations.<br/>
- *     It saves in a cache the animations. You should use this class if you want to save your animations in a cache.<br/>
- * <br/>
- * example<br/>
- * cc.animationCache.addAnimation(animation,"animation1");<br/>
- * </p>
  */
 cc.animationCache = cc.AnimationCache.getInstance();
 /**
  * @type {Object}
  * @name cc.spriteFrameCache
- * <p>
- * cc.spriteFrameCache is a singleton that handles the loading of the sprite frames. It saves in a cache the sprite frames.<br/>
- * <br/>
- * example<br/>
- * // add SpriteFrames to spriteFrameCache With File<br/>
- * cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);<br/>
- * </p>
  */
 cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
 /**
- * @type {Object} A Plist Parser
+ * @type {cc.PlistParser}
  * @name cc.plistParser
+ * A Plist Parser
  */
 cc.plistParser = cc.PlistParser.getInstance();
 //cc.tiffReader;
@@ -723,9 +696,10 @@ cc.plistParser = cc.PlistParser.getInstance();
 cc.fileUtils = cc.FileUtils.getInstance();
 
 /**
- * @type {Object} The fullscreen API provides an easy way for web content to be presented using the user's entire screen.
- * It's invalid on safari,QQbrowser and android browser
+ * @type {Object}
  * @name cc.screen
+ * The fullscreen API provides an easy way for web content to be presented using the user's entire screen.
+ * It's invalid on safari,QQbrowser and android browser
  */
 cc.screen = {
     init: function() {},
