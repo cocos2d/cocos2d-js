@@ -80,7 +80,7 @@ const char* getRuntimeVersion()
     return "1.3";
 }
 
-vector<string> splitFilter(const char *str)
+static vector<string> splitFilter(const char *str)
 {
     vector<string> filterArray;
     if (str)
@@ -99,7 +99,7 @@ vector<string> splitFilter(const char *str)
 }
 
 /*@brief wildcard funciton*/
-bool wildcardMatches(const char *wildcard, const char *str) 
+static bool wildcardMatches(const char *wildcard, const char *str) 
 {
     while (1) {
         if (*wildcard == '\0')
@@ -509,7 +509,7 @@ void FileServer::stop()
     }
 }
 
-string& replaceAll(string& str,const string& old_value,const string& new_value)
+static string& replaceAll(string& str,const string& old_value,const string& new_value)
 {
     while(true)
     {
@@ -1133,7 +1133,7 @@ bool initRuntime()
     
     searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
-
+	ScriptingCore::getInstance()->addRegisterCallback(register_FileUtils);
     return true;
 }
 
@@ -1231,7 +1231,7 @@ bool startRuntime()
 #endif
 #endif
 
-    ScriptingCore::getInstance()->addRegisterCallback(register_FileUtils);
+    
 	// turn on display FPS
     Director::getInstance()->setDisplayStats(true);
     static ConsoleCustomCommand *g_customCommand;
