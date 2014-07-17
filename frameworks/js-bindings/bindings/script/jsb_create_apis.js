@@ -779,12 +779,12 @@ cc.DrawNode.prototype._ctor = function() {
 };
 
 cc.LabelAtlas.prototype._ctor = function(strText, charMapFile, itemWidth, itemHeight, startCharMap) {
-	if (charMapFile) {
-		itemWidth = itemWidth || 0;
-		itemHeight = itemHeight || 0;
-		startCharMap = startCharMap.charCodeAt(0) || 0;
-		cc.LabelAtlas.prototype.initWithString.call(this, strText, charMapFile, itemWidth, itemHeight, startCharMap);
-	}
+    if(startCharMap != undefined){
+        startCharMap = startCharMap.charCodeAt(0);
+        cc.LabelAtlas.prototype.initWithString.call(this, strText, charMapFile, itemWidth, itemHeight, startCharMap);
+    }else if(charMapFile != undefined){
+        this.initWithString(strText, charMapFile);
+    }
 };
 
 cc.LabelBMFont.prototype._ctor = function(str, fntFile, width, alignment, imageOffset) {
