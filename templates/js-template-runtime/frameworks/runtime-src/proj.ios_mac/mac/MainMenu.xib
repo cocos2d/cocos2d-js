@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">13C64</string>
+		<string key="IBDocument.SystemVersion">13E28</string>
 		<string key="IBDocument.InterfaceBuilderVersion">5056</string>
-		<string key="IBDocument.AppKitVersion">1265.19</string>
-		<string key="IBDocument.HIToolboxVersion">697.40</string>
+		<string key="IBDocument.AppKitVersion">1265.21</string>
+		<string key="IBDocument.HIToolboxVersion">698.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">5056</string>
@@ -291,6 +291,14 @@
 									<reference key="NSOnImage" ref="180314096"/>
 									<reference key="NSMixedImage" ref="101226688"/>
 								</object>
+								<object class="NSMenuItem" id="969154231">
+									<reference key="NSMenu" ref="164292829"/>
+									<string key="NSTitle">Keep Window Top</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="180314096"/>
+									<reference key="NSMixedImage" ref="101226688"/>
+								</object>
 							</array>
 						</object>
 					</object>
@@ -441,6 +449,14 @@
 						<reference key="destination" ref="316884524"/>
 					</object>
 					<string key="id">6tF-KC-dzr</string>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onSetTop:</string>
+						<reference key="source" ref="531342050"/>
+						<reference key="destination" ref="969154231"/>
+					</object>
+					<string key="id">khH-vp-uYq</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -665,6 +681,7 @@
 						<reference key="object" ref="164292829"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="316884524"/>
+							<reference ref="969154231"/>
 						</array>
 						<reference key="parent" ref="523109896"/>
 					</object>
@@ -695,6 +712,11 @@
 						<string key="id">536</string>
 						<reference key="object" ref="7105"/>
 						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">z7D-DL-XAL</string>
+						<reference key="object" ref="969154231"/>
+						<reference key="parent" ref="164292829"/>
 					</object>
 				</array>
 			</object>
@@ -771,6 +793,7 @@
 				<boolean value="NO" key="sH6-na-PTL.showNotes"/>
 				<string key="ysx-9J-ekz.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="ysx-9J-ekz.showNotes"/>
+				<string key="z7D-DL-XAL.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
@@ -788,6 +811,7 @@
 						<string key="onScreenLandscape:">id</string>
 						<string key="onScreenPortait:">id</string>
 						<string key="onScreenZoomOut:">id</string>
+						<string key="onSetTop:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="onFileClose:">
@@ -808,6 +832,10 @@
 						</object>
 						<object class="IBActionInfo" key="onScreenZoomOut:">
 							<string key="name">onScreenZoomOut:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onSetTop:">
+							<string key="name">onSetTop:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
@@ -838,7 +866,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<real value="1070" key="NS.object.0"/>
+			<real value="1080" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
