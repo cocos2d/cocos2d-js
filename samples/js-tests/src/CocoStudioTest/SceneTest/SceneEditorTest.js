@@ -152,7 +152,7 @@ var LoadSceneEdtiorFileTest = SceneEditorTestLayer.extend({
         this._super();
         var node = ccs.sceneReader.createNodeWithSceneFile("res/scenetest/LoadSceneEdtiorFileTest/FishJoy2.json");
         this.addChild(node);
-        ccs.actionManager.playActionByName("startMenu_1.json", "Animation1");
+        //ccs.actionManager.playActionByName("startMenu_1.json", "Animation1");
         this.initSize(node);
     },
     title: function () {
