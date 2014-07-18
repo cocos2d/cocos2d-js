@@ -2748,36 +2748,36 @@ bool js_BezierActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
 template<class T>
 bool js_BezierActions_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	T* cobj = (T *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Bezier_initWithDuration : Invalid Native Object");
-	if (argc == 2) {
-		double arg0;
-		cocos2d::_ccBezierConfig arg1;
-		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    T* cobj = (T *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Bezier_initWithDuration : Invalid Native Object");
+    if (argc == 2) {
+        double arg0;
+        cocos2d::_ccBezierConfig arg1;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
 
         int num;
         cocos2d::Vec2 *arr;
         jsval_to_ccarray_of_CCPoint(cx, argv[1], &arr, &num);
-        
+
         arg1.controlPoint_1 = arr[0];
         arg1.controlPoint_2 = arr[1];
         arg1.endPosition = arr[2];
 
-		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Bezier_initWithDuration : Error processing arguments");
-		bool ret = cobj->initWithDuration(arg0, arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Bezier_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1);
         free(arr);
-		jsval jsret = JSVAL_NULL;
-		jsret = BOOLEAN_TO_JSVAL(ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
 
-	JS_ReportError(cx, "js_cocos2dx_BezierTo_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 2);
-	return false;
+    JS_ReportError(cx, "js_cocos2dx_BezierTo_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
 }
 
 template<class T>
