@@ -101,14 +101,16 @@ _p._ctor = function(fileImage, capacity) {
 
 _p = cc.SpriteFrame.prototype;
 _p._ctor = function(filename, rect, rotated, offset, originalSize){
-
-    if(filename !== undefined && rect !== undefined ){
-        if(rotated === undefined || offset === undefined || originalSize === undefined){
+    if(originalSize != undefined){
+        if(filename instanceof cc.Texture2D)
+            this.initWithTexture(filename, rect, rotated, offset, originalSize);
+        else
+            this.initWithTexture(filename, rect, rotated, offset, originalSize);
+    }else if(rect != undefined){
+        if(filename instanceof cc.Texture2D)
             this.initWithTexture(filename, rect);
-        }
-        else{
-            this.initWithTexture(filename, rect, rotated, offset, originalSize)
-        }
+        else
+            this.initWithTextureFilename(filename, rect);
     }
 };
 
@@ -777,12 +779,12 @@ cc.DrawNode.prototype._ctor = function() {
 };
 
 cc.LabelAtlas.prototype._ctor = function(strText, charMapFile, itemWidth, itemHeight, startCharMap) {
-	if (charMapFile) {
-		itemWidth = itemWidth || 0;
-		itemHeight = itemHeight || 0;
-		startCharMap = startCharMap.charCodeAt(0) || 0;
-		cc.LabelAtlas.prototype.initWithString.call(this, strText, charMapFile, itemWidth, itemHeight, startCharMap);
-	}
+    if(startCharMap != undefined){
+        startCharMap = startCharMap.charCodeAt(0);
+        cc.LabelAtlas.prototype.initWithString.call(this, strText, charMapFile, itemWidth, itemHeight, startCharMap);
+    }else if(charMapFile != undefined){
+        this.initWithString(strText, charMapFile);
+    }
 };
 
 cc.LabelBMFont.prototype._ctor = function(str, fntFile, width, alignment, imageOffset) {
