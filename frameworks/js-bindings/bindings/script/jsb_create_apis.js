@@ -745,7 +745,7 @@ cc.ActionTween.prototype._ctor = function(duration, key, from, to) {
 
 cc.Animation.prototype._ctor = function(frames, delay, loops) {
 	if (frames === undefined) {
-		this.initWithSpriteFrames(null, 0);
+		this.init();
 	} else {
 		var frame0 = frames[0];
 		delay = delay === undefined ? 0 : delay;
