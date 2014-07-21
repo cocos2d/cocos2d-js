@@ -50,9 +50,9 @@ var ChipmunkBaseLayer = BaseTestLayer.extend( {
         this._subtitle = "No Subtitle";
 
         // Menu to toggle debug physics on / off
-        var item = cc.MenuItemFont.create("Physics On/Off", this.onToggleDebug, this);
+        var item = new cc.MenuItemFont("Physics On/Off", this.onToggleDebug, this);
         item.fontSize = 24;
-        var menu = cc.Menu.create( item );
+        var menu = new cc.Menu( item );
         this.addChild( menu );
         menu.x = winSize.width-100;
         menu.y = winSize.height-90;
@@ -175,7 +175,7 @@ var ChipmunkSprite = ChipmunkBaseLayer.extend( {
         shape.setFriction( 0.5 );
         this.space.addShape( shape );
 
-        var sprite = cc.PhysicsSprite.create(s_pathGrossini);
+        var sprite = new cc.PhysicsSprite(s_pathGrossini);
         sprite.setBody( body );
         return sprite;
     },
@@ -226,7 +226,7 @@ var ChipmunkSpriteBatchTest = ChipmunkSprite.extend( {
         // cc.base(this);
 
         // batch node
-        this.batch = cc.SpriteBatchNode.create(s_pathGrossini, 50 );
+        this.batch = new cc.SpriteBatchNode(s_pathGrossini, 50 );
         this.addChild( this.batch );
 
         this.addSprite = function( pos ) {
@@ -293,7 +293,7 @@ var ChipmunkCollisionTest = ChipmunkBaseLayer.extend( {
 		shape.setCollisionType( collision_type );
 		this.space.addShape( shape );
 
-		var sprite = cc.PhysicsSprite.create(file);
+		var sprite = new cc.PhysicsSprite(file);
 		sprite.setBody( body );
 		return sprite;
 	},
@@ -331,7 +331,7 @@ var ChipmunkCollisionTest = ChipmunkBaseLayer.extend( {
 	collisionBegin : function ( arbiter, space ) {
 
 		if( ! this.messageDisplayed ) {
-			var label = cc.LabelBMFont.create("Collision Detected", s_bitmapFontTest5_fnt);
+			var label = new cc.LabelBMFont("Collision Detected", s_bitmapFontTest5_fnt);
 			this.addChild( label );
 			label.x = winSize.width/2;
 			label.y = winSize.height/2 ;
@@ -424,7 +424,7 @@ var ChipmunkCollisionTestB = ChipmunkBaseLayer.extend( {
 		cp.shapeSetCollisionType( shape, collision_type );
 		cp.spaceAddShape( this.space, shape );
 
-		var sprite = cc.PhysicsSprite.create(file);
+		var sprite = new cc.PhysicsSprite(file);
 		sprite.setBody( body );
 		return sprite;
 	},
@@ -462,7 +462,7 @@ var ChipmunkCollisionTestB = ChipmunkBaseLayer.extend( {
 	collisionBegin : function ( arbiter, space ) {
 
 		if( ! this.messageDisplayed ) {
-			var label = cc.LabelBMFont.create("Collision Detected", s_bitmapFontTest5_fnt);
+			var label = new cc.LabelBMFont("Collision Detected", s_bitmapFontTest5_fnt);
 			this.addChild( label );
 			label.x = winSize.width/2;
 			label.y = winSize.height/2 ;
@@ -585,9 +585,9 @@ var ChipmunkSpriteAnchorPoint = ChipmunkBaseLayer.extend({
 		sprite3.anchorY = 1;
 
 		// scale sprite
-		var scaledown = cc.ScaleBy.create(0.5, 0.5);
+		var scaledown = new cc.ScaleBy(0.5, 0.5);
 		var scaleup = scaledown.reverse();
-		var seq = cc.Sequence.create( scaledown, scaleup);
+		var seq = new cc.Sequence( scaledown, scaleup);
 		var repeat = seq.repeatForever();
 
 		sprite1.runAction( repeat );
@@ -619,7 +619,7 @@ var ChipmunkSpriteAnchorPoint = ChipmunkBaseLayer.extend({
         this.space.addShape( shape );
 
         // create sprite
-        var sprite = cc.PhysicsSprite.create(s_pathGrossini);
+        var sprite = new cc.PhysicsSprite(s_pathGrossini);
 
         // associate sprite with body
         sprite.setBody( body );
