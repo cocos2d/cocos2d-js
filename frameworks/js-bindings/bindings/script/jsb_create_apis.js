@@ -777,8 +777,10 @@ cc.AtlasNode.prototype._ctor = function(tile, tileWidth, tileHeight, itemsToRend
 };
 
 cc.ClippingNode.prototype._ctor = function(stencil) {
-	stencil = stencil || null;
-	cc.ClippingNode.prototype.init.call(this, stencil);
+    if(stencil != undefined)
+        cc.ClippingNode.prototype.init.call(this, stencil);
+    else
+        cc.ClippingNode.prototype.init.call(this);
 };
 
 cc.DrawNode.prototype._ctor = function() {
