@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2012 Zynga Inc.
  * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,32 +21,13 @@
  */
 
 
-#ifndef __jsb_opengl_manual
-#define __jsb_opengl_manual
+#import <Foundation/Foundation.h>
 
-#include "js_bindings_config.h"
-#ifdef JSB_INCLUDE_OPENGL
+@interface NativeOcClass : NSObject
 
-//#include <Availability.h>
-#include "jsapi.h"
-#include "jsfriendapi.h"
-
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-
-// compatible with iOS
-#define glClearDepthf glClearDepth
-#define glDepthRangef glDepthRange
-#ifndef glReleaseShaderCompiler
-	#define glReleaseShaderCompiler()
-#endif
-
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
-
-// forward declaration of new functions
-bool JSB_glGetSupportedExtensions(JSContext *cx, uint32_t argc, jsval *vp);
-
-
-#endif // JSB_INCLUDE_OPENGL
-
-#endif // __jsb_opengl_manual
++(float) callNative:(NSNumber *)a andInt:(NSString *)str;
++(void) callNativeWithParam:(NSString *)str;
++(NSString *)callNativeWithReturnString;
++(BOOL)callNativeUIWithTitle:(NSString *) title andContent:(NSString *)content;
++(int)callNativeWithAdd:(NSNumber *)num1 and:(NSNumber *)num2;
+@end

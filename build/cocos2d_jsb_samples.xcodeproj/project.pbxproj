@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0541A76319738D8C00E45470 /* NativeOcClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 0541A75D19738D5A00E45470 /* NativeOcClass.m */; };
+		0541A77819750DE700E45470 /* NativeOcClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 0541A75D19738D5A00E45470 /* NativeOcClass.m */; };
+		0541A77A19750F7A00E45470 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0541A77919750F7A00E45470 /* AppKit.framework */; };
 		05F48C13192C9178008FB408 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F48C12192C9178008FB408 /* Security.framework */; };
 		05F48C15192C9180008FB408 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F48C14192C9180008FB408 /* CoreTelephony.framework */; };
 		05FBD794195C0910006CC37F /* libPluginFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAC904F7195ADA7600307000 /* libPluginFacebook.a */; };
@@ -491,6 +494,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0541A75C19738D5A00E45470 /* NativeOcClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeOcClass.h; path = ../proj.ios/NativeOcClass.h; sourceTree = "<group>"; };
+		0541A75D19738D5A00E45470 /* NativeOcClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NativeOcClass.m; path = ../proj.ios/NativeOcClass.m; sourceTree = "<group>"; };
+		0541A77919750F7A00E45470 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		05F48C12192C9178008FB408 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		05F48C14192C9180008FB408 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
 		05FBD795195C1835006CC37F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios/sdk/FacebookSDK.framework"; sourceTree = "<group>"; };
@@ -683,6 +689,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0541A77A19750F7A00E45470 /* AppKit.framework in Frameworks */,
 				1A604FB118BF1EE800CC9A93 /* libchipmunk Mac.a in Frameworks */,
 				1A604FB218BF1EE800CC9A93 /* libcocos2dx Mac.a in Frameworks */,
 				1A604FB318BF1EE800CC9A93 /* libcocos2dx-extensions Mac.a in Frameworks */,
@@ -840,6 +847,8 @@
 		1A604F3618BF1D5600CC9A93 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0541A75C19738D5A00E45470 /* NativeOcClass.h */,
+				0541A75D19738D5A00E45470 /* NativeOcClass.m */,
 				1A604F3718BF1D5600CC9A93 /* AppDelegate.cpp */,
 				1A604F3818BF1D5600CC9A93 /* AppDelegate.h */,
 			);
@@ -904,6 +913,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0541A77919750F7A00E45470 /* AppKit.framework */,
 				05FBD795195C1835006CC37F /* FacebookSDK.framework */,
 				05F48C14192C9180008FB408 /* CoreTelephony.framework */,
 				05F48C12192C9178008FB408 /* Security.framework */,
@@ -1450,6 +1460,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0541A76319738D8C00E45470 /* NativeOcClass.m in Sources */,
 				1A604F5A18BF1D6000CC9A93 /* RootViewController.mm in Sources */,
 				1A604F3A18BF1D5600CC9A93 /* AppDelegate.cpp in Sources */,
 				1A604F5918BF1D6000CC9A93 /* main.m in Sources */,
@@ -1461,6 +1472,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0541A77819750DE700E45470 /* NativeOcClass.m in Sources */,
 				1A604F6718BF1D6600CC9A93 /* main.cpp in Sources */,
 				1A604F3918BF1D5600CC9A93 /* AppDelegate.cpp in Sources */,
 			);

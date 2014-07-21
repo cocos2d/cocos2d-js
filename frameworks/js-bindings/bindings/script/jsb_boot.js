@@ -150,10 +150,10 @@ cc.async = {
         var results = isArr ? [] : {};
         var counter = { length : li, count : li, option : option, results : results};
         cc.each(tasks, function(task, index){
-                if(counter.err) return false;
-                var counterFunc = !option.cb ? self._emptyFunc : self._counterFunc.bind({counter : counter, index : index});//bind counter and index
-                option.iterator.call(option.iteratorTarget, task, index, counterFunc);
-                });
+            if(counter.err) return false;
+            var counterFunc = !option.cb ? self._emptyFunc : self._counterFunc.bind({counter : counter, index : index});//bind counter and index
+            option.iterator.call(option.iteratorTarget, task, index, counterFunc);
+        });
     }
 };
 //+++++++++++++++++++++++++something about async end+++++++++++++++++++++++++++++++++
@@ -398,16 +398,16 @@ cc.loader = {
         if(opt.isCrossOrigin) img.crossOrigin = "Anonymous";
         
         img.addEventListener("load", function () {
-                             this.removeEventListener('load', arguments.callee, false);
-                             this.removeEventListener('error', arguments.callee, false);
-                             if(!cb) return;
-                             cb(null, img);
-                             });
+            this.removeEventListener('load', arguments.callee, false);
+            this.removeEventListener('error', arguments.callee, false);
+            if(!cb) return;
+            cb(null, img);
+        });
         img.addEventListener("error", function () {
-                             this.removeEventListener('error', arguments.callee, false);
-                             if(!cb) return;
-                             cb("error");
-                             });
+            this.removeEventListener('error', arguments.callee, false);
+            if(!cb) return;
+            cb("error");
+        });
         img.src = url;
         return img;
     },
@@ -432,7 +432,36 @@ cc.loader = {
      * @private
      */
     _loadResIterator : function(item, index, cb){
-        cb();
+        var self = this, url = null;
+        var type = item.type;
+        if (type) {
+            type = "." + type.toLowerCase();
+            url = item.src ? item.src : item.name + type;
+        } else {
+            url = item;
+            type = cc.path.extname(url);
+        }
+
+        var obj = self.cache[url];
+        if (obj)
+            return cb(null, obj);
+        var loader = self._register[type.toLowerCase()];
+        if (!loader) {
+            cc.error("loader for [" + type + "] not exists!");
+            return cb();
+        }
+        var basePath = loader.getBasePath ? loader.getBasePath() : self.resPath;
+        var realUrl = self.getUrl(basePath, url);
+        var data = loader.load(realUrl, url);
+        if (data) {
+            self.cache[url] = data;
+            cb(null, data);
+        } else {
+            cc.log(err);
+            self.cache[url] = null;
+            delete self.cache[url];
+            cb();
+        }
     },
     
     /**
@@ -1223,12 +1252,12 @@ cc.game._initConfig();
 //+++++++++++++++++++++++++other initializations+++++++++++++++++++++++++++++
 
 // JS to Native bridges
-if(cc.sys.os == cc.sys.OS_ANDROID){
+if(window.JavascriptJavaBridge && cc.sys.os == cc.sys.OS_ANDROID){
     jsb.reflection = new JavascriptJavaBridge();
     cc.sys.capabilities["keyboard"] = true;
 }
-else if(cc.sys.os == cc.sys.OS_IOS){
-    //TODO
+else if(window.JavaScriptObjCBridge && (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX)){
+    jsb.reflection = new JavaScriptObjCBridge();
 }
 
 //+++++++++++++++++++++++++other initializations end+++++++++++++++++++++++++++++

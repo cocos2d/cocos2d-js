@@ -34,7 +34,7 @@ class GitArchiver(object):
     IGNORED_RULES = [
         "*.idea/*",
         "frameworks/js-bindings/cocos2d-x/tools/*",
-        "frameworks/js-bindings/cocos2d-x/templates/*",
+        "frameworks/js-bindings/cocos2d-x/templates/*-template-*",
         "frameworks/js-bindings/cocos2d-x/tests/*"
     ]
 
@@ -132,6 +132,7 @@ class GitArchiver(object):
                 else:
                     # file
                     data = z.read(info.filename)
+                    file_paths.append(target)
                     file_dir = os.path.dirname(target)
                     if not os.path.exists(file_dir):
                         os.makedirs(file_dir)
