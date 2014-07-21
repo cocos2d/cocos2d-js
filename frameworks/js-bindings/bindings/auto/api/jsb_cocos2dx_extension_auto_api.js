@@ -3038,6 +3038,33 @@ getPercent : function (
     return 0;
 },
 
+/**
+ * @method EventAssetsManager
+ * @constructor
+ * @param {String} arg0
+ * @param {cc.AssetsManager} arg1
+ * @param {cc.EventAssetsManager::EventCode} arg2
+ * @param {float} arg3
+ * @param {float} arg4
+ * @param {String} arg5
+ * @param {String} arg6
+ * @param {int} arg7
+ * @param {int} arg8
+ */
+EventAssetsManager : function (
+str, 
+assetsmanager, 
+eventcode, 
+float, 
+float, 
+str, 
+str, 
+int, 
+int 
+)
+{
+},
+
 };
 
 /**
