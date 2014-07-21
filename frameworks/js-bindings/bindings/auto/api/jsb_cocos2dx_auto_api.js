@@ -9189,22 +9189,6 @@ vec2
 },
 
 /**
- * @method initWithDuration
- * @param {float} arg0
- * @param {point_object} arg1
- * @param {float} arg2
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-pointarray, 
-float 
-)
-{
-    return false;
-},
-
-/**
  * @method CardinalSplineTo
  * @constructor
  */
@@ -9236,40 +9220,12 @@ CardinalSplineBy : function (
  */
 cc.CatmullRomTo = {
 
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {point_object} arg1
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-pointarray 
-)
-{
-    return false;
-},
-
 };
 
 /**
  * @class CatmullRomBy
  */
 cc.CatmullRomBy = {
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {point_object} arg1
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-pointarray 
-)
-{
-    return false;
-},
 
 };
 
