@@ -5316,20 +5316,6 @@ int
 cc.BezierBy = {
 
 /**
- * @method initWithDuration
- * @param {float} arg0
- * @param {cc._ccBezierConfig} arg1
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-_ccbezierconfig 
-)
-{
-    return false;
-},
-
-/**
  * @method BezierBy
  * @constructor
  */
@@ -5344,20 +5330,6 @@ BezierBy : function (
  * @class BezierTo
  */
 cc.BezierTo = {
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {cc._ccBezierConfig} arg1
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-_ccbezierconfig 
-)
-{
-    return false;
-},
 
 /**
  * @method BezierTo
