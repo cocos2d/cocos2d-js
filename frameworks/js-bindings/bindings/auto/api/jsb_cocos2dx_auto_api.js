@@ -5316,6 +5316,20 @@ int
 cc.BezierBy = {
 
 /**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {cc._ccBezierConfig} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+_ccbezierconfig 
+)
+{
+    return false;
+},
+
+/**
  * @method BezierBy
  * @constructor
  */
@@ -5330,6 +5344,20 @@ BezierBy : function (
  * @class BezierTo
  */
 cc.BezierTo = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {cc._ccBezierConfig} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+_ccbezierconfig 
+)
+{
+    return false;
+},
 
 /**
  * @method BezierTo
@@ -7433,7 +7461,7 @@ Place : function (
 /**
  * @class CallFunc
  */
-cc._CallFunc = {
+cc.CallFunc = {
 
 /**
  * @method execute
@@ -7448,22 +7476,6 @@ execute : function (
  * @constructor
  */
 CallFunc : function (
-)
-{
-},
-
-};
-
-/**
- * @class CallFuncN
- */
-cc.CallFunc = {
-
-/**
- * @method CallFuncN
- * @constructor
- */
-CallFuncN : function (
 )
 {
 },
@@ -9189,6 +9201,22 @@ vec2
 },
 
 /**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @param {float} arg2
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+pointarray, 
+float 
+)
+{
+    return false;
+},
+
+/**
  * @method CardinalSplineTo
  * @constructor
  */
@@ -9220,12 +9248,40 @@ CardinalSplineBy : function (
  */
 cc.CatmullRomTo = {
 
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+pointarray 
+)
+{
+    return false;
+},
+
 };
 
 /**
  * @class CatmullRomBy
  */
 cc.CatmullRomBy = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+pointarray 
+)
+{
+    return false;
+},
 
 };
 

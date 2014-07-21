@@ -62,27 +62,27 @@ var MainLayer = cc.Layer.extend({
                 }
             }, this);
 
-        var sprite = cc.Sprite.create(s_pathGrossini);
+        var sprite = new cc.Sprite(s_pathGrossini);
 
-        var layer = cc.LayerColor.create(cc.color(255, 255, 0, 100));
+        var layer = new cc.LayerColor(cc.color(255, 255, 0, 100));
         this.addChild(layer, -1);
 
         this.addChild(sprite, 0, TAG_SPRITE);
         sprite.x = 20;
 	    sprite.y = 150;
 
-        sprite.runAction(cc.JumpTo.create(4, cc.p(300, 48), 100, 4));
+        sprite.runAction(new cc.JumpTo(4, cc.p(300, 48), 100, 4));
 
-        var fadeIn = cc.FadeIn.create(1);
-        var fadeOut = cc.FadeOut.create(1);
-        var forever = cc.Sequence.create(fadeIn, fadeOut).repeatForever();
+        var fadeIn = new cc.FadeIn(1);
+        var fadeOut = new cc.FadeOut(1);
+        var forever = new cc.Sequence(fadeIn, fadeOut).repeatForever();
         layer.runAction(forever);
     },
 
     moveSprite:function(position) {
         var sprite = this.getChildByTag(TAG_SPRITE);
         sprite.stopAllActions();
-        sprite.runAction(cc.MoveTo.create(1, position));
+        sprite.runAction(new cc.MoveTo(1, position));
         var o = position.x - sprite.x;
         var a = position.y - sprite.y;
         var at = Math.atan(o / a) * 57.29577951;  // radians to degrees
@@ -94,7 +94,7 @@ var MainLayer = cc.Layer.extend({
                 at = 180 - Math.abs(at);
         }
 
-        sprite.runAction(cc.RotateTo.create(1, at));
+        sprite.runAction(new cc.RotateTo(1, at));
     }
 });
 
