@@ -58,7 +58,14 @@ _p._ctor = function(start, end, v) {
 
 _p = cc.LayerMultiplex.prototype;
 _p._ctor = function(layers) {
-	layers && layers.length ? this.initWithArray(layers) : cc.LayerMultiplex.prototype.init.call(this);
+    if(layers != undefined){
+        if (layers instanceof Array)
+            cc.LayerMultiplex.prototype.initWithArray.call(this, layers);
+        else
+            cc.LayerMultiplex.prototype.initWithArray.call(this, Array.prototype.slice.call(arguments));
+    }else{
+        cc.LayerMultiplex.prototype.init.call(this);
+    }
 };
 
 
