@@ -8281,46 +8281,6 @@ bool js_cocos2dx_extension_EventAssetsManager_getPercent(JSContext *cx, uint32_t
 	JS_ReportError(cx, "js_cocos2dx_extension_EventAssetsManager_getPercent : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_cocos2dx_extension_EventAssetsManager_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-    std::string arg0;
-    cocos2d::extension::AssetsManager* arg1;
-    cocos2d::extension::EventAssetsManager::EventCode arg2;
-    ok &= jsval_to_std_string(cx, argv[0], &arg0);
-    do {
-			if (!argv[1].isObject()) { ok = false; break; }
-			js_proxy_t *jsProxy;
-			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
-			jsProxy = jsb_get_js_proxy(tmpObj);
-			arg1 = (cocos2d::extension::AssetsManager*)(jsProxy ? jsProxy->ptr : NULL);
-			JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
-		} while (0);
-    ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
-    JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_EventAssetsManager_constructor : Error processing arguments");
-    cocos2d::extension::EventAssetsManager* cobj = new cocos2d::extension::EventAssetsManager(arg0, arg1, arg2);
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::extension::EventAssetsManager> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::extension::EventAssetsManager");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
-    return true;
-}
-
 
 extern JSObject *jsb_cocos2d_EventCustom_prototype;
 
@@ -8364,7 +8324,7 @@ void js_register_cocos2dx_extension_EventAssetsManager(JSContext *cx, JSObject *
 		cx, global,
 		jsb_cocos2d_EventCustom_prototype,
 		jsb_cocos2d_extension_EventAssetsManager_class,
-		js_cocos2dx_extension_EventAssetsManager_constructor, 0, // constructor
+		dummy_constructor<cocos2d::extension::EventAssetsManager>, 0, // no constructor
 		properties,
 		funcs,
 		NULL, // no static properties
