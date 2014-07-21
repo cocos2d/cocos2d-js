@@ -432,7 +432,36 @@ cc.loader = {
      * @private
      */
     _loadResIterator : function(item, index, cb){
-        cb();
+        var self = this, url = null;
+        var type = item.type;
+        if (type) {
+            type = "." + type.toLowerCase();
+            url = item.src ? item.src : item.name + type;
+        } else {
+            url = item;
+            type = cc.path.extname(url);
+        }
+
+        var obj = self.cache[url];
+        if (obj)
+            return cb(null, obj);
+        var loader = self._register[type.toLowerCase()];
+        if (!loader) {
+            cc.error("loader for [" + type + "] not exists!");
+            return cb();
+        }
+        var basePath = loader.getBasePath ? loader.getBasePath() : self.resPath;
+        var realUrl = self.getUrl(basePath, url);
+        var data = loader.load(realUrl, url);
+        if (data) {
+            self.cache[url] = data;
+            cb(null, data);
+        } else {
+            cc.log(err);
+            self.cache[url] = null;
+            delete self.cache[url];
+            cb();
+        }
     },
     
     /**
