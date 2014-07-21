@@ -30,7 +30,7 @@ cc._txtLoader = {
     load : function(realUrl, url){
         return jsb.fileUtils.getStringFromFile(realUrl);
     }
-}
+};
 cc.loader.register(["txt", "xml", "vsh", "fsh", "tmx", "tsx"], cc._txtLoader);
 
 cc._jsonLoader = {
@@ -58,14 +58,14 @@ cc._plistLoader = {
         var content = jsb.fileUtils.getStringFromFile(realUrl);
         return cc.plistParser.parse(content);
     }
-}
+};
 cc.loader.register(["plist"], cc._plistLoader);
 
 cc._fontLoader = {
     load : function(realUrl, url){
         return null;
     }
-}
+};
 cc.loader.register(["font", "eot", "ttf", "woff", "svg"], cc._fontLoader);
 
 cc._binaryLoader = {
@@ -111,7 +111,7 @@ cc._fntLoader = {
             top : parseInt(paddingArr[1]),
             right : parseInt(paddingArr[2]),
             bottom : parseInt(paddingArr[3])
-        }
+        };
 
         //common
         var commonObj = self._parseStrToObj(fntStr.match(self.COMMON_EXP)[0]);
