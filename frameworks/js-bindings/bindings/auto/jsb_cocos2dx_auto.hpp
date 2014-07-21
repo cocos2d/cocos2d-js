@@ -868,7 +868,6 @@ bool js_cocos2dx_BezierBy_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_BezierBy_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_BezierBy(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_BezierBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_BezierBy_BezierBy(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_BezierTo_class;
@@ -878,7 +877,6 @@ bool js_cocos2dx_BezierTo_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_BezierTo_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_BezierTo(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_BezierTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_BezierTo_BezierTo(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_ScaleTo_class;
@@ -1525,6 +1523,15 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_CallFunc_execute(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_CallFunc_CallFunc(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_CallFuncN_class;
+extern JSObject *jsb_cocos2d_CallFuncN_prototype;
+
+bool js_cocos2dx_CallFuncN_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_CallFuncN_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_CallFuncN(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_CallFuncN_CallFuncN(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_GridAction_class;
 extern JSObject *jsb_cocos2d_GridAction_prototype;
 
@@ -1899,7 +1906,6 @@ void js_register_cocos2dx_CardinalSplineTo(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_CardinalSplineTo_getPoints(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_CardinalSplineTo_updatePosition(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_CardinalSplineTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_CardinalSplineTo_CardinalSplineTo(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_CardinalSplineBy_class;
@@ -1918,7 +1924,6 @@ bool js_cocos2dx_CatmullRomTo_constructor(JSContext *cx, uint32_t argc, jsval *v
 void js_cocos2dx_CatmullRomTo_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_CatmullRomTo(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_CatmullRomTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_CatmullRomBy_class;
 extern JSObject *jsb_cocos2d_CatmullRomBy_prototype;
@@ -1927,7 +1932,6 @@ bool js_cocos2dx_CatmullRomBy_constructor(JSContext *cx, uint32_t argc, jsval *v
 void js_cocos2dx_CatmullRomBy_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_CatmullRomBy(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_CatmullRomBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_DrawNode_class;
 extern JSObject *jsb_cocos2d_DrawNode_prototype;
@@ -2104,6 +2108,7 @@ bool js_cocos2dx_Label_createWithBMFont(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_Label_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_createWithCharMap(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_createWithSystemFont(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Label_Label(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_LabelBMFont_class;
 extern JSObject *jsb_cocos2d_LabelBMFont_prototype;
@@ -2747,6 +2752,7 @@ bool js_cocos2dx_ClippingNode_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ClippingNode_getStencil(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ClippingNode_setAlphaThreshold(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ClippingNode_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ClippingNode_ClippingNode(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_MotionStreak_class;
 extern JSObject *jsb_cocos2d_MotionStreak_prototype;
