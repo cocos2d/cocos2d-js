@@ -150,10 +150,10 @@ cc.async = {
         var results = isArr ? [] : {};
         var counter = { length : li, count : li, option : option, results : results};
         cc.each(tasks, function(task, index){
-                if(counter.err) return false;
-                var counterFunc = !option.cb ? self._emptyFunc : self._counterFunc.bind({counter : counter, index : index});//bind counter and index
-                option.iterator.call(option.iteratorTarget, task, index, counterFunc);
-                });
+            if(counter.err) return false;
+            var counterFunc = !option.cb ? self._emptyFunc : self._counterFunc.bind({counter : counter, index : index});//bind counter and index
+            option.iterator.call(option.iteratorTarget, task, index, counterFunc);
+        });
     }
 };
 //+++++++++++++++++++++++++something about async end+++++++++++++++++++++++++++++++++
@@ -398,16 +398,16 @@ cc.loader = {
         if(opt.isCrossOrigin) img.crossOrigin = "Anonymous";
         
         img.addEventListener("load", function () {
-                             this.removeEventListener('load', arguments.callee, false);
-                             this.removeEventListener('error', arguments.callee, false);
-                             if(!cb) return;
-                             cb(null, img);
-                             });
+            this.removeEventListener('load', arguments.callee, false);
+            this.removeEventListener('error', arguments.callee, false);
+            if(!cb) return;
+            cb(null, img);
+        });
         img.addEventListener("error", function () {
-                             this.removeEventListener('error', arguments.callee, false);
-                             if(!cb) return;
-                             cb("error");
-                             });
+            this.removeEventListener('error', arguments.callee, false);
+            if(!cb) return;
+            cb("error");
+        });
         img.src = url;
         return img;
     },
