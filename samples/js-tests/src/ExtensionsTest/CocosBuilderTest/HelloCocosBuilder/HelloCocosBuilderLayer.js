@@ -30,12 +30,12 @@ cc.BuilderReader.registerController("HelloCocosBuilderLayer", {
         var node = cc.BuilderReader.load(ccbFileName, this);
 
         this["mTestTitleLabelTTF"].setString(ccbFileName);
-        var scene = cc.Scene.create();
+        var scene = new cc.Scene();
         if(node != null)
             scene.addChild(node);
 
         /* Push the new scene with a fancy transition. */
-        cc.director.pushScene(cc.TransitionFade.create(0.5, scene, cc.color(0, 0, 0)));
+        cc.director.pushScene(new cc.TransitionFade(0.5, scene, cc.color(0, 0, 0)));
     },
     
     "onMenuTestClicked" : function() {

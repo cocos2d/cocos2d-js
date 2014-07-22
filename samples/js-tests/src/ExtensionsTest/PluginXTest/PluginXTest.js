@@ -33,16 +33,16 @@ var PluginXTest = cc.Layer.extend({
         // Get the sceensize
         var screensize = cc.winSize;
 
-        var pBackItem = cc.MenuItemFont.create("Back", this.toExtensionsMainLayer, this);
+        var pBackItem = new cc.MenuItemFont("Back", this.toExtensionsMainLayer, this);
         pBackItem.x = screensize.width - 50;
         pBackItem.y = 25;
-        var pBackMenu = cc.Menu.create(pBackItem);
+        var pBackMenu = new cc.Menu(pBackItem);
         pBackMenu.x = 0;
         pBackMenu.y = 0;
         this.addChild(pBackMenu, 10);
 
         // Add the generated background
-        var background = cc.Sprite.create(s_extensions_background);
+        var background = new cc.Sprite(s_extensions_background);
         background.x = screensize.width / 2;
         background.y = screensize.height / 2;
         var bgRect = background.getTextureRect();
@@ -59,17 +59,17 @@ var PluginXTest = cc.Layer.extend({
         this.addChild(ribbon);
 
         // Add the title
-        this.setSceneTitleLabel(cc.LabelTTF.create(title || "Title", "Arial", 12));
+        this.setSceneTitleLabel(new cc.LabelTTF(title || "Title", "Arial", 12));
         this._sceneTitleLabel.x = screensize.width / 2;
         this._sceneTitleLabel.y = screensize.height - this._sceneTitleLabel.height / 2 - 5;
         this.addChild(this._sceneTitleLabel, 1);
 
         // Add the menu
-        var item1 = cc.MenuItemImage.create(s_pathB1, s_pathB2, this.previousCallback, this);
-        var item2 = cc.MenuItemImage.create(s_pathR1, s_pathR2, this.restartCallback, this);
-        var item3 = cc.MenuItemImage.create(s_pathF1, s_pathF2, this.nextCallback, this);
+        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.previousCallback, this);
+        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.restartCallback, this);
+        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
 
-        var menu = cc.Menu.create(item1, item3, item2);
+        var menu = new cc.Menu(item1, item3, item2);
         menu.x = 0;
         menu.y = 0;
         item1.x = screensize.width / 2 - 100;

@@ -33,6 +33,7 @@ var EditBoxTestLayer = cc.Layer.extend({
     ctor: function () {
         this._super();
         cc.associateWithNative(this, cc.Layer);
+        this.init();
     },
 
     init: function () {
@@ -117,17 +118,9 @@ var EditBoxTestLayer = cc.Layer.extend({
     }
 });
 
-EditBoxTestLayer.create = function () {
-    var retObj = new EditBoxTestLayer();
-    if (retObj && retObj.init()) {
-        return retObj;
-    }
-    return null;
-};
-
 var runEditBoxTest = function () {
-    var pScene = cc.Scene.create();
-    var pLayer = EditBoxTestLayer.create();
+    var pScene = new cc.Scene();
+    var pLayer = new EditBoxTestLayer();
     pScene.addChild(pLayer);
 	cc.director.runScene(pScene);
 };

@@ -30,28 +30,28 @@ var FacebookUserTest = PluginXTest.extend({
     ctor: function (title) {
         this._super(title);
 
-        var login_label = cc.LabelTTF.create("login", "Arial", 24);
-        var login_item = cc.MenuItemLabel.create(login_label, this.loginClick, this);
+        var login_label = new cc.LabelTTF("login", "Arial", 24);
+        var login_item = new cc.MenuItemLabel(login_label, this.loginClick, this);
         login_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 100)));
 
-        var logout_label = cc.LabelTTF.create("logout", "Arial", 24);
-        var logout_item = cc.MenuItemLabel.create(logout_label, this.logoutClick, this);
+        var logout_label = new cc.LabelTTF("logout", "Arial", 24);
+        var logout_item = new cc.MenuItemLabel(logout_label, this.logoutClick, this);
         logout_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 50)));
 
-        var getUid_label = cc.LabelTTF.create("getUid", "Arial", 24);
-        var getUid_item = cc.MenuItemLabel.create(getUid_label, this.getUidClick, this);
+        var getUid_label = new cc.LabelTTF("getUid", "Arial", 24);
+        var getUid_item = new cc.MenuItemLabel(getUid_label, this.getUidClick, this);
         getUid_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 0)));
 
-        var getToken_label = cc.LabelTTF.create("getToken", "Arial", 24);
-        var getToken_item = cc.MenuItemLabel.create(getToken_label, this.getTokenClick, this);
+        var getToken_label = new cc.LabelTTF("getToken", "Arial", 24);
+        var getToken_item = new cc.MenuItemLabel(getToken_label, this.getTokenClick, this);
         getToken_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, -50)));
 
-        this.result = cc.LabelTTF.create("You can see the result at this label", "Arial", 26);
+        this.result = new cc.LabelTTF("You can see the result at this label", "Arial", 26);
         this.result.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(100, 0)));
         this.addChild(this.result, 1);
 
 
-        var menu = cc.Menu.create(login_item, logout_item, getUid_item, getToken_item);
+        var menu = new cc.Menu(login_item, logout_item, getUid_item, getToken_item);
         menu.setPosition(cc.p(0, 0));
         menu.anchorX = 0;
         menu.anchorY = 0;
