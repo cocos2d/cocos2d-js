@@ -71,7 +71,7 @@ bool js_EventListenerTouchAllAtOnce_create(JSContext *cx, uint32_t argc, jsval *
         auto ret = EventListenerTouchAllAtOnce::create();
         
         ret->onTouchesBegan = [ret](const std::vector<Touch*>& touches, Event* event) {
-            ScriptingCore::getInstance()->handleTouchesEvent(ret, EventTouch::EventCode::BEGAN, touches, event);
+            ScriptingCore::getInstance()->handleTouchesEvent(ret->getAssociatedNode(), EventTouch::EventCode::BEGAN, touches, event);
         };
         
         ret->onTouchesMoved = [ret](const std::vector<Touch*>& touches, Event* event) {
