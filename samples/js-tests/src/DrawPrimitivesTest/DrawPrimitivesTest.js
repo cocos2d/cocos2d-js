@@ -76,7 +76,7 @@ var DrawNewAPITest2 = DrawTestDemo.extend({
     ctor: function () {
         //----start0----ctor
         this._super();
-        var draw = cc.DrawNode.create();
+        var draw = new cc.DrawNode();
         this.addChild(draw, 10);
         var winSize = cc.director.getWinSize();
         var centerPos = cc.p(winSize.width / 2, winSize.height / 2);
@@ -146,7 +146,7 @@ var DrawNewAPITest = DrawTestDemo.extend({
         //----start1----ctor
         this._super();
 
-        var draw = cc.DrawNode.create();
+        var draw = new cc.DrawNode();
         this.addChild(draw, 10);
         //
         // Circles

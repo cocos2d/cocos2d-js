@@ -99,12 +99,12 @@ Box2DTestLayer = cc.Layer.extend({
 
         //Set up sprite
 
-        var mgr = cc.SpriteBatchNode.create(s_pathBlock, 150);
+        var mgr = new cc.SpriteBatchNode(s_pathBlock, 150);
         this.addChild(mgr, 0, TAG_SPRITE_MANAGER);
 
         this.addNewSpriteWithCoords(cc.p(screenSize.width / 2, screenSize.height / 2));
 
-        var label = cc.LabelTTF.create("Tap screen", "Marker Felt", 32);
+        var label = new cc.LabelTTF("Tap screen", "Marker Felt", 32);
         this.addChild(label, 0);
         label.color = cc.color(0, 0, 255);
         label.x = screenSize.width / 2;
@@ -123,7 +123,7 @@ Box2DTestLayer = cc.Layer.extend({
         //just randomly picking one of the images
         var idx = (Math.random() > .5 ? 0 : 1);
         var idy = (Math.random() > .5 ? 0 : 1);
-        var sprite = cc.Sprite.create(batch.texture, cc.rect(32 * idx, 32 * idy, 32, 32));
+        var sprite = new cc.Sprite(batch.texture, cc.rect(32 * idx, 32 * idy, 32, 32));
         batch.addChild(sprite);
 
         sprite.x = p.x;

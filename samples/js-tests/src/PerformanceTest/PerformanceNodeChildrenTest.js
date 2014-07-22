@@ -82,7 +82,7 @@ var NodeChildrenMainScene = cc.Scene.extend({
         var s = cc.director.getWinSize();
 
         // Title
-        var label = cc.LabelTTF.create(this.title(), "Arial", 40);
+        var label = new cc.LabelTTF(this.title(), "Arial", 40);
         this.addChild(label, 1);
         label.x = s.width / 2;
         label.y = s.height - 32;
@@ -91,7 +91,7 @@ var NodeChildrenMainScene = cc.Scene.extend({
         // Subtitle
         var strSubTitle = this.subtitle();
         if (strSubTitle.length) {
-            var l = cc.LabelTTF.create(strSubTitle, "Thonburi", 16);
+            var l = new cc.LabelTTF(strSubTitle, "Thonburi", 16);
             this.addChild(l, 1);
             l.x = s.width / 2;
             l.y = s.height - 80;
@@ -103,18 +103,18 @@ var NodeChildrenMainScene = cc.Scene.extend({
 
         cc.MenuItemFont.setFontSize(65);
         var that = this;
-        var decrease = cc.MenuItemFont.create(" - ", this.onDecrease, this);
+        var decrease = new cc.MenuItemFont(" - ", this.onDecrease, this);
         decrease.color = cc.color(0, 200, 20);
-        var increase = cc.MenuItemFont.create(" + ", this.onIncrease, this);
+        var increase = new cc.MenuItemFont(" + ", this.onIncrease, this);
         increase.color = cc.color(0, 200, 20);
 
-        var menu = cc.Menu.create(decrease, increase);
+        var menu = new cc.Menu(decrease, increase);
         menu.alignItemsHorizontally();
         menu.x = s.width / 2;
         menu.y = s.height / 2 + 15;
         this.addChild(menu, 1);
 
-        var infoLabel = cc.LabelTTF.create("0 nodes", "Marker Felt", 30);
+        var infoLabel = new cc.LabelTTF("0 nodes", "Marker Felt", 30);
         infoLabel.color = cc.color(0, 200, 20);
         infoLabel.x = s.width / 2;
         infoLabel.y = s.height / 2 - 15;
@@ -187,7 +187,7 @@ var IterateSpriteSheet = NodeChildrenMainScene.extend({
         // increase nodes
         if (this._currentQuantityOfNodes < this._quantityOfNodes) {
             for (var i = 0; i < (this._quantityOfNodes - this._currentQuantityOfNodes); i++) {
-                var sprite = cc.Sprite.create(this._batchNode.texture, cc.rect(0, 0, 32, 32));
+                var sprite = new cc.Sprite(this._batchNode.texture, cc.rect(0, 0, 32, 32));
                 this._batchNode.addChild(sprite);
                 sprite.x = Math.random() * s.width;
                 sprite.y = Math.random() * s.height;
@@ -205,7 +205,7 @@ var IterateSpriteSheet = NodeChildrenMainScene.extend({
         this._currentQuantityOfNodes = this._quantityOfNodes;
     },
     initWithQuantityOfNodes:function (nodes) {
-        this._batchNode = cc.SpriteBatchNode.create("res/Images/spritesheet1.png");
+        this._batchNode = new cc.SpriteBatchNode("res/Images/spritesheet1.png");
         this.addChild(this._batchNode);
 
         this._super(nodes);
@@ -310,7 +310,7 @@ var AddRemoveSpriteSheet = NodeChildrenMainScene.extend({
         // increase nodes
         if (this._currentQuantityOfNodes < this._quantityOfNodes) {
             for (var i = 0; i < (this._quantityOfNodes - this._currentQuantityOfNodes); i++) {
-                var sprite = cc.Sprite.create(this._batchNode.texture, cc.rect(0, 0, 32, 32));
+                var sprite = new cc.Sprite(this._batchNode.texture, cc.rect(0, 0, 32, 32));
                 this._batchNode.addChild(sprite);
                 sprite.x = Math.random() * s.width;
                 sprite.y = Math.random() * s.height;
@@ -328,7 +328,7 @@ var AddRemoveSpriteSheet = NodeChildrenMainScene.extend({
         this._currentQuantityOfNodes = this._quantityOfNodes;
     },
     initWithQuantityOfNodes:function (nodes) {
-        this._batchNode = cc.SpriteBatchNode.create("res/Images/spritesheet1.png");
+        this._batchNode = new cc.SpriteBatchNode("res/Images/spritesheet1.png");
         this.addChild(this._batchNode);
 
         this._super(nodes);
@@ -365,7 +365,7 @@ var AddSpriteSheet = AddRemoveSpriteSheet.extend({
 
                 // Don't include the sprite creation time and random as part of the profiling
                 for (var i = 0; i < totalToAdd; i++) {
-                    var sprite = cc.Sprite.create(this._batchNode.texture, cc.rect(0, 0, 32, 32));
+                    var sprite = new cc.Sprite(this._batchNode.texture, cc.rect(0, 0, 32, 32));
                     sprites.push(sprite);
                     zs[i] = (Math.random()*2-1) * 50;
                 }
@@ -420,7 +420,7 @@ var RemoveSpriteSheet = AddRemoveSpriteSheet.extend({
 
             // Don't include the sprite creation time as part of the profiling
             for (var i = 0; i < totalToAdd; i++) {
-                var sprite = cc.Sprite.create(this._batchNode.texture, cc.rect(0, 0, 32, 32));
+                var sprite = new cc.Sprite(this._batchNode.texture, cc.rect(0, 0, 32, 32));
                 sprites.push(sprite);
             }
 
@@ -472,7 +472,7 @@ var ReorderSpriteSheet = AddRemoveSpriteSheet.extend({
 
             // Don't include the sprite creation time as part of the profiling
             for (var i = 0; i < totalToAdd; i++) {
-                var sprite = cc.Sprite.create(this._batchNode.texture, cc.rect(0, 0, 32, 32));
+                var sprite = new cc.Sprite(this._batchNode.texture, cc.rect(0, 0, 32, 32));
                 sprites.push(sprite);
             }
 

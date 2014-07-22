@@ -104,28 +104,28 @@ var BaseTestLayerProps = {
         this._super();
 
         var t = this.getTitle();
-        var label = cc.LabelTTF.create(t, "Arial", 28);
+        var label = new cc.LabelTTF(t, "Arial", 28);
         this.addChild(label, 100, BASE_TEST_TITLE_TAG);
         label.x = winSize.width / 2;
         label.y = winSize.height - 50;
 
         var st = this.getSubtitle();
         if (st) {
-            var l = cc.LabelTTF.create(st.toString(), "Thonburi", 16);
+            var l = new cc.LabelTTF(st.toString(), "Thonburi", 16);
             this.addChild(l, 101, BASE_TEST_SUBTITLE_TAG);
             l.x = winSize.width / 2;
             l.y = winSize.height - 80;
         }
 
-        var item1 = cc.MenuItemImage.create(s_pathB1, s_pathB2, this.onBackCallback, this);
-        var item2 = cc.MenuItemImage.create(s_pathR1, s_pathR2, this.onRestartCallback, this);
-        var item3 = cc.MenuItemImage.create(s_pathF1, s_pathF2, this.onNextCallback, this);
+        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.onBackCallback, this);
+        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.onRestartCallback, this);
+        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.onNextCallback, this);
 
         item1.tag = BASE_TEST_MENUITEM_PREV_TAG;
         item2.tag = BASE_TEST_MENUITEM_RESET_TAG;
         item3.tag = BASE_TEST_MENUITEM_NEXT_TAG;
 
-        var menu = cc.Menu.create(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3);
 
         menu.x = 0;
         menu.y = 0;

@@ -74,17 +74,17 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
 
-        var containerForSprite1 = cc.Node.create();
-        var sprite1 = cc.Sprite.create("res/Images/CyanSquare.png");
+        var containerForSprite1 = new cc.Node();
+        var sprite1 = new cc.Sprite("res/Images/CyanSquare.png");
         sprite1.setPosition(origin.x + size.width/2 - 80, origin.y + size.height/2 + 80);
         containerForSprite1.addChild(sprite1);
         this.addChild(containerForSprite1, 10);
 
-        var sprite2 = cc.Sprite.create("res/Images/MagentaSquare.png");
+        var sprite2 = new cc.Sprite("res/Images/MagentaSquare.png");
         sprite2.setPosition(origin.x + size.width/2, origin.y + size.height/2);
         this.addChild(sprite2, 20);
 
-        var sprite3 = cc.Sprite.create("res/Images/YellowSquare.png");
+        var sprite3 = new cc.Sprite("res/Images/YellowSquare.png");
         sprite3.setPosition(0,0);
         sprite2.addChild(sprite3, 1);
 
@@ -129,12 +129,12 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
         cc.eventManager.addListener(listener1.clone(), sprite3);
         var selfPointer = this;
 
-        var removeAllTouchItem = cc.MenuItemFont.create("Remove All Touch Listeners", function(senderItem){
+        var removeAllTouchItem = new cc.MenuItemFont("Remove All Touch Listeners", function(senderItem){
             senderItem.setString("Only Next item could be clicked");
 
             cc.eventManager.removeListeners(cc.EventListener.TOUCH_ONE_BY_ONE);
 
-            var nextItem = cc.MenuItemFont.create("Next", function(sender){
+            var nextItem = new cc.MenuItemFont("Next", function(sender){
                 selfPointer.onNextCallback();
             });
 
@@ -142,7 +142,7 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
             nextItem.x = cc.visibleRect.right.x -100;
 	        nextItem.y = cc.visibleRect.right.y - 30;
 
-            var menu2 = cc.Menu.create(nextItem);
+            var menu2 = new cc.Menu(nextItem);
             menu2.setPosition(0, 0);
             menu2.setAnchorPoint(0, 0);
             selfPointer.addChild(menu2);
@@ -152,7 +152,7 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
         removeAllTouchItem.x = cc.visibleRect.right.x -100;
 	    removeAllTouchItem.y = cc.visibleRect.right.y;
 
-        var menu = cc.Menu.create(removeAllTouchItem);
+        var menu = new cc.Menu(removeAllTouchItem);
         menu.setPosition(0, 0);
         menu.setAnchorPoint(0, 0);
         this.addChild(menu);
@@ -296,7 +296,7 @@ var RemoveListenerWhenDispatching =  EventDispatcherTestDemo.extend({
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
 
-        var sprite1 = cc.Sprite.create("res/Images/CyanSquare.png");
+        var sprite1 = new cc.Sprite("res/Images/CyanSquare.png");
         sprite1.setPosition(origin.x + size.width/2, origin.y + size.height/2);
         this.addChild(sprite1, 10);
 
@@ -323,14 +323,14 @@ var RemoveListenerWhenDispatching =  EventDispatcherTestDemo.extend({
 
         cc.eventManager.addListener(listener1, sprite1);
 
-        var statusLabel = cc.LabelTTF.create("The sprite could be touched!", "", 20);
+        var statusLabel = new cc.LabelTTF("The sprite could be touched!", "", 20);
         statusLabel.setPosition(origin.x + size.width/2, origin.y + size.height-90 );
         this.addChild(statusLabel);
 
         var enable = true;
 
         // Enable/Disable item
-        var toggleItem = cc.MenuItemToggle.create(cc.MenuItemFont.create("Enabled"), cc.MenuItemFont.create("Disabled"),
+        var toggleItem = new cc.MenuItemToggle(new cc.MenuItemFont("Enabled"), new cc.MenuItemFont("Disabled"),
             function (sender) {
                 if (enable) {
                     cc.eventManager.removeListener(listener1);
@@ -344,7 +344,7 @@ var RemoveListenerWhenDispatching =  EventDispatcherTestDemo.extend({
             });
 
         toggleItem.setPosition(origin.x + size.width/2, origin.y + 80);
-        var menu = cc.Menu.create(toggleItem);
+        var menu = new cc.Menu(toggleItem);
         menu.setPosition(0, 0);
         menu.setAnchorPoint(0, 0);
         this.addChild(menu, 1);
@@ -380,7 +380,7 @@ var CustomEventTest =  EventDispatcherTestDemo.extend({
 
         cc.MenuItemFont.setFontSize(20);
 
-        var statusLabel = cc.LabelTTF.create("No custom event 1 received!", "", 20);
+        var statusLabel = new cc.LabelTTF("No custom event 1 received!", "", 20);
         statusLabel.setPosition(origin.x + size.width / 2, origin.y + size.height - 90);
         this.addChild(statusLabel);
 
@@ -393,7 +393,7 @@ var CustomEventTest =  EventDispatcherTestDemo.extend({
         });
         cc.eventManager.addListener(this._listener1, 1);
 
-        var sendItem = cc.MenuItemFont.create("Send Custom Event 1", function(sender){
+        var sendItem = new cc.MenuItemFont("Send Custom Event 1", function(sender){
             ++selfPointer._item1Count;
             var event = new cc.EventCustom("game_custom_event1");
             event.setUserData(selfPointer._item1Count.toString());
@@ -401,7 +401,7 @@ var CustomEventTest =  EventDispatcherTestDemo.extend({
         });
         sendItem.setPosition(origin.x + size.width/2, origin.y + size.height/2);
 
-        var statusLabel2 = cc.LabelTTF.create("No custom event 2 received!", "", 20);
+        var statusLabel2 = new cc.LabelTTF("No custom event 2 received!", "", 20);
         statusLabel2.setPosition(origin.x + size.width/2, origin.y + size.height-120);
         this.addChild(statusLabel2);
 
@@ -414,7 +414,7 @@ var CustomEventTest =  EventDispatcherTestDemo.extend({
         });
 
         cc.eventManager.addListener(this._listener2, 1);
-        var sendItem2 = cc.MenuItemFont.create("Send Custom Event 2", function(sender){
+        var sendItem2 = new cc.MenuItemFont("Send Custom Event 2", function(sender){
             ++selfPointer._item2Count;
             var event = new cc.EventCustom("game_custom_event2");
             event.setUserData(selfPointer._item2Count.toString());
@@ -422,7 +422,7 @@ var CustomEventTest =  EventDispatcherTestDemo.extend({
         });
         sendItem2.setPosition(origin.x + size.width/2, origin.x + size.height/2 - 40);
 
-        var menu = cc.Menu.create(sendItem, sendItem2);
+        var menu = new cc.Menu(sendItem, sendItem2);
         menu.setPosition(0, 0);
         menu.setAnchorPoint(0, 0);
         this.addChild(menu, 1);
@@ -460,7 +460,7 @@ var LabelKeyboardEventTest =  EventDispatcherTestDemo.extend({
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
 
-        var statusLabel = cc.LabelTTF.create("No keyboard event received!", "", 20);
+        var statusLabel = new cc.LabelTTF("No keyboard event received!", "", 20);
         statusLabel.setPosition(origin.x + size.width/2, origin.x + size.height/2);
         this.addChild(statusLabel);
 
@@ -503,7 +503,7 @@ var SpriteAccelerationEventTest =  EventDispatcherTestDemo.extend({
 
         cc.inputManager.setAccelerometerEnabled(true);
 
-        var sprite = cc.Sprite.create("res/Images/ball.png");
+        var sprite = new cc.Sprite("res/Images/ball.png");
         sprite.setPosition(origin.x + size.width/2, origin.y + size.height/2);
         this.addChild(sprite);
 
@@ -567,7 +567,7 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
 
-        this._sprite = cc.Sprite.create("res/Images/CyanSquare.png");
+        this._sprite = new cc.Sprite("res/Images/CyanSquare.png");
         this._sprite.setPosition(origin.x + size.width/2, origin.y + size.height/2);
         this.addChild(this._sprite, 10);
 
@@ -603,14 +603,14 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
         });
         cc.eventManager.addListener(listener1, this._sprite);
 
-        this.runAction(cc.Sequence.create(cc.DelayTime.create(5.0),
-            cc.CallFunc.create(function () {
+        this.runAction(new cc.Sequence(new cc.DelayTime(5.0),
+            new cc.CallFunc(function () {
                 this._spriteSaved = true;
                 this._sprite.retain();
                 this._sprite.removeFromParent();
             }, this),
-            cc.DelayTime.create(5.0),
-            cc.CallFunc.create(function () {
+            new cc.DelayTime(5.0),
+            new cc.CallFunc(function () {
                 this._spriteSaved = false;
                 this.addChild(this._sprite);
                 if(!cc.sys.isNative)
@@ -649,7 +649,7 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
         //----start7----onEnter
         this._super();
         var selfPointer = this;
-        var item1 = cc.MenuItemFont.create("Click Me 1", function(sender){
+        var item1 = new cc.MenuItemFont("Click Me 1", function(sender){
             var listener = cc.EventListener.create({
                 event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function (touch, event) {
@@ -664,18 +664,18 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
         item1.setPosition(vCenter.x, vCenter.y + 80);
 
         var addNextButton = function(){
-            var next = cc.MenuItemFont.create("Please Click Me To Reset!", function(sender){
+            var next = new cc.MenuItemFont("Please Click Me To Reset!", function(sender){
                 selfPointer.onRestartCallback();
             });
             next.setPosition(vCenter.x, vCenter.y - 40);
 
-            var menu = cc.Menu.create(next);
+            var menu = new cc.Menu(next);
             menu.setPosition(cc.visibleRect.bottomLeft);
             menu.setAnchorPoint(0,0);
             selfPointer.addChild(menu);
         };
 
-        var item2 = cc.MenuItemFont.create("Click Me 2", function(sender){
+        var item2 = new cc.MenuItemFont("Click Me 2", function(sender){
             var listener = cc.EventListener.create({
                 event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function(touch, event){
@@ -689,7 +689,7 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
         }, this);
         item2.setPosition(vCenter.x, vCenter.y + 40);
 
-        var item3 = cc.MenuItemFont.create("Click Me 3", function(sender){
+        var item3 = new cc.MenuItemFont("Click Me 3", function(sender){
             var listener = cc.EventListener.create({
                 event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function(touch, event){
@@ -703,7 +703,7 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
         }, this);
         item3.setPosition(cc.visibleRect.center);
 
-        var menu = cc.Menu.create(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3);
         menu.setPosition(cc.visibleRect.bottomLeft);
         menu.setAnchorPoint(0, 0);
         this.addChild(menu);
@@ -745,19 +745,19 @@ var DirectorEventTest =  EventDispatcherTestDemo.extend({
         this._super();
         var s = director.getWinSize(), selfPointer = this;
 
-        this._label1 = cc.LabelTTF.create("Update: 0", "Arial", 20);
+        this._label1 = new cc.LabelTTF("Update: 0", "Arial", 20);
         this._label1.setPosition(80,s.height/2 + 60);
         this.addChild(this._label1);
 
-        this._label2 = cc.LabelTTF.create("Visit: 0", "Arial", 20);
+        this._label2 = new cc.LabelTTF("Visit: 0", "Arial", 20);
         this._label2.setPosition(80,s.height/2 + 20);
         this.addChild(this._label2);
 
-        this._label3 = cc.LabelTTF.create("Draw: 0", "Arial", 20);
+        this._label3 = new cc.LabelTTF("Draw: 0", "Arial", 20);
         this._label3.setPosition(80,s.height/2 - 20);
         this.addChild(this._label3);
 
-        this._label4 = cc.LabelTTF.create("Projection: 0", "Arial", 20);
+        this._label4 = new cc.LabelTTF("Projection: 0", "Arial", 20);
         this._label4.setPosition(80,s.height/2 - 60);
         this.addChild(this._label4);
 
@@ -872,11 +872,11 @@ var GlobalZTouchTest = EventDispatcherTestDemo.extend({
         var SPRITE_COUNT = 8, sprite;
         for (var i = 0; i < SPRITE_COUNT; i++) {
             if(i==4) {
-                sprite = cc.Sprite.create("res/Images/CyanSquare.png");
+                sprite = new cc.Sprite("res/Images/CyanSquare.png");
                 this._sprite = sprite;
                 this._sprite.setGlobalZOrder(-1);
             } else
-                sprite = cc.Sprite.create("res/Images/YellowSquare.png");
+                sprite = new cc.Sprite("res/Images/YellowSquare.png");
 
             cc.eventManager.addListener(listener.clone(), sprite);
             this.addChild(sprite);
@@ -992,17 +992,17 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
 
         for (var i = 0; i < SPRITE_COUNT; i++) {
             if(i==4) {
-                sprite1 = cc.Sprite.create("res/Images/CyanSquare.png");
+                sprite1 = new cc.Sprite("res/Images/CyanSquare.png");
                 sprite1.setTag(StopPropagationTest._TAG_BLUE_SPRITE);
                 this.addChild(sprite1, 100);
 
-                sprite2 = cc.Sprite.create("res/Images/CyanSquare.png");
+                sprite2 = new cc.Sprite("res/Images/CyanSquare.png");
                 sprite2.setTag(StopPropagationTest._TAG_BLUE_SPRITE2);
                 this.addChild(sprite2, 100);
             } else {
-                sprite1 = cc.Sprite.create("res/Images/YellowSquare.png");
+                sprite1 = new cc.Sprite("res/Images/YellowSquare.png");
                 this.addChild(sprite1, 0);
-                sprite2 = cc.Sprite.create("res/Images/YellowSquare.png");
+                sprite2 = new cc.Sprite("res/Images/YellowSquare.png");
                 this.addChild(sprite2, 0);
             }
 
@@ -1124,17 +1124,17 @@ var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
         sprite2.addChild(sprite3, -1);
 
         var _this = this;
-        var popup = cc.MenuItemFont.create("Popup", function(sender){
+        var popup = new cc.MenuItemFont("Popup", function(sender){
             sprite3.getListener().setEnabled(false);
             cc.eventManager.pauseTarget(_this, true);
-            var colorLayer = cc.LayerColor.create(cc.color(0, 0, 255, 100));
+            var colorLayer = new cc.LayerColor(cc.color(0, 0, 255, 100));
             _this.addChild(colorLayer, 999); //set colorLayer to top
 
             // Add the button
             var backgroundButton = cc.Scale9Sprite.create(s_extensions_button);
             var backgroundHighlightedButton = cc.Scale9Sprite.create(s_extensions_buttonHighlighted);
 
-            var titleButton = cc.LabelTTF.create("Close Dialog", "Marker Felt", 26);
+            var titleButton = new cc.LabelTTF("Close Dialog", "Marker Felt", 26);
             titleButton.color = cc.color(159, 168, 176);
 
             var controlButton = cc.ControlButton.create(titleButton, backgroundButton);
@@ -1164,7 +1164,7 @@ var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
         popup.setAnchorPoint(1,0.5);
         popup.setPosition(cc.visibleRect.right);
 
-        var menu = cc.Menu.create(popup);
+        var menu = new cc.Menu(popup);
         menu.setAnchorPoint(0, 0);
         menu.setPosition(0, 0);
 

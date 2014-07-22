@@ -58,14 +58,14 @@ var PerformanceMainLayer = cc.LayerGradient.extend({
 
         var s = cc.director.getWinSize();
 
-        var menu = cc.Menu.create();
+        var menu = new cc.Menu();
         menu.x = 0;
         menu.y = 0;
         cc.MenuItemFont.setFontName("Arial");
         cc.MenuItemFont.setFontSize(24);
 
         for (var i = 0; i < PerformanceTests.length; i++) {
-            var pItem = cc.MenuItemFont.create(PerformanceTests[i], this.menuCallback, this);
+            var pItem = new cc.MenuItemFont(PerformanceTests[i], this.menuCallback, this);
             pItem.x = s.width / 2;
             pItem.y = s.height - (i + 1) * LINE_SPACE;
             menu.addChild(pItem, ITEM_TAG_BASIC + i);
@@ -135,17 +135,17 @@ var PerformBasicLayer = cc.Layer.extend({
 
         cc.MenuItemFont.setFontName("Arial");
         cc.MenuItemFont.setFontSize(24);
-        var mainItem = cc.MenuItemFont.create("Back", this.toMainLayer, this);
+        var mainItem = new cc.MenuItemFont("Back", this.toMainLayer, this);
         mainItem.x = s.width - 50;
         mainItem.y = 25;
-        var menu = cc.Menu.create(mainItem);
+        var menu = new cc.Menu(mainItem);
         menu.x = 0;
         menu.y = 0;
 
         if (this._controlMenuVisible) {
-            var item1 = cc.MenuItemImage.create(s_pathB1, s_pathB2, this.backCallback, this);
-            var item2 = cc.MenuItemImage.create(s_pathR1, s_pathR2, this.restartCallback, this);
-            var item3 = cc.MenuItemImage.create(s_pathF1, s_pathF2, this.nextCallback, this);
+            var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
+            var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.restartCallback, this);
+            var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
             item1.x = s.width / 2 - 100;
             item1.y = 30;
             item2.x = s.width / 2;

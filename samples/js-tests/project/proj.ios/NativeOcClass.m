@@ -21,7 +21,11 @@
  */
 
 #import "NativeOcClass.h"
+#if  TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#elif TARGET_OS_MAC
+#import <AppKit/AppKit.h>
+#endif
 @implementation NativeOcClass
 +(float) callNative:(NSNumber *)a andInt:(NSString *)str{
     float b = [a floatValue]+111.3333;
@@ -40,9 +44,24 @@
 +(int)callNativeWithAdd:(NSNumber *)num1 and:(NSNumber *)num2{
     return [num1 intValue]+[num2 intValue];
 }
+#if TARGET_OS_IPHONE
 +(BOOL)callNativeUIWithTitle:(NSString *) title andContent:(NSString *)content{
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:content delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     [alertView show];
     return true;
 }
+#elif TARGET_OS_MAC
+
++(BOOL)callNativeUIWithTitle:(NSString *) title andContent:(NSString *)content{
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle:@"OK"];
+    [alert addButtonWithTitle:@"Cancel"];
+    [alert setMessageText:title];
+    [alert setInformativeText:content];
+    [alert setAlertStyle:NSWarningAlertStyle];
+    [alert runModal];
+    return true;
+}
+
+#endif
 @end
