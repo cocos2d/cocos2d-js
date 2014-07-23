@@ -55,15 +55,15 @@ var IAPTestLayer = PluginXTest.extend({
         this.PluginIAP.setListener(this);
     },
     addMenuItem: function () {
-        var payMenu = cc.Menu.create();
+        var payMenu = new cc.Menu();
         for (var i = 0; i < s_IAPFunctionItem.length; i++) {
-            var text = cc.LabelTTF.create(s_IAPFunctionItem[i].name, "Arial", 20);
-            var item = cc.MenuItemLabel.create(text, this.menuCallBack, this);
+            var text = new cc.LabelTTF(s_IAPFunctionItem[i].name, "Arial", 20);
+            var item = new cc.MenuItemLabel(text, this.menuCallBack, this);
             item.tag = s_IAPFunctionItem[i].tag;
             item.x = 200;
             item.y = cc.winSize.height - 200 - i * 50;
 
-            var resultLabel = cc.LabelTTF.create(s_IAPResultItem[i].name, "Arial", 20);
+            var resultLabel = new cc.LabelTTF(s_IAPResultItem[i].name, "Arial", 20);
             resultLabel.color = cc.color(125, 125, 125);
             resultLabel.anchorX = 0;
             resultLabel.tag = s_IAPResultItem[i].tag;
@@ -82,8 +82,8 @@ var IAPTestLayer = PluginXTest.extend({
         cc.director.runScene(scene);
     },
     initToast: function () {
-        this.toastLayer = cc.LayerColor.create();
-        var label = cc.LabelTTF.create("loading", "Arial", 16);
+        this.toastLayer = new cc.LayerColor();
+        var label = new cc.LabelTTF("loading", "Arial", 16);
         this.toastLayer.addChild(label);
         this.toastLayer.setTag(TAG_TOAST);
         label.x = cc.winSize.width / 2;

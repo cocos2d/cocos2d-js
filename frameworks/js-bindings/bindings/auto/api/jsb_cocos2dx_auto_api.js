@@ -19139,6 +19139,20 @@ TMXLayer : function (
 cc.TMXTiledMap = {
 
 /**
+ * @method getPropertiesForGID
+* @param {int|int} int
+* @param {cc.Value} value
+* @return {bool|cc.Value}
+*/
+getPropertiesForGID : function(
+int,
+value 
+)
+{
+    return false;
+},
+
+/**
  * @method setObjectGroups
  * @param {Array} arg0
  */
@@ -19249,17 +19263,13 @@ getProperties : function (
 },
 
 /**
- * @method getPropertiesForGID
-* @param {int|int} int
-* @param {cc.Value} value
-* @return {bool|cc.Value}
-*/
-getPropertiesForGID : function(
-int,
-value 
+ * @method setMapOrientation
+ * @param {int} arg0
+ */
+setMapOrientation : function (
+int 
 )
 {
-    return false;
 },
 
 /**
@@ -19302,16 +19312,6 @@ getMapOrientation : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setMapOrientation
- * @param {int} arg0
- */
-setMapOrientation : function (
-int 
-)
-{
 },
 
 /**

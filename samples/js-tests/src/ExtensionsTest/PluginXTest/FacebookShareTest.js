@@ -41,7 +41,7 @@ var FacebookShareTest = PluginXTest.extend({
     ctor: function (title) {
         this._super(title);
 
-        var menu = cc.Menu.create();
+        var menu = new cc.Menu();
         menu.setPosition(cc.p(0, 0));
         menu.width = winSize.width;
         menu.height = winSize.height;
@@ -49,20 +49,20 @@ var FacebookShareTest = PluginXTest.extend({
 
         var top = 50;
         for (var action in buttons) {
-            var label = cc.LabelTTF.create(action, "Arial", 24);
-            var item = cc.MenuItemLabel.create(label, this[buttons[action]], this);
+            var label = new cc.LabelTTF(action, "Arial", 24);
+            var item = new cc.MenuItemLabel(label, this[buttons[action]], this);
             item.setPosition(winSize.width * 1 / 3, winSize.height - top);
             menu.addChild(item);
             top += 50;
         }
 
-        var logo = cc.Sprite.create(s_html5_logo);
+        var logo = new cc.Sprite(s_html5_logo);
         logo.setPosition(winSize.width * 2 / 3, winSize.height / 2);
         this.addChild(logo);
 
         this._agentManager = plugin.agentManager;
 
-        this.tipsLabel = cc.LabelTTF.create("This share function is not available on web version of Facebook plugin", "Arial", 20);
+        this.tipsLabel = new cc.LabelTTF("This share function is not available on web version of Facebook plugin", "Arial", 20);
         this.tipsLabel.setDimensions(cc.size(350, 120));
         this.addChild(this.tipsLabel, 100);
         this.tipsLabel.setPosition(cc.pAdd(cc.visibleRect.topRight, cc.p(-this.tipsLabel.width / 2 - 20, -100)));
@@ -88,7 +88,7 @@ var FacebookShareTest = PluginXTest.extend({
                 var preMsg = this.tipsLabel.getString();
                 this.tipsLabel.setString(msg);
             }
-            var anim = cc.Sequence.create(cc.FadeIn.create(0.2), cc.DelayTime.create(2), cc.FadeOut.create(0.2), cc.CallFunc.create(function () {
+            var anim = new cc.Sequence(new cc.FadeIn(0.2), new cc.DelayTime(2), new cc.FadeOut(0.2), new cc.CallFunc(function () {
                 this._showTips = false;
                 this.tipsLabel.visible = false;
                 if (preMsg)
@@ -125,8 +125,8 @@ var FacebookShareTest = PluginXTest.extend({
         }
         var img = this.screenshot("facebookshare.jpg");
 
-        var delay = cc.DelayTime.create(2);
-        var share = cc.CallFunc.create(function () {
+        var delay = new cc.DelayTime(2);
+        var share = new cc.CallFunc(function () {
             var map = {
                 "dialog": "share_photo",
                 "photo": img
@@ -135,7 +135,7 @@ var FacebookShareTest = PluginXTest.extend({
                 cc.log(msg);
             });
         });
-        var seq = cc.Sequence.create(delay, share);
+        var seq = new cc.Sequence(delay, share);
         this.runAction(seq);
 
     },
@@ -183,8 +183,8 @@ var FacebookShareTest = PluginXTest.extend({
         }
         var img = this.screenshot("facebookmessage.jpg");
 
-        var delay = cc.DelayTime.create(2);
-        var share = cc.CallFunc.create(function () {
+        var delay = new cc.DelayTime(2);
+        var share = new cc.CallFunc(function () {
             var map = {
                 "dialog": "message_photo",
                 "photo": img
@@ -193,7 +193,7 @@ var FacebookShareTest = PluginXTest.extend({
                 cc.log(msg);
             });
         });
-        var seq = cc.Sequence.create(delay, share);
+        var seq = new cc.Sequence(delay, share);
         this.runAction(seq);
     },
 
@@ -225,7 +225,7 @@ var FacebookShareTest = PluginXTest.extend({
     },
 
     screenshot: function (fileName) {
-        var tex = cc.RenderTexture.create(winSize.width, winSize.height, cc.Texture2D.PIXEL_FORMAT_RGBA8888);
+        var tex = new cc.RenderTexture(winSize.width, winSize.height, cc.Texture2D.PIXEL_FORMAT_RGBA8888);
         tex.setPosition(cc.p(winSize.width / 2, winSize.height / 2));
         tex.begin();
         cc.director.getRunningScene().visit();
