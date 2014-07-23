@@ -339,7 +339,7 @@ void createSimulator(const char* viewName, float width, float height, bool isLan
         width = height;
         height = tmpvalue;
     }
-    g_windTop = true;
+    g_windTop = ConfigParser::getInstance()->isWindowTop();
 
     g_eglView = GLView::createWithRect(viewName,Rect(0,0,width,height),frameZoomFactor);
     auto director = Director::getInstance();

@@ -254,7 +254,7 @@ bool startScript()
     return ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
 }
 
-bool reloadScript(const string& file,bool reloadAll)
+bool reloadScript(const string& file,bool reloadAll = false)
 {
 
     auto director = Director::getInstance();
@@ -911,8 +911,12 @@ public:
         for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
             _console->addCommand(commands[i]);
         }
+#if(CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM)
         _console->listenOnTCP(ConfigParser::getInstance()->getConsolePort());
-        
+#else     
+        _console->listenOnTCP(6050);
+#endif
+
         _fileserver = nullptr;
 #if(CC_PLATFORM_MAC != CC_TARGET_PLATFORM && CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM)
         _fileserver= FileServer::getShareInstance();
@@ -924,7 +928,7 @@ public:
     {
         Director::getInstance()->getConsole()->stop();
         if(_fileserver)
-        _fileserver->stop();
+             _fileserver->stop();
     }
 
     
@@ -1009,9 +1013,9 @@ public:
                 }else if(strcmp(strcmd.c_str(),"getfileinfo")==0){
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
                     if(_fileserver){
-                    rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
-                    for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
-                        bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
+                        rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
+                        for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
+                            bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
                         }
                     }
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
@@ -1211,7 +1215,6 @@ bool initRuntime()
     
     searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
-	ScriptingCore::getInstance()->addRegisterCallback(register_FileUtils);
     return true;
 }
 
@@ -1230,15 +1233,21 @@ bool startRuntime()
     return false;
 #endif
 #endif
-
     
 	// turn on display FPS
     Director::getInstance()->setDisplayStats(true);
     static ConsoleCustomCommand *g_customCommand;
     g_customCommand = new ConsoleCustomCommand();
     g_customCommand->init();
+
+    ScriptingCore::getInstance()->addRegisterCallback(register_FileUtils);
     ScriptingCore::getInstance()->start();
-    ScriptingCore::getInstance()->enableDebugger();
+
+    int debugPort = 5086; 
+#if(CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM)
+        debugPort =ConfigParser::getInstance()->getDebugPort();
+#endif
+    ScriptingCore::getInstance()->enableDebugger(debugPort);
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
 
