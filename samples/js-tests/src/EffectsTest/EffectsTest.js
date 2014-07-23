@@ -55,35 +55,35 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
     onEnter:function () {
        this._super();
 
-        var node = cc.Node.create();
-	    var nodeGrid = cc.NodeGrid.create();
+        var node = new cc.Node();
+	    var nodeGrid = new cc.NodeGrid();
         nodeGrid.addChild(node);
 	    nodeGrid.runAction( this.getEffect(3) );
         this.addChild( nodeGrid );
 
         // back gradient
-        var gradient = cc.LayerGradient.create( cc.color(0,0,0,255), cc.color(98,99,117,255));
+        var gradient = new cc.LayerGradient( cc.color(0,0,0,255), cc.color(98,99,117,255));
         node.addChild( gradient );
 
         // back image
-        var bg = cc.Sprite.create(s_back3);
+        var bg = new cc.Sprite(s_back3);
         bg.x = winSize.width/2;
         bg.y = winSize.height/2;
         node.addChild( bg );
 
-        var sister1 = cc.Sprite.create(s_pathSister1);
+        var sister1 = new cc.Sprite(s_pathSister1);
         sister1.x = winSize.width/3;
         sister1.y = winSize.height/2;
         node.addChild( sister1, 1 );
 
-        var sister2 = cc.Sprite.create(s_pathSister2);
+        var sister2 = new cc.Sprite(s_pathSister2);
         sister2.x = winSize.width*2/3;
         sister2.y = winSize.height/2;
         node.addChild( sister2, 1 );
 
-        var sc = cc.ScaleBy.create(2, 5);
+        var sc = new cc.ScaleBy(2, 5);
         var sc_back = sc.reverse();
-        var seq = cc.Sequence.create( sc, sc_back );
+        var seq = new cc.Sequence( sc, sc_back );
         var repeat = seq.repeatForever();
 
         sister1.runAction( repeat );
@@ -92,7 +92,7 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
 
     getEffect:function(duration) {
         // override me
-        return cc.MoveBy.create(2, cc.p(10,10) );
+        return new cc.MoveBy(2, cc.p(10,10) );
     },
 
     // automation
@@ -116,10 +116,10 @@ var Shaky3DTest = EffecstsBaseLayer.extend({
         return "Shaky 3D";
     },
     code:function () {
-        return "a = cc.Shaky3D.create(duration, gridSize, range, shakeZ)";
+        return "a = new cc.Shaky3D(duration, gridSize, range, shakeZ)";
     },
     getEffect:function(duration) {
-        return cc.Shaky3D.create( duration, cc.size(15,10), 5, false );
+        return new cc.Shaky3D( duration, cc.size(15,10), 5, false );
     }
 });
 
@@ -128,10 +128,10 @@ var Waves3DTest = EffecstsBaseLayer.extend({
         return "Waves 3D";
     },
     code:function () {
-        return "a = cc.Waves3D.create(duration, gridSize, range, shakeZ)";
+        return "a = new cc.Waves3D(duration, gridSize, range, shakeZ)";
     },
     getEffect:function(duration) {
-        return cc.Waves3D.create(duration, cc.size(15,10), 5, 40 );
+        return new cc.Waves3D(duration, cc.size(15,10), 5, 40 );
     }
 });
 
@@ -140,13 +140,13 @@ var FlipXTest = EffecstsBaseLayer.extend({
         return "FlipX3D";
     },
     code:function () {
-        return "a = cc.FlipX3D.create(duration )";
+        return "a = new cc.FlipX3D(duration )";
     },
     getEffect:function(duration) {
-        var a = cc.FlipX3D.create(duration );
-        var delay = cc.DelayTime.create(2);
+        var a = new cc.FlipX3D(duration );
+        var delay = new cc.DelayTime(2);
         var r = a.reverse();
-        return cc.Sequence.create( a, delay, r );
+        return new cc.Sequence( a, delay, r );
     }
 });
 
@@ -155,13 +155,13 @@ var FlipYTest = EffecstsBaseLayer.extend({
         return "FlipY3D";
     },
     code:function () {
-        return "a = cc.FlipY3D.create(duration )";
+        return "a = new cc.FlipY3D(duration )";
     },
     getEffect:function(duration) {
-        var a = cc.FlipY3D.create(duration );
-        var delay = cc.DelayTime.create(2);
+        var a = new cc.FlipY3D(duration );
+        var delay = new cc.DelayTime(2);
         var r = a.reverse();
-        return cc.Sequence.create( a, delay, r );
+        return new cc.Sequence( a, delay, r );
     }
 });
 
@@ -170,10 +170,10 @@ var Lens3DTest = EffecstsBaseLayer.extend({
         return "Lens3D";
     },
     code:function () {
-        return "a = cc.Lens3D.create(duration, gridSize, position, radius)";
+        return "a = new cc.Lens3D(duration, gridSize, position, radius)";
     },
     getEffect:function(duration) {
-        return cc.Lens3D.create( duration, cc.size(15,10), cc.p(winSize.width/2, winSize.height/2), 240);
+        return new cc.Lens3D( duration, cc.size(15,10), cc.p(winSize.width/2, winSize.height/2), 240);
     }
 });
 
@@ -182,10 +182,10 @@ var Ripple3DTest = EffecstsBaseLayer.extend({
         return "Ripple3D";
     },
     code:function () {
-        return "a = cc.Ripple3D.create(duration, gridSize, position, radius, waves, amplitude)";
+        return "a = new cc.Ripple3D(duration, gridSize, position, radius, waves, amplitude)";
     },
     getEffect:function(duration) {
-        return cc.Ripple3D.create( duration, cc.size(32,24), cc.p(winSize.width/2, winSize.height/2), 240, 4, 160);
+        return new cc.Ripple3D( duration, cc.size(32,24), cc.p(winSize.width/2, winSize.height/2), 240, 4, 160);
     }
 });
 
@@ -194,10 +194,10 @@ var LiquidTest = EffecstsBaseLayer.extend({
         return "Liquid";
     },
     code:function () {
-        return "a = cc.Liquid.create(duration, gridSize, waves, amplitude)";
+        return "a = new cc.Liquid(duration, gridSize, waves, amplitude)";
     },
     getEffect:function(duration) {
-        return cc.Liquid.create( duration, cc.size(16,12), 4, 20);
+        return new cc.Liquid( duration, cc.size(16,12), 4, 20);
     }
 });
 
@@ -206,10 +206,10 @@ var WavesTest = EffecstsBaseLayer.extend({
         return "Waves";
     },
     code:function () {
-        return "a = cc.Waves.create(duration, gridSize, waves, amplitude, horizontal, vertical)";
+        return "a = new cc.Waves(duration, gridSize, waves, amplitude, horizontal, vertical)";
     },
     getEffect:function(duration) {
-        return cc.Waves.create( duration, cc.size(16,12), 4, 20, true, true);
+        return new cc.Waves( duration, cc.size(16,12), 4, 20, true, true);
     }
 });
 
@@ -218,10 +218,10 @@ var TwirlTest = EffecstsBaseLayer.extend({
         return "Twirl";
     },
     code:function () {
-        return "a = cc.Twirl.create(duration, gridSize, position, twirls, amplitude)";
+        return "a = new cc.Twirl(duration, gridSize, position, twirls, amplitude)";
     },
     getEffect:function(duration) {
-        return cc.Twirl.create( duration, cc.size(12,8), cc.p(winSize.width/2, winSize.height/2), 1, 2.5);
+        return new cc.Twirl( duration, cc.size(12,8), cc.p(winSize.width/2, winSize.height/2), 1, 2.5);
     }
 });
 
@@ -230,10 +230,10 @@ var ShakyTiles3DTest = EffecstsBaseLayer.extend({
         return "ShakyTiles3D";
     },
     code:function () {
-        return "a = cc.ShakyTiles3D.create(duration, gridSize, range, shakeZ)";
+        return "a = new cc.ShakyTiles3D(duration, gridSize, range, shakeZ)";
     },
     getEffect:function(duration) {
-        return cc.ShakyTiles3D.create( duration, cc.size(16,12), 5, false);
+        return new cc.ShakyTiles3D( duration, cc.size(16,12), 5, false);
     }
 });
 
@@ -242,10 +242,10 @@ var ShatteredTiles3DTest = EffecstsBaseLayer.extend({
         return "ShatteredTiles3D";
     },
     code:function () {
-        return "a = cc.ShatteredTiles3D.create(duration, gridSize, range, shatterZ)";
+        return "a = cc.ShatteredTiles3D(duration, gridSize, range, shatterZ)";
     },
     getEffect:function(duration) {
-        return cc.ShatteredTiles3D.create( duration, cc.size(16,12), 5, false);
+        return new cc.ShatteredTiles3D( duration, cc.size(16,12), 5, false);
     }
 });
 
@@ -254,13 +254,13 @@ var ShuffleTilesTest = EffecstsBaseLayer.extend({
         return "ShuffleTiles";
     },
     code:function () {
-        return "a = cc.ShuffleTiles.create(duration, gridSize, seed)";
+        return "a = new cc.ShuffleTiles(duration, gridSize, seed)";
     },
     getEffect:function(duration) {
-        var action =  cc.ShuffleTiles.create( duration, cc.size(16,12), 25);
-        var delay = cc.DelayTime.create(2);
+        var action =  new cc.ShuffleTiles( duration, cc.size(16,12), 25);
+        var delay = new cc.DelayTime(2);
         var back = action.reverse();
-        var seq = cc.Sequence.create( action, delay, back);
+        var seq = new cc.Sequence( action, delay, back);
         return seq;
     }
 });
@@ -270,13 +270,13 @@ var FadeOutTRTilesTest = EffecstsBaseLayer.extend({
         return "FadeOutTRTilesTest";
     },
     code:function () {
-        return "a = cc.FadeOutTRTiles.create(duration, gridSize)";
+        return "a = new cc.FadeOutTRTiles(duration, gridSize)";
     },
     getEffect:function(duration) {
-        var action =  cc.FadeOutTRTiles.create( duration, cc.size(16,12));
-        var delay = cc.DelayTime.create(0.5);
+        var action =  new cc.FadeOutTRTiles( duration, cc.size(16,12));
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
-        var seq = cc.Sequence.create( action, delay, back);
+        var seq = new cc.Sequence( action, delay, back);
         return seq;
     }
 });
@@ -286,13 +286,13 @@ var FadeOutBLTilesTest = EffecstsBaseLayer.extend({
         return "FadeOutBLTilesTest";
     },
     code:function () {
-        return "a = cc.FadeOutBLTiles.create(duration, gridSize)";
+        return "a = new cc.FadeOutBLTiles(duration, gridSize)";
     },
     getEffect:function(duration) {
-        var action = cc.FadeOutBLTiles.create( duration, cc.size(16,12));
-        var delay = cc.DelayTime.create(0.5);
+        var action = new cc.FadeOutBLTiles( duration, cc.size(16,12));
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
-        var seq = cc.Sequence.create( action, delay, back);
+        var seq = new cc.Sequence( action, delay, back);
         return seq;
     }
 });
@@ -302,13 +302,13 @@ var FadeOutUpTilesTest = EffecstsBaseLayer.extend({
         return "FadeOutUpTilesTest";
     },
     code:function () {
-        return "a = cc.FadeOutUpTiles.create(duration, gridSize)";
+        return "a = new cc.FadeOutUpTiles(duration, gridSize)";
     },
     getEffect:function(duration) {
-        var action = cc.FadeOutUpTiles.create( duration, cc.size(16,12));
-        var delay = cc.DelayTime.create(0.5);
+        var action = new cc.FadeOutUpTiles( duration, cc.size(16,12));
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
-        var seq = cc.Sequence.create( action, delay, back);
+        var seq = new cc.Sequence( action, delay, back);
         return seq;
     }
 });
@@ -318,13 +318,13 @@ var FadeOutDownTilesTest = EffecstsBaseLayer.extend({
         return "FadeOutDownTilesTest";
     },
     code:function () {
-        return "a = cc.FadeOutDownTiles.create(duration, gridSize)";
+        return "a = new cc.FadeOutDownTiles(duration, gridSize)";
     },
     getEffect:function(duration) {
-        var action = cc.FadeOutDownTiles.create( duration, cc.size(16,12));
-        var delay = cc.DelayTime.create(0.5);
+        var action = new cc.FadeOutDownTiles( duration, cc.size(16,12));
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
-        var seq = cc.Sequence.create( action, delay, back);
+        var seq = new cc.Sequence( action, delay, back);
         return seq;
     }
 });
@@ -334,13 +334,13 @@ var TurnOffTilesTest = EffecstsBaseLayer.extend({
         return "TurnOffTiles";
     },
     code:function () {
-        return "a = cc.TurnOffTiles.create(duration, gridSize, seed)";
+        return "a = new cc.TurnOffTiles(duration, gridSize, seed)";
     },
     getEffect:function(duration) {
-        var action = cc.TurnOffTiles.create( duration, cc.size(48,32), 25);
-        var delay = cc.DelayTime.create(0.5);
+        var action = new cc.TurnOffTiles( duration, cc.size(48,32), 25);
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
-        var seq = cc.Sequence.create( action, delay, back);
+        var seq = new cc.Sequence( action, delay, back);
         return seq;
     }
 });
@@ -350,10 +350,10 @@ var WavesTiles3DTest = EffecstsBaseLayer.extend({
         return "WavesTiles3D";
     },
     code:function () {
-        return "a = cc.WavesTiles3D.create(duration, gridSize, waves, amplitude)";
+        return "a = new cc.WavesTiles3D(duration, gridSize, waves, amplitude)";
     },
     getEffect:function(duration) {
-        var action = cc.WavesTiles3D.create( duration, cc.size(16,12), 4, 120);
+        var action = new cc.WavesTiles3D( duration, cc.size(16,12), 4, 120);
         return action;
     }
 });
@@ -364,10 +364,10 @@ var JumpTiles3DTest = EffecstsBaseLayer.extend({
         return "JumpTiles3D";
     },
     code:function () {
-        return "a = cc.JumpTiles3D.create(duration, gridSize, jumps, amplitude)";
+        return "a = new cc.JumpTiles3D(duration, gridSize, jumps, amplitude)";
     },
     getEffect:function(duration) {
-        var action = cc.JumpTiles3D.create( duration, cc.size(16,12), 2, 30);
+        var action = new cc.JumpTiles3D( duration, cc.size(16,12), 2, 30);
         return action;
     }
 });
@@ -377,13 +377,13 @@ var SplitRowsTest = EffecstsBaseLayer.extend({
         return "SplitRows";
     },
     code:function () {
-        return "a = cc.SplitRows.create(duration, rows)";
+        return "a = new cc.SplitRows(duration, rows)";
     },
     getEffect:function(duration) {
-        var action = cc.SplitRows.create( duration, 9);
-        var delay = cc.DelayTime.create(0.5);
+        var action = new cc.SplitRows( duration, 9);
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
-        var seq = cc.Sequence.create( action, delay, back);
+        var seq = new cc.Sequence( action, delay, back);
         return seq;
     }
 });
@@ -393,13 +393,13 @@ var SplitColsTest = EffecstsBaseLayer.extend({
         return "SplitCols";
     },
     code:function () {
-        return "a = cc.SplitCols.create(duration, cols)";
+        return "a = new cc.SplitCols(duration, cols)";
     },
     getEffect:function(duration) {
-        var action = cc.SplitCols.create( duration, 9);
-        var delay = cc.DelayTime.create(0.5);
+        var action = new cc.SplitCols( duration, 9);
+        var delay = new cc.DelayTime(0.5);
         var back = action.reverse();
-        var seq = cc.Sequence.create( action, delay, back);
+        var seq = new cc.Sequence( action, delay, back);
         return seq;
     }
 });
@@ -409,10 +409,10 @@ var PageTurn3DTest = EffecstsBaseLayer.extend({
         return "PageTurn3D";
     },
     code:function () {
-        return "a = cc.PageTurn3D.create(duration, gridSize)";
+        return "a = new cc.PageTurn3D(duration, gridSize)";
     },
     getEffect:function(duration) {
-        var action = cc.PageTurn3D.create( duration, cc.size(15,10));
+        var action = new cc.PageTurn3D( duration, cc.size(15,10));
         return action;
     }
 });

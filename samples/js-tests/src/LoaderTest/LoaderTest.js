@@ -39,7 +39,7 @@ var LoaderTestLayer = BaseTestLayer.extend({
         cc.loader.load(s_helloWorld, function(results){
             cc.log(s_helloWorld + "--->");
             cc.log(results[0]);
-            var bg = cc.Sprite.create(s_helloWorld);
+            var bg = new cc.Sprite(s_helloWorld);
             self.addChild(bg);
             bg.x = winSize.width/2;
             bg.y = winSize.height/2;
@@ -51,7 +51,7 @@ var LoaderTestLayer = BaseTestLayer.extend({
             cc.log(s_Cowboy_png + "--->");
             cc.log(results[1]);
             cc.spriteFrameCache.addSpriteFrames(s_Cowboy_plist);
-            var frame = cc.Sprite.create("#testAnimationResource/1.png")
+            var frame = new cc.Sprite("#testAnimationResource/1.png")
             self.addChild(frame);
             frame.x = winSize.width/4;
             frame.y = winSize.height/4;
@@ -68,7 +68,7 @@ var LoaderTestLayer = BaseTestLayer.extend({
         }
 
         cc.loader.loadAliases(str, function(){
-            var sprite = cc.Sprite.create("grossini.bmp");
+            var sprite = new cc.Sprite("grossini.bmp");
             self.addChild( sprite );
             sprite.x = winSize.width/2;
             sprite.y = winSize.height/2;

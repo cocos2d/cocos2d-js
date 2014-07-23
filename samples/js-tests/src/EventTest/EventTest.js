@@ -61,24 +61,24 @@ var EventTest = cc.Layer.extend({
 
         var s = director.getWinSize();
 
-        var label = cc.LabelTTF.create(this.title(), "Arial", 24);
+        var label = new cc.LabelTTF(this.title(), "Arial", 24);
         this.addChild(label);
         label.x = s.width / 2;
         label.y = s.height - 50;
 
         var subTitle = this.subtitle();
         if (subTitle && subTitle !== "") {
-            var l = cc.LabelTTF.create(subTitle, "Thonburi", 16);
+            var l = new cc.LabelTTF(subTitle, "Thonburi", 16);
             this.addChild(l, 1);
             l.x = s.width / 2;
             l.y = s.height - 80;
         }
 
-        var item1 = cc.MenuItemImage.create(s_pathB1, s_pathB2, this.backCallback, this);
-        var item2 = cc.MenuItemImage.create(s_pathR1, s_pathR2, this.restartCallback, this);
-        var item3 = cc.MenuItemImage.create(s_pathF1, s_pathF2, this.nextCallback, this);
+        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
+        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.restartCallback, this);
+        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
 
-        var menu = cc.Menu.create(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3);
         menu.x = 0;
         menu.y = 0;
         item1.x = s.width / 2 - 100;
@@ -117,7 +117,7 @@ var TouchOneByOneTest = EventTest.extend({
         }
 
         for( var i=0; i < 5;i++) {
-            var sprite = this.sprite = cc.Sprite.create(s_pathR2);
+            var sprite = this.sprite = new cc.Sprite(s_pathR2);
             this.addChild(sprite,i+10);
             sprite.x = 0;
             sprite.y = 0;
@@ -205,7 +205,7 @@ var TouchAllAtOnce = EventTest.extend({
         }
 
         for( var i=0; i < 5;i++) {
-            var sprite = this.sprite = cc.Sprite.create(s_pathR2);
+            var sprite = this.sprite = new cc.Sprite(s_pathR2);
             this.addChild(sprite,i+10);
             sprite.x = 0;
             sprite.y = 0;
@@ -315,7 +315,7 @@ var AccelerometerTest = EventTest.extend({
                 }
             }, this);
 
-            var sprite = this.sprite = cc.Sprite.create(s_pathR2);
+            var sprite = this.sprite = new cc.Sprite(s_pathR2);
             this.addChild( sprite );
             sprite.x = winSize.width/2;
             sprite.y = winSize.height/2;
@@ -347,7 +347,7 @@ var AccelerometerTest = EventTest.extend({
 var MouseTest = EventTest.extend({
     init:function () {
         this._super();
-        var sprite = this.sprite = cc.Sprite.create(s_pathR2);
+        var sprite = this.sprite = new cc.Sprite(s_pathR2);
         this.addChild(sprite);
         sprite.x = 0;
         sprite.y = 0;

@@ -396,6 +396,7 @@ bool js_cocos2dx_extension_EventAssetsManager_getCURLMCode(JSContext *cx, uint32
 bool js_cocos2dx_extension_EventAssetsManager_getPercentByFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_EventAssetsManager_getEventCode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_EventAssetsManager_getPercent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManager_EventAssetsManager(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_extension_Manifest_class;
 extern JSObject *jsb_cocos2d_extension_Manifest_prototype;

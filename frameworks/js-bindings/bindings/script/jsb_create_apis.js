@@ -58,7 +58,14 @@ _p._ctor = function(start, end, v) {
 
 _p = cc.LayerMultiplex.prototype;
 _p._ctor = function(layers) {
-	layers && layers.length ? this.initWithArray(layers) : cc.LayerMultiplex.prototype.init.call(this);
+    if(layers != undefined){
+        if (layers instanceof Array)
+            cc.LayerMultiplex.prototype.initWithArray.call(this, layers);
+        else
+            cc.LayerMultiplex.prototype.initWithArray.call(this, Array.prototype.slice.call(arguments));
+    }else{
+        cc.LayerMultiplex.prototype.init.call(this);
+    }
 };
 
 
@@ -101,14 +108,16 @@ _p._ctor = function(fileImage, capacity) {
 
 _p = cc.SpriteFrame.prototype;
 _p._ctor = function(filename, rect, rotated, offset, originalSize){
-
-    if(filename !== undefined && rect !== undefined ){
-        if(rotated === undefined || offset === undefined || originalSize === undefined){
+    if(originalSize != undefined){
+        if(filename instanceof cc.Texture2D)
+            this.initWithTexture(filename, rect, rotated, offset, originalSize);
+        else
+            this.initWithTexture(filename, rect, rotated, offset, originalSize);
+    }else if(rect != undefined){
+        if(filename instanceof cc.Texture2D)
             this.initWithTexture(filename, rect);
-        }
-        else{
-            this.initWithTexture(filename, rect, rotated, offset, originalSize)
-        }
+        else
+            this.initWithTextureFilename(filename, rect);
     }
 };
 
@@ -154,7 +163,10 @@ _p._ctor = function(menuItems) {
         }
     }
 
-    items && items.length > 0 && this.initWithArray(items);
+    if(items && items.length > 0)
+        this.initWithArray(items);
+    else
+        this.init();
 };
 
 
@@ -295,6 +307,20 @@ _p._ctor = function(plistFile){
         this.initWithFile(plistFile);
     }
 };
+
+cc.ParticleFire.prototype._ctor  = cc.ParticleFireworks.prototype._ctor
+                                      = cc.ParticleSun.prototype._ctor
+                                      = cc.ParticleGalaxy.prototype._ctor
+                                      = cc.ParticleMeteor.prototype._ctor
+                                      = cc.ParticleFlower.prototype._ctor
+                                      = cc.ParticleSpiral.prototype._ctor
+                                      = cc.ParticleExplosion.prototype._ctor
+                                      = cc.ParticleSmoke.prototype._ctor
+                                      = cc.ParticleRain.prototype._ctor
+                                      = cc.ParticleSnow.prototype._ctor
+                                      = function(){
+                                            this.init();
+                                      };
 
 /************************  PhysicsSprite  *************************/
 _p = cc.PhysicsSprite.prototype;
@@ -726,7 +752,7 @@ cc.ActionTween.prototype._ctor = function(duration, key, from, to) {
 
 cc.Animation.prototype._ctor = function(frames, delay, loops) {
 	if (frames === undefined) {
-		this.initWithSpriteFrames(null, 0);
+		this.init();
 	} else {
 		var frame0 = frames[0];
 		delay = delay === undefined ? 0 : delay;
@@ -751,8 +777,10 @@ cc.AtlasNode.prototype._ctor = function(tile, tileWidth, tileHeight, itemsToRend
 };
 
 cc.ClippingNode.prototype._ctor = function(stencil) {
-	stencil = stencil || null;
-	cc.ClippingNode.prototype.init.call(this, stencil);
+    if(stencil != undefined)
+        cc.ClippingNode.prototype.init.call(this, stencil);
+    else
+        cc.ClippingNode.prototype.init.call(this);
 };
 
 cc.DrawNode.prototype._ctor = function() {
@@ -760,12 +788,12 @@ cc.DrawNode.prototype._ctor = function() {
 };
 
 cc.LabelAtlas.prototype._ctor = function(strText, charMapFile, itemWidth, itemHeight, startCharMap) {
-	if (charMapFile) {
-		itemWidth = itemWidth || 0;
-		itemHeight = itemHeight || 0;
-		startCharMap = startCharMap || "";
-		cc.LabelAtlas.prototype.initWithString.call(this, strText, charMapFile, itemWidth, itemHeight, startCharMap);
-	}
+    if(startCharMap != undefined){
+        startCharMap = startCharMap.charCodeAt(0);
+        cc.LabelAtlas.prototype.initWithString.call(this, strText, charMapFile, itemWidth, itemHeight, startCharMap);
+    }else if(charMapFile != undefined){
+        this.initWithString(strText, charMapFile);
+    }
 };
 
 cc.LabelBMFont.prototype._ctor = function(str, fntFile, width, alignment, imageOffset) {
