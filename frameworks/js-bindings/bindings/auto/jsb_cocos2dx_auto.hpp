@@ -3526,6 +3526,7 @@ bool js_cocos2dx_TMXTiledMap_constructor(JSContext *cx, uint32_t argc, jsval *vp
 void js_cocos2dx_TMXTiledMap_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_TMXTiledMap(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_TMXTiledMap_getPropertiesForGID(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_setObjectGroups(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getProperty(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_setMapSize(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3536,12 +3537,11 @@ bool js_cocos2dx_TMXTiledMap_initWithTMXFile(JSContext *cx, uint32_t argc, jsval
 bool js_cocos2dx_TMXTiledMap_getTileSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getMapSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getProperties(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_TMXTiledMap_getPropertiesForGID(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXTiledMap_setMapOrientation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_setTileSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_setProperties(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getLayer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getMapOrientation(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_TMXTiledMap_setMapOrientation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_createWithXML(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_TMXTiledMap(JSContext *cx, uint32_t argc, jsval *vp);
