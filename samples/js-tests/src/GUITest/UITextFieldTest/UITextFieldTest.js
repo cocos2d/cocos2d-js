@@ -102,7 +102,7 @@ var UITextFieldTest_MaxLength = UIScene.extend({
 
     textFieldEvent: function (sender, type) {
         var textField = sender;
-        var widgetSize = this._widget.getSize();
+        var widgetSize = this._widget.getContentSize();
         switch (type) {
             case ccui.TextField.EVENT_ATTACH_WITH_ME:
                 textField.runAction(cc.MoveTo.create(0.225,
@@ -155,14 +155,14 @@ var UITextFieldTest_Password = UIScene.extend({
         switch (type) {
             case ccui.TextField.EVENT_ATTACH_WITH_ME:
                 var textField = sender;
-                var widgetSize = this._widget.getSize();
+                var widgetSize = this._widget.getContentSize();
                 textField.runAction(cc.MoveTo.create(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME IME password");
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_ME:
                 var textField = sender;
-                var widgetSize = this._widget.getSize();
+                var widgetSize = this._widget.getContentSize();
                 textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
                 this._topDisplayLabel.setString("detach with IME password");
                 break;
