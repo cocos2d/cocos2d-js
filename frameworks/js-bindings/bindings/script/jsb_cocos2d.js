@@ -1544,12 +1544,12 @@ ccui.Layout.extend = cc.Class.extend;
 ccui.ListView.extend = cc.Class.extend;
 ccui.PageView.extend = cc.Class.extend;
 ccui.ScrollView.extend = cc.Class.extend;
-cc.ControlButton = cc.Class.extend;
-cc.ControlColourPicker = cc.Class.extend;
-cc.ControlPotentiometer = cc.Class.extend;
-cc.ControlSlider = cc.Class.extend;
-cc.ControlStepper = cc.Class.extend;
-cc.ControlSwitch = cc.Class.extend;
+cc.ControlButton.extend = cc.Class.extend;
+cc.ControlColourPicker.extend = cc.Class.extend;
+cc.ControlPotentiometer.extend = cc.Class.extend;
+cc.ControlSlider.extend = cc.Class.extend;
+cc.ControlStepper.extend = cc.Class.extend;
+cc.ControlSwitch.extend = cc.Class.extend;
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
