@@ -1509,8 +1509,8 @@ cc.MenuItemImage.extend = cc.Class.extend;
 cc.MenuItemToggle.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
 cc.ClippingNode.extend = cc.Class.extend;
+cc.Scale9Sprite.extend = cc.Class.extend;
 cc.ProgressTimer.extend = cc.Class.extend;
-//cc.Scale9Sprite.extend = cc.Class.extend;
 cc.ParallaxNode.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
 cc.Component.extend = cc.Class.extend;
@@ -1544,6 +1544,12 @@ ccui.Layout.extend = cc.Class.extend;
 ccui.ListView.extend = cc.Class.extend;
 ccui.PageView.extend = cc.Class.extend;
 ccui.ScrollView.extend = cc.Class.extend;
+cc.ControlButton = cc.Class.extend;
+cc.ControlColourPicker = cc.Class.extend;
+cc.ControlPotentiometer = cc.Class.extend;
+cc.ControlSlider = cc.Class.extend;
+cc.ControlStepper = cc.Class.extend;
+cc.ControlSwitch = cc.Class.extend;
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
