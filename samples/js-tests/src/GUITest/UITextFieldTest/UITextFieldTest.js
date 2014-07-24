@@ -48,14 +48,14 @@ var UITextFieldTest = UIScene.extend({
 
     textFieldEvent: function (sender, type) {
         switch (type) {
-            case ccui.TextField.EVENT_ATTACH_WITH_ME:
+            case ccui.TextField.EVENT_ATTACH_WITH_IME:
                 var textField = sender;
                 var widgetSize = this._widget.getContentSize();
                 textField.runAction(cc.MoveTo.create(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME");
                 break;
-            case ccui.TextField.EVENT_DETACH_WITH_ME:
+            case ccui.TextField.EVENT_DETACH_WITH_IME:
                 var textField = sender;
                 var widgetSize = this._widget.getContentSize();
                 textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
@@ -103,12 +103,12 @@ var UITextFieldTest_MaxLength = UIScene.extend({
         var textField = sender;
         var widgetSize = this._widget.getContentSize();
         switch (type) {
-            case ccui.TextField.EVENT_ATTACH_WITH_ME:
+            case ccui.TextField.EVENT_ATTACH_WITH_IME:
                 textField.runAction(cc.MoveTo.create(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME max length:" + textField.getMaxLength());
                 break;
-            case ccui.TextField.EVENT_DETACH_WITH_ME:
+            case ccui.TextField.EVENT_DETACH_WITH_IME:
                 textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
                 this._topDisplayLabel.setString("detach with IME max length:" + textField.getMaxLength());
                 break;
@@ -152,14 +152,14 @@ var UITextFieldTest_Password = UIScene.extend({
 
     textFieldEvent: function (sender, type) {
         switch (type) {
-            case ccui.TextField.EVENT_ATTACH_WITH_ME:
+            case ccui.TextField.EVENT_ATTACH_WITH_IME:
                 var textField = sender;
                 var widgetSize = this._widget.getContentSize();
                 textField.runAction(cc.MoveTo.create(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME IME password");
                 break;
-            case ccui.TextField.EVENT_DETACH_WITH_ME:
+            case ccui.TextField.EVENT_DETACH_WITH_IME:
                 var textField = sender;
                 var widgetSize = this._widget.getContentSize();
                 textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
