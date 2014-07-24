@@ -30,7 +30,7 @@ var ControlColourPickerTest = ControlScene.extend({
         if (this._super()) {
             var screenSize = cc.director.getWinSize();
 
-            var layer  = cc.Node.create();
+            var layer  = new cc.Node();
             layer.x = screenSize.width / 2;
             layer.y = screenSize.height / 2;
             this.addChild(layer, 1);
@@ -38,7 +38,7 @@ var ControlColourPickerTest = ControlScene.extend({
             var layer_width = 0;
 
             // Create the colour picker
-            var colourPicker = cc.ControlColourPicker.create();
+            var colourPicker = new cc.ControlColourPicker();
             colourPicker.color = cc.color(37, 46, 252);
             colourPicker.x = colourPicker.width / 2;
             colourPicker.y = 0;
@@ -53,7 +53,7 @@ var ControlColourPickerTest = ControlScene.extend({
             layer_width += colourPicker.width;
 
             // Add the black background for the text
-            var background = cc.Scale9Sprite.create("res/extensions/buttonBackground.png");
+            var background = new cc.Scale9Sprite("res/extensions/buttonBackground.png");
             background.width = 150;
 	        background.height = 50;
             background.x = layer_width + background.width / 2.0;
@@ -62,7 +62,7 @@ var ControlColourPickerTest = ControlScene.extend({
 
             layer_width += background.width;
 
-            this._colorLabel = cc.LabelTTF.create("#color", "Marker Felt", 30);
+            this._colorLabel = new cc.LabelTTF("#color", "Marker Felt", 30);
             this._colorLabel.retain();
 
             this._colorLabel.x = background.x;
@@ -87,7 +87,7 @@ var ControlColourPickerTest = ControlScene.extend({
     }
 });
 ControlColourPickerTest.create = function (sceneTitle) {
-    var scene = cc.Scene.create();
+    var scene = new cc.Scene();
     var controlLayer = new ControlColourPickerTest();
     if (controlLayer && controlLayer.init()) {
         controlLayer.getSceneTitleLabel().setString(sceneTitle);

@@ -843,8 +843,35 @@ var g_cocoStudio = [
     "res/scenetest/UIComponentTest/starMenuButton/starMenuButton.ExportJson",
     "res/scenetest/UIComponentTest/starMenuButton/starMenuButton0.plist",
     "res/scenetest/UIComponentTest/starMenuButton/starMenuButton0.png",
-    "res/scenetest/UIComponentTest/UIComponentTest.json"
+    "res/scenetest/UIComponentTest/UIComponentTest.json",
 
+    //parser
+    "res/cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_3_1.ExportJson",
+    "res/cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_30.plist",
+    "res/cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_30.png",
+    "res/cocosui/UIEditorTest/cocostudio1_3/SmallSun.plist",
+    "res/cocosui/UIEditorTest/cocostudio1_3/GUI/labelatlasimg.png",
+    "res/cocosui/UIEditorTest/cocostudio1_3/GUI/missing-font.fnt",
+    "res/cocosui/UIEditorTest/cocostudio1_3/GUI/missing-font.png",
+    "res/cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.ExportJson",
+    "res/cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_40.plist",
+    "res/cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_40.png",
+    "res/cocosui/UIEditorTest/cocostudio1_4/SmallSun.plist",
+    "res/cocosui/UIEditorTest/cocostudio1_4/GUI/labelatlasimg.png",
+    "res/cocosui/UIEditorTest/cocostudio1_4/GUI/missing-font.fnt",
+    "res/cocosui/UIEditorTest/cocostudio1_4/GUI/missing-font.png",
+    "res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson",
+    "res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_50.plist",
+    "res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_50.png",
+    "res/cocosui/UIEditorTest/cocostudio1_5/SmallSun.plist",
+    "res/cocosui/UIEditorTest/cocostudio1_5/GUI/labelatlasimg.png",
+    "res/cocosui/UIEditorTest/cocostudio1_5/GUI/missing-font.fnt",
+    "res/cocosui/UIEditorTest/cocostudio1_5/GUI/missing-font.png",
+
+    "res/Particles/BoilingFoam.plist",
+    "res/cocosui/CustomImageViewTest/NewProject_2_1.ExportJson",
+    "res/cocosui/CustomImageViewTest/NewProject_20.plist",
+    "res/cocosui/CustomImageViewTest/NewProject_20.png"
 ];
 
 var g_ui = [

@@ -30,7 +30,7 @@ var ControlPotentiometerTest = ControlScene.extend({
         if (this._super()) {
             var screenSize = cc.director.getWinSize();
 
-            var layer = cc.Node.create();
+            var layer = new cc.Node();
             layer.x = screenSize.width / 2;
             layer.y = screenSize.height / 2;
             this.addChild(layer, 1);
@@ -38,7 +38,7 @@ var ControlPotentiometerTest = ControlScene.extend({
             var layer_width = 0;
 
             // Add the black background for the text
-            var background = cc.Scale9Sprite.create("res/extensions/buttonBackground.png");
+            var background = new cc.Scale9Sprite("res/extensions/buttonBackground.png");
             background.width = 80;
 	        background.height = 50;
             background.x = layer_width + background.width / 2.0;
@@ -47,14 +47,14 @@ var ControlPotentiometerTest = ControlScene.extend({
 
             layer_width += background.width;
 
-            this._displayValueLabel = cc.LabelTTF.create("", "HelveticaNeue-Bold", 30);
+            this._displayValueLabel = new cc.LabelTTF("", "HelveticaNeue-Bold", 30);
 
             this._displayValueLabel.x = background.x;
             this._displayValueLabel.y = background.y;
             layer.addChild(this._displayValueLabel);
 
             // Add the slider
-            var potentiometer = cc.ControlPotentiometer.create("res/extensions/potentiometerTrack.png"
+            var potentiometer = new cc.ControlPotentiometer("res/extensions/potentiometerTrack.png"
                 , "res/extensions/potentiometerProgress.png"
                 , "res/extensions/potentiometerButton.png");
             potentiometer.x = layer_width + 10 + potentiometer.width / 2;
@@ -86,7 +86,7 @@ var ControlPotentiometerTest = ControlScene.extend({
     }
 });
 ControlPotentiometerTest.create = function (sceneTitle) {
-    var scene = cc.Scene.create();
+    var scene = new cc.Scene();
     var controlLayer = new ControlPotentiometerTest();
     if (controlLayer && controlLayer.init()) {
         controlLayer.getSceneTitleLabel().setString(sceneTitle);

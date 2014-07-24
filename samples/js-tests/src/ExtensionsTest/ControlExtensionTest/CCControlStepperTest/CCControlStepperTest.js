@@ -29,21 +29,21 @@ var ControlStepperTest = ControlScene.extend({
         if (this._super()) {
             var screenSize = cc.director.getWinSize();
 
-            var layer = cc.Node.create();
+            var layer = new cc.Node();
             layer.x = screenSize.width / 2;
             layer.y = screenSize.height / 2;
             this.addChild(layer, 1);
             var layer_width = 0;
 
             // Add the black background for the text
-            var background = cc.Scale9Sprite.create("res/extensions/buttonBackground.png");
+            var background = new cc.Scale9Sprite("res/extensions/buttonBackground.png");
             background.width = 100;
 	        background.height = 50;
             background.x = layer_width + background.width / 2.0;
             background.y = 0;
             layer.addChild(background);
 
-            this._displayValueLabel = cc.LabelTTF.create("0", "HelveticaNeue-Bold", 30);
+            this._displayValueLabel = new cc.LabelTTF("0", "HelveticaNeue-Bold", 30);
 
             this._displayValueLabel.x = background.x;
             this._displayValueLabel.y = background.y;
@@ -72,10 +72,10 @@ var ControlStepperTest = ControlScene.extend({
         return false;
     },
     makeControlStepper:function () {
-        var minusSprite = cc.Sprite.create("res/extensions/stepper-minus.png");
-        var plusSprite = cc.Sprite.create("res/extensions/stepper-plus.png");
+        var minusSprite = new cc.Sprite("res/extensions/stepper-minus.png");
+        var plusSprite = new cc.Sprite("res/extensions/stepper-plus.png");
 
-        return cc.ControlStepper.create(minusSprite, plusSprite);
+        return new cc.ControlStepper(minusSprite, plusSprite);
     },
 
     valueChanged:function (sender, controlEvent) {
@@ -85,7 +85,7 @@ var ControlStepperTest = ControlScene.extend({
 });
 
 ControlStepperTest.create = function (sceneTitle) {
-    var scene = cc.Scene.create();
+    var scene = new cc.Scene();
     var controlLayer = new ControlStepperTest();
     if (controlLayer && controlLayer.init()) {
         controlLayer.getSceneTitleLabel().setString(sceneTitle);

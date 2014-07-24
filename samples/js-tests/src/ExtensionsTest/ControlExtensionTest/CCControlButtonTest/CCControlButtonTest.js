@@ -32,7 +32,7 @@ var ControlButtonTest_HelloVariableSize = ControlScene.extend({
             // Defines an array of title to create buttons dynamically
             var stringArray = ["Hello", "Variable", "Size", "!"];
 
-            var layer = cc.Node.create();
+            var layer = new cc.Node();
             this.addChild(layer, 1);
 
             var total_width = 0, height = 0;
@@ -74,7 +74,7 @@ var ControlButtonTest_HelloVariableSize = ControlScene.extend({
             layer.y = screenSize.height / 2.0;
 
             // Add the black background
-            var background = cc.Scale9Sprite.create(s_extensions_buttonBackground);
+            var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
             background.width = total_width + 14;
             background.height = height + 14;
             background.x = screenSize.width / 2.0;
@@ -87,14 +87,14 @@ var ControlButtonTest_HelloVariableSize = ControlScene.extend({
     // Creates and return a button with a default background and title color.
     standardButtonWithTitle:function (title) {
         // Creates and return a button with a default background and title color.
-        var backgroundButton = cc.Scale9Sprite.create(s_extensions_button);
-        var backgroundHighlightedButton = cc.Scale9Sprite.create(s_extensions_buttonHighlighted);
+        var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
+        var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
 
-        var titleButton = cc.LabelTTF.create(title, "Marker Felt", 30);
+        var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
 
         titleButton.color = cc.color(159, 168, 176);
 
-        var button = cc.ControlButton.create(titleButton, backgroundButton);
+        var button = new cc.ControlButton(titleButton, backgroundButton);
         button.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
         button.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
@@ -103,7 +103,7 @@ var ControlButtonTest_HelloVariableSize = ControlScene.extend({
 });
 
 ControlButtonTest_HelloVariableSize.create = function (sceneTitle) {
-    var scene = cc.Scene.create();
+    var scene = new cc.Scene();
     var controlLayer = new ControlButtonTest_HelloVariableSize();
     if (controlLayer && controlLayer.init()) {
         controlLayer.getSceneTitleLabel().setString(sceneTitle);
@@ -120,21 +120,21 @@ var ControlButtonTest_Event = ControlScene.extend({
             var screenSize = cc.director.getWinSize();
 
             // Add the button
-            var backgroundButton = cc.Scale9Sprite.create(s_extensions_button);
-            var backgroundHighlightedButton = cc.Scale9Sprite.create(s_extensions_buttonHighlighted);
+            var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
+            var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
 
             // Add a label in which the button events will be displayed
-            this.setDisplayValueLabel(cc.LabelTTF.create("No Event", "Marker Felt", 32));
+            this.setDisplayValueLabel(new cc.LabelTTF("No Event", "Marker Felt", 32));
             this._displayValueLabel.anchorX = 0.5;
             this._displayValueLabel.anchorY = -1;
             this._displayValueLabel.x = screenSize.width / 2.0;
             this._displayValueLabel.y = screenSize.height / 2.0;
             this.addChild(this._displayValueLabel, 10);
 
-            var titleButton = cc.LabelTTF.create("Touch Me!", "Marker Felt", 30);
+            var titleButton = new cc.LabelTTF("Touch Me!", "Marker Felt", 30);
             titleButton.color = cc.color(159, 168, 176);
 
-            var controlButton = cc.ControlButton.create(titleButton, backgroundButton);
+            var controlButton = new cc.ControlButton(titleButton, backgroundButton);
             controlButton.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
             controlButton.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
@@ -145,7 +145,7 @@ var ControlButtonTest_Event = ControlScene.extend({
             this.addChild(controlButton, 1);
 
             // Add the black background
-            var background = cc.Scale9Sprite.create(s_extensions_buttonBackground);
+            var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
             background.width = 300;
             background.height = 170;
             background.x = screenSize.width / 2.0;
@@ -200,7 +200,7 @@ var ControlButtonTest_Event = ControlScene.extend({
 });
 
 ControlButtonTest_Event.create = function (sceneTitle) {
-    var scene = cc.Scene.create();
+    var scene = new cc.Scene();
     var controlLayer = new ControlButtonTest_Event();
     if (controlLayer && controlLayer.init()) {
         controlLayer.getSceneTitleLabel().setString(sceneTitle);
@@ -214,7 +214,7 @@ var ControlButtonTest_Styling = ControlScene.extend({
         if (this._super()) {
             var screenSize = cc.director.getWinSize();
 
-            var layer = cc.Node.create();
+            var layer = new cc.Node();
             this.addChild(layer, 1);
 
             var space = 10; // px
@@ -243,7 +243,7 @@ var ControlButtonTest_Styling = ControlScene.extend({
             layer.y = screenSize.height / 2.0;
 
             // Add the black background
-            var backgroundButton = cc.Scale9Sprite.create(s_extensions_buttonBackground);
+            var backgroundButton = new cc.Scale9Sprite(s_extensions_buttonBackground);
             backgroundButton.width = max_w + 14;
             backgroundButton.height = max_h + 14;
             backgroundButton.x = screenSize.width / 2.0;
@@ -255,16 +255,16 @@ var ControlButtonTest_Styling = ControlScene.extend({
     },
     standardButtonWithTitle:function (title) {
         /** Creates and return a button with a default background and title color. */
-        var backgroundButton = cc.Scale9Sprite.create(s_extensions_button);
+        var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
         backgroundButton.setPreferredSize(cc.size(45, 45));  // Set the prefered size
-        var backgroundHighlightedButton = cc.Scale9Sprite.create(s_extensions_buttonHighlighted);
+        var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
         backgroundHighlightedButton.setPreferredSize(cc.size(45, 45));  // Set the prefered size
 
-        var titleButton = cc.LabelTTF.create(title, "Marker Felt", 30);
+        var titleButton = new cc.LabelTTF(title, "Marker Felt", 30);
 
         titleButton.color = cc.color(159, 168, 176);
 
-        var button = cc.ControlButton.create(titleButton, backgroundButton);
+        var button = new cc.ControlButton(titleButton, backgroundButton);
         button.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
         button.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
@@ -273,7 +273,7 @@ var ControlButtonTest_Styling = ControlScene.extend({
 });
 
 ControlButtonTest_Styling.create = function (sceneTitle) {
-    var scene = cc.Scene.create();
+    var scene = new cc.Scene();
     var controlLayer = new ControlButtonTest_Styling();
     if (controlLayer && controlLayer.init()) {
         controlLayer.getSceneTitleLabel().setString(sceneTitle);
