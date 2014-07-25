@@ -33,11 +33,11 @@ cc.game.onStart = function(){
     cc.director.setProjection(cc.Director.PROJECTION_2D);
     var searchPaths = jsb.fileUtils.getSearchPaths()
     searchPaths.push('script')
-    //if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX)
-    //{
+    if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX)
+    {
         searchPaths.push("res");
         searchPaths.push("src");
-    //}
+    }
     jsb.fileUtils.setSearchPaths(searchPaths);
     //load resources
     cc.LoaderScene.preload(g_mainmenu, function () {
