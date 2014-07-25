@@ -35,7 +35,5 @@ bool initRuntime();
 
 bool startRuntime();
 
-bool reloadScript(const string& modulefile,bool reloadAll = false);
-
 #endif // _RUNTIME__H_
 

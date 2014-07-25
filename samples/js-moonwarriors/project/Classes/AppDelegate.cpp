@@ -38,24 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         glview = GLView::createWithRect("js-moonwarriors", Rect(0, 0, 480, 720));
         director->setOpenGLView(glview);
     }
-    director->setProjection(Director::Projection::_2D);
 
-    std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
-    
-    searchPaths.push_back("script");
-    
-    Application::Platform platform = Application::getInstance()->getTargetPlatform();
-    if (platform == Application::Platform::OS_IPHONE || platform == Application::Platform::OS_IPAD || platform == Application::Platform::OS_MAC)
-    {
-        searchPaths.push_back("res");
-        searchPaths.push_back("src");
-    }
-    
-    FileUtils::getInstance()->setSearchPaths(searchPaths);
-
-    // turn on display FPS
-    director->setDisplayStats(true);
-    
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
     

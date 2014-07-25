@@ -77,10 +77,10 @@ extern bool browseDir(const char *dir,const char *filespec,vector<string> &filte
 /*@brief   use "|" splite string  */
 const char* getRuntimeVersion()
 {
-    return "1.2";
+    return "1.3";
 }
 
-vector<string> splitFilter(const char *str)
+static vector<string> splitFilter(const char *str)
 {
     vector<string> filterArray;
     if (str)
@@ -99,7 +99,7 @@ vector<string> splitFilter(const char *str)
 }
 
 /*@brief wildcard funciton*/
-bool wildcardMatches(const char *wildcard, const char *str) 
+static bool wildcardMatches(const char *wildcard, const char *str) 
 {
     while (1) {
         if (*wildcard == '\0')
@@ -254,7 +254,7 @@ bool startScript()
     return ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
 }
 
-bool reloadScript(const string& file,bool reloadAll)
+bool reloadScript(const string& file,bool reloadAll = false)
 {
 
     auto director = Director::getInstance();
@@ -392,7 +392,8 @@ void FileServer::readResFileFinfo()
     if(!_filecfgjson.IsObject()){
         _filecfgjson.SetObject();
     }
-#ifndef CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM
+
+    //save file info to disk every ten second
     Director::getInstance()->getScheduler()->schedule([&](float){
         rapidjson::StringBuffer buffer;
         rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
@@ -405,8 +406,7 @@ void FileServer::readResFileFinfo()
         if (!pFile) return ;
         fwrite(str,sizeof(char),strlen(str),pFile);
         fclose(pFile);
-    },this, 10.0f, false, "fileinfo");
-#endif
+    },this, 5.0f, false, "fileinfo");
 }
 void FileServer::addResFileInfo(const char* filename,uint64_t u64)
 {
@@ -509,7 +509,7 @@ void FileServer::stop()
     }
 }
 
-string& replaceAll(string& str,const string& old_value,const string& new_value)
+static string& replaceAll(string& str,const string& old_value,const string& new_value)
 {
     while(true)
     {
@@ -521,7 +521,7 @@ string& replaceAll(string& str,const string& old_value,const string& new_value)
     return str;
 }
 
-bool CreateDir(const char *sPathName)
+static bool CreateDir(const char *sPathName)
 {
     char   DirName[256]={0};
     strcpy(DirName,   sPathName);
@@ -554,7 +554,7 @@ bool CreateDir(const char *sPathName)
     return   true;  
 }
 
-void recvBuf(int fd,char *pbuf,int bufsize)
+static void recvBuf(int fd,char *pbuf,int bufsize)
 {
 
     int startFlagLen = bufsize;
@@ -683,7 +683,7 @@ void FileServer::loopWriteFile()
          _fileNameMutex.lock();
          _strFileName = filename;
          _fileNameMutex.unlock();
-         cocos2d::log("WriteFile:: fullfilename = %s",filename.c_str());
+         //cocos2d::log("WriteFile:: fullfilename = %s",filename.c_str());
          CreateDir(fullfilename.substr(0,fullfilename.find_last_of("/")).c_str());
          FILE *fp= nullptr;
          if (1 == recvDataBuf.fileProto.package_seq()){
@@ -911,16 +911,24 @@ public:
         for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
             _console->addCommand(commands[i]);
         }
+#if(CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM)
+        _console->listenOnTCP(ConfigParser::getInstance()->getConsolePort());
+#else     
         _console->listenOnTCP(6050);
-        
+#endif
+
+        _fileserver = nullptr;
+#if(CC_PLATFORM_MAC != CC_TARGET_PLATFORM && CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM)
         _fileserver= FileServer::getShareInstance();
         _fileserver->listenOnTCP(6060);
         _fileserver->readResFileFinfo();
+#endif
     }
     ~ConsoleCustomCommand()
     {
         Director::getInstance()->getConsole()->stop();
-        _fileserver->stop();
+        if(_fileserver)
+             _fileserver->stop();
     }
 
     
@@ -1004,9 +1012,11 @@ public:
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }else if(strcmp(strcmd.c_str(),"getfileinfo")==0){
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
-                    rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
-                    for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
-                        bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
+                    if(_fileserver){
+                        rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
+                        for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
+                            bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
+                        }
                     }
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
@@ -1083,6 +1093,84 @@ private:
     FileServer* _fileserver;
 };
 
+bool runtime_FileUtils_addSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "cocos2dx_FileUtils_addSearchPath : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "cocos2dx_FileUtils_addSearchPath : Error processing arguments");
+        std::string argtmp = arg0;
+        if (!FileUtils::getInstance()->isAbsolutePath(arg0))
+            arg0 = g_resourcePath + arg0;
+        cobj->addSearchPath(arg0);
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        if (!FileUtils::getInstance()->isAbsolutePath(argtmp))
+            cobj->addSearchPath(argtmp);
+#endif
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    
+    JS_ReportError(cx, "cocos2dx_FileUtils_addSearchPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
+bool runtime_FileUtils_setSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_setSearchPaths : Invalid Native Object");
+    if (argc == 1) {
+        std::vector<std::string> arg0;
+        ok &= jsval_to_std_vector_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_setSearchPaths : Error processing arguments");
+        
+        std::vector<std::string> argtmp;
+        for (int i = 0; i < arg0.size(); i++)
+        {
+            if (!FileUtils::getInstance()->isAbsolutePath(arg0[i]))
+            {
+                argtmp.push_back(arg0[i]);
+                arg0[i] = g_resourcePath + arg0[i];
+            }
+        }
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        arg0.insert(arg0.end(),argtmp.begin(),argtmp.end());
+#endif
+        cobj->setSearchPaths(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_cocos2dx_FileUtils_setSearchPaths : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
+void register_FileUtils(JSContext *cx, JSObject *global) {
+    JS::RootedValue  nsval(cx);
+    JS::RootedObject ns(cx);
+    JS_GetProperty(cx, global, "cc", &nsval);
+    if (nsval == JSVAL_VOID) {
+        return;
+    } else {
+        JS_ValueToObject(cx, nsval, &ns);
+    }
+    global = ns;
+    
+    JSObject  *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.FileUtils.getInstance(); })()"));
+    JS_DefineFunction(cx, tmpObj, "addSearchPath", runtime_FileUtils_addSearchPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, tmpObj, "setSearchPaths", runtime_FileUtils_setSearchPaths, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+}
+
 bool initRuntime()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -1127,86 +1215,7 @@ bool initRuntime()
     
     searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
-
     return true;
-}
-
-bool runtime_FileUtils_addSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "cocos2dx_FileUtils_addSearchPath : Invalid Native Object");
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, argv[0], &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "cocos2dx_FileUtils_addSearchPath : Error processing arguments");
-        std::string argtmp = arg0;
-        if (!FileUtils::getInstance()->isAbsolutePath(arg0))
-            arg0 = g_resourcePath + arg0;
-        cobj->addSearchPath(arg0);
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    if (!FileUtils::getInstance()->isAbsolutePath(argtmp))
-        cobj->addSearchPath(argtmp);
-#endif
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
-
-    JS_ReportError(cx, "cocos2dx_FileUtils_addSearchPath : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-
-bool runtime_FileUtils_setSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_setSearchPaths : Invalid Native Object");
-    if (argc == 1) {
-        std::vector<std::string> arg0;
-        ok &= jsval_to_std_vector_string(cx, argv[0], &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_setSearchPaths : Error processing arguments");
-
-        std::vector<std::string> argtmp;
-        for (int i = 0; i < arg0.size(); i++)
-        {
-            if (!FileUtils::getInstance()->isAbsolutePath(arg0[i]))
-            {
-                argtmp.push_back(arg0[i]);
-                arg0[i] = g_resourcePath + arg0[i];
-            }
-        }
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        arg0.insert(arg0.end(),argtmp.begin(),argtmp.end());
-#endif
-        cobj->setSearchPaths(arg0);
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_FileUtils_setSearchPaths : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-
-void register_FileUtils(JSContext *cx, JSObject *global) {
-    JS::RootedValue  nsval(cx);
-    JS::RootedObject ns(cx);
-    JS_GetProperty(cx, global, "cc", &nsval);
-    if (nsval == JSVAL_VOID) {
-        return;
-    } else {
-        JS_ValueToObject(cx, nsval, &ns);
-    }
-    global = ns;
-
-    JSObject  *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.FileUtils.getInstance(); })()"));
-    JS_DefineFunction(cx, tmpObj, "addSearchPath", runtime_FileUtils_addSearchPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
-    JS_DefineFunction(cx, tmpObj, "setSearchPaths", runtime_FileUtils_setSearchPaths, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
 }
 
 bool startRuntime()
@@ -1224,14 +1233,21 @@ bool startRuntime()
     return false;
 #endif
 #endif
-
-    ScriptingCore::getInstance()->addRegisterCallback(register_FileUtils);
-
+    
+	// turn on display FPS
+    Director::getInstance()->setDisplayStats(true);
     static ConsoleCustomCommand *g_customCommand;
     g_customCommand = new ConsoleCustomCommand();
     g_customCommand->init();
+
+    ScriptingCore::getInstance()->addRegisterCallback(register_FileUtils);
     ScriptingCore::getInstance()->start();
-    ScriptingCore::getInstance()->enableDebugger();
+
+    int debugPort = 5086; 
+#if(CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM)
+        debugPort =ConfigParser::getInstance()->getDebugPort();
+#endif
+    ScriptingCore::getInstance()->enableDebugger(debugPort);
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
 
