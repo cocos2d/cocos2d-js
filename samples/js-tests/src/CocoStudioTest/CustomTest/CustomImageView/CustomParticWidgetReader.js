@@ -24,14 +24,8 @@
 
 var CustomParticleWidgetReader = {
 
-    _instanceCustomParticleWidgetReader: null,
-
     getInstance: function(){
-        if (!this._instanceCustomParticleWidgetReader)
-        {
-            this._instanceCustomParticleWidgetReader = CustomParticleWidgetReader;
-        }
-        return this._instanceCustomParticleWidgetReader;
+        return CustomParticleWidgetReader;
     },
     setProperties: function(classType, widget, customOptions){
         var guiReader = ccs.uiReader;
@@ -43,13 +37,10 @@ var CustomParticleWidgetReader = {
         {
             var PlistFile = customOptions["PlistFile"];
             var PlistFilePath = guiReader.getFilePath();
-            PlistFilePath.append(PlistFile);
+            PlistFilePath += PlistFile;
             custom.setParticlePlist(PlistFilePath);
 
         }
-
-    },
-    setPropsFromJsonDictionary: function(){
 
     }
 };
