@@ -29,6 +29,16 @@ cc.game.onStart = function(){
     cc.view.adjustViewPort(true);
     cc.view.setDesignResolutionSize(320,480,cc.ResolutionPolicy.SHOW_ALL);
     cc.view.resizeWithBrowserSize(true);
+    cc.director.setDisplayStats(true);
+    cc.director.setProjection(cc.Director.PROJECTION_2D);
+    var searchPaths = jsb.fileUtils.getSearchPaths()
+    searchPaths.push('script')
+    if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX)
+    {
+        searchPaths.push("res");
+        searchPaths.push("src");
+    }
+    jsb.fileUtils.setSearchPaths(searchPaths);
     //load resources
     cc.LoaderScene.preload(g_mainmenu, function () {
         cc.director.runScene(SysMenu.scene());

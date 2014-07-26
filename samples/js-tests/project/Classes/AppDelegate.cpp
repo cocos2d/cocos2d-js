@@ -58,40 +58,8 @@ bool AppDelegate::applicationDidFinishLaunching()
         director->setOpenGLView(glview);
     }
 
-    // JS-Test in Html5 uses 800x450 as design resolution
-    glview->setDesignResolutionSize(800, 450, ResolutionPolicy::FIXED_HEIGHT);
-    // turn on display FPS
-    director->setDisplayStats(true);
-
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-
-    auto fileUtils = FileUtils::getInstance();
-    std::vector<std::string> searchPaths = fileUtils->getSearchPaths();
-    searchPaths.push_back("script");
-    searchPaths.push_back("src");
-    
-    const char* paths[] = {
-        "res",
-        "res/scenetest",
-        "res/scenetest/ArmatureComponentTest",
-        "res/scenetest/AttributeComponentTest",
-        "res/scenetest/BackgroundComponentTest",
-        "res/scenetest/EffectComponentTest",
-        "res/scenetest/LoadSceneEdtiorFileTest",
-        "res/scenetest/ParticleComponentTest",
-        "res/scenetest/SpriteComponentTest",
-        "res/scenetest/TmxMapComponentTest",
-        "res/scenetest/UIComponentTest",
-        "res/scenetest/TriggerTest",
-    };
-
-    for (const auto& path : paths)
-    {
-        searchPaths.push_back(path);
-    }
-    
-    fileUtils->setSearchPaths(searchPaths);
 
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
