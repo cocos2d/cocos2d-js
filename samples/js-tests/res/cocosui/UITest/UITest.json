@@ -63,10 +63,10 @@
           "bgStartColorB": 255,
           "bgStartColorG": 255,
           "bgStartColorR": 255,
-          "capInsetsHeight": 66.6666641,
-          "capInsetsWidth": 66.6666641,
-          "capInsetsX": 66.6666641,
-          "capInsetsY": 66.6666641,
+          "capInsetsHeight": 57,
+          "capInsetsWidth": 50,
+          "capInsetsX": 0,
+          "capInsetsY": 0,
           "clipAble": false,
           "colorType": 0,
           "vectorX": 0,
@@ -343,7 +343,7 @@
           "capInsetsX": 0,
           "capInsetsY": 0,
           "clipAble": false,
-          "colorType": 1,
+          "colorType": 0,
           "vectorX": 0,
           "vectorY": -0.5
         }

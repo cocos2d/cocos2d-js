@@ -34,15 +34,15 @@ var CustomImageView = ccui.ImageView.extend({
         return false;
     },
 
-    initRenderer: function(){
-        ccui.ImageView.prototype.initRenderer.call(this);
+    _initRenderer: function(){
+        ccui.ImageView.prototype._initRenderer.call(this);
 
         this._label = cc.LabelTTF.create();
         cc.ProtectedNode.prototype.addChild.call(this, this._label, this.getLocalZOrder() + 1, -1);
     },
 
     createInstance: function(){
-        return ccs.CustomImageView.create();
+        return CustomImageView;
     },
 
     setText: function(text){

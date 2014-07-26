@@ -38,8 +38,8 @@ var CustomParticleWidget = ccui.Widget.extend({
         return false;
     },
 
-    initRenderer: function(){
-        ccui.Widget.prototype.initRenderer.call(this);
+    _initRenderer: function(){
+        ccui.Widget.prototype._initRenderer.call(this);
     },
 
     removeAllChildren: function(){
@@ -47,7 +47,7 @@ var CustomParticleWidget = ccui.Widget.extend({
     },
 
     createInstance: function(){
-        return ccui.CustomParticleWidget.create();
+        return CustomParticleWidget.create();
     },
     setParticlePlist: function(plist){
         if (!this._emitter)
