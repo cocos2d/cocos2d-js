@@ -119,11 +119,6 @@ JSAutoCompartment ac(cx, obj)
 #define JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET \
 JSAutoCompartment __jsb_ac(ScriptingCore::getInstance()->getGlobalContext(), ScriptingCore::getInstance()->getGlobalObject());
 
-/**
- * @def JSB_DEBUGGER_PORT
- * The port number, where the client will be listening on
- */
-#define JSB_DEBUGGER_PORT 5086
 
 /** @def JSB_INCLUDE_SYSTEM
  Whether or not it should include bindings for system components like LocalStorage

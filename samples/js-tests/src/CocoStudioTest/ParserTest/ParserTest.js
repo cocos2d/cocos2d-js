@@ -64,6 +64,15 @@ var CocostudioParserJsonLayer = cc.Layer.extend({
 
         var guiReader = ccs.uiReader;
 
+        guiReader.registerTypeAndCallBack("CustomImageView",
+            CustomImageView,
+            CustomImageViewReader,
+            CustomImageViewReader.setProperties);
+        guiReader.registerTypeAndCallBack("CustomParticleWidget",
+            CustomParticleWidget,
+            CustomParticleWidgetReader,
+            CustomParticleWidgetReader.setProperties);
+
         var layout = guiReader.widgetFromJsonFile(this._jsonFile);
         layout.setScale(0.7);
         this.addChild(layout);

@@ -50,6 +50,7 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 // The name of .so is specified in AndroidMenifest.xml. NativityActivity will load it automatically for you.
@@ -74,6 +75,7 @@ public class AppActivity extends Cocos2dxActivity{
 		// Check the wifi is opened when the native is debug.
 		if(nativeIsDebug())
 		{
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 			if(!isNetworkConnected())
 			{
 				AlertDialog.Builder builder=new AlertDialog.Builder(this);

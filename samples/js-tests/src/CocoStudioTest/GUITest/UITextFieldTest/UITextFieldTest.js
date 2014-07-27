@@ -44,10 +44,10 @@ var UITextFieldEditorTest = UIBaseLayer.extend({
     },
     textFieldEvent: function (sender, type) {
         switch (type) {
-            case ccui.TextField. EVENT_ATTACH_WITH_ME:
+            case ccui.TextField. EVENT_ATTACH_WITH_IME:
                 this._topDisplayText.setString("attach with IME");
                 break;
-            case ccui.TextField. EVENT_DETACH_WITH_ME:
+            case ccui.TextField. EVENT_DETACH_WITH_IME:
                 this._topDisplayText.setString("detach with IME");
                 break;
             case ccui.TextField. EVENT_INSERT_TEXT:
