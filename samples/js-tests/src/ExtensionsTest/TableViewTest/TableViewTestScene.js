@@ -32,11 +32,12 @@ var CustomTableViewCell = cc.TableViewCell.extend({
 
 var TableViewTestLayer = cc.Layer.extend({
 
-    init:function () {
-        if (!this._super()) {
-            return false;
-        }
+    ctor:function () {
+        this._super();
+        this.init();
+    },
 
+    init:function () {
         var winSize = cc.director.getWinSize();
 
         var tableView = cc.TableView.create(this, cc.size(600, 60));
@@ -57,10 +58,10 @@ var TableViewTestLayer = cc.Layer.extend({
         tableView.reloadData();
 
         // Back Menu
-        var itemBack = cc.MenuItemFont.create("Back", this.toExtensionsMainLayer, this);
+        var itemBack = new cc.MenuItemFont("Back", this.toExtensionsMainLayer, this);
         itemBack.x = winSize.width - 50;
         itemBack.y = 25;
-        var menuBack = cc.Menu.create(itemBack);
+        var menuBack = new cc.Menu(itemBack);
         menuBack.x = 0;
         menuBack.y = 0;
         this.addChild(menuBack);
@@ -95,14 +96,14 @@ var TableViewTestLayer = cc.Layer.extend({
         var label;
         if (!cell) {
             cell = new CustomTableViewCell();
-            var sprite = cc.Sprite.create(s_image_icon);
+            var sprite = new cc.Sprite(s_image_icon);
             sprite.anchorX = 0;
             sprite.anchorY = 0;
             sprite.x = 0;
             sprite.y = 0;
             cell.addChild(sprite);
 
-            label = cc.LabelTTF.create(strValue, "Helvetica", 20.0);
+            label = new cc.LabelTTF(strValue, "Helvetica", 20.0);
             label.x = 0;
             label.y = 0;
             label.anchorX = 0;
@@ -122,17 +123,9 @@ var TableViewTestLayer = cc.Layer.extend({
     }
 });
 
-TableViewTestLayer.create = function () {
-    var retObj = new TableViewTestLayer();
-    if (retObj && retObj.init()) {
-        return retObj;
-    }
-    return null;
-};
-
 var runTableViewTest = function () {
-    var pScene = cc.Scene.create();
-    var pLayer = TableViewTestLayer.create();
+    var pScene = new cc.Scene();
+    var pLayer = new TableViewTestLayer();
     pScene.addChild(pLayer);
     cc.director.runScene(pScene);
 };

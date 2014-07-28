@@ -123,14 +123,14 @@ var AnalyticsTestLayer = PluginXTest.extend({
 
         loadAnalyticsPlugin();
 
-        var pMenu = cc.Menu.create();
+        var pMenu = new cc.Menu();
         pMenu.setPosition( cc.p(0, 0) );
         this.addChild(pMenu, 1);
 
         var yPos = 0;
         for (var i = 0; i < s_EventMenuItem.length; i++) {
-            var label = cc.LabelTTF.create(s_EventMenuItem[i].id, "Arial", 24);
-            var pMenuItem = cc.MenuItemLabel.create(label, this.eventMenuCallback, this);
+            var label = new cc.LabelTTF(s_EventMenuItem[i].id, "Arial", 24);
+            var pMenuItem = new cc.MenuItemLabel(label, this.eventMenuCallback, this);
             pMenu.addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
             yPos = size.height - 50*i - 100;
             pMenuItem.setPosition( cc.p(size.width / 2, yPos));
@@ -139,12 +139,12 @@ var AnalyticsTestLayer = PluginXTest.extend({
         var strName = g_pAnalytics.getPluginName();
         var strVer = g_pAnalytics.getPluginVersion();
         var ret = "Plugin : "+strName+", Ver : "+ strVer;
-        var pLabel = cc.LabelTTF.create(ret, "Arial", 24, cc.size(size.width, 0), cc.TEXT_ALIGNMENT_CENTER);
+        var pLabel = new cc.LabelTTF(ret, "Arial", 24, cc.size(size.width, 0), cc.TEXT_ALIGNMENT_CENTER);
         pLabel.setPosition(cc.p(size.width / 2, yPos - 100));
         this.addChild(pLabel);
 
-        var label = cc.LabelTTF.create("reload all plugins", "Arial", 24);
-        var pMenuItem = cc.MenuItemLabel.create(label, this.reloadPluginMenuCallback, this);
+        var label = new cc.LabelTTF("reload all plugins", "Arial", 24);
+        var pMenuItem = new cc.MenuItemLabel(label, this.reloadPluginMenuCallback, this);
         pMenuItem.setAnchorPoint(cc.p(0.5, 0));
         pMenu.addChild(pMenuItem, 0);
         pMenuItem.setPosition( cc.p(size.width / 2, 0));

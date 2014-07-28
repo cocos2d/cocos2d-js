@@ -30,30 +30,31 @@ cc.game.onStart = function(){
     cc.view.resizeWithBrowserSize(true);
     cc.director.setDisplayStats(true);
     
-    var searchPaths = jsb.fileUtils.getSearchPaths()
-    searchPaths.push('script')
-    searchPaths.push('src')
-    var paths = [
-        'res',
-        'res/scenetest',
-        'res/scenetest/ArmatureComponentTest',
-        'res/scenetest/AttributeComponentTest',
-        'res/scenetest/BackgroundComponentTest',
-        'res/scenetest/EffectComponentTest',
-        'res/scenetest/LoadSceneEdtiorFileTest',
-        'res/scenetest/ParticleComponentTest',
-        'res/scenetest/SpriteComponentTest',
-        'res/scenetest/TmxMapComponentTest',
-        'res/scenetest/UIComponentTest',
-        'res/scenetest/TriggerTest'
-    ];
-    for (var i = 0; i < paths.length; i++) {
-        searchPaths.push(paths[i]);
-    };
-    jsb.fileUtils.setSearchPaths(searchPaths);
+    if (cc.sys.isNative) {
+        var searchPaths = jsb.fileUtils.getSearchPaths();
+        searchPaths.push('script');
+        searchPaths.push('src');
+        var paths = [
+            'res',
+            'res/scenetest',
+            'res/scenetest/ArmatureComponentTest',
+            'res/scenetest/AttributeComponentTest',
+            'res/scenetest/BackgroundComponentTest',
+            'res/scenetest/EffectComponentTest',
+            'res/scenetest/LoadSceneEdtiorFileTest',
+            'res/scenetest/ParticleComponentTest',
+            'res/scenetest/SpriteComponentTest',
+            'res/scenetest/TmxMapComponentTest',
+            'res/scenetest/UIComponentTest',
+            'res/scenetest/TriggerTest'
+        ];
+        for (var i = 0; i < paths.length; i++) {
+            searchPaths.push(paths[i]);
+        }
+        jsb.fileUtils.setSearchPaths(searchPaths);
+    }
     
     cc.LoaderScene.preload(g_resources, function () {
-
         if(window.sideIndexBar && typeof sideIndexBar.start === 'function'){
             sideIndexBar.start();
         }else{

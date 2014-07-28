@@ -140,8 +140,9 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
         var namePNG = "image-" + this._counter + ".png";
         var nameJPG = "image-" + this._counter + ".jpg";
 
-        this._target.saveToFile(nameJPG, cc.IMAGE_FORMAT_JPEG);
-        this._target.saveToFile(namePNG, cc.IMAGE_FORMAT_PNG);
+        // You can only save one file at a time (in one frame)
+        this._target.saveToFile(nameJPG, cc.IMAGE_FORMAT_JPEG, false);
+        //this._target.saveToFile(namePNG, cc.IMAGE_FORMAT_PNG);
 
         cc.log("images saved!");
         this._counter++;

@@ -45,6 +45,18 @@ var cocoStudioTestItemNames = [
         testScene:function () {
             runSceneEditorTest();
         }
+    },
+    {
+        itemTitle:"ParserTest",
+        testScene:function(){
+            runParserTest();
+        }
+    },
+    {
+        itemTitle:"CustomWidget",
+        testScene:function(){
+            runCustomGUITest();
+        }
     }
 ];
 if(!cc.sys.isNative){
