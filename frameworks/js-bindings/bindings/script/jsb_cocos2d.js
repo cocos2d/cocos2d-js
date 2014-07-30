@@ -1617,6 +1617,11 @@ var setTimeout = function (code, delay) {
     var target = new WindowTimeFun(code);
     if (arguments.length > 2)
         target._args = Array.prototype.slice.call(arguments, 2);
+    var original = target.fun;
+    target.fun = function () {
+        original.apply(this, arguments);
+        clearTimeout(target._intervalId);
+    }
     cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, 0, 0, false);
     _windowTimeFunHash[target._intervalId] = target;
     return target._intervalId;
