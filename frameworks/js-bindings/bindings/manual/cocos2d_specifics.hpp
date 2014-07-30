@@ -263,4 +263,6 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 bool js_cocos2dx_Component_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_onExit(JSContext *cx, uint32_t argc, jsval *vp);
 
+void create_js_root_obj(JSContext* cx, JSObject* global, const std::string &name, JS::RootedObject *jsObj);
+
 #endif

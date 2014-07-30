@@ -186,6 +186,12 @@ var s_testArray = [
         }
     },
     {
+        title: "UILayoutTest_Layout_Relative",
+        func: function () {
+            return new UILayoutTest_Layout_Relative();
+        }
+    },
+    {
         title: "UIScrollViewTest_Vertical",
         func: function () {
             return new UIScrollViewTest_Vertical();

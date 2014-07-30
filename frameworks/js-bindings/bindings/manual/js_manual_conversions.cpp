@@ -1646,6 +1646,10 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
     {
         return JSVAL_NULL;
     }
+    if (length == -1)
+    {
+        length = strlen(v);
+    }
     
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
