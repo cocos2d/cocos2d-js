@@ -77,7 +77,7 @@ var FacebookShareTest = PluginXTest.extend({
             "link": "http://www.cocos2d-x.org",
             "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
-        this._agentManager.share(map, function (resultcode, msg) {
+        FB.share(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
@@ -113,7 +113,7 @@ var FacebookShareTest = PluginXTest.extend({
             "url": "http://example.com/roasted_pumpkin_seeds", // Please change to your own action
             "description": "Crunchy pumpkin seeds roasted in butter and lightly salted."
         };
-        this._agentManager.dialog(map, function (resultcode, msg) {
+        FB.dialog(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
@@ -131,7 +131,7 @@ var FacebookShareTest = PluginXTest.extend({
                 "dialog": "share_photo",
                 "photo": img
             };
-            plugin.AgentManager.getInstance().dialog(map, function (resultcode, msg) {
+            FB.dialog(map, function (resultcode, msg) {
                 cc.log(msg);
             });
         });
@@ -152,7 +152,7 @@ var FacebookShareTest = PluginXTest.extend({
             "link": "http://www.cocos2d-x.org",
             "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
-        this._agentManager.dialog(map, function (resultcode, msg) {
+        FB.dialog(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
@@ -171,7 +171,7 @@ var FacebookShareTest = PluginXTest.extend({
             "url": "http://example.com/roasted_pumpkin_seeds", // Please change to your own action
             "description": "Crunchy pumpkin seeds roasted in butter and lightly salted."
         };
-        this._agentManager.dialog(map, function (resultcode, msg) {
+        FB.dialog(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
@@ -189,7 +189,7 @@ var FacebookShareTest = PluginXTest.extend({
                 "dialog": "message_photo",
                 "photo": img
             };
-            plugin.AgentManager.getInstance().dialog(map, function (resultcode, msg) {
+            FB.dialog(map, function (resultcode, msg) {
                 cc.log(msg);
             });
         });
@@ -208,7 +208,7 @@ var FacebookShareTest = PluginXTest.extend({
             "message": "Cocos2d-x is a great game engine",
             "link": "http://www.cocos2d-x.org"
         };
-        this._agentManager.dialog(map, function (resultcode, msg) {
+        FB.dialog(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
