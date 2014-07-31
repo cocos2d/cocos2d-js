@@ -75,7 +75,7 @@ var FacebookUserTest = PluginXTest.extend({
     },
     getUidClick: function (sender) {
         var self = this;
-        FB.request("/me", 0, {}, function(type, msg){
+        FB.request("/me", plugin.FacebookAgent.HttpMethod.Get, {}, function(type, msg){
             cc.log(msg);
             var response = JSON.parse(msg);
             self.result.setString(response["id"]);
