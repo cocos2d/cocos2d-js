@@ -48,13 +48,17 @@ var FacebookUserTest = PluginXTest.extend({
         var getToken_item = new cc.MenuItemLabel(getToken_label, this.getTokenClick, this);
         getToken_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, -50)));
 
+        var permission_label = new cc.LabelTTF("requet permissions", "Arial", 24);
+        var permission_item = new cc.MenuItemLabel(permission_label, this.permissionClick, this);
+        permission_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, -100)));
+
         this.result = new cc.LabelTTF("You can see the result at this label", "Arial", 26);
         this.result.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(100, 0)));
         this.result.boundingWidth = 400;
         this.addChild(this.result, 1);
 
 
-        var menu = new cc.Menu(login_item, logout_item, getUid_item, getToken_item);
+        var menu = new cc.Menu(login_item, logout_item, getUid_item, getToken_item, permission_item);
         menu.setPosition(cc.p(0, 0));
         menu.anchorX = 0;
         menu.anchorY = 0;
@@ -63,15 +67,17 @@ var FacebookUserTest = PluginXTest.extend({
     },
 
     loginClick: function (sender) {
-        var self = this;
-        FB.login(function(type, msg){
-            self.result.setString("type is " + type + " msg is " + msg);
-        });
+        if(FB.isLogedIn()){
+            this.result.setString("loged in");
+        }else{
+            var self = this;
+            FB.login(function(type, msg){
+                self.result.setString("type is " + type + " msg is " + msg);
+            });    
+        }        
     },
     logoutClick: function (sender) {
-        FB.logout(function(type, msg){
-
-        });
+        FB.logout();
     },
     getUidClick: function (sender) {
         var self = this;
@@ -85,6 +91,14 @@ var FacebookUserTest = PluginXTest.extend({
         var token = FB.getAccessToken();
         this.result.setString(token);
     },
+
+    permissionClick:function (sender) {
+        var permissions = ["create_event", "create_note"];
+        FB.requestPermissions(permissions, function(type, msg){
+            this.result.setString(msg);
+        });
+    },
+
     onNextCallback: function (sender) {
         var s = new PluginXTestScene();
         s.addChild(new PluginXTestLayer());
