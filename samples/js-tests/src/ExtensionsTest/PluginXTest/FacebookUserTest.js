@@ -22,6 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+var FB = FB || plugin.FacebookAgent.getInstance();
+
 var FacebookUserTest = PluginXTest.extend({
     _title: "Plugin-x Test",
     _subtitle: "Facebook SDK",
@@ -48,6 +50,7 @@ var FacebookUserTest = PluginXTest.extend({
 
         this.result = new cc.LabelTTF("You can see the result at this label", "Arial", 26);
         this.result.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(100, 0)));
+        this.result.boundingWidth = 400;
         this.addChild(this.result, 1);
 
 
@@ -57,39 +60,30 @@ var FacebookUserTest = PluginXTest.extend({
         menu.anchorY = 0;
         this.addChild(menu, 1);
 
-        this._agentManager = plugin.agentManager;
     },
 
     loginClick: function (sender) {
         var self = this;
-        this._agentManager.login(function(type,msg){
-            self.loginCallBack(type,msg);
+        FB.login(function(type, msg){
+            self.result.setString("type is " + type + " msg is " + msg);
         });
     },
-    loginCallBack: function (type, msg) {
-        this.result.setString("type is " + type + " msg is " + msg);
-        if (type == 0) {
-            this._isLogin = true;
-        }
-    },
     logoutClick: function (sender) {
-        this._agentManager.logout();
+        FB.logout(function(type, msg){
+
+        });
     },
     getUidClick: function (sender) {
-        if (!this._agentManager.isLogined()) {
-            this.result.setString("please Login first");
-            return;
-        }
-        var uid = this._agentManager.getUserPlugin().callStringFuncWithParam("getUserId");
-        this.result.setString(uid);
+        var self = this;
+        FB.request("/me", plugin.FacebookAgent.HttpMethod.Get, {}, function(type, msg){
+            cc.log(msg);
+            var response = JSON.parse(msg);
+            self.result.setString(response["id"]);
+        });
     },
     getTokenClick: function (sender) {
-        if (!this._agentManager.isLogined()) {
-            this.result.setString("please Login first");
-            return;
-        }
-        var uid = this._agentManager.getUserPlugin().callStringFuncWithParam("getToken");
-        this.result.setString(uid);
+        var token = FB.getAccessToken();
+        this.result.setString(token);
     },
     onNextCallback: function (sender) {
         var s = new PluginXTestScene();

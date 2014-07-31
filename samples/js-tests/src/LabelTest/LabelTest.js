@@ -1860,6 +1860,92 @@ var BMFontColorParentChild = AtlasDemo.extend({
     }
 });
 
+var WrapAlgorithmTest = AtlasDemo.extend({
+    ctor: function(){
+        this._super();
+        var self = this;
+
+        var normalText = [
+            "这里是中文测试例",
+            "测试带有符号，换行",
+            "测试中带有符号，换行",
+            "",
+            "Here is the English test",
+            "aaaaaaaaaaaaaaaaa",
+            "test test test aaa, tt",
+            "test test test aa, tt",
+            "こは日本語テスト",
+            "符号のテストに，ついて",
+        ];
+
+        normalText.forEach(function(text, i){
+            var LabelTTF = new cc.LabelTTF();
+            LabelTTF.setString(text);
+            LabelTTF.setPosition(30 + 150 * (i/4|0), 300 - (i%4) * 60);
+            LabelTTF.setAnchorPoint(0,1);
+            LabelTTF.boundingWidth = 120;
+            LabelTTF.boundingHeight = 0;
+            LabelTTF.enableStroke("rgba(0, 0, 0, 1)", 3.0);
+            self.addChild(LabelTTF);
+        });
+
+        //Extreme test
+        var extremeText = [
+            "测",
+            "\n",
+            "\r\n",
+            "、",
+            ",",
+            "W",
+            "7"
+        ];
+
+        extremeText.forEach(function(text, i){
+            var LabelTTF = new cc.LabelTTF();
+            LabelTTF.setString(text);
+            LabelTTF.setPosition(480 + i * 25, 300);
+            LabelTTF.setAnchorPoint(0,1);
+            LabelTTF.boundingWidth = 3;
+            LabelTTF.boundingHeight = 0;
+            LabelTTF.enableStroke("rgba(0, 0, 0, 1)", 3.0);
+            self.addChild(LabelTTF);
+        });
+
+        //Combinatorial testing
+        var combinatorialText = [
+            "中英混排English",
+            "中日混排テスト",
+            "日本語テストEnglish"
+        ];
+
+        combinatorialText.forEach(function(text, i){
+            var LabelTTF = new cc.LabelTTF();
+            LabelTTF.setString(text);
+            LabelTTF.setPosition(480 + 100 * (i/3|0), 240 - (i%3) * 60);
+            LabelTTF.setAnchorPoint(0,1);
+            LabelTTF.boundingWidth = 90;
+            LabelTTF.boundingHeight = 0;
+            LabelTTF.enableStroke("rgba(0, 0, 0, 1)", 3.0);
+            self.addChild(LabelTTF);
+        });
+
+    },
+    title: function(){
+        return "Wrap algorithm test";
+    },
+    subtitle: function(){
+        return "Wrap effect under various circumstances";
+    },
+    onEnter: function(){
+        this._super();
+        cc.SPRITE_DEBUG_DRAW = 1;
+    },
+    onExit: function(){
+        this._super();
+        cc.SPRITE_DEBUG_DRAW = 0;
+    }
+});
+
 //
 // Flow control
 //
@@ -1893,7 +1979,8 @@ var arrayOfLabelTest = [
     LabelTTFAlignment,
 
     LabelsEmpty,
-    LabelTTFStrokeShadowTest
+    LabelTTFStrokeShadowTest,
+    WrapAlgorithmTest
 ];
 
 var nextLabelTest = function () {
