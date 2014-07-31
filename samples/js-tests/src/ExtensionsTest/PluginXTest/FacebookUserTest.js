@@ -34,23 +34,27 @@ var FacebookUserTest = PluginXTest.extend({
 
         var login_label = new cc.LabelTTF("login", "Arial", 24);
         var login_item = new cc.MenuItemLabel(login_label, this.loginClick, this);
-        login_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 100)));
+        login_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 120)));
 
         var logout_label = new cc.LabelTTF("logout", "Arial", 24);
         var logout_item = new cc.MenuItemLabel(logout_label, this.logoutClick, this);
-        logout_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 50)));
+        logout_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 70)));
 
         var getUid_label = new cc.LabelTTF("getUid", "Arial", 24);
         var getUid_item = new cc.MenuItemLabel(getUid_label, this.getUidClick, this);
-        getUid_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 0)));
+        getUid_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 20)));
 
         var getToken_label = new cc.LabelTTF("getToken", "Arial", 24);
         var getToken_item = new cc.MenuItemLabel(getToken_label, this.getTokenClick, this);
-        getToken_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, -50)));
+        getToken_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, -30)));
 
-        var permission_label = new cc.LabelTTF("requet permissions", "Arial", 24);
+        var permission_label = new cc.LabelTTF("new permissions", "Arial", 24);
         var permission_item = new cc.MenuItemLabel(permission_label, this.permissionClick, this);
-        permission_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, -100)));
+        permission_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, -80)));
+
+        var request_label = new cc.LabelTTF("request api", "Arial", 24);
+        var request_item = new cc.MenuItemLabel(request_label, this.requestClick, this);
+        request_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, -130)));
 
         this.result = new cc.LabelTTF("You can see the result at this label", "Arial", 26);
         this.result.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(100, 0)));
@@ -58,7 +62,7 @@ var FacebookUserTest = PluginXTest.extend({
         this.addChild(this.result, 1);
 
 
-        var menu = new cc.Menu(login_item, logout_item, getUid_item, getToken_item, permission_item);
+        var menu = new cc.Menu(login_item, logout_item, getUid_item, getToken_item, permission_item, request_item);
         menu.setPosition(cc.p(0, 0));
         menu.anchorX = 0;
         menu.anchorY = 0;
@@ -96,6 +100,14 @@ var FacebookUserTest = PluginXTest.extend({
         var permissions = ["create_event", "create_note"];
         FB.requestPermissions(permissions, function(type, msg){
             this.result.setString(msg);
+        });
+    },
+
+    requestClick:function (sender) {
+        var self = this;
+        FB.request("/me/photos", plugin.FacebookAgent.HttpMethod.Post, {"url":"http://files.cocos2d-x.org/images/orgsite/logo.png"}, function(type, msg){
+            var response = JSON.parse(msg);
+            self.result.setString("post_id: " + response["post_id"]);
         });
     },
 
