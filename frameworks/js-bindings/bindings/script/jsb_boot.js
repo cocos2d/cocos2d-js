@@ -651,9 +651,10 @@ cc.view._setDesignResolutionSize = cc.view.setDesignResolutionSize;
 cc.view.setDesignResolutionSize = function(width,height,resolutionPolicy){
     cc.view._setDesignResolutionSize(width,height,resolutionPolicy);
     cc.winSize = cc.director.getWinSize();
+    cc.visibleRect.init();
 };
 cc.view.setResolutionPolicy = function(resolutionPolicy){
-    var size = cc.view.getDesignResolutionSize()
+    var size = cc.view.getDesignResolutionSize();
     cc.view.setDesignResolutionSize(size.width,size.height,resolutionPolicy);
 };
 cc.view.setContentTranslateLeftTop = function(){return;};
