@@ -2629,3 +2629,16 @@ cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
     }
     return rect;
 };
+
+
+//
+// RenderTexture beginWithClear
+//
+cc.RenderTexture.prototype._beginWithClear = cc.RenderTexture.prototype.beginWithClear;
+cc.RenderTexture.prototype.beginWithClear = function(r, g, b, a, depthValue, stencilValue) {
+    arguments[0] /= 255;
+    arguments[1] /= 255;
+    arguments[2] /= 255;
+    arguments[3] /= 255;
+    this._beginWithClear.apply(this, arguments);
+};
