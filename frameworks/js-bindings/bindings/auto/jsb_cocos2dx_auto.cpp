@@ -55226,7 +55226,7 @@ void js_register_cocos2dx_TextFieldTTF(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("textFieldWithPlaceHolder", js_cocos2dx_TextFieldTTF_textFieldWithPlaceHolder, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("create", js_cocos2dx_TextFieldTTF_textFieldWithPlaceHolder, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 

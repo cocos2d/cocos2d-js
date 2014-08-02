@@ -101,7 +101,8 @@ cc.TEXTURE_PIXELFORMAT_PVRTC4 = 9;
 cc.TEXTURE_PIXELFORMAT_DEFAULT = cc.TEXTURE_PIXELFORMAT_RGBA8888;
 
 cc.IMAGE_FORMAT_JPEG = 0;
-cc.IMAGE_FORMAT_PNG = 0;
+cc.IMAGE_FORMAT_PNG = 1;
+cc.IMAGE_FORMAT_RAWDATA = 9;
 
 cc.TOUCH_ALL_AT_ONCE = 0;
 cc.TOUCH_ONE_BY_ONE = 1;
@@ -1616,6 +1617,11 @@ var setTimeout = function (code, delay) {
     var target = new WindowTimeFun(code);
     if (arguments.length > 2)
         target._args = Array.prototype.slice.call(arguments, 2);
+    var original = target.fun;
+    target.fun = function () {
+        original.apply(this, arguments);
+        clearTimeout(target._intervalId);
+    }
     cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, 0, 0, false);
     _windowTimeFunHash[target._intervalId] = target;
     return target._intervalId;
@@ -2622,4 +2628,17 @@ cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
         }
     }
     return rect;
+};
+
+
+//
+// RenderTexture beginWithClear
+//
+cc.RenderTexture.prototype._beginWithClear = cc.RenderTexture.prototype.beginWithClear;
+cc.RenderTexture.prototype.beginWithClear = function(r, g, b, a, depthValue, stencilValue) {
+    arguments[0] /= 255;
+    arguments[1] /= 255;
+    arguments[2] /= 255;
+    arguments[3] /= 255;
+    this._beginWithClear.apply(this, arguments);
 };

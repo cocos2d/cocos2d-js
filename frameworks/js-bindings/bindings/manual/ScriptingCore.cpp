@@ -86,7 +86,7 @@ static int clientSocket = -1;
 static uint32_t s_nestedLoopLevel = 0;
 
 // server entry point for the bg thread
-static void serverEntryPoint(void);
+static void serverEntryPoint(unsigned int port);
 
 js_proxy_t *_native_js_global_ht = NULL;
 js_proxy_t *_js_native_global_ht = NULL;
@@ -1486,7 +1486,7 @@ static void clearBuffers() {
     }
 }
 
-static void serverEntryPoint(void)
+static void serverEntryPoint(unsigned int port)
 {
     // start a server, accept the connection and keep reading data from it
     struct addrinfo hints, *result = nullptr, *rp = nullptr;
@@ -1497,7 +1497,7 @@ static void serverEntryPoint(void)
     hints.ai_flags = AI_PASSIVE;     // fill in my IP for me
     
     std::stringstream portstr;
-    portstr << JSB_DEBUGGER_PORT;
+    portstr << port;
     
     int err = 0;
     
@@ -1591,7 +1591,7 @@ bool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
     return true;
 }
 
-void ScriptingCore::enableDebugger()
+void ScriptingCore::enableDebugger(unsigned int port)
 {
     if (_debugGlobal == NULL)
     {
@@ -1624,7 +1624,7 @@ void ScriptingCore::enableDebugger()
         }
         
         // start bg thread
-        auto t = std::thread(&serverEntryPoint);
+        auto t = std::thread(&serverEntryPoint,port);
         t.detach();
 
         Scheduler* scheduler = Director::getInstance()->getScheduler();
