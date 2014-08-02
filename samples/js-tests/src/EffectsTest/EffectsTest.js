@@ -81,9 +81,9 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
         sister2.y = winSize.height/2;
         node.addChild( sister2, 1 );
 
-        var sc = new cc.ScaleBy(2, 5);
+        var sc = cc.scaleBy(2, 5);
         var sc_back = sc.reverse();
-        var seq = new cc.Sequence( sc, sc_back );
+        var seq = cc.sequence( sc, sc_back );
         var repeat = seq.repeatForever();
 
         sister1.runAction( repeat );
@@ -92,7 +92,7 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
 
     getEffect:function(duration) {
         // override me
-        return new cc.MoveBy(2, cc.p(10,10) );
+        return cc.moveBy(2, cc.p(10,10) );
     },
 
     // automation
@@ -144,9 +144,9 @@ var FlipXTest = EffecstsBaseLayer.extend({
     },
     getEffect:function(duration) {
         var a = new cc.FlipX3D(duration );
-        var delay = new cc.DelayTime(2);
+        var delay = cc.delayTime(2);
         var r = a.reverse();
-        return new cc.Sequence( a, delay, r );
+        return cc.sequence( a, delay, r );
     }
 });
 
@@ -159,9 +159,9 @@ var FlipYTest = EffecstsBaseLayer.extend({
     },
     getEffect:function(duration) {
         var a = new cc.FlipY3D(duration );
-        var delay = new cc.DelayTime(2);
+        var delay = cc.delayTime(2);
         var r = a.reverse();
-        return new cc.Sequence( a, delay, r );
+        return cc.sequence( a, delay, r );
     }
 });
 
@@ -258,9 +258,9 @@ var ShuffleTilesTest = EffecstsBaseLayer.extend({
     },
     getEffect:function(duration) {
         var action =  new cc.ShuffleTiles( duration, cc.size(16,12), 25);
-        var delay = new cc.DelayTime(2);
+        var delay = cc.delayTime(2);
         var back = action.reverse();
-        var seq = new cc.Sequence( action, delay, back);
+        var seq = cc.sequence( action, delay, back);
         return seq;
     }
 });
@@ -274,9 +274,9 @@ var FadeOutTRTilesTest = EffecstsBaseLayer.extend({
     },
     getEffect:function(duration) {
         var action =  new cc.FadeOutTRTiles( duration, cc.size(16,12));
-        var delay = new cc.DelayTime(0.5);
+        var delay = cc.delayTime(0.5);
         var back = action.reverse();
-        var seq = new cc.Sequence( action, delay, back);
+        var seq = cc.sequence( action, delay, back);
         return seq;
     }
 });
@@ -290,9 +290,9 @@ var FadeOutBLTilesTest = EffecstsBaseLayer.extend({
     },
     getEffect:function(duration) {
         var action = new cc.FadeOutBLTiles( duration, cc.size(16,12));
-        var delay = new cc.DelayTime(0.5);
+        var delay = cc.delayTime(0.5);
         var back = action.reverse();
-        var seq = new cc.Sequence( action, delay, back);
+        var seq = cc.sequence( action, delay, back);
         return seq;
     }
 });
@@ -306,9 +306,9 @@ var FadeOutUpTilesTest = EffecstsBaseLayer.extend({
     },
     getEffect:function(duration) {
         var action = new cc.FadeOutUpTiles( duration, cc.size(16,12));
-        var delay = new cc.DelayTime(0.5);
+        var delay = cc.delayTime(0.5);
         var back = action.reverse();
-        var seq = new cc.Sequence( action, delay, back);
+        var seq = cc.sequence( action, delay, back);
         return seq;
     }
 });
@@ -322,9 +322,9 @@ var FadeOutDownTilesTest = EffecstsBaseLayer.extend({
     },
     getEffect:function(duration) {
         var action = new cc.FadeOutDownTiles( duration, cc.size(16,12));
-        var delay = new cc.DelayTime(0.5);
+        var delay = cc.delayTime(0.5);
         var back = action.reverse();
-        var seq = new cc.Sequence( action, delay, back);
+        var seq = cc.sequence( action, delay, back);
         return seq;
     }
 });
@@ -338,9 +338,9 @@ var TurnOffTilesTest = EffecstsBaseLayer.extend({
     },
     getEffect:function(duration) {
         var action = new cc.TurnOffTiles( duration, cc.size(48,32), 25);
-        var delay = new cc.DelayTime(0.5);
+        var delay = cc.delayTime(0.5);
         var back = action.reverse();
-        var seq = new cc.Sequence( action, delay, back);
+        var seq = cc.sequence( action, delay, back);
         return seq;
     }
 });
@@ -381,9 +381,9 @@ var SplitRowsTest = EffecstsBaseLayer.extend({
     },
     getEffect:function(duration) {
         var action = new cc.SplitRows( duration, 9);
-        var delay = new cc.DelayTime(0.5);
+        var delay = cc.delayTime(0.5);
         var back = action.reverse();
-        var seq = new cc.Sequence( action, delay, back);
+        var seq = cc.sequence( action, delay, back);
         return seq;
     }
 });
@@ -397,9 +397,9 @@ var SplitColsTest = EffecstsBaseLayer.extend({
     },
     getEffect:function(duration) {
         var action = new cc.SplitCols( duration, 9);
-        var delay = new cc.DelayTime(0.5);
+        var delay = cc.delayTime(0.5);
         var back = action.reverse();
-        var seq = new cc.Sequence( action, delay, back);
+        var seq = cc.sequence( action, delay, back);
         return seq;
     }
 });

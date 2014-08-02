@@ -93,7 +93,7 @@ var TMoveTo = ccs.BaseTriggerAction.extend({
         var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
-        var actionTo = cc.MoveTo.create(this._duration, cc.p(this._pos.x, this._pos.y));
+        var actionTo = cc.moveTo(this._duration, cc.p(this._pos.x, this._pos.y));
         node.runAction(actionTo);
     },
 
@@ -147,10 +147,10 @@ var TMoveBy = ccs.BaseTriggerAction.extend({
         var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
-        var moveBy = cc.MoveBy.create(this._duration, cc.p(this._pos.x, this._pos.y));
+        var moveBy = cc.moveBy(this._duration, cc.p(this._pos.x, this._pos.y));
         if (this._reverse) {
             var actionByBack = moveBy.reverse();
-            node.runAction(cc.Sequence.create(moveBy, actionByBack));
+            node.runAction(cc.sequence(moveBy, actionByBack));
         } else {
             node.runAction(moveBy);
         }
@@ -208,7 +208,7 @@ var TRotateTo = ccs.BaseTriggerAction.extend({
         var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
-        var actionTo = cc.RotateTo.create(this._duration, this._deltaAngle);
+        var actionTo = cc.rotateTo(this._duration, this._deltaAngle);
         node.runAction(actionTo);
     },
 
@@ -258,10 +258,10 @@ var TRotateBy = ccs.BaseTriggerAction.extend({
         var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
-        var actionBy = cc.RotateBy.create(this._duration, this._deltaAngle);
+        var actionBy = cc.rotateBy(this._duration, this._deltaAngle);
         if (this._reverse == true) {
             var actionByBack = actionBy.reverse();
-            node.runAction(cc.Sequence.create(actionBy, actionByBack));
+            node.runAction(cc.sequence(actionBy, actionByBack));
         }
         else {
             node.runAction(actionBy);
@@ -318,7 +318,7 @@ var TScaleTo = ccs.BaseTriggerAction.extend({
         var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
-        var actionTo = cc.ScaleTo.create(this._duration, this._scaleX, this._scaleY);
+        var actionTo = cc.scaleTo(this._duration, this._scaleX, this._scaleY);
         node.runAction(actionTo);
     },
 
@@ -374,10 +374,10 @@ var TScaleBy = ccs.BaseTriggerAction.extend({
         var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
-        var actionBy = cc.ScaleBy.create(this._duration, this._scaleX, this._scaleY);
+        var actionBy = cc.scaleBy(this._duration, this._scaleX, this._scaleY);
         if (this._reverse == true) {
             var actionByBack = actionBy.reverse();
-            node.runAction(cc.Sequence.create(actionBy, actionByBack));
+            node.runAction(cc.sequence(actionBy, actionByBack));
         }
         else {
             node.runAction(actionBy);
@@ -434,7 +434,7 @@ var TSkewTo = ccs.BaseTriggerAction.extend({
         var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
-        var actionTo = cc.SkewTo.create(this._duration, this._skewX, this._skewY);
+        var actionTo = cc.skewTo(this._duration, this._skewX, this._skewY);
         node.runAction(actionTo);
     },
 
@@ -490,10 +490,10 @@ var TSkewBy = ccs.BaseTriggerAction.extend({
         var node = ccs.sceneReader.getNodeByTag(this._tag);
         if (!node)
             return;
-        var actionBy = cc.SkewBy.create(this._duration, this._skewX, this._skewY);
+        var actionBy = cc.skewBy(this._duration, this._skewX, this._skewY);
         if (this._reverse == true) {
             var actionByBack = actionBy.reverse();
-            node.runAction(cc.Sequence.create(actionBy, actionByBack));
+            node.runAction(cc.sequence(actionBy, actionByBack));
         }
         else {
             node.runAction(actionBy);

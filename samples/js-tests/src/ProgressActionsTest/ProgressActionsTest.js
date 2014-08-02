@@ -259,11 +259,13 @@ var SpriteProgressBarTintAndFade = SpriteDemo.extend({
         this._super();
 
         var to = new cc.ProgressTo(6, 100);
-        var tint = new cc.Sequence(new cc.TintTo(1, 255, 0, 0),
-            new cc.TintTo(1, 0, 255, 0),
-            new cc.TintTo(1, 0, 0, 255));
+        var tint = cc.sequence(
+            cc.tintTo(1, 255, 0, 0),
+            cc.tintTo(1, 0, 255, 0),
+            cc.tintTo(1, 0, 0, 255)
+        );
 
-        var fade = new cc.Sequence(new cc.FadeTo(1.0, 0), new cc.FadeTo(1.0, 255));
+        var fade = cc.sequence(cc.fadeTo(1.0, 0), cc.fadeTo(1.0, 255));
 
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;

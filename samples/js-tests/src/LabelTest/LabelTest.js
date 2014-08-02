@@ -176,10 +176,10 @@ var LabelAtlasOpacityColorTest = AtlasDemo.extend({
         label2.y = 200;
         label2.color = cc.color(255, 0, 0);
 
-        var fade = new cc.FadeOut(1.0);
+        var fade = cc.fadeOut(1.0);
         var fade_in = fade.reverse();
-        var delay = new cc.DelayTime(0.25);
-        var seq = new cc.Sequence(fade, delay, fade_in, delay.clone());
+        var delay = cc.delayTime(0.25);
+        var seq = cc.sequence(fade, delay, fade_in, delay.clone());
         var repeat = seq.repeatForever();
         label2.runAction(repeat);
 
@@ -304,9 +304,9 @@ var BMFontOpacityColorAlignmentTest = AtlasDemo.extend({
         label1.anchorX = 0;
         label1.anchorY = 0;
         this.addChild(label1, 0, TAG_BITMAP_ATLAS1);
-        var fade = new cc.FadeOut(1.0);
+        var fade = cc.fadeOut(1.0);
         var fade_in = fade.reverse();
-        var seq = new cc.Sequence(fade, new cc.DelayTime(0.25), fade_in);
+        var seq = cc.sequence(fade, cc.delayTime(0.25), fade_in);
         var repeat = seq.repeatForever();
         label1.runAction(repeat);
 
@@ -422,29 +422,29 @@ var BMFontSubSpriteTest = AtlasDemo.extend({
         var AChar = label.getChildByTag(12);
 
         if(autoTestEnabled) {
-            var jump = new cc.JumpBy(0.5, cc.p(0,0), 60, 1);
-            var jump_4ever = new cc.Sequence(jump, new cc.DelayTime(0.25)).repeatForever();
-            var fade_out = new cc.FadeOut(0.5);
-            var rotate = new cc.RotateBy(0.5, 180);
-            var rot_4ever = new cc.Sequence(rotate, new cc.DelayTime(0.25), rotate.clone()).repeatForever();
+            var jump = cc.jumpBy(0.5, cc.p(0,0), 60, 1);
+            var jump_4ever = cc.sequence(jump, cc.delayTime(0.25)).repeatForever();
+            var fade_out = cc.fadeOut(0.5);
+            var rotate = cc.rotateBy(0.5, 180);
+            var rot_4ever = cc.sequence(rotate, cc.delayTime(0.25), rotate.clone()).repeatForever();
 
-            var scale = new cc.ScaleBy(0.5, 1.5);
+            var scale = cc.scaleBy(0.5, 1.5);
         } else {
-            var jump = new cc.JumpBy(4, cc.p(0,0), 60, 1);
+            var jump = cc.jumpBy(4, cc.p(0,0), 60, 1);
             var jump_4ever = jump.repeatForever();
-            var fade_out = new cc.FadeOut(1);
-            var rotate = new cc.RotateBy(2, 360);
+            var fade_out = cc.fadeOut(1);
+            var rotate = cc.rotateBy(2, 360);
             var rot_4ever = rotate.repeatForever();
 
-            var scale = new cc.ScaleBy(2, 1.5);
+            var scale = cc.scaleBy(2, 1.5);
         }
 
         var scale_back = scale.reverse();
-        var scale_seq = new cc.Sequence(scale, new cc.DelayTime(0.25), scale_back);
+        var scale_seq = cc.sequence(scale, cc.delayTime(0.25), scale_back);
         var scale_4ever = scale_seq.repeatForever();
 
-        var fade_in = new cc.FadeIn(1);
-        var seq = new cc.Sequence(fade_out, new cc.DelayTime(0.25), fade_in);
+        var fade_in = cc.fadeIn(1);
+        var seq = cc.sequence(fade_out, cc.delayTime(0.25), fade_in);
         var fade_4ever = seq.repeatForever();
 
         BChar.runAction(rot_4ever);
@@ -1620,9 +1620,9 @@ var LabelTTFA8Test = AtlasDemo.extend({
         label1.x = s.width / 2;
         label1.y = s.height / 2;
 
-        var fadeOut = new cc.FadeOut(2);
-        var fadeIn = new cc.FadeIn(2);
-        var seq = new cc.Sequence(fadeOut, fadeIn);
+        var fadeOut = cc.fadeOut(2);
+        var fadeIn = cc.fadeIn(2);
+        var seq = cc.sequence(fadeOut, fadeIn);
         var forever = seq.repeatForever();
         label1.runAction(forever);
         //----end22----

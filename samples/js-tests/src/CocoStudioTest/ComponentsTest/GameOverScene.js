@@ -29,18 +29,18 @@ var GameOverLayer = cc.LayerColor.extend({
     init: function () {
         if (this._super(cc.color(255, 255, 255, 255))) {
             var winSize = cc.director.getWinSize();
-            this._label = cc.LabelTTF.create("", "Artial", 32);
+            this._label = new cc.LabelTTF("", "Artial", 32);
             this._label.retain();
             this._label.color = cc.color(0, 0, 0);
             this._label.x = winSize.width / 2;
             this._label.y = winSize.height / 2;
             this.addChild(this._label);
-            this.runAction(cc.Sequence.create(cc.DelayTime.create(3), cc.CallFunc.create(this.gameOverDone, this)));
-            var itemBack = cc.MenuItemFont.create("Back", this.toExtensionsMainLayer, this);
+            this.runAction(cc.sequence(cc.delayTime(3), cc.callFunc(this.gameOverDone, this)));
+            var itemBack = new cc.MenuItemFont("Back", this.toExtensionsMainLayer, this);
             itemBack.color = cc.color(0, 0, 0);
             itemBack.x = cc.visibleRect.bottomRight.x - 50;
             itemBack.y = cc.visibleRect.bottomRight.y + 25;
-            var menuBack = cc.Menu.create(itemBack);
+            var menuBack = new cc.Menu(itemBack);
             menuBack.x = 0;
             menuBack.y = 0;
             this.addChild(menuBack);

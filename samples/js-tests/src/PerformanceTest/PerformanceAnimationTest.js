@@ -137,7 +137,7 @@ var AnimationTest = AnimationMenuLayer.extend({
             cc.log("create"+this.numNodes);
             this.moveLayer.addChild(character, 0, this.numNodes);
         }
-        var action = new cc.MoveBy(1, cc.p(20,0));
+        var action = cc.moveBy(1, cc.p(20,0));
         this.moveLayer.runAction(action.repeatForever());
         this.updateNodes();
     },
@@ -198,7 +198,7 @@ var CharacterView = cc.Node.extend({
             this.addChild(head);
             head.scale = 1.5;
             head.rotation = 350;
-            var rotateToA = new cc.RotateBy(0.01, 5);
+            var rotateToA = cc.rotateBy(0.01, 5);
             head.runAction(rotateToA.repeatForever());
         }
 
@@ -209,7 +209,7 @@ var CharacterView = cc.Node.extend({
             left.y = i * 5 - 20;
             left.rotation = 90;
             this.addChild(left);
-            //var moveStep = cc.MoveBy.create(0.01, cc.p(-5,0));
+            //var moveStep = cc.moveBy(0.01, cc.p(-5,0));
         //  left.runAction(moveStep);
             leftData[i] = left;
             if(i==0){

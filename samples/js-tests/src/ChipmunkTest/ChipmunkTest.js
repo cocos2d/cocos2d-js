@@ -585,9 +585,9 @@ var ChipmunkSpriteAnchorPoint = ChipmunkBaseLayer.extend({
 		sprite3.anchorY = 1;
 
 		// scale sprite
-		var scaledown = new cc.ScaleBy(0.5, 0.5);
+		var scaledown = cc.scaleBy(0.5, 0.5);
 		var scaleup = scaledown.reverse();
-		var seq = new cc.Sequence( scaledown, scaleup);
+		var seq = cc.sequence( scaledown, scaleup);
 		var repeat = seq.repeatForever();
 
 		sprite1.runAction( repeat );

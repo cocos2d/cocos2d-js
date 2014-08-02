@@ -86,9 +86,9 @@ var MenuLayerMainMenu = cc.Layer.extend({
 
         var item9 = new cc.MenuItemFont("Remove menu item when moving", this.onMenuMovingCallback, this);
 
-        var color_action = new cc.TintBy(0.5, 0, -255, -255);
+        var color_action = cc.tintBy(0.5, 0, -255, -255);
         var color_back = color_action.reverse();
-        var seq = new cc.Sequence(color_action, color_back);
+        var seq = cc.sequence(color_action, color_back);
         item8.runAction(seq.repeatForever());
 
         var menu = new cc.Menu( item1, item2, item3, item4, item5, item7, item8, item9);
@@ -110,7 +110,7 @@ var MenuLayerMainMenu = cc.Layer.extend({
 
                 selChild.x = dstPoint.x + offset;
                 selChild.y = dstPoint.y;
-                selChild.runAction(new cc.EaseElasticOut(new cc.MoveBy(2, cc.p(dstPoint.x - offset,0)), 0.35));
+                selChild.runAction(cc.moveBy(2, cc.p(dstPoint.x - offset,0)).easing(cc.easeElasticOut(0.35)));
             }
         }
         this._disabledItem = item3;
@@ -312,9 +312,9 @@ var MenuLayer3 = cc.Layer.extend({
         item3.x = s.width / 2;
         item3.y = s.height / 2 - 100;
 
-        var jump = new cc.JumpBy(3, cc.p(400, 0), 50, 4);
-        item2.runAction(new cc.Sequence(jump, jump.reverse()).repeatForever());
-        var spin1 = new cc.RotateBy(3, 360);
+        var jump = cc.jumpBy(3, cc.p(400, 0), 50, 4);
+        item2.runAction(cc.sequence(jump, jump.reverse()).repeatForever());
+        var spin1 = cc.rotateBy(3, 360);
         var spin2 = spin1.clone();
         var spin3 = spin1.clone();
 
