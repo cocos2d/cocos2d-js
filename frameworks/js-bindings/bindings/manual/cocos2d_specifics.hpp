@@ -26,7 +26,7 @@
 
 #include "ScriptingCore.h"
 #include "platform/CCSAXParser.h"
-#include "extensions/assets-manager/Downloader.h"
+#include "assets-manager/Downloader.h"
 
 class JSScheduleWrapper;
 
