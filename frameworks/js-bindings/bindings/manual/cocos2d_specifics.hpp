@@ -26,7 +26,6 @@
 
 #include "ScriptingCore.h"
 #include "platform/CCSAXParser.h"
-#include "assets-manager/Downloader.h"
 
 class JSScheduleWrapper;
 
@@ -263,25 +262,6 @@ bool js_cocos2dx_Node_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, j
 bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_onExit(JSContext *cx, uint32_t argc, jsval *vp);
-
-class CC_DLL __JSDownloaderDelegator : cocos2d::Ref
-{
-public:
-    static void download(const std::string &url, const jsval &callback);
-    
-protected:
-    __JSDownloaderDelegator(const std::string &url, const jsval &callback);
-    ~__JSDownloaderDelegator();
-    
-private:
-    void onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
-    void onError(const cocos2d::extension::Downloader::Error &error);
-    jsval _jsCallback;
-    unsigned char *_buffer;
-    long _size;
-    std::shared_ptr<cocos2d::extension::Downloader> _downloader;
-    std::string _url;
-};
 
 void create_js_root_obj(JSContext* cx, JSObject* global, const std::string &name, JS::RootedObject *jsObj);
 
