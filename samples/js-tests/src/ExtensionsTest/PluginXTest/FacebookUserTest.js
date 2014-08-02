@@ -22,8 +22,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var facebook = facebook || (window.plugin ? plugin.FacebookAgent.getInstance() : null);
-
 var FacebookUserTest = PluginXTest.extend({
     _title: "Plugin-x Test",
     _subtitle: "Facebook SDK",
@@ -31,6 +29,8 @@ var FacebookUserTest = PluginXTest.extend({
     _isLogin: false,
     ctor: function (title) {
         this._super(title);
+
+        window.facebook = window.facebook || (window.plugin ? plugin.FacebookAgent.getInstance() : null);
 
         var login_label = new cc.LabelTTF("login", "Arial", 24);
         var login_item = new cc.MenuItemLabel(login_label, this.loginClick, this);

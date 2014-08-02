@@ -41,6 +41,8 @@ var FacebookShareTest = PluginXTest.extend({
     ctor: function (title) {
         this._super(title);
 
+        window.facebook = window.facebook || (window.plugin ? plugin.FacebookAgent.getInstance() : null);
+
         var menu = new cc.Menu();
         menu.setPosition(cc.p(0, 0));
         menu.width = winSize.width;
@@ -99,11 +101,6 @@ var FacebookShareTest = PluginXTest.extend({
         }
     },
     onShareOG: function () {
-        if (!cc.sys.isNative) {
-            var msg = "The development of Facebook plugin for web is still in progress, some of them is not available";
-            this.showDisableTips(msg);
-            return;
-        }
         var map = {
             "dialog": "share_open_graph",
             "action_type": "fbogsamplesd:dish",
