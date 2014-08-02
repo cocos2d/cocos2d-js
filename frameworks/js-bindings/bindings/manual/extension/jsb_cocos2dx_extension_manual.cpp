@@ -959,25 +959,34 @@ __JSDownloaderDelegator::__JSDownloaderDelegator(JSContext *cx, JSObject *obj, c
 , _obj(obj)
 , _url(url)
 , _jsCallback(callback)
+, _buffer(nullptr)
 {
     _downloader = std::make_shared<cocos2d::extension::Downloader>();
     _downloader->setConnectionTimeout(8);
     _downloader->setErrorCallback( std::bind(&__JSDownloaderDelegator::onError, this, std::placeholders::_1) );
     _downloader->setSuccessCallback( std::bind(&__JSDownloaderDelegator::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3) );
     
-    _size = _downloader->getContentSize(_url) / sizeof(unsigned char);
-    _buffer = (unsigned char*)malloc(_size * sizeof(unsigned char));
-    _downloader->downloadToBufferAsync(_url, _buffer, _size);
-    
     JSContext *globalCx = ScriptingCore::getInstance()->getGlobalContext();
     if (!JSVAL_IS_NULL(_jsCallback)) {
         JS_AddNamedValueRoot(globalCx, &_jsCallback, "JSB_DownloadDelegator_jsCallback");
+    }
+    
+    long contentSize = _downloader->getContentSize(_url);
+    if (contentSize == -1) {
+        cocos2d::extension::Downloader::Error err;
+        onError(err);
+    }
+    else {
+        _size = contentSize / sizeof(unsigned char);
+        _buffer = (unsigned char*)malloc(contentSize);
+        _downloader->downloadToBufferAsync(_url, _buffer, _size);
     }
 }
 
 __JSDownloaderDelegator::~__JSDownloaderDelegator()
 {
-    free(_buffer);
+    if (_buffer != nullptr)
+        free(_buffer);
     _downloader->setErrorCallback(nullptr);
     _downloader->setSuccessCallback(nullptr);
 }
