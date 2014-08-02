@@ -386,30 +386,18 @@ cc.loader = {
      */
     loadImg : function(url, option, cb){
         var l = arguments.length;
-        var opt = {
-            isCrossOrigin : true
-        };
-        if(l == 3) {
-            opt.isCrossOrigin = option.isCrossOrigin == null ? opt.isCrossOrigin : option.isCrossOrigin;
-        }
-        else if(l == 2) cb = option;
-        
-        var img = new Image();
-        if(opt.isCrossOrigin) img.crossOrigin = "Anonymous";
-        
-        img.addEventListener("load", function () {
-            this.removeEventListener('load', arguments.callee, false);
-            this.removeEventListener('error', arguments.callee, false);
-            if(!cb) return;
-            cb(null, img);
+        if(l == 2) cb = option;
+
+        jsb.loadRemoteImg(url, function(succeed, tex) {
+            if (succeed) {
+                if(!cb) return;
+                cb(null, tex);
+            }
+            else {
+                if(!cb) return;
+                cb("error");
+            }
         });
-        img.addEventListener("error", function () {
-            this.removeEventListener('error', arguments.callee, false);
-            if(!cb) return;
-            cb("error");
-        });
-        img.src = url;
-        return img;
     },
     /**
      * Load binary data by url.
@@ -651,9 +639,10 @@ cc.view._setDesignResolutionSize = cc.view.setDesignResolutionSize;
 cc.view.setDesignResolutionSize = function(width,height,resolutionPolicy){
     cc.view._setDesignResolutionSize(width,height,resolutionPolicy);
     cc.winSize = cc.director.getWinSize();
+    cc.visibleRect.init();
 };
 cc.view.setResolutionPolicy = function(resolutionPolicy){
-    var size = cc.view.getDesignResolutionSize()
+    var size = cc.view.getDesignResolutionSize();
     cc.view.setDesignResolutionSize(size.width,size.height,resolutionPolicy);
 };
 cc.view.setContentTranslateLeftTop = function(){return;};
