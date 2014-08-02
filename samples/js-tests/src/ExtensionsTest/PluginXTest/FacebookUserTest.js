@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var FB = FB || plugin.FacebookAgent.getInstance();
+var FB = FB || (window.plugin ? plugin.FacebookAgent.getInstance() : null);
 
 var FacebookUserTest = PluginXTest.extend({
     _title: "Plugin-x Test",
