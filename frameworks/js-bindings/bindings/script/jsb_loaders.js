@@ -47,8 +47,17 @@ cc._jsonLoader = {
 cc.loader.register(["json", "ExportJson"], cc._jsonLoader);
 
 cc._imgLoader = {
-    load : function(realUrl, url){
-        return null;
+    load : function(realUrl, url, res, cb){
+        if (realUrl.match(jsb.urlRegExp)) {
+            cc.loader.loadImg(realUrl, function(err, img){
+                if(err)
+                    return cb(err);
+                cc.textureCache.handleLoadedTexture(realUrl);
+                cc.loader.cache[url] = img;
+                cb(null, img);
+            });
+        }
+        else cb(null);
     }
 };
 cc.loader.register(["png", "jpg", "bmp","jpeg","gif"], cc._imgLoader);
