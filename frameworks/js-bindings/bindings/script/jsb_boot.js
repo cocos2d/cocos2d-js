@@ -676,18 +676,17 @@ cc.configuration = cc.Configuration.getInstance();
  * cc.textureCache is the global cache for cc.Texture2D
  */
 cc.textureCache = cc.director.getTextureCache();
-cc.textureCache._addImage = cc.textureCache.addImage;
-cc.textureCache.addImage = function(url, cb, target) {
-
+cc.TextureCache.prototype._addImage = cc.TextureCache.prototype.addImage;
+cc.TextureCache.prototype.addImage = function(url, cb, target) {
     if (url.match(jsb.urlRegExp)) {
         jsb.loadRemoteImg(url, function(succeed, tex) {
             if (succeed) {
                 if(!cb) return;
-                cb(tex);
+                cb.call(target, tex);
             }
             else {
                 if(!cb) return;
-                cb(null);
+                cb.call(target, null);
             }
         });
     }
@@ -696,8 +695,9 @@ cc.textureCache.addImage = function(url, cb, target) {
             target && (cb = cb.bind(target));
             this.addImageAsync(url, cb);
         }
-        else
+        else {
             return this._addImage(url);
+        }
     }
 };
 /**
@@ -1264,6 +1264,6 @@ else if(window.JavaScriptObjCBridge && (cc.sys.os == cc.sys.OS_IOS || cc.sys.os 
     jsb.reflection = new JavaScriptObjCBridge();
 }
 
-jsb.urlRegExp = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+jsb.urlRegExp = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
 
 //+++++++++++++++++++++++++other initializations end+++++++++++++++++++++++++++++
