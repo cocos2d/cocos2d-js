@@ -678,12 +678,27 @@ cc.configuration = cc.Configuration.getInstance();
 cc.textureCache = cc.director.getTextureCache();
 cc.textureCache._addImage = cc.textureCache.addImage;
 cc.textureCache.addImage = function(url, cb, target) {
-    if (cb) {
-        target && (cb = cb.bind(target));
-        this.addImageAsync(url, cb);
+
+    if (url.match(jsb.urlRegExp)) {
+        jsb.loadRemoteImg(url, function(succeed, tex) {
+            if (succeed) {
+                if(!cb) return;
+                cb(tex);
+            }
+            else {
+                if(!cb) return;
+                cb(null);
+            }
+        });
     }
-    else
-        return this._addImage(url);
+    else {
+        if (cb) {
+            target && (cb = cb.bind(target));
+            this.addImageAsync(url, cb);
+        }
+        else
+            return this._addImage(url);
+    }
 };
 /**
  * @type {Object}
@@ -1248,5 +1263,7 @@ if(window.JavascriptJavaBridge && cc.sys.os == cc.sys.OS_ANDROID){
 else if(window.JavaScriptObjCBridge && (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX)){
     jsb.reflection = new JavaScriptObjCBridge();
 }
+
+jsb.urlRegExp = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
 
 //+++++++++++++++++++++++++other initializations end+++++++++++++++++++++++++++++
