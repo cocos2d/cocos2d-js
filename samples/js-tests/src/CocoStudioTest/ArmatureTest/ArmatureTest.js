@@ -847,7 +847,7 @@ var TestCalculatedVertex = ArmatureTestLayer.extend({
         var dict = this.armature2.getBoneDic();
         for (var key in dict) {
             var bone = dict[key];
-            var bodyList = bone.getColliderDetector() || [];
+            var bodyList = bone.getColliderBodyList() || [];
             for (var i = 0; i < bodyList.length; i++) {
                 var body = bodyList[i];
                 var vertexList = body.getCalculatedVertexList();
