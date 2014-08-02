@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var FB = FB || (window.plugin ? plugin.FacebookAgent.getInstance() : null);
+var facebook = facebook || (window.plugin ? plugin.FacebookAgent.getInstance() : null);
 
 var FacebookUserTest = PluginXTest.extend({
     _title: "Plugin-x Test",
@@ -34,30 +34,30 @@ var FacebookUserTest = PluginXTest.extend({
 
         var login_label = new cc.LabelTTF("login", "Arial", 24);
         var login_item = new cc.MenuItemLabel(login_label, this.loginClick, this);
-        login_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 120)));
+        login_item.setPosition(cc.p(120, 370));
 
         var logout_label = new cc.LabelTTF("logout", "Arial", 24);
         var logout_item = new cc.MenuItemLabel(logout_label, this.logoutClick, this);
-        logout_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 70)));
+        logout_item.setPosition(cc.p(120, 320));
 
         var getUid_label = new cc.LabelTTF("getUid", "Arial", 24);
         var getUid_item = new cc.MenuItemLabel(getUid_label, this.getUidClick, this);
-        getUid_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, 20)));
+        getUid_item.setPosition(cc.p(120, 270));
 
         var getToken_label = new cc.LabelTTF("getToken", "Arial", 24);
         var getToken_item = new cc.MenuItemLabel(getToken_label, this.getTokenClick, this);
-        getToken_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, -30)));
+        getToken_item.setPosition(cc.p(120, 220));
 
         var permission_label = new cc.LabelTTF("new permissions", "Arial", 24);
         var permission_item = new cc.MenuItemLabel(permission_label, this.permissionClick, this);
-        permission_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, -80)));
+        permission_item.setPosition(cc.p(120, 170));
 
         var request_label = new cc.LabelTTF("request api", "Arial", 24);
         var request_item = new cc.MenuItemLabel(request_label, this.requestClick, this);
-        request_item.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(120, -130)));
+        request_item.setPosition(cc.p(120, 120));
 
         this.result = new cc.LabelTTF("You can see the result at this label", "Arial", 26);
-        this.result.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(100, 0)));
+        this.result.setPosition(cc.p(500, 225));
         this.result.boundingWidth = 400;
         this.addChild(this.result, 1);
 
@@ -71,41 +71,49 @@ var FacebookUserTest = PluginXTest.extend({
     },
 
     loginClick: function (sender) {
-        if(FB.isLogedIn()){
-            this.result.setString("loged in");
-        }else{
-            var self = this;
-            FB.login(function(type, msg){
-                self.result.setString("type is " + type + " msg is " + msg);
-            });    
-        }        
+        var self = this;
+        facebook.isLoggedIn(function(type, msg){
+            if(type == 0){
+                self.result.setString(msg);
+            }else{
+                facebook.login(function(type, msg){
+                    self.result.setString("type is " + type + " msg is " + msg);
+                });
+            }
+        });     
     },
     logoutClick: function (sender) {
-        FB.logout();
+        var self = this;
+        facebook.logout(function(type, msg){
+            self.result.setString(msg);
+        });
     },
     getUidClick: function (sender) {
         var self = this;
-        FB.request("/me", plugin.FacebookAgent.HttpMethod.Get, {}, function(type, msg){
+        facebook.request("/me", plugin.FacebookAgent.HttpMethod.Get, {}, function(type, msg){
             cc.log(msg);
             var response = JSON.parse(msg);
             self.result.setString(response["id"]);
         });
     },
     getTokenClick: function (sender) {
-        var token = FB.getAccessToken();
-        this.result.setString(token);
+        var self = this;
+        facebook.requestAccessToken(function(type, token){
+            self.result.setString(token);
+        });
     },
 
     permissionClick:function (sender) {
+        var self = this;
         var permissions = ["create_event", "create_note"];
-        FB.requestPermissions(permissions, function(type, msg){
-            this.result.setString(msg);
+        facebook.requestPermissions(permissions, function(type, msg){
+            self.result.setString(msg);
         });
     },
 
     requestClick:function (sender) {
         var self = this;
-        FB.request("/me/photos", plugin.FacebookAgent.HttpMethod.Post, {"url":"http://files.cocos2d-x.org/images/orgsite/logo.png"}, function(type, msg){
+        facebook.request("/me/photos", plugin.FacebookAgent.HttpMethod.Post, {"url":"http://files.cocos2d-x.org/images/orgsite/logo.png"}, function(type, msg){
             var response = JSON.parse(msg);
             self.result.setString("post_id: " + response["post_id"]);
         });
