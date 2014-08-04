@@ -2285,6 +2285,7 @@ for (var a in easeActions) {
     cc[a] = templateEaseActions(actionTag);
 }
 
+// Action2d
 cc.action = cc.Action.create;
 cc.speed = cc.Speed.create;
 cc.follow = cc.Follow.create;
@@ -2330,6 +2331,36 @@ cc.animate = cc.Animate.create;
 cc.targetedAction = cc.TargetedAction.create;
 cc.actionTween = cc.ActionTween.create;
 
+// Actions3d
+cc.gridAction = cc.GridAction.create;
+cc.grid3DAction = cc.Grid3DAction.create;
+cc.tiledGrid3DAction = cc.TiledGrid3DAction.create;
+cc.stopGrid = cc.StopGrid.create;
+cc.reuseGrid = cc.ReuseGrid.create;
+cc.waves3D = cc.Waves3D.create;
+cc.flipX3D = cc.FlipX3D.create;
+cc.flipY3D = cc.FlipY3D.create;
+cc.lens3D = cc.Lens3D.create;
+cc.ripple3D = cc.Ripple3D.create;
+cc.shaky3D = cc.Shaky3D.create;
+cc.liquid = cc.Liquid.create;
+cc.waves = cc.Waves.create;
+cc.twirl = cc.Twirl.create;
+cc.pageTurn3D = cc.PageTurn3D.create;
+cc.shakyTiles3D = cc.ShakyTiles3D.create;
+cc.shatteredTiles3D = cc.ShatteredTiles3D.create;
+cc.shuffleTiles = cc.ShuffleTiles.create;
+cc.fadeOutTRTiles = cc.FadeOutTRTiles.create;
+cc.fadeOutBLTiles = cc.FadeOutBLTiles.create;
+cc.fadeOutUpTiles = cc.FadeOutUpTiles.create;
+cc.fadeOutDownTiles = cc.FadeOutDownTiles.create;
+cc.turnOffTiles = cc.TurnOffTiles.create;
+cc.wavesTiles3D = cc.WavesTiles3D.create;
+cc.jumpTiles3D = cc.JumpTiles3D.create;
+cc.splitRows = cc.SplitRows.create;
+cc.splitCols = cc.SplitCols.create;
+cc.progressTo = cc.ProgressTo.create;
+cc.progressFromTo = cc.ProgressFromTo.create;
 
 //
 //AffineTransform API
