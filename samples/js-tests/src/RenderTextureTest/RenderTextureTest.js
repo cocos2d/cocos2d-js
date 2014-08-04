@@ -101,11 +101,7 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
                 }
             }, this);
 
-        this._brush = new cc.Sprite(s_fire);
-        this._brush.retain();
-
-        this._brush.color = cc.color.RED;
-        this._brush.opacity = 20;
+        this._brushs = [];
 
         var save = new cc.MenuItemFont("Save", this.saveCB, this);
         var clear = new cc.MenuItemFont("Clear", this.clearCB.bind(this)); // another way to pass 'this'
@@ -117,7 +113,7 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
         this.addChild(menu, 10);
 
         // create a render texture
-        var target = new cc.RenderTexture(winSize.width, winSize.height);
+        var target = new cc.RenderTexture(winSize.width, winSize.height, 2);
         target.x = winSize.width / 2;
         target.y = winSize.height / 2;
         this.addChild(target, 1);
@@ -158,20 +154,24 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
         if (distance > 1) {
             var locBrush = this._brush, locLastLocation = this._lastLocation;
             this._target.begin();
-            for (var i = 0; i < distance; i++) {
+            this._brushs = [];
+            for(var i = 0; i < distance; ++i) {
                 var diffX = locLastLocation.x - location.x;
                 var diffY = locLastLocation.y - location.y;
-
                 var delta = i / distance;
-
-                locBrush.attr({
-	                x: location.x + diffX * delta,
-	                y: location.y + diffY * delta,
-	                rotation: Math.random() * 360,
-	                scale: Math.random() * 2,
-	                color: cc.color(Math.random() * 255, 255, 255)
+                var sprite = new cc.Sprite(s_fire);
+                sprite.attr({
+                    x: location.x + diffX * delta,
+                    y: location.y + diffY * delta,
+                    rotation: Math.random() * 360,
+                    color: cc.color(Math.random() * 255, 255, 255),
+                    scale: Math.random() + 0.25,
+                    opacity: 20
                 });
-                locBrush.visit();
+                this._brushs.push(sprite);
+            }
+            for (var i = 0; i < distance; i++) {
+                this._brushs[i].visit();
             }
             this._target.end();
         }

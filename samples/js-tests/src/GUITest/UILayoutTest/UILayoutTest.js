@@ -38,10 +38,12 @@ var UILayoutTestBase = UIScene.extend({
             this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
             var background = this._widget.getChildByName("background_Panel");
+            this._mainNode.width = widgetSize.width;
+            this._mainNode.height = widgetSize.height;
 
             // Create the layout
             this.layout = this.createLayout();
-            var  layoutRect = this.layout.getContentSize();
+            var layoutRect = this.layout.getContentSize();
             var backgroundRect = background.getContentSize();
             this.layout.x = (widgetSize.width - backgroundRect.width) / 2 + (backgroundRect.width - layoutRect.width) / 2;
 	        this.layout.y = (widgetSize.height - backgroundRect.height) / 2 + (backgroundRect.height - layoutRect.height) / 2;
@@ -207,8 +209,14 @@ var UILayoutTest_Layout_Linear_Horizontal = UILayoutTestBase.extend({
 var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = ccui.Layout.create();
+        layout.ignoreContentAdaptWithSize(false);
         layout.setLayoutType(ccui.Layout.RELATIVE);
-        layout.setContentSize(cc.size(280, 150));
+        layout.sizeType = ccui.Widget.SIZE_PERCENT;
+        layout.setSizePercent(cc.p(0.5, 0.5));
+        //layout.setContentSize(cc.size(280, 150));
+        layout.setPositionType(ccui.Widget.POSITION_PERCENT);
+        layout.setPositionPercent(cc.p(0.25, 0.25));
+        //layout.setPosition(cc.p(cc.winSize.width/2, cc.winSize.height/2));
         layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
         layout.setBackGroundColor(cc.color.GREEN);
         return layout;
@@ -219,14 +227,14 @@ var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
     setLayoutParameter: function () {
         var lp1 = ccui.RelativeLayoutParameter.create();
         this.button.setLayoutParameter(lp1);
-        lp1.setGravity(ccui.RelativeLayoutParameter.PARENT_LEFT_BOTTOM);
+        lp1.setAlign(ccui.RELATIVE_ALIGN_PARENT_TOP_LEFT);
 
         var lp2 = ccui.RelativeLayoutParameter.create();
         this.textButton.setLayoutParameter(lp2);
-        lp2.setGravity(ccui.RelativeLayoutParameter.PARENT_LEFT_BOTTOM);
+        lp2.setAlign(ccui.RELATIVE_ALIGN_PARENT_CENTER);
 
         var lp3 = ccui.RelativeLayoutParameter.create();
         this.button_scale9.setLayoutParameter(lp3);
-        lp3.setGravity(ccui.RelativeLayoutParameter.PARENT_RIGHT_CENTER_VERTICAL);
+        lp3.setAlign(ccui.RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM);
     }
 });

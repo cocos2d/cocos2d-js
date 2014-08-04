@@ -37,7 +37,7 @@ var EditBoxTestLayer = cc.Layer.extend({
     },
 
     init: function () {
-        this._box1 = cc.EditBox.create(cc.size(170, 50), cc.Scale9Sprite.create("res/extensions/green_edit.png"), cc.Scale9Sprite.create("res/extensions/orange_edit.png"));
+        this._box1 = new cc.EditBox(cc.size(170, 50), new cc.Scale9Sprite("res/extensions/green_edit.png"), new cc.Scale9Sprite("res/extensions/orange_edit.png"));
         this._box1.setString("EditBoxs");
         this._box1.x = 220;
         this._box1.y = 50;
@@ -45,7 +45,7 @@ var EditBoxTestLayer = cc.Layer.extend({
         this._box1.setDelegate(this);
         this.addChild(this._box1);
 
-        this._box2 = cc.EditBox.create(cc.size(130, 40), cc.Scale9Sprite.create("res/extensions/green_edit.png"));
+        this._box2 = new cc.EditBox(cc.size(130, 40), new cc.Scale9Sprite("res/extensions/green_edit.png"));
         this._box2.setString("EditBox Sample");
         this._box2.x = 220;
         this._box2.y = 190;
@@ -54,7 +54,7 @@ var EditBoxTestLayer = cc.Layer.extend({
         this._box2.setDelegate(this);
         this.addChild(this._box2);
 
-        this._box3 = cc.EditBox.create(cc.size(65, 40), cc.Scale9Sprite.create("res/extensions/orange_edit.png"));
+        this._box3 = new cc.EditBox(cc.size(65, 40), new cc.Scale9Sprite("res/extensions/orange_edit.png"));
         this._box3.setString("Image");
         this._box3.x = 220;
         this._box3.y = 250;
@@ -62,7 +62,7 @@ var EditBoxTestLayer = cc.Layer.extend({
         this._box3.setDelegate(this);
         this.addChild(this._box3);
 
-        this._box4 = cc.EditBox.create(cc.size(180, 40), cc.Scale9Sprite.create("res/extensions/yellow_edit.png"));
+        this._box4 = new cc.EditBox(cc.size(180, 40), new cc.Scale9Sprite("res/extensions/yellow_edit.png"));
         this._box4.setPlaceholderFontColor(cc.color(255, 0, 0));
         this._box4.setPlaceHolder("Tooltip:");
         this._box4.x = 40;
@@ -72,10 +72,10 @@ var EditBoxTestLayer = cc.Layer.extend({
         this._box4.setMaxLength(10);
         this._box3.addChild(this._box4);
 
-        var itemBack = cc.MenuItemFont.create("Back", this.toExtensionsMainLayer, this);
+        var itemBack = new cc.MenuItemFont("Back", this.toExtensionsMainLayer, this);
         itemBack.x = winSize.width - 50;
         itemBack.y = 25;
-        var menuBack = cc.Menu.create(itemBack);
+        var menuBack = new cc.Menu(itemBack);
         menuBack.x = 0;
         menuBack.y = 0;
         this.addChild(menuBack);
