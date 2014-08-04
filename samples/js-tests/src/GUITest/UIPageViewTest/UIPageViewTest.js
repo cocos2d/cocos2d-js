@@ -38,18 +38,18 @@ var UIPageViewTest = UIScene.extend({
             var background = this._widget.getChildByName("background_Panel");
 
             // Create the page view
-            var pageView = ccui.PageView.create();
+            var pageView = new ccui.PageView();
             pageView.setTouchEnabled(true);
             pageView.setContentSize(cc.size(240, 130));
             pageView.x = (widgetSize.width - background.width) / 2 + (background.width - pageView.width) / 2;
             pageView.y = (widgetSize.height - background.height) / 2 + (background.height - pageView.height) / 2;
 
             for (var i = 0; i < 3; ++i) {
-                var layout = ccui.Layout.create();
+                var layout = new ccui.Layout();
                 layout.setContentSize(cc.size(240, 130));
                 var layoutRect = layout.getContentSize();
 
-                var imageView = ccui.ImageView.create();
+                var imageView = new ccui.ImageView();
                 imageView.setTouchEnabled(true);
                 imageView.setScale9Enabled(true);
                 imageView.loadTexture("res/cocosui/scrollviewbg.png");
@@ -58,7 +58,7 @@ var UIPageViewTest = UIScene.extend({
                 imageView.y = layoutRect.height / 2;
                 layout.addChild(imageView);
 
-                var text = ccui.Text.create();
+                var text = new ccui.Text();
                 text.string = "page" + (i + 1);
                 text.font = "30px 'Marker Felt'";
                 text.color = cc.color(192, 192, 192);
@@ -69,7 +69,7 @@ var UIPageViewTest = UIScene.extend({
                 pageView.addPage(layout);
             }
             pageView.addEventListenerPageView(this.pageViewEvent, this);
-            var a = ccui.Layout.create();
+            var a = new ccui.Layout();
             this._mainNode.addChild(pageView);
 
             return true;

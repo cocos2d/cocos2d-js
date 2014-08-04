@@ -32,7 +32,7 @@ var UISliderTest = UIScene.extend({
             this._bottomDisplayLabel.setString("Slider");
 
             // Create the slider
-            var slider = ccui.Slider.create();
+            var slider = new ccui.Slider();
             slider.setTouchEnabled(true);
             slider.loadBarTexture("res/cocosui/sliderTrack.png");
             slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
@@ -69,7 +69,7 @@ var UISliderTest_Scale9 = UIScene.extend({
             this._bottomDisplayLabel.setString("Slider scale9 render");
 
             // Create the slider
-            var slider = ccui.Slider.create();
+            var slider = new ccui.Slider();
             slider.setTouchEnabled(true);
             slider.setScale9Enabled(true);
             slider.loadBarTexture("res/cocosui/sliderTrack2.png");

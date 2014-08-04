@@ -38,7 +38,7 @@ var UIScrollViewTest_Vertical = UIScene.extend({
             var background = this._widget.getChildByName("background_Panel");
 
             // Create the scrollview
-            var scrollView = ccui.ScrollView.create();
+            var scrollView = new ccui.ScrollView();
             scrollView.setDirection(ccui.ScrollView.DIR_VERTICAL);
             scrollView.setTouchEnabled(true);
             scrollView.setContentSize(cc.size(280, 150));
@@ -47,7 +47,7 @@ var UIScrollViewTest_Vertical = UIScene.extend({
             scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollView.height) / 2;
             this._mainNode.addChild(scrollView);
 
-            var imageView = ccui.ImageView.create();
+            var imageView = new ccui.ImageView();
             imageView.loadTexture("res/cocosui/ccicon.png");
 
             var innerWidth = scrollView.width;
@@ -55,14 +55,14 @@ var UIScrollViewTest_Vertical = UIScene.extend({
 
             scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
 
-            var button = ccui.Button.create();
+            var button = new ccui.Button();
             button.setTouchEnabled(true);
             button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
             button.x = innerWidth / 2;
             button.y = scrollView.getInnerContainerSize().height - button.height / 2;
             scrollView.addChild(button);
 
-            var textButton = ccui.Button.create();
+            var textButton = new ccui.Button();
             textButton.setTouchEnabled(true);
             textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
             textButton.setTitleText("Text Button");
@@ -70,7 +70,7 @@ var UIScrollViewTest_Vertical = UIScene.extend({
             textButton.y = button.getBottomBoundary() - button.height;
             scrollView.addChild(textButton);
 
-            var button_scale9 = ccui.Button.create();
+            var button_scale9 = new ccui.Button();
             button_scale9.setTouchEnabled(true);
             button_scale9.setScale9Enabled(true);
             button_scale9.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
@@ -105,7 +105,7 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
             var background = this._widget.getChildByName("background_Panel");
 
             // Create the scrollview
-            var scrollView = ccui.ScrollView.create();
+            var scrollView = new ccui.ScrollView();
             scrollView.setDirection(ccui.ScrollView.DIR_HORIZONTAL);
             scrollView.setTouchEnabled(true);
             scrollView.setContentSize(cc.size(280, 150));
@@ -116,7 +116,7 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
             scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollViewRect.height) / 2;
             this._mainNode.addChild(scrollView);
 
-            var imageView = ccui.ImageView.create();
+            var imageView = new ccui.ImageView();
             imageView.loadTexture("res/cocosui/ccicon.png");
 
             var innerWidth = scrollViewRect.width + imageView.getContentSize().width;
@@ -124,14 +124,14 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
 
             scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
 
-            var button = ccui.Button.create();
+            var button = new ccui.Button();
             button.setTouchEnabled(true);
             button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
             button.x = button.width / 2;
             button.y = scrollView.getInnerContainerSize().height - button.height / 2;
             scrollView.addChild(button);
 
-            var textButton = ccui.Button.create();
+            var textButton = new ccui.Button();
             textButton.setTouchEnabled(true);
             textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
             textButton.setTitleText("Text Button");
@@ -139,7 +139,7 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
             textButton.y = button.getBottomBoundary() - button.height;
             scrollView.addChild(textButton);
 
-            var button_scale9 = ccui.Button.create();
+            var button_scale9 = new ccui.Button();
             button_scale9.setTouchEnabled(true);
             button_scale9.setScale9Enabled(true);
             button_scale9.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
@@ -174,7 +174,7 @@ var UIScrollViewTest_Both = UIScene.extend({
             var background = this._widget.getChildByName("background_Panel");
 
             // Create the scrollview
-            var scrollView = ccui.ScrollView.create();
+            var scrollView = new ccui.ScrollView();
             scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
             scrollView.setTouchEnabled(true);
             scrollView.setBounceEnabled(true);
@@ -187,7 +187,7 @@ var UIScrollViewTest_Both = UIScene.extend({
             scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollViewSize.height) / 2;
             this._mainNode.addChild(scrollView);
 
-            var imageView = ccui.ImageView.create();
+            var imageView = new ccui.ImageView();
             imageView.loadTexture("res/cocosui/b11.png");
             scrollView.addChild(imageView);
 
@@ -214,7 +214,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection = UIScene.extend({
             var background = this._widget.getChildByName("background_Panel");
 
             // Create the scrollview
-            var scrollView = ccui.ScrollView.create();
+            var scrollView = new ccui.ScrollView();
             scrollView.setTouchEnabled(true);
             scrollView.setBackGroundColor(cc.color.GREEN);
             scrollView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
@@ -229,7 +229,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection = UIScene.extend({
 
             this._mainNode.addChild(scrollView);
 
-            var imageView = ccui.ImageView.create();
+            var imageView = new ccui.ImageView();
             imageView.loadTexture("res/cocosui/Hello.png");
             imageView.x = 240;
             imageView.y = 160;
@@ -254,7 +254,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = UIScene.extend({
             var background = this._widget.getChildByName("background_Panel");
 
             // Create the scrollview
-            var scrollView = ccui.ScrollView.create();
+            var scrollView = new ccui.ScrollView();
             scrollView.setTouchEnabled(true);
             scrollView.setBounceEnabled(true);
             scrollView.setBackGroundColor(cc.color.GREEN);
@@ -270,7 +270,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = UIScene.extend({
 
             this._mainNode.addChild(scrollView);
 
-            var imageView = ccui.ImageView.create();
+            var imageView = new ccui.ImageView();
             imageView.loadTexture("res/cocosui/Hello.png");
             imageView.x = 240;
             imageView.y = 160;
