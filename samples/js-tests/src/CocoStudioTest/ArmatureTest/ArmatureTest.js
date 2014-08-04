@@ -197,7 +197,7 @@ var TestAsynchronousLoading = ArmatureTestLayer.extend({
     dataLoaded: function (percent) {
         cc.log("percent:" + percent);
         var subTile = this.getChildByTag(BASE_TEST_SUBTITLE_TAG);
-        subTile.setString("current percent : " + percent.toFixed(2) * 100);
+        subTile.setString("current percent : " + (percent.toFixed(2) * 100));
         if (percent >= 1) {
             this.setMenuItemEnabled(true);
         }
@@ -447,9 +447,9 @@ var TestAnimationEvent = ArmatureTestLayer.extend({
     animationEvent:function (armature, movementType, movementID) {
         if (movementType == ccs.MovementEventType.loopComplete) {
             if (movementID == "Fire") {
-                var moveBy = cc.MoveBy.create(2, cc.p(300 * this._direction, 0));
+                var moveBy = cc.moveBy(2, cc.p(300 * this._direction, 0));
                 this._armature.stopAllActions();
-                this._armature.runAction(cc.Sequence.create(moveBy, cc.CallFunc.create(this.callback, this)));
+                this._armature.runAction(cc.sequence(moveBy, cc.callFunc(this.callback, this)));
                 this._armature.getAnimation().play("Walk");
 
                 this._direction *= -1;
@@ -457,7 +457,7 @@ var TestAnimationEvent = ArmatureTestLayer.extend({
         }
     },
     callback:function () {
-        this._armature.runAction(cc.ScaleTo.create(0.3, 0.25 * this._direction * -1, 0.25));
+        this._armature.runAction(cc.scaleTo(0.3, 0.25 * this._direction * -1, 0.25));
         this._armature.getAnimation().play("Fire", 10);
     }
 });
@@ -473,6 +473,7 @@ var TestFrameEvent = ArmatureTestLayer.extend({
 	_nodeGrid: null,
     onEnter: function () {
         this._super();
+        ccs.armatureDataManager.addArmatureFileInfo(s_HeroAnimation_json);
         var armature = ccs.Armature.create("HeroAnimation");
         armature.getAnimation().play("attack");
         armature.getAnimation().setSpeedScale(0.5);
@@ -728,20 +729,19 @@ var TestColliderDetector = ArmatureTestLayer.extend({
         this.bullet.x = p.x + 60;
         this.bullet.y = p.y;
         this.bullet.stopAllActions();
-        this.bullet.runAction(cc.MoveBy.create(1.5, cc.p(800, 0)));
+        this.bullet.runAction(cc.moveBy(1.5, cc.p(800, 0)));
     },
     beginHit:function(arbiter, space){
         var shapes = arbiter.getShapes();
         var shapeA = shapes[0];
         var shapeB = shapes[1];
         var bone;
-        if(shapeA.collision_type==this.enemyTag){
+        if(shapeA.collision_type==this.enemyTag)
             bone = shapeA.data;
-        }
-        if(shapeB.collision_type==this.enemyTag){
+        if(shapeB.collision_type==this.enemyTag)
             bone = shapeB.data;
-        }
-        bone.getArmature().visible = false;
+        if(bone)
+            bone.getArmature().visible = false;
     },
 
     endHit:function(arbiter, space){
@@ -749,13 +749,12 @@ var TestColliderDetector = ArmatureTestLayer.extend({
         var shapeA = shapes[0];
         var shapeB = shapes[1];
         var bone;
-        if(shapeA.collision_type==this.enemyTag){
+        if(shapeA.collision_type==this.enemyTag)
             bone = shapeA.data;
-        }
-        if(shapeB.collision_type==this.enemyTag){
+        if(shapeB.collision_type==this.enemyTag)
             bone = shapeB.data;
-        }
-        bone.getArmature().visible = true;
+        if(bone)
+            bone.getArmature().visible = true;
     },
     update:function(dt){
         this.space.step(dt);
@@ -833,7 +832,7 @@ var TestCalculatedVertex = ArmatureTestLayer.extend({
         this.bullet.x = p.x + 60;
         this.bullet.y = p.y;
         this.bullet.stopAllActions();
-        this.bullet.runAction(cc.MoveBy.create(1.5, cc.p(800, 0)));
+        this.bullet.runAction(cc.moveBy(1.5, cc.p(800, 0)));
     },
 
     update: function (dt) {
@@ -1135,7 +1134,7 @@ var TestArmatureNesting2 = ArmatureTestLayer.extend({
             armature.scaleX = 1;
         }
 
-        var move = cc.MoveTo.create(2, point);
+        var move = cc.moveTo(2, point);
         armature.stopAllActions();
         armature.runAction(move);
         return false;

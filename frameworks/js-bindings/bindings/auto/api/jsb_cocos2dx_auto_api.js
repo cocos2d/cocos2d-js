@@ -5952,6 +5952,46 @@ DelayTime : function (
 };
 
 /**
+ * @class ReverseTime
+ */
+cc.ReverseTime = {
+
+/**
+ * @method initWithAction
+ * @param {cc.FiniteTimeAction} arg0
+ * @return {bool}
+ */
+initWithAction : function (
+finitetimeaction 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {cc.FiniteTimeAction} arg0
+ * @return {cc.ReverseTime}
+ */
+create : function (
+finitetimeaction 
+)
+{
+    return cc.ReverseTime;
+},
+
+/**
+ * @method ReverseTime
+ * @constructor
+ */
+ReverseTime : function (
+)
+{
+},
+
+};
+
+/**
  * @class Animate
  */
 cc.Animate = {

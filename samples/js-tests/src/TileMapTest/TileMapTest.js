@@ -111,10 +111,10 @@ var TileMapTest = TileDemo.extend({
         map.anchorX = 0;
         map.anchorY = 0.5;
 
-        var scale = new cc.ScaleBy(4, 0.8);
+        var scale = cc.scaleBy(4, 0.8);
         var scaleBack = scale.reverse();
 
-        var seq = new cc.Sequence(scale, scaleBack);
+        var seq = cc.sequence(scale, scaleBack);
 
         map.runAction(seq.repeatForever());
     },
@@ -391,15 +391,15 @@ var TMXReadWriteTest = TileDemo.extend({
         tile3.anchorX = 0.5;
         tile3.anchorY = 0.5;
 
-        var move = new cc.MoveBy(0.5, cc.p(0, 160));
-        var rotate = new cc.RotateBy(2, 360);
-        var scale = new cc.ScaleBy(2, 5);
-        var opacity = new cc.FadeOut(2);
-        var fadein = new cc.FadeIn(2);
-        var scaleback = new cc.ScaleTo(1, 1);
-        var finish = new cc.CallFunc(this.onRemoveSprite);   // 'this' is optional. Since it is not used, it is not passed.
+        var move = cc.moveBy(0.5, cc.p(0, 160));
+        var rotate = cc.rotateBy(2, 360);
+        var scale = cc.scaleBy(2, 5);
+        var opacity = cc.fadeOut(2);
+        var fadein = cc.fadeIn(2);
+        var scaleback = cc.scaleTo(1, 1);
+        var finish = cc.callFunc(this.onRemoveSprite);   // 'this' is optional. Since it is not used, it is not passed.
 
-        var seq0 = new cc.Sequence(move, rotate, scale, opacity, fadein, scaleback, finish);
+        var seq0 = cc.sequence(move, rotate, scale, opacity, fadein, scaleback, finish);
 
         tile0.runAction(seq0);
         tile1.runAction(seq0.clone());
@@ -532,7 +532,7 @@ var TMXIsoTest = TileDemo.extend({
         // move map to the center of the screen
         var ms = map.getMapSize();
         var ts = map.getTileSize();
-        map.runAction(new cc.MoveTo(1.0, cc.p(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
+        map.runAction(cc.moveTo(1.0, cc.p(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
     },
     title:function () {
         return "TMX Isometric test 0";
@@ -618,7 +618,7 @@ var TMXIsoTest2 = TileDemo.extend({
         // move map to the center of the screen
         var ms = map.getMapSize();
         var ts = map.getTileSize();
-        map.runAction(new cc.MoveTo(1.0, cc.p(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
+        map.runAction(cc.moveTo(1.0, cc.p(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
     },
     title:function () {
         return "TMX Isometric test 2";
@@ -663,7 +663,7 @@ var TMXUncompressedTest = TileDemo.extend({
         // move map to the center of the screen
         var ms = map.getMapSize();
         var ts = map.getTileSize();
-        map.runAction(new cc.MoveTo(1.0, cc.p(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
+        map.runAction(cc.moveTo(1.0, cc.p(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
 
         // testing release map
         var childrenArray = map.children;
@@ -965,10 +965,10 @@ var TMXIsoZorder = TileDemo.extend({
         this.tamara.anchorX = 0.5;
         this.tamara.anchorY = 0;
 
-        var move = new cc.MoveBy(5, cc.pMult(cc.p(300, 250), 0.75));
+        var move = cc.moveBy(5, cc.pMult(cc.p(300, 250), 0.75));
         var back = move.reverse();
-        var delay = new cc.DelayTime(0.5);
-        var seq = new cc.Sequence(move, delay, back);
+        var delay = cc.delayTime(0.5);
+        var seq = cc.sequence(move, delay, back);
         this.tamara.runAction(seq.repeatForever());
 
         this.schedule(this.repositionSprite);
@@ -1028,9 +1028,9 @@ var TMXOrthoZorder = TileDemo.extend({
         this.tamara.anchorX = 0.5;
         this.tamara.anchorY = 0;
 
-        var move = new cc.MoveBy(5, cc.pMult(cc.p(400, 450), 0.58));
+        var move = cc.moveBy(5, cc.pMult(cc.p(400, 450), 0.58));
         var back = move.reverse();
-        var seq = new cc.Sequence(move, back);
+        var seq = cc.sequence(move, back);
         this.tamara.runAction(seq.repeatForever());
 
         this.schedule(this.repositionSprite);
@@ -1094,10 +1094,10 @@ var TMXIsoVertexZ = TMXFixBugLayer.extend({
         var layer = map.getLayer("Trees");
         this.tamara = layer.getTileAt(cc.p(29, 29));
 
-        var move = new cc.MoveBy(5, cc.pMult(cc.p(300, 250), 0.75));
+        var move = cc.moveBy(5, cc.pMult(cc.p(300, 250), 0.75));
         var back = move.reverse();
-        var delay = new cc.DelayTime(0.5);
-        var seq = new cc.Sequence(move, delay, back);
+        var delay = cc.delayTime(0.5);
+        var seq = cc.sequence(move, delay, back);
         this.tamara.runAction(seq.repeatForever());
 
         if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
@@ -1165,10 +1165,10 @@ var TMXOrthoVertexZ = TMXFixBugLayer.extend({
         this.tamara = layer.getTileAt(cc.p(0, 11));
         this.log("vertexZ: " + this.tamara.vertexZ);
 
-        var move = new cc.MoveBy(5, cc.pMult(cc.p(400, 450), 0.55));
+        var move = cc.moveBy(5, cc.pMult(cc.p(400, 450), 0.55));
         var back = move.reverse();
-        var delay = new cc.DelayTime(0.5);
-        var seq = new cc.Sequence(move, delay, back);
+        var delay = cc.delayTime(0.5);
+        var seq = cc.sequence(move, delay, back);
         this.tamara.runAction(seq.repeatForever());
 
         if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {

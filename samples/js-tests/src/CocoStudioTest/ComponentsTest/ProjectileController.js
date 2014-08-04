@@ -97,9 +97,9 @@ var ProjectileController = ccs.ComController.extend({
         var realMoveDuration = length / velocity;
 
         // Move projectile to actual endpoint
-        this.getOwner().runAction(cc.Sequence.create(
-            cc.MoveTo.create(realMoveDuration, realDest),
-            cc.CallFunc.create(function () {
+        this.getOwner().runAction(cc.sequence(
+            cc.moveTo(realMoveDuration, realDest),
+            cc.callFunc(function () {
                 var sceneController = this.getOwner().parent.getComponent("SceneController");
                 sceneController.spriteMoveFinished(this.getOwner());
             }, this)));
