@@ -75,9 +75,9 @@ var EffectAdvanceTextLayer = cc.Layer.extend({
 	    this.rootNode.addChild(grossiniGrid, 1, EffectsAdvancedTest.TAG_SPRITE1);
         grossini.x = winSize.width / 3;
         grossini.y = winSize.height / 2;
-        var sc = new cc.ScaleBy(2, 5);
+        var sc = cc.scaleBy(2, 5);
         var sc_back = sc.reverse();
-        grossini.runAction(new cc.Sequence(sc, sc_back).repeatForever());
+        grossini.runAction(cc.sequence(sc, sc_back).repeatForever());
 
         var tamara = new cc.Sprite(s_pathSister1);
 	    var tamaraGrid = new cc.NodeGrid();
@@ -85,9 +85,9 @@ var EffectAdvanceTextLayer = cc.Layer.extend({
 	    this.rootNode.addChild(tamaraGrid, 1, EffectsAdvancedTest.TAG_SPRITE2);
         tamara.x = winSize.width * 2 / 3;
         tamara.y = winSize.height / 2;
-        var sc2 = new cc.ScaleBy(2, 5);
+        var sc2 = cc.scaleBy(2, 5);
         var sc2_back = sc2.reverse();
-        tamara.runAction(new cc.Sequence(sc2, sc2_back).repeatForever());
+        tamara.runAction(cc.sequence(sc2, sc2_back).repeatForever());
 
         var label = new cc.LabelTTF(this.title(), "Arial", 28);
         label.x = cc.visibleRect.center.x;
@@ -168,13 +168,13 @@ var Effect1 = EffectAdvanceTextLayer.extend({
         var waves = new cc.Waves3D(10, cc.size(15, 10), 18, 15);
 
         var reuse = new cc.ReuseGrid(1);
-        var delay = new cc.DelayTime(8);
+        var delay = cc.delayTime(8);
 
-        var orbit = new cc.OrbitCamera(5, 1, 2, 0, 180, 0, -90);
+        var orbit = cc.orbitCamera(5, 1, 2, 0, 180, 0, -90);
         var orbit_back = orbit.reverse();
 
-        target.runAction(new cc.Sequence(orbit, orbit_back).repeatForever());
-        target.runAction(new cc.Sequence(lens, delay, reuse, waves));
+        target.runAction(cc.sequence(orbit, orbit_back).repeatForever());
+        target.runAction(cc.sequence(lens, delay, reuse, waves));
     }
 });
 
@@ -202,13 +202,13 @@ var Effect2 = EffectAdvanceTextLayer.extend({
         //   2 for turn off
         //   turnon tiles will use a new grid
         var reuse = new cc.ReuseGrid(2);
-        var delay = new cc.DelayTime(1);
+        var delay = cc.delayTime(1);
 
         //    id orbit = [OrbitCamera.create:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
         //    id orbit_back = [orbit reverse];
         //
         //    [target runAction: [RepeatForever.create: [Sequence actions: orbit, orbit_back, nil]]];
-        target.runAction(new cc.Sequence(shaky, delay, reuse, shuffle, delay.clone(), turnoff, turnon));
+        target.runAction(cc.sequence(shaky, delay, reuse, shuffle, delay.clone(), turnoff, turnon));
     }
 });
 
@@ -231,8 +231,8 @@ var Effect3 = EffectAdvanceTextLayer.extend({
 	    target2.runAction(shaky.repeatForever());
 
         // moving background. Testing issue #244
-        var move = new cc.MoveBy(3, cc.p(200, 0));
-        bg.runAction(new cc.Sequence(move, move.reverse()).repeatForever());
+        var move = cc.moveBy(3, cc.p(200, 0));
+        bg.runAction(cc.sequence(move, move.reverse()).repeatForever());
     }
 });
 
@@ -276,9 +276,9 @@ var Effect4 = EffectAdvanceTextLayer.extend({
         this._super();
 
         var lens = new cc.Lens3D(10, cc.size(32, 24), cc.p(100, 180), 150);
-        var move = new cc.JumpBy(5, cc.p(380, 0), 100, 4);
+        var move = cc.jumpBy(5, cc.p(380, 0), 100, 4);
         var move_back = move.reverse();
-        var seq = new cc.Sequence(move, move_back);
+        var seq = cc.sequence(move, move_back);
 
         /* In cocos2d-iphone, the type of action's target is 'id', so it supports using the instance of 'CCLens3D' as its target.
          While in cocos2d-x, the target of action only supports CCNode or its subclass,
@@ -290,7 +290,7 @@ var Effect4 = EffectAdvanceTextLayer.extend({
         this.addChild(target);
 
         director.getActionManager().addAction(seq, target, false);
-        this.runAction(new cc.Sequence(lens, new cc.CallFunc(
+        this.runAction(cc.sequence(lens, cc.callFunc(
             function(sender) {
                 sender.removeChild(target, true);
             }
@@ -310,7 +310,7 @@ var Effect5 = EffectAdvanceTextLayer.extend({
         var effect = new cc.Liquid(2, cc.size(32, 24), 1, 20);
 
 
-        var stopEffect = new cc.Sequence(effect, new cc.DelayTime(2), new cc.StopGrid());
+        var stopEffect = cc.sequence(effect, cc.delayTime(2), new cc.StopGrid());
 
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
         bg.runAction(stopEffect);
@@ -334,7 +334,7 @@ var Issue631 = EffectAdvanceTextLayer.extend({
     onEnter:function () {
         this._super();
 
-        var effect = new cc.Sequence(new cc.DelayTime(2.0), new cc.Shaky3D(5.0, cc.size(5, 5), 16, false));
+        var effect = cc.sequence(cc.delayTime(2.0), new cc.Shaky3D(5.0, cc.size(5, 5), 16, false));
 
         // cleanup
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);

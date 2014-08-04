@@ -28,7 +28,6 @@
 cc.game.onStart = function(){
     cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.FIXED_HEIGHT);
     cc.view.resizeWithBrowserSize(true);
-    cc.director.setDisplayStats(true);
     
     if (cc.sys.isNative) {
         var searchPaths = jsb.fileUtils.getSearchPaths();

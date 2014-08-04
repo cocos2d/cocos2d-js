@@ -303,15 +303,15 @@ var ParticleDemo = BaseTestLayer.extend({
         labelAtlas.y = 50;
 
         // moving background
-        this._background = new cc.Sprite(s_back3);
+        this._background = cc.sprite(s_back3);
         this.addChild(this._background, 5);
         this._background.x = s.width / 2;
         this._background.y = s.height - 180;
 
-        var move = new cc.MoveBy(4, cc.p(300, 0));
+        var move = cc.moveBy(4, cc.p(300, 0));
         var move_back = move.reverse();
 
-        var seq = new cc.Sequence(move, move_back);
+        var seq = cc.sequence(move, move_back);
         this._background.runAction(seq.repeatForever());
 
         this.scheduleUpdate();
@@ -882,9 +882,9 @@ var ParallaxParticle = ParticleDemo.extend({
         p2.addChild(par, 10);
         par.texture = cc.textureCache.addImage(s_fire);
 
-        var move = new cc.MoveBy(4, cc.p(300, 0));
+        var move = cc.moveBy(4, cc.p(300, 0));
         var move_back = move.reverse();
-        var seq = new cc.Sequence(move, move_back);
+        var seq = cc.sequence(move, move_back);
         p.runAction(seq.repeatForever());
     },
     title:function () {
@@ -1156,7 +1156,7 @@ var Issue704 = ParticleDemo.extend({
         // additive
         this._emitter.setBlendAdditive(false);
 
-        var rot = new cc.RotateBy(16, 360);
+        var rot = cc.rotateBy(16, 360);
         this._emitter.runAction(rot.repeatForever());
     },
     title:function () {

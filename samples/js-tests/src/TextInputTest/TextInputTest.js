@@ -281,9 +281,10 @@ var TextFieldTTFActionTest = KeyboardNotificationLayer.extend({
         this._super();
 
         this._charLimit = 20;
-        this._textFieldAction = new cc.Sequence(
-            new cc.FadeOut(0.25),
-            new cc.FadeIn(0.25)).repeatForever();
+        this._textFieldAction = cc.sequence(
+            cc.fadeOut(0.25),
+            cc.fadeIn(0.25)
+        ).repeatForever();
         this._action = false;
 
         // add CCTextFieldTTF
@@ -344,12 +345,12 @@ var TextFieldTTFActionTest = KeyboardNotificationLayer.extend({
         label.y = cc.director.getWinSize().height - label.height * 2;
         label.scale = 8;
 
-        var seq = new cc.Sequence(
-            new cc.Spawn(
-                new cc.MoveTo(duration, cc.p(endX, endY)),
-                new cc.ScaleTo(duration, 1),
-                new cc.FadeOut(duration)),
-            new cc.CallFunc(this.callbackRemoveNodeWhenDidAction, this));
+        var seq = cc.sequence(
+            cc.spawn(
+                cc.moveTo(duration, cc.p(endX, endY)),
+                cc.scaleTo(duration, 1),
+                cc.fadeOut(duration)),
+            cc.callFunc(this.callbackRemoveNodeWhenDidAction, this));
         label.runAction(seq);
         return false;
     },
@@ -372,14 +373,12 @@ var TextFieldTTFActionTest = KeyboardNotificationLayer.extend({
         label.x = beginX;
         label.y = beginY;
 
-        var seq = new cc.Sequence(
-            new cc.Spawn(
-                new cc.MoveTo(duration, endPos),
-                new cc.Repeat(
-                    new cc.RotateBy(rotateDuration, (Math.random() % 2) ? 360 : -360),
-                    repeatTime),
-                new cc.FadeOut(duration)),
-            new cc.CallFunc(this.callbackRemoveNodeWhenDidAction, this));
+        var seq = cc.sequence(
+            cc.spawn(
+                cc.moveTo(duration, endPos),
+                cc.rotateBy(rotateDuration, (Math.random() % 2) ? 360 : -360).repeat(repeatTime),
+                cc.fadeOut(duration)),
+            cc.callFunc(this.callbackRemoveNodeWhenDidAction, this));
         label.runAction(seq);
         return false;
     },

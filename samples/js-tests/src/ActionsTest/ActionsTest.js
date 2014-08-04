@@ -249,7 +249,7 @@ var ActionMove = ActionsDemo.extend({
         //----end1----
     },
     title:function () {
-        return "cc.MoveTo / cc.MoveBy";
+        return "cc.moveTo / cc.moveBy";
     },
 
     //
@@ -457,7 +457,7 @@ var ActionSkew = ActionsDemo.extend({
         //----end5----
     },
     title:function () {
-        return "cc.SkewTo / cc.SkewBy";
+        return "cc.skewTo / cc.skewBy";
     },
     //
     // Automation
@@ -591,7 +591,7 @@ var ActionJump = ActionsDemo.extend({
         //----end7----
     },
     title:function () {
-        return "cc.JumpTo / cc.JumpBy";
+        return "cc.jumpTo / cc.jumpBy";
     },
     subtitle:function () {
         return "Actions will stop for 0.25s after 2 seconds";
@@ -671,7 +671,7 @@ var ActionBezier = ActionsDemo.extend({
         //----end8----
     },
     title:function () {
-        return "cc.BezierBy / cc.BezierTo";
+        return "cc.bezierBy / cc.bezierTo";
     },
     //
     // Automation
@@ -754,7 +754,7 @@ var ActionBezierToCopy = ActionsDemo.extend({
         //----end9----
     },
     title:function () {
-        return "cc.BezierTo copy test";
+        return "cc.bezierTo copy test";
     },
     subtitle:function() {
         return "Both sprites should move across the same path";
@@ -792,7 +792,7 @@ var Issue1008 = ActionsDemo.extend({
 
         //----end10----
 
-        //this._grossini.runAction(new cc.Sequence(bz1, bz2, trace,delay));
+        //this._grossini.runAction(cc.sequence(bz1, bz2, trace,delay));
 
     },
     onTrace:function (sender) {
@@ -807,7 +807,7 @@ var Issue1008 = ActionsDemo.extend({
         return "Issue 1008";
     },
     subtitle:function () {
-        return "cc.BezierTo + Repeat. See console";
+        return "cc.bezierTo + Repeat. See console";
     },
     //
     // Automation
@@ -843,7 +843,7 @@ var ActionBlink = ActionsDemo.extend({
         //----end13----
     },
     title:function () {
-        return "cc.Blink";
+        return "cc.blink";
     },
     //
     // Automation
@@ -894,7 +894,7 @@ var ActionFade = ActionsDemo.extend({
 
     },
     title:function () {
-        return "cc.FadeIn / cc.FadeOut";
+        return "cc.fadeIn / cc.fadeOut";
     },
     //
     // Automation
@@ -938,7 +938,7 @@ var ActionTint = ActionsDemo.extend({
 
     },
     title:function () {
-        return "cc.TintTo / cc.TintBy";
+        return "cc.tintTo / cc.tintBy";
     },
     //
     // Automation
@@ -1038,7 +1038,7 @@ var ActionSequence = ActionsDemo.extend({
         //----end16----
     },
     title:function () {
-        return "cc.Sequence: Move + Rotate";
+        return "cc.sequence: Move + Rotate";
     },
     //
     // Automation
@@ -1324,7 +1324,7 @@ var ActionSpawn = ActionsDemo.extend({
 
     },
     title:function () {
-        return "cc.Spawn: Jump + Rotate";
+        return "cc.spawn: Jump + Rotate";
     },
     //
     // Automation
@@ -1392,7 +1392,7 @@ var ActionRepeatForever = ActionsDemo.extend({
 //
 //------------------------------------------------------------------
 var ActionRotateToRepeat = ActionsDemo.extend({
-    _code:"a = new cc.Repeat( action_to_repeat, #_of_times );",
+    _code:"a = action_to_repeat.repeat(#_of_times);",
 
     onEnter:function () {
         //----start23----onEnter
@@ -1655,17 +1655,17 @@ var ActionOrbit = ActionsDemo.extend({
         this._super();
         this.centerSprites(3);
 
-        var orbit1 = new cc.OrbitCamera(2, 1, 0, 0, 180, 0, 0);
+        var orbit1 = cc.orbitCamera(2, 1, 0, 0, 180, 0, 0);
         var action1 = cc.sequence(
             orbit1,
             orbit1.reverse());
 
-        var orbit2 = new cc.OrbitCamera(2, 1, 0, 0, 180, -45, 0);
+        var orbit2 = cc.orbitCamera(2, 1, 0, 0, 180, -45, 0);
         var action2 = cc.sequence(
             orbit2,
             orbit2.reverse());
 
-        var orbit3 = new cc.OrbitCamera(2, 1, 0, 0, 180, 90, 0);
+        var orbit3 = cc.orbitCamera(2, 1, 0, 0, 180, 90, 0);
         var action3 = cc.sequence(
             orbit3,
             orbit3.reverse());

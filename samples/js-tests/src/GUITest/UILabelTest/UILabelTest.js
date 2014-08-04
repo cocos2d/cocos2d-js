@@ -32,7 +32,7 @@ var UILabelTest = UIScene.extend({
             this._bottomDisplayLabel.setString("Label");
 
             // Create the label
-            var text = ccui.Text.create();
+            var text = new ccui.Text();
             text.attr({
 	            string: "Label",
 	            font: "30px AmericanTypewriter",
@@ -56,7 +56,7 @@ var UILabelTest_LineWrap = UIScene.extend({
             this._bottomDisplayLabel.string = "Label line wrap";
 
             // Create the text area
-            var text = ccui.Text.create();
+            var text = new ccui.Text();
             text.boundingWidth = 280;
 	        text.boundingHeight = 150;
             text.attr({
@@ -83,7 +83,7 @@ var UILabelTest_TTF = UIScene.extend({
             this._bottomDisplayLabel.setString("Label set TTF font");
 
             // Create the text area
-            var text = ccui.Text.create();
+            var text = new ccui.Text();
             text.boundingWidth = 280;
 	        text.boundingHeight = 150;
             text.attr({

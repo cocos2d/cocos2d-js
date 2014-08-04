@@ -41,6 +41,8 @@ var FacebookShareTest = PluginXTest.extend({
     ctor: function (title) {
         this._super(title);
 
+        window.facebook = window.facebook || (window.plugin ? plugin.FacebookAgent.getInstance() : null);
+
         var menu = new cc.Menu();
         menu.setPosition(cc.p(0, 0));
         menu.width = winSize.width;
@@ -77,7 +79,7 @@ var FacebookShareTest = PluginXTest.extend({
             "link": "http://www.cocos2d-x.org",
             "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
-        FB.share(map, function (resultcode, msg) {
+        facebook.share(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
@@ -88,22 +90,22 @@ var FacebookShareTest = PluginXTest.extend({
                 var preMsg = this.tipsLabel.getString();
                 this.tipsLabel.setString(msg);
             }
-            var anim = new cc.Sequence(new cc.FadeIn(0.2), new cc.DelayTime(2), new cc.FadeOut(0.2), new cc.CallFunc(function () {
-                this._showTips = false;
-                this.tipsLabel.visible = false;
-                if (preMsg)
-                    this.tipsLabel.setString(preMsg);
-            }, this));
+            var anim = cc.sequence(
+                cc.fadeIn(0.2),
+                cc.delayTime(2),
+                cc.fadeOut(0.2),
+                cc.callFunc(function () {
+                    this._showTips = false;
+                    this.tipsLabel.visible = false;
+                    if (preMsg)
+                        this.tipsLabel.setString(preMsg);
+                }, this)
+            );
             this.tipsLabel.visible = true;
             this.tipsLabel.runAction(anim);
         }
     },
     onShareOG: function () {
-        if (!cc.sys.isNative) {
-            var msg = "The development of Facebook plugin for web is still in progress, some of them is not available";
-            this.showDisableTips(msg);
-            return;
-        }
         var map = {
             "dialog": "share_open_graph",
             "action_type": "fbogsamplesd:dish",
@@ -113,7 +115,7 @@ var FacebookShareTest = PluginXTest.extend({
             "url": "http://example.com/roasted_pumpkin_seeds", // Please change to your own action
             "description": "Crunchy pumpkin seeds roasted in butter and lightly salted."
         };
-        FB.dialog(map, function (resultcode, msg) {
+        facebook.dialog(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
@@ -125,17 +127,17 @@ var FacebookShareTest = PluginXTest.extend({
         }
         var img = this.screenshot("facebookshare.jpg");
 
-        var delay = new cc.DelayTime(2);
-        var share = new cc.CallFunc(function () {
+        var delay = cc.delayTime(2);
+        var share = cc.callFunc(function () {
             var map = {
                 "dialog": "share_photo",
                 "photo": img
             };
-            FB.dialog(map, function (resultcode, msg) {
+            facebook.dialog(map, function (resultcode, msg) {
                 cc.log(msg);
             });
         });
-        var seq = new cc.Sequence(delay, share);
+        var seq = cc.sequence(delay, share);
         this.runAction(seq);
 
     },
@@ -152,7 +154,7 @@ var FacebookShareTest = PluginXTest.extend({
             "link": "http://www.cocos2d-x.org",
             "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
-        FB.dialog(map, function (resultcode, msg) {
+        facebook.dialog(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
@@ -171,7 +173,7 @@ var FacebookShareTest = PluginXTest.extend({
             "url": "http://example.com/roasted_pumpkin_seeds", // Please change to your own action
             "description": "Crunchy pumpkin seeds roasted in butter and lightly salted."
         };
-        FB.dialog(map, function (resultcode, msg) {
+        facebook.dialog(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
@@ -183,17 +185,17 @@ var FacebookShareTest = PluginXTest.extend({
         }
         var img = this.screenshot("facebookmessage.jpg");
 
-        var delay = new cc.DelayTime(2);
-        var share = new cc.CallFunc(function () {
+        var delay = cc.delayTime(2);
+        var share = cc.callFunc(function () {
             var map = {
                 "dialog": "message_photo",
                 "photo": img
             };
-            FB.dialog(map, function (resultcode, msg) {
+            facebook.dialog(map, function (resultcode, msg) {
                 cc.log(msg);
             });
         });
-        var seq = new cc.Sequence(delay, share);
+        var seq = cc.sequence(delay, share);
         this.runAction(seq);
     },
 
@@ -208,7 +210,7 @@ var FacebookShareTest = PluginXTest.extend({
             "message": "Cocos2d-x is a great game engine",
             "link": "http://www.cocos2d-x.org"
         };
-        FB.dialog(map, function (resultcode, msg) {
+        facebook.dialog(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },

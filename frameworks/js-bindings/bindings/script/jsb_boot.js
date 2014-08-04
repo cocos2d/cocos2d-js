@@ -386,30 +386,18 @@ cc.loader = {
      */
     loadImg : function(url, option, cb){
         var l = arguments.length;
-        var opt = {
-            isCrossOrigin : true
-        };
-        if(l == 3) {
-            opt.isCrossOrigin = option.isCrossOrigin == null ? opt.isCrossOrigin : option.isCrossOrigin;
-        }
-        else if(l == 2) cb = option;
-        
-        var img = new Image();
-        if(opt.isCrossOrigin) img.crossOrigin = "Anonymous";
-        
-        img.addEventListener("load", function () {
-            this.removeEventListener('load', arguments.callee, false);
-            this.removeEventListener('error', arguments.callee, false);
-            if(!cb) return;
-            cb(null, img);
+        if(l == 2) cb = option;
+
+        jsb.loadRemoteImg(url, function(succeed, tex) {
+            if (succeed) {
+                if(!cb) return;
+                cb(null, tex);
+            }
+            else {
+                if(!cb) return;
+                cb("error");
+            }
         });
-        img.addEventListener("error", function () {
-            this.removeEventListener('error', arguments.callee, false);
-            if(!cb) return;
-            cb("error");
-        });
-        img.src = url;
-        return img;
     },
     /**
      * Load binary data by url.
@@ -654,7 +642,7 @@ cc.view.setDesignResolutionSize = function(width,height,resolutionPolicy){
     cc.visibleRect.init();
 };
 cc.view.setResolutionPolicy = function(resolutionPolicy){
-    var size = cc.view.getDesignResolutionSize()
+    var size = cc.view.getDesignResolutionSize();
     cc.view.setDesignResolutionSize(size.width,size.height,resolutionPolicy);
 };
 cc.view.setContentTranslateLeftTop = function(){return;};
@@ -688,14 +676,29 @@ cc.configuration = cc.Configuration.getInstance();
  * cc.textureCache is the global cache for cc.Texture2D
  */
 cc.textureCache = cc.director.getTextureCache();
-cc.textureCache._addImage = cc.textureCache.addImage;
-cc.textureCache.addImage = function(url, cb, target) {
-    if (cb) {
-        target && (cb = cb.bind(target));
-        this.addImageAsync(url, cb);
+cc.TextureCache.prototype._addImage = cc.TextureCache.prototype.addImage;
+cc.TextureCache.prototype.addImage = function(url, cb, target) {
+    if (url.match(jsb.urlRegExp)) {
+        jsb.loadRemoteImg(url, function(succeed, tex) {
+            if (succeed) {
+                if(!cb) return;
+                cb.call(target, tex);
+            }
+            else {
+                if(!cb) return;
+                cb.call(target, null);
+            }
+        });
     }
-    else
-        return this._addImage(url);
+    else {
+        if (cb) {
+            target && (cb = cb.bind(target));
+            this.addImageAsync(url, cb);
+        }
+        else {
+            return this._addImage(url);
+        }
+    }
 };
 /**
  * @type {Object}
@@ -1260,5 +1263,7 @@ if(window.JavascriptJavaBridge && cc.sys.os == cc.sys.OS_ANDROID){
 else if(window.JavaScriptObjCBridge && (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX)){
     jsb.reflection = new JavaScriptObjCBridge();
 }
+
+jsb.urlRegExp = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
 
 //+++++++++++++++++++++++++other initializations end+++++++++++++++++++++++++++++

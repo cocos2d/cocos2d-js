@@ -32,7 +32,7 @@ var UIButtonTest = UIScene.extend({
 
             var widgetSize = this._widget.getContentSize();
             // Create the button
-            var button = ccui.Button.create();
+            var button = new ccui.Button();
             button.setTouchEnabled(true);
             button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
             button.x = widgetSize.width / 2.0;
@@ -76,7 +76,7 @@ var UIButtonTest_Scale9 = UIScene.extend({
             this._bottomDisplayLabel.setString("Button scale9 render");
 
             // Create the button
-            var button = ccui.Button.create();
+            var button = new ccui.Button();
             button.setTouchEnabled(true);
             button.setScale9Enabled(true);
             button.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
@@ -121,7 +121,7 @@ var UIButtonTest_PressedAction = UIScene.extend({
 
             var widgetSize = this._widget.getContentSize();
             // Create the button
-            var button = ccui.Button.create();
+            var button = new ccui.Button();
             button.setTouchEnabled(true);
             button.setPressedActionEnabled(true);
             button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
@@ -163,7 +163,7 @@ var UIButtonTest_Title = UIScene.extend({
             this._bottomDisplayLabel.setString("Button with title");
 
             // Create the text button
-            var textButton = ccui.Button.create();
+            var textButton = new ccui.Button();
             textButton.setTouchEnabled(true);
             textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
             textButton.setTitleText("Title Button");
