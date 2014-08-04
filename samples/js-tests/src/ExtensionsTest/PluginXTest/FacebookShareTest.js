@@ -41,6 +41,8 @@ var FacebookShareTest = PluginXTest.extend({
     ctor: function (title) {
         this._super(title);
 
+        window.facebook = window.facebook || (window.plugin ? plugin.FacebookAgent.getInstance() : null);
+
         var menu = new cc.Menu();
         menu.setPosition(cc.p(0, 0));
         menu.width = winSize.width;
@@ -77,7 +79,7 @@ var FacebookShareTest = PluginXTest.extend({
             "link": "http://www.cocos2d-x.org",
             "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
-        FB.share(map, function (resultcode, msg) {
+        facebook.share(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
@@ -99,11 +101,6 @@ var FacebookShareTest = PluginXTest.extend({
         }
     },
     onShareOG: function () {
-        if (!cc.sys.isNative) {
-            var msg = "The development of Facebook plugin for web is still in progress, some of them is not available";
-            this.showDisableTips(msg);
-            return;
-        }
         var map = {
             "dialog": "share_open_graph",
             "action_type": "fbogsamplesd:dish",
@@ -113,7 +110,7 @@ var FacebookShareTest = PluginXTest.extend({
             "url": "http://example.com/roasted_pumpkin_seeds", // Please change to your own action
             "description": "Crunchy pumpkin seeds roasted in butter and lightly salted."
         };
-        FB.dialog(map, function (resultcode, msg) {
+        facebook.dialog(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
@@ -131,7 +128,7 @@ var FacebookShareTest = PluginXTest.extend({
                 "dialog": "share_photo",
                 "photo": img
             };
-            FB.dialog(map, function (resultcode, msg) {
+            facebook.dialog(map, function (resultcode, msg) {
                 cc.log(msg);
             });
         });
@@ -152,7 +149,7 @@ var FacebookShareTest = PluginXTest.extend({
             "link": "http://www.cocos2d-x.org",
             "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
-        FB.dialog(map, function (resultcode, msg) {
+        facebook.dialog(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
@@ -171,7 +168,7 @@ var FacebookShareTest = PluginXTest.extend({
             "url": "http://example.com/roasted_pumpkin_seeds", // Please change to your own action
             "description": "Crunchy pumpkin seeds roasted in butter and lightly salted."
         };
-        FB.dialog(map, function (resultcode, msg) {
+        facebook.dialog(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
@@ -189,7 +186,7 @@ var FacebookShareTest = PluginXTest.extend({
                 "dialog": "message_photo",
                 "photo": img
             };
-            FB.dialog(map, function (resultcode, msg) {
+            facebook.dialog(map, function (resultcode, msg) {
                 cc.log(msg);
             });
         });
@@ -208,7 +205,7 @@ var FacebookShareTest = PluginXTest.extend({
             "message": "Cocos2d-x is a great game engine",
             "link": "http://www.cocos2d-x.org"
         };
-        FB.dialog(map, function (resultcode, msg) {
+        facebook.dialog(map, function (resultcode, msg) {
             cc.log(msg);
         });
     },
