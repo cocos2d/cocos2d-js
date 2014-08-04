@@ -10,21 +10,18 @@ var flareEffect = function (flare,target, callback) {
 		scale: 0.2
 	});
 
-    var opacityAnim = new cc.FadeTo(0.5, 255);
-    var opacDim = new cc.FadeTo(1, 0);
-    var biggeAnim = new cc.ScaleBy(0.7, 1.2, 1.2);
-    var biggerEase = new cc.EaseSineOut(biggeAnim);
-    var moveAnim = new cc.MoveBy(0.5, cc.p(328, 0));
-    var easeMove = new cc.EaseSineOut(moveAnim);
-    var rotateAnim = new cc.RotateBy(2.5, 90);
-    var rotateEase = new cc.EaseExponentialOut(rotateAnim);
-    var bigger = new cc.ScaleTo(0.5, 1);
+    var opacityAnim = cc.fadeTo(0.5, 255);
+    var opacDim = cc.fadeTo(1, 0);
+    var biggerEase = cc.scaleBy(0.7, 1.2, 1.2).easing(cc.easeSineOut());
+    var easeMove = cc.moveBy(0.5, cc.p(328, 0)).easing(cc.easeSineOut());
+    var rotateEase = cc.rotateBy(2.5, 90).easing(cc.easeExponentialOut());
+    var bigger = cc.scaleTo(0.5, 1);
 
-    var onComplete = new cc.CallFunc(callback, target);
-    var killflare = new cc.CallFunc(function () {
+    var onComplete = cc.callFunc(callback, target);
+    var killflare = cc.callFunc(function () {
         this.parent.removeChild(this,true);
     }, flare);
-    flare.runAction(new cc.Sequence(opacityAnim, biggerEase, opacDim, killflare, onComplete));
+    flare.runAction(cc.sequence(opacityAnim, biggerEase, opacDim, killflare, onComplete));
     flare.runAction(easeMove);
     flare.runAction(rotateEase);
     flare.runAction(bigger);
@@ -64,12 +61,12 @@ var spark = function (x, y, parent, scale, duration) {
     parent.addSpark(two);
     parent.addSpark(three);
 
-    var left = new cc.RotateBy(duration, -45);
-    var right = new cc.RotateBy(duration, 45);
-    var scaleBy = new cc.ScaleBy(duration, 3, 3);
-    var fadeOut = new cc.FadeOut(duration);
-    var remove = new cc.CallFunc(removeFromParent, this);
-    var seq = new cc.Sequence( fadeOut, remove );
+    var left = cc.rotateBy(duration, -45);
+    var right = cc.rotateBy(duration, 45);
+    var scaleBy = cc.scaleBy(duration, 3, 3);
+    var fadeOut = cc.fadeOut(duration);
+    var remove = cc.callFunc(removeFromParent, this);
+    var seq = cc.sequence( fadeOut, remove );
 
     one.runAction(left);
     two.runAction(right);

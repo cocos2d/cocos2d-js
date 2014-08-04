@@ -66,30 +66,28 @@ var LevelManager = cc.Class.extend({
         switch (addEnemy.moveType) {
             case MW.ENEMY_MOVE_TYPE.ATTACK:
                 offset = cc.p(this._gameLayer._ship.x, this._gameLayer._ship.y);
-                tmpAction = new cc.MoveTo(1, offset);
+                tmpAction = cc.moveTo(1, offset);
                 break;
             case MW.ENEMY_MOVE_TYPE.VERTICAL:
                 offset = cc.p(0, -winSize.height - addEnemy.height);
-                tmpAction = new cc.MoveBy(4, offset);
+                tmpAction = cc.moveBy(4, offset);
                 break;
             case MW.ENEMY_MOVE_TYPE.HORIZONTAL:
                 offset = cc.p(0, -100 - 200 * Math.random());
-                a0 = new cc.MoveBy(0.5, offset);
-                a1 = new cc.MoveBy(1, cc.p(-50 - 100 * Math.random(), 0));
-                var onComplete = new cc.CallFunc(function (pSender) {
-                    var a2 = new cc.DelayTime(1);
-                    var a3 = new cc.MoveBy(1, cc.p(100 + 100 * Math.random(), 0));
-                    pSender.runAction(new cc.RepeatForever(
-                        new cc.Sequence(a2, a3, a2.clone(), a3.reverse())
-                    ));
+                a0 = cc.moveBy(0.5, offset);
+                a1 = cc.moveBy(1, cc.p(-50 - 100 * Math.random(), 0));
+                var onComplete = cc.callFunc(function (pSender) {
+                    var a2 = cc.delayTime(1);
+                    var a3 = cc.moveBy(1, cc.p(100 + 100 * Math.random(), 0));
+                    pSender.runAction(cc.sequence(a2, a3, a2.clone(), a3.reverse()).repeatForever());
                 }.bind(addEnemy) );
-                tmpAction = new cc.Sequence(a0, a1, onComplete);
+                tmpAction = cc.sequence(a0, a1, onComplete);
                 break;
             case MW.ENEMY_MOVE_TYPE.OVERLAP:
                 var newX = (addEnemy.x <= winSize.width / 2) ? 320 : -320;
-                a0 = new cc.MoveBy(4, cc.p(newX, -240));
-                a1 = new cc.MoveBy(4,cc.p(-newX,-320));
-                tmpAction = new cc.Sequence(a0,a1);
+                a0 = cc.moveBy(4, cc.p(newX, -240));
+                a1 = cc.moveBy(4,cc.p(-newX,-320));
+                tmpAction = cc.sequence(a0,a1);
                 break;
         }
 

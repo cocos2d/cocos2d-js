@@ -250,9 +250,10 @@ var GameLayer = cc.Layer.extend({
             this._state = STATE_GAMEOVER;
             // XXX: needed for JS bindings.
             this._ship = null;
-            this.runAction(new cc.Sequence(
-                new cc.DelayTime(0.2),
-                new cc.CallFunc(this.onGameOver, this)));
+            this.runAction(cc.sequence(
+                cc.delayTime(0.2),
+                cc.callFunc(this.onGameOver, this)
+            ));
         }
     },
     updateUI:function () {
@@ -283,11 +284,11 @@ var GameLayer = cc.Layer.extend({
         var ran = Math.random();
         backTileMap.x = ran * 320;
 	    backTileMap.y = winSize.height;
-        var move = new cc.MoveBy(ran * 2 + 10, cc.p(0, -winSize.height-240));
-        var fun = new cc.CallFunc(function(){
+        var move = cc.moveBy(ran * 2 + 10, cc.p(0, -winSize.height-240));
+        var fun = cc.callFunc(function(){
             backTileMap.destroy();
         },this);
-        backTileMap.runAction(new cc.Sequence(move,fun));
+        backTileMap.runAction(cc.sequence(move,fun));
     },
 
     _movingBackground:function(dt){

@@ -57,7 +57,7 @@ var SysMenu = cc.Layer.extend({
         this.addChild(this._ship, 0, 4);
         this._ship.x = Math.random() * winSize.width;
         this._ship.y = 0;
-        this._ship.runAction(new cc.MoveBy(2, cc.p(Math.random() * winSize.width, this._ship.y + winSize.height + 100)));
+        this._ship.runAction(cc.moveBy(2, cc.p(Math.random() * winSize.width, this._ship.y + winSize.height + 100)));
 
         if (MW.SOUND) {
             cc.audioEngine.setMusicVolume(0.7);
@@ -93,9 +93,10 @@ var SysMenu = cc.Layer.extend({
         if (this._ship.y > 480) {
             this._ship.x = Math.random() * winSize.width;
 	        this._ship.y = 10;
-            this._ship.runAction( new cc.MoveBy(
+            this._ship.runAction(cc.moveBy(
                 parseInt(5 * Math.random(), 10),
-                cc.p(Math.random() * winSize.width, this._ship.y + 480)));
+                cc.p(Math.random() * winSize.width, this._ship.y + 480)
+            ));
         }
     },
     onButtonEffect:function(){

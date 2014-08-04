@@ -14,9 +14,9 @@ var Explosion = cc.Sprite.extend({
     },
     play:function(){
         //return;
-        this.runAction(new cc.Sequence(
-            new cc.Animate(this.animation),
-            new cc.CallFunc(this.destroy, this)
+        this.runAction(cc.sequence(
+            cc.animate(this.animation),
+            cc.callFunc(this.destroy, this)
         ));
     },
     destroy:function () {
