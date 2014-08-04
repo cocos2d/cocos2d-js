@@ -168,8 +168,8 @@ var TestController = cc.LayerGradient.extend({
                         event.getCurrentTarget().moveMenu(event.getDelta());
                 },
                 onMouseScroll: function (event) {
-                    var delta = event.getScrollY();
-                    event.getCurrentTarget().moveMenu({y: -delta});
+                    var delta = cc.sys.isNative ? event.getScrollY() * 6 : -event.getScrollY();
+                    event.getCurrentTarget().moveMenu({y : delta});
                     return true;
                 }
             }, this);
