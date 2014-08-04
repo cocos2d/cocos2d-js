@@ -28,7 +28,7 @@ var RotateWorldTestScene = TestScene.extend({
     runThisTest:function () {
         var layer = new RotateWorldMainLayer();
         this.addChild(layer);
-        this.runAction(new cc.RotateBy(4, -360));
+        this.runAction(cc.rotateBy(4, -360));
         director.runScene(this);
     }
 });
@@ -63,7 +63,7 @@ var SpriteLayer = cc.Layer.extend({
         spriteSister2.x = x - 40;
         spriteSister2.y = y / 2;
 
-        var rot = new cc.RotateBy(16, -3600);
+        var rot = cc.rotateBy(16, -3600);
 
         this.addChild(sprite);
         this.addChild(spriteSister1);
@@ -71,17 +71,17 @@ var SpriteLayer = cc.Layer.extend({
 
         sprite.runAction(rot);
 
-        var jump1 = new cc.JumpBy(4, cc.p(-400, 0), 100, 4);
+        var jump1 = cc.jumpBy(4, cc.p(-400, 0), 100, 4);
         var jump2 = jump1.reverse();
 
-        var rot1 = new cc.RotateBy(4, 360 * 2);
+        var rot1 = cc.rotateBy(4, 360 * 2);
         var rot2 = rot1.reverse();
 
-        spriteSister1.runAction(new cc.Sequence(jump2, jump1).repeat(5));
-        spriteSister2.runAction(new cc.Sequence(jump1.clone(), jump2.clone()).repeat(5));
+        spriteSister1.runAction(cc.sequence(jump2, jump1).repeat(5));
+        spriteSister2.runAction(cc.sequence(jump1.clone(), jump2.clone()).repeat(5));
 
-        spriteSister1.runAction(new cc.Repeat(new cc.Sequence(rot1, rot2), 5));
-        spriteSister2.runAction(new cc.Sequence(rot2.clone(), rot1.clone()).repeat(5));
+        spriteSister1.runAction(cc.sequence(rot1, rot2).repeat(5));
+        spriteSister2.runAction(cc.sequence(rot2.clone(), rot1.clone()).repeat(5));
     }
 });
 
@@ -154,7 +154,7 @@ var RotateWorldMainLayer = cc.Layer.extend({
         this.addChild(green);
         this.addChild(red);
 
-        var rot = new cc.RotateBy(8, 720);
+        var rot = cc.rotateBy(8, 720);
 
         blue.runAction(rot);
         red.runAction(rot.clone());

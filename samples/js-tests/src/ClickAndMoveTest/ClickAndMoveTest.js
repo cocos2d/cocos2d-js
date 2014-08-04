@@ -71,18 +71,18 @@ var MainLayer = cc.Layer.extend({
         sprite.x = 20;
 	    sprite.y = 150;
 
-        sprite.runAction(new cc.JumpTo(4, cc.p(300, 48), 100, 4));
+        sprite.runAction(cc.jumpTo(4, cc.p(300, 48), 100, 4));
 
-        var fadeIn = new cc.FadeIn(1);
-        var fadeOut = new cc.FadeOut(1);
-        var forever = new cc.Sequence(fadeIn, fadeOut).repeatForever();
+        var fadeIn = cc.fadeIn(1);
+        var fadeOut = cc.fadeOut(1);
+        var forever = cc.sequence(fadeIn, fadeOut).repeatForever();
         layer.runAction(forever);
     },
 
     moveSprite:function(position) {
         var sprite = this.getChildByTag(TAG_SPRITE);
         sprite.stopAllActions();
-        sprite.runAction(new cc.MoveTo(1, position));
+        sprite.runAction(cc.moveTo(1, position));
         var o = position.x - sprite.x;
         var a = position.y - sprite.y;
         var at = Math.atan(o / a) * 57.29577951;  // radians to degrees
@@ -94,7 +94,7 @@ var MainLayer = cc.Layer.extend({
                 at = 180 - Math.abs(at);
         }
 
-        sprite.runAction(new cc.RotateTo(1, at));
+        sprite.runAction(cc.rotateTo(1, at));
     }
 });
 
