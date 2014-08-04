@@ -1067,7 +1067,7 @@ cc._initDebugSetting = function (mode) {
         cc.error = bakLog.bind(cc);
         cc.assert = function(cond, msg) {
             if (!cond) cc.log("Assert: " + msg);
-        }
+        };
         if(mode != ccGame.DEBUG_MODE_ERROR && mode != ccGame.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
             cc.warn = bakLog.bind(cc);
         }
