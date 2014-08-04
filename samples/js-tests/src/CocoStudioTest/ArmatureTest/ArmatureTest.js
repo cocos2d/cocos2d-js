@@ -197,7 +197,7 @@ var TestAsynchronousLoading = ArmatureTestLayer.extend({
     dataLoaded: function (percent) {
         cc.log("percent:" + percent);
         var subTile = this.getChildByTag(BASE_TEST_SUBTITLE_TAG);
-        subTile.setString("current percent : " + percent.toFixed(2) * 100);
+        subTile.setString("current percent : " + (percent.toFixed(2) * 100));
         if (percent >= 1) {
             this.setMenuItemEnabled(true);
         }
@@ -473,6 +473,7 @@ var TestFrameEvent = ArmatureTestLayer.extend({
 	_nodeGrid: null,
     onEnter: function () {
         this._super();
+        ccs.armatureDataManager.addArmatureFileInfo(s_HeroAnimation_json);
         var armature = ccs.Armature.create("HeroAnimation");
         armature.getAnimation().play("attack");
         armature.getAnimation().setSpeedScale(0.5);
@@ -735,13 +736,12 @@ var TestColliderDetector = ArmatureTestLayer.extend({
         var shapeA = shapes[0];
         var shapeB = shapes[1];
         var bone;
-        if(shapeA.collision_type==this.enemyTag){
+        if(shapeA.collision_type==this.enemyTag)
             bone = shapeA.data;
-        }
-        if(shapeB.collision_type==this.enemyTag){
+        if(shapeB.collision_type==this.enemyTag)
             bone = shapeB.data;
-        }
-        bone.getArmature().visible = false;
+        if(bone)
+            bone.getArmature().visible = false;
     },
 
     endHit:function(arbiter, space){
@@ -749,13 +749,12 @@ var TestColliderDetector = ArmatureTestLayer.extend({
         var shapeA = shapes[0];
         var shapeB = shapes[1];
         var bone;
-        if(shapeA.collision_type==this.enemyTag){
+        if(shapeA.collision_type==this.enemyTag)
             bone = shapeA.data;
-        }
-        if(shapeB.collision_type==this.enemyTag){
+        if(shapeB.collision_type==this.enemyTag)
             bone = shapeB.data;
-        }
-        bone.getArmature().visible = true;
+        if(bone)
+            bone.getArmature().visible = true;
     },
     update:function(dt){
         this.space.step(dt);

@@ -16736,6 +16736,159 @@ void js_register_cocos2dx_DelayTime(JSContext *cx, JSObject *global) {
 	}
 }
 
+JSClass  *jsb_cocos2d_ReverseTime_class;
+JSObject *jsb_cocos2d_ReverseTime_prototype;
+
+bool js_cocos2dx_ReverseTime_initWithAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::ReverseTime* cobj = (cocos2d::ReverseTime *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ReverseTime_initWithAction : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::FiniteTimeAction* arg0;
+		do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ReverseTime_initWithAction : Error processing arguments");
+		bool ret = cobj->initWithAction(arg0);
+		jsval jsret = JSVAL_NULL;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_ReverseTime_initWithAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+bool js_cocos2dx_ReverseTime_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	if (argc == 1) {
+		cocos2d::FiniteTimeAction* arg0;
+		do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
+		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ReverseTime_create : Error processing arguments");
+		cocos2d::ReverseTime* ret = cocos2d::ReverseTime::create(arg0);
+		jsval jsret = JSVAL_NULL;
+		do {
+		if (ret) {
+			js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ReverseTime>(cx, (cocos2d::ReverseTime*)ret);
+			jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+		} else {
+			jsret = JSVAL_NULL;
+		}
+	} while (0);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+	JS_ReportError(cx, "js_cocos2dx_ReverseTime_create : wrong number of arguments");
+	return false;
+}
+
+bool js_cocos2dx_ReverseTime_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    cocos2d::ReverseTime* cobj = new cocos2d::ReverseTime();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::ReverseTime> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::ReverseTime");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
+
+extern JSObject *jsb_cocos2d_ActionInterval_prototype;
+
+void js_cocos2d_ReverseTime_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (ReverseTime)", obj);
+}
+
+void js_register_cocos2dx_ReverseTime(JSContext *cx, JSObject *global) {
+	jsb_cocos2d_ReverseTime_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_ReverseTime_class->name = "ReverseTime";
+	jsb_cocos2d_ReverseTime_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_ReverseTime_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_ReverseTime_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_ReverseTime_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_ReverseTime_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_ReverseTime_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_ReverseTime_class->convert = JS_ConvertStub;
+	jsb_cocos2d_ReverseTime_class->finalize = js_cocos2d_ReverseTime_finalize;
+	jsb_cocos2d_ReverseTime_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+	static JSPropertySpec properties[] = {
+		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+	};
+
+	static JSFunctionSpec funcs[] = {
+		JS_FN("initWithAction", js_cocos2dx_ReverseTime_initWithAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+	};
+
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", js_cocos2dx_ReverseTime_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	jsb_cocos2d_ReverseTime_prototype = JS_InitClass(
+		cx, global,
+		jsb_cocos2d_ActionInterval_prototype,
+		jsb_cocos2d_ReverseTime_class,
+		js_cocos2dx_ReverseTime_constructor, 0, // constructor
+		properties,
+		funcs,
+		NULL, // no static properties
+		st_funcs);
+	// make the class enumerable in the registered namespace
+//	bool found;
+//FIXME: Removed in Firefox v27	
+//	JS_SetPropertyAttributes(cx, global, "ReverseTime", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+	// add the proto and JSClass to the type->js info hash table
+	TypeTest<cocos2d::ReverseTime> t;
+	js_type_class_t *p;
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
+		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+		p->jsclass = jsb_cocos2d_ReverseTime_class;
+		p->proto = jsb_cocos2d_ReverseTime_prototype;
+		p->parentProto = jsb_cocos2d_ActionInterval_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
+	}
+}
+
 JSClass  *jsb_cocos2d_Animate_class;
 JSObject *jsb_cocos2d_Animate_prototype;
 
@@ -60118,6 +60271,7 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
 	js_register_cocos2dx_Follow(cx, obj);
 	js_register_cocos2dx_Animate(cx, obj);
 	js_register_cocos2dx_ShuffleTiles(cx, obj);
+	js_register_cocos2dx_ReverseTime(cx, obj);
 	js_register_cocos2dx_ProgressTimer(cx, obj);
 	js_register_cocos2dx_ParticleMeteor(cx, obj);
 	js_register_cocos2dx_EaseQuarticActionIn(cx, obj);
