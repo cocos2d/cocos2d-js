@@ -171,8 +171,8 @@ var SpriteComponentTest = SceneEditorTestLayer.extend({
         var node = ccs.sceneReader.createNodeWithSceneFile("res/scenetest/SpriteComponentTest/SpriteComponentTest.json");
         this.addChild(node);
 
-        var action1 = cc.Blink.create(2, 10);
-        var action2 = cc.Blink.create(2, 5);
+        var action1 = cc.blink(2, 10);
+        var action2 = cc.blink(2, 5);
         var sister1 = node.getChildByTag(10003).getComponent("CCSprite").getNode();
         sister1.runAction(action1);
 
@@ -198,10 +198,10 @@ var ArmatureComponentTest = SceneEditorTestLayer.extend({
         this.addChild(node);
 
         var blowFish = node.getChildByTag(10007).getComponent("CCArmature").getNode();
-        blowFish.runAction(cc.MoveBy.create(10, cc.p(-1000, 0)));
+        blowFish.runAction(cc.moveBy(10, cc.p(-1000, 0)));
 
         var butterFlyFish = node.getChildByTag(10008).getComponent("CCArmature").getNode();
-        butterFlyFish.runAction(cc.MoveBy.create(10, cc.p(-1000, 0)));
+        butterFlyFish.runAction(cc.moveBy(10, cc.p(-1000, 0)));
 
         this.initSize(node);
     },
@@ -231,10 +231,10 @@ var UIComponentTest = SceneEditorTestLayer.extend({
         switch (type) {
             case ccui.Widget.TOUCH_BEGAN:
                 var blowFish = this._node.getChildByTag(10010).getComponent("CCArmature").getNode();
-                blowFish.runAction(cc.MoveBy.create(10, cc.p(-1000, 0)));
+                blowFish.runAction(cc.moveBy(10, cc.p(-1000, 0)));
 
                 var butterFlyFish = this._node.getChildByTag(10011).getComponent("CCArmature").getNode();
-                butterFlyFish.runAction(cc.MoveBy.create(10, cc.p(-1000.0, 0)));
+                butterFlyFish.runAction(cc.moveBy(10, cc.p(-1000.0, 0)));
                 break;
             default:
                 break;
@@ -256,17 +256,17 @@ var TmxMapComponentTest = SceneEditorTestLayer.extend({
         var node = ccs.sceneReader.createNodeWithSceneFile("res/scenetest/TmxMapComponentTest/TmxMapComponentTest.json");
         this.addChild(node);
         var tmxMap = node.getChildByTag(10015).getComponent("CCTMXTiledMap").getNode();
-        var actionTo = cc.SkewTo.create(2, 0, 2);
-        var rotateTo = cc.RotateTo.create(2, 61);
-        var actionScaleTo = cc.ScaleTo.create(2, -0.44, 0.47);
+        var actionTo = cc.skewTo(2, 0, 2);
+        var rotateTo = cc.rotateTo(2, 61);
+        var actionScaleTo = cc.scaleTo(2, -0.44, 0.47);
 
-        var actionScaleToBack = cc.ScaleTo.create(2, 1, 1);
-        var rotateToBack = cc.RotateTo.create(2, 0);
-        var actionToBack = cc.SkewTo.create(2, 0, 0);
+        var actionScaleToBack = cc.scaleTo(2, 1, 1);
+        var rotateToBack = cc.rotateTo(2, 0);
+        var actionToBack = cc.skewTo(2, 0, 0);
 
-        tmxMap.runAction(cc.Sequence.create(actionTo, actionToBack));
-        tmxMap.runAction(cc.Sequence.create(rotateTo, rotateToBack));
-        tmxMap.runAction(cc.Sequence.create(actionScaleTo, actionScaleToBack));
+        tmxMap.runAction(cc.sequence(actionTo, actionToBack));
+        tmxMap.runAction(cc.sequence(rotateTo, rotateToBack));
+        tmxMap.runAction(cc.sequence(actionScaleTo, actionScaleToBack));
 
         this.initSize(node);
     },
@@ -288,8 +288,8 @@ var ParticleComponentTest = SceneEditorTestLayer.extend({
         this.addChild(node);
 
         var particle = node.getChildByTag(10020).getComponent("CCParticleSystemQuad").getNode();
-        var jump = cc.JumpBy.create(5, cc.p(-500, 0), 50, 4);
-        var action = cc.Sequence.create(jump, jump.reverse());
+        var jump = cc.jumpBy(5, cc.p(-500, 0), 50, 4);
+        var action = cc.sequence(jump, jump.reverse());
         particle.runAction(action);
 
         this.initSize(node);

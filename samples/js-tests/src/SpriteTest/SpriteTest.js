@@ -144,19 +144,19 @@ var Sprite1 = SpriteTestDemo.extend({
         var action;
         var random = Math.random();
         if (random < 0.20) {
-            action = new cc.ScaleBy(3, 2);
+            action = cc.scaleBy(3, 2);
         } else if (random < 0.40) {
-            action = new cc.RotateBy(3, 360);
+            action = cc.rotateBy(3, 360);
         } else if (random < 0.60) {
-            action = new cc.Blink(1, 3);
+            action = cc.blink(1, 3);
         } else if (random < 0.8) {
-            action = new cc.TintBy(2, 0, -255, -255);
+            action = cc.tintBy(2, 0, -255, -255);
         } else {
-            action = new cc.FadeOut(2);
+            action = cc.fadeOut(2);
         }
 
         var action_back = action.reverse();
-        var seq = new cc.Sequence(action, action_back);
+        var seq = cc.sequence(action, action_back);
 
         sprite.runAction(seq.repeatForever());
         this.testSprite = sprite;
@@ -248,18 +248,18 @@ var SpriteBatchNode1 = SpriteTestDemo.extend({
         var random = Math.random();
 
         if (random < 0.20)
-            action = new cc.ScaleBy(3, 2);
+            action = cc.scaleBy(3, 2);
         else if (random < 0.40)
-            action = new cc.RotateBy(3, 360);
+            action = cc.rotateBy(3, 360);
         else if (random < 0.60)
-            action = new cc.Blink(1, 3);
+            action = cc.blink(1, 3);
         else if (random < 0.8)
-            action = new cc.TintBy(2, 0, -255, -255);
+            action = cc.tintBy(2, 0, -255, -255);
         else
-            action = new cc.FadeOut(2);
+            action = cc.fadeOut(2);
 
         var action_back = action.reverse();
-        var seq = new cc.Sequence(action, action_back);
+        var seq = cc.sequence(action, action_back);
 
         sprite.runAction(seq.repeatForever());
         this.testSprite = sprite;
@@ -332,22 +332,22 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
         sprite8.x = (winSize.width / 5) * 4;
         sprite8.y = (winSize.height / 3) * 2;
 
-        var delay = new cc.DelayTime(0.25);
-        var action = new cc.FadeIn(2);
+        var delay = cc.delayTime(0.25);
+        var action = cc.fadeIn(2);
         var action_back = action.reverse();
-        var fade = new cc.Sequence(action, delay.clone(), action_back).repeatForever();
+        var fade = cc.sequence(action, delay.clone(), action_back).repeatForever();
 
-        var tintRed = new cc.TintBy(2, 0, -255, -255);
+        var tintRed = cc.tintBy(2, 0, -255, -255);
         var tintRedBack = tintRed.reverse();
-        var red = new cc.Sequence(tintRed, delay.clone(), tintRedBack).repeatForever();
+        var red = cc.sequence(tintRed, delay.clone(), tintRedBack).repeatForever();
 
-        var tintGreen = new cc.TintBy(2, -255, 0, -255);
+        var tintGreen = cc.tintBy(2, -255, 0, -255);
         var tintGreenBack = tintGreen.reverse();
-        var green = new cc.Sequence(tintGreen, delay.clone(), tintGreenBack).repeatForever();
+        var green = cc.sequence(tintGreen, delay.clone(), tintGreenBack).repeatForever();
 
-        var tintBlue = new cc.TintBy(2, -255, -255, 0);
+        var tintBlue = cc.tintBy(2, -255, -255, 0);
         var tintBlueBack = tintBlue.reverse();
-        var blue = new cc.Sequence(tintBlue, delay.clone(), tintBlueBack).repeatForever();
+        var blue = cc.sequence(tintBlue, delay.clone(), tintBlueBack).repeatForever();
 
         sprite5.runAction(red);
         sprite6.runAction(green);
@@ -449,21 +449,21 @@ var SpriteBatchNodeColorOpacity = SpriteTestDemo.extend({
         sprite8.x = (winSize.width / 5) * 4;
         sprite8.y = (winSize.height / 3) * 2;
 
-        var delay = new cc.DelayTime(0.25);
-        var action = new cc.FadeIn(2);
+        var delay = cc.delayTime(0.25);
+        var action = cc.fadeIn(2);
         var action_back = action.reverse();
-        var fade = new cc.Sequence(action, delay.clone(), action_back).repeatForever();
+        var fade = cc.sequence(action, delay.clone(), action_back).repeatForever();
 
-        var tintRed = new cc.TintBy(2, 0, -255, -255);
-        var red = new cc.Sequence(tintRed, delay.clone(), tintRed.reverse()).repeatForever();
+        var tintRed = cc.tintBy(2, 0, -255, -255);
+        var red = cc.sequence(tintRed, delay.clone(), tintRed.reverse()).repeatForever();
 
-        var tintGreen = new cc.TintBy(2, -255, 0, -255);
+        var tintGreen = cc.tintBy(2, -255, 0, -255);
         var tintGreenBack = tintGreen.reverse();
-        var green = new cc.Sequence(tintGreen, delay.clone(), tintGreenBack).repeatForever();
+        var green = cc.sequence(tintGreen, delay.clone(), tintGreenBack).repeatForever();
 
-        var tintBlue = new cc.TintBy(2, -255, -255, 0);
+        var tintBlue = cc.tintBy(2, -255, -255, 0);
         var tintBlueBack = tintBlue.reverse();
-        var blue = new cc.Sequence(tintBlue, delay.clone(), tintBlueBack).repeatForever();
+        var blue = cc.sequence(tintBlue, delay.clone(), tintBlueBack).repeatForever();
 
         sprite5.runAction(red);
         sprite6.runAction(green);
@@ -1037,7 +1037,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
                 node.addChild(sprite, 0);
             }
 
-            this.runAction(new cc.OrbitCamera(10, 1, 0, 0, 360, 0, 0));
+            this.runAction(cc.orbitCamera(10, 1, 0, 0, 360, 0, 0));
         } else {
             var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
@@ -1163,7 +1163,7 @@ var SpriteBatchNodeZVertex = SpriteTestDemo.extend({
                 batch.addChild(sprite, 0);
             }
 
-            this.runAction(new cc.OrbitCamera(10, 1, 0, 0, 360, 0, 0));
+            this.runAction(cc.orbitCamera(10, 1, 0, 0, 360, 0, 0));
         } else {
             var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
@@ -1232,7 +1232,7 @@ var SpriteAnchorPoint = SpriteTestDemo.extend({
         this._super();
 
         for (var i = 0; i < 3; i++) {
-            var rotate = new cc.RotateBy(10, 360);
+            var rotate = cc.rotateBy(10, 360);
             var action = rotate.repeatForever();
             var sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85 * i, 121, 85, 121));
             sprite.x = winSize.width / 4 * (i + 1);
@@ -1304,7 +1304,7 @@ var SpriteBatchNodeAnchorPoint = SpriteTestDemo.extend({
         this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
         for (var i = 0; i < 3; i++) {
-            var rotate = new cc.RotateBy(10, 360);
+            var rotate = cc.rotateBy(10, 360);
             var action = rotate.repeatForever();
             var sprite = new cc.Sprite(batch.texture, cc.rect(85 * i, 121, 85, 121));
             sprite.x = winSize.width / 4 * (i + 1);
@@ -1381,14 +1381,14 @@ var Sprite6 = SpriteTestDemo.extend({
 	    batch.height = winSize.height;
 
         // SpriteBatchNode actions
-        var rotate1 = new cc.RotateBy(5, 360);
+        var rotate1 = cc.rotateBy(5, 360);
         var rotate_back = rotate1.reverse();
-        var rotate_seq = new cc.Sequence(rotate1, rotate_back);
+        var rotate_seq = cc.sequence(rotate1, rotate_back);
         var rotate_forever = rotate_seq.repeatForever();
 
-        var scale = new cc.ScaleBy(5, 1.5);
+        var scale = cc.scaleBy(5, 1.5);
         var scale_back = scale.reverse();
-        var scale_seq = new cc.Sequence(scale, scale_back);
+        var scale_seq = cc.sequence(scale, scale_back);
         var scale_forever = scale_seq.repeatForever();
 
         for (var i = 0; i < 3; i++) {
@@ -1407,7 +1407,7 @@ var Sprite6 = SpriteTestDemo.extend({
                     sprite.y = winSize.height / 2;
                     break;
             }
-            var rotate = new cc.RotateBy(5, 360);
+            var rotate = cc.rotateBy(5, 360);
             var action = rotate.repeatForever();
             sprite.runAction(action.clone());
             batch.addChild(sprite, i);
@@ -1587,14 +1587,14 @@ var SpriteAliased = SpriteTestDemo.extend({
         sprite2.y = winSize.height / 2;
         this.addChild(sprite2, 0, TAG_SPRITE2);
 
-        var scale = new cc.ScaleBy(2, 5);
+        var scale = cc.scaleBy(2, 5);
         var scale_back = scale.reverse();
-        var seq = new cc.Sequence(scale, scale_back);
+        var seq = cc.sequence(scale, scale_back);
         var repeat = seq.repeatForever();
 
-        var scale2 = new cc.ScaleBy(2, 5);
+        var scale2 = cc.scaleBy(2, 5);
         var scale_back2 = scale2.reverse();
-        var seq2 = new cc.Sequence(scale2, scale_back2);
+        var seq2 = cc.sequence(scale2, scale_back2);
         var repeat2 = seq2.repeatForever();
 
         sprite1.runAction(repeat);
@@ -1657,14 +1657,14 @@ var SpriteBatchNodeAliased = SpriteTestDemo.extend({
         sprite2.y = winSize.height / 2;
         batch.addChild(sprite2, 0, TAG_SPRITE2);
 
-        var scale = new cc.ScaleBy(2, 5);
+        var scale = cc.scaleBy(2, 5);
         var scale_back = scale.reverse();
-        var seq = new cc.Sequence(scale, scale_back);
+        var seq = cc.sequence(scale, scale_back);
         var repeat = seq.repeatForever();
 
-        var scale2 = new cc.ScaleBy(2, 5);
+        var scale2 = cc.scaleBy(2, 5);
         var scale_back2 = scale2.reverse();
-        var seq2 = new cc.Sequence(scale2, scale_back2);
+        var seq2 = cc.sequence(scale2, scale_back2);
         var repeat2 = seq2.repeatForever();
 
         sprite1.runAction(repeat);
@@ -1767,18 +1767,18 @@ var SpriteNewTexture = SpriteTestDemo.extend({
         var random = Math.random();
 
         if (random < 0.20)
-            action = new cc.ScaleBy(3, 2);
+            action = cc.scaleBy(3, 2);
         else if (random < 0.40)
-            action = new cc.RotateBy(3, 360);
+            action = cc.rotateBy(3, 360);
         else if (random < 0.60)
-            action = new cc.Blink(1, 3);
+            action = cc.blink(1, 3);
         // else if (random < 0.8)
-        //     action = new cc.TintBy(2, 0, -255, -255);
+        //     action = cc.tintBy(2, 0, -255, -255);
         else
-            action = new cc.FadeOut(2);
+            action = cc.fadeOut(2);
 
         var action_back = action.reverse();
-        var seq = new cc.Sequence(action, action_back);
+        var seq = cc.sequence(action, action_back);
 
         sprite.runAction(seq.repeatForever());
         //----end26----
@@ -1897,17 +1897,17 @@ var SpriteBatchNodeNewTexture = SpriteTestDemo.extend({
         var random = Math.random();
 
         if (random < 0.20)
-            action = new cc.ScaleBy(3, 2);
+            action = cc.scaleBy(3, 2);
         else if (random < 0.40)
-            action = new cc.RotateBy(3, 360);
+            action = cc.rotateBy(3, 360);
         else if (random < 0.60)
-            action = new cc.Blink(1, 3);
+            action = cc.blink(1, 3);
         //else if (random < 0.8)
-        //    action = new cc.TintBy(2, 0, -255, -255);
+        //    action = cc.tintBy(2, 0, -255, -255);
         else
-            action = new cc.FadeOut(2);
+            action = cc.fadeOut(2);
         var action_back = action.reverse();
-        var seq = new cc.Sequence(action, action_back);
+        var seq = cc.sequence(action, action_back);
 
         sprite.runAction(seq.repeatForever());
         //----end27----
@@ -1992,7 +1992,7 @@ var SpriteFrameTest = SpriteTestDemo.extend({
         }
 
         var animation = new cc.Animation(animFrames, 0.3);
-        this._sprite1.runAction(new cc.Animate(animation).repeatForever());
+        this._sprite1.runAction(cc.animate(animation).repeatForever());
 
         // to test issue #732, uncomment the following line
         this._sprite1.flippedX = false;
@@ -2023,7 +2023,7 @@ var SpriteFrameTest = SpriteTestDemo.extend({
         moreFrames = moreFrames.concat(animFrames);
         var animMixed = new cc.Animation(moreFrames, 0.3);
 
-        this._sprite2.runAction(new cc.Animate(animMixed).repeatForever());
+        this._sprite2.runAction(cc.animate(animMixed).repeatForever());
 
         // to test issue #732, uncomment the following line
         this._sprite2.flippedX = false;
@@ -2149,7 +2149,7 @@ var SpriteFrameAliasNameTest = SpriteTestDemo.extend({
 
         var animation = new cc.Animation(animFrames, 0.3);
         // 14 frames * 1sec = 14 seconds
-        sprite.runAction(new cc.Animate(animation).repeatForever());
+        sprite.runAction(cc.animate(animation).repeatForever());
         this.testSprite = sprite;
         //----end3----
     },
@@ -2229,8 +2229,8 @@ var SpriteOffsetAnchorRotation = SpriteTestDemo.extend({
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
-            sprite.runAction(new cc.RotateBy(10, 360).repeatForever());
+            sprite.runAction(cc.animate(animation).repeatForever());
+            sprite.runAction(cc.rotateBy(10, 360).repeatForever());
 
             this.addChild(sprite, 0);
         }
@@ -2319,8 +2319,8 @@ var SpriteBatchNodeOffsetAnchorRotation = SpriteTestDemo.extend({
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
-            sprite.runAction(new cc.RotateBy(10, 360).repeatForever());
+            sprite.runAction(cc.animate(animation).repeatForever());
+            sprite.runAction(cc.rotateBy(10, 360).repeatForever());
 
             spritebatch.addChild(sprite, i);
         }
@@ -2406,12 +2406,12 @@ var SpriteOffsetAnchorScale = SpriteTestDemo.extend({
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            sprite.runAction(cc.animate(animation).repeatForever());
 
-            var scale = new cc.ScaleBy(2, 2);
+            var scale = cc.scaleBy(2, 2);
             var scale_back = scale.reverse();
-            var delay = new cc.DelayTime(0.25);
-            var seq_scale = new cc.Sequence(scale, delay, scale_back);
+            var delay = cc.delayTime(0.25);
+            var seq_scale = cc.sequence(scale, delay, scale_back);
             sprite.runAction(seq_scale.repeatForever());
 
             this.addChild(sprite, 0);
@@ -2503,11 +2503,11 @@ var SpriteBatchNodeOffsetAnchorScale = SpriteTestDemo.extend({
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            sprite.runAction(cc.animate(animation).repeatForever());
 
-            var scale = new cc.ScaleBy(2, 2);
+            var scale = cc.scaleBy(2, 2);
             var scale_back = scale.reverse();
-            var seq_scale = new cc.Sequence(scale, scale_back);
+            var seq_scale = cc.sequence(scale, scale_back);
             sprite.runAction(seq_scale.repeatForever());
 
             batch.addChild(sprite, i);
@@ -2593,14 +2593,14 @@ var SpriteOffsetAnchorSkew = SpriteTestDemo.extend({
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            sprite.runAction(cc.animate(animation).repeatForever());
 
-            var skewX = new cc.SkewBy(2, 45, 0);
+            var skewX = cc.skewBy(2, 45, 0);
             var skewX_back = skewX.reverse();
-            var skewY = new cc.SkewBy(2, 0, 45);
+            var skewY = cc.skewBy(2, 0, 45);
             var skewY_back = skewY.reverse();
 
-            var seq_skew = new cc.Sequence(skewX, skewX_back, skewY, skewY_back);
+            var seq_skew = cc.sequence(skewX, skewX_back, skewY, skewY_back);
             sprite.runAction(seq_skew.repeatForever());
 
             this.addChild(sprite, 0);
@@ -2682,16 +2682,16 @@ var SpriteBatchNodeOffsetAnchorSkew = SpriteTestDemo.extend({
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            sprite.runAction(cc.animate(animation).repeatForever());
 
             animFrames = null;
 
-            var skewX = new cc.SkewBy(2, 45, 0);
+            var skewX = cc.skewBy(2, 45, 0);
             var skewX_back = skewX.reverse();
-            var skewY = new cc.SkewBy(2, 0, 45);
+            var skewY = cc.skewBy(2, 0, 45);
             var skewY_back = skewY.reverse();
 
-            var seq_skew = new cc.Sequence(skewX, skewX_back, skewY, skewY_back);
+            var seq_skew = cc.sequence(skewX, skewX_back, skewY, skewY_back);
             sprite.runAction(seq_skew.repeatForever());
 
             spritebatch.addChild(sprite, i);
@@ -2769,23 +2769,23 @@ var SpriteOffsetAnchorSkewScale = SpriteTestDemo.extend({
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            sprite.runAction(cc.animate(animation).repeatForever());
 
             animFrames = null;
 
             // Skew
-            var skewX = new cc.SkewBy(2, 45, 0);
+            var skewX = cc.skewBy(2, 45, 0);
             var skewX_back = skewX.reverse();
-            var skewY = new cc.SkewBy(2, 0, 45);
+            var skewY = cc.skewBy(2, 0, 45);
             var skewY_back = skewY.reverse();
 
-            var seq_skew = new cc.Sequence(skewX, skewX_back, skewY, skewY_back);
+            var seq_skew = cc.sequence(skewX, skewX_back, skewY, skewY_back);
             sprite.runAction(seq_skew.repeatForever());
 
             // Scale
-            var scale = new cc.ScaleBy(2, 2);
+            var scale = cc.scaleBy(2, 2);
             var scale_back = scale.reverse();
-            var seq_scale = new cc.Sequence(scale, scale_back);
+            var seq_scale = cc.sequence(scale, scale_back);
             sprite.runAction(seq_scale.repeatForever());
 
             this.addChild(sprite, 0);
@@ -2870,23 +2870,23 @@ var SpriteBatchNodeOffsetAnchorSkewScale = SpriteTestDemo.extend({
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            sprite.runAction(cc.animate(animation).repeatForever());
 
             animFrames = null;
 
             // skew
-            var skewX = new cc.SkewBy(2, 45, 0);
+            var skewX = cc.skewBy(2, 45, 0);
             var skewX_back = skewX.reverse();
-            var skewY = new cc.SkewBy(2, 0, 45);
+            var skewY = cc.skewBy(2, 0, 45);
             var skewY_back = skewY.reverse();
 
-            var seq_skew = new cc.Sequence(skewX, skewX_back, skewY, skewY_back);
+            var seq_skew = cc.sequence(skewX, skewX_back, skewY, skewY_back);
             sprite.runAction(seq_skew.repeatForever());
 
             // scale
-            var scale = new cc.ScaleBy(2, 2);
+            var scale = cc.scaleBy(2, 2);
             var scale_back = scale.reverse();
-            var seq_scale = new cc.Sequence(scale, scale_back);
+            var seq_scale = cc.sequence(scale, scale_back);
             sprite.runAction(seq_scale.repeatForever());
 
             spritebatch.addChild(sprite, i);
@@ -2968,15 +2968,15 @@ var SpriteOffsetAnchorFlip = SpriteTestDemo.extend({
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            sprite.runAction(cc.animate(animation).repeatForever());
 
             animFrames = null;
 
-            var flip = new cc.FlipY(true);
-            var flip_back = new cc.FlipY(false);
-            var delay = new cc.DelayTime(1);
-            var delay1 = new cc.DelayTime(1);
-            var seq = new cc.Sequence(delay, flip, delay1, flip_back);
+            var flip = cc.flipY(true);
+            var flip_back = cc.flipY(false);
+            var delay = cc.delayTime(1);
+            var delay1 = cc.delayTime(1);
+            var seq = cc.sequence(delay, flip, delay1, flip_back);
             sprite.runAction(seq.repeatForever());
 
             this.addChild(sprite, 0);
@@ -3059,14 +3059,14 @@ var SpriteBatchNodeOffsetAnchorFlip = SpriteTestDemo.extend({
             }
 
             var animation = new cc.Animation(animFrames, 0.3);
-            sprite.runAction(new cc.Animate(animation).repeatForever());
+            sprite.runAction(cc.animate(animation).repeatForever());
 
             animFrames = null;
 
-            var flip = new cc.FlipY(true);
-            var flip_back = new cc.FlipY(false);
-            var delay = new cc.DelayTime(1);
-            var seq = new cc.Sequence(delay, flip, delay.clone(), flip_back);
+            var flip = cc.flipY(true);
+            var flip_back = cc.flipY(false);
+            var delay = cc.delayTime(1);
+            var seq = cc.sequence(delay, flip, delay.clone(), flip_back);
             sprite.runAction(seq.repeatForever());
 
             spritebatch.addChild(sprite, i);
@@ -3129,13 +3129,13 @@ var SpriteAnimationSplit = SpriteTestDemo.extend({
         animFrames.push(frame5);
 
         var animation = new cc.Animation(animFrames, 0.2);
-        var animate = new cc.Animate(animation);
-        var delay = new cc.DelayTime(0.5);
-        var seq = new cc.Sequence(animate,
-            new cc.FlipX(true),
+        var animate = cc.animate(animation);
+        var delay = cc.delayTime(0.5);
+        var seq = cc.sequence(animate,
+            cc.flipX(true),
             animate.clone(),
             delay,
-            new cc.FlipX(false));
+            cc.flipX(false));
 
         sprite.runAction(seq.repeatForever());
         //----end10----
@@ -3206,7 +3206,7 @@ var SpriteHybrid = SpriteTestDemo.extend({
             sprite.x = x;
             sprite.y = y;
 
-            var action = new cc.RotateBy(4, 360);
+            var action = cc.rotateBy(4, 360);
             sprite.runAction(action.repeatForever());
         }
 
@@ -3346,21 +3346,21 @@ var SpriteBatchNodeChildren = SpriteTestDemo.extend({
         }
 
         var animation = new cc.Animation(animFrames, 0.2);
-        sprite1.runAction(new cc.Animate(animation).repeatForever());
+        sprite1.runAction(cc.animate(animation).repeatForever());
         // END NEW CODE
 
-        var action = new cc.MoveBy(2, cc.p(200, 0));
+        var action = cc.moveBy(2, cc.p(200, 0));
         var action_back = action.reverse();
-        var action_rot = new cc.RotateBy(2, 360);
-        var action_s = new cc.ScaleBy(2, 2);
+        var action_rot = cc.rotateBy(2, 360);
+        var action_s = cc.scaleBy(2, 2);
         var action_s_back = action_s.reverse();
 
         var seq2 = action_rot.reverse();
         sprite2.runAction(seq2.repeatForever());
 
         sprite1.runAction(action_rot.repeatForever());
-        sprite1.runAction(new cc.Sequence(action, action_back).repeatForever());
-        sprite1.runAction(new cc.Sequence(action_s, action_s_back).repeatForever());
+        sprite1.runAction(cc.sequence(action, action_back).repeatForever());
+        sprite1.runAction(cc.sequence(action_s, action_s_back).repeatForever());
         //----end29----
     },
     //
@@ -3538,7 +3538,7 @@ var SpriteChildrenVisibility = SpriteTestDemo.extend({
         sprite1.addChild(sprite2, -2);
         sprite1.addChild(sprite3, 2);
 
-        sprite1.runAction(new cc.Blink(5, 10));
+        sprite1.runAction(cc.blink(5, 10));
 
         //
         // Sprite
@@ -3564,7 +3564,7 @@ var SpriteChildrenVisibility = SpriteTestDemo.extend({
         sprite1.addChild(sprite2, -2);
         sprite1.addChild(sprite3, 2);
 
-        sprite1.runAction(new cc.Blink(5, 10));
+        sprite1.runAction(cc.blink(5, 10));
         //----end31----
     },
     //
@@ -3962,7 +3962,7 @@ var SpriteBatchNodeChildrenScale = SpriteTestDemo.extend({
         this._super();
         spriteFrameCache.addSpriteFrames(s_grossini_familyPlist);
 
-        var rot = new cc.RotateBy(10, 360);
+        var rot = cc.rotateBy(10, 360);
         var seq = rot.repeatForever();
 
         //
@@ -3986,7 +3986,7 @@ var SpriteBatchNodeChildrenScale = SpriteTestDemo.extend({
         aParent.addChild(sprite1);
         sprite1.addChild(sprite2);
 
-        rot = new cc.RotateBy(10, 360);
+        rot = cc.rotateBy(10, 360);
         seq = rot.repeatForever();
         //
         // Children + Scale using SpriteBatchNode
@@ -4008,7 +4008,7 @@ var SpriteBatchNodeChildrenScale = SpriteTestDemo.extend({
         aParent.addChild(sprite1);
         sprite1.addChild(sprite2);
 
-        rot = new cc.RotateBy(10, 360);
+        rot = cc.rotateBy(10, 360);
         seq = rot.repeatForever();
         //
         // Children + Scale using Sprite
@@ -4030,7 +4030,7 @@ var SpriteBatchNodeChildrenScale = SpriteTestDemo.extend({
         aParent.addChild(sprite1);
         sprite1.addChild(sprite2);
 
-        rot = new cc.RotateBy(10, 360);
+        rot = cc.rotateBy(10, 360);
         seq = rot.repeatForever();
         //
         // Children + Scale using Sprite
@@ -4090,7 +4090,7 @@ var SpriteChildrenChildren = SpriteTestDemo.extend({
 
         spriteFrameCache.addSpriteFrames(s_ghostsPlist);
 
-        var rot = new cc.RotateBy(10, 360);
+        var rot = cc.rotateBy(10, 360);
         var seq = rot.repeatForever();
 
         var rot_back = rot.reverse();
@@ -4196,7 +4196,7 @@ var SpriteBatchNodeChildrenChildren = SpriteTestDemo.extend({
 
         spriteFrameCache.addSpriteFrames(s_ghostsPlist);
 
-        var rot = new cc.RotateBy(10, 360);
+        var rot = cc.rotateBy(10, 360);
         var seq = rot.repeatForever();
 
         var rot_back = rot.reverse();
@@ -4476,11 +4476,11 @@ var AnimationCacheTest = SpriteTestDemo.extend({
         var dance_blue = animCache.getAnimation("dance_blue");
         dance_blue.setRestoreOriginalFrame(true);
 
-        var animN = new cc.Animate(normal);
-        var animG = new cc.Animate(dance_grey);
-        var animB = new cc.Animate(dance_blue);
+        var animN = cc.animate(normal);
+        var animG = cc.animate(dance_grey);
+        var animB = cc.animate(dance_blue);
 
-        var seq = new cc.Sequence(animN, animG, animB);
+        var seq = cc.sequence(animN, animG, animB);
 
         frame = spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
         var grossini = new cc.Sprite(frame);
@@ -4819,15 +4819,15 @@ var SpriteBatchNodeSkewNegativeScaleChildren = SpriteTestDemo.extend({
             sprite.y = winSize.height / 2;
 
             // Skew
-            var skewX = new cc.SkewBy(2, 45, 0);
+            var skewX = cc.skewBy(2, 45, 0);
             var skewX_back = skewX.reverse();
-            var skewY = new cc.SkewBy(2, 0, 45);
+            var skewY = cc.skewBy(2, 0, 45);
             var skewY_back = skewY.reverse();
 
             if (i === 1)
                 sprite.scale = -1.0;
 
-            var seq_skew = new cc.Sequence(skewX, skewX_back, skewY, skewY_back);
+            var seq_skew = cc.sequence(skewX, skewX_back, skewY, skewY_back);
             sprite.runAction(seq_skew.repeatForever());
 
             var child1 = new cc.Sprite("#grossini_dance_01.png");
@@ -4880,15 +4880,15 @@ var SpriteSkewNegativeScaleChildren = SpriteTestDemo.extend({
             sprite.y = winSize.height / 2;
 
             // Skew
-            var skewX = new cc.SkewBy(2, 45, 0);
+            var skewX = cc.skewBy(2, 45, 0);
             var skewX_back = skewX.reverse();
-            var skewY = new cc.SkewBy(2, 0, 45);
+            var skewY = cc.skewBy(2, 0, 45);
             var skewY_back = skewY.reverse();
 
             if (i === 1)
                 sprite.scale = -1.0;
 
-            var seq_skew = new cc.Sequence(skewX, skewX_back, skewY, skewY_back);
+            var seq_skew = cc.sequence(skewX, skewX_back, skewY, skewY_back);
             sprite.runAction(seq_skew.repeatForever());
 
             var child1 = new cc.Sprite("#grossini_dance_01.png");
@@ -5015,9 +5015,9 @@ var SpriteDoubleResolution = SpriteTestDemo.extend({
 
 
         // Actions
-        var scale = new cc.ScaleBy(2, 0.5);
+        var scale = cc.scaleBy(2, 0.5);
         var scale_back = scale.reverse();
-        var seq = new cc.Sequence(scale, scale_back);
+        var seq = cc.sequence(scale, scale_back);
 
         var seq_copy = seq.clone();
 
@@ -5057,11 +5057,11 @@ var AnimationCacheFile = SpriteTestDemo.extend({
         var dance_blue = animCache.getAnimation("dance_3");
         dance_blue.setRestoreOriginalFrame(true);
 
-        var animN = new cc.Animate(normal);
-        var animG = new cc.Animate(dance_grey);
-        var animB = new cc.Animate(dance_blue);
+        var animN = cc.animate(normal);
+        var animG = cc.animate(dance_grey);
+        var animB = cc.animate(dance_blue);
 
-        var seq = new cc.Sequence(animN, animG, animB);
+        var seq = cc.sequence(animN, animG, animB);
 
         // create an sprite with frame name
         // texture-less sprites are not supported

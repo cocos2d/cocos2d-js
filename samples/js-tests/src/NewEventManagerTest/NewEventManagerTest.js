@@ -603,14 +603,14 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
         });
         cc.eventManager.addListener(listener1, this._sprite);
 
-        this.runAction(new cc.Sequence(new cc.DelayTime(5.0),
-            new cc.CallFunc(function () {
+        this.runAction(cc.sequence(cc.delayTime(5.0),
+            cc.callFunc(function () {
                 this._spriteSaved = true;
                 this._sprite.retain();
                 this._sprite.removeFromParent();
             }, this),
-            new cc.DelayTime(5.0),
-            new cc.CallFunc(function () {
+            cc.delayTime(5.0),
+            cc.callFunc(function () {
                 this._spriteSaved = false;
                 this.addChild(this._sprite);
                 if(!cc.sys.isNative)

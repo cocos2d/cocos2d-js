@@ -51,14 +51,14 @@ var UITextFieldTest = UIScene.extend({
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
                 var textField = sender;
                 var widgetSize = this._widget.getContentSize();
-                textField.runAction(cc.MoveTo.create(0.225,
+                textField.runAction(cc.moveTo(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME");
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_IME:
                 var textField = sender;
                 var widgetSize = this._widget.getContentSize();
-                textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
+                textField.runAction(cc.moveTo(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
                 this._topDisplayLabel.setString("detach with IME");
                 break;
             case ccui.TextField.EVENT_INSERT_TEXT:
@@ -104,12 +104,12 @@ var UITextFieldTest_MaxLength = UIScene.extend({
         var widgetSize = this._widget.getContentSize();
         switch (type) {
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
-                textField.runAction(cc.MoveTo.create(0.225,
+                textField.runAction(cc.moveTo(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME max length:" + textField.getMaxLength());
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_IME:
-                textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
+                textField.runAction(cc.moveTo(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
                 this._topDisplayLabel.setString("detach with IME max length:" + textField.getMaxLength());
                 break;
             case ccui.TextField.EVENT_INSERT_TEXT:
@@ -155,14 +155,14 @@ var UITextFieldTest_Password = UIScene.extend({
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
                 var textField = sender;
                 var widgetSize = this._widget.getContentSize();
-                textField.runAction(cc.MoveTo.create(0.225,
+                textField.runAction(cc.moveTo(0.225,
                     cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
                 this._topDisplayLabel.setString("attach with IME IME password");
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_IME:
                 var textField = sender;
                 var widgetSize = this._widget.getContentSize();
-                textField.runAction(cc.MoveTo.create(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
+                textField.runAction(cc.moveTo(0.175, cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0)));
                 this._topDisplayLabel.setString("detach with IME password");
                 break;
             case ccui.TextField.EVENT_INSERT_TEXT:
