@@ -38,7 +38,7 @@ UIScene = cc.Layer.extend({
             var winSize = cc.director.getWinSize();
 
             //add main node
-            var mainNode = cc.Node.create();
+            var mainNode = new cc.Node();
             var scale = winSize.height / 320;
             mainNode.attr({anchorX: 0, anchorY: 0, scale: scale, x: (winSize.width - 480 * scale) / 2, y: (winSize.height - 320 * scale) / 2});
             this.addChild(mainNode);
@@ -63,7 +63,7 @@ UIScene = cc.Layer.extend({
 
             //add topDisplayLabel
             var widgetSize = widget.getContentSize();
-            var topDisplayText = ccui.Text.create();
+            var topDisplayText = new ccui.Text();
             topDisplayText.attr({
 	            string: "",
 	            fontName: "Marker Felt",
@@ -76,7 +76,7 @@ UIScene = cc.Layer.extend({
             mainNode.addChild(topDisplayText);
 
             //add bottomDisplayLabel
-            var bottomDisplayText = ccui.Text.create();
+            var bottomDisplayText = new ccui.Text();
             bottomDisplayText.attr({
 	            string: "INIT",
 	            fontName: "Marker Felt",
@@ -101,10 +101,10 @@ UIScene = cc.Layer.extend({
     toExtensionsMainLayer: function (sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             UISceneManager.purge();
-            var scene = cc.Scene.create();
+            var scene = new cc.Scene();
             var layer = new TestController();
             scene.addChild(layer);
-            var transition = cc.TransitionProgressRadialCCW.create(0.5,scene);
+            var transition = new cc.TransitionProgressRadialCCW(0.5,scene);
             director.runScene(transition);
         }
     },

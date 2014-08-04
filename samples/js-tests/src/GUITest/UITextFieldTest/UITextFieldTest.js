@@ -32,7 +32,7 @@ var UITextFieldTest = UIScene.extend({
             this._bottomDisplayLabel.setString("TextField");
 
             // Create the textfield
-            var textField = ccui.TextField.create();
+            var textField = new ccui.TextField();
             textField.setTouchEnabled(true);
             textField.fontName = "Marker Felt";
             textField.fontSize = 30;
@@ -82,7 +82,7 @@ var UITextFieldTest_MaxLength = UIScene.extend({
             this._bottomDisplayLabel.setString("TextField max length");
 
             // Create the textfield
-            var textField = ccui.TextField.create();
+            var textField = new ccui.TextField();
             textField.setMaxLengthEnabled(true);
             textField.setMaxLength(3);
             textField.setTouchEnabled(true);
@@ -133,7 +133,7 @@ var UITextFieldTest_Password = UIScene.extend({
             this._bottomDisplayLabel.setString("TextField max length");
 
             // Create the textfield
-            var textField = ccui.TextField.create();
+            var textField = new ccui.TextField();
             textField.setPasswordEnabled(true);
             textField.setPasswordStyleText("*");
             textField.setTouchEnabled(true);
