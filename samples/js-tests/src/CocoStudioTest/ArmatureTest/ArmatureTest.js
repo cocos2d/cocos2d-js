@@ -736,13 +736,12 @@ var TestColliderDetector = ArmatureTestLayer.extend({
         var shapeA = shapes[0];
         var shapeB = shapes[1];
         var bone;
-        if(shapeA.collision_type==this.enemyTag){
+        if(shapeA.collision_type==this.enemyTag)
             bone = shapeA.data;
-        }
-        if(shapeB.collision_type==this.enemyTag){
+        if(shapeB.collision_type==this.enemyTag)
             bone = shapeB.data;
-        }
-        bone.getArmature().visible = false;
+        if(bone)
+            bone.getArmature().visible = false;
     },
 
     endHit:function(arbiter, space){
@@ -750,13 +749,12 @@ var TestColliderDetector = ArmatureTestLayer.extend({
         var shapeA = shapes[0];
         var shapeB = shapes[1];
         var bone;
-        if(shapeA.collision_type==this.enemyTag){
+        if(shapeA.collision_type==this.enemyTag)
             bone = shapeA.data;
-        }
-        if(shapeB.collision_type==this.enemyTag){
+        if(shapeB.collision_type==this.enemyTag)
             bone = shapeB.data;
-        }
-        bone.getArmature().visible = true;
+        if(bone)
+            bone.getArmature().visible = true;
     },
     update:function(dt){
         this.space.step(dt);
@@ -848,7 +846,7 @@ var TestCalculatedVertex = ArmatureTestLayer.extend({
         var dict = this.armature2.getBoneDic();
         for (var key in dict) {
             var bone = dict[key];
-            var bodyList = bone.getColliderDetector() || [];
+            var bodyList = bone.getColliderBodyList() || [];
             for (var i = 0; i < bodyList.length; i++) {
                 var body = bodyList[i];
                 var vertexList = body.getCalculatedVertexList();
