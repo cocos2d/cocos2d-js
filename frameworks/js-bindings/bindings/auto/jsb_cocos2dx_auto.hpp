@@ -976,6 +976,17 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_DelayTime_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DelayTime_DelayTime(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_ReverseTime_class;
+extern JSObject *jsb_cocos2d_ReverseTime_prototype;
+
+bool js_cocos2dx_ReverseTime_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ReverseTime_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ReverseTime(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ReverseTime_initWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ReverseTime_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ReverseTime_ReverseTime(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_Animate_class;
 extern JSObject *jsb_cocos2d_Animate_prototype;
 
