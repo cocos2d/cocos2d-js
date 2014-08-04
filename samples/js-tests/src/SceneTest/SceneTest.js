@@ -52,7 +52,7 @@ var SceneTestLayer1 = cc.Layer.extend({
         this.addChild(sprite);
         sprite.x = s.width - 40;
         sprite.y = s.height / 2;
-        var rotate = new cc.RotateBy(2, 360);
+        var rotate = cc.rotateBy(2, 360);
         var repeat = rotate.repeatForever();
         sprite.runAction(repeat);
         //----end0----
@@ -121,7 +121,7 @@ var SceneTestLayer2 = cc.Layer.extend({
 
         sprite.x = s.width - 40;
         sprite.y = s.height / 2;
-        var rotate = new cc.RotateBy(2, 360);
+        var rotate = cc.rotateBy(2, 360);
         var repeat = rotate.repeatForever();
         sprite.runAction(repeat);
         //----end0----
@@ -175,7 +175,7 @@ var SceneTestLayer3 = cc.LayerColor.extend({
         sprite.x = s.width - 40;
 
         sprite.y = s.height / 2;
-        var rotate = new cc.RotateBy(2, 360);
+        var rotate = cc.rotateBy(2, 360);
         var repeat = rotate.repeatForever();
         sprite.runAction(repeat);
         //----end0----

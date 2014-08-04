@@ -93,21 +93,22 @@ var extensionsTestItemNames = [
         testScene:function () {
             runCCPoolTest();
         }
-    }
-];
-
-if (cc.sys.isMobile && cc.sys.isNative) {
-     extensionsTestItemNames.push({
+    },
+    {
         itemTitle:"PluginTest",
         testScene:function () {
-            var testScene = pluginXSceneManager.currentPluginXScene();
-            if (testScene) {
-                cc.director.runScene(testScene);
-            }
+            cc.loader.loadJs('', [
+                "../../frameworks/cocos2d-html5/external/pluginx/platform/facebook_sdk.js",
+                "../../frameworks/cocos2d-html5/external/pluginx/platform/facebook.js"
+            ], function(){
+                var testScene = pluginXSceneManager.currentPluginXScene();
+                if (testScene) {
+                    cc.director.runScene(testScene);
+                }
+            });
         }
-    });
-}
-
+    }
+];
 if (cc.sys.isNative) {
     extensionsTestItemNames.push({
         itemTitle:"AssetsManagerTest",

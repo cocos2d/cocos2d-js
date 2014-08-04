@@ -414,7 +414,7 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
         this.addChild(sprite, 999999);
         sprite.color = cc.color.GREEN;
 
-        sprite.runAction(new cc.Sequence(new cc.FadeTo(2, 0), new cc.Hide()));
+        sprite.runAction(cc.sequence(cc.fadeTo(2, 0), cc.hide()));
     }
 });
 
@@ -601,10 +601,10 @@ var Issue1464 = RenderTextureBaseLayer.extend({
         sprite.visit();
         rend.end();
 
-        var fadeout = new cc.FadeOut(2);
+        var fadeout = cc.fadeOut(2);
         var fadein = fadeout.reverse();
-        var delay = new cc.DelayTime(0.25);
-        var seq = new cc.Sequence(fadeout, delay, fadein, delay.clone());
+        var delay = cc.delayTime(0.25);
+        var seq = cc.sequence(fadeout, delay, fadein, delay.clone());
         var fe = seq.repeatForever();
         rend.getSprite().runAction(fe);
 

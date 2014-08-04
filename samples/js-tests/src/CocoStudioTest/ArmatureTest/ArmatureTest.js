@@ -447,9 +447,9 @@ var TestAnimationEvent = ArmatureTestLayer.extend({
     animationEvent:function (armature, movementType, movementID) {
         if (movementType == ccs.MovementEventType.loopComplete) {
             if (movementID == "Fire") {
-                var moveBy = cc.MoveBy.create(2, cc.p(300 * this._direction, 0));
+                var moveBy = cc.moveBy(2, cc.p(300 * this._direction, 0));
                 this._armature.stopAllActions();
-                this._armature.runAction(cc.Sequence.create(moveBy, cc.CallFunc.create(this.callback, this)));
+                this._armature.runAction(cc.sequence(moveBy, cc.callFunc(this.callback, this)));
                 this._armature.getAnimation().play("Walk");
 
                 this._direction *= -1;
@@ -457,7 +457,7 @@ var TestAnimationEvent = ArmatureTestLayer.extend({
         }
     },
     callback:function () {
-        this._armature.runAction(cc.ScaleTo.create(0.3, 0.25 * this._direction * -1, 0.25));
+        this._armature.runAction(cc.scaleTo(0.3, 0.25 * this._direction * -1, 0.25));
         this._armature.getAnimation().play("Fire", 10);
     }
 });
@@ -728,7 +728,7 @@ var TestColliderDetector = ArmatureTestLayer.extend({
         this.bullet.x = p.x + 60;
         this.bullet.y = p.y;
         this.bullet.stopAllActions();
-        this.bullet.runAction(cc.MoveBy.create(1.5, cc.p(800, 0)));
+        this.bullet.runAction(cc.moveBy(1.5, cc.p(800, 0)));
     },
     beginHit:function(arbiter, space){
         var shapes = arbiter.getShapes();
@@ -833,7 +833,7 @@ var TestCalculatedVertex = ArmatureTestLayer.extend({
         this.bullet.x = p.x + 60;
         this.bullet.y = p.y;
         this.bullet.stopAllActions();
-        this.bullet.runAction(cc.MoveBy.create(1.5, cc.p(800, 0)));
+        this.bullet.runAction(cc.moveBy(1.5, cc.p(800, 0)));
     },
 
     update: function (dt) {
@@ -847,7 +847,7 @@ var TestCalculatedVertex = ArmatureTestLayer.extend({
         var dict = this.armature2.getBoneDic();
         for (var key in dict) {
             var bone = dict[key];
-            var bodyList = bone.getColliderBodyList();
+            var bodyList = bone.getColliderBodyList() || [];
             for (var i = 0; i < bodyList.length; i++) {
                 var body = bodyList[i];
                 var vertexList = body.getCalculatedVertexList();
@@ -1135,7 +1135,7 @@ var TestArmatureNesting2 = ArmatureTestLayer.extend({
             armature.scaleX = 1;
         }
 
-        var move = cc.MoveTo.create(2, point);
+        var move = cc.moveTo(2, point);
         armature.stopAllActions();
         armature.runAction(move);
         return false;

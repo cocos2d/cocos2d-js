@@ -41,6 +41,8 @@ var FacebookShareTest = PluginXTest.extend({
     ctor: function (title) {
         this._super(title);
 
+        window.facebook = window.facebook || (window.plugin ? plugin.FacebookAgent.getInstance() : null);
+
         var menu = new cc.Menu();
         menu.setPosition(cc.p(0, 0));
         menu.width = winSize.width;
@@ -88,22 +90,22 @@ var FacebookShareTest = PluginXTest.extend({
                 var preMsg = this.tipsLabel.getString();
                 this.tipsLabel.setString(msg);
             }
-            var anim = new cc.Sequence(new cc.FadeIn(0.2), new cc.DelayTime(2), new cc.FadeOut(0.2), new cc.CallFunc(function () {
-                this._showTips = false;
-                this.tipsLabel.visible = false;
-                if (preMsg)
-                    this.tipsLabel.setString(preMsg);
-            }, this));
+            var anim = cc.sequence(
+                cc.fadeIn(0.2),
+                cc.delayTime(2),
+                cc.fadeOut(0.2),
+                cc.callFunc(function () {
+                    this._showTips = false;
+                    this.tipsLabel.visible = false;
+                    if (preMsg)
+                        this.tipsLabel.setString(preMsg);
+                }, this)
+            );
             this.tipsLabel.visible = true;
             this.tipsLabel.runAction(anim);
         }
     },
     onShareOG: function () {
-        if (!cc.sys.isNative) {
-            var msg = "The development of Facebook plugin for web is still in progress, some of them is not available";
-            this.showDisableTips(msg);
-            return;
-        }
         var map = {
             "dialog": "share_open_graph",
             "action_type": "fbogsamplesd:dish",
@@ -125,8 +127,8 @@ var FacebookShareTest = PluginXTest.extend({
         }
         var img = this.screenshot("facebookshare.jpg");
 
-        var delay = new cc.DelayTime(2);
-        var share = new cc.CallFunc(function () {
+        var delay = cc.delayTime(2);
+        var share = cc.callFunc(function () {
             var map = {
                 "dialog": "share_photo",
                 "photo": img
@@ -135,7 +137,7 @@ var FacebookShareTest = PluginXTest.extend({
                 cc.log(msg);
             });
         });
-        var seq = new cc.Sequence(delay, share);
+        var seq = cc.sequence(delay, share);
         this.runAction(seq);
 
     },
@@ -183,8 +185,8 @@ var FacebookShareTest = PluginXTest.extend({
         }
         var img = this.screenshot("facebookmessage.jpg");
 
-        var delay = new cc.DelayTime(2);
-        var share = new cc.CallFunc(function () {
+        var delay = cc.delayTime(2);
+        var share = cc.callFunc(function () {
             var map = {
                 "dialog": "message_photo",
                 "photo": img
@@ -193,7 +195,7 @@ var FacebookShareTest = PluginXTest.extend({
                 cc.log(msg);
             });
         });
-        var seq = new cc.Sequence(delay, share);
+        var seq = cc.sequence(delay, share);
         this.runAction(seq);
     },
 
