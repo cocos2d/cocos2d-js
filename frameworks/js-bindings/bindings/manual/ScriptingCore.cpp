@@ -642,6 +642,10 @@ void ScriptingCore::cleanScript(const char *path)
 
 }
 
+std::unordered_map<std::string, JSScript*>  &ScriptingCore::getFileScprite()
+{
+    return filename_script;
+}
 void ScriptingCore::cleanAllScript()
 {
     filename_script.clear();
