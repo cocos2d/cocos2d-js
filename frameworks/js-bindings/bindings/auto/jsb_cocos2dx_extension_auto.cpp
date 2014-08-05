@@ -23,7 +23,7 @@ static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 		return true;
 	}
 
-    JS_ReportError(cx, "Don't use `new cc.XXX`, please use `cc.XXX.create` instead! ");
+    JS_ReportError(cx, "Constructor for the requested class is not available, please refer to the API reference.");
     return false;
 }
 
@@ -866,7 +866,7 @@ bool js_cocos2dx_extension_Scale9Sprite_constructor(JSContext *cx, uint32_t argc
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::Scale9Sprite* cobj = new cocos2d::extension::Scale9Sprite();
+    cocos2d::extension::Scale9Sprite* cobj = new (std::nothrow) cocos2d::extension::Scale9Sprite();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -899,7 +899,7 @@ static bool js_cocos2d_extension_Scale9Sprite_ctor(JSContext *cx, uint32_t argc,
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::extension::Scale9Sprite *nobj = new cocos2d::extension::Scale9Sprite();
+    cocos2d::extension::Scale9Sprite *nobj = new (std::nothrow) cocos2d::extension::Scale9Sprite();
     if (nobj) {
         nobj->autorelease();
     }
@@ -1255,7 +1255,7 @@ bool js_cocos2dx_extension_Control_constructor(JSContext *cx, uint32_t argc, jsv
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::Control* cobj = new cocos2d::extension::Control();
+    cocos2d::extension::Control* cobj = new (std::nothrow) cocos2d::extension::Control();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -2416,7 +2416,7 @@ bool js_cocos2dx_extension_ControlButton_constructor(JSContext *cx, uint32_t arg
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::ControlButton* cobj = new cocos2d::extension::ControlButton();
+    cocos2d::extension::ControlButton* cobj = new (std::nothrow) cocos2d::extension::ControlButton();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -2449,7 +2449,7 @@ static bool js_cocos2d_extension_ControlButton_ctor(JSContext *cx, uint32_t argc
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::extension::ControlButton *nobj = new cocos2d::extension::ControlButton();
+    cocos2d::extension::ControlButton *nobj = new (std::nothrow) cocos2d::extension::ControlButton();
     if (nobj) {
         nobj->autorelease();
     }
@@ -2844,7 +2844,7 @@ bool js_cocos2dx_extension_ControlHuePicker_constructor(JSContext *cx, uint32_t 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::ControlHuePicker* cobj = new cocos2d::extension::ControlHuePicker();
+    cocos2d::extension::ControlHuePicker* cobj = new (std::nothrow) cocos2d::extension::ControlHuePicker();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -3178,7 +3178,7 @@ bool js_cocos2dx_extension_ControlSaturationBrightnessPicker_constructor(JSConte
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::ControlSaturationBrightnessPicker* cobj = new cocos2d::extension::ControlSaturationBrightnessPicker();
+    cocos2d::extension::ControlSaturationBrightnessPicker* cobj = new (std::nothrow) cocos2d::extension::ControlSaturationBrightnessPicker();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -3549,7 +3549,7 @@ bool js_cocos2dx_extension_ControlColourPicker_constructor(JSContext *cx, uint32
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::ControlColourPicker* cobj = new cocos2d::extension::ControlColourPicker();
+    cocos2d::extension::ControlColourPicker* cobj = new (std::nothrow) cocos2d::extension::ControlColourPicker();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -3582,7 +3582,7 @@ static bool js_cocos2d_extension_ControlColourPicker_ctor(JSContext *cx, uint32_
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::extension::ControlColourPicker *nobj = new cocos2d::extension::ControlColourPicker();
+    cocos2d::extension::ControlColourPicker *nobj = new (std::nothrow) cocos2d::extension::ControlColourPicker();
     if (nobj) {
         nobj->autorelease();
     }
@@ -4105,7 +4105,7 @@ bool js_cocos2dx_extension_ControlPotentiometer_constructor(JSContext *cx, uint3
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::ControlPotentiometer* cobj = new cocos2d::extension::ControlPotentiometer();
+    cocos2d::extension::ControlPotentiometer* cobj = new (std::nothrow) cocos2d::extension::ControlPotentiometer();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -4138,7 +4138,7 @@ static bool js_cocos2d_extension_ControlPotentiometer_ctor(JSContext *cx, uint32
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::extension::ControlPotentiometer *nobj = new cocos2d::extension::ControlPotentiometer();
+    cocos2d::extension::ControlPotentiometer *nobj = new (std::nothrow) cocos2d::extension::ControlPotentiometer();
     if (nobj) {
         nobj->autorelease();
     }
@@ -4983,7 +4983,7 @@ bool js_cocos2dx_extension_ControlSlider_constructor(JSContext *cx, uint32_t arg
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::ControlSlider* cobj = new cocos2d::extension::ControlSlider();
+    cocos2d::extension::ControlSlider* cobj = new (std::nothrow) cocos2d::extension::ControlSlider();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -5016,7 +5016,7 @@ static bool js_cocos2d_extension_ControlSlider_ctor(JSContext *cx, uint32_t argc
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::extension::ControlSlider *nobj = new cocos2d::extension::ControlSlider();
+    cocos2d::extension::ControlSlider *nobj = new (std::nothrow) cocos2d::extension::ControlSlider();
     if (nobj) {
         nobj->autorelease();
     }
@@ -5623,7 +5623,7 @@ bool js_cocos2dx_extension_ControlStepper_constructor(JSContext *cx, uint32_t ar
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::ControlStepper* cobj = new cocos2d::extension::ControlStepper();
+    cocos2d::extension::ControlStepper* cobj = new (std::nothrow) cocos2d::extension::ControlStepper();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -5656,7 +5656,7 @@ static bool js_cocos2d_extension_ControlStepper_ctor(JSContext *cx, uint32_t arg
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::extension::ControlStepper *nobj = new cocos2d::extension::ControlStepper();
+    cocos2d::extension::ControlStepper *nobj = new (std::nothrow) cocos2d::extension::ControlStepper();
     if (nobj) {
         nobj->autorelease();
     }
@@ -6146,7 +6146,7 @@ bool js_cocos2dx_extension_ControlSwitch_constructor(JSContext *cx, uint32_t arg
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::ControlSwitch* cobj = new cocos2d::extension::ControlSwitch();
+    cocos2d::extension::ControlSwitch* cobj = new (std::nothrow) cocos2d::extension::ControlSwitch();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -6179,7 +6179,7 @@ static bool js_cocos2d_extension_ControlSwitch_ctor(JSContext *cx, uint32_t argc
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::extension::ControlSwitch *nobj = new cocos2d::extension::ControlSwitch();
+    cocos2d::extension::ControlSwitch *nobj = new (std::nothrow) cocos2d::extension::ControlSwitch();
     if (nobj) {
         nobj->autorelease();
     }
@@ -6961,7 +6961,7 @@ bool js_cocos2dx_extension_ScrollView_constructor(JSContext *cx, uint32_t argc, 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::ScrollView* cobj = new cocos2d::extension::ScrollView();
+    cocos2d::extension::ScrollView* cobj = new (std::nothrow) cocos2d::extension::ScrollView();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -6994,7 +6994,7 @@ static bool js_cocos2d_extension_ScrollView_ctor(JSContext *cx, uint32_t argc, j
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::extension::ScrollView *nobj = new cocos2d::extension::ScrollView();
+    cocos2d::extension::ScrollView *nobj = new (std::nothrow) cocos2d::extension::ScrollView();
     if (nobj) {
         nobj->autorelease();
     }
@@ -7170,7 +7170,7 @@ bool js_cocos2dx_extension_TableViewCell_constructor(JSContext *cx, uint32_t arg
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::TableViewCell* cobj = new cocos2d::extension::TableViewCell();
+    cocos2d::extension::TableViewCell* cobj = new (std::nothrow) cocos2d::extension::TableViewCell();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -7203,7 +7203,7 @@ static bool js_cocos2d_extension_TableViewCell_ctor(JSContext *cx, uint32_t argc
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::extension::TableViewCell *nobj = new cocos2d::extension::TableViewCell();
+    cocos2d::extension::TableViewCell *nobj = new (std::nothrow) cocos2d::extension::TableViewCell();
     if (nobj) {
         nobj->autorelease();
     }
@@ -7556,7 +7556,7 @@ bool js_cocos2dx_extension_TableView_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::TableView* cobj = new cocos2d::extension::TableView();
+    cocos2d::extension::TableView* cobj = new (std::nothrow) cocos2d::extension::TableView();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -7589,7 +7589,7 @@ static bool js_cocos2d_extension_TableView_ctor(JSContext *cx, uint32_t argc, js
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::extension::TableView *nobj = new cocos2d::extension::TableView();
+    cocos2d::extension::TableView *nobj = new (std::nothrow) cocos2d::extension::TableView();
     if (nobj) {
         nobj->autorelease();
     }
@@ -8152,7 +8152,7 @@ bool js_cocos2dx_extension_EditBox_constructor(JSContext *cx, uint32_t argc, jsv
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::EditBox* cobj = new cocos2d::extension::EditBox();
+    cocos2d::extension::EditBox* cobj = new (std::nothrow) cocos2d::extension::EditBox();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -8418,7 +8418,7 @@ bool js_cocos2dx_extension_EventAssetsManager_constructor(JSContext *cx, uint32_
 		} while (0);
     ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
     JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_EventAssetsManager_constructor : Error processing arguments");
-    cocos2d::extension::EventAssetsManager* cobj = new cocos2d::extension::EventAssetsManager(arg0, arg1, arg2);
+    cocos2d::extension::EventAssetsManager* cobj = new (std::nothrow) cocos2d::extension::EventAssetsManager(arg0, arg1, arg2);
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -8842,7 +8842,7 @@ bool js_cocos2dx_extension_AssetsManager_constructor(JSContext *cx, uint32_t arg
     ok &= jsval_to_std_string(cx, argv[0], &arg0);
     ok &= jsval_to_std_string(cx, argv[1], &arg1);
     JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_AssetsManager_constructor : Error processing arguments");
-    cocos2d::extension::AssetsManager* cobj = new cocos2d::extension::AssetsManager(arg0, arg1);
+    cocos2d::extension::AssetsManager* cobj = new (std::nothrow) cocos2d::extension::AssetsManager(arg0, arg1);
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -9044,7 +9044,7 @@ bool js_cocos2dx_extension_EventListenerAssetsManager_constructor(JSContext *cx,
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::extension::EventListenerAssetsManager* cobj = new cocos2d::extension::EventListenerAssetsManager();
+    cocos2d::extension::EventListenerAssetsManager* cobj = new (std::nothrow) cocos2d::extension::EventListenerAssetsManager();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
