@@ -97,15 +97,20 @@ var extensionsTestItemNames = [
     {
         itemTitle:"PluginTest",
         testScene:function () {
-            cc.loader.loadJs('', [
-                "../../frameworks/cocos2d-html5/external/pluginx/platform/facebook_sdk.js",
-                "../../frameworks/cocos2d-html5/external/pluginx/platform/facebook.js"
-            ], function(){
+            if(cc.sys.isNative){
                 var testScene = pluginXSceneManager.currentPluginXScene();
-                if (testScene) {
-                    cc.director.runScene(testScene);
-                }
-            });
+                cc.director.runScene(testScene);
+            }else{
+                cc.loader.loadJs('', [
+                    "../../frameworks/cocos2d-html5/external/pluginx/platform/facebook.js",
+                    "../../frameworks/cocos2d-html5/external/pluginx/platform/facebook_sdk.js"
+                ], function(){
+                    var testScene = pluginXSceneManager.currentPluginXScene();
+                    if (testScene) {
+                        cc.director.runScene(testScene);
+                    }
+                });
+            }
         }
     }
 ];
