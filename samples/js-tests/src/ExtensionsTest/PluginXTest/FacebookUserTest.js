@@ -73,7 +73,7 @@ var FacebookUserTest = PluginXTest.extend({
     loginClick: function (sender) {
         var self = this;
         facebook.isLoggedIn(function(type, msg){
-            if(type == 0){
+            if(type == plugin.FacebookAgent.CodeSucceed){
                 self.result.setString(msg);
             }else{
                 facebook.login(function(type, msg){
