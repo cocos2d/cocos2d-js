@@ -1547,11 +1547,11 @@ bool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         
         if(argc == 1) {
             sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, !node->isRunning());
-        } if(argc == 2) {
+        }else if(argc == 2) {
             sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, !node->isRunning());
-        } if(argc == 3) {
+        }else if(argc == 3) {
             sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, (unsigned int)repeat, 0, !node->isRunning());
-        } if (argc == 4) {
+        }else if (argc == 4) {
             sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, (unsigned int)repeat, delay, !node->isRunning());
         }
 		
