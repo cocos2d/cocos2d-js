@@ -445,7 +445,6 @@ cc.loader = {
             self.cache[url] = data;
             cb(null, data);
         } else {
-            cc.log(err);
             self.cache[url] = null;
             delete self.cache[url];
             cb();
