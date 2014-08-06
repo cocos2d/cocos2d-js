@@ -22,18 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var CustomImageViewReader = {
+var customImageViewReader = {
 
     _instanceCustomImageViewReader: null,
 
-    getInstance: function(){
-        if (!this._instanceCustomImageViewReader)
-        {
-            this._instanceCustomImageViewReader = CustomImageViewReader;
-        }
-        return this._instanceCustomImageViewReader;
-
-    },
     setProperties: function(classType, widget, customOptions){
         var custom = widget;
 

@@ -22,13 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-ccui.CustomReader = {
+ccui.customReader = {
 
     _instanceCustomReader: null,
-
-    getInstance: function(){
-        return ccui.CustomReader;
-    },
 
     setProperties: function(classType, widget, customOptions){
         if (classType.compare("CustomImageView") == 0)
