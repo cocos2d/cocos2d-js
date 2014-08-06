@@ -829,8 +829,8 @@ bool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *nu
     uint32_t len;
     JS_GetArrayLength(cx, jsobj, &len);
     
-    Point *array = (Point*)malloc( sizeof(Point) * len);
-    
+    Point *array = new Point[len];
+
     for( uint32_t i=0; i< len;i++ ) {
         JS::RootedValue valarg(cx);
         JS_GetElement(cx, jsobj, i, &valarg);
@@ -1014,7 +1014,7 @@ bool jsval_to_ccvaluemap(JSContext* cx, jsval v, cocos2d::ValueMap* ret)
                 bool ok = jsval_to_ccvaluemap(cx, value, &dictVal);
                 if (ok)
                 {
-                    dict[keyWrapper.get()] = Value(dictVal);
+                    dict.insert(ValueMap::value_type(keyWrapper.get(), Value(dictVal)));
                 }
             }
             else {
@@ -1023,14 +1023,14 @@ bool jsval_to_ccvaluemap(JSContext* cx, jsval v, cocos2d::ValueMap* ret)
                 bool ok = jsval_to_ccvaluevector(cx, value, &arrVal);
                 if (ok)
                 {
-                    dict[keyWrapper.get()] = Value(arrVal);
+                    dict.insert(ValueMap::value_type(keyWrapper.get(), Value(arrVal)));
                 }
             }
         }
         else if (JSVAL_IS_STRING(value))
         {
             JSStringWrapper valueWapper(JSVAL_TO_STRING(value), cx);
-            dict[keyWrapper.get()] = Value(valueWapper.get());
+            dict.insert(ValueMap::value_type(keyWrapper.get(), Value(valueWapper.get())));
             //            CCLOG("iterate object: key = %s, value = %s", keyWrapper.get().c_str(), valueWapper.get().c_str());
         }
         else if (JSVAL_IS_NUMBER(value))
@@ -1038,14 +1038,14 @@ bool jsval_to_ccvaluemap(JSContext* cx, jsval v, cocos2d::ValueMap* ret)
             double number = 0.0;
             bool ok = JS::ToNumber(cx, value, &number);
             if (ok) {
-                dict[keyWrapper.get()] = Value(number);
+                dict.insert(ValueMap::value_type(keyWrapper.get(), Value(number)));
                 // CCLOG("iterate object: key = %s, value = %lf", keyWrapper.get().c_str(), number);
             }
         }
         else if (JSVAL_IS_BOOLEAN(value))
         {
             bool boolVal = JS::ToBoolean(value);
-            dict[keyWrapper.get()] = Value(boolVal);
+            dict.insert(ValueMap::value_type(keyWrapper.get(), Value(boolVal)));
             // CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
         }
         else {
@@ -1104,7 +1104,7 @@ bool jsval_to_ccvaluemapintkey(JSContext* cx, jsval v, cocos2d::ValueMapIntKey* 
                 bool ok = jsval_to_ccvaluemap(cx, value, &dictVal);
                 if (ok)
                 {
-                    dict[keyVal] = Value(dictVal);
+                    dict.insert(ValueMapIntKey::value_type(keyVal, Value(dictVal)));
                 }
             }
             else {
@@ -1113,27 +1113,27 @@ bool jsval_to_ccvaluemapintkey(JSContext* cx, jsval v, cocos2d::ValueMapIntKey* 
                 bool ok = jsval_to_ccvaluevector(cx, value, &arrVal);
                 if (ok)
                 {
-                    dict[keyVal] = Value(arrVal);
+                    dict.insert(ValueMapIntKey::value_type(keyVal, Value(arrVal)));
                 }
             }
         }
         else if (JSVAL_IS_STRING(value))
         {
             JSStringWrapper valueWapper(JSVAL_TO_STRING(value), cx);
-            dict[keyVal] = Value(valueWapper.get());
+            dict.insert(ValueMapIntKey::value_type(keyVal, Value(valueWapper.get())));
         }
         else if (JSVAL_IS_NUMBER(value))
         {
             double number = 0.0;
             bool ok = JS::ToNumber(cx, value, &number);
             if (ok) {
-                dict[keyVal] = Value(number);
+                dict.insert(ValueMapIntKey::value_type(keyVal, Value(number)));
             }
         }
         else if (JSVAL_IS_BOOLEAN(value))
         {
             bool boolVal = JS::ToBoolean(value);
-            dict[keyVal] = Value(boolVal);
+            dict.insert(ValueMapIntKey::value_type(keyVal, Value(boolVal)));
         }
         else {
             CCASSERT(false, "not supported type");

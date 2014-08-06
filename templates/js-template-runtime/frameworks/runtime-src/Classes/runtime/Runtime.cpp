@@ -247,7 +247,7 @@ vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const 
     return _lfileList;
 }
 
-bool startScript()
+static bool startScript()
 {
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
@@ -859,7 +859,7 @@ public:
             _transferTip = "waiting for debugger to connect ...";
         }
         char szVersion[1024]={0};
-        sprintf(szVersion,"runtimeVersion:%s \ncocos2dVersion:%s",getRuntimeVersion(),ENGINE_VERSION);
+        sprintf(szVersion,"runtimeVersion:%s \nengineVersion:%s",getRuntimeVersion(),ENGINE_VERSION);
         Label* verLable = Label::createWithSystemFont(szVersion,"",24);
         verLable->setAnchorPoint(Vec2(0,0));
         int width = verLable->getBoundingBox().size.width;
@@ -1108,8 +1108,11 @@ public:
                     platform = "ANDROID";
 #endif
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
-                    bodyvalue.AddMember("platform",platform.c_str(),dReplyParse.GetAllocator());
+                    rapidjson::Value platformValue(rapidjson::kStringType);
+                    platformValue.SetString(platform.c_str(),dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("platform",platformValue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }
                 
                 rapidjson::StringBuffer buffer;
@@ -1250,6 +1253,10 @@ bool initRuntime()
     
     searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
+
+    static ConsoleCustomCommand *g_customCommand;
+    g_customCommand = new ConsoleCustomCommand();
+    g_customCommand->init();
     return true;
 }
 
@@ -1271,10 +1278,6 @@ bool startRuntime()
     
 	// turn on display FPS
     Director::getInstance()->setDisplayStats(true);
-    static ConsoleCustomCommand *g_customCommand;
-    g_customCommand = new ConsoleCustomCommand();
-    g_customCommand->init();
-
     ScriptingCore::getInstance()->addRegisterCallback(register_FileUtils);
     ScriptingCore::getInstance()->start();
 

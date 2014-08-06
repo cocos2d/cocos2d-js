@@ -500,7 +500,7 @@ var TestFrameEvent = ArmatureTestLayer.extend({
         if (!this.getActionByTag(FRAME_EVENT_ACTION_TAG) || this.getActionByTag(FRAME_EVENT_ACTION_TAG).isDone()) {
             if ("opengl" in cc.sys.capabilities) {
                 this.stopAllActions();
-                var action = cc.ShatteredTiles3D.create(0.2, cc.size(16, 12), 5, false);
+                var action = cc.shatteredTiles3D(0.2, cc.size(16, 12), 5, false);
                 action.tag = FRAME_EVENT_ACTION_TAG;
                 this._nodeGrid.runAction(action);
             }

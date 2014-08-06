@@ -23,7 +23,7 @@ static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 		return true;
 	}
 
-    JS_ReportError(cx, "Don't use `new cc.XXX`, please use `cc.XXX.create` instead! ");
+    JS_ReportError(cx, "Constructor for the requested class is not available, please refer to the API reference.");
     return false;
 }
 
@@ -877,7 +877,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_constructor(JSContext *cx, uint32_t
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocosbuilder::CCBAnimationManager* cobj = new cocosbuilder::CCBAnimationManager();
+    cocosbuilder::CCBAnimationManager* cobj = new (std::nothrow) cocosbuilder::CCBAnimationManager();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -1401,7 +1401,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
 				JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
-			cobj = new cocosbuilder::CCBReader(arg0);
+			cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0);
 			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
 			if (_ccobj) {
 				_ccobj->autorelease();
@@ -1431,7 +1431,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
 				JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
-			cobj = new cocosbuilder::CCBReader(arg0);
+			cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0);
 			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
 			if (_ccobj) {
 				_ccobj->autorelease();
@@ -1471,7 +1471,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
 				JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
-			cobj = new cocosbuilder::CCBReader(arg0, arg1);
+			cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0, arg1);
 			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
 			if (_ccobj) {
 				_ccobj->autorelease();
@@ -1521,7 +1521,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
 				JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
-			cobj = new cocosbuilder::CCBReader(arg0, arg1, arg2);
+			cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0, arg1, arg2);
 			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
 			if (_ccobj) {
 				_ccobj->autorelease();
@@ -1581,7 +1581,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
 				JSB_PRECONDITION2( arg3, cx, false, "Invalid Native Object");
 			} while (0);
 			if (!ok) { ok = true; break; }
-			cobj = new cocosbuilder::CCBReader(arg0, arg1, arg2, arg3);
+			cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0, arg1, arg2, arg3);
 			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
 			if (_ccobj) {
 				_ccobj->autorelease();
@@ -1601,7 +1601,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
 
 	do {
 		if (argc == 0) {
-			cobj = new cocosbuilder::CCBReader();
+			cobj = new (std::nothrow) cocosbuilder::CCBReader();
 			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
 			if (_ccobj) {
 				_ccobj->autorelease();
@@ -1620,6 +1620,9 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
 	} while(0);
 
 	if (cobj) {
+		if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        		ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return true;
 	}

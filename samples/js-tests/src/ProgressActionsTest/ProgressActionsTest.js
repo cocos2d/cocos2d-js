@@ -68,8 +68,8 @@ var SpriteProgressToRadial = SpriteDemo.extend({
         //----start0----onEnter
         this._super();
 
-        var to1 = new cc.ProgressTo(2, 100);
-        var to2 = new cc.ProgressTo(2, 100);
+        var to1 = cc.progressTo(2, 100);
+        var to2 = cc.progressTo(2, 100);
 
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_RADIAL;
@@ -98,8 +98,8 @@ var SpriteProgressToHorizontal = SpriteDemo.extend({
         //----start1----onEnter
         this._super();
 
-        var to1 = new cc.ProgressTo(2, 100);
-        var to2 = new cc.ProgressTo(2, 100);
+        var to1 = cc.progressTo(2, 100);
+        var to2 = cc.progressTo(2, 100);
 
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;
@@ -134,8 +134,8 @@ var SpriteProgressToVertical = SpriteDemo.extend({
         //----start2----onEnter
         this._super();
 
-        var to1 = new cc.ProgressTo(2, 100);
-        var to2 = new cc.ProgressTo(2, 100);
+        var to1 = cc.progressTo(2, 100);
+        var to2 = cc.progressTo(2, 100);
 
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;
@@ -170,7 +170,7 @@ var SpriteProgressToRadialMidpointChanged = SpriteDemo.extend({
         //----start3----onEnter
         this._super();
 
-        var action = new cc.ProgressTo(2, 100);
+        var action = cc.progressTo(2, 100);
 
         /**
          *  Our image on the left should be a radial progress indicator, clockwise
@@ -210,7 +210,7 @@ var SpriteProgressBarVarious = SpriteDemo.extend({
         //----start4----onEnter
         this._super();
 
-        var to = new cc.ProgressTo(2, 100);
+        var to = cc.progressTo(2, 100);
 
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;
@@ -258,7 +258,7 @@ var SpriteProgressBarTintAndFade = SpriteDemo.extend({
         //----start5----onEnter
         this._super();
 
-        var to = new cc.ProgressTo(6, 100);
+        var to = cc.progressTo(6, 100);
         var tint = cc.sequence(
             cc.tintTo(1, 255, 0, 0),
             cc.tintTo(1, 0, 255, 0),
@@ -323,7 +323,7 @@ var SpriteProgressWithSpriteFrame = SpriteDemo.extend({
         //----start6----onEnter
         this._super();
 
-        var to = new cc.ProgressTo(6, 100);
+        var to = cc.progressTo(6, 100);
 
         cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
 
