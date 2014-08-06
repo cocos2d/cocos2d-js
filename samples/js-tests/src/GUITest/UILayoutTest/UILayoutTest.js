@@ -227,14 +227,14 @@ var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
     setLayoutParameter: function () {
         var lp1 = new ccui.RelativeLayoutParameter();
         this.button.setLayoutParameter(lp1);
-        lp1.setAlign(ccui.RELATIVE_ALIGN_PARENT_TOP_LEFT);
+        lp1.setAlign(ccui.RelativeLayoutParameter.PARENT_TOP_LEFT);
 
         var lp2 = new ccui.RelativeLayoutParameter();
         this.textButton.setLayoutParameter(lp2);
-        lp2.setAlign(ccui.RELATIVE_ALIGN_PARENT_CENTER);
+        lp2.setAlign(ccui.RelativeLayoutParameter.CENTER_IN_PARENT);
 
         var lp3 = new ccui.RelativeLayoutParameter();
         this.button_scale9.setLayoutParameter(lp3);
-        lp3.setAlign(ccui.RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM);
+        lp3.setAlign(ccui.RelativeLayoutParameter.PARENT_RIGHT_BOTTOM);
     }
 });

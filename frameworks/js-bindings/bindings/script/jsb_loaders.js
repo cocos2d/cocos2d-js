@@ -57,7 +57,9 @@ cc._imgLoader = {
                 cb(null, img);
             });
         }
-        else cb(null);
+        else{
+            return null;
+        }
     }
 };
 cc.loader.register(["png", "jpg", "bmp","jpeg","gif"], cc._imgLoader);
