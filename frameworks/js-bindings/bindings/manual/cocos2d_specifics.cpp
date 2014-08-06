@@ -1547,11 +1547,11 @@ bool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         
         if(argc == 1) {
             sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, !node->isRunning());
-        } if(argc == 2) {
+        }else if(argc == 2) {
             sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, !node->isRunning());
-        } if(argc == 3) {
+        }else if(argc == 3) {
             sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, (unsigned int)repeat, 0, !node->isRunning());
-        } if (argc == 4) {
+        }else if (argc == 4) {
             sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, (unsigned int)repeat, delay, !node->isRunning());
         }
 		
@@ -2719,7 +2719,7 @@ bool js_BezierActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
         
         T* ret =  T::create(t, config);
         
-        free(arr);
+        delete [] arr;
 
         jsval jsret;
 		do {
@@ -2768,7 +2768,7 @@ bool js_BezierActions_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
 
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Bezier_initWithDuration : Error processing arguments");
         bool ret = cobj->initWithDuration(arg0, arg1);
-        free(arr);
+        delete [] arr;
         jsval jsret = JSVAL_NULL;
         jsret = BOOLEAN_TO_JSVAL(ret);
         JS_SET_RVAL(cx, vp, jsret);
@@ -2805,7 +2805,7 @@ bool js_CardinalSplineActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
         
         T *ret = T::create(dur, points, ten);
         
-        free(arr);
+        delete [] arr;
         
         jsval jsret;
 		do {
@@ -2853,7 +2853,7 @@ bool js_CatmullRomActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
         
         T *ret = T::create(dur, points);
         
-        free(arr);
+        delete [] arr;
         
         jsval jsret;
 		do {
@@ -2902,7 +2902,7 @@ bool js_CatmullRomActions_initWithDuration(JSContext *cx, uint32_t argc, jsval *
         
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CatmullRom_initWithDuration : Error processing arguments");
 		bool ret = cobj->initWithDuration(arg0, arg1);
-        free(arr);
+        delete [] arr;
 		jsval jsret = JSVAL_NULL;
 		jsret = BOOLEAN_TO_JSVAL(ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -2966,7 +2966,7 @@ bool js_cocos2dx_CardinalSplineTo_initWithDuration(JSContext *cx, uint32_t argc,
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CardinalSplineTo_initWithDuration : Error processing arguments");
 		bool ret = cobj->initWithDuration(arg0, arg1, arg2);
         
-        free(arr);
+        delete [] arr;
 		jsval jsret = JSVAL_NULL;
 		jsret = BOOLEAN_TO_JSVAL(ret);
 		JS_SET_RVAL(cx, vp, jsret);

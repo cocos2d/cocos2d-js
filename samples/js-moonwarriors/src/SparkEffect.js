@@ -25,9 +25,9 @@ var SparkEffect = cc.Class.extend({
 	        opacity: 255
         });
 
-        var right = new cc.RotateBy(this.duration, 45);
-        var scaleBy = new cc.ScaleBy(this.duration, 3, 3);
-        var seq = new cc.Sequence(new cc.FadeOut(this.duration), new cc.CallFunc(this.destroy, this));
+        var right = cc.rotateBy(this.duration, 45);
+        var scaleBy = cc.scaleBy(this.duration, 3, 3);
+        var seq = cc.sequence(cc.fadeOut(this.duration), cc.callFunc(this.destroy, this));
 
         this.spark1.runAction(right);
         this.spark1.runAction(scaleBy);

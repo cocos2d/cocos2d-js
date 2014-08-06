@@ -29,8 +29,8 @@ var Ship = cc.Sprite.extend({
 
         // ship animate
         var animation = new cc.Animation(animFrames, 0.1);
-        var animate = new cc.Animate(animation);
-        this.runAction(new cc.RepeatForever(animate));
+        var animate = cc.animate(animation);
+        this.runAction(animate.repeatForever());
         this.schedule(this.shoot, 1 / 6);
 
         this.initBornSprite();
@@ -109,15 +109,15 @@ var Ship = cc.Sprite.extend({
         //revive effect
         this.canBeAttack = false;
         this.bornSprite.scale = 8;
-        this.bornSprite.runAction(new cc.ScaleTo(0.5, 1, 1));
+        this.bornSprite.runAction(cc.scaleTo(0.5, 1, 1));
         this.bornSprite.visible = true;
-        var blinks = new cc.Blink(3, 9);
-        var makeBeAttack = new cc.CallFunc(function (t) {
+        var blinks = cc.blink(3, 9);
+        var makeBeAttack = cc.callFunc(function (t) {
             t.canBeAttack = true;
             t.visible = true;
             t.bornSprite.visible = false;
         }.bind(this));
-        this.runAction(new cc.Sequence(new cc.DelayTime(0.5), blinks, makeBeAttack));
+        this.runAction(cc.sequence(cc.delayTime(0.5), blinks, makeBeAttack));
 
         this.HP = 5;
         this._hurtColorLife = 0;

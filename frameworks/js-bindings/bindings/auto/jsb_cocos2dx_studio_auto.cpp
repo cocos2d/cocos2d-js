@@ -23,7 +23,7 @@ static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 		return true;
 	}
 
-    JS_ReportError(cx, "Don't use `new cc.XXX`, please use `cc.XXX.create` instead! ");
+    JS_ReportError(cx, "Constructor for the requested class is not available, please refer to the API reference.");
     return false;
 }
 
@@ -284,7 +284,8 @@ bool js_cocos2dx_studio_ActionObject_initWithBinary(JSContext *cx, uint32_t argc
 			arg0 = (cocostudio::CocoLoader*)(jsProxy ? jsProxy->ptr : NULL);
 			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
-		#pragma warning NO CONVERSION TO NATIVE FOR stExpCocoNode*;
+		#pragma warning NO CONVERSION TO NATIVE FOR stExpCocoNode*
+		ok = false;
 		do {
 			if (!argv[2].isObject()) { ok = false; break; }
 			js_proxy_t *jsProxy;
@@ -427,7 +428,7 @@ bool js_cocos2dx_studio_ActionObject_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocostudio::ActionObject* cobj = new cocostudio::ActionObject();
+    cocostudio::ActionObject* cobj = new (std::nothrow) cocostudio::ActionObject();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -659,7 +660,8 @@ bool js_cocos2dx_studio_ActionManagerEx_initWithBinary(JSContext *cx, uint32_t a
 			arg2 = (cocostudio::CocoLoader*)(jsProxy ? jsProxy->ptr : NULL);
 			JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
 		} while (0);
-		#pragma warning NO CONVERSION TO NATIVE FOR stExpCocoNode*;
+		#pragma warning NO CONVERSION TO NATIVE FOR stExpCocoNode*
+		ok = false;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionManagerEx_initWithBinary : Error processing arguments");
 		cobj->initWithBinary(arg0, arg1, arg2, arg3);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -845,7 +847,7 @@ bool js_cocos2dx_studio_BaseData_constructor(JSContext *cx, uint32_t argc, jsval
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocostudio::BaseData* cobj = new cocostudio::BaseData();
+    cocostudio::BaseData* cobj = new (std::nothrow) cocostudio::BaseData();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -1013,7 +1015,7 @@ bool js_cocos2dx_studio_MovementData_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocostudio::MovementData* cobj = new cocostudio::MovementData();
+    cocostudio::MovementData* cobj = new (std::nothrow) cocostudio::MovementData();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -1198,7 +1200,7 @@ bool js_cocos2dx_studio_AnimationData_constructor(JSContext *cx, uint32_t argc, 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocostudio::AnimationData* cobj = new cocostudio::AnimationData();
+    cocostudio::AnimationData* cobj = new (std::nothrow) cocostudio::AnimationData();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -1581,7 +1583,7 @@ bool js_cocos2dx_studio_ProcessBase_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocostudio::ProcessBase* cobj = new cocostudio::ProcessBase();
+    cocostudio::ProcessBase* cobj = new (std::nothrow) cocostudio::ProcessBase();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -1871,7 +1873,7 @@ bool js_cocos2dx_studio_Tween_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocostudio::Tween* cobj = new cocostudio::Tween();
+    cocostudio::Tween* cobj = new (std::nothrow) cocostudio::Tween();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -3206,7 +3208,7 @@ bool js_cocos2dx_studio_DisplayManager_constructor(JSContext *cx, uint32_t argc,
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocostudio::DisplayManager* cobj = new cocostudio::DisplayManager();
+    cocostudio::DisplayManager* cobj = new (std::nothrow) cocostudio::DisplayManager();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -4092,7 +4094,7 @@ bool js_cocos2dx_studio_Bone_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocostudio::Bone* cobj = new cocostudio::Bone();
+    cocostudio::Bone* cobj = new (std::nothrow) cocostudio::Bone();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -4756,7 +4758,7 @@ bool js_cocos2dx_studio_ArmatureAnimation_constructor(JSContext *cx, uint32_t ar
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocostudio::ArmatureAnimation* cobj = new cocostudio::ArmatureAnimation();
+    cocostudio::ArmatureAnimation* cobj = new (std::nothrow) cocostudio::ArmatureAnimation();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -6061,7 +6063,7 @@ bool js_cocos2dx_studio_Armature_constructor(JSContext *cx, uint32_t argc, jsval
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocostudio::Armature* cobj = new cocostudio::Armature();
+    cocostudio::Armature* cobj = new (std::nothrow) cocostudio::Armature();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -6094,7 +6096,7 @@ static bool js_cocostudio_Armature_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocostudio::Armature *nobj = new cocostudio::Armature();
+    cocostudio::Armature *nobj = new (std::nothrow) cocostudio::Armature();
     if (nobj) {
         nobj->autorelease();
     }
@@ -6361,7 +6363,7 @@ bool js_cocos2dx_studio_Skin_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocostudio::Skin* cobj = new cocostudio::Skin();
+    cocostudio::Skin* cobj = new (std::nothrow) cocostudio::Skin();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -7722,7 +7724,7 @@ bool js_cocos2dx_studio_ComController_constructor(JSContext *cx, uint32_t argc, 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocostudio::ComController* cobj = new cocostudio::ComController();
+    cocostudio::ComController* cobj = new (std::nothrow) cocostudio::ComController();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -7755,7 +7757,7 @@ static bool js_cocostudio_ComController_ctor(JSContext *cx, uint32_t argc, jsval
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocostudio::ComController *nobj = new cocostudio::ComController();
+    cocostudio::ComController *nobj = new (std::nothrow) cocostudio::ComController();
     if (nobj) {
         nobj->autorelease();
     }
