@@ -152,3 +152,7 @@ cc.ControlStepper.prototype._ctor = function(minusSprite, plusSprite){
 cc.ControlSwitch.prototype._ctor = function(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel){
     offLabel && this.initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
 };
+
+cc.TableView.prototype._ctor = function(dataSouurce, size, container){
+    container == undefined ? this._init(dataSouurce, size) : this._init(dataSouurce, size, container);
+};
