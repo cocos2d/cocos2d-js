@@ -44,19 +44,19 @@ var CCPoolTest = cc.Layer.extend({
         return true;
     },
     initUI: function () {
-        var createLabel = new cc.LabelTTF("click me to create 150 sprites directly", "Impact", 23);
-        var reCreateLabel = new cc.LabelTTF("click me to create 150 sprites use pool", "Impact", 23);
+        var createLabel = new cc.LabelTTF("click me to create\n 150 sprites directly", "Arial", 23);
+        var reCreateLabel = new cc.LabelTTF("click me to create\n 150 sprites use pool", "Arial", 23);
         reCreateLabel.color = cc.color(255, 255, 255, 255);
         createLabel.color = cc.color(255, 255, 255, 255);
         var menuItem1 = new cc.MenuItemLabel(createLabel, this.addSpriteByCreate, this);
         var menuItem2 = new cc.MenuItemLabel(reCreateLabel, this.addSpriteByPool, this);
         var menu = new cc.Menu(menuItem1, menuItem2);
-        menu.alignItemsHorizontallyWithPadding(40);
-        this.directLabel = new cc.LabelTTF("create directly cost:", "Arial", 21);
-        this.poolLabel = new cc.LabelTTF("use pool cost:", "Arial", 21);
-        this.directLabel.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(-250, -45)));
+        menu.alignItemsHorizontallyWithPadding(150);
+        this.directLabel = new cc.LabelTTF("create directly cost:", "Arial", 18);
+        this.poolLabel = new cc.LabelTTF("use pool cost:", "Arial", 18);
+        this.directLabel.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(-190, -65)));
         this.directLabel.anchorY = 0;
-        this.poolLabel.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(250, -45)));
+        this.poolLabel.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(200, -65)));
         this.poolLabel.anchorY = 0;
         this.addChild(this.directLabel);
         this.addChild(this.poolLabel);

@@ -1885,7 +1885,7 @@ var WrapAlgorithmTest = AtlasDemo.extend({
             LabelTTF.setAnchorPoint(0,1);
             LabelTTF.boundingWidth = 120;
             LabelTTF.boundingHeight = 0;
-            LabelTTF.enableStroke("rgba(0, 0, 0, 1)", 3.0);
+            LabelTTF.enableStroke(cc.color(0, 0, 0, 1), 3.0);
             self.addChild(LabelTTF);
         });
 
@@ -1907,7 +1907,7 @@ var WrapAlgorithmTest = AtlasDemo.extend({
             LabelTTF.setAnchorPoint(0,1);
             LabelTTF.boundingWidth = 3;
             LabelTTF.boundingHeight = 0;
-            LabelTTF.enableStroke("rgba(0, 0, 0, 1)", 3.0);
+            LabelTTF.enableStroke(cc.color(0, 0, 0, 1), 3.0);
             self.addChild(LabelTTF);
         });
 
@@ -1925,7 +1925,7 @@ var WrapAlgorithmTest = AtlasDemo.extend({
             LabelTTF.setAnchorPoint(0,1);
             LabelTTF.boundingWidth = 90;
             LabelTTF.boundingHeight = 0;
-            LabelTTF.enableStroke("rgba(0, 0, 0, 1)", 3.0);
+            LabelTTF.enableStroke(cc.color(0, 0, 0, 1), 3.0);
             self.addChild(LabelTTF);
         });
 
