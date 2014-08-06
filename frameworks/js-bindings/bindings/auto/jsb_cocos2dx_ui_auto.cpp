@@ -23,7 +23,7 @@ static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 		return true;
 	}
 
-    JS_ReportError(cx, "Don't use `new cc.XXX`, please use `cc.XXX.create` instead! ");
+    JS_ReportError(cx, "Constructor for the requested class is not available, please refer to the API reference.");
     return false;
 }
 
@@ -155,7 +155,7 @@ bool js_cocos2dx_ui_LayoutParameter_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::LayoutParameter* cobj = new cocos2d::ui::LayoutParameter();
+    cocos2d::ui::LayoutParameter* cobj = new (std::nothrow) cocos2d::ui::LayoutParameter();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -306,7 +306,7 @@ bool js_cocos2dx_ui_LinearLayoutParameter_constructor(JSContext *cx, uint32_t ar
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::LinearLayoutParameter* cobj = new cocos2d::ui::LinearLayoutParameter();
+    cocos2d::ui::LinearLayoutParameter* cobj = new (std::nothrow) cocos2d::ui::LinearLayoutParameter();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -530,7 +530,7 @@ bool js_cocos2dx_ui_RelativeLayoutParameter_constructor(JSContext *cx, uint32_t 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::RelativeLayoutParameter* cobj = new cocos2d::ui::RelativeLayoutParameter();
+    cocos2d::ui::RelativeLayoutParameter* cobj = new (std::nothrow) cocos2d::ui::RelativeLayoutParameter();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -1768,7 +1768,7 @@ bool js_cocos2dx_ui_Widget_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::Widget* cobj = new cocos2d::ui::Widget();
+    cocos2d::ui::Widget* cobj = new (std::nothrow) cocos2d::ui::Widget();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -1801,7 +1801,7 @@ static bool js_cocos2d_ui_Widget_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::Widget *nobj = new cocos2d::ui::Widget();
+    cocos2d::ui::Widget *nobj = new (std::nothrow) cocos2d::ui::Widget();
     if (nobj) {
         nobj->autorelease();
     }
@@ -2582,7 +2582,7 @@ bool js_cocos2dx_ui_Layout_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::Layout* cobj = new cocos2d::ui::Layout();
+    cocos2d::ui::Layout* cobj = new (std::nothrow) cocos2d::ui::Layout();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -2615,7 +2615,7 @@ static bool js_cocos2d_ui_Layout_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::Layout *nobj = new cocos2d::ui::Layout();
+    cocos2d::ui::Layout *nobj = new (std::nothrow) cocos2d::ui::Layout();
     if (nobj) {
         nobj->autorelease();
     }
@@ -3400,7 +3400,7 @@ bool js_cocos2dx_ui_Button_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::Button* cobj = new cocos2d::ui::Button();
+    cocos2d::ui::Button* cobj = new (std::nothrow) cocos2d::ui::Button();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -3433,7 +3433,7 @@ static bool js_cocos2d_ui_Button_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::Button *nobj = new cocos2d::ui::Button();
+    cocos2d::ui::Button *nobj = new (std::nothrow) cocos2d::ui::Button();
     if (nobj) {
         nobj->autorelease();
     }
@@ -3925,7 +3925,7 @@ bool js_cocos2dx_ui_CheckBox_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::CheckBox* cobj = new cocos2d::ui::CheckBox();
+    cocos2d::ui::CheckBox* cobj = new (std::nothrow) cocos2d::ui::CheckBox();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -3958,7 +3958,7 @@ static bool js_cocos2d_ui_CheckBox_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::CheckBox *nobj = new cocos2d::ui::CheckBox();
+    cocos2d::ui::CheckBox *nobj = new (std::nothrow) cocos2d::ui::CheckBox();
     if (nobj) {
         nobj->autorelease();
     }
@@ -4287,7 +4287,7 @@ bool js_cocos2dx_ui_ImageView_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::ImageView* cobj = new cocos2d::ui::ImageView();
+    cocos2d::ui::ImageView* cobj = new (std::nothrow) cocos2d::ui::ImageView();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -4320,7 +4320,7 @@ static bool js_cocos2d_ui_ImageView_ctor(JSContext *cx, uint32_t argc, jsval *vp
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::ImageView *nobj = new cocos2d::ui::ImageView();
+    cocos2d::ui::ImageView *nobj = new (std::nothrow) cocos2d::ui::ImageView();
     if (nobj) {
         nobj->autorelease();
     }
@@ -4904,7 +4904,7 @@ bool js_cocos2dx_ui_Text_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::Text* cobj = new cocos2d::ui::Text();
+    cocos2d::ui::Text* cobj = new (std::nothrow) cocos2d::ui::Text();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -4937,7 +4937,7 @@ static bool js_cocos2d_ui_Text_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::Text *nobj = new cocos2d::ui::Text();
+    cocos2d::ui::Text *nobj = new (std::nothrow) cocos2d::ui::Text();
     if (nobj) {
         nobj->autorelease();
     }
@@ -5207,7 +5207,7 @@ bool js_cocos2dx_ui_TextAtlas_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::TextAtlas* cobj = new cocos2d::ui::TextAtlas();
+    cocos2d::ui::TextAtlas* cobj = new (std::nothrow) cocos2d::ui::TextAtlas();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -5240,7 +5240,7 @@ static bool js_cocos2d_ui_TextAtlas_ctor(JSContext *cx, uint32_t argc, jsval *vp
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::TextAtlas *nobj = new cocos2d::ui::TextAtlas();
+    cocos2d::ui::TextAtlas *nobj = new (std::nothrow) cocos2d::ui::TextAtlas();
     if (nobj) {
         nobj->autorelease();
     }
@@ -5585,7 +5585,7 @@ bool js_cocos2dx_ui_LoadingBar_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::LoadingBar* cobj = new cocos2d::ui::LoadingBar();
+    cocos2d::ui::LoadingBar* cobj = new (std::nothrow) cocos2d::ui::LoadingBar();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -5618,7 +5618,7 @@ static bool js_cocos2d_ui_LoadingBar_ctor(JSContext *cx, uint32_t argc, jsval *v
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::LoadingBar *nobj = new cocos2d::ui::LoadingBar();
+    cocos2d::ui::LoadingBar *nobj = new (std::nothrow) cocos2d::ui::LoadingBar();
     if (nobj) {
         nobj->autorelease();
     }
@@ -6343,7 +6343,7 @@ bool js_cocos2dx_ui_ScrollView_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::ScrollView* cobj = new cocos2d::ui::ScrollView();
+    cocos2d::ui::ScrollView* cobj = new (std::nothrow) cocos2d::ui::ScrollView();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -6376,7 +6376,7 @@ static bool js_cocos2d_ui_ScrollView_ctor(JSContext *cx, uint32_t argc, jsval *v
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::ScrollView *nobj = new cocos2d::ui::ScrollView();
+    cocos2d::ui::ScrollView *nobj = new (std::nothrow) cocos2d::ui::ScrollView();
     if (nobj) {
         nobj->autorelease();
     }
@@ -6885,7 +6885,7 @@ bool js_cocos2dx_ui_ListView_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::ListView* cobj = new cocos2d::ui::ListView();
+    cocos2d::ui::ListView* cobj = new (std::nothrow) cocos2d::ui::ListView();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -6918,7 +6918,7 @@ static bool js_cocos2d_ui_ListView_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::ListView *nobj = new cocos2d::ui::ListView();
+    cocos2d::ui::ListView *nobj = new (std::nothrow) cocos2d::ui::ListView();
     if (nobj) {
         nobj->autorelease();
     }
@@ -7408,7 +7408,7 @@ bool js_cocos2dx_ui_Slider_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::Slider* cobj = new cocos2d::ui::Slider();
+    cocos2d::ui::Slider* cobj = new (std::nothrow) cocos2d::ui::Slider();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -7441,7 +7441,7 @@ static bool js_cocos2d_ui_Slider_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::Slider *nobj = new cocos2d::ui::Slider();
+    cocos2d::ui::Slider *nobj = new (std::nothrow) cocos2d::ui::Slider();
     if (nobj) {
         nobj->autorelease();
     }
@@ -8232,7 +8232,7 @@ bool js_cocos2dx_ui_TextField_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::TextField* cobj = new cocos2d::ui::TextField();
+    cocos2d::ui::TextField* cobj = new (std::nothrow) cocos2d::ui::TextField();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -8265,7 +8265,7 @@ static bool js_cocos2d_ui_TextField_ctor(JSContext *cx, uint32_t argc, jsval *vp
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::TextField *nobj = new cocos2d::ui::TextField();
+    cocos2d::ui::TextField *nobj = new (std::nothrow) cocos2d::ui::TextField();
     if (nobj) {
         nobj->autorelease();
     }
@@ -8516,7 +8516,7 @@ bool js_cocos2dx_ui_TextBMFont_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::TextBMFont* cobj = new cocos2d::ui::TextBMFont();
+    cocos2d::ui::TextBMFont* cobj = new (std::nothrow) cocos2d::ui::TextBMFont();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -8549,7 +8549,7 @@ static bool js_cocos2d_ui_TextBMFont_ctor(JSContext *cx, uint32_t argc, jsval *v
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::TextBMFont *nobj = new cocos2d::ui::TextBMFont();
+    cocos2d::ui::TextBMFont *nobj = new (std::nothrow) cocos2d::ui::TextBMFont();
     if (nobj) {
         nobj->autorelease();
     }
@@ -8901,7 +8901,7 @@ bool js_cocos2dx_ui_PageView_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::PageView* cobj = new cocos2d::ui::PageView();
+    cocos2d::ui::PageView* cobj = new (std::nothrow) cocos2d::ui::PageView();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -8934,7 +8934,7 @@ static bool js_cocos2d_ui_PageView_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::PageView *nobj = new cocos2d::ui::PageView();
+    cocos2d::ui::PageView *nobj = new (std::nothrow) cocos2d::ui::PageView();
     if (nobj) {
         nobj->autorelease();
     }
@@ -9214,7 +9214,7 @@ bool js_cocos2dx_ui_RichElement_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::RichElement* cobj = new cocos2d::ui::RichElement();
+    cocos2d::ui::RichElement* cobj = new (std::nothrow) cocos2d::ui::RichElement();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -9246,7 +9246,7 @@ static bool js_cocos2d_ui_RichElement_ctor(JSContext *cx, uint32_t argc, jsval *
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::RichElement *nobj = new cocos2d::ui::RichElement();
+    cocos2d::ui::RichElement *nobj = new (std::nothrow) cocos2d::ui::RichElement();
     if (nobj) {
         nobj->autorelease();
     }
@@ -9386,7 +9386,7 @@ bool js_cocos2dx_ui_RichElementText_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::RichElementText* cobj = new cocos2d::ui::RichElementText();
+    cocos2d::ui::RichElementText* cobj = new (std::nothrow) cocos2d::ui::RichElementText();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -9419,7 +9419,7 @@ static bool js_cocos2d_ui_RichElementText_ctor(JSContext *cx, uint32_t argc, jsv
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::RichElementText *nobj = new cocos2d::ui::RichElementText();
+    cocos2d::ui::RichElementText *nobj = new (std::nothrow) cocos2d::ui::RichElementText();
     if (nobj) {
         nobj->autorelease();
     }
@@ -9554,7 +9554,7 @@ bool js_cocos2dx_ui_RichElementImage_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::RichElementImage* cobj = new cocos2d::ui::RichElementImage();
+    cocos2d::ui::RichElementImage* cobj = new (std::nothrow) cocos2d::ui::RichElementImage();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -9587,7 +9587,7 @@ static bool js_cocos2d_ui_RichElementImage_ctor(JSContext *cx, uint32_t argc, js
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::RichElementImage *nobj = new cocos2d::ui::RichElementImage();
+    cocos2d::ui::RichElementImage *nobj = new (std::nothrow) cocos2d::ui::RichElementImage();
     if (nobj) {
         nobj->autorelease();
     }
@@ -9736,7 +9736,7 @@ bool js_cocos2dx_ui_RichElementCustomNode_constructor(JSContext *cx, uint32_t ar
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::RichElementCustomNode* cobj = new cocos2d::ui::RichElementCustomNode();
+    cocos2d::ui::RichElementCustomNode* cobj = new (std::nothrow) cocos2d::ui::RichElementCustomNode();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -9769,7 +9769,7 @@ static bool js_cocos2d_ui_RichElementCustomNode_ctor(JSContext *cx, uint32_t arg
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::RichElementCustomNode *nobj = new cocos2d::ui::RichElementCustomNode();
+    cocos2d::ui::RichElementCustomNode *nobj = new (std::nothrow) cocos2d::ui::RichElementCustomNode();
     if (nobj) {
         nobj->autorelease();
     }
@@ -10039,7 +10039,7 @@ bool js_cocos2dx_ui_RichText_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::RichText* cobj = new cocos2d::ui::RichText();
+    cocos2d::ui::RichText* cobj = new (std::nothrow) cocos2d::ui::RichText();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -10072,7 +10072,7 @@ static bool js_cocos2d_ui_RichText_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::RichText *nobj = new cocos2d::ui::RichText();
+    cocos2d::ui::RichText *nobj = new (std::nothrow) cocos2d::ui::RichText();
     if (nobj) {
         nobj->autorelease();
     }
@@ -10220,7 +10220,7 @@ bool js_cocos2dx_ui_HBox_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::HBox* cobj = new cocos2d::ui::HBox();
+    cocos2d::ui::HBox* cobj = new (std::nothrow) cocos2d::ui::HBox();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -10253,7 +10253,7 @@ static bool js_cocos2d_ui_HBox_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::HBox *nobj = new cocos2d::ui::HBox();
+    cocos2d::ui::HBox *nobj = new (std::nothrow) cocos2d::ui::HBox();
     if (nobj) {
         nobj->autorelease();
     }
@@ -10395,7 +10395,7 @@ bool js_cocos2dx_ui_VBox_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::VBox* cobj = new cocos2d::ui::VBox();
+    cocos2d::ui::VBox* cobj = new (std::nothrow) cocos2d::ui::VBox();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -10428,7 +10428,7 @@ static bool js_cocos2d_ui_VBox_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::VBox *nobj = new cocos2d::ui::VBox();
+    cocos2d::ui::VBox *nobj = new (std::nothrow) cocos2d::ui::VBox();
     if (nobj) {
         nobj->autorelease();
     }
@@ -10570,7 +10570,7 @@ bool js_cocos2dx_ui_RelativeBox_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ui::RelativeBox* cobj = new cocos2d::ui::RelativeBox();
+    cocos2d::ui::RelativeBox* cobj = new (std::nothrow) cocos2d::ui::RelativeBox();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -10603,7 +10603,7 @@ static bool js_cocos2d_ui_RelativeBox_ctor(JSContext *cx, uint32_t argc, jsval *
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ui::RelativeBox *nobj = new cocos2d::ui::RelativeBox();
+    cocos2d::ui::RelativeBox *nobj = new (std::nothrow) cocos2d::ui::RelativeBox();
     if (nobj) {
         nobj->autorelease();
     }

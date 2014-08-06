@@ -37,6 +37,8 @@
 #include <assert.h>
 #include <memory>
 
+#define ENGINE_VERSION "Cocos2d-JS v3.0 RC2"
+
 void js_log(const char *format, ...);
 
 typedef void (*sc_register_sth)(JSContext* cx, JSObject* global);
