@@ -79,6 +79,18 @@ ccui.Widget.prototype._ctor = ccui.Button.prototype._ctor
                             = ccui.ScrollView.prototype._ctor
                             = _p._ctor;
 
+ccui.RichElementText.prototype._ctor = function(tag, color, opacity, text, fontName, fontSize){
+    fontSize !== undefined && this.init(tag, color, opacity, text, fontName, fontSize);
+};
+
+ccui.RichElementImage.prototype._ctor = function(tag, color, opacity, filePath){
+    filePath !== undefined && this.init(tag, color, opacity, filePath);
+};
+
+ccui.RichElementCustomNode.prototype._ctor = function(tag, color, opacity, customNode){
+    customNode !== undefined && this.init(tag, color, opacity, customNode);
+};
+
 cc.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callback) {
     callback && this.init(assetsManager, callback);
 };
