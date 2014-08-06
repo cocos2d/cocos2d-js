@@ -1108,8 +1108,11 @@ public:
                     platform = "ANDROID";
 #endif
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
-                    bodyvalue.AddMember("platform",platform.c_str(),dReplyParse.GetAllocator());
+                    rapidjson::Value platformValue(rapidjson::kStringType);
+                    platformValue.SetString(platform.c_str(),dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("platform",platformValue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }
                 
                 rapidjson::StringBuffer buffer;
