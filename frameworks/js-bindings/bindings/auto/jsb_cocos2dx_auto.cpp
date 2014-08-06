@@ -25,7 +25,7 @@ static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 		return true;
 	}
 
-    JS_ReportError(cx, "Don't use `new cc.XXX`, please use `cc.XXX.create` instead! ");
+    JS_ReportError(cx, "Constructor for the requested class is not available, please refer to the API reference.");
     return false;
 }
 
@@ -712,7 +712,7 @@ bool js_cocos2dx_Event_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Event::Type arg0;
     ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
     JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Event_constructor : Error processing arguments");
-    cocos2d::Event* cobj = new cocos2d::Event(arg0);
+    cocos2d::Event* cobj = new (std::nothrow) cocos2d::Event(arg0);
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -1225,7 +1225,7 @@ bool js_cocos2dx_EventDispatcher_constructor(JSContext *cx, uint32_t argc, jsval
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EventDispatcher* cobj = new cocos2d::EventDispatcher();
+    cocos2d::EventDispatcher* cobj = new (std::nothrow) cocos2d::EventDispatcher();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -1485,7 +1485,7 @@ bool js_cocos2dx_Touch_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Touch* cobj = new cocos2d::Touch();
+    cocos2d::Touch* cobj = new (std::nothrow) cocos2d::Touch();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -1618,7 +1618,7 @@ bool js_cocos2dx_EventTouch_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EventTouch* cobj = new cocos2d::EventTouch();
+    cocos2d::EventTouch* cobj = new (std::nothrow) cocos2d::EventTouch();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -1713,7 +1713,7 @@ bool js_cocos2dx_EventKeyboard_constructor(JSContext *cx, uint32_t argc, jsval *
     ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
     arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
     JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventKeyboard_constructor : Error processing arguments");
-    cocos2d::EventKeyboard* cobj = new cocos2d::EventKeyboard(arg0, arg1);
+    cocos2d::EventKeyboard* cobj = new (std::nothrow) cocos2d::EventKeyboard(arg0, arg1);
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -1951,7 +1951,8 @@ bool js_cocos2dx_Texture2D_initWithMipmaps(JSContext *cx, uint32_t argc, jsval *
 		cocos2d::Texture2D::PixelFormat arg2;
 		int arg3;
 		int arg4;
-		#pragma warning NO CONVERSION TO NATIVE FOR _MipmapInfo*;
+		#pragma warning NO CONVERSION TO NATIVE FOR _MipmapInfo*
+		ok = false;
 		ok &= jsval_to_int32(cx, argv[1], (int32_t *)&arg1);
 		ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
 		ok &= jsval_to_int32(cx, argv[3], (int32_t *)&arg3);
@@ -2489,7 +2490,7 @@ bool js_cocos2dx_Texture2D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Texture2D* cobj = new cocos2d::Texture2D();
+    cocos2d::Texture2D* cobj = new (std::nothrow) cocos2d::Texture2D();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -4672,10 +4673,12 @@ bool js_cocos2dx_Node_getPosition(JSContext *cx, uint32_t argc, jsval *vp)
 	do {
 		if (argc == 2) {
 			float* arg0;
-			#pragma warning NO CONVERSION TO NATIVE FOR float*;
+			#pragma warning NO CONVERSION TO NATIVE FOR float*
+			ok = false;
 			if (!ok) { ok = true; break; }
 			float* arg1;
-			#pragma warning NO CONVERSION TO NATIVE FOR float*;
+			#pragma warning NO CONVERSION TO NATIVE FOR float*
+			ok = false;
 			if (!ok) { ok = true; break; }
 			cobj->getPosition(arg0, arg1);
 			JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -5771,7 +5774,7 @@ bool js_cocos2dx_Node_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Node* cobj = new cocos2d::Node();
+    cocos2d::Node* cobj = new (std::nothrow) cocos2d::Node();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -5803,7 +5806,7 @@ static bool js_cocos2d_Node_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::Node *nobj = new cocos2d::Node();
+    cocos2d::Node *nobj = new (std::nothrow) cocos2d::Node();
     if (nobj) {
         nobj->autorelease();
     }
@@ -6014,7 +6017,7 @@ bool js_cocos2dx___NodeRGBA_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::__NodeRGBA* cobj = new cocos2d::__NodeRGBA();
+    cocos2d::__NodeRGBA* cobj = new (std::nothrow) cocos2d::__NodeRGBA();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -6047,7 +6050,7 @@ static bool js_cocos2d___NodeRGBA_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::__NodeRGBA *nobj = new cocos2d::__NodeRGBA();
+    cocos2d::__NodeRGBA *nobj = new (std::nothrow) cocos2d::__NodeRGBA();
     if (nobj) {
         nobj->autorelease();
     }
@@ -6404,7 +6407,7 @@ bool js_cocos2dx_AtlasNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::AtlasNode* cobj = new cocos2d::AtlasNode();
+    cocos2d::AtlasNode* cobj = new (std::nothrow) cocos2d::AtlasNode();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -6724,7 +6727,7 @@ bool js_cocos2dx_LabelAtlas_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::LabelAtlas* cobj = new cocos2d::LabelAtlas();
+    cocos2d::LabelAtlas* cobj = new (std::nothrow) cocos2d::LabelAtlas();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -8228,7 +8231,7 @@ bool js_cocos2dx_Scheduler_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Scheduler* cobj = new cocos2d::Scheduler();
+    cocos2d::Scheduler* cobj = new (std::nothrow) cocos2d::Scheduler();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -9022,7 +9025,7 @@ bool js_cocos2dx_EventListenerTouchOneByOne_constructor(JSContext *cx, uint32_t 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EventListenerTouchOneByOne* cobj = new cocos2d::EventListenerTouchOneByOne();
+    cocos2d::EventListenerTouchOneByOne* cobj = new (std::nothrow) cocos2d::EventListenerTouchOneByOne();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -9130,7 +9133,7 @@ bool js_cocos2dx_EventListenerTouchAllAtOnce_constructor(JSContext *cx, uint32_t
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EventListenerTouchAllAtOnce* cobj = new cocos2d::EventListenerTouchAllAtOnce();
+    cocos2d::EventListenerTouchAllAtOnce* cobj = new (std::nothrow) cocos2d::EventListenerTouchAllAtOnce();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -9236,7 +9239,7 @@ bool js_cocos2dx_EventListenerKeyboard_constructor(JSContext *cx, uint32_t argc,
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EventListenerKeyboard* cobj = new cocos2d::EventListenerKeyboard();
+    cocos2d::EventListenerKeyboard* cobj = new (std::nothrow) cocos2d::EventListenerKeyboard();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -9477,7 +9480,7 @@ bool js_cocos2dx_EventMouse_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::EventMouse::MouseEventType arg0;
     ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
     JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventMouse_constructor : Error processing arguments");
-    cocos2d::EventMouse* cobj = new cocos2d::EventMouse(arg0);
+    cocos2d::EventMouse* cobj = new (std::nothrow) cocos2d::EventMouse(arg0);
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -9590,7 +9593,7 @@ bool js_cocos2dx_EventListenerMouse_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EventListenerMouse* cobj = new cocos2d::EventListenerMouse();
+    cocos2d::EventListenerMouse* cobj = new (std::nothrow) cocos2d::EventListenerMouse();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -9682,7 +9685,7 @@ bool js_cocos2dx_EventAcceleration_constructor(JSContext *cx, uint32_t argc, jsv
     cocos2d::Acceleration arg0;
     ok &= jsval_to_ccacceleration(cx, argv[0], &arg0);
     JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventAcceleration_constructor : Error processing arguments");
-    cocos2d::EventAcceleration* cobj = new cocos2d::EventAcceleration(arg0);
+    cocos2d::EventAcceleration* cobj = new (std::nothrow) cocos2d::EventAcceleration(arg0);
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -9859,7 +9862,7 @@ bool js_cocos2dx_EventListenerAcceleration_constructor(JSContext *cx, uint32_t a
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EventListenerAcceleration* cobj = new cocos2d::EventListenerAcceleration();
+    cocos2d::EventListenerAcceleration* cobj = new (std::nothrow) cocos2d::EventListenerAcceleration();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -9971,7 +9974,7 @@ bool js_cocos2dx_EventCustom_constructor(JSContext *cx, uint32_t argc, jsval *vp
     std::string arg0;
     ok &= jsval_to_std_string(cx, argv[0], &arg0);
     JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventCustom_constructor : Error processing arguments");
-    cocos2d::EventCustom* cobj = new cocos2d::EventCustom(arg0);
+    cocos2d::EventCustom* cobj = new (std::nothrow) cocos2d::EventCustom(arg0);
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -10107,7 +10110,7 @@ bool js_cocos2dx_EventListenerCustom_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EventListenerCustom* cobj = new cocos2d::EventListenerCustom();
+    cocos2d::EventListenerCustom* cobj = new (std::nothrow) cocos2d::EventListenerCustom();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -10217,7 +10220,7 @@ bool js_cocos2dx_EventFocus_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 			JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
 		} while (0);
     JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventFocus_constructor : Error processing arguments");
-    cocos2d::EventFocus* cobj = new cocos2d::EventFocus(arg0, arg1);
+    cocos2d::EventFocus* cobj = new (std::nothrow) cocos2d::EventFocus(arg0, arg1);
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -10342,7 +10345,7 @@ bool js_cocos2dx_EventListenerFocus_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EventListenerFocus* cobj = new cocos2d::EventListenerFocus();
+    cocos2d::EventListenerFocus* cobj = new (std::nothrow) cocos2d::EventListenerFocus();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -11048,7 +11051,7 @@ bool js_cocos2dx_Speed_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Speed* cobj = new cocos2d::Speed();
+    cocos2d::Speed* cobj = new (std::nothrow) cocos2d::Speed();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -11287,7 +11290,7 @@ bool js_cocos2dx_Follow_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Follow* cobj = new cocos2d::Follow();
+    cocos2d::Follow* cobj = new (std::nothrow) cocos2d::Follow();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -11975,7 +11978,7 @@ bool js_cocos2dx_SpriteFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::SpriteFrame* cobj = new cocos2d::SpriteFrame();
+    cocos2d::SpriteFrame* cobj = new (std::nothrow) cocos2d::SpriteFrame();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -12007,7 +12010,7 @@ static bool js_cocos2d_SpriteFrame_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::SpriteFrame *nobj = new cocos2d::SpriteFrame();
+    cocos2d::SpriteFrame *nobj = new (std::nothrow) cocos2d::SpriteFrame();
     if (nobj) {
         nobj->autorelease();
     }
@@ -12337,7 +12340,7 @@ bool js_cocos2dx_AnimationFrame_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::AnimationFrame* cobj = new cocos2d::AnimationFrame();
+    cocos2d::AnimationFrame* cobj = new (std::nothrow) cocos2d::AnimationFrame();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -12945,7 +12948,7 @@ bool js_cocos2dx_Animation_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Animation* cobj = new cocos2d::Animation();
+    cocos2d::Animation* cobj = new (std::nothrow) cocos2d::Animation();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -13233,7 +13236,7 @@ bool js_cocos2dx_Sequence_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Sequence* cobj = new cocos2d::Sequence();
+    cocos2d::Sequence* cobj = new (std::nothrow) cocos2d::Sequence();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -13438,7 +13441,7 @@ bool js_cocos2dx_Repeat_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Repeat* cobj = new cocos2d::Repeat();
+    cocos2d::Repeat* cobj = new (std::nothrow) cocos2d::Repeat();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -13644,7 +13647,7 @@ bool js_cocos2dx_RepeatForever_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::RepeatForever* cobj = new cocos2d::RepeatForever();
+    cocos2d::RepeatForever* cobj = new (std::nothrow) cocos2d::RepeatForever();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -13776,7 +13779,7 @@ bool js_cocos2dx_Spawn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Spawn* cobj = new cocos2d::Spawn();
+    cocos2d::Spawn* cobj = new (std::nothrow) cocos2d::Spawn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -13970,7 +13973,7 @@ bool js_cocos2dx_RotateTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::RotateTo* cobj = new cocos2d::RotateTo();
+    cocos2d::RotateTo* cobj = new (std::nothrow) cocos2d::RotateTo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -14206,7 +14209,7 @@ bool js_cocos2dx_RotateBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::RotateBy* cobj = new cocos2d::RotateBy();
+    cocos2d::RotateBy* cobj = new (std::nothrow) cocos2d::RotateBy();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -14349,7 +14352,7 @@ bool js_cocos2dx_MoveBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::MoveBy* cobj = new cocos2d::MoveBy();
+    cocos2d::MoveBy* cobj = new (std::nothrow) cocos2d::MoveBy();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -14492,7 +14495,7 @@ bool js_cocos2dx_MoveTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::MoveTo* cobj = new cocos2d::MoveTo();
+    cocos2d::MoveTo* cobj = new (std::nothrow) cocos2d::MoveTo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -14639,7 +14642,7 @@ bool js_cocos2dx_SkewTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::SkewTo* cobj = new cocos2d::SkewTo();
+    cocos2d::SkewTo* cobj = new (std::nothrow) cocos2d::SkewTo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -14786,7 +14789,7 @@ bool js_cocos2dx_SkewBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::SkewBy* cobj = new cocos2d::SkewBy();
+    cocos2d::SkewBy* cobj = new (std::nothrow) cocos2d::SkewBy();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -14937,7 +14940,7 @@ bool js_cocos2dx_JumpBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::JumpBy* cobj = new cocos2d::JumpBy();
+    cocos2d::JumpBy* cobj = new (std::nothrow) cocos2d::JumpBy();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -15060,7 +15063,7 @@ bool js_cocos2dx_JumpTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::JumpTo* cobj = new cocos2d::JumpTo();
+    cocos2d::JumpTo* cobj = new (std::nothrow) cocos2d::JumpTo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -15151,7 +15154,7 @@ bool js_cocos2dx_BezierBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::BezierBy* cobj = new cocos2d::BezierBy();
+    cocos2d::BezierBy* cobj = new (std::nothrow) cocos2d::BezierBy();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -15239,7 +15242,7 @@ bool js_cocos2dx_BezierTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::BezierTo* cobj = new cocos2d::BezierTo();
+    cocos2d::BezierTo* cobj = new (std::nothrow) cocos2d::BezierTo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -15483,7 +15486,7 @@ bool js_cocos2dx_ScaleTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ScaleTo* cobj = new cocos2d::ScaleTo();
+    cocos2d::ScaleTo* cobj = new (std::nothrow) cocos2d::ScaleTo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -15660,7 +15663,7 @@ bool js_cocos2dx_ScaleBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ScaleBy* cobj = new cocos2d::ScaleBy();
+    cocos2d::ScaleBy* cobj = new (std::nothrow) cocos2d::ScaleBy();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -15802,7 +15805,7 @@ bool js_cocos2dx_Blink_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Blink* cobj = new cocos2d::Blink();
+    cocos2d::Blink* cobj = new (std::nothrow) cocos2d::Blink();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -15945,7 +15948,7 @@ bool js_cocos2dx_FadeTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::FadeTo* cobj = new cocos2d::FadeTo();
+    cocos2d::FadeTo* cobj = new (std::nothrow) cocos2d::FadeTo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -16089,7 +16092,7 @@ bool js_cocos2dx_FadeIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::FadeIn* cobj = new cocos2d::FadeIn();
+    cocos2d::FadeIn* cobj = new (std::nothrow) cocos2d::FadeIn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -16233,7 +16236,7 @@ bool js_cocos2dx_FadeOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::FadeOut* cobj = new cocos2d::FadeOut();
+    cocos2d::FadeOut* cobj = new (std::nothrow) cocos2d::FadeOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -16384,7 +16387,7 @@ bool js_cocos2dx_TintTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TintTo* cobj = new cocos2d::TintTo();
+    cocos2d::TintTo* cobj = new (std::nothrow) cocos2d::TintTo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -16535,7 +16538,7 @@ bool js_cocos2dx_TintBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TintBy* cobj = new cocos2d::TintBy();
+    cocos2d::TintBy* cobj = new (std::nothrow) cocos2d::TintBy();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -16652,7 +16655,7 @@ bool js_cocos2dx_DelayTime_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::DelayTime* cobj = new cocos2d::DelayTime();
+    cocos2d::DelayTime* cobj = new (std::nothrow) cocos2d::DelayTime();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -16804,7 +16807,7 @@ bool js_cocos2dx_ReverseTime_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ReverseTime* cobj = new cocos2d::ReverseTime();
+    cocos2d::ReverseTime* cobj = new (std::nothrow) cocos2d::ReverseTime();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -17032,7 +17035,7 @@ bool js_cocos2dx_Animate_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Animate* cobj = new cocos2d::Animate();
+    cocos2d::Animate* cobj = new (std::nothrow) cocos2d::Animate();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -17280,7 +17283,7 @@ bool js_cocos2dx_TargetedAction_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TargetedAction* cobj = new cocos2d::TargetedAction();
+    cocos2d::TargetedAction* cobj = new (std::nothrow) cocos2d::TargetedAction();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -17313,7 +17316,7 @@ static bool js_cocos2d_TargetedAction_ctor(JSContext *cx, uint32_t argc, jsval *
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::TargetedAction *nobj = new cocos2d::TargetedAction();
+    cocos2d::TargetedAction *nobj = new (std::nothrow) cocos2d::TargetedAction();
     if (nobj) {
         nobj->autorelease();
     }
@@ -17524,7 +17527,7 @@ bool js_cocos2dx_ActionCamera_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ActionCamera* cobj = new cocos2d::ActionCamera();
+    cocos2d::ActionCamera* cobj = new (std::nothrow) cocos2d::ActionCamera();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -17557,7 +17560,7 @@ static bool js_cocos2d_ActionCamera_ctor(JSContext *cx, uint32_t argc, jsval *vp
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ActionCamera *nobj = new cocos2d::ActionCamera();
+    cocos2d::ActionCamera *nobj = new (std::nothrow) cocos2d::ActionCamera();
     if (nobj) {
         nobj->autorelease();
     }
@@ -17643,9 +17646,12 @@ bool js_cocos2dx_OrbitCamera_sphericalRadius(JSContext *cx, uint32_t argc, jsval
 		float* arg0;
 		float* arg1;
 		float* arg2;
-		#pragma warning NO CONVERSION TO NATIVE FOR float*;
-		#pragma warning NO CONVERSION TO NATIVE FOR float*;
-		#pragma warning NO CONVERSION TO NATIVE FOR float*;
+		#pragma warning NO CONVERSION TO NATIVE FOR float*
+		ok = false;
+		#pragma warning NO CONVERSION TO NATIVE FOR float*
+		ok = false;
+		#pragma warning NO CONVERSION TO NATIVE FOR float*
+		ok = false;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_OrbitCamera_sphericalRadius : Error processing arguments");
 		cobj->sphericalRadius(arg0, arg1, arg2);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -17730,7 +17736,7 @@ bool js_cocos2dx_OrbitCamera_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::OrbitCamera* cobj = new cocos2d::OrbitCamera();
+    cocos2d::OrbitCamera* cobj = new (std::nothrow) cocos2d::OrbitCamera();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -18137,7 +18143,7 @@ bool js_cocos2dx_ActionManager_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ActionManager* cobj = new cocos2d::ActionManager();
+    cocos2d::ActionManager* cobj = new (std::nothrow) cocos2d::ActionManager();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -18169,7 +18175,7 @@ static bool js_cocos2d_ActionManager_ctor(JSContext *cx, uint32_t argc, jsval *v
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ActionManager *nobj = new cocos2d::ActionManager();
+    cocos2d::ActionManager *nobj = new (std::nothrow) cocos2d::ActionManager();
     if (nobj) {
         nobj->autorelease();
     }
@@ -18537,7 +18543,7 @@ bool js_cocos2dx_EaseIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseIn* cobj = new cocos2d::EaseIn();
+    cocos2d::EaseIn* cobj = new (std::nothrow) cocos2d::EaseIn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -18662,7 +18668,7 @@ bool js_cocos2dx_EaseOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseOut* cobj = new cocos2d::EaseOut();
+    cocos2d::EaseOut* cobj = new (std::nothrow) cocos2d::EaseOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -18787,7 +18793,7 @@ bool js_cocos2dx_EaseInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseInOut* cobj = new cocos2d::EaseInOut();
+    cocos2d::EaseInOut* cobj = new (std::nothrow) cocos2d::EaseInOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -18910,7 +18916,7 @@ bool js_cocos2dx_EaseExponentialIn_constructor(JSContext *cx, uint32_t argc, jsv
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseExponentialIn* cobj = new cocos2d::EaseExponentialIn();
+    cocos2d::EaseExponentialIn* cobj = new (std::nothrow) cocos2d::EaseExponentialIn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -19033,7 +19039,7 @@ bool js_cocos2dx_EaseExponentialOut_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseExponentialOut* cobj = new cocos2d::EaseExponentialOut();
+    cocos2d::EaseExponentialOut* cobj = new (std::nothrow) cocos2d::EaseExponentialOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -19156,7 +19162,7 @@ bool js_cocos2dx_EaseExponentialInOut_constructor(JSContext *cx, uint32_t argc, 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseExponentialInOut* cobj = new cocos2d::EaseExponentialInOut();
+    cocos2d::EaseExponentialInOut* cobj = new (std::nothrow) cocos2d::EaseExponentialInOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -19279,7 +19285,7 @@ bool js_cocos2dx_EaseSineIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseSineIn* cobj = new cocos2d::EaseSineIn();
+    cocos2d::EaseSineIn* cobj = new (std::nothrow) cocos2d::EaseSineIn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -19402,7 +19408,7 @@ bool js_cocos2dx_EaseSineOut_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseSineOut* cobj = new cocos2d::EaseSineOut();
+    cocos2d::EaseSineOut* cobj = new (std::nothrow) cocos2d::EaseSineOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -19525,7 +19531,7 @@ bool js_cocos2dx_EaseSineInOut_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseSineInOut* cobj = new cocos2d::EaseSineInOut();
+    cocos2d::EaseSineInOut* cobj = new (std::nothrow) cocos2d::EaseSineInOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -19830,7 +19836,7 @@ bool js_cocos2dx_EaseElasticIn_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseElasticIn* cobj = new cocos2d::EaseElasticIn();
+    cocos2d::EaseElasticIn* cobj = new (std::nothrow) cocos2d::EaseElasticIn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -19985,7 +19991,7 @@ bool js_cocos2dx_EaseElasticOut_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseElasticOut* cobj = new cocos2d::EaseElasticOut();
+    cocos2d::EaseElasticOut* cobj = new (std::nothrow) cocos2d::EaseElasticOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -20140,7 +20146,7 @@ bool js_cocos2dx_EaseElasticInOut_constructor(JSContext *cx, uint32_t argc, jsva
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseElasticInOut* cobj = new cocos2d::EaseElasticInOut();
+    cocos2d::EaseElasticInOut* cobj = new (std::nothrow) cocos2d::EaseElasticInOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -20325,7 +20331,7 @@ bool js_cocos2dx_EaseBounceIn_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseBounceIn* cobj = new cocos2d::EaseBounceIn();
+    cocos2d::EaseBounceIn* cobj = new (std::nothrow) cocos2d::EaseBounceIn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -20448,7 +20454,7 @@ bool js_cocos2dx_EaseBounceOut_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseBounceOut* cobj = new cocos2d::EaseBounceOut();
+    cocos2d::EaseBounceOut* cobj = new (std::nothrow) cocos2d::EaseBounceOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -20571,7 +20577,7 @@ bool js_cocos2dx_EaseBounceInOut_constructor(JSContext *cx, uint32_t argc, jsval
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseBounceInOut* cobj = new cocos2d::EaseBounceInOut();
+    cocos2d::EaseBounceInOut* cobj = new (std::nothrow) cocos2d::EaseBounceInOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -20694,7 +20700,7 @@ bool js_cocos2dx_EaseBackIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseBackIn* cobj = new cocos2d::EaseBackIn();
+    cocos2d::EaseBackIn* cobj = new (std::nothrow) cocos2d::EaseBackIn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -20817,7 +20823,7 @@ bool js_cocos2dx_EaseBackOut_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseBackOut* cobj = new cocos2d::EaseBackOut();
+    cocos2d::EaseBackOut* cobj = new (std::nothrow) cocos2d::EaseBackOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -20940,7 +20946,7 @@ bool js_cocos2dx_EaseBackInOut_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseBackInOut* cobj = new cocos2d::EaseBackInOut();
+    cocos2d::EaseBackInOut* cobj = new (std::nothrow) cocos2d::EaseBackInOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -21089,7 +21095,7 @@ bool js_cocos2dx_EaseBezierAction_constructor(JSContext *cx, uint32_t argc, jsva
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseBezierAction* cobj = new cocos2d::EaseBezierAction();
+    cocos2d::EaseBezierAction* cobj = new (std::nothrow) cocos2d::EaseBezierAction();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -21122,7 +21128,7 @@ static bool js_cocos2d_EaseBezierAction_ctor(JSContext *cx, uint32_t argc, jsval
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseBezierAction *nobj = new cocos2d::EaseBezierAction();
+    cocos2d::EaseBezierAction *nobj = new (std::nothrow) cocos2d::EaseBezierAction();
     if (nobj) {
         nobj->autorelease();
     }
@@ -21230,7 +21236,7 @@ bool js_cocos2dx_EaseQuadraticActionIn_constructor(JSContext *cx, uint32_t argc,
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseQuadraticActionIn* cobj = new cocos2d::EaseQuadraticActionIn();
+    cocos2d::EaseQuadraticActionIn* cobj = new (std::nothrow) cocos2d::EaseQuadraticActionIn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -21263,7 +21269,7 @@ static bool js_cocos2d_EaseQuadraticActionIn_ctor(JSContext *cx, uint32_t argc, 
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseQuadraticActionIn *nobj = new cocos2d::EaseQuadraticActionIn();
+    cocos2d::EaseQuadraticActionIn *nobj = new (std::nothrow) cocos2d::EaseQuadraticActionIn();
     if (nobj) {
         nobj->autorelease();
     }
@@ -21370,7 +21376,7 @@ bool js_cocos2dx_EaseQuadraticActionOut_constructor(JSContext *cx, uint32_t argc
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseQuadraticActionOut* cobj = new cocos2d::EaseQuadraticActionOut();
+    cocos2d::EaseQuadraticActionOut* cobj = new (std::nothrow) cocos2d::EaseQuadraticActionOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -21403,7 +21409,7 @@ static bool js_cocos2d_EaseQuadraticActionOut_ctor(JSContext *cx, uint32_t argc,
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseQuadraticActionOut *nobj = new cocos2d::EaseQuadraticActionOut();
+    cocos2d::EaseQuadraticActionOut *nobj = new (std::nothrow) cocos2d::EaseQuadraticActionOut();
     if (nobj) {
         nobj->autorelease();
     }
@@ -21510,7 +21516,7 @@ bool js_cocos2dx_EaseQuadraticActionInOut_constructor(JSContext *cx, uint32_t ar
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseQuadraticActionInOut* cobj = new cocos2d::EaseQuadraticActionInOut();
+    cocos2d::EaseQuadraticActionInOut* cobj = new (std::nothrow) cocos2d::EaseQuadraticActionInOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -21543,7 +21549,7 @@ static bool js_cocos2d_EaseQuadraticActionInOut_ctor(JSContext *cx, uint32_t arg
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseQuadraticActionInOut *nobj = new cocos2d::EaseQuadraticActionInOut();
+    cocos2d::EaseQuadraticActionInOut *nobj = new (std::nothrow) cocos2d::EaseQuadraticActionInOut();
     if (nobj) {
         nobj->autorelease();
     }
@@ -21650,7 +21656,7 @@ bool js_cocos2dx_EaseQuarticActionIn_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseQuarticActionIn* cobj = new cocos2d::EaseQuarticActionIn();
+    cocos2d::EaseQuarticActionIn* cobj = new (std::nothrow) cocos2d::EaseQuarticActionIn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -21683,7 +21689,7 @@ static bool js_cocos2d_EaseQuarticActionIn_ctor(JSContext *cx, uint32_t argc, js
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseQuarticActionIn *nobj = new cocos2d::EaseQuarticActionIn();
+    cocos2d::EaseQuarticActionIn *nobj = new (std::nothrow) cocos2d::EaseQuarticActionIn();
     if (nobj) {
         nobj->autorelease();
     }
@@ -21790,7 +21796,7 @@ bool js_cocos2dx_EaseQuarticActionOut_constructor(JSContext *cx, uint32_t argc, 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseQuarticActionOut* cobj = new cocos2d::EaseQuarticActionOut();
+    cocos2d::EaseQuarticActionOut* cobj = new (std::nothrow) cocos2d::EaseQuarticActionOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -21823,7 +21829,7 @@ static bool js_cocos2d_EaseQuarticActionOut_ctor(JSContext *cx, uint32_t argc, j
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseQuarticActionOut *nobj = new cocos2d::EaseQuarticActionOut();
+    cocos2d::EaseQuarticActionOut *nobj = new (std::nothrow) cocos2d::EaseQuarticActionOut();
     if (nobj) {
         nobj->autorelease();
     }
@@ -21930,7 +21936,7 @@ bool js_cocos2dx_EaseQuarticActionInOut_constructor(JSContext *cx, uint32_t argc
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseQuarticActionInOut* cobj = new cocos2d::EaseQuarticActionInOut();
+    cocos2d::EaseQuarticActionInOut* cobj = new (std::nothrow) cocos2d::EaseQuarticActionInOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -21963,7 +21969,7 @@ static bool js_cocos2d_EaseQuarticActionInOut_ctor(JSContext *cx, uint32_t argc,
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseQuarticActionInOut *nobj = new cocos2d::EaseQuarticActionInOut();
+    cocos2d::EaseQuarticActionInOut *nobj = new (std::nothrow) cocos2d::EaseQuarticActionInOut();
     if (nobj) {
         nobj->autorelease();
     }
@@ -22070,7 +22076,7 @@ bool js_cocos2dx_EaseQuinticActionIn_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseQuinticActionIn* cobj = new cocos2d::EaseQuinticActionIn();
+    cocos2d::EaseQuinticActionIn* cobj = new (std::nothrow) cocos2d::EaseQuinticActionIn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -22103,7 +22109,7 @@ static bool js_cocos2d_EaseQuinticActionIn_ctor(JSContext *cx, uint32_t argc, js
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseQuinticActionIn *nobj = new cocos2d::EaseQuinticActionIn();
+    cocos2d::EaseQuinticActionIn *nobj = new (std::nothrow) cocos2d::EaseQuinticActionIn();
     if (nobj) {
         nobj->autorelease();
     }
@@ -22210,7 +22216,7 @@ bool js_cocos2dx_EaseQuinticActionOut_constructor(JSContext *cx, uint32_t argc, 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseQuinticActionOut* cobj = new cocos2d::EaseQuinticActionOut();
+    cocos2d::EaseQuinticActionOut* cobj = new (std::nothrow) cocos2d::EaseQuinticActionOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -22243,7 +22249,7 @@ static bool js_cocos2d_EaseQuinticActionOut_ctor(JSContext *cx, uint32_t argc, j
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseQuinticActionOut *nobj = new cocos2d::EaseQuinticActionOut();
+    cocos2d::EaseQuinticActionOut *nobj = new (std::nothrow) cocos2d::EaseQuinticActionOut();
     if (nobj) {
         nobj->autorelease();
     }
@@ -22350,7 +22356,7 @@ bool js_cocos2dx_EaseQuinticActionInOut_constructor(JSContext *cx, uint32_t argc
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseQuinticActionInOut* cobj = new cocos2d::EaseQuinticActionInOut();
+    cocos2d::EaseQuinticActionInOut* cobj = new (std::nothrow) cocos2d::EaseQuinticActionInOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -22383,7 +22389,7 @@ static bool js_cocos2d_EaseQuinticActionInOut_ctor(JSContext *cx, uint32_t argc,
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseQuinticActionInOut *nobj = new cocos2d::EaseQuinticActionInOut();
+    cocos2d::EaseQuinticActionInOut *nobj = new (std::nothrow) cocos2d::EaseQuinticActionInOut();
     if (nobj) {
         nobj->autorelease();
     }
@@ -22490,7 +22496,7 @@ bool js_cocos2dx_EaseCircleActionIn_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseCircleActionIn* cobj = new cocos2d::EaseCircleActionIn();
+    cocos2d::EaseCircleActionIn* cobj = new (std::nothrow) cocos2d::EaseCircleActionIn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -22523,7 +22529,7 @@ static bool js_cocos2d_EaseCircleActionIn_ctor(JSContext *cx, uint32_t argc, jsv
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseCircleActionIn *nobj = new cocos2d::EaseCircleActionIn();
+    cocos2d::EaseCircleActionIn *nobj = new (std::nothrow) cocos2d::EaseCircleActionIn();
     if (nobj) {
         nobj->autorelease();
     }
@@ -22630,7 +22636,7 @@ bool js_cocos2dx_EaseCircleActionOut_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseCircleActionOut* cobj = new cocos2d::EaseCircleActionOut();
+    cocos2d::EaseCircleActionOut* cobj = new (std::nothrow) cocos2d::EaseCircleActionOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -22663,7 +22669,7 @@ static bool js_cocos2d_EaseCircleActionOut_ctor(JSContext *cx, uint32_t argc, js
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseCircleActionOut *nobj = new cocos2d::EaseCircleActionOut();
+    cocos2d::EaseCircleActionOut *nobj = new (std::nothrow) cocos2d::EaseCircleActionOut();
     if (nobj) {
         nobj->autorelease();
     }
@@ -22770,7 +22776,7 @@ bool js_cocos2dx_EaseCircleActionInOut_constructor(JSContext *cx, uint32_t argc,
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseCircleActionInOut* cobj = new cocos2d::EaseCircleActionInOut();
+    cocos2d::EaseCircleActionInOut* cobj = new (std::nothrow) cocos2d::EaseCircleActionInOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -22803,7 +22809,7 @@ static bool js_cocos2d_EaseCircleActionInOut_ctor(JSContext *cx, uint32_t argc, 
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseCircleActionInOut *nobj = new cocos2d::EaseCircleActionInOut();
+    cocos2d::EaseCircleActionInOut *nobj = new (std::nothrow) cocos2d::EaseCircleActionInOut();
     if (nobj) {
         nobj->autorelease();
     }
@@ -22910,7 +22916,7 @@ bool js_cocos2dx_EaseCubicActionIn_constructor(JSContext *cx, uint32_t argc, jsv
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseCubicActionIn* cobj = new cocos2d::EaseCubicActionIn();
+    cocos2d::EaseCubicActionIn* cobj = new (std::nothrow) cocos2d::EaseCubicActionIn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -22943,7 +22949,7 @@ static bool js_cocos2d_EaseCubicActionIn_ctor(JSContext *cx, uint32_t argc, jsva
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseCubicActionIn *nobj = new cocos2d::EaseCubicActionIn();
+    cocos2d::EaseCubicActionIn *nobj = new (std::nothrow) cocos2d::EaseCubicActionIn();
     if (nobj) {
         nobj->autorelease();
     }
@@ -23050,7 +23056,7 @@ bool js_cocos2dx_EaseCubicActionOut_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseCubicActionOut* cobj = new cocos2d::EaseCubicActionOut();
+    cocos2d::EaseCubicActionOut* cobj = new (std::nothrow) cocos2d::EaseCubicActionOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -23083,7 +23089,7 @@ static bool js_cocos2d_EaseCubicActionOut_ctor(JSContext *cx, uint32_t argc, jsv
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseCubicActionOut *nobj = new cocos2d::EaseCubicActionOut();
+    cocos2d::EaseCubicActionOut *nobj = new (std::nothrow) cocos2d::EaseCubicActionOut();
     if (nobj) {
         nobj->autorelease();
     }
@@ -23190,7 +23196,7 @@ bool js_cocos2dx_EaseCubicActionInOut_constructor(JSContext *cx, uint32_t argc, 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::EaseCubicActionInOut* cobj = new cocos2d::EaseCubicActionInOut();
+    cocos2d::EaseCubicActionInOut* cobj = new (std::nothrow) cocos2d::EaseCubicActionInOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -23223,7 +23229,7 @@ static bool js_cocos2d_EaseCubicActionInOut_ctor(JSContext *cx, uint32_t argc, j
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::EaseCubicActionInOut *nobj = new cocos2d::EaseCubicActionInOut();
+    cocos2d::EaseCubicActionInOut *nobj = new (std::nothrow) cocos2d::EaseCubicActionInOut();
     if (nobj) {
         nobj->autorelease();
     }
@@ -23380,7 +23386,7 @@ bool js_cocos2dx_Show_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Show* cobj = new cocos2d::Show();
+    cocos2d::Show* cobj = new (std::nothrow) cocos2d::Show();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -23491,7 +23497,7 @@ bool js_cocos2dx_Hide_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Hide* cobj = new cocos2d::Hide();
+    cocos2d::Hide* cobj = new (std::nothrow) cocos2d::Hide();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -23602,7 +23608,7 @@ bool js_cocos2dx_ToggleVisibility_constructor(JSContext *cx, uint32_t argc, jsva
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ToggleVisibility* cobj = new cocos2d::ToggleVisibility();
+    cocos2d::ToggleVisibility* cobj = new (std::nothrow) cocos2d::ToggleVisibility();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -23754,7 +23760,7 @@ bool js_cocos2dx_RemoveSelf_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::RemoveSelf* cobj = new cocos2d::RemoveSelf();
+    cocos2d::RemoveSelf* cobj = new (std::nothrow) cocos2d::RemoveSelf();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -23893,7 +23899,7 @@ bool js_cocos2dx_FlipX_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::FlipX* cobj = new cocos2d::FlipX();
+    cocos2d::FlipX* cobj = new (std::nothrow) cocos2d::FlipX();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -24032,7 +24038,7 @@ bool js_cocos2dx_FlipY_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::FlipY* cobj = new cocos2d::FlipY();
+    cocos2d::FlipY* cobj = new (std::nothrow) cocos2d::FlipY();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -24171,7 +24177,7 @@ bool js_cocos2dx_Place_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Place* cobj = new cocos2d::Place();
+    cocos2d::Place* cobj = new (std::nothrow) cocos2d::Place();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -24278,7 +24284,7 @@ bool js_cocos2dx_CallFunc_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::CallFunc* cobj = new cocos2d::CallFunc();
+    cocos2d::CallFunc* cobj = new (std::nothrow) cocos2d::CallFunc();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -24367,7 +24373,7 @@ bool js_cocos2dx_CallFuncN_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::CallFuncN* cobj = new cocos2d::CallFuncN();
+    cocos2d::CallFuncN* cobj = new (std::nothrow) cocos2d::CallFuncN();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -24761,7 +24767,7 @@ bool js_cocos2dx_StopGrid_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::StopGrid* cobj = new cocos2d::StopGrid();
+    cocos2d::StopGrid* cobj = new (std::nothrow) cocos2d::StopGrid();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -24899,7 +24905,7 @@ bool js_cocos2dx_ReuseGrid_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ReuseGrid* cobj = new cocos2d::ReuseGrid();
+    cocos2d::ReuseGrid* cobj = new (std::nothrow) cocos2d::ReuseGrid();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -25124,7 +25130,7 @@ bool js_cocos2dx_Waves3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Waves3D* cobj = new cocos2d::Waves3D();
+    cocos2d::Waves3D* cobj = new (std::nothrow) cocos2d::Waves3D();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -25291,7 +25297,7 @@ bool js_cocos2dx_FlipX3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::FlipX3D* cobj = new cocos2d::FlipX3D();
+    cocos2d::FlipX3D* cobj = new (std::nothrow) cocos2d::FlipX3D();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -25409,7 +25415,7 @@ bool js_cocos2dx_FlipY3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::FlipY3D* cobj = new cocos2d::FlipY3D();
+    cocos2d::FlipY3D* cobj = new (std::nothrow) cocos2d::FlipY3D();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -25653,7 +25659,7 @@ bool js_cocos2dx_Lens3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Lens3D* cobj = new cocos2d::Lens3D();
+    cocos2d::Lens3D* cobj = new (std::nothrow) cocos2d::Lens3D();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -25928,7 +25934,7 @@ bool js_cocos2dx_Ripple3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Ripple3D* cobj = new cocos2d::Ripple3D();
+    cocos2d::Ripple3D* cobj = new (std::nothrow) cocos2d::Ripple3D();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -26085,7 +26091,7 @@ bool js_cocos2dx_Shaky3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Shaky3D* cobj = new cocos2d::Shaky3D();
+    cocos2d::Shaky3D* cobj = new (std::nothrow) cocos2d::Shaky3D();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -26310,7 +26316,7 @@ bool js_cocos2dx_Liquid_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Liquid* cobj = new cocos2d::Liquid();
+    cocos2d::Liquid* cobj = new (std::nothrow) cocos2d::Liquid();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -26547,7 +26553,7 @@ bool js_cocos2dx_Waves_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Waves* cobj = new cocos2d::Waves();
+    cocos2d::Waves* cobj = new (std::nothrow) cocos2d::Waves();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -26817,7 +26823,7 @@ bool js_cocos2dx_Twirl_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Twirl* cobj = new cocos2d::Twirl();
+    cocos2d::Twirl* cobj = new (std::nothrow) cocos2d::Twirl();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -27058,7 +27064,7 @@ bool js_cocos2dx_ProgressTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ProgressTo* cobj = new cocos2d::ProgressTo();
+    cocos2d::ProgressTo* cobj = new (std::nothrow) cocos2d::ProgressTo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -27205,7 +27211,7 @@ bool js_cocos2dx_ProgressFromTo_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ProgressFromTo* cobj = new cocos2d::ProgressFromTo();
+    cocos2d::ProgressFromTo* cobj = new (std::nothrow) cocos2d::ProgressFromTo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -27356,7 +27362,7 @@ bool js_cocos2dx_ShakyTiles3D_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ShakyTiles3D* cobj = new cocos2d::ShakyTiles3D();
+    cocos2d::ShakyTiles3D* cobj = new (std::nothrow) cocos2d::ShakyTiles3D();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -27507,7 +27513,7 @@ bool js_cocos2dx_ShatteredTiles3D_constructor(JSContext *cx, uint32_t argc, jsva
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ShatteredTiles3D* cobj = new cocos2d::ShatteredTiles3D();
+    cocos2d::ShatteredTiles3D* cobj = new (std::nothrow) cocos2d::ShatteredTiles3D();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -27607,7 +27613,8 @@ bool js_cocos2dx_ShuffleTiles_placeTile(JSContext *cx, uint32_t argc, jsval *vp)
 		cocos2d::Vec2 arg0;
 		cocos2d::Tile* arg1;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
-		#pragma warning NO CONVERSION TO NATIVE FOR Tile*;
+		#pragma warning NO CONVERSION TO NATIVE FOR Tile*
+		ok = false;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ShuffleTiles_placeTile : Error processing arguments");
 		cobj->placeTile(arg0, arg1);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -27628,7 +27635,8 @@ bool js_cocos2dx_ShuffleTiles_shuffle(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 2) {
 		unsigned int* arg0;
 		unsigned int arg1;
-		#pragma warning NO CONVERSION TO NATIVE FOR unsigned int*;
+		#pragma warning NO CONVERSION TO NATIVE FOR unsigned int*
+		ok = false;
 		ok &= jsval_to_uint32(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ShuffleTiles_shuffle : Error processing arguments");
 		cobj->shuffle(arg0, arg1);
@@ -27720,7 +27728,7 @@ bool js_cocos2dx_ShuffleTiles_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ShuffleTiles* cobj = new cocos2d::ShuffleTiles();
+    cocos2d::ShuffleTiles* cobj = new (std::nothrow) cocos2d::ShuffleTiles();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -27928,7 +27936,7 @@ bool js_cocos2dx_FadeOutTRTiles_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::FadeOutTRTiles* cobj = new cocos2d::FadeOutTRTiles();
+    cocos2d::FadeOutTRTiles* cobj = new (std::nothrow) cocos2d::FadeOutTRTiles();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -28050,7 +28058,7 @@ bool js_cocos2dx_FadeOutBLTiles_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::FadeOutBLTiles* cobj = new cocos2d::FadeOutBLTiles();
+    cocos2d::FadeOutBLTiles* cobj = new (std::nothrow) cocos2d::FadeOutBLTiles();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -28190,7 +28198,7 @@ bool js_cocos2dx_FadeOutUpTiles_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::FadeOutUpTiles* cobj = new cocos2d::FadeOutUpTiles();
+    cocos2d::FadeOutUpTiles* cobj = new (std::nothrow) cocos2d::FadeOutUpTiles();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -28309,7 +28317,7 @@ bool js_cocos2dx_FadeOutDownTiles_constructor(JSContext *cx, uint32_t argc, jsva
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::FadeOutDownTiles* cobj = new cocos2d::FadeOutDownTiles();
+    cocos2d::FadeOutDownTiles* cobj = new (std::nothrow) cocos2d::FadeOutDownTiles();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -28447,7 +28455,8 @@ bool js_cocos2dx_TurnOffTiles_shuffle(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 2) {
 		unsigned int* arg0;
 		unsigned int arg1;
-		#pragma warning NO CONVERSION TO NATIVE FOR unsigned int*;
+		#pragma warning NO CONVERSION TO NATIVE FOR unsigned int*
+		ok = false;
 		ok &= jsval_to_uint32(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TurnOffTiles_shuffle : Error processing arguments");
 		cobj->shuffle(arg0, arg1);
@@ -28544,7 +28553,7 @@ bool js_cocos2dx_TurnOffTiles_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TurnOffTiles* cobj = new cocos2d::TurnOffTiles();
+    cocos2d::TurnOffTiles* cobj = new (std::nothrow) cocos2d::TurnOffTiles();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -28772,7 +28781,7 @@ bool js_cocos2dx_WavesTiles3D_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::WavesTiles3D* cobj = new cocos2d::WavesTiles3D();
+    cocos2d::WavesTiles3D* cobj = new (std::nothrow) cocos2d::WavesTiles3D();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -29001,7 +29010,7 @@ bool js_cocos2dx_JumpTiles3D_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::JumpTiles3D* cobj = new cocos2d::JumpTiles3D();
+    cocos2d::JumpTiles3D* cobj = new (std::nothrow) cocos2d::JumpTiles3D();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -29148,7 +29157,7 @@ bool js_cocos2dx_SplitRows_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::SplitRows* cobj = new cocos2d::SplitRows();
+    cocos2d::SplitRows* cobj = new (std::nothrow) cocos2d::SplitRows();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -29291,7 +29300,7 @@ bool js_cocos2dx_SplitCols_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::SplitCols* cobj = new cocos2d::SplitCols();
+    cocos2d::SplitCols* cobj = new (std::nothrow) cocos2d::SplitCols();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -29449,7 +29458,7 @@ static bool js_cocos2d_ActionTween_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ActionTween *nobj = new cocos2d::ActionTween();
+    cocos2d::ActionTween *nobj = new (std::nothrow) cocos2d::ActionTween();
     if (nobj) {
         nobj->autorelease();
     }
@@ -29569,7 +29578,7 @@ bool js_cocos2dx_CardinalSplineTo_constructor(JSContext *cx, uint32_t argc, jsva
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::CardinalSplineTo* cobj = new cocos2d::CardinalSplineTo();
+    cocos2d::CardinalSplineTo* cobj = new (std::nothrow) cocos2d::CardinalSplineTo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -29659,7 +29668,7 @@ bool js_cocos2dx_CardinalSplineBy_constructor(JSContext *cx, uint32_t argc, jsva
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::CardinalSplineBy* cobj = new cocos2d::CardinalSplineBy();
+    cocos2d::CardinalSplineBy* cobj = new (std::nothrow) cocos2d::CardinalSplineBy();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -30116,7 +30125,7 @@ bool js_cocos2dx_DrawNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::DrawNode* cobj = new cocos2d::DrawNode();
+    cocos2d::DrawNode* cobj = new (std::nothrow) cocos2d::DrawNode();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -30149,7 +30158,7 @@ static bool js_cocos2d_DrawNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::DrawNode *nobj = new cocos2d::DrawNode();
+    cocos2d::DrawNode *nobj = new (std::nothrow) cocos2d::DrawNode();
     if (nobj) {
         nobj->autorelease();
     }
@@ -30996,7 +31005,7 @@ bool js_cocos2dx_LabelTTF_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::LabelTTF* cobj = new cocos2d::LabelTTF();
+    cocos2d::LabelTTF* cobj = new (std::nothrow) cocos2d::LabelTTF();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -31161,7 +31170,8 @@ bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv(JSContext *cx, uint32
 		const float* arg1;
 		unsigned int arg2;
 		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		#pragma warning NO CONVERSION TO NATIVE FOR float*;
+		#pragma warning NO CONVERSION TO NATIVE FOR float*
+		ok = false;
 		ok &= jsval_to_uint32(cx, argv[2], &arg2);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv : Error processing arguments");
 		cobj->setUniformLocationWithMatrix4fv(arg0, arg1, arg2);
@@ -31368,7 +31378,8 @@ bool js_cocos2dx_GLProgram_setUniformLocationWith3iv(JSContext *cx, uint32_t arg
 		int* arg1;
 		unsigned int arg2;
 		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		#pragma warning NO CONVERSION TO NATIVE FOR int*;
+		#pragma warning NO CONVERSION TO NATIVE FOR int*
+		ok = false;
 		ok &= jsval_to_uint32(cx, argv[2], &arg2);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWith3iv : Error processing arguments");
 		cobj->setUniformLocationWith3iv(arg0, arg1, arg2);
@@ -31407,7 +31418,8 @@ bool js_cocos2dx_GLProgram_setUniformLocationWith4iv(JSContext *cx, uint32_t arg
 		int* arg1;
 		unsigned int arg2;
 		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		#pragma warning NO CONVERSION TO NATIVE FOR int*;
+		#pragma warning NO CONVERSION TO NATIVE FOR int*
+		ok = false;
 		ok &= jsval_to_uint32(cx, argv[2], &arg2);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWith4iv : Error processing arguments");
 		cobj->setUniformLocationWith4iv(arg0, arg1, arg2);
@@ -31470,7 +31482,8 @@ bool js_cocos2dx_GLProgram_setUniformLocationWith2iv(JSContext *cx, uint32_t arg
 		int* arg1;
 		unsigned int arg2;
 		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		#pragma warning NO CONVERSION TO NATIVE FOR int*;
+		#pragma warning NO CONVERSION TO NATIVE FOR int*
+		ok = false;
 		ok &= jsval_to_uint32(cx, argv[2], &arg2);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWith2iv : Error processing arguments");
 		cobj->setUniformLocationWith2iv(arg0, arg1, arg2);
@@ -31494,7 +31507,8 @@ bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix3fv(JSContext *cx, uint32
 		const float* arg1;
 		unsigned int arg2;
 		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		#pragma warning NO CONVERSION TO NATIVE FOR float*;
+		#pragma warning NO CONVERSION TO NATIVE FOR float*
+		ok = false;
 		ok &= jsval_to_uint32(cx, argv[2], &arg2);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWithMatrix3fv : Error processing arguments");
 		cobj->setUniformLocationWithMatrix3fv(arg0, arg1, arg2);
@@ -31577,7 +31591,8 @@ bool js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv(JSContext *cx, uint32
 		const float* arg1;
 		unsigned int arg2;
 		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		#pragma warning NO CONVERSION TO NATIVE FOR float*;
+		#pragma warning NO CONVERSION TO NATIVE FOR float*
+		ok = false;
 		ok &= jsval_to_uint32(cx, argv[2], &arg2);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv : Error processing arguments");
 		cobj->setUniformLocationWithMatrix2fv(arg0, arg1, arg2);
@@ -31720,7 +31735,7 @@ bool js_cocos2dx_GLProgram_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::GLProgram* cobj = new cocos2d::GLProgram();
+    cocos2d::GLProgram* cobj = new (std::nothrow) cocos2d::GLProgram();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -32449,7 +32464,7 @@ bool js_cocos2dx_SpriteBatchNode_constructor(JSContext *cx, uint32_t argc, jsval
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::SpriteBatchNode* cobj = new cocos2d::SpriteBatchNode();
+    cocos2d::SpriteBatchNode* cobj = new (std::nothrow) cocos2d::SpriteBatchNode();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -32482,7 +32497,7 @@ static bool js_cocos2d_SpriteBatchNode_ctor(JSContext *cx, uint32_t argc, jsval 
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::SpriteBatchNode *nobj = new cocos2d::SpriteBatchNode();
+    cocos2d::SpriteBatchNode *nobj = new (std::nothrow) cocos2d::SpriteBatchNode();
     if (nobj) {
         nobj->autorelease();
     }
@@ -33785,7 +33800,7 @@ bool js_cocos2dx_Label_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Label* cobj = new cocos2d::Label();
+    cocos2d::Label* cobj = new (std::nothrow) cocos2d::Label();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -34370,7 +34385,7 @@ bool js_cocos2dx_LabelBMFont_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::LabelBMFont* cobj = new cocos2d::LabelBMFont();
+    cocos2d::LabelBMFont* cobj = new (std::nothrow) cocos2d::LabelBMFont();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -34494,7 +34509,7 @@ bool js_cocos2dx_Layer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Layer* cobj = new cocos2d::Layer();
+    cocos2d::Layer* cobj = new (std::nothrow) cocos2d::Layer();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -34527,7 +34542,7 @@ static bool js_cocos2d_Layer_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::Layer *nobj = new cocos2d::Layer();
+    cocos2d::Layer *nobj = new (std::nothrow) cocos2d::Layer();
     if (nobj) {
         nobj->autorelease();
     }
@@ -34622,7 +34637,7 @@ bool js_cocos2dx___LayerRGBA_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::__LayerRGBA* cobj = new cocos2d::__LayerRGBA();
+    cocos2d::__LayerRGBA* cobj = new (std::nothrow) cocos2d::__LayerRGBA();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -34938,7 +34953,7 @@ bool js_cocos2dx_LayerColor_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::LayerColor* cobj = new cocos2d::LayerColor();
+    cocos2d::LayerColor* cobj = new (std::nothrow) cocos2d::LayerColor();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -34971,7 +34986,7 @@ static bool js_cocos2d_LayerColor_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::LayerColor *nobj = new cocos2d::LayerColor();
+    cocos2d::LayerColor *nobj = new (std::nothrow) cocos2d::LayerColor();
     if (nobj) {
         nobj->autorelease();
     }
@@ -35413,7 +35428,7 @@ bool js_cocos2dx_LayerGradient_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::LayerGradient* cobj = new cocos2d::LayerGradient();
+    cocos2d::LayerGradient* cobj = new (std::nothrow) cocos2d::LayerGradient();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -35446,7 +35461,7 @@ static bool js_cocos2d_LayerGradient_ctor(JSContext *cx, uint32_t argc, jsval *v
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::LayerGradient *nobj = new cocos2d::LayerGradient();
+    cocos2d::LayerGradient *nobj = new (std::nothrow) cocos2d::LayerGradient();
     if (nobj) {
         nobj->autorelease();
     }
@@ -35641,7 +35656,7 @@ bool js_cocos2dx_LayerMultiplex_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::LayerMultiplex* cobj = new cocos2d::LayerMultiplex();
+    cocos2d::LayerMultiplex* cobj = new (std::nothrow) cocos2d::LayerMultiplex();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -35674,7 +35689,7 @@ static bool js_cocos2d_LayerMultiplex_ctor(JSContext *cx, uint32_t argc, jsval *
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::LayerMultiplex *nobj = new cocos2d::LayerMultiplex();
+    cocos2d::LayerMultiplex *nobj = new (std::nothrow) cocos2d::LayerMultiplex();
     if (nobj) {
         nobj->autorelease();
     }
@@ -35896,7 +35911,7 @@ bool js_cocos2dx_Scene_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Scene* cobj = new cocos2d::Scene();
+    cocos2d::Scene* cobj = new (std::nothrow) cocos2d::Scene();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -35929,7 +35944,7 @@ static bool js_cocos2d_Scene_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::Scene *nobj = new cocos2d::Scene();
+    cocos2d::Scene *nobj = new (std::nothrow) cocos2d::Scene();
     if (nobj) {
         nobj->autorelease();
     }
@@ -36203,7 +36218,7 @@ bool js_cocos2dx_TransitionScene_constructor(JSContext *cx, uint32_t argc, jsval
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionScene* cobj = new cocos2d::TransitionScene();
+    cocos2d::TransitionScene* cobj = new (std::nothrow) cocos2d::TransitionScene();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -36236,7 +36251,7 @@ static bool js_cocos2d_TransitionScene_ctor(JSContext *cx, uint32_t argc, jsval 
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::TransitionScene *nobj = new cocos2d::TransitionScene();
+    cocos2d::TransitionScene *nobj = new (std::nothrow) cocos2d::TransitionScene();
     if (nobj) {
         nobj->autorelease();
     }
@@ -36383,7 +36398,7 @@ bool js_cocos2dx_TransitionSceneOriented_constructor(JSContext *cx, uint32_t arg
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionSceneOriented* cobj = new cocos2d::TransitionSceneOriented();
+    cocos2d::TransitionSceneOriented* cobj = new (std::nothrow) cocos2d::TransitionSceneOriented();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -36509,7 +36524,7 @@ bool js_cocos2dx_TransitionRotoZoom_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionRotoZoom* cobj = new cocos2d::TransitionRotoZoom();
+    cocos2d::TransitionRotoZoom* cobj = new (std::nothrow) cocos2d::TransitionRotoZoom();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -36634,7 +36649,7 @@ bool js_cocos2dx_TransitionJumpZoom_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionJumpZoom* cobj = new cocos2d::TransitionJumpZoom();
+    cocos2d::TransitionJumpZoom* cobj = new (std::nothrow) cocos2d::TransitionJumpZoom();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -36819,7 +36834,7 @@ bool js_cocos2dx_TransitionMoveInL_constructor(JSContext *cx, uint32_t argc, jsv
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionMoveInL* cobj = new cocos2d::TransitionMoveInL();
+    cocos2d::TransitionMoveInL* cobj = new (std::nothrow) cocos2d::TransitionMoveInL();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -36946,7 +36961,7 @@ bool js_cocos2dx_TransitionMoveInR_constructor(JSContext *cx, uint32_t argc, jsv
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionMoveInR* cobj = new cocos2d::TransitionMoveInR();
+    cocos2d::TransitionMoveInR* cobj = new (std::nothrow) cocos2d::TransitionMoveInR();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -37071,7 +37086,7 @@ bool js_cocos2dx_TransitionMoveInT_constructor(JSContext *cx, uint32_t argc, jsv
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionMoveInT* cobj = new cocos2d::TransitionMoveInT();
+    cocos2d::TransitionMoveInT* cobj = new (std::nothrow) cocos2d::TransitionMoveInT();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -37196,7 +37211,7 @@ bool js_cocos2dx_TransitionMoveInB_constructor(JSContext *cx, uint32_t argc, jsv
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionMoveInB* cobj = new cocos2d::TransitionMoveInB();
+    cocos2d::TransitionMoveInB* cobj = new (std::nothrow) cocos2d::TransitionMoveInB();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -37381,7 +37396,7 @@ bool js_cocos2dx_TransitionSlideInL_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionSlideInL* cobj = new cocos2d::TransitionSlideInL();
+    cocos2d::TransitionSlideInL* cobj = new (std::nothrow) cocos2d::TransitionSlideInL();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -37532,7 +37547,7 @@ bool js_cocos2dx_TransitionSlideInR_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionSlideInR* cobj = new cocos2d::TransitionSlideInR();
+    cocos2d::TransitionSlideInR* cobj = new (std::nothrow) cocos2d::TransitionSlideInR();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -37682,7 +37697,7 @@ bool js_cocos2dx_TransitionSlideInB_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionSlideInB* cobj = new cocos2d::TransitionSlideInB();
+    cocos2d::TransitionSlideInB* cobj = new (std::nothrow) cocos2d::TransitionSlideInB();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -37832,7 +37847,7 @@ bool js_cocos2dx_TransitionSlideInT_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionSlideInT* cobj = new cocos2d::TransitionSlideInT();
+    cocos2d::TransitionSlideInT* cobj = new (std::nothrow) cocos2d::TransitionSlideInT();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -37994,7 +38009,7 @@ bool js_cocos2dx_TransitionShrinkGrow_constructor(JSContext *cx, uint32_t argc, 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionShrinkGrow* cobj = new cocos2d::TransitionShrinkGrow();
+    cocos2d::TransitionShrinkGrow* cobj = new (std::nothrow) cocos2d::TransitionShrinkGrow();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -38156,7 +38171,7 @@ bool js_cocos2dx_TransitionFlipX_constructor(JSContext *cx, uint32_t argc, jsval
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionFlipX* cobj = new cocos2d::TransitionFlipX();
+    cocos2d::TransitionFlipX* cobj = new (std::nothrow) cocos2d::TransitionFlipX();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -38317,7 +38332,7 @@ bool js_cocos2dx_TransitionFlipY_constructor(JSContext *cx, uint32_t argc, jsval
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionFlipY* cobj = new cocos2d::TransitionFlipY();
+    cocos2d::TransitionFlipY* cobj = new (std::nothrow) cocos2d::TransitionFlipY();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -38478,7 +38493,7 @@ bool js_cocos2dx_TransitionFlipAngular_constructor(JSContext *cx, uint32_t argc,
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionFlipAngular* cobj = new cocos2d::TransitionFlipAngular();
+    cocos2d::TransitionFlipAngular* cobj = new (std::nothrow) cocos2d::TransitionFlipAngular();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -38639,7 +38654,7 @@ bool js_cocos2dx_TransitionZoomFlipX_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionZoomFlipX* cobj = new cocos2d::TransitionZoomFlipX();
+    cocos2d::TransitionZoomFlipX* cobj = new (std::nothrow) cocos2d::TransitionZoomFlipX();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -38800,7 +38815,7 @@ bool js_cocos2dx_TransitionZoomFlipY_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionZoomFlipY* cobj = new cocos2d::TransitionZoomFlipY();
+    cocos2d::TransitionZoomFlipY* cobj = new (std::nothrow) cocos2d::TransitionZoomFlipY();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -38961,7 +38976,7 @@ bool js_cocos2dx_TransitionZoomFlipAngular_constructor(JSContext *cx, uint32_t a
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionZoomFlipAngular* cobj = new cocos2d::TransitionZoomFlipAngular();
+    cocos2d::TransitionZoomFlipAngular* cobj = new (std::nothrow) cocos2d::TransitionZoomFlipAngular();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -39185,7 +39200,7 @@ bool js_cocos2dx_TransitionFade_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionFade* cobj = new cocos2d::TransitionFade();
+    cocos2d::TransitionFade* cobj = new (std::nothrow) cocos2d::TransitionFade();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -39311,7 +39326,7 @@ bool js_cocos2dx_TransitionCrossFade_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionCrossFade* cobj = new cocos2d::TransitionCrossFade();
+    cocos2d::TransitionCrossFade* cobj = new (std::nothrow) cocos2d::TransitionCrossFade();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -39472,7 +39487,7 @@ bool js_cocos2dx_TransitionTurnOffTiles_constructor(JSContext *cx, uint32_t argc
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionTurnOffTiles* cobj = new cocos2d::TransitionTurnOffTiles();
+    cocos2d::TransitionTurnOffTiles* cobj = new (std::nothrow) cocos2d::TransitionTurnOffTiles();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -39658,7 +39673,7 @@ bool js_cocos2dx_TransitionSplitCols_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionSplitCols* cobj = new cocos2d::TransitionSplitCols();
+    cocos2d::TransitionSplitCols* cobj = new (std::nothrow) cocos2d::TransitionSplitCols();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -39785,7 +39800,7 @@ bool js_cocos2dx_TransitionSplitRows_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionSplitRows* cobj = new cocos2d::TransitionSplitRows();
+    cocos2d::TransitionSplitRows* cobj = new (std::nothrow) cocos2d::TransitionSplitRows();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -39975,7 +39990,7 @@ bool js_cocos2dx_TransitionFadeTR_constructor(JSContext *cx, uint32_t argc, jsva
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionFadeTR* cobj = new cocos2d::TransitionFadeTR();
+    cocos2d::TransitionFadeTR* cobj = new (std::nothrow) cocos2d::TransitionFadeTR();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -40102,7 +40117,7 @@ bool js_cocos2dx_TransitionFadeBL_constructor(JSContext *cx, uint32_t argc, jsva
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionFadeBL* cobj = new cocos2d::TransitionFadeBL();
+    cocos2d::TransitionFadeBL* cobj = new (std::nothrow) cocos2d::TransitionFadeBL();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -40227,7 +40242,7 @@ bool js_cocos2dx_TransitionFadeUp_constructor(JSContext *cx, uint32_t argc, jsva
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionFadeUp* cobj = new cocos2d::TransitionFadeUp();
+    cocos2d::TransitionFadeUp* cobj = new (std::nothrow) cocos2d::TransitionFadeUp();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -40352,7 +40367,7 @@ bool js_cocos2dx_TransitionFadeDown_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionFadeDown* cobj = new cocos2d::TransitionFadeDown();
+    cocos2d::TransitionFadeDown* cobj = new (std::nothrow) cocos2d::TransitionFadeDown();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -40541,7 +40556,7 @@ bool js_cocos2dx_TransitionPageTurn_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionPageTurn* cobj = new cocos2d::TransitionPageTurn();
+    cocos2d::TransitionPageTurn* cobj = new (std::nothrow) cocos2d::TransitionPageTurn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -40668,7 +40683,7 @@ bool js_cocos2dx_TransitionProgress_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionProgress* cobj = new cocos2d::TransitionProgress();
+    cocos2d::TransitionProgress* cobj = new (std::nothrow) cocos2d::TransitionProgress();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -40793,7 +40808,7 @@ bool js_cocos2dx_TransitionProgressRadialCCW_constructor(JSContext *cx, uint32_t
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionProgressRadialCCW* cobj = new cocos2d::TransitionProgressRadialCCW();
+    cocos2d::TransitionProgressRadialCCW* cobj = new (std::nothrow) cocos2d::TransitionProgressRadialCCW();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -40918,7 +40933,7 @@ bool js_cocos2dx_TransitionProgressRadialCW_constructor(JSContext *cx, uint32_t 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionProgressRadialCW* cobj = new cocos2d::TransitionProgressRadialCW();
+    cocos2d::TransitionProgressRadialCW* cobj = new (std::nothrow) cocos2d::TransitionProgressRadialCW();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -41043,7 +41058,7 @@ bool js_cocos2dx_TransitionProgressHorizontal_constructor(JSContext *cx, uint32_
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionProgressHorizontal* cobj = new cocos2d::TransitionProgressHorizontal();
+    cocos2d::TransitionProgressHorizontal* cobj = new (std::nothrow) cocos2d::TransitionProgressHorizontal();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -41168,7 +41183,7 @@ bool js_cocos2dx_TransitionProgressVertical_constructor(JSContext *cx, uint32_t 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionProgressVertical* cobj = new cocos2d::TransitionProgressVertical();
+    cocos2d::TransitionProgressVertical* cobj = new (std::nothrow) cocos2d::TransitionProgressVertical();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -41293,7 +41308,7 @@ bool js_cocos2dx_TransitionProgressInOut_constructor(JSContext *cx, uint32_t arg
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionProgressInOut* cobj = new cocos2d::TransitionProgressInOut();
+    cocos2d::TransitionProgressInOut* cobj = new (std::nothrow) cocos2d::TransitionProgressInOut();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -41418,7 +41433,7 @@ bool js_cocos2dx_TransitionProgressOutIn_constructor(JSContext *cx, uint32_t arg
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TransitionProgressOutIn* cobj = new cocos2d::TransitionProgressOutIn();
+    cocos2d::TransitionProgressOutIn* cobj = new (std::nothrow) cocos2d::TransitionProgressOutIn();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -41667,7 +41682,7 @@ bool js_cocos2dx_MenuItem_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::MenuItem* cobj = new cocos2d::MenuItem();
+    cocos2d::MenuItem* cobj = new (std::nothrow) cocos2d::MenuItem();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -41700,7 +41715,7 @@ static bool js_cocos2d_MenuItem_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::MenuItem *nobj = new cocos2d::MenuItem();
+    cocos2d::MenuItem *nobj = new (std::nothrow) cocos2d::MenuItem();
     if (nobj) {
         nobj->autorelease();
     }
@@ -41939,7 +41954,7 @@ bool js_cocos2dx_MenuItemLabel_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::MenuItemLabel* cobj = new cocos2d::MenuItemLabel();
+    cocos2d::MenuItemLabel* cobj = new (std::nothrow) cocos2d::MenuItemLabel();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -41972,7 +41987,7 @@ static bool js_cocos2d_MenuItemLabel_ctor(JSContext *cx, uint32_t argc, jsval *v
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::MenuItemLabel *nobj = new cocos2d::MenuItemLabel();
+    cocos2d::MenuItemLabel *nobj = new (std::nothrow) cocos2d::MenuItemLabel();
     if (nobj) {
         nobj->autorelease();
     }
@@ -42102,7 +42117,7 @@ bool js_cocos2dx_MenuItemAtlasFont_constructor(JSContext *cx, uint32_t argc, jsv
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::MenuItemAtlasFont* cobj = new cocos2d::MenuItemAtlasFont();
+    cocos2d::MenuItemAtlasFont* cobj = new (std::nothrow) cocos2d::MenuItemAtlasFont();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -42135,7 +42150,7 @@ static bool js_cocos2d_MenuItemAtlasFont_ctor(JSContext *cx, uint32_t argc, jsva
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::MenuItemAtlasFont *nobj = new cocos2d::MenuItemAtlasFont();
+    cocos2d::MenuItemAtlasFont *nobj = new (std::nothrow) cocos2d::MenuItemAtlasFont();
     if (nobj) {
         nobj->autorelease();
     }
@@ -42384,7 +42399,7 @@ bool js_cocos2dx_MenuItemFont_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::MenuItemFont* cobj = new cocos2d::MenuItemFont();
+    cocos2d::MenuItemFont* cobj = new (std::nothrow) cocos2d::MenuItemFont();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -42417,7 +42432,7 @@ static bool js_cocos2d_MenuItemFont_ctor(JSContext *cx, uint32_t argc, jsval *vp
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::MenuItemFont *nobj = new cocos2d::MenuItemFont();
+    cocos2d::MenuItemFont *nobj = new (std::nothrow) cocos2d::MenuItemFont();
     if (nobj) {
         nobj->autorelease();
     }
@@ -42772,7 +42787,7 @@ bool js_cocos2dx_MenuItemSprite_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::MenuItemSprite* cobj = new cocos2d::MenuItemSprite();
+    cocos2d::MenuItemSprite* cobj = new (std::nothrow) cocos2d::MenuItemSprite();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -42805,7 +42820,7 @@ static bool js_cocos2d_MenuItemSprite_ctor(JSContext *cx, uint32_t argc, jsval *
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::MenuItemSprite *nobj = new cocos2d::MenuItemSprite();
+    cocos2d::MenuItemSprite *nobj = new (std::nothrow) cocos2d::MenuItemSprite();
     if (nobj) {
         nobj->autorelease();
     }
@@ -43033,7 +43048,7 @@ bool js_cocos2dx_MenuItemImage_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::MenuItemImage* cobj = new cocos2d::MenuItemImage();
+    cocos2d::MenuItemImage* cobj = new (std::nothrow) cocos2d::MenuItemImage();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -43066,7 +43081,7 @@ static bool js_cocos2d_MenuItemImage_ctor(JSContext *cx, uint32_t argc, jsval *v
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::MenuItemImage *nobj = new cocos2d::MenuItemImage();
+    cocos2d::MenuItemImage *nobj = new (std::nothrow) cocos2d::MenuItemImage();
     if (nobj) {
         nobj->autorelease();
     }
@@ -43280,7 +43295,7 @@ bool js_cocos2dx_MenuItemToggle_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::MenuItemToggle* cobj = new cocos2d::MenuItemToggle();
+    cocos2d::MenuItemToggle* cobj = new (std::nothrow) cocos2d::MenuItemToggle();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -43313,7 +43328,7 @@ static bool js_cocos2d_MenuItemToggle_ctor(JSContext *cx, uint32_t argc, jsval *
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::MenuItemToggle *nobj = new cocos2d::MenuItemToggle();
+    cocos2d::MenuItemToggle *nobj = new (std::nothrow) cocos2d::MenuItemToggle();
     if (nobj) {
         nobj->autorelease();
     }
@@ -43537,7 +43552,7 @@ bool js_cocos2dx_Menu_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Menu* cobj = new cocos2d::Menu();
+    cocos2d::Menu* cobj = new (std::nothrow) cocos2d::Menu();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -43570,7 +43585,7 @@ static bool js_cocos2d_Menu_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::Menu *nobj = new cocos2d::Menu();
+    cocos2d::Menu *nobj = new (std::nothrow) cocos2d::Menu();
     if (nobj) {
         nobj->autorelease();
     }
@@ -43870,7 +43885,7 @@ bool js_cocos2dx_ClippingNode_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ClippingNode* cobj = new cocos2d::ClippingNode();
+    cocos2d::ClippingNode* cobj = new (std::nothrow) cocos2d::ClippingNode();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -44314,7 +44329,7 @@ bool js_cocos2dx_MotionStreak_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::MotionStreak* cobj = new cocos2d::MotionStreak();
+    cocos2d::MotionStreak* cobj = new (std::nothrow) cocos2d::MotionStreak();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -44347,7 +44362,7 @@ static bool js_cocos2d_MotionStreak_ctor(JSContext *cx, uint32_t argc, jsval *vp
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::MotionStreak *nobj = new cocos2d::MotionStreak();
+    cocos2d::MotionStreak *nobj = new (std::nothrow) cocos2d::MotionStreak();
     if (nobj) {
         nobj->autorelease();
     }
@@ -45465,7 +45480,7 @@ bool js_cocos2dx_Sprite_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Sprite* cobj = new cocos2d::Sprite();
+    cocos2d::Sprite* cobj = new (std::nothrow) cocos2d::Sprite();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -45498,7 +45513,7 @@ static bool js_cocos2d_Sprite_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::Sprite *nobj = new cocos2d::Sprite();
+    cocos2d::Sprite *nobj = new (std::nothrow) cocos2d::Sprite();
     if (nobj) {
         nobj->autorelease();
     }
@@ -45919,7 +45934,7 @@ bool js_cocos2dx_ProgressTimer_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ProgressTimer* cobj = new cocos2d::ProgressTimer();
+    cocos2d::ProgressTimer* cobj = new (std::nothrow) cocos2d::ProgressTimer();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -45952,7 +45967,7 @@ static bool js_cocos2d_ProgressTimer_ctor(JSContext *cx, uint32_t argc, jsval *v
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ProgressTimer *nobj = new cocos2d::ProgressTimer();
+    cocos2d::ProgressTimer *nobj = new (std::nothrow) cocos2d::ProgressTimer();
     if (nobj) {
         nobj->autorelease();
     }
@@ -46773,7 +46788,7 @@ bool js_cocos2dx_RenderTexture_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::RenderTexture* cobj = new cocos2d::RenderTexture();
+    cocos2d::RenderTexture* cobj = new (std::nothrow) cocos2d::RenderTexture();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -46806,7 +46821,7 @@ static bool js_cocos2d_RenderTexture_ctor(JSContext *cx, uint32_t argc, jsval *v
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::RenderTexture *nobj = new cocos2d::RenderTexture();
+    cocos2d::RenderTexture *nobj = new (std::nothrow) cocos2d::RenderTexture();
     if (nobj) {
         nobj->autorelease();
     }
@@ -47000,7 +47015,7 @@ bool js_cocos2dx_NodeGrid_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::NodeGrid* cobj = new cocos2d::NodeGrid();
+    cocos2d::NodeGrid* cobj = new (std::nothrow) cocos2d::NodeGrid();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -47480,7 +47495,7 @@ bool js_cocos2dx_ParticleBatchNode_constructor(JSContext *cx, uint32_t argc, jsv
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleBatchNode* cobj = new cocos2d::ParticleBatchNode();
+    cocos2d::ParticleBatchNode* cobj = new (std::nothrow) cocos2d::ParticleBatchNode();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -47513,7 +47528,7 @@ static bool js_cocos2d_ParticleBatchNode_ctor(JSContext *cx, uint32_t argc, jsva
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ParticleBatchNode *nobj = new cocos2d::ParticleBatchNode();
+    cocos2d::ParticleBatchNode *nobj = new (std::nothrow) cocos2d::ParticleBatchNode();
     if (nobj) {
         nobj->autorelease();
     }
@@ -48381,7 +48396,8 @@ bool js_cocos2dx_ParticleSystem_updateQuadWithParticle(JSContext *cx, uint32_t a
 	if (argc == 2) {
 		cocos2d::sParticle* arg0;
 		cocos2d::Vec2 arg1;
-		#pragma warning NO CONVERSION TO NATIVE FOR sParticle*;
+		#pragma warning NO CONVERSION TO NATIVE FOR sParticle*
+		ok = false;
 		ok &= jsval_to_vector2(cx, argv[1], &arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParticleSystem_updateQuadWithParticle : Error processing arguments");
 		cobj->updateQuadWithParticle(arg0, arg1);
@@ -48676,7 +48692,8 @@ bool js_cocos2dx_ParticleSystem_initParticle(JSContext *cx, uint32_t argc, jsval
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_initParticle : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::sParticle* arg0;
-		#pragma warning NO CONVERSION TO NATIVE FOR sParticle*;
+		#pragma warning NO CONVERSION TO NATIVE FOR sParticle*
+		ok = false;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParticleSystem_initParticle : Error processing arguments");
 		cobj->initParticle(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -49661,7 +49678,7 @@ bool js_cocos2dx_ParticleSystem_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleSystem* cobj = new cocos2d::ParticleSystem();
+    cocos2d::ParticleSystem* cobj = new (std::nothrow) cocos2d::ParticleSystem();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -49694,7 +49711,7 @@ static bool js_cocos2d_ParticleSystem_ctor(JSContext *cx, uint32_t argc, jsval *
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ParticleSystem *nobj = new cocos2d::ParticleSystem();
+    cocos2d::ParticleSystem *nobj = new (std::nothrow) cocos2d::ParticleSystem();
     if (nobj) {
         nobj->autorelease();
     }
@@ -50048,7 +50065,7 @@ bool js_cocos2dx_ParticleSystemQuad_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleSystemQuad* cobj = new cocos2d::ParticleSystemQuad();
+    cocos2d::ParticleSystemQuad* cobj = new (std::nothrow) cocos2d::ParticleSystemQuad();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -50205,7 +50222,7 @@ bool js_cocos2dx_ParticleFire_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleFire* cobj = new cocos2d::ParticleFire();
+    cocos2d::ParticleFire* cobj = new (std::nothrow) cocos2d::ParticleFire();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -50382,7 +50399,7 @@ bool js_cocos2dx_ParticleFireworks_constructor(JSContext *cx, uint32_t argc, jsv
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleFireworks* cobj = new cocos2d::ParticleFireworks();
+    cocos2d::ParticleFireworks* cobj = new (std::nothrow) cocos2d::ParticleFireworks();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -50560,7 +50577,7 @@ bool js_cocos2dx_ParticleSun_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleSun* cobj = new cocos2d::ParticleSun();
+    cocos2d::ParticleSun* cobj = new (std::nothrow) cocos2d::ParticleSun();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -50738,7 +50755,7 @@ bool js_cocos2dx_ParticleGalaxy_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleGalaxy* cobj = new cocos2d::ParticleGalaxy();
+    cocos2d::ParticleGalaxy* cobj = new (std::nothrow) cocos2d::ParticleGalaxy();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -50916,7 +50933,7 @@ bool js_cocos2dx_ParticleFlower_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleFlower* cobj = new cocos2d::ParticleFlower();
+    cocos2d::ParticleFlower* cobj = new (std::nothrow) cocos2d::ParticleFlower();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -51094,7 +51111,7 @@ bool js_cocos2dx_ParticleMeteor_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleMeteor* cobj = new cocos2d::ParticleMeteor();
+    cocos2d::ParticleMeteor* cobj = new (std::nothrow) cocos2d::ParticleMeteor();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -51272,7 +51289,7 @@ bool js_cocos2dx_ParticleSpiral_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleSpiral* cobj = new cocos2d::ParticleSpiral();
+    cocos2d::ParticleSpiral* cobj = new (std::nothrow) cocos2d::ParticleSpiral();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -51450,7 +51467,7 @@ bool js_cocos2dx_ParticleExplosion_constructor(JSContext *cx, uint32_t argc, jsv
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleExplosion* cobj = new cocos2d::ParticleExplosion();
+    cocos2d::ParticleExplosion* cobj = new (std::nothrow) cocos2d::ParticleExplosion();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -51628,7 +51645,7 @@ bool js_cocos2dx_ParticleSmoke_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleSmoke* cobj = new cocos2d::ParticleSmoke();
+    cocos2d::ParticleSmoke* cobj = new (std::nothrow) cocos2d::ParticleSmoke();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -51806,7 +51823,7 @@ bool js_cocos2dx_ParticleSnow_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleSnow* cobj = new cocos2d::ParticleSnow();
+    cocos2d::ParticleSnow* cobj = new (std::nothrow) cocos2d::ParticleSnow();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -51984,7 +52001,7 @@ bool js_cocos2dx_ParticleRain_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParticleRain* cobj = new cocos2d::ParticleRain();
+    cocos2d::ParticleRain* cobj = new (std::nothrow) cocos2d::ParticleRain();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -52483,7 +52500,7 @@ static bool js_cocos2d_GridBase_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::GridBase *nobj = new cocos2d::GridBase();
+    cocos2d::GridBase *nobj = new (std::nothrow) cocos2d::GridBase();
     if (nobj) {
         nobj->autorelease();
     }
@@ -52635,7 +52652,7 @@ bool js_cocos2dx_Grid3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Grid3D* cobj = new cocos2d::Grid3D();
+    cocos2d::Grid3D* cobj = new (std::nothrow) cocos2d::Grid3D();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -52668,7 +52685,7 @@ static bool js_cocos2d_Grid3D_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::Grid3D *nobj = new cocos2d::Grid3D();
+    cocos2d::Grid3D *nobj = new (std::nothrow) cocos2d::Grid3D();
     if (nobj) {
         nobj->autorelease();
     }
@@ -52803,7 +52820,7 @@ bool js_cocos2dx_TiledGrid3D_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TiledGrid3D* cobj = new cocos2d::TiledGrid3D();
+    cocos2d::TiledGrid3D* cobj = new (std::nothrow) cocos2d::TiledGrid3D();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -52836,7 +52853,7 @@ static bool js_cocos2d_TiledGrid3D_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::TiledGrid3D *nobj = new cocos2d::TiledGrid3D();
+    cocos2d::TiledGrid3D *nobj = new (std::nothrow) cocos2d::TiledGrid3D();
     if (nobj) {
         nobj->autorelease();
     }
@@ -53030,7 +53047,7 @@ bool js_cocos2dx_GLProgramCache_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::GLProgramCache* cobj = new cocos2d::GLProgramCache();
+    cocos2d::GLProgramCache* cobj = new (std::nothrow) cocos2d::GLProgramCache();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -53443,7 +53460,7 @@ bool js_cocos2dx_TextureCache_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TextureCache* cobj = new cocos2d::TextureCache();
+    cocos2d::TextureCache* cobj = new (std::nothrow) cocos2d::TextureCache();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -54565,7 +54582,7 @@ bool js_cocos2dx_AnimationCache_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::AnimationCache* cobj = new cocos2d::AnimationCache();
+    cocos2d::AnimationCache* cobj = new (std::nothrow) cocos2d::AnimationCache();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -55300,7 +55317,7 @@ bool js_cocos2dx_TextFieldTTF_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TextFieldTTF* cobj = new cocos2d::TextFieldTTF();
+    cocos2d::TextFieldTTF* cobj = new (std::nothrow) cocos2d::TextFieldTTF();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -55333,7 +55350,7 @@ static bool js_cocos2d_TextFieldTTF_ctor(JSContext *cx, uint32_t argc, jsval *vp
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::TextFieldTTF *nobj = new cocos2d::TextFieldTTF();
+    cocos2d::TextFieldTTF *nobj = new (std::nothrow) cocos2d::TextFieldTTF();
     if (nobj) {
         nobj->autorelease();
     }
@@ -55511,7 +55528,8 @@ bool js_cocos2dx_ParallaxNode_setParallaxArray(JSContext *cx, uint32_t argc, jsv
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParallaxNode_setParallaxArray : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::_ccArray* arg0;
-		#pragma warning NO CONVERSION TO NATIVE FOR _ccArray*;
+		#pragma warning NO CONVERSION TO NATIVE FOR _ccArray*
+		ok = false;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParallaxNode_setParallaxArray : Error processing arguments");
 		cobj->setParallaxArray(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -55545,7 +55563,7 @@ bool js_cocos2dx_ParallaxNode_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ParallaxNode* cobj = new cocos2d::ParallaxNode();
+    cocos2d::ParallaxNode* cobj = new (std::nothrow) cocos2d::ParallaxNode();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -55578,7 +55596,7 @@ static bool js_cocos2d_ParallaxNode_ctor(JSContext *cx, uint32_t argc, jsval *vp
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::ParallaxNode *nobj = new cocos2d::ParallaxNode();
+    cocos2d::ParallaxNode *nobj = new (std::nothrow) cocos2d::ParallaxNode();
     if (nobj) {
         nobj->autorelease();
     }
@@ -55883,7 +55901,7 @@ bool js_cocos2dx_TMXObjectGroup_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TMXObjectGroup* cobj = new cocos2d::TMXObjectGroup();
+    cocos2d::TMXObjectGroup* cobj = new (std::nothrow) cocos2d::TMXObjectGroup();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -56017,7 +56035,7 @@ bool js_cocos2dx_TMXLayerInfo_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TMXLayerInfo* cobj = new cocos2d::TMXLayerInfo();
+    cocos2d::TMXLayerInfo* cobj = new (std::nothrow) cocos2d::TMXLayerInfo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -56128,7 +56146,7 @@ bool js_cocos2dx_TMXTilesetInfo_constructor(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TMXTilesetInfo* cobj = new cocos2d::TMXTilesetInfo();
+    cocos2d::TMXTilesetInfo* cobj = new (std::nothrow) cocos2d::TMXTilesetInfo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -56944,7 +56962,7 @@ bool js_cocos2dx_TMXMapInfo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TMXMapInfo* cobj = new cocos2d::TMXMapInfo();
+    cocos2d::TMXMapInfo* cobj = new (std::nothrow) cocos2d::TMXMapInfo();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -56976,7 +56994,7 @@ static bool js_cocos2d_TMXMapInfo_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::TMXMapInfo *nobj = new cocos2d::TMXMapInfo();
+    cocos2d::TMXMapInfo *nobj = new (std::nothrow) cocos2d::TMXMapInfo();
     if (nobj) {
         nobj->autorelease();
     }
@@ -57102,7 +57120,8 @@ bool js_cocos2dx_TMXLayer_getTileGIDAt(JSContext *cx, uint32_t argc, jsval *vp)
 		cocos2d::Vec2 arg0;
 		cocos2d::TMXTileFlags_* arg1;
 		ok &= jsval_to_vector2(cx, argv[0], &arg0);
-		#pragma warning NO CONVERSION TO NATIVE FOR TMXTileFlags_*;
+		#pragma warning NO CONVERSION TO NATIVE FOR TMXTileFlags_*
+		ok = false;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXLayer_getTileGIDAt : Error processing arguments");
 		unsigned int ret = cobj->getTileGIDAt(arg0, arg1);
 		jsval jsret = JSVAL_NULL;
@@ -57181,7 +57200,8 @@ bool js_cocos2dx_TMXLayer_setTiles(JSContext *cx, uint32_t argc, jsval *vp)
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXLayer_setTiles : Invalid Native Object");
 	if (argc == 1) {
 		unsigned int* arg0;
-		#pragma warning NO CONVERSION TO NATIVE FOR unsigned int*;
+		#pragma warning NO CONVERSION TO NATIVE FOR unsigned int*
+		ok = false;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXLayer_setTiles : Error processing arguments");
 		cobj->setTiles(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -57656,7 +57676,7 @@ bool js_cocos2dx_TMXLayer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TMXLayer* cobj = new cocos2d::TMXLayer();
+    cocos2d::TMXLayer* cobj = new (std::nothrow) cocos2d::TMXLayer();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -57689,7 +57709,7 @@ static bool js_cocos2d_TMXLayer_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::TMXLayer *nobj = new cocos2d::TMXLayer();
+    cocos2d::TMXLayer *nobj = new (std::nothrow) cocos2d::TMXLayer();
     if (nobj) {
         nobj->autorelease();
     }
@@ -58216,7 +58236,7 @@ bool js_cocos2dx_TMXTiledMap_constructor(JSContext *cx, uint32_t argc, jsval *vp
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TMXTiledMap* cobj = new cocos2d::TMXTiledMap();
+    cocos2d::TMXTiledMap* cobj = new (std::nothrow) cocos2d::TMXTiledMap();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -58249,7 +58269,7 @@ static bool js_cocos2d_TMXTiledMap_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::TMXTiledMap *nobj = new cocos2d::TMXTiledMap();
+    cocos2d::TMXTiledMap *nobj = new (std::nothrow) cocos2d::TMXTiledMap();
     if (nobj) {
         nobj->autorelease();
     }
@@ -58451,7 +58471,8 @@ bool js_cocos2dx_TileMapAtlas_setTGAInfo(JSContext *cx, uint32_t argc, jsval *vp
 	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TileMapAtlas_setTGAInfo : Invalid Native Object");
 	if (argc == 1) {
 		cocos2d::sImageTGA* arg0;
-		#pragma warning NO CONVERSION TO NATIVE FOR sImageTGA*;
+		#pragma warning NO CONVERSION TO NATIVE FOR sImageTGA*
+		ok = false;
 		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TileMapAtlas_setTGAInfo : Error processing arguments");
 		cobj->setTGAInfo(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -58496,7 +58517,7 @@ bool js_cocos2dx_TileMapAtlas_constructor(JSContext *cx, uint32_t argc, jsval *v
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::TileMapAtlas* cobj = new cocos2d::TileMapAtlas();
+    cocos2d::TileMapAtlas* cobj = new (std::nothrow) cocos2d::TileMapAtlas();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -58529,7 +58550,7 @@ static bool js_cocos2d_TileMapAtlas_ctor(JSContext *cx, uint32_t argc, jsval *vp
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::TileMapAtlas *nobj = new cocos2d::TileMapAtlas();
+    cocos2d::TileMapAtlas *nobj = new (std::nothrow) cocos2d::TileMapAtlas();
     if (nobj) {
         nobj->autorelease();
     }
@@ -58792,7 +58813,7 @@ bool js_cocos2dx_Component_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::Component* cobj = new cocos2d::Component();
+    cocos2d::Component* cobj = new (std::nothrow) cocos2d::Component();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -58824,7 +58845,7 @@ static bool js_cocos2d_Component_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    cocos2d::Component *nobj = new cocos2d::Component();
+    cocos2d::Component *nobj = new (std::nothrow) cocos2d::Component();
     if (nobj) {
         nobj->autorelease();
     }
@@ -59972,7 +59993,7 @@ bool js_cocos2dx_ProtectedNode_constructor(JSContext *cx, uint32_t argc, jsval *
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ProtectedNode* cobj = new cocos2d::ProtectedNode();
+    cocos2d::ProtectedNode* cobj = new (std::nothrow) cocos2d::ProtectedNode();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
