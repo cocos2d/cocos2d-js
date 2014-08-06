@@ -156,3 +156,13 @@ cc.ControlSwitch.prototype._ctor = function(maskSprite, onSprite, offSprite, thu
 cc.TableView.prototype._ctor = function(dataSouurce, size, container){
     container == undefined ? this._init(dataSouurce, size) : this._init(dataSouurce, size, container);
 };
+
+cc.EditBox.prototype._ctor = function(size, normal9SpriteBg, press9SpriteBg, disabled9SpriteBg){
+    if (this.initWithSizeAndBackgroundSprite(size, normal9SpriteBg)) {
+        if (press9SpriteBg)
+            this.setBackgroundSpriteForState(press9SpriteBg, cc.CONTROL_STATE_HIGHLIGHTED);
+
+        if (disabled9SpriteBg)
+            this.setBackgroundSpriteForState(disabled9SpriteBg, cc.CONTROL_STATE_DISABLED);
+    }
+};
