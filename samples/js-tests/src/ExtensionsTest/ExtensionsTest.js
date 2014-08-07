@@ -102,8 +102,8 @@ var extensionsTestItemNames = [
                 cc.director.runScene(testScene);
             }else if(!cc.sys.isNative){   //browser
                 cc.loader.loadJs('', [
-                    "../../frameworks/cocos2d-html5/external/pluginx/platform/facebook.js",
-                    "../../frameworks/cocos2d-html5/external/pluginx/platform/facebook_sdk.js"
+                    "../../frameworks/cocos2d-html5/external/pluginx/platform/facebook_sdk.js",
+                    "../../frameworks/cocos2d-html5/external/pluginx/platform/facebook.js"
                 ], function(){
                     var testScene = pluginXSceneManager.currentPluginXScene();
                     if (testScene) {
