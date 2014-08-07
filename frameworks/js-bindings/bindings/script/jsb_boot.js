@@ -761,25 +761,45 @@ ccui.helper = ccui.Helper;
  * @type {Object} Base object for ccs.uiReader
  * @name ccs.uiReader
  */
-ccs.uiReader = ccs.GUIReader.getInstance();
+ccs.uiReader = null;
+cc.defineGetterSetter(ccs, "uiReader", function() {
+    return ccs.GUIReader.getInstance();
+});
+ccs.GUIReader.prototype.clear = function() {
+    ccs.GUIReader.destroyInstance();
+};
 /**
  * @type {Object} Format and manage armature configuration and armature animation
  * @name ccs.armatureDataManager
  */
-ccs.armatureDataManager = ccs.ArmatureDataManager.getInstance();
+ccs.armatureDataManager = null;
+cc.defineGetterSetter(ccs, "armatureDataManager", function() {
+    return ccs.ArmatureDataManager.getInstance();
+});
+ccs.ArmatureDataManager.prototype.clear = function() {
+    ccs.ArmatureDataManager.destroyInstance();
+};
+/**
+ * @type {Object} Base singleton object for ccs.sceneReader
+ * @name ccs.sceneReader
+ */
+ccs.sceneReader = null;
+cc.defineGetterSetter(ccs, "sceneReader", function() {
+    return ccs.SceneReader.getInstance();
+});
+ccs.SceneReader.prototype.clear = function() {
+    ccs.SceneReader.destroyInstance();
+};
+ccs.SceneReader.prototype.version = function() {
+    return ccs.SceneReader.sceneReaderVersion();
+};
 /**
  * @type {Object} Base singleton object for ccs.ActionManager
  * @name ccs.actionManager
  */
 ccs.actionManager = ccs.ActionManager.getInstance();
-/**
- * @type {Object} Base singleton object for ccs.sceneReader
- * @name ccs.sceneReader
- */
-ccs.sceneReader = ccs.SceneReader.getInstance();
-ccs.sceneReader.clear = ccs.uiReader.clear = ccs.actionManager.clear = ccs.armatureDataManager.clear = function() {};
-ccs.sceneReader.version = function() {
-    return ccs.SceneReader.sceneReaderVersion();
+ccs.ActionManager.prototype.clear = function() {
+    ccs.ActionManager.releaseActions();
 };
 
 //ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
