@@ -768,14 +768,6 @@ jsval anonEvaluate(JSContext *cx, JSObject *thisObj, const char* string) {
 	return JSVAL_VOID;
 }
 
-bool js_platform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSString *str = JS_NewStringCopyZ(cx, "mobile");
-	jsval out = STRING_TO_JSVAL(str);
-	JS_SET_RVAL(cx, vp, out);
-	return true;
-}
-
 JSCallbackWrapper::JSCallbackWrapper()
 : _jsCallback(JSVAL_VOID), _jsThisObj(JSVAL_VOID), _extraData(JSVAL_VOID)
 {
@@ -4301,8 +4293,6 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 {
     JS::RootedObject ccObj(cx);
 	create_js_root_obj(cx, global, "cc", &ccObj);
-
-	JS_DefineFunction(cx, global, "__getPlatform", js_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 
 	JSObject *tmpObj;
     JS_DefineFunction(cx, jsb_cocos2d_Label_prototype, "createWithTTF", js_cocos2dx_Label_createWithTTF, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);

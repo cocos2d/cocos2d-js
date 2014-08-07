@@ -761,25 +761,45 @@ ccui.helper = ccui.Helper;
  * @type {Object} Base object for ccs.uiReader
  * @name ccs.uiReader
  */
-ccs.uiReader = ccs.GUIReader.getInstance();
+ccs.uiReader = null;
+cc.defineGetterSetter(ccs, "uiReader", function() {
+    return ccs.GUIReader.getInstance();
+});
+ccs.GUIReader.prototype.clear = function() {
+    ccs.GUIReader.destroyInstance();
+};
 /**
  * @type {Object} Format and manage armature configuration and armature animation
  * @name ccs.armatureDataManager
  */
-ccs.armatureDataManager = ccs.ArmatureDataManager.getInstance();
+ccs.armatureDataManager = null;
+cc.defineGetterSetter(ccs, "armatureDataManager", function() {
+    return ccs.ArmatureDataManager.getInstance();
+});
+ccs.ArmatureDataManager.prototype.clear = function() {
+    ccs.ArmatureDataManager.destroyInstance();
+};
+/**
+ * @type {Object} Base singleton object for ccs.sceneReader
+ * @name ccs.sceneReader
+ */
+ccs.sceneReader = null;
+cc.defineGetterSetter(ccs, "sceneReader", function() {
+    return ccs.SceneReader.getInstance();
+});
+ccs.SceneReader.prototype.clear = function() {
+    ccs.SceneReader.destroyInstance();
+};
+ccs.SceneReader.prototype.version = function() {
+    return ccs.SceneReader.sceneReaderVersion();
+};
 /**
  * @type {Object} Base singleton object for ccs.ActionManager
  * @name ccs.actionManager
  */
 ccs.actionManager = ccs.ActionManager.getInstance();
-/**
- * @type {Object} Base singleton object for ccs.sceneReader
- * @name ccs.sceneReader
- */
-ccs.sceneReader = ccs.SceneReader.getInstance();
-ccs.sceneReader.clear = ccs.uiReader.clear = ccs.actionManager.clear = ccs.armatureDataManager.clear = function() {};
-ccs.sceneReader.version = function() {
-    return ccs.SceneReader.sceneReaderVersion();
+ccs.ActionManager.prototype.clear = function() {
+    this.releaseActions();
 };
 
 //ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
@@ -846,120 +866,225 @@ cc._initSys = function(config, CONFIG_KEY){
     /**
      * English language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_ENGLISH = "en";
     /**
      * Chinese language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_CHINESE = "zh";
     /**
      * French language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_FRENCH = "fr";
     /**
      * Italian language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_ITALIAN = "it";
     /**
      * German language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_GERMAN = "de";
     /**
      * Spanish language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_SPANISH = "es";
     /**
      * Russian language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_RUSSIAN = "ru";
     /**
      * Korean language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_KOREAN = "ko";
     /**
      * Japanese language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_JAPANESE = "ja";
     /**
      * Hungarian language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_HUNGARIAN = "hu";
     /**
      * Portuguese language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_PORTUGUESE = "pt";
     /**
      * Arabic language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_ARABIC = "ar";
     /**
      * Norwegian language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_NORWEGIAN = "no";
     /**
      * Polish language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_POLISH = "pl";
 
 
     /**
      * @constant
+     * @default
      * @type {string}
      */
     locSys.OS_WINDOWS = "Windows";
     /**
      * @constant
+     * @default
      * @type {string}
      */
     locSys.OS_IOS = "iOS";
     /**
      * @constant
+     * @default
      * @type {string}
      */
     locSys.OS_OSX = "OS X";
     /**
      * @constant
+     * @default
      * @type {string}
      */
     locSys.OS_UNIX = "UNIX";
     /**
      * @constant
+     * @default
      * @type {string}
      */
     locSys.OS_LINUX = "Linux";
     /**
      * @constant
+     * @default
      * @type {string}
      */
     locSys.OS_ANDROID = "Android";
     locSys.OS_UNKNOWN = "unknown";
+
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.WINDOWS = 0;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.LINUX = 1;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.MACOS = 2;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.ANDROID = 3;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.IPHONE = 4;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.IPAD = 5;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.BLACKBERRY = 6;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.NACL = 7;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.EMSCRIPTEN = 8;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.TIZEN = 9;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.WINRT = 10;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.WP8 = 11;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.MOBILE_BROWSER = 100;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.DESKTOP_BROWSER = 101;
 
     locSys.BROWSER_TYPE_WECHAT = "wechat";
     locSys.BROWSER_TYPE_ANDROID = "androidbrowser";
@@ -981,12 +1106,16 @@ cc._initSys = function(config, CONFIG_KEY){
     /**
      * Is native ? This is set to be true in jsb auto.
      * @constant
-     * @type Boolean
+     * @default
+     * @type {Boolean}
      */
     locSys.isNative = true;
 
     /** Get the os of system */
     locSys.os = __getOS();
+
+    /** Get the target platform of system */
+    locSys.platform = __getPlatform();
 
     // Forces the garbage collector
     locSys.garbageCollect = function() {
@@ -1011,6 +1140,7 @@ cc._initSys = function(config, CONFIG_KEY){
         str += "browserType : " + self.browserType + "\r\n";
         str += "capabilities : " + JSON.stringify(self.capabilities) + "\r\n";
         str += "os : " + self.os + "\r\n";
+        str += "platform : " + self.platform + "\r\n";
         cc.log(str);
     }
 
@@ -1100,7 +1230,8 @@ cc.game = {
     /**
      * Key of config
      * @constant
-     * @type Object
+     * @default
+     * @type {Object}
      */
     CONFIG_KEY : {
         engineDir : "engineDir",
@@ -1123,39 +1254,39 @@ cc.game = {
     
     /**
      * Config of game
-     * @type Object
+     * @type {Object}
      */
     config : null,
     
     /**
      * Callback when the scripts of engine have been load.
-     * @type Function
+     * @type {Function}
      */
     onStart : null,
     
     /**
      * Callback when game exits.
-     * @type Function
+     * @type {Function}
      */
     onExit : null,
     /**
      * Callback before game resumes.
-     * @type Function
+     * @type {Function}
      */
     onBeforeResume : null,
     /**
      * Callback after game resumes.
-     * @type Function
+     * @type {Function}
      */
     onAfterResume : null,
     /**
      * Callback before game pauses.
-     * @type Function
+     * @type {Function}
      */
     onBeforePause : null,
     /**
      * Callback after game pauses.
-     * @type Function
+     * @type {Function}
      */
     onAfterPause : null,
     
