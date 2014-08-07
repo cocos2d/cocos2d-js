@@ -100,7 +100,7 @@ var CocostudioParserJsonScene = cc.Scene.extend({
         var pMenu = cc.Menu.create(pMenuItem);
 
         pMenu.setPosition( cc.p(0, 0) );
-        pMenuItem.setPosition( cc.p( 750, 25) );
+        pMenuItem.setPosition( cc.pAdd(cc.visibleRect.bottomRight,cc.p(-50,25)) );
 
         this.addChild(pMenu, 1);
 
