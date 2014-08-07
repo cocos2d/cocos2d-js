@@ -799,7 +799,7 @@ ccs.SceneReader.prototype.version = function() {
  */
 ccs.actionManager = ccs.ActionManager.getInstance();
 ccs.ActionManager.prototype.clear = function() {
-    ccs.ActionManager.releaseActions();
+    this.releaseActions();
 };
 
 //ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
