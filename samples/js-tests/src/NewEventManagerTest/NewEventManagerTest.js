@@ -149,7 +149,7 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
         });
 
         removeAllTouchItem.fontSize = 16;
-        removeAllTouchItem.x = cc.visibleRect.right.x -100;
+        removeAllTouchItem.x = cc.visibleRect.right.x -removeAllTouchItem.width/2-20;
         removeAllTouchItem.y = cc.visibleRect.right.y;
 
         var menu = new cc.Menu(removeAllTouchItem);

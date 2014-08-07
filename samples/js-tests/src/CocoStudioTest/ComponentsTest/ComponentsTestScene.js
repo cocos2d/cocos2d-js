@@ -59,6 +59,7 @@ var ComponentsTestLayer = cc.LayerColor.extend({
     },
 
     toExtensionsMainLayer: function (sender) {
+        cc.audioEngine.stopMusic("res/Sound/background-music-aac.wav");
         var scene = new CocoStudioTestScene();
         scene.runThisTest();
     }
