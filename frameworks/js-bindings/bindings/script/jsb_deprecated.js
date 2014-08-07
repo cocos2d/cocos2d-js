@@ -91,11 +91,6 @@ var cc = cc || {};
         return cc.Node.prototype.getNumberOfRunningActionsInTarget.apply(this, arguments);
     };
 
-    cc.TMXTiledMap.prototype.propertiesForGID = function() {
-        logW("cc.TMXTiledMap.propertiesForGID", "cc.TMXTiledMap.getPropertiesForGID");
-        return cc.TMXTiledMap.prototype.getPropertiesForGID.apply(this, arguments);
-    };
-
     cc.Menu.prototype.setHandlerPriority = function() {
         cc.log("cc.Menu.setHandlerPriority was deprecated, 3.0 uses new event dispatcher to dispatch touch event based on draw order, so setHandlerPriority is not needed now.");
     };

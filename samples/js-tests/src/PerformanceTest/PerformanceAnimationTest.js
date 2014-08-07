@@ -86,8 +86,7 @@ var AnimationMenuLayer = PerformBasicLayer.extend({
 var AnimationTest = AnimationMenuLayer.extend({
     numNodes:null,
     lastRenderedCount:null,
-    moveLayer:null,
-
+    moveLayerList:null,
     init:function () {
         this._super();
 
@@ -110,8 +109,8 @@ var AnimationTest = AnimationMenuLayer.extend({
         infoLabel.x = size.width / 2;
         infoLabel.y = size.height - 90;
         this.addChild(infoLabel, 1, TAG_INFO_LAYER);
-
         this.numNodes = 0;
+        this.moveLayerList = [];
         this.createMovieClip();
         //this.scheduleUpdate();
     },
@@ -125,8 +124,9 @@ var AnimationTest = AnimationMenuLayer.extend({
         return "";
     },
     createMovieClip:function () {
-        this.moveLayer = new cc.Node();
-        this.addChild(this.moveLayer);
+        var moveLayer = new cc.Node();
+        this.addChild(moveLayer);
+        this.moveLayerList.push(moveLayer);
         var size = cc.director.getWinSize();
         for(var i=0; i<10; i++) {
             var character = new CharacterView();
@@ -135,10 +135,10 @@ var AnimationTest = AnimationMenuLayer.extend({
             character.y = size.height /2 - i*15;
             this.numNodes++;
             cc.log("create"+this.numNodes);
-            this.moveLayer.addChild(character, 0, this.numNodes);
+            moveLayer.addChild(character, 0, this.numNodes);
         }
         var action = cc.moveBy(1, cc.p(20,0));
-        this.moveLayer.runAction(action.repeatForever());
+        moveLayer.runAction(action.repeatForever());
         this.updateNodes();
     },
     onIncrease:function () {
@@ -146,11 +146,14 @@ var AnimationTest = AnimationMenuLayer.extend({
     },
     onDecrease:function () {
         if(this.numNodes > 0) {
+            var moveLayer = this.moveLayerList[this.moveLayerList.length-1];
             for(var i=0;i<10;i++) {
                 cc.log("remove"+this.numNodes);
-                this.moveLayer.removeChildByTag(this.numNodes, true);
+                moveLayer.removeChildByTag(this.numNodes, true);
                 this.numNodes--;
             }
+            moveLayer.removeFromParent(true);
+            this.moveLayerList.pop();
         }
         this.updateNodes();
     },

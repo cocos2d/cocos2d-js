@@ -675,7 +675,7 @@ var SpeedTest = EaseSpriteDemo.extend({
         this._tamara.runAction(action3);
         this._kathia.runAction(action);
 
-        this.schedule(this.altertime, 1.0);//:@selector(altertime:) interval:1.0];
+        this.schedule(this.altertime, 1.0);
         //----end12----
     },
     title:function () {
