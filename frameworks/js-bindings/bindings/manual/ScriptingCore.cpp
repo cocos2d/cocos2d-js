@@ -282,17 +282,17 @@ bool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
         return false;
     }
 
-    JSString * platform;
+    Application::Platform platform;
 
     // config.deviceType: Device Type
     // 'mobile' for any kind of mobile devices, 'desktop' for PCs, 'browser' for Web Browsers
     // #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     //     platform = JS_InternString(_cx, "desktop");
     // #else
-    platform = JS_InternString(cx, "mobile");
+    platform = Application::getInstance()->getTargetPlatform();
     // #endif
 
-    jsval ret = STRING_TO_JSVAL(platform);
+    jsval ret = INT_TO_JSVAL((int)platform);
 
     JS_SET_RVAL(cx, vp, ret);
 
