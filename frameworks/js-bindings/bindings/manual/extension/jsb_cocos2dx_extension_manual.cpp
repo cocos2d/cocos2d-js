@@ -505,6 +505,59 @@ static bool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval *
     return false;
 }
 
+static bool js_cocos2dx_CCTableView_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::extension::TableView* cobj = (cocos2d::extension::TableView *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_TableView_dequeueCell : Invalid Native Object");
+    bool ok = true;
+    if (argc == 3 || argc == 2)
+    {
+        
+        JSB_TableViewDataSource* pNativeSource = new JSB_TableViewDataSource();
+        pNativeSource->setTableViewDataSource(JSVAL_TO_OBJECT(argv[0]));
+        cobj->setDataSource(pNativeSource);
+
+        cocos2d::Size arg1;
+        ok &= jsval_to_ccsize(cx, argv[1], &arg1);
+
+        if (argc == 2)
+        {
+            cobj->initWithViewSize(arg1);
+        }
+        else
+        {
+            cocos2d::Node* arg2;
+            do 
+            {
+                js_proxy_t *proxy;
+                JSObject *tmpObj = JSVAL_TO_OBJECT(argv[2]);
+                proxy = jsb_get_js_proxy(tmpObj);
+                arg2 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
+                JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
+            } while (0);
+            JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+            cobj->initWithViewSize(arg1, arg2);
+        }
+        cobj->reloadData();
+        
+        __Dictionary* userDict = new __Dictionary();
+        userDict->setObject(pNativeSource, KEY_TABLEVIEW_DATA_SOURCE);
+        cobj->setUserObject(userDict);
+        userDict->release();
+        
+        pNativeSource->release();
+        
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    
+    JS_ReportError(cx, "wrong number of arguments");
+    return false;
+}
+
 class JSB_EditBoxDelegate
 : public Ref
 , public EditBoxDelegate
@@ -1098,6 +1151,7 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_cocos2d_extension_ScrollView_prototype, "setDelegate", js_cocos2dx_CCScrollView_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_extension_TableView_prototype, "setDelegate", js_cocos2dx_CCTableView_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_extension_TableView_prototype, "setDataSource", js_cocos2dx_CCTableView_setDataSource, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_extension_TableView_prototype, "_init", js_cocos2dx_CCTableView_init, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_extension_EditBox_prototype, "setDelegate", js_cocos2dx_CCEditBox_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_extension_Control_prototype, "addTargetWithActionForControlEvents", js_cocos2dx_CCControl_addTargetWithActionForControlEvents, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_extension_Control_prototype, "removeTargetWithActionForControlEvents", js_cocos2dx_CCControl_removeTargetWithActionForControlEvents, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);

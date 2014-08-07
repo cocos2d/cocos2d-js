@@ -22,11 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var CustomParticleWidgetReader = {
+var customParticleWidgetReader = {
 
-    getInstance: function(){
-        return CustomParticleWidgetReader;
-    },
     setProperties: function(classType, widget, customOptions){
         var guiReader = ccs.uiReader;
 

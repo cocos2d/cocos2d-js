@@ -140,7 +140,7 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
 
             nextItem.fontSize = 16;
             nextItem.x = cc.visibleRect.right.x -100;
-	        nextItem.y = cc.visibleRect.right.y - 30;
+            nextItem.y = cc.visibleRect.right.y - 30;
 
             var menu2 = new cc.Menu(nextItem);
             menu2.setPosition(0, 0);
@@ -150,7 +150,7 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
 
         removeAllTouchItem.fontSize = 16;
         removeAllTouchItem.x = cc.visibleRect.right.x -removeAllTouchItem.width/2-20;
-	    removeAllTouchItem.y = cc.visibleRect.right.y;
+        removeAllTouchItem.y = cc.visibleRect.right.y;
 
         var menu = new cc.Menu(removeAllTouchItem);
         menu.setPosition(0, 0);
@@ -464,18 +464,31 @@ var LabelKeyboardEventTest =  EventDispatcherTestDemo.extend({
         statusLabel.setPosition(origin.x + size.width/2, origin.x + size.height/2);
         this.addChild(statusLabel);
 
+        var that = this;
         cc.eventManager.addListener({
             event: cc.EventListener.KEYBOARD,
             onKeyPressed:  function(keyCode, event){
                 var label = event.getCurrentTarget();
-                label.setString("Key " + String.fromCharCode(keyCode) + "(" + keyCode.toString()  + ") was pressed!");
+                label.setString("Key " + (cc.sys.isNative ? that.getNativeKeyName(keyCode) : String.fromCharCode(keyCode) ) + "(" + keyCode.toString()  + ") was pressed!");
             },
             onKeyReleased: function(keyCode, event){
                 var label = event.getCurrentTarget();
-                label.setString("Key " + String.fromCharCode(keyCode) + "(" + keyCode.toString()  + ") was released!");
+                label.setString("Key " + (cc.sys.isNative ? that.getNativeKeyName(keyCode) : String.fromCharCode(keyCode) ) + "(" + keyCode.toString()  + ") was released!");
             }
         }, statusLabel);
         //----end4----
+    },
+
+    getNativeKeyName:function(keyCode) {
+        var allCode = Object.getOwnPropertyNames(cc.KEY);
+        var keyName = "";
+        for(var x in allCode){
+            if(cc.KEY[allCode[x]] == keyCode){
+                keyName = allCode[x];
+                break;
+            }
+        }
+        return keyName;
     },
 
     title:function(){

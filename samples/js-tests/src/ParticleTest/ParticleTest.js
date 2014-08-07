@@ -303,7 +303,7 @@ var ParticleDemo = BaseTestLayer.extend({
         labelAtlas.y = 50;
 
         // moving background
-        this._background = cc.sprite(s_back3);
+        this._background = new cc.Sprite(s_back3);
         this.addChild(this._background, 5);
         this._background.x = s.width / 2;
         this._background.y = s.height - 180;
