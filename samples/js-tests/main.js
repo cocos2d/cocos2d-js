@@ -26,10 +26,10 @@
  ****************************************************************************/
 
 cc.game.onStart = function(){
-    cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.FIXED_HEIGHT);
-    cc.view.resizeWithBrowserSize(true);
     
     if (cc.sys.isNative) {
+        cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.FIXED_HEIGHT);
+        cc.view.resizeWithBrowserSize(true);
         var searchPaths = jsb.fileUtils.getSearchPaths();
         searchPaths.push('script');
         searchPaths.push('src');

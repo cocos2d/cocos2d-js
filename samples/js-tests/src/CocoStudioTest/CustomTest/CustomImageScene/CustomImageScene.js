@@ -30,8 +30,8 @@ var CustomImageLayer = cc.Layer.extend({
         var guiReader = ccs.uiReader;
         guiReader.registerTypeAndCallBack("CustomImageView",
             CustomImageView,
-            CustomImageViewReader,
-            CustomImageViewReader.setProperties);
+            customImageViewReader,
+            customImageViewReader.setProperties);
 
         var layout = guiReader.widgetFromJsonFile("res/cocosui/CustomImageViewTest/NewProject_2_1.ExportJson");
         this.addChild(layout);

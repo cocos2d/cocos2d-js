@@ -79,6 +79,18 @@ ccui.Widget.prototype._ctor = ccui.Button.prototype._ctor
                             = ccui.ScrollView.prototype._ctor
                             = _p._ctor;
 
+ccui.RichElementText.prototype._ctor = function(tag, color, opacity, text, fontName, fontSize){
+    fontSize !== undefined && this.init(tag, color, opacity, text, fontName, fontSize);
+};
+
+ccui.RichElementImage.prototype._ctor = function(tag, color, opacity, filePath){
+    filePath !== undefined && this.init(tag, color, opacity, filePath);
+};
+
+ccui.RichElementCustomNode.prototype._ctor = function(tag, color, opacity, customNode){
+    customNode !== undefined && this.init(tag, color, opacity, customNode);
+};
+
 cc.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callback) {
     callback && this.init(assetsManager, callback);
 };
@@ -151,4 +163,18 @@ cc.ControlStepper.prototype._ctor = function(minusSprite, plusSprite){
 
 cc.ControlSwitch.prototype._ctor = function(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel){
     offLabel && this.initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
+};
+
+cc.TableView.prototype._ctor = function(dataSouurce, size, container){
+    container == undefined ? this._init(dataSouurce, size) : this._init(dataSouurce, size, container);
+};
+
+cc.EditBox.prototype._ctor = function(size, normal9SpriteBg, press9SpriteBg, disabled9SpriteBg){
+    if (this.initWithSizeAndBackgroundSprite(size, normal9SpriteBg)) {
+        if (press9SpriteBg)
+            this.setBackgroundSpriteForState(press9SpriteBg, cc.CONTROL_STATE_HIGHLIGHTED);
+
+        if (disabled9SpriteBg)
+            this.setBackgroundSpriteForState(disabled9SpriteBg, cc.CONTROL_STATE_DISABLED);
+    }
 };

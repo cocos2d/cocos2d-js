@@ -102,7 +102,7 @@ var TestController = cc.LayerGradient.extend({
 
         var toggleAutoTestItem = cc.MenuItemToggle.create(subItem1, subItem2);
         toggleAutoTestItem.setCallback(this.onToggleAutoTest, this);
-        toggleAutoTestItem.x = winSize.width-90;
+        toggleAutoTestItem.x = winSize.width - toggleAutoTestItem.width / 2 - 10;
 	    toggleAutoTestItem.y = 20;
         if( autoTestEnabled )
             toggleAutoTestItem.setSelectedIndex(1);
@@ -197,7 +197,7 @@ var TestController = cc.LayerGradient.extend({
         }, this);
     },
     onCloseCallback:function () {
-        history && history.go(-1);
+        window.history && window.history.go(-1);
     },
     onToggleAutoTest:function() {
         autoTestEnabled = !autoTestEnabled;

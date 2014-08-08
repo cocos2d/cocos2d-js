@@ -66,7 +66,7 @@ var XHRTestLayer = cc.Layer.extend({
         xhr.open("GET", "http://httpbin.org/get");
 
         xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
+            if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207)) {
                 var httpStatus = xhr.statusText;
                 var response = xhr.responseText.substring(0, 50) + "...";
                 var responseLabel = new cc.LabelTTF("GET Response (50 chars): \n" + response, "Thonburi", 16);
@@ -96,7 +96,7 @@ var XHRTestLayer = cc.Layer.extend({
 
         xhr.open("POST", "http://httpbin.org/post");
         xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
+            if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207)) {
                 var httpStatus = xhr.statusText;
                 var response = xhr.responseText.substring(0, 50) + "...";
                 var responseLabel = new cc.LabelTTF("POST Response (50 chars):  \n" + response, "Thonburi", 16);

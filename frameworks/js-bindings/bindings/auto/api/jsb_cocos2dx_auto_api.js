@@ -17659,6 +17659,16 @@ char
 cc.Application = {
 
 /**
+ * @method getTargetPlatform
+ * @return {cc.ApplicationProtocol::Platform}
+ */
+getTargetPlatform : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getCurrentLanguage
  * @return {cc.LanguageType}
  */
