@@ -116,7 +116,7 @@ var extensionsTestItemNames = [
         }
     }
 ];
-if (cc.sys.isNative) {
+if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
     extensionsTestItemNames.push({
         itemTitle:"AssetsManagerTest",
         testScene:function () {
