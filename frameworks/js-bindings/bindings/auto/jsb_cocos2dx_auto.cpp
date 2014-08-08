@@ -53751,6 +53751,23 @@ void js_register_cocos2dx_SAXParser(JSContext *cx, JSObject *global) {
 JSClass  *jsb_cocos2d_Application_class;
 JSObject *jsb_cocos2d_Application_prototype;
 
+bool js_cocos2dx_Application_getTargetPlatform(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::Application* cobj = (cocos2d::Application *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Application_getTargetPlatform : Invalid Native Object");
+	if (argc == 0) {
+		int ret = (int)cobj->getTargetPlatform();
+		jsval jsret = JSVAL_NULL;
+		jsret = int32_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_cocos2dx_Application_getTargetPlatform : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
 bool js_cocos2dx_Application_getCurrentLanguage(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -53813,6 +53830,7 @@ void js_register_cocos2dx_Application(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
+		JS_FN("getTargetPlatform", js_cocos2dx_Application_getTargetPlatform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getCurrentLanguage", js_cocos2dx_Application_getCurrentLanguage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
