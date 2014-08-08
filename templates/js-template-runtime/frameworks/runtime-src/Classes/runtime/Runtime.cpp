@@ -247,14 +247,30 @@ vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const 
     return _lfileList;
 }
 
-bool startScript()
+static bool startScript()
 {
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     return ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
 }
 
-bool reloadScript(const string& file,bool reloadAll = false)
+static void cleanScript(const char *path)
+{
+    std::unordered_map<std::string, JSScript*> filenameScript= ScriptingCore::getInstance()->getFileScprite();
+    auto it = filenameScript.begin();
+    while (it != filenameScript.end())
+    {
+        int found = it->first.rfind(path);
+        if (0 == found || ( found!=std::string::npos && it->first.at(found-1) == '/'))
+        {
+            it = filenameScript.erase(it);
+            continue;
+        }
+        it++;
+    }
+}
+
+bool reloadScript(const string& file)
 {
 
     auto director = Director::getInstance();
@@ -273,11 +289,7 @@ bool reloadScript(const string& file,bool reloadAll = false)
     if (modulefile.empty())
     {
         modulefile = ConfigParser::getInstance()->getEntryFile().c_str();
-        ScriptingCore::getInstance()->cleanScript(modulefile.c_str());
-    }
-    if (reloadAll)
-    {
-        ScriptingCore::getInstance()->cleanAllScript();
+        cleanScript(modulefile.c_str());
     }
     return ScriptingCore::getInstance()->runScript(modulefile.c_str());
     
@@ -847,7 +859,7 @@ public:
             _transferTip = "waiting for debugger to connect ...";
         }
         char szVersion[1024]={0};
-        sprintf(szVersion,"runtimeVersion:%s \ncocos2dVersion:%s",getRuntimeVersion(),cocos2dVersion());
+        sprintf(szVersion,"runtimeVersion:%s \nengineVersion:%s",getRuntimeVersion(),ENGINE_VERSION);
         Label* verLable = Label::createWithSystemFont(szVersion,"",24);
         verLable->setAnchorPoint(Vec2(0,0));
         int width = verLable->getBoundingBox().size.width;
@@ -967,7 +979,7 @@ public:
                         const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
                         for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
                         {
-                            ScriptingCore::getInstance()->cleanScript(objectfiles[i].GetString());
+                            cleanScript(objectfiles[i].GetString());
                             ScriptingCore::getInstance()->compileScript(objectfiles[i].GetString());
                         }
                         if (0 == objectfiles.Size()) {
@@ -980,7 +992,7 @@ public:
                         vector<std::string> fileInfoList = searchFileList(g_resourcePath,"*.js","runtime|frameworks|");
                         for (unsigned i = 0; i < fileInfoList.size(); i++)
                         {
-                            ScriptingCore::getInstance()->cleanScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
+                            cleanScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
                             ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
                         }
                     }
@@ -1045,7 +1057,7 @@ public:
                         for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
                         {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
-                            ScriptingCore::getInstance()->cleanScript(objectfiles[i].GetString());
+                            cleanScript(objectfiles[i].GetString());
 #else
                             string filename(g_resourcePath);
                             filename.append("/");
@@ -1075,6 +1087,32 @@ public:
 #else
                     exit(0);
 #endif	
+                }else if(strcmp(strcmd.c_str(),"shutdownapp")==0)
+                {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+                    extern void shutDownApp();
+                    shutDownApp();
+#else
+                    exit(0);
+#endif	
+                }else if (strcmp(strcmd.c_str(),"getplatform")==0)
+                {
+                    string platform="UNKNOW";
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+                    platform = "WIN32";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+                    platform = "MAC";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+                    platform = "IOS";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+                    platform = "ANDROID";
+#endif
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                    rapidjson::Value platformValue(rapidjson::kStringType);
+                    platformValue.SetString(platform.c_str(),dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("platform",platformValue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }
                 
                 rapidjson::StringBuffer buffer;
@@ -1215,6 +1253,13 @@ bool initRuntime()
     
     searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
+
+    if (!ConfigParser::getInstance()->isInit()) {
+        ConfigParser::getInstance()->readConfig();
+    }
+    static ConsoleCustomCommand *g_customCommand;
+    g_customCommand = new ConsoleCustomCommand();
+    g_customCommand->init();
     return true;
 }
 
@@ -1236,10 +1281,6 @@ bool startRuntime()
     
 	// turn on display FPS
     Director::getInstance()->setDisplayStats(true);
-    static ConsoleCustomCommand *g_customCommand;
-    g_customCommand = new ConsoleCustomCommand();
-    g_customCommand->init();
-
     ScriptingCore::getInstance()->addRegisterCallback(register_FileUtils);
     ScriptingCore::getInstance()->start();
 
