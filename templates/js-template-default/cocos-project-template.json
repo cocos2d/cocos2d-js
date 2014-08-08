@@ -6,7 +6,13 @@
          "append_h5_engine":{
             "from":"frameworks/cocos2d-html5",
             "to":"frameworks/cocos2d-html5"
-         }
+         },
+         "append_file":[
+             {
+                 "from":"frameworks/cocos2d-html5/jsb_apis.js",
+                 "to":"frameworks/cocos2d-html5/jsb_apis.js"
+             }
+         ]
       },
       "do_add_native_support":{
          "append_from_template":{
