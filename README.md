@@ -1,3 +1,5 @@
+![](https://travis-ci.org/cocos2d/cocos2d-js.svg?branch=master)
+
 <img src="http://www.cocos2d-x.org/attachments/1508/2dh5-logo.png" width=200>
 
 Cocos2d-JS

@@ -30,8 +30,8 @@ var CustomParticleWidgetLayer = cc.Layer.extend({
         var guiReader = ccs.uiReader;
         guiReader.registerTypeAndCallBack("CustomParticleWidget",
             CustomParticleWidget,
-            CustomParticleWidgetReader,
-            CustomParticleWidgetReader.setProperties);
+            customParticleWidgetReader,
+            customParticleWidgetReader.setProperties);
 
         var custom = CustomParticleWidget.create();
         custom.setPosition(cc.p(370, 210));

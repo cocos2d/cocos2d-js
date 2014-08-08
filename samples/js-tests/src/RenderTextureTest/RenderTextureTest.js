@@ -74,7 +74,7 @@ var RenderTextureBaseLayer = BaseTestLayer.extend({
 //
 //------------------------------------------------------------------
 var RenderTextureSave = RenderTextureBaseLayer.extend({
-    _brush:null,
+    _brushs:null,
     _target:null,
     _lastLocation:null,
     _counter:0,
@@ -124,7 +124,9 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
     },
 
     onExit:function () {
-        this._brush.release();
+        for(var i in this._brushs){
+            this._brushs[i].release();
+        }
         this._super();
     },
 
@@ -152,7 +154,7 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
         var distance = cc.pDistance(location, this._lastLocation);
 
         if (distance > 1) {
-            var locBrush = this._brush, locLastLocation = this._lastLocation;
+            var locLastLocation = this._lastLocation;
             this._target.begin();
             this._brushs = [];
             for(var i = 0; i < distance; ++i) {
@@ -400,7 +402,7 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
             return;
 
         texture.anchorX = 0;
-	    texture.anchorY = 0;
+        texture.anchorY = 0;
         texture.begin();
         this.visit();
         texture.end();
@@ -444,8 +446,8 @@ var RenderTextureTestDepthStencil = RenderTextureBaseLayer.extend({
         sprite.visit();
 
         //! move sprite half width and height, and draw only where not marked
-	    sprite.x += sprite.width * sprite.scale / 2;
-	    sprite.y += sprite.height * sprite.scale / 2;
+        sprite.x += sprite.width * sprite.scale / 2;
+        sprite.y += sprite.height * sprite.scale / 2;
         gl.stencilFunc(gl.NOTEQUAL, 1, 0xFF);
         gl.colorMask(1, 1, 1, 1);
         sprite.visit();
@@ -517,8 +519,8 @@ var RenderTextureTargetNode = RenderTextureBaseLayer.extend({
 
         renderTexture.x = winSize.width / 2;
         renderTexture.y = winSize.height / 2;
-        //		[renderTexture setPosition:cc.p(s.width, s.height)];
-        //		renderTexture.scale = 2;
+        //      [renderTexture setPosition:cc.p(s.width, s.height)];
+        //      renderTexture.scale = 2;
 
         /* add the sprites to the render texture */
         renderTexture.addChild(this._sprite1);
