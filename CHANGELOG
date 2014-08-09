@@ -56,6 +56,11 @@ Cocos2d-JS-v3.0 RC2 @ Aug.11, 2014
     31. [JSB] Added defaultPixelFormat property definition.
     32. [JSB] Fixed typo of cc.radiansToDegrees.
 
+* Known issues:
+    1. [JSB] cc.ActionInterval's setSpeed and getSpeed function doesn't exist in JSB.
+    2. [JSB] cc.bezierAt function is not supported in JSB.
+    3. [JSB] jsb.AssetsManager have issues on Windows platform and iOS simulator.
+
 Cocos2d-JS-v3.0 RC1 @ July.18, 2014
 This version include some crutial bug fixes.
 
