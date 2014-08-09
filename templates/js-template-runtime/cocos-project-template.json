@@ -102,6 +102,10 @@
             {
                "from":"templates/js-template-runtime/project.json",
                "to":"runtime/ios/PrebuiltRuntimeJs.app/project.json"
+            },
+            {
+                "from":"frameworks/cocos2d-html5/jsb_apis.js",
+                "to":"frameworks/cocos2d-html5/jsb_apis.js"
             }
          ]
       },
