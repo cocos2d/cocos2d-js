@@ -146,6 +146,7 @@ public:
      */
     void cleanScript(const char *path);
     
+    std::unordered_map<std::string, JSScript*> &getFileScprite();
      /**
      * will clean all script object
      */

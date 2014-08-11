@@ -14,7 +14,6 @@ Furthermore, javascript friendly API makes your game development experience a br
 ## API Reference
 
 - API Reference: [Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0rc0/index.html)
-
 - And you can download it from
 [Cocos2d-JS-v3.0-rc0-API.zip](http://www.cocos2d-x.org/filedown/Cocos2d-JS-v3.0-rc0-API.zip)
 
@@ -53,7 +52,7 @@ Example:
 	cocos run -p ios|mac|android|web
 	```
 
-You may need to provide your NDK, Android SDK and ANT's path during the setup. Note that this tool is developed with python, so you will need python (32bit) 2.7.5 or later installed on your machine (but it doesn't support Python3). Please refer to [Cocos Console document](http://www.cocos2d-x.org/docs/manual/framework/html5/cocos-console/en).
+You may need to provide your NDK, Android SDK and ANT's path during the setup. Note that this tool is developed with python, so you will need python (32bit) 2.7.5 or later installed on your machine (but it doesn't support Python3). Please refer to [Cocos Console document](http://www.cocos2d-x.org/docs/manual/framework/html5/v2/cocos-console/en).
 
 And if you have any doubt about the usage, please use `-h` with any command to have some help messages.
 
