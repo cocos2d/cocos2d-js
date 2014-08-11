@@ -42,6 +42,10 @@
                 ]
              },
              {
+                "from":"frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.android/DependProject/src",
+                "to":"frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.android/DependProject/src"
+             },
+             {
                 "from":"tools",
                 "to":"tools",
                 "exclude":[
