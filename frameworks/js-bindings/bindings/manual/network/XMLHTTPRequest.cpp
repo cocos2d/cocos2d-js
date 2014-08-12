@@ -715,7 +715,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 }
 
 /**
- *  @brief abort function Placeholder!
+ *  @brief abort function
  *
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, abort)
