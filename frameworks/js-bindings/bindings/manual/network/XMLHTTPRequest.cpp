@@ -170,6 +170,11 @@ void MinXmlHttpRequest::_setHttpRequestHeader()
  */
 void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response)
 {
+    if(_isAborted)
+    {
+        return;
+    }
+
     if (0 != strlen(response->getHttpRequest()->getTag()))
     {
         CCLOG("%s completed", response->getHttpRequest()->getTag());
@@ -269,6 +274,7 @@ MinXmlHttpRequest::MinXmlHttpRequest()
 , _errorFlag(false)
 , _httpHeader()
 , _requestHeader()
+, _isAborted(false)
 {
 }
 
@@ -660,6 +666,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
         _isNetwork = true;
         _readyState = OPENED;
         _status = 0;
+        _isAborted = false;
         
         return true;
     }
@@ -713,6 +720,14 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, abort)
 {
+    //1.Terminate the request.
+    _isAborted = true;
+
+    //2.If the state is UNSENT, OPENED with the send() flag being unset, or DONE go to the next step.
+    //nothing to do
+
+    //3.Change the state to UNSENT.
+    _readyState = UNSENT;
     return true;
 }
 
