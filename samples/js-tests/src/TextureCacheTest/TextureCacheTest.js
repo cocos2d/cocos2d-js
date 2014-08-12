@@ -153,7 +153,7 @@ var TextureCacheTest = cc.Layer.extend({
     },
     loadingCallBack:function (obj) {
         ++this._numberOfLoadedSprites;
-        this._labelPercent = (this._numberOfLoadedSprites / this._numberOfSprites) * 100;
+        this._labelPercent.setString((this._numberOfLoadedSprites / this._numberOfSprites) * 100 + '');
         if (this._numberOfLoadedSprites == this._numberOfSprites) {
             this.removeChild(this._labelLoading, true);
             this.removeChild(this._labelPercent, true);
