@@ -241,7 +241,7 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
 void MinXmlHttpRequest::_sendRequest(JSContext *cx)
 {
     _httpRequest->setResponseCallback(this, httpresponse_selector(MinXmlHttpRequest::handle_requestResponse));
-    cocos2d::network::HttpClient::getInstance()->send(_httpRequest);
+    cocos2d::network::HttpClient::getInstance()->sendImmediate(_httpRequest);
     _httpRequest->release();
 }
 
