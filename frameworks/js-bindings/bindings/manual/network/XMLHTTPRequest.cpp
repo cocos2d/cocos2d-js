@@ -266,7 +266,7 @@ MinXmlHttpRequest::MinXmlHttpRequest()
 , _status(0)
 , _statusText()
 , _responseType()
-, _timeout()
+, _timeout(0)
 , _isAsync()
 , _httpRequest(new cocos2d::network::HttpRequest())
 , _isNetwork(true)
@@ -619,6 +619,8 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
 
 /**
  *  @brief initialize new xhr.
+ *  TODO: doesn't supprot username, password arguments now
+ *        http://www.w3.org/TR/XMLHttpRequest/#the-open()-method
  *
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
