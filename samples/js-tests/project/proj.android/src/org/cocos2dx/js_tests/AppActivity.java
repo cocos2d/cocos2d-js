@@ -28,8 +28,7 @@ import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 import org.cocos2dx.lib.Cocos2dxJavascriptJavaBridge;
 import org.cocos2dx.plugin.PluginWrapper;
-
-import com.facebook.Session;
+import org.cocos2dx.plugin.FacebookWrapper;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -54,7 +53,8 @@ public class AppActivity extends Cocos2dxActivity {
         
         PluginWrapper.init(this);
         PluginWrapper.setGLSurfaceView(glSurfaceView);
-
+        FacebookWrapper.onCreate(this);
+        
         return glSurfaceView;
     }
     
@@ -86,13 +86,12 @@ public class AppActivity extends Cocos2dxActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+        FacebookWrapper.onAcitivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Session session = Session.getActiveSession();
-        Session.saveSession(session, outState);
+        FacebookWrapper.onSaveInstanceState(outState);
     }
 }
