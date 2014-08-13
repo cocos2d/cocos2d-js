@@ -170,6 +170,11 @@ void MinXmlHttpRequest::_setHttpRequestHeader()
  */
 void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response)
 {
+    if(_isAborted)
+    {
+        return;
+    }
+
     if (0 != strlen(response->getHttpRequest()->getTag()))
     {
         CCLOG("%s completed", response->getHttpRequest()->getTag());
@@ -241,7 +246,7 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
 void MinXmlHttpRequest::_sendRequest(JSContext *cx)
 {
     _httpRequest->setResponseCallback(this, httpresponse_selector(MinXmlHttpRequest::handle_requestResponse));
-    cocos2d::network::HttpClient::getInstance()->send(_httpRequest);
+    cocos2d::network::HttpClient::getInstance()->sendImmediate(_httpRequest);
     _httpRequest->release();
 }
 
@@ -261,7 +266,7 @@ MinXmlHttpRequest::MinXmlHttpRequest()
 , _status(0)
 , _statusText()
 , _responseType()
-, _timeout()
+, _timeout(0)
 , _isAsync()
 , _httpRequest(new cocos2d::network::HttpRequest())
 , _isNetwork(true)
@@ -269,6 +274,7 @@ MinXmlHttpRequest::MinXmlHttpRequest()
 , _errorFlag(false)
 , _httpHeader()
 , _requestHeader()
+, _isAborted(false)
 {
 }
 
@@ -613,6 +619,8 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
 
 /**
  *  @brief initialize new xhr.
+ *  TODO: doesn't supprot username, password arguments now
+ *        http://www.w3.org/TR/XMLHttpRequest/#the-open()-method
  *
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
@@ -660,6 +668,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
         _isNetwork = true;
         _readyState = OPENED;
         _status = 0;
+        _isAborted = false;
         
         return true;
     }
@@ -708,11 +717,19 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 }
 
 /**
- *  @brief abort function Placeholder!
+ *  @brief abort function
  *
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, abort)
 {
+    //1.Terminate the request.
+    _isAborted = true;
+
+    //2.If the state is UNSENT, OPENED with the send() flag being unset, or DONE go to the next step.
+    //nothing to do
+
+    //3.Change the state to UNSENT.
+    _readyState = UNSENT;
     return true;
 }
 
