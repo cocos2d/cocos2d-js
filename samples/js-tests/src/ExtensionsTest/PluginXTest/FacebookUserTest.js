@@ -105,7 +105,7 @@ var FacebookUserTest = PluginXTest.extend({
 
     permissionClick:function (sender) {
         var self = this;
-        var permissions = ["create_event", "create_note", "manage_pages"];
+        var permissions = ["create_event", "create_note", "manage_pages", "publish_actions"];
         facebook.requestPermissions(permissions, function(type, msg){
             self.result.setString(msg);
         });
