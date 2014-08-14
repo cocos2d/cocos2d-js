@@ -200,10 +200,10 @@ var FacebookShareTest = PluginXTest.extend({
     },
 
     onRequest: function () {
-        if (!cc.sys.isNative) {
-            this.showDisableTips();
-            return;
-        }
+//        if (!cc.sys.isNative) {
+//            this.showDisableTips();
+//            return;
+//        }
 
         var map = {
             "dialog": "apprequests",
