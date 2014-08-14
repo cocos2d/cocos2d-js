@@ -108,13 +108,15 @@ var FacebookShareTest = PluginXTest.extend({
     onShareOG: function () {
         var map = {
             "dialog": "share_open_graph",
-            "action_type": "fbogsamplesd:dish",
-            "preview_property": "dish",
+            "action_type": "cocostestmyfc:share",
+            "preview_property": "cocos_document",
             "title": "Roasted pumpkin seeds",
             "image": "http://files.cocos2d-x.org/images/orgsite/logo.png",
-            "url": "http://example.com/roasted_pumpkin_seeds", // Please change to your own action
+            "url": "http://cocos2d-x.org/docs/manual/framework/html5/en",
             "description": "Crunchy pumpkin seeds roasted in butter and lightly salted."
+
         };
+
         facebook.dialog(map, function (resultcode, msg) {
             cc.log(msg);
         });
