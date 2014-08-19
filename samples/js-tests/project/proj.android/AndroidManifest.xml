@@ -15,9 +15,7 @@
             
 	    <!-- facebook test-->
 	    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id" />
-	    <meta-data android:name="PluginUser" android:value="UserFacebook" />
-	    <meta-data android:name="PluginShare" android:value="ShareFacebook" />
-    
+
         <activity android:name=".AppActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="landscape"
