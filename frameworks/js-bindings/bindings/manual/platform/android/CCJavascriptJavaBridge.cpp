@@ -309,7 +309,7 @@ JS_BINDED_FUNC_IMPL(JavascriptJavaBridge, callStaticMethod)
 {
     jsval *argv = JS_ARGV(cx, vp);
     if (argc == 3) {
-    JSStringWrapper arg0(argv[0]);
+        JSStringWrapper arg0(argv[0]);
         JSStringWrapper arg1(argv[1]);
         JSStringWrapper arg2(argv[2]);
 
