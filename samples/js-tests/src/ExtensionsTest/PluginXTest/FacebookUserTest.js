@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var buttons = {
+var button_share = {
     "login": "loginClick",
     "logout": "logoutClick",
     "getUid": "getUidClick",
@@ -42,7 +42,7 @@ var FacebookUserTest = PluginXTest.extend({
         window.facebook = window.facebook || (window.plugin ? plugin.FacebookAgent.getInstance() : null);
 
         var menu = cc.Menu.create();
-        for (var action in buttons) {
+        for (var action in button_share) {
             var label = new cc.LabelTTF(action, "Arial", 24);
             var item = new cc.MenuItemLabel(label, this[buttons[action]], this);
             menu.addChild(item);
