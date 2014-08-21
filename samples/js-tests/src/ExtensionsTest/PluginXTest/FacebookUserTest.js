@@ -102,6 +102,7 @@ var FacebookUserTest = PluginXTest.extend({
       var self = this;
         facebook.getPermissionList(function(type,data){
             if(!type){
+                data = JSON.stringify(data);
                 self.result.setString(data);
             }
         });
