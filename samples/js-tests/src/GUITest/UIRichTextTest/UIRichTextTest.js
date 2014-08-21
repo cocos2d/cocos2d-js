@@ -82,8 +82,7 @@ var UIRichTextTest = UIScene.extend({
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
                 this._richText.setContentSize(cc.size(120, 100));
-            }
-            else {
+            } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
         }
