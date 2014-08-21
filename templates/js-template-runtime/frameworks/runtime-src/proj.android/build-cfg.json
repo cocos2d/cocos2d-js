@@ -23,7 +23,11 @@
         {
             "from": "../../../main.js",
             "to": ""
-        }
+        },
+        {
+            "from": "../../../project.json",
+            "to": ""
+        } 
     ],
     "must_copy_resources": [
         {
@@ -33,10 +37,6 @@
         {
             "from": "../../../config.json",
             "to": ""
-        },
-        {
-            "from": "../../../project.json",
-            "to": ""
-        } 
+        }
     ]
 }

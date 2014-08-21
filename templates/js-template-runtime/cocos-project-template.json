@@ -28,17 +28,7 @@
             },
             {
                "from":"frameworks/js-bindings/bindings/script",
-               "to":"runtime/mac/PrebuiltRuntimeJs.app/Contents/Resources/script",
-               "exclude":[]
-            },
-            {
-               "from":"frameworks/js-bindings/bindings/script",
-               "to":"runtime/ios/PrebuiltRuntimeJs.app/script",
-               "exclude":[]
-            },
-            {
-               "from":"frameworks/js-bindings/bindings/script",
-               "to":"runtime/win32/script",
+               "to":"script",
                "exclude":[]
             },
             {
@@ -96,12 +86,6 @@
                "include": [
                   "*.dll"
                ]
-            }
-         ],
-         "append_file":[
-            {
-               "from":"templates/js-template-runtime/project.json",
-               "to":"runtime/ios/PrebuiltRuntimeJs.app/project.json"
             }
          ]
       },
