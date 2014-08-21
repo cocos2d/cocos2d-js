@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,8 +30,10 @@
 JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalString
   (JNIEnv *env, jclass cls, jstring value)
 {
-    const char *_value = env->GetStringUTFChars(value, 0);
+    const char *_value = env->GetStringUTFChars(value, NULL);
     ScriptingCore::getInstance()->evalString(_value,NULL);
     env->ReleaseStringUTFChars(value, _value);
+    
     return 1;
 }
+
