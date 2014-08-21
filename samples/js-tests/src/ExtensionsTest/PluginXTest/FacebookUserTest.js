@@ -44,7 +44,7 @@ var FacebookUserTest = PluginXTest.extend({
         var menu = cc.Menu.create();
         for (var action in button_share) {
             var label = new cc.LabelTTF(action, "Arial", 24);
-            var item = new cc.MenuItemLabel(label, this[buttons[action]], this);
+            var item = new cc.MenuItemLabel(label, this[button_share[action]], this);
             menu.addChild(item);
         }
         menu.alignItemsVerticallyWithPadding(20);
@@ -62,10 +62,10 @@ var FacebookUserTest = PluginXTest.extend({
         var self = this;
         facebook.isLoggedIn(function (type, msg) {
             if (type == plugin.FacebookAgent.CodeSucceed) {
-                self.result.setString(msg);
+                self.result.setString("logged in");
             } else {
                 facebook.login(function (type, msg) {
-                    self.result.setString("type is " + type + " msg is " + msg);
+                    self.result.setString("type is " + type + " msg is " + JSON.stringify(msg));
                 });
             }
         });
@@ -78,16 +78,14 @@ var FacebookUserTest = PluginXTest.extend({
     },
     getUidClick: function (sender) {
         var self = this;
-        facebook.request("/me", plugin.FacebookAgent.HttpMethod.Get, {}, function (type, msg) {
-            cc.log(msg);
-            var response = JSON.parse(msg);
-            self.result.setString(response["id"]);
+        facebook.request("/me", plugin.FacebookAgent.HttpMethod.Get, function (type, msg) {
+            self.result.setString(msg["id"]);
         });
     },
     getTokenClick: function (sender) {
         var self = this;
-        facebook.requestAccessToken(function (type, token) {
-            self.result.setString(token);
+        facebook.requestAccessToken(function (type, msg) {
+            self.result.setString(msg["accessToken"]);
         });
     },
 
@@ -95,7 +93,7 @@ var FacebookUserTest = PluginXTest.extend({
         var self = this;
         var permissions = ["create_event", "create_note", "manage_pages", "publish_actions"];
         facebook.requestPermissions(permissions, function (type, msg) {
-            self.result.setString(msg);
+            self.result.setString(msg["permissions"]);
         });
     },
     getPermissionClick:function(sender){
@@ -110,8 +108,7 @@ var FacebookUserTest = PluginXTest.extend({
     requestClick: function (sender) {
         var self = this;
         facebook.request("/me/photos", plugin.FacebookAgent.HttpMethod.Post, {"url": "http://files.cocos2d-x.org/images/orgsite/logo.png"}, function (type, msg) {
-            var response = JSON.parse(msg);
-            self.result.setString("post_id: " + response["post_id"]);
+            self.result.setString("post_id: " + msg["post_id"]);
         });
     },
     onNextCallback: function (sender) {
