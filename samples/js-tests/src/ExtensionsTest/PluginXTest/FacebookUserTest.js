@@ -56,9 +56,25 @@ var FacebookUserTest = PluginXTest.extend({
         this.result.boundingWidth = this.result.width;
         this.addChild(this.result, 1);
 
+        if(cc.sys.isNative){
+            this.testpublicInstall();
+            this.testLogEvent();
+        }
+
+    },
+    testpublicInstall:function(){
         facebook.publishInstall();
     },
+    testLogEvent:function(){
+        var parameters = {};
+        var floatVal = 888.888;
+        parameters[plugin.FacebookAgent.AppEventParam.SUCCESS] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
+        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL);
+        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL,floatVal);
+        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL,parameters);
+        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL,floatVal, parameters);
 
+    },
     loginClick: function (sender) {
         var self = this;
         facebook.isLoggedIn(function (type, msg) {
@@ -113,9 +129,7 @@ var FacebookUserTest = PluginXTest.extend({
         });
     },
     onNextCallback: function (sender) {
-        var parameters = {};
-        parameters[plugin.FacebookAgent.AppEventParam.SUCCESS] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
-        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, parameters);
+
         var s = new PluginXTestScene();
         s.addChild(new PluginXTestLayer());
         director.runScene(s);
