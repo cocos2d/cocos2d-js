@@ -56,6 +56,7 @@ var FacebookUserTest = PluginXTest.extend({
         this.result.boundingWidth = this.result.width;
         this.addChild(this.result, 1);
 
+        facebook.publishInstall();
     },
 
     loginClick: function (sender) {
@@ -112,6 +113,9 @@ var FacebookUserTest = PluginXTest.extend({
         });
     },
     onNextCallback: function (sender) {
+        var parameters = {};
+        parameters[plugin.FacebookAgent.AppEventParam.SUCCESS] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
+        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, parameters);
         var s = new PluginXTestScene();
         s.addChild(new PluginXTestLayer());
         director.runScene(s);
