@@ -70,6 +70,7 @@ var FacebookUserTest = PluginXTest.extend({
     },
     publicInstallClick: function () {
         facebook.publishInstall();
+        this.result.setString("publishInstall is invoked");
     },
     LogEventClick: function () {
         var parameters = {};
@@ -79,7 +80,7 @@ var FacebookUserTest = PluginXTest.extend({
         facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal);
         facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, parameters);
         facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal, parameters);
-
+        this.result.setString("logEvent is invoked");
     },
     loginClick: function (sender) {
         var self = this;
