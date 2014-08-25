@@ -2458,10 +2458,10 @@ cc.rectApplyAffineTransform = function (rect, anAffineTransform) {
     var right = cc.rectGetMaxX(rect);
     var bottom = cc.rectGetMaxY(rect);
 
-    var topLeft = cc._PointApplyAffineTransform(left, top, anAffineTransform);
-    var topRight = cc._PointApplyAffineTransform(right, top, anAffineTransform);
-    var bottomLeft = cc._PointApplyAffineTransform(left, bottom, anAffineTransform);
-    var bottomRight = cc._PointApplyAffineTransform(right, bottom, anAffineTransform);
+    var topLeft = cc._pointApplyAffineTransform(left, top, anAffineTransform);
+    var topRight = cc._pointApplyAffineTransform(right, top, anAffineTransform);
+    var bottomLeft = cc._pointApplyAffineTransform(left, bottom, anAffineTransform);
+    var bottomRight = cc._pointApplyAffineTransform(right, bottom, anAffineTransform);
 
     var minX = Math.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
     var maxX = Math.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
@@ -2477,10 +2477,10 @@ cc._rectApplyAffineTransformIn = function(rect, anAffineTransform){
     var right = cc.rectGetMaxX(rect);
     var bottom = cc.rectGetMaxY(rect);
 
-    var topLeft = cc._PointApplyAffineTransform(left, top, anAffineTransform);
-    var topRight = cc._PointApplyAffineTransform(right, top, anAffineTransform);
-    var bottomLeft = cc._PointApplyAffineTransform(left, bottom, anAffineTransform);
-    var bottomRight = cc._PointApplyAffineTransform(right, bottom, anAffineTransform);
+    var topLeft = cc._pointApplyAffineTransform(left, top, anAffineTransform);
+    var topRight = cc._pointApplyAffineTransform(right, top, anAffineTransform);
+    var bottomLeft = cc._pointApplyAffineTransform(left, bottom, anAffineTransform);
+    var bottomRight = cc._pointApplyAffineTransform(right, bottom, anAffineTransform);
 
     var minX = Math.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
     var maxX = Math.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
@@ -2612,8 +2612,8 @@ cc.Node.prototype.getBoundingBoxToWorld = function () {
     var contentSize = this.getContentSize();
     var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
     var matrix = this.getNodeToWorldTransform();
-    var trans = cc.AffineTransformMake(matrix[0], matrix[1], matrix[4], matrix[5], matrix[12], matrix[13]);  
-    rect = cc.RectApplyAffineTransform(rect, trans);
+    var trans = cc.affineTransformMake(matrix[0], matrix[1], matrix[4], matrix[5], matrix[12], matrix[13]);
+    rect = cc.rectApplyAffineTransform(rect, trans);
 
     //query child's BoundingBox
     if (!this.getChildren())
@@ -2635,9 +2635,9 @@ cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
     var contentSize = this.getContentSize();
     var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
     var matrix = this.getNodeToParentTransform();
-    var _trans = cc.AffineTransformMake(matrix[0], matrix[1], matrix[4], matrix[5], matrix[12], matrix[13]); 
-    var trans = (parentTransform == null) ? _trans : cc.AffineTransformConcat(_trans, parentTransform);
-    rect = cc.RectApplyAffineTransform(rect, trans);
+    var _trans = cc.affineTransformMake(matrix[0], matrix[1], matrix[4], matrix[5], matrix[12], matrix[13]);
+    var trans = (parentTransform == null) ? _trans : cc.affineTransformConcat(_trans, parentTransform);
+    rect = cc.rectApplyAffineTransform(rect, trans);
 
     //query child's BoundingBox
     if (!this.getChildren())

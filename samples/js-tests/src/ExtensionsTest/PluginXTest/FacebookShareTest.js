@@ -80,7 +80,7 @@ var FacebookShareTest = PluginXTest.extend({
             "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
         facebook.share(map, function (resultcode, msg) {
-            cc.log(msg);
+            cc.log(JSON.stringify(msg));
         });
     },
     showDisableTips: function (msg) {
@@ -116,7 +116,7 @@ var FacebookShareTest = PluginXTest.extend({
              "description": "cocos document"
         };
         facebook.dialog(map, function (resultcode, msg) {
-            cc.log(msg);
+            cc.log(JSON.stringify(msg));
         });
     },
 
@@ -134,7 +134,7 @@ var FacebookShareTest = PluginXTest.extend({
                 "photo": img
             };
             facebook.dialog(map, function (resultcode, msg) {
-                cc.log(msg);
+                cc.log(JSON.stringify(msg));
             });
         });
         var seq = cc.sequence(delay, share);
@@ -155,7 +155,7 @@ var FacebookShareTest = PluginXTest.extend({
             "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
         facebook.dialog(map, function (resultcode, msg) {
-            cc.log(msg);
+            cc.log(JSON.stringify(msg));
         });
     },
 
@@ -174,7 +174,7 @@ var FacebookShareTest = PluginXTest.extend({
              "description": "cocos document"
         };
         facebook.dialog(map, function (resultcode, msg) {
-            cc.log(msg);
+            cc.log(JSON.stringify(msg));
         });
     },
 
@@ -192,7 +192,7 @@ var FacebookShareTest = PluginXTest.extend({
                 "photo": img
             };
             facebook.dialog(map, function (resultcode, msg) {
-                cc.log(msg);
+                cc.log(JSON.stringify(msg));
             });
         });
         var seq = cc.sequence(delay, share);
@@ -211,7 +211,7 @@ var FacebookShareTest = PluginXTest.extend({
             "link": "http://www.cocos2d-x.org"
         };
         facebook.dialog(map, function (resultcode, msg) {
-            cc.log(msg);
+            cc.log(JSON.stringify(msg));
         });
     },
 
