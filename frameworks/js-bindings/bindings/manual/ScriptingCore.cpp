@@ -480,8 +480,6 @@ void ScriptingCore::start()
 {
     // for now just this
     createGlobalContext();
-    
-    runScript("script/jsb_boot.js");
 }
 
 void ScriptingCore::addRegisterCallback(sc_register_sth callback) {
