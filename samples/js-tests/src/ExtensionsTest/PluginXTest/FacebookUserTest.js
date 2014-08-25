@@ -31,6 +31,10 @@ var button_share = {
     "getPermissions": "getPermissionClick",
     "request API": "requestClick"
 };
+button_share_native = {
+    "publishInstall": "publicInstallClick",
+    "logEvent": "LogEventClick"
+}
 var FacebookUserTest = PluginXTest.extend({
     _title: "Plugin-x Test",
     _subtitle: "Facebook SDK",
@@ -47,27 +51,50 @@ var FacebookUserTest = PluginXTest.extend({
             var item = new cc.MenuItemLabel(label, this[button_share[action]], this);
             menu.addChild(item);
         }
-        menu.alignItemsVerticallyWithPadding(20);
+        if (cc.sys.isNative) {
+            for(var key in button_share_native){
+                var label = new cc.LabelTTF(key, "Arial", 24);
+                var item = new cc.MenuItemLabel(label, this[button_share_native[key]], this);
+                menu.addChild(item);
+            }
+        }
+        menu.alignItemsVerticallyWithPadding(16);
         menu.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(+120, 0)));
         this.addChild(menu);
+
 
         this.result = new cc.LabelTTF("You can see the result at this label", "Arial", 22);
         this.result.setPosition(cc.pAdd(cc.visibleRect.right, cc.p(-this.result.width / 2 - 30, 0)));
         this.result.boundingWidth = this.result.width;
         this.addChild(this.result, 1);
-
-        facebook.publishInstall();
     },
-
+    publicInstallClick: function () {
+        facebook.publishInstall();
+        this.result.setString("publishInstall is invoked");
+    },
+    LogEventClick: function () {
+        var parameters = {};
+        var floatVal = 888.888;
+        parameters[plugin.FacebookAgent.AppEventParam.SUCCESS] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
+        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL);
+        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal);
+        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, parameters);
+        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal, parameters);
+        this.result.setString("logEvent is invoked");
+    },
     loginClick: function (sender) {
         var self = this;
         facebook.isLoggedIn(function (type, msg) {
             if (type == plugin.FacebookAgent.CodeSucceed) {
-                self.result.setString("logged in");
+                if (msg["isLoggedIn"]) {
+                    self.result.setString("logged in");
+                } else {
+                    facebook.login(function (type, msg) {
+                        self.result.setString("type is " + type + " msg is " + JSON.stringify(msg));
+                    });
+                }
             } else {
-                facebook.login(function (type, msg) {
-                    self.result.setString("type is " + type + " msg is " + JSON.stringify(msg));
-                });
+                self.result.setString("error");
             }
         });
     },
@@ -80,13 +107,19 @@ var FacebookUserTest = PluginXTest.extend({
     getUidClick: function (sender) {
         var self = this;
         facebook.request("/me", plugin.FacebookAgent.HttpMethod.Get, function (type, msg) {
-            self.result.setString(msg["id"]);
+            if (type == plugin.FacebookAgent.CodeSucceed) {
+                self.result.setString(msg["id"]);
+            } else {
+                self.result.setString(msg["error_message"]);
+            }
         });
     },
     getTokenClick: function (sender) {
         var self = this;
         facebook.requestAccessToken(function (type, msg) {
-            self.result.setString(msg["accessToken"]);
+            if (type == plugin.FacebookAgent.CodeSucceed) {
+                self.result.setString(msg["accessToken"]);
+            }
         });
     },
 
@@ -94,13 +127,15 @@ var FacebookUserTest = PluginXTest.extend({
         var self = this;
         var permissions = ["create_event", "create_note", "manage_pages", "publish_actions"];
         facebook.requestPermissions(permissions, function (type, msg) {
-            self.result.setString(msg["permissions"]);
+            if (type == plugin.FacebookAgent.CodeSucceed) {
+                self.result.setString(msg["permissions"]);
+            }
         });
     },
-    getPermissionClick:function(sender){
-      var self = this;
-        facebook.getPermissionList(function(type,data){
-            if(!type){
+    getPermissionClick: function (sender) {
+        var self = this;
+        facebook.getPermissionList(function (type, data) {
+            if (type == plugin.FacebookAgent.CodeSucceed) {
                 data = JSON.stringify(data);
                 self.result.setString(data);
             }
@@ -109,13 +144,13 @@ var FacebookUserTest = PluginXTest.extend({
     requestClick: function (sender) {
         var self = this;
         facebook.request("/me/photos", plugin.FacebookAgent.HttpMethod.Post, {"url": "http://files.cocos2d-x.org/images/orgsite/logo.png"}, function (type, msg) {
-            self.result.setString("post_id: " + msg["post_id"]);
+            if (type == plugin.FacebookAgent.CodeSucceed) {
+                self.result.setString("post_id: " + msg["post_id"]);
+            }
         });
     },
     onNextCallback: function (sender) {
-        var parameters = {};
-        parameters[plugin.FacebookAgent.AppEventParam.SUCCESS] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
-        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, parameters);
+
         var s = new PluginXTestScene();
         s.addChild(new PluginXTestLayer());
         director.runScene(s);
