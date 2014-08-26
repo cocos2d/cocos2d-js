@@ -2492,8 +2492,9 @@ bool js_cocos2dx_ActionInterval_speed(JSContext *cx, uint32_t argc, jsval *vp)
         if( ! JS::ToNumber(cx, argv[0], &speed) ) {
             return false;
         }
-        if (speed <= 0) {
-            JS_ReportError(cx, "js_cocos2dx_ActionInterval_repeat : Speed must be greater than 0");
+        if (speed < 0) {
+            JS_ReportError(cx, "js_cocos2dx_ActionInterval_speed : Speed must not be negative");
+            return false;
         }
         
         cocos2d::Speed* action = cocos2d::Speed::create(cobj, speed);
@@ -2669,15 +2670,12 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
             JS::RootedValue jsParam3(cx);
             JS::RootedValue jsParam4(cx);
             double parameter2, parameter3, parameter4;
-            JS_GetProperty(cx, tmp, "param2", &jsParam2);
-            JS::ToNumber(cx, jsParam2, &parameter2);
-            ok &= (parameter2 == parameter2);
-            JS_GetProperty(cx, tmp, "param3", &jsParam3);
-            JS::ToNumber(cx, jsParam3, &parameter3);
-            ok &= (parameter3 == parameter3);
-            JS_GetProperty(cx, tmp, "param4", &jsParam4);
-            JS::ToNumber(cx, jsParam4, &parameter4);
-            ok &= (parameter4 == parameter4);
+            ok &= JS_GetProperty(cx, tmp, "param2", &jsParam2);
+            ok &= JS::ToNumber(cx, jsParam2, &parameter2);
+            ok &= JS_GetProperty(cx, tmp, "param3", &jsParam3);
+            ok &= JS::ToNumber(cx, jsParam3, &parameter3);
+            ok &= JS_GetProperty(cx, tmp, "param4", &jsParam4);
+            ok &= JS::ToNumber(cx, jsParam4, &parameter4);
             if (!ok) continue;
             
             action = cocos2d::EaseBezierAction::create(currentAction);
@@ -4424,9 +4422,9 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_cocos2d_TMXLayer_prototype, "getTileFlagsAt", js_cocos2dx_CCTMXLayer_tileFlagsAt, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_TMXLayer_prototype, "getTiles", js_cocos2dx_CCTMXLayer_getTiles, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    JS_DefineFunction(cx, jsb_cocos2d_ActionInterval_prototype, "repeat", js_cocos2dx_ActionInterval_repeat, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_ActionInterval_prototype, "repeat", js_cocos2dx_ActionInterval_repeat, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_ActionInterval_prototype, "repeatForever", js_cocos2dx_ActionInterval_repeatForever, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_cocos2d_ActionInterval_prototype, "speed", js_cocos2dx_ActionInterval_speed, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_ActionInterval_prototype, "_speed", js_cocos2dx_ActionInterval_speed, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_ActionInterval_prototype, "easing", js_cocos2dx_ActionInterval_easing, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.Menu; })()"));

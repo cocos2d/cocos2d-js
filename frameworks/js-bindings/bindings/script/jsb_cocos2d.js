@@ -2355,6 +2355,69 @@ cc.splitCols = cc.SplitCols.create;
 cc.progressTo = cc.ProgressTo.create;
 cc.progressFromTo = cc.ProgressFromTo.create;
 
+// Speed functions
+cc.Speed.prototype.speed = cc.ActionInterval.prototype.speed = function(speed) {
+    if (speed < 0) {
+        cc.warn("cc.ActionInterval#speed : Speed must not be negative");
+        return;
+    }
+    var action = this, found = false;
+    while (action.getInnerAction && !found) {
+        if (action instanceof cc.Speed) {
+            found = true;
+        }
+        else {
+            action = action.getInnerAction();
+        }
+    }
+    if (found) {
+        speed = speed * action._getSpeed();
+        action._setSpeed(speed);
+    }
+    else {
+        this._speed(speed);
+    }
+    return this;
+};
+cc.Speed.prototype.setSpeed = cc.ActionInterval.prototype.setSpeed = function(speed) {
+    if (speed < 0) {
+        cc.warn("cc.ActionInterval#speed : Speed must not be negative");
+        return;
+    }
+    var action = this, found = false;
+    while (action.getInnerAction && !found) {
+        if (action instanceof cc.Speed) {
+            found = true;
+        }
+        else {
+            action = action.getInnerAction();
+        }
+    }
+    if (found) {
+        action._setSpeed(speed);
+    }
+    else {
+        this._speed(speed);
+    }
+};
+cc.Speed.prototype.getSpeed = cc.ActionInterval.prototype.getSpeed = function() {
+    var action = this, found = false;
+    while (action.getInnerAction && !found) {
+        if (action instanceof cc.Speed) {
+            found = true;
+        }
+        else {
+            action = action.getInnerAction();
+        }
+    }
+    if (found) {
+        return action._getSpeed();
+    }
+    else {
+        return 1;
+    }
+};
+
 //
 //AffineTransform API
 //
