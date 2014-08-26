@@ -2572,7 +2572,7 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
             JS_ValueToObject(cx, JS::RootedValue(cx, vpi), &tmp) &&
             JS_GetProperty(cx, tmp, "tag", &jsTag) &&
             JS::ToNumber(cx, jsTag, &tag);
-        JS_GetProperty(cx, tmp, "parameter", &jsParam) && JS::ToNumber(cx, jsParam, &parameter);
+        JS_GetProperty(cx, tmp, "param", &jsParam) && JS::ToNumber(cx, jsParam, &parameter);
         bool hasParam = (parameter == parameter);
         if (!ok) continue;
 
@@ -2665,8 +2665,23 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
             action = cocos2d::EaseCubicActionInOut::create(currentAction);
         else if (tag == EASE_BEZIER_ACTION)
         {
-            // TODO: Extra manipulation on parameters
+            JS::RootedValue jsParam2(cx);
+            JS::RootedValue jsParam3(cx);
+            JS::RootedValue jsParam4(cx);
+            double parameter2, parameter3, parameter4;
+            JS_GetProperty(cx, tmp, "param2", &jsParam2);
+            JS::ToNumber(cx, jsParam2, &parameter2);
+            ok &= (parameter2 == parameter2);
+            JS_GetProperty(cx, tmp, "param3", &jsParam3);
+            JS::ToNumber(cx, jsParam3, &parameter3);
+            ok &= (parameter3 == parameter3);
+            JS_GetProperty(cx, tmp, "param4", &jsParam4);
+            JS::ToNumber(cx, jsParam4, &parameter4);
+            ok &= (parameter4 == parameter4);
+            if (!ok) continue;
+            
             action = cocos2d::EaseBezierAction::create(currentAction);
+            ((EaseBezierAction *)action)->setBezierParamer(parameter, parameter2, parameter3, parameter4);
         }
         else
             continue;

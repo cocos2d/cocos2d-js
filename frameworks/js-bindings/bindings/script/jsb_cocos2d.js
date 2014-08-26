@@ -2268,8 +2268,8 @@ var easeActions = {
 };
 
 function templateEaseActions(actionTag) {
-    return function(param) {
-        return {tag: actionTag, parameter: param};
+    return function(param, param2, param3, param4) {
+        return {tag: actionTag, param: param, param2: param2, param3: param3, param4: param4};
     }
 }
 
