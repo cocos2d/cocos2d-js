@@ -1971,6 +1971,18 @@ cc.arrayAppendObjectsToIndex = function(arr, addObjs,index){
     return arr;
 };
 
+/**
+ * Copy an array's item to a new array (its performance is better than Array.slice)
+ * @param {Array} arr
+ * @returns {Array}
+ */
+cc.copyArray = function(arr){
+    var i, len = arr.length, arr_clone = new Array(len);
+    for (i = 0; i < len; i += 1)
+        arr_clone[i] = arr[i];
+    return arr_clone;
+};
+
 
 
 //
