@@ -349,3 +349,12 @@ _safeExtend(ccui.ScrollView.prototype, {
 //         }
 //     }
 // });
+
+_safeExtend(cc.Texture2D.prototype, {
+    _getWidth : function(){
+        return this.getContentSize().width;
+    },
+    _getHeight : function(){
+        return this.getContentSize().height;
+    }
+});
