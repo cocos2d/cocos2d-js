@@ -1971,6 +1971,18 @@ cc.arrayAppendObjectsToIndex = function(arr, addObjs,index){
     return arr;
 };
 
+/**
+ * Copy an array's item to a new array (its performance is better than Array.slice)
+ * @param {Array} arr
+ * @returns {Array}
+ */
+cc.copyArray = function(arr){
+    var i, len = arr.length, arr_clone = new Array(len);
+    for (i = 0; i < len; i += 1)
+        arr_clone[i] = arr[i];
+    return arr_clone;
+};
+
 
 
 //
@@ -2256,8 +2268,8 @@ var easeActions = {
 };
 
 function templateEaseActions(actionTag) {
-    return function(param) {
-        return {tag: actionTag, parameter: param};
+    return function(param, param2, param3, param4) {
+        return {tag: actionTag, param: param, param2: param2, param3: param3, param4: param4};
     }
 }
 
@@ -2350,6 +2362,69 @@ cc.splitRows = cc.SplitRows.create;
 cc.splitCols = cc.SplitCols.create;
 cc.progressTo = cc.ProgressTo.create;
 cc.progressFromTo = cc.ProgressFromTo.create;
+
+// Speed functions
+cc.Speed.prototype.speed = cc.ActionInterval.prototype.speed = function(speed) {
+    if (speed < 0) {
+        cc.warn("cc.ActionInterval#speed : Speed must not be negative");
+        return;
+    }
+    var action = this, found = false;
+    while (action.getInnerAction && !found) {
+        if (action instanceof cc.Speed) {
+            found = true;
+        }
+        else {
+            action = action.getInnerAction();
+        }
+    }
+    if (found) {
+        speed = speed * action._getSpeed();
+        action._setSpeed(speed);
+    }
+    else {
+        this._speed(speed);
+    }
+    return this;
+};
+cc.Speed.prototype.setSpeed = cc.ActionInterval.prototype.setSpeed = function(speed) {
+    if (speed < 0) {
+        cc.warn("cc.ActionInterval#speed : Speed must not be negative");
+        return;
+    }
+    var action = this, found = false;
+    while (action.getInnerAction && !found) {
+        if (action instanceof cc.Speed) {
+            found = true;
+        }
+        else {
+            action = action.getInnerAction();
+        }
+    }
+    if (found) {
+        action._setSpeed(speed);
+    }
+    else {
+        this._speed(speed);
+    }
+};
+cc.Speed.prototype.getSpeed = cc.ActionInterval.prototype.getSpeed = function() {
+    var action = this, found = false;
+    while (action.getInnerAction && !found) {
+        if (action instanceof cc.Speed) {
+            found = true;
+        }
+        else {
+            action = action.getInnerAction();
+        }
+    }
+    if (found) {
+        return action._getSpeed();
+    }
+    else {
+        return 1;
+    }
+};
 
 //
 //AffineTransform API
