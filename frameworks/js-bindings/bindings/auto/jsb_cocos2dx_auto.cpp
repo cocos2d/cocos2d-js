@@ -11100,8 +11100,8 @@ void js_register_cocos2dx_Speed(JSContext *cx, JSObject *global) {
 
 	static JSFunctionSpec funcs[] = {
 		JS_FN("setInnerAction", js_cocos2dx_Speed_setInnerAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getSpeed", js_cocos2dx_Speed_getSpeed, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setSpeed", js_cocos2dx_Speed_setSpeed, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("_getSpeed", js_cocos2dx_Speed_getSpeed, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("_setSpeed", js_cocos2dx_Speed_setSpeed, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("initWithAction", js_cocos2dx_Speed_initWithAction, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getInnerAction", js_cocos2dx_Speed_getInnerAction, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
