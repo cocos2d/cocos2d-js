@@ -216,6 +216,15 @@ cc.PhysicsDebugNode.create = function( space ) {
         s = space.handle;
     return cc.PhysicsDebugNode._create( s );
 };
+
+cc.PhysicsDebugNode.prototype._ctor = function(space){
+    this.init();
+    var s = space;
+    if( space.handle !== undefined )
+        s = space.handle;
+    this.setSpace(s);
+};
+
 cc.PhysicsDebugNode.prototype.setSpace = function( space ) {
     var s = space;
     if( space.handle !== undefined )
