@@ -387,7 +387,7 @@ ChipmunkPage.prototype.initPhysics = function() {
 
 
 	// Physics debug layer
-	this.debugNode = cc.PhysicsDebugNode.create( this.space.handle );
+	this.debugNode = new cc.PhysicsDebugNode( this.space.handle );
 	this.debugNode.visible = false ;
 	this.addChild( this.debugNode, 100 );
 };
