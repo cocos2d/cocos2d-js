@@ -193,11 +193,6 @@ cc.g_NumberOfDraws = 0;        //CCDirector.js
 
 cc.PRIORITY_NON_SYSTEM = cc.PRIORITY_SYSTEM + 1;          //CCScheduler.js
 
-cc.Node.ON_ENTER = 0;          //CCNode.js
-cc.Node.ON_EXIT = 1;
-cc.Node.ON_ENTER_TRANSITION_DID_FINISH = 2;
-cc.Node.ON_EXIT_TRANSITOIN_DID_START = 3;
-cc.Node.ON_CLEAN_UP = 4;
 cc.s_globalOrderOfArrival = 1;
 
 cc.Event.TOUCH = 0;                  //CCEvent.js
@@ -2286,7 +2281,7 @@ cc.toggleVisibility = cc.ToggleVisibility.create;
 cc.removeSelf = cc.RemoveSelf.create;
 cc.flipX = cc.FlipX.create;
 cc.flipY = cc.FlipY.create;
-cc.place = cc.Place.create;
+// cc.place = cc.Place.create;
 cc.callFunc = cc.CallFunc.create;
 cc.actionInterval = cc.ActionInterval.create;
 cc.sequence = cc.Sequence.create;
@@ -2316,6 +2311,14 @@ cc.reverseTime = cc.ReverseTime.create;
 cc.animate = cc.Animate.create;
 cc.targetedAction = cc.TargetedAction.create;
 cc.actionTween = cc.ActionTween.create;
+
+cc.place = function(posOrX, y){
+    if (undefined === y){
+        return cc.Place.create(posOrX);
+    }else{
+        return cc.Place.create(cc.p(posOrX, y));
+    }
+}
 
 // Actions3d
 cc.gridAction = cc.GridAction.create;
