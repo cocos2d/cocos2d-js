@@ -2293,7 +2293,7 @@ cc.toggleVisibility = cc.ToggleVisibility.create;
 cc.removeSelf = cc.RemoveSelf.create;
 cc.flipX = cc.FlipX.create;
 cc.flipY = cc.FlipY.create;
-cc.place = cc.Place.create;
+// cc.place = cc.Place.create;
 cc.callFunc = cc.CallFunc.create;
 cc.actionInterval = cc.ActionInterval.create;
 cc.sequence = cc.Sequence.create;
@@ -2323,6 +2323,14 @@ cc.reverseTime = cc.ReverseTime.create;
 cc.animate = cc.Animate.create;
 cc.targetedAction = cc.TargetedAction.create;
 cc.actionTween = cc.ActionTween.create;
+
+cc.place = function(posOrX, y){
+    if (undefined === y){
+        return cc.Place.create(posOrX);
+    }else{
+        return cc.Place.create(cc.p(posOrX, y));
+    }
+}
 
 // Actions3d
 cc.gridAction = cc.GridAction.create;
