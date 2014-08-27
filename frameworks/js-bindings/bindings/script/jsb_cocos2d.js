@@ -193,11 +193,6 @@ cc.g_NumberOfDraws = 0;        //CCDirector.js
 
 cc.PRIORITY_NON_SYSTEM = cc.PRIORITY_SYSTEM + 1;          //CCScheduler.js
 
-cc.Node.ON_ENTER = 0;          //CCNode.js
-cc.Node.ON_EXIT = 1;
-cc.Node.ON_ENTER_TRANSITION_DID_FINISH = 2;
-cc.Node.ON_EXIT_TRANSITOIN_DID_START = 3;
-cc.Node.ON_CLEAN_UP = 4;
 cc.s_globalOrderOfArrival = 1;
 
 cc.Event.TOUCH = 0;                  //CCEvent.js
