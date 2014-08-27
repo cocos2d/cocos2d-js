@@ -527,7 +527,7 @@ var testNames = [
         title:"TextureCache Test",
         platforms: PLATFORM_ALL,
         testScene:function () {
-            return new TextureCacheTestScene();
+            return new TexCacheTestScene();
         }
     },
     {
