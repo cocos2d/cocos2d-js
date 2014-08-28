@@ -70,10 +70,10 @@ _safeExtend(cc.Node.prototype, {
     },
 
     _setAnchorX: function(x) {
-        this.setAnchorPoint(x, this.getAnchorPoint().y);
+        this.setAnchorPoint(cc.p(x, this.getAnchorPoint().y));
     },
     _setAnchorY: function(y) {
-        this.setAnchorPoint(this.getAnchorPoint().x, y);
+        this.setAnchorPoint(cc.p(this.getAnchorPoint().x, y));
     }
 });
 

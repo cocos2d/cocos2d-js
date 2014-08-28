@@ -44,7 +44,8 @@ var UIRichTextTest = UIScene.extend({
             // RichText
             var richText = new ccui.RichText();
             richText.ignoreContentAdaptWithSize(false);
-            richText.setContentSize(cc.size(120, 100));
+            richText.width = 120;
+            richText.height = 100;
 
             var re1 = new ccui.RichElementText(1, cc.color.WHITE, 255, "This color is white. ", "Helvetica", 10);
             var re2 = new ccui.RichElementText(2, cc.color.YELLOW, 255, "And this is yellow. ", "Helvetica", 10);
@@ -69,7 +70,8 @@ var UIRichTextTest = UIScene.extend({
             richText.pushBackElement(recustom);
             richText.pushBackElement(re6);
 
-            richText.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
+            richText.x = widgetSize.width / 2;
+            richText.y = widgetSize.height / 2;
 
             this._mainNode.addChild(richText);
             this._richText = richText;

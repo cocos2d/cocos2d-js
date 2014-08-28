@@ -285,7 +285,7 @@ var testNames = [
     },
     {
         title:"CurrentLanguage Test",
-        platforms: PLATFORM_HTML5,
+        platforms: PLATFORM_ALL,
         testScene:function () {
             return new CurrentLanguageTestScene();
         }
@@ -527,7 +527,7 @@ var testNames = [
         title:"TextureCache Test",
         platforms: PLATFORM_ALL,
         testScene:function () {
-            return new TextureCacheTestScene();
+            return new TexCacheTestScene();
         }
     },
     {

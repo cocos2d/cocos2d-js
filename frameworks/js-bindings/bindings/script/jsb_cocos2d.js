@@ -2302,12 +2302,12 @@ cc.repeatForever = cc.RepeatForever.create;
 cc.spawn = cc.Spawn.create;
 cc.rotateTo = cc.RotateTo.create;
 cc.rotateBy = cc.RotateBy.create;
-cc.moveBy = cc.MoveBy.create;
-cc.moveTo = cc.MoveTo.create;
+//cc.moveBy = cc.MoveBy.create;
+//cc.moveTo = cc.MoveTo.create;
 cc.skewTo = cc.SkewTo.create;
 cc.skewBy = cc.SkewBy.create;
-cc.jumpBy = cc.JumpBy.create;
-cc.jumpTo = cc.JumpTo.create;
+//cc.jumpBy = cc.JumpBy.create;
+//cc.jumpTo = cc.JumpTo.create;
 cc.bezierBy = cc.BezierBy.create;
 cc.bezierTo = cc.BezierTo.create;
 cc.scaleTo = cc.ScaleTo.create;
@@ -2324,13 +2324,50 @@ cc.animate = cc.Animate.create;
 cc.targetedAction = cc.TargetedAction.create;
 cc.actionTween = cc.ActionTween.create;
 
-cc.place = function(posOrX, y){
+cc.Place._create = cc.Place.create;
+cc.place = cc.Place.create = function(posOrX, y){
     if (undefined === y){
-        return cc.Place.create(posOrX);
+        return cc.Place._create(posOrX);
     }else{
-        return cc.Place.create(cc.p(posOrX, y));
+        return cc.Place._create(cc.p(posOrX, y));
     }
-}
+};
+cc.MoveTo._create = cc.MoveTo.create;
+cc.moveTo = cc.MoveTo.create = function(duration, posOrX, y){
+    if (undefined === y){
+        return cc.MoveTo._create(duration, posOrX);
+    }else{
+        return cc.MoveTo._create(duration, cc.p(posOrX, y));
+    }
+};
+cc.MoveBy._create = cc.MoveBy.create;
+cc.moveBy = cc.MoveBy.create = function(duration, posOrX, y){
+    if (undefined === y){
+        return cc.MoveBy._create(duration, posOrX);
+    }else{
+        return cc.MoveBy._create(duration, cc.p(posOrX, y));
+    }
+};
+cc.JumpTo._create = cc.JumpTo.create;
+cc.jumpTo = cc.JumpTo.create = function(duration, position, y, height, jumps){
+    if (undefined === jumps){
+        jumps = height;
+        height = y;
+        return cc.JumpTo._create(duration, position, height, jumps);
+    }else{
+        return cc.JumpTo._create(duration, cc.p(position, y), height, jumps);
+    }
+};
+cc.JumpBy._create = cc.JumpBy.create;
+cc.jumpBy = cc.JumpBy.create = function(duration, position, y, height, jumps){
+    if (undefined === jumps){
+        jumps = height;
+        height = y;
+        return cc.JumpBy._create(duration, position, height, jumps);
+    }else{
+        return cc.JumpBy._create(duration, cc.p(position, y), height, jumps);
+    }
+};
 
 // Actions3d
 cc.gridAction = cc.GridAction.create;
@@ -2736,4 +2773,22 @@ cc.RenderTexture.prototype.beginWithClear = function(r, g, b, a, depthValue, ste
     arguments[2] /= 255;
     arguments[3] /= 255;
     this._beginWithClear.apply(this, arguments);
+};
+
+
+//
+// Texture2D setTexParameters
+//
+cc.Texture2D.prototype._setTexParameters = cc.Texture2D.prototype.setTexParameters;
+cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS, wrapT) {
+    var minFilter;
+    if (magFilter === undefined) {
+        minFilter = texParams.minFilter;
+        magFilter = texParams.magFilter;
+        wrapS = texParams.wrapS;
+        wrapT = texParams.wrapT;
+    }
+    else minFilter = texParams;
+
+    this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
 };
