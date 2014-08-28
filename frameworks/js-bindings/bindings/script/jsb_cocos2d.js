@@ -194,15 +194,21 @@ cc.UNIFORM_RANDOM01 = 6;
 cc.UNIFORM_SAMPLER = 7;
 cc.UNIFORM_MAX = 8;
 
+// Shaders 
+cc.UNIFORM_TIME_S = "CC_Time";
+cc.UNIFORM_COS_TIME_S	= 'CC_CosTime';
+cc.UNIFORM_COSTIME_S = "CC_CosTime";
+cc.UNIFORM_SIN_TIME_S	= 'CC_SinTime';
+cc.UNIFORM_SINTIME_S = "CC_SinTime";
 cc.UNIFORM_PMATRIX_S = "CC_PMatrix";
 cc.UNIFORM_MVMATRIX_S = "CC_MVMatrix";
 cc.UNIFORM_MVPMATRIX_S = "CC_MVPMatrix";
-cc.UNIFORM_TIME_S = "CC_Time";
-cc.UNIFORM_SINTIME_S = "CC_SinTime";
-cc.UNIFORM_COSTIME_S = "CC_CosTime";
-cc.UNIFORM_RANDOM01_S = "CC_Random01";
-cc.UNIFORM_SAMPLER_S = "CC_Texture0";
-cc.UNIFORM_ALPHA_TEST_VALUE_S = "CC_alpha_value";
+cc.UNIFORM_P_MATRIX_S	= 'CC_PMatrix';
+cc.UNIFORM_MV_MATRIX_S	= 'CC_MVMatrix';
+cc.UNIFORM_MVP_MATRIX_S	= 'CC_MVPMatrix';
+cc.UNIFORM_RANDOM01_S	= 'CC_Random01';
+cc.UNIFORM_SAMPLER_S	= 'CC_Texture0';
+cc.UNIFORM_ALPHA_TEST_VALUE_S = "CC_AlphaValue";
 
 cc.ITEM_SIZE = 32;
 

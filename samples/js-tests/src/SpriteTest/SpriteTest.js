@@ -431,8 +431,6 @@ var SpriteBatchNodeColorOpacity = SpriteTestDemo.extend({
 
 
         sprite1.x = (winSize.width / 5) * 1;
-
-
         sprite1.y = (winSize.height / 3) * 1;
         sprite2.x = (winSize.width / 5) * 2;
         sprite2.y = (winSize.height / 3) * 1;
@@ -450,7 +448,7 @@ var SpriteBatchNodeColorOpacity = SpriteTestDemo.extend({
         sprite8.y = (winSize.height / 3) * 2;
 
         var delay = cc.delayTime(0.25);
-        var action = cc.fadeIn(2);
+        var action = cc.fadeOut(2);
         var action_back = action.reverse();
         var fade = cc.sequence(action, delay.clone(), action_back).repeatForever();
 
@@ -1015,7 +1013,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
             node.anchorX = 0.5;
             node.anchorY = 0.5;
             node.x = winSize.width / 2;
-            node.y = winSize.height / 2;
+            node.y = winSize.height / 3;
 
             this.addChild(node, 0);
             var sprite;
