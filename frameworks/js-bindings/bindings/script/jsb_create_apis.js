@@ -823,6 +823,13 @@ cc.LabelTTF.prototype._ctor = function(text, fontName, fontSize, dimensions, hAl
 
 /************************  Other classes  *************************/
 
+cc.EventTouch.prototype._ctor = function(touches) {
+    touches && cc.EventTouch.prototype.setTouches.call(this, touches);
+};
+cc.Touch.prototype._ctor = function(x, y, id) {
+    id !== undefined && cc.Touch.prototype.setTouchInfo.call(this, x, y, id);
+};
+
 cc.GLProgram.prototype._ctor = function(vShaderFileName, fShaderFileName) {
 	vShaderFileName && fShaderFileName && cc.GLProgram.prototype.init.call(this, vShaderFileName, fShaderFileName);
 };
