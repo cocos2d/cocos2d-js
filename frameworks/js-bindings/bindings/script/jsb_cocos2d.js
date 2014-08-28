@@ -2774,3 +2774,21 @@ cc.RenderTexture.prototype.beginWithClear = function(r, g, b, a, depthValue, ste
     arguments[3] /= 255;
     this._beginWithClear.apply(this, arguments);
 };
+
+
+//
+// Texture2D setTexParameters
+//
+cc.Texture2D.prototype._setTexParameters = cc.Texture2D.prototype.setTexParameters;
+cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS, wrapT) {
+    var minFilter;
+    if (magFilter === undefined) {
+        minFilter = texParams.minFilter;
+        magFilter = texParams.magFilter;
+        wrapS = texParams.wrapS;
+        wrapT = texParams.wrapT;
+    }
+    else minFilter = texParams;
+
+    this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
+};

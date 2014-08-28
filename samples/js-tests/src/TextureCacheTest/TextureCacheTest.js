@@ -24,7 +24,33 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var TextureCacheTest = cc.Layer.extend({
+var TextureCacheTestBase = BaseTestLayer.extend({
+    _title:"",
+    _subtitle:"",
+
+    ctor:function() {
+        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+    },
+
+    onRestartCallback:function (sender) {
+        var s = new TexCacheTestScene();
+        s.addChild(restartTexCacheTest());
+        director.runScene(s);
+    },
+    onNextCallback:function (sender) {
+        var s = new TexCacheTestScene();
+        s.addChild(nextTexCacheTest());
+        director.runScene(s);
+    },
+    onBackCallback:function (sender) {
+        var s = new TexCacheTestScene();
+        s.addChild(previousTexCacheTest());
+        director.runScene(s);
+    }
+});
+
+var TextureCacheTest = TextureCacheTestBase.extend({
+    _title:"Texture Cache Loading Test",
     _labelLoading:null,
     _labelPercent:null,
     _numberOfSprites:20,
@@ -162,10 +188,69 @@ var TextureCacheTest = cc.Layer.extend({
     }
 });
 
-var TextureCacheTestScene = TestScene.extend({
+var RemoteTextureTest = TextureCacheTestBase.extend({
+    _title:"Remote Texture Test",
+    _subtitle:"",
+    _remoteTex: "http://www.cocos2d-x.org/attachments/download/1508",
+    _sprite : null,
+    onEnter:function () {
+        this._super();
+        cc.textureCache.addImage(this._remoteTex, this.texLoaded, this);
+    },
+
+    texLoaded: function(texture) {
+        if (texture instanceof cc.Texture2D) {
+            cc.log("Remote texture loaded: " + this._remoteTex);
+            if (this._sprite) {
+                this.removeChild(this._sprite);
+            }
+            this._sprite = new cc.Sprite(texture);
+            this._sprite.x = cc.winSize.width/2;
+            this._sprite.y = cc.winSize.height/2;
+            this.addChild(this._sprite);
+        }
+        else {
+            cc.log("Fail to load remote texture");
+        }
+    }
+});
+
+
+//
+// Flow control
+//
+
+var texCacheTestSceneIdx = -1;
+
+var TexCacheTestScene = TestScene.extend({
     runThisTest:function () {
-        var layer = new TextureCacheTest();
+        texCacheTestSceneIdx = -1;
+        var layer = nextTexCacheTest();
         this.addChild(layer);
+
         cc.director.runScene(this);
     }
 });
+
+var arrayOfTexCacheTest = [
+    TextureCacheTest,
+    RemoteTextureTest
+];
+
+var nextTexCacheTest = function () {
+    texCacheTestSceneIdx++;
+    texCacheTestSceneIdx = texCacheTestSceneIdx % arrayOfTexCacheTest.length;
+
+    return new arrayOfTexCacheTest[texCacheTestSceneIdx]();
+};
+var previousTexCacheTest = function () {
+    texCacheTestSceneIdx--;
+    if (texCacheTestSceneIdx < 0)
+        texCacheTestSceneIdx += arrayOfTexCacheTest.length;
+
+    return new arrayOfTexCacheTest[texCacheTestSceneIdx]();
+};
+var restartTexCacheTest = function () {
+    return new arrayOfTexCacheTest[texCacheTestSceneIdx]();
+};
+
