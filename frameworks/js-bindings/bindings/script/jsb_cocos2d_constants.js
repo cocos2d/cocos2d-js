@@ -134,7 +134,6 @@ cc.CHIPMUNK_IMPORT	= 'chipmunk.h';
 cc.ATTRIBUTE_NAME_COLOR	= 'a_color';
 cc.ATTRIBUTE_NAME_POSITION	= 'a_position';
 cc.ATTRIBUTE_NAME_TEX_COORD	= 'a_texCoord';
-cc.UNIFORM_ALPHA_TEST_VALUE_S	= 'CC_AlphaValue';
 cc.UNIFORM_COS_TIME_S	= 'CC_CosTime';
 cc.UNIFORM_MV_MATRIX_S	= 'CC_MVMatrix';
 cc.UNIFORM_MVP_MATRIX_S	= 'CC_MVPMatrix';
