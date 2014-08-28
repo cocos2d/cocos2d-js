@@ -660,7 +660,7 @@ cc.JumpBy.prototype._ctor = cc.JumpTo.prototype._ctor = function(duration, posit
 };
 
 cc.BezierBy.prototype._ctor = cc.BezierTo.prototype._ctor = function(t, c) {
-	c && this.initWithDuration(t, c);
+	c !== undefined && this.initWithDuration(t, c);
 };
 
 cc.ScaleTo.prototype._ctor = cc.ScaleBy.prototype._ctor = function(duration, sx, sy) {
@@ -797,7 +797,8 @@ cc.LabelAtlas.prototype._ctor = function(strText, charMapFile, itemWidth, itemHe
 };
 
 cc.LabelBMFont.prototype._ctor = function(str, fntFile, width, alignment, imageOffset) {
-	if( str && fntFile ) {
+    str = str || "";
+	if( fntFile ) {
 		width = width || 0;
 		alignment = alignment === undefined ? cc.TEXT_ALIGNMENT_LEFT : alignment;
 		imageOffset = imageOffset || cc.p(0, 0);
