@@ -24,7 +24,33 @@
 // cocos2d constants
 //
 
+// CCConfig.js
+//
 cc.ENGINE_VERSION = "Cocos2d-JS v3.0 RC2";
+
+cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
+cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
+cc.DIRECTOR_FPS_INTERVAL = 0.5;
+cc.COCOSNODE_RENDER_SUBPIXEL = 1;
+cc.SPRITEBATCHNODE_RENDER_SUBPIXEL = 1;
+cc.OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA = 0;
+cc.TEXTURE_ATLAS_USE_TRIANGLE_STRIP = 0;
+cc.TEXTURE_ATLAS_USE_VAO = 0;
+cc.TEXTURE_NPOT_SUPPORT = 0;
+cc.RETINA_DISPLAY_SUPPORT = 1;
+cc.RETINA_DISPLAY_FILENAME_SUFFIX = "-hd";
+cc.USE_LA88_LABELS = 1;
+cc.SPRITE_DEBUG_DRAW = 0;
+cc.SPRITEBATCHNODE_DEBUG_DRAW = 0;
+cc.LABELBMFONT_DEBUG_DRAW = 0;
+cc.LABELATLAS_DEBUG_DRAW = 0;
+cc.IS_RETINA_DISPLAY_SUPPORTED = 1;
+cc.DEFAULT_ENGINE = cc.ENGINE_VERSION + "-native";
+cc.ENABLE_STACKABLE_ACTIONS = 1;
+cc.ENABLE_GL_STATE_CACHE = 1;
+
+
+// Resolution policies
 
 cc.ResolutionPolicy = {
     // The entire application is visible in the specified area without trying to preserve the original aspect ratio.
@@ -2402,10 +2428,10 @@ cc.progressFromTo = cc.ProgressFromTo.create;
 
 // Speed functions
 cc.Speed.prototype.speed = cc.ActionInterval.prototype.speed = function(speed) {
-    if (speed < 0) {
-        cc.warn("cc.ActionInterval#speed : Speed must not be negative");
-        return;
-    }
+//    if (speed < 0) {
+//        cc.warn("cc.ActionInterval#speed : Speed must not be negative");
+//        return;
+//    }
     var action = this, found = false;
     while (action.getInnerAction && !found) {
         if (action instanceof cc.Speed) {
@@ -2425,10 +2451,10 @@ cc.Speed.prototype.speed = cc.ActionInterval.prototype.speed = function(speed) {
     return this;
 };
 cc.Speed.prototype.setSpeed = cc.ActionInterval.prototype.setSpeed = function(speed) {
-    if (speed < 0) {
-        cc.warn("cc.ActionInterval#speed : Speed must not be negative");
-        return;
-    }
+//    if (speed < 0) {
+//        cc.warn("cc.ActionInterval#setSpeed : Speed must not be negative");
+//        return;
+//    }
     var action = this, found = false;
     while (action.getInnerAction && !found) {
         if (action instanceof cc.Speed) {
