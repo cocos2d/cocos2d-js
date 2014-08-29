@@ -47,13 +47,13 @@ var GameOver = cc.Layer.extend({
         lbScore.color = cc.color(250,179,0);
         this.addChild(lbScore,10);
 
-        var b1 = new cc.LabelTTF("Download Cocos2d-html5","Arial",14);
-        var b2 = new cc.LabelTTF("Download This Sample","Arial",14);
+        var b1 = new cc.LabelTTF("Download Cocos2d-JS","Arial",14);
+        var b2 = new cc.LabelTTF("Github Repository","Arial",14);
         var menu1 = new cc.MenuItemLabel(b1,function(){
-            window.location.href = "http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Cocos2d-html5";
+            window.location.href = "http://www.cocos2d-x.org/download";
         });
         var menu2 = new cc.MenuItemLabel(b2,function(){
-            window.location.href = "https://github.com/ShengxiangChen/MoonWarriors";
+            window.location.href = "https://github.com/cocos2d/cocos2d-js";
         });
         var cocos2dMenu = new cc.Menu(menu1,menu2);
         cocos2dMenu.alignItemsVerticallyWithPadding(10);
