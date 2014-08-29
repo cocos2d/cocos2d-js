@@ -122,7 +122,7 @@ bool JavaScriptObjCBridge::CallInfo::execute(JSContext *cx,jsval *argv,unsigned 
                 [invocation getReturnValue:&ret];
                 pushValue(ret);
             }
-            else if (strcmp(returnType, "c") == 0) // BOOL
+            else if (strcmp(returnType, "c") == 0 || strcmp(returnType, "B") == 0) // BOOL
             {
                 char ret;
                 [invocation getReturnValue:&ret];
