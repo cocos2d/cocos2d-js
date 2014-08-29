@@ -830,7 +830,7 @@ cc.TextureCache.prototype.addImage = function(url, cb, target) {
     var cachedTex = this.getTextureForKey(url);
     if (cachedTex) {
         cb && cb.call(target, cachedTex);
-        return;
+        return cachedTex;
     }
     if (url.match(jsb.urlRegExp)) {
         jsb.loadRemoteImg(url, function(succeed, tex) {
