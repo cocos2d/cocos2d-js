@@ -1232,3 +1232,26 @@ cc.Animation.create = function (frames, delay, loops) {
         return cc.Animation.createWithSpriteFrames.apply(this, arguments);
     }
 };
+
+cc.Menu.create = function(menuItems) {
+    if((arguments.length > 0) && (arguments[arguments.length-1] == null))
+        cc.log("parameters should not be ending with null in Javascript");
+
+    var argc = arguments.length,
+        items = [];
+    if (argc == 1) {
+        if (menuItems instanceof Array) {
+            items = menuItems;
+        }
+        else{
+            items.push(arguments[0]);
+        }
+    }
+    else if (argc > 1) {
+        for (var i = 0; i < argc; i++) {
+            if (arguments[i])
+                items.push(arguments[i]);
+        }
+    }
+    return cc.Menu._create.apply(null, items);
+};

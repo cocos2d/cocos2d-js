@@ -81,18 +81,25 @@ cc.defineGetterSetter(_proto, "cascadeColor", _proto.isCascadeColorEnabled, _pro
 _proto = cc.Menu.prototype;
 cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
+cc.defineGetterSetter(_proto, "cascadeOpacity", _proto.isCascadeOpacityEnabled, _proto.setCascadeOpacityEnabled);
 cc.defineGetterSetter(_proto, "color", _proto.getColor, _proto.setColor);
+cc.defineGetterSetter(_proto, "cascadeColor", _proto.isCascadeColorEnabled, _proto.setCascadeColorEnabled);
 
 _proto = cc.MenuItem.prototype;
 cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
+cc.defineGetterSetter(_proto, "cascadeOpacity", _proto.isCascadeOpacityEnabled, _proto.setCascadeOpacityEnabled);
 cc.defineGetterSetter(_proto, "color", _proto.getColor, _proto.setColor);
+cc.defineGetterSetter(_proto, "cascadeColor", _proto.isCascadeColorEnabled, _proto.setCascadeColorEnabled);
 
 _proto = cc.MotionStreak.prototype;
 cc.defineGetterSetter(_proto, "x", _proto.getPositionX, _proto.setPositionX);
 cc.defineGetterSetter(_proto, "y", _proto.getPositionY, _proto.setPositionY);
+cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
 cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
+cc.defineGetterSetter(_proto, "color", _proto.getColor, _proto.setColor);
+cc.defineGetterSetter(_proto, "cascadeColor", _proto.isCascadeColorEnabled, _proto.setCascadeColorEnabled);
 
 _proto = cc.ParticleSystem.prototype;
 cc.defineGetterSetter(_proto, "rotation", _proto.getRotation, _proto.setRotation);
