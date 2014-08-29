@@ -603,26 +603,6 @@ cc.loader = {
         }, option.cb, option.cbTarget);
         asyncPool.flow();
         return asyncPool;
-
-//        var l = arguments.length;
-//        if(l == 3) {
-//            if(typeof option == "function") option = {trigger : option};
-//        }
-//        else if(l == 2){
-//            if(typeof option == "function") {
-//                cb = option;
-//                option = {};
-//            }
-//        }else if(l == 1) option = {};
-//        else throw "arguments error!";
-//        option.cb = function(err, results){
-//            if(err) cc.log(err);
-//            if(cb) cb(results);
-//        };
-//        if(!(res instanceof Array)) res = [res];
-//        option.iterator = this._loadResIterator;
-//        option.iteratorTarget = this;
-//        cc.async.map(res, option);
     },
 
     /**
