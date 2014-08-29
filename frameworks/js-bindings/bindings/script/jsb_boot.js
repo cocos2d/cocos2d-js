@@ -725,6 +725,11 @@ cc.configuration = cc.Configuration.getInstance();
 cc.textureCache = cc.director.getTextureCache();
 cc.TextureCache.prototype._addImage = cc.TextureCache.prototype.addImage;
 cc.TextureCache.prototype.addImage = function(url, cb, target) {
+    var cachedTex = this.getTextureForKey(url);
+    if (cachedTex) {
+        cb && cb.call(target, cachedTex);
+        return;
+    }
     if (url.match(jsb.urlRegExp)) {
         jsb.loadRemoteImg(url, function(succeed, tex) {
             if (succeed) {
