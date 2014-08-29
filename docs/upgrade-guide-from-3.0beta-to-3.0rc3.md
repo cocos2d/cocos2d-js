@@ -1,4 +1,4 @@
-#Upgrade guide from Cocos2d-JS v3.0 beta to Cocos2d-JS v3.0 RC2
+#Upgrade guide from Cocos2d-JS v3.0 beta to Cocos2d-JS v3.0 RC3
 
 ## 0. Upgrade from Cocos2d-JS v2.x to v3.0 beta
 
@@ -158,3 +158,20 @@ Added `cc.sys.platform` for detecting target platform.
 ### 6.7 [JSB]console.log **[New in RC2]**
 
 Bound `console.log` function for JSB.
+
+### 6.8 cc.formatStr **[New in RC3]**
+
+Added `cc.formatStr` for string formatting, for example: 
+
+```
+cc.formatStr("a: %d, b: %b", a, b);
+```
+
+### 6.9 Function refactoration for adapting naming protocole **[New in RC3]**
+
+```
+cc.pool.hasObj                  -> cc.pool.hasObject
+cc.pool.removeObj               -> cc.pool.removeObject
+cc.textureCache.textureForKey   -> cc.textureCache.getTextureForKey
+cc.TMXTilemap#propertiesForGID  -> cc.TMXTilemap#getPropertiesForGID
+```
