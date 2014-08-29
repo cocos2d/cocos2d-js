@@ -62,7 +62,7 @@ using namespace std;
 using namespace cocos2d;
 
 std::string g_resourcePath;
-
+static std::string g_projectPath;
 //1M size 
 #define MAXPROTOLENGTH 1048576
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -77,7 +77,7 @@ extern bool browseDir(const char *dir,const char *filespec,vector<string> &filte
 /*@brief   use "|" splite string  */
 const char* getRuntimeVersion()
 {
-    return "1.3";
+    return "1.4";
 }
 
 static vector<string> splitFilter(const char *str)
@@ -217,7 +217,7 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 /************************
 * Get file list from specified directory. 
 *
-*@param dir		    search directory
+*@param dir         search directory
 *@param filespec    search specified type file
 *@param filterfile  filter file or folder
 *
@@ -931,11 +931,13 @@ public:
 #endif
 
         _fileserver = nullptr;
-#if(CC_PLATFORM_MAC != CC_TARGET_PLATFORM && CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM)
         _fileserver= FileServer::getShareInstance();
+#if(CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM)
+        _fileserver->listenOnTCP(ConfigParser::getInstance()->getUploadPort());
+#else
         _fileserver->listenOnTCP(6060);
-        _fileserver->readResFileFinfo();
 #endif
+        _fileserver->readResFileFinfo();
     }
     ~ConsoleCustomCommand()
     {
@@ -990,7 +992,13 @@ public:
                         compileAll = true;
                     }
                     if (compileAll) {
-                        vector<std::string> fileInfoList = searchFileList(g_resourcePath,"*.js","runtime|frameworks|");
+                        vector<std::string> projfileInfoList = searchFileList(g_projectPath,"*.js","runtime|frameworks|");
+                        vector<std::string> fileInfoList = searchFileList(g_resourcePath,"*.js");
+                        for (unsigned i = 0; i < projfileInfoList.size(); i++)
+                        {
+                            cleanScript(projfileInfoList[i].substr(g_projectPath.length(),-1).c_str());
+                            ScriptingCore::getInstance()->compileScript(projfileInfoList[i].substr(g_projectPath.length(),-1).c_str());
+                        }
                         for (unsigned i = 0; i < fileInfoList.size(); i++)
                         {
                             cleanScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
@@ -1144,13 +1152,19 @@ bool runtime_FileUtils_addSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
         std::string arg0;
         ok &= jsval_to_std_string(cx, argv[0], &arg0);
         JSB_PRECONDITION2(ok, cx, false, "cocos2dx_FileUtils_addSearchPath : Error processing arguments");
-        std::string argtmp = arg0;
-        if (!FileUtils::getInstance()->isAbsolutePath(arg0))
-            arg0 = g_resourcePath + arg0;
+        std::string originPath = arg0;
+        if (!FileUtils::getInstance()->isAbsolutePath(originPath))
+            arg0 = g_resourcePath + originPath;
         cobj->addSearchPath(arg0);
+
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        if (!FileUtils::getInstance()->isAbsolutePath(originPath))
+                cobj->addSearchPath(g_projectPath + originPath);        
+#endif
+
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        if (!FileUtils::getInstance()->isAbsolutePath(argtmp))
-            cobj->addSearchPath(argtmp);
+        if (!FileUtils::getInstance()->isAbsolutePath(originPath))
+            cobj->addSearchPath(originPath);
 #endif
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
@@ -1173,17 +1187,23 @@ bool runtime_FileUtils_setSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_std_vector_string(cx, argv[0], &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_setSearchPaths : Error processing arguments");
         
-        std::vector<std::string> argtmp;
+        std::vector<std::string> originPath; // for IOS platform.
+        std::vector<std::string> projPath; // for Desktop platform.
         for (int i = 0; i < arg0.size(); i++)
         {
             if (!FileUtils::getInstance()->isAbsolutePath(arg0[i]))
             {
-                argtmp.push_back(arg0[i]);
+                originPath.push_back(arg0[i]); // for IOS platform.
+                projPath.push_back(g_projectPath+arg0[i]); //for Desktop platform.
                 arg0[i] = g_resourcePath + arg0[i];
             }
         }
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        arg0.insert(arg0.end(),projPath.begin(),projPath.end());
+#endif
+
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        arg0.insert(arg0.end(),argtmp.begin(),argtmp.end());
+        arg0.insert(arg0.end(),originPath.begin(),originPath.end());
 #endif
         cobj->setSearchPaths(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1229,19 +1249,23 @@ bool initRuntime()
     vector<string> searchPathArray;
     searchPathArray=FileUtils::getInstance()->getSearchPaths();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    if (g_resourcePath.empty())
+    if (g_projectPath.empty())
     {
         extern std::string getCurAppPath();
-        string resourcePath = getCurAppPath();
+        string appPath = getCurAppPath();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        resourcePath.append("/../../");
+        appPath.append("/../../");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        resourcePath.append("/../../../");
+        appPath.append("/../../../");
 #endif
-        resourcePath =replaceAll(resourcePath,"\\","/");
-        g_resourcePath = resourcePath;
+        appPath =replaceAll(appPath,"\\","/");
+        g_projectPath = appPath;
     }
-    
+    searchPathArray.insert(searchPathArray.begin(),g_projectPath);
+    g_resourcePath = FileUtils::getInstance()->getWritablePath();
+    g_resourcePath += "debugruntime/";
+    g_resourcePath += ConfigParser::getInstance()->getInitViewName();
+    g_resourcePath +="/";
 #else
     g_resourcePath = FileUtils::getInstance()->getWritablePath();
     g_resourcePath += "debugruntime/";
