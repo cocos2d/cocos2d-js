@@ -333,7 +333,7 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
         sprite8.y = (winSize.height / 3) * 2;
 
         var delay = cc.delayTime(0.25);
-        var action = cc.fadeIn(2);
+        var action = cc.fadeOut(2);
         var action_back = action.reverse();
         var fade = cc.sequence(action, delay.clone(), action_back).repeatForever();
 
@@ -349,11 +349,6 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
         var tintBlueBack = tintBlue.reverse();
         var blue = cc.sequence(tintBlue, delay.clone(), tintBlueBack).repeatForever();
 
-        sprite5.runAction(red);
-        sprite6.runAction(green);
-        sprite7.runAction(blue);
-        sprite8.runAction(fade);
-
         // late add: test dirtyColor and dirtyPosition
         this.addChild(sprite1, 0, TAG_SPRITE1);
         this.addChild(sprite2, 0, TAG_SPRITE2);
@@ -363,6 +358,11 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
         this.addChild(sprite6, 0, TAG_SPRITE6);
         this.addChild(sprite7, 0, TAG_SPRITE7);
         this.addChild(sprite8, 0, TAG_SPRITE8);
+
+        sprite5.runAction(red);
+        sprite6.runAction(green);
+        sprite7.runAction(blue);
+        sprite8.runAction(fade);
 
         this.schedule(this.removeAndAddSprite, 2);
         //----end11----
@@ -431,8 +431,6 @@ var SpriteBatchNodeColorOpacity = SpriteTestDemo.extend({
 
 
         sprite1.x = (winSize.width / 5) * 1;
-
-
         sprite1.y = (winSize.height / 3) * 1;
         sprite2.x = (winSize.width / 5) * 2;
         sprite2.y = (winSize.height / 3) * 1;
@@ -450,7 +448,7 @@ var SpriteBatchNodeColorOpacity = SpriteTestDemo.extend({
         sprite8.y = (winSize.height / 3) * 2;
 
         var delay = cc.delayTime(0.25);
-        var action = cc.fadeIn(2);
+        var action = cc.fadeOut(2);
         var action_back = action.reverse();
         var fade = cc.sequence(action, delay.clone(), action_back).repeatForever();
 
@@ -465,11 +463,6 @@ var SpriteBatchNodeColorOpacity = SpriteTestDemo.extend({
         var tintBlueBack = tintBlue.reverse();
         var blue = cc.sequence(tintBlue, delay.clone(), tintBlueBack).repeatForever();
 
-        sprite5.runAction(red);
-        sprite6.runAction(green);
-        sprite7.runAction(blue);
-        sprite8.runAction(fade);
-
         // late add: test dirtyColor and dirtyPosition
         batch.addChild(sprite1, 0, TAG_SPRITE1);
         batch.addChild(sprite2, 0, TAG_SPRITE2);
@@ -479,6 +472,11 @@ var SpriteBatchNodeColorOpacity = SpriteTestDemo.extend({
         batch.addChild(sprite6, 0, TAG_SPRITE6);
         batch.addChild(sprite7, 0, TAG_SPRITE7);
         batch.addChild(sprite8, 0, TAG_SPRITE8);
+
+        sprite5.runAction(red);
+        sprite6.runAction(green);
+        sprite7.runAction(blue);
+        sprite8.runAction(fade);
 
         this.schedule(this.removeAndAddSprite, 2);
         //----end12----
@@ -1015,7 +1013,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
             node.anchorX = 0.5;
             node.anchorY = 0.5;
             node.x = winSize.width / 2;
-            node.y = winSize.height / 2;
+            node.y = winSize.height / 3;
 
             this.addChild(node, 0);
             var sprite;
