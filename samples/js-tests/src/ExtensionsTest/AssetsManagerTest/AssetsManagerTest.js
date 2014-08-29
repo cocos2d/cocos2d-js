@@ -213,7 +213,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
     },
 
     onExit : function () {
-        this._am.release();
+        //this._am.release();
         this._super();
     }
 });

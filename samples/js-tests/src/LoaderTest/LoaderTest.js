@@ -60,7 +60,7 @@ var LoaderTestLayer = BaseTestLayer.extend({
             cc.log(s_Cowboy_png + "--->");
             cc.log(results[1]);
             cc.spriteFrameCache.addSpriteFrames(s_Cowboy_plist);
-            var frame = new cc.Sprite("#testAnimationResource/1.png")
+            var frame = new cc.Sprite("#testAnimationResource/1.png");
             self.addChild(frame);
             frame.x = winSize.width/4;
             frame.y = winSize.height/4;
