@@ -1263,9 +1263,10 @@ bool initRuntime()
     }
     searchPathArray.insert(searchPathArray.begin(),g_projectPath);
 #endif
+
     g_resourcePath = FileUtils::getInstance()->getWritablePath();
     g_resourcePath += "debugruntime/";
-
+    
     g_resourcePath=replaceAll(g_resourcePath,"\\","/");
     if (g_resourcePath.at(g_resourcePath.length()-1) != '/'){
         g_resourcePath.append("/");
