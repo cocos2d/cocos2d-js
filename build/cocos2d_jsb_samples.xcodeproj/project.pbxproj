@@ -1788,7 +1788,7 @@
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/protocols/include $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/plugins/** $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/auto $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/manual";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/auto $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/manual";
 			};
 			name = Debug;
 		};
@@ -1820,7 +1820,7 @@
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/protocols/include $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/plugins/** $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/auto $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/manual";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/cocos/platform/ios $(SRCROOT)/../frameworks/js-bindings/external/spidermonkey/include/ios $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/auto $(SRCROOT)/../frameworks/js-bindings/cocos2d-x/plugin/jsbindings/manual";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

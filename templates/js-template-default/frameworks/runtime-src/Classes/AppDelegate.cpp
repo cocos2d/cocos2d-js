@@ -18,8 +18,11 @@
 #include "network/XMLHTTPRequest.h"
 #include "network/jsb_websocket.h"
 #include "network/jsb_socketio.h"
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCJavascriptJavaBridge.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#include "platform/ios/JavaScriptObjCBridge.h"
 #endif
 
 USING_NS_CC;
@@ -71,9 +74,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_jsb_websocket);
 	sc->addRegisterCallback(register_jsb_socketio);
     
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
-    #endif
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    sc->addRegisterCallback(JavaScriptObjCBridge::_js_register);
+#endif
     sc->start();
     
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();

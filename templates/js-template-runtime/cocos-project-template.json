@@ -21,6 +21,10 @@
                "exclude":[]
             },
             {
+               "from":"frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.android/DependProject/src",
+               "to":"frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.android/DependProject/src"
+            },
+            {
                "from":"frameworks/js-bindings/bindings/script",
                "to":"runtime/mac/PrebuiltRuntimeJs.app/Contents/Resources/script",
                "exclude":[]
@@ -96,6 +100,10 @@
             {
                "from":"templates/js-template-runtime/project.json",
                "to":"runtime/ios/PrebuiltRuntimeJs.app/project.json"
+            },
+            {
+                "from":"frameworks/cocos2d-html5/jsb_apis.js",
+                "to":"frameworks/cocos2d-html5/jsb_apis.js"
             }
          ]
       },
