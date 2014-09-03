@@ -206,11 +206,10 @@ var FacebookShareTest = PluginXTest.extend({
 //        }
 
         var map = {
-            "dialog": "apprequests",
             "message": "Cocos2d-x is a great game engine",
             "link": "http://www.cocos2d-x.org"
         };
-        facebook.dialog(map, function (resultcode, msg) {
+        facebook.appRequest(map, function (resultcode, msg) {
             cc.log(JSON.stringify(msg));
         });
     },
