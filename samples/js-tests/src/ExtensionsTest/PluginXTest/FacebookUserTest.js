@@ -28,7 +28,7 @@ var button_share = {
     "logout": "logoutClick",
     "getUid": "getUidClick",
     "getToken": "getTokenClick",
-    "new permissions": "permissionClick",
+    "getPermissions": "getPermissionClick",
     "request API": "requestClick"
 };
 button_share_native = {
