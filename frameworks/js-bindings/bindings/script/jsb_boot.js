@@ -62,98 +62,182 @@ cc.defineGetterSetter = function (proto, prop, getter, setter){
 };
 
 //+++++++++++++++++++++++++something about async begin+++++++++++++++++++++++++++++++
+/**
+ * Async Pool class, a helper of cc.async
+ * @param {Object|Array} srcObj
+ * @param {Number} limit the limit of parallel number
+ * @param {function} iterator
+ * @param {function} onEnd
+ * @param {object} target
+ * @constructor
+ */
+cc.AsyncPool = function(srcObj, limit, iterator, onEnd, target){
+    var self = this;
+    self._srcObj = srcObj;
+    self._limit = limit;
+    self._pool = [];
+    self._iterator = iterator;
+    self._iteratorTarget = target;
+    self._onEnd = onEnd;
+    self._onEndTarget = target;
+    self._results = srcObj instanceof Array ? [] : {};
+    self._isErr = false;
+
+    cc.each(srcObj, function(value, index){
+        self._pool.push({index : index, value : value});
+    });
+
+    self.size = self._pool.length;
+    self.finishedSize = 0;
+    self._workingSize = 0;
+
+    self._limit = self._limit || self.size;
+
+    self.onIterator = function(iterator, target){
+        self._iterator = iterator;
+        self._iteratorTarget = target;
+    };
+
+    self.onEnd = function(endCb, endCbTarget){
+        self._onEnd = endCb;
+        self._onEndTarget = endCbTarget;
+    };
+
+    self._handleItem = function(){
+        var self = this;
+        if(self._pool.length == 0)
+            return;                                                         //return directly if the array's length = 0
+        if(self._workingSize >= self._limit)
+            return;                                                         //return directly if the working size great equal limit number
+        var item = self._pool.shift();
+        var value = item.value, index = item.index;
+        self._workingSize++;
+        self._iterator.call(self._iteratorTarget, value, index, function(err){
+            if(self._isErr)
+                return;
+
+            self.finishedSize++;
+            self._workingSize--;
+            if(err) {
+                self._isErr = true;
+                if(self._onEnd)
+                    self._onEnd.call(self._onEndTarget, err);
+                return
+            }
+
+            var arr = Array.prototype.slice.call(arguments, 1);
+            self._results[this.index] = arr[0];
+            if(self.finishedSize == self.size) {
+                if(self._onEnd)
+                    self._onEnd.call(self._onEndTarget, null, self._results);
+                return;
+            }
+            self._handleItem();
+        }.bind(item), self);
+    };
+
+    self.flow = function(){
+        var self = this;
+        if(self._pool.length == 0) {
+            if(self._onEnd)
+                self._onEnd.call(self._onEndTarget, null, []);
+            return;
+        }
+        for(var i = 0; i < self._limit; i++)
+            self._handleItem();
+    }
+};
+
 cc.async = {
     /**
-     * Counter for cc.async
-     * @param err
+     * Do tasks series.
+     * @param {Array|Object} tasks
+     * @param {function} [cb] callback
+     * @param {Object} [target]
+     * @return {cc.AsyncPool}
      */
-    _counterFunc : function(err){
-        var counter = this.counter;
-        if(counter.err) return;
-        var length = counter.length;
-        var results = counter.results;
-        var option = counter.option;
-        var cb = option.cb, cbTarget = option.cbTarget, trigger = option.trigger, triggerTarget = option.triggerTarget;
-        if(err) {
-            counter.err = err;
-            if(cb) return cb.call(cbTarget, err);
-            return;
-        }
-        var result = Array.apply(null, arguments).slice(1);
-        var l = result.length;
-        if(l == 0) result = null;
-        else if(l == 1) result = result[0];
-        else result = result;
-        results[this.index] = result;
-        counter.count--;
-        if(trigger) trigger.call(triggerTarget, result, length - counter.count, length);
-        if(counter.count == 0 && cb) cb.apply(cbTarget, [null, results]);
+    series : function(tasks, cb, target){
+        var asyncPool = new cc.AsyncPool(tasks, 1, function(func, index, cb1){
+            func.call(target, cb1);
+        }, cb, target);
+        asyncPool.flow();
+        return asyncPool;
     },
-    
-    /**
-     * Empty function for async.
-     * @private
-     */
-    _emptyFunc : function(){},
+
     /**
      * Do tasks parallel.
-     * @param tasks
-     * @param option
-     * @param cb
+     * @param {Array|Object} tasks
+     * @param {function} cb callback
+     * @param {Object} [target]
+     * @return {cc.AsyncPool}
      */
-    parallel : function(tasks, option, cb){
-        var async = cc.async;
-        var l = arguments.length;
-        if(l == 3) {
-            if(typeof option == "function") option = {trigger : option};
-            option.cb = cb || option.cb;
-        }
-        else if(l == 2){
-            if(typeof option == "function") option = {cb : option};
-        }else if(l == 1) option = {};
-        else throw "arguments error!";
-        var isArr = tasks instanceof Array;
-        var li = isArr ? tasks.length : Object.keys(tasks).length;
-        if(li == 0){
-            if(option.cb) option.cb.call(option.cbTarget, null);
-            return;
-        }
-        var results = isArr ? [] : {};
-        var counter = { length : li, count : li, option : option, results : results};
-        
-        cc.each(tasks, function(task, index){
-                if(counter.err) return false;
-                var counterFunc = !option.cb && !option.trigger ? async._emptyFunc : async._counterFunc.bind({counter : counter, index : index});//bind counter and index
-                task(counterFunc, index);
-                });
+    parallel : function(tasks, cb, target){
+        var asyncPool = new cc.AsyncPool(tasks, 0, function(func, index, cb1){
+            func.call(target, cb1);
+        }, cb, target);
+        asyncPool.flow();
+        return asyncPool;
     },
-    
+
+    /**
+     * Do tasks waterfall.
+     * @param {Array|Object} tasks
+     * @param {function} cb callback
+     * @param {Object} [target]
+     * @return {cc.AsyncPool}
+     */
+    waterfall : function(tasks, cb, target){
+        var args = [];
+        var asyncPool = new cc.AsyncPool(tasks, 1,
+            function (func, index, cb1) {
+                args.push(function (err) {
+                    args = Array.prototype.slice.call(arguments, 1);
+                    cb1.apply(null, arguments);
+                });
+                func.apply(target, args);
+            }, function (err, results) {
+                if (!cb)
+                    return;
+                if (err)
+                    return cb.call(target, err);
+                cb.call(target, null, results[results.length - 1]);
+            });
+        asyncPool.flow();
+        return asyncPool;
+    },
+
     /**
      * Do tasks by iterator.
-     * @param tasks
-     * @param {{cb:{function}, target:{object}, iterator:{function}, iteratorTarget:{function}}|function} option
-     * @param cb
+     * @param {Array|Object} tasks
+     * @param {function|Object} iterator
+     * @param {function} cb callback
+     * @param {Object} [target]
+     * @return {cc.AsyncPool}
      */
-    map : function(tasks, option, cb){
-        var self = this;
-        var l = arguments.length;
-        if(typeof option == "function") option = {iterator : option};
-        if(l == 3) option.cb = cb || option.cb;
-        else if(l == 2);
-        else throw "arguments error!";
-        var isArr = tasks instanceof Array;
-        var li = isArr ? tasks.length : Object.keys(tasks).length;
-        if(li == 0){
-            if(option.cb) option.cb.call(option.cbTarget, null);
-            return;
+    map : function(tasks, iterator, cb, target){
+        var locIterator = iterator;
+        if(typeof(iterator) == "object"){
+            cb = iterator.cb;
+            target = iterator.iteratorTarget;
+            locIterator = iterator.iterator;
         }
-        var results = isArr ? [] : {};
-        var counter = { length : li, count : li, option : option, results : results};
-        cc.each(tasks, function(task, index){
-            if(counter.err) return false;
-            var counterFunc = !option.cb ? self._emptyFunc : self._counterFunc.bind({counter : counter, index : index});//bind counter and index
-            option.iterator.call(option.iteratorTarget, task, index, counterFunc);
-        });
+        var asyncPool = new cc.AsyncPool(tasks, 0, locIterator, cb, target);
+        asyncPool.flow();
+        return asyncPool;
+    },
+
+    /**
+     * Do tasks by iterator limit.
+     * @param {Array|Object} tasks
+     * @param {Number} limit
+     * @param {function} iterator
+     * @param {function} cb callback
+     * @param {Object} [target]
+     */
+    mapLimit : function(tasks, limit, iterator, cb, target){
+        var asyncPool = new cc.AsyncPool(tasks, limit, iterator, cb, target);
+        asyncPool.flow();
+        return asyncPool;
     }
 };
 //+++++++++++++++++++++++++something about async end+++++++++++++++++++++++++++++++++
@@ -395,7 +479,7 @@ cc.loader = {
             }
             else {
                 if(!cb) return;
-                cb("error");
+                cb("Load image failed");
             }
         });
     },
@@ -464,12 +548,15 @@ cc.loader = {
             var type = path.extname(url);
             type = type ? type.toLowerCase() : "";
             var loader = self._register[type];
-            if(!loader) basePath = self.resPath;
-            else basePath = loader.getBasePath ? loader.getBasePath() : self.resPath;
+            if(!loader)
+                basePath = self.resPath;
+            else
+                basePath = loader.getBasePath ? loader.getBasePath() : self.resPath;
         }
-        url = cc.path.join(basePath || "", url)
+        url = cc.path.join(basePath || "", url);
         if(url.match(/[\/(\\\\)]lang[\/(\\\\)]/i)){
-            if(langPathCache[url]) return langPathCache[url];
+            if(langPathCache[url])
+                return langPathCache[url];
             var extname = path.extname(url) || "";
             url = langPathCache[url] = url.substring(0, url.length - extname.length) + "_" + cc.sys.language + extname;
         }
@@ -482,26 +569,40 @@ cc.loader = {
      * @param [{function}|{}] option
      * @param {function} cb :
      */
-    load : function(res, option, cb){
-        var l = arguments.length;
-        if(l == 3) {
-            if(typeof option == "function") option = {trigger : option};
-        }
-        else if(l == 2){
-            if(typeof option == "function") {
-                cb = option;
-                option = {};
+    load : function(resources, option, cb){
+        var self = this;
+        var len = arguments.length;
+        if(len == 0)
+            throw "arguments error!";
+
+        if(len == 3){
+            if(typeof option == "function"){
+                if(typeof cb == "function")
+                    option = {trigger : option, cb : cb };
+                else
+                    option = { cb : option, cbTarget : cb};
             }
-        }else if(l == 1) option = {};
-        else throw "arguments error!";
-        option.cb = function(err, results){
-            if(err) cc.log(err);
-            if(cb) cb(results);
-        };
-        if(!(res instanceof Array)) res = [res];
-        option.iterator = this._loadResIterator;
-        option.iteratorTarget = this;
-        cc.async.map(res, option);
+        }else if(len == 2){
+            if(typeof option == "function")
+                option = {cb : option};
+        }else if(len == 1){
+            option = {};
+        }
+
+        if(!(resources instanceof Array))
+            resources = [resources];
+        var asyncPool = new cc.AsyncPool(resources, 0, function(value, index, cb1, aPool){
+            self._loadResIterator(value, index, function(err){
+                if(err)
+                    return cb1(err);
+                var arr = Array.prototype.slice.call(arguments, 1);
+                if(option.trigger)
+                    option.trigger.call(option.triggerTarget, arr[0], aPool.size, aPool.finishedSize); //call trigger
+                cb1(null, arr[0]);
+            });
+        }, option.cb, option.cbTarget);
+        asyncPool.flow();
+        return asyncPool;
     },
 
     /**
@@ -546,8 +647,9 @@ cc.loader = {
     register : function(extNames, loader){
         if(!extNames || !loader) return;
         var self = this;
-        if(typeof extNames == "string") return this._register[extNames.trim().toLowerCase()] = loader;
-        for(var i = 0, li = extNames.length; i < li; i++){
+        if(typeof extNames == "string")
+            return this._register[extNames.trim().toLowerCase()] = loader;
+        for(var i = 0, li = extNames.length; i < li; i++) {
             self._register["." + extNames[i].trim().toLowerCase()] = loader;
         }
     },
@@ -725,6 +827,11 @@ cc.configuration = cc.Configuration.getInstance();
 cc.textureCache = cc.director.getTextureCache();
 cc.TextureCache.prototype._addImage = cc.TextureCache.prototype.addImage;
 cc.TextureCache.prototype.addImage = function(url, cb, target) {
+    var cachedTex = this.getTextureForKey(url);
+    if (cachedTex) {
+        cb && cb.call(target, cachedTex);
+        return;
+    }
     if (url.match(jsb.urlRegExp)) {
         jsb.loadRemoteImg(url, function(succeed, tex) {
             if (succeed) {

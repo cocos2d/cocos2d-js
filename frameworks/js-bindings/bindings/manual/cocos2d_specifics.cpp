@@ -200,6 +200,81 @@ void JSTouchDelegate::onTouchesCancelled(const std::vector<Touch*>& touches, Eve
     ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::CANCELLED, touches, _obj);
 }
 
+// cc.EventTouch#getTouches
+bool js_cocos2dx_EventTouch_getTouches(JSContext *cx, uint32_t argc, jsval *vp) {
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::EventTouch* cobj = (cocos2d::EventTouch *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EventTouch_getTouches : Invalid Native Object");
+	if (argc == 0) {
+		const std::vector<cocos2d::Touch*>& ret = cobj->getTouches();
+        JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+        
+        int i = 0;
+        for (cocos2d::Touch* touchObj : ret)
+        {
+            JS::RootedValue arrElement(cx);
+            
+            //First, check whether object is associated with js object.
+            js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Touch>(cx, touchObj);
+            if (jsproxy) {
+                arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
+            }
+            if (!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+                break;
+            }
+            ++i;
+        }
+        
+		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsretArr));
+		return true;
+	}
+    
+	JS_ReportError(cx, "js_cocos2dx_EventTouch_getTouches : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+
+// cc.EventTouch#setTouches
+bool js_cocos2dx_EventTouch_setTouches(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::EventTouch* cobj = (cocos2d::EventTouch *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EventTouch_setTouches : Invalid Native Object");
+	if (argc == 1) {
+		std::vector<Touch*> arg0;
+        JS::RootedObject jsobj(cx);
+        ok = argv->isObject() && JS_ValueToObject( cx, JS::RootedValue(cx, *argv), &jsobj );
+        JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
+        JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "Object must be an array");
+        
+        uint32_t len = 0;
+        JS_GetArrayLength(cx, jsobj, &len);
+        
+        for (uint32_t i=0; i < len; i++)
+        {
+            JS::RootedValue value(cx);
+            if (JS_GetElement(cx, jsobj, i, &value))
+            {
+                JSObject *tmp = JSVAL_TO_OBJECT(value);
+                proxy = jsb_get_js_proxy(tmp);
+                cocos2d::Touch* touchObj = (cocos2d::Touch *)(proxy ? proxy->ptr : NULL);
+                if (touchObj) {
+                    arg0.push_back(touchObj);
+                }
+            }
+        }
+		cobj->setTouches(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+    
+	JS_ReportError(cx, "js_cocos2dx_EventTouch_setTouches : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+
 static void addCallBackAndThis(JSObject *obj, jsval callback, jsval &thisObj)
 {
     if(callback != JSVAL_VOID) {
@@ -4319,6 +4394,9 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_cocos2d_EventListener_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_cocos2d_EventListener_prototype, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
+    JS_DefineFunction(cx, jsb_cocos2d_EventTouch_prototype, "getTouches", js_cocos2dx_EventTouch_getTouches, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, jsb_cocos2d_EventTouch_prototype, "setTouches", js_cocos2dx_EventTouch_setTouches, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
     JS_DefineFunction(cx, jsb_cocos2d_GLProgram_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_cocos2d_GLProgram_prototype, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "onEnter", js_cocos2dx_Node_onEnter, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
@@ -4428,7 +4506,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_cocos2d_ActionInterval_prototype, "easing", js_cocos2dx_ActionInterval_easing, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.Menu; })()"));
-	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenu_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, tmpObj, "_create", js_cocos2dx_CCMenu_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.MenuItem; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItem_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.MenuItemSprite; })()"));

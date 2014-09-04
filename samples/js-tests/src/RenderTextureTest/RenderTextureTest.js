@@ -170,6 +170,7 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
                     scale: Math.random() + 0.25,
                     opacity: 20
                 });
+                sprite.retain();
                 this._brushs.push(sprite);
             }
             for (var i = 0; i < distance; i++) {
