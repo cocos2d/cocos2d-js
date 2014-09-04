@@ -32,7 +32,7 @@ Cocos2d-JS-v3.0 RC3 @ Aug.29, 2014
 * [JSB] Refactored cc.Node and cc.Texture2D's `getGLProgram` to `getShaderProgram`, `setGLProgram` to `setShaderProgram` for compatibility with web engine.
 * [JSB] Added missed shader program constants.
 * [JSB] Added missed array util functions.
-* [JSB] Bound constructor for cc.EventTouch and cc.Touch
+* [JSB] Bound constructor for cc.EventTouch and cc.Touch.
 
 * Bugs fix:
     1. Fixed an issue of tilemap that it can't runAction in canvas render mode.
