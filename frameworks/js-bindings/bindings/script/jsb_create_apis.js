@@ -241,13 +241,7 @@ _p._ctor = function(normalImage, selectedImage, three, four, five) {
 			target = five;
 		}
 		callback = callback ? callback.bind(target) : null;
-        this.initWithCallback(callback);
-
-        this.setNormalImage(new cc.Sprite(normalImage));
-        this.setSelectedImage(new cc.Sprite(selectedImage));
-        if (disabledImage)
-            this.setDisabledImage(new cc.Sprite(disabledImage));
-        else this.setDisabledImage(new cc.Sprite(normalImage));
+        this.initWithNormalSprite(new cc.Sprite(normalImage), new cc.Sprite(selectedImage), disabledImage ? new cc.Sprite(disabledImage) : new cc.Sprite(normalImage), callback);
 	}
 };
 
