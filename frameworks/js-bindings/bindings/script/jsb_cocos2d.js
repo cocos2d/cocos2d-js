@@ -2718,8 +2718,7 @@ cc.Node.prototype.getUserData = function () {
 cc.Node.prototype.getBoundingBoxToWorld = function () {
     var contentSize = this.getContentSize();
     var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
-    var matrix = this.getNodeToWorldTransform();
-    var trans = cc.affineTransformMake(matrix[0], matrix[1], matrix[4], matrix[5], matrix[12], matrix[13]);
+    var trans = this.getNodeToWorldTransform();
     rect = cc.rectApplyAffineTransform(rect, trans);
 
     //query child's BoundingBox
@@ -2741,8 +2740,7 @@ cc.Node.prototype.getBoundingBoxToWorld = function () {
 cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
     var contentSize = this.getContentSize();
     var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
-    var matrix = this.getNodeToParentTransform();
-    var _trans = cc.affineTransformMake(matrix[0], matrix[1], matrix[4], matrix[5], matrix[12], matrix[13]);
+    var _trans = this.getNodeToParentTransform();
     var trans = (parentTransform == null) ? _trans : cc.affineTransformConcat(_trans, parentTransform);
     rect = cc.rectApplyAffineTransform(rect, trans);
 
