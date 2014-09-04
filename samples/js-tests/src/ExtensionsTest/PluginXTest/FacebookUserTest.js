@@ -24,10 +24,10 @@
 
 var button_share = {
     "login": "loginClick",
+    "loginWithPermission" : "loginWithPermissionClick",
     "logout": "logoutClick",
     "getUid": "getUidClick",
     "getToken": "getTokenClick",
-    "new permissions": "permissionClick",
     "getPermissions": "getPermissionClick",
     "request API": "requestClick"
 };
@@ -106,7 +106,7 @@ var FacebookUserTest = PluginXTest.extend({
     },
     getUidClick: function (sender) {
         var self = this;
-        facebook.request("/me", plugin.FacebookAgent.HttpMethod.Get, function (type, msg) {
+        facebook.api("/me", plugin.FacebookAgent.HttpMethod.Get, function (type, msg) {
             if (type == plugin.FacebookAgent.CodeSucceed) {
                 self.result.setString(msg["id"]);
             } else {
@@ -123,10 +123,10 @@ var FacebookUserTest = PluginXTest.extend({
         });
     },
 
-    permissionClick: function (sender) {
+    loginWithPermissionClick: function (sender) {
         var self = this;
         var permissions = ["create_event", "create_note", "manage_pages", "publish_actions"];
-        facebook.requestPermissions(permissions, function (type, msg) {
+        facebook.login(permissions, function (type, msg) {
             if (type == plugin.FacebookAgent.CodeSucceed) {
                 self.result.setString(msg["permissions"]);
             }
@@ -143,7 +143,7 @@ var FacebookUserTest = PluginXTest.extend({
     },
     requestClick: function (sender) {
         var self = this;
-        facebook.request("/me/photos", plugin.FacebookAgent.HttpMethod.Post, {"url": "http://files.cocos2d-x.org/images/orgsite/logo.png"}, function (type, msg) {
+        facebook.api("/me/photos", plugin.FacebookAgent.HttpMethod.Post, {"url": "http://files.cocos2d-x.org/images/orgsite/logo.png"}, function (type, msg) {
             if (type == plugin.FacebookAgent.CodeSucceed) {
                 self.result.setString("post_id: " + msg["post_id"]);
             }
