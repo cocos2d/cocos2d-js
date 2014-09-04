@@ -186,8 +186,6 @@ var AssetsManagerLoaderScene = TestScene.extend({
                         break;
                     case jsb.EventAssetsManager.ERROR_UPDATING:
                         cc.log("Asset update error: " + event.getAssetId() + ", " + event.getMessage());
-                        scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-                        cc.director.runScene(scene);
                         break;
                     case jsb.EventAssetsManager.ERROR_DECOMPRESS:
                         cc.log(event.getMessage());
@@ -213,7 +211,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
     },
 
     onExit : function () {
-        //this._am.release();
+        this._am.release();
         this._super();
     }
 });
