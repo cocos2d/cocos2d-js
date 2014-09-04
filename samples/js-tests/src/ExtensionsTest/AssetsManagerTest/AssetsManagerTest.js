@@ -149,12 +149,12 @@ var AssetsManagerLoaderScene = TestScene.extend({
                     case jsb.EventAssetsManager.UPDATE_PROGRESSION:
                         that._percent = event.getPercent();
                         that._percentByFile = event.getPercentByFile();
-                        cc.log(that._percent + "%");
 
                         var msg = event.getMessage();
                         if (msg) {
                             cc.log(msg);
                         }
+                        cc.log(that._percent + "%");
                         break;
                     case jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
                     case jsb.EventAssetsManager.ERROR_PARSE_MANIFEST:
