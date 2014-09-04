@@ -2794,6 +2794,13 @@ cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
 
 
 //
+// cc.Layer bake/unbake/isBaked
+//
+cc.Layer.prototype.bake = cc.Layer.prototype.unbake = function() {};
+cc.Layer.prototype.isBaked = function() {return false;};
+
+
+//
 // RenderTexture beginWithClear
 //
 cc.RenderTexture.prototype._beginWithClear = cc.RenderTexture.prototype.beginWithClear;

@@ -26,7 +26,7 @@ For more informations please see [Cocos2d-JS github site](https://github.com/coc
 * Unified all know incompatible issue between JSB and Html5 engine.
 * Unified SpiderMonkey's 32bit and 64bit library to support Xcode 6.
 
-Cocos2d-JS v3.0 RC3 is a candidate release version for v3.0 Final, all features have been added and all important issues have been fixed.
+Cocos2d-JS v3.0 RC3 is a candidate release version for v3.0 Final, all features have been added and all known important issues have been fixed.
 
 ## More information
 
@@ -37,10 +37,10 @@ Read more about all the features and bug fixes
 
 ## New documents
 
-- [Facebook SDK Beta API Reference](./facebook-sdk/api-reference/en.md)
-- [Integrate the Facebook SDK Beta for Cocos2d-JS on Android](./facebook-sdk/facebook-sdk-on-android/en.md)
-- [Integrate the Facebook SDK Beta for Cocos2d-JS on iOS](./facebook-sdk/facebook-sdk-on-ios/en.md)
-- [Integrate the Facebook SDK Beta for Cocos2d-JS on Web](./facebook-sdk/facebook-sdk-on-web/en.md)
+- [Facebook SDK Beta API Reference](http://www.cocos2d-x.org/docs/manual/framework/html5/facebook-sdk/api-reference/en.md)
+- [Integrate the Facebook SDK Beta for Cocos2d-JS on Android](http://www.cocos2d-x.org/docs/manual/framework/html5/facebook-sdk/facebook-sdk-on-android/en.md)
+- [Integrate the Facebook SDK Beta for Cocos2d-JS on iOS](http://www.cocos2d-x.org/docs/manual/framework/html5/facebook-sdk/facebook-sdk-on-ios/en.md)
+- [Integrate the Facebook SDK Beta for Cocos2d-JS on Web](http://www.cocos2d-x.org/docs/manual/framework/html5/facebook-sdk/facebook-sdk-on-web/en.md)
 
 ## About Cocos2d family
 
