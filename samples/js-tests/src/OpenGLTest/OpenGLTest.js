@@ -1125,7 +1125,7 @@ var GLTexParamterTest = OpenGLTestLayer.extend({
     },
     getTexValues:function() {
         if(!cc.sys.isNative){
-            var texture2d = cc.textureCache.textureForKey(s_pathGrossini);
+            var texture2d = cc.textureCache.getTextureForKey(s_pathGrossini);
             gl.bindTexture(gl.TEXTURE_2D, texture2d.getName());
         } else {
             gl.bindTexture(gl.TEXTURE_2D, null);

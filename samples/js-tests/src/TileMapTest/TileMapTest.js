@@ -1272,7 +1272,7 @@ var TMXTilePropertyTest = TileDemo.extend({
         this.addChild(map, 0, TAG_TILE_MAP);
 
         for (var i = 1; i <= 6; i++) {
-            var properties = map.propertiesForGID(i);
+            var properties = map.getPropertiesForGID(i);
             this.log("GID:" + i + ", Properties:" + JSON.stringify(properties));
             this.propertiesList.push(properties)
         }

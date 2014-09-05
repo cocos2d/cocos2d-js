@@ -107,6 +107,7 @@ private:
     bool                              _errorFlag;
     std::unordered_map<std::string, std::string>          _httpHeader;
     std::unordered_map<std::string, std::string>          _requestHeader;
+    bool                              _isAborted;
 };
 
 #endif

@@ -137,38 +137,38 @@ var AssetsManagerLoaderScene = TestScene.extend({
         else
         {
             var that = this;
-            var listener = new cc.EventListenerAssetsManager(this._am, function(event) {
+            var listener = new jsb.EventListenerAssetsManager(this._am, function(event) {
                 var scene;
                 switch (event.getEventCode())
                 {
-                    case cc.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST:
+                    case jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST:
                         cc.log("No local manifest file found, skip assets update.");
                         scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
                         cc.director.runScene(scene);
                         break;
-                    case cc.EventAssetsManager.UPDATE_PROGRESSION:
+                    case jsb.EventAssetsManager.UPDATE_PROGRESSION:
                         that._percent = event.getPercent();
                         that._percentByFile = event.getPercentByFile();
-                        cc.log(that._percent + "%");
 
                         var msg = event.getMessage();
                         if (msg) {
                             cc.log(msg);
                         }
+                        cc.log(that._percent + "%");
                         break;
-                    case cc.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
-                    case cc.EventAssetsManager.ERROR_PARSE_MANIFEST:
+                    case jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
+                    case jsb.EventAssetsManager.ERROR_PARSE_MANIFEST:
                         cc.log("Fail to download manifest file, update skipped.");
                         scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
                         cc.director.runScene(scene);
                         break;
-                    case cc.EventAssetsManager.ALREADY_UP_TO_DATE:
-                    case cc.EventAssetsManager.UPDATE_FINISHED:
+                    case jsb.EventAssetsManager.ALREADY_UP_TO_DATE:
+                    case jsb.EventAssetsManager.UPDATE_FINISHED:
                         cc.log("Update finished. " + event.getMessage());
                         scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
                         cc.director.runScene(scene);
                         break;
-                    case cc.EventAssetsManager.UPDATE_FAILED:
+                    case jsb.EventAssetsManager.UPDATE_FAILED:
                         cc.log("Update failed. " + event.getMessage());
 
                         __failCount ++;
@@ -184,12 +184,10 @@ var AssetsManagerLoaderScene = TestScene.extend({
                             cc.director.runScene(scene);
                         }
                         break;
-                    case cc.EventAssetsManager.ERROR_UPDATING:
+                    case jsb.EventAssetsManager.ERROR_UPDATING:
                         cc.log("Asset update error: " + event.getAssetId() + ", " + event.getMessage());
-                        scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-                        cc.director.runScene(scene);
                         break;
-                    case cc.EventAssetsManager.ERROR_DECOMPRESS:
+                    case jsb.EventAssetsManager.ERROR_DECOMPRESS:
                         cc.log(event.getMessage());
                         break;
                     default:

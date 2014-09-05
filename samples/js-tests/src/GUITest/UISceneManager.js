@@ -91,6 +91,12 @@ var s_testArray = [
         }
     },
     {
+        title: "UILoadingBarTest_Fix",
+        func: function(){
+            return new UILoadingBarTest_Fix();
+        }
+    },
+    {
         title: "UILoadingBarTest_Left_Scale9",
         func: function () {
             return new UILoadingBarTest_Left_Scale9();
@@ -100,6 +106,12 @@ var s_testArray = [
         title: "UILoadingBarTest_Right_Scale9",
         func: function () {
             return new UILoadingBarTest_Right_Scale9();
+        }
+    },
+    {
+        title: "UILoadingBarTest_Fix_Scale9",
+        func: function(){
+            return new UILoadingBarTest_Fix_Scale9();
         }
     },
     {

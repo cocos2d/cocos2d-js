@@ -241,13 +241,7 @@ _p._ctor = function(normalImage, selectedImage, three, four, five) {
 			target = five;
 		}
 		callback = callback ? callback.bind(target) : null;
-        this.initWithCallback(callback);
-
-        this.setNormalImage(new cc.Sprite(normalImage));
-        this.setSelectedImage(new cc.Sprite(selectedImage));
-        if (disabledImage)
-            this.setDisabledImage(new cc.Sprite(disabledImage));
-        else this.setDisabledImage(new cc.Sprite(normalImage));
+        this.initWithNormalSprite(new cc.Sprite(normalImage), new cc.Sprite(selectedImage), disabledImage ? new cc.Sprite(disabledImage) : new cc.Sprite(normalImage), callback);
 	}
 };
 
@@ -660,7 +654,7 @@ cc.JumpBy.prototype._ctor = cc.JumpTo.prototype._ctor = function(duration, posit
 };
 
 cc.BezierBy.prototype._ctor = cc.BezierTo.prototype._ctor = function(t, c) {
-	c && this.initWithDuration(t, c);
+	c !== undefined && this.initWithDuration(t, c);
 };
 
 cc.ScaleTo.prototype._ctor = cc.ScaleBy.prototype._ctor = function(duration, sx, sy) {
@@ -797,7 +791,8 @@ cc.LabelAtlas.prototype._ctor = function(strText, charMapFile, itemWidth, itemHe
 };
 
 cc.LabelBMFont.prototype._ctor = function(str, fntFile, width, alignment, imageOffset) {
-	if( str && fntFile ) {
+    str = str || "";
+	if( fntFile ) {
 		width = width || 0;
 		alignment = alignment === undefined ? cc.TEXT_ALIGNMENT_LEFT : alignment;
 		imageOffset = imageOffset || cc.p(0, 0);
@@ -822,6 +817,13 @@ cc.LabelTTF.prototype._ctor = function(text, fontName, fontSize, dimensions, hAl
 
 
 /************************  Other classes  *************************/
+
+cc.EventTouch.prototype._ctor = function(touches) {
+    touches && cc.EventTouch.prototype.setTouches.call(this, touches);
+};
+cc.Touch.prototype._ctor = function(x, y, id) {
+    id !== undefined && cc.Touch.prototype.setTouchInfo.call(this, x, y, id);
+};
 
 cc.GLProgram.prototype._ctor = function(vShaderFileName, fShaderFileName) {
 	vShaderFileName && fShaderFileName && cc.GLProgram.prototype.init.call(this, vShaderFileName, fShaderFileName);
@@ -1223,4 +1225,27 @@ cc.Animation.create = function (frames, delay, loops) {
         delay = delay || 0;
         return cc.Animation.createWithSpriteFrames.apply(this, arguments);
     }
+};
+
+cc.Menu.create = function(menuItems) {
+    if((arguments.length > 0) && (arguments[arguments.length-1] == null))
+        cc.log("parameters should not be ending with null in Javascript");
+
+    var argc = arguments.length,
+        items = [];
+    if (argc == 1) {
+        if (menuItems instanceof Array) {
+            items = menuItems;
+        }
+        else{
+            items.push(arguments[0]);
+        }
+    }
+    else if (argc > 1) {
+        for (var i = 0; i < argc; i++) {
+            if (arguments[i])
+                items.push(arguments[i]);
+        }
+    }
+    return cc.Menu._create.apply(null, items);
 };
