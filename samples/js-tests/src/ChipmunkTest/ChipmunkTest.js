@@ -66,7 +66,7 @@ var ChipmunkBaseLayer = BaseTestLayer.extend( {
     setupDebugNode : function()
     {
         // debug only
-        this._debugNode = cc.PhysicsDebugNode.create( this.space );
+        this._debugNode = new cc.PhysicsDebugNode(this.space );
         this._debugNode.visible = false ;
         this.addChild( this._debugNode );
     },

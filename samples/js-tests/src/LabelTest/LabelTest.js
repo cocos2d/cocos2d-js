@@ -1574,24 +1574,24 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
         this.labelShouldRetain.boundingWidth = Math.abs(this.arrowsShouldRetain.getPosition().x - this.labelShouldRetain.getPosition().x) * 2;
     },
 
-    onMouseDown:function (touch) {
-        var location = touch.getLocation();
+    onMouseDown:function (event) {
+        var location = event.getLocation();
 
         if (cc.rectContainsPoint(this.arrowsShouldRetain.getBoundingBox(), location)) {
             this.arrowsBarShouldRetain.visible = true;
         }
     },
-    onMouseMove:function (touch) {
+    onMouseMove:function (event) {
         if(!event.getButton || event.getButton() != cc.EventMouse.BUTTON_LEFT)
             return;
 
-        var location = touch.getLocation();
+        var location = event.getLocation();
         var winSize = director.getWinSize();
 
         this.arrowsShouldRetain.x = Math.max(Math.min(location.x, ArrowsMax * winSize.width), ArrowsMin * winSize.width);
         this.labelShouldRetain.boundingWidth = Math.abs(this.arrowsShouldRetain.x - this.labelShouldRetain.x) * 2;
     },
-    onMouseUp:function (touch) {
+    onMouseUp:function (event) {
         //this.snapArrowsToEdge();
         this.arrowsBarShouldRetain.visible = false;
     },
@@ -1979,9 +1979,12 @@ var arrayOfLabelTest = [
     LabelTTFAlignment,
 
     LabelsEmpty,
-    LabelTTFStrokeShadowTest,
-    WrapAlgorithmTest
+    LabelTTFStrokeShadowTest
 ];
+
+if (!cc.sys.isNative || cc.sys.isMobile) {
+    arrayOfLabelTest.push(WrapAlgorithmTest);
+}
 
 var nextLabelTest = function () {
     labelTestIdx++;

@@ -689,7 +689,7 @@ var TestColliderDetector = ArmatureTestLayer.extend({
         this.space.gravity =  cp.v(0, 0);
 
         // Physics debug layer
-        var debugLayer = cc.PhysicsDebugNode.create(this.space);
+        var debugLayer = new cc.PhysicsDebugNode(this.space);
         this.addChild(debugLayer, 9999);
 
         //init bullet body

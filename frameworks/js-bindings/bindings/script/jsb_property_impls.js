@@ -70,10 +70,10 @@ _safeExtend(cc.Node.prototype, {
     },
 
     _setAnchorX: function(x) {
-        this.setAnchorPoint(x, this.getAnchorPoint().y);
+        this.setAnchorPoint(cc.p(x, this.getAnchorPoint().y));
     },
     _setAnchorY: function(y) {
-        this.setAnchorPoint(this.getAnchorPoint().x, y);
+        this.setAnchorPoint(cc.p(this.getAnchorPoint().x, y));
     }
 });
 
@@ -349,3 +349,12 @@ _safeExtend(ccui.ScrollView.prototype, {
 //         }
 //     }
 // });
+
+_safeExtend(cc.Texture2D.prototype, {
+    _getWidth : function(){
+        return this.getContentSize().width;
+    },
+    _getHeight : function(){
+        return this.getContentSize().height;
+    }
+});
