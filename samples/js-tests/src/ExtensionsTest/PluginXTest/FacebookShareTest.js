@@ -74,8 +74,8 @@ var FacebookShareTest = PluginXTest.extend({
     onShareLink: function () {
         var map = {
             "dialog": "share_link",
-            "description": "Cocos2d-x is a great game engine",
-            "title": "Cocos2d-x",
+            "description": "Cocos2d-JS is a great game engine",
+            "title": "Cocos2d-JS",
             "link": "http://www.cocos2d-x.org",
             "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
@@ -111,9 +111,9 @@ var FacebookShareTest = PluginXTest.extend({
             "action_type": "cocostestmyfc:share",
             "preview_property": "cocos_document",
             "title": "Cocos2d-JS Game Engine",
-             "image": "http://files.cocos2d-x.org/images/orgsite/logo.png",
-             "url": "http://cocos2d-x.org/docs/manual/framework/html5/en",
-             "description": "cocos document"
+            "image": "http://files.cocos2d-x.org/images/orgsite/logo.png",
+            "url": "http://cocos2d-x.org/docs/manual/framework/html5/en",
+            "description": "cocos document"
         };
         facebook.dialog(map, function (resultcode, msg) {
             cc.log(JSON.stringify(msg));
@@ -149,8 +149,8 @@ var FacebookShareTest = PluginXTest.extend({
         }
         var map = {
             "dialog": "message_link",
-            "description": "Cocos2d-x is a great game engine",
-            "title": "Cocos2d-x",
+            "description": "Cocos2d-JS is a great game engine",
+            "title": "Cocos2d-JS",
             "link": "http://www.cocos2d-x.org",
             "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
@@ -206,8 +206,8 @@ var FacebookShareTest = PluginXTest.extend({
 //        }
 
         var map = {
-            "message": "Cocos2d-x is a great game engine",
-            "link": "http://www.cocos2d-x.org"
+            "message": "Cocos2d-JS is a great game engine",
+            "title": "Cocos2d-JS"
         };
         facebook.appRequest(map, function (resultcode, msg) {
             cc.log(JSON.stringify(msg));
