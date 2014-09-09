@@ -1366,15 +1366,26 @@ cc._initDebugSetting = function (mode) {
     cc.log = cc.warn = cc.error = cc.assert = function(){};
     if(mode == ccGame.DEBUG_MODE_NONE){
     }else{
-        cc.error = bakLog.bind(cc);
+        cc.error = function(){
+            bakLog.call(this, "ERROR :  " + cc.formatStr.apply(cc, arguments));
+        };
         cc.assert = function(cond, msg) {
-            if (!cond) cc.log("Assert: " + msg);
+            if (!cond && msg) {
+                var args = [];
+                for (var i = 1; i < arguments.length; i++)
+                    args.push(arguments[i]);
+                bakLog("Assert: " + cc.formatStr.apply(cc, args));
+            }
         };
         if(mode != ccGame.DEBUG_MODE_ERROR && mode != ccGame.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
-            cc.warn = bakLog.bind(cc);
+            cc.warn = function(){
+                bakLog.call(this, "WARN :  " + cc.formatStr.apply(cc, arguments));
+            };
         }
         if(mode == ccGame.DEBUG_MODE_INFO || mode == ccGame.DEBUG_MODE_INFO_FOR_WEB_PAGE){
-            cc.log = bakLog;
+            cc.log = function(){
+                bakLog.call(this, cc.formatStr.apply(cc, arguments));
+            };
         }
     }
 };
