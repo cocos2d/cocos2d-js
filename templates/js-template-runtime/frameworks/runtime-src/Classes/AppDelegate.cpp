@@ -105,8 +105,8 @@ bool AppDelegate::applicationDidFinishLaunching()
         return true;
 #endif
 
-    ScriptingCore::getInstance()->start();
-    ScriptingCore::getInstance()->runScript("script/jsb_boot.js");
+    sc->start();
+    sc->runScript("script/jsb_boot.js");
     auto engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
