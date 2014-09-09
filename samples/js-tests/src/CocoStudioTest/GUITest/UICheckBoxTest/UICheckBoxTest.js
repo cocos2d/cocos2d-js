@@ -34,7 +34,7 @@ var UICheckBoxEditorTest = UIBaseLayer.extend({
         back_label.addTouchEventListener(this.backEvent,this);
 
         var checkbox = ccui.helper.seekWidgetByName(root, "CheckBox_540");
-        checkbox.addEventListenerCheckBox(this.selectedStateEvent,this);
+        checkbox.addEventListener(this.selectedStateEvent,this);
 
     },
 

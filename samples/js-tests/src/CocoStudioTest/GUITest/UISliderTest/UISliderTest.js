@@ -34,10 +34,10 @@ var UISliderEditorTest = UIBaseLayer.extend({
         back_label.addTouchEventListener(this.backEvent,this);
 
         var slider = ccui.helper.seekWidgetByName(root, "Slider_738");
-        slider.addEventListenerSlider(this.sliderEvent,this);
+        slider.addEventListener(this.sliderEvent,this);
 
         var scale9_slider = ccui.helper.seekWidgetByName(root, "Slider_740");
-        scale9_slider.addEventListenerSlider(this.sliderEvent,this);
+        scale9_slider.addEventListener(this.sliderEvent,this);
     },
 
     sliderEvent: function (sender, type) {

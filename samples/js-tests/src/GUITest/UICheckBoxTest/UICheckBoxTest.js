@@ -41,7 +41,7 @@ var UICheckBoxTest = UIScene.extend({
                 "res/cocosui/check_box_active_disable.png");
             checkBox.x = widgetSize.width / 2.0;
 	        checkBox.y = widgetSize.height / 2.0;
-            checkBox.addEventListenerCheckBox(this.selectedStateEvent, this);
+            checkBox.addEventListener(this.selectedStateEvent, this);
             this._mainNode.addChild(checkBox);
 
             return true;
