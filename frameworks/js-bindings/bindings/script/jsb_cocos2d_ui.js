@@ -291,8 +291,8 @@ ccui.TextBMFont.RENDERER_ZORDER = -1;
  * UITextField
  */
 //TextField event
-ccui.TextField.EVENT_ATTACH_WITH_ME = 0;
-ccui.TextField.EVENT_DETACH_WITH_ME = 1;
+ccui.TextField.EVENT_ATTACH_WITH_IME = 0;
+ccui.TextField.EVENT_DETACH_WITH_IME = 1;
 ccui.TextField.EVENT_INSERT_TEXT = 2;
 ccui.TextField.EVENT_DELETE_BACKWARD = 3;
 

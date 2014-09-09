@@ -37,6 +37,7 @@ public:
     rapidjson::Document& getConfigJsonRoot();
     const SimulatorScreenSize getScreenSize(int index);
     int getConsolePort();
+    int getUploadPort();
     int getDebugPort();
     bool isLanscape();
     bool isWindowTop();
@@ -53,6 +54,7 @@ private:
     bool _isInit;
     bool _isWindowTop;
     int _consolePort;
+    int _uploadPort;
     int _debugPort;
     
     rapidjson::Document _docRootjson;

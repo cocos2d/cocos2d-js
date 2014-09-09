@@ -27,6 +27,7 @@ void ConfigParser::readConfig()
     _isWindowTop = false;
     _consolePort = 6050;
     _debugPort = 5086;
+    _uploadPort = 6060;
     string filecfg = "config.json";
     
     string fileContent;
@@ -81,6 +82,11 @@ void ConfigParser::readConfig()
                     _debugPort = objectInitView["debugPort"].GetUint();
                     if(_debugPort<=0)
                         _debugPort = 5086;
+                }
+                if (objectInitView.HasMember("uploadPort")){
+                    _uploadPort = objectInitView["uploadPort"].GetUint();
+                    if(_uploadPort<=0)
+                        _uploadPort = 6060;
                 }
                 if (objectInitView.HasMember("isWindowTop") && objectInitView["isWindowTop"].IsBool()){
                     _isWindowTop= objectInitView["isWindowTop"].GetBool();
@@ -148,6 +154,10 @@ int ConfigParser::getConsolePort()
     return _consolePort;
 }
 
+int ConfigParser::getUploadPort()
+{
+    return _uploadPort;
+}
 int ConfigParser::getDebugPort()
 {
     return _debugPort;
