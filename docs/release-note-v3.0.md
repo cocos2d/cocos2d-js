@@ -14,12 +14,14 @@ Furthermore, JavaScript friendly APIs make your game development experience a br
 
 - Casual web game developers can download the Express Version and start to develop just like using other web frameworks (e.g. jQuery).
 
+![](./workflows.jpg)
+
 ## Highlights
 
-* Unified Cocos2d-JS APIs for web engine and native engine.
+* One code base, run everywhere with unified Cocos2d-JS API.
 * JavaScript style API refactorations: new construction, property APIs, simplified action APIs.
-* Added assets manager to support assets hot update.
-* Added new event manager to allow all kinds of objects to observe events via cc.eventManager with all types of event listener.
+* Assets manager for assets and scripts hot update.
+* Added new event manager to allow all kinds of objects to observe all event types.
 * Added JavaScript to JAVA/Objective-C reflection support.
 * Added Spine animations support.
 
@@ -56,3 +58,12 @@ With any problems you might have, our communities are happy to help:
 - [Online forum](http://discuss.cocos2d-x.org/category/javascript)
 - [Document root](http://cocos2d-x.org/docs/manual/framework/html5/en)
 - [Github repository](https://github.com/cocos2d/cocos2d-js)
+
+## Roadmap
+
+Cocos2d-JS have greatly simplified cross platform development. For the next step, we will focus on improving performance on mobile web, toolchain enhancement and completing documentation. Here is a list of main tasks we consider to accomplish in v3.1 :
+
+- The research for performance improvement on Web engine have already made great progress, the new renderer for canvas render mode is ready and will be merged in v3.1. The performance is upto 50% better than v3.0 based on various tests.
+- Facebook SDK for Cocos2d-JS will be released with v3.1, developers can use all Facebook features on iOS/Android/Web with the same JavaScript code.
+- Continue the research of memory model in JSB, improve the stability and simplify the usage.
+- Complete the Cocos2d-JS Programming Guide document to cover all important aspects about Cocos2d-JS development.
