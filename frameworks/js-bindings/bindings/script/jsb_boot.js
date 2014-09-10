@@ -715,12 +715,10 @@ cc.formatStr = function(){
     var str = args[0];
     var needToFormat = true;
     if(typeof str == "object"){
-        str = JSON.stringify(str);
         needToFormat = false;
     }
     for(var i = 1; i < l; ++i){
         var arg = args[i];
-        arg = typeof arg == "object" ? JSON.stringify(arg) : arg;
         if(needToFormat){
             while(true){
                 var result = null;
@@ -797,6 +795,12 @@ cc.view.setResolutionPolicy = function(resolutionPolicy){
 cc.view.setContentTranslateLeftTop = function(){return;};
 cc.view.getContentTranslateLeftTop = function(){return null;};
 cc.view.setFrameZoomFactor = function(){return;};
+cc.DENSITYDPI_DEVICE = "device-dpi";
+cc.DENSITYDPI_HIGH = "high-dpi";
+cc.DENSITYDPI_MEDIUM = "medium-dpi";
+cc.DENSITYDPI_LOW = "low-dpi";
+cc.view.setTargetDensityDPI = function() {};
+cc.view.getTargetDensityDPI = function() {return cc.DENSITYDPI_DEVICE;};
 
 /**
  * @type {Object}
@@ -1084,6 +1088,13 @@ cc._initSys = function(config, CONFIG_KEY){
      * @type {string}
      */
     locSys.LANGUAGE_DUTCH = "nl";
+    /**
+     * Dutch language code
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.LANGUAGE_DUTCH = "du";
     /**
      * Russian language code
      * @constant
