@@ -101,7 +101,7 @@ var FacebookUserTest = PluginXTest.extend({
     logoutClick: function (sender) {
         var self = this;
         facebook.logout(function (type, msg) {
-            self.result.setString(msg);
+            self.result.setString(JSON.stringify(msg));
         });
     },
     getUidClick: function (sender) {
