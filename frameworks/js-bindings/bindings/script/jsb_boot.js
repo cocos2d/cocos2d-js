@@ -1078,6 +1078,12 @@ cc._initSys = function(config, CONFIG_KEY){
      * @type {Number}
      */
     locSys.LANGUAGE_SPANISH = "es";
+    
+    /**
+     * Netherlands language code
+     * @type {string}
+     */
+    locSys.LANGUAGE_DUTCH = "nl";
     /**
      * Russian language code
      * @constant
@@ -1328,14 +1334,15 @@ cc._initSys = function(config, CONFIG_KEY){
             case 3: return locSys.LANGUAGE_ITALIAN;
             case 4: return locSys.LANGUAGE_GERMAN;
             case 5: return locSys.LANGUAGE_SPANISH;
-            case 6: return locSys.LANGUAGE_RUSSIAN;
-            case 7: return locSys.LANGUAGE_KOREAN;
-            case 8: return locSys.LANGUAGE_JAPANESE;
-            case 9: return locSys.LANGUAGE_HUNGARIAN;
-            case 10: return locSys.LANGUAGE_PORTUGUESE;
-            case 11: return locSys.LANGUAGE_ARABIC;
-            case 12: return locSys.LANGUAGE_NORWEGIAN;
-            case 13: return locSys.LANGUAGE_POLISH;
+            case 6: return locSys.LANGUAGE_DUTCH;
+            case 7: return locSys.LANGUAGE_RUSSIAN;
+            case 8: return locSys.LANGUAGE_KOREAN;
+            case 9: return locSys.LANGUAGE_JAPANESE;
+            case 10: return locSys.LANGUAGE_HUNGARIAN;
+            case 11: return locSys.LANGUAGE_PORTUGUESE;
+            case 12: return locSys.LANGUAGE_ARABIC;
+            case 13: return locSys.LANGUAGE_NORWEGIAN;
+            case 14: return locSys.LANGUAGE_POLISH;
             default : return locSys.LANGUAGE_ENGLISH;
         }
     })();
