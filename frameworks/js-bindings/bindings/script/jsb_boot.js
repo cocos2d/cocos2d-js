@@ -989,24 +989,6 @@ delete cc.fileUtils;
  */
 jsb.AssetsManager = cc.AssetsManager;
 delete cc.AssetsManager;
-/**
- * @type {Object}
- * @name jsb.EventListenerAssetsManager
- * jsb.EventListenerAssetsManager is the native event listener for AssetsManager.
- * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
- * Only available in JSB
- */
-jsb.EventListenerAssetsManager = cc.EventListenerAssetsManager;
-delete cc.EventListenerAssetsManager;
-/**
- * @type {Object}
- * @name jsb.EventAssetsManager
- * jsb.EventAssetsManager is the native event for AssetsManager.
- * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
- * Only available in JSB
- */
-jsb.EventAssetsManager = cc.EventAssetsManager;
-delete cc.EventAssetsManager;
 
 /**
  * @type {Object}
@@ -1078,6 +1060,12 @@ cc._initSys = function(config, CONFIG_KEY){
      * @type {Number}
      */
     locSys.LANGUAGE_SPANISH = "es";
+
+    /**
+     * Netherlands language code
+     * @type {string}
+     */
+    locSys.LANGUAGE_DUTCH = "nl";
     /**
      * Russian language code
      * @constant
@@ -1328,14 +1316,15 @@ cc._initSys = function(config, CONFIG_KEY){
             case 3: return locSys.LANGUAGE_ITALIAN;
             case 4: return locSys.LANGUAGE_GERMAN;
             case 5: return locSys.LANGUAGE_SPANISH;
-            case 6: return locSys.LANGUAGE_RUSSIAN;
-            case 7: return locSys.LANGUAGE_KOREAN;
-            case 8: return locSys.LANGUAGE_JAPANESE;
-            case 9: return locSys.LANGUAGE_HUNGARIAN;
-            case 10: return locSys.LANGUAGE_PORTUGUESE;
-            case 11: return locSys.LANGUAGE_ARABIC;
-            case 12: return locSys.LANGUAGE_NORWEGIAN;
-            case 13: return locSys.LANGUAGE_POLISH;
+            case 6: return locSys.LANGUAGE_DUTCH;
+            case 7: return locSys.LANGUAGE_RUSSIAN;
+            case 8: return locSys.LANGUAGE_KOREAN;
+            case 9: return locSys.LANGUAGE_JAPANESE;
+            case 10: return locSys.LANGUAGE_HUNGARIAN;
+            case 11: return locSys.LANGUAGE_PORTUGUESE;
+            case 12: return locSys.LANGUAGE_ARABIC;
+            case 13: return locSys.LANGUAGE_NORWEGIAN;
+            case 14: return locSys.LANGUAGE_POLISH;
             default : return locSys.LANGUAGE_ENGLISH;
         }
     })();
@@ -1366,26 +1355,15 @@ cc._initDebugSetting = function (mode) {
     cc.log = cc.warn = cc.error = cc.assert = function(){};
     if(mode == ccGame.DEBUG_MODE_NONE){
     }else{
-        cc.error = function(){
-            bakLog.call(this, "ERROR :  " + cc.formatStr.apply(cc, arguments));
-        };
+        cc.error = bakLog.bind(cc);
         cc.assert = function(cond, msg) {
-            if (!cond && msg) {
-                var args = [];
-                for (var i = 1; i < arguments.length; i++)
-                    args.push(arguments[i]);
-                bakLog("Assert: " + cc.formatStr.apply(cc, args));
-            }
+            if (!cond) cc.log("Assert: " + msg);
         };
         if(mode != ccGame.DEBUG_MODE_ERROR && mode != ccGame.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
-            cc.warn = function(){
-                bakLog.call(this, "WARN :  " + cc.formatStr.apply(cc, arguments));
-            };
+            cc.warn = bakLog.bind(cc);
         }
         if(mode == ccGame.DEBUG_MODE_INFO || mode == ccGame.DEBUG_MODE_INFO_FOR_WEB_PAGE){
-            cc.log = function(){
-                bakLog.call(this, cc.formatStr.apply(cc, arguments));
-            };
+            cc.log = bakLog;
         }
     }
 };
