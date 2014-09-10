@@ -797,6 +797,12 @@ cc.view.setResolutionPolicy = function(resolutionPolicy){
 cc.view.setContentTranslateLeftTop = function(){return;};
 cc.view.getContentTranslateLeftTop = function(){return null;};
 cc.view.setFrameZoomFactor = function(){return;};
+cc.DENSITYDPI_DEVICE = "device-dpi";
+cc.DENSITYDPI_HIGH = "high-dpi";
+cc.DENSITYDPI_MEDIUM = "medium-dpi";
+cc.DENSITYDPI_LOW = "low-dpi";
+cc.view.setTargetDensityDPI = function() {};
+cc.view.getTargetDensityDPI = function() {return cc.DENSITYDPI_DEVICE;};
 
 /**
  * @type {Object}
