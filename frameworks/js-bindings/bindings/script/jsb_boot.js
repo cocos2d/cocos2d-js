@@ -989,6 +989,24 @@ delete cc.fileUtils;
  */
 jsb.AssetsManager = cc.AssetsManager;
 delete cc.AssetsManager;
+/**
+ * @type {Object}
+ * @name jsb.EventListenerAssetsManager
+ * jsb.EventListenerAssetsManager is the native event listener for AssetsManager.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
+ * Only available in JSB
+ */
+jsb.EventListenerAssetsManager = cc.EventListenerAssetsManager;
+delete cc.EventListenerAssetsManager;
+/**
+ * @type {Object}
+ * @name jsb.EventAssetsManager
+ * jsb.EventAssetsManager is the native event for AssetsManager.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
+ * Only available in JSB
+ */
+jsb.EventAssetsManager = cc.EventAssetsManager;
+delete cc.EventAssetsManager;
 
 /**
  * @type {Object}
@@ -1060,7 +1078,7 @@ cc._initSys = function(config, CONFIG_KEY){
      * @type {Number}
      */
     locSys.LANGUAGE_SPANISH = "es";
-
+    
     /**
      * Netherlands language code
      * @type {string}
@@ -1355,15 +1373,26 @@ cc._initDebugSetting = function (mode) {
     cc.log = cc.warn = cc.error = cc.assert = function(){};
     if(mode == ccGame.DEBUG_MODE_NONE){
     }else{
-        cc.error = bakLog.bind(cc);
+        cc.error = function(){
+            bakLog.call(this, "ERROR :  " + cc.formatStr.apply(cc, arguments));
+        };
         cc.assert = function(cond, msg) {
-            if (!cond) cc.log("Assert: " + msg);
+            if (!cond && msg) {
+                var args = [];
+                for (var i = 1; i < arguments.length; i++)
+                    args.push(arguments[i]);
+                bakLog("Assert: " + cc.formatStr.apply(cc, args));
+            }
         };
         if(mode != ccGame.DEBUG_MODE_ERROR && mode != ccGame.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
-            cc.warn = bakLog.bind(cc);
+            cc.warn = function(){
+                bakLog.call(this, "WARN :  " + cc.formatStr.apply(cc, arguments));
+            };
         }
         if(mode == ccGame.DEBUG_MODE_INFO || mode == ccGame.DEBUG_MODE_INFO_FOR_WEB_PAGE){
-            cc.log = bakLog;
+            cc.log = function(){
+                bakLog.call(this, cc.formatStr.apply(cc, arguments));
+            };
         }
     }
 };
