@@ -715,12 +715,10 @@ cc.formatStr = function(){
     var str = args[0];
     var needToFormat = true;
     if(typeof str == "object"){
-        str = JSON.stringify(str);
         needToFormat = false;
     }
     for(var i = 1; i < l; ++i){
         var arg = args[i];
-        arg = typeof arg == "object" ? JSON.stringify(arg) : arg;
         if(needToFormat){
             while(true){
                 var result = null;
@@ -1085,6 +1083,13 @@ cc._initSys = function(config, CONFIG_KEY){
      */
     locSys.LANGUAGE_SPANISH = "es";
     /**
+     * Dutch language code
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.LANGUAGE_DUTCH = "du";
+    /**
      * Russian language code
      * @constant
      * @default
@@ -1334,14 +1339,15 @@ cc._initSys = function(config, CONFIG_KEY){
             case 3: return locSys.LANGUAGE_ITALIAN;
             case 4: return locSys.LANGUAGE_GERMAN;
             case 5: return locSys.LANGUAGE_SPANISH;
-            case 6: return locSys.LANGUAGE_RUSSIAN;
-            case 7: return locSys.LANGUAGE_KOREAN;
-            case 8: return locSys.LANGUAGE_JAPANESE;
-            case 9: return locSys.LANGUAGE_HUNGARIAN;
-            case 10: return locSys.LANGUAGE_PORTUGUESE;
-            case 11: return locSys.LANGUAGE_ARABIC;
-            case 12: return locSys.LANGUAGE_NORWEGIAN;
-            case 13: return locSys.LANGUAGE_POLISH;
+            case 6: return locSys.LANGUAGE_DUTCH;
+            case 7: return locSys.LANGUAGE_RUSSIAN;
+            case 8: return locSys.LANGUAGE_KOREAN;
+            case 9: return locSys.LANGUAGE_JAPANESE;
+            case 10: return locSys.LANGUAGE_HUNGARIAN;
+            case 11: return locSys.LANGUAGE_PORTUGUESE;
+            case 12: return locSys.LANGUAGE_ARABIC;
+            case 13: return locSys.LANGUAGE_NORWEGIAN;
+            case 14: return locSys.LANGUAGE_POLISH;
             default : return locSys.LANGUAGE_ENGLISH;
         }
     })();
