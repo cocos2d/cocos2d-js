@@ -1082,6 +1082,12 @@ cc._initSys = function(config, CONFIG_KEY){
      * @type {Number}
      */
     locSys.LANGUAGE_SPANISH = "es";
+    
+    /**
+     * Netherlands language code
+     * @type {string}
+     */
+    locSys.LANGUAGE_DUTCH = "nl";
     /**
      * Dutch language code
      * @constant
