@@ -29,6 +29,7 @@ Name                GithubID        Main contribution
 
 seobyeongky         @seobyeongky    XMLHTTPRequest bug fixes
                                     GLProgram_setUniformLocationWith4f bug fixed
+                                    Corrent value of cc.REPEAT_FOREVER
 
 Liang Wu            @akira-cn       No default font Arial on android bug fix
 

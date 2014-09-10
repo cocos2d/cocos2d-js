@@ -1,4 +1,4 @@
-#Upgrade guide from Cocos2d-JS v3.0 beta to Cocos2d-JS v3.0 RC3
+#Upgrade guide from Cocos2d-JS v3.0 beta to Cocos2d-JS v3.0 Final
 
 ## 0. Upgrade from Cocos2d-JS v2.x to v3.0 beta
 
@@ -6,7 +6,7 @@ If you are still using Cocos2d-html5 or Cocos2d-JSB v2.x, you need to read the p
 
 ## 1. Layer baking
 
-In RC0, you can start to bake a layer to a static cache, so that it can be rendered more efficiently.
+In v3.0, you can start to bake a layer to a static cache, so that it can be rendered more efficiently.
 
 ```
 var layer = new cc.Layer();
@@ -20,7 +20,7 @@ Detailed informations can be found in [layer baking document](../../../v3.0/bake
 
 ## 2. Object pool extension: `cc.pool`
 
-An object pool implementation have been proposed in RC0: `cc.pool`, it can helps you to improve your game performance for objects which need frequent release and recreate operations
+An object pool implementation have been proposed: `cc.pool`, it can helps you to improve your game performance for objects which need frequent release and recreate operations
 
 Some common use case is :
     - Bullets in game (die very soon, massive creation and recreation, no side effect on other objects)
@@ -74,9 +74,11 @@ Just for a remindment, the new API for using an easing action is `action.easing(
 We added jsb namespace to contain all jsb only APIs:
 
 ```
-cc.fileUtils        -->     jsb.fileUtils
-cc.Reflection       -->     jsb.Reflection
-cc.AssetsManager    -->     jsb.AssetsManager
+cc.fileUtils                    --> jsb.fileUtils
+cc.Reflection                   --> jsb.Reflection
+cc.AssetsManager                --> jsb.AssetsManager
+cc.EventAssetsManager           --> jsb.EventAssetsManager
+cc.EventListenerAssetsManager   --> jsb.EventListenerAssetsManager
 ```
 
 And some new functions have been bound to `jsb.fileUtils`:
@@ -89,9 +91,9 @@ jsb.fileUtils.setSearchResolutionsOrder(orders)
 jsb.fileUtils.addSearchResolutionsOrder(order)
 ```
 
-## 5. ccui.Widget
+## 5. ccui
 
-ccui.Widget's boundary functions have been renamed.
+### 5.1 ccui.Widget's boundary functions have been renamed
 
 ```
 getLeftInParent     -->     getLeftBoundary
@@ -100,17 +102,41 @@ getRightInParent    -->     getRightBoundary
 getTopInParent      -->     getTopBoundary
 ```
 
+### 5.2 `getContentSize` and `setContentSize`
+
 We also added `getContentSize` and `setContentSize` to `ccui.Widget`, so that it can share the same usage with `cc.Node`.
 
-## 6. Other API modifications
+```
+// Added
+ccui.Widget#getContentSize
+ccui.Widget#setContentSize
+```
+### 5.3 `addEventListenerXXX` functions have been merged
 
-### 6.1 cc.FadeIn
+All `addEventListenerXXX` in ccui have been renamed to `addEventListener` to ensure better develop experience.
+
+```
+ccui.CheckBox#addEventListenerCheckBox      --> ccui.CheckBox#addEventListener
+ccui.Slider#addEventListenerSlider          --> ccui.Slider#addEventListener
+ccui.TextField#addEventListenerTextField    --> ccui.TextField#addEventListener
+ccui.PageView#addEventListenerPageView      --> ccui.PageView#addEventListener
+ccui.ScrollView#addEventListenerScrollView  --> ccui.ScrollView#addEventListener
+ccui.ListView#addEventListenerListView      --> ccui.ListView#addEventListener
+```
+
+## 6 cc.AssetsManager
+
+A new API `downloadFailedAssets` allows you to restart failed download, and other great improvement can be found in upgraded [Assets manager document](../../../v3/assets-manager/en.md)
+
+## 7. Other API modifications
+
+### 7.1 cc.FadeIn
 
 ```
 cc.FadeIn.create(duration, toOpacity)   -->     cc.FadeIn.create(duration)
 ```
 
-### 6.2 Formatted string in cc.log
+### 7.2 Formatted string in cc.log
 
 ```
 var str = "The number is";
@@ -118,23 +144,19 @@ var number = cc.random0To1() * 10;
 cc.log("%s : %d", str, number);
 ```
 
-### 6.3 cc.AssetsManager
-
-In RC0, you can restart failed download with `downloadFailedAssets` function, and other great improvement can be found in upgraded [Assets manager document](../../../v3/assets-manager/en.md)
-
-### 6.4 Affine transform util functions **[New in RC2]**
+### 7.3 Affine transform util functions
 
 To adapte our naming protocole, we have renamed all affine transform functions, here is the list:
 
 ```
 cc.AffineTransformMake              ->  cc.affineTransformMake
 cc.PointApplyAffineTransform        ->  cc.pointApplyAffineTransform
-cc._PointApplyAffineTransform       ->  cc._pointApplyAffineTransform
+cc.\_PointApplyAffineTransform       ->  cc._pointApplyAffineTransform
 cc.SizeApplyAffineTransform         ->  cc.sizeApplyAffineTransform
 cc.AffineTransformMakeIdentity      ->  cc.affineTransformMakeIdentity
 cc.AffineTransformIdentity          ->  cc.affineTransformIdentity
 cc.RectApplyAffineTransform	        ->  cc.rectApplyAffineTransform
-cc._RectApplyAffineTransformIn      ->  cc._rectApplyAffineTransformIn
+cc.\_RectApplyAffineTransformIn      ->  cc._rectApplyAffineTransformIn
 cc.AffineTransformTranslate         ->  cc.affineTransformTranslate
 cc.AffineTransformScale             ->  cc.affineTransformScale
 cc.AffineTransformRotate            ->  cc.affineTransformRotate
@@ -143,7 +165,7 @@ cc.AffineTransformEqualToTransform  ->  cc.affineTransformEqualToTransform
 cc.AffineTransformInvert            ->  cc.affineTransformInvert
 ```
 
-### 6.5 cc.RenderTexture **[New in RC2]**
+### 7.4 cc.RenderTexture
 
 ```
 cc.RenderTexture.beginWithClear(r, g, b, a, depthValue, stencilValue)
@@ -151,15 +173,15 @@ cc.RenderTexture.beginWithClear(r, g, b, a, depthValue, stencilValue)
 
 `cc.RenderTexture`'s `beginWithClear` function now start to accept color value from 0-255 for `r`, `g`, `b`, `a` parameters, please stop to use float value parameters.
 
-### 6.6 cc.sys.platform **[New in RC2]**
+### 7.5 cc.sys.platform
 
 Added `cc.sys.platform` for detecting target platform.
 
-### 6.7 [JSB]console.log **[New in RC2]**
+### 7.6 [JSB]console.log
 
 Bound `console.log` function for JSB.
 
-### 6.8 cc.formatStr **[New in RC3]**
+### 7.7 Formatted string
 
 Added `cc.formatStr` for string formatting, for example: 
 
@@ -167,11 +189,33 @@ Added `cc.formatStr` for string formatting, for example:
 cc.formatStr("a: %d, b: %b", a, b);
 ```
 
-### 6.9 Function refactoration for adapting naming protocole **[New in RC3]**
+The following APIs also support formatted string as parameters:
+
+```
+cc.log(message, ...)
+cc.assert(condition, message, ...)
+cc.warn(message, ...)
+cc.error(message, ...)
+```
+
+### 7.8 Function refactoration for adapting naming protocole
 
 ```
 cc.pool.hasObj                  -> cc.pool.hasObject
 cc.pool.removeObj               -> cc.pool.removeObject
 cc.textureCache.textureForKey   -> cc.textureCache.getTextureForKey
 cc.TMXTilemap#propertiesForGID  -> cc.TMXTilemap#getPropertiesForGID
+```
+
+### 7.9 Added getter and setter for device's target density dpi
+
+```
+// Added
+cc.DENSITYDPI_DEVICE = "device-dpi";
+cc.DENSITYDPI_HIGH = "high-dpi";
+cc.DENSITYDPI_MEDIUM = "medium-dpi";
+cc.DENSITYDPI_LOW = "low-dpi";
+
+cc.view.setTargetDensityDPI(targetDensityDPI)
+cc.view.getTargetDensityDPI()
 ```
