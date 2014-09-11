@@ -649,6 +649,16 @@ bool
 cc.Texture2D = {
 
 /**
+ * @method getGLProgram
+ * @return {cc.GLProgram}
+ */
+getGLProgram : function (
+)
+{
+    return cc.GLProgram;
+},
+
+/**
  * @method getMaxT
  * @return {float}
  */
@@ -680,6 +690,16 @@ pixelformat
 )
 {
     return false;
+},
+
+/**
+ * @method setGLProgram
+ * @param {cc.GLProgram} arg0
+ */
+setGLProgram : function (
+glprogram 
+)
+{
 },
 
 /**
@@ -859,16 +879,6 @@ getPixelFormat : function (
 },
 
 /**
- * @method setGLProgram
- * @param {cc.GLProgram} arg0
- */
-setGLProgram : function (
-glprogram 
-)
-{
-},
-
-/**
  * @method getContentSizeInPixels
  * @return {size_object}
  */
@@ -896,16 +906,6 @@ drawAtPoint : function (
 vec2 
 )
 {
-},
-
-/**
- * @method getGLProgram
- * @return {cc.GLProgram}
- */
-getGLProgram : function (
-)
-{
-    return cc.GLProgram;
 },
 
 /**
@@ -1008,6 +1008,16 @@ setPhysicsBody : function (
 physicsbody 
 )
 {
+},
+
+/**
+ * @method getGLProgram
+ * @return {cc.GLProgram}
+ */
+getGLProgram : function (
+)
+{
+    return cc.GLProgram;
 },
 
 /**
@@ -1231,13 +1241,13 @@ getonEnterTransitionDidFinishCallback : function (
 },
 
 /**
- * @method getGLProgram
- * @return {cc.GLProgram}
+ * @method getNodeToWorldAffineTransform
+ * @return {cc.AffineTransform}
  */
-getGLProgram : function (
+getNodeToWorldAffineTransform : function (
 )
 {
-    return cc.GLProgram;
+    return cc.AffineTransform;
 },
 
 /**
@@ -1599,16 +1609,6 @@ updateTransform : function (
 },
 
 /**
- * @method setGLProgram
- * @param {cc.GLProgram} arg0
- */
-setGLProgram : function (
-glprogram 
-)
-{
-},
-
-/**
  * @method isVisible
  * @return {bool}
  */
@@ -1665,13 +1665,13 @@ action
 },
 
 /**
- * @method isOpacityModifyRGB
- * @return {bool}
+ * @method setGLProgram
+ * @param {cc.GLProgram} arg0
  */
-isOpacityModifyRGB : function (
+setGLProgram : function (
+glprogram 
 )
 {
-    return false;
 },
 
 /**
@@ -1953,16 +1953,6 @@ setPositionY : function (
 float 
 )
 {
-},
-
-/**
- * @method getNodeToWorldAffineTransform
- * @return {cc.AffineTransform}
- */
-getNodeToWorldAffineTransform : function (
-)
-{
-    return cc.AffineTransform;
 },
 
 /**
@@ -2348,6 +2338,16 @@ int
  * @return {bool}
  */
 isCascadeColorEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isOpacityModifyRGB
+ * @return {bool}
+ */
+isOpacityModifyRGB : function (
 )
 {
     return false;
@@ -19189,20 +19189,6 @@ TMXLayer : function (
 cc.TMXTiledMap = {
 
 /**
- * @method getPropertiesForGID
-* @param {int|int} int
-* @param {cc.Value} value
-* @return {bool|cc.Value}
-*/
-getPropertiesForGID : function(
-int,
-value 
-)
-{
-    return false;
-},
-
-/**
  * @method setObjectGroups
  * @param {Array} arg0
  */
@@ -19313,13 +19299,17 @@ getProperties : function (
 },
 
 /**
- * @method setMapOrientation
- * @param {int} arg0
- */
-setMapOrientation : function (
-int 
+ * @method getPropertiesForGID
+* @param {int|int} int
+* @param {cc.Value} value
+* @return {bool|cc.Value}
+*/
+getPropertiesForGID : function(
+int,
+value 
 )
 {
+    return false;
 },
 
 /**
@@ -19362,6 +19352,16 @@ getMapOrientation : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setMapOrientation
+ * @param {int} arg0
+ */
+setMapOrientation : function (
+int 
+)
+{
 },
 
 /**

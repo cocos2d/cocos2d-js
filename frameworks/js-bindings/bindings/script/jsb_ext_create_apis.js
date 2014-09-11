@@ -91,7 +91,7 @@ ccui.RichElementCustomNode.prototype._ctor = function(tag, color, opacity, custo
     customNode !== undefined && this.init(tag, color, opacity, customNode);
 };
 
-cc.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callback) {
+jsb.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callback) {
     callback && this.init(assetsManager, callback);
 };
 

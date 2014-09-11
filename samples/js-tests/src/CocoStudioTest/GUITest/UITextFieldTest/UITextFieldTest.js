@@ -34,13 +34,13 @@ var UITextFieldEditorTest = UIBaseLayer.extend({
         back_label.addTouchEventListener(this.backEvent,this);
 
         var textField_normal = ccui.helper.seekWidgetByName(root, "TextField_1109");
-        textField_normal.addEventListenerTextField(this.textFieldEvent,this);
+        textField_normal.addEventListener(this.textFieldEvent,this);
 
         var textField_max_character = ccui.helper.seekWidgetByName(root, "TextField_1110");
-        textField_max_character.addEventListenerTextField(this.textFieldEvent,this);
+        textField_max_character.addEventListener(this.textFieldEvent,this);
 
         var textField_password = ccui.helper.seekWidgetByName(root, "TextField_1107");
-        textField_password.addEventListenerTextField(this.textFieldEvent,this);
+        textField_password.addEventListener(this.textFieldEvent,this);
     },
     textFieldEvent: function (sender, type) {
         switch (type) {

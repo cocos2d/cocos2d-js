@@ -79,10 +79,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
-	<key>PluginUser</key>
-	<string>UserFacebook</string>
-	<key>PluginShare</key>
-	<string>ShareFacebook</string>
 	<key>FacebookAppID</key>
 	<string>1426774790893461</string>
 	<key>FacebookDisplayName</key>
