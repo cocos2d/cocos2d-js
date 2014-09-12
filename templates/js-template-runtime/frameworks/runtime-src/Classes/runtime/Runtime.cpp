@@ -617,7 +617,7 @@ void FileServer::loopReceiveFile()
         recvBuf(fd,_protoBuf,protolength.uint16_type);
         RecvBufStruct recvDataBuf;
         recvDataBuf.fd = fd;
-        recvDataBuf.fileProto.ParseFromString(_protoBuf);
+        recvDataBuf.fileProto.ParseFromArray(_protoBuf, protolength.uint16_type);
         if (1 == recvDataBuf.fileProto.package_seq()){
             _recvErrorFile = "";
         }else{
