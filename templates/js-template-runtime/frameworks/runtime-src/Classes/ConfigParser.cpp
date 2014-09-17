@@ -12,13 +12,9 @@ ConfigParser *ConfigParser::getInstance(void)
     if (!s_sharedInstance)
     {
         s_sharedInstance = new ConfigParser();
+        s_sharedInstance->readConfig();
     }
     return s_sharedInstance;
-}
-
-bool ConfigParser::isInit()
-{
-    return _isInit;
 }
 
 void ConfigParser::readConfig()

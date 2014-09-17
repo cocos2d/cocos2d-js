@@ -32,7 +32,6 @@ import android.content.pm.ActivityInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.WindowManager;
 
 
@@ -76,14 +75,6 @@ public class AppActivity extends Cocos2dxActivity{
     
     public static String getLocalIpAddress() {
         return hostIPAdress;
-    }
-    
-    public static String getSDCardPath() {
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            String strSDCardPathString = Environment.getExternalStorageDirectory().getPath();
-           return  strSDCardPathString;
-        }
-        return null;
     }
     
     private static native boolean nativeIsLandScape();

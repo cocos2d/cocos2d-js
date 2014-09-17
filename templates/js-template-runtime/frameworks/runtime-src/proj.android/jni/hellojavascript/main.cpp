@@ -20,10 +20,6 @@ extern "C"
 {
     bool Java_org_cocos2dx_javascript_AppActivity_nativeIsLandScape(JNIEnv *env, jobject thisz)
     {
-        if (!ConfigParser::getInstance()->isInit())
-        {
-            ConfigParser::getInstance()->readConfig();
-        }
         return ConfigParser::getInstance()->isLanscape();
     }
 
