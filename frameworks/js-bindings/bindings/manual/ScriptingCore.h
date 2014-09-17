@@ -128,6 +128,13 @@ public:
 	 * Can be NULL.
 	 */
 	bool evalString(const char *string, jsval *outVal, const char *filename = NULL, JSContext* cx = NULL, JSObject* global = NULL);
+    
+    /**
+     @brief get script object for the given path
+     @param given script path
+     @return script object
+     */
+    JSScript* getScript(const char *path);
 
 	/**
 	 * will compile the specified string
@@ -146,7 +153,7 @@ public:
      */
     void cleanScript(const char *path);
     
-    std::unordered_map<std::string, JSScript*> &getFileScprite();
+    std::unordered_map<std::string, JSScript*> &getFileScript();
      /**
      * will clean all script object
      */
