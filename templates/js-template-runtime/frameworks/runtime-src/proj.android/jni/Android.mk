@@ -29,8 +29,8 @@ LOCAL_SRC_FILES := \
 ../../Classes/VisibleRect.cpp \
 ../../Classes/AppDelegate.cpp \
 ../../Classes/ConfigParser.cpp \
-javascript/Runtime_android.cpp \
-javascript/main.cpp
+hellojavascript/Runtime_android.cpp \
+hellojavascript/main.cpp
 
 LOCAL_C_INCLUDES := \
 $(LOCAL_PATH)/../../Classes/runtime \

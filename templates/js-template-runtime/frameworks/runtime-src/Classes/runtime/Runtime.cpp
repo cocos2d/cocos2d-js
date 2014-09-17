@@ -1079,10 +1079,7 @@ bool initRuntime()
     
     searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
-
-    if (!ConfigParser::getInstance()->isInit()) {
-        ConfigParser::getInstance()->readConfig();
-    }
+    
     static ConsoleCustomCommand *g_customCommand;
     g_customCommand = new ConsoleCustomCommand();
     g_customCommand->init();
