@@ -25,8 +25,6 @@ THE SOFTWARE.
 #ifndef  _RUNTIME__H_
 #define  _RUNTIME__H_
 
-#define _MAX_PATH_ 512
-
 bool initRuntime();
 
 bool startRuntime();
