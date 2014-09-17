@@ -1,5 +1,3 @@
-![](https://travis-ci.org/cocos2d/cocos2d-js.svg?branch=master)
-
 <img src="http://www.cocos2d-x.org/attachments/1508/2dh5-logo.png" width=200>
 
 Cocos2d-JS
@@ -45,7 +43,7 @@ Furthermore, JavaScript friendly APIs make your game development experience a br
 
 With any problems you might have, our communities are happy to help:
 
-- [Online forum](http://discuss.cocos2d-x.org/category/javascript)
+- [Online forum](http://discuss.cocos2d-x.org/category/cocos2d-x/javascript)
 - [Document root](http://cocos2d-x.org/docs/manual/framework/html5/en)
 - [Github repository](https://github.com/cocos2d/cocos2d-js)
 
