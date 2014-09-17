@@ -572,11 +572,30 @@ static std::string RemoveFileExt(const std::string& filePath) {
     }
 }
 
+JSScript* ScriptingCore::getScript(const char *path)
+{
+    // a) check jsc file first
+	std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+    if (filename_script[byteCodePath])
+        return filename_script[byteCodePath];
+    
+    // b) no jsc file, check js file
+    std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(path);
+    if (filename_script[fullPath])
+        return filename_script[fullPath];
+    
+    return NULL;
+}
+
 void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext* cx)
 {
 	if (!path) {
-		return ;
+		return;
 	}
+    
+    if (getScript(path)) {
+        return;
+    }
 
 	cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
 
@@ -624,26 +643,37 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
 #else
 		script = JS::Compile(cx, obj, options, fullPath.c_str());
 #endif
+        if (script) {
+            filename_script[fullPath] = script;
+        }
 	}
-	if (script) {
-		filename_script[path] = script;
-	}
+    else {
+        filename_script[byteCodePath] = script;
+    }
 }
 
 void ScriptingCore::cleanScript(const char *path)
 {
-    auto it = filename_script.find(path);
+    std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+    auto it = filename_script.find(byteCodePath);
     if (it != filename_script.end())
     {
         filename_script.erase(it);
     }
-
+    
+    std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(path);
+    it = filename_script.find(fullPath);
+    if (it != filename_script.end())
+    {
+        filename_script.erase(it);
+    }
 }
 
-std::unordered_map<std::string, JSScript*>  &ScriptingCore::getFileScprite()
+std::unordered_map<std::string, JSScript*>  &ScriptingCore::getFileScript()
 {
     return filename_script;
 }
+
 void ScriptingCore::cleanAllScript()
 {
     filename_script.clear();
@@ -657,11 +687,8 @@ bool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
 	if (cx == NULL) {
 		cx = _cx;
 	}
-	if (!filename_script[path])
-	{
-		compileScript(path,global,cx );
-	}
-	JSScript * script = filename_script[path];
+	compileScript(path,global,cx);
+	JSScript * script = getScript(path);
 	bool evaluatedOK = false;
 	if (script) {
 		jsval rval;

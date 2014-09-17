@@ -43,16 +43,11 @@ THE SOFTWARE.
 #include "Protos.pb.h"
 #include "zlib.h"
 
+// header files for directory operation
 #ifdef _WIN32
-#define realpath(dir,fuldir) _fullpath(fuldir,dir,_MAX_PATH_)
 #include <direct.h>
 #else
-#include <unistd.h>
-#include <limits.h>
-#include <dirent.h>
-#include <unistd.h>
 #include <sys/stat.h>
-#include <stdio.h>
 #endif
 
 #include <vector>
@@ -68,183 +63,14 @@ static std::string g_projectPath;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #define usleep(t) Sleep(t)
 #else
-#include <unistd.h>
 #define usleep(t) usleep(t)
 #endif
 
 extern string getIPAddress();
-extern bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<std::string> &fileList);
-/*@brief   use "|" splite string  */
+
 const char* getRuntimeVersion()
 {
-    return "1.4";
-}
-
-static vector<string> splitFilter(const char *str)
-{
-    vector<string> filterArray;
-    if (str)
-    {
-        char *token=NULL;
-        char szFilterFile[_MAX_PATH_]={0};
-        strcpy(szFilterFile,str);
-        token = strtok(szFilterFile, "|" );		
-        while( token != NULL )
-        {
-            filterArray.push_back(token);
-            token = strtok( NULL, "|");
-        }
-    }
-    return filterArray;
-}
-
-/*@brief wildcard funciton*/
-static bool wildcardMatches(const char *wildcard, const char *str) 
-{
-    while (1) {
-        if (*wildcard == '\0')
-        {
-            return *str == '\0';
-        }
-        if (*wildcard == '?') 
-        {
-            ++wildcard; ++str;
-        } 
-        else if (*wildcard == '*') 
-        {
-            for (++wildcard; *str; ++str)
-            {
-                if (wildcardMatches(wildcard, str))
-                {
-                    return true;
-                }
-            }
-            return *wildcard == '\0';
-        } 
-        else 
-        {
-            if (*wildcard != *str)
-            {
-                return false;
-            }
-            ++wildcard; ++str;
-        }
-    }
-}
-
-
-#ifndef _WIN32
-#pragma warning(disable:4099)
-/*
-*@brief iterator directory and process file.
-*/
-bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<std::string> &fileList)
-{
-    DIR *dp=NULL;
-    struct dirent *entry=NULL;
-    struct stat statbuf;
-    if((dp = opendir(dir)) == NULL) 
-    {
-        return false;
-    }
-
-    if (chdir(dir) != 0)
-    {
-        return false;
-    }
-
-    while((entry = readdir(dp)) != NULL) 
-    {
-        lstat(entry->d_name,&statbuf);
-        if(S_ISDIR(statbuf.st_mode)) 
-        {
-            if(strcmp(".",entry->d_name) == 0 ||strcmp("..",entry->d_name) == 0)
-            {
-                continue;
-            }
-
-            if (find(filterArray.begin(),filterArray.end(),entry->d_name) != filterArray.end())
-            {
-                continue;
-            }
-
-            char subdir[_MAX_PATH_]={0};
-            sprintf(subdir,"%s%s/",dir,entry->d_name);
-            if (!browseDir(subdir,filespec,filterArray,fileList))
-            {
-                closedir(dp);
-                return false;
-            }
-        } 
-        else 
-        {
-
-            if (!wildcardMatches(filespec,entry->d_name))
-            {
-                continue;
-            }
-
-            char *pszexten=strrchr(entry->d_name,'.');
-            char szextension[_MAX_PATH_]={0};
-            if (pszexten)
-            {
-                strcpy(szextension,"*");
-                strcat(szextension,pszexten);
-                if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
-                {
-                    continue;
-                }
-            }
-
-            strcpy(szextension,entry->d_name);
-            if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
-            {
-                continue;
-            }
-
-            char fullFileName[_MAX_PATH_] ={0};
-            sprintf(fullFileName,"%s%s",dir,entry->d_name);
-            fileList.push_back(fullFileName);
-        }
-    }
-    chdir("..");
-    closedir(dp);
-    return true;
-}
-#endif
-
-
-/************************
-* Get file list from specified directory. 
-*
-*@param dir         search directory
-*@param filespec    search specified type file
-*@param filterfile  filter file or folder
-*
-*Like this:
-*    searchFileList("/home","*.*",".svn|.jpg|");  
-*********************************/
-vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const char *filterfile=NULL)
-{
-    char fulldir[_MAX_PATH_]={0};
-    vector<string> _filterArray;
-    vector<std::string> _lfileList;
-    _filterArray = splitFilter(filterfile);
-
-    if (realpath(dir.c_str(), fulldir)== NULL)
-    {
-        return _lfileList;
-    }
-
-    int len=strlen(fulldir);
-    if (fulldir[len-1] != '/')
-    {
-        strcat(fulldir,"/");
-    }
-
-    browseDir(fulldir,filespec,_filterArray,_lfileList);
-    dir =fulldir;
-    return _lfileList;
+    return "1.5";
 }
 
 static bool startScript()
@@ -255,25 +81,8 @@ static bool startScript()
     return ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
 }
 
-static void cleanScript(const char *path)
-{
-    std::unordered_map<std::string, JSScript*> filenameScript= ScriptingCore::getInstance()->getFileScprite();
-    auto it = filenameScript.begin();
-    while (it != filenameScript.end())
-    {
-        int found = it->first.rfind(path);
-        if (0 == found || ( found!=std::string::npos && it->first.at(found-1) == '/'))
-        {
-            it = filenameScript.erase(it);
-            continue;
-        }
-        it++;
-    }
-}
-
 bool reloadScript(const string& file)
 {
-
     auto director = Director::getInstance();
     FontFNT::purgeCachedData();
     if (director->getOpenGLView())
@@ -290,13 +99,13 @@ bool reloadScript(const string& file)
     if (modulefile.empty())
     {
         modulefile = ConfigParser::getInstance()->getEntryFile().c_str();
-        cleanScript(modulefile.c_str());
     }
+
     return ScriptingCore::getInstance()->runScript(modulefile.c_str());
-    
 }
 
-#if defined(_MSC_VER) || defined(__MINGW32__)
+// header files for socket
+#ifdef _WIN32
 #include <io.h>
 #include <WS2tcpip.h>
 
@@ -304,11 +113,9 @@ bool reloadScript(const string& file)
 
 #else
 #include <netdb.h>
-#include <unistd.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
-#include <sys/un.h>
 #endif
 
 class  FileServer
@@ -939,17 +746,17 @@ public:
 #endif
         _fileserver->readResFileFinfo();
     }
+
     ~ConsoleCustomCommand()
     {
         Director::getInstance()->getConsole()->stop();
         if(_fileserver)
              _fileserver->stop();
     }
-
     
     void onSendCommand(int fd, const std::string &args)
     {
-            Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
             rapidjson::Document dArgParse;
             dArgParse.Parse<0>(args.c_str());
             if (dArgParse.HasMember("cmd"))
@@ -959,7 +766,8 @@ public:
                 rapidjson::Document dReplyParse;
                 dReplyParse.SetObject();
                 dReplyParse.AddMember("cmd",strcmd.c_str(),dReplyParse.GetAllocator());
-                if (dArgParse.HasMember("seq")) {
+                if (dArgParse.HasMember("seq")) 
+                {
                     dReplyParse.AddMember("seq",dArgParse["seq"],dReplyParse.GetAllocator());
                 }
                 
@@ -973,40 +781,25 @@ public:
                         dReplyParse.AddMember("code",1,dReplyParse.GetAllocator());
                     }
                     
-                }else if(strcmp(strcmd.c_str(),"precompile")==0)
+                } else if (strcmp(strcmd.c_str(),"clearcompile")==0)
                 {
-                    bool compileAll = false;
-                    if (dArgParse.HasMember("modulefiles"))
+                    const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
+                    for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
                     {
-                        rapidjson::Value bodyvalue(rapidjson::kObjectType);
-                        const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
-                        for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
-                        {
-                            cleanScript(objectfiles[i].GetString());
-                            ScriptingCore::getInstance()->compileScript(objectfiles[i].GetString());
-                        }
-                        if (0 == objectfiles.Size()) {
-                            compileAll = true;
-                        }
-                    }else{
-                        compileAll = true;
+                        ScriptingCore::getInstance()->cleanScript(objectfiles[i].GetString());
                     }
-                    if (compileAll) {
-                        vector<std::string> projfileInfoList = searchFileList(g_projectPath,"*.js","runtime|frameworks|");
-                        vector<std::string> fileInfoList = searchFileList(g_resourcePath,"*.js");
-                        for (unsigned i = 0; i < projfileInfoList.size(); i++)
-                        {
-                            cleanScript(projfileInfoList[i].substr(g_projectPath.length(),-1).c_str());
-                            ScriptingCore::getInstance()->compileScript(projfileInfoList[i].substr(g_projectPath.length(),-1).c_str());
-                        }
-                        for (unsigned i = 0; i < fileInfoList.size(); i++)
-                        {
-                            cleanScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
-                            ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(g_resourcePath.length(),-1).c_str());
-                        }
-                    }
+                    
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
-                }else if(strcmp(strcmd.c_str(),"reload")==0)
+                } else if(strcmp(strcmd.c_str(),"precompile")==0)
+                {
+                    const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
+                    for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
+                    {
+                        ScriptingCore::getInstance()->compileScript(objectfiles[i].GetString());
+                    }
+                    
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                } else if(strcmp(strcmd.c_str(),"reload")==0)
                 {
                     if (dArgParse.HasMember("modulefiles")){
                         rapidjson::Value bodyvalue(rapidjson::kObjectType);
@@ -1031,7 +824,8 @@ public:
                     bodyvalue.AddMember("version",getRuntimeVersion(),dReplyParse.GetAllocator());
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
-                }else if(strcmp(strcmd.c_str(),"getfileinfo")==0){
+                }else if(strcmp(strcmd.c_str(),"getfileinfo")==0)
+                {
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
                     if(_fileserver){
                         rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
@@ -1042,14 +836,16 @@ public:
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                    
-                }else if (strcmp(strcmd.c_str(),"getEntryfile")==0){
+                }else if (strcmp(strcmd.c_str(),"getEntryfile")==0)
+                {
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
                     rapidjson::Value entryFileValue(rapidjson::kStringType);
                     entryFileValue.SetString(ConfigParser::getInstance()->getEntryFile().c_str(),dReplyParse.GetAllocator());
                     bodyvalue.AddMember("entryfile",entryFileValue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
-                }else if(strcmp(strcmd.c_str(),"getIP")==0){
+                }else if(strcmp(strcmd.c_str(),"getIP")==0)
+                {
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
                     rapidjson::Value IPValue(rapidjson::kStringType);
                     IPValue.SetString(getIPAddress().c_str(),dReplyParse.GetAllocator());
@@ -1057,45 +853,47 @@ public:
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
 
-                }else if(strcmp(strcmd.c_str(),"remove")==0)
+                } else if(strcmp(strcmd.c_str(), "remove") == 0)
                 {
                     if (dArgParse.HasMember("files"))
                     {
                         rapidjson::Value bodyvalue(rapidjson::kObjectType);
                         const rapidjson::Value& objectfiles = dArgParse["files"];
+                        const char* filename = NULL;
                         for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
                         {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
-                            cleanScript(objectfiles[i].GetString());
-#else
-                            string filename(g_resourcePath);
-                            filename.append("/");
-                            filename.append(objectfiles[i].GetString());
-                            if (FileUtils::getInstance()->isFileExist(filename)) {
-                                if(remove(filename.c_str())==0){
-                                    if (_fileserver)
-                                        _fileserver->removeResFileInfo(objectfiles[i].GetString());
-                                    }
-                                else{
-                                    bodyvalue.AddMember(objectfiles[i].GetString(),2,dReplyParse.GetAllocator());
-                                }
-                            }else{
-                                bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
-                            }
-#endif                            
-                        }
-                        dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
-                    }
-                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                            filename = objectfiles[i].GetString();
 
-                }else if(strcmp(strcmd.c_str(),"shutdownapp")==0)
-                {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-                    extern void shutDownApp();
-                    shutDownApp();
-#else
-                    exit(0);
-#endif	
+                            // remove js compiled script
+                            ScriptingCore::getInstance()->cleanScript(filename);
+
+                            // remove file from disk
+                            string filepath(g_resourcePath + "/" + filename);
+                            if (FileUtils::getInstance()->isFileExist(filepath)) 
+                            {
+                                if(remove(filepath.c_str()) != 0) 
+                                {
+                                    // remove failed
+                                    bodyvalue.AddMember(filename, 2, dReplyParse.GetAllocator());
+                                }
+                            } else
+                            {
+                                // file not exist
+                                bodyvalue.AddMember(filename, 1, dReplyParse.GetAllocator());
+                            }
+
+                            if (_fileserver)
+                            {
+                                // file remove success, remove it from record
+                                if (! FileUtils::getInstance()->isFileExist(filepath))
+                                    _fileserver->removeResFileInfo(filename);
+                            }
+                        }
+
+                        dReplyParse.AddMember("body", bodyvalue, dReplyParse.GetAllocator());
+                    }
+
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }else if(strcmp(strcmd.c_str(),"shutdownapp")==0)
                 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -1263,15 +1061,18 @@ bool initRuntime()
     }
     searchPathArray.insert(searchPathArray.begin(),g_projectPath);
 #endif
+
     g_resourcePath = FileUtils::getInstance()->getWritablePath();
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     std::string getCurAppName(void);
     g_resourcePath += getCurAppName();
     g_resourcePath +="/";
 #endif
+
     g_resourcePath += "debugruntime/";
     
-    g_resourcePath=replaceAll(g_resourcePath,"\\","/");
+    g_resourcePath = replaceAll(g_resourcePath,"\\","/");
     if (g_resourcePath.at(g_resourcePath.length()-1) != '/'){
         g_resourcePath.append("/");
     }
