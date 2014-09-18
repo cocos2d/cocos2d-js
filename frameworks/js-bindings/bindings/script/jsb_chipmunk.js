@@ -26,8 +26,43 @@
 
 var cp = cp || {};
 
-cp.v = cc.p;
-cp._v = cc._p;
+cp.Vect = function(x, y){
+    this.x = x;
+    this.y = y;
+}
+cp.Vect.prototype.add = function(v){
+    this.x += v.x;
+    this.y += v.y;
+    return this;
+}
+cp.Vect.prototype.sub = function(v){
+    this.x -= v.x;
+    this.y -= v.y;
+    return this;
+}
+cp.Vect.prototype.neg = function(){
+    this.x = -this.x;
+    this.y = -this.y;
+    return this;
+}
+cp.Vect.prototype.mult = function(s){
+    this.x *= s;
+    this.y *= s;
+    return this;
+}
+cp.Vect.prototype.rotate = function(v){
+    this.x = this.x * v.x - this.y * v.y;
+    this.y = this.x * v.y + this.y * v.x;
+    return this;
+}
+cp.Vect.prototype.project = function(v){
+    this.mult(cp.vdot(this, v) / cp.vlengthsq(v));
+    return this;
+}
+
+cp.v = function(x, y){
+    return new cp.Vect(x, y);
+}
 cp.vzero  = cp.v(0,0);
 
 // Vector: Compatibility with Chipmunk-JS
@@ -51,12 +86,15 @@ cp.v.normalize_safe = cp.vnormalize_safe;
 cp.v.perp = cp.vperp;
 cp.v.project = cp.vproject;
 cp.v.rotate = cp.vrotate;
-cp.v.rperp = cp.vrperp;
+cp.v.pvrperp = cp.vrperp;
 cp.v.slerp = cp.vslerp;
 cp.v.slerpconst = cp.vslerpconst;
 cp.v.sub = cp.vsub;
 cp.v.toangle = cp.vtoangle;
 cp.v.unrotate = cp.vunrotate;
+cp.v.str = function(v){
+    return "(" + v.x.toFixed(3) + ", " + v.y.toFixed(3) + ")";
+}
 
 // XXX: renaming functions should be supported in JSB
 cp.clamp01 = cp.fclamp01;
