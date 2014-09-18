@@ -670,12 +670,14 @@ cc.loader = {
      * @returns {*}
      */
     getRes : function(url){
-        var self = this;
+        var cached = this.cache[url] || this.cache[this._aliases[url]];
+        if (cached)
+            return cached;
         var type = cc.path.extname(url);
-        var loader = self._register[type.toLowerCase()];
+        var loader = this._register[type.toLowerCase()];
         if(!loader) return cc.log("loader for [" + type + "] not exists!");
-        var basePath = loader.getBasePath ? loader.getBasePath() : self.resPath;
-        var realUrl = self.getUrl(basePath, url);
+        var basePath = loader.getBasePath ? loader.getBasePath() : this.resPath;
+        var realUrl = this.getUrl(basePath, url);
         return loader.load(realUrl, url);
     },
     
