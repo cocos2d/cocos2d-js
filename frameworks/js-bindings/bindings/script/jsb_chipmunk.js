@@ -133,7 +133,10 @@ cp.StaticBody = function()
 // "Bounding Box" compatibility with Chipmunk-JS
 cp.BB = function(l, b, r, t)
 {
-	return {l:l, b:b, r:r, t:t};
+	this.l = l;
+    this.b = b;
+    this.r = r;
+    this.t = t;
 };
 
 // helper function to create a BB

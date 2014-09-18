@@ -4487,6 +4487,21 @@ bool JSB_cpShape_update(JSContext *cx, uint32_t argc, jsval *vp) {
 	return true;
 }
 
+// Arguments: void
+// Ret value: cpBool
+bool JSB_cpShape_active(JSContext *cx, uint32_t argc, jsval *vp){
+    JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
+
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+	cpShape* arg0 = (cpShape*) proxy->handle;
+
+    bool active = cpShapeActive(arg0);
+    jsval retval = BOOLEAN_TO_JSVAL(active);
+    JS_SET_RVAL(cx, vp, retval);
+    return true;
+}
+
 void JSB_cpShape_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSB_cpShape_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -4527,6 +4542,7 @@ void JSB_cpShape_createClass(JSContext *cx, JSObject* globalObj, const char* nam
 		JS_FN("setSensor", JSB_cpShape_setSensor, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("setSurfaceVelocity", JSB_cpShape_setSurfaceVelocity, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("update", JSB_cpShape_update, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+        JS_FN("active", JSB_cpShape_active, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
