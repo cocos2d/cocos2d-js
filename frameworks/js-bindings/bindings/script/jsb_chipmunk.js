@@ -133,7 +133,7 @@ cp.StaticBody = function()
 // "Bounding Box" compatibility with Chipmunk-JS
 cp.BB = function(l, b, r, t)
 {
-	this.l = l;
+    this.l = l;
     this.b = b;
     this.r = r;
     this.t = t;
@@ -147,6 +147,7 @@ cp.bb = function(l, b, r, t) {
 //
 // Some properties
 //
+var _proto = cp.Base.prototype;
 // "handle" needed in some cases
 Object.defineProperties(cp.Base.prototype,
 				{
@@ -319,36 +320,16 @@ Object.defineProperties(cp.Body.prototype,
 				});
 
 // Shape properties
-Object.defineProperties(cp.Shape.prototype,
-				{
-					"body" : {
-						get : function(){
-                            return this.getBody();
-                        },
-						set : function(newValue){
-                            this.setBody(newValue);
-                        },
-						enumerable : true,
-						configurable : true
-					},
-                    "group" : {
-						get : function(){
-                            return this.getGroup();
-                        },
-						set : function(newValue){
-                            this.setGroup(newValue);
-                        },
-						enumerable : true,
-						configurable : true
-                    },
-					"collision_type" : {
-						get : function(){
-                            return this.getCollisionType();
-                        },
-						enumerable : true,
-						configurable : true
-					}
-				});
+_proto = cp.Shape.prototype;
+cc.defineGetterSetter(_proto, "body", _proto.getBody, _proto.setBody);
+cc.defineGetterSetter(_proto, "group", _proto.getGroup, _proto.setGroup);
+cc.defineGetterSetter(_proto, "collision_type", _proto.getCollisionType, _proto.setCollisionType);
+cc.defineGetterSetter(_proto, "layers", _proto.getLayers, _proto.setLayers);
+cc.defineGetterSetter(_proto, "sensor", _proto.getSensor, _proto.setSensor);
+cc.defineGetterSetter(_proto, "space", _proto.getSpace);
+cc.defineGetterSetter(_proto, "surface_v", _proto.getSurfaceVelocity, _proto.setSurfaceVelocity);
+cc.defineGetterSetter(_proto, "e", _proto.getElasticity, _proto.setElasticity);
+cc.defineGetterSetter(_proto, "u", _proto.getFriction, _proto.setFriction);
 
 // Constraint properties
 Object.defineProperties(cp.Constraint.prototype,
@@ -389,3 +370,5 @@ Object.defineProperties(cp.PinJoint.prototype,
 						configurable : true
 					}
 				});
+
+_proto = null;

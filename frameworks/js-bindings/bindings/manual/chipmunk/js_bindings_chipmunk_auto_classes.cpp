@@ -4502,6 +4502,61 @@ bool JSB_cpShape_active(JSContext *cx, uint32_t argc, jsval *vp){
     return true;
 }
 
+static bool js_get_cpShape_bbl(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    vp.setNumber(shape->bb.l);
+    return true;
+}
+
+static bool js_set_cpShape_bbl(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    shape->bb.l = JSVAL_TO_DOUBLE(vp.get());
+    return true;
+}
+
+static bool js_get_cpShape_bbb(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    vp.setNumber(shape->bb.b);
+    return true;
+}
+
+static bool js_set_cpShape_bbb(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    shape->bb.b = JSVAL_TO_DOUBLE(vp.get());
+    return true;
+}
+static bool js_get_cpShape_bbr(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    vp.setNumber(shape->bb.r);
+    return true;
+}
+
+static bool js_set_cpShape_bbr(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    shape->bb.r = JSVAL_TO_DOUBLE(vp.get());
+    return true;
+}
+
+static bool js_get_cpShape_bbt(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    vp.setNumber(shape->bb.t);
+    return true;
+}
+
+static bool js_set_cpShape_bbt(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    shape->bb.t = JSVAL_TO_DOUBLE(vp.get());
+    return true;
+}
+
 void JSB_cpShape_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSB_cpShape_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -4517,7 +4572,11 @@ void JSB_cpShape_createClass(JSContext *cx, JSObject* globalObj, const char* nam
 	JSB_cpShape_class->flags = JSCLASS_HAS_PRIVATE;
 
 	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
+        {"bb_l", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpShape_bbl), JSOP_WRAPPER(js_set_cpShape_bbl)},
+        {"bb_b", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpShape_bbb), JSOP_WRAPPER(js_set_cpShape_bbb)},
+        {"bb_r", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpShape_bbr), JSOP_WRAPPER(js_set_cpShape_bbr)},
+        {"bb_t", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpShape_bbt), JSOP_WRAPPER(js_set_cpShape_bbt)},
+        {0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("cacheBB", JSB_cpShape_cacheBB, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
@@ -4542,7 +4601,7 @@ void JSB_cpShape_createClass(JSContext *cx, JSObject* globalObj, const char* nam
 		JS_FN("setSensor", JSB_cpShape_setSensor, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("setSurfaceVelocity", JSB_cpShape_setSurfaceVelocity, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("update", JSB_cpShape_update, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-        JS_FN("active", JSB_cpShape_active, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("active", JSB_cpShape_active, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
