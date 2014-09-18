@@ -417,7 +417,7 @@ static void recvBuf(int fd, char *pbuf, unsigned long bufsize)
     }
 }
 
-static void sendBuf(int fd, char *pbuf, unsigned long bufsize)
+static void sendBuf(int fd, const char *pbuf, unsigned long bufsize)
 {
     unsigned long leftLength = bufsize;
     while (leftLength != 0)
@@ -1022,9 +1022,7 @@ public:
                 
                 string msg(msgLength + msgContent);
                 
-                char dataBuf[1024] = {0};
-                memcpy(dataBuf, msg.c_str(), msg.size());
-                sendBuf(fd, dataBuf, msg.size());
+                sendBuf(fd, msg.c_str(), msg.size());
             }
         });
     }
