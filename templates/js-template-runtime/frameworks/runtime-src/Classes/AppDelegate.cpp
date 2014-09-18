@@ -43,7 +43,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     
-#if (COCOS2D_DEBUG>0)
+#if (COCOS2D_DEBUG > 0)
     initRuntime();
 #endif
 
@@ -96,7 +96,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JavaScriptObjCBridge::_js_register);
 #endif
     
-#if (COCOS2D_DEBUG>0)
+#if (COCOS2D_DEBUG > 0)
     if (startRuntime())
         return true;
 #endif
