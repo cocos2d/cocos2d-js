@@ -670,7 +670,7 @@ cc.loader = {
      * @returns {*}
      */
     getRes : function(url){
-        var cached = this.cache[url] || this.cache[this._aliases[url]];
+        var cached = this.cache[url];
         if (cached)
             return cached;
         var type = cc.path.extname(url);
