@@ -865,10 +865,17 @@ public:
                     
                 } else if (strcmp(strcmd.c_str(),"clearcompile")==0)
                 {
-                    const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
-                    for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
+                    if (dArgParse.HasMember("modulefiles") && dArgParse["modulefiles"].Size() != 0)
                     {
-                        ScriptingCore::getInstance()->cleanScript(objectfiles[i].GetString());
+                        const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
+                        for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
+                        {
+                            ScriptingCore::getInstance()->cleanScript(objectfiles[i].GetString());
+                        }
+                    } else
+                    {
+                        std::unordered_map<std::string, JSScript*> filenameScript = ScriptingCore::getInstance()->getFileScript();
+                        filenameScript.clear();
                     }
                     
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
