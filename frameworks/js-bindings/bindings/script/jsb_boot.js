@@ -472,16 +472,26 @@ cc.loader = {
         var l = arguments.length;
         if(l == 2) cb = option;
 
-        jsb.loadRemoteImg(url, function(succeed, tex) {
-            if (succeed) {
-                if(!cb) return;
-                cb(null, tex);
-            }
-            else {
-                if(!cb) return;
-                cb("Load image failed");
-            }
-        });
+        var cachedTex = cc.textureCache.getTextureForKey(url);
+        if (cachedTex) {
+            cb && cb(null, cachedTex);
+        }
+        if (url.match(jsb.urlRegExp)) {
+            jsb.loadRemoteImg(url, function(succeed, tex) {
+                if (succeed) {
+                    cb && cb(null, tex);
+                }
+                else {
+                    cb && cb("Load image failed");
+                }
+            });
+        }
+        else {
+            var tex = cc.textureCache._addImage(url);
+            if (tex instanceof cc.Texture2D)
+                cb && cb(null, tex);
+            else cb && cb("Load image failed");
+        }
     },
     /**
      * Load binary data by url.
@@ -831,32 +841,12 @@ cc.configuration = cc.Configuration.getInstance();
 cc.textureCache = cc.director.getTextureCache();
 cc.TextureCache.prototype._addImage = cc.TextureCache.prototype.addImage;
 cc.TextureCache.prototype.addImage = function(url, cb, target) {
-    var cachedTex = this.getTextureForKey(url);
-    if (cachedTex) {
-        cb && cb.call(target, cachedTex);
-        return cachedTex;
-    }
-    if (url.match(jsb.urlRegExp)) {
-        jsb.loadRemoteImg(url, function(succeed, tex) {
-            if (succeed) {
-                if(!cb) return;
-                cb.call(target, tex);
-            }
-            else {
-                if(!cb) return;
-                cb.call(target, null);
-            }
-        });
-    }
-    else {
+    cc.loader.loadImg(url, function(err, tex) {
         if (cb) {
-            target && (cb = cb.bind(target));
-            this.addImageAsync(url, cb);
+            if (err) tex = null;
+            cb.call(target, tex);
         }
-        else {
-            return this._addImage(url);
-        }
-    }
+    });
 };
 /**
  * @type {Object}
