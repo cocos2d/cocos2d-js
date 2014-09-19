@@ -843,12 +843,15 @@ cc.configuration = cc.Configuration.getInstance();
 cc.textureCache = cc.director.getTextureCache();
 cc.TextureCache.prototype._addImage = cc.TextureCache.prototype.addImage;
 cc.TextureCache.prototype.addImage = function(url, cb, target) {
+    var localTex = null;
     cc.loader.loadImg(url, function(err, tex) {
+        if (err) tex = null;
         if (cb) {
-            if (err) tex = null;
             cb.call(target, tex);
         }
+        localTex = tex;
     });
+    return localTex;
 };
 /**
  * @type {Object}
