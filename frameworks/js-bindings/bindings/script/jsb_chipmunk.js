@@ -26,8 +26,43 @@
 
 var cp = cp || {};
 
-cp.v = cc.p;
-cp._v = cc._p;
+cp.Vect = function(x, y){
+    this.x = x;
+    this.y = y;
+}
+cp.Vect.prototype.add = function(v){
+    this.x += v.x;
+    this.y += v.y;
+    return this;
+}
+cp.Vect.prototype.sub = function(v){
+    this.x -= v.x;
+    this.y -= v.y;
+    return this;
+}
+cp.Vect.prototype.neg = function(){
+    this.x = -this.x;
+    this.y = -this.y;
+    return this;
+}
+cp.Vect.prototype.mult = function(s){
+    this.x *= s;
+    this.y *= s;
+    return this;
+}
+cp.Vect.prototype.rotate = function(v){
+    this.x = this.x * v.x - this.y * v.y;
+    this.y = this.x * v.y + this.y * v.x;
+    return this;
+}
+cp.Vect.prototype.project = function(v){
+    this.mult(cp.vdot(this, v) / cp.vlengthsq(v));
+    return this;
+}
+
+cp.v = function(x, y){
+    return new cp.Vect(x, y);
+}
 cp.vzero  = cp.v(0,0);
 
 // Vector: Compatibility with Chipmunk-JS
@@ -51,12 +86,15 @@ cp.v.normalize_safe = cp.vnormalize_safe;
 cp.v.perp = cp.vperp;
 cp.v.project = cp.vproject;
 cp.v.rotate = cp.vrotate;
-cp.v.rperp = cp.vrperp;
+cp.v.pvrperp = cp.vrperp;
 cp.v.slerp = cp.vslerp;
 cp.v.slerpconst = cp.vslerpconst;
 cp.v.sub = cp.vsub;
 cp.v.toangle = cp.vtoangle;
 cp.v.unrotate = cp.vunrotate;
+cp.v.str = function(v){
+    return "(" + v.x.toFixed(3) + ", " + v.y.toFixed(3) + ")";
+}
 
 // XXX: renaming functions should be supported in JSB
 cp.clamp01 = cp.fclamp01;
@@ -95,7 +133,10 @@ cp.StaticBody = function()
 // "Bounding Box" compatibility with Chipmunk-JS
 cp.BB = function(l, b, r, t)
 {
-	return {l:l, b:b, r:r, t:t};
+    this.l = l;
+    this.b = b;
+    this.r = r;
+    this.t = t;
 };
 
 // helper function to create a BB
@@ -106,6 +147,7 @@ cp.bb = function(l, b, r, t) {
 //
 // Some properties
 //
+var _proto = cp.Base.prototype;
 // "handle" needed in some cases
 Object.defineProperties(cp.Base.prototype,
 				{
@@ -278,36 +320,16 @@ Object.defineProperties(cp.Body.prototype,
 				});
 
 // Shape properties
-Object.defineProperties(cp.Shape.prototype,
-				{
-					"body" : {
-						get : function(){
-                            return this.getBody();
-                        },
-						set : function(newValue){
-                            this.setBody(newValue);
-                        },
-						enumerable : true,
-						configurable : true
-					},
-                    "group" : {
-						get : function(){
-                            return this.getGroup();
-                        },
-						set : function(newValue){
-                            this.setGroup(newValue);
-                        },
-						enumerable : true,
-						configurable : true
-                    },
-					"collision_type" : {
-						get : function(){
-                            return this.getCollisionType();
-                        },
-						enumerable : true,
-						configurable : true
-					}
-				});
+_proto = cp.Shape.prototype;
+cc.defineGetterSetter(_proto, "body", _proto.getBody, _proto.setBody);
+cc.defineGetterSetter(_proto, "group", _proto.getGroup, _proto.setGroup);
+cc.defineGetterSetter(_proto, "collision_type", _proto.getCollisionType, _proto.setCollisionType);
+cc.defineGetterSetter(_proto, "layers", _proto.getLayers, _proto.setLayers);
+cc.defineGetterSetter(_proto, "sensor", _proto.getSensor, _proto.setSensor);
+cc.defineGetterSetter(_proto, "space", _proto.getSpace);
+cc.defineGetterSetter(_proto, "surface_v", _proto.getSurfaceVelocity, _proto.setSurfaceVelocity);
+cc.defineGetterSetter(_proto, "e", _proto.getElasticity, _proto.setElasticity);
+cc.defineGetterSetter(_proto, "u", _proto.getFriction, _proto.setFriction);
 
 // Constraint properties
 Object.defineProperties(cp.Constraint.prototype,
@@ -348,3 +370,5 @@ Object.defineProperties(cp.PinJoint.prototype,
 						configurable : true
 					}
 				});
+
+_proto = null;
