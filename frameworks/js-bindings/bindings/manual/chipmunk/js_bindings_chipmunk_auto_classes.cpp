@@ -3153,7 +3153,16 @@ bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *v
     cpGroup group;
     bool ok = true;
     ok &= jsval_to_cpVect( cx, argvp[0], &point );
-    maxDistance = 100;//JSVAL_TO_DOUBLE(argvp[1]);
+    if(JSVAL_IS_INT(argvp[1]))
+    {
+        int arg1;
+        ok &= jsval_to_int(cx, argvp[1], &arg1);
+        maxDistance = (cpFloat) arg1;
+    }
+    else
+    {
+        maxDistance = JSVAL_TO_DOUBLE(argvp[1]);
+    }
     ok &= jsval_to_uint32( cx, argvp[2], &layers );
     ok &= jsval_to_uint( cx, argvp[3], &group );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
