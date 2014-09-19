@@ -3124,12 +3124,55 @@ bool JSB_cpSpace_segmentQueryFirst(JSContext *cx, uint32_t argc, jsval *vp){
 	JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     cpSegmentQueryInfo *out = new cpSegmentQueryInfo();
-    cpSpaceSegmentQueryFirst(space, start, end, layers, group, out);
+    cpShape* target = cpSpaceSegmentQueryFirst(space, start, end, layers, group, out);
 
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpSegmentQueryInfo_class, JSB_cpSegmentQueryInfo_object, NULL);
-	jsb_set_jsobject_for_proxy(jsobj, out);
-	jsb_set_c_proxy_for_jsobject(jsobj, out, JSB_C_FLAG_CALL_FREE);
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+    if(target)
+    {
+        JSObject *jsobj = JS_NewObject(cx, JSB_cpSegmentQueryInfo_class, JSB_cpSegmentQueryInfo_object, NULL);
+	    jsb_set_jsobject_for_proxy(jsobj, out);
+	    jsb_set_c_proxy_for_jsobject(jsobj, out, JSB_C_FLAG_CALL_FREE);
+	    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+    }
+    else
+    {
+        delete out;
+        JS_SET_RVAL(cx, vp, JSVAL_NULL);
+    }
+    return true;
+}
+
+bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *vp){
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*) proxy->handle;
+    jsval *argvp = JS_ARGV(cx,vp);
+
+    cpVect point;
+    cpFloat maxDistance;
+    cpLayers layers;
+    cpGroup group;
+    bool ok = true;
+    ok &= jsval_to_cpVect( cx, argvp[0], &point );
+    maxDistance = 100;//JSVAL_TO_DOUBLE(argvp[1]);
+    ok &= jsval_to_uint32( cx, argvp[2], &layers );
+    ok &= jsval_to_uint( cx, argvp[3], &group );
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+    cpNearestPointQueryInfo* info = new cpNearestPointQueryInfo();
+    cpShape* target = cpSpaceNearestPointQueryNearest(space, point, maxDistance, layers, group, info);
+
+    if(target)
+    {
+        JSObject *jsobj = JS_NewObject(cx, JSB_cpNearestPointQueryInfo_class, JSB_cpNearestPointQueryInfo_object, NULL);
+        jsb_set_jsobject_for_proxy(jsobj, info);
+        jsb_set_c_proxy_for_jsobject(jsobj, info, JSB_C_FLAG_CALL_FREE);
+        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));    
+    }
+    else
+    {
+        delete info;
+        JS_SET_RVAL(cx, vp, JSVAL_NULL);
+    }
     return true;
 }
 
@@ -3195,6 +3238,7 @@ void JSB_cpSpace_createClass(JSContext *cx, JSObject* globalObj, const char* nam
 		JS_FN("addBody", JSB_cpSpace_addBody, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("removeShape", JSB_cpSpace_removeShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("segmentQueryFirst", JSB_cpSpace_segmentQueryFirst, 4, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+        JS_FN("nearestPointQueryNearest", JSB_cpSpace_nearestPointQueryNearest, 4, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -5176,4 +5220,114 @@ void JSB_cpSegmentQueryInfo_createClass(JSContext *cx, JSObject* globalObj, cons
 //	JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 }
 
+bool js_get_cpNearestPointQueryInfo_shape(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpNearestPointQueryInfo* info = (cpNearestPointQueryInfo*) proxy->handle;
+    cpShape* shape = info->shape;
+    
+    if(shape){
+        JSObject *jsobj = JS_NewObject(cx, JSB_cpShape_class, JSB_cpShape_object, NULL);
+        //jsb_set_jsobject_for_proxy(jsobj, shape);
+	    jsb_set_c_proxy_for_jsobject(jsobj, shape, JSB_C_FLAG_DO_NOT_CALL_FREE);
+        vp.set(OBJECT_TO_JSVAL(jsobj));
+    }else{
+        vp.setNull();
+    }
+    
+    return true;
+}
+
+bool js_set_cpNearestPointQueryInfo_shape(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
+{
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpNearestPointQueryInfo* info = (cpNearestPointQueryInfo*) proxy->handle;
+
+    cpShape* shape;
+    struct jsb_c_proxy_s *retproxy;
+	jsval_to_c_class( cx, vp.get(), (void**)&shape, &retproxy );
+
+    info->shape = shape;
+    return true;
+}
+
+bool js_get_cpNearestPointQueryInfo_p(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpNearestPointQueryInfo* info = (cpNearestPointQueryInfo*) proxy->handle;
+    vp.set(cpVect_to_jsval(cx, info->p));
+    return true;
+}
+
+bool js_set_cpNearestPointQueryInfo_p(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpNearestPointQueryInfo* info = (cpNearestPointQueryInfo*) proxy->handle;
+    cpVect v;
+    bool ok = jsval_to_cpVect(cx, vp.get(), &v);
+    if(ok)
+        info->p = v;
+    return true;
+}
+
+bool js_get_cpNearestPointQueryInfo_d(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpNearestPointQueryInfo* info = (cpNearestPointQueryInfo*) proxy->handle;
+    vp.setNumber(info->d);
+    return true;
+}
+
+bool js_set_cpNearestPointQueryInfo_d(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpNearestPointQueryInfo* info = (cpNearestPointQueryInfo*) proxy->handle;
+    info->d = JSVAL_TO_DOUBLE(vp.get());
+    return true;
+}
+
+JSClass* JSB_cpNearestPointQueryInfo_class = NULL;
+JSObject* JSB_cpNearestPointQueryInfo_object = NULL;
+
+// Destructor
+void JSB_cpNearestPointQueryInfo_finalize(JSFreeOp *fop, JSObject *jsthis)
+{
+	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+	if( proxy ) {
+		CCLOGINFO("jsbindings: finalizing JS object %p (cpSegmentQueryInfo), handle: %p", jsthis, proxy->handle);
+
+		jsb_del_jsobject_for_proxy(proxy->handle);
+		if(proxy->flags == JSB_C_FLAG_CALL_FREE)
+			delete ( (cpNearestPointQueryInfo*)proxy->handle);
+		jsb_del_c_proxy_for_jsobject(jsthis);
+	} else {
+		CCLOGINFO("jsbindings: finalizing uninitialized JS object %p (cpSegmentQueryInfo)", jsthis);
+	}
+}
+
+void JSB_cpNearestPointQueryInfo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+    JSB_cpNearestPointQueryInfo_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSB_cpNearestPointQueryInfo_class->name = name;
+	JSB_cpNearestPointQueryInfo_class->addProperty = JS_PropertyStub;
+	JSB_cpNearestPointQueryInfo_class->delProperty = JS_DeletePropertyStub;
+	JSB_cpNearestPointQueryInfo_class->getProperty = JS_PropertyStub;
+	JSB_cpNearestPointQueryInfo_class->setProperty = JS_StrictPropertyStub;
+	JSB_cpNearestPointQueryInfo_class->enumerate = JS_EnumerateStub;
+	JSB_cpNearestPointQueryInfo_class->resolve = JS_ResolveStub;
+	JSB_cpNearestPointQueryInfo_class->convert = JS_ConvertStub;
+	JSB_cpNearestPointQueryInfo_class->finalize = JSB_cpNearestPointQueryInfo_finalize;
+	JSB_cpNearestPointQueryInfo_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+        {"shape", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpNearestPointQueryInfo_shape), JSOP_WRAPPER(js_set_cpNearestPointQueryInfo_shape)},
+        {"p", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpNearestPointQueryInfo_p), JSOP_WRAPPER(js_set_cpNearestPointQueryInfo_p)},
+        {"d", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpNearestPointQueryInfo_d), JSOP_WRAPPER(js_set_cpNearestPointQueryInfo_d)},
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FS_END
+	};
+
+	JSB_cpNearestPointQueryInfo_object = JS_InitClass(cx, globalObj, NULL, JSB_cpNearestPointQueryInfo_class, NULL,0,properties,funcs,NULL,st_funcs);
+}
 #endif // JSB_INCLUDE_CHIPMUNK
