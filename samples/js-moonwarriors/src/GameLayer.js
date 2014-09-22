@@ -75,7 +75,8 @@ var GameLayer = cc.Layer.extend({
             anchorX: 1,
             anchorY: 0,
             x: winSize.width - 5,
-            y: winSize.height - 30
+            y: winSize.height - 30,
+            scale: MW.SCALE
         });
         this.lbScore.textAlign = cc.TEXT_ALIGNMENT_RIGHT;
         this.addChild(this.lbScore, 1000);
@@ -284,7 +285,7 @@ var GameLayer = cc.Layer.extend({
         var ran = Math.random();
         backTileMap.x = ran * 320;
 	    backTileMap.y = winSize.height;
-        var move = cc.moveBy(ran * 2 + 10, cc.p(0, -winSize.height-240));
+        var move = cc.moveBy(ran * 2 + 10, cc.p(0, -winSize.height-backTileMap.height));
         var fun = cc.callFunc(function(){
             backTileMap.destroy();
         },this);

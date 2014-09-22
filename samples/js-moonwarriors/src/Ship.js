@@ -20,12 +20,12 @@ var Ship = cc.Sprite.extend({
 	    this.y = this.appearPosition.y;
 
         // set frame
-        var frame2 = cc.spriteFrameCache.getSpriteFrame("ship03.png");
+        //var frame2 = cc.spriteFrameCache.getSpriteFrame("ship03.png");
         var frame0 = cc.spriteFrameCache.getSpriteFrame("ship01.png");
         var frame1 = cc.spriteFrameCache.getSpriteFrame("ship02.png");
 
         var animFrames = [];
-        animFrames.push(frame2);
+        //animFrames.push(frame2);
         animFrames.push(frame0);
         animFrames.push(frame1);
 
