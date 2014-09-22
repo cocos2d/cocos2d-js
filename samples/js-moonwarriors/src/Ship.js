@@ -20,10 +20,12 @@ var Ship = cc.Sprite.extend({
 	    this.y = this.appearPosition.y;
 
         // set frame
+        var frame2 = cc.spriteFrameCache.getSpriteFrame("ship03.png");
         var frame0 = cc.spriteFrameCache.getSpriteFrame("ship01.png");
         var frame1 = cc.spriteFrameCache.getSpriteFrame("ship02.png");
 
         var animFrames = [];
+        animFrames.push(frame2);
         animFrames.push(frame0);
         animFrames.push(frame1);
 
@@ -67,7 +69,7 @@ var Ship = cc.Sprite.extend({
     },
     shoot:function (dt) {
         //this.shootEffect();
-        var offset = 13;
+        var offset = 27;
         var a = Bullet.getOrCreateBullet(this.bulletSpeed, "W1.png", MW.ENEMY_ATTACK_MODE.NORMAL, 3000, MW.UNIT_TAG.PLAYER_BULLET);
         a.x = this.x + offset;
 	    a.y = this.y + 3 + this.height * 0.3;
@@ -101,7 +103,7 @@ var Ship = cc.Sprite.extend({
         this.bornSprite = new cc.Sprite("#ship03.png");
         this.bornSprite.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
         this.bornSprite.x = this.width / 2;
-	    this.bornSprite.y = 12;
+	    this.bornSprite.y = this.height / 2;
         this.bornSprite.visible = false;
         this.addChild(this.bornSprite, 3000, 99999);
     },

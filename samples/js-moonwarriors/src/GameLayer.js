@@ -81,18 +81,18 @@ var GameLayer = cc.Layer.extend({
         this.addChild(this.lbScore, 1000);
 
         // ship life
-        var life = new cc.Sprite("#ship01.png");
+        var life = new cc.Sprite("#ship03.png");
         life.attr({
             scale: 0.6,
             x: 30,
-            y: 460
+            y: MW.HEIGHT - 30
         });
         this._texTransparentBatch.addChild(life, 1, 5);
 
         // ship Life count
         this._lbLife = new cc.LabelTTF("0", "Arial", 20);
         this._lbLife.x = 60;
-        this._lbLife.y = 463;
+        this._lbLife.y = MW.HEIGHT - 25;
         this._lbLife.color = cc.color(255, 0, 0);
         this.addChild(this._lbLife, 1000);
 

@@ -4,14 +4,14 @@ var GameControlMenu = cc.Layer.extend({
         this.init();
     },
     init:function () {
-        cc.MenuItemFont.setFontSize(18);
+        cc.MenuItemFont.setFontSize(24);
         cc.MenuItemFont.setFontName("Arial");
         var systemMenu = new cc.MenuItemFont("Main Menu", this.onSysMenu);
         var menu = new cc.Menu(systemMenu);
         menu.x = 0;
         menu.y = 0;
         systemMenu.attr({
-            x: winSize.width-95,
+            x: winSize.width-125,
             y: 5,
             anchorX: 0,
             anchorY: 0

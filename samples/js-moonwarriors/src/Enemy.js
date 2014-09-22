@@ -26,7 +26,7 @@ var Enemy = cc.Sprite.extend({
     update:function (dt) {
         var x = this.x;
 	    var y = this.y;
-        if ((x < 0 || x > 320) && (y < 0 || y > 480)) {
+        if ((x < 0 || x > MW.WIDTH) && (y < 0 || y > MW.HEIGHT)) {
             this.active = false;
         }
         this._timeTick += dt;
