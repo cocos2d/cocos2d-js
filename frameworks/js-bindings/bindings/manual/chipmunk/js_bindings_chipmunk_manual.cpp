@@ -1691,11 +1691,16 @@ bool JSB_cpPolyShape_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 static void unroot_jsobject_from_handle(void *handle)
 {
 	JSObject *jsobj = jsb_get_jsobject_for_proxy(handle);
-	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsobj);
+    //2014.9.19 by joshua
+    //add safe guard
+    if(jsobj)
+    {
+        struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsobj);
 	
-	// HACK context from global
-	JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-	JS_RemoveObjectRoot(cx, &proxy->jsobj);
+	    // HACK context from global
+	    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+	    JS_RemoveObjectRoot(cx, &proxy->jsobj);
+    }
 	
 }
 static void shapeFreeWrap(cpSpace *space, cpShape *shape, void *unused){
