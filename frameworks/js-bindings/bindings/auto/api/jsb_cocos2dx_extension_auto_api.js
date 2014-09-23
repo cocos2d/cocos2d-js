@@ -4,308 +4,6 @@
 var cc = cc || {};
 
 /**
- * @class Scale9Sprite
- */
-cc.Scale9Sprite = {
-
-/**
- * @method resizableSpriteWithCapInsets
- * @param {rect_object} arg0
- * @return {cc.Scale9Sprite}
- */
-resizableSpriteWithCapInsets : function (
-rect 
-)
-{
-    return cc.Scale9Sprite;
-},
-
-/**
- * @method setInsetBottom
- * @param {float} arg0
- */
-setInsetBottom : function (
-float 
-)
-{
-},
-
-/**
- * @method initWithSpriteFrameName
-* @param {String|String} str
-* @param {rect_object} rect
-* @return {bool|bool}
-*/
-initWithSpriteFrameName : function(
-str,
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method setInsetTop
- * @param {float} arg0
- */
-setInsetTop : function (
-float 
-)
-{
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setPreferredSize
- * @param {size_object} arg0
- */
-setPreferredSize : function (
-size 
-)
-{
-},
-
-/**
- * @method setSpriteFrame
- * @param {cc.SpriteFrame} arg0
- */
-setSpriteFrame : function (
-spriteframe 
-)
-{
-},
-
-/**
- * @method initWithBatchNode
-* @param {cc.SpriteBatchNode|cc.SpriteBatchNode} spritebatchnode
-* @param {rect_object|rect_object} rect
-* @param {rect_object|bool} rect
-* @param {rect_object} rect
-* @return {bool|bool}
-*/
-initWithBatchNode : function(
-spritebatchnode,
-rect,
-bool,
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method getInsetBottom
- * @return {float}
- */
-getInsetBottom : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getCapInsets
- * @return {rect_object}
- */
-getCapInsets : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
- * @method updateWithBatchNode
- * @param {cc.SpriteBatchNode} arg0
- * @param {rect_object} arg1
- * @param {bool} arg2
- * @param {rect_object} arg3
- * @return {bool}
- */
-updateWithBatchNode : function (
-spritebatchnode, 
-rect, 
-bool, 
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method getInsetRight
- * @return {float}
- */
-getInsetRight : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getOriginalSize
- * @return {size_object}
- */
-getOriginalSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method initWithFile
-* @param {String|String|rect_object|String} str
-* @param {rect_object|rect_object|String} rect
-* @param {rect_object} rect
-* @return {bool|bool|bool|bool}
-*/
-initWithFile : function(
-str,
-rect,
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method getInsetTop
- * @return {float}
- */
-getInsetTop : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setInsetLeft
- * @param {float} arg0
- */
-setInsetLeft : function (
-float 
-)
-{
-},
-
-/**
- * @method initWithSpriteFrame
-* @param {cc.SpriteFrame|cc.SpriteFrame} spriteframe
-* @param {rect_object} rect
-* @return {bool|bool}
-*/
-initWithSpriteFrame : function(
-spriteframe,
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method getPreferredSize
- * @return {size_object}
- */
-getPreferredSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method setCapInsets
- * @param {rect_object} arg0
- */
-setCapInsets : function (
-rect 
-)
-{
-},
-
-/**
- * @method getInsetLeft
- * @return {float}
- */
-getInsetLeft : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setInsetRight
- * @param {float} arg0
- */
-setInsetRight : function (
-float 
-)
-{
-},
-
-/**
- * @method create
-* @param {String|rect_object|String|String} str
-* @param {rect_object|String|rect_object} rect
-* @param {rect_object} rect
-* @return {cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite|cc.Scale9Sprite}
-*/
-create : function(
-str,
-rect,
-rect 
-)
-{
-    return cc.Scale9Sprite;
-},
-
-/**
- * @method createWithSpriteFrameName
-* @param {String|String} str
-* @param {rect_object} rect
-* @return {cc.Scale9Sprite|cc.Scale9Sprite}
-*/
-createWithSpriteFrameName : function(
-str,
-rect 
-)
-{
-    return cc.Scale9Sprite;
-},
-
-/**
- * @method createWithSpriteFrame
-* @param {cc.SpriteFrame|cc.SpriteFrame} spriteframe
-* @param {rect_object} rect
-* @return {cc.Scale9Sprite|cc.Scale9Sprite}
-*/
-createWithSpriteFrame : function(
-spriteframe,
-rect 
-)
-{
-    return cc.Scale9Sprite;
-},
-
-/**
- * @method Scale9Sprite
- * @constructor
- */
-Scale9Sprite : function (
-)
-{
-},
-
-};
-
-/**
  * @class Control
  */
 cc.Control = {
@@ -454,6 +152,384 @@ Control : function (
 };
 
 /**
+ * @class Scale9Sprite
+ */
+cc.Scale9Sprite = {
+
+/**
+ * @method disableCascadeColor
+ */
+disableCascadeColor : function (
+)
+{
+},
+
+/**
+ * @method updateWithSprite
+ * @param {cc.Sprite} arg0
+ * @param {rect_object} arg1
+ * @param {bool} arg2
+ * @param {rect_object} arg3
+ * @return {bool}
+ */
+updateWithSprite : function (
+sprite, 
+rect, 
+bool, 
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method isFlippedX
+ * @return {bool}
+ */
+isFlippedX : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setFlippedY
+ * @param {bool} arg0
+ */
+setFlippedY : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setFlippedX
+ * @param {bool} arg0
+ */
+setFlippedX : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setScale9Enabled
+ * @param {bool} arg0
+ */
+setScale9Enabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method disableCascadeOpacity
+ */
+disableCascadeOpacity : function (
+)
+{
+},
+
+/**
+ * @method setInsetBottom
+ * @param {float} arg0
+ */
+setInsetBottom : function (
+float 
+)
+{
+},
+
+/**
+ * @method initWithSpriteFrameName
+* @param {String|String} str
+* @param {rect_object} rect
+* @return {bool|bool}
+*/
+initWithSpriteFrameName : function(
+str,
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method getSprite
+ * @return {cc.Sprite}
+ */
+getSprite : function (
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method setInsetTop
+ * @param {float} arg0
+ */
+setInsetTop : function (
+float 
+)
+{
+},
+
+/**
+ * @method init
+* @param {cc.Sprite|cc.Sprite} sprite
+* @param {rect_object|rect_object} rect
+* @param {bool|rect_object} bool
+* @param {rect_object} rect
+* @return {bool|bool|bool}
+*/
+init : function(
+sprite,
+rect,
+bool,
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method setPreferredSize
+ * @param {size_object} arg0
+ */
+setPreferredSize : function (
+size 
+)
+{
+},
+
+/**
+ * @method getInsetRight
+ * @return {float}
+ */
+getInsetRight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setSpriteFrame
+ * @param {cc.SpriteFrame} arg0
+ */
+setSpriteFrame : function (
+spriteframe 
+)
+{
+},
+
+/**
+ * @method getInsetBottom
+ * @return {float}
+ */
+getInsetBottom : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method resizableSpriteWithCapInsets
+ * @param {rect_object} arg0
+ * @return {ccui.Scale9Sprite}
+ */
+resizableSpriteWithCapInsets : function (
+rect 
+)
+{
+    return ccui.Scale9Sprite;
+},
+
+/**
+ * @method isScale9Enabled
+ * @return {bool}
+ */
+isScale9Enabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getCapInsets
+ * @return {rect_object}
+ */
+getCapInsets : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method getOriginalSize
+ * @return {size_object}
+ */
+getOriginalSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method initWithFile
+* @param {String|String|rect_object|String} str
+* @param {rect_object|rect_object|String} rect
+* @param {rect_object} rect
+* @return {bool|bool|bool|bool}
+*/
+initWithFile : function(
+str,
+rect,
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method getInsetTop
+ * @return {float}
+ */
+getInsetTop : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setInsetLeft
+ * @param {float} arg0
+ */
+setInsetLeft : function (
+float 
+)
+{
+},
+
+/**
+ * @method initWithSpriteFrame
+* @param {cc.SpriteFrame|cc.SpriteFrame} spriteframe
+* @param {rect_object} rect
+* @return {bool|bool}
+*/
+initWithSpriteFrame : function(
+spriteframe,
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method getPreferredSize
+ * @return {size_object}
+ */
+getPreferredSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method setCapInsets
+ * @param {rect_object} arg0
+ */
+setCapInsets : function (
+rect 
+)
+{
+},
+
+/**
+ * @method isFlippedY
+ * @return {bool}
+ */
+isFlippedY : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getInsetLeft
+ * @return {float}
+ */
+getInsetLeft : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setInsetRight
+ * @param {float} arg0
+ */
+setInsetRight : function (
+float 
+)
+{
+},
+
+/**
+ * @method create
+* @param {String|rect_object|String|String} str
+* @param {rect_object|String|rect_object} rect
+* @param {rect_object} rect
+* @return {ccui.Scale9Sprite|ccui.Scale9Sprite|ccui.Scale9Sprite|ccui.Scale9Sprite|ccui.Scale9Sprite}
+*/
+create : function(
+str,
+rect,
+rect 
+)
+{
+    return ccui.Scale9Sprite;
+},
+
+/**
+ * @method createWithSpriteFrameName
+* @param {String|String} str
+* @param {rect_object} rect
+* @return {ccui.Scale9Sprite|ccui.Scale9Sprite}
+*/
+createWithSpriteFrameName : function(
+str,
+rect 
+)
+{
+    return ccui.Scale9Sprite;
+},
+
+/**
+ * @method createWithSpriteFrame
+* @param {cc.SpriteFrame|cc.SpriteFrame} spriteframe
+* @param {rect_object} rect
+* @return {ccui.Scale9Sprite|ccui.Scale9Sprite}
+*/
+createWithSpriteFrame : function(
+spriteframe,
+rect 
+)
+{
+    return ccui.Scale9Sprite;
+},
+
+/**
+ * @method Scale9Sprite
+ * @constructor
+ */
+Scale9Sprite : function (
+)
+{
+},
+
+};
+
+/**
  * @class ControlButton
  */
 cc.ControlButton = {
@@ -554,7 +630,7 @@ getLabelAnchorPoint : function (
 
 /**
  * @method initWithBackgroundSprite
- * @param {cc.Scale9Sprite} arg0
+ * @param {ccui.Scale9Sprite} arg0
  * @return {bool}
  */
 initWithBackgroundSprite : function (
@@ -642,7 +718,7 @@ bool
 
 /**
  * @method setBackgroundSprite
- * @param {cc.Scale9Sprite} arg0
+ * @param {ccui.Scale9Sprite} arg0
  */
 setBackgroundSprite : function (
 scale9sprite 
@@ -653,13 +729,13 @@ scale9sprite
 /**
  * @method getBackgroundSpriteForState
  * @param {cc.Control::State} arg0
- * @return {cc.Scale9Sprite}
+ * @return {ccui.Scale9Sprite}
  */
 getBackgroundSpriteForState : function (
 state 
 )
 {
-    return cc.Scale9Sprite;
+    return ccui.Scale9Sprite;
 },
 
 /**
@@ -730,12 +806,12 @@ state
 
 /**
  * @method getBackgroundSprite
- * @return {cc.Scale9Sprite}
+ * @return {ccui.Scale9Sprite}
  */
 getBackgroundSprite : function (
 )
 {
-    return cc.Scale9Sprite;
+    return ccui.Scale9Sprite;
 },
 
 /**
@@ -786,7 +862,7 @@ state
 
 /**
  * @method setBackgroundSpriteForState
- * @param {cc.Scale9Sprite} arg0
+ * @param {ccui.Scale9Sprite} arg0
  * @param {cc.Control::State} arg1
  */
 setBackgroundSpriteForState : function (
@@ -809,7 +885,7 @@ float
 /**
  * @method initWithLabelAndBackgroundSprite
  * @param {cc.Node} arg0
- * @param {cc.Scale9Sprite} arg1
+ * @param {ccui.Scale9Sprite} arg1
  * @return {bool}
  */
 initWithLabelAndBackgroundSprite : function (
@@ -922,8 +998,8 @@ state
 
 /**
  * @method create
-* @param {cc.Scale9Sprite|cc.Node|String} scale9sprite
-* @param {cc.Scale9Sprite|String} scale9sprite
+* @param {ccui.Scale9Sprite|cc.Node|String} scale9sprite
+* @param {ccui.Scale9Sprite|String} scale9sprite
 * @param {float} float
 * @return {cc.ControlButton|cc.ControlButton|cc.ControlButton|cc.ControlButton}
 */
@@ -2255,13 +2331,35 @@ float
 },
 
 /**
- * @method setBounceable
- * @param {bool} arg0
+ * @method updateTweenAction
+ * @param {float} arg0
+ * @param {String} arg1
  */
-setBounceable : function (
-bool 
+updateTweenAction : function (
+float, 
+str 
 )
 {
+},
+
+/**
+ * @method setMaxScale
+ * @param {float} arg0
+ */
+setMaxScale : function (
+float 
+)
+{
+},
+
+/**
+ * @method hasVisibleParents
+ * @return {bool}
+ */
+hasVisibleParents : function (
+)
+{
+    return false;
 },
 
 /**
@@ -2285,13 +2383,11 @@ getContainer : function (
 },
 
 /**
- * @method updateTweenAction
+ * @method setMinScale
  * @param {float} arg0
- * @param {String} arg1
  */
-updateTweenAction : function (
-float, 
-str 
+setMinScale : function (
+float 
 )
 {
 },
@@ -2468,6 +2564,16 @@ maxContainerOffset : function (
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method setBounceable
+ * @param {bool} arg0
+ */
+setBounceable : function (
+bool 
+)
+{
 },
 
 /**
@@ -2732,6 +2838,180 @@ TableView : function (
 };
 
 /**
+ * @class AssetsManager
+ */
+cc.AssetsManager = {
+
+/**
+ * @method setStoragePath
+ * @param {char} arg0
+ */
+setStoragePath : function (
+char 
+)
+{
+},
+
+/**
+ * @method getDelegate
+ * @return {cc.AssetsManagerDelegateProtocol}
+ */
+getDelegate : function (
+)
+{
+    return cc.AssetsManagerDelegateProtocol;
+},
+
+/**
+ * @method setPackageUrl
+ * @param {char} arg0
+ */
+setPackageUrl : function (
+char 
+)
+{
+},
+
+/**
+ * @method checkUpdate
+ * @return {bool}
+ */
+checkUpdate : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getStoragePath
+ * @return {char}
+ */
+getStoragePath : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method update
+ */
+update : function (
+)
+{
+},
+
+/**
+ * @method setConnectionTimeout
+ * @param {unsigned int} arg0
+ */
+setConnectionTimeout : function (
+int 
+)
+{
+},
+
+/**
+ * @method setVersionFileUrl
+ * @param {char} arg0
+ */
+setVersionFileUrl : function (
+char 
+)
+{
+},
+
+/**
+ * @method getPackageUrl
+ * @return {char}
+ */
+getPackageUrl : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setDelegate
+ * @param {cc.AssetsManagerDelegateProtocol} arg0
+ */
+setDelegate : function (
+assetsmanagerdelegateprotocol 
+)
+{
+},
+
+/**
+ * @method getConnectionTimeout
+ * @return {unsigned int}
+ */
+getConnectionTimeout : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getVersion
+ * @return {String}
+ */
+getVersion : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getVersionFileUrl
+ * @return {char}
+ */
+getVersionFileUrl : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method deleteVersion
+ */
+deleteVersion : function (
+)
+{
+},
+
+/**
+ * @method create
+ * @param {char} arg0
+ * @param {char} arg1
+ * @param {char} arg2
+ * @param {function} arg3
+ * @param {function} arg4
+ * @param {function} arg5
+ * @return {cc.AssetsManager}
+ */
+create : function (
+char, 
+char, 
+char, 
+func, 
+func, 
+func 
+)
+{
+    return cc.AssetsManager;
+},
+
+/**
+ * @method AssetsManager
+ * @constructor
+ */
+AssetsManager : function (
+)
+{
+},
+
+};
+
+/**
  * @class EditBox
  */
 cc.EditBox = {
@@ -2808,7 +3088,7 @@ int
 
 /**
  * @method setInputMode
- * @param {cc.EditBox::InputMode} arg0
+ * @param {ccui.EditBox::InputMode} arg0
  */
 setInputMode : function (
 inputmode 
@@ -2850,13 +3130,15 @@ int
 
 /**
  * @method initWithSizeAndBackgroundSprite
- * @param {size_object} arg0
- * @param {cc.Scale9Sprite} arg1
- * @return {bool}
- */
-initWithSizeAndBackgroundSprite : function (
-size, 
-scale9sprite 
+* @param {size_object|size_object} size
+* @param {ccui.Scale9Sprite|String} scale9sprite
+* @param {ccui.Widget::TextureResType} texturerestype
+* @return {bool|bool}
+*/
+initWithSizeAndBackgroundSprite : function(
+size,
+str,
+texturerestype 
 )
 {
     return false;
@@ -2874,7 +3156,7 @@ char
 
 /**
  * @method setReturnType
- * @param {cc.EditBox::KeyboardReturnType} arg0
+ * @param {ccui.EditBox::KeyboardReturnType} arg0
  */
 setReturnType : function (
 keyboardreturntype 
@@ -2884,7 +3166,7 @@ keyboardreturntype
 
 /**
  * @method setInputFlag
- * @param {cc.EditBox::InputFlag} arg0
+ * @param {ccui.EditBox::InputFlag} arg0
  */
 setInputFlag : function (
 inputflag 
@@ -2926,20 +3208,20 @@ int
 
 /**
  * @method create
- * @param {size_object} arg0
- * @param {cc.Scale9Sprite} arg1
- * @param {cc.Scale9Sprite} arg2
- * @param {cc.Scale9Sprite} arg3
- * @return {cc.EditBox}
- */
-create : function (
-size, 
-scale9sprite, 
-scale9sprite, 
+* @param {size_object|size_object} size
+* @param {String|ccui.Scale9Sprite} str
+* @param {ccui.Widget::TextureResType|ccui.Scale9Sprite} texturerestype
+* @param {ccui.Scale9Sprite} scale9sprite
+* @return {ccui.EditBox|ccui.EditBox}
+*/
+create : function(
+size,
+scale9sprite,
+scale9sprite,
 scale9sprite 
 )
 {
-    return cc.EditBox;
+    return ccui.EditBox;
 },
 
 /**
@@ -2947,329 +3229,6 @@ scale9sprite
  * @constructor
  */
 EditBox : function (
-)
-{
-},
-
-};
-
-/**
- * @class EventAssetsManager
- */
-cc.EventAssetsManager = {
-
-/**
- * @method getAssetsManager
- * @return {cc.AssetsManager}
- */
-getAssetsManager : function (
-)
-{
-    return cc.AssetsManager;
-},
-
-/**
- * @method getAssetId
- * @return {String}
- */
-getAssetId : function (
-)
-{
-    return ;
-},
-
-/**
- * @method getCURLECode
- * @return {int}
- */
-getCURLECode : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getMessage
- * @return {String}
- */
-getMessage : function (
-)
-{
-    return ;
-},
-
-/**
- * @method getCURLMCode
- * @return {int}
- */
-getCURLMCode : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getPercentByFile
- * @return {float}
- */
-getPercentByFile : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getEventCode
- * @return {cc.EventAssetsManager::EventCode}
- */
-getEventCode : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getPercent
- * @return {float}
- */
-getPercent : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method EventAssetsManager
- * @constructor
- * @param {String} arg0
- * @param {cc.AssetsManager} arg1
- * @param {cc.EventAssetsManager::EventCode} arg2
- * @param {float} arg3
- * @param {float} arg4
- * @param {String} arg5
- * @param {String} arg6
- * @param {int} arg7
- * @param {int} arg8
- */
-EventAssetsManager : function (
-str, 
-assetsmanager, 
-eventcode, 
-float, 
-float, 
-str, 
-str, 
-int, 
-int 
-)
-{
-},
-
-};
-
-/**
- * @class Manifest
- */
-cc.Manifest = {
-
-/**
- * @method getManifestFileUrl
- * @return {String}
- */
-getManifestFileUrl : function (
-)
-{
-    return ;
-},
-
-/**
- * @method isVersionLoaded
- * @return {bool}
- */
-isVersionLoaded : function (
-)
-{
-    return false;
-},
-
-/**
- * @method isLoaded
- * @return {bool}
- */
-isLoaded : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getPackageUrl
- * @return {String}
- */
-getPackageUrl : function (
-)
-{
-    return ;
-},
-
-/**
- * @method getVersion
- * @return {String}
- */
-getVersion : function (
-)
-{
-    return ;
-},
-
-/**
- * @method getVersionFileUrl
- * @return {String}
- */
-getVersionFileUrl : function (
-)
-{
-    return ;
-},
-
-};
-
-/**
- * @class AssetsManager
- */
-cc.AssetsManager = {
-
-/**
- * @method getState
- * @return {cc.AssetsManager::State}
- */
-getState : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method checkUpdate
- */
-checkUpdate : function (
-)
-{
-},
-
-/**
- * @method getStoragePath
- * @return {String}
- */
-getStoragePath : function (
-)
-{
-    return ;
-},
-
-/**
- * @method update
- */
-update : function (
-)
-{
-},
-
-/**
- * @method getLocalManifest
- * @return {cc.Manifest}
- */
-getLocalManifest : function (
-)
-{
-    return cc.Manifest;
-},
-
-/**
- * @method getRemoteManifest
- * @return {cc.Manifest}
- */
-getRemoteManifest : function (
-)
-{
-    return cc.Manifest;
-},
-
-/**
- * @method downloadFailedAssets
- */
-downloadFailedAssets : function (
-)
-{
-},
-
-/**
- * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @return {cc.AssetsManager}
- */
-create : function (
-str, 
-str 
-)
-{
-    return cc.AssetsManager;
-},
-
-/**
- * @method AssetsManager
- * @constructor
- * @param {String} arg0
- * @param {String} arg1
- */
-AssetsManager : function (
-str, 
-str 
-)
-{
-},
-
-};
-
-/**
- * @class EventListenerAssetsManager
- */
-cc.EventListenerAssetsManager = {
-
-/**
- * @method init
- * @param {cc.AssetsManager} arg0
- * @param {function} arg1
- * @return {bool}
- */
-init : function (
-assetsmanager, 
-func 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {cc.AssetsManager} arg0
- * @param {function} arg1
- * @return {cc.EventListenerAssetsManager}
- */
-create : function (
-assetsmanager, 
-func 
-)
-{
-    return cc.EventListenerAssetsManager;
-},
-
-/**
- * @method EventListenerAssetsManager
- * @constructor
- */
-EventListenerAssetsManager : function (
 )
 {
 },

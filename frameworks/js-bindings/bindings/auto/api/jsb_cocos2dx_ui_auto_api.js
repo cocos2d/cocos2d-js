@@ -227,13 +227,13 @@ getCustomSize : function (
 },
 
 /**
- * @method setFlippedY
- * @param {bool} arg0
+ * @method getLeftBoundary
+ * @return {float}
  */
-setFlippedY : function (
-bool 
+getLeftBoundary : function (
 )
 {
+    return 0;
 },
 
 /**
@@ -267,6 +267,16 @@ getVirtualRenderer : function (
 },
 
 /**
+ * @method setPropagateTouchEvents
+ * @param {bool} arg0
+ */
+setPropagateTouchEvents : function (
+bool 
+)
+{
+},
+
+/**
  * @method getSizePercent
  * @return {vec2_object}
  */
@@ -282,6 +292,16 @@ getSizePercent : function (
  */
 setPositionPercent : function (
 vec2 
+)
+{
+},
+
+/**
+ * @method setSwallowTouches
+ * @param {bool} arg0
+ */
+setSwallowTouches : function (
+bool 
 )
 {
 },
@@ -357,17 +377,15 @@ getLayoutParameter : function (
 },
 
 /**
- * @method findNextFocusedWidget
- * @param {ccui.Widget::FocusDirection} arg0
- * @param {ccui.Widget} arg1
- * @return {ccui.Widget}
+ * @method hitTest
+ * @param {vec2_object} arg0
+ * @return {bool}
  */
-findNextFocusedWidget : function (
-focusdirection, 
-widget 
+hitTest : function (
+vec2 
 )
 {
-    return ccui.Widget;
+    return false;
 },
 
 /**
@@ -398,6 +416,20 @@ ignoreContentAdaptWithSize : function (
 bool 
 )
 {
+},
+
+/**
+ * @method findNextFocusedWidget
+ * @param {ccui.Widget::FocusDirection} arg0
+ * @param {ccui.Widget} arg1
+ * @return {ccui.Widget}
+ */
+findNextFocusedWidget : function (
+focusdirection, 
+widget 
+)
+{
+    return ccui.Widget;
 },
 
 /**
@@ -461,6 +493,16 @@ getWorldPosition : function (
 },
 
 /**
+ * @method isFocusEnabled
+ * @return {bool}
+ */
+isFocusEnabled : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setFocused
  * @param {bool} arg0
  */
@@ -491,13 +533,13 @@ bool
 },
 
 /**
- * @method getLeftBoundary
- * @return {float}
+ * @method setFlippedY
+ * @param {bool} arg0
  */
-getLeftBoundary : function (
+setFlippedY : function (
+bool 
 )
 {
-    return 0;
 },
 
 /**
@@ -575,6 +617,16 @@ getBottomBoundary : function (
  * @return {bool}
  */
 isBright : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isPropagateTouchEvents
+ * @return {bool}
+ */
+isPropagateTouchEvents : function (
 )
 {
     return false;
@@ -675,15 +727,27 @@ getPositionPercent : function (
 },
 
 /**
- * @method hitTest
- * @param {vec2_object} arg0
- * @return {bool}
+ * @method propagateTouchEvent
+ * @param {ccui.Widget::TouchEventType} arg0
+ * @param {ccui.Widget} arg1
+ * @param {cc.Touch} arg2
  */
-hitTest : function (
-vec2 
+propagateTouchEvent : function (
+toucheventtype, 
+widget, 
+touch 
 )
 {
-    return false;
+},
+
+/**
+ * @method addClickEventListener
+ * @param {function} arg0
+ */
+addClickEventListener : function (
+func 
+)
+{
 },
 
 /**
@@ -751,10 +815,10 @@ bool
 },
 
 /**
- * @method isFocusEnabled
+ * @method isSwallowTouches
  * @return {bool}
  */
-isFocusEnabled : function (
+isSwallowTouches : function (
 )
 {
     return false;
@@ -1067,6 +1131,14 @@ getBackGroundImageTextureSize : function (
 },
 
 /**
+ * @method forceDoLayout
+ */
+forceDoLayout : function (
+)
+{
+},
+
+/**
  * @method getLayoutType
  * @return {ccui.Layout::Type}
  */
@@ -1180,6 +1252,26 @@ setScale9Enabled : function (
 bool 
 )
 {
+},
+
+/**
+ * @method getTitleRenderer
+ * @return {cc.Label}
+ */
+getTitleRenderer : function (
+)
+{
+    return cc.Label;
+},
+
+/**
+ * @method getZoomScale
+ * @return {float}
+ */
+getZoomScale : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -1403,6 +1495,16 @@ bool
 },
 
 /**
+ * @method setZoomScale
+ * @param {float} arg0
+ */
+setZoomScale : function (
+float 
+)
+{
+},
+
+/**
  * @method create
 * @param {String} str
 * @param {String} str
@@ -1447,16 +1549,6 @@ Button : function (
 ccui.CheckBox = {
 
 /**
- * @method getSelectedState
- * @return {bool}
- */
-getSelectedState : function (
-)
-{
-    return false;
-},
-
-/**
  * @method loadTextureBackGroundSelected
  * @param {String} arg0
  * @param {ccui.Widget::TextureResType} arg1
@@ -1481,6 +1573,16 @@ texturerestype
 },
 
 /**
+ * @method setSelected
+ * @param {bool} arg0
+ */
+setSelected : function (
+bool 
+)
+{
+},
+
+/**
  * @method loadTextureFrontCross
  * @param {String} arg0
  * @param {ccui.Widget::TextureResType} arg1
@@ -1490,6 +1592,16 @@ str,
 texturerestype 
 )
 {
+},
+
+/**
+ * @method isSelected
+ * @return {bool}
+ */
+isSelected : function (
+)
+{
+    return false;
 },
 
 /**
@@ -1542,16 +1654,6 @@ texturerestype
 loadTextureBackGround : function (
 str, 
 texturerestype 
-)
-{
-},
-
-/**
- * @method setSelectedState
- * @param {bool} arg0
- */
-setSelectedState : function (
-bool 
 )
 {
 },
@@ -1769,13 +1871,13 @@ disableEffect : function (
 },
 
 /**
- * @method getTextAreaSize
- * @return {size_object}
+ * @method getTextColor
+ * @return {color4b_object}
  */
-getTextAreaSize : function (
+getTextColor : function (
 )
 {
-    return cc.Size;
+    return cc.Color4B;
 },
 
 /**
@@ -1917,6 +2019,16 @@ int
 },
 
 /**
+ * @method setTextColor
+ * @param {color4b_object} arg0
+ */
+setTextColor : function (
+color4b 
+)
+{
+},
+
+/**
  * @method enableGlow
  * @param {color4b_object} arg0
  */
@@ -1934,6 +2046,16 @@ getTextVerticalAlignment : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getTextAreaSize
+ * @return {size_object}
+ */
+getTextAreaSize : function (
+)
+{
+    return cc.Size;
 },
 
 /**
@@ -3013,13 +3135,23 @@ getFontSize : function (
 },
 
 /**
- * @method getStringValue
+ * @method getString
  * @return {String}
  */
-getStringValue : function (
+getString : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setPasswordStyleText
+ * @param {char} arg0
+ */
+setPasswordStyleText : function (
+char 
+)
+{
 },
 
 /**
@@ -3078,6 +3210,16 @@ getInsertText : function (
  */
 setInsertText : function (
 bool 
+)
+{
+},
+
+/**
+ * @method setString
+ * @param {String} arg0
+ */
+setString : function (
+str 
 )
 {
 },
@@ -3159,6 +3301,16 @@ bool
 },
 
 /**
+ * @method getPlaceHolderColor
+ * @return {color4b_object}
+ */
+getPlaceHolderColor : function (
+)
+{
+    return cc.Color4B;
+},
+
+/**
  * @method getPasswordStyleText
  * @return {char}
  */
@@ -3179,13 +3331,13 @@ bool
 },
 
 /**
- * @method setPasswordStyleText
- * @param {char} arg0
+ * @method isPasswordEnabled
+ * @return {bool}
  */
-setPasswordStyleText : function (
-char 
+isPasswordEnabled : function (
 )
 {
+    return false;
 },
 
 /**
@@ -3219,13 +3371,13 @@ str
 },
 
 /**
- * @method isPasswordEnabled
- * @return {bool}
- */
-isPasswordEnabled : function (
+ * @method setPlaceHolderColor
+* @param {color4b_object|color3b_object} color4b
+*/
+setPlaceHolderColor : function(
+color3b 
 )
 {
-    return false;
 },
 
 /**
@@ -3234,6 +3386,16 @@ isPasswordEnabled : function (
  */
 setTextHorizontalAlignment : function (
 texthalignment 
+)
+{
+},
+
+/**
+ * @method setTextColor
+ * @param {color4b_object} arg0
+ */
+setTextColor : function (
+color4b 
 )
 {
 },
@@ -3264,16 +3426,6 @@ isMaxLengthEnabled : function (
  */
 setDetachWithIME : function (
 bool 
-)
-{
-},
-
-/**
- * @method setText
- * @param {String} arg0
- */
-setText : function (
-str 
 )
 {
 },
@@ -3453,6 +3605,16 @@ TextBMFont : function (
 ccui.PageView = {
 
 /**
+ * @method getCustomScrollThreshold
+ * @return {float}
+ */
+getCustomScrollThreshold : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getCurPageIndex
  * @return {long}
  */
@@ -3477,6 +3639,16 @@ bool
 },
 
 /**
+ * @method isUsingCustomScrollThreshold
+ * @return {bool}
+ */
+isUsingCustomScrollThreshold : function (
+)
+{
+    return false;
+},
+
+/**
  * @method getPage
  * @param {long} arg0
  * @return {ccui.Layout}
@@ -3494,6 +3666,26 @@ long
  */
 removePage : function (
 layout 
+)
+{
+},
+
+/**
+ * @method setUsingCustomScrollThreshold
+ * @param {bool} arg0
+ */
+setUsingCustomScrollThreshold : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setCustomScrollThreshold
+ * @param {float} arg0
+ */
+setCustomScrollThreshold : function (
+float 
 )
 {
 },
@@ -3593,6 +3785,22 @@ PageView : function (
  * @class Helper
  */
 ccui.Helper = {
+
+/**
+ * @method getSubStringOfUTF8String
+ * @param {String} arg0
+ * @param {unsigned long} arg1
+ * @param {unsigned long} arg2
+ * @return {String}
+ */
+getSubStringOfUTF8String : function (
+str, 
+long, 
+long 
+)
+{
+    return ;
+},
 
 /**
  * @method seekWidgetByTag

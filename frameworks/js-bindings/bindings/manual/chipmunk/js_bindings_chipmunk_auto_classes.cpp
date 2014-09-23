@@ -3120,7 +3120,7 @@ bool JSB_cpSpace_segmentQueryFirst(JSContext *cx, uint32_t argc, jsval *vp){
     ok &= jsval_to_cpVect( cx, argvp[0], &start );
 	ok &= jsval_to_cpVect( cx, argvp[1], &end );
     ok &= jsval_to_uint32( cx, argvp[2], &layers );
-	ok &= jsval_to_uint( cx, argvp[3], &group );
+	ok &= jsval_to_ulong( cx, argvp[3], &group );
 	JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     cpSegmentQueryInfo *out = new cpSegmentQueryInfo();
@@ -3164,7 +3164,7 @@ bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *v
         maxDistance = JSVAL_TO_DOUBLE(argvp[1]);
     }
     ok &= jsval_to_uint32( cx, argvp[2], &layers );
-    ok &= jsval_to_uint( cx, argvp[3], &group );
+    ok &= jsval_to_ulong( cx, argvp[3], &group );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     cpNearestPointQueryInfo* info = new cpNearestPointQueryInfo();
