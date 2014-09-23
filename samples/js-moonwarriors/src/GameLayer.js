@@ -56,7 +56,7 @@ var GameLayer = cc.Layer.extend({
         // OpaqueBatch
         var texOpaque = cc.textureCache.addImage(res.textureOpaquePack_png);
         this._texOpaqueBatch = new cc.SpriteBatchNode(texOpaque);
-        this._texOpaqueBatch.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
+        //this._texOpaqueBatch.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
         this.addChild(this._texOpaqueBatch);
 
         // TransparentBatch
