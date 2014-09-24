@@ -1,5 +1,3 @@
-![](https://travis-ci.org/cocos2d/cocos2d-js.svg?branch=master)
-
 <img src="http://www.cocos2d-x.org/attachments/1508/2dh5-logo.png" width=200>
 
 Cocos2d-JS
@@ -45,7 +43,7 @@ Furthermore, JavaScript friendly APIs make your game development experience a br
 
 With any problems you might have, our communities are happy to help:
 
-- [Online forum](http://discuss.cocos2d-x.org/category/javascript)
+- [Online forum](http://discuss.cocos2d-x.org/category/cocos2d-x/javascript)
 - [Document root](http://cocos2d-x.org/docs/manual/framework/html5/en)
 - [Github repository](https://github.com/cocos2d/cocos2d-js)
 
@@ -164,6 +162,7 @@ If you fork our github repository or download the package from github, you will 
 
 - Run `frameworks/js-bindings/cocos2d-x/download-deps.py` to download external dependencies for Cocos2d-x
 - Run `tools/cocos2d-console/download-bin.py` to download bin files for some cocos2d-console plugins like Google Closure Compiler and JSC Compiler.
+- Run `git submodule update --init --recursive` in the `cocos2d-js` root folder, to init and update submodules recursively, such as `cocos2dx/plugin`.
 
 Otherwise, you will fail to compile your JSB projects.
 
