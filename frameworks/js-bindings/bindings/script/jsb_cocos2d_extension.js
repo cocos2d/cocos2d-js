@@ -196,7 +196,7 @@ cc.Scale9Sprite.POSITIONS_TOPLEFT = 6;
 cc.Scale9Sprite.POSITIONS_BOTTOMRIGHT = 7;
 cc.Scale9Sprite.POSITIONS_BOTTOMLEFT = 8;
 
-
+/*
 jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST = 0;
 jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST = 1;
 jsb.EventAssetsManager.ERROR_PARSE_MANIFEST = 2;
@@ -208,7 +208,7 @@ jsb.EventAssetsManager.ERROR_UPDATING = 7;
 jsb.EventAssetsManager.UPDATE_FINISHED = 8;
 jsb.EventAssetsManager.UPDATE_FAILED = 9;
 jsb.EventAssetsManager.ERROR_DECOMPRESS = 10;
-
+*/
 // PhysicsDebugNode
 cc.PhysicsDebugNode.create = function( space ) {
     var s = space;
