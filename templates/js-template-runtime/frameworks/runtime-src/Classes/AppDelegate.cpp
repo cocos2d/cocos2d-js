@@ -33,6 +33,10 @@ using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
 {
+#if (COCOS2D_DEBUG > 0)
+    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+    initRuntime();
+#endif
 }
 
 AppDelegate::~AppDelegate()
@@ -42,11 +46,6 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    
-#if (COCOS2D_DEBUG > 0)
-    initRuntime();
-#endif
-
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();    
@@ -97,15 +96,15 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     
 #if (COCOS2D_DEBUG > 0)
-    if (startRuntime())
-        return true;
-#endif
-
+    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+    startRuntime();
+#else
     sc->start();
     sc->runScript("script/jsb_boot.js");
     auto engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
+#endif
     
     return true;
 }
