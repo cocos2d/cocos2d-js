@@ -90,11 +90,11 @@ ccui.RichElementImage.prototype._ctor = function(tag, color, opacity, filePath){
 ccui.RichElementCustomNode.prototype._ctor = function(tag, color, opacity, customNode){
     customNode !== undefined && this.init(tag, color, opacity, customNode);
 };
-
+/*
 jsb.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callback) {
     callback && this.init(assetsManager, callback);
 };
-
+*/
 cc.Scale9Sprite.prototype._ctor = function(file, rect, capInsets){
     rect = rect || cc.rect(0, 0, 0, 0);
     capInsets = capInsets || cc.rect(0, 0, 0, 0);

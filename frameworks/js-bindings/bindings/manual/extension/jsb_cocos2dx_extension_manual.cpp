@@ -557,7 +557,7 @@ static bool js_cocos2dx_CCTableView_init(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "wrong number of arguments");
     return false;
 }
-
+/*
 class JSB_EditBoxDelegate
 : public Ref
 , public EditBoxDelegate
@@ -661,7 +661,7 @@ static bool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-
+*/
 
 
 class JSB_ControlButtonTarget : public Ref
@@ -1006,7 +1006,7 @@ bool js_cocos2dx_ext_release(JSContext *cx, uint32_t argc, jsval *vp)
 	return false;
 }
 
-
+/*
 __JSDownloaderDelegator::__JSDownloaderDelegator(JSContext *cx, JSObject *obj, const std::string &url, const jsval &callback)
 : _cx(cx)
 , _obj(obj)
@@ -1130,20 +1130,20 @@ bool js_load_remote_image(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_load_remote_image : wrong number of arguments");
     return false;
 }
-
+*/
 extern JSObject* jsb_cocos2d_extension_ScrollView_prototype;
 extern JSObject* jsb_cocos2d_extension_TableView_prototype;
-extern JSObject* jsb_cocos2d_extension_EditBox_prototype;
+//extern JSObject* jsb_cocos2d_extension_EditBox_prototype;
 extern JSObject* jsb_cocos2d_extension_Control_prototype;
-extern JSObject* jsb_cocos2d_extension_AssetsManager_prototype;
-extern JSObject* jsb_cocos2d_extension_Manifest_prototype;
+//extern JSObject* jsb_cocos2d_extension_AssetsManager_prototype;
+//extern JSObject* jsb_cocos2d_extension_Manifest_prototype;
 
 void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global)
 {
-    JS_DefineFunction(cx, jsb_cocos2d_extension_AssetsManager_prototype, "retain", js_cocos2dx_ext_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, jsb_cocos2d_extension_AssetsManager_prototype, "release", js_cocos2dx_ext_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_cocos2d_extension_Manifest_prototype, "retain", js_cocos2dx_ext_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, jsb_cocos2d_extension_Manifest_prototype, "release", js_cocos2dx_ext_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, jsb_cocos2d_extension_AssetsManager_prototype, "retain", js_cocos2dx_ext_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//	JS_DefineFunction(cx, jsb_cocos2d_extension_AssetsManager_prototype, "release", js_cocos2dx_ext_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, jsb_cocos2d_extension_Manifest_prototype, "retain", js_cocos2dx_ext_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//	JS_DefineFunction(cx, jsb_cocos2d_extension_Manifest_prototype, "release", js_cocos2dx_ext_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     //JS_DefineFunction(cx, jsb_cocos2d_extension_AssetsManager_prototype, "updateAssets", js_cocos2dx_ext_AssetsManager_updateAssets, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	//JS_DefineFunction(cx, jsb_cocos2d_extension_AssetsManager_prototype, "getFailedAssets", js_cocos2dx_ext_AssetsManager_getFailedAssets, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -1152,16 +1152,17 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_cocos2d_extension_TableView_prototype, "setDelegate", js_cocos2dx_CCTableView_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_extension_TableView_prototype, "setDataSource", js_cocos2dx_CCTableView_setDataSource, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_extension_TableView_prototype, "_init", js_cocos2dx_CCTableView_init, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_cocos2d_extension_EditBox_prototype, "setDelegate", js_cocos2dx_CCEditBox_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, jsb_cocos2d_extension_EditBox_prototype, "setDelegate", js_cocos2dx_CCEditBox_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_extension_Control_prototype, "addTargetWithActionForControlEvents", js_cocos2dx_CCControl_addTargetWithActionForControlEvents, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_extension_Control_prototype, "removeTargetWithActionForControlEvents", js_cocos2dx_CCControl_removeTargetWithActionForControlEvents, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     JSObject *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.TableView; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCTableView_create, 3, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    
+    /*
     JS::RootedObject jsbObj(cx);
 	create_js_root_obj(cx, global, "jsb", &jsbObj);
     
     JS_DefineFunction(cx, jsbObj, "loadRemoteImg", js_load_remote_image, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+     */
 }

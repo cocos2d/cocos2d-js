@@ -678,10 +678,8 @@ var DemoExplosion = ParticleDemo.extend({
         this._emitter.setAutoRemoveOnFinish(true);
 
         this.setEmitterPosition();
-        this._emitter.retain();
     },
     onExit: function() {
-        this._emitter.release();
         this._super();
     },
     title:function () {

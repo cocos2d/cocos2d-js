@@ -3105,6 +3105,86 @@ bool JSB_cpSpace_useSpatialHash(JSContext *cx, uint32_t argc, jsval *vp) {
 	return true;
 }
 
+
+bool JSB_cpSpace_segmentQueryFirst(JSContext *cx, uint32_t argc, jsval *vp){
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+	cpSpace* space = (cpSpace*) proxy->handle;
+	jsval *argvp = JS_ARGV(cx,vp);
+
+    cpVect start;
+    cpVect end;
+    cpLayers layers;
+    cpGroup group;
+    bool ok = true;
+    ok &= jsval_to_cpVect( cx, argvp[0], &start );
+	ok &= jsval_to_cpVect( cx, argvp[1], &end );
+    ok &= jsval_to_uint32( cx, argvp[2], &layers );
+	ok &= jsval_to_ulong( cx, argvp[3], &group );
+	JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+    cpSegmentQueryInfo *out = new cpSegmentQueryInfo();
+    cpShape* target = cpSpaceSegmentQueryFirst(space, start, end, layers, group, out);
+
+    if(target)
+    {
+        JSObject *jsobj = JS_NewObject(cx, JSB_cpSegmentQueryInfo_class, JSB_cpSegmentQueryInfo_object, NULL);
+	    jsb_set_jsobject_for_proxy(jsobj, out);
+	    jsb_set_c_proxy_for_jsobject(jsobj, out, JSB_C_FLAG_CALL_FREE);
+	    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+    }
+    else
+    {
+        delete out;
+        JS_SET_RVAL(cx, vp, JSVAL_NULL);
+    }
+    return true;
+}
+
+bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *vp){
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*) proxy->handle;
+    jsval *argvp = JS_ARGV(cx,vp);
+
+    cpVect point;
+    cpFloat maxDistance;
+    cpLayers layers;
+    cpGroup group;
+    bool ok = true;
+    ok &= jsval_to_cpVect( cx, argvp[0], &point );
+    if(JSVAL_IS_INT(argvp[1]))
+    {
+        int arg1;
+        ok &= jsval_to_int(cx, argvp[1], &arg1);
+        maxDistance = (cpFloat) arg1;
+    }
+    else
+    {
+        maxDistance = JSVAL_TO_DOUBLE(argvp[1]);
+    }
+    ok &= jsval_to_uint32( cx, argvp[2], &layers );
+    ok &= jsval_to_ulong( cx, argvp[3], &group );
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+    cpNearestPointQueryInfo* info = new cpNearestPointQueryInfo();
+    cpShape* target = cpSpaceNearestPointQueryNearest(space, point, maxDistance, layers, group, info);
+
+    if(target)
+    {
+        JSObject *jsobj = JS_NewObject(cx, JSB_cpNearestPointQueryInfo_class, JSB_cpNearestPointQueryInfo_object, NULL);
+        jsb_set_jsobject_for_proxy(jsobj, info);
+        jsb_set_c_proxy_for_jsobject(jsobj, info, JSB_C_FLAG_CALL_FREE);
+        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));    
+    }
+    else
+    {
+        delete info;
+        JS_SET_RVAL(cx, vp, JSVAL_NULL);
+    }
+    return true;
+}
+
 void JSB_cpSpace_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSB_cpSpace_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -3166,6 +3246,8 @@ void JSB_cpSpace_createClass(JSContext *cx, JSObject* globalObj, const char* nam
 		JS_FN("addConstraint", JSB_cpSpace_addConstraint, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("addBody", JSB_cpSpace_addBody, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("removeShape", JSB_cpSpace_removeShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("segmentQueryFirst", JSB_cpSpace_segmentQueryFirst, 4, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+        JS_FN("nearestPointQueryNearest", JSB_cpSpace_nearestPointQueryNearest, 4, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -4487,6 +4569,76 @@ bool JSB_cpShape_update(JSContext *cx, uint32_t argc, jsval *vp) {
 	return true;
 }
 
+// Arguments: void
+// Ret value: cpBool
+bool JSB_cpShape_active(JSContext *cx, uint32_t argc, jsval *vp){
+    JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
+
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+	cpShape* arg0 = (cpShape*) proxy->handle;
+
+    bool active = cpShapeActive(arg0);
+    jsval retval = BOOLEAN_TO_JSVAL(active);
+    JS_SET_RVAL(cx, vp, retval);
+    return true;
+}
+
+static bool js_get_cpShape_bbl(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    vp.setNumber(shape->bb.l);
+    return true;
+}
+
+static bool js_set_cpShape_bbl(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    shape->bb.l = JSVAL_TO_DOUBLE(vp.get());
+    return true;
+}
+
+static bool js_get_cpShape_bbb(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    vp.setNumber(shape->bb.b);
+    return true;
+}
+
+static bool js_set_cpShape_bbb(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    shape->bb.b = JSVAL_TO_DOUBLE(vp.get());
+    return true;
+}
+static bool js_get_cpShape_bbr(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    vp.setNumber(shape->bb.r);
+    return true;
+}
+
+static bool js_set_cpShape_bbr(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    shape->bb.r = JSVAL_TO_DOUBLE(vp.get());
+    return true;
+}
+
+static bool js_get_cpShape_bbt(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    vp.setNumber(shape->bb.t);
+    return true;
+}
+
+static bool js_set_cpShape_bbt(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpShape* shape = (cpShape*) proxy->handle;
+    shape->bb.t = JSVAL_TO_DOUBLE(vp.get());
+    return true;
+}
+
 void JSB_cpShape_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSB_cpShape_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -4502,7 +4654,11 @@ void JSB_cpShape_createClass(JSContext *cx, JSObject* globalObj, const char* nam
 	JSB_cpShape_class->flags = JSCLASS_HAS_PRIVATE;
 
 	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
+        {"bb_l", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpShape_bbl), JSOP_WRAPPER(js_set_cpShape_bbl)},
+        {"bb_b", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpShape_bbb), JSOP_WRAPPER(js_set_cpShape_bbb)},
+        {"bb_r", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpShape_bbr), JSOP_WRAPPER(js_set_cpShape_bbr)},
+        {"bb_t", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpShape_bbt), JSOP_WRAPPER(js_set_cpShape_bbt)},
+        {0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("cacheBB", JSB_cpShape_cacheBB, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
@@ -4527,6 +4683,7 @@ void JSB_cpShape_createClass(JSContext *cx, JSObject* globalObj, const char* nam
 		JS_FN("setSensor", JSB_cpShape_setSensor, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("setSurfaceVelocity", JSB_cpShape_setSurfaceVelocity, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("update", JSB_cpShape_update, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("active", JSB_cpShape_active, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -4913,5 +5070,273 @@ void JSB_cpPolyShape_createClass(JSContext *cx, JSObject* globalObj, const char*
 //	JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 }
 
+bool JSB_cpSegmentQueryInfo_hitPoint(JSContext *cx, uint32_t argc, jsval *vp){
+    JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
 
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+	cpSegmentQueryInfo* info = (cpSegmentQueryInfo*) proxy->handle;
+	jsval *argvp = JS_ARGV(cx,vp);
+
+    cpVect start;
+    cpVect end;
+    
+    bool ok = true;
+    ok &= jsval_to_cpVect( cx, argvp[0], &start );
+	ok &= jsval_to_cpVect( cx, argvp[1], &end );
+	JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+    cpVect ret = cpSegmentQueryHitPoint(start, end, *info);
+
+    jsval ret_jsval = cpVect_to_jsval( cx, ret );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+    return true;
+}
+
+bool JSB_cpSegmentQueryInfo_hitDist(JSContext *cx, uint32_t argc, jsval *vp){
+    JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
+
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+	cpSegmentQueryInfo* info = (cpSegmentQueryInfo*) proxy->handle;
+	jsval *argvp = JS_ARGV(cx,vp);
+
+    cpVect start;
+    cpVect end;
+    
+    bool ok = true;
+    ok &= jsval_to_cpVect( cx, argvp[0], &start );
+	ok &= jsval_to_cpVect( cx, argvp[1], &end );
+	JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+    float ret = cpSegmentQueryHitDist(start, end, *info);
+
+    jsval ret_jsval = DOUBLE_TO_JSVAL(ret);
+	JS_SET_RVAL(cx, vp, ret_jsval);
+    return true;
+}
+
+JSClass* JSB_cpSegmentQueryInfo_class = NULL;
+JSObject* JSB_cpSegmentQueryInfo_object = NULL;
+
+// Destructor
+void JSB_cpSegmentQueryInfo_finalize(JSFreeOp *fop, JSObject *jsthis)
+{
+	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+	if( proxy ) {
+		CCLOGINFO("jsbindings: finalizing JS object %p (cpSegmentQueryInfo), handle: %p", jsthis, proxy->handle);
+
+		jsb_del_jsobject_for_proxy(proxy->handle);
+		if(proxy->flags == JSB_C_FLAG_CALL_FREE)
+			delete ( (cpSegmentQueryInfo*)proxy->handle);
+		jsb_del_c_proxy_for_jsobject(jsthis);
+	} else {
+		CCLOGINFO("jsbindings: finalizing uninitialized JS object %p (cpSegmentQueryInfo)", jsthis);
+	}
+}
+
+bool js_get_cpSegmentQueryInfo_shape(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpSegmentQueryInfo* info = (cpSegmentQueryInfo*) proxy->handle;
+    cpShape* shape = info->shape;
+    
+    if(shape){
+        JSObject *jsobj = JS_NewObject(cx, JSB_cpShape_class, JSB_cpShape_object, NULL);
+        //jsb_set_jsobject_for_proxy(jsobj, shape);
+	    jsb_set_c_proxy_for_jsobject(jsobj, shape, JSB_C_FLAG_DO_NOT_CALL_FREE);
+        vp.set(OBJECT_TO_JSVAL(jsobj));
+    }else{
+        vp.setNull();
+    }
+    
+    return true;
+}
+
+bool js_set_cpSegmentQueryInfo_shape(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
+{
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpSegmentQueryInfo* info = (cpSegmentQueryInfo*) proxy->handle;
+
+    cpShape* shape;
+    struct jsb_c_proxy_s *retproxy;
+	jsval_to_c_class( cx, vp.get(), (void**)&shape, &retproxy );
+
+    info->shape = shape;
+    return true;
+}
+
+bool js_get_cpSegmentQueryInfo_t(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpSegmentQueryInfo* info = (cpSegmentQueryInfo*) proxy->handle;
+    vp.setNumber(info->t);
+    return true;
+}
+
+bool js_set_cpSegmentQueryInfo_t(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpSegmentQueryInfo* info = (cpSegmentQueryInfo*) proxy->handle;
+    info->t = JSVAL_TO_DOUBLE(vp.get());
+    return true;
+}
+
+bool js_get_cpSegmentQueryInfo_n(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpSegmentQueryInfo* info = (cpSegmentQueryInfo*) proxy->handle;
+    vp.set(cpVect_to_jsval(cx, info->n));
+    return true;
+}
+
+bool js_set_cpSegmentQueryInfo_n(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpSegmentQueryInfo* info = (cpSegmentQueryInfo*) proxy->handle;
+    cpVect v;
+    bool ok = jsval_to_cpVect(cx, vp.get(), &v);
+    if(ok)
+        info->n = v;
+    return true;
+}
+
+void JSB_cpSegmentQueryInfo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSB_cpSegmentQueryInfo_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSB_cpSegmentQueryInfo_class->name = name;
+	JSB_cpSegmentQueryInfo_class->addProperty = JS_PropertyStub;
+	JSB_cpSegmentQueryInfo_class->delProperty = JS_DeletePropertyStub;
+	JSB_cpSegmentQueryInfo_class->getProperty = JS_PropertyStub;
+	JSB_cpSegmentQueryInfo_class->setProperty = JS_StrictPropertyStub;
+	JSB_cpSegmentQueryInfo_class->enumerate = JS_EnumerateStub;
+	JSB_cpSegmentQueryInfo_class->resolve = JS_ResolveStub;
+	JSB_cpSegmentQueryInfo_class->convert = JS_ConvertStub;
+	JSB_cpSegmentQueryInfo_class->finalize = JSB_cpSegmentQueryInfo_finalize;
+	JSB_cpSegmentQueryInfo_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+        {"shape", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpSegmentQueryInfo_shape), JSOP_WRAPPER(js_set_cpSegmentQueryInfo_shape)},
+        {"t", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpSegmentQueryInfo_t), JSOP_WRAPPER(js_set_cpSegmentQueryInfo_t)},
+        {"n", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpSegmentQueryInfo_n), JSOP_WRAPPER(js_set_cpSegmentQueryInfo_n)},
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("hitPoint", JSB_cpSegmentQueryInfo_hitPoint, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("hitDist", JSB_cpSegmentQueryInfo_hitDist, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FS_END
+	};
+
+	JSB_cpSegmentQueryInfo_object = JS_InitClass(cx, globalObj, NULL, JSB_cpSegmentQueryInfo_class, NULL,0,properties,funcs,NULL,st_funcs);
+//	bool found;
+//	JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+}
+
+bool js_get_cpNearestPointQueryInfo_shape(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpNearestPointQueryInfo* info = (cpNearestPointQueryInfo*) proxy->handle;
+    cpShape* shape = info->shape;
+    
+    if(shape){
+        JSObject *jsobj = JS_NewObject(cx, JSB_cpShape_class, JSB_cpShape_object, NULL);
+        //jsb_set_jsobject_for_proxy(jsobj, shape);
+	    jsb_set_c_proxy_for_jsobject(jsobj, shape, JSB_C_FLAG_DO_NOT_CALL_FREE);
+        vp.set(OBJECT_TO_JSVAL(jsobj));
+    }else{
+        vp.setNull();
+    }
+    
+    return true;
+}
+
+bool js_set_cpNearestPointQueryInfo_shape(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
+{
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpNearestPointQueryInfo* info = (cpNearestPointQueryInfo*) proxy->handle;
+
+    cpShape* shape;
+    struct jsb_c_proxy_s *retproxy;
+	jsval_to_c_class( cx, vp.get(), (void**)&shape, &retproxy );
+
+    info->shape = shape;
+    return true;
+}
+
+bool js_get_cpNearestPointQueryInfo_p(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpNearestPointQueryInfo* info = (cpNearestPointQueryInfo*) proxy->handle;
+    vp.set(cpVect_to_jsval(cx, info->p));
+    return true;
+}
+
+bool js_set_cpNearestPointQueryInfo_p(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpNearestPointQueryInfo* info = (cpNearestPointQueryInfo*) proxy->handle;
+    cpVect v;
+    bool ok = jsval_to_cpVect(cx, vp.get(), &v);
+    if(ok)
+        info->p = v;
+    return true;
+}
+
+bool js_get_cpNearestPointQueryInfo_d(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpNearestPointQueryInfo* info = (cpNearestPointQueryInfo*) proxy->handle;
+    vp.setNumber(info->d);
+    return true;
+}
+
+bool js_set_cpNearestPointQueryInfo_d(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp){
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+	cpNearestPointQueryInfo* info = (cpNearestPointQueryInfo*) proxy->handle;
+    info->d = JSVAL_TO_DOUBLE(vp.get());
+    return true;
+}
+
+JSClass* JSB_cpNearestPointQueryInfo_class = NULL;
+JSObject* JSB_cpNearestPointQueryInfo_object = NULL;
+
+// Destructor
+void JSB_cpNearestPointQueryInfo_finalize(JSFreeOp *fop, JSObject *jsthis)
+{
+	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+	if( proxy ) {
+		CCLOGINFO("jsbindings: finalizing JS object %p (cpSegmentQueryInfo), handle: %p", jsthis, proxy->handle);
+
+		jsb_del_jsobject_for_proxy(proxy->handle);
+		if(proxy->flags == JSB_C_FLAG_CALL_FREE)
+			delete ( (cpNearestPointQueryInfo*)proxy->handle);
+		jsb_del_c_proxy_for_jsobject(jsthis);
+	} else {
+		CCLOGINFO("jsbindings: finalizing uninitialized JS object %p (cpSegmentQueryInfo)", jsthis);
+	}
+}
+
+void JSB_cpNearestPointQueryInfo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+    JSB_cpNearestPointQueryInfo_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSB_cpNearestPointQueryInfo_class->name = name;
+	JSB_cpNearestPointQueryInfo_class->addProperty = JS_PropertyStub;
+	JSB_cpNearestPointQueryInfo_class->delProperty = JS_DeletePropertyStub;
+	JSB_cpNearestPointQueryInfo_class->getProperty = JS_PropertyStub;
+	JSB_cpNearestPointQueryInfo_class->setProperty = JS_StrictPropertyStub;
+	JSB_cpNearestPointQueryInfo_class->enumerate = JS_EnumerateStub;
+	JSB_cpNearestPointQueryInfo_class->resolve = JS_ResolveStub;
+	JSB_cpNearestPointQueryInfo_class->convert = JS_ConvertStub;
+	JSB_cpNearestPointQueryInfo_class->finalize = JSB_cpNearestPointQueryInfo_finalize;
+	JSB_cpNearestPointQueryInfo_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+        {"shape", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpNearestPointQueryInfo_shape), JSOP_WRAPPER(js_set_cpNearestPointQueryInfo_shape)},
+        {"p", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpNearestPointQueryInfo_p), JSOP_WRAPPER(js_set_cpNearestPointQueryInfo_p)},
+        {"d", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpNearestPointQueryInfo_d), JSOP_WRAPPER(js_set_cpNearestPointQueryInfo_d)},
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FS_END
+	};
+
+	JSB_cpNearestPointQueryInfo_object = JS_InitClass(cx, globalObj, NULL, JSB_cpNearestPointQueryInfo_class, NULL,0,properties,funcs,NULL,st_funcs);
+}
 #endif // JSB_INCLUDE_CHIPMUNK

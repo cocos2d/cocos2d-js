@@ -25,12 +25,6 @@ THE SOFTWARE.
 #ifndef  _RUNTIME__H_
 #define  _RUNTIME__H_
 
-#include <string>
-#include <vector>
-using namespace std;
-
-#define _MAX_PATH_ 512
-
 bool initRuntime();
 
 bool startRuntime();

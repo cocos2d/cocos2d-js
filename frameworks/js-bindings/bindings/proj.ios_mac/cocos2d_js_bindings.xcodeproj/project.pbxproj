@@ -839,7 +839,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../../external/spidermonkey/prebuilt/mac",
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../external/spidermonkey/include/mac $(SRCROOT)/../../cocos2d-x/cocos/platform/mac $(SRCROOT)/../../cocos2d-x/external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../external/spidermonkey/include/mac $(SRCROOT)/../../cocos2d-x/cocos/platform/mac $(SRCROOT)/../../cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../../external/chipmunk/include";
 			};
 			name = Debug;
 		};
@@ -859,7 +859,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../../external/spidermonkey/prebuilt/mac",
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../external/spidermonkey/include/mac $(SRCROOT)/../../cocos2d-x/cocos/platform/mac $(SRCROOT)/../../cocos2d-x/external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../external/spidermonkey/include/mac $(SRCROOT)/../../cocos2d-x/cocos/platform/mac $(SRCROOT)/../../cocos2d-x/external/glfw3/include/mac $(SRCROOT)/../../external/chipmunk/include";
 			};
 			name = Release;
 		};

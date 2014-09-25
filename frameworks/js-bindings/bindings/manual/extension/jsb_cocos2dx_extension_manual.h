@@ -26,7 +26,7 @@
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "extensions/assets-manager/Downloader.h"
+/*#include "extensions/assets-manager/Downloader.h"
 
 class CC_DLL __JSDownloaderDelegator : cocos2d::Ref
 {
@@ -47,7 +47,7 @@ private:
     std::string _url;
     JSContext *_cx;
     JSObject *_obj;
-};
+};*/
 
 void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global);
 

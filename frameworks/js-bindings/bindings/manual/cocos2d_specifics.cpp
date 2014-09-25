@@ -910,29 +910,38 @@ static bool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
             JSObject* thisObj = JSVAL_IS_VOID(jsvalThis) ? nullptr : JSVAL_TO_OBJECT(jsvalThis);
             
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-            
-            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, sender);
-            
-            jsval retval;
-            if(jsvalCallback != JSVAL_VOID)
+
+            if(sender)
             {
-                if (hasExtraData)
+                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, sender);
+            
+                jsval retval;
+                if(jsvalCallback != JSVAL_VOID)
                 {
-                    jsval valArr[2];
-                    valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
-                    valArr[1] = jsvalExtraData;
-                    
-                    JS_AddValueRoot(cx, valArr);
-                    JS_CallFunctionValue(cx, thisObj, jsvalCallback, 2, valArr, &retval);
-                    JS_RemoveValueRoot(cx, valArr);
+                    if (hasExtraData)
+                    {
+                        jsval valArr[2];
+                        valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
+                        valArr[1] = jsvalExtraData;
+                        
+                        JS_AddValueRoot(cx, valArr);
+                        JS_CallFunctionValue(cx, thisObj, jsvalCallback, 2, valArr, &retval);
+                        JS_RemoveValueRoot(cx, valArr);
+                    }
+                    else
+                    {
+                        jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
+                        JS_AddValueRoot(cx, &senderVal);
+                        JS_CallFunctionValue(cx, thisObj, jsvalCallback, 1, &senderVal, &retval);
+                        JS_RemoveValueRoot(cx, &senderVal);
+                    }
                 }
-                else
-                {
-                    jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
-                    JS_AddValueRoot(cx, &senderVal);
-                    JS_CallFunctionValue(cx, thisObj, jsvalCallback, 1, &senderVal, &retval);
-                    JS_RemoveValueRoot(cx, &senderVal);
-                }
+            }
+            else
+            {
+                jsval arg;
+                jsval ret;
+                JS_CallFunctionValue(cx, thisObj, jsvalCallback, 0, &arg, &ret);
             }
             
             // I think the JSCallFuncWrapper isn't needed.
@@ -990,29 +999,39 @@ bool js_cocos2dx_CallFunc_initWithFunction(JSContext *cx, uint32_t argc, jsval *
             
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             
-            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, sender);
-            
-            jsval retval;
-            if(jsvalCallback != JSVAL_VOID)
+            if(sender)
             {
-                if (hasExtraData)
+                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, sender);
+            
+                jsval retval;
+                if(jsvalCallback != JSVAL_VOID)
                 {
-                    jsval valArr[2];
-                    valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
-                    valArr[1] = jsvalExtraData;
-                    
-                    JS_AddValueRoot(cx, valArr);
-                    JS_CallFunctionValue(cx, thisObj, jsvalCallback, 2, valArr, &retval);
-                    JS_RemoveValueRoot(cx, valArr);
-                }
-                else
-                {
-                    jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
-                    JS_AddValueRoot(cx, &senderVal);
-                    JS_CallFunctionValue(cx, thisObj, jsvalCallback, 1, &senderVal, &retval);
-                    JS_RemoveValueRoot(cx, &senderVal);
+                    if (hasExtraData)
+                    {
+                        jsval valArr[2];
+                        valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
+                        valArr[1] = jsvalExtraData;
+                        
+                        JS_AddValueRoot(cx, valArr);
+                        JS_CallFunctionValue(cx, thisObj, jsvalCallback, 2, valArr, &retval);
+                        JS_RemoveValueRoot(cx, valArr);
+                    }
+                    else
+                    {
+                        jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
+                        JS_AddValueRoot(cx, &senderVal);
+                        JS_CallFunctionValue(cx, thisObj, jsvalCallback, 1, &senderVal, &retval);
+                        JS_RemoveValueRoot(cx, &senderVal);
+                    }
                 }
             }
+            else
+            {
+                jsval arg;
+                jsval ret;
+                JS_CallFunctionValue(cx, thisObj, jsvalCallback, 0, &arg, &ret);
+            }
+            
             
             // I think the JSCallFuncWrapper isn't needed.
             // Since an action will be run by a cc.Node, it will be released at the Node::cleanup.

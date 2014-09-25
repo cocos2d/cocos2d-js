@@ -150,10 +150,10 @@ var ChipmunkSprite = ChipmunkBaseLayer.extend( {
         var staticBody = space.staticBody;
 
         // Walls
-        var walls = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),				// bottom
-            new cp.SegmentShape( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),	// top
-            new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),				// left
-            new cp.SegmentShape( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)	// right
+        var walls = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),               // bottom
+            new cp.SegmentShape( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),    // top
+            new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),             // left
+            new cp.SegmentShape( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)  // right
         ];
         for( var i=0; i < walls.length; i++ ) {
             var shape = walls[i];
@@ -260,103 +260,103 @@ var ChipmunkCollisionTest = ChipmunkBaseLayer.extend( {
         this._subtitle = 'Using Object Oriented API. ** Use this API **';
     },
 
-	// init physics
+    // init physics
     initPhysics : function() {
-		var staticBody = this.space.staticBody;
+        var staticBody = this.space.staticBody;
 
-		// Walls
-		var walls = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),				// bottom
-				new cp.SegmentShape( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),	// top
-				new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),				// left
-				new cp.SegmentShape( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)	// right
-				];
-		for( var i=0; i < walls.length; i++ ) {
-			var wall = walls[i];
-			wall.setElasticity(1);
-			wall.setFriction(1);
-			this.space.addStaticShape( wall );
-		}
+        // Walls
+        var walls = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),               // bottom
+                new cp.SegmentShape( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),    // top
+                new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),             // left
+                new cp.SegmentShape( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)  // right
+                ];
+        for( var i=0; i < walls.length; i++ ) {
+            var wall = walls[i];
+            wall.setElasticity(1);
+            wall.setFriction(1);
+            this.space.addStaticShape( wall );
+        }
 
-		// Gravity:
-		// testing properties
-		this.space.gravity = cp.v(0,-100);
-		this.space.iterations = 15;
-	},
+        // Gravity:
+        // testing properties
+        this.space.gravity = cp.v(0,-100);
+        this.space.iterations = 15;
+    },
 
-	createPhysicsSprite : function( pos, file, collision_type ) {
-		var body = new cp.Body(1, cp.momentForBox(1, 48, 108) );
-		body.setPos(pos);
-		this.space.addBody(body);
-		var shape = new cp.BoxShape( body, 48, 108);
-		shape.setElasticity( 0.5 );
-		shape.setFriction( 0.5 );
-		shape.setCollisionType( collision_type );
-		this.space.addShape( shape );
+    createPhysicsSprite : function( pos, file, collision_type ) {
+        var body = new cp.Body(1, cp.momentForBox(1, 48, 108) );
+        body.setPos(pos);
+        this.space.addBody(body);
+        var shape = new cp.BoxShape( body, 48, 108);
+        shape.setElasticity( 0.5 );
+        shape.setFriction( 0.5 );
+        shape.setCollisionType( collision_type );
+        this.space.addShape( shape );
 
-		var sprite = new cc.PhysicsSprite(file);
-		sprite.setBody( body );
-		return sprite;
-	},
+        var sprite = new cc.PhysicsSprite(file);
+        sprite.setBody( body );
+        return sprite;
+    },
 
-	onEnter : function () {
-		ChipmunkBaseLayer.prototype.onEnter.call(this);
-		// cc.base(this, 'onEnter');
+    onEnter : function () {
+        ChipmunkBaseLayer.prototype.onEnter.call(this);
+        // cc.base(this, 'onEnter');
 
         this.initPhysics();
-		this.scheduleUpdate();
+        this.scheduleUpdate();
 
-		var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), s_pathGrossini, 1);
-		var sprite2 = this.createPhysicsSprite( cc.p(winSize.width/2, 50), s_pathSister1, 2);
+        var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), s_pathGrossini, 1);
+        var sprite2 = this.createPhysicsSprite( cc.p(winSize.width/2, 50), s_pathSister1, 2);
 
-		this.addChild( sprite1 );
-		this.addChild( sprite2 );
+        this.addChild( sprite1 );
+        this.addChild( sprite2 );
 
-		this.space.addCollisionHandler( 1, 2,
-			this.collisionBegin.bind(this),
-			this.collisionPre.bind(this),
-			this.collisionPost.bind(this),
-			this.collisionSeparate.bind(this)
-			);
-	},
+        this.space.addCollisionHandler( 1, 2,
+            this.collisionBegin.bind(this),
+            this.collisionPre.bind(this),
+            this.collisionPost.bind(this),
+            this.collisionSeparate.bind(this)
+            );
+    },
 
-	onExit : function() {
-		this.space.removeCollisionHandler( 1, 2 );
+    onExit : function() {
+        this.space.removeCollisionHandler( 1, 2 );
         ChipmunkBaseLayer.prototype.onExit.call(this);
-	},
+    },
 
-	update : function( delta ) {
-		this.space.step( delta );
-	},
+    update : function( delta ) {
+        this.space.step( delta );
+    },
 
-	collisionBegin : function ( arbiter, space ) {
+    collisionBegin : function ( arbiter, space ) {
 
-		if( ! this.messageDisplayed ) {
-			var label = new cc.LabelBMFont("Collision Detected", s_bitmapFontTest5_fnt);
-			this.addChild( label );
-			label.x = winSize.width/2;
-			label.y = winSize.height/2 ;
-			this.messageDisplayed = true;
-		}
-		cc.log('collision begin');
-		var shapes = arbiter.getShapes();
-		var collTypeA = shapes[0].collision_type;
-		var collTypeB = shapes[1].collision_type;
-		cc.log( 'Collision Type A:' + collTypeA );
-		cc.log( 'Collision Type B:' + collTypeB );
-		return true;
-	},
+        if( ! this.messageDisplayed ) {
+            var label = new cc.LabelBMFont("Collision Detected", s_bitmapFontTest5_fnt);
+            this.addChild( label );
+            label.x = winSize.width/2;
+            label.y = winSize.height/2 ;
+            this.messageDisplayed = true;
+        }
+        cc.log('collision begin');
+        var shapes = arbiter.getShapes();
+        var collTypeA = shapes[0].collision_type;
+        var collTypeB = shapes[1].collision_type;
+        cc.log( 'Collision Type A:' + collTypeA );
+        cc.log( 'Collision Type B:' + collTypeB );
+        return true;
+    },
 
-	collisionPre : function ( arbiter, space ) {
-		cc.log('collision pre');
-		return true;
-	},
+    collisionPre : function ( arbiter, space ) {
+        cc.log('collision pre');
+        return true;
+    },
 
     collisionPost : function ( arbiter, space ) {
-		cc.log('collision post');
-	},
+        cc.log('collision post');
+    },
 
     collisionSeparate : function ( arbiter, space ) {
-		cc.log('collision separate');
+        cc.log('collision separate');
     },
 
     title : function(){
@@ -385,111 +385,111 @@ var ChipmunkCollisionTestB = ChipmunkBaseLayer.extend( {
         this._subtitle = 'using "C"-like API. ** DO NOT USE THIS API **';
     },
 
-	// init physics
-	initPhysics : function() {
-		this.space =  cp.spaceNew();
+    // init physics
+    initPhysics : function() {
+        this.space =  cp.spaceNew();
 
-		// update Physics Debug Node with new space
-		this._debugNode.setSpace(this.space);
+        // update Physics Debug Node with new space
+        this._debugNode.setSpace(this.space);
 
-		var staticBody = cp.spaceGetStaticBody( this.space );
+        var staticBody = cp.spaceGetStaticBody( this.space );
 
-		// Walls using "C" API. DO NO USE THIS API
-		var walls = [cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),				// bottom
-				cp.segmentShapeNew( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),	// top
-				cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),				// left
-				cp.segmentShapeNew( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)	// right
-				];
+        // Walls using "C" API. DO NO USE THIS API
+        var walls = [cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),             // bottom
+                cp.segmentShapeNew( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0), // top
+                cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),              // left
+                cp.segmentShapeNew( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)   // right
+                ];
 
-		for( var i=0; i < walls.length; i++ ) {
-			// 'properties' using "C" API. DO NO USE THIS API
-			var wall = walls[i];
-			cp.shapeSetElasticity(wall, 1);
-			cp.shapeSetFriction(wall, 1);
-			cp.spaceAddStaticShape( this.space, wall );
-		}
+        for( var i=0; i < walls.length; i++ ) {
+            // 'properties' using "C" API. DO NO USE THIS API
+            var wall = walls[i];
+            cp.shapeSetElasticity(wall, 1);
+            cp.shapeSetFriction(wall, 1);
+            cp.spaceAddStaticShape( this.space, wall );
+        }
 
-		// Gravity
-		cp.spaceSetGravity( this.space, cp.v(0, -30) );
-	},
-
-	createPhysicsSprite : function( pos, file, collision_type ) {
-		// using "C" API. DO NO USE THIS API
-		var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
-		cp.bodySetPos( body, pos );
-		cp.spaceAddBody( this.space, body );
-		var shape = cp.boxShapeNew( body, 48, 108);
-		cp.shapeSetElasticity( shape, 0.5 );
-		cp.shapeSetFriction( shape, 0.5 );
-		cp.shapeSetCollisionType( shape, collision_type );
-		cp.spaceAddShape( this.space, shape );
-
-		var sprite = new cc.PhysicsSprite(file);
-		sprite.setBody( body );
-		return sprite;
-	},
-
-	onEnter : function () {
-		ChipmunkBaseLayer.prototype.onEnter.call(this);
-		// cc.base(this, 'onEnter');
-
-        this.initPhysics();
-		this.scheduleUpdate();
-
-		var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), s_pathGrossini, 1);
-		var sprite2 = this.createPhysicsSprite( cc.p(winSize.width/2, 50), s_pathSister1, 2);
-
-		this.addChild( sprite1 );
-		this.addChild( sprite2 );
-
-		cp.spaceAddCollisionHandler( this.space, 1, 2,
-			this.collisionBegin.bind(this),
-			this.collisionPre.bind(this),
-			this.collisionPost.bind(this),
-			this.collisionSeparate.bind(this) );
-	},
-
-	onExit : function() {
-		cp.spaceRemoveCollisionHandler( this.space, 1, 2 );
-        cp.spaceFree( this.space );
-        ChipmunkBaseLayer.prototype.onExit.call(this);
-	},
-
-	update : function( delta ) {
-		cp.spaceStep( this.space, delta );
-	},
-
-	collisionBegin : function ( arbiter, space ) {
-
-		if( ! this.messageDisplayed ) {
-			var label = new cc.LabelBMFont("Collision Detected", s_bitmapFontTest5_fnt);
-			this.addChild( label );
-			label.x = winSize.width/2;
-			label.y = winSize.height/2 ;
-			this.messageDisplayed = true;
-		}
-		cc.log('collision begin');
-		var bodies = cp.arbiterGetBodies( arbiter );
-		var shapes = cp.arbiterGetShapes( arbiter );
-		var collTypeA = cp.shapeGetCollisionType( shapes[0] );
-		var collTypeB = cp.shapeGetCollisionType( shapes[1] );
-		cc.log( 'Collision Type A:' + collTypeA );
-		cc.log( 'Collision Type B:' + collTypeB );
-		return true;
-	},
-
-	collisionPre : function ( arbiter, space ) {
-		cc.log('collision pre');
-		return true;
+        // Gravity
+        cp.spaceSetGravity( this.space, cp.v(0, -30) );
     },
 
-	collisionPost : function ( arbiter, space ) {
-		cc.log('collision post');
-	},
+    createPhysicsSprite : function( pos, file, collision_type ) {
+        // using "C" API. DO NO USE THIS API
+        var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
+        cp.bodySetPos( body, pos );
+        cp.spaceAddBody( this.space, body );
+        var shape = cp.boxShapeNew( body, 48, 108);
+        cp.shapeSetElasticity( shape, 0.5 );
+        cp.shapeSetFriction( shape, 0.5 );
+        cp.shapeSetCollisionType( shape, collision_type );
+        cp.spaceAddShape( this.space, shape );
 
-	collisionSeparate : function ( arbiter, space ) {
-		cc.log('collision separate');
-	}
+        var sprite = new cc.PhysicsSprite(file);
+        sprite.setBody( body );
+        return sprite;
+    },
+
+    onEnter : function () {
+        ChipmunkBaseLayer.prototype.onEnter.call(this);
+        // cc.base(this, 'onEnter');
+
+        this.initPhysics();
+        this.scheduleUpdate();
+
+        var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), s_pathGrossini, 1);
+        var sprite2 = this.createPhysicsSprite( cc.p(winSize.width/2, 50), s_pathSister1, 2);
+
+        this.addChild( sprite1 );
+        this.addChild( sprite2 );
+
+        cp.spaceAddCollisionHandler( this.space, 1, 2,
+            this.collisionBegin.bind(this),
+            this.collisionPre.bind(this),
+            this.collisionPost.bind(this),
+            this.collisionSeparate.bind(this) );
+    },
+
+    onExit : function() {
+        cp.spaceRemoveCollisionHandler( this.space, 1, 2 );
+        cp.spaceFree( this.space );
+        ChipmunkBaseLayer.prototype.onExit.call(this);
+    },
+
+    update : function( delta ) {
+        cp.spaceStep( this.space, delta );
+    },
+
+    collisionBegin : function ( arbiter, space ) {
+
+        if( ! this.messageDisplayed ) {
+            var label = new cc.LabelBMFont("Collision Detected", s_bitmapFontTest5_fnt);
+            this.addChild( label );
+            label.x = winSize.width/2;
+            label.y = winSize.height/2 ;
+            this.messageDisplayed = true;
+        }
+        cc.log('collision begin');
+        var bodies = cp.arbiterGetBodies( arbiter );
+        var shapes = cp.arbiterGetShapes( arbiter );
+        var collTypeA = cp.shapeGetCollisionType( shapes[0] );
+        var collTypeB = cp.shapeGetCollisionType( shapes[1] );
+        cc.log( 'Collision Type A:' + collTypeA );
+        cc.log( 'Collision Type B:' + collTypeB );
+        return true;
+    },
+
+    collisionPre : function ( arbiter, space ) {
+        cc.log('collision pre');
+        return true;
+    },
+
+    collisionPost : function ( arbiter, space ) {
+        cc.log('collision post');
+    },
+
+    collisionSeparate : function ( arbiter, space ) {
+        cc.log('collision separate');
+    }
 });
 
 
@@ -508,38 +508,38 @@ var ChipmunkCollisionMemoryLeakTest = ChipmunkBaseLayer.extend({
         this._subtitle = 'Testing possible memory leak on the collision handler. No visual feedback';
     },
 
-	collisionBegin : function ( arbiter, space ) {
-		return true;
-	},
-
-	collisionPre : function ( arbiter, space ) {
-		return true;
-	},
-
-	collisionPost : function ( arbiter, space ) {
-		cc.log('collision post');
+    collisionBegin : function ( arbiter, space ) {
+        return true;
     },
 
-	collisionSeparate : function ( arbiter, space ) {
-		cc.log('collision separate');
-	},
+    collisionPre : function ( arbiter, space ) {
+        return true;
+    },
+
+    collisionPost : function ( arbiter, space ) {
+        cc.log('collision post');
+    },
+
+    collisionSeparate : function ( arbiter, space ) {
+        cc.log('collision separate');
+    },
 
     onEnter : function() {
-		ChipmunkBaseLayer.prototype.onEnter.call(this);
+        ChipmunkBaseLayer.prototype.onEnter.call(this);
         // cc.base(this, 'onEnter');
 
         for( var i=1 ; i < 100 ; i++ )
             this.space.addCollisionHandler( i, i+1,
-				this.collisionBegin.bind(this),
-				this.collisionPre.bind(this),
-				this.collisionPost.bind(this),
-				this.collisionSeparate.bind(this)
-				);
+                this.collisionBegin.bind(this),
+                this.collisionPre.bind(this),
+                this.collisionPost.bind(this),
+                this.collisionSeparate.bind(this)
+                );
 
     },
 
-	onExit : function() {
-		ChipmunkBaseLayer.prototype.onExit.call(this);
+    onExit : function() {
+        ChipmunkBaseLayer.prototype.onExit.call(this);
 
         for( var i=1 ; i < 100 ; i++ )
             this.space.removeCollisionHandler( i, i+1 );
@@ -566,39 +566,39 @@ var ChipmunkSpriteAnchorPoint = ChipmunkBaseLayer.extend({
     },
 
     onEnter : function() {
-		ChipmunkBaseLayer.prototype.onEnter.call(this);
+        ChipmunkBaseLayer.prototype.onEnter.call(this);
         // cc.base(this, 'onEnter');
 
-		this._debugNode.visible = true ;
+        this._debugNode.visible = true ;
 
-		this.space.gravity = v(0, 0);
+        this.space.gravity = v(0, 0);
 
-		var sprite1 = this.createPhysicsSprite( cp.v(winSize.width/4*1, winSize.height/2) );
-		var sprite2 = this.createPhysicsSprite( cp.v(winSize.width/4*2, winSize.height/2) );
-		var sprite3 = this.createPhysicsSprite( cp.v(winSize.width/4*3, winSize.height/2) );
+        var sprite1 = this.createPhysicsSprite( cp.v(winSize.width/4*1, winSize.height/2) );
+        var sprite2 = this.createPhysicsSprite( cp.v(winSize.width/4*2, winSize.height/2) );
+        var sprite3 = this.createPhysicsSprite( cp.v(winSize.width/4*3, winSize.height/2) );
 
-		sprite1.anchorX = 0;
-		sprite1.anchorY = 0;
-		sprite2.anchorX = 0.5;
-		sprite2.anchorY = 0.5;
-		sprite3.anchorX = 1;
-		sprite3.anchorY = 1;
+        sprite1.anchorX = 0;
+        sprite1.anchorY = 0;
+        sprite2.anchorX = 0.5;
+        sprite2.anchorY = 0.5;
+        sprite3.anchorX = 1;
+        sprite3.anchorY = 1;
 
-		// scale sprite
-		var scaledown = cc.scaleBy(0.5, 0.5);
-		var scaleup = scaledown.reverse();
-		var seq = cc.sequence( scaledown, scaleup);
-		var repeat = seq.repeatForever();
+        // scale sprite
+        var scaledown = cc.scaleBy(0.5, 0.5);
+        var scaleup = scaledown.reverse();
+        var seq = cc.sequence( scaledown, scaleup);
+        var repeat = seq.repeatForever();
 
-		sprite1.runAction( repeat );
-		sprite2.runAction( repeat.clone() );
-		sprite3.runAction( repeat.clone() );
+        sprite1.runAction( repeat );
+        sprite2.runAction( repeat.clone() );
+        sprite3.runAction( repeat.clone() );
 
-		this.addChild(sprite1);
-		this.addChild(sprite2);
-		this.addChild(sprite3);
+        this.addChild(sprite1);
+        this.addChild(sprite2);
+        this.addChild(sprite3);
 
-		this.scheduleUpdate();
+        this.scheduleUpdate();
     },
 
     title : function(){
@@ -652,24 +652,24 @@ var ChipmunkReleaseTest = ChipmunkBaseLayer.extend({
         this._subtitle = 'Space finalizer should be called';
     },
 
-	collisionBegin : function ( arbiter, space ) {
-		return true;
+    collisionBegin : function ( arbiter, space ) {
+        return true;
     },
 
-	collisionPre : function ( arbiter, space ) {
-		return true;
-	},
-
-	collisionPost : function ( arbiter, space ) {
-		cc.log('collision post');
+    collisionPre : function ( arbiter, space ) {
+        return true;
     },
 
-	collisionSeparate : function ( arbiter, space ) {
-		cc.log('collision separate');
-	},
+    collisionPost : function ( arbiter, space ) {
+        cc.log('collision post');
+    },
+
+    collisionSeparate : function ( arbiter, space ) {
+        cc.log('collision separate');
+    },
 
     onEnter : function() {
-		ChipmunkBaseLayer.prototype.onEnter.call(this);
+        ChipmunkBaseLayer.prototype.onEnter.call(this);
         // cc.base(this, 'onEnter');
 
         cc.log("OnEnter");
@@ -677,29 +677,29 @@ var ChipmunkReleaseTest = ChipmunkBaseLayer.extend({
         cc.sys.garbageCollect();
 
         this.space.addCollisionHandler( 10,11,
-			this.collisionBegin.bind(this),
-			this.collisionPre.bind(this),
-			this.collisionPost.bind(this),
-			this.collisionSeparate.bind(this)
-			);
+            this.collisionBegin.bind(this),
+            this.collisionPre.bind(this),
+            this.collisionPost.bind(this),
+            this.collisionSeparate.bind(this)
+            );
 
     },
 
-	onExit : function() {
+    onExit : function() {
 
         cc.log("OnExit");
 
-		// not calling this on purpose
-		// this.space.removeCollisionHandler( 10, 11 );
+        // not calling this on purpose
+        // this.space.removeCollisionHandler( 10, 11 );
 
-		this.space = null;
+        this.space = null;
 
         cc.sys.dumpRoot();
         cc.sys.garbageCollect();
 
         // cc.base(this, 'onExit');
         ChipmunkBaseLayer.prototype.onExit.call(this);
-	}
+    }
 });
 
 //
@@ -1209,7 +1209,7 @@ var Buoyancy = ChipmunkDemo.extend( {
         var space = this.space;
         space.iterations = 30;
         space.gravity = cp.v(0,-500);
-    //	cpSpaceSetDamping(space, 0.5);
+    //  cpSpaceSetDamping(space, 0.5);
         space.sleepTimeThreshold = 0.5;
         space.collisionSlop = 0.5;
 
@@ -1372,7 +1372,7 @@ var Buoyancy = ChipmunkDemo.extend( {
         var k = 1; //k_scalar_body(body, r, cp.v.normalize_safe(v_centroid));
         var damping = clippedArea*FLUID_DRAG*FLUID_DENSITY;
         var v_coef = Math.exp(-damping*dt*k); // linear drag
-//	var v_coef = 1.0/(1.0 + damping*dt*cp.v.len(v_centroid)*k); // quadratic drag
+//  var v_coef = 1.0/(1.0 + damping*dt*cp.v.len(v_centroid)*k); // quadratic drag
         body.applyImpulse( cp.v.mult(cp.v.sub(cp.v.mult(v_centroid, v_coef), v_centroid), 1.0/k), r);
 
         // Apply angular damping for the fluid drag.
@@ -1492,14 +1492,126 @@ var Planet = ChipmunkDemo.extend({
     }
 });
 
+//------------------------------------------------------------------
+//
+// Query
+//
+//------------------------------------------------------------------
+
+var Query = ChipmunkDemo.extend({
+    drawNode: null,
+    ctor: function () {
+        this._super();
+        this._subtitle = 'Chipmunk Demo';
+        this._title = 'Query';
+
+        this.drawNode = new cc.DrawNode();
+        this.addChild(this.drawNode, 10);
+
+        if( 'mouse' in cc.sys.capabilities ) {
+            cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
+                onMouseMove: this.drawQuery
+            }, this);
+        }
+        else if( 'touches' in cc.sys.capabilities ) {
+            cc.eventManager.addListener({
+                event: cc.EventListener.TOUCH_ONE_BY_ONE,
+                swallowTouches: true,
+                onTouchBegan:function(){
+                    return true;
+                },
+                onTouchMoved: this.drawQuery
+            }, this);
+        }
+
+        var space = this.space;
+
+        { // add a fat segment
+            var mass = 1;
+            var length = 100;
+            var a = v(-length/2, 0), b = v(length/2, 0);
+            
+            var body = space.addBody(new cp.Body(mass, cp.momentForSegment(mass, a, b)));
+            body.setPos(v(320, 340));
+            
+            space.addShape(new cp.SegmentShape(body, a, b, 20));
+        }
+
+        { // add a static segment
+            space.addShape(new cp.SegmentShape(space.staticBody, v(320, 540), v(620, 240), 0));
+        }
+
+        { // add a pentagon
+            var mass = 1;
+            var NUM_VERTS = 5;
+            
+            var verts = new Array(NUM_VERTS * 2);
+            for(var i=0; i<NUM_VERTS*2; i+=2){
+                var angle = -Math.PI*i/NUM_VERTS;
+                verts[i]   = 30*Math.cos(angle);
+                verts[i+1] = 30*Math.sin(angle);
+            }
+            
+            var body = space.addBody(new cp.Body(mass, cp.momentForPoly(mass, verts, v(0,0))));
+            body.setPos(v(350+60, 220+60));
+
+            space.addShape(new cp.PolyShape(body, verts, v(0,0)));
+        }
+        
+        { // add a circle
+            var mass = 1;
+            var r = 20;
+            
+            var body = space.addBody(new cp.Body(mass, cp.momentForCircle(mass, 0, r, v(0,0))));
+            body.setPos(v(320+100, 240+120));
+            
+            space.addShape(new cp.CircleShape(body, r, v(0,0)));
+        }
+
+    },
+
+    drawBB: function(bb, fillColor, lineColor){
+        this.drawNode.drawRect(cc.p(bb.l, bb.b), cc.p(bb.r, bb.t), fillColor, 1, lineColor);
+    },
+
+    drawQuery: function(touch, event){
+        var target = !!event ? event.getCurrentTarget() : touch.getCurrentTarget();
+        var drawNode = target.drawNode;
+        drawNode.clear();
+
+        var start = cc.p(320, 240);
+        var end = touch.getLocation();
+        drawNode.drawSegment(start, end, 1, cc.color(0, 255, 0, 255));
+
+        var info = target.space.segmentQueryFirst(start, end, cp.ALL_LAYERS, cp.NO_GROUP);
+        if(info) {
+            var point = info.hitPoint(start, end);
+
+            // Draw red over the occluded part of the query
+            drawNode.drawSegment(point, end, 1, cc.color(255, 0, 0, 255));
+            
+            // Draw a little blue surface normal
+            drawNode.drawSegment(point, cp.v.add(point, cp.v.mult(info.n, 16)), 1, cc.color(0, 255, 255, 255));
+        }
+
+        var nearestInfo = target.space.nearestPointQueryNearest(end, 100, cp.ALL_LAYERS, cp.NO_GROUP);
+        if (nearestInfo) {
+            drawNode.drawSegment(end, nearestInfo.p, 1, cc.color(255, 255, 0, 255));
+
+            // Draw a red bounding box around the shape under the mouse.
+            if(nearestInfo.d < 0) target.drawBB(nearestInfo.shape.getBB(), null, cc.color(255, 0, 0, 255));
+        }
+    }
+});
 
 //
 // Entry point
 //
 
 var ChipmunkTestScene = function() {
-	TestScene.call(this);
-	//var parent = cc.base(this);
+    TestScene.call(this);
+    //var parent = cc.base(this);
 };
 cc.inherits(ChipmunkTestScene, TestScene );
 
@@ -1518,24 +1630,25 @@ ChipmunkTestScene.prototype.runThisTest = function (num) {
 var arrayOfChipmunkTest =  [
 
 // Chipmunk "C" Tests
-		// Planet,
-		Buoyancy,
-		PyramidStack,
-		PyramidTopple,
-		Joints,
-		Balls,
+        // Planet,
+        Query,
+        Buoyancy,
+        PyramidStack,
+        PyramidTopple,
+        Joints,
+        Balls,
 
 // Custom Tests
-		ChipmunkSprite ,
-		ChipmunkSpriteBatchTest ,
-		ChipmunkCollisionTest,
-		ChipmunkCollisionMemoryLeakTest,
-		ChipmunkSpriteAnchorPoint
-		];
+        ChipmunkSprite ,
+        ChipmunkSpriteBatchTest ,
+        ChipmunkCollisionTest,
+        ChipmunkCollisionMemoryLeakTest,
+        ChipmunkSpriteAnchorPoint
+        ];
 
 if( cc.sys.isNative ) {
-	arrayOfChipmunkTest.push( ChipmunkCollisionTestB );
-	arrayOfChipmunkTest.push( ChipmunkReleaseTest );
+    arrayOfChipmunkTest.push( ChipmunkCollisionTestB );
+    arrayOfChipmunkTest.push( ChipmunkReleaseTest );
 }
 
 var nextChipmunkTest = function () {
