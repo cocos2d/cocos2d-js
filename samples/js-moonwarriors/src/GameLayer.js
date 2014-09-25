@@ -108,8 +108,7 @@ var GameLayer = cc.Layer.extend({
         this.addChild(this._explosions);
         Explosion.sharedExplosion();
 
-        // accept touch now!
-       if (cc.sys.capabilities.hasOwnProperty('keyboard'))
+        if (cc.sys.capabilities.hasOwnProperty('keyboard'))
             cc.eventManager.addListener({
                 event: cc.EventListener.KEYBOARD,
                 onKeyPressed:function (key, event) {
