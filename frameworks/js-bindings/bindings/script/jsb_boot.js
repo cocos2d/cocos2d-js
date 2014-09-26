@@ -1594,6 +1594,6 @@ else if(window.JavaScriptObjCBridge && (cc.sys.os == cc.sys.OS_IOS || cc.sys.os 
     jsb.reflection = new JavaScriptObjCBridge();
 }
 
-jsb.urlRegExp = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+jsb.urlRegExp = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*(\/[\w\-_\.,;\/?%&=]*)?$/;
 
 //+++++++++++++++++++++++++other initializations end+++++++++++++++++++++++++++++
