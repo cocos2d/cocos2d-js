@@ -169,13 +169,13 @@ void js_cocos2dx_WebSocket_finalize(JSFreeOp *fop, JSObject *obj) {
 
 bool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
-	if(argc == 1){
+    if(argc == 1){
         do
         {
             if (JSVAL_IS_STRING(argv[0]))
@@ -214,47 +214,47 @@ bool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *v
 
         } while (0);
         
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
 
-		return true;
-	}
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return true;
+        return true;
+    }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+    return true;
 }
 
 bool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *vp){
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     
-	if(argc == 0){
-		cobj->close();
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
+    if(argc == 0){
+        cobj->close();
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
 }
 
 bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
     
-	if (argc == 1 || argc == 2)
+    if (argc == 1 || argc == 2)
     {
 
-		std::string url;
-		
-		do {
-			bool ok = jsval_to_std_string(cx, argv[0], &url);
-			JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
-		} while (0);
+        std::string url;
         
-		JSObject *obj = JS_NewObject(cx, js_cocos2dx_websocket_class, js_cocos2dx_websocket_prototype, NULL);
-		
+        do {
+            bool ok = jsval_to_std_string(cx, argv[0], &url);
+            JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
+        } while (0);
         
-		WebSocket* cobj = new WebSocket();
+        JSObject *obj = JS_NewObject(cx, js_cocos2dx_websocket_class, js_cocos2dx_websocket_prototype, NULL);
+        
+        
+        WebSocket* cobj = new WebSocket();
         JSB_WebSocketDelegate* delegate = new JSB_WebSocketDelegate();
         delegate->setJSDelegate(obj);
         
@@ -304,28 +304,28 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
         JS_DefineProperty(cx, obj, "URL", argv[0]
                           , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
         
-		//protocol not support yet (always return "")
-		JS_DefineProperty(cx, obj, "protocol", c_string_to_jsval(cx, "")
+        //protocol not support yet (always return "")
+        JS_DefineProperty(cx, obj, "protocol", c_string_to_jsval(cx, "")
                           , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
         
         // link the native object with the javascript object
-		js_proxy_t *p = jsb_new_proxy(cobj, obj);
+        js_proxy_t *p = jsb_new_proxy(cobj, obj);
         JS_AddNamedObjectRoot(cx, &p->obj, "WebSocket");
         
         JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-		return true;
-	}
+        return true;
+    }
     
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
 }
 
 static bool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
 {
     JSObject* jsobj = obj.get();
-	js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
-	WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
+    js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
+    WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     
     if (cobj) {
         vp.set(INT_TO_JSVAL((int)cobj->getReadyState()));
@@ -357,7 +357,7 @@ void register_jsb_websocket(JSContext *cx, JSObject *global) {
     
     static JSFunctionSpec funcs[] = {
         JS_FN("send",js_cocos2dx_extension_WebSocket_send, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("close",js_cocos2dx_extension_WebSocket_close, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("close",js_cocos2dx_extension_WebSocket_close, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
     
@@ -379,11 +379,11 @@ void register_jsb_websocket(JSContext *cx, JSObject *global) {
 
     JS_DefineProperty(cx, jsclassObj, "CONNECTING", INT_TO_JSVAL((int)WebSocket::State::CONNECTING)
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
-	JS_DefineProperty(cx, jsclassObj, "OPEN", INT_TO_JSVAL((int)WebSocket::State::OPEN)
+    JS_DefineProperty(cx, jsclassObj, "OPEN", INT_TO_JSVAL((int)WebSocket::State::OPEN)
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
-	JS_DefineProperty(cx, jsclassObj, "CLOSING", INT_TO_JSVAL((int)WebSocket::State::CLOSING)
+    JS_DefineProperty(cx, jsclassObj, "CLOSING", INT_TO_JSVAL((int)WebSocket::State::CLOSING)
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
-	JS_DefineProperty(cx, jsclassObj, "CLOSED", INT_TO_JSVAL((int)WebSocket::State::CLOSED)
+    JS_DefineProperty(cx, jsclassObj, "CLOSED", INT_TO_JSVAL((int)WebSocket::State::CLOSED)
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
     
     // make the class enumerable in the registered namespace
