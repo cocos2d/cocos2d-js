@@ -24,7 +24,7 @@
 
 var button_share = {
     "login": "loginClick",
-    "loginWithPermission" : "loginWithPermissionClick",
+    "loginWithPermission": "loginWithPermissionClick",
     "logout": "logoutClick",
     "getUid": "getUidClick",
     "getToken": "getTokenClick",
@@ -99,13 +99,11 @@ var FacebookUserTest = PluginXTest.extend({
     },
     getUidClick: function (sender) {
         var self = this;
-        facebook.api("/me", plugin.FacebookAgent.HttpMethod.GET, function (type, msg) {
-            if (type == plugin.FacebookAgent.CODE_SUCCEED) {
-                self.result.setString(msg["id"]);
-            } else {
-                self.result.setString(msg["error_message"]);
+        if (facebook.isLoggedIn(function (errorCode, msg) {
+            if (errorCode == plugin.FacebookAgent.CODE_SUCCEED) {
+                self.result.setString(facebook.getUserID());
             }
-        });
+        }));
     },
     getTokenClick: function (sender) {
         var self = this;
@@ -142,9 +140,9 @@ var FacebookUserTest = PluginXTest.extend({
             }
         });
     },
-    LogPurchaseClick:function(sender){
+    LogPurchaseClick: function (sender) {
         cc.log("in purchase");
-        facebook.logPurchase(1.23,"RMB",{"cocos2d":1,"js":2});
+        facebook.logPurchase(1.23, "CNY", {"cocos2d": 1, "js": 2});
     },
     onNextCallback: function (sender) {
 
