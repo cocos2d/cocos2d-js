@@ -74,14 +74,17 @@ var FacebookShareTest = PluginXTest.extend({
     onShareLink: function () {
         var map = {
             "dialog": "share_link",
-            "description": "Cocos2d-x is a great game engine",
-            "title": "Cocos2d-x",
-            "link": "http://www.cocos2d-x.org",
-            "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
+            "link": "http://www.cocos2d-x.org"
         };
-        facebook.share(map, function (resultcode, msg) {
-            cc.log(JSON.stringify(msg));
-        });
+        if(facebook.canPresentDialog(map)){
+            facebook.dialog(map,function(errorCode,msg){
+                 cc.log(JSON.stringify(msg));
+            });
+        }else{
+            facebook.webDialog(map,function(errorCode,msg){
+                 cc.log(JSON.stringify(msg));
+            });
+        }
     },
     showDisableTips: function (msg) {
         if (!this._showTips) {
@@ -115,9 +118,17 @@ var FacebookShareTest = PluginXTest.extend({
              "url": "http://cocos2d-x.org/docs/manual/framework/html5/en",
              "description": "cocos document"
         };
-        facebook.dialog(map, function (resultcode, msg) {
-            cc.log(JSON.stringify(msg));
-        });
+        if(facebook.canPresentDialog(map)){
+            facebook.dialog(map, function (resultcode, msg) {
+                cc.log(JSON.stringify(msg));
+            });
+        }else{
+            facebook.webDialog(map, function (resultcode, msg) {
+                cc.log(JSON.stringify(msg));
+            });
+        }
+
+
     },
 
     onSharePhoto: function () {
@@ -133,9 +144,13 @@ var FacebookShareTest = PluginXTest.extend({
                 "dialog": "share_photo",
                 "photo": img
             };
-            facebook.dialog(map, function (resultcode, msg) {
-                cc.log(JSON.stringify(msg));
-            });
+            if(facebook.canPresentDialog(map)){
+                facebook.dialog(map, function (resultcode, msg) {
+                    cc.log(JSON.stringify(msg));
+                });
+            }else{
+                cc.log("Can't use webDialog for share_photo");
+            }
         });
         var seq = cc.sequence(delay, share);
         this.runAction(seq);
@@ -154,9 +169,13 @@ var FacebookShareTest = PluginXTest.extend({
             "link": "http://www.cocos2d-x.org",
             "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
-        facebook.dialog(map, function (resultcode, msg) {
-            cc.log(JSON.stringify(msg));
-        });
+        if(facebook.canPresentDialog(map)){
+            facebook.dialog(map, function (resultcode, msg) {
+                cc.log(JSON.stringify(msg));
+            });
+        }else{
+            cc.log("Can't use webDialog for message_link");
+        }
     },
 
     onOGMsg: function () {
@@ -173,9 +192,13 @@ var FacebookShareTest = PluginXTest.extend({
              "url": "http://cocos2d-x.org/docs/manual/framework/html5/en",
              "description": "cocos document"
         };
-        facebook.dialog(map, function (resultcode, msg) {
-            cc.log(JSON.stringify(msg));
-        });
+        if(facebook.canPresentDialog(map)){
+            facebook.dialog(map, function (resultcode, msg) {
+                cc.log(JSON.stringify(msg));
+            });
+        }else{
+            cc.log("Can't use webDialog for message_open_graph");
+        }
     },
 
     onPhotoMsg: function () {
@@ -191,20 +214,19 @@ var FacebookShareTest = PluginXTest.extend({
                 "dialog": "message_photo",
                 "photo": img
             };
-            facebook.dialog(map, function (resultcode, msg) {
-                cc.log(JSON.stringify(msg));
-            });
+            if(facebook.canPresentDialog(map)){
+                facebook.dialog(map, function (resultcode, msg) {
+                    cc.log(JSON.stringify(msg));
+                });
+            }else{
+                cc.log("Can't use webDialog for message_photo");
+            }
         });
         var seq = cc.sequence(delay, share);
         this.runAction(seq);
     },
 
     onRequest: function () {
-//        if (!cc.sys.isNative) {
-//            this.showDisableTips();
-//            return;
-//        }
-
         var map = {
             "message": "Cocos2d-x is a great game engine",
             "link": "http://www.cocos2d-x.org"
