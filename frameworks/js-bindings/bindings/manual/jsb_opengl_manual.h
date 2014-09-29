@@ -39,7 +39,7 @@
 #define glClearDepthf glClearDepth
 #define glDepthRangef glDepthRange
 #ifndef glReleaseShaderCompiler
-	#define glReleaseShaderCompiler()
+    #define glReleaseShaderCompiler()
 #endif
 
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
