@@ -171,6 +171,8 @@ ccui.Widget.POSITION_PERCENT = 1;
  */
 //listView event type
 ccui.ListView.EVENT_SELECTED_ITEM = 0;
+ccui.ListView.ON_SELECTED_ITEM_START = 0;
+ccui.ListView.ON_SELECTED_ITEM_END = 1;
 
 //listView gravity
 ccui.ListView.GRAVITY_LEFT = 0;
