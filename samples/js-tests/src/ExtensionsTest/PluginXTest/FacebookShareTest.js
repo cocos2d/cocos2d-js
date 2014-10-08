@@ -74,6 +74,10 @@ var FacebookShareTest = PluginXTest.extend({
     onShareLink: function () {
         var map = {
             "dialog": "share_link",
+            "name": "Cocos2d-x web site",
+            "caption": "Cocos2d-x caption",
+            "description":"Cocos2d-x description",
+            "picture": "http://files.cocos2d-x.org/images/orgsite/logo.png",
             "link": "http://www.cocos2d-x.org"
         };
         if(facebook.canPresentDialog(map)){
@@ -229,7 +233,8 @@ var FacebookShareTest = PluginXTest.extend({
     onRequest: function () {
         var map = {
             "message": "Cocos2d-x is a great game engine",
-            "link": "http://www.cocos2d-x.org"
+            "title": "Cocos2d-x title",
+            "data": "Cocos2d-x data"
         };
         facebook.appRequest(map, function (resultcode, msg) {
             cc.log(JSON.stringify(msg));
