@@ -32,12 +32,26 @@ var buttons = {
     "App request": "onRequest"
 };
 
+var appRequestAction = {
+    "Invites request": "onInviteRequest",
+    "Target invite request": "onTargetInviteRequest",
+    "specific lists of friends":"onSpecificListsFriends",
+    "Sending requests explicitly":"SendingRequestsExplicitly",
+    "Turn-based games": "onTurnBasedGamesRequest"
+};
+var shareLinkAction = {
+    "share a simple link": "onShareSimpleLink",
+    "share a Text link": "onShareTextInfoLink",
+    "share a Picture link": "onSharePictureInfoLink",
+    "share a media link": "onShareMediaSource"
+};
+
 var FacebookShareTest = PluginXTest.extend({
     _title: "Plugin-x Test",
     _subtitle: "Facebook SDK",
     _agentManager: null,
     _showTips: false,
-
+    _secondMenu:null,
     ctor: function (title) {
         this._super(title);
 
@@ -69,26 +83,96 @@ var FacebookShareTest = PluginXTest.extend({
         this.addChild(this.tipsLabel, 100);
         this.tipsLabel.setPosition(cc.pAdd(cc.visibleRect.topRight, cc.p(-this.tipsLabel.width / 2 - 20, -100)));
         this.tipsLabel.visible = false;
+
+        this._secondMenu = new cc.Menu();
+        this._secondMenu.setPosition(cc.p(340, 0));
+        this._secondMenu.width = winSize.width / 2;
+        this._secondMenu.height = winSize.height;
+        this.addChild(this._secondMenu, 2);
+    },
+    showSecondMenu: function (buttonActions) {
+        this._secondMenu.removeAllChildren();
+        var top = 50;
+        for (var action in buttonActions) {
+            var label = new cc.LabelTTF(action, "Arial", 24);
+            var item = new cc.MenuItemLabel(label, this[buttonActions[action]], this);
+            item.setPosition(winSize.width * 1 / 3, winSize.height - top);
+            this._secondMenu.addChild(item);
+            top += 50;
+        }
+    },
+    onShareLink: function () {
+        this.showSecondMenu(shareLinkAction);
     },
 
-    onShareLink: function () {
+    onShareSimpleLink: function (){
+        var map = {
+            "dialog": "share_link",
+            "link": "http://www.cocos2d-x.org"
+        };
+        if(facebook.canPresentDialog(map)){
+            facebook.dialog(map,function(errorCode,msg){
+                cc.log(JSON.stringify(msg));
+            });
+        }else{
+            facebook.webDialog(map,function(errorCode,msg){
+                cc.log(JSON.stringify(msg));
+            });
+        }
+    },
+    onShareTextInfoLink: function (){
         var map = {
             "dialog": "share_link",
             "name": "Cocos2d-x web site",
             "caption": "Cocos2d-x caption",
             "description":"Cocos2d-x description",
+            "link": "http://www.cocos2d-x.org"
+        };
+        if(facebook.canPresentDialog(map)){
+            facebook.dialog(map,function(errorCode,msg){
+                cc.log(JSON.stringify(msg));
+            });
+        }else{
+            facebook.webDialog(map,function(errorCode,msg){
+                cc.log(JSON.stringify(msg));
+            });
+        }
+    },
+    onSharePictureInfoLink: function (){
+        var map = {
+            "dialog": "share_link",
+            "name": "Cocos2d-x web site",
+            "caption": "Cocos2d-x caption",
+            "description":"Cocos2d-x description",
+            "to": "100006738453912", // android only web view support
             "picture": "http://files.cocos2d-x.org/images/orgsite/logo.png",
             "link": "http://www.cocos2d-x.org"
         };
         if(facebook.canPresentDialog(map)){
             facebook.dialog(map,function(errorCode,msg){
-                 cc.log(JSON.stringify(msg));
+                cc.log(JSON.stringify(msg));
             });
         }else{
             facebook.webDialog(map,function(errorCode,msg){
-                 cc.log(JSON.stringify(msg));
+                cc.log(JSON.stringify(msg));
             });
         }
+    },
+    onShareMediaSource: function () {
+        var map = {
+            "dialog": "share_link",
+            "name": "Cocos2d-x web site",
+            "caption": "Cocos2d-x caption",
+            "description":"Cocos2d-x description",
+            "to": "100006738453912",// android only web view support
+            "media_source": "http://v.youku.com/v_show/id_XNzY3NDM0MDI0.html?f=22798415",
+            "link": "http://www.cocos2d-x.org"
+        };
+
+        // only support in web dialog
+        facebook.webDialog(map,function(errorCode,msg){
+            cc.log(JSON.stringify(msg));
+        });
     },
     showDisableTips: function (msg) {
         if (!this._showTips) {
@@ -118,9 +202,9 @@ var FacebookShareTest = PluginXTest.extend({
             "action_type": "cocostestmyfc:share",
             "preview_property": "cocos_document",
             "title": "Cocos2d-JS Game Engine",
-             "image": "http://files.cocos2d-x.org/images/orgsite/logo.png",
-             "url": "http://cocos2d-x.org/docs/manual/framework/html5/en",
-             "description": "cocos document"
+            "image": "http://files.cocos2d-x.org/images/orgsite/logo.png",
+            "url": "http://cocos2d-x.org/docs/manual/framework/html5/en",
+            "description": "cocos document"
         };
         if(facebook.canPresentDialog(map)){
             facebook.dialog(map, function (resultcode, msg) {
@@ -192,9 +276,9 @@ var FacebookShareTest = PluginXTest.extend({
             "action_type": "cocostestmyfc:share",
             "preview_property": "cocos_document",
             "title": "Cocos2d-JS Game Engine",
-             "image": "http://files.cocos2d-x.org/images/orgsite/logo.png",
-             "url": "http://cocos2d-x.org/docs/manual/framework/html5/en",
-             "description": "cocos document"
+            "image": "http://files.cocos2d-x.org/images/orgsite/logo.png",
+            "url": "http://cocos2d-x.org/docs/manual/framework/html5/en",
+            "description": "cocos document"
         };
         if(facebook.canPresentDialog(map)){
             facebook.dialog(map, function (resultcode, msg) {
@@ -231,16 +315,64 @@ var FacebookShareTest = PluginXTest.extend({
     },
 
     onRequest: function () {
+        this.showSecondMenu(appRequestAction);
+    },
+
+    onInviteRequest: function () {
         var map = {
             "message": "Cocos2d-x is a great game engine",
-            "title": "Cocos2d-x title",
-            "data": "Cocos2d-x data"
+            "title": "Cocos2d-x title"
         };
         facebook.appRequest(map, function (resultcode, msg) {
             cc.log(JSON.stringify(msg));
         });
     },
-
+    onTargetInviteRequest: function () {
+        var map = {
+            "message": "Cocos2d-x is a great game engine",
+            "title": "Cocos2d-x title",
+            "to": "100006738453912, 10204182777160522"
+        };
+        // android only web view support to
+        facebook.appRequest(map, function (resultcode, msg) {
+            cc.log(JSON.stringify(msg));
+        });
+    },
+    onSpecificListsFriends: function () {
+        var map = {
+            "message": "Cocos2d-x is a great game engine",
+            "title": "Cocos2d-x title",
+            "filters": '[{"name":"company", "user_ids":["100006738453912","10204182777160522"]}]'
+        };
+        // android not support filters
+        facebook.appRequest(map, function (resultcode, msg) {
+            cc.log(JSON.stringify(msg));
+        });
+    },
+    SendingRequestsExplicitly: function () {
+        var map = {
+            "message": "Cocos2d-x is a great game engine",
+            "to": "100006738453912",
+            "action_type":"send",
+            "object_id":"191181717736427"// 191181717736427   1426774790893461
+        };
+        // android not support action_type
+        facebook.appRequest(map, function (resultcode, msg) {
+            cc.log(JSON.stringify(msg));
+        });
+    },
+    onTurnBasedGamesRequest: function () {
+        var map = {
+            "message": "Cocos2d-x is a great game engine",
+            "title": "Cocos2d-x title",
+            "to": "100006738453912",
+            "action_type":"turn"
+        };
+        // android not support action_type
+        facebook.appRequest(map, function (resultcode, msg) {
+            cc.log(JSON.stringify(msg));
+        });
+    },
     onNextCallback: function (sender) {
         var s = new PluginXTestScene();
         s.addChild(new PluginXTestLayer());
