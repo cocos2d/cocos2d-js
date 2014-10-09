@@ -135,8 +135,8 @@ var GameLayer = cc.Layer.extend({
                 event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesMoved:function (touches, event) {
                     var touch = touches[0];
-                    if (this.prevTouchId != touch.getId())
-                        this.prevTouchId = touch.getId();
+                    if (this.prevTouchId != touch.getID())
+                        this.prevTouchId = touch.getID();
                     else event.getCurrentTarget().processEvent(touches[0]);
                 }
             }, this);
