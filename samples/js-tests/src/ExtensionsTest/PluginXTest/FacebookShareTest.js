@@ -164,8 +164,7 @@ var FacebookShareTest = PluginXTest.extend({
             "name": "Cocos2d-x web site",
             "caption": "Cocos2d-x caption",
             "description":"Cocos2d-x description",
-            "to": "100006738453912",// android only web view support
-            "media_source": "http://v.youku.com/v_show/id_XNzY3NDM0MDI0.html?f=22798415",
+            "media_source": "http://221.203.1.212/youku/6775B002C8F48839F6AFA63BDA/0300200100540438A173C515AA2BED245C4903-F675-B311-EF1A-4544B5C04370.mp4",
             "link": "http://www.cocos2d-x.org"
         };
 
