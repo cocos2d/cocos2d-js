@@ -202,7 +202,7 @@ var FacebookShareTest = PluginXTest.extend({
         var map = {
             "dialog": "share_open_graph",
             "action_type": "cocostestmyfc:share",
-            "preview_property": "cocos_document",
+            "preview_property_name": "cocos_document",
             "title": "Cocos2d-JS Game Engine",
             "image": "http://files.cocos2d-x.org/images/orgsite/logo.png",
             "url": "http://cocos2d-x.org/docs/manual/framework/html5/en",
@@ -274,7 +274,7 @@ var FacebookShareTest = PluginXTest.extend({
         var map = {
             "dialog": "message_open_graph",
             "action_type": "cocostestmyfc:share",
-            "preview_property": "cocos_document",
+            "preview_property_name": "cocos_document",
             "title": "Cocos2d-JS Game Engine",
             "image": "http://files.cocos2d-x.org/images/orgsite/logo.png",
             "url": "http://cocos2d-x.org/docs/manual/framework/html5/en",
