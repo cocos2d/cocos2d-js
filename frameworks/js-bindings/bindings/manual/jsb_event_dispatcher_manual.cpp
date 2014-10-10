@@ -56,13 +56,13 @@ bool js_EventListenerTouchOneByOne_create(JSContext *cx, uint32_t argc, jsval *v
             ScriptingCore::getInstance()->handleTouchEvent(ret, EventTouch::EventCode::CANCELLED, touch, event);
         };
         
-		jsval jsret = getJSObject(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
+        jsval jsret = getJSObject(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
     
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
 }
 
 bool js_EventListenerTouchAllAtOnce_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -86,13 +86,13 @@ bool js_EventListenerTouchAllAtOnce_create(JSContext *cx, uint32_t argc, jsval *
             ScriptingCore::getInstance()->handleTouchesEvent(ret, EventTouch::EventCode::CANCELLED, touches, event);
         };
         
-		jsval jsret = getJSObject(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
+        jsval jsret = getJSObject(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
     
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
 }
 
 bool js_EventListenerMouse_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -116,13 +116,13 @@ bool js_EventListenerMouse_create(JSContext *cx, uint32_t argc, jsval *vp)
             ScriptingCore::getInstance()->handleMouseEvent(ret, EventMouse::MouseEventType::MOUSE_SCROLL, event);
         };
         
-		jsval jsret = getJSObject(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
+        jsval jsret = getJSObject(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
     
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
 }
 
 bool js_EventListenerKeyboard_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -138,13 +138,13 @@ bool js_EventListenerKeyboard_create(JSContext *cx, uint32_t argc, jsval *vp)
             ScriptingCore::getInstance()->handleKeybardEvent(ret, keyCode, false, event);
         };
         
-		jsval jsret = getJSObject(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
+        jsval jsret = getJSObject(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
     
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
 }
 
 

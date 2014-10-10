@@ -291,8 +291,8 @@ ccui.TextBMFont.RENDERER_ZORDER = -1;
  * UITextField
  */
 //TextField event
-ccui.TextField.EVENT_ATTACH_WITH_ME = 0;
-ccui.TextField.EVENT_DETACH_WITH_ME = 1;
+ccui.TextField.EVENT_ATTACH_WITH_IME = 0;
+ccui.TextField.EVENT_DETACH_WITH_IME = 1;
 ccui.TextField.EVENT_INSERT_TEXT = 2;
 ccui.TextField.EVENT_DELETE_BACKWARD = 3;
 
@@ -350,3 +350,4 @@ ccui.Widget.prototype.setSize = ccui.Widget.prototype.setContentSize;
  * UITextField temporary solution to getString, wait for -x patch
  */
 ccui.TextField.prototype.getString = ccui.TextField.prototype.getStringValue;
+ccui.TextField.prototype.setString = ccui.TextField.prototype.setText;

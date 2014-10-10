@@ -15,9 +15,7 @@
             
 	    <!-- facebook test-->
 	    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id" />
-	    <meta-data android:name="PluginUser" android:value="UserFacebook" />
-	    <meta-data android:name="PluginShare" android:value="ShareFacebook" />
-    
+
         <activity android:name=".AppActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="landscape"
@@ -35,11 +33,6 @@
         <provider android:authorities="com.facebook.app.NativeAppCallContentProvider1426774790893461"
                   android:name="com.facebook.NativeAppCallContentProvider"
                   android:exported="true"/>
-        <receiver android:name="org.cocos2dx.plugin.ShareFacebookBroadcastReceiver">
-            <intent-filter>
-                <action android:name="com.facebook.platform.AppCallResultBroadcast" />
-            </intent-filter>
-        </receiver>
         
         <meta-data android:value="50d2af93527015338b000052" android:name="UMENG_APPKEY"></meta-data>
     </application>

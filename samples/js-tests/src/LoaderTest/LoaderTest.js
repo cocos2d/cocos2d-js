@@ -36,7 +36,11 @@ var LoaderTestLayer = BaseTestLayer.extend({
         self._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
         var winSize = cc.winSize;
-        cc.loader.load(s_helloWorld, function(results){
+        cc.loader.load(s_helloWorld, function(err, results){
+            if(err){
+                cc.log("Failed to load %s.", s_helloWorld);
+                return;
+            }
             cc.log(s_helloWorld + "--->");
             cc.log(results[0]);
             var bg = new cc.Sprite(s_helloWorld);
@@ -45,13 +49,18 @@ var LoaderTestLayer = BaseTestLayer.extend({
             bg.y = winSize.height/2;
         });
 
-        cc.loader.load([s_Cowboy_plist, s_Cowboy_png], function(results){
+        cc.loader.load([s_Cowboy_plist, s_Cowboy_png], function(err, results){
+            if(err){
+                cc.log("Failed to load %s, %s .", s_Cowboy_plist, s_Cowboy_png);
+                return;
+            }
+
             cc.log(s_Cowboy_plist + "--->");
             cc.log(results[0]);
             cc.log(s_Cowboy_png + "--->");
             cc.log(results[1]);
             cc.spriteFrameCache.addSpriteFrames(s_Cowboy_plist);
-            var frame = new cc.Sprite("#testAnimationResource/1.png")
+            var frame = new cc.Sprite("#testAnimationResource/1.png");
             self.addChild(frame);
             frame.x = winSize.width/4;
             frame.y = winSize.height/4;

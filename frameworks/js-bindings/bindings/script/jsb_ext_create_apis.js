@@ -91,7 +91,7 @@ ccui.RichElementCustomNode.prototype._ctor = function(tag, color, opacity, custo
     customNode !== undefined && this.init(tag, color, opacity, customNode);
 };
 
-cc.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callback) {
+jsb.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callback) {
     callback && this.init(assetsManager, callback);
 };
 
@@ -177,4 +177,8 @@ cc.EditBox.prototype._ctor = function(size, normal9SpriteBg, press9SpriteBg, dis
         if (disabled9SpriteBg)
             this.setBackgroundSpriteForState(disabled9SpriteBg, cc.CONTROL_STATE_DISABLED);
     }
+};
+
+cc.ScrollView.prototype._ctor = function(size, container) {
+    container == undefined ? this.init() : this.initWithViewSize(size, container);
 };

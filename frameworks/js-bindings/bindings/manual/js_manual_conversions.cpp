@@ -26,6 +26,7 @@
 #include "js_bindings_config.h"
 #include "js_manual_conversions.h"
 #include "cocos2d_specifics.hpp"
+#include "math/TransformUtils.h"
 
 USING_NS_CC;
 
@@ -157,137 +158,137 @@ bool jsval_to_opaque( JSContext *cx, jsval vp, void **r)
 
     // begin
     JS::RootedObject tmp_arg(cx);
-	bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &tmp_arg );
-	JSB_PRECONDITION2( ok, cx, false, "Error converting value to object");
-	JSB_PRECONDITION2( tmp_arg && JS_IsTypedArrayObject( tmp_arg ), cx, false, "Not a TypedArray object");
-	JSB_PRECONDITION2( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(void*), cx, false, "Invalid Typed Array length");
+    bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &tmp_arg );
+    JSB_PRECONDITION2( ok, cx, false, "Error converting value to object");
+    JSB_PRECONDITION2( tmp_arg && JS_IsTypedArrayObject( tmp_arg ), cx, false, "Not a TypedArray object");
+    JSB_PRECONDITION2( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(void*), cx, false, "Invalid Typed Array length");
 
-	uint32_t* arg_array = (uint32_t*)JS_GetArrayBufferViewData( tmp_arg );
-	uint64_t ret =  arg_array[0];
-	ret = ret << 32;
-	ret |= arg_array[1];
+    uint32_t* arg_array = (uint32_t*)JS_GetArrayBufferViewData( tmp_arg );
+    uint64_t ret =  arg_array[0];
+    ret = ret << 32;
+    ret |= arg_array[1];
 
 #else
-	assert( sizeof(int)==4);
-	int32_t ret;
-	if( ! jsval_to_int32(cx, vp, &ret ) )
-	  return false;
+    assert( sizeof(int)==4);
+    int32_t ret;
+    if( ! jsval_to_int32(cx, vp, &ret ) )
+      return false;
 #endif
-	*r = (void*)ret;
-	return true;
+    *r = (void*)ret;
+    return true;
 }
 
 bool jsval_to_int( JSContext *cx, jsval vp, int *ret )
 {
-	// Since this is called to cast uint64 to uint32,
-	// it is needed to initialize the value to 0 first
+    // Since this is called to cast uint64 to uint32,
+    // it is needed to initialize the value to 0 first
 #ifdef __LP64__
-	long *tmp = (long*)ret;
-	*tmp = 0;
+    long *tmp = (long*)ret;
+    *tmp = 0;
 #endif
-	return jsval_to_int32(cx, vp, (int32_t*)ret);
+    return jsval_to_int32(cx, vp, (int32_t*)ret);
 }
 
 jsval opaque_to_jsval( JSContext *cx, void *opaque )
 {
 #ifdef __LP64__
-	uint64_t number = (uint64_t)opaque;
-	JSObject *typedArray = JS_NewUint32Array( cx, 2 );
-	uint32_t *buffer = (uint32_t*)JS_GetArrayBufferViewData(typedArray);
-	buffer[0] = number >> 32;
-	buffer[1] = number & 0xffffffff;
-	return OBJECT_TO_JSVAL(typedArray);
+    uint64_t number = (uint64_t)opaque;
+    JSObject *typedArray = JS_NewUint32Array( cx, 2 );
+    uint32_t *buffer = (uint32_t*)JS_GetArrayBufferViewData(typedArray);
+    buffer[0] = number >> 32;
+    buffer[1] = number & 0xffffffff;
+    return OBJECT_TO_JSVAL(typedArray);
 #else
-	assert(sizeof(int)==4);
-	int32_t number = (int32_t) opaque;
-	return INT_TO_JSVAL(number);
+    assert(sizeof(int)==4);
+    int32_t number = (int32_t) opaque;
+    return INT_TO_JSVAL(number);
 #endif
 }
 
 jsval c_class_to_jsval( JSContext *cx, void* handle, JSObject* object, JSClass *klass, const char* class_name)
 {
-	JSObject *jsobj;
+    JSObject *jsobj;
     
-	jsobj = jsb_get_jsobject_for_proxy(handle);
-	if( !jsobj ) {
-		jsobj = JS_NewObject(cx, klass, object, NULL);
-		CCASSERT(jsobj, "Invalid object");
-		jsb_set_c_proxy_for_jsobject(jsobj, handle, JSB_C_FLAG_DO_NOT_CALL_FREE);
-		jsb_set_jsobject_for_proxy(jsobj, handle);
-	}
+    jsobj = jsb_get_jsobject_for_proxy(handle);
+    if( !jsobj ) {
+        jsobj = JS_NewObject(cx, klass, object, NULL);
+        CCASSERT(jsobj, "Invalid object");
+        jsb_set_c_proxy_for_jsobject(jsobj, handle, JSB_C_FLAG_DO_NOT_CALL_FREE);
+        jsb_set_jsobject_for_proxy(jsobj, handle);
+    }
     
-	return OBJECT_TO_JSVAL(jsobj);
+    return OBJECT_TO_JSVAL(jsobj);
 }
 
 bool jsval_to_c_class( JSContext *cx, jsval vp, void **out_native, struct jsb_c_proxy_s **out_proxy)
 {
     JS::RootedObject jsobj(cx);
-	bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj );
-	JSB_PRECONDITION2(ok, cx, false, "Error converting jsval to object");
-	
-	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsobj);
-	*out_native = proxy->handle;
-	if( out_proxy )
-		*out_proxy = proxy;
-	return true;
+    bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj );
+    JSB_PRECONDITION2(ok, cx, false, "Error converting jsval to object");
+    
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsobj);
+    *out_native = proxy->handle;
+    if( out_proxy )
+        *out_proxy = proxy;
+    return true;
 }
 
 bool jsval_to_uint( JSContext *cx, jsval vp, unsigned int *ret )
 {
-	// Since this is called to cast uint64 to uint32,
-	// it is needed to initialize the value to 0 first
+    // Since this is called to cast uint64 to uint32,
+    // it is needed to initialize the value to 0 first
 #ifdef __LP64__
-	long *tmp = (long*)ret;
-	*tmp = 0;
+    long *tmp = (long*)ret;
+    *tmp = 0;
 #endif
-	return jsval_to_int32(cx, vp, (int32_t*)ret);
+    return jsval_to_int32(cx, vp, (int32_t*)ret);
 }
 
 jsval long_to_jsval( JSContext *cx, long number )
 {
 #ifdef __LP64__
-	assert( sizeof(long)==8);
+    assert( sizeof(long)==8);
 
-	char chr[128];
-	snprintf(chr, sizeof(chr)-1, "%ld", number);
-	JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
-	return STRING_TO_JSVAL(ret_obj);
+    char chr[128];
+    snprintf(chr, sizeof(chr)-1, "%ld", number);
+    JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
+    return STRING_TO_JSVAL(ret_obj);
 #else
-	CCASSERT( sizeof(int)==4, "Error!");
-	return INT_TO_JSVAL(number);
+    CCASSERT( sizeof(int)==4, "Error!");
+    return INT_TO_JSVAL(number);
 #endif
 }
 
 jsval ulong_to_jsval( JSContext *cx, unsigned long number )
 {
 #ifdef __LP64__
-	assert( sizeof(unsigned long)==8);
+    assert( sizeof(unsigned long)==8);
     
-	char chr[128];
-	snprintf(chr, sizeof(chr)-1, "%lu", number);
-	JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
-	return STRING_TO_JSVAL(ret_obj);
+    char chr[128];
+    snprintf(chr, sizeof(chr)-1, "%lu", number);
+    JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
+    return STRING_TO_JSVAL(ret_obj);
 #else
-	CCASSERT( sizeof(int)==4, "Error!");
-	return UINT_TO_JSVAL(number);
+    CCASSERT( sizeof(int)==4, "Error!");
+    return UINT_TO_JSVAL(number);
 #endif
 }
 
 jsval long_long_to_jsval( JSContext *cx, long long number )
 {
 #if JSB_REPRESENT_LONGLONG_AS_STR
-	char chr[128];
-	snprintf(chr, sizeof(chr)-1, "%lld", number);
-	JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
-	return STRING_TO_JSVAL(ret_obj);
+    char chr[128];
+    snprintf(chr, sizeof(chr)-1, "%lld", number);
+    JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
+    return STRING_TO_JSVAL(ret_obj);
     
 #else
-	CCASSERT( sizeof(long long)==8, "Error!");
-	JSObject *typedArray = JS_NewUint32Array( cx, 2 );
-	uint32_t *buffer = (uint32_t*)JS_GetArrayBufferViewData(typedArray, cx);
-	buffer[0] = number >> 32;
-	buffer[1] = number & 0xffffffff;
-	return OBJECT_TO_JSVAL(typedArray);
+    CCASSERT( sizeof(long long)==8, "Error!");
+    JSObject *typedArray = JS_NewUint32Array( cx, 2 );
+    uint32_t *buffer = (uint32_t*)JS_GetArrayBufferViewData(typedArray, cx);
+    buffer[0] = number >> 32;
+    buffer[1] = number & 0xffffffff;
+    return OBJECT_TO_JSVAL(typedArray);
 #endif
 }
 
@@ -319,90 +320,90 @@ jsval charptr_to_jsval( JSContext *cx, const char *str)
 bool JSB_jsval_typedarray_to_dataptr( JSContext *cx, jsval vp, GLsizei *count, void **data, JSArrayBufferViewType t)
 {
     JS::RootedObject jsobj(cx);
-	bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj );
-	JSB_PRECONDITION2( ok && jsobj, cx, false, "Error converting value to object");
+    bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj );
+    JSB_PRECONDITION2( ok && jsobj, cx, false, "Error converting value to object");
     
-	// WebGL supports TypedArray and sequences for some of its APIs. So when converting a TypedArray, we should
-	// also check for a possible non-Typed Array JS object, like a JS Array.
+    // WebGL supports TypedArray and sequences for some of its APIs. So when converting a TypedArray, we should
+    // also check for a possible non-Typed Array JS object, like a JS Array.
     
-	if( JS_IsTypedArrayObject( jsobj ) ) {
+    if( JS_IsTypedArrayObject( jsobj ) ) {
         
-		*count = JS_GetTypedArrayLength(jsobj);
-		JSArrayBufferViewType type = JS_GetArrayBufferViewType(jsobj);
-		JSB_PRECONDITION2(t==type, cx, false, "TypedArray type different than expected type");
+        *count = JS_GetTypedArrayLength(jsobj);
+        JSArrayBufferViewType type = JS_GetArrayBufferViewType(jsobj);
+        JSB_PRECONDITION2(t==type, cx, false, "TypedArray type different than expected type");
         
-		switch (t) {
-			case js::ArrayBufferView::TYPE_INT8:
-			case js::ArrayBufferView::TYPE_UINT8:
-				*data = JS_GetUint8ArrayData(jsobj);
-				break;
+        switch (t) {
+            case js::ArrayBufferView::TYPE_INT8:
+            case js::ArrayBufferView::TYPE_UINT8:
+                *data = JS_GetUint8ArrayData(jsobj);
+                break;
                 
-			case js::ArrayBufferView::TYPE_INT16:
-			case js::ArrayBufferView::TYPE_UINT16:
-				*data = JS_GetUint16ArrayData(jsobj);
-				break;
+            case js::ArrayBufferView::TYPE_INT16:
+            case js::ArrayBufferView::TYPE_UINT16:
+                *data = JS_GetUint16ArrayData(jsobj);
+                break;
                 
-			case js::ArrayBufferView::TYPE_INT32:
-			case js::ArrayBufferView::TYPE_UINT32:
-				*data = JS_GetUint32ArrayData(jsobj);
-				break;
+            case js::ArrayBufferView::TYPE_INT32:
+            case js::ArrayBufferView::TYPE_UINT32:
+                *data = JS_GetUint32ArrayData(jsobj);
+                break;
                 
-			case js::ArrayBufferView::TYPE_FLOAT32:
-				*data = JS_GetFloat32ArrayData(jsobj);
-				break;
+            case js::ArrayBufferView::TYPE_FLOAT32:
+                *data = JS_GetFloat32ArrayData(jsobj);
+                break;
                 
-			default:
-				JSB_PRECONDITION2(false, cx, false, "Unsupported typedarray type");
-				break;
-		}
-	} else if( JS_IsArrayObject(cx, jsobj)) {
-		// Slow... avoid it. Use TypedArray instead, but the spec says that it can receive
-		// Sequence<> as well.
-		uint32_t length;
-		JS_GetArrayLength(cx, jsobj, &length);
+            default:
+                JSB_PRECONDITION2(false, cx, false, "Unsupported typedarray type");
+                break;
+        }
+    } else if( JS_IsArrayObject(cx, jsobj)) {
+        // Slow... avoid it. Use TypedArray instead, but the spec says that it can receive
+        // Sequence<> as well.
+        uint32_t length;
+        JS_GetArrayLength(cx, jsobj, &length);
         
-		for( uint32_t i=0; i<length;i++ ) {
+        for( uint32_t i=0; i<length;i++ ) {
             
             JS::RootedValue valarg(cx);
-			JS_GetElement(cx, jsobj, i, &valarg);
+            JS_GetElement(cx, jsobj, i, &valarg);
             
-			switch(t) {
-				case js::ArrayBufferView::TYPE_INT32:
-				case js::ArrayBufferView::TYPE_UINT32:
-				{
-					uint32_t e = JSVAL_TO_INT(valarg);
-					((uint32_t*)data)[i] = e;
-					break;
-				}
-				case js::ArrayBufferView::TYPE_FLOAT32:
-				{
-					double e = JSVAL_TO_DOUBLE(valarg);
-					((GLfloat*)data)[i] = (GLfloat)e;
-					break;
-				}
-				default:
-					JSB_PRECONDITION2(false, cx, false, "Unsupported typedarray type");
-					break;
-			}
-		}
+            switch(t) {
+                case js::ArrayBufferView::TYPE_INT32:
+                case js::ArrayBufferView::TYPE_UINT32:
+                {
+                    uint32_t e = JSVAL_TO_INT(valarg);
+                    ((uint32_t*)data)[i] = e;
+                    break;
+                }
+                case js::ArrayBufferView::TYPE_FLOAT32:
+                {
+                    double e = JSVAL_TO_DOUBLE(valarg);
+                    ((GLfloat*)data)[i] = (GLfloat)e;
+                    break;
+                }
+                default:
+                    JSB_PRECONDITION2(false, cx, false, "Unsupported typedarray type");
+                    break;
+            }
+        }
         
-	} else
-		JSB_PRECONDITION2(false, cx, false, "Object shall be a TypedArray or Sequence");
+    } else
+        JSB_PRECONDITION2(false, cx, false, "Object shall be a TypedArray or Sequence");
     
-	return true;
+    return true;
 }
 
 bool JSB_get_arraybufferview_dataptr( JSContext *cx, jsval vp, GLsizei *count, GLvoid **data )
 {
     JS::RootedObject jsobj(cx);
-	bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj );
-	JSB_PRECONDITION2( ok && jsobj, cx, false, "Error converting value to object");
-	JSB_PRECONDITION2( JS_IsArrayBufferViewObject(jsobj), cx, false, "Not an ArrayBufferView object");
+    bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj );
+    JSB_PRECONDITION2( ok && jsobj, cx, false, "Error converting value to object");
+    JSB_PRECONDITION2( JS_IsArrayBufferViewObject(jsobj), cx, false, "Not an ArrayBufferView object");
     
-	*data = JS_GetArrayBufferViewData(jsobj);
-	*count = JS_GetArrayBufferViewByteLength(jsobj);
+    *data = JS_GetArrayBufferViewData(jsobj);
+    *count = JS_GetArrayBufferViewByteLength(jsobj);
     
-	return true;
+    return true;
 }
 
 
@@ -467,28 +468,28 @@ bool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *outval )
 bool jsval_to_long( JSContext *cx, jsval vp, long *r )
 {
 #ifdef __LP64__
-	// compatibility check
-	assert( sizeof(long)==8);
-	JSString *jsstr = JS::ToString(cx, JS::RootedValue(cx, vp));
-	JSB_PRECONDITION2(jsstr, cx, false, "Error converting value to string");
+    // compatibility check
+    assert( sizeof(long)==8);
+    JSString *jsstr = JS::ToString(cx, JS::RootedValue(cx, vp));
+    JSB_PRECONDITION2(jsstr, cx, false, "Error converting value to string");
     
-	char *str = JS_EncodeString(cx, jsstr);
-	JSB_PRECONDITION2(str, cx, false, "Error encoding string");
+    char *str = JS_EncodeString(cx, jsstr);
+    JSB_PRECONDITION2(str, cx, false, "Error encoding string");
     
-	char *endptr;
-	long ret = strtol(str, &endptr, 10);
+    char *endptr;
+    long ret = strtol(str, &endptr, 10);
     
-	*r = ret;
-	return true;
+    *r = ret;
+    return true;
     
 #else
-	// compatibility check
-	assert( sizeof(int)==4);
-	long ret = JSVAL_TO_INT(vp);
+    // compatibility check
+    assert( sizeof(int)==4);
+    long ret = JSVAL_TO_INT(vp);
 #endif
-	
-	*r = ret;
-	return true;
+    
+    *r = ret;
+    return true;
 }
 
 
@@ -510,18 +511,18 @@ bool jsval_to_ulong( JSContext *cx, jsval vp, unsigned long *out)
 bool jsval_to_long_long(JSContext *cx, jsval vp, long long* r)
 {
     JS::RootedObject tmp_arg(cx);
-	bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &tmp_arg );
-	JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
-	JSB_PRECONDITION3( tmp_arg && JS_IsTypedArrayObject( tmp_arg ), cx, false, "Not a TypedArray object");
-	JSB_PRECONDITION3( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), cx, false, "Invalid Typed Array length");
-	
-	uint32_t* arg_array = (uint32_t*)JS_GetArrayBufferViewData( tmp_arg );
-	long long ret =  arg_array[0];
-	ret = ret << 32;
-	ret |= arg_array[1];
-	
-	*r = ret;
-	return true;
+    bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &tmp_arg );
+    JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
+    JSB_PRECONDITION3( tmp_arg && JS_IsTypedArrayObject( tmp_arg ), cx, false, "Not a TypedArray object");
+    JSB_PRECONDITION3( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), cx, false, "Invalid Typed Array length");
+    
+    uint32_t* arg_array = (uint32_t*)JS_GetArrayBufferViewData( tmp_arg );
+    long long ret =  arg_array[0];
+    ret = ret << 32;
+    ret |= arg_array[1];
+    
+    *r = ret;
+    return true;
 }
 
 bool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
@@ -1830,10 +1831,10 @@ bool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
 {
     JS::RootedObject jsobj(cx);
     
-	if (!JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj ) )
-		return false;
-	
-	JSB_PRECONDITION( jsobj, "Not a valid JS object");
+    if (!JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj ) )
+        return false;
+    
+    JSB_PRECONDITION( jsobj, "Not a valid JS object");
     
     // defaul values
     const char *            defautlFontName         = "Arial";
@@ -2032,7 +2033,7 @@ bool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     }
     
     // we are done here
-	return true;
+    return true;
 }
 
 #define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
@@ -2042,45 +2043,45 @@ bool jsval_to_CCPoint( JSContext *cx, jsval vp, Point *ret )
 #ifdef JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
     
     JS::RootedObject jsobj(cx);
-	if( ! JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj ) )
-		return false;
-	
-	JSB_PRECONDITION( jsobj, "Not a valid JS object");
+    if( ! JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj ) )
+        return false;
+    
+    JSB_PRECONDITION( jsobj, "Not a valid JS object");
     
     JS::RootedValue valx(cx);
     JS::RootedValue valy(cx);
-	bool ok = true;
-	ok &= JS_GetProperty(cx, jsobj, "x", &valx);
-	ok &= JS_GetProperty(cx, jsobj, "y", &valy);
+    bool ok = true;
+    ok &= JS_GetProperty(cx, jsobj, "x", &valx);
+    ok &= JS_GetProperty(cx, jsobj, "y", &valy);
     
-	if( ! ok )
-		return false;
-	
-	double x, y;
-	ok &= JS::ToNumber(cx, valx, &x);
-	ok &= JS::ToNumber(cx, valy, &y);
-	
-	if( ! ok )
-		return false;
-	
-	ret->x = x;
-	ret->y = y;
+    if( ! ok )
+        return false;
     
-	return true;
+    double x, y;
+    ok &= JS::ToNumber(cx, valx, &x);
+    ok &= JS::ToNumber(cx, valy, &y);
+    
+    if( ! ok )
+        return false;
+    
+    ret->x = x;
+    ret->y = y;
+    
+    return true;
     
 #else // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
     
-	JSObject *tmp_arg;
-	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-		return false;
-	
-	JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-	
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(cpVect), "Invalid length");
-	
-	*ret = *(Point*)JS_GetArrayBufferViewData( tmp_arg, cx );
-	
-	return true;
+    JSObject *tmp_arg;
+    if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
+        return false;
+    
+    JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
+    
+    JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(cpVect), "Invalid length");
+    
+    *ret = *(Point*)JS_GetArrayBufferViewData( tmp_arg, cx );
+    
+    return true;
 #endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
@@ -2089,76 +2090,76 @@ bool jsval_to_CGPoint( JSContext *cx, jsval vp, cpVect *ret )
 {
 #ifdef JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
     
-	JS::RootedObject jsobj(cx);
-	if( ! JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj ) )
-		return false;
-	
-	JSB_PRECONDITION( jsobj, "Not a valid JS object");
+    JS::RootedObject jsobj(cx);
+    if( ! JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj ) )
+        return false;
+    
+    JSB_PRECONDITION( jsobj, "Not a valid JS object");
     
     JS::RootedValue valx(cx);
     JS::RootedValue valy(cx);
-	bool ok = true;
-	ok &= JS_GetProperty(cx, jsobj, "x", &valx);
-	ok &= JS_GetProperty(cx, jsobj, "y", &valy);
+    bool ok = true;
+    ok &= JS_GetProperty(cx, jsobj, "x", &valx);
+    ok &= JS_GetProperty(cx, jsobj, "y", &valy);
     
-	if( ! ok )
-		return false;
-	
-	double x, y;
-	ok &= JS::ToNumber(cx, valx, &x);
-	ok &= JS::ToNumber(cx, valy, &y);
-	
-	if( ! ok )
-		return false;
-	
-	ret->x = x;
-	ret->y = y;
+    if( ! ok )
+        return false;
     
-	return true;
+    double x, y;
+    ok &= JS::ToNumber(cx, valx, &x);
+    ok &= JS::ToNumber(cx, valy, &y);
+    
+    if( ! ok )
+        return false;
+    
+    ret->x = x;
+    ret->y = y;
+    
+    return true;
     
 #else // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
     
-	JSObject *tmp_arg;
-	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-		return false;
-	
-	JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-	
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(cpVect), "Invalid length");
-	
-	*ret = *(cpVect*)JS_GetArrayBufferViewData( tmp_arg, cx );
-	
-	return true;
+    JSObject *tmp_arg;
+    if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
+        return false;
+    
+    JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
+    
+    JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(cpVect), "Invalid length");
+    
+    *ret = *(cpVect*)JS_GetArrayBufferViewData( tmp_arg, cx );
+    
+    return true;
 #endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
 
 jsval CGPoint_to_jsval( JSContext *cx, cpVect p)
 {
-	
+    
 #ifdef JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
     
-	JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
-	if (!object)
-		return JSVAL_VOID;
+    JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
+    if (!object)
+        return JSVAL_VOID;
     
-	if (!JS_DefineProperty(cx, object, "x", DOUBLE_TO_JSVAL(p.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-		!JS_DefineProperty(cx, object, "y", DOUBLE_TO_JSVAL(p.y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
-		return JSVAL_VOID;
-	
-	return OBJECT_TO_JSVAL(object);
+    if (!JS_DefineProperty(cx, object, "x", DOUBLE_TO_JSVAL(p.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+        !JS_DefineProperty(cx, object, "y", DOUBLE_TO_JSVAL(p.y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+        return JSVAL_VOID;
+    
+    return OBJECT_TO_JSVAL(object);
     
 #else // JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-	
+    
 #ifdef __LP64__
-	JSObject *typedArray = JS_NewFloat64Array( cx, 2 );
+    JSObject *typedArray = JS_NewFloat64Array( cx, 2 );
 #else
-	JSObject *typedArray = JS_NewFloat32Array( cx, 2 );
+    JSObject *typedArray = JS_NewFloat32Array( cx, 2 );
 #endif
     
-	cpVect *buffer = (cpVect*)JS_GetArrayBufferViewData(typedArray, cx );
-	*buffer = p;
-	return OBJECT_TO_JSVAL(typedArray);
+    cpVect *buffer = (cpVect*)JS_GetArrayBufferViewData(typedArray, cx );
+    *buffer = p;
+    return OBJECT_TO_JSVAL(typedArray);
 #endif // ! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
@@ -2383,7 +2384,7 @@ jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v)
 
 jsval matrix_to_jsval(JSContext *cx, const cocos2d::Mat4& v)
 {
-    JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    /*JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
     
     for (int i = 0; i < 16; i++) {
         JS::RootedValue arrElement(cx);
@@ -2394,7 +2395,12 @@ jsval matrix_to_jsval(JSContext *cx, const cocos2d::Mat4& v)
         }
     }
     
-    return OBJECT_TO_JSVAL(jsretArr);
+    return OBJECT_TO_JSVAL(jsretArr);*/
+    
+    //convert Mat4 to AffineTransform to be compatible with html5
+    cocos2d::AffineTransform affineTransform;
+    cocos2d::GLToCGAffine(v.m, &affineTransform);
+    return ccaffinetransform_to_jsval(cx, affineTransform);
 }
 
 jsval vector2_to_jsval(JSContext *cx, const cocos2d::Vec2& v)

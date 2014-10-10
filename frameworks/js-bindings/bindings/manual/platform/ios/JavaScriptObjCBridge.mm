@@ -33,21 +33,21 @@ JavaScriptObjCBridge::CallInfo::~CallInfo(void)
 }
 JS::Value JavaScriptObjCBridge::convertReturnValue(JSContext *cx, ReturnValue retValue, ValueType type)
 {
-	JS::Value ret = JSVAL_NULL;
+    JS::Value ret = JSVAL_NULL;
     
-	switch (type)
-	{
-		case TypeInteger:
-			return INT_TO_JSVAL(retValue.intValue);
-		case TypeFloat:
-			return DOUBLE_TO_JSVAL((double)retValue.floatValue);
-		case TypeBoolean:
-			return BOOLEAN_TO_JSVAL(retValue.boolValue);
-		case TypeString:
-			return c_string_to_jsval(cx, retValue.stringValue->c_str(),retValue.stringValue->size());
-	}
+    switch (type)
+    {
+        case TypeInteger:
+            return INT_TO_JSVAL(retValue.intValue);
+        case TypeFloat:
+            return DOUBLE_TO_JSVAL((double)retValue.floatValue);
+        case TypeBoolean:
+            return BOOLEAN_TO_JSVAL(retValue.boolValue);
+        case TypeString:
+            return c_string_to_jsval(cx, retValue.stringValue->c_str(),retValue.stringValue->size());
+    }
     
-	return ret;
+    return ret;
 }
 
 bool JavaScriptObjCBridge::CallInfo::execute(JSContext *cx,jsval *argv,unsigned argc)
@@ -122,7 +122,7 @@ bool JavaScriptObjCBridge::CallInfo::execute(JSContext *cx,jsval *argv,unsigned 
                 [invocation getReturnValue:&ret];
                 pushValue(ret);
             }
-            else if (strcmp(returnType, "c") == 0) // BOOL
+            else if (strcmp(returnType, "c") == 0 || strcmp(returnType, "B") == 0) // BOOL
             {
                 char ret;
                 [invocation getReturnValue:&ret];
@@ -247,7 +247,7 @@ static void basic_object_finalize(JSFreeOp *freeOp, JSObject *obj)
 JS_BINDED_FUNC_IMPL(JavaScriptObjCBridge, callStaticMethod){
     jsval *argv = JS_ARGV(cx, vp);
     if (argc >= 2) {
-    	JSStringWrapper arg0(argv[0]);
+        JSStringWrapper arg0(argv[0]);
         JSStringWrapper arg1(argv[1]);
         CallInfo call(arg0.get(),arg1.get());
         bool ok = call.execute(cx,argv,argc);

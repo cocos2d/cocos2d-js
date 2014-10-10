@@ -679,6 +679,9 @@ var DemoExplosion = ParticleDemo.extend({
 
         this.setEmitterPosition();
     },
+    onExit: function() {
+        this._super();
+    },
     title:function () {
         return "ParticleExplosion";
     }

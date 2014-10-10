@@ -394,17 +394,17 @@ void register_all_cocos2dx_ui_manual(JSContext* cx, JSObject* global)
 {
     JS_DefineFunction(cx, jsb_cocos2d_ui_Widget_prototype, "addTouchEventListener", js_cocos2dx_UIWidget_addTouchEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_cocos2d_ui_CheckBox_prototype, "addEventListenerCheckBox", js_cocos2dx_UICheckBox_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_ui_CheckBox_prototype, "addEventListener", js_cocos2dx_UICheckBox_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_cocos2d_ui_Slider_prototype, "addEventListenerSlider", js_cocos2dx_UISlider_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_ui_Slider_prototype, "addEventListener", js_cocos2dx_UISlider_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_cocos2d_ui_TextField_prototype, "addEventListenerTextField", js_cocos2dx_UITextField_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_ui_TextField_prototype, "addEventListener", js_cocos2dx_UITextField_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_cocos2d_ui_PageView_prototype, "addEventListenerPageView", js_cocos2dx_UIPageView_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_ui_PageView_prototype, "addEventListener", js_cocos2dx_UIPageView_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    JS_DefineFunction(cx, jsb_cocos2d_ui_ScrollView_prototype, "addEventListenerScrollView", js_cocos2dx_UIScrollView_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_ui_ScrollView_prototype, "addEventListener", js_cocos2dx_UIScrollView_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_cocos2d_ui_ListView_prototype, "addEventListenerListView", js_cocos2dx_UIListView_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_ui_ListView_prototype, "addEventListener", js_cocos2dx_UIListView_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, jsb_cocos2d_ui_LayoutParameter_prototype, "setMargin", js_cocos2dx_LayoutParameter_setMargin, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 

@@ -58,6 +58,14 @@ std::string getCurAppPath(void)
 {
     return [[[NSBundle mainBundle] bundlePath] UTF8String];
 }
+std::string getCurAppName(void)
+{
+    string appName = [[[NSProcessInfo processInfo] processName] UTF8String];
+    int found = appName.find(" ");
+    if (found!=std::string::npos)
+        appName = appName.substr(0,found);
+    return appName;
+}
 
 -(void) dealloc
 {
@@ -84,7 +92,7 @@ std::string getCurAppPath(void)
     Application::getInstance()->run();
     
     // After run, application needs to be terminated immediately.
-    [NSApp terminate: self];
+    [[NSApplication sharedApplication] terminate: self];
 }
 
 
@@ -110,7 +118,7 @@ std::string getCurAppPath(void)
     director->setOpenGLView(g_eglView);
 
     window = glfwGetCocoaWindow(g_eglView->getWindow());
-    [NSApp setDelegate: self];
+    [[NSApplication sharedApplication] setDelegate: self];
     
     [self createViewMenu];
     [self updateMenu];

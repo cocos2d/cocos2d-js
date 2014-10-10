@@ -74,13 +74,13 @@ var FacebookShareTest = PluginXTest.extend({
     onShareLink: function () {
         var map = {
             "dialog": "share_link",
-            "description": "Cocos2d-x is a great game engine",
-            "title": "Cocos2d-x",
+            "description": "Cocos2d-JS is a great game engine",
+            "title": "Cocos2d-JS",
             "link": "http://www.cocos2d-x.org",
             "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
         facebook.share(map, function (resultcode, msg) {
-            cc.log(msg);
+            cc.log(JSON.stringify(msg));
         });
     },
     showDisableTips: function (msg) {
@@ -108,15 +108,15 @@ var FacebookShareTest = PluginXTest.extend({
     onShareOG: function () {
         var map = {
             "dialog": "share_open_graph",
-            "action_type": "fbogsamplesd:dish",
-            "preview_property": "dish",
-            "title": "Roasted pumpkin seeds",
+            "action_type": "cocostestmyfc:share",
+            "preview_property": "cocos_document",
+            "title": "Cocos2d-JS Game Engine",
             "image": "http://files.cocos2d-x.org/images/orgsite/logo.png",
-            "url": "http://example.com/roasted_pumpkin_seeds", // Please change to your own action
-            "description": "Crunchy pumpkin seeds roasted in butter and lightly salted."
+            "url": "http://cocos2d-x.org/docs/manual/framework/html5/en",
+            "description": "cocos document"
         };
         facebook.dialog(map, function (resultcode, msg) {
-            cc.log(msg);
+            cc.log(JSON.stringify(msg));
         });
     },
 
@@ -134,7 +134,7 @@ var FacebookShareTest = PluginXTest.extend({
                 "photo": img
             };
             facebook.dialog(map, function (resultcode, msg) {
-                cc.log(msg);
+                cc.log(JSON.stringify(msg));
             });
         });
         var seq = cc.sequence(delay, share);
@@ -149,13 +149,13 @@ var FacebookShareTest = PluginXTest.extend({
         }
         var map = {
             "dialog": "message_link",
-            "description": "Cocos2d-x is a great game engine",
-            "title": "Cocos2d-x",
+            "description": "Cocos2d-JS is a great game engine",
+            "title": "Cocos2d-JS",
             "link": "http://www.cocos2d-x.org",
             "imageUrl": "http://files.cocos2d-x.org/images/orgsite/logo.png"
         };
         facebook.dialog(map, function (resultcode, msg) {
-            cc.log(msg);
+            cc.log(JSON.stringify(msg));
         });
     },
 
@@ -166,15 +166,15 @@ var FacebookShareTest = PluginXTest.extend({
         }
         var map = {
             "dialog": "message_open_graph",
-            "action_type": "fbogsamplesd:dish",
-            "preview_property": "dish",
-            "title": "Roasted pumpkin seeds",
-            "image": "http://files.cocos2d-x.org/images/orgsite/logo.png",
-            "url": "http://example.com/roasted_pumpkin_seeds", // Please change to your own action
-            "description": "Crunchy pumpkin seeds roasted in butter and lightly salted."
+            "action_type": "cocostestmyfc:share",
+            "preview_property": "cocos_document",
+            "title": "Cocos2d-JS Game Engine",
+             "image": "http://files.cocos2d-x.org/images/orgsite/logo.png",
+             "url": "http://cocos2d-x.org/docs/manual/framework/html5/en",
+             "description": "cocos document"
         };
         facebook.dialog(map, function (resultcode, msg) {
-            cc.log(msg);
+            cc.log(JSON.stringify(msg));
         });
     },
 
@@ -192,7 +192,7 @@ var FacebookShareTest = PluginXTest.extend({
                 "photo": img
             };
             facebook.dialog(map, function (resultcode, msg) {
-                cc.log(msg);
+                cc.log(JSON.stringify(msg));
             });
         });
         var seq = cc.sequence(delay, share);
@@ -200,18 +200,17 @@ var FacebookShareTest = PluginXTest.extend({
     },
 
     onRequest: function () {
-        if (!cc.sys.isNative) {
-            this.showDisableTips();
-            return;
-        }
+//        if (!cc.sys.isNative) {
+//            this.showDisableTips();
+//            return;
+//        }
 
         var map = {
-            "dialog": "apprequests",
-            "message": "Cocos2d-x is a great game engine",
-            "link": "http://www.cocos2d-x.org"
+            "message": "Cocos2d-JS is a great game engine",
+            "title": "Cocos2d-JS"
         };
-        facebook.dialog(map, function (resultcode, msg) {
-            cc.log(msg);
+        facebook.appRequest(map, function (resultcode, msg) {
+            cc.log(JSON.stringify(msg));
         });
     },
 
