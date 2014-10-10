@@ -24,17 +24,17 @@
 
 var button_share = {
     "login": "loginClick",
-    "loginWithPermission" : "loginWithPermissionClick",
+    "loginWithPermission": "loginWithPermissionClick",
     "logout": "logoutClick",
     "getUid": "getUidClick",
     "getToken": "getTokenClick",
     "getPermissions": "getPermissionClick",
-    "request API": "requestClick"
-};
-button_share_native = {
+    "request API": "requestClick",
     "publishInstall": "publicInstallClick",
-    "logEvent": "LogEventClick"
-}
+    "logEvent": "LogEventClick",
+    "logPurchase": "LogPurchaseClick"
+
+};
 var FacebookUserTest = PluginXTest.extend({
     _title: "Plugin-x Test",
     _subtitle: "Facebook SDK",
@@ -51,14 +51,7 @@ var FacebookUserTest = PluginXTest.extend({
             var item = new cc.MenuItemLabel(label, this[button_share[action]], this);
             menu.addChild(item);
         }
-        if (cc.sys.isNative) {
-            for(var key in button_share_native){
-                var label = new cc.LabelTTF(key, "Arial", 24);
-                var item = new cc.MenuItemLabel(label, this[button_share_native[key]], this);
-                menu.addChild(item);
-            }
-        }
-        menu.alignItemsVerticallyWithPadding(16);
+        menu.alignItemsVerticallyWithPadding(12);
         menu.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(+120, 0)));
         this.addChild(menu);
 
@@ -76,7 +69,7 @@ var FacebookUserTest = PluginXTest.extend({
         var parameters = {};
         var floatVal = 888.888;
         parameters[plugin.FacebookAgent.AppEventParam.SUCCESS] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
-        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL);
+//        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL);
         facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal);
         facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, parameters);
         facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal, parameters);
@@ -106,11 +99,9 @@ var FacebookUserTest = PluginXTest.extend({
     },
     getUidClick: function (sender) {
         var self = this;
-        facebook.api("/me", plugin.FacebookAgent.HttpMethod.GET, function (type, msg) {
-            if (type == plugin.FacebookAgent.CODE_SUCCEED) {
-                self.result.setString(msg["id"]);
-            } else {
-                self.result.setString(msg["error_message"]);
+        facebook.isLoggedIn(function (errorCode, msg) {
+            if (errorCode == plugin.FacebookAgent.CODE_SUCCEED) {
+                self.result.setString(facebook.getUserID());
             }
         });
     },
@@ -148,6 +139,10 @@ var FacebookUserTest = PluginXTest.extend({
                 self.result.setString("post_id: " + msg["post_id"]);
             }
         });
+    },
+    LogPurchaseClick: function (sender) {
+        cc.log("in purchase");
+        facebook.logPurchase(1.23, "CNY", {"cocos2d": 1, "js": 2});
     },
     onNextCallback: function (sender) {
 

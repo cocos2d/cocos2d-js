@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef  _RUNTIME__H_
 #define  _RUNTIME__H_
 
-bool initRuntime();
+void initRuntime();
 
-bool startRuntime();
+void startRuntime();
 
 #endif // _RUNTIME__H_
 
