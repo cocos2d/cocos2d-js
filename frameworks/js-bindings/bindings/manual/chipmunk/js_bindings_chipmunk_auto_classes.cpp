@@ -3106,85 +3106,6 @@ bool JSB_cpSpace_useSpatialHash(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 
-bool JSB_cpSpace_segmentQueryFirst(JSContext *cx, uint32_t argc, jsval *vp){
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
-	cpSpace* space = (cpSpace*) proxy->handle;
-	jsval *argvp = JS_ARGV(cx,vp);
-
-    cpVect start;
-    cpVect end;
-    cpLayers layers;
-    cpGroup group;
-    bool ok = true;
-    ok &= jsval_to_cpVect( cx, argvp[0], &start );
-	ok &= jsval_to_cpVect( cx, argvp[1], &end );
-    ok &= jsval_to_uint32( cx, argvp[2], &layers );
-	ok &= jsval_to_uint( cx, argvp[3], &group );
-	JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-
-    cpSegmentQueryInfo *out = new cpSegmentQueryInfo();
-    cpShape* target = cpSpaceSegmentQueryFirst(space, start, end, layers, group, out);
-
-    if(target)
-    {
-        JSObject *jsobj = JS_NewObject(cx, JSB_cpSegmentQueryInfo_class, JSB_cpSegmentQueryInfo_object, NULL);
-	    jsb_set_jsobject_for_proxy(jsobj, out);
-	    jsb_set_c_proxy_for_jsobject(jsobj, out, JSB_C_FLAG_CALL_FREE);
-	    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-    }
-    else
-    {
-        delete out;
-        JS_SET_RVAL(cx, vp, JSVAL_NULL);
-    }
-    return true;
-}
-
-bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *vp){
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
-    cpSpace* space = (cpSpace*) proxy->handle;
-    jsval *argvp = JS_ARGV(cx,vp);
-
-    cpVect point;
-    cpFloat maxDistance;
-    cpLayers layers;
-    cpGroup group;
-    bool ok = true;
-    ok &= jsval_to_cpVect( cx, argvp[0], &point );
-    if(JSVAL_IS_INT(argvp[1]))
-    {
-        int arg1;
-        ok &= jsval_to_int(cx, argvp[1], &arg1);
-        maxDistance = (cpFloat) arg1;
-    }
-    else
-    {
-        maxDistance = JSVAL_TO_DOUBLE(argvp[1]);
-    }
-    ok &= jsval_to_uint32( cx, argvp[2], &layers );
-    ok &= jsval_to_uint( cx, argvp[3], &group );
-    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-
-    cpNearestPointQueryInfo* info = new cpNearestPointQueryInfo();
-    cpShape* target = cpSpaceNearestPointQueryNearest(space, point, maxDistance, layers, group, info);
-
-    if(target)
-    {
-        JSObject *jsobj = JS_NewObject(cx, JSB_cpNearestPointQueryInfo_class, JSB_cpNearestPointQueryInfo_object, NULL);
-        jsb_set_jsobject_for_proxy(jsobj, info);
-        jsb_set_c_proxy_for_jsobject(jsobj, info, JSB_C_FLAG_CALL_FREE);
-        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));    
-    }
-    else
-    {
-        delete info;
-        JS_SET_RVAL(cx, vp, JSVAL_NULL);
-    }
-    return true;
-}
-
 void JSB_cpSpace_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSB_cpSpace_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -3246,8 +3167,6 @@ void JSB_cpSpace_createClass(JSContext *cx, JSObject* globalObj, const char* nam
 		JS_FN("addConstraint", JSB_cpSpace_addConstraint, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("addBody", JSB_cpSpace_addBody, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FN("removeShape", JSB_cpSpace_removeShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("segmentQueryFirst", JSB_cpSpace_segmentQueryFirst, 4, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-        JS_FN("nearestPointQueryNearest", JSB_cpSpace_nearestPointQueryNearest, 4, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
