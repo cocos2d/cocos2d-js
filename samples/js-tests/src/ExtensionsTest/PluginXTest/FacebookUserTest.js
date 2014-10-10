@@ -77,19 +77,15 @@ var FacebookUserTest = PluginXTest.extend({
     },
     loginClick: function (sender) {
         var self = this;
-        facebook.isLoggedIn(function (type, msg) {
-            if (type == plugin.FacebookAgent.CODE_SUCCEED) {
-                if (msg["isLoggedIn"]) {
-                    self.result.setString("logged in");
-                } else {
-                    facebook.login(function (type, msg) {
-                        self.result.setString("type is " + type + " msg is " + JSON.stringify(msg));
-                    });
-                }
-            } else {
-                self.result.setString("error");
-            }
-        });
+
+        if (facebook.isLoggedIn()) {
+            self.result.setString("logged in");
+        }
+        else {
+            facebook.login(function (type, msg) {
+                self.result.setString("type is " + type + " msg is " + JSON.stringify(msg));
+            });
+        }
     },
     logoutClick: function (sender) {
         var self = this;
@@ -99,19 +95,23 @@ var FacebookUserTest = PluginXTest.extend({
     },
     getUidClick: function (sender) {
         var self = this;
-        facebook.isLoggedIn(function (errorCode, msg) {
-            if (errorCode == plugin.FacebookAgent.CODE_SUCCEED) {
-                self.result.setString(facebook.getUserID());
-            }
-        });
+
+        if (facebook.isLoggedIn()) {
+            self.result.setString(facebook.getUserID());
+        }
+        else {
+            self.result.setString("User haven't been logged in");
+        }
     },
     getTokenClick: function (sender) {
         var self = this;
-        facebook.requestAccessToken(function (type, msg) {
-            if (type == plugin.FacebookAgent.CODE_SUCCEED) {
-                self.result.setString(msg["accessToken"]);
-            }
-        });
+
+        if (facebook.isLoggedIn()) {
+            self.result.setString(facebook.getAccessToken());
+        }
+        else {
+            self.result.setString("User haven't been logged in");
+        }
     },
 
     loginWithPermissionClick: function (sender) {
@@ -125,7 +125,7 @@ var FacebookUserTest = PluginXTest.extend({
     },
     getPermissionClick: function (sender) {
         var self = this;
-        facebook.getPermissionList(function (type, data) {
+        facebook.api("/me/permissions", plugin.FacebookAgent.HttpMethod.POST, {}, function (type, data) {
             if (type == plugin.FacebookAgent.CODE_SUCCEED) {
                 data = JSON.stringify(data);
                 self.result.setString(data);

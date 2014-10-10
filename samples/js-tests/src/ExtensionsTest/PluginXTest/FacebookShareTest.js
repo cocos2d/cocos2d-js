@@ -115,7 +115,8 @@ var FacebookShareTest = PluginXTest.extend({
                 cc.log(JSON.stringify(msg));
             });
         }else{
-            facebook.webDialog(map,function(errorCode,msg){
+            map["dialog"] = "feed_dialog";
+            facebook.dialog(map,function(errorCode,msg){
                 cc.log(JSON.stringify(msg));
             });
         }
@@ -133,7 +134,8 @@ var FacebookShareTest = PluginXTest.extend({
                 cc.log(JSON.stringify(msg));
             });
         }else{
-            facebook.webDialog(map,function(errorCode,msg){
+            map["dialog"] = "feed_dialog";
+            facebook.dialog(map,function(errorCode,msg){
                 cc.log(JSON.stringify(msg));
             });
         }
@@ -153,14 +155,15 @@ var FacebookShareTest = PluginXTest.extend({
                 cc.log(JSON.stringify(msg));
             });
         }else{
-            facebook.webDialog(map,function(errorCode,msg){
+            map["dialog"] = "feed_dialog";
+            facebook.dialog(map,function(errorCode,msg){
                 cc.log(JSON.stringify(msg));
             });
         }
     },
     onShareMediaSource: function () {
         var map = {
-            "dialog": "share_link",
+            "dialog": "feed_dialog",
             "name": "Cocos2d-x web site",
             "caption": "Cocos2d-x caption",
             "description":"Cocos2d-x description",
@@ -168,8 +171,8 @@ var FacebookShareTest = PluginXTest.extend({
             "link": "http://www.cocos2d-x.org"
         };
 
-        // only support in web dialog
-        facebook.webDialog(map,function(errorCode,msg){
+        // only support in feed dialog
+        facebook.dialog(map,function(errorCode,msg){
             cc.log(JSON.stringify(msg));
         });
     },
@@ -210,9 +213,7 @@ var FacebookShareTest = PluginXTest.extend({
                 cc.log(JSON.stringify(msg));
             });
         }else{
-            facebook.webDialog(map, function (resultcode, msg) {
-                cc.log(JSON.stringify(msg));
-            });
+            cc.log("Can't open dialog for share_open_graph");
         }
 
 
@@ -236,7 +237,7 @@ var FacebookShareTest = PluginXTest.extend({
                     cc.log(JSON.stringify(msg));
                 });
             }else{
-                cc.log("Can't use webDialog for share_photo");
+                cc.log("Can't open dialog for share_photo");
             }
         });
         var seq = cc.sequence(delay, share);
@@ -261,7 +262,7 @@ var FacebookShareTest = PluginXTest.extend({
                 cc.log(JSON.stringify(msg));
             });
         }else{
-            cc.log("Can't use webDialog for message_link");
+            cc.log("Can't open dialog for message_link");
         }
     },
 
@@ -284,7 +285,7 @@ var FacebookShareTest = PluginXTest.extend({
                 cc.log(JSON.stringify(msg));
             });
         }else{
-            cc.log("Can't use webDialog for message_open_graph");
+            cc.log("Can't open dialog for message_open_graph");
         }
     },
 
@@ -306,7 +307,7 @@ var FacebookShareTest = PluginXTest.extend({
                     cc.log(JSON.stringify(msg));
                 });
             }else{
-                cc.log("Can't use webDialog for message_photo");
+                cc.log("Can't open dialog for message_photo");
             }
         });
         var seq = cc.sequence(delay, share);
