@@ -142,7 +142,7 @@ var FacebookUserTest = PluginXTest.extend({
     },
     LogPurchaseClick: function (sender) {
         cc.log("in purchase");
-        facebook.logPurchase(1.23, "CNY", {"cocos2d": 1, "js": 2});
+        facebook.logPurchase(1.23, "CNY", {"cocos2d": "1", "js": "2"});
     },
     onNextCallback: function (sender) {
 
