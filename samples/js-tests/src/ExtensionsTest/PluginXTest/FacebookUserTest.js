@@ -99,11 +99,11 @@ var FacebookUserTest = PluginXTest.extend({
     },
     getUidClick: function (sender) {
         var self = this;
-        if (facebook.isLoggedIn(function (errorCode, msg) {
+        facebook.isLoggedIn(function (errorCode, msg) {
             if (errorCode == plugin.FacebookAgent.CODE_SUCCEED) {
                 self.result.setString(facebook.getUserID());
             }
-        }));
+        });
     },
     getTokenClick: function (sender) {
         var self = this;
