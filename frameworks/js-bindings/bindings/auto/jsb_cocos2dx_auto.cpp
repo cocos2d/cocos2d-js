@@ -1537,7 +1537,7 @@ void js_register_cocos2dx_Touch(JSContext *cx, JSObject *global) {
         JS_FN("getDelta", js_cocos2dx_Touch_getDelta, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStartLocationInView", js_cocos2dx_Touch_getStartLocationInView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStartLocation", js_cocos2dx_Touch_getStartLocation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getId", js_cocos2dx_Touch_getID, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getID", js_cocos2dx_Touch_getID, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTouchInfo", js_cocos2dx_Touch_setTouchInfo, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getLocationInView", js_cocos2dx_Touch_getLocationInView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPreviousLocation", js_cocos2dx_Touch_getPreviousLocation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
