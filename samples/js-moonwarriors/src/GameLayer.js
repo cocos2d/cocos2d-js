@@ -56,8 +56,10 @@ var GameLayer = cc.Layer.extend({
         // OpaqueBatch
         var texOpaque = cc.textureCache.addImage(res.textureOpaquePack_png);
         this._texOpaqueBatch = new cc.SpriteBatchNode(texOpaque);
-        //this._texOpaqueBatch.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
+        this._sparkBatch = new cc.SpriteBatchNode(texOpaque);
+        if(cc.sys.isNative) this._sparkBatch.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
         this.addChild(this._texOpaqueBatch);
+        this.addChild(this._sparkBatch);
 
         // TransparentBatch
         var texTransparent = cc.textureCache.addImage(res.textureTransparentPack_png);
@@ -228,8 +230,15 @@ var GameLayer = cc.Layer.extend({
         }
     },
     removeInactiveUnit:function (dt) {
-        var selChild, children = this._texOpaqueBatch.children;
-        for (var i in children) {
+        var i, selChild, children = this._texOpaqueBatch.children;
+        for (i in children) {
+            selChild = children[i];
+            if (selChild && selChild.active)
+                selChild.update(dt);
+        }
+
+        children = this._sparkBatch.children;
+        for (i in children) {
             selChild = children[i];
             if (selChild && selChild.active)
                 selChild.update(dt);
@@ -351,7 +360,7 @@ GameLayer.prototype.addBulletHits = function (hit, zOrder) {
 };
 
 GameLayer.prototype.addSpark = function (spark) {
-    this._texOpaqueBatch.addChild(spark);
+    this._sparkBatch.addChild(spark);
 };
 
 GameLayer.prototype.addBullet = function (bullet, zOrder, mode) {
