@@ -24,17 +24,17 @@
 
 var button_share = {
     "login": "loginClick",
-    "loginWithPermission" : "loginWithPermissionClick",
+    "loginWithPermission": "loginWithPermissionClick",
     "logout": "logoutClick",
     "getUid": "getUidClick",
     "getToken": "getTokenClick",
     "getPermissions": "getPermissionClick",
-    "request API": "requestClick"
+    "request API": "requestClick",
+    "activateApp": "activateAppClick",
+    "logEvent": "LogEventClick",
+    "logPurchase": "LogPurchaseClick"
+
 };
-button_share_native = {
-    "publishInstall": "publicInstallClick",
-    "logEvent": "LogEventClick"
-}
 var FacebookUserTest = PluginXTest.extend({
     _title: "Plugin-x Test",
     _subtitle: "Facebook SDK",
@@ -51,14 +51,7 @@ var FacebookUserTest = PluginXTest.extend({
             var item = new cc.MenuItemLabel(label, this[button_share[action]], this);
             menu.addChild(item);
         }
-        if (cc.sys.isNative) {
-            for(var key in button_share_native){
-                var label = new cc.LabelTTF(key, "Arial", 24);
-                var item = new cc.MenuItemLabel(label, this[button_share_native[key]], this);
-                menu.addChild(item);
-            }
-        }
-        menu.alignItemsVerticallyWithPadding(16);
+        menu.alignItemsVerticallyWithPadding(12);
         menu.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(+120, 0)));
         this.addChild(menu);
 
@@ -68,35 +61,41 @@ var FacebookUserTest = PluginXTest.extend({
         this.result.boundingWidth = this.result.width;
         this.addChild(this.result, 1);
     },
-    publicInstallClick: function () {
-        facebook.activateApp();
-        this.result.setString("activateApp is invoked");
+    activateAppClick: function () {
+        if (cc.sys.isNative) {
+            facebook.activateApp();
+            this.result.setString("activateApp is invoked");
+        }
+        else {
+            this.result.setString("activateApp is only available for Facebook Canvas App");
+        }
     },
     LogEventClick: function () {
-        var parameters = {};
-        var floatVal = 888.888;
-        parameters[plugin.FacebookAgent.AppEventParam.SUCCESS] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
-        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL);
-        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal);
-        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, parameters);
-        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal, parameters);
-        this.result.setString("logEvent is invoked");
+        if (cc.sys.isNative) {
+            var parameters = {};
+            var floatVal = 888.888;
+            parameters[plugin.FacebookAgent.AppEventParam.SUCCESS] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
+    //        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL);
+            facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal);
+            facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, parameters);
+            facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal, parameters);
+            this.result.setString("logEvent is invoked");
+        }
+        else {
+            this.result.setString("LogEvent is only available for Facebook Canvas App");
+        }
     },
     loginClick: function (sender) {
         var self = this;
-        facebook.isLoggedIn(function (type, msg) {
-            if (type == plugin.FacebookAgent.CODE_SUCCEED) {
-                if (msg["isLoggedIn"]) {
-                    self.result.setString("logged in");
-                } else {
-                    facebook.login(function (type, msg) {
-                        self.result.setString("type is " + type + " msg is " + JSON.stringify(msg));
-                    });
-                }
-            } else {
-                self.result.setString("error");
-            }
-        });
+
+        if (facebook.isLoggedIn()) {
+            self.result.setString("logged in");
+        }
+        else {
+            facebook.login(function (type, msg) {
+                self.result.setString("type is " + type + " msg is " + JSON.stringify(msg));
+            });
+        }
     },
     logoutClick: function (sender) {
         var self = this;
@@ -106,21 +105,23 @@ var FacebookUserTest = PluginXTest.extend({
     },
     getUidClick: function (sender) {
         var self = this;
-        facebook.api("/me", plugin.FacebookAgent.HttpMethod.GET, function (type, msg) {
-            if (type == plugin.FacebookAgent.CODE_SUCCEED) {
-                self.result.setString(msg["id"]);
-            } else {
-                self.result.setString(msg["error_message"]);
-            }
-        });
+
+        if (facebook.isLoggedIn()) {
+            self.result.setString(facebook.getUserID());
+        }
+        else {
+            self.result.setString("User haven't been logged in");
+        }
     },
     getTokenClick: function (sender) {
         var self = this;
-        facebook.requestAccessToken(function (type, msg) {
-            if (type == plugin.FacebookAgent.CODE_SUCCEED) {
-                self.result.setString(msg["accessToken"]);
-            }
-        });
+
+        if (facebook.isLoggedIn()) {
+            self.result.setString(facebook.getAccessToken());
+        }
+        else {
+            self.result.setString("User haven't been logged in");
+        }
     },
 
     loginWithPermissionClick: function (sender) {
@@ -134,10 +135,13 @@ var FacebookUserTest = PluginXTest.extend({
     },
     getPermissionClick: function (sender) {
         var self = this;
-        facebook.getPermissionList(function (type, data) {
+        facebook.api("/me/permissions", plugin.FacebookAgent.HttpMethod.GET, {}, function (type, data) {
             if (type == plugin.FacebookAgent.CODE_SUCCEED) {
                 data = JSON.stringify(data);
                 self.result.setString(data);
+            }
+            else {
+                self.result.setString(JSON.stringify(data));
             }
         });
     },
@@ -149,8 +153,29 @@ var FacebookUserTest = PluginXTest.extend({
             }
         });
     },
+    LogPurchaseClick: function (sender) {
+        if (cc.sys.isNative) {
+            var params = {};
+            // All supported parameters are listed here
+            params[plugin.FacebookAgent.AppEventParam.CURRENCY] = "CNY";
+            params[plugin.FacebookAgent.AppEventParam.REGISTRATION_METHOD] = "Facebook";
+            params[plugin.FacebookAgent.AppEventParam.CONTENT_TYPE] = "game";
+            params[plugin.FacebookAgent.AppEventParam.CONTENT_ID] = "201410102342";
+            params[plugin.FacebookAgent.AppEventParam.SEARCH_STRING] = "cocos2djs";
+            params[plugin.FacebookAgent.AppEventParam.SUCCESS] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
+            params[plugin.FacebookAgent.AppEventParam.MAX_RATING_VALUE] = "10";
+            params[plugin.FacebookAgent.AppEventParam.PAYMENT_INFO_AVAILABLE] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
+            params[plugin.FacebookAgent.AppEventParam.NUM_ITEMS] = "99";
+            params[plugin.FacebookAgent.AppEventParam.LEVEL] = "10";
+            params[plugin.FacebookAgent.AppEventParam.DESCRIPTION] = "Cocos2d-JS";
+            facebook.logPurchase(1.23, "CNY", params);
+            this.result.setString("Purchase logged.");
+        }
+        else {
+            this.result.setString("LogPurchase is only available for Facebook Canvas App");
+        }
+    },
     onNextCallback: function (sender) {
-
         var s = new PluginXTestScene();
         s.addChild(new PluginXTestLayer());
         director.runScene(s);

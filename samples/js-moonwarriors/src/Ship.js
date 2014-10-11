@@ -39,20 +39,17 @@ var Ship = cc.Sprite.extend({
         this.born();
     },
     update:function (dt) {
-        // Keys are only enabled on the browser
-        if (!cc.sys.isNative) {
-            if ((MW.KEYS[cc.KEY.w] || MW.KEYS[cc.KEY.up]) && this.y <= winSize.height) {
-                this.y += dt * this.speed;
-            }
-            if ((MW.KEYS[cc.KEY.s] || MW.KEYS[cc.KEY.down]) && this.y >= 0) {
-                this.y -= dt * this.speed;
-            }
-            if ((MW.KEYS[cc.KEY.a] || MW.KEYS[cc.KEY.left]) && this.x >= 0) {
-                this.x -= dt * this.speed;
-            }
-            if ((MW.KEYS[cc.KEY.d] || MW.KEYS[cc.KEY.right]) && this.x <= winSize.width) {
-                this.x += dt * this.speed;
-            }
+        if ((MW.KEYS[cc.KEY.w] || MW.KEYS[cc.KEY.up]) && this.y <= winSize.height) {
+            this.y += dt * this.speed;
+        }
+        if ((MW.KEYS[cc.KEY.s] || MW.KEYS[cc.KEY.down]) && this.y >= 0) {
+            this.y -= dt * this.speed;
+        }
+        if ((MW.KEYS[cc.KEY.a] || MW.KEYS[cc.KEY.left]) && this.x >= 0) {
+            this.x -= dt * this.speed;
+        }
+        if ((MW.KEYS[cc.KEY.d] || MW.KEYS[cc.KEY.right]) && this.x <= winSize.width) {
+            this.x += dt * this.speed;
         }
 
         if (this.HP <= 0) {

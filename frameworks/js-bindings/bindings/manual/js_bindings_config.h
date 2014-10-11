@@ -41,33 +41,33 @@
 #define ASSERT( condition, error_msg) do { NSCAssert( condition, [NSString stringWithUTF8String:error_msg] ); } while(0)
 
 #else
-#define JSB_PRECONDITION( condition, ...) do {							\
-	if( ! (condition) ) {														\
-        cocos2d::log("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );			\
+#define JSB_PRECONDITION( condition, ...) do {                          \
+    if( ! (condition) ) {                                                       \
+        cocos2d::log("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );         \
         cocos2d::log(__VA_ARGS__);                                        \
-		JSContext* globalContext = ScriptingCore::getInstance()->getGlobalContext();	\
-		if( ! JS_IsExceptionPending( globalContext ) ) {						\
-			JS_ReportError( globalContext, __VA_ARGS__ );							\
-		}																		\
-		return false;														\
-	}																			\
-} while(0)
-#define JSB_PRECONDITION2( condition, context, ret_value, ...) do {             \
-    if( ! (condition) ) {														\
-        cocos2d::log("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );			\
-        cocos2d::log(__VA_ARGS__);                                        \
-        if( ! JS_IsExceptionPending( context ) ) {							\
-            JS_ReportError( context, __VA_ARGS__ );								\
-        }																		\
-        return ret_value;														\
+        JSContext* globalContext = ScriptingCore::getInstance()->getGlobalContext();    \
+        if( ! JS_IsExceptionPending( globalContext ) ) {                        \
+            JS_ReportError( globalContext, __VA_ARGS__ );                           \
+        }                                                                       \
+        return false;                                                       \
     }                                                                           \
 } while(0)
-#define ASSERT( condition, error_msg) do {										\
-	if( ! (condition) ) {														\
-		CCLOG("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
-		return false;															\
-	}																			\
-	} while(0)
+#define JSB_PRECONDITION2( condition, context, ret_value, ...) do {             \
+    if( ! (condition) ) {                                                       \
+        cocos2d::log("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );         \
+        cocos2d::log(__VA_ARGS__);                                        \
+        if( ! JS_IsExceptionPending( context ) ) {                          \
+            JS_ReportError( context, __VA_ARGS__ );                             \
+        }                                                                       \
+        return ret_value;                                                       \
+    }                                                                           \
+} while(0)
+#define ASSERT( condition, error_msg) do {                                      \
+    if( ! (condition) ) {                                                       \
+        CCLOG("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);               \
+        return false;                                                           \
+    }                                                                           \
+    } while(0)
 #endif
 
 #define JSB_PRECONDITION3( condition, context, ret_value, ...) do { \
