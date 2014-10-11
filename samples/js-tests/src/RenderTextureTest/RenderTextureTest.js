@@ -423,6 +423,7 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
 
 var RenderTextureTestDepthStencil = RenderTextureBaseLayer.extend({
     ctor:function () {
+        //Need to re-write test case for new renderer
         this._super();
         var gl = cc._renderContext;
 
