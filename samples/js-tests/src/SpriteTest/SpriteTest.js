@@ -5322,7 +5322,6 @@ var SpriteTestScene = TestScene.extend({
 // Flow control
 //
 var arrayOfSpriteTest = [
-    SpriteZVertex,
 	Sprite1,
     SpriteBatchNode1,
     SpriteFrameTest,
