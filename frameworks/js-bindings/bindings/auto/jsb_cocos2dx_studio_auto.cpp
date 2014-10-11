@@ -445,7 +445,7 @@ bool js_cocos2dx_studio_ActionObject_constructor(JSContext *cx, uint32_t argc, j
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::ActionObject");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     return true;
 }
@@ -864,7 +864,7 @@ bool js_cocos2dx_studio_BaseData_constructor(JSContext *cx, uint32_t argc, jsval
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::BaseData");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     return true;
 }
@@ -1032,7 +1032,7 @@ bool js_cocos2dx_studio_MovementData_constructor(JSContext *cx, uint32_t argc, j
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::MovementData");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     return true;
 }
@@ -1217,7 +1217,7 @@ bool js_cocos2dx_studio_AnimationData_constructor(JSContext *cx, uint32_t argc, 
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::AnimationData");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     return true;
 }
@@ -1600,7 +1600,7 @@ bool js_cocos2dx_studio_ProcessBase_constructor(JSContext *cx, uint32_t argc, js
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::ProcessBase");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     return true;
 }
@@ -1890,7 +1890,7 @@ bool js_cocos2dx_studio_Tween_constructor(JSContext *cx, uint32_t argc, jsval *v
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::Tween");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     return true;
 }
@@ -3225,7 +3225,7 @@ bool js_cocos2dx_studio_DisplayManager_constructor(JSContext *cx, uint32_t argc,
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::DisplayManager");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     return true;
 }
@@ -4111,7 +4111,7 @@ bool js_cocos2dx_studio_Bone_constructor(JSContext *cx, uint32_t argc, jsval *vp
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::Bone");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     return true;
 }
@@ -4775,7 +4775,7 @@ bool js_cocos2dx_studio_ArmatureAnimation_constructor(JSContext *cx, uint32_t ar
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::ArmatureAnimation");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     return true;
 }
@@ -6080,7 +6080,7 @@ bool js_cocos2dx_studio_Armature_constructor(JSContext *cx, uint32_t argc, jsval
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::Armature");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     return true;
 }
@@ -6103,7 +6103,7 @@ static bool js_cocostudio_Armature_ctor(JSContext *cx, uint32_t argc, jsval *vp)
     js_proxy_t* p = jsb_new_proxy(nobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::Armature");
     bool isFound = false;
-    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     JS_SET_RVAL(cx, vp, JSVAL_VOID);
     return true;
@@ -6380,7 +6380,7 @@ bool js_cocos2dx_studio_Skin_constructor(JSContext *cx, uint32_t argc, jsval *vp
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::Skin");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     return true;
 }
@@ -7741,7 +7741,7 @@ bool js_cocos2dx_studio_ComController_constructor(JSContext *cx, uint32_t argc, 
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::ComController");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     return true;
 }
@@ -7764,7 +7764,7 @@ static bool js_cocostudio_ComController_ctor(JSContext *cx, uint32_t argc, jsval
     js_proxy_t* p = jsb_new_proxy(nobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::ComController");
     bool isFound = false;
-    if (JS_HasProperty(cx, obj, "_ctor", &isFound))
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     JS_SET_RVAL(cx, vp, JSVAL_VOID);
     return true;

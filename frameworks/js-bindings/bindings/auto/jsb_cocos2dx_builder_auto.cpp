@@ -894,7 +894,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_constructor(JSContext *cx, uint32_t
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     JS_AddNamedObjectRoot(cx, &p->obj, "cocosbuilder::CCBAnimationManager");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     return true;
 }
@@ -1620,7 +1620,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
     } while(0);
 
     if (cobj) {
-        if (JS_HasProperty(cx, obj, "_ctor", &ok))
+        if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
                 ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
 
         JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
