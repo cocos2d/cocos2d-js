@@ -41,7 +41,7 @@ MW.LIFE = 4;
 MW.SCORE = 0;
 
 //sound
-MW.SOUND = true;
+MW.SOUND = false;
 
 //enemy move type
 MW.ENEMY_MOVE_TYPE = {
@@ -107,3 +107,9 @@ MW.BULLET_SPEED = {
 };
 // the counter of active enemies
 MW.ACTIVE_ENEMIES = 0;
+
+MW.LOGOY = 375;
+MW.FLAREY = 445;
+MW.SCALE = 1.5;
+MW.WIDTH = 480;
+MW.HEIGHT = 720;
