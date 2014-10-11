@@ -103,6 +103,7 @@
         "src/ExtensionsTest/S9SpriteTest/S9SpriteTest.js",
         "src/ExtensionsTest/NetworkTest/WebSocketTest.js",
         "src/ExtensionsTest/NetworkTest/SocketIOTest.js",
+        "src/ExtensionsTest/CocostudioActionTimelineTest/ActionTimelineTestScene.js",
         "src/ExtensionsTest/PluginXTest/PluginXTest.js",
         "src/ExtensionsTest/PluginXTest/PluginXTestsManager.js",
         "src/ExtensionsTest/PluginXTest/IOSIAPTest.js",

@@ -34,30 +34,30 @@
 
 void JSB_register_opengl(JSContext *_cx, JSObject *object)
 {
-	//
-	// gl
-	//
-	JSObject *opengl = JS_NewObject(_cx, NULL, NULL, NULL);
+    //
+    // gl
+    //
+    JSObject *opengl = JS_NewObject(_cx, NULL, NULL, NULL);
     
     JS::RootedValue openglVal(_cx);
-	openglVal = OBJECT_TO_JSVAL(opengl);
-	JS_SetProperty(_cx, object, "gl", openglVal);
+    openglVal = OBJECT_TO_JSVAL(opengl);
+    JS_SetProperty(_cx, object, "gl", openglVal);
 
     JS::RootedValue nsval(_cx);
     JS::RootedObject ccns(_cx);
-	JS_GetProperty(_cx, object, "cc", &nsval);
-	if (nsval == JSVAL_VOID) {
-		ccns = JS_NewObject(_cx, NULL, NULL, NULL);
-		nsval = OBJECT_TO_JSVAL(ccns);
-		JS_SetProperty(_cx, object, "cc", nsval);
-	} else {
-		JS_ValueToObject(_cx, nsval, &ccns);
-	}
+    JS_GetProperty(_cx, object, "cc", &nsval);
+    if (nsval == JSVAL_VOID) {
+        ccns = JS_NewObject(_cx, NULL, NULL, NULL);
+        nsval = OBJECT_TO_JSVAL(ccns);
+        JS_SetProperty(_cx, object, "cc", nsval);
+    } else {
+        JS_ValueToObject(_cx, nsval, &ccns);
+    }
     
     js_register_cocos2dx_GLNode(_cx, ccns);
     
-	// New WebGL functions, not present on OpenGL ES 2.0
-	JS_DefineFunction(_cx, opengl, "getSupportedExtensions", JSB_glGetSupportedExtensions, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    // New WebGL functions, not present on OpenGL ES 2.0
+    JS_DefineFunction(_cx, opengl, "getSupportedExtensions", JSB_glGetSupportedExtensions, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(_cx, opengl, "activeTexture", JSB_glActiveTexture, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(_cx, opengl, "_attachShader", JSB_glAttachShader, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(_cx, opengl, "_bindAttribLocation", JSB_glBindAttribLocation, 3, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );

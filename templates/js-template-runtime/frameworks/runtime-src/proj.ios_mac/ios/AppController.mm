@@ -30,7 +30,6 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "CCEAGLView.h"
-#include "ConfigParser.h"
 
 @implementation AppController
 
@@ -44,8 +43,6 @@ static AppDelegate s_sharedApplication;
 {
 
     // Override point for customization after application launch.
-    
-    ConfigParser::getInstance()->readConfig();
     
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];

@@ -27,7 +27,6 @@ class ConfigParser
 {
 public:
     static ConfigParser *getInstance(void);
-    void readConfig();
 
     // predefined screen size
     int getScreenSizeCount(void);
@@ -41,9 +40,9 @@ public:
     int getDebugPort();
     bool isLanscape();
     bool isWindowTop();
-    bool isInit();
     
 private:
+    void readConfig();
     ConfigParser(void);
     static ConfigParser *s_sharedInstance;
     ScreenSizeArray _screenSizeArray;
@@ -51,7 +50,6 @@ private:
     string _viewName;
     string _entryfile;
     bool _isLandscape;
-    bool _isInit;
     bool _isWindowTop;
     int _consolePort;
     int _uploadPort;

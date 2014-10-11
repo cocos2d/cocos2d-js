@@ -120,4 +120,9 @@ var cc = cc || {};
         return this.getString();
     };
 
+    cc.Touch.prototype.getId = function(){
+        logW("cc.Touch.getId", "cc.Touch.getID");
+        return this.getID();
+    };
+
 })();
