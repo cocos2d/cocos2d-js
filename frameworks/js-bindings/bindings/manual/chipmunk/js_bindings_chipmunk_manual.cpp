@@ -1246,6 +1246,90 @@ bool JSB_cpSpace_removeStaticShape(JSContext *cx, uint32_t argc, jsval *vp) {
     JS_SET_RVAL(cx, vp, JSVAL_VOID);
     return true;
 }
+
+#pragma mark segmentQueryFirst function
+
+bool JSB_cpSpace_segmentQueryFirst(JSContext *cx, uint32_t argc, jsval *vp){
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*) proxy->handle;
+    jsval *argvp = JS_ARGV(cx,vp);
+    
+    cpVect start;
+    cpVect end;
+    cpLayers layers;
+    unsigned int group;
+    bool ok = true;
+    ok &= jsval_to_cpVect( cx, argvp[0], &start );
+    ok &= jsval_to_cpVect( cx, argvp[1], &end );
+    ok &= jsval_to_uint32( cx, argvp[2], &layers );
+    ok &= jsval_to_uint( cx, argvp[3], &group );
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+    
+    cpSegmentQueryInfo *out = new cpSegmentQueryInfo();
+    cpShape* target = cpSpaceSegmentQueryFirst(space, start, end, layers, group, out);
+    
+    if(target)
+    {
+        JSObject *jsobj = JS_NewObject(cx, JSB_cpSegmentQueryInfo_class, JSB_cpSegmentQueryInfo_object, NULL);
+        jsb_set_jsobject_for_proxy(jsobj, out);
+        jsb_set_c_proxy_for_jsobject(jsobj, out, JSB_C_FLAG_CALL_FREE);
+        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+    }
+    else
+    {
+        delete out;
+        JS_SET_RVAL(cx, vp, JSVAL_NULL);
+    }
+    return true;
+}
+
+#pragma mark nearestPointQueryNearest function
+
+bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *vp){
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*) proxy->handle;
+    jsval *argvp = JS_ARGV(cx,vp);
+    
+    cpVect point;
+    cpFloat maxDistance;
+    cpLayers layers;
+    unsigned int group;
+    bool ok = true;
+    ok &= jsval_to_cpVect( cx, argvp[0], &point );
+    if(JSVAL_IS_INT(argvp[1]))
+    {
+        int arg1;
+        ok &= jsval_to_int(cx, argvp[1], &arg1);
+        maxDistance = (cpFloat) arg1;
+    }
+    else
+    {
+        maxDistance = JSVAL_TO_DOUBLE(argvp[1]);
+    }
+    ok &= jsval_to_uint32( cx, argvp[2], &layers );
+    ok &= jsval_to_uint( cx, argvp[3], &group );
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+    
+    cpNearestPointQueryInfo* info = new cpNearestPointQueryInfo();
+    cpShape* target = cpSpaceNearestPointQueryNearest(space, point, maxDistance, layers, group, info);
+    
+    if(target)
+    {
+        JSObject *jsobj = JS_NewObject(cx, JSB_cpNearestPointQueryInfo_class, JSB_cpNearestPointQueryInfo_object, NULL);
+        jsb_set_jsobject_for_proxy(jsobj, info);
+        jsb_set_c_proxy_for_jsobject(jsobj, info, JSB_C_FLAG_CALL_FREE);
+        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+    }
+    else
+    {
+        delete info;
+        JS_SET_RVAL(cx, vp, JSVAL_NULL);
+    }
+    return true;
+}
+
 #pragma mark - Arbiter
 
 #pragma mark getBodies

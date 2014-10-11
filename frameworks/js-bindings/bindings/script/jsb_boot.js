@@ -527,7 +527,10 @@ cc.loader = {
         var obj = self.cache[url];
         if (obj)
             return cb(null, obj);
-        var loader = self._register[type.toLowerCase()];
+        var loader = null;
+        if (type) {
+            loader = self._register[type.toLowerCase()];
+        }
         if (!loader) {
             cc.error("loader for [" + type + "] not exists!");
             return cb();
@@ -1625,6 +1628,5 @@ jsb.urlRegExp = new RegExp(
         "(?:/\\S*)?" +
     "$", "i"
 );
-
 
 //+++++++++++++++++++++++++other initializations end+++++++++++++++++++++++++++++

@@ -77,19 +77,15 @@ var FacebookUserTest = PluginXTest.extend({
     },
     loginClick: function (sender) {
         var self = this;
-        facebook.isLoggedIn(function (type, msg) {
-            if (type == plugin.FacebookAgent.CODE_SUCCEED) {
-                if (msg["isLoggedIn"]) {
-                    self.result.setString("logged in");
-                } else {
-                    facebook.login(function (type, msg) {
-                        self.result.setString("type is " + type + " msg is " + JSON.stringify(msg));
-                    });
-                }
-            } else {
-                self.result.setString("error");
-            }
-        });
+
+        if (facebook.isLoggedIn()) {
+            self.result.setString("logged in");
+        }
+        else {
+            facebook.login(function (type, msg) {
+                self.result.setString("type is " + type + " msg is " + JSON.stringify(msg));
+            });
+        }
     },
     logoutClick: function (sender) {
         var self = this;
@@ -99,19 +95,23 @@ var FacebookUserTest = PluginXTest.extend({
     },
     getUidClick: function (sender) {
         var self = this;
-        facebook.isLoggedIn(function (errorCode, msg) {
-            if (errorCode == plugin.FacebookAgent.CODE_SUCCEED) {
-                self.result.setString(facebook.getUserID());
-            }
-        });
+
+        if (facebook.isLoggedIn()) {
+            self.result.setString(facebook.getUserID());
+        }
+        else {
+            self.result.setString("User haven't been logged in");
+        }
     },
     getTokenClick: function (sender) {
         var self = this;
-        facebook.requestAccessToken(function (type, msg) {
-            if (type == plugin.FacebookAgent.CODE_SUCCEED) {
-                self.result.setString(msg["accessToken"]);
-            }
-        });
+
+        if (facebook.isLoggedIn()) {
+            self.result.setString(facebook.getAccessToken());
+        }
+        else {
+            self.result.setString("User haven't been logged in");
+        }
     },
 
     loginWithPermissionClick: function (sender) {
@@ -125,7 +125,7 @@ var FacebookUserTest = PluginXTest.extend({
     },
     getPermissionClick: function (sender) {
         var self = this;
-        facebook.getPermissionList(function (type, data) {
+        facebook.api("/me/permissions", plugin.FacebookAgent.HttpMethod.POST, {}, function (type, data) {
             if (type == plugin.FacebookAgent.CODE_SUCCEED) {
                 data = JSON.stringify(data);
                 self.result.setString(data);
@@ -141,8 +141,21 @@ var FacebookUserTest = PluginXTest.extend({
         });
     },
     LogPurchaseClick: function (sender) {
-        cc.log("in purchase");
-        facebook.logPurchase(1.23, "CNY", {"cocos2d": 1, "js": 2});
+        var params = {};
+        // All supported parameters are listed here
+        params[plugin.FacebookAgent.AppEventParam.CURRENCY] = "CNY";
+        params[plugin.FacebookAgent.AppEventParam.REGISTRATION_METHOD] = "Facebook";
+        params[plugin.FacebookAgent.AppEventParam.CONTENT_TYPE] = "game";
+        params[plugin.FacebookAgent.AppEventParam.CONTENT_ID] = "201410102342";
+        params[plugin.FacebookAgent.AppEventParam.SEARCH_STRING] = "cocos2djs";
+        params[plugin.FacebookAgent.AppEventParam.SUCCESS] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
+        params[plugin.FacebookAgent.AppEventParam.MAX_RATING_VALUE] = "10";
+        params[plugin.FacebookAgent.AppEventParam.PAYMENT_INFO_AVAILABLE] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
+        params[plugin.FacebookAgent.AppEventParam.NUM_ITEMS] = "99";
+        params[plugin.FacebookAgent.AppEventParam.LEVEL] = "10";
+        params[plugin.FacebookAgent.AppEventParam.DESCRIPTION] = "Cocos2d-JS";
+        facebook.logPurchase(1.23, "CNY", params);
+        this.result.setString("Purchase logged.");
     },
     onNextCallback: function (sender) {
 

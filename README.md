@@ -160,9 +160,9 @@ For JSB build, there are some restrictions :
 
 If you fork our github repository or download the package from github, you will need to do some extra tasks:
 
+- Run `git submodule update --init --recursive` in the `cocos2d-js` root folder, to init and update submodules recursively, such as `cocos2dx/plugin`.
 - Run `frameworks/js-bindings/cocos2d-x/download-deps.py` to download external dependencies for Cocos2d-x
 - Run `tools/cocos2d-console/download-bin.py` to download bin files for some cocos2d-console plugins like Google Closure Compiler and JSC Compiler.
-- Run `git submodule update --init --recursive` in the `cocos2d-js` root folder, to init and update submodules recursively, such as `cocos2dx/plugin`.
 
 Otherwise, you will fail to compile your JSB projects.
 

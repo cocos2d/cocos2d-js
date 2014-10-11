@@ -2418,14 +2418,14 @@ bool js_cocos2dx_CCNode_setColor(JSContext *cx, uint32_t argc, jsval *vp)
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setColor : Error processing arguments");
         cobj->setColor(arg0);
         
-        int32_t alpha;
-        ok &= jsval_cccolor_to_opacity(cx, argv[0], &alpha);
-        if (ok) {
-            cobj->setOpacity(alpha);
-        }
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
+//        int32_t alpha;
+//		ok &= jsval_cccolor_to_opacity(cx, argv[0], &alpha);
+//        if (ok) {
+//            cobj->setOpacity(alpha);
+//        }
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
     
     JS_ReportError(cx, "js_cocos2dx_Node_setColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
