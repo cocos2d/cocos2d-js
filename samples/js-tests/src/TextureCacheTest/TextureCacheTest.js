@@ -195,6 +195,10 @@ var RemoteTextureTest = TextureCacheTestBase.extend({
     _sprite : null,
     onEnter:function () {
         this._super();
+        this.scheduleOnce(this.startDownload, 0.1);
+    },
+
+    startDownload: function() {
         cc.textureCache.addImage(this._remoteTex, this.texLoaded, this);
     },
 

@@ -476,7 +476,7 @@ cc.loader = {
         if (cachedTex) {
             cb && cb(null, cachedTex);
         }
-        if (url.match(jsb.urlRegExp)) {
+        else if (url.match(jsb.urlRegExp)) {
             jsb.loadRemoteImg(url, function(succeed, tex) {
                 if (succeed) {
                     cb && cb(null, tex);
