@@ -56,7 +56,7 @@ var GameLayer = cc.Layer.extend({
         // OpaqueBatch
         var texOpaque = cc.textureCache.addImage(res.textureOpaquePack_png);
         this._texOpaqueBatch = new cc.SpriteBatchNode(texOpaque);
-        this._texOpaqueBatch.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
+        //this._texOpaqueBatch.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
         this.addChild(this._texOpaqueBatch);
 
         // TransparentBatch
@@ -75,24 +75,25 @@ var GameLayer = cc.Layer.extend({
             anchorX: 1,
             anchorY: 0,
             x: winSize.width - 5,
-            y: winSize.height - 30
+            y: winSize.height - 30,
+            scale: MW.SCALE
         });
         this.lbScore.textAlign = cc.TEXT_ALIGNMENT_RIGHT;
         this.addChild(this.lbScore, 1000);
 
         // ship life
-        var life = new cc.Sprite("#ship01.png");
+        var life = new cc.Sprite("#ship03.png");
         life.attr({
             scale: 0.6,
             x: 30,
-            y: 460
+            y: MW.HEIGHT - 30
         });
         this._texTransparentBatch.addChild(life, 1, 5);
 
         // ship Life count
         this._lbLife = new cc.LabelTTF("0", "Arial", 20);
         this._lbLife.x = 60;
-        this._lbLife.y = 463;
+        this._lbLife.y = MW.HEIGHT - 25;
         this._lbLife.color = cc.color(255, 0, 0);
         this.addChild(this._lbLife, 1000);
 
@@ -283,7 +284,7 @@ var GameLayer = cc.Layer.extend({
         var ran = Math.random();
         backTileMap.x = ran * 320;
 	    backTileMap.y = winSize.height;
-        var move = cc.moveBy(ran * 2 + 10, cc.p(0, -winSize.height-240));
+        var move = cc.moveBy(ran * 2 + 10, cc.p(0, -winSize.height-backTileMap.height));
         var fun = cc.callFunc(function(){
             backTileMap.destroy();
         },this);
@@ -306,7 +307,7 @@ var GameLayer = cc.Layer.extend({
             //create a new background
             this._backSky = BackSky.getOrCreate();
             locBackSky = this._backSky;
-            locBackSky.y = currPosY + locSkyHeight - 2;
+            locBackSky.y = currPosY + locSkyHeight - 5;
         } else
             locBackSky.y = currPosY;
 

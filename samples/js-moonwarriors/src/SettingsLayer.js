@@ -7,11 +7,12 @@ var SettingsLayer = cc.Layer.extend({
         var sp = new cc.Sprite(res.loading_png);
         sp.anchorX = 0;
         sp.anchorY = 0;
+        sp.scale = MW.SCALE;
         this.addChild(sp, 0, 1);
 
         var cacheImage = cc.textureCache.addImage(res.menuTitle_png);
         var title = new cc.Sprite(cacheImage, cc.rect(0, 0, 134, 34));
-        title.x = winSize.width / 2
+        title.x = winSize.width / 2;
         title.y = winSize.height - 120;
         this.addChild(title);
 

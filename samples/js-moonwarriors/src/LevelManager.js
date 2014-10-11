@@ -84,9 +84,9 @@ var LevelManager = cc.Class.extend({
                 tmpAction = cc.sequence(a0, a1, onComplete);
                 break;
             case MW.ENEMY_MOVE_TYPE.OVERLAP:
-                var newX = (addEnemy.x <= winSize.width / 2) ? 320 : -320;
-                a0 = cc.moveBy(4, cc.p(newX, -240));
-                a1 = cc.moveBy(4,cc.p(-newX,-320));
+                var newX = (addEnemy.x <= winSize.width / 2) ? MW.WIDTH : -MW.WIDTH;
+                a0 = cc.moveBy(4, cc.p(newX, -MW.WIDTH*0.75));
+                a1 = cc.moveBy(4, cc.p(-newX,-MW.WIDTH));
                 tmpAction = cc.sequence(a0,a1);
                 break;
         }
