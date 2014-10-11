@@ -14,6 +14,8 @@ var Enemy = cc.Sprite.extend({
     _hurtColorLife:0,
     ctor:function (arg) {
         this._super("#"+arg.textureName);
+        if (arg.textureName != "E4.png")
+            this.flippedY = true;
 
         this.HP = arg.HP;
         this.moveType = arg.moveType;
