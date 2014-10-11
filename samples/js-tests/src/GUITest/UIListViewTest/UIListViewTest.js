@@ -247,7 +247,7 @@ var UIListViewTest_Horizontal = UIScene.extend({
 
             // set item data
             items_count = items.length;
-            for (var i = 0; i < items_count; ++i) {
+            for (i = 0; i < items_count; ++i) {
                 var item = listView.getItem(i);
                 var button = item.getChildByName("TextButton");
                 var index = listView.getIndex(item);

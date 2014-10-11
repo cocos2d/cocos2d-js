@@ -1013,7 +1013,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
             node.anchorX = 0.5;
             node.anchorY = 0.5;
             node.x = winSize.width / 2;
-            node.y = winSize.height / 3;
+            node.y = winSize.height / 2;
 
             this.addChild(node, 0);
             var sprite;
@@ -5322,6 +5322,7 @@ var SpriteTestScene = TestScene.extend({
 // Flow control
 //
 var arrayOfSpriteTest = [
+    SpriteZVertex,
 	Sprite1,
     SpriteBatchNode1,
     SpriteFrameTest,
