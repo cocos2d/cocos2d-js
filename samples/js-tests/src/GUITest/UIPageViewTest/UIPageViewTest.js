@@ -69,7 +69,6 @@ var UIPageViewTest = UIScene.extend({
                 pageView.addPage(layout);
             }
             pageView.addEventListener(this.pageViewEvent, this);
-            var a = new ccui.Layout();
             this._mainNode.addChild(pageView);
 
             return true;

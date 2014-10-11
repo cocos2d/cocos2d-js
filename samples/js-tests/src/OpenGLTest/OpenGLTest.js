@@ -40,6 +40,17 @@ cc.GLNode = cc.Node.extend({
         this._super();
         this.init();
     },
+    _initRendererCmd:function(){
+        this._rendererCmd = new cc.CustomRenderCmdWebGL(this, function(){
+            cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
+            cc.kmGLPushMatrix();
+            cc.kmGLLoadMatrix(this._stackMatrix);
+
+            this.draw();
+
+            cc.kmGLPopMatrix();
+        });
+    },
     draw:function(ctx){
         this._super(ctx);
     }
@@ -237,24 +248,24 @@ var GLNodeWebGLAPITest = OpenGLTestLayer.extend({
             // simple shader example taken from:
             // http://learningwebgl.com/blog/?p=134
             var vsh = "\n" +
-"attribute vec3 aVertexPosition;\n" +
-"attribute vec4 aVertexColor;\n" +
-"uniform mat4 uMVMatrix;\n" +
-"uniform mat4 uPMatrix;\n" +
-"varying vec4 vColor;\n" +
-"void main(void) {\n" +
-" gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);\n" +
-" vColor = aVertexColor;\n" +
-"}\n";
+                "attribute vec3 aVertexPosition;\n" +
+                "attribute vec4 aVertexColor;\n" +
+                "uniform mat4 uMVMatrix;\n" +
+                "uniform mat4 uPMatrix;\n" +
+                "varying vec4 vColor;\n" +
+                "void main(void) {\n" +
+                " gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);\n" +
+                " vColor = aVertexColor;\n" +
+                "}\n";
 
             var fsh = "\n" +
-"#ifdef GL_ES\n" +
-"precision mediump float;\n" +
-"#endif\n" +
-"varying vec4 vColor;\n" +
-"void main(void) {\n"+
-" gl_FragColor = vColor;\n" +
-"}\n";
+                "#ifdef GL_ES\n" +
+                "precision mediump float;\n" +
+                "#endif\n" +
+                "varying vec4 vColor;\n" +
+                "void main(void) {\n"+
+                " gl_FragColor = vColor;\n" +
+                "}\n";
 
             var fshader = this.compileShader(fsh, 'fragment');
             var vshader = this.compileShader(vsh, 'vertex');
@@ -335,9 +346,9 @@ var GLNodeWebGLAPITest = OpenGLTestLayer.extend({
         var triangleVertexPositionBuffer = this.triangleVertexPositionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
         var vertices = [
-             0.0,  1.0,  0.0,
+            0.0,  1.0,  0.0,
             -1.0, -1.0,  0.0,
-             1.0, -1.0,  0.0
+            1.0, -1.0,  0.0
         ];
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
         triangleVertexPositionBuffer.itemSize = 3;
@@ -358,9 +369,9 @@ var GLNodeWebGLAPITest = OpenGLTestLayer.extend({
         var squareVertexPositionBuffer = this.squareVertexPositionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
         vertices = [
-             1.0,  1.0,  0.0,
+            1.0,  1.0,  0.0,
             -1.0,  1.0,  0.0,
-             1.0, -1.0,  0.0,
+            1.0, -1.0,  0.0,
             -1.0, -1.0,  0.0
         ];
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
@@ -480,9 +491,9 @@ var GLNodeCCAPITest = OpenGLTestLayer.extend({
         var triangleVertexPositionBuffer = this.triangleVertexPositionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
         var vertices = [
-             winSize.width/2,   winSize.height,
-             0,                 0,
-             winSize.width,     0
+                winSize.width/2,   winSize.height,
+            0,                 0,
+            winSize.width,     0
         ];
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
@@ -556,9 +567,9 @@ var ShaderNode = cc.GLNode.extend({
 
         if( 'opengl' in cc.sys.capabilities ) {
             this.width = 256;
-	        this.height = 256;
+            this.height = 256;
             this.anchorX = 0.5;
-	        this.anchorY = 0.5;
+            this.anchorY = 0.5;
 
             this.shader = cc.GLProgram.create(vertexShader, framentShader);
             this.shader.retain();
@@ -576,7 +587,14 @@ var ShaderNode = cc.GLNode.extend({
             this._time = 0;
         }
     },
+    _initRendererCmd:function () {
+        this._rendererCmd = new cc.CustomRenderCmdWebGL(this, this.draw);
+    },
     draw:function() {
+        cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
+        cc.kmGLPushMatrix();
+        cc.kmGLLoadMatrix(this._stackMatrix);
+
         this.shader.use();
         this.shader.setUniformsForBuiltins();
 
@@ -594,6 +612,8 @@ var ShaderNode = cc.GLNode.extend({
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
+
+        cc.kmGLPopMatrix();
     },
 
     update:function(dt) {
@@ -964,9 +984,9 @@ var TexImage2DTest = OpenGLTestLayer.extend({
             glnode.x = winSize.width/2;
             glnode.y = winSize.height/2;
             glnode.width = 128;
-	        glnode.height = 128;
+            glnode.height = 128;
             glnode.anchorX = 0.5;
-	        glnode.anchorY = 0.5;
+            glnode.anchorY = 0.5;
 
             this.shader = cc.shaderCache.getProgram("ShaderPositionTexture");
             this.initGL();
