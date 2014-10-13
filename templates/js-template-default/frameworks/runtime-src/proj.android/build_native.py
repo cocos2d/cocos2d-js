@@ -1,7 +1,10 @@
 #!/usr/bin/python
-# android-build.py
-# Build android
 
+'''
+build_native.py
+
+This script will copy resources to assets and build native code with NDK.
+'''
 import sys
 import os, os.path
 import shutil
