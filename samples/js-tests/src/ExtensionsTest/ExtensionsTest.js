@@ -95,13 +95,6 @@ var extensionsTestItemNames = [
         }
     },
     {
-        itemTitle:"ActionTimelineTestScene",
-        testScene:function () {
-            var scene = new ActionTimelineTestScene();
-            scene.runThisTest();
-        }
-    },
-    {
         itemTitle:"PluginTest",
         testScene:function () {
             if(cc.sys.OS_ANDROID === cc.sys.os || cc.sys.OS_IOS === cc.sys.os){  //android/ios
@@ -131,6 +124,15 @@ if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
             if (testScene) {
                 testScene.runThisTest();
             }
+        }
+    });
+}
+if (!cc.sys.isNative) {
+    extensionsTestItemNames.push({
+        itemTitle:"ActionTimelineTestScene",
+        testScene:function () {
+            var scene = new ActionTimelineTestScene();
+            scene.runThisTest();
         }
     });
 }
