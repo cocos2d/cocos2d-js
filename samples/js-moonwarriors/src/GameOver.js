@@ -10,6 +10,7 @@ var GameOver = cc.Layer.extend({
         var sp = new cc.Sprite(res.loading_png);
         sp.anchorX = 0;
         sp.anchorY = 0;
+        sp.scale = MW.SCALE;
         this.addChild(sp, 0, 1);
 
         var logo = new cc.Sprite(res.gameOver_png);
@@ -17,7 +18,8 @@ var GameOver = cc.Layer.extend({
             anchorX: 0,
             anchorY: 0,
             x: 0,
-            y: 300
+            y: 450,
+            scale: MW.SCALE
         });
         this.addChild(logo,10,1);
 
@@ -26,29 +28,30 @@ var GameOver = cc.Layer.extend({
         var playAgainDisabled = new cc.Sprite(res.menu_png, cc.rect(378, 33 * 2, 126, 33));
 
         var cocos2dhtml5 = new cc.Sprite(res.cocos2d_html5_png);
-        cocos2dhtml5.x = 160;
-        cocos2dhtml5.y = 150;
-        this.addChild(cocos2dhtml5,10);
+        cocos2dhtml5.x = 240;
+        cocos2dhtml5.y = 225;
+        this.addChild(cocos2dhtml5, 10);
         var flare = new cc.Sprite(res.flare_jpg);
         this.addChild(flare);
         flare.visible = false;
         var playAgain = new cc.MenuItemSprite(playAgainNormal, playAgainSelected, playAgainDisabled, function(){
             flareEffect(flare,this,this.onPlayAgain);
         }.bind(this) );
+        playAgain.scale = MW.SCALE;
 
         var menu = new cc.Menu(playAgain);
         this.addChild(menu, 1, 2);
         menu.x = winSize.width / 2;
-        menu.y = 220;
+        menu.y = 300;
 
-        var lbScore = new cc.LabelTTF("Your Score:"+MW.SCORE,"Arial Bold",16);
-        lbScore.x = 160;
-        lbScore.y = 280;
+        var lbScore = new cc.LabelTTF("Your Score:"+MW.SCORE,"Arial Bold",24);
+        lbScore.x = 240;
+        lbScore.y = 370;
         lbScore.color = cc.color(250,179,0);
         this.addChild(lbScore,10);
 
-        var b1 = new cc.LabelTTF("Download Cocos2d-JS","Arial",14);
-        var b2 = new cc.LabelTTF("Github Repository","Arial",14);
+        var b1 = new cc.LabelTTF("Download Cocos2d-JS","Arial",21);
+        var b2 = new cc.LabelTTF("Github Repository","Arial",21);
         var menu1 = new cc.MenuItemLabel(b1,function(){
             window.location.href = "http://www.cocos2d-x.org/download";
         });
@@ -57,8 +60,8 @@ var GameOver = cc.Layer.extend({
         });
         var cocos2dMenu = new cc.Menu(menu1,menu2);
         cocos2dMenu.alignItemsVerticallyWithPadding(10);
-        cocos2dMenu.x = 160;
-        cocos2dMenu.y = 80;
+        cocos2dMenu.x = 240;
+        cocos2dMenu.y = 120;
         this.addChild(cocos2dMenu);
 
 

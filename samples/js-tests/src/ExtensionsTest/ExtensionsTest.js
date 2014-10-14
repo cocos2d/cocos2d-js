@@ -95,13 +95,6 @@ var extensionsTestItemNames = [
         }
     },
     {
-        itemTitle:"ActionTimelineTestScene",
-        testScene:function () {
-            var scene = new ActionTimelineTestScene();
-            scene.runThisTest();
-        }
-    },
-    {
         itemTitle:"PluginTest",
         testScene:function () {
             if(cc.sys.OS_ANDROID === cc.sys.os || cc.sys.OS_IOS === cc.sys.os){  //android/ios
@@ -120,6 +113,13 @@ var extensionsTestItemNames = [
             }else{  //desktop
                 cc.log("Plugin-x doesn't support desktop platforms.");
             }
+        }
+    },
+    {
+        itemTitle:"ActionTimelineTestScene",
+        testScene:function () {
+            var scene = new ActionTimelineTestScene();
+            scene.runThisTest();
         }
     }
 ];

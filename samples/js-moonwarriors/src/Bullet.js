@@ -14,7 +14,7 @@ var Bullet = cc.Sprite.extend({
 
         this.yVelocity = -bulletSpeed;
         this.attackMode = attackMode;
-        this.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
+        //this.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
     },
     update:function (dt) {
         var x = this.x, y = this.y;
