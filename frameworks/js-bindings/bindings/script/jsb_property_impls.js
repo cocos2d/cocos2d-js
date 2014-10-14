@@ -88,10 +88,10 @@ _safeExtend(cc.LabelTTF.prototype, {
 
     _setFont: function(fontStyle) {
         var res = this._fontStyleRE.exec(fontStyle);
-		if(res) {
-			this.setFontSize(parseInt(res[1]));
-			this.setFontName(res[2]);
-		}
+        if(res) {
+            this.setFontSize(parseInt(res[1]));
+            this.setFontName(res[2]);
+        }
     },
 
     _getBoundingWidth: function() {
