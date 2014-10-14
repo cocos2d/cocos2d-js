@@ -103,30 +103,30 @@ cp.clamp01 = cp.fclamp01;
 /// Initialize an offset box shaped polygon shape.
 cp.BoxShape2 = function(body, box)
 {
-	var verts = [
-		box.l, box.b,
-		box.l, box.t,
-		box.r, box.t,
-		box.r, box.b
-	];
+    var verts = [
+        box.l, box.b,
+        box.l, box.t,
+        box.r, box.t,
+        box.r, box.b
+    ];
 
-	return new cp.PolyShape(body, verts, cp.vzero);
+    return new cp.PolyShape(body, verts, cp.vzero);
 };
 
 /// Initialize a box shaped polygon shape.
 cp.BoxShape = function(body, width, height)
 {
-	var hw = width/2;
-	var hh = height/2;
+    var hw = width/2;
+    var hh = height/2;
 
-	return cp.BoxShape2(body, new cp.BB(-hw, -hh, hw, hh));
+    return cp.BoxShape2(body, new cp.BB(-hw, -hh, hw, hh));
 };
 
 
 /// Initialize an static body
 cp.StaticBody = function()
 {
-	return new cp.Body(Infinity, Infinity);
+    return new cp.Body(Infinity, Infinity);
 };
 
 
@@ -141,7 +141,7 @@ cp.BB = function(l, b, r, t)
 
 // helper function to create a BB
 cp.bb = function(l, b, r, t) {
-	return new cp.BB(l, b, r, t);
+    return new cp.BB(l, b, r, t);
 };
 
 //
@@ -150,174 +150,174 @@ cp.bb = function(l, b, r, t) {
 var _proto = cp.Base.prototype;
 // "handle" needed in some cases
 Object.defineProperties(cp.Base.prototype,
-				{
-					"handle" : {
-						get : function(){
+                {
+                    "handle" : {
+                        get : function(){
                             return this.getHandle();
                         },
                         enumerable : true,
-						configurable : true
-					}
-				});
+                        configurable : true
+                    }
+                });
 
 // Properties, for Chipmunk-JS compatibility
 // Space properties
 Object.defineProperties(cp.Space.prototype,
-				{
-					"gravity" : {
-						get : function(){
+                {
+                    "gravity" : {
+                        get : function(){
                             return this.getGravity();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setGravity(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"iterations" : {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "iterations" : {
+                        get : function(){
                             return this.getIterations();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setIterations(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"damping" : {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "damping" : {
+                        get : function(){
                             return this.getDamping();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setDamping(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"staticBody" : {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "staticBody" : {
+                        get : function(){
                             return this.getStaticBody();
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"idleSpeedThreshold" : {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "idleSpeedThreshold" : {
+                        get : function(){
                             return this.getIdleSpeedThreshold();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setIdleSpeedThreshold(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"sleepTimeThreshold": {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "sleepTimeThreshold": {
+                        get : function(){
                             return this.getSleepTimeThreshold();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setSleepTimeThreshold(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"collisionSlop": {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "collisionSlop": {
+                        get : function(){
                             return this.getCollisionSlop();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setCollisionSlop(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"collisionBias": {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "collisionBias": {
+                        get : function(){
                             return this.getCollisionBias();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setCollisionBias(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"collisionPersistence": {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "collisionPersistence": {
+                        get : function(){
                             return this.getCollisionPersistence();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setCollisionPersistence(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"enableContactGraph": {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "enableContactGraph": {
+                        get : function(){
                             return this.getEnableContactGraph();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setEnableContactGraph(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					}
-				});
+                        enumerable : true,
+                        configurable : true
+                    }
+                });
 
 // Body properties
 Object.defineProperties(cp.Body.prototype,
-				{
-					"a" : {
-						get : function(){
+                {
+                    "a" : {
+                        get : function(){
                             return this.getAngle();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setAngle(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"w" : {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "w" : {
+                        get : function(){
                             return this.getAngVel();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setAngVel(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"p" : {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "p" : {
+                        get : function(){
                             return this.getPos();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setPos(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"v" : {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "v" : {
+                        get : function(){
                             return this.getVel();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setVel(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"i" : {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "i" : {
+                        get : function(){
                             return this.getMoment();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setMoment(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					}
+                        enumerable : true,
+                        configurable : true
+                    }
 
-				});
+                });
 
 // Shape properties
 _proto = cp.Shape.prototype;
@@ -333,42 +333,42 @@ cc.defineGetterSetter(_proto, "u", _proto.getFriction, _proto.setFriction);
 
 // Constraint properties
 Object.defineProperties(cp.Constraint.prototype,
-				{
-					"maxForce" : {
-						get : function(){
+                {
+                    "maxForce" : {
+                        get : function(){
                             return this.getMaxForce();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setMaxForce(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					}
-				});
+                        enumerable : true,
+                        configurable : true
+                    }
+                });
 
 // PinJoint properties
 Object.defineProperties(cp.PinJoint.prototype,
-				{
-					"anchr1" : {
-						get : function(){
+                {
+                    "anchr1" : {
+                        get : function(){
                             return this.getAnchr1();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setAnchr1(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					},
-					"anchr2" : {
-						get : function(){
+                        enumerable : true,
+                        configurable : true
+                    },
+                    "anchr2" : {
+                        get : function(){
                             return this.getAnchr2();
                         },
-						set : function(newValue){
+                        set : function(newValue){
                             this.setAnchr2(newValue);
                         },
-						enumerable : true,
-						configurable : true
-					}
-				});
+                        enumerable : true,
+                        configurable : true
+                    }
+                });
 
 _proto = null;

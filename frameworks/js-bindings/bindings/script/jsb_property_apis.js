@@ -30,8 +30,8 @@
  */
 cc.Node.prototype.attr = function(attrs) {
     for(var key in attrs) {
-		this[key] = attrs[key];
-	}
+        this[key] = attrs[key];
+    }
 };
 
 var _proto = cc.Action.prototype;
