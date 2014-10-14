@@ -884,6 +884,9 @@ cc.plistParser = cc.PlistParser.getInstance();
 // File utils (Temporary, won't be accessible)
 cc.fileUtils = cc.FileUtils.getInstance();
 
+ccs.nodeReader = ccs.NodeReader.getInstance();
+ccs.actionTimelineCache = ccs.ActionTimelineCache.getInstance();
+
 /**
  * @type {Object}
  * @name cc.screen
