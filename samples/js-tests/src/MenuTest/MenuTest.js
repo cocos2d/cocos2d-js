@@ -530,4 +530,4 @@ var MenuTestScene = TestScene.extend({
     }
 });
 
-var arrayOfMenuTest = ["Menu scene test"];
+var arrayOfMenuTest = [MenuTestScene];
