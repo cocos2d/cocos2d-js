@@ -227,8 +227,8 @@ var RemoteTextureTest = TextureCacheTestBase.extend({
 var texCacheTestSceneIdx = -1;
 
 var TexCacheTestScene = TestScene.extend({
-    runThisTest:function () {
-        texCacheTestSceneIdx = -1;
+    runThisTest:function (num) {
+        texCacheTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextTexCacheTest();
         this.addChild(layer);
 
