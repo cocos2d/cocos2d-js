@@ -35,7 +35,7 @@ var OpenGLTestScene = TestScene.extend({
     }
 });
 
-cc.GLNode = cc.Node.extend({
+cc.GLNode = cc.GLNode || cc.Node.extend({
     ctor:function(){
         this._super();
         this.init();
@@ -579,8 +579,9 @@ var ShaderNode = cc.GLNode.extend({
 
             var program = this.shader.getProgram();
             this.uniformCenter = gl.getUniformLocation( program, "center");
+            cc.log(this.uniformCenter)
             this.uniformResolution = gl.getUniformLocation( program, "resolution");
-
+            cc.log(this.uniformResolution)
             this.initBuffers();
 
             this.scheduleUpdate();
@@ -588,13 +589,17 @@ var ShaderNode = cc.GLNode.extend({
         }
     },
     _initRendererCmd:function () {
-        this._rendererCmd = new cc.CustomRenderCmdWebGL(this, this.draw);
+        this._rendererCmd = new cc.CustomRenderCmdWebGL(this, function(){
+            cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
+            cc.kmGLPushMatrix();
+            cc.kmGLLoadMatrix(this._stackMatrix);
+
+            this.draw();
+
+            cc.kmGLPopMatrix(); 
+        });
     },
     draw:function() {
-        cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
-        cc.kmGLPushMatrix();
-        cc.kmGLLoadMatrix(this._stackMatrix);
-
         this.shader.use();
         this.shader.setUniformsForBuiltins();
 
@@ -612,8 +617,6 @@ var ShaderNode = cc.GLNode.extend({
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
-
-        cc.kmGLPopMatrix();
     },
 
     update:function(dt) {

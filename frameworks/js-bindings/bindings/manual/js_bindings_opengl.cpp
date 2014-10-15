@@ -32,7 +32,6 @@ void GLNode::draw(Renderer *renderer, const Mat4& transform, uint32_t flags) {
 
 void GLNode::onDraw(Mat4 &transform, uint32_t flags)
 {
-    CCLOG("cpp draw");
     js_proxy_t* proxy = NULL;
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     proxy = js_get_or_create_proxy<cocos2d::Node>(cx, this);
