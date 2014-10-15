@@ -28,8 +28,8 @@ var OpenGLTestIdx = -1;
 // every Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
 var OpenGLTestScene = TestScene.extend({
-    runThisTest:function () {
-        OpenGLTestIdx = -1;
+    runThisTest:function (num) {
+        OpenGLTestIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextOpenGLTest());
         director.runScene(this);
     }

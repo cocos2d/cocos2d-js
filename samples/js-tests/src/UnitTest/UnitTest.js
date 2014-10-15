@@ -245,8 +245,8 @@ var DictionaryToFromTest = UnitTestBase.extend({
 });
 
 var UnitTestScene = TestScene.extend({
-    runThisTest:function () {
-        unitTestSceneIdx = -1;
+    runThisTest:function (num) {
+        unitTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextUnitTest();
         this.addChild(layer);
 

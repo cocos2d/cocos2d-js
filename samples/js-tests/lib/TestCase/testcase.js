@@ -224,10 +224,10 @@
                 ,arrayOfEaseActionsTest//arrayOfEaseActionsTest
                 ,arrayOfEventDispatcherTest//arrayOfEventDispatcherTest
                 ,arrayOfEventsTest//arrayOfEventsTest
-                ,extensionsTestItemNames//extensions
+                ,null//extensions
                 ,arrayOfEffectsTest
                 ,arrayOfEffectsAdvancedTest
-                ,fontList
+                ,null//FontTest
                 ,null//UI
                 ,[IntervalLayer]//Interval
                 ,arrayOfLabelTest//arrayOfLabelTest
@@ -324,6 +324,9 @@
                         if(typeof o === 'string'){
                             title = o;
                         }
+                        if(typeof o === 'object'){
+                            title = o.title || o.itemTitle;
+                        }
                         html += '<li><a data-num="'+ j +'">'+ title +'</a></li>'
                     });
                     btnArray[1].innerHTML = html;
@@ -418,10 +421,22 @@
                 //Click on the sidebar to allow
                 cc._silderClick = true;
 
-                var scene = testNames[sidebar.diplayRecordArr[actualSceneNum]].testScene();
-                if (scene) {
-                    scene.runThisTest(actualTestNum);
+                // subchild
+                if (typeof sidebar._childNameList[sidebar.diplayRecordArr[actualSceneNum]][actualTestNum] == "object")
+                {
+                    var scene = sidebar._childNameList[sidebar.diplayRecordArr[actualSceneNum]][actualTestNum].testScene();
+                    if (scene) {
+                        scene.runThisTest(actualTestNum);
+                    }
                 }
+                else
+                {
+                    var scene = testNames[sidebar.diplayRecordArr[actualSceneNum]].testScene();
+                    if (scene) {
+                        scene.runThisTest(actualTestNum);
+                    }
+                }
+
 
             }, this);
 

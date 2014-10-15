@@ -388,8 +388,8 @@ var TextFieldTTFActionTest = KeyboardNotificationLayer.extend({
 });
 
 var TextInputTestScene = TestScene.extend({
-    runThisTest:function () {
-        sceneIdx = -1;
+    runThisTest:function (num) {
+        sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextTextInputTest();
 
         this.addChild(layer);

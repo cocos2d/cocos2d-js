@@ -647,8 +647,8 @@ var Issue1464 = RenderTextureBaseLayer.extend({
 
 
 var RenderTextureTestScene = TestScene.extend({
-    runThisTest:function () {
-        sceneRenderTextureIdx = -1;
+    runThisTest:function (num) {
+        sceneRenderTextureIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextRenderTextureTest();
         this.addChild(layer);
 
