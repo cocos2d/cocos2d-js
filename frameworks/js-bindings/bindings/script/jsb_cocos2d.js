@@ -1711,6 +1711,8 @@ cc.eventManager.addListener = function(listener, nodeOrPriority) {
     } else {
         cc.eventManager.addEventListenerWithSceneGraphPriority(listener, nodeOrPriority);
     }
+
+    return listener;
 };
 
 cc.eventManager.dispatchCustomEvent = function (eventName, optionalUserData) {
