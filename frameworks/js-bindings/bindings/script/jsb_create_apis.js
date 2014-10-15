@@ -836,7 +836,7 @@ ccs.Armature.prototype._ctor = function(name, parentBone) {
     parentBone && ccs.Armature.prototype.init.call(this, name, parentBone);
 };
 
-cc.ActionTimelineData.prototype._ctor = function(actionTag){
+ccs.ActionTimelineData.prototype._ctor = function(actionTag){
     actionTag && this.init(actionTag)
 };
 ccs.ActionTimeline.prototype._ctor = function(){
