@@ -439,7 +439,7 @@ var testNames = [
     {
         title:"OpenGL Test",
         resource:g_opengl_resources,
-        platforms: PLATFORM_HTML5_WEBGL,
+        platforms: PLATFORM_JSB_AND_WEBGL,
         linksrc:"src/OpenGLTest/OpenGLTest.js",
         testScene:function () {
             return new OpenGLTestScene();
