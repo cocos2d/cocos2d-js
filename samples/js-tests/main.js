@@ -112,7 +112,9 @@ cc.game.onStart = function(){
         if(window.sideIndexBar && typeof sideIndexBar.start === 'function'){
             sideIndexBar.start();
         }else{
-            cc.director.runScene(new TestController());
+            var scene = new cc.Scene();
+            scene.addChild(new TestController());
+            cc.director.runScene(scene);
         }
     }, this);
 };
