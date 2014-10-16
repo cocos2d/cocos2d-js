@@ -579,9 +579,7 @@ var ShaderNode = cc.GLNode.extend({
 
             var program = this.shader.getProgram();
             this.uniformCenter = gl.getUniformLocation( program, "center");
-            cc.log(this.uniformCenter)
             this.uniformResolution = gl.getUniformLocation( program, "resolution");
-            cc.log(this.uniformResolution)
             this.initBuffers();
 
             this.scheduleUpdate();
@@ -606,7 +604,8 @@ var ShaderNode = cc.GLNode.extend({
         //
         // Uniforms
         //
-        this.shader.setUniformLocationF32( this.uniformCenter, winSize.width/2, winSize.height/2);
+        var frameSize = cc.view.getFrameSize();
+        this.shader.setUniformLocationF32( this.uniformCenter, frameSize.width/2, frameSize.height/2);
         this.shader.setUniformLocationF32( this.uniformResolution, 256, 256);
 
         cc.glEnableVertexAttribs( cc.VERTEX_ATTRIB_FLAG_POSITION );
