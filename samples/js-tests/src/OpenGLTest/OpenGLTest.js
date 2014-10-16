@@ -868,6 +868,11 @@ var ShaderJuliaTest = OpenGLTestLayer.extend({
 // ShaderRetro
 //
 //------------------------------------------------------------------
+
+// Fix me:
+// The implemetation of LabelBMFont is quite defferent between html5 and native
+// That is why we use 'if (cc.sys.isNative){...}else{...}' in this test case
+// It should be fixed in the future.
 var ShaderRetroEffect = OpenGLTestLayer.extend({
     ctor:function() {
         this._super();
@@ -880,8 +885,12 @@ var ShaderRetroEffect = OpenGLTestLayer.extend({
             program.updateUniforms();
 
             var label = new cc.LabelBMFont("RETRO EFFECT","res/fonts/west_england-64.fnt");
-            label.shaderProgram = program;
-
+            
+            if(cc.sys.isNative)
+                label.children[0].shaderProgram = program;
+            else
+                label.shaderProgram = program;
+            
             label.x = winSize.width/2;
 
             label.y = winSize.height/2;
@@ -895,16 +904,26 @@ var ShaderRetroEffect = OpenGLTestLayer.extend({
     },
     update:function(dt) {
         this.accum += dt;
-        var children = this.label.children;
 
-        for( var i in children ) {
-            var sprite = children[i];
-            sprite.y = Math.sin( this.accum * 2 + i/2.0) * 20;
+        if(cc.sys.isNative){
+            var letters = this.label.children[0];
+            for(var i = 0; i< letters.getStringLength(); ++i){
+                var sprite = letters.getLetter(i);
+                sprite.y = Math.sin( this.accum * 2 + i/2.0) * 20;
+                sprite.scaleY  = ( Math.sin( this.accum * 2 + i/2.0 + 0.707) );       
+            }
+        }else{
+            var children = this.label.children;
 
-            // add fabs() to prevent negative scaling
-            var scaleY = ( Math.sin( this.accum * 2 + i/2.0 + 0.707) );
+            for( var i in children ) {
+                var sprite = children[i];
+                sprite.y = Math.sin( this.accum * 2 + i/2.0) * 20;
 
-            sprite.scaleY = scaleY;
+                // add fabs() to prevent negative scaling
+                var scaleY = ( Math.sin( this.accum * 2 + i/2.0 + 0.707) );
+
+                sprite.scaleY = scaleY;
+            }
         }
     },
     title:function () {
