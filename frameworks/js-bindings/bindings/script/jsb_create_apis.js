@@ -830,13 +830,6 @@ cc.GLProgram.prototype._ctor = function(vShaderFileName, fShaderFileName) {
 };
 
 
-/************************  Cocostudio  *************************/
-
-ccs.Armature.prototype._ctor = function(name, parentBone) {
-	parentBone && ccs.Armature.prototype.init.call(this, name, parentBone);
-};
-
-
 
 
 /************************************************************
