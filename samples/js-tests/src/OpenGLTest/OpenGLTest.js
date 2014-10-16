@@ -35,7 +35,7 @@ var OpenGLTestScene = TestScene.extend({
     }
 });
 
-cc.GLNode = cc.Node.extend({
+cc.GLNode = cc.GLNode || cc.Node.extend({
     ctor:function(){
         this._super();
         this.init();
@@ -580,7 +580,6 @@ var ShaderNode = cc.GLNode.extend({
             var program = this.shader.getProgram();
             this.uniformCenter = gl.getUniformLocation( program, "center");
             this.uniformResolution = gl.getUniformLocation( program, "resolution");
-
             this.initBuffers();
 
             this.scheduleUpdate();
@@ -588,20 +587,25 @@ var ShaderNode = cc.GLNode.extend({
         }
     },
     _initRendererCmd:function () {
-        this._rendererCmd = new cc.CustomRenderCmdWebGL(this, this.draw);
+        this._rendererCmd = new cc.CustomRenderCmdWebGL(this, function(){
+            cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
+            cc.kmGLPushMatrix();
+            cc.kmGLLoadMatrix(this._stackMatrix);
+
+            this.draw();
+
+            cc.kmGLPopMatrix(); 
+        });
     },
     draw:function() {
-        cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
-        cc.kmGLPushMatrix();
-        cc.kmGLLoadMatrix(this._stackMatrix);
-
         this.shader.use();
         this.shader.setUniformsForBuiltins();
 
         //
         // Uniforms
         //
-        this.shader.setUniformLocationF32( this.uniformCenter, winSize.width/2, winSize.height/2);
+        var frameSize = cc.view.getFrameSize();
+        this.shader.setUniformLocationF32( this.uniformCenter, frameSize.width/2, frameSize.height/2);
         this.shader.setUniformLocationF32( this.uniformResolution, 256, 256);
 
         cc.glEnableVertexAttribs( cc.VERTEX_ATTRIB_FLAG_POSITION );
@@ -612,8 +616,6 @@ var ShaderNode = cc.GLNode.extend({
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
-
-        cc.kmGLPopMatrix();
     },
 
     update:function(dt) {
