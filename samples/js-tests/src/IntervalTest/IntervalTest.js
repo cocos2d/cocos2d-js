@@ -26,7 +26,7 @@
 
 
 
-IntervalLayer = cc.LayerGradient.extend({
+var IntervalLayer = cc.LayerGradient.extend({
 
     label0:null,
     label1:null,
@@ -146,7 +146,7 @@ IntervalLayer = cc.LayerGradient.extend({
     //CREATE_NODE(IntervalLayer);
 });
 
-IntervalTestScene = TestScene.extend({
+var IntervalTestScene = TestScene.extend({
 
     runThisTest:function () {
         var layer = new IntervalLayer();

@@ -45,7 +45,7 @@ SpineTestScene = TestScene.extend({
 
 touchcount = 0;
 
-SpineTest = BaseTestLayer.extend({
+var SpineTest = BaseTestLayer.extend({
     _spineboy:null,
     _debugMode: 0,
     ctor:function () {
