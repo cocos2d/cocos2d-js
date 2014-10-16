@@ -137,6 +137,7 @@
 		BAA7DEE518C84F5000D9A10E /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEE218C84F5000D9A10E /* main.js */; };
 		BAA7DEE618C84F5000D9A10E /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEE318C84F5000D9A10E /* project.json */; };
 		BAA7DEE718C84F5000D9A10E /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = BAA7DEE318C84F5000D9A10E /* project.json */; };
+		BAB1575119F041BB00BDF3AD /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAB1575019F041BB00BDF3AD /* GameController.framework */; };
 		BAC90566195C2E6D00307000 /* jsb_pluginx.js in Resources */ = {isa = PBXBuildFile; fileRef = BAC9055E195C2D2500307000 /* jsb_pluginx.js */; };
 		D60AE43817F9143D00757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		ED743D1717D099F10004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
@@ -441,6 +442,7 @@
 		BA623E24191A221D00761F37 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		BAA7DEE218C84F5000D9A10E /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../samples/js-tests/main.js"; sourceTree = "<group>"; };
 		BAA7DEE318C84F5000D9A10E /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = "../samples/js-tests/project.json"; sourceTree = "<group>"; };
+		BAB1575019F041BB00BDF3AD /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
 		BAC9055E195C2D2500307000 /* jsb_pluginx.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_pluginx.js; sourceTree = "<group>"; };
 		BAF426F51948498A002B22EF /* PluginIAP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginIAP.xcodeproj; path = "../frameworks/js-bindings/cocos2d-x/plugin/plugins/iosiap/proj.ios/PluginIAP.xcodeproj"; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
@@ -492,6 +494,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAB1575119F041BB00BDF3AD /* GameController.framework in Frameworks */,
 				05FBD794195C0910006CC37F /* libPluginFacebook.a in Frameworks */,
 				BA623E1F191A220B00761F37 /* StoreKit.framework in Frameworks */,
 				05F48C15192C9180008FB408 /* CoreTelephony.framework in Frameworks */,
@@ -741,6 +744,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BAB1575019F041BB00BDF3AD /* GameController.framework */,
 				0541A77919750F7A00E45470 /* AppKit.framework */,
 				05FBD795195C1835006CC37F /* FacebookSDK.framework */,
 				05F48C14192C9180008FB408 /* CoreTelephony.framework */,
