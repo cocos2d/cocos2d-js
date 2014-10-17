@@ -1,5 +1,5 @@
-define(["require", "core", "Sprite", "actions", "game/config/GameConfig", "game/GameLayer"], function(require, cc, Sprite, actions, MW, GameLayer) {
-
+define(["require", "core", "Sprite", "actions", "game/config/GameConfig"], function(require, cc, Sprite, actions, MW) {
+    var GameLayer = null;
     var SparkEffect = cc.Class.extend({
         active:true,
         spark1:null,
@@ -71,7 +71,8 @@ define(["require", "core", "Sprite", "actions", "game/config/GameConfig", "game/
         return sparkEffect;
     };
 
-    SparkEffect.preSet = function () {
+    SparkEffect.preSet = function (gameLayer) {
+        GameLayer = gameLayer
         var sparkEffect = null;
         for (var i = 0; i < 6; i++) {
             sparkEffect = SparkEffect.create();

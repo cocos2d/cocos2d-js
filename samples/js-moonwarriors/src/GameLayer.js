@@ -7,8 +7,8 @@ define([
     "core",
     "Scene",
     "layers",
-    "cocos2d/core/sprites/CCSpriteFrameCache",
     "Sprite",
+    "cocos2dPath/core/sprites/CCSpriteFrameCache",
     "SpriteBatchNode",
     "LabelTTF",
     "LabelBMFont",
@@ -18,7 +18,6 @@ define([
     "game/LevelManager",
     "game/Ship",
     "game/Explosion",
-    "game/GameLayer",
     "game/Bullet",
     "game/Enemy",
     "game/HitEffect",
@@ -33,7 +32,6 @@ define([
             LevelManager,
             Ship,
             Explosion,
-            GameLayer,
             Bullet,
             Enemy,
             HitEffect,
@@ -189,13 +187,13 @@ define([
             GameLayer.sharedGameLayer = this;
 
             //pre set
-            Bullet.preSet();
-            Enemy.preSet();
-            HitEffect.preSet();
-            SparkEffect.preSet();
-            Explosion.preSet();
-            BackSky.preSet();
-            BackTileMap.preSet();
+            Bullet.preSet(GameLayer);
+            Enemy.preSet(GameLayer);
+            HitEffect.preSet(GameLayer);
+            SparkEffect.preSet(GameLayer);
+            Explosion.preSet(GameLayer);
+            BackSky.preSet(GameLayer);
+            BackTileMap.preSet(GameLayer);
 
             this.initBackground();
 

@@ -1,10 +1,9 @@
 define([
     "require",
     "core", "Sprite", "actions",
-    "game/config/GameConfig",
-    "game/GameLayer",
-], function(require, cc, Sprite, actions, MW, GameLayer) {
-
+    "game/config/GameConfig"
+], function(require, cc, Sprite, actions, MW) {
+    var GameLayer = null;
     var HitEffect = Sprite.extend({
         active:true,
         ctor:function () {
@@ -45,13 +44,13 @@ define([
 
     HitEffect.create = function () {
         var hitEffect = new HitEffect();
-        GameLayer = require("GameLayer");
         GameLayer.sharedGameLayer.addBulletHits(hitEffect, 9999);
         MW.CONTAINER.HITS.push(hitEffect);
         return hitEffect;
     };
 
-    HitEffect.preSet = function () {
+    HitEffect.preSet = function (gameLayer) {
+        GameLayer = gameLayer
         var hitEffect = null;
         for (var i = 0; i < 10; i++) {
             hitEffect = HitEffect.create();

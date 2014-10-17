@@ -1,4 +1,4 @@
-define(["require", "core", "Sprite", "actions", "cocos2d/actions/CCActionEase"], function(require, cc, Sprite, actions, eases) {
+define(["require", "core", "Sprite", "actions", "cocos2dPath/actions/CCActionEase"], function(require, cc, Sprite, actions, eases) {
 
     var flareEffect = function (flare, target, callback) {
         flare.stopAllActions();

@@ -1,6 +1,7 @@
 
-define(["require", "core", "Sprite", "game/GameLayer", "game/config/GameConfig", "game/HitEffect"], function(require, cc, Sprite, GameLayer, MW, HitEffect) {
+define(["require", "core", "Sprite", "game/config/GameConfig", "game/HitEffect"], function(require, cc, Sprite, MW, HitEffect) {
 
+    var GameLayer = null;
     //bullet
     var Bullet = Sprite.extend({
         active:true,
@@ -80,7 +81,8 @@ define(["require", "core", "Sprite", "game/GameLayer", "game/config/GameConfig",
         return bullet;
     };
 
-    Bullet.preSet = function () {
+    Bullet.preSet = function (gameLayer) {
+        GameLayer = gameLayer;
         var bullet = null;
         for (var i = 0; i < 10; i++) {
             var bullet = Bullet.create(MW.BULLET_SPEED.SHIP, "W1.png", MW.ENEMY_ATTACK_MODE.NORMAL, 3000, MW.UNIT_TAG.PLAYER_BULLET);

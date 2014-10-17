@@ -2,8 +2,8 @@
 define([
     "require",
     "core", "Sprite", "actions", "audio",
-    "cocos2d/core/sprites/CCSpriteFrameCache",
-    "cocos2d/core/sprites/CCAnimation",
+    "cocos2dPath/core/sprites/CCSpriteFrameCache",
+    "cocos2dPath/core/sprites/CCAnimation",
     "game/config/GameConfig",
     "game/Bullet",
     "game/Explosion"

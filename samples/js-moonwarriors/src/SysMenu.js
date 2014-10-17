@@ -1,7 +1,8 @@
 define([
     "require",
     "core", "Scene", "LoaderScene", "layers", "Sprite", "Menu", "menuitems", "actions", "audio",
-    "cocos2d/core/sprites/CCSpriteFrameCache",
+    "cocos2dPath/core/sprites/CCSpriteFrameCache",
+    "cocos2dPath/transitions/CCTransition",
     "game/config/GameConfig",
     "game/res_game",
     "game/GameLayer",
@@ -9,7 +10,7 @@ define([
     "game/SettingsLayer",
     "game/AboutLayer",
     "game/Effect"
-], function(require, cc, Scene, LoaderScene, ls, Sprite, Menu, mItems, actions, audioEngine, spriteFrameCache, MW, res_game, GameLayer, GameControlMenu, SettingsLayer, AboutLayer, flareEffect) {
+], function(require, cc, Scene, LoaderScene, ls, Sprite, Menu, mItems, actions, audioEngine, spriteFrameCache, transition, MW, res_game, GameLayer, GameControlMenu, SettingsLayer, AboutLayer, flareEffect) {
 
     var SysMenu = ls.Layer.extend({
         _ship:null,
@@ -88,7 +89,7 @@ define([
                 GameControlMenu = require("game/GameControlMenu");
                 scene.addChild(new GameLayer());
                 scene.addChild(new GameControlMenu());
-                cc.director.runScene(new cc.TransitionFade(1.2, scene));
+                cc.director.runScene(new transition(1.2, scene));
             }, this);
         },
         onSettings:function (pSender) {
@@ -96,14 +97,14 @@ define([
             var scene = new Scene();
             SettingsLayer = require("game/SettingsLayer");
             scene.addChild(new SettingsLayer());
-            cc.director.runScene(new cc.TransitionFade(1.2, scene));
+            cc.director.runScene(new transition(1.2, scene));
         },
         onAbout:function (pSender) {
             this.onButtonEffect();
             var scene = new Scene();
             AboutLayer = require("game/AboutLayer");
             scene.addChild(new AboutLayer());
-            cc.director.runScene(new cc.TransitionFade(1.2, scene));
+            cc.director.runScene(new transition(1.2, scene));
         },
         update:function () {
             if (this._ship.y > 480) {

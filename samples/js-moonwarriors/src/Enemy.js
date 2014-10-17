@@ -1,11 +1,13 @@
 define([
     "require", "core", "Sprite", "audio",
     "game/config/GameConfig",
-    "game/GameLayer",
     "game/Explosion",
     "game/SparkEffect",
-    "game/Bullet"
-], function(require, cc, Sprite, audioEngine, MW, GameLayer, Explosion, SparkEffect, Bullet) {
+    "game/Bullet",
+    "game/config/EnemyType"
+], function(require, cc, Sprite, audioEngine, MW, Explosion, SparkEffect, Bullet, EnemyType) {
+
+    var GameLayer = null;
 
     var Enemy = Sprite.extend({
         eID:0,
@@ -46,7 +48,7 @@ define([
                 }
             }
 
-            if (x < 0 || x > g_sharedGameLayer.screenRect.width || y < 0 || y > g_sharedGameLayer.screenRect.height || this.HP <= 0) {
+            if (x < 0 || x > GameLayer.sharedGameLayer.screenRect.width || y < 0 || y > GameLayer.sharedGameLayer.screenRect.height || this.HP <= 0) {
                 this.active = false;
                 this.destroy();
             }
@@ -117,7 +119,8 @@ define([
         return enemy;
     };
 
-    Enemy.preSet = function () {
+    Enemy.preSet = function (gameLayer) {
+        GameLayer = gameLayer
         var enemy = null;
         for (var i = 0; i < 3; i++) {
             for (var j = 0; j < EnemyType.length; j++) {

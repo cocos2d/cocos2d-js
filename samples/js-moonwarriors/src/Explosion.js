@@ -1,13 +1,12 @@
 define([
     "require", "core", "Sprite",
-    "cocos2d/core/sprites/CCSpriteFrameCache",
-    "cocos2d/core/sprites/CCAnimation",
-    "cocos2d/core/sprites/CCAnimationCache",
+    "cocos2dPath/core/sprites/CCSpriteFrameCache",
+    "cocos2dPath/core/sprites/CCAnimation",
+    "cocos2dPath/core/sprites/CCAnimationCache",
     "actions",
-    "game/config/GameConfig",
-    "game/GameLayer"
-], function(require, cc, Sprite, spriteFrameCache, Animation, animationCache, actions, MW, GameLayer) {
-
+    "game/config/GameConfig"
+], function(require, cc, Sprite, spriteFrameCache, Animation, animationCache, actions, MW) {
+    var GameLayer = null;
     var Explosion = cc.Sprite.extend({
         tmpWidth:0,
         tmpHeight:0,
@@ -70,7 +69,8 @@ define([
         return explosion;
     };
 
-    Explosion.preSet = function () {
+    Explosion.preSet = function (gameLayer) {
+        GameLayer = gameLayer
         var explosion = null;
         for (var i = 0; i < 6; i++) {
             explosion = Explosion.create();

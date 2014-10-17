@@ -5,7 +5,8 @@ define([
     "game/config/GameConfig",
     "game/config/EnemyType",
     "game/Enemy",
-], function(require, cc, Sprite, actions, MW, EnemyType, Enemy) {
+    "game/config/Level"
+], function(require, cc, Sprite, actions, MW, EnemyType, Enemy, Level1) {
 
     var LevelManager = cc.Class.extend({
         _currentLevel:null,

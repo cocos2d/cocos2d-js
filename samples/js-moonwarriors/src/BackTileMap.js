@@ -1,4 +1,5 @@
-define(["require", "core", "Sprite", "game/GameLayer", "game/config/GameConfig"], function(require, cc, Sprite, GameLayer, MW) {
+define(["require", "core", "Sprite", "game/config/GameConfig"], function(require, cc, Sprite, MW) {
+    var GameLayer = null;
     var BackTileMapLvl1 = [
         "lvl1_map1.png",
         "lvl1_map2.png",
@@ -41,7 +42,8 @@ define(["require", "core", "Sprite", "game/GameLayer", "game/config/GameConfig"]
     };
 
 
-    BackTileMap.preSet = function () {
+    BackTileMap.preSet = function (gameLayer) {
+        GameLayer = gameLayer
         var backTileMap = null;
         for (var i = 0; i < BackTileMapLvl1.length; i++) {
             backTileMap = BackTileMap.create(BackTileMapLvl1[i]);

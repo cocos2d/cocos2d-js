@@ -71,31 +71,32 @@
  *
  */
 
-
 require.config(require_config);
 
-require(["root/CCBoot", "core", "LoaderScene", "game/res_menu", "game/SysMenu"], function(boot, cc, LoaderScene, res, SysMenu) {
+require(["root/CCBoot", "core"], function(boot, cc) {
 
-    cc.game.onStart = function(){
-        cc.view.adjustViewPort(true);
-        cc.view.setDesignResolutionSize(320,480,cc.ResolutionPolicy.SHOW_ALL);
-        cc.view.resizeWithBrowserSize(true);
-        cc.director.setProjection(cc.Director.PROJECTION_2D);
+    require(["cocos2dPath/core/scenes/CCLoaderScene", "game/res_menu", "game/SysMenu"], function(LoaderScene, res, SysMenu) {
+        cc.game.onStart = function () {
+            cc.view.adjustViewPort(true);
+            cc.view.setDesignResolutionSize(320, 480, cc.ResolutionPolicy.SHOW_ALL);
+            cc.view.resizeWithBrowserSize(true);
+            cc.director.setProjection(cc.Director.PROJECTION_2D);
 
-        if (cc.sys.isNative) {
-            var searchPaths = jsb.fileUtils.getSearchPaths();
-            searchPaths.push('script');
-            if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX) {
-                searchPaths.push("res");
-                searchPaths.push("src");
+            if (cc.sys.isNative) {
+                var searchPaths = jsb.fileUtils.getSearchPaths();
+                searchPaths.push('script');
+                if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX) {
+                    searchPaths.push("res");
+                    searchPaths.push("src");
+                }
+                jsb.fileUtils.setSearchPaths(searchPaths);
             }
-            jsb.fileUtils.setSearchPaths(searchPaths);
-        }
-        //load resources
-        LoaderScene.preload(res, function () {
-            cc.director.runScene(SysMenu.scene());
-        }, this);
-    };
+            //load resources
+            LoaderScene.preload(res, function () {
+                cc.director.runScene(SysMenu.scene());
+            }, this);
+        };
 
-    cc.game.run();
+        cc.game.run();
+    });
 });

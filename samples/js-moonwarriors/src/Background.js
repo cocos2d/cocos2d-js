@@ -1,5 +1,5 @@
-define(["require", "core", "Sprite", "game/GameLayer", "game/config/GameConfig"], function(require, cc, Sprite, GameLayer, MW) {
-
+define(["require", "core", "Sprite", "game/config/GameConfig"], function(require, cc, Sprite, MW) {
+    var GameLayer = null;
     var BackSky = Sprite.extend({
         active:true,
         ctor:function () {
@@ -35,7 +35,8 @@ define(["require", "core", "Sprite", "game/GameLayer", "game/config/GameConfig"]
     };
 
 
-    BackSky.preSet = function () {
+    BackSky.preSet = function (gameLayer) {
+        GameLayer = gameLayer
         var background = null;
         for (var i = 0; i < 2; i++) {
             background = BackSky.create();
