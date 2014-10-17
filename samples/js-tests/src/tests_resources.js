@@ -1060,5 +1060,5 @@ var g_ccs2 = [
     "res/cocosui/UIEditorTest/UISlider_Editor/crossplatform_UISlider_Editor_1.csb",
     "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.csb",
     "res/ActionTimeline/boy_1.csb",
-    "res/ActionTimeline/armature/Cowboy0.plist",
+    "res/ActionTimeline/armature/Cowboy0.plist"
 ];

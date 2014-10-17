@@ -182,3 +182,19 @@ cc.EditBox.prototype._ctor = function(size, normal9SpriteBg, press9SpriteBg, dis
 cc.ScrollView.prototype._ctor = function(size, container) {
     container == undefined ? this.init() : this.initWithViewSize(size, container);
 };
+
+ccs.ComAttribute.prototype._ctor = function() {
+    ccs.ComAttribute.prototype.init.call(this);
+};
+
+ccs.ComAudio.prototype._ctor = function() {
+    ccs.ComAudio.prototype.init.call(this);
+};
+
+ccs.ComController.prototype._ctor = function() {
+    ccs.ComController.prototype.init.call(this);
+};
+
+ccs.ComRender.prototype._ctor = function() {
+    ccs.ComRender.prototype.init.call(this);
+};
