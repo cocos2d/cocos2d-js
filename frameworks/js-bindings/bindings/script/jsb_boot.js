@@ -476,7 +476,7 @@ cc.loader = {
         if (cachedTex) {
             cb && cb(null, cachedTex);
         }
-        if (url.match(jsb.urlRegExp)) {
+        else if (url.match(jsb.urlRegExp)) {
             jsb.loadRemoteImg(url, function(succeed, tex) {
                 if (succeed) {
                     cb && cb(null, tex);
@@ -883,6 +883,9 @@ cc.plistParser = cc.PlistParser.getInstance();
 
 // File utils (Temporary, won't be accessible)
 cc.fileUtils = cc.FileUtils.getInstance();
+
+ccs.nodeReader = ccs.NodeReader.getInstance();
+ccs.actionTimelineCache = ccs.ActionTimelineCache.getInstance();
 
 /**
  * @type {Object}
@@ -1534,7 +1537,7 @@ cc.game = {
             var data = JSON.parse(txt);
             this.config = _init(data || {});
         }catch(e){
-	        cc.log("Failed to read or parse project.json");
+            cc.log("Failed to read or parse project.json");
             this.config = _init({});
         }
 //        cc._initDebugSetting(this.config[CONFIG_KEY.debugMode]);

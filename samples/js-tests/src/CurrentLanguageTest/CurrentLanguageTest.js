@@ -81,5 +81,5 @@ var CurrentLanguageTestScene = TestScene.extend({
 });
 
 var arrayOfCurrentLanguageTest = [
-    'current language'
+    CurrentLanguageTest
 ];
