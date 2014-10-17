@@ -39,7 +39,7 @@ ccs.MovementEventType = {
 
 // Armature
 if(ccs.Armature){
-	ccs.Armature.prototype.setBody = function( body ) {
+    ccs.Armature.prototype.setBody = function( body ) {
     var b = body;
     if( body.handle !== undefined )
         b = body.handle;
@@ -310,7 +310,7 @@ ccs.triggerManager = {
         if (!eventTriggers) {
             eventTriggers = [];
         }
-	    if (eventTriggers.indexOf(triggerObj) == -1) {
+        if (eventTriggers.indexOf(triggerObj) == -1) {
             eventTriggers.push(triggerObj);
             this._eventTriggers[event] = eventTriggers;
         }

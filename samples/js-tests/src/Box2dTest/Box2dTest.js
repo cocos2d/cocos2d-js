@@ -26,7 +26,7 @@
 var TAG_SPRITE_MANAGER = 1;
 var PTM_RATIO = 32;
 
-Box2DTestLayer = cc.Layer.extend({
+var Box2DTestLayer = cc.Layer.extend({
     world:null,
     //GLESDebugDraw *m_debugDraw;
 
@@ -183,7 +183,7 @@ Box2DTestLayer = cc.Layer.extend({
     //CREATE_NODE(Box2DTestLayer);
 });
 
-Box2DTestScene = TestScene.extend({
+var Box2DTestScene = TestScene.extend({
     runThisTest:function () {
         var layer = new Box2DTestLayer();
         this.addChild(layer);
@@ -193,5 +193,5 @@ Box2DTestScene = TestScene.extend({
 });
 
 var arrayOfBox2DTest = [
-    'Physical block test'
+    Box2DTestLayer
 ];

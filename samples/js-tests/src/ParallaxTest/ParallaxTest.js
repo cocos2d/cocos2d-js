@@ -65,7 +65,7 @@ ParallaxDemo = BaseTestLayer.extend({
 
 });
 
-Parallax1 = ParallaxDemo.extend({
+var Parallax1 = ParallaxDemo.extend({
     _parentNode:null,
     _background:null,
     _tilemap:null,
@@ -156,7 +156,7 @@ Parallax1 = ParallaxDemo.extend({
     }
 });
 
-Parallax2 = ParallaxDemo.extend({
+var Parallax2 = ParallaxDemo.extend({
     _root:null,
     _target:null,
     _streak:null,
@@ -235,8 +235,8 @@ Parallax2 = ParallaxDemo.extend({
 });
 
 ParallaxTestScene = TestScene.extend({
-    runThisTest:function () {
-        parallaxTestSceneIdx = -1;
+    runThisTest:function (num) {
+        parallaxTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         this.addChild(nextParallaxTest());
         director.runScene(this);
     }
