@@ -35,7 +35,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::createWithRect("js-moonwarriors", Rect(0, 0, 480, 720));
+        glview = GLViewImpl::createWithRect("js-moonwarriors", Rect(0, 0, 480, 720));
         director->setOpenGLView(glview);
     }
 
