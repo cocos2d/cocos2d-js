@@ -225,7 +225,7 @@ private:
 };
 
 
-class CC_DLL __JSPlistDelegator: public cocos2d::SAXDelegator
+class __JSPlistDelegator: public cocos2d::SAXDelegator
 {
 public:
     static __JSPlistDelegator* getInstance() {
