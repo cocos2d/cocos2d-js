@@ -57,7 +57,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         bool isLanscape = ConfigParser::getInstance()->isLanscape();
         createSimulator(title.c_str(), viewSize.width,viewSize.height, isLanscape);
 #else
-        glview = GLView::createWithRect(title.c_str(), Rect(0, 0, viewSize.width, viewSize.height));
+        glview = GLViewImpl::createWithRect(title.c_str(), Rect(0, 0, viewSize.width, viewSize.height));
         director->setOpenGLView(glview);
 #endif
     }
