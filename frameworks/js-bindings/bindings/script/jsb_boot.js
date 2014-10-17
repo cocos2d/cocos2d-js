@@ -910,6 +910,9 @@ cc.screen = {
     }
 };
 
+cc.EditBox = ccui.EditBox;
+delete ccui.EditBox;
+
 // GUI
 /**
  * @type {Object}
