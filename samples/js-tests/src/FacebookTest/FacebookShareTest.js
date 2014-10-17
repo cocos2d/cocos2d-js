@@ -46,9 +46,9 @@ var shareLinkAction = {
     "share a media link": "onShareMediaSource"
 };
 
-var FacebookShareTest = PluginXTest.extend({
-    _title: "Plugin-x Test",
-    _subtitle: "Facebook SDK",
+var FacebookShareTest = FacebookTest.extend({
+    _title: "Facebook SDK Sharing Test",
+    _subtitle: "",
     _agentManager: null,
     _showTips: false,
     _secondMenu:null,
@@ -387,16 +387,6 @@ var FacebookShareTest = PluginXTest.extend({
         facebook.appRequest(map, function (resultcode, msg) {
             self.showDisableTips(JSON.stringify(msg));
         });
-    },
-    onNextCallback: function (sender) {
-        var s = new PluginXTestScene();
-        s.addChild(new PluginXTestLayer());
-        director.runScene(s);
-    },
-    onBackCallback: function (sender) {
-        var s = new PluginXTestScene();
-        s.addChild(new PluginXTestLayer());
-        director.runScene(s);
     },
 
     screenshot: function (fileName) {

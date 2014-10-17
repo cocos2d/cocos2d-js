@@ -35,9 +35,9 @@ var button_share = {
     "logPurchase": "LogPurchaseClick"
 
 };
-var FacebookUserTest = PluginXTest.extend({
-    _title: "Plugin-x Test",
-    _subtitle: "Facebook SDK",
+var FacebookUserTest = FacebookTest.extend({
+    _title: "Facebook SDK User Test",
+    _subtitle: "",
     _agentManager: null,
     _isLogin: false,
     ctor: function (title) {
@@ -52,7 +52,7 @@ var FacebookUserTest = PluginXTest.extend({
             menu.addChild(item);
         }
         menu.alignItemsVerticallyWithPadding(12);
-        menu.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(+120, 0)));
+        menu.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(+180, 0)));
         this.addChild(menu);
 
 
@@ -174,15 +174,5 @@ var FacebookUserTest = PluginXTest.extend({
         else {
             this.result.setString("LogPurchase is only available for Facebook Canvas App");
         }
-    },
-    onNextCallback: function (sender) {
-        var s = new PluginXTestScene();
-        s.addChild(new PluginXTestLayer());
-        director.runScene(s);
-    },
-    onBackCallback: function (sender) {
-        var s = new PluginXTestScene();
-        s.addChild(new PluginXTestLayer());
-        director.runScene(s);
     }
 });
