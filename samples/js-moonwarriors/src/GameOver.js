@@ -3,9 +3,8 @@ define([
     "core", "Scene", "Sprite", "layers", "Menu", "menuitems", "audio",
     "game/config/GameConfig",
     "game/Effect",
-    "game/GameLayer",
     "game/GameControlMenu"
-], function(require, cc, Scene, Sprite, ls, Menu, mItems, audioEngine, MW, flareEffect, GameLayer, GameControlMenu) {
+], function(require, cc, Scene, Sprite, ls, Menu, mItems, audioEngine, MW, flareEffect, GameControlMenu) {
 
     var GameOver = ls.Layer.extend({
         _ship:null,
@@ -81,7 +80,7 @@ define([
             audioEngine.stopMusic();
             audioEngine.stopAllEffects();
             var scene = new Scene();
-            GameLayer = require("game/GameLayer");
+            var GameLayer = require("game/GameLayer");
             scene.addChild(new GameLayer());
             scene.addChild(new GameControlMenu());
             cc.director.runScene(new cc.TransitionFade(1.2,scene));

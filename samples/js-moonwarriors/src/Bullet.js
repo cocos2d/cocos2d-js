@@ -1,7 +1,6 @@
 
 define(["require", "core", "Sprite", "game/config/GameConfig", "game/HitEffect"], function(require, cc, Sprite, MW, HitEffect) {
 
-    var GameLayer = null;
     //bullet
     var Bullet = Sprite.extend({
         active:true,
@@ -24,6 +23,7 @@ define(["require", "core", "Sprite", "game/config/GameConfig", "game/HitEffect"]
             var x = this.x, y = this.y;
             this.x = x - this.xVelocity * dt;
             this.y = y - this.yVelocity * dt;
+            var GameLayer = require("game/GameLayer");
             if (x < 0 || x > GameLayer.sharedGameLayer.screenRect.width || y < 0 || y > GameLayer.sharedGameLayer.screenRect.height || this.HP <= 0) {
                 this.destroy();
             }
@@ -72,6 +72,7 @@ define(["require", "core", "Sprite", "game/config/GameConfig", "game/HitEffect"]
 
     Bullet.create = function (bulletSpeed, weaponType, attackMode, zOrder, mode) {
         var bullet = new Bullet(bulletSpeed, weaponType, attackMode);
+        var GameLayer = require("game/GameLayer");
         GameLayer.sharedGameLayer.addBullet(bullet, zOrder, mode);
         if (mode == MW.UNIT_TAG.PLAYER_BULLET) {
             MW.CONTAINER.PLAYER_BULLETS.push(bullet);
@@ -81,8 +82,7 @@ define(["require", "core", "Sprite", "game/config/GameConfig", "game/HitEffect"]
         return bullet;
     };
 
-    Bullet.preSet = function (gameLayer) {
-        GameLayer = gameLayer;
+    Bullet.preSet = function () {
         var bullet = null;
         for (var i = 0; i < 10; i++) {
             var bullet = Bullet.create(MW.BULLET_SPEED.SHIP, "W1.png", MW.ENEMY_ATTACK_MODE.NORMAL, 3000, MW.UNIT_TAG.PLAYER_BULLET);

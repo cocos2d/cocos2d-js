@@ -1,5 +1,4 @@
 define(["require", "core", "Sprite", "game/config/GameConfig"], function(require, cc, Sprite, MW) {
-    var GameLayer = null;
     var BackTileMapLvl1 = [
         "lvl1_map1.png",
         "lvl1_map2.png",
@@ -22,6 +21,7 @@ define(["require", "core", "Sprite", "game/config/GameConfig"], function(require
 
     BackTileMap.create = function (frameName) {
         var backTileMap = new BackTileMap(frameName);
+        var GameLayer = require("game/GameLayer");
         GameLayer.sharedGameLayer.addChild(backTileMap, -9);
         MW.CONTAINER.BACKTILEMAPS.push(backTileMap);
         return backTileMap;
@@ -42,8 +42,7 @@ define(["require", "core", "Sprite", "game/config/GameConfig"], function(require
     };
 
 
-    BackTileMap.preSet = function (gameLayer) {
-        GameLayer = gameLayer
+    BackTileMap.preSet = function () {
         var backTileMap = null;
         for (var i = 0; i < BackTileMapLvl1.length; i++) {
             backTileMap = BackTileMap.create(BackTileMapLvl1[i]);

@@ -1,5 +1,5 @@
 define(["require", "core", "Sprite", "actions", "game/config/GameConfig"], function(require, cc, Sprite, actions, MW) {
-    var GameLayer = null;
+
     var SparkEffect = cc.Class.extend({
         active:true,
         spark1:null,
@@ -64,15 +64,14 @@ define(["require", "core", "Sprite", "actions", "game/config/GameConfig"], funct
 
     SparkEffect.create = function () {
         var sparkEffect = new SparkEffect();
-        GameLayer = require("game/GameLayer");
+        var GameLayer = require("game/GameLayer");
         GameLayer.sharedGameLayer.addSpark(sparkEffect.spark1);
         GameLayer.sharedGameLayer.addSpark(sparkEffect.spark2);
         MW.CONTAINER.SPARKS.push(sparkEffect);
         return sparkEffect;
     };
 
-    SparkEffect.preSet = function (gameLayer) {
-        GameLayer = gameLayer
+    SparkEffect.preSet = function () {
         var sparkEffect = null;
         for (var i = 0; i < 6; i++) {
             sparkEffect = SparkEffect.create();

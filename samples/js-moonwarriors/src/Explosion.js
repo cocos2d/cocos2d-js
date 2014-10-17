@@ -6,7 +6,6 @@ define([
     "actions",
     "game/config/GameConfig"
 ], function(require, cc, Sprite, spriteFrameCache, Animation, animationCache, actions, MW) {
-    var GameLayer = null;
     var Explosion = cc.Sprite.extend({
         tmpWidth:0,
         tmpHeight:0,
@@ -63,14 +62,13 @@ define([
     };
     Explosion.create = function () {
         var explosion = new Explosion();
-        GameLayer = require("game/GameLayer");
+        var GameLayer = require("game/GameLayer");
         GameLayer.sharedGameLayer.addExplosions(explosion);
         MW.CONTAINER.EXPLOSIONS.push(explosion);
         return explosion;
     };
 
-    Explosion.preSet = function (gameLayer) {
-        GameLayer = gameLayer
+    Explosion.preSet = function () {
         var explosion = null;
         for (var i = 0; i < 6; i++) {
             explosion = Explosion.create();
