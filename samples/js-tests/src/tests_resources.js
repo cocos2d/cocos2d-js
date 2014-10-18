@@ -254,7 +254,9 @@ var g_resources = [
     s_bitmapFontTest5,
     s_playNormal,
     s_playSelect,
-    s_bitmapFontTest5_fnt
+    s_bitmapFontTest5_fnt,
+    s_extensions_background,
+    s_extensions_ribbon
 ];
 
 var g_sprites = [
