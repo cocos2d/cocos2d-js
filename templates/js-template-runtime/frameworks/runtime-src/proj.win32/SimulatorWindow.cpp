@@ -38,7 +38,7 @@ using namespace cocos2d;
 
 WNDPROC g_oldProc=NULL;
 bool g_landscape=false;
-bool g_windTop = true;
+bool g_windTop = false;
 CCSize g_screenSize;
 GLViewImpl* g_eglView=NULL;
 INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
