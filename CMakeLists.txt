@@ -29,7 +29,7 @@ project (Cocos2djs)
 #set(Cocos2djsSamples_VERSION_MAJOR 3)
 #set(Cocos2djsSamples_VERSION_MINOR 0)
 
-include(frameworks/js-bindings/cocos2d-x/build/BuildHelpers.CMakeLists.txt)
+include(frameworks/js-bindings/cocos2d-x/cmake/BuildHelpers.CMakeLists.txt)
 
 
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
@@ -114,6 +114,7 @@ endif()
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x
   ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/cocos
+  ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/cocos/platform	
   ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/cocos/platform/desktop
   ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/cocos/platform/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/cocos/audio/include
@@ -158,111 +159,45 @@ else()
 endif()
 
 
-if(WIN32)
 
-  if(NOT MINGW)
-  link_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/jpeg/prebuilt/${PLATFORM_FOLDER}
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/tiff/prebuilt/${PLATFORM_FOLDER}
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/png/prebuilt/${PLATFORM_FOLDER}
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/freetype2/prebuilt/${PLATFORM_FOLDER}
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/curl/prebuilt/${PLATFORM_FOLDER}
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/${PLATFORM_FOLDER}-specific/icon/prebuilt
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/${PLATFORM_FOLDER}-specific/zlib/prebuilt
-  )
-  endif()
 
-elseif(APPLE)
+link_directories(
+  /usr/local/lib
+  ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/chipmunk/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/jpeg/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/tiff/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/webp/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/png/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/freetype2/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/websockets/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/${PLATFORM_FOLDER}-specific/fmod/prebuilt/${ARCH_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+)
 
-else()
 
-  link_directories(
-    /usr/local/lib
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/jpeg/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/tiff/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/webp/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/png/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/freetype2/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/websockets/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/cocos2d-x/external/${PLATFORM_FOLDER}-specific/fmod/prebuilt/${ARCH_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-  )
-
-endif()
-
-# chipmunk library
-add_subdirectory(frameworks/js-bindings/cocos2d-x/external/chipmunk/src)
-
-# box2d library
-#add_subdirectory(frameworks/js-bindings/cocos2d-x/external/Box2D)
-
-# unzip library
+# build for 3rd party libraries
+if(LINUX OR APPLE)
+add_subdirectory(frameworks/js-bindings/cocos2d-x/external/Box2D)
 add_subdirectory(frameworks/js-bindings/cocos2d-x/external/unzip)
-
-# tinyxml2 library
-add_subdirectory(frameworks/js-bindings/cocos2d-x/external/tinyxml2)
-
-# xxhash library
 add_subdirectory(frameworks/js-bindings/cocos2d-x/external/xxhash)
-
-# audio
-add_subdirectory(frameworks/js-bindings/cocos2d-x/cocos/audio)
+add_subdirectory(frameworks/js-bindings/cocos2d-x/external/tinyxml2)
+add_subdirectory(frameworks/js-bindings/cocos2d-x/external/protobuf-lite)
+endif()
 
 # cocos2d library
 add_subdirectory(frameworks/js-bindings/cocos2d-x/cocos)
 
-if(BUILD_EXTENSIONS)
-# extensions
-add_subdirectory(frameworks/js-bindings/cocos2d-x/extensions)
-# jsb extensions
-add_subdirectory(frameworks/js-bindings/bindings/manual/extension)
-endif(BUILD_EXTENSIONS)
-
-## Editor Support
-
-if(BUILD_EDITOR_SPINE)
-# spine
-add_subdirectory(frameworks/js-bindings/cocos2d-x/cocos/editor-support/spine)
-#jsb spine
-add_subdirectory(frameworks/js-bindings/bindings/manual/spine)
-endif(BUILD_EDITOR_SPINE)
-
-if(BUILD_EDITOR_COCOSBUILDER)
-# cocosbuilder
-add_subdirectory(frameworks/js-bindings/cocos2d-x/cocos/editor-support/cocosbuilder)
-#jsb cocosbuilder
-add_subdirectory(frameworks/js-bindings/bindings/manual/cocosbuilder)
-endif(BUILD_EDITOR_COCOSBUILDER)
-
-if(BUILD_EDITOR_COCOSTUDIO)
-# cocostudio
-add_subdirectory(frameworks/js-bindings/cocos2d-x/cocos/editor-support/cocostudio)
-#jsb cocostudio
-add_subdirectory(frameworks/js-bindings/bindings/manual/cocostudio)
-endif(BUILD_EDITOR_COCOSTUDIO)
-
-#jsbinding library
+# jsbindings library
 add_subdirectory(frameworks/js-bindings/bindings)
 
-#jsbinding_chipmunk library
-add_subdirectory(frameworks/js-bindings/bindings/manual/chipmunk)
-
-#jsbinding_localstorage library
-add_subdirectory(frameworks/js-bindings/bindings/manual/localstorage)
-
-#jsbinding_network library
-add_subdirectory(frameworks/js-bindings/bindings/manual/network)
-
-#jsbinding_ui library
-add_subdirectory(frameworks/js-bindings/bindings/manual/ui)
+#js-moonwarriors sample
+if(BUILD_JSMOONWARRIORS)
+add_subdirectory(samples/js-moonwarriors)
+endif(BUILD_JSMOONWARRIORS)
 
 #js-tests sample
 if(BUILD_JSTests)
 add_subdirectory(samples/js-tests)
 endif(BUILD_JSTests)
 
-#js-moonwarriors sample
-if(BUILD_JSMOONWARRIORS)
-add_subdirectory(samples/js-moonwarriors)
-endif(BUILD_JSMOONWARRIORS)
 
