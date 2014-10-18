@@ -29,13 +29,20 @@ AppDelegate::~AppDelegate()
 	ScriptEngineManager::destroyInstance();
 }
 
+void AppDelegate::initGLContextAttrs()
+{
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::createWithRect("js-moonwarriors", Rect(0, 0, 480, 720));
+        glview = cocos2d::GLViewImpl::createWithRect("js-moonwarriors", Rect(0, 0, 480, 720));
         director->setOpenGLView(glview);
     }
 

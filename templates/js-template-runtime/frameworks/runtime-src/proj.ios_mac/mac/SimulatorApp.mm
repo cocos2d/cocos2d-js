@@ -44,7 +44,7 @@ using namespace cocos2d;
 bool g_landscape=false;
 bool g_windTop = false;
 cocos2d::Size g_screenSize;
-GLView* g_eglView = nullptr;
+GLViewImpl* g_eglView = nullptr;
 
 static AppController* g_nsAppDelegate=nullptr;
 
@@ -113,7 +113,7 @@ std::string getCurAppName(void)
         height = tmpvalue;
     }
     g_windTop = ConfigParser::getInstance()->isWindowTop();
-    g_eglView = GLView::createWithRect([viewName cStringUsingEncoding:NSUTF8StringEncoding],cocos2d::Rect(0.0f,0.0f,width,height),frameZoomFactor);
+    g_eglView = GLViewImpl::createWithRect([viewName cStringUsingEncoding:NSUTF8StringEncoding],cocos2d::Rect(0.0f,0.0f,width,height),frameZoomFactor);
     auto director = Director::getInstance();
     director->setOpenGLView(g_eglView);
 

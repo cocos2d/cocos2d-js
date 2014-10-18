@@ -1,7 +1,7 @@
 #ifndef  _APP_DELEGATE_H_
 #define  _APP_DELEGATE_H_
 
-#include "CCApplication.h"
+#include "platform/CCApplication.h"
 /**
  @brief    The cocos2d Application.
  
@@ -12,6 +12,8 @@ class  AppDelegate : private cocos2d::Application
 public:
     AppDelegate();
     virtual ~AppDelegate();
+    
+    void initGLContextAttrs() override;
     
     /**
      @brief    Implement Director and Scene init code here.
