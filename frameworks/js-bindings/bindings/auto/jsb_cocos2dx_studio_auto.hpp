@@ -337,6 +337,7 @@ bool js_cocos2dx_studio_Armature_getArmatureData(JSContext *cx, uint32_t argc, j
 bool js_cocos2dx_studio_Armature_getBoundingBox(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_getVersion(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_getAnimation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Armature_getOffsetPoints(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_getBoneDic(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_create(JSContext *cx, uint32_t argc, jsval *vp);
@@ -479,25 +480,6 @@ bool js_cocos2dx_studio_SceneReader_destroyInstance(JSContext *cx, uint32_t argc
 bool js_cocos2dx_studio_SceneReader_sceneReaderVersion(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_SceneReader_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_cocostudio_timeline_NodeReader_class;
-extern JSObject *jsb_cocostudio_timeline_NodeReader_prototype;
-
-bool js_cocos2dx_studio_NodeReader_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_studio_NodeReader_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_studio_NodeReader(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_studio_NodeReader_setJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_NodeReader_createNode(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_NodeReader_loadNodeWithFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_NodeReader_purge(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_NodeReader_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_NodeReader_loadNodeWithContent(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_NodeReader_isRecordJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_NodeReader_getJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_NodeReader_setRecordJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_NodeReader_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_NodeReader_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
-
 extern JSClass  *jsb_cocostudio_timeline_ActionTimelineCache_class;
 extern JSObject *jsb_cocostudio_timeline_ActionTimelineCache_prototype;
 
@@ -505,13 +487,19 @@ bool js_cocos2dx_studio_ActionTimelineCache_constructor(JSContext *cx, uint32_t 
 void js_cocos2dx_studio_ActionTimelineCache_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_studio_ActionTimelineCache(JSContext *cx, JSObject *global);
 void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_studio_ActionTimelineCache_createAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_createActionFromJson(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_createActionFromProtocolBuffers(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_createActionFromXML(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_loadAnimationActionWithFileFromProtocolBuffers(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_loadAnimationActionWithFileFromXML(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimelineCache_purge(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimelineCache_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ActionTimelineCache_loadAnimationActionWithContent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimelineCache_loadAnimationActionWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_loadAnimationActionWithContent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimelineCache_removeAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_loadActionTimelineFromXML(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimelineCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_createAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimelineCache_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocostudio_timeline_Frame_class;

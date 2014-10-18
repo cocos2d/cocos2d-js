@@ -2186,6 +2186,16 @@ getAnimation : function (
 },
 
 /**
+ * @method getOffsetPoints
+ * @return {vec2_object}
+ */
+getOffsetPoints : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
  * @method setBlendFunc
  * @param {cc.BlendFunc} arg0
  */
@@ -3047,133 +3057,64 @@ getInstance : function (
 };
 
 /**
- * @class NodeReader
- */
-ccs.NodeReader = {
-
-/**
- * @method setJsonPath
- * @param {String} arg0
- */
-setJsonPath : function (
-str 
-)
-{
-},
-
-/**
- * @method createNode
- * @param {String} arg0
- * @return {cc.Node}
- */
-createNode : function (
-str 
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method loadNodeWithFile
- * @param {String} arg0
- * @return {cc.Node}
- */
-loadNodeWithFile : function (
-str 
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method purge
- */
-purge : function (
-)
-{
-},
-
-/**
- * @method init
- */
-init : function (
-)
-{
-},
-
-/**
- * @method loadNodeWithContent
- * @param {String} arg0
- * @return {cc.Node}
- */
-loadNodeWithContent : function (
-str 
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method isRecordJsonPath
- * @return {bool}
- */
-isRecordJsonPath : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getJsonPath
- * @return {String}
- */
-getJsonPath : function (
-)
-{
-    return ;
-},
-
-/**
- * @method setRecordJsonPath
- * @param {bool} arg0
- */
-setRecordJsonPath : function (
-bool 
-)
-{
-},
-
-/**
- * @method destroyInstance
- */
-destroyInstance : function (
-)
-{
-},
-
-/**
- * @method getInstance
- * @return {ccs.timeline::NodeReader}
- */
-getInstance : function (
-)
-{
-    return ccs.timeline::NodeReader;
-},
-
-};
-
-/**
  * @class ActionTimelineCache
  */
 ccs.ActionTimelineCache = {
 
 /**
- * @method createAction
+ * @method createActionFromJson
  * @param {String} arg0
  * @return {ccs.timeline::ActionTimeline}
  */
-createAction : function (
+createActionFromJson : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method createActionFromProtocolBuffers
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+createActionFromProtocolBuffers : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method createActionFromXML
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+createActionFromXML : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method loadAnimationActionWithFileFromProtocolBuffers
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+loadAnimationActionWithFileFromProtocolBuffers : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method loadAnimationActionWithFileFromXML
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+loadAnimationActionWithFileFromXML : function (
 str 
 )
 {
@@ -3194,6 +3135,18 @@ purge : function (
 init : function (
 )
 {
+},
+
+/**
+ * @method loadAnimationActionWithFile
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+loadAnimationActionWithFile : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
 },
 
 /**
@@ -3211,18 +3164,6 @@ str
 },
 
 /**
- * @method loadAnimationActionWithFile
- * @param {String} arg0
- * @return {ccs.timeline::ActionTimeline}
- */
-loadAnimationActionWithFile : function (
-str 
-)
-{
-    return ccs.timeline::ActionTimeline;
-},
-
-/**
  * @method removeAction
  * @param {String} arg0
  */
@@ -3233,11 +3174,35 @@ str
 },
 
 /**
+ * @method loadActionTimelineFromXML
+ * @param {tinyxml2::XMLElement} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+loadActionTimelineFromXML : function (
+xmlelement 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
  * @method destroyInstance
  */
 destroyInstance : function (
 )
 {
+},
+
+/**
+ * @method createAction
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+createAction : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
 },
 
 /**
