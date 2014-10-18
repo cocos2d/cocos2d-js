@@ -3823,27 +3823,13 @@ long
 },
 
 /**
- * @method doLayout
- * @param {cc.Node} arg0
+ * @method changeLayoutSystemActiveState
+ * @param {bool} arg0
  */
-doLayout : function (
-node 
+changeLayoutSystemActiveState : function (
+bool 
 )
 {
-},
-
-/**
- * @method seekWidgetByTag
- * @param {ccui.Widget} arg0
- * @param {int} arg1
- * @return {ccui.Widget}
- */
-seekWidgetByTag : function (
-widget, 
-int 
-)
-{
-    return ccui.Widget;
 },
 
 /**
@@ -3872,6 +3858,30 @@ str
 )
 {
     return ccui.Widget;
+},
+
+/**
+ * @method seekWidgetByTag
+ * @param {ccui.Widget} arg0
+ * @param {int} arg1
+ * @return {ccui.Widget}
+ */
+seekWidgetByTag : function (
+widget, 
+int 
+)
+{
+    return ccui.Widget;
+},
+
+/**
+ * @method doLayout
+ * @param {cc.Node} arg0
+ */
+doLayout : function (
+node 
+)
+{
 },
 
 };
