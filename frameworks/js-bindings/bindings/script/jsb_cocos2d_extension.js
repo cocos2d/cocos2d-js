@@ -248,3 +248,9 @@ cc.ScrollView.extend = cc.Class.extend;
 cc.TableView.extend = cc.Class.extend;
 cc.TableViewCell.extend = cc.Class.extend;
 cc.GLNode.extend = cc.Class.extend;
+
+// updateWithBatchNode deprecated in JSB
+cc.Scale9Sprite.prototype.updateWithBatchNode = function (batchNode, originalRect, rotated, capInsets) {
+    var sprite = new cc.Sprite(batchNode.getTexture());
+    this.updateWithSprite(sprite, originalRect, rotated, cc.p(0, 0), cc.size(originalRect.width, originalRect.height), capInsets);
+};

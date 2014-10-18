@@ -136,8 +136,8 @@ jsval spskeleton_to_jsval(JSContext* cx, spSkeleton& v)
     JS_DefineProperty(cx, tmp, "flipX", DOUBLE_TO_JSVAL(v.flipX), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "flipY", DOUBLE_TO_JSVAL(v.flipY), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "time", DOUBLE_TO_JSVAL(v.time), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "boneCount", INT_TO_JSVAL(v.boneCount), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "slotCount", INT_TO_JSVAL(v.slotCount), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineProperty(cx, tmp, "boneCount", INT_TO_JSVAL(v.bonesCount), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "slotCount", INT_TO_JSVAL(v.slotsCount), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     if (ok)
     {
@@ -195,7 +195,7 @@ jsval spslot_to_jsval(JSContext* cx, spSlot& v)
      JS_DefineProperty(cx, tmp, "b", DOUBLE_TO_JSVAL(v.b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
      JS_DefineProperty(cx, tmp, "a", DOUBLE_TO_JSVAL(v.a), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
      JS_DefineProperty(cx, tmp, "bone", spbone_to_jsval(cx, *v.bone), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-     JS_DefineProperty(cx, tmp, "skeleton", spskeleton_to_jsval(cx, *v.skeleton), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+     //JS_DefineProperty(cx, tmp, "skeleton", spskeleton_to_jsval(cx, *v.skeleton), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
      JS_DefineProperty(cx, tmp, "attachment", spattachment_to_jsval(cx, *v.attachment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
      JS_DefineProperty(cx, tmp, "data", spslotdata_to_jsval(cx, *v.data), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
         
@@ -228,7 +228,7 @@ jsval spanimationstate_to_jsval(JSContext* cx, spAnimationState& v)
     if (!tmp) return JSVAL_NULL;
     
     bool ok = JS_DefineProperty(cx, tmp, "timeScale", DOUBLE_TO_JSVAL(v.timeScale), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "trackCount", DOUBLE_TO_JSVAL(v.trackCount), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineProperty(cx, tmp, "trackCount", DOUBLE_TO_JSVAL(v.tracksCount), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     if (ok)
     {
@@ -244,7 +244,7 @@ jsval spanimation_to_jsval(JSContext* cx, spAnimation& v)
     if (!tmp) return JSVAL_NULL;
     
     bool ok = JS_DefineProperty(cx, tmp, "duration", DOUBLE_TO_JSVAL(v.duration), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "timelineCount", INT_TO_JSVAL(v.timelineCount), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "timelineCount", INT_TO_JSVAL(v.timelinesCount), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "name", c_string_to_jsval(cx, v.name), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "timelines", sptimeline_to_jsval(cx, **v.timelines), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
@@ -294,7 +294,7 @@ bool jsb_cocos2dx_spine_findBone(JSContext *cx, uint32_t argc, jsval *vp)
     bool ok = true;
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    spine::Skeleton* cobj = (spine::Skeleton *)(proxy ? proxy->ptr : NULL);
+    SkeletonRenderer* cobj = (SkeletonRenderer *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     if (argc == 1) {
         const char* arg0;
@@ -323,7 +323,7 @@ bool jsb_cocos2dx_spine_findSlot(JSContext *cx, uint32_t argc, jsval *vp)
     bool ok = true;
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    spine::Skeleton* cobj = (spine::Skeleton *)(proxy ? proxy->ptr : NULL);
+    SkeletonRenderer* cobj = (SkeletonRenderer *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     if (argc == 1) {
         const char* arg0;
@@ -351,11 +351,11 @@ bool jsb_cocos2dx_spine_setDebugBones(JSContext *cx, uint32_t argc, jsval *vp)
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    spine::Skeleton* cobj = (spine::Skeleton *)(proxy ? proxy->ptr : NULL);
+    SkeletonRenderer* cobj = (SkeletonRenderer *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     if (argc == 1) {
         bool enable = JSVAL_TO_BOOLEAN(argv[0]);
-        cobj->debugBones = enable;
+        cobj->setDebugBonesEnabled(enable);
         
         JS_SET_RVAL(cx, vp, JSVAL_NULL);
         return true;
@@ -370,11 +370,11 @@ bool jsb_cocos2dx_spine_setDebugSolots(JSContext *cx, uint32_t argc, jsval *vp)
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    spine::Skeleton* cobj = (spine::Skeleton *)(proxy ? proxy->ptr : NULL);
+    SkeletonRenderer* cobj = (SkeletonRenderer *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     if (argc == 1) {
         bool enable = JSVAL_TO_BOOLEAN(argv[0]);
-        cobj->debugSlots = enable;
+        cobj->setDebugSlotsEnabled(enable);
         
         JS_SET_RVAL(cx, vp, JSVAL_NULL);
         return true;
@@ -390,7 +390,7 @@ bool jsb_cocos2dx_spine_getAttachment(JSContext *cx, uint32_t argc, jsval *vp)
     bool ok = true;
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    spine::Skeleton* cobj = (spine::Skeleton*)(proxy ? proxy->ptr : NULL);
+    SkeletonRenderer* cobj = (SkeletonRenderer*)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     if (argc == 2) {
         const char* arg0;
@@ -607,7 +607,7 @@ static bool jsb_cocos2dx_spine_setAnimationListener(JSContext *cx, uint32_t argc
         tmpCobj->setJSCallbackFunc(argv[1]);
         tmpCobj->setJSCallbackThis(argv[0]);
         
-        node->setAnimationListener(tmpCobj, animationStateEvent_selector(JSSkeletonAnimationWrapper::animationCallbackFunc));
+        //node->setAnimationListener(tmpCobj, animationStateEvent_selector(JSSkeletonAnimationWrapper::animationCallbackFunc));
         
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         
@@ -617,16 +617,16 @@ static bool jsb_cocos2dx_spine_setAnimationListener(JSContext *cx, uint32_t argc
     return false;
 }
 
-extern JSObject* jsb_spine_Skeleton_prototype;
+extern JSObject* jsb_spine_SkeletonRenderer_prototype;
 extern JSObject* jsb_spine_SkeletonAnimation_prototype;
 
 void register_all_cocos2dx_spine_manual(JSContext* cx, JSObject* global)
 {
-    JS_DefineFunction(cx, jsb_spine_Skeleton_prototype, "findBone", jsb_cocos2dx_spine_findBone, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_spine_Skeleton_prototype, "findSlot", jsb_cocos2dx_spine_findSlot, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_spine_Skeleton_prototype, "setDebugBones", jsb_cocos2dx_spine_setDebugBones, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_spine_Skeleton_prototype, "setDebugSolots", jsb_cocos2dx_spine_setDebugSolots, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_spine_Skeleton_prototype, "getAttachment", jsb_cocos2dx_spine_getAttachment, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_spine_SkeletonRenderer_prototype, "findBone", jsb_cocos2dx_spine_findBone, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_spine_SkeletonRenderer_prototype, "findSlot", jsb_cocos2dx_spine_findSlot, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_spine_SkeletonRenderer_prototype, "setDebugBones", jsb_cocos2dx_spine_setDebugBones, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_spine_SkeletonRenderer_prototype, "setDebugSolots", jsb_cocos2dx_spine_setDebugSolots, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_spine_SkeletonRenderer_prototype, "getAttachment", jsb_cocos2dx_spine_getAttachment, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_spine_SkeletonAnimation_prototype, "getCurrent", jsb_cocos2dx_spine_getCurrent, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_spine_SkeletonAnimation_prototype, "setAnimation", jsb_cocos2dx_spine_setAnimation, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_spine_SkeletonAnimation_prototype, "addAnimation", jsb_cocos2dx_spine_addAnimation, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
