@@ -2096,14 +2096,6 @@ bone
 },
 
 /**
- * @method drawContour
- */
-drawContour : function (
-)
-{
-},
-
-/**
  * @method setBatchNode
  * @param {ccs.BatchNode} arg0
  */

@@ -5751,21 +5751,6 @@ bool js_cocos2dx_studio_Armature_setParentBone(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_cocos2dx_studio_Armature_setParentBone : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_studio_Armature_drawContour(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocostudio::Armature* cobj = (cocostudio::Armature *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Armature_drawContour : Invalid Native Object");
-    if (argc == 0) {
-        cobj->drawContour();
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_studio_Armature_drawContour : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_studio_Armature_setBatchNode(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -6156,7 +6141,6 @@ void js_register_cocos2dx_studio_Armature(JSContext *cx, JSObject *global) {
         JS_FN("getBatchNode", js_cocos2dx_studio_Armature_getBatchNode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_cocos2dx_studio_Armature_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setParentBone", js_cocos2dx_studio_Armature_setParentBone, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("drawContour", js_cocos2dx_studio_Armature_drawContour, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBatchNode", js_cocos2dx_studio_Armature_setBatchNode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBlendFunc", js_cocos2dx_studio_Armature_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setArmatureData", js_cocos2dx_studio_Armature_setArmatureData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
