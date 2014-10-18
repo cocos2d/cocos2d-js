@@ -38,6 +38,7 @@ var nextFacebookTest = function () {
 FacebookTestScene = TestScene.extend({
     runThisTest:function (num) {
         var self = this;
+        __sceneIdx = (num || num == 0) ? (num - 1) : -1;
 
         if(!cc.sys.isNative) {   //browser
             cc.loader.loadJs('', [

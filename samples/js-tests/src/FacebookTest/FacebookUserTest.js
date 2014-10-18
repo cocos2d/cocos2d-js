@@ -32,8 +32,8 @@ var button_share = {
     "request API": "requestClick",
     "activateApp": "activateAppClick",
     "logEvent": "LogEventClick",
-    "logPurchase": "LogPurchaseClick"
-
+    "logPurchase": "LogPurchaseClick",
+    "payment": "paymentClick"
 };
 var FacebookUserTest = FacebookTest.extend({
     _title: "Facebook SDK User Test",
@@ -47,11 +47,11 @@ var FacebookUserTest = FacebookTest.extend({
 
         var menu = cc.Menu.create();
         for (var action in button_share) {
-            var label = new cc.LabelTTF(action, "Arial", 24);
+            var label = new cc.LabelTTF(action, "Arial", 22);
             var item = new cc.MenuItemLabel(label, this[button_share[action]], this);
             menu.addChild(item);
         }
-        menu.alignItemsVerticallyWithPadding(12);
+        menu.alignItemsVerticallyWithPadding(8);
         menu.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(+180, 0)));
         this.addChild(menu);
 
@@ -174,5 +174,22 @@ var FacebookUserTest = FacebookTest.extend({
         else {
             this.result.setString("LogPurchase is only available for Facebook Canvas App");
         }
+    },
+    paymentClick: function () {
+        var info = {
+            product: 'https://www.cocos2d-x.org/demo/facebooktest/pay/item1.html'
+        };
+
+        var self = this;
+        facebook.canvas.pay(info, function(code, response){
+            if (code == plugin.FacebookAgent.CODE_SUCCEED){
+                if (response['status'] === 'completed')
+                    self.result.setString("Payment succeeded: " + response['amount'] + response['currency']);
+                else
+                    self.result.setString("Payment failed: " + JSON.stringify(response['status']))
+            } else {
+                self.result.setString("Request send failed, error #" + code + ": " + JSON.stringify(response));
+            }
+        });
     }
 });
