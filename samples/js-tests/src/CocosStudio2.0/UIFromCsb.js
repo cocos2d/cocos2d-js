@@ -1,6 +1,6 @@
 var CocosStudio2_UIFromCsb = (function(){
 
-    const testItem = [
+    var testItem = [
         {itemTitle: "Button"},
         {itemTitle: "CheckBox"},
         {itemTitle: "ImageView"},
@@ -48,7 +48,7 @@ var CocosStudio2_UIFromCsb = (function(){
                     var s = new CocosStudio2();
                     s.runThisTest();
                 }, this);
-            backMenu.x = 760;
+            backMenu.x = winSize.width - 60;
             backMenu.y = 40;
             backMenu.addChild(backItem);
             this.addChild(backMenu);
@@ -58,9 +58,11 @@ var CocosStudio2_UIFromCsb = (function(){
         },
 
         menuCallback:function (sender) {
+
             var nIndex = sender.zIndex - ITEM_TAG_BASIC;
             var layer = this;
             var node = ccs.csLoader.createNode(g_ccs2[nIndex]);
+
             var child = node._children[0];
             child.removeFromParent(false);
             this.addChild(child);
@@ -74,11 +76,14 @@ var CocosStudio2_UIFromCsb = (function(){
             this._pMenu.setVisible(0);
             this._backMenu.setVisible(0);
 
+
             var back = ccui.helper.seekWidgetByName(child, "back");
             back.addTouchEventListener(function(){
+
                 layer.removeChild(child);
                 layer._pMenu.setVisible(1);
                 layer._backMenu.setVisible(1);
+
             });
         }
     });
