@@ -34,9 +34,10 @@ var PLATFORM_HTML5 = 1 << 1;
 var PLATFORM_HTML5_WEBGL = 1 << 2;
 var PLATFROM_ANDROID = 1 << 3;
 var PLATFROM_IOS = 1 << 4;
+var PLATFORM_MAC = 1 << 5;
 var PLATFORM_JSB_AND_WEBGL =  PLATFORM_JSB | PLATFORM_HTML5_WEBGL;
 var PLATFORM_ALL = PLATFORM_JSB | PLATFORM_HTML5 | PLATFORM_HTML5_WEBGL | PLATFROM_ANDROID | PLATFROM_IOS;
-var PLATFROM_ANDROID_AND_IOS = PLATFROM_ANDROID | PLATFROM_IOS;
+var PLATFROM_APPLE = PLATFROM_IOS | PLATFORM_MAC;
 
 // automation vars
 var autoTestEnabled = autoTestEnabled || false;
@@ -130,12 +131,13 @@ var TestController = cc.LayerGradient.extend({
                     menuItem.setEnabled( testNames[i].platforms & PLATFORM_HTML5 );
                 }
             } else {
-                if(cc.sys.os == cc.sys.OS_ANDROID)
-                {
+                if (cc.sys.os == cc.sys.OS_ANDROID) {
                     menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFROM_ANDROID ) );
-                }else if(cc.sys.os == cc.sys.OS_IOS|| cc.sys.os == cc.sys.OS_OSX){
+                } else if (cc.sys.os == cc.sys.OS_IOS) {
                     menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFROM_IOS) );
-                }else{
+                } else if (cc.sys.os == cc.sys.OS_OSX) {
+                    menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFORM_MAC) );
+                } else {
                     menuItem.setEnabled( testNames[i].platforms & PLATFORM_JSB );
                 }
             }
@@ -369,6 +371,14 @@ var testNames = [
         }
     },
     {
+        title:"Facebook SDK Test",
+        platforms: PLATFROM_ANDROID | PLATFROM_IOS | PLATFORM_HTML5,
+        linksrc:"src/FacebookTest/FacebookTestsManager.js",
+        testScene:function () {
+            return new FacebookTestScene();
+        }
+    },
+    {
         title:"Font Test",
         resource:g_fonts,
         platforms: PLATFORM_ALL,
@@ -499,7 +509,7 @@ var testNames = [
     },
     {
         title:"Reflection Test",
-        platforms: PLATFROM_ANDROID_AND_IOS,
+        platforms: PLATFROM_ANDROID | PLATFROM_APPLE,
         linksrc:"src/ReflectionTest/ReflectionTest.js",
         testScene:function () {
             return new ReflectionTestScene();
