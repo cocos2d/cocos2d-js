@@ -887,6 +887,8 @@ cc.fileUtils.setPopupNotify(false);
 
 //ccs.nodeReader = ccs.NodeReader.getInstance();
 ccs.actionTimelineCache = ccs.ActionTimelineCache.getInstance();
+ccs.actionTimelineCache.createAction = ccs.ActionTimelineCache.createAction;
+
 ccs.csLoader = ccs.CSLoader.getInstance();
 ccs.csLoader.createNode = ccs.CSLoader.createNode;
 ccs.csLoader.createTimeLine = ccs.CSLoader.createTimeLine;
