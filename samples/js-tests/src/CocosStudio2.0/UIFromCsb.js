@@ -66,7 +66,7 @@ var CocosStudio2_UIFromCsb = (function(){
             var nIndex = sender.zIndex - ITEM_TAG_BASIC;
             var layer = this;
             var node = ccs.csLoader.createNode(g_ccs2[nIndex]);
-            var child = node._children[0];
+            var child = node.children[0];
 
             var screenSize = cc.director.getWinSize();
             var rootSize = child.getContentSize();
@@ -83,7 +83,7 @@ var CocosStudio2_UIFromCsb = (function(){
                 layer.removeChild(child);
                 listMenu.setVisible(true);
                 backMenu.setVisible(true);
-            });
+            }, this);
         }
     });
 
