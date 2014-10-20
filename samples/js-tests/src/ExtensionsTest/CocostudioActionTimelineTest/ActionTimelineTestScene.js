@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-(function(){
+var ActionTimelineTestScene = (function(){
 
     var ActionTimelineTestSceneEnum = {
         TEST_ANIMATIONELEMENT: 0,
@@ -311,5 +311,5 @@
         return pLayer;
     };
 
-    window.ActionTimelineTestScene = ActionTimelineTestScene;
+    return ActionTimelineTestScene;
 })();
