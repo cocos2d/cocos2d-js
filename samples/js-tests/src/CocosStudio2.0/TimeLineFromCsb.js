@@ -1,6 +1,6 @@
 var CocosStudio2_TimeLineFromCsb = (function(){
 
-    const testItem = [
+    var testItem = [
         {
             itemTitle: "walk",
             run: function(){
@@ -53,10 +53,12 @@ var CocosStudio2_TimeLineFromCsb = (function(){
                     var s = new CocosStudio2();
                     s.runThisTest();
                 }, this);
-            backMenu.x = 760;
+            backMenu.x = winSize.width - 60;
             backMenu.y = 40;
             backMenu.addChild(backItem);
             this.addChild(backMenu);
+
+            cc.spriteFrameCache.addSpriteFrames("res/armatures/Cowboy0.plist", "res/armatures/Cowboy0.png");
 
             people = ccs.csLoader.createNode("res/ActionTimeline/boy_1.csb");
             action = ccs.actionTimelineCache.createAction("res/ActionTimeline/boy_1.csb");
@@ -64,7 +66,7 @@ var CocosStudio2_TimeLineFromCsb = (function(){
             action.gotoFrameAndPlay(0, 60, true);
             people.setScale(0.2);
             people.setPosition(150,100);
-            people.runAction(action);
+
             this.addChild(people);
         }
     });
