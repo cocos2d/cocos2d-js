@@ -746,7 +746,7 @@ public:
         }
 
         char szVersion[256] = {0};
-        sprintf(szVersion, "runtimeVersion:%s \nengineVersion:%s", getRuntimeVersion(), cocos2dVersion());
+        sprintf(szVersion, "runtimeVersion:%s \nengineVersion:%s", getRuntimeVersion(), ENGINE_VERSION);
         Label* verLable = Label::createWithSystemFont(szVersion, "", 24);
         verLable->setAnchorPoint(Vec2(0, 0));
         int width = verLable->getBoundingBox().size.width;
@@ -1023,7 +1023,7 @@ public:
                 dReplyParse.Accept(writer);
                 string msgContent = buffer.GetString();
                 char msgLength[64] = {0x1, 0};
-                sprintf(msgLength + 1, "%zu:", msgContent.size());
+                sprintf(msgLength + 1, "%d:", msgContent.size());
                 
                 string msg(msgLength + msgContent);
                 

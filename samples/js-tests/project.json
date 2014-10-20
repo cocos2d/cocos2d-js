@@ -76,6 +76,11 @@
         "src/ClippingNodeTest/ClippingNodeTest.js",
         "src/OpenGLTest/OpenGLTest.js",
 
+        "src/FacebookTest/FacebookTest.js",
+        "src/FacebookTest/FacebookShareTest.js",
+        "src/FacebookTest/FacebookUserTest.js",
+        "src/FacebookTest/FacebookTestsManager.js",
+
         "src/ExtensionsTest/ExtensionsTest.js",
         "src/ExtensionsTest/AssetsManagerTest/AssetsManagerTest.js",
         "src/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.js",
@@ -107,8 +112,6 @@
         "src/ExtensionsTest/PluginXTest/PluginXTest.js",
         "src/ExtensionsTest/PluginXTest/PluginXTestsManager.js",
         "src/ExtensionsTest/PluginXTest/IOSIAPTest.js",
-        "src/ExtensionsTest/PluginXTest/FacebookShareTest.js",
-        "src/ExtensionsTest/PluginXTest/FacebookUserTest.js",
         "src/ExtensionsTest/PluginXTest/AnalyticsTest.js",
         "src/CocoStudioTest/ArmatureTest/ArmatureTest.js",
         "src/CocoStudioTest/ComponentsTest/ComponentsTestScene.js",
@@ -170,6 +173,10 @@
         "src/ChipmunkTest/ChipmunkTest.js",
 
         "src/Presentation/Presentation.js",
-        "src/ReflectionTest/ReflectionTest.js"
+        "src/ReflectionTest/ReflectionTest.js",
+
+        "src/CocosStudio2.0/main.js",
+        "src/CocosStudio2.0/UIFromCsb.js",
+        "src/CocosStudio2.0/TimeLineFromCsb.js"
     ]
 }

@@ -27,7 +27,7 @@ cmake_minimum_required(VERSION 2.6)
 set(APP_NAME MyGame)
 project (${APP_NAME})
 
-include(frameworks/js-bindings/cocos2d-x/build/BuildHelpers.CMakeLists.txt)
+include(frameworks/js-bindings/cocos2d-x/cmake/BuildHelpers.CMakeLists.txt)
 
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
@@ -101,6 +101,7 @@ include_directories(
 
 link_directories(
   /usr/local/lib
+  ${COCOS2D_ROOT}/external/chipmunk/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/jpeg/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/tiff/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/webp/prebuilt/linux/${ARCH_DIR}
@@ -111,56 +112,21 @@ link_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/js-bindings/external/spidermonkey/prebuilt/linux/${ARCH_DIR}
 )
 
-# chipmunk library
-add_subdirectory(${COCOS2D_ROOT}/external/chipmunk/src)
-
-# unzip library
-add_subdirectory(${COCOS2D_ROOT}/external/unzip)
-
-# tinyxml2 library
-add_subdirectory(${COCOS2D_ROOT}/external/tinyxml2)
-
-# audio
-add_subdirectory(${COCOS2D_ROOT}/cocos/audio)
-
-# xxhash library
-add_subdirectory(${COCOS2D_ROOT}/external/xxhash)
+# build for 3rd party libraries
+if(LINUX OR APPLE)
+add_subdirectory(frameworks/js-bindings/cocos2d-x/external/Box2D)
+add_subdirectory(frameworks/js-bindings/cocos2d-x/external/unzip)
+add_subdirectory(frameworks/js-bindings/cocos2d-x/external/xxhash)
+add_subdirectory(frameworks/js-bindings/cocos2d-x/external/tinyxml2)
+add_subdirectory(frameworks/js-bindings/cocos2d-x/external/protobuf-lite)
+endif()
 
 # cocos2d
 add_subdirectory(${COCOS2D_ROOT}/cocos)
 
-# extensions
-add_subdirectory(${COCOS2D_ROOT}/extensions)
-add_subdirectory(frameworks/js-bindings/bindings/manual/extension)
 
-## Editor Support
-
-# spine
-add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/spine)
-add_subdirectory(frameworks/js-bindings/bindings/manual/spine)
-
-# cocosbuilder
-add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/cocosbuilder)
-add_subdirectory(frameworks/js-bindings/bindings/manual/cocosbuilder)
-
-# cocostudio
-add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/cocostudio)
-add_subdirectory(frameworks/js-bindings/bindings/manual/cocostudio)
-
-#jsbinding library
+#jsbindings library
 add_subdirectory(frameworks/js-bindings/bindings)
-
-#jsbinding_chipmunk library
-add_subdirectory(frameworks/js-bindings/bindings/manual/chipmunk)
-
-#jsbinding_localstorage library
-add_subdirectory(frameworks/js-bindings/bindings/manual/localstorage)
-
-#jsbinding_network library
-add_subdirectory(frameworks/js-bindings/bindings/manual/network)
-
-#jsbinding_ui library
-add_subdirectory(frameworks/js-bindings/bindings/manual/ui)
 
 
 # add the executable
@@ -175,21 +141,7 @@ set(FMOD_LIB "fmodex")
 endif()
 
 target_link_libraries(${APP_NAME}
-  jsb_spine
-  spine
-  jsb_studio
-  cocostudio
-  jsb_builder
-  cocosbuilder
-  jsb_chipmunk
-  chipmunk_static
-  jsb_extension
-  extensions
-  audio
-  jsb_localstorage
-  jsb_network
-  jsb_ui
-  jsbinding
+  jsbindings
   cocos2d
   js_static
   )

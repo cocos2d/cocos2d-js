@@ -1509,6 +1509,7 @@ cc.LayerGradient.extend = cc.Class.extend;
 cc.LayerColor.extend = cc.Class.extend;
 cc.LayerMultiplex.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
+cc.SpriteBatchNode.extend = cc.Class.extend;
 cc.SpriteFrame.extend = cc.Class.extend;
 cc.LabelTTF.extend = cc.Class.extend;
 cc.LabelBMFont.extend = cc.Class.extend;
@@ -1738,6 +1739,8 @@ cc.eventManager.addListener = function(listener, nodeOrPriority) {
     } else {
         cc.eventManager.addEventListenerWithSceneGraphPriority(listener, nodeOrPriority);
     }
+
+    return listener;
 };
 
 cc.eventManager.dispatchCustomEvent = function (eventName, optionalUserData) {

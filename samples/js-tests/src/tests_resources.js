@@ -254,7 +254,9 @@ var g_resources = [
     s_bitmapFontTest5,
     s_playNormal,
     s_playSelect,
-    s_bitmapFontTest5_fnt
+    s_bitmapFontTest5_fnt,
+    s_extensions_background,
+    s_extensions_ribbon
 ];
 
 var g_sprites = [
@@ -1046,4 +1048,19 @@ var g_spine = [
     "res/skeletons/spineboy.atlas",
     "res/skeletons/spineboy.json",
     "res/skeletons/spineboy.png"
+];
+
+var g_ccs2 = [
+    "res/cocosui/UIEditorTest/UIButton_Editor/crossplatform_UIButton_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UICheckBox_Editor/crossplatform_UICheckBox_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UIImageView_Editor/crossplatform_UIImageView_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UILabel_Editor/crossplatform_UILabel_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UILabelAtlas_Editor/crossplatform_UILabelAtlas_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/crossplatform_UILabelBMFont_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UILoadingBar_Editor/crossplatform_UILoadingBar_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UIPageView_Editor/crossplatform_UIPageView_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UISlider_Editor/crossplatform_UISlider_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.csb",
+    "res/ActionTimeline/boy_1.csb",
+    "res/ActionTimeline/armature/Cowboy0.plist"
 ];

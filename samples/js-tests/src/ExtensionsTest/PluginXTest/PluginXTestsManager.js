@@ -22,22 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var pluginXTestItemNames = [
-    {
-        itemTitle: "Facebook User Test",
-        testLayer: function () {
-            return new FacebookUserTest(this.itemTitle);
-        }
-    },
-    {
-        itemTitle: "Facebook Share Test",
-        testLayer: function () {
-            return new FacebookShareTest(this.itemTitle);
-        }
-    }
-
-
-];
+var pluginXTestItemNames = [];
 
 if (cc.sys.isMobile && cc.sys.os == cc.sys.OS_IOS) {
     pluginXTestItemNames.push({
