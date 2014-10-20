@@ -12295,6 +12295,639 @@ void js_register_cocos2dx_studio_ActionTimeline(JSContext *cx, JSObject *global)
     }
 }
 
+JSClass  *jsb_cocos2d_CSLoader_class;
+JSObject *jsb_cocos2d_CSLoader_prototype;
+
+bool js_cocos2dx_studio_CSLoader_createNodeFromJson(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_createNodeFromJson : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_createNodeFromJson : Error processing arguments");
+        cocos2d::Node* ret = cobj->createNodeFromJson(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_createNodeFromJson : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_nodeFromXML(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_nodeFromXML : Invalid Native Object");
+    if (argc == 2) {
+        const tinyxml2::XMLElement* arg0;
+        std::string arg1;
+        do {
+            if (!argv[0].isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (const tinyxml2::XMLElement*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_std_string(cx, argv[1], &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_nodeFromXML : Error processing arguments");
+        cocos2d::Node* ret = cobj->nodeFromXML(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_nodeFromXML : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_createNodeFromProtocolBuffers(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_createNodeFromProtocolBuffers : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_createNodeFromProtocolBuffers : Error processing arguments");
+        cocos2d::Node* ret = cobj->createNodeFromProtocolBuffers(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_createNodeFromProtocolBuffers : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_init : Invalid Native Object");
+    if (argc == 0) {
+        cobj->init();
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_init : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_setRecordXMLPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_setRecordXMLPath : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_setRecordXMLPath : Error processing arguments");
+        cobj->setRecordXMLPath(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_setRecordXMLPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_setJsonPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_setJsonPath : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_setJsonPath : Error processing arguments");
+        cobj->setJsonPath(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_setJsonPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_loadNodeWithFile(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_loadNodeWithFile : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_loadNodeWithFile : Error processing arguments");
+        cocos2d::Node* ret = cobj->loadNodeWithFile(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_loadNodeWithFile : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_loadNodeWithContent(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_loadNodeWithContent : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_loadNodeWithContent : Error processing arguments");
+        cocos2d::Node* ret = cobj->loadNodeWithContent(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_loadNodeWithContent : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_isRecordProtocolBuffersPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_isRecordProtocolBuffersPath : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isRecordProtocolBuffersPath();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_isRecordProtocolBuffersPath : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_isRecordXMLPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_isRecordXMLPath : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isRecordXMLPath();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_isRecordXMLPath : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_getProtocolBuffersPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_getProtocolBuffersPath : Invalid Native Object");
+    if (argc == 0) {
+        std::string ret = cobj->getProtocolBuffersPath();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_getProtocolBuffersPath : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_getXMLPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_getXMLPath : Invalid Native Object");
+    if (argc == 0) {
+        std::string ret = cobj->getXMLPath();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_getXMLPath : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_createNodeFromXML(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_createNodeFromXML : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_createNodeFromXML : Error processing arguments");
+        cocos2d::Node* ret = cobj->createNodeFromXML(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_createNodeFromXML : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_isRecordJsonPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_isRecordJsonPath : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isRecordJsonPath();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_isRecordJsonPath : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_setRecordProtocolBuffersPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_setRecordProtocolBuffersPath : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_setRecordProtocolBuffersPath : Error processing arguments");
+        cobj->setRecordProtocolBuffersPath(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_setRecordProtocolBuffersPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_getJsonPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_getJsonPath : Invalid Native Object");
+    if (argc == 0) {
+        std::string ret = cobj->getJsonPath();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_getJsonPath : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_setRecordJsonPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_setRecordJsonPath : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_setRecordJsonPath : Error processing arguments");
+        cobj->setRecordJsonPath(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_setRecordJsonPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_setProtocolBuffersPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_setProtocolBuffersPath : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_setProtocolBuffersPath : Error processing arguments");
+        cobj->setProtocolBuffersPath(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_setProtocolBuffersPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_purge(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_purge : Invalid Native Object");
+    if (argc == 0) {
+        cobj->purge();
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_purge : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_setXMLPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_setXMLPath : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_setXMLPath : Error processing arguments");
+        cobj->setXMLPath(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_setXMLPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_nodeFromXMLFile(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CSLoader* cobj = (cocos2d::CSLoader *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_CSLoader_nodeFromXMLFile : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_nodeFromXMLFile : Error processing arguments");
+        cocos2d::Node* ret = cobj->nodeFromXMLFile(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_nodeFromXMLFile : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_CSLoader_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc == 0) {
+        cocos2d::CSLoader::destroyInstance();
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_destroyInstance : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_studio_CSLoader_createNode(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_createNode : Error processing arguments");
+        cocos2d::Node* ret = cocos2d::CSLoader::createNode(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_createNode : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_studio_CSLoader_createTimeline(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_CSLoader_createTimeline : Error processing arguments");
+        cocostudio::timeline::ActionTimeline* ret = cocos2d::CSLoader::createTimeline(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::ActionTimeline>(cx, (cocostudio::timeline::ActionTimeline*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_createTimeline : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_studio_CSLoader_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc == 0) {
+        cocos2d::CSLoader* ret = cocos2d::CSLoader::getInstance();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::CSLoader>(cx, (cocos2d::CSLoader*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_studio_CSLoader_getInstance : wrong number of arguments");
+    return false;
+}
+
+
+
+void js_cocos2d_CSLoader_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (CSLoader)", obj);
+}
+
+void js_register_cocos2dx_studio_CSLoader(JSContext *cx, JSObject *global) {
+    jsb_cocos2d_CSLoader_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_CSLoader_class->name = "CSLoader";
+    jsb_cocos2d_CSLoader_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_CSLoader_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_CSLoader_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_CSLoader_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_CSLoader_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_CSLoader_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_CSLoader_class->convert = JS_ConvertStub;
+    jsb_cocos2d_CSLoader_class->finalize = js_cocos2d_CSLoader_finalize;
+    jsb_cocos2d_CSLoader_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        {"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+        {0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("createNodeFromJson", js_cocos2dx_studio_CSLoader_createNodeFromJson, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("nodeFromXML", js_cocos2dx_studio_CSLoader_nodeFromXML, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createNodeFromProtocolBuffers", js_cocos2dx_studio_CSLoader_createNodeFromProtocolBuffers, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_cocos2dx_studio_CSLoader_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setRecordXMLPath", js_cocos2dx_studio_CSLoader_setRecordXMLPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setJsonPath", js_cocos2dx_studio_CSLoader_setJsonPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("loadNodeWithFile", js_cocos2dx_studio_CSLoader_loadNodeWithFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("loadNodeWithContent", js_cocos2dx_studio_CSLoader_loadNodeWithContent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isRecordProtocolBuffersPath", js_cocos2dx_studio_CSLoader_isRecordProtocolBuffersPath, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isRecordXMLPath", js_cocos2dx_studio_CSLoader_isRecordXMLPath, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getProtocolBuffersPath", js_cocos2dx_studio_CSLoader_getProtocolBuffersPath, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getXMLPath", js_cocos2dx_studio_CSLoader_getXMLPath, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createNodeFromXML", js_cocos2dx_studio_CSLoader_createNodeFromXML, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isRecordJsonPath", js_cocos2dx_studio_CSLoader_isRecordJsonPath, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setRecordProtocolBuffersPath", js_cocos2dx_studio_CSLoader_setRecordProtocolBuffersPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getJsonPath", js_cocos2dx_studio_CSLoader_getJsonPath, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setRecordJsonPath", js_cocos2dx_studio_CSLoader_setRecordJsonPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setProtocolBuffersPath", js_cocos2dx_studio_CSLoader_setProtocolBuffersPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("purge", js_cocos2dx_studio_CSLoader_purge, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setXMLPath", js_cocos2dx_studio_CSLoader_setXMLPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("nodeFromXMLFile", js_cocos2dx_studio_CSLoader_nodeFromXMLFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("destroyInstance", js_cocos2dx_studio_CSLoader_destroyInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createNode", js_cocos2dx_studio_CSLoader_createNode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createTimeline", js_cocos2dx_studio_CSLoader_createTimeline, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getInstance", js_cocos2dx_studio_CSLoader_getInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_CSLoader_prototype = JS_InitClass(
+        cx, global,
+        NULL, // parent proto
+        jsb_cocos2d_CSLoader_class,
+        empty_constructor, 0,
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "CSLoader", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::CSLoader> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_CSLoader_class;
+        p->proto = jsb_cocos2d_CSLoader_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
 void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj) {
     // first, try to get the ns
     JS::RootedValue nsval(cx);
@@ -12324,6 +12957,7 @@ void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj) {
     js_register_cocos2dx_studio_ColorFrame(cx, obj);
     js_register_cocos2dx_studio_ZOrderFrame(cx, obj);
     js_register_cocos2dx_studio_Timeline(cx, obj);
+    js_register_cocos2dx_studio_CSLoader(cx, obj);
     js_register_cocos2dx_studio_ColliderBody(cx, obj);
     js_register_cocos2dx_studio_InputDelegate(cx, obj);
     js_register_cocos2dx_studio_ComController(cx, obj);
