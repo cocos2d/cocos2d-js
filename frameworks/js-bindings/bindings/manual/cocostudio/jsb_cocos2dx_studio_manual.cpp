@@ -150,26 +150,33 @@ static bool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *cx
     cocostudio::ArmatureAnimation* cobj = (cocostudio::ArmatureAnimation *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
-    if (argc == 2) {
+    if (argc > 0) {
         jsval *argv = JS_ARGV(cx, vp);
-
-        JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
-        tmpObj->autorelease();
         
-        cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
-        if (nullptr == dict)
-        {
-            dict = cocos2d::__Dictionary::create();
-            cobj->setUserObject(dict);
+        if (JSVAL_IS_NULL(argv[0])) {
+            cobj->setMovementEventCallFunc(nullptr);
+            
+            return true;
         }
-        dict->setObject(tmpObj, "moveEvent");
-
-        tmpObj->setJSCallbackFunc(argv[0]);
-        tmpObj->setJSCallbackThis(argv[1]);
-
-        cobj->setMovementEventCallFunc(CC_CALLBACK_0(JSArmatureWrapper::movementCallbackFunc, tmpObj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
-        
-        return true;
+        else if (argc == 2) {
+            JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
+            tmpObj->autorelease();
+            
+            cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
+            if (nullptr == dict)
+            {
+                dict = cocos2d::__Dictionary::create();
+                cobj->setUserObject(dict);
+            }
+            dict->setObject(tmpObj, "moveEvent");
+            
+            tmpObj->setJSCallbackFunc(argv[0]);
+            tmpObj->setJSCallbackThis(argv[1]);
+            
+            cobj->setMovementEventCallFunc(CC_CALLBACK_0(JSArmatureWrapper::movementCallbackFunc, tmpObj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+            
+            return true;
+        }
     }
     JS_ReportError(cx, "Invalid number of arguments");
     return false;
@@ -181,28 +188,36 @@ static bool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx, u
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocostudio::ArmatureAnimation* cobj = (cocostudio::ArmatureAnimation *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
-
-    if (argc == 2) {
+    
+    if (argc > 0) {
         jsval *argv = JS_ARGV(cx, vp);
-
-        JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
-        tmpObj->autorelease();
         
-        cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
-        if (nullptr == dict)
-        {
-            dict = cocos2d::__Dictionary::create();
-            cobj->setUserObject(dict);
+        if (JSVAL_IS_NULL(argv[0])) {
+            cobj->setFrameEventCallFunc(nullptr);
+            
+            return true;
         }
-        dict->setObject(tmpObj, "frameEvent");
-
-        tmpObj->setJSCallbackFunc(argv[0]);
-        tmpObj->setJSCallbackThis(argv[1]);
-
-        cobj->setFrameEventCallFunc(CC_CALLBACK_0(JSArmatureWrapper::frameCallbackFunc, tmpObj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
-
-        return true;
+        else if (argc == 2) {
+            JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
+            tmpObj->autorelease();
+            
+            cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
+            if (nullptr == dict)
+            {
+                dict = cocos2d::__Dictionary::create();
+                cobj->setUserObject(dict);
+            }
+            dict->setObject(tmpObj, "frameEvent");
+            
+            tmpObj->setJSCallbackFunc(argv[0]);
+            tmpObj->setJSCallbackThis(argv[1]);
+            
+            cobj->setFrameEventCallFunc(CC_CALLBACK_0(JSArmatureWrapper::frameCallbackFunc, tmpObj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
+            
+            return true;
+        }
     }
+    
     JS_ReportError(cx, "Invalid number of arguments");
     return false;
 }
