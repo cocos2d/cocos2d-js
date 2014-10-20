@@ -455,31 +455,6 @@ bool js_cocos2dx_FileUtils_createDirectory(JSContext *cx, uint32_t argc, jsval *
 bool js_cocos2dx_FileUtils_getWritablePath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_cocos2d_Camera_class;
-extern JSObject *jsb_cocos2d_Camera_prototype;
-
-bool js_cocos2dx_Camera_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_Camera_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_Camera(JSContext *cx, JSObject *global);
-void register_all_cocos2dx(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_Camera_setScene(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_getProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_getViewProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_getViewMatrix(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_getCameraFlag(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_getType(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_lookAt(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_setCameraFlag(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_initOrthographic(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_initPerspective(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_initDefault(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_setAdditionalProjection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_createPerspective(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_createOrthographic(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_getVisitingCamera(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_Camera(JSContext *cx, uint32_t argc, jsval *vp);
-
 extern JSClass  *jsb_cocos2d_EventListener_class;
 extern JSObject *jsb_cocos2d_EventListener_prototype;
 
@@ -3324,6 +3299,31 @@ void js_register_cocos2dx_TiledGrid3D(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_TiledGrid3D_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TiledGrid3D_TiledGrid3D(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_Camera_class;
+extern JSObject *jsb_cocos2d_Camera_prototype;
+
+bool js_cocos2dx_Camera_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_Camera_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_Camera(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_Camera_setScene(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_getProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_getViewProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_getViewMatrix(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_getCameraFlag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_getType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_lookAt(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_setCameraFlag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_initOrthographic(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_initPerspective(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_initDefault(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_setAdditionalProjection(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_createPerspective(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_createOrthographic(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_getVisitingCamera(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_Camera(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_GLProgram_class;
 extern JSObject *jsb_cocos2d_GLProgram_prototype;
