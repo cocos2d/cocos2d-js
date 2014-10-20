@@ -295,6 +295,15 @@ var testNames = [
         }
     },
     {
+        title: "Cocos Studio 2.0 Test",
+        resource: g_ccs2,
+        platforms: PLATFORM_ALL,
+        linksrc: "",
+        testScene: function(){
+            return new CocosStudio2();
+        }
+    },
+    {
         title:"CurrentLanguage Test",
         platforms: PLATFORM_ALL,
         linksrc:"src/CurrentLanguageTest/CurrentLanguageTest.js",

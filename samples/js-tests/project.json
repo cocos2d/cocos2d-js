@@ -173,6 +173,10 @@
         "src/ChipmunkTest/ChipmunkTest.js",
 
         "src/Presentation/Presentation.js",
-        "src/ReflectionTest/ReflectionTest.js"
+        "src/ReflectionTest/ReflectionTest.js",
+
+        "src/CocosStudio2.0/main.js",
+        "src/CocosStudio2.0/UIFromCsb.js",
+        "src/CocosStudio2.0/TimeLineFromCsb.js"
     ]
 }
