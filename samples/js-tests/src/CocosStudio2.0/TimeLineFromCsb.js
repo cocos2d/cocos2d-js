@@ -58,7 +58,7 @@ var CocosStudio2_TimeLineFromCsb = (function(){
             backMenu.addChild(backItem);
             this.addChild(backMenu);
 
-            people = ccs.CSLoader.createNode("res/ActionTimeline/boy_1.csb");
+            people = ccs.csLoader.createNode("res/ActionTimeline/boy_1.csb");
             action = ccs.actionTimelineCache.createAction("res/ActionTimeline/boy_1.csb");
             people.runAction(action);
             action.gotoFrameAndPlay(0, 60, true);
