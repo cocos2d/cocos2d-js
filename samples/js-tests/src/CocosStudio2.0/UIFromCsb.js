@@ -41,7 +41,6 @@ var CocosStudio2_UIFromCsb = (function(){
                 pMenu.addChild(pItem, ITEM_TAG_BASIC + i);
             }
             this.addChild(pMenu);
-            this._listMenu = pMenu;
 
             var backMenu = new cc.Menu();
             var backItem = new cc.MenuItemFont("back",
@@ -52,24 +51,39 @@ var CocosStudio2_UIFromCsb = (function(){
             backMenu.x = winSize.width - 60;
             backMenu.y = 40;
             backMenu.addChild(backItem);
-            this.addChild(backMenu, 1000);
+            this.addChild(backMenu);
+
+            this._pMenu = pMenu;
+            this._backMenu = backMenu;
         },
 
         menuCallback:function (sender) {
-            var listMenu = this._listMenu;
 
             var nIndex = sender.zIndex - ITEM_TAG_BASIC;
             var layer = this;
             var node = ccs.csLoader.createNode(g_ccs2[nIndex]);
-            node.setScale(1.4);
-            node.x = 60;
-            layer.addChild(node);
-            listMenu.setEnabled(false);
 
-            var back = ccui.helper.seekWidgetByName(node, "back");
+            var child = node._children[0];
+            child.removeFromParent(false);
+            this.addChild(child);
+
+            var screenSize = cc.director.getWinSize();
+            var rootSize = child.getContentSize();
+
+            child.setPosition(cc.p((screenSize.width - rootSize.width) / 2,
+                    (screenSize.height - rootSize.height) / 2));
+
+            this._pMenu.setVisible(false);
+            this._backMenu.setVisible(false);
+
+
+            var back = ccui.helper.seekWidgetByName(child, "back");
             back.addTouchEventListener(function(){
-                layer.removeChild(node);
-                listMenu.setEnabled(true);
+
+                layer.removeChild(child);
+                layer._pMenu.setVisible(true);
+                layer._backMenu.setVisible(true);
+
             });
         }
     });
