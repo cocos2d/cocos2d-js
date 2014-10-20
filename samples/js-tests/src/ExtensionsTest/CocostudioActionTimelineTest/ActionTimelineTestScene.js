@@ -71,7 +71,6 @@
             this.removeAllChildren();
         }
     });
-    window.ActionTimelineTestScene = ActionTimelineTestScene;
 
     var ActionTimelineTestLayer = cc.Layer.extend({
 
@@ -151,7 +150,7 @@
 
             cc.spriteFrameCache.addSpriteFrames("res/armatures/Cowboy0.plist", "res/armatures/Cowboy0.png");
 
-            var node = ccs.nodeReader.createNode("res/ActionTimeline/boy_1.ExportJson");
+            var node = ccs.csLoader.createNode("res/ActionTimeline/boy_1.ExportJson");
             var action = ccs.actionTimelineCache.createAction("res/ActionTimeline/boy_1.ExportJson");
 
             node.runAction(action);
@@ -176,7 +175,7 @@
 
             cc.spriteFrameCache.addSpriteFrames("res/armatures/Cowboy0.plist", "res/armatures/Cowboy0.png");
 
-            var node = ccs.nodeReader.createNode("res/ActionTimeline/boy_1.ExportJson");
+            var node = ccs.csLoader.createNode("res/ActionTimeline/boy_1.ExportJson");
             this._action = ccs.actionTimelineCache.createAction("res/ActionTimeline/boy_1.ExportJson");
 
             node.runAction(this._action);
@@ -213,9 +212,8 @@
 
             cc.spriteFrameCache.addSpriteFrames("res/armatures/Cowboy0.plist", "res/armatures/Cowboy0.png");
 
-            var node = ccs.nodeReader.createNode("res/ActionTimeline/boy_1.ExportJson");
+            var node = ccs.csLoader.createNode("res/ActionTimeline/boy_1.ExportJson");
             var action = ccs.actionTimelineCache.createAction("res/ActionTimeline/boy_1.ExportJson");
-
             node.runAction(action);
             action.gotoFrameAndPlay(0, 60, true);
 
@@ -250,7 +248,7 @@
             cc.spriteFrameCache.addSpriteFrames("res/armatures/Cowboy0.plist", "res/armatures/Cowboy0.png");
 
             for (var i = 0; i< 100; i++){
-                var node = ccs.nodeReader.createNode("res/ActionTimeline/boy_1.ExportJson");
+                var node = ccs.csLoader.createNode("res/ActionTimeline/boy_1.ExportJson");
                 var action = ccs.actionTimelineCache.createAction("res/ActionTimeline/boy_1.ExportJson");
 
                 node.runAction(action);
@@ -313,4 +311,5 @@
         return pLayer;
     };
 
+    window.ActionTimelineTestScene = ActionTimelineTestScene;
 })();
