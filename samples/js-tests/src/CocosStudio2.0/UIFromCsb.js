@@ -41,6 +41,7 @@ var CocosStudio2_UIFromCsb = (function(){
                 pMenu.addChild(pItem, ITEM_TAG_BASIC + i);
             }
             this.addChild(pMenu);
+            this._listMenu = pMenu;
 
             var backMenu = cc.Menu.create();
             var backItem = cc.MenuItemFont.create("back",
@@ -55,16 +56,20 @@ var CocosStudio2_UIFromCsb = (function(){
         },
 
         menuCallback:function (sender) {
+            var listMenu = this._listMenu;
+
             var nIndex = sender.zIndex - ITEM_TAG_BASIC;
             var layer = this;
             var node = ccs.uiReader.widgetFromProtocolBuffers(g_ccs2[nIndex]);
             node.setScale(1.4);
             node.x = 60;
             layer.addChild(node);
+            listMenu.setEnabled(false);
 
             var back = ccui.helper.seekWidgetByName(node, "back");
             back.addTouchEventListener(function(){
                 layer.removeChild(node);
+                listMenu.setEnabled(true);
             });
         }
     });
