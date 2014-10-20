@@ -73,16 +73,16 @@ var CocosStudio2_UIFromCsb = (function(){
             child.setPosition(cc.p((screenSize.width - rootSize.width) / 2,
                     (screenSize.height - rootSize.height) / 2));
 
-            this._pMenu.setVisible(0);
-            this._backMenu.setVisible(0);
+            this._pMenu.setVisible(false);
+            this._backMenu.setVisible(false);
 
 
             var back = ccui.helper.seekWidgetByName(child, "back");
             back.addTouchEventListener(function(){
 
                 layer.removeChild(child);
-                layer._pMenu.setVisible(1);
-                layer._backMenu.setVisible(1);
+                layer._pMenu.setVisible(true);
+                layer._backMenu.setVisible(true);
 
             });
         }
