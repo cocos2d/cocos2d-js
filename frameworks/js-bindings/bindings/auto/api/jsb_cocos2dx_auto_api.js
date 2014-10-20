@@ -3665,216 +3665,6 @@ getInstance : function (
 };
 
 /**
- * @class Camera
- */
-cc.Camera = {
-
-/**
- * @method setScene
- * @param {cc.Scene} arg0
- */
-setScene : function (
-scene 
-)
-{
-},
-
-/**
- * @method getProjectionMatrix
- * @return {mat4_object}
- */
-getProjectionMatrix : function (
-)
-{
-    return cc.Mat4;
-},
-
-/**
- * @method getViewProjectionMatrix
- * @return {mat4_object}
- */
-getViewProjectionMatrix : function (
-)
-{
-    return cc.Mat4;
-},
-
-/**
- * @method getViewMatrix
- * @return {mat4_object}
- */
-getViewMatrix : function (
-)
-{
-    return cc.Mat4;
-},
-
-/**
- * @method getCameraFlag
- * @return {cc.CameraFlag}
- */
-getCameraFlag : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getType
- * @return {cc.Camera::Type}
- */
-getType : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method lookAt
- * @param {vec3_object} arg0
- * @param {vec3_object} arg1
- */
-lookAt : function (
-vec3, 
-vec3 
-)
-{
-},
-
-/**
- * @method setCameraFlag
- * @param {cc.CameraFlag} arg0
- */
-setCameraFlag : function (
-cameraflag 
-)
-{
-},
-
-/**
- * @method initOrthographic
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {bool}
- */
-initOrthographic : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method initPerspective
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {bool}
- */
-initPerspective : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method initDefault
- * @return {bool}
- */
-initDefault : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setAdditionalProjection
- * @param {mat4_object} arg0
- */
-setAdditionalProjection : function (
-mat4 
-)
-{
-},
-
-/**
- * @method create
- * @return {cc.Camera}
- */
-create : function (
-)
-{
-    return cc.Camera;
-},
-
-/**
- * @method createPerspective
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {cc.Camera}
- */
-createPerspective : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-    return cc.Camera;
-},
-
-/**
- * @method createOrthographic
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {cc.Camera}
- */
-createOrthographic : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-    return cc.Camera;
-},
-
-/**
- * @method getVisitingCamera
- * @return {cc.Camera}
- */
-getVisitingCamera : function (
-)
-{
-    return cc.Camera;
-},
-
-/**
- * @method Camera
- * @constructor
- */
-Camera : function (
-)
-{
-},
-
-};
-
-/**
  * @class EventListener
  */
 cc.EventListener = {
@@ -18110,6 +17900,216 @@ bool
  * @constructor
  */
 TiledGrid3D : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Camera
+ */
+cc.Camera = {
+
+/**
+ * @method setScene
+ * @param {cc.Scene} arg0
+ */
+setScene : function (
+scene 
+)
+{
+},
+
+/**
+ * @method getProjectionMatrix
+ * @return {mat4_object}
+ */
+getProjectionMatrix : function (
+)
+{
+    return cc.Mat4;
+},
+
+/**
+ * @method getViewProjectionMatrix
+ * @return {mat4_object}
+ */
+getViewProjectionMatrix : function (
+)
+{
+    return cc.Mat4;
+},
+
+/**
+ * @method getViewMatrix
+ * @return {mat4_object}
+ */
+getViewMatrix : function (
+)
+{
+    return cc.Mat4;
+},
+
+/**
+ * @method getCameraFlag
+ * @return {cc.CameraFlag}
+ */
+getCameraFlag : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getType
+ * @return {cc.Camera::Type}
+ */
+getType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method lookAt
+ * @param {vec3_object} arg0
+ * @param {vec3_object} arg1
+ */
+lookAt : function (
+vec3, 
+vec3 
+)
+{
+},
+
+/**
+ * @method setCameraFlag
+ * @param {cc.CameraFlag} arg0
+ */
+setCameraFlag : function (
+cameraflag 
+)
+{
+},
+
+/**
+ * @method initOrthographic
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {bool}
+ */
+initOrthographic : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method initPerspective
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {bool}
+ */
+initPerspective : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method initDefault
+ * @return {bool}
+ */
+initDefault : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setAdditionalProjection
+ * @param {mat4_object} arg0
+ */
+setAdditionalProjection : function (
+mat4 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {cc.Camera}
+ */
+create : function (
+)
+{
+    return cc.Camera;
+},
+
+/**
+ * @method createPerspective
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {cc.Camera}
+ */
+createPerspective : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+    return cc.Camera;
+},
+
+/**
+ * @method createOrthographic
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {cc.Camera}
+ */
+createOrthographic : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+    return cc.Camera;
+},
+
+/**
+ * @method getVisitingCamera
+ * @return {cc.Camera}
+ */
+getVisitingCamera : function (
+)
+{
+    return cc.Camera;
+},
+
+/**
+ * @method Camera
+ * @constructor
+ */
+Camera : function (
 )
 {
 },
