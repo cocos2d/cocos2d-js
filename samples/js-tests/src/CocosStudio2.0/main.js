@@ -23,6 +23,8 @@ var CocosStudio2 = (function(){
 
     var scene = cc.Scene.extend({
         runThisTest:function () {
+
+            ccs.csLoader.setRecordProtocolBuffersPath(true);
             var layer = new mainLayer();
             this.addChild(layer);
             cc.director.runScene(this);
@@ -35,14 +37,14 @@ var CocosStudio2 = (function(){
 
             var winSize = cc.director.getWinSize();
 
-            var pMenu = cc.Menu.create();
+            var pMenu = new cc.Menu();
             pMenu.x = 0;
             pMenu.y = 0;
             cc.MenuItemFont.setFontName("Arial");
             cc.MenuItemFont.setFontSize(24);
             for (var i = 0; i < testItem.length; ++i) {
                 var selItem = testItem[i];
-                var pItem = cc.MenuItemFont.create(selItem.itemTitle,
+                var pItem = new cc.MenuItemFont(selItem.itemTitle,
                     this.menuCallback, this);
                 pItem.x = winSize.width / 2;
                 pItem.y = winSize.height - (i + 1) * LINE_SPACE;
@@ -50,13 +52,13 @@ var CocosStudio2 = (function(){
             }
             this.addChild(pMenu);
 
-            var backMenu = cc.Menu.create();
-            var backItem = cc.MenuItemFont.create("main",
+            var backMenu = new cc.Menu();
+            var backItem = new cc.MenuItemFont("main",
                 function(){
-                    var scene = cc.Scene.create();
+                    var scene = new cc.Scene();
                     var layer = new TestController();
                     scene.addChild(layer);
-                    var transition = cc.TransitionProgressRadialCCW.create(0.5,scene);
+                    var transition = new cc.TransitionProgressRadialCCW(0.5,scene);
                     director.runScene(transition);
                 }, this);
             backMenu.x = 760;
