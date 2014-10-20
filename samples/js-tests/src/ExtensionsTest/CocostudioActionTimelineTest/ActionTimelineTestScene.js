@@ -202,6 +202,8 @@ var ActionTimelineTestScene = (function(){
                 target._action.gotoFrameAndPlay(70, target._action.getDuration(), true);
             else
                 target._action.gotoFrameAndPlay(0, 60, true);
+
+            return true;
         }
 
     });
