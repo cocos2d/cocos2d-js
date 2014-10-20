@@ -27,14 +27,14 @@ var CocosStudio2_UIFromCsb = (function(){
 
             var winSize = cc.director.getWinSize();
 
-            var pMenu = cc.Menu.create();
+            var pMenu = new cc.Menu();
             pMenu.x = 0;
             pMenu.y = 0;
             cc.MenuItemFont.setFontName("Arial");
             cc.MenuItemFont.setFontSize(24);
             for (var i = 0; i < testItem.length; ++i) {
                 var selItem = testItem[i];
-                var pItem = cc.MenuItemFont.create(selItem.itemTitle,
+                var pItem = new cc.MenuItemFont(selItem.itemTitle,
                     this.menuCallback, this);
                 pItem.x = winSize.width / 2;
                 pItem.y = winSize.height - (i + 1) * LINE_SPACE;
@@ -42,8 +42,8 @@ var CocosStudio2_UIFromCsb = (function(){
             }
             this.addChild(pMenu);
 
-            var backMenu = cc.Menu.create();
-            var backItem = cc.MenuItemFont.create("back",
+            var backMenu = new cc.Menu();
+            var backItem = new cc.MenuItemFont("back",
                 function(){
                     var s = new CocosStudio2();
                     s.runThisTest();

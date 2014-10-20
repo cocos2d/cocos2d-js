@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-(function(){
+var ActionTimelineTestScene = (function(){
 
     var ActionTimelineTestSceneEnum = {
         TEST_ANIMATIONELEMENT: 0,
@@ -150,7 +150,7 @@
 
             cc.spriteFrameCache.addSpriteFrames("res/armatures/Cowboy0.plist", "res/armatures/Cowboy0.png");
 
-            var node = ccs.CSLoader.createNode("res/ActionTimeline/boy_1.ExportJson");
+            var node = ccs.csLoader.createNode("res/ActionTimeline/boy_1.ExportJson");
             var action = ccs.actionTimelineCache.createAction("res/ActionTimeline/boy_1.ExportJson");
 
             node.runAction(action);
@@ -175,7 +175,7 @@
 
             cc.spriteFrameCache.addSpriteFrames("res/armatures/Cowboy0.plist", "res/armatures/Cowboy0.png");
 
-            var node = ccs.CSLoader.createNode("res/ActionTimeline/boy_1.ExportJson");
+            var node = ccs.csLoader.createNode("res/ActionTimeline/boy_1.ExportJson");
             this._action = ccs.actionTimelineCache.createAction("res/ActionTimeline/boy_1.ExportJson");
 
             node.runAction(this._action);
@@ -212,7 +212,7 @@
 
             cc.spriteFrameCache.addSpriteFrames("res/armatures/Cowboy0.plist", "res/armatures/Cowboy0.png");
 
-            var node = ccs.CSLoader.createNode("res/ActionTimeline/boy_1.ExportJson");
+            var node = ccs.csLoader.createNode("res/ActionTimeline/boy_1.ExportJson");
             var action = ccs.actionTimelineCache.createAction("res/ActionTimeline/boy_1.ExportJson");
             node.runAction(action);
             action.gotoFrameAndPlay(0, 60, true);
@@ -248,7 +248,7 @@
             cc.spriteFrameCache.addSpriteFrames("res/armatures/Cowboy0.plist", "res/armatures/Cowboy0.png");
 
             for (var i = 0; i< 100; i++){
-                var node = ccs.CSLoader.createNode("res/ActionTimeline/boy_1.ExportJson");
+                var node = ccs.csLoader.createNode("res/ActionTimeline/boy_1.ExportJson");
                 var action = ccs.actionTimelineCache.createAction("res/ActionTimeline/boy_1.ExportJson");
 
                 node.runAction(action);
@@ -310,5 +310,7 @@
         var pLayer = CreateAnimationLayer(s_nActionIdx);
         return pLayer;
     };
+
+    return ActionTimelineTestScene;
 
 })();
