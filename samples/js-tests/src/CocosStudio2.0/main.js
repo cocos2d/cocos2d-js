@@ -1,6 +1,6 @@
 var CocosStudio2 = (function(){
 
-    const testItem = [
+    var testItem = [
         {
             itemTitle: "UI from protocolBuffer",
             testScene: function(){
@@ -61,7 +61,7 @@ var CocosStudio2 = (function(){
                     var transition = new cc.TransitionProgressRadialCCW(0.5,scene);
                     director.runScene(transition);
                 }, this);
-            backMenu.x = 760;
+            backMenu.x = winSize.width - 60;
             backMenu.y = 40;
             backMenu.addChild(backItem);
             this.addChild(backMenu);
