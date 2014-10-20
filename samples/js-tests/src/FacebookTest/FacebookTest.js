@@ -82,7 +82,9 @@ var FacebookTest = cc.Layer.extend({
     nextCallback:function (sender) {
         if (this._quit) return;
         this._quit = true;
-        (new FacebookTestScene()).runThisTest();
+        __sceneIdx++;
+        __sceneIdx = __sceneIdx % arrayOfFacebookTest.length;
+        (new FacebookTestScene()).runThisTest(__sceneIdx);
     },
 
     previousCallback:function (sender) {
