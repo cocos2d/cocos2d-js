@@ -68,8 +68,8 @@ var SpriteProgressToRadial = SpriteDemo.extend({
         //----start0----onEnter
         this._super();
 
-        var to1 = cc.progressTo(2, 100);
-        var to2 = cc.progressTo(2, 100);
+        var to1 = cc.progressFromTo(2, 0, 100);
+        var to2 = cc.progressFromTo(2, 0, 100);
 
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_RADIAL;
@@ -89,7 +89,7 @@ var SpriteProgressToRadial = SpriteDemo.extend({
     },
 
     title:function () {
-        return "ProgressTo Radial";
+        return "ProgressFromTo Radial";
     }
 });
 
