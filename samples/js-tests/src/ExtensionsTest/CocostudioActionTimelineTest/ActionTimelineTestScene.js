@@ -312,5 +312,4 @@ var ActionTimelineTestScene = (function(){
     };
 
     return ActionTimelineTestScene;
-
 })();
