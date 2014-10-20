@@ -737,5 +737,38 @@ bool js_cocos2dx_studio_ActionTimeline_removeTimeline(JSContext *cx, uint32_t ar
 bool js_cocos2dx_studio_ActionTimeline_clearFrameEventCallFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_ActionTimeline(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_CSLoader_class;
+extern JSObject *jsb_cocos2d_CSLoader_prototype;
+
+bool js_cocos2dx_studio_CSLoader_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_CSLoader_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_CSLoader(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_CSLoader_createNodeFromJson(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_nodeFromXML(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_createNodeFromProtocolBuffers(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_setRecordXMLPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_setJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_loadNodeWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_loadNodeWithContent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_isRecordProtocolBuffersPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_isRecordXMLPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_getProtocolBuffersPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_getXMLPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_createNodeFromXML(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_isRecordJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_setRecordProtocolBuffersPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_getJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_setRecordJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_setProtocolBuffersPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_purge(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_setXMLPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_nodeFromXMLFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_createNode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_createTimeline(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 
