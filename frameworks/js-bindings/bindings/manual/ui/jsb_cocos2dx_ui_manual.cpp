@@ -94,6 +94,29 @@ void JSStudioEventListenerWrapper::eventCallbackFunc(Ref* sender,int eventType)
     }
 }
 
+class CallbacksComponent: public cocos2d::Component {
+public:
+    CallbacksComponent();
+    virtual ~CallbacksComponent();
+    
+    cocos2d::__Dictionary* callbacks;
+    static const std::string NAME;
+};
+
+const std::string CallbacksComponent::NAME = "JSB_Callbacks";
+
+CallbacksComponent::CallbacksComponent()
+{
+    setName(NAME);
+    callbacks = cocos2d::__Dictionary::create();
+    CC_SAFE_RETAIN(callbacks);
+}
+
+CallbacksComponent::~CallbacksComponent()
+{
+    CC_SAFE_RELEASE(callbacks);
+}
+
 static bool js_cocos2dx_UIWidget_addTouchEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -107,12 +130,14 @@ static bool js_cocos2dx_UIWidget_addTouchEventListener(JSContext *cx, uint32_t a
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
         tmpObj->autorelease();
         
-        cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
-        if (nullptr == dict)
+        CallbacksComponent *comp = static_cast<CallbacksComponent *>(cobj->getComponent(CallbacksComponent::NAME));
+        if (nullptr == comp)
         {
-            dict = cocos2d::__Dictionary::create();
-            cobj->setUserObject(dict);
+            comp = new CallbacksComponent();
+            comp->autorelease();
+            cobj->addComponent(comp);
         }
+        cocos2d::__Dictionary* dict = comp->callbacks;
         dict->setObject(tmpObj, "widgetTouchEvent");
 
         tmpObj->setJSCallbackFunc(argv[0]);
