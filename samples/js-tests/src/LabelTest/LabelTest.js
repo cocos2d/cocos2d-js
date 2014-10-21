@@ -1875,7 +1875,7 @@ var WrapAlgorithmTest = AtlasDemo.extend({
             "test test test aaa, tt",
             "test test test aa, tt",
             "こは日本語テスト",
-            "符号のテストに，ついて",
+            "符号のテストに，ついて"
         ];
 
         normalText.forEach(function(text, i){

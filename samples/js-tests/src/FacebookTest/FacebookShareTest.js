@@ -55,7 +55,7 @@ var FacebookShareTest = FacebookTest.extend({
     ctor: function (title) {
         this._super(title);
 
-        window.facebook = window.facebook || (window.plugin ? plugin.FacebookAgent.getInstance() : null);
+        window.facebook = window.facebook || (window["plugin"] ? window["plugin"]["FacebookAgent"]["getInstance"]() : null);
 
         var menu = new cc.Menu();
         menu.setPosition(cc.p(0, 0));
@@ -76,7 +76,7 @@ var FacebookShareTest = FacebookTest.extend({
         logo.setPosition(winSize.width * 2 / 3, winSize.height / 2);
         this.addChild(logo);
 
-        this._agentManager = plugin.agentManager;
+        this._agentManager = window["plugin"].agentManager;
 
         this.tipsLabel = new cc.LabelTTF("", "Arial", 20);
         this.tipsLabel.setDimensions(cc.size(350, 0));
