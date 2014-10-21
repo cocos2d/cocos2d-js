@@ -22,8 +22,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+/** @expose */
+window.io;
 
-var SocketIO = SocketIO || io;
+var SocketIO = SocketIO || window.io;
 
 var SocketIOTestLayer = cc.Layer.extend({
 

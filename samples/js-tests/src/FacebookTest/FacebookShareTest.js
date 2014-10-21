@@ -55,7 +55,7 @@ var FacebookShareTest = FacebookTest.extend({
     ctor: function (title) {
         this._super(title);
 
-        window.facebook = window.facebook || (window.plugin ? plugin.FacebookAgent.getInstance() : null);
+        window.facebook = window.facebook || (window["plugin"] ? window["plugin"]["FacebookAgent"]["getInstance"]() : null);
 
         var menu = new cc.Menu();
         menu.setPosition(cc.p(0, 0));
@@ -76,7 +76,7 @@ var FacebookShareTest = FacebookTest.extend({
         logo.setPosition(winSize.width * 2 / 3, winSize.height / 2);
         this.addChild(logo);
 
-        this._agentManager = plugin.agentManager;
+        this._agentManager = window["plugin"].agentManager;
 
         this.tipsLabel = new cc.LabelTTF("", "Arial", 20);
         this.tipsLabel.setDimensions(cc.size(350, 0));
@@ -148,7 +148,7 @@ var FacebookShareTest = FacebookTest.extend({
             "name": "Cocos2d-JS web site",
             "caption": "Cocos2d-JS caption",
             "description":"Cocos2d-JS description",
-            "to": "100006738453912", // android only web view support
+            "to": "100008180737293,100006738453912",
             "picture": "http://files.cocos2d-x.org/images/orgsite/logo.png",
             "link": "http://www.cocos2d-x.org"
         };
@@ -166,12 +166,11 @@ var FacebookShareTest = FacebookTest.extend({
     },
     onShareMediaSource: function () {
         var map = {
-            "dialog": "feedDialog",
+            "dialog": "shareLink",
             "name": "Cocos2d-JS web site",
             "caption": "Cocos2d-JS caption",
             "description":"Cocos2d-JS description",
-            "media_source": "http://221.203.1.212/youku/6775B002C8F48839F6AFA63BDA/0300200100540438A173C515AA2BED245C4903-F675-B311-EF1A-4544B5C04370.mp4",
-            "link": "http://www.cocos2d-x.org"
+            "link": "http://www.youtube.com/watch?v=uMnHAHpMtDc&feature=youtu.be"
         };
 
         var self = this;

@@ -31,6 +31,24 @@
 #define  LOG_TAG    "CCJavascriptJavaBridge"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalString
+  (JNIEnv *env, jclass cls, jstring value)
+{
+    const char *_value = env->GetStringUTFChars(value, NULL);
+    ScriptingCore::getInstance()->evalString(_value,NULL);
+    env->ReleaseStringUTFChars(value, _value);
+    
+    return 1;
+}
+
+#ifdef __cplusplus
+}
+#endif
+
 JavascriptJavaBridge::CallInfo::~CallInfo(void)
 {
     if (m_returnType == TypeString && m_ret.stringValue)
