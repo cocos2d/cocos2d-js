@@ -8710,461 +8710,6 @@ void js_register_cocos2dx_FileUtils(JSContext *cx, JSObject *global) {
     }
 }
 
-JSClass  *jsb_cocos2d_Camera_class;
-JSObject *jsb_cocos2d_Camera_prototype;
-
-bool js_cocos2dx_Camera_setScene(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_setScene : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Scene* arg0;
-        do {
-            if (!argv[0].isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Scene*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_setScene : Error processing arguments");
-        cobj->setScene(arg0);
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Camera_setScene : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_Camera_getProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_getProjectionMatrix : Invalid Native Object");
-    if (argc == 0) {
-        const cocos2d::Mat4& ret = cobj->getProjectionMatrix();
-        jsval jsret = JSVAL_NULL;
-        jsret = matrix_to_jsval(cx, ret);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Camera_getProjectionMatrix : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_Camera_getViewProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_getViewProjectionMatrix : Invalid Native Object");
-    if (argc == 0) {
-        const cocos2d::Mat4& ret = cobj->getViewProjectionMatrix();
-        jsval jsret = JSVAL_NULL;
-        jsret = matrix_to_jsval(cx, ret);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Camera_getViewProjectionMatrix : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_Camera_getViewMatrix(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_getViewMatrix : Invalid Native Object");
-    if (argc == 0) {
-        const cocos2d::Mat4& ret = cobj->getViewMatrix();
-        jsval jsret = JSVAL_NULL;
-        jsret = matrix_to_jsval(cx, ret);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Camera_getViewMatrix : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_Camera_getCameraFlag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_getCameraFlag : Invalid Native Object");
-    if (argc == 0) {
-        int ret = (int)cobj->getCameraFlag();
-        jsval jsret = JSVAL_NULL;
-        jsret = int32_to_jsval(cx, ret);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Camera_getCameraFlag : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_Camera_getType(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_getType : Invalid Native Object");
-    if (argc == 0) {
-        int ret = (int)cobj->getType();
-        jsval jsret = JSVAL_NULL;
-        jsret = int32_to_jsval(cx, ret);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Camera_getType : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_Camera_lookAt(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_lookAt : Invalid Native Object");
-    if (argc == 2) {
-        cocos2d::Vec3 arg0;
-        cocos2d::Vec3 arg1;
-        ok &= jsval_to_vector3(cx, argv[0], &arg0);
-        ok &= jsval_to_vector3(cx, argv[1], &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_lookAt : Error processing arguments");
-        cobj->lookAt(arg0, arg1);
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Camera_lookAt : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_cocos2dx_Camera_setCameraFlag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_setCameraFlag : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::CameraFlag arg0;
-        ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_setCameraFlag : Error processing arguments");
-        cobj->setCameraFlag(arg0);
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Camera_setCameraFlag : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_Camera_initOrthographic(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_initOrthographic : Invalid Native Object");
-    if (argc == 4) {
-        double arg0;
-        double arg1;
-        double arg2;
-        double arg3;
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[2]), &arg2);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[3]), &arg3);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_initOrthographic : Error processing arguments");
-        bool ret = cobj->initOrthographic(arg0, arg1, arg2, arg3);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Camera_initOrthographic : wrong number of arguments: %d, was expecting %d", argc, 4);
-    return false;
-}
-bool js_cocos2dx_Camera_initPerspective(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_initPerspective : Invalid Native Object");
-    if (argc == 4) {
-        double arg0;
-        double arg1;
-        double arg2;
-        double arg3;
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[2]), &arg2);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[3]), &arg3);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_initPerspective : Error processing arguments");
-        bool ret = cobj->initPerspective(arg0, arg1, arg2, arg3);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Camera_initPerspective : wrong number of arguments: %d, was expecting %d", argc, 4);
-    return false;
-}
-bool js_cocos2dx_Camera_initDefault(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_initDefault : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->initDefault();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Camera_initDefault : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_Camera_setAdditionalProjection(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_setAdditionalProjection : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Mat4 arg0;
-        ok &= jsval_to_matrix(cx, argv[0], &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_setAdditionalProjection : Error processing arguments");
-        cobj->setAdditionalProjection(arg0);
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Camera_setAdditionalProjection : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_Camera_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    if (argc == 0) {
-        cocos2d::Camera* ret = cocos2d::Camera::create();
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Camera>(cx, (cocos2d::Camera*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_Camera_create : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_Camera_createPerspective(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    if (argc == 4) {
-        double arg0;
-        double arg1;
-        double arg2;
-        double arg3;
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[2]), &arg2);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[3]), &arg3);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_createPerspective : Error processing arguments");
-        cocos2d::Camera* ret = cocos2d::Camera::createPerspective(arg0, arg1, arg2, arg3);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Camera>(cx, (cocos2d::Camera*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_Camera_createPerspective : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_Camera_createOrthographic(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    if (argc == 4) {
-        double arg0;
-        double arg1;
-        double arg2;
-        double arg3;
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[2]), &arg2);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[3]), &arg3);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_createOrthographic : Error processing arguments");
-        cocos2d::Camera* ret = cocos2d::Camera::createOrthographic(arg0, arg1, arg2, arg3);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Camera>(cx, (cocos2d::Camera*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_Camera_createOrthographic : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_Camera_getVisitingCamera(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    if (argc == 0) {
-        const cocos2d::Camera* ret = cocos2d::Camera::getVisitingCamera();
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Camera>(cx, (cocos2d::Camera*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_Camera_getVisitingCamera : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_Camera_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    cocos2d::Camera* cobj = new (std::nothrow) cocos2d::Camera();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::Camera> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::Camera");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
-    return true;
-}
-
-
-extern JSObject *jsb_cocos2d_Node_prototype;
-
-void js_cocos2d_Camera_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Camera)", obj);
-}
-
-void js_register_cocos2dx_Camera(JSContext *cx, JSObject *global) {
-    jsb_cocos2d_Camera_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_cocos2d_Camera_class->name = "Camera";
-    jsb_cocos2d_Camera_class->addProperty = JS_PropertyStub;
-    jsb_cocos2d_Camera_class->delProperty = JS_DeletePropertyStub;
-    jsb_cocos2d_Camera_class->getProperty = JS_PropertyStub;
-    jsb_cocos2d_Camera_class->setProperty = JS_StrictPropertyStub;
-    jsb_cocos2d_Camera_class->enumerate = JS_EnumerateStub;
-    jsb_cocos2d_Camera_class->resolve = JS_ResolveStub;
-    jsb_cocos2d_Camera_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Camera_class->finalize = js_cocos2d_Camera_finalize;
-    jsb_cocos2d_Camera_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
-
-    static JSPropertySpec properties[] = {
-        {"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
-        {0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
-    };
-
-    static JSFunctionSpec funcs[] = {
-        JS_FN("setScene", js_cocos2dx_Camera_setScene, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getProjectionMatrix", js_cocos2dx_Camera_getProjectionMatrix, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getViewProjectionMatrix", js_cocos2dx_Camera_getViewProjectionMatrix, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getViewMatrix", js_cocos2dx_Camera_getViewMatrix, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getCameraFlag", js_cocos2dx_Camera_getCameraFlag, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getType", js_cocos2dx_Camera_getType, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("lookAt", js_cocos2dx_Camera_lookAt, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCameraFlag", js_cocos2dx_Camera_setCameraFlag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("initOrthographic", js_cocos2dx_Camera_initOrthographic, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("initPerspective", js_cocos2dx_Camera_initPerspective, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("initDefault", js_cocos2dx_Camera_initDefault, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setAdditionalProjection", js_cocos2dx_Camera_setAdditionalProjection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_cocos2dx_Camera_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createPerspective", js_cocos2dx_Camera_createPerspective, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createOrthographic", js_cocos2dx_Camera_createOrthographic, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getVisitingCamera", js_cocos2dx_Camera_getVisitingCamera, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    jsb_cocos2d_Camera_prototype = JS_InitClass(
-        cx, global,
-        jsb_cocos2d_Node_prototype,
-        jsb_cocos2d_Camera_class,
-        js_cocos2dx_Camera_constructor, 0, // constructor
-        properties,
-        funcs,
-        NULL, // no static properties
-        st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Camera", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
-
-    // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Camera> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Camera_class;
-        p->proto = jsb_cocos2d_Camera_prototype;
-        p->parentProto = jsb_cocos2d_Node_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
-}
-
 JSClass  *jsb_cocos2d_EventListener_class;
 JSObject *jsb_cocos2d_EventListener_prototype;
 
@@ -54643,6 +54188,461 @@ void js_register_cocos2dx_TiledGrid3D(JSContext *cx, JSObject *global) {
     }
 }
 
+JSClass  *jsb_cocos2d_Camera_class;
+JSObject *jsb_cocos2d_Camera_prototype;
+
+bool js_cocos2dx_Camera_setScene(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_setScene : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Scene* arg0;
+        do {
+            if (!argv[0].isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Scene*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_setScene : Error processing arguments");
+        cobj->setScene(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_setScene : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_Camera_getProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_getProjectionMatrix : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::Mat4& ret = cobj->getProjectionMatrix();
+        jsval jsret = JSVAL_NULL;
+        jsret = matrix_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_getProjectionMatrix : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_Camera_getViewProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_getViewProjectionMatrix : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::Mat4& ret = cobj->getViewProjectionMatrix();
+        jsval jsret = JSVAL_NULL;
+        jsret = matrix_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_getViewProjectionMatrix : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_Camera_getViewMatrix(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_getViewMatrix : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::Mat4& ret = cobj->getViewMatrix();
+        jsval jsret = JSVAL_NULL;
+        jsret = matrix_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_getViewMatrix : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_Camera_getCameraFlag(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_getCameraFlag : Invalid Native Object");
+    if (argc == 0) {
+        int ret = (int)cobj->getCameraFlag();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_getCameraFlag : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_Camera_getType(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_getType : Invalid Native Object");
+    if (argc == 0) {
+        int ret = (int)cobj->getType();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_getType : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_Camera_lookAt(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_lookAt : Invalid Native Object");
+    if (argc == 2) {
+        cocos2d::Vec3 arg0;
+        cocos2d::Vec3 arg1;
+        ok &= jsval_to_vector3(cx, argv[0], &arg0);
+        ok &= jsval_to_vector3(cx, argv[1], &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_lookAt : Error processing arguments");
+        cobj->lookAt(arg0, arg1);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_lookAt : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_cocos2dx_Camera_setCameraFlag(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_setCameraFlag : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::CameraFlag arg0;
+        ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_setCameraFlag : Error processing arguments");
+        cobj->setCameraFlag(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_setCameraFlag : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_Camera_initOrthographic(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_initOrthographic : Invalid Native Object");
+    if (argc == 4) {
+        double arg0;
+        double arg1;
+        double arg2;
+        double arg3;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[2]), &arg2);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[3]), &arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_initOrthographic : Error processing arguments");
+        bool ret = cobj->initOrthographic(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_initOrthographic : wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+bool js_cocos2dx_Camera_initPerspective(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_initPerspective : Invalid Native Object");
+    if (argc == 4) {
+        double arg0;
+        double arg1;
+        double arg2;
+        double arg3;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[2]), &arg2);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[3]), &arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_initPerspective : Error processing arguments");
+        bool ret = cobj->initPerspective(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_initPerspective : wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+bool js_cocos2dx_Camera_initDefault(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_initDefault : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->initDefault();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_initDefault : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_Camera_setAdditionalProjection(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_setAdditionalProjection : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Mat4 arg0;
+        ok &= jsval_to_matrix(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_setAdditionalProjection : Error processing arguments");
+        cobj->setAdditionalProjection(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_setAdditionalProjection : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_Camera_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc == 0) {
+        cocos2d::Camera* ret = cocos2d::Camera::create();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Camera>(cx, (cocos2d::Camera*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_Camera_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_Camera_createPerspective(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    if (argc == 4) {
+        double arg0;
+        double arg1;
+        double arg2;
+        double arg3;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[2]), &arg2);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[3]), &arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_createPerspective : Error processing arguments");
+        cocos2d::Camera* ret = cocos2d::Camera::createPerspective(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Camera>(cx, (cocos2d::Camera*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_Camera_createPerspective : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_Camera_createOrthographic(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    if (argc == 4) {
+        double arg0;
+        double arg1;
+        double arg2;
+        double arg3;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[2]), &arg2);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[3]), &arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_createOrthographic : Error processing arguments");
+        cocos2d::Camera* ret = cocos2d::Camera::createOrthographic(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Camera>(cx, (cocos2d::Camera*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_Camera_createOrthographic : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_Camera_getVisitingCamera(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc == 0) {
+        const cocos2d::Camera* ret = cocos2d::Camera::getVisitingCamera();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Camera>(cx, (cocos2d::Camera*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_Camera_getVisitingCamera : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_Camera_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    cocos2d::Camera* cobj = new (std::nothrow) cocos2d::Camera();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::Camera> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::Camera");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
+
+extern JSObject *jsb_cocos2d_Node_prototype;
+
+void js_cocos2d_Camera_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (Camera)", obj);
+}
+
+void js_register_cocos2dx_Camera(JSContext *cx, JSObject *global) {
+    jsb_cocos2d_Camera_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_Camera_class->name = "Camera";
+    jsb_cocos2d_Camera_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_Camera_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_Camera_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_Camera_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_Camera_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_Camera_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_Camera_class->convert = JS_ConvertStub;
+    jsb_cocos2d_Camera_class->finalize = js_cocos2d_Camera_finalize;
+    jsb_cocos2d_Camera_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        {"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+        {0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("setScene", js_cocos2dx_Camera_setScene, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getProjectionMatrix", js_cocos2dx_Camera_getProjectionMatrix, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getViewProjectionMatrix", js_cocos2dx_Camera_getViewProjectionMatrix, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getViewMatrix", js_cocos2dx_Camera_getViewMatrix, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCameraFlag", js_cocos2dx_Camera_getCameraFlag, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getType", js_cocos2dx_Camera_getType, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("lookAt", js_cocos2dx_Camera_lookAt, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setCameraFlag", js_cocos2dx_Camera_setCameraFlag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initOrthographic", js_cocos2dx_Camera_initOrthographic, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initPerspective", js_cocos2dx_Camera_initPerspective, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initDefault", js_cocos2dx_Camera_initDefault, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAdditionalProjection", js_cocos2dx_Camera_setAdditionalProjection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_Camera_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createPerspective", js_cocos2dx_Camera_createPerspective, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createOrthographic", js_cocos2dx_Camera_createOrthographic, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getVisitingCamera", js_cocos2dx_Camera_getVisitingCamera, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_Camera_prototype = JS_InitClass(
+        cx, global,
+        jsb_cocos2d_Node_prototype,
+        jsb_cocos2d_Camera_class,
+        js_cocos2dx_Camera_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "Camera", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::Camera> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_Camera_class;
+        p->proto = jsb_cocos2d_Camera_prototype;
+        p->parentProto = jsb_cocos2d_Node_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
 JSClass  *jsb_cocos2d_GLProgram_class;
 JSObject *jsb_cocos2d_GLProgram_prototype;
 
@@ -61870,6 +61870,7 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
     js_register_cocos2dx_TMXLayerInfo(cx, obj);
     js_register_cocos2dx_EaseSineIn(cx, obj);
     js_register_cocos2dx_EaseBounceIn(cx, obj);
+    js_register_cocos2dx_Camera(cx, obj);
     js_register_cocos2dx_GLProgram(cx, obj);
     js_register_cocos2dx_ParticleGalaxy(cx, obj);
     js_register_cocos2dx_Twirl(cx, obj);
@@ -61910,7 +61911,6 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
     js_register_cocos2dx_TransitionCrossFade(cx, obj);
     js_register_cocos2dx_Ripple3D(cx, obj);
     js_register_cocos2dx_Lens3D(cx, obj);
-    js_register_cocos2dx_Animation(cx, obj);
     js_register_cocos2dx_ScaleTo(cx, obj);
     js_register_cocos2dx_Spawn(cx, obj);
     js_register_cocos2dx_EaseQuarticActionInOut(cx, obj);
@@ -61922,7 +61922,6 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
     js_register_cocos2dx_EaseCircleActionOut(cx, obj);
     js_register_cocos2dx_TransitionProgressInOut(cx, obj);
     js_register_cocos2dx_EaseCubicActionInOut(cx, obj);
-    js_register_cocos2dx_Camera(cx, obj);
     js_register_cocos2dx_EaseBackIn(cx, obj);
     js_register_cocos2dx_SplitRows(cx, obj);
     js_register_cocos2dx_Follow(cx, obj);
@@ -61936,6 +61935,7 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
     js_register_cocos2dx_TransitionZoomFlipY(cx, obj);
     js_register_cocos2dx_ScaleBy(cx, obj);
     js_register_cocos2dx_EventTouch(cx, obj);
+    js_register_cocos2dx_Animation(cx, obj);
     js_register_cocos2dx_TMXMapInfo(cx, obj);
     js_register_cocos2dx_EaseExponentialIn(cx, obj);
     js_register_cocos2dx_ReuseGrid(cx, obj);

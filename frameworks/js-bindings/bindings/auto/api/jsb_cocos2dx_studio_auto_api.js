@@ -3245,6 +3245,16 @@ timeline
 },
 
 /**
+ * @method isEnterWhenPassed
+ * @return {bool}
+ */
+isEnterWhenPassed : function (
+)
+{
+    return false;
+},
+
+/**
  * @method getFrameIndex
  * @return {unsigned int}
  */
@@ -3907,6 +3917,14 @@ ccs.EventFrame = {
  */
 setEvent : function (
 str 
+)
+{
+},
+
+/**
+ * @method init
+ */
+init : function (
 )
 {
 },
