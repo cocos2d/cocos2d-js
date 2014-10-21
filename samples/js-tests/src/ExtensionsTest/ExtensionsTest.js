@@ -103,7 +103,7 @@ var extensionsTestItemNames = [
     }
 ];
 
-if (cc.sys.OS_IOS == cc.sys.os) {
+if (cc.sys.isNative && cc.sys.OS_IOS == cc.sys.os) {
     extensionsTestItemNames.push({
         itemTitle:"PluginTest",
         testScene:function () {
