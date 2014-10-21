@@ -32,7 +32,7 @@ ccui.Button.prototype.init = function(){
 };
 ccui.CheckBox.prototype.init = function(){
     ccui.Widget.prototype.init.call(this);
-    this.setSelectedState(false);
+    this.setSelected(false);
     this.setTouchEnabled(true);
 };
 ccui.LoadingBar.prototype.init = function(){
