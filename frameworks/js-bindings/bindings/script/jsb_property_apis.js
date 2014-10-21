@@ -565,7 +565,7 @@ cc.defineGetterSetter(_proto, "titleFontColor", _proto.getTitleFontColor, _proto
 cc.defineGetterSetter(_proto, "pressedActionEnabled", _proto.getPressedActionEnabled, _proto.setPressedActionEnabled);
 
 _proto = ccui.CheckBox.prototype;
-cc.defineGetterSetter(_proto, "selected", _proto.getSelectedState, _proto.setSelectedState);
+cc.defineGetterSetter(_proto, "selected", _proto.getSelected, _proto.setSelected);
 
 _proto = ccui.Text.prototype;
 cc.defineGetterSetter(_proto, "boundingWidth", _proto._getBoundingWidth, _proto._setBoundingWidth);

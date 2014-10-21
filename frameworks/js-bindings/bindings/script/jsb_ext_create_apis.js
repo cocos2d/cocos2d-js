@@ -32,7 +32,7 @@ ccui.Button.prototype.init = function(){
 };
 ccui.CheckBox.prototype.init = function(){
     ccui.Widget.prototype.init.call(this);
-    this.setSelectedState(false);
+    this.setSelected(false);
     this.setTouchEnabled(true);
 };
 ccui.LoadingBar.prototype.init = function(){
@@ -170,17 +170,11 @@ cc.TableView.prototype._ctor = function(dataSouurce, size, container){
 };
 
 cc.EditBox.prototype._ctor = function(size, normal9SpriteBg, press9SpriteBg, disabled9SpriteBg){
-    if (this.initWithSizeAndBackgroundSprite(size, normal9SpriteBg)) {
-        if (press9SpriteBg)
-            this.setBackgroundSpriteForState(press9SpriteBg, cc.CONTROL_STATE_HIGHLIGHTED);
-
-        if (disabled9SpriteBg)
-            this.setBackgroundSpriteForState(disabled9SpriteBg, cc.CONTROL_STATE_DISABLED);
-    }
+    normal9SpriteBg && this.initWithSizeAndBackgroundSprite(size, normal9SpriteBg);
 };
 
 cc.ScrollView.prototype._ctor = function(size, container) {
-    container == undefined ? this.init() : this.initWithViewSize(size, container);
+    size == undefined ? this.init() : (container ? this.initWithViewSize(size, container) : this.initWithViewSize(size));
 };
 
 
