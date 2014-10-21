@@ -180,7 +180,7 @@ cc.EditBox.prototype._ctor = function(size, normal9SpriteBg, press9SpriteBg, dis
 };
 
 cc.ScrollView.prototype._ctor = function(size, container) {
-    container == undefined ? this.init() : this.initWithViewSize(size, container);
+    size == undefined ? this.init() : (container ? this.initWithViewSize(size, container) : this.initWithViewSize(size));
 };
 
 
