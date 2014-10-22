@@ -92,7 +92,7 @@ ccui.RichElementCustomNode.prototype._ctor = function(tag, color, opacity, custo
 };
 
 jsb.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callback) {
-    callback && this.init(assetsManager, callback);
+    callback !== undefined && this.init(assetsManager, callback);
 };
 
 cc.Scale9Sprite.prototype._ctor = function(file, rect, capInsets){
@@ -158,11 +158,11 @@ cc.ControlSlider.prototype._ctor = function(bgFile, progressFile, thumbFile){
 };
 
 cc.ControlStepper.prototype._ctor = function(minusSprite, plusSprite){
-    plusSprite && this.initWithMinusSpriteAndPlusSprite(minusSprite, plusSprite);
+    plusSprite !== undefined && this.initWithMinusSpriteAndPlusSprite(minusSprite, plusSprite);
 };
 
 cc.ControlSwitch.prototype._ctor = function(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel){
-    offLabel && this.initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
+    offLabel !== undefined && this.initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
 };
 
 cc.TableView.prototype._ctor = function(dataSouurce, size, container){
@@ -187,19 +187,19 @@ cc.ScrollView.prototype._ctor = function(size, container) {
 /************************  Cocostudio  *************************/
 
 ccs.Armature.prototype._ctor = function(name, parentBone) {
-    parentBone && ccs.Armature.prototype.init.call(this, name, parentBone);
+    parentBone !== undefined && ccs.Armature.prototype.init.call(this, name, parentBone);
 };
 
 ccs.Bone.prototype._ctor = function(name) {
-    name && ccs.Bone.prototype.init.call(this, name);
+    name !== undefined && ccs.Bone.prototype.init.call(this, name);
 };
 
 ccs.ArmatureAnimation.prototype._ctor = function(armature) {
-    armature && ccs.ArmatureAnimation.prototype.init.call(this, armature);
+    armature !== undefined && ccs.ArmatureAnimation.prototype.init.call(this, armature);
 };
 
 ccs.Tween.prototype._ctor = function(bone) {
-    bone && ccs.Tween.prototype.init.call(this, bone);
+    bone !== undefined && ccs.Tween.prototype.init.call(this, bone);
 };
 
 ccs.BatchNode.prototype._ctor = function() {
@@ -211,7 +211,7 @@ ccs.DecorativeDisplay.prototype._ctor = function() {
 };
 
 ccs.DisplayManager.prototype._ctor = function(bone) {
-    bone && ccs.DisplayManager.prototype.init.call(this, bone);
+    bone !== undefined && ccs.DisplayManager.prototype.init.call(this, bone);
 };
 
 ccs.Skin.prototype._ctor = function(fileName, rect) {
@@ -228,7 +228,7 @@ ccs.Skin.prototype._ctor = function(fileName, rect) {
 };
 
 ccs.ColliderDetector.prototype._ctor = function(bone) {
-    bone && ccs.ColliderDetector.prototype.init.call(this, bone);
+    bone !== undefined && ccs.ColliderDetector.prototype.init.call(this, bone);
 };
 
 ccs.TriggerObj.prototype._ctor = function() {
