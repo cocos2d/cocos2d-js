@@ -348,7 +348,7 @@ _p._ctor = function(fileName, rect){
 /************************  ProgressTimer  *************************/
 _p = cc.ProgressTimer.prototype;
 _p._ctor = function(sprite){
-    sprite && this.initWithSprite(sprite);
+    sprite !== undefined && this.initWithSprite(sprite);
 };
 
 /************************  TextFieldTTF  *************************/
@@ -447,12 +447,12 @@ cc.CardinalSplineTo.prototype._ctor = cc.CardinalSplineBy.prototype._ctor = func
 };
 
 cc.CatmullRomTo.prototype._ctor = cc.CatmullRomBy.prototype._ctor = function(dt, points) {
-    points && this.initWithDuration(dt, points);
+    points !== undefined && this.initWithDuration(dt, points);
 };
 
 _p = cc.ActionEase.prototype;
 _p._ctor = function(action) {
-    action && this.initWithAction(action);
+    action !== undefined && this.initWithAction(action);
 };
 cc.EaseExponentialIn._ctor
     = cc.EaseExponentialOut._ctor
@@ -534,7 +534,7 @@ cc.Lens3D.prototype._ctor = function(duration, gridSize, position, radius) {
 cc.FlipY3D.prototype._ctor
     = cc.FlipX3D.prototype._ctor
     = function(duration) {
-    duration !== undefiend && this.initWithDuration(duration, cc.size(1, 1));
+    duration !== undefined && this.initWithDuration(duration, cc.size(1, 1));
 };
 
 cc.Waves3D.prototype._ctor = function(duration, gridSize, waves, amplitude) {
@@ -597,7 +597,7 @@ cc.Repeat.prototype._ctor = function(action, times) {
 };
 
 cc.RepeatForever.prototype._ctor = function(action) {
-    action && this.initWithAction(action);
+    action !== undefined && this.initWithAction(action);
 };
 
 cc.Spawn.prototype._ctor = function(tempArray) {
@@ -819,14 +819,14 @@ cc.LabelTTF.prototype._ctor = function(text, fontName, fontSize, dimensions, hAl
 /************************  Other classes  *************************/
 
 cc.EventTouch.prototype._ctor = function(touches) {
-    touches && cc.EventTouch.prototype.setTouches.call(this, touches);
+    touches !== undefined && cc.EventTouch.prototype.setTouches.call(this, touches);
 };
 cc.Touch.prototype._ctor = function(x, y, id) {
     id !== undefined && cc.Touch.prototype.setTouchInfo.call(this, x, y, id);
 };
 
 cc.GLProgram.prototype._ctor = function(vShaderFileName, fShaderFileName) {
-    vShaderFileName && fShaderFileName && cc.GLProgram.prototype.init.call(this, vShaderFileName, fShaderFileName);
+    vShaderFileName !== undefined && fShaderFileName !== undefined && cc.GLProgram.prototype.init.call(this, vShaderFileName, fShaderFileName);
 };
 
 
