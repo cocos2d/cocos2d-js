@@ -176,7 +176,7 @@ var FacebookUserTest = FacebookTest.extend({
         }
     },
     paymentClick: function () {
-        if(!cc.sys.isNative){
+        if(facebook_is_canvas){
             var info = {
                 product: 'https://www.cocos2d-x.org/demo/facebooktest/pay/item1.html'
             };
@@ -192,6 +192,8 @@ var FacebookUserTest = FacebookTest.extend({
                     self.result.setString("Request send failed, error #" + code + ": " + JSON.stringify(response));
                 }
             });
+        }else{
+            this.result.setString("canvas.pay is only available for Facebook Canvas App");
         }
     }
 });
