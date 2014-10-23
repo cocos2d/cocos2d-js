@@ -62,7 +62,7 @@ var FacebookUserTest = FacebookTest.extend({
         this.addChild(this.result, 1);
     },
     activateAppClick: function () {
-        if (cc.sys.isNative) {
+        if (cc.sys.isNative|| facebook_is_canvas) {
             facebook.activateApp();
             this.result.setString("activateApp is invoked");
         }
@@ -71,7 +71,7 @@ var FacebookUserTest = FacebookTest.extend({
         }
     },
     LogEventClick: function () {
-        if (cc.sys.isNative) {
+        if (cc.sys.isNative || facebook_is_canvas) {
             var parameters = {};
             var floatVal = 888.888;
             parameters[window["plugin"].FacebookAgent.AppEventParam.SUCCESS] = window["plugin"].FacebookAgent.AppEventParamValue.VALUE_YES;
@@ -154,7 +154,7 @@ var FacebookUserTest = FacebookTest.extend({
         });
     },
     LogPurchaseClick: function (sender) {
-        if (cc.sys.isNative) {
+        if (cc.sys.isNative || facebook_is_canvas) {
             var params = {};
             // All supported parameters are listed here
             params[window["plugin"].FacebookAgent.AppEventParam.CURRENCY] = "CNY";
@@ -176,20 +176,22 @@ var FacebookUserTest = FacebookTest.extend({
         }
     },
     paymentClick: function () {
-        var info = {
-            product: 'https://www.cocos2d-x.org/demo/facebooktest/pay/item1.html'
-        };
+        if(!cc.sys.isNative){
+            var info = {
+                product: 'https://www.cocos2d-x.org/demo/facebooktest/pay/item1.html'
+            };
 
-        var self = this;
-        facebook.canvas.pay(info, function(code, response){
-            if (code == window["plugin"].FacebookAgent.CODE_SUCCEED){
-                if (response['status'] === 'completed')
-                    self.result.setString("Payment succeeded: " + response['amount'] + response['currency']);
-                else
-                    self.result.setString("Payment failed: " + JSON.stringify(response['status']))
-            } else {
-                self.result.setString("Request send failed, error #" + code + ": " + JSON.stringify(response));
-            }
-        });
+            var self = this;
+            facebook.canvas.pay(info, function(code, response){
+                if (code == window["plugin"].FacebookAgent.CODE_SUCCEED){
+                    if (response['status'] === 'completed')
+                        self.result.setString("Payment succeeded: " + response['amount'] + response['currency']);
+                    else
+                        self.result.setString("Payment failed: " + JSON.stringify(response['status']))
+                } else {
+                    self.result.setString("Request send failed, error #" + code + ": " + JSON.stringify(response));
+                }
+            });
+        }
     }
 });
