@@ -43,7 +43,7 @@ var FacebookUserTest = FacebookTest.extend({
     ctor: function (title) {
         this._super(title);
 
-        window.facebook = window.facebook || (window.plugin ? plugin.FacebookAgent.getInstance() : null);
+        window.facebook = window.facebook || (window["plugin"] ? window["plugin"]["FacebookAgent"]["getInstance"]() : null);
 
         var menu = cc.Menu.create();
         for (var action in button_share) {
@@ -74,11 +74,11 @@ var FacebookUserTest = FacebookTest.extend({
         if (cc.sys.isNative) {
             var parameters = {};
             var floatVal = 888.888;
-            parameters[plugin.FacebookAgent.AppEventParam.SUCCESS] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
+            parameters[window["plugin"].FacebookAgent.AppEventParam.SUCCESS] = window["plugin"].FacebookAgent.AppEventParamValue.VALUE_YES;
     //        facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL);
-            facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal);
-            facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, parameters);
-            facebook.logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal, parameters);
+            facebook.logEvent(window["plugin"].FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal);
+            facebook.logEvent(window["plugin"].FacebookAgent.AppEvent.COMPLETED_TUTORIAL, parameters);
+            facebook.logEvent(window["plugin"].FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal, parameters);
             this.result.setString("logEvent is invoked");
         }
         else {
@@ -128,15 +128,15 @@ var FacebookUserTest = FacebookTest.extend({
         var self = this;
         var permissions = ["create_event", "create_note", "manage_pages", "publish_actions"];
         facebook.login(permissions, function (type, msg) {
-            if (type == plugin.FacebookAgent.CODE_SUCCEED) {
+            if (type == window["plugin"].FacebookAgent.CODE_SUCCEED) {
                 self.result.setString(msg["permissions"]);
             }
         });
     },
     getPermissionClick: function (sender) {
         var self = this;
-        facebook.api("/me/permissions", plugin.FacebookAgent.HttpMethod.GET, {}, function (type, data) {
-            if (type == plugin.FacebookAgent.CODE_SUCCEED) {
+        facebook.api("/me/permissions", window["plugin"].FacebookAgent.HttpMethod.GET, {}, function (type, data) {
+            if (type == window["plugin"].FacebookAgent.CODE_SUCCEED) {
                 data = JSON.stringify(data);
                 self.result.setString(data);
             }
@@ -147,8 +147,8 @@ var FacebookUserTest = FacebookTest.extend({
     },
     requestClick: function (sender) {
         var self = this;
-        facebook.api("/me/photos", plugin.FacebookAgent.HttpMethod.POST, {"url": "http://files.cocos2d-x.org/images/orgsite/logo.png"}, function (type, msg) {
-            if (type == plugin.FacebookAgent.CODE_SUCCEED) {
+        facebook.api("/me/photos", window["plugin"].FacebookAgent.HttpMethod.POST, {"url": "http://files.cocos2d-x.org/images/orgsite/logo.png"}, function (type, msg) {
+            if (type == window["plugin"].FacebookAgent.CODE_SUCCEED) {
                 self.result.setString("post_id: " + msg["post_id"]);
             }
         });
@@ -157,17 +157,17 @@ var FacebookUserTest = FacebookTest.extend({
         if (cc.sys.isNative) {
             var params = {};
             // All supported parameters are listed here
-            params[plugin.FacebookAgent.AppEventParam.CURRENCY] = "CNY";
-            params[plugin.FacebookAgent.AppEventParam.REGISTRATION_METHOD] = "Facebook";
-            params[plugin.FacebookAgent.AppEventParam.CONTENT_TYPE] = "game";
-            params[plugin.FacebookAgent.AppEventParam.CONTENT_ID] = "201410102342";
-            params[plugin.FacebookAgent.AppEventParam.SEARCH_STRING] = "cocos2djs";
-            params[plugin.FacebookAgent.AppEventParam.SUCCESS] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
-            params[plugin.FacebookAgent.AppEventParam.MAX_RATING_VALUE] = "10";
-            params[plugin.FacebookAgent.AppEventParam.PAYMENT_INFO_AVAILABLE] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES;
-            params[plugin.FacebookAgent.AppEventParam.NUM_ITEMS] = "99";
-            params[plugin.FacebookAgent.AppEventParam.LEVEL] = "10";
-            params[plugin.FacebookAgent.AppEventParam.DESCRIPTION] = "Cocos2d-JS";
+            params[window["plugin"].FacebookAgent.AppEventParam.CURRENCY] = "CNY";
+            params[window["plugin"].FacebookAgent.AppEventParam.REGISTRATION_METHOD] = "Facebook";
+            params[window["plugin"].FacebookAgent.AppEventParam.CONTENT_TYPE] = "game";
+            params[window["plugin"].FacebookAgent.AppEventParam.CONTENT_ID] = "201410102342";
+            params[window["plugin"].FacebookAgent.AppEventParam.SEARCH_STRING] = "cocos2djs";
+            params[window["plugin"].FacebookAgent.AppEventParam.SUCCESS] = window["plugin"].FacebookAgent.AppEventParamValue.VALUE_YES;
+            params[window["plugin"].FacebookAgent.AppEventParam.MAX_RATING_VALUE] = "10";
+            params[window["plugin"].FacebookAgent.AppEventParam.PAYMENT_INFO_AVAILABLE] = window["plugin"].FacebookAgent.AppEventParamValue.VALUE_YES;
+            params[window["plugin"].FacebookAgent.AppEventParam.NUM_ITEMS] = "99";
+            params[window["plugin"].FacebookAgent.AppEventParam.LEVEL] = "10";
+            params[window["plugin"].FacebookAgent.AppEventParam.DESCRIPTION] = "Cocos2d-JS";
             facebook.logPurchase(1.23, "CNY", params);
             this.result.setString("Purchase logged.");
         }
@@ -182,7 +182,7 @@ var FacebookUserTest = FacebookTest.extend({
 
         var self = this;
         facebook.canvas.pay(info, function(code, response){
-            if (code == plugin.FacebookAgent.CODE_SUCCEED){
+            if (code == window["plugin"].FacebookAgent.CODE_SUCCEED){
                 if (response['status'] === 'completed')
                     self.result.setString("Payment succeeded: " + response['amount'] + response['currency']);
                 else
