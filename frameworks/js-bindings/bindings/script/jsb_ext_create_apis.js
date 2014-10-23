@@ -75,7 +75,8 @@ ccui.Widget.prototype._ctor = ccui.CheckBox.prototype._ctor
                             = _p._ctor;
 
 ccui.Button.prototype._ctor = function (normalImage, selectedImage,disableImage, texType) {
-    texType !== undefined && this.init(normalImage, selectedImage, disableImage, texType);
+    texType !== undefined && ccui.Button.prototype.init.call(this, normalImage, selectedImage,disableImage, texType);
+    this.setTouchEnabled(true);
 };
 
 ccui.RichElementText.prototype._ctor = function(tag, color, opacity, text, fontName, fontSize){
