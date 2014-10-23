@@ -35,9 +35,9 @@ Cocos2d-JS v3.1 @ Oct.22, 2014
     15. [JSB] Fixed user object conflict in `ccui.Widget`'s `addTouchEventListener` function binding.
     16. [JSB] Fixed an issue that null parameter was not correctly processed in `ccs.ArmatureAnimations`'s `setFrameEventCallFunc` and `setMovementEventCallFunc` functions.
     17. [JSB] Fixed an issue that `cc.Scale9Sprite`'s `updateWithBatchNode` had been deprecated in JSB.
-    28. [JSB] Fixed an issue that `cc.SpriteBatchNode` could not be extended in JSB.
-    29. [JSB] Fixed an issue that Cocos Studio extension classes could not be extended in JSB.
-    30. [JSB] Fixed API inconsistency issues by renaming `cc.Node`'s `getRotationSkewX/Y` and `setRotationSkewX/Y` to `getRotationX/Y` and `setRotationX/Y`.
+    18. [JSB] Fixed an issue that `cc.SpriteBatchNode` could not be extended in JSB.
+    19. [JSB] Fixed an issue that Cocos Studio extension classes could not be extended in JSB.
+    20. [JSB] Fixed API inconsistency issues by renaming `cc.Node`'s `getRotationSkewX/Y` and `setRotationSkewX/Y` to `getRotationX/Y` and `setRotationX/Y`.
 
 * Known Issues:
     1. `jsb.AssetsManager` doesn't work on windows due to a bug in libcurl
