@@ -26,10 +26,6 @@
  *
  ************************************************************/
 ccui.Widget.prototype.init = ccui.Widget.prototype._init;
-ccui.Button.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-    this.setTouchEnabled(true);
-};
 ccui.CheckBox.prototype.init = function(){
     ccui.Widget.prototype.init.call(this);
     this.setSelected(false);
@@ -63,8 +59,7 @@ var _p = {};
 _p._ctor = function(){
     this.init();
 };
-ccui.Widget.prototype._ctor = ccui.Button.prototype._ctor
-                            = ccui.CheckBox.prototype._ctor 
+ccui.Widget.prototype._ctor = ccui.CheckBox.prototype._ctor 
                             = ccui.ImageView.prototype._ctor
                             = ccui.LoadingBar.prototype._ctor
                             = ccui.RichText.prototype._ctor
@@ -78,6 +73,11 @@ ccui.Widget.prototype._ctor = ccui.Button.prototype._ctor
                             = ccui.PageView.prototype._ctor
                             = ccui.ScrollView.prototype._ctor
                             = _p._ctor;
+
+ccui.Button.prototype._ctor = function (normalImage, selectedImage,disableImage, texType) {
+    texType !== undefined && ccui.Button.prototype.init.call(this, normalImage, selectedImage,disableImage, texType);
+    this.setTouchEnabled(true);
+};
 
 ccui.RichElementText.prototype._ctor = function(tag, color, opacity, text, fontName, fontSize){
     fontSize !== undefined && this.init(tag, color, opacity, text, fontName, fontSize);
