@@ -20,10 +20,12 @@ var Ship = cc.Sprite.extend({
 	    this.y = this.appearPosition.y;
 
         // set frame
+        //var frame2 = cc.spriteFrameCache.getSpriteFrame("ship03.png");
         var frame0 = cc.spriteFrameCache.getSpriteFrame("ship01.png");
         var frame1 = cc.spriteFrameCache.getSpriteFrame("ship02.png");
 
         var animFrames = [];
+        //animFrames.push(frame2);
         animFrames.push(frame0);
         animFrames.push(frame1);
 
@@ -37,20 +39,17 @@ var Ship = cc.Sprite.extend({
         this.born();
     },
     update:function (dt) {
-        // Keys are only enabled on the browser
-        if (!cc.sys.isNative) {
-            if ((MW.KEYS[cc.KEY.w] || MW.KEYS[cc.KEY.up]) && this.y <= winSize.height) {
-                this.y += dt * this.speed;
-            }
-            if ((MW.KEYS[cc.KEY.s] || MW.KEYS[cc.KEY.down]) && this.y >= 0) {
-                this.y -= dt * this.speed;
-            }
-            if ((MW.KEYS[cc.KEY.a] || MW.KEYS[cc.KEY.left]) && this.x >= 0) {
-                this.x -= dt * this.speed;
-            }
-            if ((MW.KEYS[cc.KEY.d] || MW.KEYS[cc.KEY.right]) && this.x <= winSize.width) {
-                this.x += dt * this.speed;
-            }
+        if ((MW.KEYS[cc.KEY.w] || MW.KEYS[cc.KEY.up]) && this.y <= winSize.height) {
+            this.y += dt * this.speed;
+        }
+        if ((MW.KEYS[cc.KEY.s] || MW.KEYS[cc.KEY.down]) && this.y >= 0) {
+            this.y -= dt * this.speed;
+        }
+        if ((MW.KEYS[cc.KEY.a] || MW.KEYS[cc.KEY.left]) && this.x >= 0) {
+            this.x -= dt * this.speed;
+        }
+        if ((MW.KEYS[cc.KEY.d] || MW.KEYS[cc.KEY.right]) && this.x <= winSize.width) {
+            this.x += dt * this.speed;
         }
 
         if (this.HP <= 0) {
@@ -67,7 +66,7 @@ var Ship = cc.Sprite.extend({
     },
     shoot:function (dt) {
         //this.shootEffect();
-        var offset = 13;
+        var offset = 27;
         var a = Bullet.getOrCreateBullet(this.bulletSpeed, "W1.png", MW.ENEMY_ATTACK_MODE.NORMAL, 3000, MW.UNIT_TAG.PLAYER_BULLET);
         a.x = this.x + offset;
 	    a.y = this.y + 3 + this.height * 0.3;
@@ -101,7 +100,7 @@ var Ship = cc.Sprite.extend({
         this.bornSprite = new cc.Sprite("#ship03.png");
         this.bornSprite.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
         this.bornSprite.x = this.width / 2;
-	    this.bornSprite.y = 12;
+	    this.bornSprite.y = this.height / 2;
         this.bornSprite.visible = false;
         this.addChild(this.bornSprite, 3000, 99999);
     },

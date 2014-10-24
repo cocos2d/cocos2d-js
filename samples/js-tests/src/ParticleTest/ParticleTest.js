@@ -28,8 +28,8 @@ var TAG_LABEL_ATLAS = 1;
 var particleSceneIdx = -1;
 
 var ParticleTestScene = TestScene.extend({
-    runThisTest:function () {
-        particleSceneIdx = -1;
+    runThisTest:function (num) {
+        particleSceneIdx = (num || num == 0) ? (num - 1) : -1;
 
         this.addChild(nextParticleAction());
         director.runScene(this);
@@ -678,10 +678,8 @@ var DemoExplosion = ParticleDemo.extend({
         this._emitter.setAutoRemoveOnFinish(true);
 
         this.setEmitterPosition();
-        this._emitter.retain();
     },
     onExit: function() {
-        this._emitter.release();
         this._super();
     },
     title:function () {

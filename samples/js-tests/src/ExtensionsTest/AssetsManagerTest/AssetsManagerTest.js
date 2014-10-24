@@ -28,7 +28,7 @@
 
 var sceneManifests = ["Manifests/AMTestScene1/project.manifest", "Manifests/AMTestScene2/project.manifest", "Manifests/AMTestScene3/project.manifest"];
 var storagePaths = ["JSBTests/AssetsManagerTest/scene1/", "JSBTests/AssetsManagerTest/scene2/", "JSBTests/AssetsManagerTest/scene3"];
-var backgroundPaths = ["Images/background1.jpg", "Images/background2.jpg", "Images/background3.png"];
+var backgroundPaths = ["Images/assetMgrBackground1.jpg", "Images/assetMgrBackground2.png", "Images/assetMgrBackground3.png"];
 
 var currentScene = 0;
 

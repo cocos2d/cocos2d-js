@@ -95,27 +95,24 @@ var extensionsTestItemNames = [
         }
     },
     {
-        itemTitle:"PluginTest",
+        itemTitle:"ActionTimelineTestScene",
         testScene:function () {
-            if(cc.sys.OS_ANDROID === cc.sys.os || cc.sys.OS_IOS === cc.sys.os){  //android/ios
-                var testScene = pluginXSceneManager.currentPluginXScene();
-                cc.director.runScene(testScene);
-            }else if(!cc.sys.isNative){   //browser
-                cc.loader.loadJs('', [
-                    "../../frameworks/cocos2d-html5/external/pluginx/platform/facebook_sdk.js",
-                    "../../frameworks/cocos2d-html5/external/pluginx/platform/facebook.js"
-                ], function(){
-                    var testScene = pluginXSceneManager.currentPluginXScene();
-                    if (testScene) {
-                        cc.director.runScene(testScene);
-                    }
-                });
-            }else{  //desktop
-                cc.log("Plugin-x doesn't support desktop platforms.");
-            }
+            var scene = new ActionTimelineTestScene();
+            scene.runThisTest();
         }
     }
 ];
+
+if (cc.sys.isNative && cc.sys.OS_IOS == cc.sys.os) {
+    extensionsTestItemNames.push({
+        itemTitle:"PluginTest",
+        testScene:function () {
+            var testScene = pluginXSceneManager.currentPluginXScene();
+            cc.director.runScene(testScene);
+        }
+    })
+}
+
 if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
     extensionsTestItemNames.push({
         itemTitle:"AssetsManagerTest",

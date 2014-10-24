@@ -92,11 +92,11 @@ jsval CCBScriptCallbackProxy::getJSOwner() {
 bool js_cocos2dx_CCBAnimationManager_animationCompleteCallback(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc >= 1) {
-		jsval *argv = JS_ARGV(cx, vp);
+        jsval *argv = JS_ARGV(cx, vp);
         
         JSObject *obj = JS_THIS_OBJECT(cx, vp);
-		js_proxy_t *p = jsb_get_js_proxy(obj);
-		cocosbuilder::CCBAnimationManager *node = (cocosbuilder::CCBAnimationManager *)(p ? p->ptr : NULL);
+        js_proxy_t *p = jsb_get_js_proxy(obj);
+        cocosbuilder::CCBAnimationManager *node = (cocosbuilder::CCBAnimationManager *)(p ? p->ptr : NULL);
         
         JSCCBAnimationWrapper *tmpCobj = new JSCCBAnimationWrapper();
         tmpCobj->autorelease();
@@ -153,7 +153,7 @@ bool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc, j
     }
     if (argc == 1) {
         const char* arg0;
-		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
         cocos2d::Node* ret = cobj->readNodeGraphFromFile(arg0);
@@ -200,86 +200,86 @@ bool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc, j
 
 bool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
+    jsval *argv = JS_ARGV(cx, vp);
     bool ok = true;
-	JSObject *obj;
-	cocosbuilder::CCBReader* cobj;
-	obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *p = jsb_get_js_proxy(obj);
-	cobj = (cocosbuilder::CCBReader *)(p ? p->ptr : NULL);
-	TEST_NATIVE_OBJECT(cx, cobj)
+    JSObject *obj;
+    cocosbuilder::CCBReader* cobj;
+    obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *p = jsb_get_js_proxy(obj);
+    cobj = (cocosbuilder::CCBReader *)(p ? p->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, cobj)
     
-	if (argc == 2) {
-		const char* arg0;
-		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-		cocos2d::Ref* arg1;
-		do {
-			js_proxy_t *proxy;
-			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
-			proxy = jsb_get_js_proxy(tmpObj);
-			arg1 = (cocos2d::Ref*)(proxy ? proxy->ptr : NULL);
-			TEST_NATIVE_OBJECT(cx, arg1)
-		} while (0);
+    if (argc == 2) {
+        const char* arg0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        cocos2d::Ref* arg1;
+        do {
+            js_proxy_t *proxy;
+            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
+            proxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (cocos2d::Ref*)(proxy ? proxy->ptr : NULL);
+            TEST_NATIVE_OBJECT(cx, arg1)
+        } while (0);
         
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
-		cocos2d::Scene* ret = cobj->createSceneWithNodeGraphFromFile(arg0, arg1);
-		jsval jsret; do {
-			if (ret) {
-				js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Scene>(cx, ret);
-				jsret = OBJECT_TO_JSVAL(proxy->obj);
-			} else {
-				jsret = JSVAL_NULL;
-			}
-		} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-	if (argc == 1) {
-		const char* arg0;
-		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        cocos2d::Scene* ret = cobj->createSceneWithNodeGraphFromFile(arg0, arg1);
+        jsval jsret; do {
+            if (ret) {
+                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Scene>(cx, ret);
+                jsret = OBJECT_TO_JSVAL(proxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    if (argc == 1) {
+        const char* arg0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
-		cocos2d::Scene* ret = cobj->createSceneWithNodeGraphFromFile(arg0);
-		jsval jsret; do {
-			if (ret) {
-				js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Scene>(cx, ret);
-				jsret = OBJECT_TO_JSVAL(proxy->obj);
-			} else {
-				jsret = JSVAL_NULL;
-			}
-		} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-	if (argc == 3) {
-		const char* arg0;
-		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-		cocos2d::Ref* arg1;
-		do {
-			js_proxy_t *proxy;
-			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
-			proxy = jsb_get_js_proxy(tmpObj);
-			arg1 = (cocos2d::Ref*)(proxy ? proxy->ptr : NULL);
-			TEST_NATIVE_OBJECT(cx, arg1)
-		} while (0);
-		cocos2d::Size arg2;
+        cocos2d::Scene* ret = cobj->createSceneWithNodeGraphFromFile(arg0);
+        jsval jsret; do {
+            if (ret) {
+                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Scene>(cx, ret);
+                jsret = OBJECT_TO_JSVAL(proxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    if (argc == 3) {
+        const char* arg0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        cocos2d::Ref* arg1;
+        do {
+            js_proxy_t *proxy;
+            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
+            proxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (cocos2d::Ref*)(proxy ? proxy->ptr : NULL);
+            TEST_NATIVE_OBJECT(cx, arg1)
+        } while (0);
+        cocos2d::Size arg2;
         ok &= jsval_to_ccsize(cx, argv[2], &arg2);
         
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
-		cocos2d::Scene* ret = cobj->createSceneWithNodeGraphFromFile(arg0, arg1, arg2);
-		jsval jsret; do {
-			if (ret) {
-				js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Scene>(cx, ret);
-				jsret = OBJECT_TO_JSVAL(proxy->obj);
-			} else {
-				jsret = JSVAL_NULL;
-			}
-		} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
+        cocos2d::Scene* ret = cobj->createSceneWithNodeGraphFromFile(arg0, arg1, arg2);
+        jsval jsret; do {
+            if (ret) {
+                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Scene>(cx, ret);
+                jsret = OBJECT_TO_JSVAL(proxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
     
     return false;
 }
@@ -288,7 +288,7 @@ bool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uint3
 bool js_CocosBuilder_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
-	NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::getInstance();
+    NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::getInstance();
     
     ccNodeLoaderLibrary->registerNodeLoader("", JSLayerLoader::loader());
     
@@ -319,15 +319,15 @@ extern JSObject* jsb_cocosbuilder_CCBAnimationManager_prototype;
 void register_CCBuilderReader(JSContext *cx, JSObject *obj) {
     JS::RootedValue  nsval(cx);
     JS::RootedObject ns(cx);
-	JS_GetProperty(cx, obj, "cc", &nsval);
-	if (nsval == JSVAL_VOID) {
-		ns = JS_NewObject(cx, NULL, NULL, NULL);
-		nsval = OBJECT_TO_JSVAL(ns);
-		JS_SetProperty(cx, obj, "cc", nsval);
-	} else {
-		JS_ValueToObject(cx, nsval, &ns);
-	}
-	obj = ns;
+    JS_GetProperty(cx, obj, "cc", &nsval);
+    if (nsval == JSVAL_VOID) {
+        ns = JS_NewObject(cx, NULL, NULL, NULL);
+        nsval = OBJECT_TO_JSVAL(ns);
+        JS_SetProperty(cx, obj, "cc", nsval);
+    } else {
+        JS_ValueToObject(cx, nsval, &ns);
+    }
+    obj = ns;
 
     JSObject  *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, obj, "(function () { return cc._Reader; })()"));
     JS_DefineFunction(cx, tmpObj, "create", js_CocosBuilder_create, 2, JSPROP_READONLY | JSPROP_PERMANENT);

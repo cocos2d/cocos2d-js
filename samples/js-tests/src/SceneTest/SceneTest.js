@@ -217,5 +217,5 @@ SceneTestScene = TestScene.extend({
 });
 
 var arrayOfSceneTest = [
-    'Scene Layer'
+    SceneTestLayer1
 ];

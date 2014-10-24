@@ -27,14 +27,14 @@ var TAG_SPRITE = 1;
 
 var ClickAndMoveTestScene = TestScene.extend({
     runThisTest:function () {
-        var layer = new MainLayer();
+        var layer = new ClickAndMoveTestLayer();
 
         this.addChild(layer);
         director.runScene(this);
     }
 });
 
-var MainLayer = cc.Layer.extend({
+var ClickAndMoveTestLayer = cc.Layer.extend({
     ctor:function () {
 
         if(window.sideIndexBar){
@@ -98,4 +98,4 @@ var MainLayer = cc.Layer.extend({
     }
 });
 
-var arrayOfClickMoveTest = ['Click on the screen'];
+var arrayOfClickMoveTest = [ClickAndMoveTestLayer];

@@ -151,9 +151,9 @@ public:
     static void removeAllTargets();
     // Remove all targets for priority.
     static void removeAllTargetsForMinPriority(int minPriority);
-	// Remove all targets by js object from hash table(_schedFunc_target_ht and _schedObj_target_ht).	
+    // Remove all targets by js object from hash table(_schedFunc_target_ht and _schedObj_target_ht).   
     static void removeAllTargetsForJSObject(JSObject* jsTargetObj);
-	// Remove the target by js object and the wrapper for native schedule.
+    // Remove the target by js object and the wrapper for native schedule.
     static void removeTargetForJSObject(JSObject* jsTargetObj, JSScheduleWrapper* target);
     static void dump();
 
@@ -188,19 +188,19 @@ public:
     JSTouchDelegate();
     ~JSTouchDelegate();
     
-	// Set the touch delegate to map by using the key (pJSObj).
+    // Set the touch delegate to map by using the key (pJSObj).
     static void setDelegateForJSObject(JSObject* pJSObj, JSTouchDelegate* pDelegate);
     // Get the touch delegate by the key (pJSObj).
-	static JSTouchDelegate* getDelegateForJSObject(JSObject* pJSObj);
-	// Remove the delegate by the key (pJSObj).
+    static JSTouchDelegate* getDelegateForJSObject(JSObject* pJSObj);
+    // Remove the delegate by the key (pJSObj).
     static void removeDelegateForJSObject(JSObject* pJSObj);
 
     void setJSObject(JSObject *obj);
     void registerStandardDelegate(int priority);
     void registerTargetedDelegate(int priority, bool swallowsTouches);
-	// unregister touch delegate.
-	// Normally, developer should invoke cc.unregisterTouchDelegate() in when the scene exits.
-	// So this function need to be binded.
+    // unregister touch delegate.
+    // Normally, developer should invoke cc.unregisterTouchDelegate() in when the scene exits.
+    // So this function need to be binded.
     void unregisterTouchDelegate();
 
     bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
@@ -225,23 +225,23 @@ private:
 };
 
 
-class CC_DLL __JSPlistDelegator: public cocos2d::SAXDelegator
+class __JSPlistDelegator: public cocos2d::SAXDelegator
 {
 public:
     static __JSPlistDelegator* getInstance() {
-		static __JSPlistDelegator* pInstance = NULL;
+        static __JSPlistDelegator* pInstance = NULL;
         if (pInstance == NULL) {
             pInstance = new __JSPlistDelegator();
         }
-		return pInstance;
-	};
+        return pInstance;
+    };
     
     ~__JSPlistDelegator();
     
     cocos2d::SAXParser* getParser();
     
     std::string parse(const std::string& path);
-	std::string parseText(const std::string& text);
+    std::string parseText(const std::string& text);
     
     // implement pure virtual methods of SAXDelegator
     void startElement(void *ctx, const char *name, const char **atts);

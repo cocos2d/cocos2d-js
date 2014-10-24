@@ -14,6 +14,8 @@ var Enemy = cc.Sprite.extend({
     _hurtColorLife:0,
     ctor:function (arg) {
         this._super("#"+arg.textureName);
+        if (arg.textureName != "E4.png")
+            this.flippedY = true;
 
         this.HP = arg.HP;
         this.moveType = arg.moveType;
@@ -26,7 +28,7 @@ var Enemy = cc.Sprite.extend({
     update:function (dt) {
         var x = this.x;
 	    var y = this.y;
-        if ((x < 0 || x > 320) && (y < 0 || y > 480)) {
+        if ((x < 0 || x > MW.WIDTH) && (y < 0 || y > MW.HEIGHT)) {
             this.active = false;
         }
         this._timeTick += dt;

@@ -915,7 +915,7 @@ var TestBoundingBox = ArmatureTestLayer.extend({
         return "Test BoundingBox";
     },
     update: function () {
-        var rect =  this.armature.boundingBox();
+        var rect =  this.armature.getBoundingBox();
         this.drawNode.clear();
         this.drawNode.drawRect(cc.p(rect.x, rect.y), cc.p(cc.rectGetMaxX(rect), cc.rectGetMaxY(rect)));
     }

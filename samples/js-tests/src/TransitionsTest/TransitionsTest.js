@@ -101,73 +101,76 @@ var arrayOfTransitionsTest = [
     }}
 ];
 
-if( 'opengl' in cc.sys.capabilities ){
-    arrayOfTransitionsTest = arrayOfTransitionsTest.concat([{title:"FlipXLeftOver", transitionFunc:function (t, s) {
-        return FlipXLeftOver(t, s);
-    }},
-    {title:"FlipXRightOver", transitionFunc:function (t, s) {
-        return FlipXRightOver(t, s);
-    }},
-    {title:"FlipYUpOver", transitionFunc:function (t, s) {
-        return FlipYUpOver(t, s);
-    }},
-    {title:"FlipYDownOver", transitionFunc:function (t, s) {
-        return FlipYDownOver(t, s);
-    }},
-    {title:"FlipAngularLeftOver", transitionFunc:function (t, s) {
-        return FlipAngularLeftOver(t, s);
-    }},
-    {title:"FlipAngularRightOver", transitionFunc:function (t, s) {
-        return FlipAngularRightOver(t, s);
-    }},
-    {title:"ZoomFlipXLeftOver", transitionFunc:function (t, s) {
-        return ZoomFlipXLeftOver(t, s);
-    }},
-    {title:"ZoomFlipXRightOver", transitionFunc:function (t, s) {
-        return ZoomFlipXRightOver(t, s);
-    }},
-    {title:"ZoomFlipYUpOver", transitionFunc:function (t, s) {
-        return ZoomFlipYUpOver(t, s);
-    }},
-    {title:"ZoomFlipYDownOver", transitionFunc:function (t, s) {
-        return ZoomFlipYDownOver(t, s);
-    }},
-    {title:"ZoomFlipAngularLeftOver", transitionFunc:function (t, s) {
-        return ZoomFlipAngularLeftOver(t, s);
-    }},
-    {title:"ZoomFlipAngularRightOver", transitionFunc:function (t, s) {
-        return ZoomFlipAngularRightOver(t, s);
-    }},
-    {title:"PageTransitionForward", transitionFunc:function (t, s) {
-        return PageTransitionForward(t, s);
-    }},
-    {title:"PageTransitionBackward", transitionFunc:function (t, s) {
-        return PageTransitionBackward(t, s);
-    }},
-    {title:"FadeTRTransition", transitionFunc:function (t, s) {
-        return FadeTRTransition(t, s);
-    }},
-    {title:"FadeBLTransition", transitionFunc:function (t, s) {
-        return FadeBLTransition(t, s);
-    }},
-    {title:"FadeUpTransition", transitionFunc:function (t, s) {
-        return FadeUpTransition(t, s);
-    }},
-    {title:"FadeDownTransition", transitionFunc:function (t, s) {
-        return FadeDownTransition(t, s);
-    }},
-    {title:"TurnOffTilesTransition", transitionFunc:function (t, s) {
-        return TurnOffTilesTransition(t, s);
-    }},
-    {title:"SplitRowsTransition", transitionFunc:function (t, s) {
-        return SplitRowsTransition(t, s);
-    }},
-    {title:"CCTransitionCrossFade", transitionFunc:function (t, s) {
-        return CCTransitionCrossFade(t, s);
-    }},
-    {title:"SplitColsTransition", transitionFunc:function (t, s) {
-        return SplitColsTransition(t, s);
-    }}]);
+if ('opengl' in cc.sys.capabilities) {
+    arrayOfTransitionsTest = arrayOfTransitionsTest.concat(
+        [
+            {title: "FlipXLeftOver", transitionFunc: function (t, s) {
+                return FlipXLeftOver(t, s);
+            }},
+            {title: "FlipXRightOver", transitionFunc: function (t, s) {
+                return FlipXRightOver(t, s);
+            }},
+            {title: "FlipYUpOver", transitionFunc: function (t, s) {
+                return FlipYUpOver(t, s);
+            }},
+            {title: "FlipYDownOver", transitionFunc: function (t, s) {
+                return FlipYDownOver(t, s);
+            }},
+            {title: "FlipAngularLeftOver", transitionFunc: function (t, s) {
+                return FlipAngularLeftOver(t, s);
+            }},
+            {title: "FlipAngularRightOver", transitionFunc: function (t, s) {
+                return FlipAngularRightOver(t, s);
+            }},
+            {title: "ZoomFlipXLeftOver", transitionFunc: function (t, s) {
+                return ZoomFlipXLeftOver(t, s);
+            }},
+            {title: "ZoomFlipXRightOver", transitionFunc: function (t, s) {
+                return ZoomFlipXRightOver(t, s);
+            }},
+            {title: "ZoomFlipYUpOver", transitionFunc: function (t, s) {
+                return ZoomFlipYUpOver(t, s);
+            }},
+            {title: "ZoomFlipYDownOver", transitionFunc: function (t, s) {
+                return ZoomFlipYDownOver(t, s);
+            }},
+            {title: "ZoomFlipAngularLeftOver", transitionFunc: function (t, s) {
+                return ZoomFlipAngularLeftOver(t, s);
+            }},
+            {title: "ZoomFlipAngularRightOver", transitionFunc: function (t, s) {
+                return ZoomFlipAngularRightOver(t, s);
+            }},
+            {title: "PageTransitionForward", transitionFunc: function (t, s) {
+                return PageTransitionForward(t, s);
+            }},
+            {title: "PageTransitionBackward", transitionFunc: function (t, s) {
+                return PageTransitionBackward(t, s);
+            }},
+            {title: "FadeTRTransition", transitionFunc: function (t, s) {
+                return FadeTRTransition(t, s);
+            }},
+            {title: "FadeBLTransition", transitionFunc: function (t, s) {
+                return FadeBLTransition(t, s);
+            }},
+            {title: "FadeUpTransition", transitionFunc: function (t, s) {
+                return FadeUpTransition(t, s);
+            }},
+            {title: "FadeDownTransition", transitionFunc: function (t, s) {
+                return FadeDownTransition(t, s);
+            }},
+            {title: "TurnOffTilesTransition", transitionFunc: function (t, s) {
+                return TurnOffTilesTransition(t, s);
+            }},
+            {title: "SplitRowsTransition", transitionFunc: function (t, s) {
+                return SplitRowsTransition(t, s);
+            }},
+            {title: "CCTransitionCrossFade", transitionFunc: function (t, s) {
+                return CCTransitionCrossFade(t, s);
+            }},
+            {title: "SplitColsTransition", transitionFunc: function (t, s) {
+                return SplitColsTransition(t, s);
+            }}
+        ]);
 }
 
 var transitionsIdx = 0;

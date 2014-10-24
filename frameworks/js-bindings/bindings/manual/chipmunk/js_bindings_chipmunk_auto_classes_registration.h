@@ -24,6 +24,6 @@ JSB_cpShape_createClass(cx, chipmunk, "Shape");
 JSB_cpCircleShape_createClass(cx, chipmunk, "CircleShape");
 JSB_cpSegmentShape_createClass(cx, chipmunk, "SegmentShape");
 JSB_cpPolyShape_createClass(cx, chipmunk, "PolyShape");
-
-
+JSB_cpSegmentQueryInfo_createClass(cx, chipmunk, "SegmentQueryInfo");
+JSB_cpNearestPointQueryInfo_createClass(cx, chipmunk, "NearestPointQueryInfo");
 #endif // JSB_INCLUDE_CHIPMUNK
