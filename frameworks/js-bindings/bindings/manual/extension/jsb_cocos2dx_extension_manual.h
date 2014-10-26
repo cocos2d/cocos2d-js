@@ -28,7 +28,7 @@
 #include "jsfriendapi.h"
 #include "extensions/assets-manager/Downloader.h"
 
-class CC_DLL __JSDownloaderDelegator : cocos2d::Ref
+class __JSDownloaderDelegator : cocos2d::Ref
 {
 public:
     static void download(JSContext *cx, JSObject *obj, const std::string &url, const jsval &callback);

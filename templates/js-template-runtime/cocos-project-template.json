@@ -16,15 +16,9 @@
             },
          "append_dir":[
             {
-               "from":"frameworks/js-bindings",
-               "to":"frameworks/js-bindings",
-               "exclude":[
-                  "cocos2d-x",
-                  "bindings/proj.win32/Debug.win32",
-                  "bindings/proj.win32/Release.win32",
-                  "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/project.xcworkspace",
-                  "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/xcuserdata"
-               ]
+               "from":"frameworks/js-bindings/bindings/script",
+               "to":"frameworks/js-bindings/bindings/script",
+               "exclude":[]
             },
             {
                "from":"frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.android/DependProject/src",
@@ -53,14 +47,35 @@
                ]
             },
             {
-               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/zlib/prebuilt",
+               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/icon/prebuilt",
                "to":"runtime/win32",
                "include": [
                   "*.dll"
                ]
             },
             {
-               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/icon/prebuilt",
+               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/MP3Decoder/prebuilt",
+               "to":"runtime/win32",
+               "include": [
+                  "*.dll"
+               ]
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/OggDecoder/prebuilt",
+               "to":"runtime/win32",
+               "include": [
+                  "*.dll"
+               ]
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/OpenalSoft/prebuilt",
+               "to":"runtime/win32",
+               "include": [
+                  "*.dll"
+               ]
+            },
+            {
+               "from":"frameworks/js-bindings/cocos2d-x/external/win32-specific/zlib/prebuilt",
                "to":"runtime/win32",
                "include": [
                   "*.dll"
@@ -138,12 +153,19 @@
                    "bindings-generator/.git",
                    "bindings-generator/.gitignore"
                 ]
-             }
+             },
+            {
+               "from":"frameworks/js-bindings",
+               "to":"frameworks/js-bindings",
+               "exclude":[
+                  "bindings/script",
+                  "bindings/proj.win32/Debug.win32",
+                  "bindings/proj.win32/Release.win32",
+                  "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/project.xcworkspace",
+                  "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/xcuserdata"
+               ]
+            }
          ],
-         "append_x_engine":{
-            "from":"frameworks/js-bindings/cocos2d-x",
-            "to":"frameworks/js-bindings/cocos2d-x"
-         },
          "project_rename":{
             "src_project_name":"HelloJavascript",
             "files":[

@@ -1,0 +1,530 @@
+{
+  "version": "1.0.0.0",
+  "cocos2dVersion": "3.x",
+  "designWidth": 480,
+  "designHeight": 320,
+  "dataScale": 1.0,
+  "textures": [],
+  "texturesPng": [],
+  "nodeTree": {
+    "options": {
+      "$type": "EditorCommon.JsonModel.Component.GUI.RootGUISurrogate, EditorCommon",
+      "visible": true,
+      "frameEvent": null,
+      "name": "Node",
+      "classname": "Node"
+    },
+    "children": [
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.PanelSurrogate, EditorCommon",
+          "bgColorOpacity": 0,
+          "capInsetsWidth": 0.0,
+          "capInsetsHeight": 0.0,
+          "visible": true,
+          "classType": "Panel",
+          "width": 480.0,
+          "height": 320.0,
+          "sizePercentX": 1.0,
+          "sizePercentY": 1.0,
+          "actionTag": -1,
+          "tag": 5,
+          "anchorPointX": 0.0,
+          "anchorPointY": 0.0,
+          "ignoreSize": false,
+          "name": "Panel_521",
+          "classname": "Panel"
+        },
+        "children": [
+          {
+            "options": {
+              "$type": "EditorCommon.JsonModel.Component.GUI.PanelSurrogate, EditorCommon",
+              "backGroundImageData": {
+                "resourceType": 0,
+                "path": "background.png",
+                "plistFile": ""
+              },
+              "bgColorR": 255,
+              "bgColorG": 255,
+              "bgEndColorR": 0,
+              "bgEndColorG": 0,
+              "colorType": 0,
+              "bgColorOpacity": 255,
+              "capInsetsX": 160.0,
+              "capInsetsY": 106.0,
+              "capInsetsWidth": 160.0,
+              "capInsetsHeight": 106.0,
+              "layoutType": 3,
+              "visible": true,
+              "ZOrder": 1,
+              "classType": "Panel",
+              "width": 480.0,
+              "height": 320.0,
+              "sizePercentX": 1.0,
+              "sizePercentY": 1.0,
+              "actionTag": -1,
+              "tag": 81,
+              "anchorPointX": 0.0,
+              "anchorPointY": 0.0,
+              "ignoreSize": false,
+              "name": "root_Panel",
+              "classname": "Panel"
+            },
+            "children": [
+              {
+                "options": {
+                  "$type": "EditorCommon.JsonModel.Component.GUI.PanelSurrogate, EditorCommon",
+                  "backGroundImageData": {
+                    "resourceType": 0,
+                    "path": "ribbon.png",
+                    "plistFile": ""
+                  },
+                  "bgEndColorR": 0,
+                  "bgEndColorG": 0,
+                  "colorType": 0,
+                  "capInsetsX": 66.0,
+                  "capInsetsY": 66.0,
+                  "capInsetsWidth": 66.0,
+                  "capInsetsHeight": 66.0,
+                  "backGroundScale9Enable": true,
+                  "y": 263.0,
+                  "visible": true,
+                  "ZOrder": 1,
+                  "classType": "Panel",
+                  "width": 480.0,
+                  "height": 57.0,
+                  "positionPercentY": 0.821875,
+                  "sizePercentX": 1.0,
+                  "sizePercentY": 0.178125,
+                  "actionTag": 109,
+                  "tag": 82,
+                  "anchorPointX": 0.0,
+                  "anchorPointY": 0.0,
+                  "ignoreSize": false,
+                  "layoutParameter": {
+                    "type": 2,
+                    "relativeName": "Panel",
+                    "relativeToName": "root_Panel",
+                    "align": 2
+                  },
+                  "name": "Panel",
+                  "classname": "Panel"
+                },
+                "children": [],
+                "classname": "Panel"
+              },
+              {
+                "options": {
+                  "$type": "EditorCommon.JsonModel.Component.GUI.LabelSurrogate, EditorCommon",
+                  "fontName": "宋体",
+                  "text": "UI_test",
+                  "x": 240.0,
+                  "y": 310.0,
+                  "visible": true,
+                  "ZOrder": 1,
+                  "classType": "Label",
+                  "width": 70.0,
+                  "height": 20.0,
+                  "positionPercentX": 0.5,
+                  "positionPercentY": 0.96875,
+                  "sizePercentX": 0.145833328,
+                  "sizePercentY": 0.0625,
+                  "actionTag": 115,
+                  "tag": 88,
+                  "ignoreSize": true,
+                  "layoutParameter": {
+                    "type": 2,
+                    "relativeName": "UItest",
+                    "relativeToName": "root_Panel",
+                    "align": 2
+                  },
+                  "name": "UItest",
+                  "classname": "Label"
+                },
+                "children": [],
+                "classname": "Label"
+              },
+              {
+                "options": {
+                  "$type": "EditorCommon.JsonModel.Component.GUI.PanelSurrogate, EditorCommon",
+                  "backGroundImageData": {
+                    "resourceType": 0,
+                    "path": "buttonBackground.png",
+                    "plistFile": ""
+                  },
+                  "bgEndColorR": 0,
+                  "bgEndColorG": 0,
+                  "colorType": 0,
+                  "capInsetsWidth": 0.0,
+                  "capInsetsHeight": 0.0,
+                  "backGroundScale9Enable": true,
+                  "layoutType": 2,
+                  "x": 38.0,
+                  "y": 75.0,
+                  "visible": true,
+                  "ZOrder": 2,
+                  "classType": "Panel",
+                  "width": 403.0,
+                  "height": 170.0,
+                  "positionPercentX": 0.08020833,
+                  "positionPercentY": 0.234375,
+                  "sizePercentX": 0.839583337,
+                  "sizePercentY": 0.53125,
+                  "actionTag": 110,
+                  "tag": 83,
+                  "anchorPointX": 0.0,
+                  "anchorPointY": 0.0,
+                  "ignoreSize": false,
+                  "layoutParameter": {
+                    "type": 2,
+                    "relativeName": "background_Panel",
+                    "relativeToName": "root_Panel",
+                    "align": 5
+                  },
+                  "name": "background_Panel",
+                  "classname": "Panel"
+                },
+                "children": [
+                  {
+                    "options": {
+                      "$type": "EditorCommon.JsonModel.Component.GUI.PanelSurrogate, EditorCommon",
+                      "colorType": 0,
+                      "capInsetsWidth": 0.0,
+                      "capInsetsHeight": 0.0,
+                      "layoutType": 1,
+                      "visible": true,
+                      "classType": "Panel",
+                      "width": 132.0,
+                      "height": 170.0,
+                      "sizeType": 1,
+                      "sizePercentX": 0.33,
+                      "sizePercentY": 1.0,
+                      "actionTag": 993,
+                      "tag": 10,
+                      "anchorPointX": 0.0,
+                      "anchorPointY": 0.0,
+                      "ignoreSize": false,
+                      "layoutParameter": {
+                        "type": 1,
+                        "gravity": 5,
+                        "relativeName": "Panel_button_0",
+                        "relativeToName": "background_Panel"
+                      },
+                      "name": "Panel_button_0",
+                      "classname": "Panel"
+                    },
+                    "children": [
+                      {
+                        "options": {
+                          "$type": "EditorCommon.JsonModel.Component.GUI.TextFieldSurrogate, EditorCommon",
+                          "text": "",
+                          "placeHolder": "input words",
+                          "maxLength": 6,
+                          "x": 66.0,
+                          "y": 106.0,
+                          "touchAble": true,
+                          "visible": true,
+                          "classType": "TextField",
+                          "width": 114.0,
+                          "height": 27.0,
+                          "positionPercentX": 0.5,
+                          "positionPercentY": 0.626470566,
+                          "sizePercentX": 0.8572073,
+                          "sizePercentY": 0.158823535,
+                          "actionTag": 1109,
+                          "tag": 24,
+                          "ignoreSize": true,
+                          "layoutParameter": {
+                            "type": 1,
+                            "gravity": 6,
+                            "relativeName": "TextField_1109",
+                            "relativeToName": "Panel_button_0",
+                            "marginTop": 50
+                          },
+                          "name": "TextField_1109",
+                          "classname": "TextField"
+                        },
+                        "children": [],
+                        "classname": "TextField"
+                      },
+                      {
+                        "options": {
+                          "$type": "EditorCommon.JsonModel.Component.GUI.LabelSurrogate, EditorCommon",
+                          "text": "nomal",
+                          "x": 66.0,
+                          "y": 69.0,
+                          "visible": true,
+                          "classType": "Label",
+                          "width": 60.0,
+                          "height": 27.0,
+                          "positionPercentX": 0.5,
+                          "positionPercentY": 0.40882352,
+                          "sizePercentX": 0.4511617,
+                          "sizePercentY": 0.158823535,
+                          "actionTag": 997,
+                          "tag": 18,
+                          "ignoreSize": true,
+                          "layoutParameter": {
+                            "type": 1,
+                            "gravity": 6,
+                            "relativeName": "Label_997",
+                            "relativeToName": "Panel_button_0",
+                            "marginTop": 10
+                          },
+                          "name": "Label_997",
+                          "classname": "Label"
+                        },
+                        "children": [],
+                        "classname": "Label"
+                      }
+                    ],
+                    "classname": "Panel"
+                  },
+                  {
+                    "options": {
+                      "$type": "EditorCommon.JsonModel.Component.GUI.PanelSurrogate, EditorCommon",
+                      "colorType": 0,
+                      "capInsetsWidth": 0.0,
+                      "capInsetsHeight": 0.0,
+                      "layoutType": 1,
+                      "x": 132.0,
+                      "visible": true,
+                      "classType": "Panel",
+                      "width": 137.0,
+                      "height": 170.0,
+                      "positionPercentX": 0.33,
+                      "sizeType": 1,
+                      "sizePercentX": 0.34,
+                      "sizePercentY": 1.0,
+                      "actionTag": 122,
+                      "tag": 10,
+                      "anchorPointX": 0.0,
+                      "anchorPointY": 0.0,
+                      "ignoreSize": false,
+                      "layoutParameter": {
+                        "type": 1,
+                        "gravity": 5,
+                        "relativeName": "Panel_button",
+                        "relativeToName": "background_Panel"
+                      },
+                      "name": "Panel_button",
+                      "classname": "Panel"
+                    },
+                    "children": [
+                      {
+                        "options": {
+                          "$type": "EditorCommon.JsonModel.Component.GUI.TextFieldSurrogate, EditorCommon",
+                          "text": "",
+                          "placeHolder": "input words",
+                          "maxLengthEnable": true,
+                          "maxLength": 3,
+                          "x": 68.0,
+                          "y": 106.0,
+                          "touchAble": true,
+                          "visible": true,
+                          "classType": "TextField",
+                          "width": 114.0,
+                          "height": 27.0,
+                          "positionPercentX": 0.5,
+                          "positionPercentY": 0.626470566,
+                          "sizePercentX": 0.8319953,
+                          "sizePercentY": 0.158823535,
+                          "actionTag": 1110,
+                          "tag": 25,
+                          "ignoreSize": true,
+                          "layoutParameter": {
+                            "type": 1,
+                            "gravity": 6,
+                            "relativeName": "TextField_1110",
+                            "relativeToName": "Panel_button",
+                            "marginTop": 50
+                          },
+                          "name": "TextField_1110",
+                          "classname": "TextField"
+                        },
+                        "children": [],
+                        "classname": "TextField"
+                      },
+                      {
+                        "options": {
+                          "$type": "EditorCommon.JsonModel.Component.GUI.LabelSurrogate, EditorCommon",
+                          "text": "max character",
+                          "x": 68.0,
+                          "y": 69.0,
+                          "visible": true,
+                          "classType": "Label",
+                          "width": 134.0,
+                          "height": 27.0,
+                          "positionPercentX": 0.5,
+                          "positionPercentY": 0.40882352,
+                          "sizePercentX": 0.9779594,
+                          "sizePercentY": 0.158823535,
+                          "actionTag": 998,
+                          "tag": 19,
+                          "ignoreSize": true,
+                          "layoutParameter": {
+                            "type": 1,
+                            "gravity": 6,
+                            "relativeName": "Label_998",
+                            "relativeToName": "Panel_button",
+                            "marginTop": 10
+                          },
+                          "name": "Label_998",
+                          "classname": "Label"
+                        },
+                        "children": [],
+                        "classname": "Label"
+                      }
+                    ],
+                    "classname": "Panel"
+                  },
+                  {
+                    "options": {
+                      "$type": "EditorCommon.JsonModel.Component.GUI.PanelSurrogate, EditorCommon",
+                      "colorType": 0,
+                      "capInsetsWidth": 0.0,
+                      "capInsetsHeight": 0.0,
+                      "layoutType": 1,
+                      "x": 270.0,
+                      "visible": true,
+                      "classType": "Panel",
+                      "width": 132.0,
+                      "height": 170.0,
+                      "positionPercentX": 0.67,
+                      "sizeType": 1,
+                      "sizePercentX": 0.33,
+                      "sizePercentY": 1.0,
+                      "actionTag": 1106,
+                      "tag": 21,
+                      "anchorPointX": 0.0,
+                      "anchorPointY": 0.0,
+                      "ignoreSize": false,
+                      "layoutParameter": {
+                        "type": 1,
+                        "gravity": 2,
+                        "relativeName": "Panel_1106",
+                        "relativeToName": "background_Panel"
+                      },
+                      "name": "Panel_1106",
+                      "classname": "Panel"
+                    },
+                    "children": [
+                      {
+                        "options": {
+                          "$type": "EditorCommon.JsonModel.Component.GUI.TextFieldSurrogate, EditorCommon",
+                          "text": "",
+                          "placeHolder": "input words",
+                          "passwordEnable": true,
+                          "maxLength": 6,
+                          "x": 66.0,
+                          "y": 106.0,
+                          "touchAble": true,
+                          "visible": true,
+                          "classType": "TextField",
+                          "width": 114.0,
+                          "height": 27.0,
+                          "positionPercentX": 0.5,
+                          "positionPercentY": 0.626470566,
+                          "sizePercentX": 0.8572073,
+                          "sizePercentY": 0.158823535,
+                          "actionTag": 1107,
+                          "tag": 22,
+                          "ignoreSize": true,
+                          "layoutParameter": {
+                            "type": 1,
+                            "gravity": 6,
+                            "relativeName": "TextField_1107",
+                            "relativeToName": "Panel_1106",
+                            "marginTop": 50
+                          },
+                          "name": "TextField_1107",
+                          "classname": "TextField"
+                        },
+                        "children": [],
+                        "classname": "TextField"
+                      },
+                      {
+                        "options": {
+                          "$type": "EditorCommon.JsonModel.Component.GUI.LabelSurrogate, EditorCommon",
+                          "text": "password",
+                          "x": 66.0,
+                          "y": 69.0,
+                          "visible": true,
+                          "classType": "Label",
+                          "width": 92.0,
+                          "height": 27.0,
+                          "positionPercentX": 0.5,
+                          "positionPercentY": 0.40882352,
+                          "sizePercentX": 0.6917813,
+                          "sizePercentY": 0.158823535,
+                          "actionTag": 1108,
+                          "tag": 23,
+                          "ignoreSize": true,
+                          "layoutParameter": {
+                            "type": 1,
+                            "gravity": 6,
+                            "relativeName": "Label_1108",
+                            "relativeToName": "Panel_1106",
+                            "marginTop": 10
+                          },
+                          "name": "Label_1108",
+                          "classname": "Label"
+                        },
+                        "children": [],
+                        "classname": "Label"
+                      }
+                    ],
+                    "classname": "Panel"
+                  }
+                ],
+                "classname": "Panel"
+              },
+              {
+                "options": {
+                  "$type": "EditorCommon.JsonModel.Component.GUI.LabelSurrogate, EditorCommon",
+                  "fontName": "宋体",
+                  "fontSize": 24,
+                  "text": "Back",
+                  "x": 436.0,
+                  "y": 22.0,
+                  "touchAble": true,
+                  "visible": true,
+                  "ZOrder": 6,
+                  "classType": "Label",
+                  "width": 48.0,
+                  "height": 24.0,
+                  "positionPercentX": 0.908333361,
+                  "positionPercentY": 0.06875,
+                  "sizePercentX": 0.1,
+                  "sizePercentY": 0.075,
+                  "actionTag": 114,
+                  "tag": 87,
+                  "ignoreSize": true,
+                  "layoutParameter": {
+                    "type": 2,
+                    "relativeName": "back",
+                    "relativeToName": "root_Panel",
+                    "align": 9,
+                    "marginRight": 20,
+                    "marginDown": 10
+                  },
+                  "name": "back",
+                  "classname": "Label"
+                },
+                "children": [],
+                "classname": "Label"
+              }
+            ],
+            "classname": "Panel"
+          }
+        ],
+        "classname": "Panel"
+      }
+    ],
+    "classname": "Node"
+  },
+  "action": {
+    "speed": 1.0,
+    "timelines": []
+  }
+}

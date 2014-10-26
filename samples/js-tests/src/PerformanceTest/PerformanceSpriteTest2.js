@@ -273,8 +273,8 @@ var arrayOfPerformanceSpriteTest = [
 
 ];
 var PerformanceSpriteTestScene = TestScene.extend({
-    runThisTest:function () {
-        performanceSpriteTestSceneIdx = -1;
+    runThisTest:function (num) {
+        performanceSpriteTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextPerformanceSpriteTest();
         this.addChild(layer);
 

@@ -24,7 +24,33 @@
 // cocos2d constants
 //
 
-cc.ENGINE_VERSION = "Cocos2d-JS v3.0 RC2";
+// CCConfig.js
+//
+cc.ENGINE_VERSION = "Cocos2d-JS v3.1";
+
+cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
+cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
+cc.DIRECTOR_FPS_INTERVAL = 0.5;
+cc.COCOSNODE_RENDER_SUBPIXEL = 1;
+cc.SPRITEBATCHNODE_RENDER_SUBPIXEL = 1;
+cc.OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA = 0;
+cc.TEXTURE_ATLAS_USE_TRIANGLE_STRIP = 0;
+cc.TEXTURE_ATLAS_USE_VAO = 0;
+cc.TEXTURE_NPOT_SUPPORT = 0;
+cc.RETINA_DISPLAY_SUPPORT = 1;
+cc.RETINA_DISPLAY_FILENAME_SUFFIX = "-hd";
+cc.USE_LA88_LABELS = 1;
+cc.SPRITE_DEBUG_DRAW = 0;
+cc.SPRITEBATCHNODE_DEBUG_DRAW = 0;
+cc.LABELBMFONT_DEBUG_DRAW = 0;
+cc.LABELATLAS_DEBUG_DRAW = 0;
+cc.IS_RETINA_DISPLAY_SUPPORTED = 1;
+cc.DEFAULT_ENGINE = cc.ENGINE_VERSION + "-native";
+cc.ENABLE_STACKABLE_ACTIONS = 1;
+cc.ENABLE_GL_STATE_CACHE = 1;
+
+
+// Resolution policies
 
 cc.ResolutionPolicy = {
     // The entire application is visible in the specified area without trying to preserve the original aspect ratio.
@@ -114,7 +140,7 @@ cc.MENU_STATE_TRACKING_TOUCH = 1;
 cc.MENU_HANDLER_PRIORITY = -128;
 cc.DEFAULT_PADDING = 5;
 
-cc.Scheduler.PRIORITY_SYSTEM	= -2147483648;
+cc.Scheduler.PRIORITY_SYSTEM    = -2147483648;
 
 var _Class = cc.Texture2D;
 _Class.PIXEL_FORMAT_AUTO = 0;
@@ -143,8 +169,8 @@ cc.ONE_MINUS_SRC_ALPHA = 0x0303;
 cc.ONE_MINUS_SRC_COLOR = 0x301;
 cc.ONE_MINUS_DST_ALPHA = 0x305;
 cc.ONE_MINUS_DST_COLOR = 0x0307;
-cc.ONE_MINUS_CONSTANT_ALPHA	= 0x8004;
-cc.ONE_MINUS_CONSTANT_COLOR	= 0x8002;
+cc.ONE_MINUS_CONSTANT_ALPHA = 0x8004;
+cc.ONE_MINUS_CONSTANT_COLOR = 0x8002;
 
 cc.VERTEX_ATTRIB_FLAG_NONE = 0;
 cc.VERTEX_ATTRIB_FLAG_POSITION = 1 << 0;
@@ -168,15 +194,21 @@ cc.UNIFORM_RANDOM01 = 6;
 cc.UNIFORM_SAMPLER = 7;
 cc.UNIFORM_MAX = 8;
 
+// Shaders 
+cc.UNIFORM_TIME_S = "CC_Time";
+cc.UNIFORM_COS_TIME_S   = 'CC_CosTime';
+cc.UNIFORM_COSTIME_S = "CC_CosTime";
+cc.UNIFORM_SIN_TIME_S   = 'CC_SinTime';
+cc.UNIFORM_SINTIME_S = "CC_SinTime";
 cc.UNIFORM_PMATRIX_S = "CC_PMatrix";
 cc.UNIFORM_MVMATRIX_S = "CC_MVMatrix";
 cc.UNIFORM_MVPMATRIX_S = "CC_MVPMatrix";
-cc.UNIFORM_TIME_S = "CC_Time";
-cc.UNIFORM_SINTIME_S = "CC_SinTime";
-cc.UNIFORM_COSTIME_S = "CC_CosTime";
-cc.UNIFORM_RANDOM01_S = "CC_Random01";
-cc.UNIFORM_SAMPLER_S = "CC_Texture0";
-cc.UNIFORM_ALPHA_TEST_VALUE_S = "CC_alpha_value";
+cc.UNIFORM_P_MATRIX_S   = 'CC_PMatrix';
+cc.UNIFORM_MV_MATRIX_S  = 'CC_MVMatrix';
+cc.UNIFORM_MVP_MATRIX_S = 'CC_MVPMatrix';
+cc.UNIFORM_RANDOM01_S   = 'CC_Random01';
+cc.UNIFORM_SAMPLER_S    = 'CC_Texture0';
+cc.UNIFORM_ALPHA_TEST_VALUE_S = "CC_AlphaValue";
 
 cc.ITEM_SIZE = 32;
 
@@ -193,11 +225,6 @@ cc.g_NumberOfDraws = 0;        //CCDirector.js
 
 cc.PRIORITY_NON_SYSTEM = cc.PRIORITY_SYSTEM + 1;          //CCScheduler.js
 
-cc.Node.ON_ENTER = 0;          //CCNode.js
-cc.Node.ON_EXIT = 1;
-cc.Node.ON_ENTER_TRANSITION_DID_FINISH = 2;
-cc.Node.ON_EXIT_TRANSITOIN_DID_START = 3;
-cc.Node.ON_CLEAN_UP = 4;
 cc.s_globalOrderOfArrival = 1;
 
 cc.Event.TOUCH = 0;                  //CCEvent.js
@@ -400,12 +427,12 @@ cc.UINT_MAX = 0xffffffff;
  * @deprecated
  */
 cc.swap = function (x, y, ref) {
-	if ((typeof ref) == 'object' && (typeof ref.x) != 'undefined' && (typeof ref.y) != 'undefined') {
-		var tmp = ref[x];
-		ref[x] = ref[y];
-		ref[y] = tmp;
-	} else
-		cc.log("cc.swap is being modified from original macro, please check usage");
+    if ((typeof ref) == 'object' && (typeof ref.x) != 'undefined' && (typeof ref.y) != 'undefined') {
+        var tmp = ref[x];
+        ref[x] = ref[y];
+        ref[y] = tmp;
+    } else
+        cc.log("cc.swap is being modified from original macro, please check usage");
 };
 
 /**
@@ -421,7 +448,7 @@ cc.swap = function (x, y, ref) {
  * cc.lerp(2,10,0.2)//returns 3.6
  */
 cc.lerp = function (a, b, r) {
-	return a + (b - a) * r;
+    return a + (b - a) * r;
 };
 
 /**
@@ -430,7 +457,7 @@ cc.lerp = function (a, b, r) {
  * @returns {number}
  */
 cc.rand = function () {
-	return Math.random() * 0xffffff;
+    return Math.random() * 0xffffff;
 };
 
 /**
@@ -439,7 +466,7 @@ cc.rand = function () {
  * @function
  */
 cc.randomMinus1To1 = function () {
-	return (Math.random() - 0.5) * 2;
+    return (Math.random() - 0.5) * 2;
 };
 
 /**
@@ -456,7 +483,7 @@ cc.random0To1 = Math.random;
  * @function
  */
 cc.degreesToRadians = function (angle) {
-	return angle * cc.RAD;
+    return angle * cc.RAD;
 };
 
 /**
@@ -466,7 +493,7 @@ cc.degreesToRadians = function (angle) {
  * @function
  */
 cc.radiansToDegrees = function (angle) {
-	return angle * cc.DEG;
+    return angle * cc.DEG;
 };
 
 /**
@@ -495,12 +522,12 @@ cc.BLEND_DST = 0x0303;
  * @function
  */
 cc.nodeDrawSetup = function (node) {
-	//cc.glEnable(node._glServerState);
-	if (node._shaderProgram) {
-		//cc._renderContext.useProgram(node._shaderProgram._programObj);
-		node._shaderProgram.use();
-		node._shaderProgram.setUniformForModelViewAndProjectionMatrixWithMat4();
-	}
+    //cc.glEnable(node._glServerState);
+    if (node._shaderProgram) {
+        //cc._renderContext.useProgram(node._shaderProgram._programObj);
+        node._shaderProgram.use();
+        node._shaderProgram.setUniformForModelViewAndProjectionMatrixWithMat4();
+    }
 };
 
 /**
@@ -514,12 +541,12 @@ cc.nodeDrawSetup = function (node) {
  * @function
  */
 cc.enableDefaultGLStates = function () {
-	//TODO OPENGL STUFF
-	/*
-	 glEnableClientState(GL_VERTEX_ARRAY);
-	 glEnableClientState(GL_COLOR_ARRAY);
-	 glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	 glEnable(GL_TEXTURE_2D);*/
+    //TODO OPENGL STUFF
+    /*
+     glEnableClientState(GL_VERTEX_ARRAY);
+     glEnableClientState(GL_COLOR_ARRAY);
+     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+     glEnable(GL_TEXTURE_2D);*/
 };
 
 /**
@@ -532,13 +559,13 @@ cc.enableDefaultGLStates = function () {
  * @function
  */
 cc.disableDefaultGLStates = function () {
-	//TODO OPENGL
-	/*
-	 glDisable(GL_TEXTURE_2D);
-	 glDisableClientState(GL_COLOR_ARRAY);
-	 glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	 glDisableClientState(GL_VERTEX_ARRAY);
-	 */
+    //TODO OPENGL
+    /*
+     glDisable(GL_TEXTURE_2D);
+     glDisableClientState(GL_COLOR_ARRAY);
+     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+     glDisableClientState(GL_VERTEX_ARRAY);
+     */
 };
 
 /**
@@ -550,7 +577,7 @@ cc.disableDefaultGLStates = function () {
  * @function
  */
 cc.incrementGLDraws = function (addNumber) {
-	cc.g_NumberOfDraws += addNumber;
+    cc.g_NumberOfDraws += addNumber;
 };
 
 /**
@@ -567,9 +594,9 @@ cc.FLT_EPSILON = 0.0000001192092896;
  * @function
  */
 cc.contentScaleFactor = cc.IS_RETINA_DISPLAY_SUPPORTED ? function () {
-	return cc.director.getContentScaleFactor();
+    return cc.director.getContentScaleFactor();
 } : function () {
-	return 1;
+    return 1;
 };
 
 /**
@@ -579,8 +606,8 @@ cc.contentScaleFactor = cc.IS_RETINA_DISPLAY_SUPPORTED ? function () {
  * @function
  */
 cc.pointPointsToPixels = function (points) {
-	var scale = cc.contentScaleFactor();
-	return cc.p(points.x * scale, points.y * scale);
+    var scale = cc.contentScaleFactor();
+    return cc.p(points.x * scale, points.y * scale);
 };
 
 /**
@@ -589,14 +616,14 @@ cc.pointPointsToPixels = function (points) {
  * @function
  */
 cc.pointPixelsToPoints = function (pixels) {
-	var scale = cc.contentScaleFactor();
-	return cc.p(pixels.x / scale, pixels.y / scale);
+    var scale = cc.contentScaleFactor();
+    return cc.p(pixels.x / scale, pixels.y / scale);
 };
 
 cc._pointPixelsToPointsOut = function(pixels, outPoint){
-	var scale = cc.contentScaleFactor();
-	outPoint.x = pixels.x / scale;
-	outPoint.y = pixels.y / scale;
+    var scale = cc.contentScaleFactor();
+    outPoint.x = pixels.x / scale;
+    outPoint.y = pixels.y / scale;
 };
 
 /**
@@ -606,8 +633,8 @@ cc._pointPixelsToPointsOut = function(pixels, outPoint){
  * @function
  */
 cc.sizePointsToPixels = function (sizeInPoints) {
-	var scale = cc.contentScaleFactor();
-	return cc.size(sizeInPoints.width * scale, sizeInPoints.height * scale);
+    var scale = cc.contentScaleFactor();
+    return cc.size(sizeInPoints.width * scale, sizeInPoints.height * scale);
 };
 
 /**
@@ -617,14 +644,14 @@ cc.sizePointsToPixels = function (sizeInPoints) {
  * @function
  */
 cc.sizePixelsToPoints = function (sizeInPixels) {
-	var scale = cc.contentScaleFactor();
-	return cc.size(sizeInPixels.width / scale, sizeInPixels.height / scale);
+    var scale = cc.contentScaleFactor();
+    return cc.size(sizeInPixels.width / scale, sizeInPixels.height / scale);
 };
 
 cc._sizePixelsToPointsOut = function (sizeInPixels, outSize) {
-	var scale = cc.contentScaleFactor();
-	outSize.width = sizeInPixels.width / scale;
-	outSize.height = sizeInPixels.height / scale;
+    var scale = cc.contentScaleFactor();
+    outSize.width = sizeInPixels.width / scale;
+    outSize.height = sizeInPixels.height / scale;
 };
 
 /**
@@ -633,11 +660,11 @@ cc._sizePixelsToPointsOut = function (sizeInPixels, outSize) {
  * @function
  */
 cc.rectPixelsToPoints = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (pixel) {
-	var scale = cc.contentScaleFactor();
-	return cc.rect(pixel.x / scale, pixel.y / scale,
-		pixel.width / scale, pixel.height / scale);
+    var scale = cc.contentScaleFactor();
+    return cc.rect(pixel.x / scale, pixel.y / scale,
+        pixel.width / scale, pixel.height / scale);
 } : function (p) {
-	return p;
+    return p;
 };
 
 /**
@@ -646,20 +673,20 @@ cc.rectPixelsToPoints = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (pixel) {
  * @function
  */
 cc.rectPointsToPixels = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (point) {
-	var scale = cc.contentScaleFactor();
-	return cc.rect(point.x * scale, point.y * scale,
-		point.width * scale, point.height * scale);
+    var scale = cc.contentScaleFactor();
+    return cc.rect(point.x * scale, point.y * scale,
+        point.width * scale, point.height * scale);
 } : function (p) {
-	return p;
+    return p;
 };
 
 cc.checkGLErrorDebug = function () {
-	if (cc.renderMode == cc._RENDER_TYPE_WEBGL) {
-		var _error = cc._renderContext.getError();
-		if (_error) {
-			cc.log(CC._localZOrder.checkGLErrorDebug, _error);
-		}
-	}
+    if (cc.renderMode == cc._RENDER_TYPE_WEBGL) {
+        var _error = cc._renderContext.getError();
+        if (_error) {
+            cc.log(CC._localZOrder.checkGLErrorDebug, _error);
+        }
+    }
 };
 
 
@@ -1345,48 +1372,48 @@ cc.associateWithNative = function( jsobj, superclass_or_instance ) {};
 // This is the recommended way to do it
 //
 cc.inherits = function (childCtor, parentCtor) {
-	/** @constructor */
-	function tempCtor() {};
-	tempCtor.prototype = parentCtor.prototype;
-	childCtor.superClass_ = parentCtor.prototype;
-	childCtor.prototype = new tempCtor();
-	childCtor.prototype.constructor = childCtor;
+    /** @constructor */
+    function tempCtor() {};
+    tempCtor.prototype = parentCtor.prototype;
+    childCtor.superClass_ = parentCtor.prototype;
+    childCtor.prototype = new tempCtor();
+    childCtor.prototype.constructor = childCtor;
 
     // Copy "static" method, but doesn't generate subclasses.
-//	for( var i in parentCtor ) {
-//		childCtor[ i ] = parentCtor[ i ];
-//	}
+//  for( var i in parentCtor ) {
+//      childCtor[ i ] = parentCtor[ i ];
+//  }
 };
 cc.base = function(me, opt_methodName, var_args) {
-	var caller = arguments.callee.caller;
-	if (caller.superClass_) {
-		// This is a constructor. Call the superclass constructor.
-		ret =  caller.superClass_.constructor.apply( me, Array.prototype.slice.call(arguments, 1));
-		return ret;
-	}
+    var caller = arguments.callee.caller;
+    if (caller.superClass_) {
+        // This is a constructor. Call the superclass constructor.
+        ret =  caller.superClass_.constructor.apply( me, Array.prototype.slice.call(arguments, 1));
+        return ret;
+    }
 
-	var args = Array.prototype.slice.call(arguments, 2);
-	var foundCaller = false;
-	for (var ctor = me.constructor;
+    var args = Array.prototype.slice.call(arguments, 2);
+    var foundCaller = false;
+    for (var ctor = me.constructor;
         ctor; ctor = ctor.superClass_ && ctor.superClass_.constructor) {
-		if (ctor.prototype[opt_methodName] === caller) {
-			foundCaller = true;
-		} else if (foundCaller) {
-			return ctor.prototype[opt_methodName].apply(me, args);
-		}
-	}
+        if (ctor.prototype[opt_methodName] === caller) {
+            foundCaller = true;
+        } else if (foundCaller) {
+            return ctor.prototype[opt_methodName].apply(me, args);
+        }
+    }
 
-	// If we did not find the caller in the prototype chain,
-	// then one of two things happened:
-	// 1) The caller is an instance method.
-	// 2) This method was not called by the right caller.
-	if (me[opt_methodName] === caller) {
-		return me.constructor.prototype[opt_methodName].apply(me, args);
-	} else {
-		throw Error(
-					'cc.base called from a method of one name ' +
-					'to a method of a different name');
-	}
+    // If we did not find the caller in the prototype chain,
+    // then one of two things happened:
+    // 1) The caller is an instance method.
+    // 2) This method was not called by the right caller.
+    if (me[opt_methodName] === caller) {
+        return me.constructor.prototype[opt_methodName].apply(me, args);
+    } else {
+        throw Error(
+                    'cc.base called from a method of one name ' +
+                    'to a method of a different name');
+    }
 };
 
 
@@ -1414,7 +1441,7 @@ cc.Class.extend = function (prop) {
     // Instantiate a base class (but only create the instance,
     // don't run the init constructor)
     initializing = true;
-    var prototype = new this();
+    var prototype = Object.create(_super);
     initializing = false;
     fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 
@@ -1482,6 +1509,7 @@ cc.LayerGradient.extend = cc.Class.extend;
 cc.LayerColor.extend = cc.Class.extend;
 cc.LayerMultiplex.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
+cc.SpriteBatchNode.extend = cc.Class.extend;
 cc.SpriteFrame.extend = cc.Class.extend;
 cc.LabelTTF.extend = cc.Class.extend;
 cc.LabelBMFont.extend = cc.Class.extend;
@@ -1541,13 +1569,13 @@ cc.ControlSwitch.extend = cc.Class.extend;
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
 cc.Loader = cc.Class.extend({
-	initWith:function (resources, selector, target) {
-		if (selector) {
-			this._selector = selector;
-			this._target = target;
-		}
-		this._selector.call(this._target);
-	}
+    initWith:function (resources, selector, target) {
+        if (selector) {
+            this._selector = selector;
+            this._target = target;
+        }
+        this._selector.call(this._target);
+    }
 });
 
 cc.Loader.preload = function (resources, selector, target) {
@@ -1903,7 +1931,7 @@ cc.FontDefinition = function () {
     this.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
     this.fillStyle = cc.color(255, 255, 255, 255);
     this.boundingWidth = 0;
-	this.boundingHeight = 0;
+    this.boundingHeight = 0;
 
     this.strokeEnabled = false;
     this.strokeStyle = cc.color(255, 255, 255, 255);
@@ -1911,7 +1939,7 @@ cc.FontDefinition = function () {
 
     this.shadowEnabled = false;
     this.shadowOffsetX = 0;
-	this.shadowOffsetY = 0;
+    this.shadowOffsetY = 0;
     this.shadowBlur = 0;
     this.shadowOpacity = 1.0;
 };
@@ -1978,6 +2006,18 @@ cc.arrayAppendObjectsToIndex = function(arr, addObjs,index){
     return arr;
 };
 
+/**
+ * Copy an array's item to a new array (its performance is better than Array.slice)
+ * @param {Array} arr
+ * @returns {Array}
+ */
+cc.copyArray = function(arr){
+    var i, len = arr.length, arr_clone = new Array(len);
+    for (i = 0; i < len; i += 1)
+        arr_clone[i] = arr[i];
+    return arr_clone;
+};
+
 
 
 //
@@ -1985,156 +2025,156 @@ cc.arrayAppendObjectsToIndex = function(arr, addObjs,index){
 //
 
 cc.cardinalSplineAt = function (p0, p1, p2, p3, tension, t) {
-	var t2 = t * t;
-	var t3 = t2 * t;
+    var t2 = t * t;
+    var t3 = t2 * t;
 
-	var s = (1 - tension) / 2;
+    var s = (1 - tension) / 2;
 
-	var b1 = s * ((-t3 + (2 * t2)) - t);                      // s(-t3 + 2 t2 - t)P1
-	var b2 = s * (-t3 + t2) + (2 * t3 - 3 * t2 + 1);          // s(-t3 + t2)P2 + (2 t3 - 3 t2 + 1)P2
-	var b3 = s * (t3 - 2 * t2 + t) + (-2 * t3 + 3 * t2);      // s(t3 - 2 t2 + t)P3 + (-2 t3 + 3 t2)P3
-	var b4 = s * (t3 - t2);                                   // s(t3 - t2)P4
+    var b1 = s * ((-t3 + (2 * t2)) - t);                      // s(-t3 + 2 t2 - t)P1
+    var b2 = s * (-t3 + t2) + (2 * t3 - 3 * t2 + 1);          // s(-t3 + t2)P2 + (2 t3 - 3 t2 + 1)P2
+    var b3 = s * (t3 - 2 * t2 + t) + (-2 * t3 + 3 * t2);      // s(t3 - 2 t2 + t)P3 + (-2 t3 + 3 t2)P3
+    var b4 = s * (t3 - t2);                                   // s(t3 - t2)P4
 
-	var x = (p0.x * b1 + p1.x * b2 + p2.x * b3 + p3.x * b4);
-	var y = (p0.y * b1 + p1.y * b2 + p2.y * b3 + p3.y * b4);
-	return cc.p(x, y);
+    var x = (p0.x * b1 + p1.x * b2 + p2.x * b3 + p3.x * b4);
+    var y = (p0.y * b1 + p1.y * b2 + p2.y * b3 + p3.y * b4);
+    return cc.p(x, y);
 };
 
 cc._DrawNode = cc.DrawNode;
 cc.DrawNode = cc._DrawNode.extend({
-	_drawColor: cc.color(255, 255, 255, 255),
-	_lineWidth: 1,
+    _drawColor: cc.color(255, 255, 255, 255),
+    _lineWidth: 1,
 
-	setLineWidth: function (width) {
-		this._lineWidth = width;
-	},
+    setLineWidth: function (width) {
+        this._lineWidth = width;
+    },
 
-	getLineWidth: function () {
-		return this._lineWidth;
-	},
+    getLineWidth: function () {
+        return this._lineWidth;
+    },
 
-	setDrawColor: function(color) {
-		var locDrawColor = this._drawColor;
-		locDrawColor.r = color.r;
-		locDrawColor.g = color.g;
-		locDrawColor.b = color.b;
-		locDrawColor.a = (color.a == null) ? 255 : color.a;
-	},
+    setDrawColor: function(color) {
+        var locDrawColor = this._drawColor;
+        locDrawColor.r = color.r;
+        locDrawColor.g = color.g;
+        locDrawColor.b = color.b;
+        locDrawColor.a = (color.a == null) ? 255 : color.a;
+    },
 
-	getDrawColor: function () {
-		return  cc.color(this._drawColor.r, this._drawColor.g, this._drawColor.b, this._drawColor.a);
-	},
+    getDrawColor: function () {
+        return  cc.color(this._drawColor.r, this._drawColor.g, this._drawColor.b, this._drawColor.a);
+    },
 
-	drawRect: function (origin, destination, fillColor, lineWidth, lineColor) {
-		lineWidth = lineWidth || this._lineWidth;
-		lineColor = lineColor || this._drawColor;
-		var points = [origin, cc.p(origin.x, destination.y), destination, cc.p(destination.x, origin.y)];
-		if (fillColor)
-			cc._DrawNode.prototype.drawPoly.call(this, points, fillColor, lineWidth, lineColor);
-		else {
-			points.push(origin);
-			var drawSeg = cc._DrawNode.prototype.drawSegment;
-			for (var i = 0, len = points.length; i < len - 1; i++)
-				drawSeg.call(this, points[i], points[i + 1], lineWidth, lineColor);
-		}
-	},
+    drawRect: function (origin, destination, fillColor, lineWidth, lineColor) {
+        lineWidth = lineWidth || this._lineWidth;
+        lineColor = lineColor || this._drawColor;
+        var points = [origin, cc.p(origin.x, destination.y), destination, cc.p(destination.x, origin.y)];
+        if (fillColor)
+            cc._DrawNode.prototype.drawPoly.call(this, points, fillColor, lineWidth, lineColor);
+        else {
+            points.push(origin);
+            var drawSeg = cc._DrawNode.prototype.drawSegment;
+            for (var i = 0, len = points.length; i < len - 1; i++)
+                drawSeg.call(this, points[i], points[i + 1], lineWidth, lineColor);
+        }
+    },
 
-	drawCircle: function (center, radius, angle, segments, drawLineToCenter, lineWidth, color) {
-		lineWidth = lineWidth || this._lineWidth;
-		color = color || this._drawColor;
-		if (color.a == null)
-			color.a = 255;
-		var coef = 2.0 * Math.PI / segments, vertices = [], i, len;
-		for (i = 0; i <= segments; i++) {
-			var rads = i * coef;
-			var j = radius * Math.cos(rads + angle) + center.x;
-			var k = radius * Math.sin(rads + angle) + center.y;
-			vertices.push(cc.p(j, k));
-		}
-		if (drawLineToCenter)
-			vertices.push(cc.p(center.x, center.y));
+    drawCircle: function (center, radius, angle, segments, drawLineToCenter, lineWidth, color) {
+        lineWidth = lineWidth || this._lineWidth;
+        color = color || this._drawColor;
+        if (color.a == null)
+            color.a = 255;
+        var coef = 2.0 * Math.PI / segments, vertices = [], i, len;
+        for (i = 0; i <= segments; i++) {
+            var rads = i * coef;
+            var j = radius * Math.cos(rads + angle) + center.x;
+            var k = radius * Math.sin(rads + angle) + center.y;
+            vertices.push(cc.p(j, k));
+        }
+        if (drawLineToCenter)
+            vertices.push(cc.p(center.x, center.y));
 
-		lineWidth *= 0.5;
-		var drawSeg = cc._DrawNode.prototype.drawSegment;
-		for (i = 0, len = vertices.length; i < len - 1; i++)
-			drawSeg.call(this, vertices[i], vertices[i + 1], lineWidth, color);
-	},
+        lineWidth *= 0.5;
+        var drawSeg = cc._DrawNode.prototype.drawSegment;
+        for (i = 0, len = vertices.length; i < len - 1; i++)
+            drawSeg.call(this, vertices[i], vertices[i + 1], lineWidth, color);
+    },
 
-	drawQuadBezier: function (origin, control, destination, segments, lineWidth, color) {
-		lineWidth = lineWidth || this._lineWidth;
-		color = color || this._drawColor;
-		cc._DrawNode.prototype.drawQuadBezier.call(this, origin, control, destination, segments, color);
-	},
+    drawQuadBezier: function (origin, control, destination, segments, lineWidth, color) {
+        lineWidth = lineWidth || this._lineWidth;
+        color = color || this._drawColor;
+        cc._DrawNode.prototype.drawQuadBezier.call(this, origin, control, destination, segments, color);
+    },
 
-	drawCubicBezier: function (origin, control1, control2, destination, segments, lineWidth, color) {
-		lineWidth = lineWidth || this._lineWidth;
-		color = color || this._drawColor;
-		cc._DrawNode.prototype.drawCubicBezier.call(this, origin, control1, control2, destination, segments, color);
-	},
+    drawCubicBezier: function (origin, control1, control2, destination, segments, lineWidth, color) {
+        lineWidth = lineWidth || this._lineWidth;
+        color = color || this._drawColor;
+        cc._DrawNode.prototype.drawCubicBezier.call(this, origin, control1, control2, destination, segments, color);
+    },
 
-	drawCatmullRom: function (points, segments, lineWidth, color) {
-		this.drawCardinalSpline(points, 0.5, segments, lineWidth, color);
-	},
+    drawCatmullRom: function (points, segments, lineWidth, color) {
+        this.drawCardinalSpline(points, 0.5, segments, lineWidth, color);
+    },
 
-	drawCardinalSpline: function (config, tension, segments, lineWidth, color) {
-		lineWidth = lineWidth || this._lineWidth;
-		color = color || this._drawColor;
-		if (color.a == null)
-			color.a = 255;
-		var vertices = [], p, lt, deltaT = 1.0 / config.length, m1len = config.length - 1;
+    drawCardinalSpline: function (config, tension, segments, lineWidth, color) {
+        lineWidth = lineWidth || this._lineWidth;
+        color = color || this._drawColor;
+        if (color.a == null)
+            color.a = 255;
+        var vertices = [], p, lt, deltaT = 1.0 / config.length, m1len = config.length - 1;
 
-		for (var i = 0; i < segments + 1; i++) {
-			var dt = i / segments;
+        for (var i = 0; i < segments + 1; i++) {
+            var dt = i / segments;
 
-			// border
-			if (dt == 1) {
-				p = m1len;
-				lt = 1;
-			} else {
-				p = 0 | (dt / deltaT);
-				lt = (dt - deltaT * p) / deltaT;
-			}
+            // border
+            if (dt == 1) {
+                p = m1len;
+                lt = 1;
+            } else {
+                p = 0 | (dt / deltaT);
+                lt = (dt - deltaT * p) / deltaT;
+            }
 
-			// Interpolate
-			var newPos = cc.cardinalSplineAt(
-				config[Math.min(m1len, Math.max(p - 1, 0))],
-				config[Math.min(m1len, Math.max(p + 0, 0))],
-				config[Math.min(m1len, Math.max(p + 1, 0))],
-				config[Math.min(m1len, Math.max(p + 2, 0))],
-				tension, lt);
-			vertices.push(newPos);
-		}
+            // Interpolate
+            var newPos = cc.cardinalSplineAt(
+                config[Math.min(m1len, Math.max(p - 1, 0))],
+                config[Math.min(m1len, Math.max(p + 0, 0))],
+                config[Math.min(m1len, Math.max(p + 1, 0))],
+                config[Math.min(m1len, Math.max(p + 2, 0))],
+                tension, lt);
+            vertices.push(newPos);
+        }
 
-		lineWidth *= 0.5;
-		var drawSeg = cc._DrawNode.prototype.drawSegment;
-		for (var j = 0, len = vertices.length; j < len - 1; j++)
-			drawSeg.call(this, vertices[j], vertices[j + 1], lineWidth, color);
-	},
+        lineWidth *= 0.5;
+        var drawSeg = cc._DrawNode.prototype.drawSegment;
+        for (var j = 0, len = vertices.length; j < len - 1; j++)
+            drawSeg.call(this, vertices[j], vertices[j + 1], lineWidth, color);
+    },
 
-	drawDot:function (pos, radius, color) {
-		color = color || this._drawColor;
-		cc._DrawNode.prototype.drawDot.call(this, pos, radius, color);
-	},
+    drawDot:function (pos, radius, color) {
+        color = color || this._drawColor;
+        cc._DrawNode.prototype.drawDot.call(this, pos, radius, color);
+    },
 
-	drawSegment:function (from, to, radius, color) {
-		color = color || this._drawColor;
-		cc._DrawNode.prototype.drawSegment.call(this, from, to, radius, color);
-	},
+    drawSegment:function (from, to, radius, color) {
+        color = color || this._drawColor;
+        cc._DrawNode.prototype.drawSegment.call(this, from, to, radius, color);
+    },
 
-	drawPoly:function (verts, fillColor, borderWidth, borderColor) {
-		borderColor = borderColor || this._drawColor;
-		if (fillColor)
-			cc._DrawNode.prototype.drawPoly.call(this, verts, fillColor, borderWidth, borderColor);
-		else {
-			verts.push(verts[0]);
-			var drawSeg = cc._DrawNode.prototype.drawSegment;
-			for (var i = 0, len = verts.length; i < len - 1; i++)
-				drawSeg.call(this, verts[i], verts[i + 1], borderWidth, borderColor);
-		}
-	}
+    drawPoly:function (verts, fillColor, borderWidth, borderColor) {
+        borderColor = borderColor || this._drawColor;
+        if (fillColor)
+            cc._DrawNode.prototype.drawPoly.call(this, verts, fillColor, borderWidth, borderColor);
+        else {
+            verts.push(verts[0]);
+            var drawSeg = cc._DrawNode.prototype.drawSegment;
+            for (var i = 0, len = verts.length; i < len - 1; i++)
+                drawSeg.call(this, verts[i], verts[i + 1], borderWidth, borderColor);
+        }
+    }
 });
 cc.DrawNode.create = function () {
-	return new cc.DrawNode();
+    return new cc.DrawNode();
 };
 
 
@@ -2263,8 +2303,8 @@ var easeActions = {
 };
 
 function templateEaseActions(actionTag) {
-    return function(param) {
-        return {tag: actionTag, parameter: param};
+    return function(param, param2, param3, param4) {
+        return {tag: actionTag, param: param, param2: param2, param3: param3, param4: param4};
     }
 }
 
@@ -2288,7 +2328,7 @@ cc.toggleVisibility = cc.ToggleVisibility.create;
 cc.removeSelf = cc.RemoveSelf.create;
 cc.flipX = cc.FlipX.create;
 cc.flipY = cc.FlipY.create;
-cc.place = cc.Place.create;
+// cc.place = cc.Place.create;
 cc.callFunc = cc.CallFunc.create;
 cc.actionInterval = cc.ActionInterval.create;
 cc.sequence = cc.Sequence.create;
@@ -2297,12 +2337,12 @@ cc.repeatForever = cc.RepeatForever.create;
 cc.spawn = cc.Spawn.create;
 cc.rotateTo = cc.RotateTo.create;
 cc.rotateBy = cc.RotateBy.create;
-cc.moveBy = cc.MoveBy.create;
-cc.moveTo = cc.MoveTo.create;
+//cc.moveBy = cc.MoveBy.create;
+//cc.moveTo = cc.MoveTo.create;
 cc.skewTo = cc.SkewTo.create;
 cc.skewBy = cc.SkewBy.create;
-cc.jumpBy = cc.JumpBy.create;
-cc.jumpTo = cc.JumpTo.create;
+//cc.jumpBy = cc.JumpBy.create;
+//cc.jumpTo = cc.JumpTo.create;
 cc.bezierBy = cc.BezierBy.create;
 cc.bezierTo = cc.BezierTo.create;
 cc.scaleTo = cc.ScaleTo.create;
@@ -2318,6 +2358,51 @@ cc.reverseTime = cc.ReverseTime.create;
 cc.animate = cc.Animate.create;
 cc.targetedAction = cc.TargetedAction.create;
 cc.actionTween = cc.ActionTween.create;
+
+cc.Place._create = cc.Place.create;
+cc.place = cc.Place.create = function(posOrX, y){
+    if (undefined === y){
+        return cc.Place._create(posOrX);
+    }else{
+        return cc.Place._create(cc.p(posOrX, y));
+    }
+};
+cc.MoveTo._create = cc.MoveTo.create;
+cc.moveTo = cc.MoveTo.create = function(duration, posOrX, y){
+    if (undefined === y){
+        return cc.MoveTo._create(duration, posOrX);
+    }else{
+        return cc.MoveTo._create(duration, cc.p(posOrX, y));
+    }
+};
+cc.MoveBy._create = cc.MoveBy.create;
+cc.moveBy = cc.MoveBy.create = function(duration, posOrX, y){
+    if (undefined === y){
+        return cc.MoveBy._create(duration, posOrX);
+    }else{
+        return cc.MoveBy._create(duration, cc.p(posOrX, y));
+    }
+};
+cc.JumpTo._create = cc.JumpTo.create;
+cc.jumpTo = cc.JumpTo.create = function(duration, position, y, height, jumps){
+    if (undefined === jumps){
+        jumps = height;
+        height = y;
+        return cc.JumpTo._create(duration, position, height, jumps);
+    }else{
+        return cc.JumpTo._create(duration, cc.p(position, y), height, jumps);
+    }
+};
+cc.JumpBy._create = cc.JumpBy.create;
+cc.jumpBy = cc.JumpBy.create = function(duration, position, y, height, jumps){
+    if (undefined === jumps){
+        jumps = height;
+        height = y;
+        return cc.JumpBy._create(duration, position, height, jumps);
+    }else{
+        return cc.JumpBy._create(duration, cc.p(position, y), height, jumps);
+    }
+};
 
 // Actions3d
 cc.gridAction = cc.GridAction.create;
@@ -2349,6 +2434,69 @@ cc.splitRows = cc.SplitRows.create;
 cc.splitCols = cc.SplitCols.create;
 cc.progressTo = cc.ProgressTo.create;
 cc.progressFromTo = cc.ProgressFromTo.create;
+
+// Speed functions
+cc.Speed.prototype.speed = cc.ActionInterval.prototype.speed = function(speed) {
+//    if (speed < 0) {
+//        cc.warn("cc.ActionInterval#speed : Speed must not be negative");
+//        return;
+//    }
+    var action = this, found = false;
+    while (action.getInnerAction && !found) {
+        if (action instanceof cc.Speed) {
+            found = true;
+        }
+        else {
+            action = action.getInnerAction();
+        }
+    }
+    if (found) {
+        speed = speed * action._getSpeed();
+        action._setSpeed(speed);
+    }
+    else {
+        this._speed(speed);
+    }
+    return this;
+};
+cc.Speed.prototype.setSpeed = cc.ActionInterval.prototype.setSpeed = function(speed) {
+//    if (speed < 0) {
+//        cc.warn("cc.ActionInterval#setSpeed : Speed must not be negative");
+//        return;
+//    }
+    var action = this, found = false;
+    while (action.getInnerAction && !found) {
+        if (action instanceof cc.Speed) {
+            found = true;
+        }
+        else {
+            action = action.getInnerAction();
+        }
+    }
+    if (found) {
+        action._setSpeed(speed);
+    }
+    else {
+        this._speed(speed);
+    }
+};
+cc.Speed.prototype.getSpeed = cc.ActionInterval.prototype.getSpeed = function() {
+    var action = this, found = false;
+    while (action.getInnerAction && !found) {
+        if (action instanceof cc.Speed) {
+            found = true;
+        }
+        else {
+            action = action.getInnerAction();
+        }
+    }
+    if (found) {
+        return action._getSpeed();
+    }
+    else {
+        return 1;
+    }
+};
 
 //
 //AffineTransform API
@@ -2452,10 +2600,10 @@ cc.rectApplyAffineTransform = function (rect, anAffineTransform) {
     var right = cc.rectGetMaxX(rect);
     var bottom = cc.rectGetMaxY(rect);
 
-    var topLeft = cc._PointApplyAffineTransform(left, top, anAffineTransform);
-    var topRight = cc._PointApplyAffineTransform(right, top, anAffineTransform);
-    var bottomLeft = cc._PointApplyAffineTransform(left, bottom, anAffineTransform);
-    var bottomRight = cc._PointApplyAffineTransform(right, bottom, anAffineTransform);
+    var topLeft = cc._pointApplyAffineTransform(left, top, anAffineTransform);
+    var topRight = cc._pointApplyAffineTransform(right, top, anAffineTransform);
+    var bottomLeft = cc._pointApplyAffineTransform(left, bottom, anAffineTransform);
+    var bottomRight = cc._pointApplyAffineTransform(right, bottom, anAffineTransform);
 
     var minX = Math.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
     var maxX = Math.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
@@ -2471,10 +2619,10 @@ cc._rectApplyAffineTransformIn = function(rect, anAffineTransform){
     var right = cc.rectGetMaxX(rect);
     var bottom = cc.rectGetMaxY(rect);
 
-    var topLeft = cc._PointApplyAffineTransform(left, top, anAffineTransform);
-    var topRight = cc._PointApplyAffineTransform(right, top, anAffineTransform);
-    var bottomLeft = cc._PointApplyAffineTransform(left, bottom, anAffineTransform);
-    var bottomRight = cc._PointApplyAffineTransform(right, bottom, anAffineTransform);
+    var topLeft = cc._pointApplyAffineTransform(left, top, anAffineTransform);
+    var topRight = cc._pointApplyAffineTransform(right, top, anAffineTransform);
+    var bottomLeft = cc._pointApplyAffineTransform(left, bottom, anAffineTransform);
+    var bottomRight = cc._pointApplyAffineTransform(right, bottom, anAffineTransform);
 
     var minX = Math.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
     var maxX = Math.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
@@ -2605,9 +2753,8 @@ cc.Node.prototype.getUserData = function () {
 cc.Node.prototype.getBoundingBoxToWorld = function () {
     var contentSize = this.getContentSize();
     var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
-    var matrix = this.getNodeToWorldTransform();
-    var trans = cc.AffineTransformMake(matrix[0], matrix[1], matrix[4], matrix[5], matrix[12], matrix[13]);  
-    rect = cc.RectApplyAffineTransform(rect, trans);
+    var trans = this.getNodeToWorldTransform();
+    rect = cc.rectApplyAffineTransform(rect, trans);
 
     //query child's BoundingBox
     if (!this.getChildren())
@@ -2628,10 +2775,9 @@ cc.Node.prototype.getBoundingBoxToWorld = function () {
 cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
     var contentSize = this.getContentSize();
     var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
-    var matrix = this.getNodeToParentTransform();
-    var _trans = cc.AffineTransformMake(matrix[0], matrix[1], matrix[4], matrix[5], matrix[12], matrix[13]); 
-    var trans = (parentTransform == null) ? _trans : cc.AffineTransformConcat(_trans, parentTransform);
-    rect = cc.RectApplyAffineTransform(rect, trans);
+    var _trans = this.getNodeToParentTransform();
+    var trans = (parentTransform == null) ? _trans : cc.affineTransformConcat(_trans, parentTransform);
+    rect = cc.rectApplyAffineTransform(rect, trans);
 
     //query child's BoundingBox
     if (!this.getChildren())
@@ -2651,6 +2797,13 @@ cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
 
 
 //
+// cc.Layer bake/unbake/isBaked
+//
+cc.Layer.prototype.bake = cc.Layer.prototype.unbake = function() {};
+cc.Layer.prototype.isBaked = function() {return false;};
+
+
+//
 // RenderTexture beginWithClear
 //
 cc.RenderTexture.prototype._beginWithClear = cc.RenderTexture.prototype.beginWithClear;
@@ -2660,4 +2813,22 @@ cc.RenderTexture.prototype.beginWithClear = function(r, g, b, a, depthValue, ste
     arguments[2] /= 255;
     arguments[3] /= 255;
     this._beginWithClear.apply(this, arguments);
+};
+
+
+//
+// Texture2D setTexParameters
+//
+cc.Texture2D.prototype._setTexParameters = cc.Texture2D.prototype.setTexParameters;
+cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS, wrapT) {
+    var minFilter;
+    if (magFilter === undefined) {
+        minFilter = texParams.minFilter;
+        magFilter = texParams.magFilter;
+        wrapS = texParams.wrapS;
+        wrapT = texParams.wrapT;
+    }
+    else minFilter = texParams;
+
+    this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
 };

@@ -70,10 +70,10 @@ _safeExtend(cc.Node.prototype, {
     },
 
     _setAnchorX: function(x) {
-        this.setAnchorPoint(x, this.getAnchorPoint().y);
+        this.setAnchorPoint(cc.p(x, this.getAnchorPoint().y));
     },
     _setAnchorY: function(y) {
-        this.setAnchorPoint(this.getAnchorPoint().x, y);
+        this.setAnchorPoint(cc.p(this.getAnchorPoint().x, y));
     }
 });
 
@@ -88,10 +88,10 @@ _safeExtend(cc.LabelTTF.prototype, {
 
     _setFont: function(fontStyle) {
         var res = this._fontStyleRE.exec(fontStyle);
-		if(res) {
-			this.setFontSize(parseInt(res[1]));
-			this.setFontName(res[2]);
-		}
+        if(res) {
+            this.setFontSize(parseInt(res[1]));
+            this.setFontName(res[2]);
+        }
     },
 
     _getBoundingWidth: function() {
@@ -349,3 +349,12 @@ _safeExtend(ccui.ScrollView.prototype, {
 //         }
 //     }
 // });
+
+_safeExtend(cc.Texture2D.prototype, {
+    _getWidth : function(){
+        return this.getContentSize().width;
+    },
+    _getHeight : function(){
+        return this.getContentSize().height;
+    }
+});

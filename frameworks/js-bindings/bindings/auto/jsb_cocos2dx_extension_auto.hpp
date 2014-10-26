@@ -5,39 +5,6 @@
 #include "jsfriendapi.h"
 
 
-extern JSClass  *jsb_cocos2d_extension_Scale9Sprite_class;
-extern JSObject *jsb_cocos2d_extension_Scale9Sprite_prototype;
-
-bool js_cocos2dx_extension_Scale9Sprite_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_extension_Scale9Sprite_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_Scale9Sprite(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_extension_Scale9Sprite_resizableSpriteWithCapInsets(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setInsetBottom(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_initWithSpriteFrameName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setInsetTop(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setPreferredSize(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_initWithBatchNode(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getInsetBottom(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getCapInsets(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_updateWithBatchNode(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getInsetRight(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getOriginalSize(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_initWithFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getInsetTop(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setInsetLeft(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_initWithSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getPreferredSize(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setCapInsets(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getInsetLeft(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setInsetRight(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_createWithSpriteFrameName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_createWithSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_Scale9Sprite(JSContext *cx, uint32_t argc, jsval *vp);
-
 extern JSClass  *jsb_cocos2d_extension_Control_class;
 extern JSObject *jsb_cocos2d_extension_Control_prototype;
 
@@ -59,6 +26,47 @@ bool js_cocos2dx_extension_Control_getTouchLocation(JSContext *cx, uint32_t argc
 bool js_cocos2dx_extension_Control_isHighlighted(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_Control_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_Control_Control(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_Scale9Sprite_class;
+extern JSObject *jsb_cocos2d_ui_Scale9Sprite_prototype;
+
+bool js_cocos2dx_extension_Scale9Sprite_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_extension_Scale9Sprite_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_extension_Scale9Sprite(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_extension_Scale9Sprite_disableCascadeColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_updateWithSprite(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_isFlippedX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_setFlippedY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_setFlippedX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_setScale9Enabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_disableCascadeOpacity(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_setInsetBottom(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_initWithSpriteFrameName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_getSprite(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_setInsetTop(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_setPreferredSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_getInsetRight(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_setSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_getInsetBottom(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_resizableSpriteWithCapInsets(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_isScale9Enabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_getCapInsets(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_getOriginalSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_initWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_getInsetTop(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_setInsetLeft(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_initWithSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_getPreferredSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_setCapInsets(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_isFlippedY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_getInsetLeft(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_setInsetRight(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_createWithSpriteFrameName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_createWithSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_Scale9Sprite_Scale9Sprite(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_extension_ControlButton_class;
 extern JSObject *jsb_cocos2d_extension_ControlButton_prototype;
@@ -291,10 +299,12 @@ bool js_cocos2dx_extension_ScrollView_isClippingToBounds(JSContext *cx, uint32_t
 bool js_cocos2dx_extension_ScrollView_setContainer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_setContentOffsetInDuration(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_setZoomScaleInDuration(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_ScrollView_setBounceable(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ScrollView_updateTweenAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ScrollView_setMaxScale(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ScrollView_hasVisibleParents(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_getDirection(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_getContainer(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_ScrollView_updateTweenAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ScrollView_setMinScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_getZoomScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_updateInset(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_initWithViewSize(JSContext *cx, uint32_t argc, jsval *vp);
@@ -312,6 +322,7 @@ bool js_cocos2dx_extension_ScrollView_setClippingToBounds(JSContext *cx, uint32_
 bool js_cocos2dx_extension_ScrollView_setViewSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_getViewSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_maxContainerOffset(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ScrollView_setBounceable(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_isTouchMoved(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_isNodeVisible(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_minContainerOffset(JSContext *cx, uint32_t argc, jsval *vp);
@@ -353,50 +364,22 @@ bool js_cocos2dx_extension_TableView_cellAtIndex(JSContext *cx, uint32_t argc, j
 bool js_cocos2dx_extension_TableView_dequeueCell(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_TableView_TableView(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_cocos2d_extension_EditBox_class;
-extern JSObject *jsb_cocos2d_extension_EditBox_prototype;
+extern JSClass  *jsb_cocos2d_extension_EventAssetsManagerEx_class;
+extern JSObject *jsb_cocos2d_extension_EventAssetsManagerEx_prototype;
 
-bool js_cocos2dx_extension_EditBox_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_extension_EditBox_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_EditBox(JSContext *cx, JSObject *global);
+bool js_cocos2dx_extension_EventAssetsManagerEx_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_extension_EventAssetsManagerEx_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_extension_EventAssetsManagerEx(JSContext *cx, JSObject *global);
 void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_extension_EditBox_getText(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setFontSize(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setPlaceholderFontName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_getPlaceHolder(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setFontName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setText(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setPlaceholderFontSize(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setInputMode(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setPlaceholderFontColor(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setFontColor(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setPlaceholderFont(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_initWithSizeAndBackgroundSprite(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setPlaceHolder(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setReturnType(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setInputFlag(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_getMaxLength(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setMaxLength(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_setFont(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EditBox_EditBox(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_extension_EventAssetsManager_class;
-extern JSObject *jsb_cocos2d_extension_EventAssetsManager_prototype;
-
-bool js_cocos2dx_extension_EventAssetsManager_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_extension_EventAssetsManager_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_EventAssetsManager(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_extension_EventAssetsManager_getAssetsManager(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EventAssetsManager_getAssetId(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EventAssetsManager_getCURLECode(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EventAssetsManager_getMessage(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EventAssetsManager_getCURLMCode(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EventAssetsManager_getPercentByFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EventAssetsManager_getEventCode(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EventAssetsManager_getPercent(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EventAssetsManager_EventAssetsManager(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManagerEx_getAssetsManagerEx(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManagerEx_getAssetId(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManagerEx_getCURLECode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManagerEx_getMessage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManagerEx_getCURLMCode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManagerEx_getPercentByFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManagerEx_getEventCode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManagerEx_getPercent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventAssetsManagerEx_EventAssetsManagerEx(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_extension_Manifest_class;
 extern JSObject *jsb_cocos2d_extension_Manifest_prototype;
@@ -412,32 +395,32 @@ bool js_cocos2dx_extension_Manifest_getPackageUrl(JSContext *cx, uint32_t argc, 
 bool js_cocos2dx_extension_Manifest_getVersion(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_Manifest_getVersionFileUrl(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_cocos2d_extension_AssetsManager_class;
-extern JSObject *jsb_cocos2d_extension_AssetsManager_prototype;
+extern JSClass  *jsb_cocos2d_extension_AssetsManagerEx_class;
+extern JSObject *jsb_cocos2d_extension_AssetsManagerEx_prototype;
 
-bool js_cocos2dx_extension_AssetsManager_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_extension_AssetsManager_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_AssetsManager(JSContext *cx, JSObject *global);
+bool js_cocos2dx_extension_AssetsManagerEx_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_extension_AssetsManagerEx_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_extension_AssetsManagerEx(JSContext *cx, JSObject *global);
 void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_extension_AssetsManager_getState(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_AssetsManager_checkUpdate(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_AssetsManager_getStoragePath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_AssetsManager_update(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_AssetsManager_getLocalManifest(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_AssetsManager_getRemoteManifest(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_AssetsManager_downloadFailedAssets(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_AssetsManager_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_AssetsManager_AssetsManager(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManagerEx_getState(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManagerEx_checkUpdate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManagerEx_getStoragePath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManagerEx_update(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManagerEx_getLocalManifest(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManagerEx_getRemoteManifest(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManagerEx_downloadFailedAssets(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManagerEx_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManagerEx_AssetsManagerEx(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_cocos2d_extension_EventListenerAssetsManager_class;
-extern JSObject *jsb_cocos2d_extension_EventListenerAssetsManager_prototype;
+extern JSClass  *jsb_cocos2d_extension_EventListenerAssetsManagerEx_class;
+extern JSObject *jsb_cocos2d_extension_EventListenerAssetsManagerEx_prototype;
 
-bool js_cocos2dx_extension_EventListenerAssetsManager_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_extension_EventListenerAssetsManager_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_EventListenerAssetsManager(JSContext *cx, JSObject *global);
+bool js_cocos2dx_extension_EventListenerAssetsManagerEx_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_extension_EventListenerAssetsManagerEx_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_extension_EventListenerAssetsManagerEx(JSContext *cx, JSObject *global);
 void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_extension_EventListenerAssetsManager_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EventListenerAssetsManager_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EventListenerAssetsManager_EventListenerAssetsManager(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventListenerAssetsManagerEx_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventListenerAssetsManagerEx_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_EventListenerAssetsManagerEx_EventListenerAssetsManagerEx(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 

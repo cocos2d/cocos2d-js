@@ -178,7 +178,7 @@ var KeyboardNotificationLayer = TextInputTest.extend({
         // decide the trackNode is clicked.
         cc.log("KeyboardNotificationLayer:clickedAt(" + point.x + "," + point.y + ")");
 
-        var rect = textInputGetRect(this._trackNode);
+        var rect = textInputGetRect(target._trackNode);
         cc.log("KeyboardNotificationLayer:TrackNode at(origin:" + rect.x + "," + rect.y
             + ", size:" + rect.width + "," + rect.height + ")");
 
@@ -388,8 +388,8 @@ var TextFieldTTFActionTest = KeyboardNotificationLayer.extend({
 });
 
 var TextInputTestScene = TestScene.extend({
-    runThisTest:function () {
-        sceneIdx = -1;
+    runThisTest:function (num) {
+        sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextTextInputTest();
 
         this.addChild(layer);

@@ -50,21 +50,7 @@ add_executable(${APP_NAME}
 )
 
 target_link_libraries(${APP_NAME}
-  jsb_spine
-  spine
-  jsb_studio
-  cocostudio
-  jsb_builder
-  cocosbuilder
-  jsb_chipmunk
-  chipmunk_static
-  jsb_extension
-  extensions
-  audio
-  jsb_localstorage
-  jsb_network
-  jsb_ui
-  jsbinding
+  jsbindings  
   cocos2d
   js_static
 )

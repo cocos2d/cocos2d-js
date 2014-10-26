@@ -31,6 +31,24 @@
 #define  LOG_TAG    "CCJavascriptJavaBridge"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalString
+  (JNIEnv *env, jclass cls, jstring value)
+{
+    const char *_value = env->GetStringUTFChars(value, NULL);
+    ScriptingCore::getInstance()->evalString(_value,NULL);
+    env->ReleaseStringUTFChars(value, _value);
+    
+    return 1;
+}
+
+#ifdef __cplusplus
+}
+#endif
+
 JavascriptJavaBridge::CallInfo::~CallInfo(void)
 {
     if (m_returnType == TypeString && m_ret.stringValue)
@@ -309,16 +327,18 @@ JS_BINDED_FUNC_IMPL(JavascriptJavaBridge, callStaticMethod)
 {
     jsval *argv = JS_ARGV(cx, vp);
     if (argc == 3) {
-    	JSStringWrapper arg0(argv[0]);
+        JSStringWrapper arg0(argv[0]);
         JSStringWrapper arg1(argv[1]);
         JSStringWrapper arg2(argv[2]);
 
         CallInfo call(arg0.get(), arg1.get(), arg2.get());
         if(call.isValid()){
-	        bool success = call.execute();
-			JS_ReportError(cx, "js_cocos2dx_JSJavaBridge : call result code: %d", call.getErrorCode());
-	        JS_SET_RVAL(cx, vp, convertReturnValue(cx, call.getReturnValue(), call.getReturnValueType()));
-	        return success;	
+            bool success = call.execute();
+            int errorCode = call.getErrorCode();
+            if(errorCode < 0)
+                JS_ReportError(cx, "js_cocos2dx_JSJavaBridge : call result code: %d", errorCode);
+            JS_SET_RVAL(cx, vp, convertReturnValue(cx, call.getReturnValue(), call.getReturnValueType()));
+            return success;	
         }
     }
     else if(argc > 3){
@@ -359,7 +379,9 @@ JS_BINDED_FUNC_IMPL(JavascriptJavaBridge, callStaticMethod)
             }
             bool success = call.executeWithArgs(args);
             if (args) delete []args;
-            JS_ReportError(cx, "js_cocos2dx_JSJavaBridge : call result code: %d", call.getErrorCode());
+            int errorCode = call.getErrorCode();
+            if(errorCode < 0)
+                JS_ReportError(cx, "js_cocos2dx_JSJavaBridge : call result code: %d", errorCode);
             JS_SET_RVAL(cx, vp, convertReturnValue(cx, call.getReturnValue(), call.getReturnValueType()));
             return success;
         }

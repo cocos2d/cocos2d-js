@@ -328,7 +328,6 @@ bool js_cocos2dx_studio_Armature_removeBone(JSContext *cx, uint32_t argc, jsval 
 bool js_cocos2dx_studio_Armature_getBatchNode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_setParentBone(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_Armature_drawContour(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_setBatchNode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_setArmatureData(JSContext *cx, uint32_t argc, jsval *vp);
@@ -337,6 +336,7 @@ bool js_cocos2dx_studio_Armature_getArmatureData(JSContext *cx, uint32_t argc, j
 bool js_cocos2dx_studio_Armature_getBoundingBox(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_getVersion(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_getAnimation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Armature_getOffsetPoints(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_getBoneDic(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_Armature_create(JSContext *cx, uint32_t argc, jsval *vp);
@@ -478,5 +478,299 @@ bool js_cocos2dx_studio_SceneReader_getNodeByTag(JSContext *cx, uint32_t argc, j
 bool js_cocos2dx_studio_SceneReader_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_SceneReader_sceneReaderVersion(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_SceneReader_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_ActionTimelineCache_class;
+extern JSObject *jsb_cocostudio_timeline_ActionTimelineCache_prototype;
+
+bool js_cocos2dx_studio_ActionTimelineCache_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_ActionTimelineCache_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_ActionTimelineCache(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_ActionTimelineCache_createActionFromJson(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_createActionFromProtocolBuffers(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_createActionFromXML(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_loadAnimationActionWithFileFromProtocolBuffers(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_loadAnimationActionWithFileFromXML(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_purge(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_loadAnimationActionWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_loadAnimationActionWithContent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_removeAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_loadActionTimelineFromXML(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_createAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineCache_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_Frame_class;
+extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
+
+bool js_cocos2dx_studio_Frame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_Frame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_Frame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_Frame_clone(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Frame_setNode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Frame_setTimeline(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Frame_isEnterWhenPassed(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Frame_getFrameIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Frame_apply(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Frame_isTween(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Frame_setFrameIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Frame_setTween(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Frame_getTimeline(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Frame_getNode(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_VisibleFrame_class;
+extern JSObject *jsb_cocostudio_timeline_VisibleFrame_prototype;
+
+bool js_cocos2dx_studio_VisibleFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_VisibleFrame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_VisibleFrame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_VisibleFrame_isVisible(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_VisibleFrame_setVisible(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_VisibleFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_VisibleFrame_VisibleFrame(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_TextureFrame_class;
+extern JSObject *jsb_cocostudio_timeline_TextureFrame_prototype;
+
+bool js_cocos2dx_studio_TextureFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_TextureFrame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_TextureFrame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_TextureFrame_getTextureName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_TextureFrame_setNode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_TextureFrame_setTextureName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_TextureFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_TextureFrame_TextureFrame(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_RotationFrame_class;
+extern JSObject *jsb_cocostudio_timeline_RotationFrame_prototype;
+
+bool js_cocos2dx_studio_RotationFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_RotationFrame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_RotationFrame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_RotationFrame_setRotation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_RotationFrame_getRotation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_RotationFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_RotationFrame_RotationFrame(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_SkewFrame_class;
+extern JSObject *jsb_cocostudio_timeline_SkewFrame_prototype;
+
+bool js_cocos2dx_studio_SkewFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_SkewFrame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_SkewFrame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_SkewFrame_getSkewY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_SkewFrame_setSkewX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_SkewFrame_setSkewY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_SkewFrame_getSkewX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_SkewFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_SkewFrame_SkewFrame(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_RotationSkewFrame_class;
+extern JSObject *jsb_cocostudio_timeline_RotationSkewFrame_prototype;
+
+bool js_cocos2dx_studio_RotationSkewFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_RotationSkewFrame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_RotationSkewFrame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_RotationSkewFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_RotationSkewFrame_RotationSkewFrame(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_PositionFrame_class;
+extern JSObject *jsb_cocostudio_timeline_PositionFrame_prototype;
+
+bool js_cocos2dx_studio_PositionFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_PositionFrame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_PositionFrame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_PositionFrame_getX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_PositionFrame_getY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_PositionFrame_setPosition(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_PositionFrame_setX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_PositionFrame_setY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_PositionFrame_getPosition(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_PositionFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_PositionFrame_PositionFrame(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_ScaleFrame_class;
+extern JSObject *jsb_cocostudio_timeline_ScaleFrame_prototype;
+
+bool js_cocos2dx_studio_ScaleFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_ScaleFrame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_ScaleFrame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_ScaleFrame_setScaleY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ScaleFrame_setScaleX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ScaleFrame_getScaleY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ScaleFrame_getScaleX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ScaleFrame_setScale(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ScaleFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ScaleFrame_ScaleFrame(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_AnchorPointFrame_class;
+extern JSObject *jsb_cocostudio_timeline_AnchorPointFrame_prototype;
+
+bool js_cocos2dx_studio_AnchorPointFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_AnchorPointFrame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_AnchorPointFrame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_AnchorPointFrame_setAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_AnchorPointFrame_getAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_AnchorPointFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_AnchorPointFrame_AnchorPointFrame(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_InnerActionFrame_class;
+extern JSObject *jsb_cocostudio_timeline_InnerActionFrame_prototype;
+
+bool js_cocos2dx_studio_InnerActionFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_InnerActionFrame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_InnerActionFrame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_InnerActionFrame_getInnerActionType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_setStartFrameIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_setInnerActionType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_getStartFrameIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_InnerActionFrame(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_ColorFrame_class;
+extern JSObject *jsb_cocostudio_timeline_ColorFrame_prototype;
+
+bool js_cocos2dx_studio_ColorFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_ColorFrame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_ColorFrame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_ColorFrame_getAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ColorFrame_getColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ColorFrame_setAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ColorFrame_setColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ColorFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ColorFrame_ColorFrame(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_EventFrame_class;
+extern JSObject *jsb_cocostudio_timeline_EventFrame_prototype;
+
+bool js_cocos2dx_studio_EventFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_EventFrame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_EventFrame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_EventFrame_setEvent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_EventFrame_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_EventFrame_getEvent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_EventFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_EventFrame_EventFrame(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_ZOrderFrame_class;
+extern JSObject *jsb_cocostudio_timeline_ZOrderFrame_prototype;
+
+bool js_cocos2dx_studio_ZOrderFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_ZOrderFrame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_ZOrderFrame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_ZOrderFrame_getZOrder(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ZOrderFrame_setZOrder(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ZOrderFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ZOrderFrame_ZOrderFrame(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_Timeline_class;
+extern JSObject *jsb_cocostudio_timeline_Timeline_prototype;
+
+bool js_cocos2dx_studio_Timeline_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_Timeline_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_Timeline(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_Timeline_clone(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_gotoFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_setNode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_getActionTimeline(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_insertFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_setActionTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_addFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_getFrames(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_getActionTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_getNode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_removeFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_setActionTimeline(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_stepToFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_Timeline_Timeline(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_ActionTimelineData_class;
+extern JSObject *jsb_cocostudio_timeline_ActionTimelineData_prototype;
+
+bool js_cocos2dx_studio_ActionTimelineData_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_ActionTimelineData_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_ActionTimelineData(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_ActionTimelineData_setActionTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineData_getActionTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineData_create(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_ActionTimeline_class;
+extern JSObject *jsb_cocostudio_timeline_ActionTimeline_prototype;
+
+bool js_cocos2dx_studio_ActionTimeline_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_ActionTimeline_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_ActionTimeline(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_ActionTimeline_getTimelines(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_getCurrentFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_getStartFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_pause(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_setFrameEventCallFunc(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_resume(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_getDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_addTimeline(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_getEndFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_setCurrentFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_setTimeSpeed(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_setDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_getTimeSpeed(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_gotoFrameAndPause(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_isPlaying(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_gotoFrameAndPlay(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_removeTimeline(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_clearFrameEventCallFunc(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_ActionTimeline(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_CSLoader_class;
+extern JSObject *jsb_cocos2d_CSLoader_prototype;
+
+bool js_cocos2dx_studio_CSLoader_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_CSLoader_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_CSLoader(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_CSLoader_createNodeFromJson(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_nodeFromXML(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_createNodeFromProtocolBuffers(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_setRecordXMLPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_setJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_loadNodeWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_loadNodeWithContent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_isRecordProtocolBuffersPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_isRecordXMLPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_getProtocolBuffersPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_getXMLPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_createNodeFromXML(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_isRecordJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_setRecordProtocolBuffersPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_getJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_setRecordJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_setProtocolBuffersPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_purge(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_setXMLPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_nodeFromXMLFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_createNode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_createTimeline(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_CSLoader_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 

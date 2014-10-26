@@ -185,6 +185,6 @@ MySprite.create = function (f1, f2, f3) {
 }
 MySprite.reCreate = function (f1, f2, f3) {
     var pool = cc.pool;
-    if (pool.hasObj(MySprite)) return pool.getFromPool(MySprite, f1, f2, f3);
+    if (pool.hasObject(MySprite)) return pool.getFromPool(MySprite, f1, f2, f3);
     return  MySprite.create(f1, f2, f3);
 }

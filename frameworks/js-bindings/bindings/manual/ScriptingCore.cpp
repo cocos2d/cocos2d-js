@@ -356,10 +356,10 @@ bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
 
 bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments in executeScript");
+    JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments in executeScript");
     ScriptingCore::getInstance()->reset();
     JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return true;
+    return true;
 };
 
 void registerDefaultClasses(JSContext* cx, JSObject* global) {
@@ -480,8 +480,6 @@ void ScriptingCore::start()
 {
     // for now just this
     createGlobalContext();
-    
-    runScript("script/jsb_boot.js");
 }
 
 void ScriptingCore::addRegisterCallback(sc_register_sth callback) {
@@ -534,10 +532,10 @@ void ScriptingCore::createGlobalContext() {
     //JS_SetCStringsAreUTF8();
     this->_rt = JS_NewRuntime(8L * 1024L * 1024L, JS_USE_HELPER_THREADS);
     JS_SetGCParameter(_rt, JSGC_MAX_BYTES, 0xffffffff);
-	
+    
     JS_SetTrustedPrincipals(_rt, &shellTrustedPrincipals);
     JS_SetSecurityCallbacks(_rt, &securityCallbacks);
-	JS_SetNativeStackQuota(_rt, JSB_MAX_STACK_QUOTA);
+    JS_SetNativeStackQuota(_rt, JSB_MAX_STACK_QUOTA);
     
     this->_cx = JS_NewContext(_rt, 8192);
     
@@ -574,28 +572,47 @@ static std::string RemoveFileExt(const std::string& filePath) {
     }
 }
 
+JSScript* ScriptingCore::getScript(const char *path)
+{
+    // a) check jsc file first
+    std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+    if (filename_script[byteCodePath])
+        return filename_script[byteCodePath];
+    
+    // b) no jsc file, check js file
+    std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(path);
+    if (filename_script[fullPath])
+        return filename_script[fullPath];
+    
+    return NULL;
+}
+
 void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext* cx)
 {
-	if (!path) {
-		return ;
-	}
+    if (!path) {
+        return;
+    }
+    
+    if (getScript(path)) {
+        return;
+    }
 
-	cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
+    cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
 
-	if (global == NULL) {
-		global = _global;
-	}
-	if (cx == NULL) {
-		cx = _cx;
-	}
+    if (global == NULL) {
+        global = _global;
+    }
+    if (cx == NULL) {
+        cx = _cx;
+    }
 
-	JSAutoCompartment ac(cx, global);
+    JSAutoCompartment ac(cx, global);
 
-	JS::RootedScript script(cx);
-	JS::RootedObject obj(cx, global);
+    JS::RootedScript script(cx);
+    JS::RootedObject obj(cx, global);
 
-	// a) check jsc file first
-	std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+    // a) check jsc file first
+    std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
 
     // Check whether '.jsc' files exist to avoid outputing log which says 'couldn't find .jsc file'.
     if (futil->isFileExist(byteCodePath))
@@ -607,45 +624,56 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
         }
     }
 
-	// b) no jsc file, check js file
-	if (!script)
-	{
-		/* Clear any pending exception from previous failed decoding.  */
-		ReportException(cx);
+    // b) no jsc file, check js file
+    if (!script)
+    {
+        /* Clear any pending exception from previous failed decoding.  */
+        ReportException(cx);
 
-		std::string fullPath = futil->fullPathForFilename(path);
-		JS::CompileOptions options(cx);
-		options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
+        std::string fullPath = futil->fullPathForFilename(path);
+        JS::CompileOptions options(cx);
+        options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-		std::string jsFileContent = futil->getStringFromFile(fullPath);
-		if (!jsFileContent.empty())
-		{
-			script = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size());
-		}
+        std::string jsFileContent = futil->getStringFromFile(fullPath);
+        if (!jsFileContent.empty())
+        {
+            script = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size());
+        }
 #else
-		script = JS::Compile(cx, obj, options, fullPath.c_str());
+        script = JS::Compile(cx, obj, options, fullPath.c_str());
 #endif
-	}
-	if (script) {
-		filename_script[path] = script;
-	}
+        if (script) {
+            filename_script[fullPath] = script;
+        }
+    }
+    else {
+        filename_script[byteCodePath] = script;
+    }
 }
 
 void ScriptingCore::cleanScript(const char *path)
 {
-    auto it = filename_script.find(path);
+    std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+    auto it = filename_script.find(byteCodePath);
     if (it != filename_script.end())
     {
         filename_script.erase(it);
     }
-
+    
+    std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(path);
+    it = filename_script.find(fullPath);
+    if (it != filename_script.end())
+    {
+        filename_script.erase(it);
+    }
 }
 
-std::unordered_map<std::string, JSScript*>  &ScriptingCore::getFileScprite()
+std::unordered_map<std::string, JSScript*>  &ScriptingCore::getFileScript()
 {
     return filename_script;
 }
+
 void ScriptingCore::cleanAllScript()
 {
     filename_script.clear();
@@ -653,28 +681,25 @@ void ScriptingCore::cleanAllScript()
 
 bool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
 {
-	if (global == NULL) {
-		global = _global;
-	}
-	if (cx == NULL) {
-		cx = _cx;
-	}
-	if (!filename_script[path])
-	{
-		compileScript(path,global,cx );
-	}
-	JSScript * script = filename_script[path];
-	bool evaluatedOK = false;
-	if (script) {
-		jsval rval;
-		JSAutoCompartment ac(cx, global);
-		evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
-		if (false == evaluatedOK) {
-			cocos2d::log("(evaluatedOK == JS_FALSE)");
-			JS_ReportPendingException(cx);
-		}
-	}
-	return evaluatedOK;
+    if (global == NULL) {
+        global = _global;
+    }
+    if (cx == NULL) {
+        cx = _cx;
+    }
+    compileScript(path,global,cx);
+    JSScript * script = getScript(path);
+    bool evaluatedOK = false;
+    if (script) {
+        jsval rval;
+        JSAutoCompartment ac(cx, global);
+        evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
+        if (false == evaluatedOK) {
+            cocos2d::log("(evaluatedOK == JS_FALSE)");
+            JS_ReportPendingException(cx);
+        }
+    }
+    return evaluatedOK;
 }
 
 void ScriptingCore::reset()
@@ -1216,7 +1241,7 @@ bool ScriptingCore::handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::
 {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-	js_proxy_t * p = jsb_get_native_proxy(nativeObj);
+    js_proxy_t * p = jsb_get_native_proxy(nativeObj);
 
     if (nullptr == p)
         return false;
@@ -1521,16 +1546,16 @@ static void serverEntryPoint(unsigned int port)
         int optval = 1;
         if ((setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval))) < 0) {
             cc_closesocket(s);
-			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_REUSEADDR");
+            TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_REUSEADDR");
             return;
         }
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-		if ((setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval))) < 0) {
-			close(s);
-			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_NOSIGPIPE");
-			return;
-		}
+        if ((setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval))) < 0) {
+            close(s);
+            TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_NOSIGPIPE");
+            return;
+        }
 #endif //(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         
         if ((::bind(s, rp->ai_addr, rp->ai_addrlen)) == 0) {
@@ -1540,7 +1565,7 @@ static void serverEntryPoint(unsigned int port)
         s = -1;
     }
     if (s < 0 || rp == NULL) {
-		TRACE_DEBUGGER_SERVER("debug server : error creating/binding socket");
+        TRACE_DEBUGGER_SERVER("debug server : error creating/binding socket");
         return;
     }
     
@@ -1548,7 +1573,7 @@ static void serverEntryPoint(unsigned int port)
     
     listen(s, 1);
     
-	while (true) {
+    while (true) {
         clientSocket = accept(s, NULL, NULL);
         
         if (clientSocket < 0)
@@ -1580,7 +1605,7 @@ static void serverEntryPoint(unsigned int port)
             
             cc_closesocket(clientSocket);
         }
-	} // while(true)
+    } // while(true)
 }
 
 bool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)

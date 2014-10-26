@@ -13,6 +13,7 @@ var SysMenu = cc.Layer.extend({
         var sp = new cc.Sprite(res.loading_png);
         sp.anchorX = 0;
         sp.anchorY = 0;
+        sp.scale = MW.SCALE;
         this.addChild(sp, 0, 1);
 
         var logo = new cc.Sprite(res.logo_png);
@@ -20,7 +21,8 @@ var SysMenu = cc.Layer.extend({
             anchorX: 0,
             anchorY: 0,
             x: 0,
-            y: 250
+            y: MW.LOGOY,
+            scale: MW.SCALE
         });
         this.addChild(logo, 10, 1);
 
@@ -45,6 +47,9 @@ var SysMenu = cc.Layer.extend({
         }.bind(this));
         var gameSettings = new cc.MenuItemSprite(gameSettingsNormal, gameSettingsSelected, gameSettingsDisabled, this.onSettings, this);
         var about = new cc.MenuItemSprite(aboutNormal, aboutSelected, aboutDisabled, this.onAbout, this);
+        newGame.scale = MW.SCALE;
+        gameSettings.scale = MW.SCALE;
+        about.scale = MW.SCALE;
 
         var menu = new cc.Menu(newGame, gameSettings, about);
         menu.alignItemsVerticallyWithPadding(10);
@@ -53,7 +58,7 @@ var SysMenu = cc.Layer.extend({
         menu.y = winSize.height / 2 - 80;
         this.schedule(this.update, 0.1);
 
-        this._ship = new cc.Sprite("#ship01.png");
+        this._ship = new cc.Sprite("#ship03.png");
         this.addChild(this._ship, 0, 4);
         this._ship.x = Math.random() * winSize.width;
         this._ship.y = 0;
@@ -90,12 +95,12 @@ var SysMenu = cc.Layer.extend({
 	    cc.director.runScene(new cc.TransitionFade(1.2, scene));
     },
     update:function () {
-        if (this._ship.y > 480) {
+        if (this._ship.y > 750) {
             this._ship.x = Math.random() * winSize.width;
 	        this._ship.y = 10;
             this._ship.runAction(cc.moveBy(
                 parseInt(5 * Math.random(), 10),
-                cc.p(Math.random() * winSize.width, this._ship.y + 480)
+                cc.p(Math.random() * winSize.width, this._ship.y + 750)
             ));
         }
     },

@@ -45,7 +45,8 @@ var UIListViewTest_Vertical = UIScene.extend({
             listView.setBackGroundImageScale9Enabled(true);
             listView.setContentSize(cc.size(240, 130));
             listView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - listView.width) / 2;
-            listView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - listView.height) / 2;            listView.addEventListenerListView(this.selectedItemEvent, this);
+            listView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - listView.height) / 2;
+            listView.addEventListener(this.selectedItemEvent, this);
             this._mainNode.addChild(listView);
 
             // create model
@@ -178,7 +179,7 @@ var UIListViewTest_Horizontal = UIScene.extend({
             listView.setContentSize(cc.size(240, 130));
             listView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - listView.width) / 2;
             listView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - listView.height) / 2;
-            listView.addEventListenerListView(this.selectedItemEvent, this);
+            listView.addEventListener(this.selectedItemEvent, this);
             this._mainNode.addChild(listView);
 
             // create model
@@ -246,7 +247,7 @@ var UIListViewTest_Horizontal = UIScene.extend({
 
             // set item data
             items_count = items.length;
-            for (var i = 0; i < items_count; ++i) {
+            for (i = 0; i < items_count; ++i) {
                 var item = listView.getItem(i);
                 var button = item.getChildByName("TextButton");
                 var index = listView.getIndex(item);

@@ -61,6 +61,10 @@ void JSB_cpSegmentShape_createClass(JSContext *cx, JSObject* globalObj, const ch
 extern JSObject *JSB_cpPolyShape_object;
 extern JSClass *JSB_cpPolyShape_class;
 void JSB_cpPolyShape_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-
+extern JSObject *JSB_cpSegmentQueryInfo_object;
+extern JSClass *JSB_cpSegmentQueryInfo_class;
+void JSB_cpSegmentQueryInfo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+extern JSObject *JSB_cpNearestPointQueryInfo_object;
+extern JSClass *JSB_cpNearestPointQueryInfo_class;
+void JSB_cpNearestPointQueryInfo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 #endif // JSB_INCLUDE_CHIPMUNK

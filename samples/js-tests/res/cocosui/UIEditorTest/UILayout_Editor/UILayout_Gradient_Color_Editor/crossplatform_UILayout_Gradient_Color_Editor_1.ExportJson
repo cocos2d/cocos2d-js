@@ -1,0 +1,397 @@
+{
+  "version": "1.0.0.0",
+  "cocos2dVersion": "3.x",
+  "designWidth": 480,
+  "designHeight": 320,
+  "dataScale": 1.0,
+  "textures": [],
+  "texturesPng": [],
+  "nodeTree": {
+    "options": {
+      "$type": "EditorCommon.JsonModel.Component.GUI.RootGUISurrogate, EditorCommon",
+      "visible": true,
+      "frameEvent": null,
+      "name": "Node",
+      "classname": "Node"
+    },
+    "children": [
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.PanelSurrogate, EditorCommon",
+          "bgColorOpacity": 0,
+          "capInsetsWidth": 0.0,
+          "capInsetsHeight": 0.0,
+          "visible": true,
+          "classType": "Panel",
+          "width": 480.0,
+          "height": 320.0,
+          "sizePercentX": 1.0,
+          "sizePercentY": 1.0,
+          "actionTag": -1,
+          "tag": 5,
+          "anchorPointX": 0.0,
+          "anchorPointY": 0.0,
+          "ignoreSize": false,
+          "name": "Panel_521",
+          "classname": "Panel"
+        },
+        "children": [
+          {
+            "options": {
+              "$type": "EditorCommon.JsonModel.Component.GUI.PanelSurrogate, EditorCommon",
+              "backGroundImageData": {
+                "resourceType": 0,
+                "path": "background.png",
+                "plistFile": ""
+              },
+              "bgColorR": 255,
+              "bgColorG": 255,
+              "bgEndColorR": 0,
+              "bgEndColorG": 0,
+              "colorType": 0,
+              "bgColorOpacity": 255,
+              "capInsetsX": 160.0,
+              "capInsetsY": 106.0,
+              "capInsetsWidth": 160.0,
+              "capInsetsHeight": 106.0,
+              "layoutType": 3,
+              "visible": true,
+              "ZOrder": 1,
+              "classType": "Panel",
+              "width": 480.0,
+              "height": 320.0,
+              "sizePercentX": 1.0,
+              "sizePercentY": 1.0,
+              "actionTag": -1,
+              "tag": 81,
+              "anchorPointX": 0.0,
+              "anchorPointY": 0.0,
+              "ignoreSize": false,
+              "name": "root_Panel",
+              "classname": "Panel"
+            },
+            "children": [
+              {
+                "options": {
+                  "$type": "EditorCommon.JsonModel.Component.GUI.PanelSurrogate, EditorCommon",
+                  "backGroundImageData": {
+                    "resourceType": 0,
+                    "path": "ribbon.png",
+                    "plistFile": ""
+                  },
+                  "bgEndColorR": 0,
+                  "bgEndColorG": 0,
+                  "colorType": 0,
+                  "capInsetsX": 66.0,
+                  "capInsetsY": 66.0,
+                  "capInsetsWidth": 66.0,
+                  "capInsetsHeight": 66.0,
+                  "backGroundScale9Enable": true,
+                  "y": 263.0,
+                  "visible": true,
+                  "ZOrder": 1,
+                  "classType": "Panel",
+                  "width": 480.0,
+                  "height": 57.0,
+                  "positionPercentY": 0.821875,
+                  "sizePercentX": 1.0,
+                  "sizePercentY": 0.178125,
+                  "actionTag": 109,
+                  "tag": 82,
+                  "anchorPointX": 0.0,
+                  "anchorPointY": 0.0,
+                  "ignoreSize": false,
+                  "layoutParameter": {
+                    "type": 2,
+                    "relativeName": "Panel",
+                    "relativeToName": "root_Panel",
+                    "align": 2
+                  },
+                  "name": "Panel",
+                  "classname": "Panel"
+                },
+                "children": [],
+                "classname": "Panel"
+              },
+              {
+                "options": {
+                  "$type": "EditorCommon.JsonModel.Component.GUI.LabelSurrogate, EditorCommon",
+                  "fontName": "宋体",
+                  "text": "UI_test",
+                  "x": 240.0,
+                  "y": 310.0,
+                  "visible": true,
+                  "ZOrder": 1,
+                  "classType": "Label",
+                  "width": 70.0,
+                  "height": 20.0,
+                  "positionPercentX": 0.5,
+                  "positionPercentY": 0.96875,
+                  "sizePercentX": 0.145833328,
+                  "sizePercentY": 0.0625,
+                  "actionTag": 115,
+                  "tag": 88,
+                  "ignoreSize": true,
+                  "layoutParameter": {
+                    "type": 2,
+                    "relativeName": "UItest",
+                    "relativeToName": "root_Panel",
+                    "align": 2
+                  },
+                  "name": "UItest",
+                  "classname": "Label"
+                },
+                "children": [],
+                "classname": "Label"
+              },
+              {
+                "options": {
+                  "$type": "EditorCommon.JsonModel.Component.GUI.PanelSurrogate, EditorCommon",
+                  "backGroundImageData": {
+                    "resourceType": 0,
+                    "path": "buttonBackground.png",
+                    "plistFile": ""
+                  },
+                  "bgEndColorR": 0,
+                  "bgEndColorG": 0,
+                  "colorType": 0,
+                  "capInsetsWidth": 0.0,
+                  "capInsetsHeight": 0.0,
+                  "backGroundScale9Enable": true,
+                  "layoutType": 2,
+                  "x": 38.0,
+                  "y": 75.0,
+                  "visible": true,
+                  "ZOrder": 2,
+                  "classType": "Panel",
+                  "width": 403.0,
+                  "height": 170.0,
+                  "positionPercentX": 0.08020833,
+                  "positionPercentY": 0.234375,
+                  "sizePercentX": 0.839583337,
+                  "sizePercentY": 0.53125,
+                  "actionTag": 110,
+                  "tag": 83,
+                  "anchorPointX": 0.0,
+                  "anchorPointY": 0.0,
+                  "ignoreSize": false,
+                  "layoutParameter": {
+                    "type": 2,
+                    "relativeName": "background_Panel",
+                    "relativeToName": "root_Panel",
+                    "align": 5
+                  },
+                  "name": "background_Panel",
+                  "classname": "Panel"
+                },
+                "children": [
+                  {
+                    "options": {
+                      "$type": "EditorCommon.JsonModel.Component.GUI.PanelSurrogate, EditorCommon",
+                      "bgColorR": 47,
+                      "bgColorG": 79,
+                      "bgColorB": 79,
+                      "bgEndColorR": 85,
+                      "bgEndColorG": 107,
+                      "bgEndColorB": 47,
+                      "colorType": 2,
+                      "bgColorOpacity": 255,
+                      "vectorY": -1.0,
+                      "capInsetsWidth": 0.0,
+                      "capInsetsHeight": 0.0,
+                      "visible": true,
+                      "classType": "Panel",
+                      "width": 403.0,
+                      "height": 170.0,
+                      "sizeType": 1,
+                      "sizePercentX": 1.0,
+                      "sizePercentY": 1.0,
+                      "actionTag": 1137,
+                      "tag": 18,
+                      "anchorPointX": 0.0,
+                      "anchorPointY": 0.0,
+                      "ignoreSize": false,
+                      "layoutParameter": {
+                        "type": 1,
+                        "gravity": 2,
+                        "relativeName": "Panel_1137",
+                        "relativeToName": "background_Panel"
+                      },
+                      "name": "Panel_1137",
+                      "classname": "Panel"
+                    },
+                    "children": [
+                      {
+                        "options": {
+                          "$type": "EditorCommon.JsonModel.Component.GUI.ButtonSurrogate, EditorCommon",
+                          "normalData": {
+                            "resourceType": 0,
+                            "path": "button_n.png",
+                            "plistFile": ""
+                          },
+                          "pressedData": {
+                            "resourceType": 0,
+                            "path": "button_p.png",
+                            "plistFile": ""
+                          },
+                          "disabledData": {
+                            "resourceType": 0,
+                            "path": "button_p.png",
+                            "plistFile": ""
+                          },
+                          "text": "Text Button",
+                          "scale9Width": 103.0,
+                          "scale9Height": 40.0,
+                          "x": 333.0,
+                          "y": 76.0,
+                          "touchAble": true,
+                          "visible": true,
+                          "classType": "Button",
+                          "width": 103.0,
+                          "height": 40.0,
+                          "positionPercentX": 0.8263027,
+                          "positionPercentY": 0.447058827,
+                          "sizePercentX": 0.255583137,
+                          "sizePercentY": 0.235294119,
+                          "actionTag": 1138,
+                          "tag": 19,
+                          "ignoreSize": true,
+                          "name": "Button_1138",
+                          "classname": "Button"
+                        },
+                        "children": [],
+                        "classname": "Button"
+                      },
+                      {
+                        "options": {
+                          "$type": "EditorCommon.JsonModel.Component.GUI.CheckBoxSurrogate, EditorCommon",
+                          "backGroundBoxData": {
+                            "resourceType": 0,
+                            "path": "selected01.png",
+                            "plistFile": ""
+                          },
+                          "backGroundBoxSelectedData": {
+                            "resourceType": 0,
+                            "path": "selected01.png",
+                            "plistFile": ""
+                          },
+                          "backGroundBoxDisabledData": {
+                            "resourceType": 0,
+                            "path": "selected01.png",
+                            "plistFile": ""
+                          },
+                          "frontCrossData": {
+                            "resourceType": 0,
+                            "path": "selected02.png",
+                            "plistFile": ""
+                          },
+                          "frontCrossDisabledData": {
+                            "resourceType": 0,
+                            "path": "selected01.png",
+                            "plistFile": ""
+                          },
+                          "selectedState": true,
+                          "x": 46.0,
+                          "y": 102.0,
+                          "touchAble": true,
+                          "visible": true,
+                          "classType": "CheckBox",
+                          "width": 56.0,
+                          "height": 56.0,
+                          "positionPercentX": 0.114143923,
+                          "positionPercentY": 0.6,
+                          "sizePercentX": 0.138957813,
+                          "sizePercentY": 0.329411775,
+                          "actionTag": 1139,
+                          "tag": 20,
+                          "ignoreSize": true,
+                          "name": "CheckBox_1139",
+                          "classname": "CheckBox"
+                        },
+                        "children": [],
+                        "classname": "CheckBox"
+                      },
+                      {
+                        "options": {
+                          "$type": "EditorCommon.JsonModel.Component.GUI.ImageViewSurrogate, EditorCommon",
+                          "fileNameData": {
+                            "resourceType": 0,
+                            "path": "GUI/image.png",
+                            "plistFile": ""
+                          },
+                          "capInsetsWidth": 0.0,
+                          "capInsetsHeight": 0.0,
+                          "x": 159.0,
+                          "y": 90.0,
+                          "visible": true,
+                          "classType": "ImageView",
+                          "width": 80.0,
+                          "height": 80.0,
+                          "positionPercentX": 0.394540936,
+                          "positionPercentY": 0.5294118,
+                          "sizePercentX": 0.198511168,
+                          "sizePercentY": 0.470588237,
+                          "actionTag": 1140,
+                          "tag": 21,
+                          "ignoreSize": true,
+                          "name": "ImageView_1140",
+                          "classname": "ImageView"
+                        },
+                        "children": [],
+                        "classname": "ImageView"
+                      }
+                    ],
+                    "classname": "Panel"
+                  }
+                ],
+                "classname": "Panel"
+              },
+              {
+                "options": {
+                  "$type": "EditorCommon.JsonModel.Component.GUI.LabelSurrogate, EditorCommon",
+                  "fontName": "宋体",
+                  "fontSize": 24,
+                  "text": "Back",
+                  "x": 436.0,
+                  "y": 22.0,
+                  "touchAble": true,
+                  "visible": true,
+                  "ZOrder": 6,
+                  "classType": "Label",
+                  "width": 48.0,
+                  "height": 24.0,
+                  "positionPercentX": 0.908333361,
+                  "positionPercentY": 0.06875,
+                  "sizePercentX": 0.1,
+                  "sizePercentY": 0.075,
+                  "actionTag": 114,
+                  "tag": 87,
+                  "ignoreSize": true,
+                  "layoutParameter": {
+                    "type": 2,
+                    "relativeName": "back",
+                    "relativeToName": "root_Panel",
+                    "align": 9,
+                    "marginRight": 20,
+                    "marginDown": 10
+                  },
+                  "name": "back",
+                  "classname": "Label"
+                },
+                "children": [],
+                "classname": "Label"
+              }
+            ],
+            "classname": "Panel"
+          }
+        ],
+        "classname": "Panel"
+      }
+    ],
+    "classname": "Node"
+  },
+  "action": {
+    "speed": 1.0,
+    "timelines": []
+  }
+}

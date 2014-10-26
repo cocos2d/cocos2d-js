@@ -34,7 +34,7 @@ var UIPageViewEditorTest = UIBaseLayer.extend({
         back_label.addTouchEventListener(this.backEvent,this);
 
         var pageView =ccui.helper.seekWidgetByName(root, "PageView_1269");
-        pageView.addEventListenerPageView(this.pageViewEvent, this);
+        pageView.addEventListener(this.pageViewEvent, this);
     },
 
     pageViewEvent: function (sender, type) {

@@ -37,13 +37,20 @@ AppDelegate::~AppDelegate()
     ScriptEngineManager::destroyInstance();
 }
 
+void AppDelegate::initGLContextAttrs()
+{
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
 	auto glview = director->getOpenGLView();
 	if(!glview) {
-		glview = GLView::createWithRect("HelloJavascript", Rect(0,0,900,640));
+		glview = cocos2d::GLViewImpl::createWithRect("HelloJavascript", Rect(0,0,900,640));
 		director->setOpenGLView(glview);
 	}
 
@@ -79,8 +86,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     sc->addRegisterCallback(JavaScriptObjCBridge::_js_register);
 #endif
-    sc->start();
-    
+    sc->start();    
+    sc->runScript("script/jsb_boot.js");
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
 	ScriptingCore::getInstance()->runScript("main.js");

@@ -34,9 +34,10 @@ var PLATFORM_HTML5 = 1 << 1;
 var PLATFORM_HTML5_WEBGL = 1 << 2;
 var PLATFROM_ANDROID = 1 << 3;
 var PLATFROM_IOS = 1 << 4;
+var PLATFORM_MAC = 1 << 5;
 var PLATFORM_JSB_AND_WEBGL =  PLATFORM_JSB | PLATFORM_HTML5_WEBGL;
 var PLATFORM_ALL = PLATFORM_JSB | PLATFORM_HTML5 | PLATFORM_HTML5_WEBGL | PLATFROM_ANDROID | PLATFROM_IOS;
-var PLATFROM_ANDROID_AND_IOS = PLATFROM_ANDROID | PLATFROM_IOS;
+var PLATFROM_APPLE = PLATFROM_IOS | PLATFORM_MAC;
 
 // automation vars
 var autoTestEnabled = autoTestEnabled || false;
@@ -130,12 +131,13 @@ var TestController = cc.LayerGradient.extend({
                     menuItem.setEnabled( testNames[i].platforms & PLATFORM_HTML5 );
                 }
             } else {
-                if(cc.sys.os == cc.sys.OS_ANDROID)
-                {
+                if (cc.sys.os == cc.sys.OS_ANDROID) {
                     menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFROM_ANDROID ) );
-                }else if(cc.sys.os == cc.sys.OS_IOS|| cc.sys.os == cc.sys.OS_OSX){
+                } else if (cc.sys.os == cc.sys.OS_IOS) {
                     menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFROM_IOS) );
-                }else{
+                } else if (cc.sys.os == cc.sys.OS_OSX) {
+                    menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFORM_MAC) );
+                } else {
                     menuItem.setEnabled( testNames[i].platforms & PLATFORM_JSB );
                 }
             }
@@ -219,6 +221,7 @@ var testNames = [
     {
         title:"ActionManager Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/ActionManagerTest/ActionManagerTest.js",
         testScene:function () {
             return new ActionManagerTestScene();
         }
@@ -226,6 +229,7 @@ var testNames = [
     {
         title:"Actions Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/ActionsTest/ActionsTest.js",
         testScene:function () {
             return new ActionsTestScene();
         }
@@ -233,6 +237,7 @@ var testNames = [
     {
         title:"Bake Layer Test",
         platforms: PLATFORM_HTML5,
+        linksrc:"src/BakeLayerTest/BakeLayerTest.js",
         testScene:function () {
             return new BakeLayerTestScene();
         }
@@ -241,6 +246,7 @@ var testNames = [
         title:"Box2D Test",
         resource:g_box2d,
         platforms: PLATFORM_HTML5,
+        linksrc:"src/Box2dTest/Box2dTest.js",
         testScene:function () {
             return new Box2DTestScene();
         }
@@ -248,6 +254,7 @@ var testNames = [
     {
         title:"Chipmunk Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/ChipmunkTest/ChipmunkTest.js",
         testScene:function () {
             return new ChipmunkTestScene();
         }
@@ -256,6 +263,7 @@ var testNames = [
     {
         title:"Click and Move Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/ClickAndMoveTest/ClickAndMoveTest.js",
         testScene:function () {
             return new ClickAndMoveTestScene();
         }
@@ -263,6 +271,7 @@ var testNames = [
     {
         title:"ClippingNode Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/ClippingNodeTest/ClippingNodeTest.js",
         testScene:function () {
             return new ClippingNodeTestScene();
         }
@@ -271,6 +280,7 @@ var testNames = [
         title:"CocosDenshion Test",
         resource:g_cocosdeshion,
         platforms: PLATFORM_ALL,
+        linksrc:"src/CocosDenshionTest/CocosDenshionTest.js",
         testScene:function () {
             return new CocosDenshionTestScene();
         }
@@ -279,13 +289,24 @@ var testNames = [
         title:"CocoStudio Test",
         resource:g_cocoStudio,
         platforms: PLATFORM_ALL,
+        linksrc:"",
         testScene:function () {
             return new CocoStudioTestScene();
         }
     },
     {
+        title: "Cocos Studio 2.0 Test",
+        resource: g_ccs2,
+        platforms: PLATFORM_ALL,
+        linksrc: "",
+        testScene: function(){
+            return new CocosStudio2();
+        }
+    },
+    {
         title:"CurrentLanguage Test",
-        platforms: PLATFORM_HTML5,
+        platforms: PLATFORM_ALL,
+        linksrc:"src/CurrentLanguageTest/CurrentLanguageTest.js",
         testScene:function () {
             return new CurrentLanguageTestScene();
         }
@@ -294,6 +315,7 @@ var testNames = [
     {
         title:"DrawPrimitives Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/DrawPrimitivesTest/DrawPrimitivesTest.js",
         testScene:function () {
             return new DrawPrimitivesTestScene();
         }
@@ -301,6 +323,7 @@ var testNames = [
     {
         title:"EaseActions Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/EaseActionsTest/EaseActionsTest.js",
         testScene:function () {
             return new EaseActionsTestScene();
         }
@@ -309,6 +332,7 @@ var testNames = [
         title:"Event Manager Test",
         resource:g_eventDispatcher,
         platforms: PLATFORM_ALL,
+        linksrc:"src/NewEventManagerTest/NewEventManagerTest.js",
         testScene:function () {
             return new EventDispatcherTestScene();
         }
@@ -316,6 +340,7 @@ var testNames = [
     {
         title:"Event Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/EventTest/EventTest.js",
         testScene:function () {
             return new EventTestScene();
         }
@@ -324,6 +349,7 @@ var testNames = [
         title:"Extensions Test",
         resource:g_extensions,
         platforms: PLATFORM_ALL,
+        linksrc:"",
         testScene:function () {
             return new ExtensionsTestScene();
         }
@@ -331,6 +357,7 @@ var testNames = [
     {
         title:"Effects Test",
         platforms: PLATFORM_JSB_AND_WEBGL,
+        linksrc:"src/EffectsTest/EffectsTest.js",
         testScene:function () {
             return new EffectsTestScene();
         }
@@ -338,14 +365,24 @@ var testNames = [
     {
         title:"Effects Advanced Test",
         platforms: PLATFORM_JSB_AND_WEBGL,
+        linksrc:"src/EffectsAdvancedTest/EffectsAdvancedTest.js",
         testScene:function () {
             return new EffectAdvanceScene();
+        }
+    },
+    {
+        title:"Facebook SDK Test",
+        platforms: PLATFROM_ANDROID | PLATFROM_IOS | PLATFORM_HTML5,
+        linksrc:"src/FacebookTest/FacebookTestsManager.js",
+        testScene:function () {
+            return new FacebookTestScene();
         }
     },
     {
         title:"Font Test",
         resource:g_fonts,
         platforms: PLATFORM_ALL,
+        linksrc:"src/FontTest/FontTest.js",
         testScene:function () {
             return new FontTestScene();
         }
@@ -354,6 +391,7 @@ var testNames = [
         title:"UI Test",
         resource:g_ui,
         platforms: PLATFORM_ALL,
+        linksrc:"",
         testScene:function () {
             return new GUITestScene();
         }
@@ -362,6 +400,7 @@ var testNames = [
     {
         title:"Interval Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/IntervalTest/IntervalTest.js",
         testScene:function () {
             return new IntervalTestScene();
         }
@@ -370,6 +409,7 @@ var testNames = [
         title:"Label Test",
         resource:g_label,
         platforms: PLATFORM_ALL,
+        linksrc:"src/LabelTest/LabelTest.js",
         testScene:function () {
             return new LabelTestScene();
         }
@@ -377,6 +417,7 @@ var testNames = [
     {
         title:"Layer Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/LayerTest/LayerTest.js",
         testScene:function () {
             return new LayerTestScene();
         }
@@ -384,6 +425,7 @@ var testNames = [
     {
         title:"Loader Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/LoaderTest/LoaderTest.js",
         testScene:function () {
             return new LoaderTestScene();
         }
@@ -392,6 +434,7 @@ var testNames = [
         title:"Menu Test",
         resource:g_menu,
         platforms: PLATFORM_ALL,
+        linksrc:"src/MenuTest/MenuTest.js",
         testScene:function () {
             return new MenuTestScene();
         }
@@ -399,6 +442,7 @@ var testNames = [
     {
         title:"MotionStreak Test",
         platforms: PLATFORM_JSB_AND_WEBGL,
+        linksrc:"src/MotionStreakTest/MotionStreakTest.js",
         testScene:function () {
             return new MotionStreakTestScene();
         }
@@ -406,6 +450,7 @@ var testNames = [
     {
         title:"Node Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/CocosNodeTest/CocosNodeTest.js",
         testScene:function () {
             return new NodeTestScene();
         }
@@ -413,7 +458,8 @@ var testNames = [
     {
         title:"OpenGL Test",
         resource:g_opengl_resources,
-        platforms: PLATFORM_HTML5_WEBGL,
+        platforms: PLATFORM_JSB_AND_WEBGL,
+        linksrc:"src/OpenGLTest/OpenGLTest.js",
         testScene:function () {
             return new OpenGLTestScene();
         }
@@ -422,6 +468,7 @@ var testNames = [
         title:"Parallax Test",
         resource:g_parallax,
         platforms: PLATFORM_ALL,
+        linksrc:"src/ParallaxTest/ParallaxTest.js",
         testScene:function () {
             return new ParallaxTestScene();
         }
@@ -429,6 +476,7 @@ var testNames = [
     {
         title:"Particle Test",
         platforms: PLATFORM_ALL,
+        linksrc:"",
         resource:g_particle,
         testScene:function () {
             return new ParticleTestScene();
@@ -437,6 +485,7 @@ var testNames = [
     {
         title:"Path Tests",
         platforms: PLATFORM_ALL,
+        linksrc:"src/PathTest/PathTest.js",
         testScene:function () {
             return new PathTestScene();
         }
@@ -444,6 +493,7 @@ var testNames = [
     {
         title:"Performance Test",
         platforms: PLATFORM_ALL,
+        linksrc:"",
         resource:g_performace,
         testScene:function () {
             return new PerformanceTestScene();
@@ -452,13 +502,15 @@ var testNames = [
     {
         title:"ProgressActions Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/ProgressActionsTest/ProgressActionsTest.js",
         testScene:function () {
             return new ProgressActionsTestScene();
         }
     },
     {
         title:"Reflection Test",
-        platforms: PLATFROM_ANDROID_AND_IOS,
+        platforms: PLATFROM_ANDROID | PLATFROM_APPLE,
+        linksrc:"src/ReflectionTest/ReflectionTest.js",
         testScene:function () {
             return new ReflectionTestScene();
         }
@@ -466,6 +518,7 @@ var testNames = [
     {
         title:"RenderTexture Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/RenderTextureTest/RenderTextureTest.js",
         testScene:function () {
             return new RenderTextureTestScene();
         }
@@ -473,6 +526,7 @@ var testNames = [
     {
         title:"RotateWorld Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/RotateWorldTest/RotateWorldTest.js",
         testScene:function () {
             return new RotateWorldTestScene();
         }
@@ -480,6 +534,7 @@ var testNames = [
     {
         title:"Scene Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/SceneTest/SceneTest.js",
         testScene:function () {
             return new SceneTestScene();
         }
@@ -487,6 +542,7 @@ var testNames = [
     {
         title:"Scheduler Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/SchedulerTest/SchedulerTest.js",
         testScene:function () {
             return new SchedulerTestScene();
         }
@@ -495,6 +551,7 @@ var testNames = [
         title:"Spine Test",
         resource: g_spine,
         platforms: PLATFORM_ALL,
+        linksrc:"src/SpineTest/SpineTest.js",
         testScene:function () {
             return new SpineTestScene();
         }
@@ -503,6 +560,7 @@ var testNames = [
         title:"Sprite Test",
         resource:g_sprites,
         platforms: PLATFORM_ALL,
+        linksrc:"src/SpriteTest/SpriteTest.js",
         testScene:function () {
             return new SpriteTestScene();
         }
@@ -511,6 +569,7 @@ var testNames = [
         title:"Scale9Sprite Test",
         resource:g_s9s_blocks,
         platforms: PLATFORM_ALL,
+        linksrc:"src/ExtensionsTest/S9SpriteTest/S9SpriteTest.js",
         testScene:function () {
             return new S9SpriteTestScene();
         }
@@ -518,6 +577,7 @@ var testNames = [
     {
         title:"TextInput Test",
         platforms: PLATFORM_HTML5,
+        linksrc:"src/TextInputTest/TextInputTest.js",
         testScene:function () {
             return new TextInputTestScene();
         }
@@ -526,14 +586,16 @@ var testNames = [
     {
         title:"TextureCache Test",
         platforms: PLATFORM_ALL,
+        linksrc:"src/TextureCacheTest/TextureCacheTest.js",
         testScene:function () {
-            return new TextureCacheTestScene();
+            return new TexCacheTestScene();
         }
     },
     {
         title:"TileMap Test",
         resource:g_tilemaps,
         platforms: PLATFORM_ALL,
+        linksrc:"src/TileMapTest/TileMapTest.js",
         testScene:function () {
             return new TileMapTestScene();
         }
@@ -542,6 +604,7 @@ var testNames = [
         title:"Touches Test",
         resource:g_touches,
         platforms: PLATFORM_HTML5,
+        linksrc:"src/TouchesTest/TouchesTest.js",
         testScene:function () {
             return new TouchesTestScene();
         }
@@ -550,6 +613,7 @@ var testNames = [
         title:"Transitions Test",
         resource:g_transitions,
         platforms: PLATFORM_ALL,
+        linksrc:"",
         testScene:function () {
             return new TransitionsTestScene();
         }
@@ -557,6 +621,7 @@ var testNames = [
     {
         title:"Unit Tests",
         platforms: PLATFORM_ALL,
+        linksrc:"src/UnitTest/UnitTest.js",
         testScene:function () {
             return new UnitTestScene();
         }
@@ -564,6 +629,7 @@ var testNames = [
     {
         title:"Sys Tests",
         platforms: PLATFORM_ALL,
+        linksrc:"src/SysTest/SysTest.js",
         testScene:function () {
             return new SysTestScene();
         }
@@ -571,6 +637,7 @@ var testNames = [
     {
         title:"cocos2d JS Presentation",
         platforms: PLATFORM_JSB,
+        linksrc:"src/Presentation/Presentation.js",
         testScene:function () {
             return new PresentationScene();
         }
@@ -578,6 +645,7 @@ var testNames = [
     {
         title:"XMLHttpRequest",
         platforms: PLATFORM_ALL,
+        linksrc:"src/XHRTest/XHRTest.js",
         testScene:function () {
             return new XHRTestScene();
         }

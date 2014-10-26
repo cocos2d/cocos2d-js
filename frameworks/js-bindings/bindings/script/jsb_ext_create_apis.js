@@ -32,7 +32,7 @@ ccui.Button.prototype.init = function(){
 };
 ccui.CheckBox.prototype.init = function(){
     ccui.Widget.prototype.init.call(this);
-    this.setSelectedState(false);
+    this.setSelected(false);
     this.setTouchEnabled(true);
 };
 ccui.LoadingBar.prototype.init = function(){
@@ -91,8 +91,8 @@ ccui.RichElementCustomNode.prototype._ctor = function(tag, color, opacity, custo
     customNode !== undefined && this.init(tag, color, opacity, customNode);
 };
 
-cc.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callback) {
-    callback && this.init(assetsManager, callback);
+jsb.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callback) {
+    callback !== undefined && this.init(assetsManager, callback);
 };
 
 cc.Scale9Sprite.prototype._ctor = function(file, rect, capInsets){
@@ -158,11 +158,11 @@ cc.ControlSlider.prototype._ctor = function(bgFile, progressFile, thumbFile){
 };
 
 cc.ControlStepper.prototype._ctor = function(minusSprite, plusSprite){
-    plusSprite && this.initWithMinusSpriteAndPlusSprite(minusSprite, plusSprite);
+    plusSprite !== undefined && this.initWithMinusSpriteAndPlusSprite(minusSprite, plusSprite);
 };
 
 cc.ControlSwitch.prototype._ctor = function(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel){
-    offLabel && this.initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
+    offLabel !== undefined && this.initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
 };
 
 cc.TableView.prototype._ctor = function(dataSouurce, size, container){
@@ -170,11 +170,77 @@ cc.TableView.prototype._ctor = function(dataSouurce, size, container){
 };
 
 cc.EditBox.prototype._ctor = function(size, normal9SpriteBg, press9SpriteBg, disabled9SpriteBg){
-    if (this.initWithSizeAndBackgroundSprite(size, normal9SpriteBg)) {
-        if (press9SpriteBg)
-            this.setBackgroundSpriteForState(press9SpriteBg, cc.CONTROL_STATE_HIGHLIGHTED);
+    normal9SpriteBg && this.initWithSizeAndBackgroundSprite(size, normal9SpriteBg);
+};
 
-        if (disabled9SpriteBg)
-            this.setBackgroundSpriteForState(disabled9SpriteBg, cc.CONTROL_STATE_DISABLED);
+cc.ScrollView.prototype._ctor = function(size, container) {
+    size == undefined ? this.init() : (container ? this.initWithViewSize(size, container) : this.initWithViewSize(size));
+};
+
+
+/************************  Cocostudio  *************************/
+
+ccs.Armature.prototype._ctor = function(name, parentBone) {
+    parentBone !== undefined && ccs.Armature.prototype.init.call(this, name, parentBone);
+};
+
+ccs.Bone.prototype._ctor = function(name) {
+    name !== undefined && ccs.Bone.prototype.init.call(this, name);
+};
+
+ccs.ArmatureAnimation.prototype._ctor = function(armature) {
+    armature !== undefined && ccs.ArmatureAnimation.prototype.init.call(this, armature);
+};
+
+ccs.Tween.prototype._ctor = function(bone) {
+    bone !== undefined && ccs.Tween.prototype.init.call(this, bone);
+};
+
+ccs.BatchNode.prototype._ctor = function() {
+    ccs.BatchNode.prototype.init.call(this);
+};
+
+ccs.DecorativeDisplay.prototype._ctor = function() {
+    ccs.DecorativeDisplay.prototype.init.call(this);
+};
+
+ccs.DisplayManager.prototype._ctor = function(bone) {
+    bone !== undefined && ccs.DisplayManager.prototype.init.call(this, bone);
+};
+
+ccs.Skin.prototype._ctor = function(fileName, rect) {
+    if (fileName == null || fileName == "") {
+        ccs.Skin.prototype.init.call(this);
+    } else {
+        if(fileName[0] == "#"){
+            ccs.Skin.prototype.initWithSpriteFrameName.call(this, fileName.substr(1));
+        } else {
+            rect ? ccs.Skin.prototype.initWithFile.call(this, fileName)
+                 : ccs.Skin.prototype.initWithFile.call(this, fileName, rect);
+        }
     }
+};
+
+ccs.ColliderDetector.prototype._ctor = function(bone) {
+    bone !== undefined && ccs.ColliderDetector.prototype.init.call(this, bone);
+};
+
+ccs.TriggerObj.prototype._ctor = function() {
+    ccs.TriggerObj.prototype.init.call(this);
+};
+
+ccs.ComAttribute.prototype._ctor = function() {
+    ccs.ComAttribute.prototype.init.call(this);
+};
+
+ccs.ComAudio.prototype._ctor = function() {
+    ccs.ComAudio.prototype.init.call(this);
+};
+
+ccs.ComController.prototype._ctor = function() {
+    ccs.ComController.prototype.init.call(this);
+};
+
+ccs.ComRender.prototype._ctor = function() {
+    ccs.ComRender.prototype.init.call(this);
 };

@@ -39,7 +39,7 @@ var UISliderTest = UIScene.extend({
             slider.loadProgressBarTexture("res/cocosui/sliderProgress.png");
             slider.x = widgetSize.width / 2.0;
             slider.y = widgetSize.height / 2.0;
-            slider.addEventListenerSlider(this.sliderEvent, this);
+            slider.addEventListener(this.sliderEvent, this);
             this._mainNode.addChild(slider);
 
             return true;
@@ -79,7 +79,7 @@ var UISliderTest_Scale9 = UIScene.extend({
             slider.setContentSize(cc.size(250, 10));
             slider.x = widgetSize.width / 2.0;
             slider.y = widgetSize.height / 2.0;
-            slider.addEventListenerSlider(this.sliderEvent, this);
+            slider.addEventListener(this.sliderEvent, this);
             this._mainNode.addChild(slider);
 
             return true;

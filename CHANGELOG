@@ -1,5 +1,208 @@
 ChangeLog:
 
+Cocos2d-JS v3.1 @ Oct.22, 2014
+
+* Released Facebook Integration for Cocos2d-JS v1.0, all APIs have been significantly polished and stabilized. Improved test cases for Facebook with more features demonstrated.
+* Upgraded Cocos2d-x to v3.3 rc0
+* Supported Cocos Studio v2.0 including Timeline animation support and proto buffers format support for both web engine and JSB engine.
+* Refactored load event of texture, sprite frame and sprite for better maintainability.
+* Refactored `cc.rendererCanvas` for improving performance.
+* Moved the `CC_Texture0` definition of fragment shader to cc.GLProgram to ensure compatibility with JSB.
+* Added normalized position functions to cc.Node.
+* Refactored the constructor of Cocos Studio's classes and deprecated all create functions.
+* Refactored Cocos Studio reader for better maintainability.
+* Improved Facebook SDK.
+* Modified `cc.ProgressTo`'s behavior, its progression didn't reset to zero when the progression is 100.
+* Changed `ccui.Widget`'s default anchor point to (0, 0) in widget reader.
+* Removed all deprecated create function usage in engine and in the test cases.
+* [JSB] Refactor `cc.GLNode` for new renderer and re-enable OpenGL test case.
+
+* Bug fixes:
+    1. Fixed an issue of `cc.UILayout` that its scissor mode didn't work.
+    2. Fixed an issue of `ccui.TextBMFont` that its 'string' property setting was incorrect.
+    3. Fixed an issue of `cc.DrawNode` that its element's position was incorrect in Canvas mode.
+    4. Fixed an issue of `cc.Layer` that its bake function didn't work in new renderer.
+    5. Fixed an issue of `cc.Scale9Sprite` that its cached canvas size was incorrect.
+    6. Fixed an issue of `cc.Director` that its position was incorrect when calling `setProjection` in new renderer.
+    7. Fixed an issue of `cc.view` that the reinitialization logic of frame size was incorrect.
+    8. Fixed incorrect usage of  `cc.progressTo` in progress action test.
+    9. Fixed an issue of CocosNodeTest for the new renderer.
+    10. Fixed minor issues in test cases.
+    11. [JSB] Fixed an issue of `cc.EditBox`'s constructor.
+    12. [JSB] Refactored an issue that `ccui.CheckBox`'s deprecated function `setSelectedState` is used instead of `setSelected`.
+    13. [JSB] Fixed an issue of `cc.ScrollView`'s constructor.
+    14. [JSB] Fixed an issue in Moon Warriors sample that a label's height was too small so it was cutting off its content.
+    15. [JSB] Fixed user object conflict in `ccui.Widget`'s `addTouchEventListener` function binding.
+    16. [JSB] Fixed an issue that null parameter was not correctly processed in `ccs.ArmatureAnimations`'s `setFrameEventCallFunc` and `setMovementEventCallFunc` functions.
+    17. [JSB] Fixed an issue that `cc.Scale9Sprite`'s `updateWithBatchNode` had been deprecated in JSB.
+    18. [JSB] Fixed an issue that `cc.SpriteBatchNode` could not be extended in JSB.
+    19. [JSB] Fixed an issue that Cocos Studio extension classes could not be extended in JSB.
+    20. [JSB] Fixed API inconsistency issues by renaming `cc.Node`'s `getRotationSkewX/Y` and `setRotationSkewX/Y` to `getRotationX/Y` and `setRotationX/Y`.
+
+* Known Issues:
+    1. `jsb.AssetsManager` doesn't work on windows due to a bug in libcurl
+
+Cocos2d-JS v3.1 beta @ Oct.13, 2014
+
+* Refactoration of the web engine with new renderer on the architecture level, optimization is under going.
+* Released Facebook SDK for Cocos2d-JS beta2, its API have been significantly improved and stablized.
+* Upgraded MoonWarriors sample with new set of graphical assets.
+* Automatically enabled WebGL on iOS 8 safari.
+* Upgraded chipmunk.js to the newest version.
+* Supported setting color of shadow for `cc.LabelTTF`.
+* Added `getTitleRenderer` function to ccui.Button.
+* Supported Coco Studio timeline animation.
+* Set the default value of LabelAtlas's `cascadeOpacityEnabled` and `cascadeColorEnabled` to true.
+* Added a listener of texture to `cc.Sprite#setTexture` when the texture hasn't loaded.
+* Activated `cc.pool` for all kind of objects.
+* Added query test for chipmunk and added necessary JavaScript bindings.
+* [JSB] Added properties for `cp.Shape`, added missed methods for `cp.Vect` and `cp.v`.
+* [JSB] Added missed constant for `ccui.ListView`.
+* [JSB] Ignored alpha value in `cc.Node#setColor`.
+* [JSB] Used Object.create for creating prototype during inheritance to avoid potential memory leak.
+* [JSB] Made regular expression for URL check more reliable using third party code.
+
+* Bugs fix:
+    1. Fixed a bug of `cc.ComponentContainer` that a 'if' statement behavior is incorrect.
+    2. Fixed a bug of `cc.Scale9Sprite` that the behavior of Canvas and WebGL is different.
+    3. Fixed a bug of `cc.EventListener` that its pause state should set to true.
+    4. Fixed a bug of `cc.ParticleSystem` that it should apply canvas scaling on canvas rendering mode.
+    5. Fixed a bug of CCBoot.js that `cc.loader` should add a condition to check whether `crossOrign` property is undefined on IE9 and IE10.
+    6. Fixed a bug of `ccui.Widget` that its `setPosition` function's behavior is incorrect.
+    7. Fixed a bug of `ccui.LoadingBar` that its `barRenderer` should add to protected children array.
+    8. Fixed a bug of `cc.Texture2D` that its `TEXTURE_MAG_FILTER` should set to LINEAR.
+    9. Fixed a bug of `cc.TMXMapInfo` that its doesn't parse `rotation` property.
+    10. Fixed a bug of `cc.TMXLayer` that it should apply canvas scaling on Canvas rendering mode.
+    11. [JSB] Fixed an issue of incorrect return value in `cc.textureCache.addImage`.
+    12. [JSB] Fixed an issue of `cc.loader.getRes` for supporting cached resources.
+    13. [JSB] Fixed an issue of `cc.loader.loadImg` for supporting local image loading.
+    14. [JSB] Fixed `cocos run -p ios` command issue with Xcode 6.
+    15. [JSB] Fixed `cc.EditBox` behavior issue on iOS8.
+    16. [JSB] Fixed an issue of `cc.Scale9Sprite` that it may mask its child node content.
+    17. [JSB] Fixed an issue that `arrivalOrder` get reset after being visited and cause children order chaos.
+    18. [JSB] Fixed an issue of `_ctor` function check in construction.
+    19. [JSB] Fixed a bug of `cpGroup` type definition inconsistence between iOS 8 and other platforms.
+    20. [JSB] Fixed API inconsistence between web and JSB engine for `cc.Touch#getID`.
+    21. [JSB] Fixed memory leak issue of cc.pool in JSB.
+    22. [JSB] Fixed a bug that `cc.ScrollView`'s construction haven't been implemented in JSB.
+    23. [JSB] Fixed arguments processing error in chipmunk bindings by adding safe guard.
+    24. [JSB] Fixed a bug in particle system test case.
+    25. [JSB] Fixed a potential crash issue for `cc.CallFunc`.
+
+* Known Issues:
+    1. AssetsManager doesn't work on windows due to a bug in libcurl
+    2. Timeline animation haven't been bound to JSB
+
+Cocos2d-JS-v3.0 Final @ Sep.10, 2014
+
+* Facebook SDK Beta2: Added `appRequest` API.
+* Facebook SDK Beta2: Added permission request in `login` API, removed `requestPermission` API.
+* Facebook SDK Beta2: Renamed `request` API to `api`.
+* Facebook SDK Beta2: Renamed `publishInstall` API to `activateApp`.
+* Added getter and setter function for browser's density dpi: `cc.view.setTargetDensityDPI`, `cc.view.getTargetDensityDPI`.
+* Added some type check functions.
+* Added audio support for wechat browser.
+* Added setPlaceHolderColor and setTextColor to ccui.TextField.
+* Added API reference for Cocos Studio extension.
+* [JSB] Polished AssetsManager for better iOS simulator support.
+* [JSB] Move `EventAssetsManager` and `EventListenerAssetsManager` to jsb namespace.
+* [JSB] Supported formatted string in `cc.log`/`cc.warn`/`cc.error`/`cc.assert`.
+* [JSB] Added `retain`/`release` function for cc.Touch
+
+* Bugs fix:
+    1. Fixed an issue of `cc.Menu` that its item's touch priority is different than cc.eventManager.
+    2. Fixed an issue of `cc.view` that its NO_BORDER mode doesn't work correctly.
+    3. Fixed an issue of `cc.LabelBMFont` that its content size is different than JSB.
+    4. Fixed an issue of `cc.LabelBMFont` that its `setColor` is invalid on some mobile devices.
+    5. Fixed an issue of `cc.PageView` that it can't receive TOUCH_CANCEL event.
+    6. Fixed an issue of `cc.loader` that it can't load cross origin textures.
+    7. Fixed an issue that Facebook SDK Web's `appRequest` wraps info parameter incorrectly.
+    8. Fixed an issue of ccui widgets' `addEventListener` that it doesn't accept function's target as parameter.
+    9. [JSB] Fixed a crash issue of Facebook SDK when session is closed.
+    10. [JSB] Fixed constant inconsistence in ccui.TextField.
+    11. [JSB] Fixed return value inconsistence of `cc.Node#getNodeToWorldTransform` function.
+    12. [JSB] Fixed an issue that `cc.MenuItemImage`'s `setColor` doesn't work.
+    13. [JSB] Fixed API inconsistence that `cc.Layer`'s `bake`/`unbake`/`isBaked` functions are absent in JSB.
+    14. [JSB] Refactored ccui's `addEventListenerXXX` to `addEventListener` to fit Web engine API.
+    15. [JSB] Fix an issue that delete doesn't work for `ccui.TextField`'s on desktop.
+    16. [JSB] Fixed stroke color issue of LabelTTF on iOS.
+    17. [JSB] Fixed an issue of `jsb.fileUtils.renameFile` on windows.
+    18. [JSB] Fixed an issue of bindings generator script on windows.
+    19. [JSB] Fixed `cc.REPEAT_FOREVER` value error.
+
+Cocos2d-JS-v3.0 RC3 @ Aug.29, 2014
+
+* Facebook SDK Beta: Unified the callback parameters for different platform.
+* Facebook SDK Beta: Added payment API on Web platform.
+* Facebook SDK Beta: Added `publishInstall` and `logEvent` APIS on iOS and Android.
+* Facebook SDK Beta: Supported app request and share open graph API on Web platform.
+* Facebook SDK Beta: Remove plugin configuration for Facebook SDK to simplify the usage.
+* Facebook SDK Beta: Added test case for new features and improve all test cases.
+* Cocos Console: Improved web compile with `--advanced` tag.
+* Improved Cocos2d-JS inline docs to provide a better API reference document.
+* Refactored cc.game for maintainability.
+* Refactored cc.async to simplify and improve the usage.
+* Added `cc.formatStr` for string formatting, for example: `cc.formatStr("a: %d, b: %b", a, b)`.
+* Refactored cc.log to support formatted string.
+* Refactored cc.pool's `hasObj` to `hasObject` and `removeObj` to `removeObject`.
+* Added some state check to cc.audioEngine.
+* Refactored sprite's blend function to support more features on Canvas.
+* Refactored `cc.textureCache.textureForKey` to `cc.textureCache.getTextureForKey`, `cc.TMXTilemap#propertiesForGID` to `cc.TMXTilemap#getPropertiesForGID` to follow the standard API naming style.
+* Detected mouse event on touch screen tablets.
+* Support new construction for cc.PhysicsDebugNode and deprecated `cc.PhysicsDebugNode.create`
+* Made cc.Texture2D's setTexParameters supports two types of parameters.
+* Added test case for remote image loading.
+* [JSB] Combine SpiderMonkey's arm64&32 lib to support Xcode 6.0
+* [JSB] Added abort function for XMLHttpRequest.
+* [JSB] Used clang as the default compiler for Android compilation.
+* [JSB] Made cc.place, cc.moveTo, cc.moveBy, cc.jumpTo, cc.jumpBy support x, y seperated position parameters.
+* [JSB] Added setSpeed/getSpeed functions for cc.ActionInterval.
+* [JSB] Made cc.easeBezierAction accept multiple parameters.
+* [JSB] Refactored ccui.TextField's `setText` to `setString`, `getStringValue` to `getString`.
+* [JSB] Refactored cc.Node and cc.Texture2D's `getGLProgram` to `getShaderProgram`, `setGLProgram` to `setShaderProgram` for compatibility with web engine.
+* [JSB] Added missed shader program constants.
+* [JSB] Added missed array util functions.
+* [JSB] Bound constructor for cc.EventTouch and cc.Touch.
+
+* Bugs fix:
+    1. Fixed an issue of tilemap that it can't runAction in canvas render mode.
+	2. Fixed an issue of cc.eventManager that its removeListeners' codes are unreachable.
+	3. Fixed an issue of cc.EditBox that its position is incorrect.
+    4. Fixed an issue of cc.WebAudio that its stopped state is incorrect.
+    5. Fixed an issue of cc.audioEngine that it doesn't work on firefox after it compiled with advanced mode.
+    6. Fixed an issue of ccs.Bone that it doesn't update color and opacity correctly.
+    7. Fixed an issue of ccs.Armature that its setShaderProgram doesn't work.
+    8. Fixed cc.Sprite and cc.Scale9Sprite's issue so that their texture loads incorrectly.
+    9. Fixed an issue of ccui.LoadingBar that its setPercent is invalid.
+    10. Fixed an issue of Armature reader that it can't parse isTween property.
+    11. Fixed an issue of ccui.PageView that its getTouchBeganPosition returns incorrect value.
+    12. Fixed an issue of ccui.ImageView that its setColor doesn't work.
+    13. Fixed an issue of cc.RenderTexture that it doesn't support parameter depthStencilFormat.
+    14. Fixed an issue of ccs.ArmatureAnimation.setSpeedScale.
+    15. Fixed an issue of cc.Scale9Sprite that it has a line on iOS device.
+    16. Fixed CCProgressTimer draw on canvas with colorized sprite
+    17. Fixed an issue of cc.game that its frameRate setter is invalid.
+    18. Fixed an issue of cc.loader that its callback state is incorrect.
+    19. [JSB] Fixed memory leark issue of XMLHttpRequest.
+    20. [JSB] Fixed bugs of Android Facebook SDK's dialog callback.
+    21. [JSB] Fixed bugs of android-build.py.
+    22. [JSB] Fixed bugs of cc.Texture2D's width and height property was not working.
+    23. [JSB] Fixed a crash issue that `cc.textureCache.addImage` create duplicated jsb proxy for the same url.
+    24. [JSB] Fixed incompatible issue in cc.async and cc.loader
+    25. [JSB] Fixed cc.skewBy's inversed behavior.
+    26. [JSB] Fixed an issue of Javascript to Objective-C reflection.
+    27. [JSB] Fixed `anchorX` and `anchorY` property setter issue.
+    28. [JSB] Fixed an issue about cc.BezierBy's construction.
+    29. [JSB] Fixed an issue that cc.LabelBMFont doesn't initialize when passing empty string as its content.
+    30. [JSB] Fixed an issue that ccui.Layout doesn't sort children nodes with their local z order.
+    31. [JSB] Fixed an Android platform crash issue when handleOnPause get invoked before onSurfaceCreated
+    32. [JSB] Fixed an issue that cc.Menu.create doesn't accept array as parameter.
+    33. [JSB] Fixed an "Invalid Native Object" issue in RenderTextureTest.
+    34. [JSB] Fixed an crash issue in assets manager test.
+
+* Known issues:
+    1. [JSB] jsb.AssetsManager have issues on Windows platform and iOS simulator.
+
 Cocos2d-JS-v3.0 RC2 @ Aug.11, 2014
 * Refactored Cocos UI for more stable and friendly user experience.
 * Upgraded Cocostudio reader to support version 1.2 - 1.5.x.

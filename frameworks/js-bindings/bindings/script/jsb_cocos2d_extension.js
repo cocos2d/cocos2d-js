@@ -197,17 +197,17 @@ cc.Scale9Sprite.POSITIONS_BOTTOMRIGHT = 7;
 cc.Scale9Sprite.POSITIONS_BOTTOMLEFT = 8;
 
 
-cc.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST = 0;
-cc.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST = 1;
-cc.EventAssetsManager.ERROR_PARSE_MANIFEST = 2;
-cc.EventAssetsManager.NEW_VERSION_FOUND = 3;
-cc.EventAssetsManager.ALREADY_UP_TO_DATE = 4;
-cc.EventAssetsManager.UPDATE_PROGRESSION = 5;
-cc.EventAssetsManager.ASSET_UPDATED = 6;
-cc.EventAssetsManager.ERROR_UPDATING = 7;
-cc.EventAssetsManager.UPDATE_FINISHED = 8;
-cc.EventAssetsManager.UPDATE_FAILED = 9;
-cc.EventAssetsManager.ERROR_DECOMPRESS = 10;
+jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST = 0;
+jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST = 1;
+jsb.EventAssetsManager.ERROR_PARSE_MANIFEST = 2;
+jsb.EventAssetsManager.NEW_VERSION_FOUND = 3;
+jsb.EventAssetsManager.ALREADY_UP_TO_DATE = 4;
+jsb.EventAssetsManager.UPDATE_PROGRESSION = 5;
+jsb.EventAssetsManager.ASSET_UPDATED = 6;
+jsb.EventAssetsManager.ERROR_UPDATING = 7;
+jsb.EventAssetsManager.UPDATE_FINISHED = 8;
+jsb.EventAssetsManager.UPDATE_FAILED = 9;
+jsb.EventAssetsManager.ERROR_DECOMPRESS = 10;
 
 // PhysicsDebugNode
 cc.PhysicsDebugNode.create = function( space ) {
@@ -216,6 +216,15 @@ cc.PhysicsDebugNode.create = function( space ) {
         s = space.handle;
     return cc.PhysicsDebugNode._create( s );
 };
+
+cc.PhysicsDebugNode.prototype._ctor = function(space){
+    this.init();
+    var s = space;
+    if( space.handle !== undefined )
+        s = space.handle;
+    this.setSpace(s);
+};
+
 cc.PhysicsDebugNode.prototype.setSpace = function( space ) {
     var s = space;
     if( space.handle !== undefined )
@@ -239,3 +248,9 @@ cc.ScrollView.extend = cc.Class.extend;
 cc.TableView.extend = cc.Class.extend;
 cc.TableViewCell.extend = cc.Class.extend;
 cc.GLNode.extend = cc.Class.extend;
+
+// updateWithBatchNode deprecated in JSB
+cc.Scale9Sprite.prototype.updateWithBatchNode = function (batchNode, originalRect, rotated, capInsets) {
+    var sprite = new cc.Sprite(batchNode.getTexture());
+    this.updateWithSprite(sprite, originalRect, rotated, cc.p(0, 0), cc.size(originalRect.width, originalRect.height), capInsets);
+};

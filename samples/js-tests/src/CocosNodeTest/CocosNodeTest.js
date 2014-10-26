@@ -614,10 +614,14 @@ var CameraZoomTest = TestNodeDemo.extend({
         var sprite = this.getChildByTag(20);
         var cam = sprite.getCamera();
         cam.setEye(0, 0, this._z);
+        if(!cc.sys.isNative)
+            sprite.setNodeDirty();
 
         sprite = this.getChildByTag(40);
         cam = sprite.getCamera();
         cam.setEye(0, 0, -this._z);
+        if(!cc.sys.isNative)
+            sprite.setNodeDirty();
         //----end12----
     },
     onEnter:function () {

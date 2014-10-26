@@ -204,10 +204,6 @@ var Effect2 = EffectAdvanceTextLayer.extend({
         var reuse = cc.reuseGrid(2);
         var delay = cc.delayTime(1);
 
-        //    id orbit = [OrbitCamera.create:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
-        //    id orbit_back = [orbit reverse];
-        //
-        //    [target runAction: [RepeatForever.create: [Sequence actions: orbit, orbit_back, nil]]];
         target.runAction(cc.sequence(shaky, delay, reuse, shuffle, delay.clone(), turnoff, turnon));
     }
 });
@@ -306,10 +302,7 @@ var Effect5 = EffectAdvanceTextLayer.extend({
     onEnter:function () {
         this._super();
 
-        //CCDirector.sharedDirector().setProjection(CCDirectorProjection2D);
         var effect = cc.liquid(2, cc.size(32, 24), 1, 20);
-
-
         var stopEffect = cc.sequence(effect, cc.delayTime(2), cc.stopGrid());
 
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);

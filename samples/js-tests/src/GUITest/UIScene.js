@@ -23,14 +23,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-UIScene = cc.Layer.extend({
+UIScene = cc.Scene.extend({
     _widget: null,
     _sceneTitle: null,
     _topDisplayLabel:null,
     _bottomDisplayLabel:null,
     _mainNode:null,
     ctor: function () {
-        cc.Layer.prototype.ctor.call(this)
+        cc.Scene.prototype.ctor.call(this)
         this._widget = null;
     },
     init: function () {

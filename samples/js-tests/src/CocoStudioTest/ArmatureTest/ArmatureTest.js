@@ -689,7 +689,7 @@ var TestColliderDetector = ArmatureTestLayer.extend({
         this.space.gravity =  cp.v(0, 0);
 
         // Physics debug layer
-        var debugLayer = cc.PhysicsDebugNode.create(this.space);
+        var debugLayer = new cc.PhysicsDebugNode(this.space);
         this.addChild(debugLayer, 9999);
 
         //init bullet body
@@ -915,7 +915,7 @@ var TestBoundingBox = ArmatureTestLayer.extend({
         return "Test BoundingBox";
     },
     update: function () {
-        var rect =  this.armature.boundingBox();
+        var rect =  this.armature.getBoundingBox();
         this.drawNode.clear();
         this.drawNode.drawRect(cc.p(rect.x, rect.y), cc.p(cc.rectGetMaxX(rect), cc.rectGetMaxY(rect)));
     }

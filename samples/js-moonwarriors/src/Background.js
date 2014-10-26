@@ -2,6 +2,8 @@ var BackSky = cc.Sprite.extend({
     active:true,
     ctor:function () {
         this._super("#bg01.png");
+        var rect = cc.rect(0, 1, this.width, this.height-2);
+        this.setTextureRect(rect);
         this.anchorX = 0;
 	    this.anchorY = 0;
     },
