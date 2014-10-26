@@ -1752,7 +1752,7 @@ bool JSB_cpPolyShape_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION(ok, "Error processing arguments");
     cpShape *shape = cpPolyShapeNew(body, numVerts, verts, offset);
 
-    jsb_set_c_proxy_for_jsobject(jsobj, shape, JSB_C_FLAG_DO_NOT_CALL_FREE);
+    jsb_set_c_proxy_for_jsobject(jsobj, shape, JSB_C_FLAG_CALL_FREE);
     jsb_set_jsobject_for_proxy(jsobj, shape);
     
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
