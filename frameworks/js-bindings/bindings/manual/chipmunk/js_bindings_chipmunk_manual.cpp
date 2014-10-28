@@ -1367,6 +1367,7 @@ bool JSB_cpSpace_eachShape(JSContext *cx, uint32_t argc, jsval *vp)
     data->func = argvp;
 
     cpSpaceEachShape(space, JSB_cpSpace_each_func, data);
+    free(data);
     return true;
 }
 
@@ -1387,6 +1388,7 @@ bool JSB_cpSpace_eachBody(JSContext *cx, uint32_t argc, jsval *vp)
     data->func = argvp;
 
     cpSpaceEachBody(space, JSB_cpSpace_each_func, data);
+    free(data);
     return true;
 }
 
@@ -1407,6 +1409,7 @@ bool JSB_cpSpace_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp)
     data->func = argvp;
 
     cpSpaceEachConstraint(space, JSB_cpSpace_each_func, data);
+    free(data);
     return true;
 }
 
