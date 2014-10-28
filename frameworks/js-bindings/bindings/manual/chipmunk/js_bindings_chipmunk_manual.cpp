@@ -1330,6 +1330,86 @@ bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *v
     return true;
 }
 
+struct JSB_cpSpace_each_UserData
+{
+    JSContext *cx;
+    jsval* func;
+};
+
+template<typename T>
+void JSB_cpSpace_each_func(T* cpObject, void *data)
+{
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+
+    JSContext* cx = ((JSB_cpSpace_each_UserData*)data)->cx;
+    jsval* func = ((JSB_cpSpace_each_UserData*)data)->func;
+
+    JSObject *jsCpObject = jsb_get_jsobject_for_proxy(cpObject);
+    jsval rval;
+
+    JS_CallFunctionValue(cx, NULL, *func, 1, &OBJECT_TO_JSVAL(jsCpObject), &rval);
+}
+
+bool JSB_cpSpace_eachShape(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2(argc == 1, cx, false, "Invalid number of arguments");
+
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*)proxy->handle;
+    jsval *argvp = JS_ARGV(cx, vp);
+
+    JSB_cpSpace_each_UserData *data = (JSB_cpSpace_each_UserData*)malloc(sizeof(JSB_cpSpace_each_UserData));
+    if (!data)
+        return false;
+
+    data->cx = cx;
+    data->func = argvp;
+
+    cpSpaceEachShape(space, JSB_cpSpace_each_func, data);
+    return true;
+}
+
+bool JSB_cpSpace_eachBody(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2(argc == 1, cx, false, "Invalid number of arguments");
+
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*)proxy->handle;
+    jsval *argvp = JS_ARGV(cx, vp);
+
+    JSB_cpSpace_each_UserData *data = (JSB_cpSpace_each_UserData*)malloc(sizeof(JSB_cpSpace_each_UserData));
+    if (!data)
+        return false;
+
+    data->cx = cx;
+    data->func = argvp;
+
+    cpSpaceEachBody(space, JSB_cpSpace_each_func, data);
+    return true;
+}
+
+bool JSB_cpSpace_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2(argc == 1, cx, false, "Invalid number of arguments");
+
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*)proxy->handle;
+    jsval *argvp = JS_ARGV(cx, vp);
+
+    JSB_cpSpace_each_UserData *data = (JSB_cpSpace_each_UserData*)malloc(sizeof(JSB_cpSpace_each_UserData));
+    if (!data)
+        return false;
+
+    data->cx = cx;
+    data->func = argvp;
+
+    cpSpaceEachConstraint(space, JSB_cpSpace_each_func, data);
+    return true;
+}
+
 #pragma mark - Arbiter
 
 #pragma mark getBodies
