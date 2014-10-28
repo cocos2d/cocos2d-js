@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+var facebook_is_canvas = false;
 var arrayOfFacebookTest = [
     FacebookShareTest,
     FacebookUserTest

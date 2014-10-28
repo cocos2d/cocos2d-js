@@ -1258,12 +1258,12 @@ bool JSB_cpSpace_segmentQueryFirst(JSContext *cx, uint32_t argc, jsval *vp){
     cpVect start;
     cpVect end;
     cpLayers layers;
-    unsigned int group;
+    cpGroup group;
     bool ok = true;
     ok &= jsval_to_cpVect( cx, argvp[0], &start );
     ok &= jsval_to_cpVect( cx, argvp[1], &end );
     ok &= jsval_to_uint32( cx, argvp[2], &layers );
-    ok &= jsval_to_uint( cx, argvp[3], &group );
+    ok &= jsval_to_uint( cx, argvp[3], (unsigned int*)&group );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     
     cpSegmentQueryInfo *out = new cpSegmentQueryInfo();
@@ -1295,7 +1295,7 @@ bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *v
     cpVect point;
     cpFloat maxDistance;
     cpLayers layers;
-    unsigned int group;
+    cpGroup group;
     bool ok = true;
     ok &= jsval_to_cpVect( cx, argvp[0], &point );
     if(JSVAL_IS_INT(argvp[1]))
@@ -1309,7 +1309,7 @@ bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *v
         maxDistance = JSVAL_TO_DOUBLE(argvp[1]);
     }
     ok &= jsval_to_uint32( cx, argvp[2], &layers );
-    ok &= jsval_to_uint( cx, argvp[3], &group );
+    ok &= jsval_to_uint( cx, argvp[3], (unsigned int*)&group );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     
     cpNearestPointQueryInfo* info = new cpNearestPointQueryInfo();
@@ -1752,7 +1752,7 @@ bool JSB_cpPolyShape_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION(ok, "Error processing arguments");
     cpShape *shape = cpPolyShapeNew(body, numVerts, verts, offset);
 
-    jsb_set_c_proxy_for_jsobject(jsobj, shape, JSB_C_FLAG_DO_NOT_CALL_FREE);
+    jsb_set_c_proxy_for_jsobject(jsobj, shape, JSB_C_FLAG_CALL_FREE);
     jsb_set_jsobject_for_proxy(jsobj, shape);
     
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));

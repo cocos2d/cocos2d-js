@@ -881,6 +881,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../external/spidermonkey/include/ios $(SRCROOT)/../../cocos2d-x/cocos/platform/ios $(SRCROOT)/../../cocos2d-x/plugin/protocols/include";
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
@@ -903,6 +904,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../external/spidermonkey/include/ios $(SRCROOT)/../../cocos2d-x/cocos/platform/ios $(SRCROOT)/../../cocos2d-x/plugin/protocols/include";
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
 		};
