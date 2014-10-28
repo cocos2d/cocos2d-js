@@ -1684,7 +1684,9 @@ var LogoSmash = (function(){
             // Generally you will never need to do this.
             //
             // (... Except the spatial hash isn't implemented in JS)
-            //cpSpaceUseSpatialHash(space, 2.0, 10000);
+            // but it is implemented in JSB :)
+            if(cc.sys.isNative)
+                space.useSpatialHash(2.0, 10000);
 
             var batch = new cc.SpriteBatchNode(s_hole_stencil_png);
             this.addChild(batch);
