@@ -4503,6 +4503,60 @@ bool JSB_cpShape_active(JSContext *cx, uint32_t argc, jsval *vp){
     return true;
 }
 
+bool JSB_cpShape_nearestPointQuery(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
+
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpShape* shape = (cpShape*) proxy->handle;
+    jsval *argvp = JS_ARGV(cx,vp);
+
+    cpVect p;
+    bool ok = jsval_to_cpVect(cx, argvp[0], &p);
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+    cpNearestPointQueryInfo* info = new cpNearestPointQueryInfo();
+    cpShapeNearestPointQuery(shape, p, info);
+    JSObject *jsobj = JS_NewObject(cx, JSB_cpNearestPointQueryInfo_class, JSB_cpNearestPointQueryInfo_object, NULL);
+    jsb_set_jsobject_for_proxy(jsobj, info);
+    jsb_set_c_proxy_for_jsobject(jsobj, info, JSB_C_FLAG_CALL_FREE);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    return true;
+}
+
+bool JSB_cpShape_segmentQuery(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
+
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpShape* shape = (cpShape*) proxy->handle;
+    jsval *argvp = JS_ARGV(cx,vp);
+
+    cpVect a;
+    cpVect b;
+    bool ok = jsval_to_cpVect(cx, argvp[0], &a);
+    ok &= jsval_to_cpVect(cx, argvp[1], &b);
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+    cpSegmentQueryInfo* info = new cpSegmentQueryInfo();
+    if(cpShapeSegmentQuery(shape, a, b, info))
+    {
+        JSObject* jsobj = JS_NewObject(cx, JSB_cpSegmentQueryInfo_class, JSB_cpSegmentQueryInfo_object, NULL);
+        jsb_set_jsobject_for_proxy(jsobj, info);
+        jsb_set_c_proxy_for_jsobject(jsobj, info, JSB_C_FLAG_CALL_FREE);
+        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+    }
+    else
+    {
+        delete info;
+        JS_SET_RVAL(cx, vp, JSVAL_NULL);
+    }
+    return true;
+}
+
 static bool js_get_cpShape_bbl(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
     cpShape* shape = (cpShape*) proxy->handle;
@@ -4603,6 +4657,8 @@ void JSB_cpShape_createClass(JSContext *cx, JSObject* globalObj, const char* nam
         JS_FN("setSurfaceVelocity", JSB_cpShape_setSurfaceVelocity, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
         JS_FN("update", JSB_cpShape_update, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
         JS_FN("active", JSB_cpShape_active, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+        JS_FN("nearestPointQuery", JSB_cpShape_nearestPointQuery, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+        JS_FN("segmentQuery", JSB_cpShape_segmentQuery, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
         JS_FS_END
     };
     static JSFunctionSpec st_funcs[] = {
