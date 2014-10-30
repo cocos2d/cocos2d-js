@@ -313,6 +313,8 @@ var g_s9s_blocks = [
 
 var g_opengl_resources = [
     //preload shader source
+    "res/Shaders/example_Outline.fsh",
+    "res/Shaders/example_Outline.vsh",
     "res/Shaders/example_Blur.fsh",
     "res/Shaders/example_ColorBars.fsh",
     "res/Shaders/example_ColorBars.vsh",

@@ -219,6 +219,7 @@
                 ,arrayOfClippingNodeTest
                 ,[CocosDenshionTest]//DenshionTests
                 ,null//cocoStudioTestItemNamescocostudio
+                ,null//cocosStudio 2.0
                 ,arrayOfCurrentLanguageTest
                 ,arrayOfDrawTest
                 ,arrayOfEaseActionsTest//arrayOfEaseActionsTest
@@ -227,6 +228,7 @@
                 ,null//extensions
                 ,arrayOfEffectsTest
                 ,arrayOfEffectsAdvancedTest
+                ,null//facebook
                 ,null//FontTest
                 ,null//UI
                 ,[IntervalLayer]//Interval
