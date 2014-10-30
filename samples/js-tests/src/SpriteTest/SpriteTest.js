@@ -5308,6 +5308,27 @@ var TextureRotatedSpriteFrame = SpriteTestDemo.extend({
     }
 });
 
+var SpriteWithRepeatingTexture = SpriteTestDemo.extend({
+
+    _title:"Sprite with Repeating texture",
+    _subtitle:"aTexture.setTexParameters(cc.LINEAR, cc.LINEAR, cc.REPEAT, cc.REPEAT);",
+
+    ctor:function () {
+        //----start58----ctor
+        this._super();
+        var block = new cc.Sprite(s_pathBlock);
+
+        var x = winSize.width / 2;
+        var y = (winSize.height / 2);
+
+        block.setTextureRect(cc.rect(0,0, 320,240));
+        block.setPosition(x, y);
+        block.getTexture().setTexParameters(cc.LINEAR, cc.LINEAR, cc.REPEAT, cc.REPEAT);
+        this.addChild(block);
+        //----end58----
+    }
+});
+
 var SpriteTestScene = TestScene.extend({
     runThisTest:function (num) {
         spriteTestIdx = (num || num == 0) ? (num - 1) : -1;
@@ -5379,7 +5400,8 @@ var arrayOfSpriteTest = [
     AnimationCacheFile,
     TextureColorCacheIssue,
     TextureColorCacheIssue2,
-    TextureRotatedSpriteFrame
+    TextureRotatedSpriteFrame,
+    SpriteWithRepeatingTexture
 ];
 
 var nextSpriteTest = function () {
