@@ -891,7 +891,7 @@ ccs.actionTimelineCache.createAction = ccs.ActionTimelineCache.createAction;
 
 ccs.csLoader = ccs.CSLoader.getInstance();
 ccs.csLoader.createNode = ccs.CSLoader.createNode;
-ccs.csLoader.createTimeLine = ccs.CSLoader.createTimeLine;
+ccs.csLoader.createTimeline = ccs.CSLoader.createTimeline;
 
 /**
  * @type {Object}
