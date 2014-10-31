@@ -347,9 +347,3 @@ ccui.MarginZero = function(){
 ccui.Widget.prototype.addNode = ccui.Widget.prototype.addChild;
 ccui.Widget.prototype.getSize = ccui.Widget.prototype.getContentSize;
 ccui.Widget.prototype.setSize = ccui.Widget.prototype.setContentSize;
-
-/*
- * UITextField temporary solution to getString, wait for -x patch
- */
-ccui.TextField.prototype.getString = ccui.TextField.prototype.getStringValue;
-ccui.TextField.prototype.setString = ccui.TextField.prototype.setText;
