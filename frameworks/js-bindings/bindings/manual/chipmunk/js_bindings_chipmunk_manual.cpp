@@ -1345,10 +1345,14 @@ void JSB_cpSpace_each_func(T* cpObject, void *data)
     jsval* func = ((JSB_cpSpace_each_UserData*)data)->func;
 
     JSObject *jsCpObject = jsb_get_jsobject_for_proxy(cpObject);
-    jsval rval;
-    jsval argv = OBJECT_TO_JSVAL(jsCpObject);
+    if(jsCpObject)
+    {
+        jsval rval;
+        jsval argv = OBJECT_TO_JSVAL(jsCpObject);
 
-    JS_CallFunctionValue(cx, NULL, *func, 1, &argv, &rval);
+        JS_CallFunctionValue(cx, NULL, *func, 1, &argv, &rval);
+        
+    }
 }
 
 bool JSB_cpSpace_eachShape(JSContext *cx, uint32_t argc, jsval *vp)
