@@ -4917,6 +4917,26 @@ bool JSB_cpSegmentShape_setNeighbors(JSContext *cx, uint32_t argc, jsval *vp) {
     return true;
 }
 
+static bool js_get_cpSegmentShape_a_tangent(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpSegmentShape* shape = (cpSegmentShape*) proxy->handle;
+    cpVect vec = shape->a_tangent;
+    jsval ret = cpVect_to_jsval( cx, vec);
+    vp.set(ret);
+    return true;
+}
+
+static bool js_get_cpSegmentShape_b_tangent(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpSegmentShape* shape = (cpSegmentShape*) proxy->handle;
+    cpVect vec = shape->b_tangent;
+    jsval ret = cpVect_to_jsval( cx, vec);
+    vp.set(ret);
+    return true;
+}
+
 void JSB_cpSegmentShape_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
     JSB_cpSegmentShape_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -4932,6 +4952,8 @@ void JSB_cpSegmentShape_createClass(JSContext *cx, JSObject* globalObj, const ch
     JSB_cpSegmentShape_class->flags = JSCLASS_HAS_PRIVATE;
 
     static JSPropertySpec properties[] = {
+        {"a_tangent", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpSegmentShape_a_tangent), JSOP_NULLWRAPPER},
+        {"b_tangent", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpSegmentShape_b_tangent), JSOP_NULLWRAPPER},
         {0, 0, 0, 0, 0}
     };
     static JSFunctionSpec funcs[] = {

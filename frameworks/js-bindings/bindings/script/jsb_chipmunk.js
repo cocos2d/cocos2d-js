@@ -338,6 +338,14 @@ _proto.type  = "circle";
 cc.defineGetterSetter(_proto, "r", _proto.getRadius);
 cc.defineGetterSetter(_proto, "c", _proto.getOffset);
 
+//SegmentShape properties
+_proto = cp.SegmentShape.prototype;
+_proto.type = "segment";
+cc.defineGetterSetter(_proto, "a", _proto.getA);
+cc.defineGetterSetter(_proto, "b", _proto.getB);
+cc.defineGetterSetter(_proto, "n", _proto.getNormal);
+cc.defineGetterSetter(_proto, "r", _proto.getRadius);
+
 // Constraint properties
 Object.defineProperties(cp.Constraint.prototype,
                 {
