@@ -346,6 +346,9 @@ cc.defineGetterSetter(_proto, "b", _proto.getB);
 cc.defineGetterSetter(_proto, "n", _proto.getNormal);
 cc.defineGetterSetter(_proto, "r", _proto.getRadius);
 
+//PolyShape properties
+_proto = cp.PolyShape.prototype;
+_proto.type = "poly";
 // Constraint properties
 Object.defineProperties(cp.Constraint.prototype,
                 {

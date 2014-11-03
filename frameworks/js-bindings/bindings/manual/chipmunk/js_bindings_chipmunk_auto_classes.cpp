@@ -5036,6 +5036,25 @@ bool JSB_cpPolyShape_getVert(JSContext *cx, uint32_t argc, jsval *vp) {
     return true;
 }
 
+static bool js_get_cpPolyShape_verts(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpPolyShape* shape = (cpPolyShape*) proxy->handle;
+    int numVerts = shape->numVerts;
+    cpVect* verts = shape->verts;
+
+    JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    int i = 0;
+    while (i < numVerts) {
+        JS::RootedValue arrElement(cx);
+        arrElement = cpVect_to_jsval(cx, verts[i]);
+        JS_SetElement(cx, jsretArr, i, &arrElement);
+        i++;
+    }
+    vp.set(OBJECT_TO_JSVAL(jsretArr));
+    return true;
+}
+
 void JSB_cpPolyShape_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
     JSB_cpPolyShape_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -5051,6 +5070,7 @@ void JSB_cpPolyShape_createClass(JSContext *cx, JSObject* globalObj, const char*
     JSB_cpPolyShape_class->flags = JSCLASS_HAS_PRIVATE;
 
     static JSPropertySpec properties[] = {
+        {"verts", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpPolyShape_verts), JSOP_NULLWRAPPER},
         {0, 0, 0, 0, 0}
     };
     static JSFunctionSpec funcs[] = {
