@@ -5060,6 +5060,35 @@ static bool js_get_cpPolyShape_verts(JSContext *cx, JS::HandleObject obj, JS::Ha
     return true;
 }
 
+static bool js_get_cpPolyShape_planes(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpPolyShape* shape = (cpPolyShape*) proxy->handle;
+    int numVerts = shape->numVerts;
+    cpSplittingPlane* planes = shape->planes;
+
+    JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    int i = 0;
+    while(i < numVerts){
+        cpSplittingPlane *plane = planes + i;
+        JS::RootedValue elem(cx);
+
+        JSObject *jsobj = jsb_get_jsobject_for_proxy(plane);
+        if(!jsobj)
+        {
+            jsobj = JS_NewObject(cx, JSB_cpSplittingPlane_class, JSB_cpSplittingPlane_object, NULL);
+            jsb_set_jsobject_for_proxy(jsobj, plane);
+            jsb_set_c_proxy_for_jsobject(jsobj, plane, JSB_C_FLAG_DO_NOT_CALL_FREE);
+        }
+
+        elem = OBJECT_TO_JSVAL(jsobj);
+        JS_SetElement(cx, jsretArr, i, &elem);
+        i++;
+    }
+    vp.set(OBJECT_TO_JSVAL(jsretArr));
+    return true;
+}
+
 void JSB_cpPolyShape_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
     JSB_cpPolyShape_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -5076,6 +5105,7 @@ void JSB_cpPolyShape_createClass(JSContext *cx, JSObject* globalObj, const char*
 
     static JSPropertySpec properties[] = {
         {"verts", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpPolyShape_verts), JSOP_NULLWRAPPER},
+        {"planes", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpPolyShape_planes), JSOP_NULLWRAPPER},
         {0, 0, 0, 0, 0}
     };
     static JSFunctionSpec funcs[] = {
@@ -5090,6 +5120,62 @@ void JSB_cpPolyShape_createClass(JSContext *cx, JSObject* globalObj, const char*
     JSB_cpPolyShape_object = JS_InitClass(cx, globalObj, JSB_cpShape_object, JSB_cpPolyShape_class, JSB_cpPolyShape_constructor,0,properties,funcs,NULL,st_funcs);
 //  bool found;
 //  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+}
+
+// SplittingPlane
+JSObject *JSB_cpSplittingPlane_object = NULL;
+JSClass *JSB_cpSplittingPlane_class = NULL;
+
+// Destructor
+void JSB_cpSplittingPlane_finalize(JSFreeOp *fop, JSObject *jsthis)
+{
+ //nothing need to do, cpSplittingPlane will be freed by it's shape
+}
+
+bool js_get_cpSplitting_n(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpSplittingPlane* plane = (cpSplittingPlane*) proxy->handle;
+    cpVect vec = plane->n;
+    vp.set(cpVect_to_jsval(cx, vec));
+    return true;
+}
+
+bool js_get_cpSplitting_d(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpSplittingPlane* plane = (cpSplittingPlane*) proxy->handle;
+    vp.set(DOUBLE_TO_JSVAL(plane->d));
+    return true;
+}
+
+void JSB_cpSplittingPlane_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+    JSB_cpSplittingPlane_class = (JSClass *)calloc(1, sizeof(JSClass));
+    JSB_cpSplittingPlane_class->name = name;
+    JSB_cpSplittingPlane_class->addProperty = JS_PropertyStub;
+    JSB_cpSplittingPlane_class->delProperty = JS_DeletePropertyStub;
+    JSB_cpSplittingPlane_class->getProperty = JS_PropertyStub;
+    JSB_cpSplittingPlane_class->setProperty = JS_StrictPropertyStub;
+    JSB_cpSplittingPlane_class->enumerate = JS_EnumerateStub;
+    JSB_cpSplittingPlane_class->resolve = JS_ResolveStub;
+    JSB_cpSplittingPlane_class->convert = JS_ConvertStub;
+    JSB_cpSplittingPlane_class->finalize = JSB_cpSplittingPlane_finalize;
+    JSB_cpSplittingPlane_class->flags = JSCLASS_HAS_PRIVATE;
+
+    static JSPropertySpec properties[] = {
+        {"n", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpSplitting_n), JSOP_NULLWRAPPER},
+        {"d", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpSplitting_d), JSOP_NULLWRAPPER},
+        {0, 0, 0, 0, 0}
+    };
+    static JSFunctionSpec funcs[] = {
+        JS_FS_END
+    };
+    static JSFunctionSpec st_funcs[] = {
+        JS_FS_END
+    };
+
+    JSB_cpSplittingPlane_object = JS_InitClass(cx, globalObj, NULL, JSB_cpSplittingPlane_class, NULL,0,properties,funcs,NULL,st_funcs);
 }
 
 bool JSB_cpSegmentQueryInfo_hitPoint(JSContext *cx, uint32_t argc, jsval *vp){
