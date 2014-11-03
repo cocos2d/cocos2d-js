@@ -1767,6 +1767,31 @@ ChipmunkTestScene.prototype.runThisTest = function (num) {
 // Flow control
 //
 
+var Issue1073 = ChipmunkDemo.extend({
+    ctor:function(){
+        this._super();
+        this._subtitle = 'Chipmunk Demo';
+        this._title = 'Issue 1073';
+
+        var space = this.space;
+        // add a circle
+        var mass = 1;
+        var r = 20;
+        var body = space.addBody(new cp.Body(mass, cp.momentForCircle(mass, 0, r, v(0,0))));
+        body.setPos(cp.v(winSize.width/2, winSize.height/2));
+        var shape = new cp.CircleShape(body, r, v(0,0));
+        space.addShape(shape);
+
+        var nearestPointQueryInfo = shape.nearestPointQuery(cp.v(winSize.width/2+100, winSize.height/2));
+        cc.log("The nearest point on the shape's surface to query point is : (" + nearestPointQueryInfo.p.x + "," + nearestPointQueryInfo.p.y + ")");
+        cc.log("And the distance is : " + nearestPointQueryInfo.d);
+
+        var segmentQueryInfo = shape.segmentQuery(cp.v(winSize.width/2 - 100, winSize.height/2), cp.v(winSize.width/2 + 100, winSize.height/2));
+        cc.log("The normal of the surface hit is : (" + segmentQueryInfo.n.x + "," + segmentQueryInfo.n.y + ")");
+        cc.log("The normalized distance along the query segment in the range [0, 1] is : " + segmentQueryInfo.t);
+    }
+});
+
 // Chipmunk Demos
 var arrayOfChipmunkTest =  [
 
@@ -1785,7 +1810,9 @@ var arrayOfChipmunkTest =  [
         ChipmunkSpriteBatchTest ,
         ChipmunkCollisionTest,
         ChipmunkCollisionMemoryLeakTest,
-        ChipmunkSpriteAnchorPoint
+        ChipmunkSpriteAnchorPoint,
+
+        Issue1073
         ];
 
 if( cc.sys.isNative ) {
