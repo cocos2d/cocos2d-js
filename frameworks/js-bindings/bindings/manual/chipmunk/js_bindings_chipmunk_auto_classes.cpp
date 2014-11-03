@@ -5046,9 +5046,14 @@ static bool js_get_cpPolyShape_verts(JSContext *cx, JS::HandleObject obj, JS::Ha
     JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
     int i = 0;
     while (i < numVerts) {
-        JS::RootedValue arrElement(cx);
-        arrElement = cpVect_to_jsval(cx, verts[i]);
-        JS_SetElement(cx, jsretArr, i, &arrElement);
+        cpVect vec = verts[i];
+
+        JS::RootedValue x(cx);
+        JS::RootedValue y(cx);
+        x = DOUBLE_TO_JSVAL(vec.x);
+        y = DOUBLE_TO_JSVAL(vec.y);
+        JS_SetElement(cx, jsretArr, i*2, &x);
+        JS_SetElement(cx, jsretArr, i*2+1, &y);
         i++;
     }
     vp.set(OBJECT_TO_JSVAL(jsretArr));
