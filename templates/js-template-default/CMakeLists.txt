@@ -55,6 +55,8 @@ else(USE_CHIPMUNK)
   message(FATAL_ERROR "Must choose a physics library.")
 endif(USE_CHIPMUNK)
 
+ADD_DEFINITIONS(-DCC_RESOURCE_FOLDER_LINUX="/")
+
 # architecture
 if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
 set(ARCH_DIR "64-bit")
