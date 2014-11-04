@@ -53,8 +53,6 @@ void jsb_register_chipmunk(JSContext* cx, JSObject *object)
     // manual
     JS_DefineFunction(cx, chipmunk, "spaceAddCollisionHandler", JSB_cpSpaceAddCollisionHandler, 8, JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, chipmunk, "spaceRemoveCollisionHandler", JSB_cpSpaceRemoveCollisionHandler, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE );
-    JS_DefineFunction(cx, JSB_cpSpace_object, "segmentQueryFirst", JSB_cpSpace_segmentQueryFirst, 4, JSPROP_PERMANENT  | JSPROP_ENUMERATE);
-    JS_DefineFunction(cx, JSB_cpSpace_object, "nearestPointQueryNearest", JSB_cpSpace_nearestPointQueryNearest, 4, JSPROP_PERMANENT  | JSPROP_ENUMERATE);
     JS_DefineFunction(cx, chipmunk, "arbiterGetBodies", JSB_cpArbiterGetBodies, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, chipmunk, "arbiterGetShapes", JSB_cpArbiterGetShapes, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, chipmunk, "bodyGetUserData", JSB_cpBodyGetUserData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
@@ -64,6 +62,13 @@ void jsb_register_chipmunk(JSContext* cx, JSObject *object)
     JS_DefineFunction(cx, chipmunk, "momentForPoly", JSB_cpMomentForPoly, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, chipmunk, "centroidForPoly", JSB_cpCentroidForPoly, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, chipmunk, "recenterPoly", JSB_cpRecenterPoly, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
+
+    JS_DefineFunction(cx, JSB_cpSpace_object, "segmentQueryFirst", JSB_cpSpace_segmentQueryFirst, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, JSB_cpSpace_object, "nearestPointQueryNearest", JSB_cpSpace_nearestPointQueryNearest, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, JSB_cpSpace_object, "eachShape", JSB_cpSpace_eachShape, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, JSB_cpSpace_object, "eachBody", JSB_cpSpace_eachBody, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, JSB_cpSpace_object, "eachConstraint", JSB_cpSpace_eachConstraint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+
     register_CCPhysicsSprite(cx, object);
     register_CCPhysicsDebugNode(cx, object);
 }
