@@ -330,6 +330,13 @@ cc.defineGetterSetter(_proto, "space", _proto.getSpace);
 cc.defineGetterSetter(_proto, "surface_v", _proto.getSurfaceVelocity, _proto.setSurfaceVelocity);
 cc.defineGetterSetter(_proto, "e", _proto.getElasticity, _proto.setElasticity);
 cc.defineGetterSetter(_proto, "u", _proto.getFriction, _proto.setFriction);
+_proto.cacheData = _proto.update;
+
+//CircleShape properties
+_proto = cp.CircleShape.prototype;
+_proto.type  = "circle";
+cc.defineGetterSetter(_proto, "r", _proto.getRadius);
+cc.defineGetterSetter(_proto, "c", _proto.getOffset);
 
 // Constraint properties
 Object.defineProperties(cp.Constraint.prototype,
