@@ -75,7 +75,7 @@ ccui.Widget.prototype._ctor = ccui.CheckBox.prototype._ctor
                             = _p._ctor;
 
 ccui.Button.prototype._ctor = function (normalImage, selectedImage,disableImage, texType) {
-    texType !== undefined && ccui.Button.prototype.init.call(this, normalImage, selectedImage,disableImage, texType);
+    texType !== undefined ? ccui.Button.prototype.init.call(this, normalImage, selectedImage,disableImage, texType) : ccui.Widget.prototype.init.call(this);
     this.setTouchEnabled(true);
 };
 
