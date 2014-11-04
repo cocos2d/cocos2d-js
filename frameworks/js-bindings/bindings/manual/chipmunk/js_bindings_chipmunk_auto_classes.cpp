@@ -3108,70 +3108,70 @@ bool JSB_cpSpace_useSpatialHash(JSContext *cx, uint32_t argc, jsval *vp) {
 
 void JSB_cpSpace_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
-	JSB_cpSpace_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSB_cpSpace_class->name = name;
-	JSB_cpSpace_class->addProperty = JS_PropertyStub;
-	JSB_cpSpace_class->delProperty = JS_DeletePropertyStub;
-	JSB_cpSpace_class->getProperty = JS_PropertyStub;
-	JSB_cpSpace_class->setProperty = JS_StrictPropertyStub;
-	JSB_cpSpace_class->enumerate = JS_EnumerateStub;
-	JSB_cpSpace_class->resolve = JS_ResolveStub;
-	JSB_cpSpace_class->convert = JS_ConvertStub;
-	JSB_cpSpace_class->finalize = JSB_cpSpace_finalize;
-	JSB_cpSpace_class->flags = JSCLASS_HAS_PRIVATE;
+    JSB_cpSpace_class = (JSClass *)calloc(1, sizeof(JSClass));
+    JSB_cpSpace_class->name = name;
+    JSB_cpSpace_class->addProperty = JS_PropertyStub;
+    JSB_cpSpace_class->delProperty = JS_DeletePropertyStub;
+    JSB_cpSpace_class->getProperty = JS_PropertyStub;
+    JSB_cpSpace_class->setProperty = JS_StrictPropertyStub;
+    JSB_cpSpace_class->enumerate = JS_EnumerateStub;
+    JSB_cpSpace_class->resolve = JS_ResolveStub;
+    JSB_cpSpace_class->convert = JS_ConvertStub;
+    JSB_cpSpace_class->finalize = JSB_cpSpace_finalize;
+    JSB_cpSpace_class->flags = JSCLASS_HAS_PRIVATE;
 
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("activateShapesTouchingShape", JSB_cpSpace_activateShapesTouchingShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("containsBody", JSB_cpSpace_containsBody, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("containsConstraint", JSB_cpSpace_containsConstraint, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("containsShape", JSB_cpSpace_containsShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("destroy", JSB_cpSpace_destroy, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("getCollisionBias", JSB_cpSpace_getCollisionBias, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("getCollisionPersistence", JSB_cpSpace_getCollisionPersistence, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("getCollisionSlop", JSB_cpSpace_getCollisionSlop, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("getCurrentTimeStep", JSB_cpSpace_getCurrentTimeStep, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("getDamping", JSB_cpSpace_getDamping, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("getEnableContactGraph", JSB_cpSpace_getEnableContactGraph, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("getGravity", JSB_cpSpace_getGravity, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("getIdleSpeedThreshold", JSB_cpSpace_getIdleSpeedThreshold, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("getIterations", JSB_cpSpace_getIterations, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("getSleepTimeThreshold", JSB_cpSpace_getSleepTimeThreshold, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("getStaticBody", JSB_cpSpace_getStaticBody, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("init", JSB_cpSpace_init, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("isLocked", JSB_cpSpace_isLocked, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("pointQueryFirst", JSB_cpSpace_pointQueryFirst, 3, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("reindexShape", JSB_cpSpace_reindexShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("reindexShapesForBody", JSB_cpSpace_reindexShapesForBody, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("reindexStatic", JSB_cpSpace_reindexStatic, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("setCollisionBias", JSB_cpSpace_setCollisionBias, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("setCollisionPersistence", JSB_cpSpace_setCollisionPersistence, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("setCollisionSlop", JSB_cpSpace_setCollisionSlop, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("setDamping", JSB_cpSpace_setDamping, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("setEnableContactGraph", JSB_cpSpace_setEnableContactGraph, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("setGravity", JSB_cpSpace_setGravity, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("setIdleSpeedThreshold", JSB_cpSpace_setIdleSpeedThreshold, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("setIterations", JSB_cpSpace_setIterations, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("setSleepTimeThreshold", JSB_cpSpace_setSleepTimeThreshold, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("step", JSB_cpSpace_step, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("useSpatialHash", JSB_cpSpace_useSpatialHash, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("addShape", JSB_cpSpace_addShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("addCollisionHandler", JSB_cpSpace_addCollisionHandler, 7, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("addStaticShape", JSB_cpSpace_addStaticShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("removeConstraint", JSB_cpSpace_removeConstraint, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("removeBody", JSB_cpSpace_removeBody, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("removeCollisionHandler", JSB_cpSpace_removeCollisionHandler, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("removeStaticShape", JSB_cpSpace_removeStaticShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("addConstraint", JSB_cpSpace_addConstraint, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("addBody", JSB_cpSpace_addBody, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FN("removeShape", JSB_cpSpace_removeShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FS_END
-	};
+    static JSPropertySpec properties[] = {
+        { 0, 0, 0, 0, 0 }
+    };
+    static JSFunctionSpec funcs[] = {
+        JS_FN("activateShapesTouchingShape", JSB_cpSpace_activateShapesTouchingShape, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("containsBody", JSB_cpSpace_containsBody, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("containsConstraint", JSB_cpSpace_containsConstraint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("containsShape", JSB_cpSpace_containsShape, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("destroy", JSB_cpSpace_destroy, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCollisionBias", JSB_cpSpace_getCollisionBias, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCollisionPersistence", JSB_cpSpace_getCollisionPersistence, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCollisionSlop", JSB_cpSpace_getCollisionSlop, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCurrentTimeStep", JSB_cpSpace_getCurrentTimeStep, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getDamping", JSB_cpSpace_getDamping, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getEnableContactGraph", JSB_cpSpace_getEnableContactGraph, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getGravity", JSB_cpSpace_getGravity, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getIdleSpeedThreshold", JSB_cpSpace_getIdleSpeedThreshold, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getIterations", JSB_cpSpace_getIterations, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getSleepTimeThreshold", JSB_cpSpace_getSleepTimeThreshold, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getStaticBody", JSB_cpSpace_getStaticBody, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", JSB_cpSpace_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isLocked", JSB_cpSpace_isLocked, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("pointQueryFirst", JSB_cpSpace_pointQueryFirst, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("reindexShape", JSB_cpSpace_reindexShape, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("reindexShapesForBody", JSB_cpSpace_reindexShapesForBody, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("reindexStatic", JSB_cpSpace_reindexStatic, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setCollisionBias", JSB_cpSpace_setCollisionBias, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setCollisionPersistence", JSB_cpSpace_setCollisionPersistence, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setCollisionSlop", JSB_cpSpace_setCollisionSlop, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setDamping", JSB_cpSpace_setDamping, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setEnableContactGraph", JSB_cpSpace_setEnableContactGraph, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setGravity", JSB_cpSpace_setGravity, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setIdleSpeedThreshold", JSB_cpSpace_setIdleSpeedThreshold, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setIterations", JSB_cpSpace_setIterations, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setSleepTimeThreshold", JSB_cpSpace_setSleepTimeThreshold, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("step", JSB_cpSpace_step, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("useSpatialHash", JSB_cpSpace_useSpatialHash, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addShape", JSB_cpSpace_addShape, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addCollisionHandler", JSB_cpSpace_addCollisionHandler, 7, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addStaticShape", JSB_cpSpace_addStaticShape, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeConstraint", JSB_cpSpace_removeConstraint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeBody", JSB_cpSpace_removeBody, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeCollisionHandler", JSB_cpSpace_removeCollisionHandler, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeStaticShape", JSB_cpSpace_removeStaticShape, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addConstraint", JSB_cpSpace_addConstraint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addBody", JSB_cpSpace_addBody, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeShape", JSB_cpSpace_removeShape, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+    static JSFunctionSpec st_funcs[] = {
+        JS_FS_END
+    };
 
     JSB_cpSpace_object = JS_InitClass(cx, globalObj, JSB_cpBase_object, JSB_cpSpace_class, JSB_cpSpace_constructor,0,properties,funcs,NULL,st_funcs);
 //  bool found;
@@ -4503,6 +4503,60 @@ bool JSB_cpShape_active(JSContext *cx, uint32_t argc, jsval *vp){
     return true;
 }
 
+bool JSB_cpShape_nearestPointQuery(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
+
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpShape* shape = (cpShape*) proxy->handle;
+    jsval *argvp = JS_ARGV(cx,vp);
+
+    cpVect p;
+    bool ok = jsval_to_cpVect(cx, argvp[0], &p);
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+    cpNearestPointQueryInfo* info = new cpNearestPointQueryInfo();
+    cpShapeNearestPointQuery(shape, p, info);
+    JSObject *jsobj = JS_NewObject(cx, JSB_cpNearestPointQueryInfo_class, JSB_cpNearestPointQueryInfo_object, NULL);
+    jsb_set_jsobject_for_proxy(jsobj, info);
+    jsb_set_c_proxy_for_jsobject(jsobj, info, JSB_C_FLAG_CALL_FREE);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    return true;
+}
+
+bool JSB_cpShape_segmentQuery(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
+
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpShape* shape = (cpShape*) proxy->handle;
+    jsval *argvp = JS_ARGV(cx,vp);
+
+    cpVect a;
+    cpVect b;
+    bool ok = jsval_to_cpVect(cx, argvp[0], &a);
+    ok &= jsval_to_cpVect(cx, argvp[1], &b);
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+    cpSegmentQueryInfo* info = new cpSegmentQueryInfo();
+    if(cpShapeSegmentQuery(shape, a, b, info))
+    {
+        JSObject* jsobj = JS_NewObject(cx, JSB_cpSegmentQueryInfo_class, JSB_cpSegmentQueryInfo_object, NULL);
+        jsb_set_jsobject_for_proxy(jsobj, info);
+        jsb_set_c_proxy_for_jsobject(jsobj, info, JSB_C_FLAG_CALL_FREE);
+        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+    }
+    else
+    {
+        delete info;
+        JS_SET_RVAL(cx, vp, JSVAL_NULL);
+    }
+    return true;
+}
+
 static bool js_get_cpShape_bbl(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
     cpShape* shape = (cpShape*) proxy->handle;
@@ -4603,6 +4657,8 @@ void JSB_cpShape_createClass(JSContext *cx, JSObject* globalObj, const char* nam
         JS_FN("setSurfaceVelocity", JSB_cpShape_setSurfaceVelocity, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
         JS_FN("update", JSB_cpShape_update, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
         JS_FN("active", JSB_cpShape_active, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+        JS_FN("nearestPointQuery", JSB_cpShape_nearestPointQuery, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+        JS_FN("segmentQuery", JSB_cpShape_segmentQuery, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
         JS_FS_END
     };
     static JSFunctionSpec st_funcs[] = {

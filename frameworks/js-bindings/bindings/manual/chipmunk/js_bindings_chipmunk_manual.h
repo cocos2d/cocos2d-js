@@ -64,6 +64,9 @@ bool JSB_cpSpace_removeShape(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpSpace_removeStaticShape(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpSpace_segmentQueryFirst(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_eachShape(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_eachBody(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp);
 
 
 bool JSB_cpArbiter_getBodies(JSContext *cx, uint32_t argc, jsval *vp);
