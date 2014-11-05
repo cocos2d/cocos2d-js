@@ -1542,7 +1542,6 @@ cc.TMXLayer.extend = cc.Class.extend;
 cc.TMXTiledMap.extend = cc.Class.extend;
 cc.TMXMapInfo.extend = cc.Class.extend;
 cc.TransitionScene.extend = cc.Class.extend;
-ccs.Armature.extend = cc.Class.extend;
 ccui.Widget.extend = cc.Class.extend;
 ccui.Button.extend = cc.Class.extend;
 ccui.CheckBox.extend = cc.Class.extend;

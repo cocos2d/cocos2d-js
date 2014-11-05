@@ -28,16 +28,26 @@
 require('script/jsb_cocos2d_constants.js');
 require('script/jsb_cocos2d.js');
 require('script/jsb_cocos2d_extension.js');
-require('script/jsb_cocos2d_studio.js');
-require('script/jsb_cocos2d_ui.js');
+
 require('script/jsb_property_impls.js');
 require('script/jsb_property_apis.js');
 require('script/jsb_create_apis.js');
 require('script/jsb_ext_create_apis.js');
 
+if (typeof ccs !== "undefined") {
+    require('script/studio/jsb_studio_boot.js');
+    ccs.Armature.extend = cc.Class.extend; // move from jsb_cocos2d.js
+    require('script/studio/jsb_cocos2d_studio.js');
+    require('script/studio/jsb_studio_property_apis.js');
+    require('script/studio/jsb_chipmunk_create_apis.js');
+}
+
+require('script/jsb_cocos2d_ui.js');
+
+
 if (typeof cc.PhysicsSprite !== "undefined")
 {
-    cc.PhysicsSprite.extend = cc.Class.extend;
+    cc.PhysicsSprite.extend = cc.Class.extend;// move from jsb_cocos2d.js
     require('script/chipmunk/jsb_chipmunk_cocos2d_extension.js');
     require('script/chipmunk/jsb_chipmunk_property_impls.js');
     require('script/chipmunk/jsb_chipmunk_property_apis.js');

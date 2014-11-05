@@ -885,13 +885,7 @@ cc.plistParser = cc.PlistParser.getInstance();
 cc.fileUtils = cc.FileUtils.getInstance();
 cc.fileUtils.setPopupNotify(false);
 
-//ccs.nodeReader = ccs.NodeReader.getInstance();
-ccs.actionTimelineCache = ccs.ActionTimelineCache.getInstance();
-ccs.actionTimelineCache.createAction = ccs.ActionTimelineCache.createAction;
 
-ccs.csLoader = ccs.CSLoader.getInstance();
-ccs.csLoader.createNode = ccs.CSLoader.createNode;
-ccs.csLoader.createTimeline = ccs.CSLoader.createTimeline;
 
 /**
  * @type {Object}
@@ -924,55 +918,6 @@ delete ccui.EditBox;
  * UI Helper
  */
 ccui.helper = ccui.Helper;
-
-// In extension
-/**
- * @type {Object} Base object for ccs.uiReader
- * @name ccs.uiReader
- */
-ccs.uiReader = null;
-cc.defineGetterSetter(ccs, "uiReader", function() {
-    return ccs.GUIReader.getInstance();
-});
-ccs.GUIReader.prototype.clear = function() {
-    ccs.GUIReader.destroyInstance();
-};
-/**
- * @type {Object} Format and manage armature configuration and armature animation
- * @name ccs.armatureDataManager
- */
-ccs.armatureDataManager = null;
-cc.defineGetterSetter(ccs, "armatureDataManager", function() {
-    return ccs.ArmatureDataManager.getInstance();
-});
-ccs.ArmatureDataManager.prototype.clear = function() {
-    ccs.ArmatureDataManager.destroyInstance();
-};
-/**
- * @type {Object} Base singleton object for ccs.sceneReader
- * @name ccs.sceneReader
- */
-ccs.sceneReader = null;
-cc.defineGetterSetter(ccs, "sceneReader", function() {
-    return ccs.SceneReader.getInstance();
-});
-ccs.SceneReader.prototype.clear = function() {
-    ccs.SceneReader.destroyInstance();
-};
-ccs.SceneReader.prototype.version = function() {
-    return ccs.SceneReader.sceneReaderVersion();
-};
-/**
- * @type {Object} Base singleton object for ccs.ActionManager
- * @name ccs.actionManager
- */
-ccs.actionManager = ccs.ActionManager.getInstance();
-ccs.ActionManager.prototype.clear = function() {
-    this.releaseActions();
-};
-
-//ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
-//ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
 
 //+++++++++++++++++++++++Define singleton objects end+++++++++++++++++++++++++++
 
