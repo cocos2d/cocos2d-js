@@ -212,7 +212,7 @@ jsb.EventAssetsManager.ERROR_DECOMPRESS = 10;
 cc.ScrollView.extend = cc.Class.extend;
 cc.TableView.extend = cc.Class.extend;
 cc.TableViewCell.extend = cc.Class.extend;
-cc.GLNode.extend = cc.Class.extend;
+
 
 // updateWithBatchNode deprecated in JSB
 cc.Scale9Sprite.prototype.updateWithBatchNode = function (batchNode, originalRect, rotated, capInsets) {

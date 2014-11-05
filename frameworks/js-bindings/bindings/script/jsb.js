@@ -34,6 +34,11 @@ require('script/jsb_property_apis.js');
 require('script/jsb_create_apis.js');
 require('script/jsb_ext_create_apis.js');
 
+
+if (typeof cc.GLNode !== "undefined") {
+    cc.GLNode.extend = cc.Class.extend; // move from jsb_cocos2d_extension
+}
+
 if (typeof ccs !== "undefined") {
     require('script/studio/jsb_studio_boot.js');
     ccs.Armature.extend = cc.Class.extend; // move from jsb_cocos2d.js
