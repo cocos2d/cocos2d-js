@@ -260,10 +260,13 @@ cc.defineGetterSetter(_proto, "a", _proto.getAngle, _proto.setAngle);
 cc.defineGetterSetter(_proto, "w", _proto.getAngVel, _proto.setAngVel);
 cc.defineGetterSetter(_proto, "p", _proto.getPos, _proto.setPos);
 cc.defineGetterSetter(_proto, "v", _proto.getVel, _proto.setVel);
-// cc.defineGetterSetter(_proto, "vx", );
-// cc.defineGetterSetter(_proto, "vx", );
+cc.defineGetterSetter(_proto, "f", _proto.getForce, _proto.setForce);
+cc.defineGetterSetter(_proto, "t", _proto.getTorque, _proto.setTorque);
+cc.defineGetterSetter(_proto, "v_limit", _proto.getVelLimit, _proto.setVelLimit);
+cc.defineGetterSetter(_proto, "w_limit", _proto.getAngVelLimit, _proto.setAngVelLimit);
+cc.defineGetterSetter(_proto, "space", _proto.getSpace);
+cc.defineGetterSetter(_proto, "rot", _proto.getRot);
 cc.defineGetterSetter(_proto, "m", _proto.getMass, _proto.setMass);
-// cc.defineGetterSetter(_proto, "m_inv",)
 cc.defineGetterSetter(_proto, "i", _proto.getMoment, _proto.setMoment);
 
 // Shape properties
