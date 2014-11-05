@@ -149,16 +149,7 @@ cp.bb = function(l, b, r, t) {
 //
 var _proto = cp.Base.prototype;
 // "handle" needed in some cases
-Object.defineProperties(cp.Base.prototype,
-                {
-                    "handle" : {
-                        get : function(){
-                            return this.getHandle();
-                        },
-                        enumerable : true,
-                        configurable : true
-                    }
-                });
+cc.defineGetterSetter(_proto, "handle", _proto.getHandle);
 
 // Properties, for Chipmunk-JS compatibility
 // Space properties
@@ -264,60 +255,16 @@ Object.defineProperties(cp.Space.prototype,
                 });
 
 // Body properties
-Object.defineProperties(cp.Body.prototype,
-                {
-                    "a" : {
-                        get : function(){
-                            return this.getAngle();
-                        },
-                        set : function(newValue){
-                            this.setAngle(newValue);
-                        },
-                        enumerable : true,
-                        configurable : true
-                    },
-                    "w" : {
-                        get : function(){
-                            return this.getAngVel();
-                        },
-                        set : function(newValue){
-                            this.setAngVel(newValue);
-                        },
-                        enumerable : true,
-                        configurable : true
-                    },
-                    "p" : {
-                        get : function(){
-                            return this.getPos();
-                        },
-                        set : function(newValue){
-                            this.setPos(newValue);
-                        },
-                        enumerable : true,
-                        configurable : true
-                    },
-                    "v" : {
-                        get : function(){
-                            return this.getVel();
-                        },
-                        set : function(newValue){
-                            this.setVel(newValue);
-                        },
-                        enumerable : true,
-                        configurable : true
-                    },
-                    "i" : {
-                        get : function(){
-                            return this.getMoment();
-                        },
-                        set : function(newValue){
-                            this.setMoment(newValue);
-                        },
-                        enumerable : true,
-                        configurable : true
-                    }
-
-                });
+_proto = cp.Body.prototype;
+cc.defineGetterSetter(_proto, "a", _proto.getAngle, _proto.setAngle);
+cc.defineGetterSetter(_proto, "w", _proto.getAngVel, _proto.setAngVel);
+cc.defineGetterSetter(_proto, "p", _proto.getPos, _proto.setPos);
+cc.defineGetterSetter(_proto, "v", _proto.getVel, _proto.setVel);
+// cc.defineGetterSetter(_proto, "vx", );
+// cc.defineGetterSetter(_proto, "vx", );
+cc.defineGetterSetter(_proto, "m", _proto.getMass, _proto.setMass);
+// cc.defineGetterSetter(_proto, "m_inv",)
+cc.defineGetterSetter(_proto, "i", _proto.getMoment, _proto.setMoment);
 
 // Shape properties
 _proto = cp.Shape.prototype;
