@@ -4038,6 +4038,9 @@ void JSB_cpBody_createClass(JSContext *cx, JSObject* globalObj, const char* name
         JS_FN("world2Local", JSB_cpBody_world2Local, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
         JS_FN("setUserData", JSB_cpBody_setUserData, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
         JS_FN("getUserData", JSB_cpBody_getUserData, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+        JS_FN("eachShape", JSB_cpBody_eachShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+        JS_FN("eachConstraint", JSB_cpBody_eachConstraint, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+        JS_FN("eachArbiter", JSB_cpBody_eachArbiter, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
         JS_FS_END
     };
     static JSFunctionSpec st_funcs[] = {
