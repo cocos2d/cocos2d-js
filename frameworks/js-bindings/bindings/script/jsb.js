@@ -42,7 +42,45 @@ if (typeof ccs !== "undefined") {
     require('script/studio/jsb_chipmunk_create_apis.js');
 }
 
-require('script/jsb_cocos2d_ui.js');
+if (typeof ccui !== "undefined") {
+    // move from jsb_boot.js line 912
+    //start------------------------------
+    cc.EditBox = ccui.EditBox;
+    delete ccui.EditBox;
+
+    // GUI
+    /**
+     * @type {Object}
+     * UI Helper
+     */
+    ccui.helper = ccui.Helper;
+    //end------------------------------
+
+    // move from jsb_cocos2d
+    //start------------------------------
+    ccui.Widget.extend = cc.Class.extend;
+    ccui.Button.extend = cc.Class.extend;
+    ccui.CheckBox.extend = cc.Class.extend;
+    ccui.ImageView.extend = cc.Class.extend;
+    ccui.LoadingBar.extend = cc.Class.extend;
+    ccui.RichText.extend = cc.Class.extend;
+    ccui.Slider.extend = cc.Class.extend;
+    ccui.Text.extend = cc.Class.extend;
+    ccui.TextAtlas.extend = cc.Class.extend;
+    ccui.TextBMFont.extend = cc.Class.extend;
+    ccui.TextField.extend = cc.Class.extend;
+    ccui.Layout.extend = cc.Class.extend;
+    ccui.ListView.extend = cc.Class.extend;
+    ccui.PageView.extend = cc.Class.extend;
+    ccui.ScrollView.extend = cc.Class.extend;
+    //end------------------------------
+
+    require('script/ccui/jsb_cocos2d_ui.js');
+    require('script/ccui/jsb_ccui_property_impls.js');
+    require('script/ccui/jsb_ccui_property_apis.js');
+    require('script/ccui/jsb_ccui_create_apis.js');
+    require('script/ccui/jsb_ccui_deprecated.js');
+}
 
 
 if (typeof cc.PhysicsSprite !== "undefined")

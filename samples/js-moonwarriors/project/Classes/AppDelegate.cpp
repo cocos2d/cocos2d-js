@@ -59,8 +59,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_CCBuilderReader);
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(JSB_register_opengl);
-    sc->addRegisterCallback(register_all_cocos2dx_ui);
-    sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
+    //sc->addRegisterCallback(register_all_cocos2dx_ui);
+    //sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
     //sc->addRegisterCallback(register_all_cocos2dx_studio);
     //sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
     

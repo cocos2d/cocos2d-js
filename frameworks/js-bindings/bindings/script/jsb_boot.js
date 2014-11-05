@@ -909,16 +909,6 @@ cc.screen = {
     }
 };
 
-cc.EditBox = ccui.EditBox;
-delete ccui.EditBox;
-
-// GUI
-/**
- * @type {Object}
- * UI Helper
- */
-ccui.helper = ccui.Helper;
-
 //+++++++++++++++++++++++Define singleton objects end+++++++++++++++++++++++++++
 
 

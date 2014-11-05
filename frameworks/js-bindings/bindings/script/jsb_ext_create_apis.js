@@ -25,71 +25,6 @@
  * Constructors with built in init function
  *
  ************************************************************/
-ccui.Widget.prototype.init = ccui.Widget.prototype._init;
-ccui.CheckBox.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-    this.setSelected(false);
-    this.setTouchEnabled(true);
-};
-ccui.LoadingBar.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-};
-ccui.RichText.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-};
-ccui.Slider.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-    this.setTouchEnabled(true);
-};
-ccui.Text.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-};
-ccui.TextAtlas.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-};
-ccui.TextBMFont.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-};
-ccui.TextField.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-    this.setTouchEnabled(true);
-};
-
-var _p = {};
-_p._ctor = function(){
-    this.init();
-};
-ccui.Widget.prototype._ctor = ccui.CheckBox.prototype._ctor 
-                            = ccui.ImageView.prototype._ctor
-                            = ccui.LoadingBar.prototype._ctor
-                            = ccui.RichText.prototype._ctor
-                            = ccui.Slider.prototype._ctor
-                            = ccui.Text.prototype._ctor
-                            = ccui.TextAtlas.prototype._ctor
-                            = ccui.TextBMFont.prototype._ctor
-                            = ccui.TextField.prototype._ctor
-                            = ccui.Layout.prototype._ctor
-                            = ccui.ListView.prototype._ctor
-                            = ccui.PageView.prototype._ctor
-                            = ccui.ScrollView.prototype._ctor
-                            = _p._ctor;
-
-ccui.Button.prototype._ctor = function (normalImage, selectedImage,disableImage, texType) {
-    texType !== undefined && ccui.Button.prototype.init.call(this, normalImage, selectedImage,disableImage, texType);
-    this.setTouchEnabled(true);
-};
-
-ccui.RichElementText.prototype._ctor = function(tag, color, opacity, text, fontName, fontSize){
-    fontSize !== undefined && this.init(tag, color, opacity, text, fontName, fontSize);
-};
-
-ccui.RichElementImage.prototype._ctor = function(tag, color, opacity, filePath){
-    filePath !== undefined && this.init(tag, color, opacity, filePath);
-};
-
-ccui.RichElementCustomNode.prototype._ctor = function(tag, color, opacity, customNode){
-    customNode !== undefined && this.init(tag, color, opacity, customNode);
-};
 
 jsb.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callback) {
     callback !== undefined && this.init(assetsManager, callback);
@@ -167,10 +102,6 @@ cc.ControlSwitch.prototype._ctor = function(maskSprite, onSprite, offSprite, thu
 
 cc.TableView.prototype._ctor = function(dataSouurce, size, container){
     container == undefined ? this._init(dataSouurce, size) : this._init(dataSouurce, size, container);
-};
-
-cc.EditBox.prototype._ctor = function(size, normal9SpriteBg, press9SpriteBg, disabled9SpriteBg){
-    normal9SpriteBg && this.initWithSizeAndBackgroundSprite(size, normal9SpriteBg);
 };
 
 cc.ScrollView.prototype._ctor = function(size, container) {
