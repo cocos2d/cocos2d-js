@@ -107,13 +107,6 @@ cc.defineGetterSetter(_proto, "scale", _proto.getScale, _proto.setScale);
 cc.defineGetterSetter(_proto, "scaleX", _proto.getScaleX, _proto.setScaleX);
 cc.defineGetterSetter(_proto, "scaleY", _proto.getScaleY, _proto.setScaleY);
 
-_proto = cc.PhysicsSprite.prototype;
-cc.defineGetterSetter(_proto, "body", _proto.getBody, _proto.setBody);
-cc.defineGetterSetter(_proto, "x", _proto.getPositionX, _proto.setPositionX);
-cc.defineGetterSetter(_proto, "y", _proto.getPositionY, _proto.setPositionY);
-cc.defineGetterSetter(_proto, "rotation", _proto.getRotation, _proto.setRotation);
-cc.defineGetterSetter(_proto, "dirty", _proto.isDirty, _proto.setDirty);
-
 _proto = cc.ProgressTimer.prototype;
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
 cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);

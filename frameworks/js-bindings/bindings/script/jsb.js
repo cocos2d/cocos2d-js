@@ -34,8 +34,18 @@ require('script/jsb_property_impls.js');
 require('script/jsb_property_apis.js');
 require('script/jsb_create_apis.js');
 require('script/jsb_ext_create_apis.js');
-require('script/jsb_chipmunk_constants.js');
-require('script/jsb_chipmunk.js');
+
+if (typeof cc.PhysicsSprite !== "undefined")
+{
+    cc.PhysicsSprite.extend = cc.Class.extend;
+    require('script/chipmunk/jsb_chipmunk_cocos2d_extension.js');
+    require('script/chipmunk/jsb_chipmunk_property_impls.js');
+    require('script/chipmunk/jsb_chipmunk_property_apis.js');
+    require('script/chipmunk/jsb_chipmunk_create_apis.js');
+    require('script/chipmunk/jsb_chipmunk_constants.js');
+    require('script/chipmunk/jsb_chipmunk.js');
+}
+
 require('script/jsb_opengl_constants.js');
 require('script/jsb_opengl.js');
 require('script/jsb_cocosbuilder.js');

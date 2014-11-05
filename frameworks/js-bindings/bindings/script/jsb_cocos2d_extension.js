@@ -209,41 +209,6 @@ jsb.EventAssetsManager.UPDATE_FINISHED = 8;
 jsb.EventAssetsManager.UPDATE_FAILED = 9;
 jsb.EventAssetsManager.ERROR_DECOMPRESS = 10;
 
-// PhysicsDebugNode
-cc.PhysicsDebugNode.create = function( space ) {
-    var s = space;
-    if( space.handle !== undefined )
-        s = space.handle;
-    return cc.PhysicsDebugNode._create( s );
-};
-
-cc.PhysicsDebugNode.prototype._ctor = function(space){
-    this.init();
-    var s = space;
-    if( space.handle !== undefined )
-        s = space.handle;
-    this.setSpace(s);
-};
-
-cc.PhysicsDebugNode.prototype.setSpace = function( space ) {
-    var s = space;
-    if( space.handle !== undefined )
-        s = space.handle;
-    return this._setSpace( s );
-};
-
-// PhysicsSprite
-cc.PhysicsSprite.prototype.setBody = function( body ) {
-    var b = body;
-    if( body.handle !== undefined )
-        b = body.handle;
-    return this._setCPBody( b );
-};
-
-cc.PhysicsSprite.prototype.getBody = function() {
-    return this.getCPBody();
-};
-
 cc.ScrollView.extend = cc.Class.extend;
 cc.TableView.extend = cc.Class.extend;
 cc.TableViewCell.extend = cc.Class.extend;
