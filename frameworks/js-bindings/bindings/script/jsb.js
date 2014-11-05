@@ -39,7 +39,7 @@ if (typeof ccs !== "undefined") {
     ccs.Armature.extend = cc.Class.extend; // move from jsb_cocos2d.js
     require('script/studio/jsb_cocos2d_studio.js');
     require('script/studio/jsb_studio_property_apis.js');
-    require('script/studio/jsb_chipmunk_create_apis.js');
+    require('script/studio/jsb_studio_create_apis.js');
 }
 
 if (typeof ccui !== "undefined") {
