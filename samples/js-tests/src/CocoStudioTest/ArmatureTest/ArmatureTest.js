@@ -435,7 +435,10 @@ var TestAnimationEvent = ArmatureTestLayer.extend({
         this._armature.scaleY = 0.25;
         this._armature.x = winSize.width / 2 - 150;
         this._armature.y = winSize.height / 2;
-        this._armature.getAnimation().setMovementEventCallFunc(this.animationEvent,this);
+        var self = this;
+        this._armature.getAnimation().setMovementEventCallFunc(function(armature, movementType, movementID) {
+            self.animationEvent(armature, movementType, movementID);
+        });
         this.addChild(this._armature);
 
         this._direction = 1;
@@ -488,7 +491,10 @@ var TestFrameEvent = ArmatureTestLayer.extend({
          * Set armature's frame event callback function
          * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
          */
-        armature.getAnimation().setFrameEventCallFunc(this.onFrameEvent, this);
+        var self = this;
+        armature.getAnimation().setFrameEventCallFunc(function(bone, evt, originFrameIndex, currentFrameIndex) {
+            self.onFrameEvent(bone, evt, originFrameIndex, currentFrameIndex);
+        });
 
         this.schedule(this.checkAction);
     },
