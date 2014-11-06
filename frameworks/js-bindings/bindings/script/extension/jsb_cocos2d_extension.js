@@ -20,6 +20,45 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @type {Object}
+ * @name jsb.AssetsManager
+ * jsb.AssetsManager is the native AssetsManager for your game resources or scripts.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
+ * Only available in JSB
+ */
+jsb.AssetsManager = cc.AssetsManager;
+delete cc.AssetsManager;
+/**
+ * @type {Object}
+ * @name jsb.EventListenerAssetsManager
+ * jsb.EventListenerAssetsManager is the native event listener for AssetsManager.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
+ * Only available in JSB
+ */
+jsb.EventListenerAssetsManager = cc.EventListenerAssetsManager;
+delete cc.EventListenerAssetsManager;
+/**
+ * @type {Object}
+ * @name jsb.EventAssetsManager
+ * jsb.EventAssetsManager is the native event for AssetsManager.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
+ * Only available in JSB
+ */
+jsb.EventAssetsManager = cc.EventAssetsManager;
+delete cc.EventAssetsManager;
+
+// move from jsb_cocos2d
+//start------------------------------
+cc.Scale9Sprite.extend = cc.Class.extend;
+cc.ControlButton.extend = cc.Class.extend;
+cc.ControlColourPicker.extend = cc.Class.extend;
+cc.ControlPotentiometer.extend = cc.Class.extend;
+cc.ControlSlider.extend = cc.Class.extend;
+cc.ControlStepper.extend = cc.Class.extend;
+cc.ControlSwitch.extend = cc.Class.extend;
+//end------------------------------
+
 //
 // cocos2d constants
 //

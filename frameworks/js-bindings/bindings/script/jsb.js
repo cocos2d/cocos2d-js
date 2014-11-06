@@ -32,8 +32,6 @@ require('script/jsb_property_impls.js');
 require('script/jsb_property_apis.js');
 require('script/jsb_create_apis.js');
 
-
-
 if (typeof cc.GLNode !== "undefined") {
     cc.GLNode.extend = cc.Class.extend; // move from jsb_cocos2d_extension
 }
@@ -47,19 +45,9 @@ if (typeof ccs !== "undefined") {
 }
 
 if (typeof cc.Scale9Sprite !== "undefined") {
-    // move from jsb_cocos2d
-    //start------------------------------
-    cc.Scale9Sprite.extend = cc.Class.extend;
-    cc.ControlButton.extend = cc.Class.extend;
-    cc.ControlColourPicker.extend = cc.Class.extend;
-    cc.ControlPotentiometer.extend = cc.Class.extend;
-    cc.ControlSlider.extend = cc.Class.extend;
-    cc.ControlStepper.extend = cc.Class.extend;
-    cc.ControlSwitch.extend = cc.Class.extend;
-    //end------------------------------
-    require('script/jsb_cocos2d_extension.js');
-    require('script/jsb_ext_property_apis.js');
-    require('script/jsb_ext_create_apis.js');
+    require('script/extension/jsb_cocos2d_extension.js');
+    require('script/extension/jsb_ext_property_apis.js');
+    require('script/extension/jsb_ext_create_apis.js');
 }
 
 if (typeof ccui !== "undefined") {
