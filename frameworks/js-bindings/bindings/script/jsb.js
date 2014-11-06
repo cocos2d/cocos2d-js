@@ -27,12 +27,11 @@
 // DO NOT ALTER THE ORDER
 require('script/jsb_cocos2d_constants.js');
 require('script/jsb_cocos2d.js');
-require('script/jsb_cocos2d_extension.js');
 
 require('script/jsb_property_impls.js');
 require('script/jsb_property_apis.js');
 require('script/jsb_create_apis.js');
-require('script/jsb_ext_create_apis.js');
+
 
 
 if (typeof cc.GLNode !== "undefined") {
@@ -45,6 +44,22 @@ if (typeof ccs !== "undefined") {
     require('script/studio/jsb_cocos2d_studio.js');
     require('script/studio/jsb_studio_property_apis.js');
     require('script/studio/jsb_studio_create_apis.js');
+}
+
+if (typeof cc.Scale9Sprite !== "undefined") {
+    // move from jsb_cocos2d
+    //start------------------------------
+    cc.Scale9Sprite.extend = cc.Class.extend;
+    cc.ControlButton.extend = cc.Class.extend;
+    cc.ControlColourPicker.extend = cc.Class.extend;
+    cc.ControlPotentiometer.extend = cc.Class.extend;
+    cc.ControlSlider.extend = cc.Class.extend;
+    cc.ControlStepper.extend = cc.Class.extend;
+    cc.ControlSwitch.extend = cc.Class.extend;
+    //end------------------------------
+    require('script/jsb_cocos2d_extension.js');
+    require('script/jsb_ext_property_apis.js');
+    require('script/jsb_ext_create_apis.js');
 }
 
 if (typeof ccui !== "undefined") {

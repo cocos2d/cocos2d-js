@@ -115,6 +115,7 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
 }
 
 jsval anonEvaluate(JSContext *cx, JSObject *thisObj, const char* string);
+void register_cocos2dx_js_core(JSContext* cx, JSObject* obj);
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* obj);
 
 
