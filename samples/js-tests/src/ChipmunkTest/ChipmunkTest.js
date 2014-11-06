@@ -1826,9 +1826,9 @@ var Issue1083 = ChipmunkDemo.extend({
         cc.assert(segment.a.x == -length/2, "SegmentShape assertion failed : a.x");
         cc.assert(segment.a.y == 0, "SegmentShape assertion failed : a.y");
         cc.assert(segment.b.x == length/2, "SegmentShape assertion failed : b.x");
-        cc.assert(segment.a.y == 0, "SegmentShape assertion failed : a.y");
+        cc.assert(segment.b.y == 0, "SegmentShape assertion failed : b.y");
         var nomal = cp.v.perp(cp.v.normalize(cp.v.sub(b, a)));
-        cc.assert(segment.n.x == nomal.x, "SegmentShape assertion failed : n.y");
+        cc.assert(segment.n.x == nomal.x, "SegmentShape assertion failed : n.x");
         cc.assert(segment.n.y == nomal.y, "SegmentShape assertion failed : n.y");
         cc.assert(segment.r == 20, "SegmentShape assertion failed : r");
 
@@ -1838,7 +1838,7 @@ var Issue1083 = ChipmunkDemo.extend({
 
         var plane = poly.planes[0];
         cc.assert(plane.d.toFixed(4) == 24.2705, "PolyShape assertion failed : planes d");
-        cc.assert(plane.n.x.toFixed(4) == 0.8090, "PolyShape assertion failed : planes n")
+        cc.assert(plane.n.x.toFixed(4) == 0.8090, "PolyShape assertion failed : planes n");
     }
 });
 
