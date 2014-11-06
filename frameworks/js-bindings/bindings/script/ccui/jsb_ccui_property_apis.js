@@ -140,6 +140,19 @@ cc.defineGetterSetter(_proto, "children", _proto.getChildren);
 cc.defineGetterSetter(_proto, "childrenCount", _proto.getChildrenCount);
 cc.defineGetterSetter(_proto, "layoutType", _proto.getLayoutType, _proto.setLayoutType);
 
+_proto = cc.Scale9Sprite.prototype;
+cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
+cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
+cc.defineGetterSetter(_proto, "color", _proto.getColor, _proto.setColor);
+cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
+cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
+cc.defineGetterSetter(_proto, "preferredSize", _proto.getPreferredSize, _proto.setPreferredSize);
+cc.defineGetterSetter(_proto, "capInsets", _proto.getCapInsets, _proto.setCapInsets);
+cc.defineGetterSetter(_proto, "insetLeft", _proto.getInsetLeft, _proto.setInsetLeft);
+cc.defineGetterSetter(_proto, "insetTop", _proto.getInsetTop, _proto.setInsetTop);
+cc.defineGetterSetter(_proto, "insetRight", _proto.getInsetRight, _proto.setInsetRight);
+cc.defineGetterSetter(_proto, "insetBottom", _proto.getInsetBottom, _proto.setInsetBottom);
+
 _proto = cc.EditBox.prototype;
 cc.defineGetterSetter(_proto, "font", null, _proto._setFont);
 cc.defineGetterSetter(_proto, "fontName", null, _proto.setFontName);

@@ -86,6 +86,24 @@ ccui.RichElementCustomNode.prototype._ctor = function(tag, color, opacity, custo
     customNode !== undefined && this.init(tag, color, opacity, customNode);
 };
 
+cc.Scale9Sprite.prototype._ctor = function(file, rect, capInsets){
+    rect = rect || cc.rect(0, 0, 0, 0);
+    capInsets = capInsets || cc.rect(0, 0, 0, 0);
+    if(file != undefined){
+        if(file instanceof cc.SpriteFrame)
+            this.initWithSpriteFrame(file, rect);
+        else{
+            var frame = cc.spriteFrameCache.getSpriteFrame(file);
+            if(frame != null)
+                this.initWithSpriteFrame(frame, rect);
+            else
+                this.initWithFile(file, rect, capInsets);
+        }
+    }else{
+        this.init();
+    }
+};
+
 cc.EditBox.prototype._ctor = function(size, normal9SpriteBg, press9SpriteBg, disabled9SpriteBg){
     normal9SpriteBg && this.initWithSizeAndBackgroundSprite(size, normal9SpriteBg);
 };

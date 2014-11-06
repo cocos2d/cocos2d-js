@@ -50,7 +50,6 @@ delete cc.EventAssetsManager;
 
 // move from jsb_cocos2d
 //start------------------------------
-cc.Scale9Sprite.extend = cc.Class.extend;
 cc.ControlButton.extend = cc.Class.extend;
 cc.ControlColourPicker.extend = cc.Class.extend;
 cc.ControlPotentiometer.extend = cc.Class.extend;
@@ -225,16 +224,6 @@ cc.CONTROL_STEPPER_LABELFONT = "CourierNewPSMT";
 cc.AUTOREPEAT_DELTATIME = 0.15;
 cc.AUTOREPEAT_INCREASETIME_INCREMENT = 12;
 
-cc.Scale9Sprite.POSITIONS_CENTRE = 0;                //CCScale9Sprite.js
-cc.Scale9Sprite.POSITIONS_TOP = 1;
-cc.Scale9Sprite.POSITIONS_LEFT = 2;
-cc.Scale9Sprite.POSITIONS_RIGHT = 3;
-cc.Scale9Sprite.POSITIONS_BOTTOM = 4;
-cc.Scale9Sprite.POSITIONS_TOPRIGHT = 5;
-cc.Scale9Sprite.POSITIONS_TOPLEFT = 6;
-cc.Scale9Sprite.POSITIONS_BOTTOMRIGHT = 7;
-cc.Scale9Sprite.POSITIONS_BOTTOMLEFT = 8;
-
 
 jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST = 0;
 jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST = 1;
@@ -252,9 +241,3 @@ cc.ScrollView.extend = cc.Class.extend;
 cc.TableView.extend = cc.Class.extend;
 cc.TableViewCell.extend = cc.Class.extend;
 
-
-// updateWithBatchNode deprecated in JSB
-cc.Scale9Sprite.prototype.updateWithBatchNode = function (batchNode, originalRect, rotated, capInsets) {
-    var sprite = new cc.Sprite(batchNode.getTexture());
-    this.updateWithSprite(sprite, originalRect, rotated, cc.p(0, 0), cc.size(originalRect.width, originalRect.height), capInsets);
-};

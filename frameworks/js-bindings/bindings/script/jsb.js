@@ -44,17 +44,13 @@ if (typeof ccs !== "undefined") {
     require('script/studio/jsb_studio_create_apis.js');
 }
 
-if (typeof cc.Scale9Sprite !== "undefined") {
-    require('script/extension/jsb_cocos2d_extension.js');
-    require('script/extension/jsb_ext_property_apis.js');
-    require('script/extension/jsb_ext_create_apis.js');
-}
-
 if (typeof ccui !== "undefined") {
     // move from jsb_boot.js line 912
     //start------------------------------
     cc.EditBox = ccui.EditBox;
     delete ccui.EditBox;
+
+    cc.Scale9Sprite = ccui.Scale9Sprite;
 
     // GUI
     /**
@@ -81,6 +77,7 @@ if (typeof ccui !== "undefined") {
     ccui.ListView.extend = cc.Class.extend;
     ccui.PageView.extend = cc.Class.extend;
     ccui.ScrollView.extend = cc.Class.extend;
+    ccui.Scale9Sprite.extend = cc.Class.extend;
     //end------------------------------
 
     require('script/ccui/jsb_cocos2d_ui.js');
@@ -90,6 +87,11 @@ if (typeof ccui !== "undefined") {
     require('script/ccui/jsb_ccui_deprecated.js');
 }
 
+if (typeof cc.ControlButton !== "undefined") {
+    require('script/extension/jsb_cocos2d_extension.js');
+    require('script/extension/jsb_ext_property_apis.js');
+    require('script/extension/jsb_ext_create_apis.js');
+}
 
 if (typeof cc.PhysicsSprite !== "undefined")
 {

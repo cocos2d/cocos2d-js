@@ -30,23 +30,7 @@ jsb.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callbac
     callback !== undefined && this.init(assetsManager, callback);
 };
 
-cc.Scale9Sprite.prototype._ctor = function(file, rect, capInsets){
-    rect = rect || cc.rect(0, 0, 0, 0);
-    capInsets = capInsets || cc.rect(0, 0, 0, 0);
-    if(file != undefined){
-        if(file instanceof cc.SpriteFrame)
-            this.initWithSpriteFrame(file, rect);
-        else{
-            var frame = cc.spriteFrameCache.getSpriteFrame(file);
-            if(frame != null)
-                this.initWithSpriteFrame(frame, rect);
-            else
-                this.initWithFile(file, rect, capInsets);
-        }
-    }else{
-        this.init();
-    }
-};
+
 
 cc.ControlButton.prototype._ctor = function(label, backgroundSprite, fontSize){
     if(fontSize != undefined)
