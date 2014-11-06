@@ -5129,7 +5129,15 @@ JSClass *JSB_cpSplittingPlane_class = NULL;
 // Destructor
 void JSB_cpSplittingPlane_finalize(JSFreeOp *fop, JSObject *jsthis)
 {
- //nothing need to do, cpSplittingPlane will be freed by it's shape
+    jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    if( proxy ) {
+        CCLOGINFO("jsbindings: finalizing JS object %p (cpSplittingPlane), handle: %p", jsthis, proxy->handle);
+
+        jsb_del_jsobject_for_proxy(proxy->handle);
+        jsb_del_c_proxy_for_jsobject(jsthis);
+
+        //no need to free cpSplittingPlane, cpSplittingPlane will be freed by it's shape
+    }
 }
 
 bool js_get_cpSplitting_n(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
