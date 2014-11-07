@@ -1746,7 +1746,7 @@ var LogoSmash = (function(){
     });
 })();
 
- //
+//
 // Entry point
 //
 
