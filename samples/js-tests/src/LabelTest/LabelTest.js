@@ -1208,6 +1208,7 @@ var LabelTTFTest = AtlasDemo.extend({
 
         this._label = new cc.LabelTTF(this.getCurrentAlignment(), "Arial", 32, blockSize, this._horizAlign, this._vertAlign);
 
+        this._label.setLineHeight(50);
         this._label.anchorX = 0;
         this._label.anchorY = 0;
         this._label.x = (s.width - blockSize.width) / 2;
@@ -1274,7 +1275,7 @@ var LabelTTFTest = AtlasDemo.extend({
         return "Testing cc.LabelTTF";
     },
     subtitle:function () {
-        return "Select the buttons on the sides to change alignment";
+        return "Select the buttons on the sides to change alignment(lineHeight 50)";
     }
 });
 
