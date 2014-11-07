@@ -39,7 +39,7 @@ Furthermore, JavaScript friendly APIs make your game development experience a br
 
 - Cocos2d-JS v3.0 uses Cocos2d-x 3.2 final as base of JSB solution
 - Cocos2d-JS v3.0 is compatible with Cocos Code IDE v1.0.0 RC2+
-- Cocos2d-JS v3.0 is compatible with Cocos Studio v1.2 - v1.5.0.1
+- Cocos2d-JS v3.0 is compatible with Cocos Studio v1.2 - v2.0
 
 With any problems you might have, our communities are happy to help:
 

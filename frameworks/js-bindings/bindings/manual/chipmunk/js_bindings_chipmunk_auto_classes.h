@@ -67,4 +67,7 @@ void JSB_cpSegmentQueryInfo_createClass(JSContext *cx, JSObject* globalObj, cons
 extern JSObject *JSB_cpNearestPointQueryInfo_object;
 extern JSClass *JSB_cpNearestPointQueryInfo_class;
 void JSB_cpNearestPointQueryInfo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+extern JSObject *JSB_cpSplittingPlane_object;
+extern JSClass *JSB_cpSplittingPlane_class;
+void JSB_cpSplittingPlane_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 #endif // JSB_INCLUDE_CHIPMUNK
