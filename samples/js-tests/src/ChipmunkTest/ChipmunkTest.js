@@ -1902,9 +1902,9 @@ var arrayOfChipmunkTest =  [
         ChipmunkCollisionMemoryLeakTest,
         ChipmunkSpriteAnchorPoint,
 
-        Issue1092,
         Issue1073,
-        Issue1083
+        Issue1083,
+        Issue1092
         ];
 
 if( cc.sys.isNative ) {
