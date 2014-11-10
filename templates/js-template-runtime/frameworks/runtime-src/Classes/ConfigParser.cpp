@@ -37,7 +37,6 @@ void ConfigParser::readConfig()
         return;
     }
     
-    _docRootjson.Parse<0>(fileContent.c_str());
     if (_docRootjson.HasMember("init_cfg"))
     {
         if(_docRootjson["init_cfg"].IsObject())
