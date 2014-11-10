@@ -3159,6 +3159,7 @@ void JSB_cpSpace_createClass(JSContext *cx, JSObject* globalObj, const char* nam
         JS_FN("useSpatialHash", JSB_cpSpace_useSpatialHash, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addShape", JSB_cpSpace_addShape, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addCollisionHandler", JSB_cpSpace_addCollisionHandler, 6, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setDefaultCollisionHandler", JSB_cpSpace_setDefaultCollisionHandler, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addStaticShape", JSB_cpSpace_addStaticShape, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeConstraint", JSB_cpSpace_removeConstraint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeBody", JSB_cpSpace_removeBody, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),

@@ -50,6 +50,7 @@ bool JSB_cpCentroidForPoly(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpRecenterPoly(JSContext *cx, uint32_t argc, jsval *vp);
 
 // "Methods" from the OO API
+bool JSB_cpSpace_setDefaultCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpSpace_addCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpSpace_removeCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
 

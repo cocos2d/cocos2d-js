@@ -806,7 +806,9 @@ static void myCollisionPost(cpArbiter *arb, cpSpace *space, void *data)
 static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
 {
     struct collision_handler *handler = (struct collision_handler*) data;
-    
+    if(! handler->cx || !handler->space)
+        return;
+
     jsval args[2];
     if( handler->is_oo ) {
         args[0] = c_class_to_jsval(handler->cx, arb, JSB_cpArbiter_object, JSB_cpArbiter_class, "cpArbiter");
@@ -972,6 +974,79 @@ bool JSB_cpSpace_addCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
     void *handle = proxy->handle;
     
     return __jsb_cpSpace_addCollisionHandler(cx, vp, JS_ARGV(cx,vp), (cpSpace*)handle, 1);
+}
+
+bool JSB_cpSpace_setDefaultCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2(argc==4, cx, false, "Invalid number of arguments");
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*) proxy->handle;
+
+    collision_handler *handler = (collision_handler*) malloc( sizeof(collision_handler) );
+    JSB_PRECONDITION(handler, "Error allocating memory");
+
+    handler->typeA = 0;
+    handler->typeB = 0;
+    handler->jsthis = jsthis;
+
+    jsval *argv = JS_ARGV(cx,vp);
+    handler->begin = !JSVAL_IS_NULL(argv[0]) ? JSVAL_TO_OBJECT(argv[0]) : NULL;
+    handler->pre = !JSVAL_IS_NULL(argv[1]) ? JSVAL_TO_OBJECT(argv[1]) : NULL;
+    handler->post = !JSVAL_IS_NULL(argv[2]) ? JSVAL_TO_OBJECT(argv[2]) : NULL;
+    handler->separate = !JSVAL_IS_NULL(argv[3]) ? JSVAL_TO_OBJECT(argv[3]) : NULL;
+
+    // Object Oriented API ?
+    handler->is_oo = 1;
+
+    // owner of the collision handler
+    handler->space = space;
+    handler->cx = cx;
+
+    cpSpaceSetDefaultCollisionHandler(space,
+                               !handler->begin ? NULL : &myCollisionBegin,
+                               !handler->pre ? NULL : &myCollisionPre,
+                               !handler->post ? NULL : &myCollisionPost,
+                               !handler->separate ? NULL : &myCollisionSeparate,
+                               handler );
+
+    //
+    // Already added ? If so, remove it.
+    // Then add new entry
+    //
+    struct collision_handler *hashElement = NULL;
+    unsigned long paired_key = pair_ints(handler->typeA, handler->typeB );
+    HASH_FIND_INT(collision_handler_hash, &paired_key, hashElement);
+    if( hashElement ) {
+        if( hashElement->begin ) {
+            JS_RemoveObjectRoot(cx, &hashElement->begin);
+        }
+        if( hashElement->pre )
+            JS_RemoveObjectRoot(cx, &hashElement->pre);
+        if( hashElement->post )
+            JS_RemoveObjectRoot(cx, &hashElement->post);
+        if( hashElement->separate )
+            JS_RemoveObjectRoot(cx, &hashElement->separate);
+        HASH_DEL( collision_handler_hash, hashElement );
+        free( hashElement );
+    }
+
+    handler->hash_key = paired_key;
+    HASH_ADD_INT( collision_handler_hash, hash_key, handler );
+
+    // Root it
+    if( handler->begin )
+        JS_AddNamedObjectRoot(cx, &handler->begin, "begin collision_handler");
+    if( handler->pre )
+        JS_AddNamedObjectRoot(cx, &handler->pre, "pre collision_handler");
+    if( handler->post )
+        JS_AddNamedObjectRoot(cx, &handler->post, "post collision_handler");
+    if( handler->separate )
+        JS_AddNamedObjectRoot(cx, &handler->separate, "separate collision_handler");
+
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+
+    return true;
 }
 
 #pragma mark removeCollisionHandler
