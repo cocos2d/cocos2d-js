@@ -32,11 +32,11 @@ require('script/jsb_property_impls.js');
 require('script/jsb_property_apis.js');
 require('script/jsb_create_apis.js');
 
-if (typeof cc.GLNode !== "undefined") {
+if (cc.GLNode) {
     cc.GLNode.extend = cc.Class.extend; // move from jsb_cocos2d_extension
 }
 
-if (typeof ccs !== "undefined") {
+if (ccs) {
     require('script/studio/jsb_studio_boot.js');
     ccs.Armature.extend = cc.Class.extend; // move from jsb_cocos2d.js
     require('script/studio/jsb_cocos2d_studio.js');
@@ -44,7 +44,7 @@ if (typeof ccs !== "undefined") {
     require('script/studio/jsb_studio_create_apis.js');
 }
 
-if (typeof ccui !== "undefined") {
+if (ccui) {
     // move from jsb_boot.js line 912
     //start------------------------------
     cc.EditBox = ccui.EditBox;
@@ -87,13 +87,13 @@ if (typeof ccui !== "undefined") {
     require('script/ccui/jsb_ccui_deprecated.js');
 }
 
-if (typeof cc.ControlButton !== "undefined") {
+if (cc.ControlButton) {
     require('script/extension/jsb_cocos2d_extension.js');
     require('script/extension/jsb_ext_property_apis.js');
     require('script/extension/jsb_ext_create_apis.js');
 }
 
-if (typeof cc.PhysicsSprite !== "undefined")
+if (cc.PhysicsSprite)
 {
     cc.PhysicsSprite.extend = cc.Class.extend;// move from jsb_cocos2d.js
     require('script/chipmunk/jsb_chipmunk_cocos2d_extension.js');

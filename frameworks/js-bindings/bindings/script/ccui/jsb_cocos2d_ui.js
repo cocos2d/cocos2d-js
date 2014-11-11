@@ -350,7 +350,7 @@ ccui.MarginZero = function(){
 };
 
 // updateWithBatchNode deprecated in JSB
-cc.Scale9Sprite.prototype.updateWithBatchNode = function (batchNode, originalRect, rotated, capInsets) {
+ccui.Scale9Sprite.prototype.updateWithBatchNode = function (batchNode, originalRect, rotated, capInsets) {
     var sprite = new cc.Sprite(batchNode.getTexture());
     this.updateWithSprite(sprite, originalRect, rotated, cc.p(0, 0), cc.size(originalRect.width, originalRect.height), capInsets);
 };
