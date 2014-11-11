@@ -41,11 +41,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
-	auto glview = director->getOpenGLView();
-	if(!glview) {
-		glview = GLView::createWithRect("HelloJavascript", Rect(0,0,900,640));
-		director->setOpenGLView(glview);
-	}
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        glview = GLView::createWithRect("HelloJavascript", Rect(0,0,900,640));
+        director->setOpenGLView(glview);
+    }
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
@@ -62,10 +62,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
     
-	sc->addRegisterCallback(register_all_cocos2dx_ui);
-	sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
-	sc->addRegisterCallback(register_all_cocos2dx_studio);
-	sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
+    sc->addRegisterCallback(register_all_cocos2dx_ui);
+    sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
+    sc->addRegisterCallback(register_all_cocos2dx_studio);
+    sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
     
     sc->addRegisterCallback(register_all_cocos2dx_spine);
     sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
@@ -82,8 +82,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->start();
     
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
-	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->runScript("main.js");
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    ScriptingCore::getInstance()->runScript("main.js");
 
     return true;
 }
