@@ -36,7 +36,7 @@ if (cc.GLNode) {
     cc.GLNode.extend = cc.Class.extend; // move from jsb_cocos2d_extension
 }
 
-if (ccs) {
+if (window.ccs) {
     require('script/studio/jsb_studio_boot.js');
     ccs.Armature.extend = cc.Class.extend; // move from jsb_cocos2d.js
     require('script/studio/jsb_cocos2d_studio.js');
@@ -44,7 +44,7 @@ if (ccs) {
     require('script/studio/jsb_studio_create_apis.js');
 }
 
-if (ccui) {
+if (window.ccui) {
     // move from jsb_boot.js line 912
     //start------------------------------
     cc.EditBox = ccui.EditBox;
