@@ -1330,7 +1330,7 @@ bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *v
     return true;
 }
 
-struct JSB_cpSpace_each_UserData
+struct JSB_cp_each_UserData
 {
     JSContext *cx;
     jsval* func;
@@ -1341,12 +1341,11 @@ void JSB_cpSpace_each_func(T* cpObject, void *data)
 {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
-    JSContext* cx = ((JSB_cpSpace_each_UserData*)data)->cx;
-    jsval* func = ((JSB_cpSpace_each_UserData*)data)->func;
-
     JSObject *jsCpObject = jsb_get_jsobject_for_proxy(cpObject);
     if(jsCpObject)
     {
+        JSContext* cx = ((JSB_cp_each_UserData*)data)->cx;
+        jsval* func = ((JSB_cp_each_UserData*)data)->func;
         jsval rval;
         jsval argv = OBJECT_TO_JSVAL(jsCpObject);
 
@@ -1364,7 +1363,7 @@ bool JSB_cpSpace_eachShape(JSContext *cx, uint32_t argc, jsval *vp)
     cpSpace* space = (cpSpace*)proxy->handle;
     jsval *argvp = JS_ARGV(cx, vp);
 
-    JSB_cpSpace_each_UserData *data = (JSB_cpSpace_each_UserData*)malloc(sizeof(JSB_cpSpace_each_UserData));
+    JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
     if (!data)
         return false;
 
@@ -1385,7 +1384,7 @@ bool JSB_cpSpace_eachBody(JSContext *cx, uint32_t argc, jsval *vp)
     cpSpace* space = (cpSpace*)proxy->handle;
     jsval *argvp = JS_ARGV(cx, vp);
 
-    JSB_cpSpace_each_UserData *data = (JSB_cpSpace_each_UserData*)malloc(sizeof(JSB_cpSpace_each_UserData));
+    JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
     if (!data)
         return false;
 
@@ -1406,7 +1405,7 @@ bool JSB_cpSpace_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp)
     cpSpace* space = (cpSpace*)proxy->handle;
     jsval *argvp = JS_ARGV(cx, vp);
 
-    JSB_cpSpace_each_UserData *data = (JSB_cpSpace_each_UserData*)malloc(sizeof(JSB_cpSpace_each_UserData));
+    JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
     if (!data)
         return false;
 
@@ -1414,6 +1413,87 @@ bool JSB_cpSpace_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp)
     data->func = argvp;
 
     cpSpaceEachConstraint(space, JSB_cpSpace_each_func, data);
+    free(data);
+    return true;
+}
+
+template<typename T>
+void JSB_cpBody_each_func(cpBody* body, T* cpObject, void* data)
+{
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+
+    JSObject *jsCpObject = jsb_get_jsobject_for_proxy(cpObject);
+    if(jsCpObject)
+    {
+        JSContext* cx = ((JSB_cp_each_UserData*)data)->cx;
+        jsval* func = ((JSB_cp_each_UserData*)data)->func;
+        jsval rval;
+        jsval argv = OBJECT_TO_JSVAL(jsCpObject);
+
+        JS_CallFunctionValue(cx, NULL, *func, 1, &argv, &rval);
+
+    }
+}
+
+bool JSB_cpBody_eachShape(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2(argc == 1, cx, false, "Invalid number of arguments");
+
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpBody* body = (cpBody*)proxy->handle;
+    jsval *argvp = JS_ARGV(cx, vp);
+
+    JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
+    if (!data)
+        return false;
+
+    data->cx = cx;
+    data->func = argvp;
+
+    cpBodyEachShape(body, JSB_cpBody_each_func, data);
+    free(data);
+    return true;
+}
+
+bool JSB_cpBody_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2(argc == 1, cx, false, "Invalid number of arguments");
+
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpBody* body = (cpBody*)proxy->handle;
+    jsval *argvp = JS_ARGV(cx, vp);
+
+    JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
+    if (!data)
+        return false;
+
+    data->cx = cx;
+    data->func = argvp;
+
+    cpBodyEachConstraint(body, JSB_cpBody_each_func, data);
+    free(data);
+    return true;
+}
+
+bool JSB_cpBody_eachArbiter(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2(argc == 1, cx, false, "Invalid number of arguments");
+
+    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpBody* body = (cpBody*)proxy->handle;
+    jsval *argvp = JS_ARGV(cx, vp);
+
+    JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
+    if (!data)
+        return false;
+
+    data->cx = cx;
+    data->func = argvp;
+
+    cpBodyEachArbiter(body, JSB_cpBody_each_func, data);
     free(data);
     return true;
 }
