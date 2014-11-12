@@ -3976,6 +3976,38 @@ bool JSB_cpBody_world2Local(JSContext *cx, uint32_t argc, jsval *vp) {
     return true;
 }
 
+bool js_get_cpBody_vx(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpBody* body = (cpBody*) proxy->handle;
+    vp.set(DOUBLE_TO_JSVAL(body->v.x));
+    return true;
+}
+
+bool js_get_cpBody_vy(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpBody* body = (cpBody*) proxy->handle;
+    vp.set(DOUBLE_TO_JSVAL(body->v.y));
+    return true;
+}
+
+bool js_get_cpBody_inverse_m(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpBody* body = (cpBody*) proxy->handle;
+    vp.set(DOUBLE_TO_JSVAL(body->m_inv));
+    return true;
+}
+
+bool js_get_cpBody_inverse_i(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpBody* body = (cpBody*) proxy->handle;
+    vp.set(DOUBLE_TO_JSVAL(body->i_inv));
+    return true;
+}
+
 void JSB_cpBody_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
     JSB_cpBody_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -3991,6 +4023,10 @@ void JSB_cpBody_createClass(JSContext *cx, JSObject* globalObj, const char* name
     JSB_cpBody_class->flags = JSCLASS_HAS_PRIVATE;
 
     static JSPropertySpec properties[] = {
+        {"vx", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpBody_vx), JSOP_NULLWRAPPER},
+        {"vy", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpBody_vy), JSOP_NULLWRAPPER},
+        {"m_inv", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpBody_inverse_m), JSOP_NULLWRAPPER},
+        {"i_inv", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpBody_inverse_i), JSOP_NULLWRAPPER},
         {0, 0, 0, 0, 0}
     };
     static JSFunctionSpec funcs[] = {
@@ -4038,6 +4074,9 @@ void JSB_cpBody_createClass(JSContext *cx, JSObject* globalObj, const char* name
         JS_FN("world2Local", JSB_cpBody_world2Local, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
         JS_FN("setUserData", JSB_cpBody_setUserData, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
         JS_FN("getUserData", JSB_cpBody_getUserData, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+        JS_FN("eachShape", JSB_cpBody_eachShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+        JS_FN("eachConstraint", JSB_cpBody_eachConstraint, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+        JS_FN("eachArbiter", JSB_cpBody_eachArbiter, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
         JS_FS_END
     };
     static JSFunctionSpec st_funcs[] = {
