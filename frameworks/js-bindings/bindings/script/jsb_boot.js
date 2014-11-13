@@ -1332,6 +1332,12 @@ cc._initSys = function(config, CONFIG_KEY){
         __restartVM();
     };
 
+    // clean a singal js file
+    locSys.cleanScript = function(jsFile) {
+        __cleanScript(jsFile);
+    };
+
+
     locSys.dump = function(){
         var self = this;
         var str = "";
