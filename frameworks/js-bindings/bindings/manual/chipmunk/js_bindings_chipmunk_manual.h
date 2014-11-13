@@ -76,6 +76,10 @@ bool JSB_cpBody_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpBody_getUserData(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpBody_setUserData(JSContext *cx, uint32_t argc, jsval *vp);
 
+bool JSB_cpBody_eachShape(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpBody_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpBody_eachArbiter(JSContext *cx, uint32_t argc, jsval *vp);
+
 
 // convertions
 

@@ -1549,8 +1549,9 @@ cc.game = {
             cc.log("Failed to read or parse project.json");
             this.config = _init({});
         }
-//        cc._initDebugSetting(this.config[CONFIG_KEY.debugMode]);
+        cc._initDebugSetting(this.config[CONFIG_KEY.debugMode]);
         cc.director.setDisplayStats(this.config[CONFIG_KEY.showFPS]);
+        cc.director.setAnimationInterval(1.0/this.config[CONFIG_KEY.frameRate]);
         cc._initSys(this.config, CONFIG_KEY);
     },
     

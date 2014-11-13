@@ -1145,6 +1145,14 @@ cc.rectIntersectsRect = function( rectA, rectB )
     return bool;
 };
 
+cc.rectOverlapsRect = function (rectA, rectB)
+{
+    return !((rectA.x + rectA.width < rectB.x) ||
+             (rectB.x + rectB.width < rectA.x) ||
+             (rectA.y + rectA.height < rectB.y) ||
+             (rectB.y + rectB.height < rectA.y));
+};
+
 cc.rectUnion = function (rectA, rectB) {
     var rect = cc.rect(0, 0, 0, 0);
     rect.x = Math.min(rectA.x, rectB.x);
