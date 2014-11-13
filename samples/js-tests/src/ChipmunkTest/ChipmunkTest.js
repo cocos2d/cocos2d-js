@@ -243,6 +243,101 @@ var ChipmunkSpriteBatchTest = ChipmunkSprite.extend( {
     }
 });
 
+ //------------------------------------------------------------------
+ //
+ // Chipmunk Collision Test
+ // Using setDefaultCollisionHandler
+ // The default collision handler is invoked for each colliding pair of shapes that isn't explicitly handled by a specific collision handler.
+ //
+ //------------------------------------------------------------------
+var ChipmunkCollisionTest_no_specific_type = ChipmunkBaseLayer.extend({
+    ctor : function () {
+        this._super();
+
+        this._title = 'Chipmunk Collision test';
+        this._subtitle = 'Using setDefaultCollisionHandler';
+    },
+
+    // init physics
+    initPhysics : function() {
+        var staticBody = this.space.staticBody;
+
+        // Walls
+        var walls = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),               // bottom
+            // new cp.SegmentShape( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),    // top
+            // new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),             // left
+            // new cp.SegmentShape( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)  // right
+        ];
+        for( var i=0; i < walls.length; i++ ) {
+            var wall = walls[i];
+            wall.setElasticity(1);
+            wall.setFriction(1);
+            this.space.addStaticShape( wall );
+        }
+
+        // Gravity:
+        // testing properties
+        this.space.gravity = cp.v(0,-100);
+        this.space.iterations = 15;
+    },
+
+    createPhysicsSprite : function( pos, file ) {
+        var body = new cp.Body(1, cp.momentForBox(1, 48, 108) );
+        body.setPos(pos);
+        this.space.addBody(body);
+        var shape = new cp.BoxShape( body, 48, 108);
+        shape.setElasticity( 0.5 );
+        shape.setFriction( 0.5 );
+        this.space.addShape( shape );
+
+        var sprite = new cc.PhysicsSprite(file);
+        sprite.setBody( body );
+        return sprite;
+    },
+
+    onEnter : function () {
+        ChipmunkBaseLayer.prototype.onEnter.call(this);
+
+        this.initPhysics();
+        this.scheduleUpdate();
+
+        var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), s_pathGrossini);
+        this.addChild( sprite1 );
+
+        this.space.setDefaultCollisionHandler(
+            this.collisionBegin.bind(this),
+            this.collisionPre.bind(this),
+            this.collisionPost.bind(this),
+            this.collisionSeparate.bind(this)
+        );
+    },
+
+    onExit : function() {
+        ChipmunkBaseLayer.prototype.onExit.call(this);
+    },
+
+    update : function( delta ) {
+        this.space.step( delta );
+    },
+
+    collisionBegin : function ( arbiter, space ) {
+        cc.log('collision begin');
+        return true;
+    },
+
+    collisionPre : function ( arbiter, space ) {
+        cc.log('collision pre');
+        return true;
+    },
+
+    collisionPost : function ( arbiter, space ) {
+        cc.log('collision post');
+    },
+
+    collisionSeparate : function ( arbiter, space ) {
+        cc.log('collision separate');
+    }
+});
 //------------------------------------------------------------------
 //
 // Chipmunk Collision Test
@@ -1898,6 +1993,7 @@ var arrayOfChipmunkTest =  [
 // Custom Tests
         ChipmunkSprite ,
         ChipmunkSpriteBatchTest ,
+        ChipmunkCollisionTest_no_specific_type,
         ChipmunkCollisionTest,
         ChipmunkCollisionMemoryLeakTest,
         ChipmunkSpriteAnchorPoint,
