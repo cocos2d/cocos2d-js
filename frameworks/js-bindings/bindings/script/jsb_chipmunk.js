@@ -417,4 +417,10 @@ cc.defineGetterSetter(_proto, "ratio", _proto.getRatio, _proto.setRatio);
 _proto = cp.SimpleMotor.prototype;
 cc.defineGetterSetter(_proto, "rate", _proto.getRate, _proto.setRate);
 
+//Arbiter properties
+_proto = cp.Arbiter.prototype;
+cc.defineGetterSetter(_proto, "e", _proto.getElasticity, _proto.setElasticity);
+cc.defineGetterSetter(_proto, "u", _proto.getFriction, _proto.setFriction);
+cc.defineGetterSetter(_proto, "surface_vr", _proto.getSurfaceVelocity, _proto.setSurfaceVelocity);
+
 _proto = null;
