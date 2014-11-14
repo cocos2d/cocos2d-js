@@ -3169,6 +3169,7 @@ void JSB_cpSpace_createClass(JSContext *cx, JSObject* globalObj, const char* nam
         JS_FN("addBody", JSB_cpSpace_addBody, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeShape", JSB_cpSpace_removeShape, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("pointQuery", JSB_cpSpace_pointQuery, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("nearestPointQuery", JSB_cpSpace_nearestPointQuery, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
     static JSFunctionSpec st_funcs[] = {
