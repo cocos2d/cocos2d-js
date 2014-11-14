@@ -1520,6 +1520,13 @@ cc.game = {
     /**
      * Run game.
      */
+    restart: function () {
+        //window.location.href = window.location.href;
+        __restartGame();
+    },
+    /**
+     * Run game.
+     */
     run : function(){
         var self = this;
         if(!self._prepareCalled){

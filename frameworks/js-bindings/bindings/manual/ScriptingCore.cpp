@@ -372,6 +372,13 @@ bool JSB_cleanScript(JSContext *cx, uint32_t argc, jsval *vp)
 	return true;
 };
 
+bool JSB_restartGame(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments in executeScript");
+    ScriptingCore::getInstance()->reset();
+}
+
 bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments in executeScript");
@@ -418,6 +425,7 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 	JS_DefineFunction(cx, global, "__cleanScript", JSB_cleanScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "__restartGame", JSB_restartGame, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
 static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {

@@ -129,7 +129,7 @@ if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
     extensionsTestItemNames.push({
         itemTitle:"ScriptTestLayer",
         testScene:function () {
-            var testScene = new ScriptTestLoaderScene();
+            var testScene = new ScriptTestScene();
             if (testScene) {
                 testScene.runThisTest();
             }

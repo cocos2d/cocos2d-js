@@ -24,9 +24,45 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var currentScene = 0;
+var sceneIdx = -1;
 
-var ScriptTestLayer = BaseTestLayer.extend({
+var ScriptTestDemo = BaseTestLayer.extend({
+    _title:"",
+    _subtitle:"",
+
+    ctor:function () {
+        this._super.apply(this, arguments);
+    },
+
+    onRestartCallback:function (sender) {
+        var s = new ScriptTestScene();
+        s.addChild(restartScriptTest());
+        director.runScene(s);
+    },
+
+    onNextCallback:function (sender) {
+        var s = new ScriptTestScene();
+        s.addChild(nextScriptTest());
+        director.runScene(s);
+    },
+
+    onBackCallback:function (sender) {
+        var s = new ScriptTestScene();
+        s.addChild(previousScriptTest());
+        director.runScene(s);
+    },
+
+    // automation
+    numberOfPendingTests:function () {
+        return ( (arrayOfScriptTest.length - 1) - sceneIdx );
+    },
+
+    getTestNumber:function () {
+        return sceneIdx;
+    }
+});
+
+var ScriptTestLayer = ScriptTestDemo.extend({
     _tempLayer:null,
     clickMeShowTempLayer:function () {
         if (this._tempLayer != null)
@@ -68,44 +104,72 @@ var ScriptTestLayer = BaseTestLayer.extend({
 
     getTitle : function() {
         return "ScriptTest";
-    },
-    onNextCallback : function () {
-        if (currentScene < 2)
-        {
-            currentScene++;
-        }
-        else currentScene = 0;
-        var scene = new ScriptTestLoaderScene();
-        scene.runThisTest();
-    },
-
-    onBackCallback : function () {
-        if (currentScene > 0)
-        {
-            currentScene--;
-        }
-        else currentScene = 2;
-        var scene = new ScriptTestLoaderScene();
-        scene.runThisTest();
     }
+
 });
 
-var RestartGameLayer = BaseTestLayer.extend({
+var RestartGameLayerTest = ScriptTestDemo.extend({
+    getTitle : function() {
+        return "RestartGameTest";
+    },
+    restartGame:function()
+    {
+        cc.game.restart();
+    },
     ctor : function () {
         this._super();
+        var menu = new cc.Menu();
+        menu.setPosition(cc.p(0, 0));
+        menu.width = winSize.width;
+        menu.height = winSize.height;
+        this.addChild(menu, 1);
+        var item1 = new cc.MenuItemLabel(new cc.LabelTTF("restartGame", "Arial", 22), this.restartGame, this);
+        menu.addChild(item1);
+        menu.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(+180, 0)));
     }
 });
+
 var ScriptTestScene = TestScene.extend({
-    ctor : function () {
-        this._super();
-        var layer = new ScriptTestLayer();
+    runThisTest : function (num) {
+        sceneIdx = (num || num == 0) ? (num - 1) : -1;
+        var layer = nextScriptTest();
+        // var menu = new EventTest();
+        // menu.addKeyboardNotificationLayer( layer );
+
         this.addChild(layer);
+        director.runScene(this);
     }
 });
 
-var ScriptTestLoaderScene = TestScene.extend({
-    runThisTest : function () {
-        var scene = new ScriptTestScene();
-        cc.director.runScene(scene);
+//
+// Flow control
+//
+var arrayOfScriptTest = [
+    ScriptTestLayer,
+    RestartGameLayerTest
+];
+
+var nextScriptTest = function () {
+    sceneIdx++;
+    sceneIdx = sceneIdx % arrayOfScriptTest.length;
+
+    if(window.sideIndexBar){
+        sceneIdx = window.sideIndexBar.changeTest(sceneIdx, 12);
     }
-});
+
+    return new arrayOfScriptTest[sceneIdx]();
+};
+var previousScriptTest = function () {
+    sceneIdx--;
+    if (sceneIdx < 0)
+        sceneIdx += arrayOfScriptTest.length;
+
+    if(window.sideIndexBar){
+        sceneIdx = window.sideIndexBar.changeTest(sceneIdx, 12);
+    }
+
+    return new arrayOfScriptTest[sceneIdx]();
+};
+var restartScriptTest = function () {
+    return new arrayOfScriptTest[sceneIdx]();
+};
