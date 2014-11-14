@@ -1532,7 +1532,6 @@ cc.MenuItemImage.extend = cc.Class.extend;
 cc.MenuItemToggle.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
 cc.ClippingNode.extend = cc.Class.extend;
-cc.Scale9Sprite.extend = cc.Class.extend;
 cc.ProgressTimer.extend = cc.Class.extend;
 cc.ParallaxNode.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
@@ -1543,7 +1542,6 @@ cc.TiledGrid3D.extend = cc.Class.extend;
 cc.MotionStreak.extend = cc.Class.extend;
 cc.ParticleBatchNode.extend = cc.Class.extend;
 cc.ParticleSystem.extend = cc.Class.extend;
-cc.PhysicsSprite.extend = cc.Class.extend;
 cc.TextFieldTTF.extend = cc.Class.extend;
 cc.RenderTexture.extend = cc.Class.extend;
 cc.TileMapAtlas.extend = cc.Class.extend;
@@ -1551,28 +1549,7 @@ cc.TMXLayer.extend = cc.Class.extend;
 cc.TMXTiledMap.extend = cc.Class.extend;
 cc.TMXMapInfo.extend = cc.Class.extend;
 cc.TransitionScene.extend = cc.Class.extend;
-ccs.Armature.extend = cc.Class.extend;
-ccui.Widget.extend = cc.Class.extend;
-ccui.Button.extend = cc.Class.extend;
-ccui.CheckBox.extend = cc.Class.extend;
-ccui.ImageView.extend = cc.Class.extend;
-ccui.LoadingBar.extend = cc.Class.extend;
-ccui.RichText.extend = cc.Class.extend;
-ccui.Slider.extend = cc.Class.extend;
-ccui.Text.extend = cc.Class.extend;
-ccui.TextAtlas.extend = cc.Class.extend;
-ccui.TextBMFont.extend = cc.Class.extend;
-ccui.TextField.extend = cc.Class.extend;
-ccui.Layout.extend = cc.Class.extend;
-ccui.ListView.extend = cc.Class.extend;
-ccui.PageView.extend = cc.Class.extend;
-ccui.ScrollView.extend = cc.Class.extend;
-cc.ControlButton.extend = cc.Class.extend;
-cc.ControlColourPicker.extend = cc.Class.extend;
-cc.ControlPotentiometer.extend = cc.Class.extend;
-cc.ControlSlider.extend = cc.Class.extend;
-cc.ControlStepper.extend = cc.Class.extend;
-cc.ControlSwitch.extend = cc.Class.extend;
+
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
