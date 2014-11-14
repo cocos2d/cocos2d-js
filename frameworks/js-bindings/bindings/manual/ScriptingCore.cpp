@@ -377,7 +377,8 @@ bool JSB_restartGame(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, JSVAL_VOID);
     JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments in executeScript");
     ScriptingCore::getInstance()->reset();
-}
+    return true;
+};
 
 bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -731,8 +732,23 @@ bool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
 
 void ScriptingCore::reset()
 {
+    auto director = Director::getInstance();
+    FontFNT::purgeCachedData();
+    if (director->getOpenGLView())
+    {
+        SpriteFrameCache::getInstance()->removeSpriteFrames();
+        director->getTextureCache()->removeAllTextures();
+    }
+    FileUtils::getInstance()->purgeCachedEntries();
+    director->getScheduler()->unscheduleAll();
+    
     cleanup();
-    start();
+    
+    this->addRegisterCallback(registerDefaultClasses);
+    this->_runLoop = new SimpleRunLoop();
+    
+    Application::getInstance()->run();
+    //start();
 }
 
 ScriptingCore::~ScriptingCore()
@@ -768,6 +784,7 @@ void ScriptingCore::cleanup()
     
     _js_global_type_map.clear();
     filename_script.clear();
+    registrationList.clear();
 }
 
 void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)
