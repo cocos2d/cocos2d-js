@@ -1715,7 +1715,12 @@ var Query = ChipmunkDemo.extend({
             cc.log("nearestPointQuery" + shape);
             cc.log("distance:" + distance);
             cc.log("nearest point:" + point.x + "," + point.y);
-        })
+        });
+
+        //bbQuery
+        target.space.bbQuery(cp.bb(end.x-50, end.y-50, end.x+50, end.y+50), cp.ALL_LAYERS, cp.NO_GROUP, function(shape){
+            cc.log("bbQuery" + shape);
+        });
     }
 });
 

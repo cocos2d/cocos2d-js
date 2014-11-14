@@ -1567,6 +1567,40 @@ bool JSB_cpSpace_segmentQuery(JSContext *cx, uint32_t argc, jsval *vp)
     return true;
 }
 
+#define JSB_cpSpace_bbQuery_func JSB_cpSpace_pointQuery_func
+
+bool JSB_cpSpace_bbQuery(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2(argc == 4, cx, false, "Invalid number of arguments");
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+
+    JSObject* jsthis = JSVAL_TO_OBJECT(args.thisv());
+    struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*) proxy->handle;
+
+    cpBB bb;
+    cpLayers layers;
+    cpGroup group;
+
+    bool ok = jsval_to_cpBB(cx, args.get(0), &bb);
+    ok &= jsval_to_uint32(cx, args.get(1), &layers);
+    ok &= jsval_to_uint(cx, args.get(2), (unsigned int*)&group);
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+    JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
+    if (!data)
+        return false;
+
+    data->cx = cx;
+    data->func = const_cast<JS::Value*>(args.get(3).address());
+
+    cpSpaceBBQuery(space, bb, layers, group, JSB_cpSpace_bbQuery_func, data);
+
+    free(data);
+    args.rval().setUndefined();
+    return true;
+}
+
 template<typename T>
 void JSB_cpSpace_each_func(T* cpObject, void *data)
 {
