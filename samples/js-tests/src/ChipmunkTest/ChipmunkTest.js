@@ -1679,6 +1679,7 @@ var Query = ChipmunkDemo.extend({
         var end = touch.getLocation();
         drawNode.drawSegment(start, end, 1, cc.color(0, 255, 0, 255));
 
+        //segmntQueryFirst
         var info = target.space.segmentQueryFirst(start, end, cp.ALL_LAYERS, cp.NO_GROUP);
         if(info) {
             var point = info.hitPoint(start, end);
@@ -1690,6 +1691,12 @@ var Query = ChipmunkDemo.extend({
             drawNode.drawSegment(point, cp.v.add(point, cp.v.mult(info.n, 16)), 1, cc.color(0, 255, 255, 255));
         }
 
+        //segmentQuery
+        target.space.segmentQuery(start, end, cp.ALL_LAYERS, cp.NO_GROUP, function(shape, t, n){
+            cc.log("segmentQuery" + shape);
+        });
+
+        //nearestPointQueryNearest
         var nearestInfo = target.space.nearestPointQueryNearest(end, 100, cp.ALL_LAYERS, cp.NO_GROUP);
         if (nearestInfo) {
             drawNode.drawSegment(end, nearestInfo.p, 1, cc.color(255, 255, 0, 255));
@@ -1697,6 +1704,18 @@ var Query = ChipmunkDemo.extend({
             // Draw a red bounding box around the shape under the mouse.
             if(nearestInfo.d < 0) target.drawBB(nearestInfo.shape.getBB(), null, cc.color(255, 0, 0, 255));
         }
+
+        //pointQuery
+        target.space.pointQuery(end, cp.ALL_LAYERS, cp.NO_GROUP, function(shape){
+            cc.log("pointQuery" + shape);
+        });
+        
+        //nearestPointQuery
+        target.space.nearestPointQuery(end, 100, cp.ALL_LAYERS, cp.NO_GROUP, function(shape, distance, point){
+            cc.log("nearestPointQuery" + shape);
+            cc.log("distance:" + distance);
+            cc.log("nearest point:" + point.x + "," + point.y);
+        })
     }
 });
 
