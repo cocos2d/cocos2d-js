@@ -2447,11 +2447,8 @@ bool js_cocos2dx_CCNode_pause(JSContext *cx, uint32_t argc, jsval *vp)
                 JSScheduleWrapper* wrapper = NULL;
                 for(ssize_t i = 0; i < arr->count(); ++i) {
                     wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
-                    if(wrapper && wrapper->isUpdateSchedule()) {
-                        cobj->getScheduler()->unscheduleUpdate(wrapper);
-                        CCASSERT(OBJECT_TO_JSVAL(tmpObj) == wrapper->getJSCallbackThis(), "Wrong target object.");
-                        JSScheduleWrapper::removeTargetForJSObject(tmpObj, wrapper);
-                        break;
+                    if(wrapper) {
+                        cobj->getScheduler()->pauseTarget(wrapper);
                     }
                 }
             }
