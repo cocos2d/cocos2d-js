@@ -1,0 +1,109 @@
+/*
+ * Copyright (c) 2014 Chukong Technologies Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+ccui.Widget.prototype.init = ccui.Widget.prototype._init;
+ccui.CheckBox.prototype.init = function(){
+    ccui.Widget.prototype.init.call(this);
+    this.setSelected(false);
+    this.setTouchEnabled(true);
+};
+ccui.LoadingBar.prototype.init = function(){
+    ccui.Widget.prototype.init.call(this);
+};
+ccui.RichText.prototype.init = function(){
+    ccui.Widget.prototype.init.call(this);
+};
+ccui.Slider.prototype.init = function(){
+    ccui.Widget.prototype.init.call(this);
+    this.setTouchEnabled(true);
+};
+ccui.Text.prototype.init = function(){
+    ccui.Widget.prototype.init.call(this);
+};
+ccui.TextAtlas.prototype.init = function(){
+    ccui.Widget.prototype.init.call(this);
+};
+ccui.TextBMFont.prototype.init = function(){
+    ccui.Widget.prototype.init.call(this);
+};
+ccui.TextField.prototype.init = function(){
+    ccui.Widget.prototype.init.call(this);
+    this.setTouchEnabled(true);
+};
+
+var _p = {};
+_p._ctor = function(){
+    this.init();
+};
+ccui.Widget.prototype._ctor = ccui.CheckBox.prototype._ctor
+    = ccui.ImageView.prototype._ctor
+    = ccui.LoadingBar.prototype._ctor
+    = ccui.RichText.prototype._ctor
+    = ccui.Slider.prototype._ctor
+    = ccui.Text.prototype._ctor
+    = ccui.TextAtlas.prototype._ctor
+    = ccui.TextBMFont.prototype._ctor
+    = ccui.TextField.prototype._ctor
+    = ccui.Layout.prototype._ctor
+    = ccui.ListView.prototype._ctor
+    = ccui.PageView.prototype._ctor
+    = ccui.ScrollView.prototype._ctor
+    = _p._ctor;
+
+ccui.Button.prototype._ctor = function (normalImage, selectedImage,disableImage, texType) {
+    texType !== undefined ? ccui.Button.prototype.init.call(this, normalImage, selectedImage,disableImage, texType) : ccui.Widget.prototype.init.call(this);
+    this.setTouchEnabled(true);
+};
+
+ccui.RichElementText.prototype._ctor = function(tag, color, opacity, text, fontName, fontSize){
+    fontSize !== undefined && this.init(tag, color, opacity, text, fontName, fontSize);
+};
+
+ccui.RichElementImage.prototype._ctor = function(tag, color, opacity, filePath){
+    filePath !== undefined && this.init(tag, color, opacity, filePath);
+};
+
+ccui.RichElementCustomNode.prototype._ctor = function(tag, color, opacity, customNode){
+    customNode !== undefined && this.init(tag, color, opacity, customNode);
+};
+
+cc.Scale9Sprite.prototype._ctor = function(file, rect, capInsets){
+    rect = rect || cc.rect(0, 0, 0, 0);
+    capInsets = capInsets || cc.rect(0, 0, 0, 0);
+    if(file != undefined){
+        if(file instanceof cc.SpriteFrame)
+            this.initWithSpriteFrame(file, rect);
+        else{
+            var frame = cc.spriteFrameCache.getSpriteFrame(file);
+            if(frame != null)
+                this.initWithSpriteFrame(frame, rect);
+            else
+                this.initWithFile(file, rect, capInsets);
+        }
+    }else{
+        this.init();
+    }
+};
+
+cc.EditBox.prototype._ctor = function(size, normal9SpriteBg, press9SpriteBg, disabled9SpriteBg){
+    normal9SpriteBg && this.initWithSizeAndBackgroundSprite(size, normal9SpriteBg);
+};

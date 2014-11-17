@@ -227,6 +227,16 @@ ccui.PRESSED_RENDERER_ZORDER = -2;
 ccui.DISABLED_RENDERER_ZORDER = -2;
 ccui.TITLE_RENDERER_ZORDER = -1;
 
+ccui.Scale9Sprite.POSITIONS_CENTRE = 0;                //CCScale9Sprite.js
+ccui.Scale9Sprite.POSITIONS_TOP = 1;
+ccui.Scale9Sprite.POSITIONS_LEFT = 2;
+ccui.Scale9Sprite.POSITIONS_RIGHT = 3;
+ccui.Scale9Sprite.POSITIONS_BOTTOM = 4;
+ccui.Scale9Sprite.POSITIONS_TOPRIGHT = 5;
+ccui.Scale9Sprite.POSITIONS_TOPLEFT = 6;
+ccui.Scale9Sprite.POSITIONS_BOTTOMRIGHT = 7;
+ccui.Scale9Sprite.POSITIONS_BOTTOMLEFT = 8;
+
 /*
  * UICheckBox
  */
@@ -339,6 +349,11 @@ ccui.MarginZero = function(){
     return new ccui.Margin(0,0,0,0);
 };
 
+// updateWithBatchNode deprecated in JSB
+ccui.Scale9Sprite.prototype.updateWithBatchNode = function (batchNode, originalRect, rotated, capInsets) {
+    var sprite = new cc.Sprite(batchNode.getTexture());
+    this.updateWithSprite(sprite, originalRect, rotated, cc.p(0, 0), cc.size(originalRect.width, originalRect.height), capInsets);
+};
 
 /*
  * UIWidget temporary solution to addChild
