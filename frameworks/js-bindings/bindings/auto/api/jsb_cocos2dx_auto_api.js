@@ -884,14 +884,6 @@ func
 },
 
 /**
- * @method pause
- */
-pause : function (
-)
-{
-},
-
-/**
  * @method convertToWorldSpaceAR
  * @param {vec2_object} arg0
  * @return {vec2_object}
@@ -1277,14 +1269,6 @@ getName : function (
 )
 {
     return ;
-},
-
-/**
- * @method resume
- */
-resume : function (
-)
-{
 },
 
 /**
