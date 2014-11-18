@@ -20,6 +20,44 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @type {Object}
+ * @name jsb.AssetsManager
+ * jsb.AssetsManager is the native AssetsManager for your game resources or scripts.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
+ * Only available in JSB
+ */
+jsb.AssetsManager = cc.AssetsManager;
+delete cc.AssetsManager;
+/**
+ * @type {Object}
+ * @name jsb.EventListenerAssetsManager
+ * jsb.EventListenerAssetsManager is the native event listener for AssetsManager.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
+ * Only available in JSB
+ */
+jsb.EventListenerAssetsManager = cc.EventListenerAssetsManager;
+delete cc.EventListenerAssetsManager;
+/**
+ * @type {Object}
+ * @name jsb.EventAssetsManager
+ * jsb.EventAssetsManager is the native event for AssetsManager.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
+ * Only available in JSB
+ */
+jsb.EventAssetsManager = cc.EventAssetsManager;
+delete cc.EventAssetsManager;
+
+// move from jsb_cocos2d
+//start------------------------------
+cc.ControlButton.extend = cc.Class.extend;
+cc.ControlColourPicker.extend = cc.Class.extend;
+cc.ControlPotentiometer.extend = cc.Class.extend;
+cc.ControlSlider.extend = cc.Class.extend;
+cc.ControlStepper.extend = cc.Class.extend;
+cc.ControlSwitch.extend = cc.Class.extend;
+//end------------------------------
+
 //
 // cocos2d constants
 //
@@ -186,16 +224,6 @@ cc.CONTROL_STEPPER_LABELFONT = "CourierNewPSMT";
 cc.AUTOREPEAT_DELTATIME = 0.15;
 cc.AUTOREPEAT_INCREASETIME_INCREMENT = 12;
 
-cc.Scale9Sprite.POSITIONS_CENTRE = 0;                //CCScale9Sprite.js
-cc.Scale9Sprite.POSITIONS_TOP = 1;
-cc.Scale9Sprite.POSITIONS_LEFT = 2;
-cc.Scale9Sprite.POSITIONS_RIGHT = 3;
-cc.Scale9Sprite.POSITIONS_BOTTOM = 4;
-cc.Scale9Sprite.POSITIONS_TOPRIGHT = 5;
-cc.Scale9Sprite.POSITIONS_TOPLEFT = 6;
-cc.Scale9Sprite.POSITIONS_BOTTOMRIGHT = 7;
-cc.Scale9Sprite.POSITIONS_BOTTOMLEFT = 8;
-
 
 jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST = 0;
 jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST = 1;
@@ -209,48 +237,7 @@ jsb.EventAssetsManager.UPDATE_FINISHED = 8;
 jsb.EventAssetsManager.UPDATE_FAILED = 9;
 jsb.EventAssetsManager.ERROR_DECOMPRESS = 10;
 
-// PhysicsDebugNode
-cc.PhysicsDebugNode.create = function( space ) {
-    var s = space;
-    if( space.handle !== undefined )
-        s = space.handle;
-    return cc.PhysicsDebugNode._create( s );
-};
-
-cc.PhysicsDebugNode.prototype._ctor = function(space){
-    this.init();
-    var s = space;
-    if( space.handle !== undefined )
-        s = space.handle;
-    this.setSpace(s);
-};
-
-cc.PhysicsDebugNode.prototype.setSpace = function( space ) {
-    var s = space;
-    if( space.handle !== undefined )
-        s = space.handle;
-    return this._setSpace( s );
-};
-
-// PhysicsSprite
-cc.PhysicsSprite.prototype.setBody = function( body ) {
-    var b = body;
-    if( body.handle !== undefined )
-        b = body.handle;
-    return this._setCPBody( b );
-};
-
-cc.PhysicsSprite.prototype.getBody = function() {
-    return this.getCPBody();
-};
-
 cc.ScrollView.extend = cc.Class.extend;
 cc.TableView.extend = cc.Class.extend;
 cc.TableViewCell.extend = cc.Class.extend;
-cc.GLNode.extend = cc.Class.extend;
 
-// updateWithBatchNode deprecated in JSB
-cc.Scale9Sprite.prototype.updateWithBatchNode = function (batchNode, originalRect, rotated, capInsets) {
-    var sprite = new cc.Sprite(batchNode.getTexture());
-    this.updateWithSprite(sprite, originalRect, rotated, cc.p(0, 0), cc.size(originalRect.width, originalRect.height), capInsets);
-};
