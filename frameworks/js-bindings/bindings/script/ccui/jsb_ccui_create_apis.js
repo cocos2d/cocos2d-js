@@ -69,7 +69,7 @@ ccui.Button.prototype._ctor = function (normalImage, selectedImage,disableImage,
 };
 
 ccui.CheckBox.prototype._ctor = function (backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled, texType) {
-    if (texType !== undefined) {
+    if (frontCrossDisabled !== undefined) {
         texType = texType || ccui.Widget.LOCAL_TEXTURE;
         ccui.CheckBox.prototype.init.call(this, backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled, texType);
     }
