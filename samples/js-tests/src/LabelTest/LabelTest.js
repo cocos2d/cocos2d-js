@@ -1208,6 +1208,10 @@ var LabelTTFTest = AtlasDemo.extend({
 
         this._label = new cc.LabelTTF(this.getCurrentAlignment(), "Arial", 32, blockSize, this._horizAlign, this._vertAlign);
 
+
+        if (!cc.sys.isNative) {
+            this._label.setLineHeight(50);
+        }
         this._label.anchorX = 0;
         this._label.anchorY = 0;
         this._label.x = (s.width - blockSize.width) / 2;
