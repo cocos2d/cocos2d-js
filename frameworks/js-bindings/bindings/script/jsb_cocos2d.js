@@ -2832,3 +2832,6 @@ cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS,
 
     this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
 };
+
+cc.LabelTTF.prototype.getLineHeight = function() {};
+cc.LabelTTF.prototype.setLineHeight = function() {};
