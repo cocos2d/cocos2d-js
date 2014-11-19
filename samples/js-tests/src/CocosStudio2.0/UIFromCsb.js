@@ -83,7 +83,7 @@ var CocosStudio2_UIFromCsb = (function(){
                 layer._listMenu.setVisible(true);
                 layer._backMenu.setVisible(true);
 
-            });
+            }, this);
         }
     });
 

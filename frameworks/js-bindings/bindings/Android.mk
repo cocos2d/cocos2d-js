@@ -22,7 +22,6 @@ LOCAL_SRC_FILES := auto/jsb_cocos2dx_auto.cpp \
                    manual/jsb_opengl_registration.cpp \
                    manual/jsb_event_dispatcher_manual.cpp \
                    manual/platform/android/CCJavascriptJavaBridge.cpp \
-                   manual/platform/android/org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge.cpp \
                    manual/chipmunk/js_bindings_chipmunk_auto_classes.cpp \
                    manual/chipmunk/js_bindings_chipmunk_functions.cpp \
                    manual/chipmunk/js_bindings_chipmunk_manual.cpp \

@@ -865,6 +865,64 @@ var ShaderJuliaTest = OpenGLTestLayer.extend({
 
 //------------------------------------------------------------------
 //
+// ShaderOutline
+//
+//------------------------------------------------------------------
+var ShaderOutlineEffect = OpenGLTestLayer.extend({
+    ctor:function() {
+        this._super();
+
+        if( 'opengl' in cc.sys.capabilities ) {
+            this.shader = new cc.GLProgram("res/Shaders/example_Outline.vsh", "res/Shaders/example_Outline.fsh");
+            this.shader.addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION);
+            this.shader.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS);
+            this.shader.link();
+            this.shader.use();
+            this.shader.setUniformLocationWith1f(this.shader.getUniformLocationForName('u_threshold'), 1.75);
+            this.shader.setUniformLocationWith3f(this.shader.getUniformLocationForName('u_outlineColor'), 0 / 255, 255 / 255, 0 / 255);
+            this.shader.updateUniforms();
+
+            this.sprite = cc.Sprite.create('res/Images/grossini.png');
+            this.sprite.attr({
+                x: winSize.width / 2,
+                y: winSize.height / 2
+            });
+            this.sprite.runAction(
+                cc.RepeatForever.create(
+                    cc.Sequence.create(
+                        cc.RotateTo.create(1.0, 10),
+                        cc.RotateTo.create(1.0, -10)
+                    )
+                )
+            );
+            this.sprite.setShaderProgram(this.shader);
+                                     
+            this.addChild(this.sprite);
+
+            this.scheduleUpdate();
+        }
+    },
+    update:function(dt) {
+        if( 'opengl' in cc.sys.capabilities ) {
+        this.shader.use();
+        this.shader.setUniformLocationWith1f(this.shader.getUniformLocationForName('u_radius'), Math.abs(this.sprite.getRotation() / 500));
+        this.shader.updateUniforms();
+        }
+    },
+    title:function () {
+        return "Shader Outline Effect";
+    },
+    subtitle:function () {
+        return "Should see rotated image with animated outline effect";
+    }
+
+    //
+    // Automation
+    //
+});
+
+//------------------------------------------------------------------
+//
 // ShaderRetro
 //
 //------------------------------------------------------------------
@@ -1259,6 +1317,7 @@ var GLGetUniformTest = OpenGLTestLayer.extend({
 // Flow control
 //
 var arrayOfOpenGLTest = [
+    ShaderOutlineEffect,
     ShaderRetroEffect,
     ShaderMonjoriTest,
     ShaderMandelbrotTest,

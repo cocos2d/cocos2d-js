@@ -45,6 +45,12 @@ var cocoStudioTestItemNames = [
         testScene:function () {
             runSceneEditorTest();
         }
+    },
+    {
+        itemTitle:"ParserTest",
+        testScene:function(){
+            runParserTest();
+        }
     }
 ];
 
@@ -53,12 +59,6 @@ if(!cc.sys.isNative){
         itemTitle: "CocoStudioComponentsTest",
         testScene: function () {
             runComponentsTestLayer();
-        }
-    });
-    cocoStudioTestItemNames.push({
-        itemTitle:"ParserTest",
-        testScene:function(){
-            runParserTest();
         }
     });
     cocoStudioTestItemNames.push({
