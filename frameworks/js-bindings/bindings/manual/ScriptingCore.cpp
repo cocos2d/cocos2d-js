@@ -55,16 +55,33 @@
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_cocos2dx_extension_auto.hpp"
 #include "jsb_cocos2dx_builder_auto.hpp"
+#include "jsb_cocos2dx_spine_auto.hpp"
 #include "extension/jsb_cocos2dx_extension_manual.h"
-#include "cocos2d_specifics.hpp"
-#include "cocosbuilder/js_bindings_ccbreader.h"
-#include "localstorage/js_bindings_system_registration.h"
-#include "chipmunk/js_bindings_chipmunk_registration.h"
-#include "jsb_opengl_registration.h"
-#include "jsb_cocos2dx_ui_auto.hpp"
-#include "ui/jsb_cocos2dx_ui_manual.h"
 #include "cocostudio/jsb_cocos2dx_studio_manual.h"
 #include "jsb_cocos2dx_studio_auto.hpp"
+#include "jsb_cocos2dx_ui_auto.hpp"
+#include "ui/jsb_cocos2dx_ui_manual.h"
+#include "spine/jsb_cocos2dx_spine_manual.h"
+#include "cocos2d_specifics.hpp"
+#include "cocosbuilder/cocosbuilder_specifics.hpp"
+#include "chipmunk/js_bindings_chipmunk_registration.h"
+#include "localstorage/js_bindings_system_registration.h"
+#include "jsb_opengl_registration.h"
+#include "network/XMLHTTPRequest.h"
+#include "network/jsb_websocket.h"
+#include "network/jsb_socketio.h"
+#include "cocosbuilder/js_bindings_ccbreader.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "jsb_cocos2dx_pluginx_auto.hpp"
+#include "jsb_pluginx_extension_registration.h"
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "platform/android/CCJavascriptJavaBridge.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#include "platform/ios/JavaScriptObjCBridge.h"
+#endif
 
 #ifdef ANDROID
 #include <android/log.h>
@@ -455,8 +472,13 @@ ScriptingCore::ScriptingCore()
     // set utf8 strings internally (we don't need utf16)
     // XXX: Removed in SpiderMonkey 19.0
     //JS_SetCStringsAreUTF8();
-    this->addRegisterCallback(registerDefaultClasses);
-    this->_runLoop = new SimpleRunLoop();
+    initRegister();
+}
+
+void ScriptingCore::initRegister()
+{
+	this->addRegisterCallback(registerDefaultClasses);
+	this->_runLoop = new SimpleRunLoop();
 }
 
 void ScriptingCore::string_report(jsval val) {
@@ -737,18 +759,13 @@ bool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
 
 void ScriptingCore::reset()
 {
-	Director::getInstance()->end();
+	Director::getInstance()->restart();
 }
 
-void ScriptingCore::rebootVm()
+void ScriptingCore::restartVM()
 {
-	Director::getInstance()->restartDirector(); 
-	// release the objects
-	PoolManager::getInstance()->getCurrentPool()->clear();
 	cleanup();
-	this->addRegisterCallback(registerDefaultClasses);
-	this->_runLoop = new SimpleRunLoop();
-
+	initRegister();
 	runGame();
 }
 
@@ -1392,7 +1409,7 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
 	// special type, can't use this code after JSAutoCompartment
 	if (evt->type == kRestartGame)
 	{
-		rebootVm();
+		restartVM();
 		return 0;
 	}
 
@@ -1715,19 +1732,43 @@ void ScriptingCore::enableDebugger(unsigned int port)
 
 void ScriptingCore::register_all()
 {
+	ScriptingCore* sc = ScriptingCore::getInstance();
 	addRegisterCallback(register_all_cocos2dx);
-	addRegisterCallback(register_all_cocos2dx_extension);
+	addRegisterCallback(register_cocos2dx_js_core);
 	addRegisterCallback(register_cocos2dx_js_extensions);
-	addRegisterCallback(jsb_register_chipmunk);
-	addRegisterCallback(register_all_cocos2dx_extension_manual);
-	addRegisterCallback(register_all_cocos2dx_builder);
-	addRegisterCallback(register_CCBuilderReader);
 	addRegisterCallback(jsb_register_system);
+
+	addRegisterCallback(register_all_cocos2dx_extension);
+	addRegisterCallback(register_all_cocos2dx_extension_manual);
+
+	addRegisterCallback(jsb_register_chipmunk);
 	addRegisterCallback(JSB_register_opengl);
+
+	addRegisterCallback(MinXmlHttpRequest::_js_register);
+	addRegisterCallback(register_jsb_websocket);
+	addRegisterCallback(register_jsb_socketio);
+
+	sc->addRegisterCallback(register_all_cocos2dx_builder);
+	sc->addRegisterCallback(register_CCBuilderReader);
+
 	addRegisterCallback(register_all_cocos2dx_ui);
 	addRegisterCallback(register_all_cocos2dx_ui_manual);
 	addRegisterCallback(register_all_cocos2dx_studio);
 	addRegisterCallback(register_all_cocos2dx_studio_manual);
+
+	addRegisterCallback(register_all_cocos2dx_spine);
+	addRegisterCallback(register_all_cocos2dx_spine_manual);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	addRegisterCallback(register_all_pluginx_protocols);
+	addRegisterCallback(register_pluginx_js_extensions);
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	addRegisterCallback(JavascriptJavaBridge::_js_register);
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+	addRegisterCallback(JavaScriptObjCBridge::_js_register);
+#endif
 }
 
 void ScriptingCore::runGame()
