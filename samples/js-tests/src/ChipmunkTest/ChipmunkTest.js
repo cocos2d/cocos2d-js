@@ -243,6 +243,101 @@ var ChipmunkSpriteBatchTest = ChipmunkSprite.extend( {
     }
 });
 
+ //------------------------------------------------------------------
+ //
+ // Chipmunk Collision Test
+ // Using setDefaultCollisionHandler
+ // The default collision handler is invoked for each colliding pair of shapes that isn't explicitly handled by a specific collision handler.
+ //
+ //------------------------------------------------------------------
+var ChipmunkCollisionTest_no_specific_type = ChipmunkBaseLayer.extend({
+    ctor : function () {
+        this._super();
+
+        this._title = 'Chipmunk Collision test';
+        this._subtitle = 'Using setDefaultCollisionHandler';
+    },
+
+    // init physics
+    initPhysics : function() {
+        var staticBody = this.space.staticBody;
+
+        // Walls
+        var walls = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),               // bottom
+            // new cp.SegmentShape( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),    // top
+            // new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),             // left
+            // new cp.SegmentShape( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)  // right
+        ];
+        for( var i=0; i < walls.length; i++ ) {
+            var wall = walls[i];
+            wall.setElasticity(1);
+            wall.setFriction(1);
+            this.space.addStaticShape( wall );
+        }
+
+        // Gravity:
+        // testing properties
+        this.space.gravity = cp.v(0,-100);
+        this.space.iterations = 15;
+    },
+
+    createPhysicsSprite : function( pos, file ) {
+        var body = new cp.Body(1, cp.momentForBox(1, 48, 108) );
+        body.setPos(pos);
+        this.space.addBody(body);
+        var shape = new cp.BoxShape( body, 48, 108);
+        shape.setElasticity( 0.5 );
+        shape.setFriction( 0.5 );
+        this.space.addShape( shape );
+
+        var sprite = new cc.PhysicsSprite(file);
+        sprite.setBody( body );
+        return sprite;
+    },
+
+    onEnter : function () {
+        ChipmunkBaseLayer.prototype.onEnter.call(this);
+
+        this.initPhysics();
+        this.scheduleUpdate();
+
+        var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), s_pathGrossini);
+        this.addChild( sprite1 );
+
+        this.space.setDefaultCollisionHandler(
+            this.collisionBegin.bind(this),
+            this.collisionPre.bind(this),
+            this.collisionPost.bind(this),
+            this.collisionSeparate.bind(this)
+        );
+    },
+
+    onExit : function() {
+        ChipmunkBaseLayer.prototype.onExit.call(this);
+    },
+
+    update : function( delta ) {
+        this.space.step( delta );
+    },
+
+    collisionBegin : function ( arbiter, space ) {
+        cc.log('collision begin');
+        return true;
+    },
+
+    collisionPre : function ( arbiter, space ) {
+        cc.log('collision pre');
+        return true;
+    },
+
+    collisionPost : function ( arbiter, space ) {
+        cc.log('collision post');
+    },
+
+    collisionSeparate : function ( arbiter, space ) {
+        cc.log('collision separate');
+    }
+});
 //------------------------------------------------------------------
 //
 // Chipmunk Collision Test
@@ -1746,7 +1841,7 @@ var LogoSmash = (function(){
     });
 })();
 
- //
+//
 // Entry point
 //
 
@@ -1766,6 +1861,46 @@ ChipmunkTestScene.prototype.runThisTest = function (num) {
 //
 // Flow control
 //
+
+var Issue1092 = ChipmunkDemo.extend({
+    ctor:function(){
+        this._super();
+        this._subtitle = 'Chipmunk Demo';
+        this._title = 'Issue 1092';
+
+        var space = this.space;
+
+        var body = space.addBody(new cp.Body(100, 50));
+        body.setPos(cp.v(winSize.width/2, winSize.height/2));
+        space.addShape(cp.BoxShape(body, 50, 50));
+
+        cc.assert(body.vx == 0, "assertion failed : vx");
+        cc.assert(body.vy == 0, "assertion failed : vy");
+        cc.assert(body.v_limit == Infinity, "assertion failed : v_limit");
+        cc.assert(body.w_limit == Infinity, "assertion failed : w_limit");
+        cc.assert(body.f.x == 0, "assertion failed : f");
+        cc.assert(body.t == 0, "assertion failed : t");
+        cc.assert(body.m == 100, "assertion failed : m");
+        cc.assert(body.m_inv == 0.01, "assertion failed : m_inv");
+        cc.assert(body.i == 50, "assertion failed : i");
+        cc.assert(body.i_inv == 0.02, "assertion failed : i_inv");
+        cc.assert(body.rot.x == Math.cos(0), "assertion failed : rot");
+
+
+        space.addConstraint(new cp.PivotJoint(body, space.staticBody, cp.v(winSize.width/2, winSize.height/2)));
+        body.applyImpulse(cp.v(winSize.width/2, winSize.height/2-20), cp.v(1, -1));
+
+        body.eachShape(function(shape){
+            cc.log(shape);
+        });
+        body.eachConstraint(function(joint){
+            cc.log(joint);
+        });
+        body.eachArbiter(function(arbiter){
+            cc.log(arbiter);
+        })
+    }
+});
 
 var Issue1073 = ChipmunkDemo.extend({
     ctor:function(){
@@ -1858,12 +1993,14 @@ var arrayOfChipmunkTest =  [
 // Custom Tests
         ChipmunkSprite ,
         ChipmunkSpriteBatchTest ,
+        ChipmunkCollisionTest_no_specific_type,
         ChipmunkCollisionTest,
         ChipmunkCollisionMemoryLeakTest,
         ChipmunkSpriteAnchorPoint,
 
         Issue1073,
-        Issue1083
+        Issue1083,
+        Issue1092
         ];
 
 if( cc.sys.isNative ) {

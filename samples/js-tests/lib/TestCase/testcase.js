@@ -389,11 +389,16 @@
             });
         },
 
-        changeTest: function() {
-            return sidebar._testNum;
+        changeTest: function(testChangeNum) {
+            if (sidebar._testNum == testChangeNum)
+            {
+                return testChangeNum;
+            }
+            sidebar.changeHover(testChangeNum, sidebar._sceneNum);
+            return testChangeNum;
         },
 
-        changeTestScene: function(actualTestNum, actualSceneNum){
+        changeHover:function (actualTestNum, actualSceneNum) {
             if(sidebar._sceneNum == actualSceneNum){
 
                 if(sidebar._testNum < actualTestNum){
@@ -417,6 +422,10 @@
             sidebar._testNum = actualTestNum;
 
             this._hiddenOtherHover(actualTestNum, actualSceneNum);
+        },
+
+        changeTestScene: function(actualTestNum, actualSceneNum){
+            sidebar.changeHover(actualTestNum, actualSceneNum);
 
             //The same scene
             cc.LoaderScene.preload(testNames[sidebar.diplayRecordArr[actualSceneNum]].resource || [], function () {
