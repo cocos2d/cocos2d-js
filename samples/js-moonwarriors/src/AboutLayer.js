@@ -36,8 +36,9 @@ var AboutLayer = cc.Layer.extend({
         return true;
     },
     onBackCallback:function (pSender) {
-        var scene = new cc.Scene();
-        scene.addChild(new SysMenu());
-	    cc.director.runScene(new cc.TransitionFade(1.2, scene));
+        cc.game.restart();
+//        var scene = new cc.Scene();
+//        scene.addChild(new SysMenu());
+//	    cc.director.runScene(new cc.TransitionFade(1.2, scene));
     }
 });
