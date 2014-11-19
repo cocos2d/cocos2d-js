@@ -52,6 +52,20 @@
 #include <vector>
 #include <map>
 
+#include "jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_builder_auto.hpp"
+#include "extension/jsb_cocos2dx_extension_manual.h"
+#include "cocos2d_specifics.hpp"
+#include "cocosbuilder/js_bindings_ccbreader.h"
+#include "localstorage/js_bindings_system_registration.h"
+#include "chipmunk/js_bindings_chipmunk_registration.h"
+#include "jsb_opengl_registration.h"
+#include "jsb_cocos2dx_ui_auto.hpp"
+#include "ui/jsb_cocos2dx_ui_manual.h"
+#include "cocostudio/jsb_cocos2dx_studio_manual.h"
+#include "jsb_cocos2dx_studio_auto.hpp"
+
 #ifdef ANDROID
 #include <android/log.h>
 #include <jni/JniHelper.h>
@@ -372,14 +386,6 @@ bool JSB_cleanScript(JSContext *cx, uint32_t argc, jsval *vp)
 	return true;
 };
 
-bool JSB_restartGame(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
-    JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments in executeScript");
-    ScriptingCore::getInstance()->reset();
-    return true;
-};
-
 bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments in executeScript");
@@ -426,7 +432,6 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 	JS_DefineFunction(cx, global, "__cleanScript", JSB_cleanScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, global, "__restartGame", JSB_restartGame, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
 static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
@@ -732,23 +737,19 @@ bool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
 
 void ScriptingCore::reset()
 {
-    auto director = Director::getInstance();
-    FontFNT::purgeCachedData();
-    if (director->getOpenGLView())
-    {
-        SpriteFrameCache::getInstance()->removeSpriteFrames();
-        director->getTextureCache()->removeAllTextures();
-    }
-    FileUtils::getInstance()->purgeCachedEntries();
-    director->getScheduler()->unscheduleAll();
-    
-    cleanup();
-    
-    this->addRegisterCallback(registerDefaultClasses);
-    this->_runLoop = new SimpleRunLoop();
-    
-    Application::getInstance()->run();
-    //start();
+	Director::getInstance()->end();
+}
+
+void ScriptingCore::rebootVm()
+{
+	Director::getInstance()->restartDirector(); 
+	// release the objects
+	PoolManager::getInstance()->getCurrentPool()->clear();
+	cleanup();
+	this->addRegisterCallback(registerDefaultClasses);
+	this->_runLoop = new SimpleRunLoop();
+
+	runGame();
 }
 
 ScriptingCore::~ScriptingCore()
@@ -1388,6 +1389,13 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
     if (NULL == evt)
         return 0;
  
+	// special type, can't use this code after JSAutoCompartment
+	if (evt->type == kRestartGame)
+	{
+		rebootVm();
+		return 0;
+	}
+
     JSAutoCompartment ac(_cx, _global);
     
     switch (evt->type)
@@ -1703,6 +1711,41 @@ void ScriptingCore::enableDebugger(unsigned int port)
         Scheduler* scheduler = Director::getInstance()->getScheduler();
         scheduler->scheduleUpdate(this->_runLoop, 0, false);
     }
+}
+
+void ScriptingCore::register_all()
+{
+	addRegisterCallback(register_all_cocos2dx);
+	addRegisterCallback(register_all_cocos2dx_extension);
+	addRegisterCallback(register_cocos2dx_js_extensions);
+	addRegisterCallback(jsb_register_chipmunk);
+	addRegisterCallback(register_all_cocos2dx_extension_manual);
+	addRegisterCallback(register_all_cocos2dx_builder);
+	addRegisterCallback(register_CCBuilderReader);
+	addRegisterCallback(jsb_register_system);
+	addRegisterCallback(JSB_register_opengl);
+	addRegisterCallback(register_all_cocos2dx_ui);
+	addRegisterCallback(register_all_cocos2dx_ui_manual);
+	addRegisterCallback(register_all_cocos2dx_studio);
+	addRegisterCallback(register_all_cocos2dx_studio_manual);
+}
+
+void ScriptingCore::runGame()
+{
+	register_all();
+
+	start();
+
+	runScript("script/jsb_boot.js");
+
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+	enableDebugger();
+#endif
+
+	auto pEngine = ScriptingCore::getInstance();
+	ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
+
+	runScript("main.js");
 }
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug)

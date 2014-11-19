@@ -1522,7 +1522,7 @@ cc.game = {
      */
     restart: function () {
         //window.location.href = window.location.href;
-        __restartGame();
+        __restartVM();
     },
     /**
      * Run game.
