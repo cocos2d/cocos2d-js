@@ -174,11 +174,6 @@ public:
      */
     void reset();
 
-	/**
-     *  run cocos game
-     */
-	void runGame();
-
     /**
      * will add the register_sth callback to the list of functions that need to be called
      * after the creation of the context
@@ -253,7 +248,6 @@ public:
  private:
     void string_report(jsval val);
 	void initRegister();
-	void register_all();
 public:
     int handleNodeEvent(void* data);
     int handleComponentEvent(void* data);

@@ -766,7 +766,7 @@ void ScriptingCore::restartVM()
 {
 	cleanup();
 	initRegister();
-	runGame();
+	CCApplication::getInstance()->applicationDidFinishLaunching();
 }
 
 ScriptingCore::~ScriptingCore()
@@ -1728,65 +1728,6 @@ void ScriptingCore::enableDebugger(unsigned int port)
         Scheduler* scheduler = Director::getInstance()->getScheduler();
         scheduler->scheduleUpdate(this->_runLoop, 0, false);
     }
-}
-
-void ScriptingCore::register_all()
-{
-	ScriptingCore* sc = ScriptingCore::getInstance();
-	addRegisterCallback(register_all_cocos2dx);
-	addRegisterCallback(register_cocos2dx_js_core);
-	addRegisterCallback(register_cocos2dx_js_extensions);
-	addRegisterCallback(jsb_register_system);
-
-	addRegisterCallback(register_all_cocos2dx_extension);
-	addRegisterCallback(register_all_cocos2dx_extension_manual);
-
-	addRegisterCallback(jsb_register_chipmunk);
-	addRegisterCallback(JSB_register_opengl);
-
-	addRegisterCallback(MinXmlHttpRequest::_js_register);
-	addRegisterCallback(register_jsb_websocket);
-	addRegisterCallback(register_jsb_socketio);
-
-	sc->addRegisterCallback(register_all_cocos2dx_builder);
-	sc->addRegisterCallback(register_CCBuilderReader);
-
-	addRegisterCallback(register_all_cocos2dx_ui);
-	addRegisterCallback(register_all_cocos2dx_ui_manual);
-	addRegisterCallback(register_all_cocos2dx_studio);
-	addRegisterCallback(register_all_cocos2dx_studio_manual);
-
-	addRegisterCallback(register_all_cocos2dx_spine);
-	addRegisterCallback(register_all_cocos2dx_spine_manual);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	addRegisterCallback(register_all_pluginx_protocols);
-	addRegisterCallback(register_pluginx_js_extensions);
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	addRegisterCallback(JavascriptJavaBridge::_js_register);
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-	addRegisterCallback(JavaScriptObjCBridge::_js_register);
-#endif
-}
-
-void ScriptingCore::runGame()
-{
-	register_all();
-
-	start();
-
-	runScript("script/jsb_boot.js");
-
-#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
-	enableDebugger();
-#endif
-
-	auto pEngine = ScriptingCore::getInstance();
-	ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
-
-	runScript("main.js");
 }
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug)
