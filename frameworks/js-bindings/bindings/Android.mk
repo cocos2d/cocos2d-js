@@ -34,6 +34,7 @@ LOCAL_SRC_FILES := auto/jsb_cocos2dx_auto.cpp \
                    manual/network/jsb_socketio.cpp \
                    manual/network/jsb_websocket.cpp \
                    manual/network/XMLHTTPRequest.cpp \
+                   manual/network/EventSource.cpp \
                    manual/spine/jsb_cocos2dx_spine_manual.cpp \
                    manual/ui/jsb_cocos2dx_ui_manual.cpp
                    
