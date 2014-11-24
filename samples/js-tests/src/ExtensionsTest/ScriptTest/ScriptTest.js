@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 var sceneIdx = -1;
-
+var tempJSFileName = "ScriptTestTempFile.js";
 var ScriptTestDemo = BaseTestLayer.extend({
     _title:"",
     _subtitle:"",
@@ -64,6 +64,69 @@ var ScriptTestDemo = BaseTestLayer.extend({
 
 var ScriptTestLayer = ScriptTestDemo.extend({
     _tempLayer:null,
+    _am : null,
+    startDownload:function () {
+        if (!cc.sys.isNative)
+        {
+            return;
+        }
+        var manifestPath = "Manifests/ScriptTest/project.manifest";
+        var storagePath = ((jsb.fileUtils ? jsb.fileUtils.getWritablePath() : "/") + "JSBTests/AssetsManagerTest/ScriptTest/");
+        cc.log("Storage path for this test : " + storagePath);
+
+        if (this._am)
+        {
+            this._am.release();
+            this._am = null;
+        }
+
+        this._am = new jsb.AssetsManager(manifestPath, storagePath);
+        this._am.retain();
+        if (!this._am.getLocalManifest().isLoaded())
+        {
+            cc.log("Fail to update assets, step skipped.");
+            that.clickMeShowTempLayer();
+        }
+        else {
+            var that = this;
+            var listener = new jsb.EventListenerAssetsManager(this._am, function (event) {
+                var scene;
+                switch (event.getEventCode()) {
+                    case jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST:
+                        cc.log("No local manifest file found, skip assets update.");
+                        that.clickMeShowTempLayer();
+                        break;
+                    case jsb.EventAssetsManager.UPDATE_PROGRESSION:
+                        cc.log(event.getPercent() + "%");
+                        break;
+                    case jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
+                    case jsb.EventAssetsManager.ERROR_PARSE_MANIFEST:
+                        cc.log("Fail to download manifest file, update skipped.");
+                        that.clickMeShowTempLayer();
+                        break;
+                    case jsb.EventAssetsManager.ALREADY_UP_TO_DATE:
+                    case jsb.EventAssetsManager.UPDATE_FINISHED:
+                        cc.log("Update finished. " + event.getMessage());
+                        require(tempJSFileName);
+                        that.clickMeShowTempLayer();
+                        break;
+                    case jsb.EventAssetsManager.UPDATE_FAILED:
+                        cc.log("Update failed. " + event.getMessage());
+                        break;
+                    case jsb.EventAssetsManager.ERROR_UPDATING:
+                        cc.log("Asset update error: " + event.getAssetId() + ", " + event.getMessage());
+                        break;
+                    case jsb.EventAssetsManager.ERROR_DECOMPRESS:
+                        cc.log(event.getMessage());
+                        break;
+                    default:
+                        break;
+                }
+            });
+            cc.eventManager.addListener(listener, 1);
+            this._am.update();
+        }
+    },
     clickMeShowTempLayer:function () {
         if (this._tempLayer != null)
         {
@@ -73,16 +136,25 @@ var ScriptTestLayer = ScriptTestDemo.extend({
         this.addChild(this._tempLayer);
     },
     clickMeReloadTempLayer:function(){
-        cc.sys.cleanScript("ScriptTestTempFile.js");
-        // insert from the sdcard
-        // to do
-        if (cc.sys.os == cc.sys.OS_ANDROID)
+        cc.sys.cleanScript(tempJSFileName);
+        if (!cc.sys.isNative)
         {
-            jsb.fileUtils.addSearchPath("/mnt/sdcard/newScript", true);
-            require("ScriptTestTempFile.js");
+            this.clickMeShowTempLayer();
+        }
+        else
+        {
+            this.startDownload();
         }
 
-        this.clickMeShowTempLayer();
+    },
+    onExit : function () {
+        if (this._am)
+        {
+            this._am.release();
+            this._am = null;
+        }
+
+        this._super();
     },
     ctor : function () {
         this._super();
@@ -103,14 +175,14 @@ var ScriptTestLayer = ScriptTestDemo.extend({
     },
 
     getTitle : function() {
-        return "ScriptTest";
+        return "ScriptTest only used in native";
     }
 
 });
 
 var RestartGameLayerTest = ScriptTestDemo.extend({
     getTitle : function() {
-        return "RestartGameTest";
+        return "RestartGameTest only used in native";
     },
     restartGame:function()
     {
@@ -133,8 +205,6 @@ var ScriptTestScene = TestScene.extend({
     runThisTest : function (num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextScriptTest();
-        // var menu = new EventTest();
-        // menu.addKeyboardNotificationLayer( layer );
 
         this.addChild(layer);
         director.runScene(this);

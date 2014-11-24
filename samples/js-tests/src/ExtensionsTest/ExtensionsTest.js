@@ -125,7 +125,7 @@ if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
     });
 }
 
-//if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
+if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
     extensionsTestItemNames.push({
         itemTitle:"ScriptTestLayer",
         testScene:function () {
@@ -135,7 +135,7 @@ if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
             }
         }
     });
-//}
+}
 
 var ExtensionsMainLayer = cc.Layer.extend({
     onEnter:function () {
