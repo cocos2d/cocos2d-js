@@ -21,14 +21,6 @@
  */
 
 ccui.Widget.prototype.init = ccui.Widget.prototype._init;
-ccui.CheckBox.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-    this.setSelected(false);
-    this.setTouchEnabled(true);
-};
-ccui.LoadingBar.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-};
 ccui.RichText.prototype.init = function(){
     ccui.Widget.prototype.init.call(this);
 };
@@ -36,42 +28,82 @@ ccui.Slider.prototype.init = function(){
     ccui.Widget.prototype.init.call(this);
     this.setTouchEnabled(true);
 };
-ccui.Text.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-};
-ccui.TextAtlas.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-};
-ccui.TextBMFont.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-};
-ccui.TextField.prototype.init = function(){
-    ccui.Widget.prototype.init.call(this);
-    this.setTouchEnabled(true);
-};
 
-var _p = {};
-_p._ctor = function(){
-    this.init();
-};
-ccui.Widget.prototype._ctor = ccui.CheckBox.prototype._ctor
-    = ccui.ImageView.prototype._ctor
-    = ccui.LoadingBar.prototype._ctor
+ccui.Widget.prototype._ctor
     = ccui.RichText.prototype._ctor
     = ccui.Slider.prototype._ctor
-    = ccui.Text.prototype._ctor
-    = ccui.TextAtlas.prototype._ctor
-    = ccui.TextBMFont.prototype._ctor
-    = ccui.TextField.prototype._ctor
     = ccui.Layout.prototype._ctor
     = ccui.ListView.prototype._ctor
     = ccui.PageView.prototype._ctor
     = ccui.ScrollView.prototype._ctor
-    = _p._ctor;
+    = function(){
+        this.init();
+    }
 
 ccui.Button.prototype._ctor = function (normalImage, selectedImage,disableImage, texType) {
     texType !== undefined ? ccui.Button.prototype.init.call(this, normalImage, selectedImage,disableImage, texType) : ccui.Widget.prototype.init.call(this);
     this.setTouchEnabled(true);
+};
+
+ccui.CheckBox.prototype._ctor = function (backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled, texType) {
+    if (frontCrossDisabled !== undefined) {
+        texType = texType || ccui.Widget.LOCAL_TEXTURE;
+        ccui.CheckBox.prototype.init.call(this, backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled, texType);
+    }
+    else {
+        ccui.Widget.prototype.init.call(this);
+    }
+    this.setSelected(false);
+    this.setTouchEnabled(true);
+};
+
+ccui.ImageView.prototype._ctor = function(imageFileName, texType){
+    if(texType !== undefined)
+        ccui.ImageView.prototype._init.call(this, imageFileName, texType);
+    else
+        ccui.Widget.prototype.init.call(this);
+}
+
+ccui.LoadingBar.prototype._ctor = function(textureName, percentage){
+    ccui.Widget.prototype.init.call(this);
+
+    if(textureName !== undefined)
+        this.loadTexture(textureName);
+    if(percentage !== undefined)
+        this.setPercent(percentage);
+};
+
+ccui.TextAtlas.prototype._ctor = function(stringValue, charMapFile, itemWidth, itemHeight, startCharMap){
+    ccui.Widget.prototype.init.call(this);
+    startCharMap !== undefined && this.setProperty(stringValue, charMapFile, itemWidth, itemHeight, startCharMap);
+};
+
+ccui.Text.prototype._ctor = function(textContent, fontName, fontSize){
+    if(fontSize !== undefined)
+        ccui.Text.prototype.init.call(this, textContent, fontName, fontSize);
+    else
+        ccui.Widget.prototype.init.call(this);
+};
+
+ccui.TextBMFont.prototype._ctor = function(text, filename){
+    ccui.Widget.prototype.init.call(this);
+
+    if(filename !== undefined){
+        this.setFntFile(filename);
+        this.setString(text);
+    }
+};
+
+ccui.TextField.prototype._ctor = function(placeholder, fontName, fontSize){
+    ccui.Widget.prototype.init.call(this);
+    this.setTouchEnabled(true);
+
+    if (placeholder !== undefined)
+        this.setPlaceHolder(placeholder);
+    if (fontName !== undefined)
+        this.setFontName(fontName);
+    if (fontSize !== undefined)
+        this.setFontSize(fontSize);
 };
 
 ccui.RichElementText.prototype._ctor = function(tag, color, opacity, text, fontName, fontSize){
