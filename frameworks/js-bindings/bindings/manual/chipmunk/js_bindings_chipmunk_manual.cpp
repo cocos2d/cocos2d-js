@@ -1411,6 +1411,196 @@ struct JSB_cp_each_UserData
     jsval* func;
 };
 
+void JSB_cpSpace_pointQuery_func(cpShape *shape, void *data)
+{
+    JSObject *jsCpObject = jsb_get_jsobject_for_proxy(shape);
+    if(jsCpObject)
+    {
+        JSContext* cx = ((JSB_cp_each_UserData*)data)->cx;
+        jsval* func = ((JSB_cp_each_UserData*)data)->func;
+        jsval rval;
+        jsval argv = OBJECT_TO_JSVAL(jsCpObject);
+
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+        JS_CallFunctionValue(cx, NULL, *func, 1, &argv, &rval);
+
+    }
+}
+
+bool JSB_cpSpace_pointQuery(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2(argc == 4, cx, false, "Invalid number of arguments");
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+
+    JSObject* jsthis = JSVAL_TO_OBJECT(args.thisv());
+    struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*) proxy->handle;
+
+    cpVect point;
+    cpLayers layers;
+    cpGroup group;
+
+    bool ok = jsval_to_cpVect(cx, args.get(0), &point);
+    ok &= jsval_to_uint32(cx, args.get(1), &layers);
+    ok &= jsval_to_uint(cx, args.get(2), (unsigned int*)&group);
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+
+    JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
+    if (!data)
+        return false;
+
+    data->cx = cx;
+    data->func = const_cast<JS::Value*>(args.get(3).address());
+
+    cpSpacePointQuery(space, point, layers, group, JSB_cpSpace_pointQuery_func, data);
+    free(data);
+
+    args.rval().setUndefined();
+    return true;
+}
+
+void JSB_cpSpace_nearestPointQuery_func(cpShape *shape, cpFloat distance, cpVect point, void *data)
+{
+    JSObject *jsCpObject = jsb_get_jsobject_for_proxy(shape);
+    if(jsCpObject)
+    {
+        JSContext* cx = ((JSB_cp_each_UserData*)data)->cx;
+        jsval* func = ((JSB_cp_each_UserData*)data)->func;
+        jsval rval;
+        jsval argv[3];
+        argv[0] = OBJECT_TO_JSVAL(jsCpObject);
+        argv[1] = DOUBLE_TO_JSVAL(distance);
+        argv[2] = cpVect_to_jsval(cx, point);
+
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+        JS_CallFunctionValue(cx, NULL, *func, 3, argv, &rval);
+
+    }
+}
+
+bool JSB_cpSpace_nearestPointQuery(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2(argc == 5, cx, false, "Invalid number of arguments");
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+
+    JSObject* jsthis = JSVAL_TO_OBJECT(args.thisv());
+    struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*) proxy->handle;
+
+    cpVect point;
+    cpFloat maxDistance;
+    cpLayers layers;
+    cpGroup group;
+
+    bool ok = jsval_to_cpVect(cx, args.get(0), &point);
+    ok &= JS::ToNumber(cx, args.get(1), &maxDistance);
+    ok &= jsval_to_uint32(cx, args.get(2), &layers);
+    ok &= jsval_to_uint(cx, args.get(3), (unsigned int*)&group);
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+    JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
+    if (!data)
+        return false;
+
+    data->cx = cx;
+    data->func = const_cast<JS::Value*>(args.get(4).address());
+
+    cpSpaceNearestPointQuery(space, point, maxDistance, layers, group, JSB_cpSpace_nearestPointQuery_func, data);
+
+    free(data);
+    args.rval().setUndefined();
+    return true;
+}
+
+void JSB_cpSpace_segmentQuery_func(cpShape *shape, cpFloat t, cpVect n, void *data)
+{
+    JSObject *jsCpObject = jsb_get_jsobject_for_proxy(shape);
+    if(jsCpObject)
+    {
+        JSContext* cx = ((JSB_cp_each_UserData*)data)->cx;
+        jsval* func = ((JSB_cp_each_UserData*)data)->func;
+        jsval rval;
+        jsval argv[3];
+        argv[0] = OBJECT_TO_JSVAL(jsCpObject);
+        argv[1] = DOUBLE_TO_JSVAL(t);
+        argv[2] = cpVect_to_jsval(cx, n);
+
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+        JS_CallFunctionValue(cx, NULL, *func, 3, argv, &rval);
+
+    }
+}
+
+bool JSB_cpSpace_segmentQuery(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2(argc == 5, cx, false, "Invalid number of arguments");
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+
+    JSObject* jsthis = JSVAL_TO_OBJECT(args.thisv());
+    struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*) proxy->handle;
+
+    cpVect start;
+    cpVect end;
+    cpLayers layers;
+    cpGroup group;
+
+    bool ok = jsval_to_cpVect(cx, args.get(0), &start);
+    ok = jsval_to_cpVect(cx, args.get(1), &end);
+    ok &= jsval_to_uint32(cx, args.get(2), &layers);
+    ok &= jsval_to_uint(cx, args.get(3), (unsigned int*)&group);
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+
+    JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
+    if (!data)
+        return false;
+
+    data->cx = cx;
+    data->func = const_cast<JS::Value*>(args.get(4).address());
+
+    cpSpaceSegmentQuery(space, start, end, layers, group, JSB_cpSpace_segmentQuery_func, data);
+
+    free(data);
+    args.rval().setUndefined();
+    return true;
+}
+
+#define JSB_cpSpace_bbQuery_func JSB_cpSpace_pointQuery_func
+
+bool JSB_cpSpace_bbQuery(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2(argc == 4, cx, false, "Invalid number of arguments");
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+
+    JSObject* jsthis = JSVAL_TO_OBJECT(args.thisv());
+    struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*) proxy->handle;
+
+    cpBB bb;
+    cpLayers layers;
+    cpGroup group;
+
+    bool ok = jsval_to_cpBB(cx, args.get(0), &bb);
+    ok &= jsval_to_uint32(cx, args.get(1), &layers);
+    ok &= jsval_to_uint(cx, args.get(2), (unsigned int*)&group);
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+    JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
+    if (!data)
+        return false;
+
+    data->cx = cx;
+    data->func = const_cast<JS::Value*>(args.get(3).address());
+
+    cpSpaceBBQuery(space, bb, layers, group, JSB_cpSpace_bbQuery_func, data);
+
+    free(data);
+    args.rval().setUndefined();
+    return true;
+}
+
 template<typename T>
 void JSB_cpSpace_each_func(T* cpObject, void *data)
 {

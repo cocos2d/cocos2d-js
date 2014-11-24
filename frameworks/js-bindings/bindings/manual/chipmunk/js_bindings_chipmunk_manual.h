@@ -68,7 +68,10 @@ bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *v
 bool JSB_cpSpace_eachShape(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpSpace_eachBody(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpSpace_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp);
-
+bool JSB_cpSpace_pointQuery(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_nearestPointQuery(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_segmentQuery(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_bbQuery(JSContext *cx, uint32_t argc, jsval *vp);
 
 bool JSB_cpArbiter_getBodies(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpArbiter_getShapes(JSContext *cx, uint32_t argc, jsval *vp);
