@@ -299,44 +299,78 @@ cc.defineGetterSetter(_proto, "r", _proto.getRadius);
 //PolyShape properties
 _proto = cp.PolyShape.prototype;
 _proto.type = "poly";
+
 // Constraint properties
-Object.defineProperties(cp.Constraint.prototype,
-                {
-                    "maxForce" : {
-                        get : function(){
-                            return this.getMaxForce();
-                        },
-                        set : function(newValue){
-                            this.setMaxForce(newValue);
-                        },
-                        enumerable : true,
-                        configurable : true
-                    }
-                });
+_proto = cp.Constraint.prototype;
+cc.defineGetterSetter(_proto, "a", _proto.getA);
+cc.defineGetterSetter(_proto, "b", _proto.getB);
+cc.defineGetterSetter(_proto, "space", _proto.getSpace);
+cc.defineGetterSetter(_proto, "maxForce", _proto.getMaxForce, _proto.setMaxForce);
+cc.defineGetterSetter(_proto, "errorBias", _proto.getErrorBias, _proto.setErrorBias);
+cc.defineGetterSetter(_proto, "maxBias", _proto.getMaxBias, _proto.setMaxBias);
 
 // PinJoint properties
-Object.defineProperties(cp.PinJoint.prototype,
-                {
-                    "anchr1" : {
-                        get : function(){
-                            return this.getAnchr1();
-                        },
-                        set : function(newValue){
-                            this.setAnchr1(newValue);
-                        },
-                        enumerable : true,
-                        configurable : true
-                    },
-                    "anchr2" : {
-                        get : function(){
-                            return this.getAnchr2();
-                        },
-                        set : function(newValue){
-                            this.setAnchr2(newValue);
-                        },
-                        enumerable : true,
-                        configurable : true
-                    }
-                });
+_proto = cp.PinJoint.prototype;
+cc.defineGetterSetter(_proto, "anchr1", _proto.getAnchr1, _proto.setAnchr1);
+cc.defineGetterSetter(_proto, "anchr2", _proto.getAnchr2, _proto.setAnchr2);
+cc.defineGetterSetter(_proto, "dist", _proto.getDist, _proto.setDist);
+
+//SlideJoint  properties
+_proto = cp.SlideJoint.prototype;
+cc.defineGetterSetter(_proto, "anchr1", _proto.getAnchr1, _proto.setAnchr1);
+cc.defineGetterSetter(_proto, "anchr2", _proto.getAnchr2, _proto.setAnchr2);
+cc.defineGetterSetter(_proto, "min", _proto.getMin, _proto.setMin);
+cc.defineGetterSetter(_proto, "max", _proto.getMax, _proto.setMax);
+
+//PivotJoint properties
+_proto = cp.PivotJoint.prototype;
+cc.defineGetterSetter(_proto, "anchr1", _proto.getAnchr1, _proto.setAnchr1);
+cc.defineGetterSetter(_proto, "anchr2", _proto.getAnchr2, _proto.setAnchr2);
+
+//GrooveJoint properties
+_proto = cp.GrooveJoint.prototype;
+cc.defineGetterSetter(_proto, "anchr2", _proto.getAnchr2, _proto.setAnchr2);
+cc.defineGetterSetter(_proto, "grv_a", _proto.getGrooveA, _proto.setGrooveA);
+cc.defineGetterSetter(_proto, "grv_b", _proto.getGrooveB, _proto.setGrooveB);
+
+//DampedSpring properties
+_proto = cp.DampedSpring.prototype;
+cc.defineGetterSetter(_proto, "anchr1", _proto.getAnchr1, _proto.setAnchr1);
+cc.defineGetterSetter(_proto, "anchr2", _proto.getAnchr2, _proto.setAnchr2);
+cc.defineGetterSetter(_proto, "damping", _proto.getDamping, _proto.setDamping);
+cc.defineGetterSetter(_proto, "restLength", _proto.getRestLength, _proto.setRestLength);
+cc.defineGetterSetter(_proto, "stiffness", _proto.getStiffness, _proto.setStiffness);
+
+//DampedRotarySpring properties
+_proto = cp.DampedRotarySpring.prototype;
+cc.defineGetterSetter(_proto, "restAngle", _proto.getRestAngle, _proto.setRestAngle);
+cc.defineGetterSetter(_proto, "stiffness", _proto.getStiffness, _proto.setStiffness);
+cc.defineGetterSetter(_proto, "damping", _proto.getDamping, _proto.setDamping);
+
+//RotaryLimitJoint properties
+_proto = cp.RotaryLimitJoint.prototype;
+cc.defineGetterSetter(_proto, "min", _proto.getMin, _proto.setMin);
+cc.defineGetterSetter(_proto, "max", _proto.getMax, _proto.setMax);
+
+//RatchetJoint properties
+_proto = cp.RatchetJoint.prototype;
+cc.defineGetterSetter(_proto, "angle", _proto.getAngle, _proto.setAngle);
+cc.defineGetterSetter(_proto, "phase", _proto.getPhase, _proto.setPhase);
+cc.defineGetterSetter(_proto, "ratchet", _proto.getRatchet, _proto.setRatchet);
+
+//GearJoint properties
+_proto = cp.GearJoint.prototype;
+cc.defineGetterSetter(_proto, "phase", _proto.getPhase, _proto.setPhase);
+cc.defineGetterSetter(_proto, "ratio", _proto.getRatio, _proto.setRatio);
+
+//SimpleMotor properties
+_proto = cp.SimpleMotor.prototype;
+cc.defineGetterSetter(_proto, "rate", _proto.getRate, _proto.setRate);
+
+//Arbiter properties
+_proto = cp.Arbiter.prototype;
+cc.defineGetterSetter(_proto, "e", _proto.getElasticity, _proto.setElasticity);
+cc.defineGetterSetter(_proto, "u", _proto.getFriction, _proto.setFriction);
+cc.defineGetterSetter(_proto, "surface_vr", _proto.getSurfaceVelocity, _proto.setSurfaceVelocity);
 
 _proto = null;
