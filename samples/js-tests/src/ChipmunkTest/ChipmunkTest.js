@@ -438,6 +438,14 @@ var ChipmunkCollisionTest = ChipmunkBaseLayer.extend( {
         var collTypeB = shapes[1].collision_type;
         cc.log( 'Collision Type A:' + collTypeA );
         cc.log( 'Collision Type B:' + collTypeB );
+
+        //test addPostStepCallback
+        space.addPostStepCallback(function(){
+            cc.log("post step callback 1");
+        });
+        space.addPostStepCallback(function(){
+            cc.log("post step callback 2");
+        });
         return true;
     },
 
