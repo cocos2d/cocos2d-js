@@ -356,20 +356,20 @@ bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
 
 bool JSB_cleanScript(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	if (argc != 1)
-	{
-		JS_ReportError(cx, "Invalid number of arguments in JSB_cleanScript");
-		return false;
-	}
-	jsval *argv = JS_ARGV(cx, vp);
-	JSString *jsPath = JSVAL_TO_STRING(argv[0]);
-	JSB_PRECONDITION2(jsPath, cx, false, "Error js file in clean script");
-	JSStringWrapper wrapper(jsPath);
-	ScriptingCore::getInstance()->cleanScript(wrapper.get());
+    if (argc != 1)
+    {
+        JS_ReportError(cx, "Invalid number of arguments in JSB_cleanScript");
+        return false;
+    }
+    jsval *argv = JS_ARGV(cx, vp);
+    JSString *jsPath = JSVAL_TO_STRING(argv[0]);
+    JSB_PRECONDITION2(jsPath, cx, false, "Error js file in clean script");
+    JSStringWrapper wrapper(jsPath);
+    ScriptingCore::getInstance()->cleanScript(wrapper.get());
 
-	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
 
-	return true;
+    return true;
 };
 
 bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
@@ -412,12 +412,12 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-	
+    
     JS_DefineFunction(cx, global, "__getPlatform", JSBCore_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__getOS", JSBCore_os, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(cx, global, "__cleanScript", JSB_cleanScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "__cleanScript", JSB_cleanScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
 static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
@@ -446,8 +446,8 @@ ScriptingCore::ScriptingCore()
 
 void ScriptingCore::initRegister()
 {
-	this->addRegisterCallback(registerDefaultClasses);
-	this->_runLoop = new SimpleRunLoop();
+    this->addRegisterCallback(registerDefaultClasses);
+    this->_runLoop = new SimpleRunLoop();
 }
 
 void ScriptingCore::string_report(jsval val) {
@@ -728,14 +728,14 @@ bool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
 
 void ScriptingCore::reset()
 {
-	Director::getInstance()->restart();
+    Director::getInstance()->restart();
 }
 
 void ScriptingCore::restartVM()
 {
-	cleanup();
-	initRegister();
-	CCApplication::getInstance()->applicationDidFinishLaunching();
+    cleanup();
+    initRegister();
+    CCApplication::getInstance()->applicationDidFinishLaunching();
 }
 
 ScriptingCore::~ScriptingCore()
@@ -1375,12 +1375,12 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
     if (NULL == evt)
         return 0;
  
-	// special type, can't use this code after JSAutoCompartment
-	if (evt->type == kRestartGame)
-	{
-		restartVM();
-		return 0;
-	}
+    // special type, can't use this code after JSAutoCompartment
+    if (evt->type == kRestartGame)
+    {
+        restartVM();
+        return 0;
+    }
 
     JSAutoCompartment ac(_cx, _global);
     
