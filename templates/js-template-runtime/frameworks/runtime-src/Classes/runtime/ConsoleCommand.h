@@ -22,27 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef  _RUNTIME__H_
-#define  _RUNTIME__H_
+#ifndef  _CONSOLE_COMMAND__H_
+#define  _CONSOLE_COMMAND__H_
 
-#include <string>
-#include "ScriptingCore.h"
+#include "FileServer.h"
 
-void recvBuf(int fd, char *pbuf, unsigned long bufsize);
+class ConsoleCommand
+{
+public:
+    void init();
+    ~ConsoleCommand();
+    void onSendCommand(int fd, const std::string &args);
+private:
+    FileServer* _fileserver;
+};
 
-void sendBuf(int fd, const char *pbuf, unsigned long bufsize);
-
-std::string& replaceAll(std::string& str, const std::string& old_value, const std::string& new_value);
-
-std::string getIPAddress();
-
-const char* getRuntimeVersion();
-
-bool startScript();
-
-void initRuntime();
-
-void startRuntime();
-
-#endif // _RUNTIME__H_
+#endif // _CONSOLE_COMMAND__H_
 

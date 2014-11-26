@@ -48,9 +48,9 @@ void ConfigParser::readConfig()
                 _initViewSize.height = objectInitView["height"].GetUint();
                 if (_initViewSize.height>_initViewSize.width)
                 {
-                    float tmpvalue =_initViewSize.height;
+                    float tmpvalue = _initViewSize.height;
                     _initViewSize.height = _initViewSize.width;
-                     _initViewSize.width = tmpvalue;
+                    _initViewSize.width = tmpvalue;
                 }
                 
             }
@@ -69,7 +69,7 @@ void ConfigParser::readConfig()
             if (objectInitView.HasMember("consolePort"))
             {
                 _consolePort = objectInitView["consolePort"].GetUint();
-                if(_consolePort<=0)
+                if(_consolePort <= 0)
                     _consolePort = CONSOLE_PORT;
             }
             if (objectInitView.HasMember("debugPort"))
@@ -81,7 +81,7 @@ void ConfigParser::readConfig()
             if (objectInitView.HasMember("uploadPort"))
             {
                 _uploadPort = objectInitView["uploadPort"].GetUint();
-                if(_uploadPort<=0)
+                if(_uploadPort <= 0)
                     _uploadPort = UPLOAD_PORT;
             }
             if (objectInitView.HasMember("isWindowTop") && objectInitView["isWindowTop"].IsBool())
@@ -147,12 +147,10 @@ bool ConfigParser::isWindowTop()
 {
     return _isWindowTop;
 }
-
 int ConfigParser::getConsolePort()
 {
     return _consolePort;
 }
-
 int ConfigParser::getUploadPort()
 {
     return _uploadPort;
