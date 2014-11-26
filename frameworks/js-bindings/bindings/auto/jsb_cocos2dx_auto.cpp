@@ -44173,18 +44173,36 @@ bool js_cocos2dx_MenuItemImage_setDisabledSpriteFrame(JSContext *cx, uint32_t ar
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::MenuItemImage* cobj = (cocos2d::MenuItemImage *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_MenuItemImage_setDisabledSpriteFrame : Invalid Native Object");
+
+    do {
+        if (argc == 1) {
+            cocos2d::SpriteFrame* arg0;
+            do {
+                if (!argv[0].isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::SpriteFrame*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            cobj->setDisabledSpriteFrame(arg0);
+            JS_SET_RVAL(cx, vp, JSVAL_VOID);
+            return true;
+        }
+    } while (0);
+
     if (argc == 1) {
-        cocos2d::SpriteFrame* arg0;
+        std::string arg0;
+        cocos2d::Sprite* cobj2;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
         do {
-            if (!argv[0].isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::SpriteFrame*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            if (!ok) { ok = false; break; }
+            cobj2 = cocos2d::Sprite::create(arg0);
+            if (!cobj2) { ok = false; break; }
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MenuItemImage_setDisabledSpriteFrame : Error processing arguments");
-        cobj->setDisabledSpriteFrame(arg0);
+        cobj->setDisabledSpriteFrame(cobj2->getSpriteFrame());
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
@@ -44200,18 +44218,36 @@ bool js_cocos2dx_MenuItemImage_setSelectedSpriteFrame(JSContext *cx, uint32_t ar
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::MenuItemImage* cobj = (cocos2d::MenuItemImage *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_MenuItemImage_setSelectedSpriteFrame : Invalid Native Object");
+
+    do {
+        if (argc == 1) {
+            cocos2d::SpriteFrame* arg0;
+            do {
+                if (!argv[0].isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::SpriteFrame*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            cobj->setSelectedSpriteFrame(arg0);
+            JS_SET_RVAL(cx, vp, JSVAL_VOID);
+            return true;
+        }
+    } while (0);
+
     if (argc == 1) {
-        cocos2d::SpriteFrame* arg0;
+        std::string arg0;
+        cocos2d::Sprite* cobj2;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
         do {
-            if (!argv[0].isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::SpriteFrame*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            if (!ok) { ok = false; break; }
+            cobj2 = cocos2d::Sprite::create(arg0);
+            if (!cobj2) { ok = false; break; }
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MenuItemImage_setSelectedSpriteFrame : Error processing arguments");
-        cobj->setSelectedSpriteFrame(arg0);
+        cobj->setSelectedSpriteFrame(cobj2->getSpriteFrame());
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
@@ -44227,18 +44263,36 @@ bool js_cocos2dx_MenuItemImage_setNormalSpriteFrame(JSContext *cx, uint32_t argc
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::MenuItemImage* cobj = (cocos2d::MenuItemImage *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_MenuItemImage_setNormalSpriteFrame : Invalid Native Object");
+
+    do {
+        if (argc == 1) {
+            cocos2d::SpriteFrame* arg0;
+            do {
+                if (!argv[0].isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::SpriteFrame*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            cobj->setNormalSpriteFrame(arg0);
+            JS_SET_RVAL(cx, vp, JSVAL_VOID);
+            return true;
+        }
+    } while (0);
+
     if (argc == 1) {
-        cocos2d::SpriteFrame* arg0;
+        std::string arg0;
+        cocos2d::Sprite* cobj2;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
         do {
-            if (!argv[0].isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::SpriteFrame*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            if (!ok) { ok = false; break; }
+            cobj2 = cocos2d::Sprite::create(arg0);
+            if (!cobj2) { ok = false; break; }
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MenuItemImage_setNormalSpriteFrame : Error processing arguments");
-        cobj->setNormalSpriteFrame(arg0);
+        cobj->setNormalSpriteFrame(cobj2->getSpriteFrame());
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
