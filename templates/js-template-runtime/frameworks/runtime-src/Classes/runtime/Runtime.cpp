@@ -205,9 +205,8 @@ void initRuntime()
     searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
     
-    static ConsoleCommand *g_customCommand;
-    g_customCommand = new ConsoleCommand();
-    g_customCommand->init();
+
+    ConsoleCommand::getShareInstance()->init();
 }
 
 void startRuntime()
@@ -229,4 +228,11 @@ void startRuntime()
     auto director = Director::getInstance();
     scene->addChild(connectLayer);
     director->runWithScene(scene);
+}
+
+void endRuntime()
+{
+	ConsoleCommand::purge();
+	FileServer::getShareInstance()->stop();
+	//FileServer::purge();
 }
