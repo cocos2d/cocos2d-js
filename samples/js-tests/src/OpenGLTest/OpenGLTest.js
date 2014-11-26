@@ -921,7 +921,7 @@ var ShaderOutlineEffect = OpenGLTestLayer.extend({
                 this.sprite.getGLProgramState().setUniformFloat("u_radius", Math.abs(this.sprite.getRotation() / 500));
             }else{
                 this.shader.use();
-                this.shader.setUniformLocationWith1f(this.shader.getUniformLocation('u_radius'), Math.abs(this.sprite.getRotation() / 500));
+                this.shader.setUniformLocationWith1f(this.shader.getUniformLocationForName('u_radius'), Math.abs(this.sprite.getRotation() / 500));
                 this.shader.updateUniforms();
             }
         }
