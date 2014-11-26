@@ -74,7 +74,7 @@ var RenderTextureBaseLayer = BaseTestLayer.extend({
 //
 //------------------------------------------------------------------
 var RenderTextureSave = RenderTextureBaseLayer.extend({
-    _brush:null,
+    _brushs:null,
     _target:null,
     _lastLocation:null,
     _counter:0,
@@ -96,20 +96,16 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
                     event.getCurrentTarget()._lastLocation = event.getLocation();
                 },
                 onMouseMove: function(event){
-                    if(event.getButton() != undefined)
+                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget().drawInLocation(event.getLocation());
                 }
             }, this);
 
-        this._brush = cc.Sprite.create(s_fire);
-        this._brush.retain();
+        this._brushs = [];
 
-        this._brush.color = cc.color.RED;
-        this._brush.opacity = 20;
-
-        var save = cc.MenuItemFont.create("Save", this.saveCB, this);
-        var clear = cc.MenuItemFont.create("Clear", this.clearCB.bind(this)); // another way to pass 'this'
-        var menu = cc.Menu.create(save, clear);
+        var save = new cc.MenuItemFont("Save", this.saveCB, this);
+        var clear = new cc.MenuItemFont("Clear", this.clearCB.bind(this)); // another way to pass 'this'
+        var menu = new cc.Menu(save, clear);
         // var menu = cc.Menu.create(clear);
         menu.alignItemsVertically();
         menu.x = winSize.width - 70;
@@ -117,7 +113,7 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
         this.addChild(menu, 10);
 
         // create a render texture
-        var target = cc.RenderTexture.create(winSize.width, winSize.height);
+        var target = new cc.RenderTexture(winSize.width, winSize.height, 2);
         target.x = winSize.width / 2;
         target.y = winSize.height / 2;
         this.addChild(target, 1);
@@ -128,7 +124,9 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
     },
 
     onExit:function () {
-        this._brush.release();
+        for(var i in this._brushs){
+            this._brushs[i].release();
+        }
         this._super();
     },
 
@@ -140,8 +138,9 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
         var namePNG = "image-" + this._counter + ".png";
         var nameJPG = "image-" + this._counter + ".jpg";
 
-        this._target.saveToFile(nameJPG, cc.IMAGE_FORMAT_JPEG);
-        this._target.saveToFile(namePNG, cc.IMAGE_FORMAT_PNG);
+        // You can only save one file at a time (in one frame)
+        this._target.saveToFile(nameJPG, cc.IMAGE_FORMAT_JPEG, false);
+        //this._target.saveToFile(namePNG, cc.IMAGE_FORMAT_PNG);
 
         cc.log("images saved!");
         this._counter++;
@@ -155,22 +154,27 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
         var distance = cc.pDistance(location, this._lastLocation);
 
         if (distance > 1) {
-            var locBrush = this._brush, locLastLocation = this._lastLocation;
+            var locLastLocation = this._lastLocation;
             this._target.begin();
-            for (var i = 0; i < distance; i++) {
+            this._brushs = [];
+            for(var i = 0; i < distance; ++i) {
                 var diffX = locLastLocation.x - location.x;
                 var diffY = locLastLocation.y - location.y;
-
                 var delta = i / distance;
-
-                locBrush.attr({
-	                x: location.x + diffX * delta,
-	                y: location.y + diffY * delta,
-	                rotation: Math.random() * 360,
-	                scale: Math.random() * 2,
-	                color: cc.color(Math.random() * 255, 255, 255)
+                var sprite = new cc.Sprite(s_fire);
+                sprite.attr({
+                    x: location.x + diffX * delta,
+                    y: location.y + diffY * delta,
+                    rotation: Math.random() * 360,
+                    color: cc.color(Math.random() * 255, 255, 255),
+                    scale: Math.random() + 0.25,
+                    opacity: 20
                 });
-                locBrush.visit();
+                sprite.retain();
+                this._brushs.push(sprite);
+            }
+            for (var i = 0; i < distance; i++) {
+                this._brushs[i].visit();
             }
             this._target.end();
         }
@@ -198,19 +202,19 @@ var RenderTextureIssue937 = RenderTextureBaseLayer.extend({
          *  B1: non-premulti sprite
          *  B2: non-premulti render
          */
-        var background = cc.LayerColor.create(cc.color(200, 200, 200, 255));
+        var background = new cc.LayerColor(cc.color(200, 200, 200, 255));
         this.addChild(background);
 
-        var spr_premulti = cc.Sprite.create(s_fire);
+        var spr_premulti = new cc.Sprite(s_fire);
         spr_premulti.x = 16;
         spr_premulti.y = 48;
 
-        var spr_nonpremulti = cc.Sprite.create(s_fire);
+        var spr_nonpremulti = new cc.Sprite(s_fire);
         spr_nonpremulti.x = 16;
         spr_nonpremulti.y = 16;
 
         /* A2 & B2 setup */
-        var rend = cc.RenderTexture.create(32, 64, cc.Texture2D.PIXEL_FORMAT_RGBA8888);
+        var rend = new cc.RenderTexture(32, 64, cc.Texture2D.PIXEL_FORMAT_RGBA8888);
         if (!rend)
             return;
         // It's possible to modify the RenderTexture blending function by
@@ -268,17 +272,17 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
         }, this);
 
         var size = cc.director.getWinSize();
-        var label = cc.LabelTTF.create("vertexZ = 50", "Marker Felt", 64);
+        var label = new cc.LabelTTF("vertexZ = 50", "Marker Felt", 64);
         label.x = size.width / 2;
         label.y = size.height * 0.25;
         this.addChild(label);
 
-        var label2 = cc.LabelTTF.create("vertexZ = 0", "Marker Felt", 64);
+        var label2 = new cc.LabelTTF("vertexZ = 0", "Marker Felt", 64);
         label2.x = size.width / 2;
         label2.y = size.height * 0.5;
         this.addChild(label2);
 
-        var label3 = cc.LabelTTF.create("vertexZ = -50", "Marker Felt", 64);
+        var label3 = new cc.LabelTTF("vertexZ = -50", "Marker Felt", 64);
         label3.x = size.width / 2;
         label3.y = size.height * 0.75;
         this.addChild(label3);
@@ -288,17 +292,17 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
         label3.vertexZ = -50;
 
         cc.spriteFrameCache.addSpriteFrames(s_circle_plist);
-        this.mgr = cc.SpriteBatchNode.create(s_circle_png, 9);
+        this.mgr = new cc.SpriteBatchNode(s_circle_png, 9);
         this.addChild(this.mgr);
-        this.sp1 = cc.Sprite.create("#circle.png");
-        this.sp2 = cc.Sprite.create("#circle.png");
-        this.sp3 = cc.Sprite.create("#circle.png");
-        this.sp4 = cc.Sprite.create("#circle.png");
-        this.sp5 = cc.Sprite.create("#circle.png");
-        this.sp6 = cc.Sprite.create("#circle.png");
-        this.sp7 = cc.Sprite.create("#circle.png");
-        this.sp8 = cc.Sprite.create("#circle.png");
-        this.sp9 = cc.Sprite.create("#circle.png");
+        this.sp1 = new cc.Sprite("#circle.png");
+        this.sp2 = new cc.Sprite("#circle.png");
+        this.sp3 = new cc.Sprite("#circle.png");
+        this.sp4 = new cc.Sprite("#circle.png");
+        this.sp5 = new cc.Sprite("#circle.png");
+        this.sp6 = new cc.Sprite("#circle.png");
+        this.sp7 = new cc.Sprite("#circle.png");
+        this.sp8 = new cc.Sprite("#circle.png");
+        this.sp9 = new cc.Sprite("#circle.png");
 
         this.mgr.addChild(this.sp1, 9);
         this.mgr.addChild(this.sp2, 8);
@@ -394,17 +398,17 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
 
     renderScreenShot:function () {
         var winSize = cc.director.getWinSize();
-        var texture = cc.RenderTexture.create(winSize.width, winSize.width);
+        var texture = new cc.RenderTexture(winSize.width, winSize.width);
         if (!texture)
             return;
 
         texture.anchorX = 0;
-	    texture.anchorY = 0;
+        texture.anchorY = 0;
         texture.begin();
         this.visit();
         texture.end();
 
-        var sprite = cc.Sprite.create(texture.getSprite().texture);
+        var sprite = new cc.Sprite(texture.getSprite().texture);
 
         sprite.x = winSize.width/2;
         sprite.y = winSize.width/2;
@@ -413,24 +417,25 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
         this.addChild(sprite, 999999);
         sprite.color = cc.color.GREEN;
 
-        sprite.runAction(cc.Sequence.create(cc.FadeTo.create(2, 0), cc.Hide.create()));
+        sprite.runAction(cc.sequence(cc.fadeTo(2, 0), cc.hide()));
     }
 });
 
 var RenderTextureTestDepthStencil = RenderTextureBaseLayer.extend({
     ctor:function () {
+        //Need to re-write test case for new renderer
         this._super();
         var gl = cc._renderContext;
 
         var winSize = cc.director.getWinSize();
 
-        var sprite = cc.Sprite.create(s_fire);
+        var sprite = new cc.Sprite(s_fire);
         sprite.x = winSize.width * 0.25;
         sprite.y = 0;
         sprite.scale = 10;
         //TODO GL_DEPTH24_STENCIL8
-        //var rend = cc.RenderTexture.create(winSize.width, winSize.height, cc.TEXTURE_2D_PIXEL_FORMAT_RGBA4444);
-        var rend = cc.RenderTexture.create(winSize.width, winSize.height);
+        //var rend = new cc.RenderTexture(winSize.width, winSize.height, cc.TEXTURE_2D_PIXEL_FORMAT_RGBA4444);
+        var rend = new cc.RenderTexture(winSize.width, winSize.height);
 
         gl.stencilMask(0xFF);
         rend.beginWithClear(0, 0, 0, 0, 0, 0);
@@ -443,8 +448,8 @@ var RenderTextureTestDepthStencil = RenderTextureBaseLayer.extend({
         sprite.visit();
 
         //! move sprite half width and height, and draw only where not marked
-	    sprite.x += sprite.width * sprite.scale / 2;
-	    sprite.y += sprite.height * sprite.scale / 2;
+        sprite.x += sprite.width * sprite.scale / 2;
+        sprite.y += sprite.height * sprite.scale / 2;
         gl.stencilFunc(gl.NOTEQUAL, 1, 0xFF);
         gl.colorMask(1, 1, 1, 1);
         sprite.visit();
@@ -490,34 +495,34 @@ var RenderTextureTargetNode = RenderTextureBaseLayer.extend({
          *  B1: non-premulti sprite
          *  B2: non-premulti render
          */
-        var background = cc.LayerColor.create(cc.color(40, 40, 40, 255));
+        var background = new cc.LayerColor(cc.color(40, 40, 40, 255));
         this.addChild(background);
 
         var winSize = cc.director.getWinSize();
         this._winSize = winSize;
 
         // sprite 1
-        var sprite1 = cc.Sprite.create(s_fire);
+        var sprite1 = new cc.Sprite(s_fire);
         sprite1.x = winSize.width;
         sprite1.y = winSize.height;
         this._sprite1 = sprite1;
 
         // sprite 2
         //todo Images/fire_rgba8888.pvr
-        var sprite2 = cc.Sprite.create(s_fire);
+        var sprite2 = new cc.Sprite(s_fire);
         sprite2.x = winSize.width;
         sprite2.y = winSize.height;
         this._sprite2 = sprite2;
 
         /* Create the render texture */
-        //var renderTexture = cc.RenderTexture.create(winSize.width, winSize.height, cc.TEXTURE_2D_PIXEL_FORMAT_RGBA4444);
-        var renderTexture = cc.RenderTexture.create(winSize.width, winSize.height);
+        //var renderTexture = new cc.RenderTexture(winSize.width, winSize.height, cc.TEXTURE_2D_PIXEL_FORMAT_RGBA4444);
+        var renderTexture = new cc.RenderTexture(winSize.width, winSize.height);
         this._renderTexture = renderTexture;
 
         renderTexture.x = winSize.width / 2;
         renderTexture.y = winSize.height / 2;
-        //		[renderTexture setPosition:cc.p(s.width, s.height)];
-        //		renderTexture.scale = 2;
+        //      [renderTexture setPosition:cc.p(s.width, s.height)];
+        //      renderTexture.scale = 2;
 
         /* add the sprites to the render texture */
         renderTexture.addChild(this._sprite1);
@@ -533,8 +538,8 @@ var RenderTextureTargetNode = RenderTextureBaseLayer.extend({
         this.scheduleUpdate();
 
         // Toggle clear on / off
-        var item = cc.MenuItemFont.create("Clear On/Off", this.touched, this);
-        var menu = cc.Menu.create(item);
+        var item = new cc.MenuItemFont("Clear On/Off", this.touched, this);
+        var menu = new cc.Menu(item);
         this.addChild(menu);
 
         menu.x = winSize.width / 2;
@@ -585,10 +590,10 @@ var Issue1464 = RenderTextureBaseLayer.extend({
     ctor:function() {
         this._super();
 
-        var sprite = cc.Sprite.create(s_grossini);
+        var sprite = new cc.Sprite(s_grossini);
 
         // create a render texture
-        var rend = cc.RenderTexture.create( winSize.width/2, winSize.height/2 );
+        var rend = new cc.RenderTexture( winSize.width/2, winSize.height/2 );
         rend.x = winSize.width/2;
         rend.y = winSize.height/2 ;
         this.addChild( rend, 1 );
@@ -600,15 +605,15 @@ var Issue1464 = RenderTextureBaseLayer.extend({
         sprite.visit();
         rend.end();
 
-        var fadeout = cc.FadeOut.create(2);
+        var fadeout = cc.fadeOut(2);
         var fadein = fadeout.reverse();
-        var delay = cc.DelayTime.create(0.25);
-        var seq = cc.Sequence.create(fadeout, delay, fadein, delay.clone());
+        var delay = cc.delayTime(0.25);
+        var seq = cc.sequence(fadeout, delay, fadein, delay.clone());
         var fe = seq.repeatForever();
         rend.getSprite().runAction(fe);
 
         if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
-            var label = cc.LabelTTF.create("Not support Actions on HTML5-canvas", "Times New Roman", 30);
+            var label = new cc.LabelTTF("Not support Actions on HTML5-canvas", "Times New Roman", 30);
             label.x = winSize.width / 2;
             label.y = winSize.height / 2 + 50;
             this.addChild(label, 100);
@@ -642,8 +647,8 @@ var Issue1464 = RenderTextureBaseLayer.extend({
 
 
 var RenderTextureTestScene = TestScene.extend({
-    runThisTest:function () {
-        sceneRenderTextureIdx = -1;
+    runThisTest:function (num) {
+        sceneRenderTextureIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextRenderTextureTest();
         this.addChild(layer);
 

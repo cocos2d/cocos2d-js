@@ -46,24 +46,24 @@ var MotionStreakTest = cc.Layer.extend({
 
         var winSize = cc.director.getWinSize();
 
-        var label = cc.LabelTTF.create(this.title(), "Arial", 32);
+        var label = new cc.LabelTTF(this.title(), "Arial", 32);
         this.addChild(label, 0, TAG_LABEL);
         label.x = winSize.width / 2;
         label.y = winSize.height - 50;
 
         var subTitle = this.subtitle();
         if (subTitle.length > 0) {
-            var l = cc.LabelTTF.create(subTitle, "Arial", 16);
+            var l = new cc.LabelTTF(subTitle, "Arial", 16);
             this.addChild(l, 1);
             l.x = winSize.width / 2;
             l.y = winSize.height - 80;
         }
 
-        var item1 = cc.MenuItemImage.create(s_pathB1, s_pathB2, this.backCallback, this);
-        var item2 = cc.MenuItemImage.create(s_pathR1, s_pathR2, this.restartCallback, this);
-        var item3 = cc.MenuItemImage.create(s_pathF1, s_pathF2, this.nextCallback, this);
+        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
+        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.restartCallback, this);
+        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
 
-        var menu = cc.Menu.create(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3);
 
         menu.x = 0;
         menu.y = 0;
@@ -76,10 +76,10 @@ var MotionStreakTest = cc.Layer.extend({
 
         this.addChild(menu, 1);
 
-        var itemMode = cc.MenuItemToggle.create(cc.MenuItemFont.create("Use High Quality Mode"),
-            cc.MenuItemFont.create("Use Fast Mode"), this.modeCallback, this);
+        var itemMode = new cc.MenuItemToggle(new cc.MenuItemFont("Use High Quality Mode"),
+            new cc.MenuItemFont("Use Fast Mode"), this.modeCallback, this);
 
-        var menuMode = cc.Menu.create(itemMode);
+        var menuMode = new cc.Menu(itemMode);
         this.addChild(menuMode);
 
         menuMode.x = winSize.width / 2;
@@ -119,38 +119,39 @@ var MotionStreakTest1 = MotionStreakTest.extend({
 
         var winSize = cc.director.getWinSize();
         // the root object just rotates around
-        this._root = cc.Sprite.create(s_pathR1);
+        this._root = new cc.Sprite(s_pathR1);
         this.addChild(this._root, 1);
         this._root.x = winSize.width / 2;
         this._root.y = winSize.height / 2;
 
         // the target object is offset from root, and the streak is moved to follow it
-        this._target = cc.Sprite.create(s_pathR1);
+        this._target = new cc.Sprite(s_pathR1);
         this._root.addChild(this._target);
         this._target.x = winSize.width / 4;
         this._target.y = 0;
 
         // create the streak object and add it to the scene
-        this._streak = cc.MotionStreak.create(2, 3, 32, cc.color.GREEN, s_streak);
+        this._streak = new cc.MotionStreak(2, 3, 32, cc.color.GREEN, s_streak);
         this.addChild(this._streak);
         // schedule an update on each frame so we can syncronize the streak with the target
         this.schedule(this.onUpdate);
 
-        var a1 = cc.RotateBy.create(2, 360);
+        var a1 = cc.rotateBy(2, 360);
 
         var action1 = a1.repeatForever();
-        var motion = cc.MoveBy.create(2, cc.p(100, 0));
-        this._root.runAction(cc.Sequence.create(motion, motion.reverse()).repeatForever());
+        var motion = cc.moveBy(2, cc.p(100, 0));
+        this._root.runAction(cc.sequence(motion, motion.reverse()).repeatForever());
         this._root.runAction(action1);
 
-        var colorAction = cc.Sequence.create(
-            cc.TintTo.create(0.2, 255, 0, 0),
-            cc.TintTo.create(0.2, 0, 255, 0),
-            cc.TintTo.create(0.2, 0, 0, 255),
-            cc.TintTo.create(0.2, 0, 255, 255),
-            cc.TintTo.create(0.2, 255, 255, 0),
-            cc.TintTo.create(0.2, 255, 0, 255),
-            cc.TintTo.create(0.2, 255, 255, 255)).repeatForever();
+        var colorAction = cc.sequence(
+            cc.tintTo(0.2, 255, 0, 0),
+            cc.tintTo(0.2, 0, 255, 0),
+            cc.tintTo(0.2, 0, 0, 255),
+            cc.tintTo(0.2, 0, 255, 255),
+            cc.tintTo(0.2, 255, 255, 0),
+            cc.tintTo(0.2, 255, 0, 255),
+            cc.tintTo(0.2, 255, 255, 255)
+        ).repeatForever();
 
         this._streak.runAction(colorAction);
     },
@@ -188,7 +189,7 @@ var MotionStreakTest2 = MotionStreakTest.extend({
         }, this);
         var winSize = cc.director.getWinSize();
         // create the streak object and add it to the scene
-        this._streak = cc.MotionStreak.create(3, 3, 64, cc.color.WHITE, s_streak);
+        this._streak = new cc.MotionStreak(3, 3, 64, cc.color.WHITE, s_streak);
         this.addChild(this._streak);
         this._streak.x = winSize.width / 2;
         this._streak.y = winSize.height / 2;
@@ -216,7 +217,7 @@ var Issue1358 = MotionStreakTest.extend({
 
         // ask director the the window size
         var size = cc.director.getWinSize();
-        this._streak = cc.MotionStreak.create(2.0, 1.0, 50.0, cc.color(255, 255, 0), s_image_icon);
+        this._streak = new cc.MotionStreak(2.0, 1.0, 50.0, cc.color(255, 255, 0), s_image_icon);
         this.addChild(this._streak);
 
         this._center = cc.p(size.width / 2, size.height / 2);
@@ -256,8 +257,8 @@ var restartMotionAction = function () {
 };
 
 var MotionStreakTestScene = TestScene.extend({
-    runThisTest:function () {
-        sceneIdx = -1;
+    runThisTest:function (num) {
+        sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var pLayer = nextMotionAction();
         this.addChild(pLayer);
         cc.director.runScene(this);

@@ -44,7 +44,7 @@
 
     ```
     cc.game.onStart = function(){
-        cc.Director.getInstance().runScene(new MyScene());
+        cc.director.runScene(new MyScene());
     };
     cc.game.run();
     ```
@@ -219,7 +219,7 @@ In Cocos2d-JS v3.0 alpha, we have made a great improvement, we merged all `creat
 ```
 var sprite = cc.Sprite.create(filename, rect);
 var sprite = cc.Sprite.create(texture, rect);
-var sprite = cc.Sprite.create(spriteFrameName);
+var sprite = cc.Sprite.create("#" + spriteFrameName);
 ```
 
 This changement affect not only cc.Sprite, but all similar classes, all classes and details about create function refactoration can be found in [this document](../../../v3.0/create-api/en.md).
@@ -229,7 +229,7 @@ As we never stop to improve our engine, in Cocos2d-JS v3.0 alpha2, we have made 
 ```
 var sprite = new cc.Sprite(filename, rect);
 var sprite = new cc.Sprite(texture, rect);
-var sprite = new cc.Sprite(spriteFrameName);
+var sprite = new cc.Sprite("#" + spriteFrameName);
 ```
 
 In the meantime, for backward compatibility, we have kept all `create` functions also, so it's totally your choice. What's more important with this improvement is that the inheritance is much easier than before. Developers can now completely ignore all `initXXX` functions, you can simply override `ctor` function and call `this._super` with correct parameters, then your object will be correctly initialized:
@@ -246,7 +246,7 @@ var Enemy = cc.Sprite.extend({
 var enemy1 = new Enemy(100);
 ```
 
-As you can see, there isn't a single `init` function call, very convenient to use. All cocos2d (no extension) classes have been refactored to support this style, and JSB support it too. [This document](../../../v3.0/inheritance/en) discuss the `new` constructor and the inheritance in detail.
+As you can see, there isn't a single `init` function call, very convenient to use. All cocos2d and extension classes have been refactored to support this style, and JSB support it too. [This document](../../../v3.0/inheritance/en) discuss the `new` constructor and the inheritance in detail.
 
 
 ##8. GUI widgets
@@ -359,6 +359,8 @@ if (cc.sys.isNative) {
     cc.fileUtils.fullPathForFilename(filename)
     cc.fileUtils.loadFilenameLookup(filename)
     cc.fileUtils.getStringFromFile(filename)
+    cc.fileUtils.getByteArrayFromFile(filename) // [New in beta]
+    cc.fileUtils.createDictionaryWithContentsOfFile(filename) // [New in beta]
     cc.fileUtils.isAbsolutePath(path)
     cc.fileUtils.isPopupNotify()
     cc.fileUtils.getValueVectorFromFile(filename)
@@ -368,9 +370,14 @@ if (cc.sys.isNative) {
     cc.fileUtils.purgeCachedEntries()
     cc.fileUtils.fullPathFromRelativeFile(filename, relativeFile)
     cc.fileUtils.getWritablePath()
+    cc.fileUtils.addSearchPath(path) // [New in beta]
+    cc.fileUtils.setSearchPaths(pathArray) // [New in beta]
+    cc.fileUtils.getSearchPaths() // [New in beta]
+    cc.fileUtils.setSearchResolutionsOrder(orderArray) // [New in beta]
+    cc.fileUtils.getSearchResolutionsOrder() // [New in beta]
     ```
     
-    All functions about search path configuration have been removed, because this will due to code inconsistence between Cocos2d-html5 and Cocos2d-JSB and eventually a high cost of maintainbility.
+    Pay attention when you use functions about search path configuration, because this will due to code inconsistence between Cocos2d-html5 and Cocos2d-JSB and eventually a high cost of maintainbility. If you really need them, we suggest you to maintain two list of resources for Web and JSB, so that you can use the same resource variable name to refer to different path.
 
 * **10.3** cc.AssetsManager
 
@@ -615,6 +622,7 @@ if (cc.sys.isNative) {
     getCString  --> getString
     setCString  --> setString
     ```
+    
 ##12.[New in Beta]Actions API changements
 
 * **12.1 Provide shortcut to create an action**
@@ -660,19 +668,22 @@ if (cc.sys.isNative) {
 
     **Old usage:**
     ```
-var anAction = cc.Sequence.create(
-    cc.Speed.create(cc.Repeat.create(cc.EaseIn.create(cc.MoveBy.create(2, cc.p(100,50)),0.3), 5),1.7),
-    cc.RepeatForever.create(cc.RotateBy.create(2, 30)));
+    var anAction = cc.Sequence.create(
+        cc.Speed.create(cc.Repeat.create(cc.EaseIn.create(cc.MoveBy.create(2, cc.p(100,50)),0.3), 5),1.7),
+        cc.RepeatForever.create(cc.RotateBy.create(2, 30))
+    );
     ```
 
     **New usage:**
     ```
     var anAction = cc.sequence(
-		    cc.moveBy(2,cc.p(100,50)).easing(cc.easeIn(0.3).repeat(5).speed(1.7), 
-		    cc.rotateBy(2,30).repeatForever());
+        cc.moveBy(2,cc.p(100,50)).easing(cc.easeIn(0.3)).repeat(5).speed(1.7), 
+        cc.rotateBy(2,30).repeatForever()
+    );
     ```
 
     **Note**: All actions changes are backward compatible.
+    
 * **12.4 The new design list**
    
      Old usage       				     | New usage
@@ -703,35 +714,34 @@ var anAction = cc.Sequence.create(
 
 ##13.[New in Beta]Changed setText，getText to unified API of SetString, getString
 
-* ccui.Text refactoration :
-
+* ccui.Text :
     
   ```
   setText --> setString
   getStringValue --> getString
   ```
 
-* ccui.TextAtlas
+* ccui.TextAtlas :
  
   ```
   getStringValue ==> getString
   ```
 
-* ccui.TextBMFont
+* ccui.TextBMFont :
 
-   ```
+  ```
   setText --> setString
   getStringValue --> getString
   ```
 
-* ccui.TextField
+* ccui.TextField :
 
-   ```
+  ```
   setText --> setString
   getStringValue --> getString
   ```
 
-* cc.EditBox
+* cc.EditBox :
 
   ```
   setText --> setString

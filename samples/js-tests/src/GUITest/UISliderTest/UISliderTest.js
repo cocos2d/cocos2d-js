@@ -26,20 +26,20 @@
 var UISliderTest = UIScene.extend({
     init: function () {
         if (this._super()) {
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("Move the slider thumb");
             this._bottomDisplayLabel.setString("Slider");
 
             // Create the slider
-            var slider = ccui.Slider.create();
+            var slider = new ccui.Slider();
             slider.setTouchEnabled(true);
             slider.loadBarTexture("res/cocosui/sliderTrack.png");
             slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
             slider.loadProgressBarTexture("res/cocosui/sliderProgress.png");
             slider.x = widgetSize.width / 2.0;
             slider.y = widgetSize.height / 2.0;
-            slider.addEventListenerSlider(this.sliderEvent, this);
+            slider.addEventListener(this.sliderEvent, this);
             this._mainNode.addChild(slider);
 
             return true;
@@ -63,23 +63,23 @@ var UISliderTest = UIScene.extend({
 var UISliderTest_Scale9 = UIScene.extend({
     init: function () {
         if (this._super()) {
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("Move the slider thumb");
             this._bottomDisplayLabel.setString("Slider scale9 render");
 
             // Create the slider
-            var slider = ccui.Slider.create();
+            var slider = new ccui.Slider();
             slider.setTouchEnabled(true);
             slider.setScale9Enabled(true);
             slider.loadBarTexture("res/cocosui/sliderTrack2.png");
             slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
             slider.loadProgressBarTexture("res/cocosui/slider_bar_active_9patch.png");
             slider.setCapInsets(cc.rect(0, 0, 0, 0));
-            slider.setSize(cc.size(250, 10));
+            slider.setContentSize(cc.size(250, 10));
             slider.x = widgetSize.width / 2.0;
             slider.y = widgetSize.height / 2.0;
-            slider.addEventListenerSlider(this.sliderEvent, this);
+            slider.addEventListener(this.sliderEvent, this);
             this._mainNode.addChild(slider);
 
             return true;

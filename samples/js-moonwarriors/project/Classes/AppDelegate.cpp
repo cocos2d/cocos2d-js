@@ -29,33 +29,23 @@ AppDelegate::~AppDelegate()
 	ScriptEngineManager::destroyInstance();
 }
 
+void AppDelegate::initGLContextAttrs()
+{
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::createWithRect("js-moonwarriors", Rect(0, 0, 480, 720));
+        glview = cocos2d::GLViewImpl::createWithRect("js-moonwarriors", Rect(0, 0, 480, 720));
         director->setOpenGLView(glview);
     }
-    director->setProjection(Director::Projection::_2D);
 
-    std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
-    
-    searchPaths.push_back("script");
-    
-    Application::Platform platform = Application::getInstance()->getTargetPlatform();
-    if (platform == Application::Platform::OS_IPHONE || platform == Application::Platform::OS_IPAD || platform == Application::Platform::OS_MAC)
-    {
-        searchPaths.push_back("res");
-        searchPaths.push_back("src");
-    }
-    
-    FileUtils::getInstance()->setSearchPaths(searchPaths);
-
-    // turn on display FPS
-    director->setDisplayStats(true);
-    
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
     
@@ -75,7 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
     
     sc->start();
-    
+    sc->runScript("script/jsb_boot.js");
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     sc->enableDebugger();
 #endif

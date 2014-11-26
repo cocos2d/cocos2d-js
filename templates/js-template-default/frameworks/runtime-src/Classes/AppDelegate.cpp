@@ -18,8 +18,11 @@
 #include "network/XMLHTTPRequest.h"
 #include "network/jsb_websocket.h"
 #include "network/jsb_socketio.h"
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCJavascriptJavaBridge.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#include "platform/ios/JavaScriptObjCBridge.h"
 #endif
 
 USING_NS_CC;
@@ -34,18 +37,23 @@ AppDelegate::~AppDelegate()
     ScriptEngineManager::destroyInstance();
 }
 
+void AppDelegate::initGLContextAttrs()
+{
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
 	auto glview = director->getOpenGLView();
 	if(!glview) {
-		glview = GLView::createWithRect("HelloJavascript", Rect(0,0,900,640));
+		glview = cocos2d::GLViewImpl::createWithRect("HelloJavascript", Rect(0,0,900,640));
 		director->setOpenGLView(glview);
 	}
 
-    // turn on display FPS
-    director->setDisplayStats(true);
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
     
@@ -73,11 +81,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_jsb_websocket);
 	sc->addRegisterCallback(register_jsb_socketio);
     
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
-    #endif
-    sc->start();
-    
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    sc->addRegisterCallback(JavaScriptObjCBridge::_js_register);
+#endif
+    sc->start();    
+    sc->runScript("script/jsb_boot.js");
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
 	ScriptingCore::getInstance()->runScript("main.js");

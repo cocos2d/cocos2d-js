@@ -26,9 +26,9 @@
 
 var RotateWorldTestScene = TestScene.extend({
     runThisTest:function () {
-        var layer = RotateWorldMainLayer.create();
+        var layer = new RotateWorldMainLayer();
         this.addChild(layer);
-        this.runAction(cc.RotateBy.create(4, -360));
+        this.runAction(cc.rotateBy(4, -360));
         director.runScene(this);
     }
 });
@@ -48,9 +48,9 @@ var SpriteLayer = cc.Layer.extend({
         x = size.width;
         y = size.height;
 
-        var sprite = cc.Sprite.create(s_pathGrossini);
-        var spriteSister1 = cc.Sprite.create(s_pathSister1);
-        var spriteSister2 = cc.Sprite.create(s_pathSister2);
+        var sprite = new cc.Sprite(s_pathGrossini);
+        var spriteSister1 = new cc.Sprite(s_pathSister1);
+        var spriteSister2 = new cc.Sprite(s_pathSister2);
 
         sprite.scale = 1.5;
         spriteSister1.scale = 1.5;
@@ -63,7 +63,7 @@ var SpriteLayer = cc.Layer.extend({
         spriteSister2.x = x - 40;
         spriteSister2.y = y / 2;
 
-        var rot = cc.RotateBy.create(16, -3600);
+        var rot = cc.rotateBy(16, -3600);
 
         this.addChild(sprite);
         this.addChild(spriteSister1);
@@ -71,23 +71,19 @@ var SpriteLayer = cc.Layer.extend({
 
         sprite.runAction(rot);
 
-        var jump1 = cc.JumpBy.create(4, cc.p(-400, 0), 100, 4);
+        var jump1 = cc.jumpBy(4, cc.p(-400, 0), 100, 4);
         var jump2 = jump1.reverse();
 
-        var rot1 = cc.RotateBy.create(4, 360 * 2);
+        var rot1 = cc.rotateBy(4, 360 * 2);
         var rot2 = rot1.reverse();
 
-        spriteSister1.runAction(cc.Sequence.create(jump2, jump1).repeat(5));
-        spriteSister2.runAction(cc.Sequence.create(jump1.clone(), jump2.clone()).repeat(5));
+        spriteSister1.runAction(cc.sequence(jump2, jump1).repeat(5));
+        spriteSister2.runAction(cc.sequence(jump1.clone(), jump2.clone()).repeat(5));
 
-        spriteSister1.runAction(cc.Repeat.create(cc.Sequence.create(rot1, rot2), 5));
-        spriteSister2.runAction(cc.Sequence.create(rot2.clone(), rot1.clone()).repeat(5));
+        spriteSister1.runAction(cc.sequence(rot1, rot2).repeat(5));
+        spriteSister2.runAction(cc.sequence(rot2.clone(), rot1.clone()).repeat(5));
     }
 });
-
-SpriteLayer.create = function () {
-    return new SpriteLayer();
-};
 
 var TestLayer = cc.Layer.extend({
     ctor:function () {
@@ -107,7 +103,7 @@ var TestLayer = cc.Layer.extend({
         //cc.MutableArray *array = [UIFont familyNames];
         //for( cc.String *s in array )
         //	NSLog( s );
-        var label = cc.LabelTTF.create("cocos2d", "Tahoma", 64);
+        var label = new cc.LabelTTF("cocos2d", "Tahoma", 64);
 
         label.x = x / 2;
         label.y = y / 2;
@@ -115,10 +111,6 @@ var TestLayer = cc.Layer.extend({
         this.addChild(label);
     }
 });
-
-TestLayer.create = function () {
-    return new TestLayer();
-};
 
 var RotateWorldMainLayer = cc.Layer.extend({
     ctor:function () {
@@ -134,15 +126,15 @@ var RotateWorldMainLayer = cc.Layer.extend({
         x = size.width;
         y = size.height;
 
-        var blue = cc.LayerColor.create(cc.color(0, 0, 255, 255));
-        var red = cc.LayerColor.create(cc.color(255, 0, 0, 255));
-        var green = cc.LayerColor.create(cc.color(0, 255, 0, 255));
-        var white = cc.LayerColor.create(cc.color(255, 255, 255, 255));
+        var blue = new cc.LayerColor(cc.color(0, 0, 255, 255));
+        var red = new cc.LayerColor(cc.color(255, 0, 0, 255));
+        var green = new cc.LayerColor(cc.color(0, 255, 0, 255));
+        var white = new cc.LayerColor(cc.color(255, 255, 255, 255));
 
         blue.scale = 0.5;
         blue.x = -x / 4;
         blue.y = -y / 4;
-        blue.addChild(SpriteLayer.create());
+        blue.addChild(new SpriteLayer());
 
         red.scale = 0.5;
         red.x = x / 4;
@@ -151,7 +143,7 @@ var RotateWorldMainLayer = cc.Layer.extend({
         green.scale = 0.5;
         green.x = -x / 4;
         green.y = y / 4;
-        green.addChild(TestLayer.create());
+        green.addChild(new TestLayer());
 
         white.scale = 0.5;
         white.x = x / 4;
@@ -162,7 +154,7 @@ var RotateWorldMainLayer = cc.Layer.extend({
         this.addChild(green);
         this.addChild(red);
 
-        var rot = cc.RotateBy.create(8, 720);
+        var rot = cc.rotateBy(8, 720);
 
         blue.runAction(rot);
         red.runAction(rot.clone());
@@ -170,7 +162,3 @@ var RotateWorldMainLayer = cc.Layer.extend({
         white.runAction(rot.clone());
     }
 });
-
-RotateWorldMainLayer.create = function () {
-    return new RotateWorldMainLayer();
-};

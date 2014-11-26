@@ -6,7 +6,13 @@
          "append_h5_engine":{
             "from":"frameworks/cocos2d-html5",
             "to":"frameworks/cocos2d-html5"
-         }
+         },
+         "append_file":[
+             {
+                 "from":"frameworks/cocos2d-html5/jsb_apis.js",
+                 "to":"frameworks/cocos2d-html5/jsb_apis.js"
+             }
+         ]
       },
       "do_add_native_support":{
          "append_from_template":{
@@ -34,6 +40,10 @@
                    "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/project.xcworkspace",
                    "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/xcuserdata"
                 ]
+             },
+             {
+                "from":"frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.android/DependProject/src",
+                "to":"frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.android/DependProject/src"
              },
              {
                 "from":"tools",
@@ -83,6 +93,18 @@
             "src_package_name":"org.cocos2dx.hellojavascript",
             "files":[
                "frameworks/runtime-src/proj.android/AndroidManifest.xml"
+            ]
+         },
+         "project_replace_mac_bundleid":{
+            "src_bundle_id":"org.cocos2dx.hellojavascript",
+            "files":[
+               "frameworks/runtime-src/proj.ios_mac/mac/Info.plist"
+            ]
+         },
+         "project_replace_ios_bundleid":{
+            "src_bundle_id":"org.cocos2dx.hellojavascript",
+            "files":[
+               "frameworks/runtime-src/proj.ios_mac/ios/Info.plist"
             ]
          }
     }

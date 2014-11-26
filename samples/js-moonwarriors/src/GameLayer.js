@@ -30,135 +30,141 @@ var GameLayer = cc.Layer.extend({
     _texOpaqueBatch:null,
     _texTransparentBatch:null,
 
+    ctor:function(){
+        this._super();
+        this.init();
+    },
     init:function () {
-        var bRet = false;
-        if (this._super()) {
+        cc.spriteFrameCache.addSpriteFrames(res.textureOpaquePack_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.b01_plist);
 
-            cc.spriteFrameCache.addSpriteFrames(res.textureOpaquePack_plist);
-            cc.spriteFrameCache.addSpriteFrames(res.b01_plist);
+        // reset global values
+        MW.CONTAINER.ENEMIES = [];
+        MW.CONTAINER.ENEMY_BULLETS = [];
+        MW.CONTAINER.PLAYER_BULLETS = [];
+        MW.CONTAINER.EXPLOSIONS = [];
+        MW.CONTAINER.SPARKS = [];
+        MW.CONTAINER.HITS = [];
+        MW.CONTAINER.BACKSKYS = [];
+        MW.CONTAINER.BACKTILEMAPS = [];
+        MW.ACTIVE_ENEMIES = 0;
 
-            // reset global values
-            MW.CONTAINER.ENEMIES = [];
-            MW.CONTAINER.ENEMY_BULLETS = [];
-            MW.CONTAINER.PLAYER_BULLETS = [];
-            MW.CONTAINER.EXPLOSIONS = [];
-            MW.CONTAINER.SPARKS = [];
-            MW.CONTAINER.HITS = [];
-            MW.CONTAINER.BACKSKYS = [];
-            MW.CONTAINER.BACKTILEMAPS = [];
-            MW.ACTIVE_ENEMIES = 0;
+        MW.SCORE = 0;
+        MW.LIFE = 4;
+        this._state = STATE_PLAYING;
 
-            MW.SCORE = 0;
-            MW.LIFE = 4;
-            this._state = STATE_PLAYING;
+        // OpaqueBatch
+        var texOpaque = cc.textureCache.addImage(res.textureOpaquePack_png);
+        this._texOpaqueBatch = new cc.SpriteBatchNode(texOpaque);
+        this._sparkBatch = new cc.SpriteBatchNode(texOpaque);
+        if(cc.sys.isNative) this._sparkBatch.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
+        this.addChild(this._texOpaqueBatch);
+        this.addChild(this._sparkBatch);
 
-            // OpaqueBatch
-            var texOpaque = cc.textureCache.addImage(res.textureOpaquePack_png);
-            this._texOpaqueBatch = cc.SpriteBatchNode.create(texOpaque);
-            this._texOpaqueBatch.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
-            this.addChild(this._texOpaqueBatch);
+        // TransparentBatch
+        var texTransparent = cc.textureCache.addImage(res.textureTransparentPack_png);
+        this._texTransparentBatch = new cc.SpriteBatchNode(texTransparent);
+        this.addChild(this._texTransparentBatch);
 
-            // TransparentBatch
-            var texTransparent = cc.textureCache.addImage(res.textureTransparentPack_png);
-            this._texTransparentBatch = cc.SpriteBatchNode.create(texTransparent);
-            this.addChild(this._texTransparentBatch);
+        winSize = cc.director.getWinSize();
+        this._levelManager = new LevelManager(this);
 
-            winSize = cc.director.getWinSize();
-            this._levelManager = new LevelManager(this);
+        this.screenRect = cc.rect(0, 0, winSize.width, winSize.height + 10);
 
-            this.screenRect = cc.rect(0, 0, winSize.width, winSize.height + 10);
+        // score
+        this.lbScore = new cc.LabelBMFont("Score: 0", res.arial_14_fnt);
+        this.lbScore.attr({
+            anchorX: 1,
+            anchorY: 0,
+            x: winSize.width - 5,
+            y: winSize.height - 30,
+            scale: MW.SCALE
+        });
+        this.lbScore.textAlign = cc.TEXT_ALIGNMENT_RIGHT;
+        this.addChild(this.lbScore, 1000);
 
-            // score
-            this.lbScore = cc.LabelBMFont.create("Score: 0", res.arial_14_fnt);
-            this.lbScore.attr({
-	            anchorX: 1,
-                anchorY: 0,
-	            x: winSize.width - 5,
-	            y: winSize.height - 30
-            });
-            this.lbScore.textAlign = cc.TEXT_ALIGNMENT_RIGHT;
-            this.addChild(this.lbScore, 1000);
+        // ship life
+        var life = new cc.Sprite("#ship03.png");
+        life.attr({
+            scale: 0.6,
+            x: 30,
+            y: MW.HEIGHT - 30
+        });
+        this._texTransparentBatch.addChild(life, 1, 5);
 
-            // ship life
-            var life = cc.Sprite.create("#ship01.png");
-            life.attr({
-	            scale: 0.6,
-	            x: 30,
-	            y: 460
-            });
-            this._texTransparentBatch.addChild(life, 1, 5);
+        // ship Life count
+        this._lbLife = new cc.LabelTTF("0", "Arial", 20);
+        this._lbLife.x = 60;
+        this._lbLife.y = MW.HEIGHT - 25;
+        this._lbLife.color = cc.color(255, 0, 0);
+        this.addChild(this._lbLife, 1000);
 
-            // ship Life count
-            this._lbLife = cc.LabelTTF.create("0", "Arial", 20);
-            this._lbLife.x = 60;
-	        this._lbLife.y = 463;
-            this._lbLife.color = cc.color(255, 0, 0);
-            this.addChild(this._lbLife, 1000);
+        // ship
+        this._ship = new Ship();
+        this._texTransparentBatch.addChild(this._ship, this._ship.zOrder, MW.UNIT_TAG.PLAYER);
 
-            // ship
-            this._ship = new Ship();
-            this._texTransparentBatch.addChild(this._ship, this._ship.zOrder, MW.UNIT_TAG.PLAYER);
+        // explosion batch node
+        cc.spriteFrameCache.addSpriteFrames(res.explosion_plist);
+        var explosionTexture = cc.textureCache.addImage(res.explosion_png);
+        this._explosions = new cc.SpriteBatchNode(explosionTexture);
+        this._explosions.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
+        this.addChild(this._explosions);
+        Explosion.sharedExplosion();
 
-            // explosion batch node
-            cc.spriteFrameCache.addSpriteFrames(res.explosion_plist);
-            var explosionTexture = cc.textureCache.addImage(res.explosion_png);
-            this._explosions = cc.SpriteBatchNode.create(explosionTexture);
-            this._explosions.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
-            this.addChild(this._explosions);
-            Explosion.sharedExplosion();
+        if (cc.sys.capabilities.hasOwnProperty('keyboard'))
+            cc.eventManager.addListener({
+                event: cc.EventListener.KEYBOARD,
+                onKeyPressed:function (key, event) {
+                    MW.KEYS[key] = true;
+                },
+                onKeyReleased:function (key, event) {
+                    MW.KEYS[key] = false;
+                }
+            }, this);
 
-            // accept touch now!
-           if (cc.sys.capabilities.hasOwnProperty('keyboard'))
-                cc.eventManager.addListener({
-                    event: cc.EventListener.KEYBOARD,
-                    onKeyPressed:function (key, event) {
-                        MW.KEYS[key] = true;
-                    },
-                    onKeyReleased:function (key, event) {
-                        MW.KEYS[key] = false;
-                    }
-                }, this);
+        if ('mouse' in cc.sys.capabilities)
+            cc.eventManager.addListener({
+                event: cc.EventListener.MOUSE,
+                onMouseMove: function(event){
+                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
+                        event.getCurrentTarget().processEvent(event);
+                }
+            }, this);
 
-            if ('mouse' in cc.sys.capabilities)
-                cc.eventManager.addListener({
-                    event: cc.EventListener.MOUSE,
-                    onMouseMove: function(event){
-                        if(event.getButton() != undefined)
-                            event.getCurrentTarget().processEvent(event);
-                    }
-                }, this);
-
-            if (cc.sys.capabilities.hasOwnProperty('touches')){
-                cc.eventManager.addListener({
-                    event: cc.EventListener.TOUCH_ALL_AT_ONCE,
-                    onTouchesMoved:function (touches, event) {
-                        event.getCurrentTarget().processEvent(touches[0]);
-                    }
-                }, this);
-            }
-
-            // schedule
-            this.scheduleUpdate();
-            this.schedule(this.scoreCounter, 1);
-
-            if (MW.SOUND)
-	            cc.audioEngine.playMusic(res.bgMusic_mp3, true);
-
-            bRet = true;
-            g_sharedGameLayer = this;
-
-            //pre set
-            Bullet.preSet();
-            Enemy.preSet();
-            HitEffect.preSet();
-            SparkEffect.preSet();
-            Explosion.preSet();
-            BackSky.preSet();
-            BackTileMap.preSet();
-
-            this.initBackground();
+        if (cc.sys.capabilities.hasOwnProperty('touches')){
+            cc.eventManager.addListener({
+                prevTouchId: -1,
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+                onTouchesMoved:function (touches, event) {
+                    var touch = touches[0];
+                    if (this.prevTouchId != touch.getID())
+                        this.prevTouchId = touch.getID();
+                    else event.getCurrentTarget().processEvent(touches[0]);
+                }
+            }, this);
         }
-        return bRet;
+
+        // schedule
+        this.scheduleUpdate();
+        this.schedule(this.scoreCounter, 1);
+
+        if (MW.SOUND)
+            cc.audioEngine.playMusic(res.bgMusic_mp3, true);
+
+        g_sharedGameLayer = this;
+
+        //pre set
+        Bullet.preSet();
+        Enemy.preSet();
+        HitEffect.preSet();
+        SparkEffect.preSet();
+        Explosion.preSet();
+        BackSky.preSet();
+        BackTileMap.preSet();
+
+        this.initBackground();
+
+        return true;
     },
 
     scoreCounter:function () {
@@ -224,8 +230,15 @@ var GameLayer = cc.Layer.extend({
         }
     },
     removeInactiveUnit:function (dt) {
-        var selChild, children = this._texOpaqueBatch.children;
-        for (var i in children) {
+        var i, selChild, children = this._texOpaqueBatch.children;
+        for (i in children) {
+            selChild = children[i];
+            if (selChild && selChild.active)
+                selChild.update(dt);
+        }
+
+        children = this._sparkBatch.children;
+        for (i in children) {
             selChild = children[i];
             if (selChild && selChild.active)
                 selChild.update(dt);
@@ -246,9 +259,10 @@ var GameLayer = cc.Layer.extend({
             this._state = STATE_GAMEOVER;
             // XXX: needed for JS bindings.
             this._ship = null;
-            this.runAction(cc.Sequence.create(
-                cc.DelayTime.create(0.2),
-                cc.CallFunc.create(this.onGameOver, this)));
+            this.runAction(cc.sequence(
+                cc.delayTime(0.2),
+                cc.callFunc(this.onGameOver, this)
+            ));
         }
     },
     updateUI:function () {
@@ -279,11 +293,11 @@ var GameLayer = cc.Layer.extend({
         var ran = Math.random();
         backTileMap.x = ran * 320;
 	    backTileMap.y = winSize.height;
-        var move = cc.MoveBy.create(ran * 2 + 10, cc.p(0, -winSize.height-240));
-        var fun =cc.CallFunc.create(function(){
+        var move = cc.moveBy(ran * 2 + 10, cc.p(0, -winSize.height-backTileMap.height));
+        var fun = cc.callFunc(function(){
             backTileMap.destroy();
         },this);
-        backTileMap.runAction(cc.Sequence.create(move,fun));
+        backTileMap.runAction(cc.sequence(move,fun));
     },
 
     _movingBackground:function(dt){
@@ -302,7 +316,7 @@ var GameLayer = cc.Layer.extend({
             //create a new background
             this._backSky = BackSky.getOrCreate();
             locBackSky = this._backSky;
-            locBackSky.y = currPosY + locSkyHeight - 2;
+            locBackSky.y = currPosY + locSkyHeight - 5;
         } else
             locBackSky.y = currPosY;
 
@@ -320,23 +334,15 @@ var GameLayer = cc.Layer.extend({
     onGameOver:function () {
         cc.audioEngine.stopMusic();
         cc.audioEngine.stopAllEffects();
-        var scene = cc.Scene.create();
-        scene.addChild(GameOver.create());
-	    cc.director.runScene(cc.TransitionFade.create(1.2, scene));
+        var scene = new cc.Scene();
+        scene.addChild(new GameOver());
+	    cc.director.runScene(new cc.TransitionFade(1.2, scene));
     }
 });
 
-GameLayer.create = function () {
-    var sg = new GameLayer();
-    if (sg && sg.init()) {
-        return sg;
-    }
-    return null;
-};
-
 GameLayer.scene = function () {
-    var scene = cc.Scene.create();
-    var layer = GameLayer.create();
+    var scene = new cc.Scene();
+    var layer = new GameLayer();
     scene.addChild(layer, 1);
     return scene;
 };
@@ -354,7 +360,7 @@ GameLayer.prototype.addBulletHits = function (hit, zOrder) {
 };
 
 GameLayer.prototype.addSpark = function (spark) {
-    this._texOpaqueBatch.addChild(spark);
+    this._sparkBatch.addChild(spark);
 };
 
 GameLayer.prototype.addBullet = function (bullet, zOrder, mode) {

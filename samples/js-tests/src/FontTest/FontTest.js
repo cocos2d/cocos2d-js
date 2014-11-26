@@ -60,8 +60,8 @@ function nextFontTestAction() {
     fontIdx++;
     fontIdx = fontIdx % fontList.length;
 
-    if(window.sidebar){
-        fontIdx = window.sidebar.changeTest(fontIdx, 16);
+    if(window.sideIndexBar){
+        fontIdx = window.sideIndexBar.changeTest(fontIdx, 16);
     }
 
     return fontList[fontIdx];
@@ -73,8 +73,8 @@ function backFontTestAction() {
         fontIdx += fontList.length;
     }
 
-    if(window.sidebar){
-        fontIdx = window.sidebar.changeTest(fontIdx, 16);
+    if(window.sideIndexBar){
+        fontIdx = window.sideIndexBar.changeTest(fontIdx, 16);
     }
 
     return fontList[fontIdx];
@@ -89,14 +89,14 @@ FontTestScene = TestScene.extend({
 
         fontIdx = num || fontIdx;
 
-        var layer = FontTest.create();
+        var layer = new FontTest();
         this.addChild(layer);
 
         director.runScene(this);
     }
 });
 
-FontTest = BaseTestLayer.extend({
+var FontTest = BaseTestLayer.extend({
     ctor:function () {
         this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
@@ -111,10 +111,10 @@ FontTest = BaseTestLayer.extend({
 
         var winSize = director.getWinSize();
 
-        var top = cc.LabelTTF.create(pFont, pFont, 24);
-        var left = cc.LabelTTF.create("alignment left", pFont, 32, cc.size(winSize.width, 50), cc.TEXT_ALIGNMENT_LEFT);
-        var center = cc.LabelTTF.create("alignment center", pFont, 32, cc.size(winSize.width, 50), cc.TEXT_ALIGNMENT_CENTER);
-        var right = cc.LabelTTF.create("alignment right", pFont, 32, cc.size(winSize.width, 50), cc.TEXT_ALIGNMENT_RIGHT);
+        var top = new cc.LabelTTF(pFont, pFont, 24);
+        var left = new cc.LabelTTF("alignment left", pFont, 32, cc.size(winSize.width, 50), cc.TEXT_ALIGNMENT_LEFT);
+        var center = new cc.LabelTTF("alignment center", pFont, 32, cc.size(winSize.width, 50), cc.TEXT_ALIGNMENT_CENTER);
+        var right = new cc.LabelTTF("alignment right", pFont, 32, cc.size(winSize.width, 50), cc.TEXT_ALIGNMENT_RIGHT);
 
         top.x = winSize.width / 2;
         top.y = winSize.height * 3 / 4;
@@ -157,7 +157,3 @@ FontTest = BaseTestLayer.extend({
     }
 
 });
-
-FontTest.create = function () {
-    return new FontTest();
-};

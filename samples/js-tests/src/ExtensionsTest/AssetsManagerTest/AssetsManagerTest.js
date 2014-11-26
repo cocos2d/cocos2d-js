@@ -28,7 +28,7 @@
 
 var sceneManifests = ["Manifests/AMTestScene1/project.manifest", "Manifests/AMTestScene2/project.manifest", "Manifests/AMTestScene3/project.manifest"];
 var storagePaths = ["JSBTests/AssetsManagerTest/scene1/", "JSBTests/AssetsManagerTest/scene2/", "JSBTests/AssetsManagerTest/scene3"];
-var backgroundPaths = ["Images/background1.jpg", "Images/background2.jpg", "Images/background3.png"];
+var backgroundPaths = ["Images/assetMgrBackground1.jpg", "Images/assetMgrBackground2.png", "Images/assetMgrBackground3.png"];
 
 var currentScene = 0;
 
@@ -92,15 +92,20 @@ var AssetsManagerTestScene = TestScene.extend({
     }
 });
 
+var __failCount = 0;
 
 var AssetsManagerLoaderScene = TestScene.extend({
     _am : null,
     _progress : null,
     _percent : 0,
+    _percentByFile : 0,
+    _loadingBar : null,
+    _fileLoadingBar : null,
 
     runThisTest : function () {
         var manifestPath = sceneManifests[currentScene];
-        var storagePath = ((cc.fileUtils ? cc.fileUtils.getWritablePath() : "/") + storagePaths[currentScene]);
+        var storagePath = ((jsb.fileUtils ? jsb.fileUtils.getWritablePath() : "/") + storagePaths[currentScene]);
+        cc.log("Storage path for this test : " + storagePath);
 
         var layer = new cc.Layer();
         this.addChild(layer);
@@ -110,52 +115,80 @@ var AssetsManagerLoaderScene = TestScene.extend({
         icon.y = cc.winSize.height/2;
         layer.addChild(icon);
 
-        this._progress = new cc.LabelTTF("0%", "Arial", 30);
-        this._progress.x = cc.winSize.width/2;
-        this._progress.y = cc.winSize.height/2 + 50;
-        layer.addChild(this._progress);
+        this._loadingBar = ccui.LoadingBar.create("res/cocosui/sliderProgress.png");
+        this._loadingBar.x = cc.visibleRect.center.x;
+        this._loadingBar.y = cc.visibleRect.top.y - 40;
+        layer.addChild(this._loadingBar);
 
-        this._am = new cc.AssetsManager(manifestPath, storagePath);
+        this._fileLoadingBar = ccui.LoadingBar.create("res/cocosui/sliderProgress.png");
+        this._fileLoadingBar.x = cc.visibleRect.center.x;
+        this._fileLoadingBar.y = cc.visibleRect.top.y - 80;
+        layer.addChild(this._fileLoadingBar);
+
+        this._am = new jsb.AssetsManager(manifestPath, storagePath);
         this._am.retain();
 
         if (!this._am.getLocalManifest().isLoaded())
         {
             cc.log("Fail to update assets, step skipped.");
-            var scene = new cc.AssetsManagerTestScene(backgroundPaths[currentScene]);
+            var scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
             cc.director.runScene(scene);
         }
         else
         {
             var that = this;
-            var listener = new cc.EventListenerAssetsManager(this._am, function(event) {
+            var listener = new jsb.EventListenerAssetsManager(this._am, function(event) {
                 var scene;
                 switch (event.getEventCode())
                 {
-                    case cc.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST:
+                    case jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST:
                         cc.log("No local manifest file found, skip assets update.");
                         scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
                         cc.director.runScene(scene);
-                        scene.release();
                         break;
-                    case cc.EventAssetsManager.UPDATE_PROGRESSION:
+                    case jsb.EventAssetsManager.UPDATE_PROGRESSION:
                         that._percent = event.getPercent();
+                        that._percentByFile = event.getPercentByFile();
+
+                        var msg = event.getMessage();
+                        if (msg) {
+                            cc.log(msg);
+                        }
+                        cc.log(that._percent + "%");
                         break;
-                    case cc.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
-                    case cc.EventAssetsManager.ERROR_PARSE_MANIFEST:
+                    case jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
+                    case jsb.EventAssetsManager.ERROR_PARSE_MANIFEST:
                         cc.log("Fail to download manifest file, update skipped.");
                         scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
                         cc.director.runScene(scene);
                         break;
-                    case cc.EventAssetsManager.ALREADY_UP_TO_DATE:
-                    case cc.EventAssetsManager.UPDATE_FINISHED:
-                        cc.log("Update finished.");
+                    case jsb.EventAssetsManager.ALREADY_UP_TO_DATE:
+                    case jsb.EventAssetsManager.UPDATE_FINISHED:
+                        cc.log("Update finished. " + event.getMessage());
                         scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
                         cc.director.runScene(scene);
                         break;
-                    case cc.EventAssetsManager.ERROR_UPDATING:
+                    case jsb.EventAssetsManager.UPDATE_FAILED:
+                        cc.log("Update failed. " + event.getMessage());
+
+                        __failCount ++;
+                        if (__failCount < 5)
+                        {
+                            that._am.downloadFailedAssets();
+                        }
+                        else
+                        {
+                            cc.log("Reach maximum fail count, exit update process");
+                            __failCount = 0;
+                            scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
+                            cc.director.runScene(scene);
+                        }
+                        break;
+                    case jsb.EventAssetsManager.ERROR_UPDATING:
                         cc.log("Asset update error: " + event.getAssetId() + ", " + event.getMessage());
-                        scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-                        cc.director.runScene(scene);
+                        break;
+                    case jsb.EventAssetsManager.ERROR_DECOMPRESS:
+                        cc.log(event.getMessage());
                         break;
                     default:
                         break;
@@ -172,8 +205,9 @@ var AssetsManagerLoaderScene = TestScene.extend({
         this.schedule(this.updateProgress, 0.5);
     },
 
-    updateProgress : function(dt){
-        this._progress.string = "" + this._percent;
+    updateProgress : function () {
+        this._loadingBar.setPercent(this._percent);
+        this._fileLoadingBar.setPercent(this._percentByFile);
     },
 
     onExit : function () {

@@ -28,6 +28,12 @@
 #include "jsb_pluginx_extension_registration.h"
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "platform/android/CCJavascriptJavaBridge.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#include "platform/ios/JavaScriptObjCBridge.h"
+#endif
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace CocosDenshion;
@@ -41,50 +47,25 @@ AppDelegate::~AppDelegate()
     ScriptEngineManager::destroyInstance();
 }
 
+void AppDelegate::initGLContextAttrs()
+{
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::createWithRect("js-tests", Rect(0,0,900,640));
+        glview = cocos2d::GLViewImpl::createWithRect("js-tests", Rect(0,0,900,640));
         director->setOpenGLView(glview);
     }
 
-    // JS-Test in Html5 uses 800x450 as design resolution
-    glview->setDesignResolutionSize(800, 450, ResolutionPolicy::FIXED_HEIGHT);
-    // turn on display FPS
-    director->setDisplayStats(true);
-
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-
-    auto fileUtils = FileUtils::getInstance();
-    std::vector<std::string> searchPaths = fileUtils->getSearchPaths();
-    searchPaths.push_back("script");
-    searchPaths.push_back("src");
-    
-    const char* paths[] = {
-        "res",
-        "res/scenetest",
-        "res/scenetest/ArmatureComponentTest",
-        "res/scenetest/AttributeComponentTest",
-        "res/scenetest/BackgroundComponentTest",
-        "res/scenetest/EffectComponentTest",
-        "res/scenetest/LoadSceneEdtiorFileTest",
-        "res/scenetest/ParticleComponentTest",
-        "res/scenetest/SpriteComponentTest",
-        "res/scenetest/TmxMapComponentTest",
-        "res/scenetest/UIComponentTest",
-        "res/scenetest/TriggerTest",
-    };
-
-    for (const auto& path : paths)
-    {
-        searchPaths.push_back(path);
-    }
-    
-    fileUtils->setSearchPaths(searchPaths);
 
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
@@ -114,8 +95,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_pluginx_js_extensions);
 #endif
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    sc->addRegisterCallback(JavaScriptObjCBridge::_js_register);
+#endif
     sc->start();
-    
+    sc->runScript("script/jsb_boot.js");
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     sc->enableDebugger();
 #endif
@@ -124,7 +110,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     
     ScriptingCore::getInstance()->runScript("main.js");
-
+    
     return true;
 }
 

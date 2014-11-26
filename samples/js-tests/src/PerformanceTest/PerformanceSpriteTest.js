@@ -76,14 +76,14 @@ var SubTest = cc.Class.extend({
         switch (this._subtestNumber) {
             case 1:
             {
-                sprite = cc.Sprite.create("res/Images/grossinis_sister1.png");
+                sprite = new cc.Sprite("res/Images/grossinis_sister1.png");
                 this._parent.addChild(sprite, 0, tag + 100);
                 break;
             }
             case 2:
             case 3:
             {
-                sprite = cc.Sprite.create(this._batchNode.texture, cc.rect(0, 0, 52, 139));
+                sprite = new cc.Sprite(this._batchNode.texture, cc.rect(0, 0, 52, 139));
                 this._batchNode.addChild(sprite, 0, tag + 100);
                 break;
             }
@@ -92,7 +92,7 @@ var SubTest = cc.Class.extend({
                 var idx = parseInt(Math.random() * 14) + 1;
                 idx = idx < 10 ? "0" + idx : idx.toString();
                 var str = "res/Images/grossini_dance_" + idx + ".png";
-                sprite = cc.Sprite.create(str);
+                sprite = new cc.Sprite(str);
                 this._parent.addChild(sprite, 0, tag + 100);
                 break;
             }
@@ -102,7 +102,7 @@ var SubTest = cc.Class.extend({
                 var idx = 0 | (Math.random() * 14);
                 var x = (idx % 5) * 85;
                 var y = (0 | (idx / 5)) * 121;
-                sprite = cc.Sprite.create(this._batchNode.texture, cc.rect(x, y, 85, 121));
+                sprite = new cc.Sprite(this._batchNode.texture, cc.rect(x, y, 85, 121));
                 this._batchNode.addChild(sprite, 0, tag + 100);
                 break;
             }
@@ -116,7 +116,7 @@ var SubTest = cc.Class.extend({
                 x = parseInt(r % 8);
 
                 var str = "res/Images/sprites_test/sprite-" + x + "-" + y + ".png";
-                sprite = cc.Sprite.create(str);
+                sprite = new cc.Sprite(str);
                 this._parent.addChild(sprite, 0, tag + 100);
                 break;
             }
@@ -129,7 +129,7 @@ var SubTest = cc.Class.extend({
 
                 y = (0 | (r / 8)) * 32;
                 x = (r % 8) * 32;
-                sprite = cc.Sprite.create(this._batchNode.texture, cc.rect(x, y, 32, 32));
+                sprite = new cc.Sprite(this._batchNode.texture, cc.rect(x, y, 32, 32));
                 this._batchNode.addChild(sprite, 0, tag + 100);
                 break;
             }
@@ -184,13 +184,13 @@ var SubTest = cc.Class.extend({
             case 2:
                 if( "opengl" in cc.sys.capabilities )
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA8888;
-                this._batchNode = cc.SpriteBatchNode.create("res/Images/grossinis_sister1.png", 500);
+                this._batchNode = new cc.SpriteBatchNode("res/Images/grossinis_sister1.png", 500);
                 p.addChild(this._batchNode, 0);
                 break;
             case 3:
                 if( "opengl" in cc.sys.capabilities )
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA4444;
-                this._batchNode = cc.SpriteBatchNode.create("res/Images/grossinis_sister1.png", 500);
+                this._batchNode = new cc.SpriteBatchNode("res/Images/grossinis_sister1.png", 500);
                 p.addChild(this._batchNode, 0);
                 break;
 
@@ -198,13 +198,13 @@ var SubTest = cc.Class.extend({
             case 5:
                 if( "opengl" in cc.sys.capabilities )
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA8888;
-                this._batchNode = cc.SpriteBatchNode.create("res/Images/grossini_dance_atlas.png", 500);
+                this._batchNode = new cc.SpriteBatchNode("res/Images/grossini_dance_atlas.png", 500);
                 p.addChild(this._batchNode, 0);
                 break;
             case 6:
                 if( "opengl" in cc.sys.capabilities )
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA4444;
-                this._batchNode = cc.SpriteBatchNode.create("res/Images/grossini_dance_atlas.png", 500);
+                this._batchNode = new cc.SpriteBatchNode("res/Images/grossini_dance_atlas.png", 500);
                 p.addChild(this._batchNode, 0);
                 break;
 
@@ -212,13 +212,13 @@ var SubTest = cc.Class.extend({
             case 8:
                 if( "opengl" in cc.sys.capabilities )
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA8888;
-                this._batchNode = cc.SpriteBatchNode.create("res/Images/spritesheet1.png", 500);
+                this._batchNode = new cc.SpriteBatchNode("res/Images/spritesheet1.png", 500);
                 p.addChild(this._batchNode, 0);
                 break;
             case 9:
                 if( "opengl" in cc.sys.capabilities )
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA4444;
-                this._batchNode = cc.SpriteBatchNode.create("res/Images/spritesheet1.png", 500);
+                this._batchNode = new cc.SpriteBatchNode("res/Images/spritesheet1.png", 500);
                 p.addChild(this._batchNode, 0);
                 break;
 
@@ -307,19 +307,19 @@ var SpriteMainScene = cc.Scene.extend({
         this._quantityNodes = 0;
 
         // add title label
-        var label = cc.LabelTTF.create(this.title(), "Arial", 40);
+        var label = new cc.LabelTTF(this.title(), "Arial", 40);
         this.addChild(label, 1);
         label.x = s.width / 2;
         label.y = s.height - 32;
         label.color = cc.color(255, 255, 40);
 
         cc.MenuItemFont.setFontSize(65);
-        var decrease = cc.MenuItemFont.create(" - ", this.onDecrease, this);
+        var decrease = new cc.MenuItemFont(" - ", this.onDecrease, this);
         decrease.color = cc.color(0, 200, 20);
-        var increase = cc.MenuItemFont.create(" + ", this.onIncrease, this);
+        var increase = new cc.MenuItemFont(" + ", this.onIncrease, this);
         increase.color = cc.color(0, 200, 20);
 
-        var menu = cc.Menu.create(decrease, increase);
+        var menu = new cc.Menu(decrease, increase);
         menu.alignItemsHorizontally();
 
         menu.x = s.width / 2;
@@ -327,7 +327,7 @@ var SpriteMainScene = cc.Scene.extend({
         menu.y = s.height - 65;
         this.addChild(menu, 1);
 
-        var infoLabel = cc.LabelTTF.create("0 nodes", "Marker Felt", 30);
+        var infoLabel = new cc.LabelTTF("0 nodes", "Marker Felt", 30);
         infoLabel.color = cc.color(0, 200, 20);
         infoLabel.x = s.width / 2;
         infoLabel.y = s.height - 90;
@@ -339,10 +339,10 @@ var SpriteMainScene = cc.Scene.extend({
 
         // Sub Tests
         cc.MenuItemFont.setFontSize(32);
-        var subMenu = cc.Menu.create();
+        var subMenu = new cc.Menu();
         for (var i = 1; i <= 9; ++i) {
             var text = i.toString();
-            var itemFont = cc.MenuItemFont.create(text, this.testNCallback, this);
+            var itemFont = new cc.MenuItemFont(text, this.testNCallback, this);
             itemFont.tag = i;
             subMenu.addChild(itemFont, 10);
 
@@ -425,14 +425,14 @@ function performanceActions(sprite) {
     sprite.y = parseInt(Math.random() * size.height);
 
     var period = 0.5 + (Math.random() * 1000) / 500.0;
-    var rot = cc.RotateBy.create(period, 360.0 * Math.random());
+    var rot = cc.rotateBy(period, 360.0 * Math.random());
     var rot_back = rot.reverse();
-    var permanentRotation = cc.Sequence.create(rot, rot_back).repeatForever();
+    var permanentRotation = cc.sequence(rot, rot_back).repeatForever();
     sprite.runAction(permanentRotation);
 
     var growDuration = 0.5 + (Math.random() * 1000) / 500.0;
-    var grow = cc.ScaleBy.create(growDuration, 0.5, 0.5);
-    var permanentScaleLoop = cc.Sequence.create(grow, grow.reverse()).repeatForever();
+    var grow = cc.scaleBy(growDuration, 0.5, 0.5);
+    var permanentScaleLoop = cc.sequence(grow, grow.reverse()).repeatForever();
     sprite.runAction(permanentScaleLoop);
 }
 
@@ -448,14 +448,14 @@ function performanceActions20(sprite) {
     }
 
     var period = 0.5 + (Math.random() * 1000) / 500.0;
-    var rot = cc.RotateBy.create(period, 360.0 * Math.random());
+    var rot = cc.rotateBy(period, 360.0 * Math.random());
     var rot_back = rot.reverse();
-    var permanentRotation = cc.Sequence.create(rot, rot_back).repeatForever();
+    var permanentRotation = cc.sequence(rot, rot_back).repeatForever();
     sprite.runAction(permanentRotation);
 
     var growDuration = 0.5 + (Math.random() * 1000) / 500.0;
-    var grow = cc.ScaleBy.create(growDuration, 0.5, 0.5);
-    var permanentScaleLoop = cc.Sequence.create(grow, grow.reverse()).repeatForever();
+    var grow = cc.scaleBy(growDuration, 0.5, 0.5);
+    var permanentScaleLoop = cc.sequence(grow, grow.reverse()).repeatForever();
     sprite.runAction(permanentScaleLoop);
 }
 

@@ -30,9 +30,9 @@ var UICheckBoxTest = UIScene.extend({
             this._topDisplayLabel.setString("No Event");
             this._bottomDisplayLabel.setString("CheckBox");
 
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             // Create the checkbox
-            var checkBox = ccui.CheckBox.create();
+            var checkBox = new ccui.CheckBox();
             checkBox.setTouchEnabled(true);
             checkBox.loadTextures("res/cocosui/check_box_normal.png",
                 "res/cocosui/check_box_normal_press.png",
@@ -41,7 +41,7 @@ var UICheckBoxTest = UIScene.extend({
                 "res/cocosui/check_box_active_disable.png");
             checkBox.x = widgetSize.width / 2.0;
 	        checkBox.y = widgetSize.height / 2.0;
-            checkBox.addEventListenerCheckBox(this.selectedStateEvent, this);
+            checkBox.addEventListener(this.selectedStateEvent, this);
             this._mainNode.addChild(checkBox);
 
             return true;

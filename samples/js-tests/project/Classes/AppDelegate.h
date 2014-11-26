@@ -1,15 +1,7 @@
-//
-//  GCTestAppDelegate.h
-//  GCTest
-//
-//  Created by Rohan Kuruvilla on 06/08/2012.
-//  Copyright __MyCompanyName__ 2012. All rights reserved.
-//
-
 #ifndef  _APP_DELEGATE_H_
 #define  _APP_DELEGATE_H_
 
-#include "CCApplication.h"
+#include "platform/CCApplication.h"
 /**
  @brief    The cocos2d Application.
  
@@ -20,6 +12,8 @@ class  AppDelegate : private cocos2d::Application
 public:
     AppDelegate();
     virtual ~AppDelegate();
+    
+    void initGLContextAttrs() override;
     
     /**
      @brief    Implement Director and Scene init code here.

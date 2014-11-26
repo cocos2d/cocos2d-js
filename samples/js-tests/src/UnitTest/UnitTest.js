@@ -158,7 +158,7 @@ var RectUnitTest = UnitTestBase.extend({
         ret.push(rectA.height);
 
         this.log("Test 11: getBoundingBox()");
-        var node = cc.Node.create();
+        var node = new cc.Node();
         node.width = 99;
 	    node.height = 101;
         var bb = node.getBoundingBox();
@@ -245,8 +245,8 @@ var DictionaryToFromTest = UnitTestBase.extend({
 });
 
 var UnitTestScene = TestScene.extend({
-    runThisTest:function () {
-        unitTestSceneIdx = -1;
+    runThisTest:function (num) {
+        unitTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextUnitTest();
         this.addChild(layer);
 

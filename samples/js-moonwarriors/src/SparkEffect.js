@@ -5,10 +5,10 @@ var SparkEffect = cc.Class.extend({
     scale:1.2,
     duration:0.7,
     ctor:function () {
-        this.spark1 = cc.Sprite.create("#explode2.png");
-        this.spark1.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
-        this.spark2 = cc.Sprite.create("#explode3.png");
-        this.spark2.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
+        this.spark1 = new cc.Sprite("#explode2.png");
+        //this.spark1.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
+        this.spark2 = new cc.Sprite("#explode3.png");
+        //this.spark2.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
     },
     reset:function (x, y) {
         this.spark1.attr({
@@ -25,9 +25,9 @@ var SparkEffect = cc.Class.extend({
 	        opacity: 255
         });
 
-        var right = cc.RotateBy.create(this.duration, 45);
-        var scaleBy = cc.ScaleBy.create(this.duration, 3, 3);
-        var seq = cc.Sequence.create(cc.FadeOut.create(this.duration), cc.CallFunc.create(this.destroy, this));
+        var right = cc.rotateBy(this.duration, 45);
+        var scaleBy = cc.scaleBy(this.duration, 3, 3);
+        var seq = cc.sequence(cc.fadeOut(this.duration), cc.callFunc(this.destroy, this));
 
         this.spark1.runAction(right);
         this.spark1.runAction(scaleBy);

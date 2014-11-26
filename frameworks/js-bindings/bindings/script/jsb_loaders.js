@@ -28,14 +28,14 @@
 
 cc._txtLoader = {
     load : function(realUrl, url){
-        return cc.FileUtils.getInstance().getStringFromFile(realUrl);
+        return jsb.fileUtils.getStringFromFile(realUrl);
     }
-}
+};
 cc.loader.register(["txt", "xml", "vsh", "fsh", "tmx", "tsx"], cc._txtLoader);
 
 cc._jsonLoader = {
     load : function(realUrl, url){
-        var data = cc.FileUtils.getInstance().getStringFromFile(realUrl);
+        var data = jsb.fileUtils.getStringFromFile(realUrl);
         try{
             return JSON.parse(data);
         }catch(e){
@@ -47,25 +47,32 @@ cc._jsonLoader = {
 cc.loader.register(["json", "ExportJson"], cc._jsonLoader);
 
 cc._imgLoader = {
-    load : function(realUrl, url){
-        return null;
+    load : function(realUrl, url, res, cb){
+        cc.loader.loadImg(realUrl, function(err, img){
+            if(err) {
+                cb && cb(err);
+                return;
+            }
+            cc.loader.cache[url] = img;
+            cb && cb(null, img);
+        });
     }
 };
 cc.loader.register(["png", "jpg", "bmp","jpeg","gif"], cc._imgLoader);
 
 cc._plistLoader = {
     load : function(realUrl, url){
-        var content = cc.fileUtils.getStringFromFile(realUrl);
+        var content = jsb.fileUtils.getStringFromFile(realUrl);
         return cc.plistParser.parse(content);
     }
-}
+};
 cc.loader.register(["plist"], cc._plistLoader);
 
 cc._fontLoader = {
     load : function(realUrl, url){
         return null;
     }
-}
+};
 cc.loader.register(["font", "eot", "ttf", "woff", "svg"], cc._fontLoader);
 
 cc._binaryLoader = {
@@ -111,7 +118,7 @@ cc._fntLoader = {
             top : parseInt(paddingArr[1]),
             right : parseInt(paddingArr[2]),
             bottom : parseInt(paddingArr[3])
-        }
+        };
 
         //common
         var commonObj = self._parseStrToObj(fntStr.match(self.COMMON_EXP)[0]);
@@ -155,7 +162,7 @@ cc._fntLoader = {
     },
 
     load : function(realUrl, url){
-        var data = cc.FileUtils.getInstance().getStringFromFile(realUrl);
+        var data = jsb.fileUtils.getStringFromFile(realUrl);
         return this.parseFnt(data, url);
     }
 };

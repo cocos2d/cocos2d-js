@@ -87,22 +87,22 @@ var CrashTest = ActionManagerTest.extend({
         //----start0----onEnter
         this._super();
 
-        var child = cc.Sprite.create(s_pathGrossini);
+        var child = new cc.Sprite(s_pathGrossini);
         child.x = 200;
         child.y = 200;
         this.addChild(child, 1);
 
         //Sum of all action's duration is 1.5 second.
-        child.runAction(cc.RotateBy.create(1.5, 90));
-        child.runAction(cc.Sequence.create(
-            cc.DelayTime.create(1.4),
-            cc.FadeOut.create(1.1))
+        child.runAction(cc.rotateBy(1.5, 90));
+        child.runAction(cc.sequence(
+            cc.delayTime(1.4),
+            cc.fadeOut(1.1))
         );
 
         //After 1.5 second, self will be removed.
-        //this.runAction(cc.Sequence.create(
-        //    cc.DelayTime.create(1.4),
-        //    cc.CallFunc.create(this.onRemoveThis, this))
+        //this.runAction(cc.sequence(
+        //    cc.delayTime(1.4),
+        //    cc.callFunc(this.onRemoveThis, this))
         //);
         //----end0----
     },
@@ -123,8 +123,6 @@ var CrashTest = ActionManagerTest.extend({
     getCurrentResult:function() {
         return NOT_CRASHED_CONST;
     }
-
-
 });
 
 //------------------------------------------------------------------
@@ -140,14 +138,14 @@ var LogicTest = ActionManagerTest.extend({
         //----start1----onEnter
         this._super();
 
-        var grossini = cc.Sprite.create(s_pathGrossini);
+        var grossini = new cc.Sprite(s_pathGrossini);
         this.addChild(grossini, 0, 2);
         grossini.x = 200;
 	    grossini.y = 200;
 
-        grossini.runAction(cc.Sequence.create(
-            cc.MoveBy.create(1, cc.p(150, 0)),
-            cc.CallFunc.create(this.onBugMe, this))
+        grossini.runAction(cc.sequence(
+            cc.moveBy(1, cc.p(150, 0)),
+            cc.callFunc(this.onBugMe, this))
         );
 
 
@@ -162,7 +160,7 @@ var LogicTest = ActionManagerTest.extend({
     onBugMe:function (node) {
         //----start1----onBugMe
         node.stopAllActions(); //After this stop next action not working, if remove this stop everything is working
-        node.runAction(cc.ScaleTo.create(2, 2));
+        node.runAction(cc.scaleTo(2, 2));
         //----end1----
     },
 
@@ -198,7 +196,7 @@ var PauseTest = ActionManagerTest.extend({
         this._super();
 
         var s = director.getWinSize();
-        var l = cc.LabelTTF.create("After 3 seconds grossini should move", "Thonburi", 16);
+        var l = new cc.LabelTTF("After 3 seconds grossini should move", "Thonburi", 16);
         this.addChild(l);
         l.x = s.width / 2;
 	    l.y = 245;
@@ -206,13 +204,13 @@ var PauseTest = ActionManagerTest.extend({
         //
         // Also, this test MUST be done, after [super onEnter]
         //
-        var grossini = cc.Sprite.create(s_pathGrossini);
+        var grossini = new cc.Sprite(s_pathGrossini);
         this.addChild(grossini, 0, TAG_GROSSINI);
         grossini.x = 200;
 	    grossini.y = 200;
 
 
-        var action = cc.MoveBy.create(1, cc.p(150, 0));
+        var action = cc.moveBy(1, cc.p(150, 0));
 
         director.getActionManager().addAction(action, grossini, true);
 
@@ -271,17 +269,17 @@ var RemoveTest = ActionManagerTest.extend({
         this._super();
 
         var s = director.getWinSize();
-        var l = cc.LabelTTF.create("Should not crash", "Thonburi", 16);
+        var l = new cc.LabelTTF("Should not crash", "Thonburi", 16);
         this.addChild(l);
         l.x = s.width / 2;
 	    l.y = 245;
 
-        var move = cc.MoveBy.create(2, cc.p(200, 0));
-        var callback = cc.CallFunc.create(this.stopAction, this);
-        var sequence = cc.Sequence.create(move, callback);
+        var move = cc.moveBy(2, cc.p(200, 0));
+        var callback = cc.callFunc(this.stopAction, this);
+        var sequence = cc.sequence(move, callback);
         sequence.tag = TAG_SEQUENCE;
 
-        var child = cc.Sprite.create(s_pathGrossini);
+        var child = new cc.Sprite(s_pathGrossini);
         child.x = 200;
 	    child.y = 200;
 
@@ -323,21 +321,21 @@ var ResumeTest = ActionManagerTest.extend({
         this._super();
 
         var s = director.getWinSize();
-        var l = cc.LabelTTF.create("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
+        var l = new cc.LabelTTF("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
         this.addChild(l);
         l.x = s.width / 2;
 	    l.y = 245;
 
-        var grossini = cc.Sprite.create(s_pathGrossini);
+        var grossini = new cc.Sprite(s_pathGrossini);
         this._grossini = grossini;
         this.addChild(grossini, 0, TAG_GROSSINI);
         grossini.x = s.width / 2;
 	    grossini.y = s.height / 2;
 
-        grossini.runAction(cc.ScaleBy.create(2, 2));
+        grossini.runAction(cc.scaleBy(2, 2));
 
         director.getActionManager().pauseTarget(grossini);
-        grossini.runAction(cc.RotateBy.create(2, 360));
+        grossini.runAction(cc.rotateBy(2, 360));
 
         this.schedule(this.resumeGrossini, 3.0);
         //----end4----
@@ -408,8 +406,8 @@ var nextActionMgrTest = function (num) {
     ActionMgrTestIdx++;
     ActionMgrTestIdx = ActionMgrTestIdx % arrayOfActionMgrTest.length;
 
-    if(window.sidebar){
-        ActionMgrTestIdx = window.sidebar.changeTest(ActionMgrTestIdx, 0);
+    if(window.sideIndexBar){
+        ActionMgrTestIdx = window.sideIndexBar.changeTest(ActionMgrTestIdx, 0);
     }
 
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
@@ -419,14 +417,12 @@ var previousActionMgrTest = function () {
     if (ActionMgrTestIdx < 0)
         ActionMgrTestIdx += arrayOfActionMgrTest.length;
 
-    if(window.sidebar){
-        ActionMgrTestIdx = window.sidebar.changeTest(ActionMgrTestIdx, 0);
+    if(window.sideIndexBar){
+        ActionMgrTestIdx = window.sideIndexBar.changeTest(ActionMgrTestIdx, 0);
     }
 
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 };
 var restartActionMgrTest = function () {
-
-
     return new arrayOfActionMgrTest[ActionMgrTestIdx]();
 };

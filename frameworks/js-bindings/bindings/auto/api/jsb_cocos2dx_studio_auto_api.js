@@ -115,6 +115,20 @@ getLoop : function (
 },
 
 /**
+ * @method initWithBinary
+ * @param {ccs.CocoLoader} arg0
+ * @param {ccs.stExpCocoNode} arg1
+ * @param {cc.Ref} arg2
+ */
+initWithBinary : function (
+cocoloader, 
+stexpcoconode, 
+ref 
+)
+{
+},
+
+/**
  * @method addActionNode
  * @param {ccs.ActionNode} arg0
  */
@@ -221,6 +235,22 @@ char
 },
 
 /**
+ * @method initWithBinary
+ * @param {char} arg0
+ * @param {cc.Ref} arg1
+ * @param {ccs.CocoLoader} arg2
+ * @param {ccs.stExpCocoNode} arg3
+ */
+initWithBinary : function (
+char, 
+ref, 
+cocoloader, 
+stexpcoconode 
+)
+{
+},
+
+/**
  * @method releaseActions
  */
 releaseActions : function (
@@ -288,6 +318,112 @@ create : function (
  * @constructor
  */
 BaseData : function (
+)
+{
+},
+
+};
+
+/**
+ * @class MovementData
+ */
+ccs.MovementData = {
+
+/**
+ * @method getMovementBoneData
+ * @param {String} arg0
+ * @return {ccs.MovementBoneData}
+ */
+getMovementBoneData : function (
+str 
+)
+{
+    return ccs.MovementBoneData;
+},
+
+/**
+ * @method addMovementBoneData
+ * @param {ccs.MovementBoneData} arg0
+ */
+addMovementBoneData : function (
+movementbonedata 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.MovementData}
+ */
+create : function (
+)
+{
+    return ccs.MovementData;
+},
+
+/**
+ * @method MovementData
+ * @constructor
+ */
+MovementData : function (
+)
+{
+},
+
+};
+
+/**
+ * @class AnimationData
+ */
+ccs.AnimationData = {
+
+/**
+ * @method getMovement
+ * @param {String} arg0
+ * @return {ccs.MovementData}
+ */
+getMovement : function (
+str 
+)
+{
+    return ccs.MovementData;
+},
+
+/**
+ * @method getMovementCount
+ * @return {long}
+ */
+getMovementCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method addMovement
+ * @param {ccs.MovementData} arg0
+ */
+addMovement : function (
+movementdata 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.AnimationData}
+ */
+create : function (
+)
+{
+    return ccs.AnimationData;
+},
+
+/**
+ * @method AnimationData
+ * @constructor
+ */
+AnimationData : function (
 )
 {
 },
@@ -619,7 +755,7 @@ getColliderBodyList : function (
 
 /**
  * @method updateTransform
- * @param {cc.Mat4} arg0
+ * @param {mat4_object} arg0
  */
 updateTransform : function (
 mat4 
@@ -795,7 +931,7 @@ getDisplayRenderNode : function (
 
 /**
  * @method getAnchorPointInPoints
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getAnchorPointInPoints : function (
 )
@@ -889,7 +1025,7 @@ int
 
 /**
  * @method containPoint
-* @param {float|cc.Vec2} float
+* @param {float|vec2_object} float
 * @param {float} float
 * @return {bool|bool}
 */
@@ -969,7 +1105,7 @@ getCurrentDisplayIndex : function (
 
 /**
  * @method getAnchorPoint
- * @return {cc.Vec2}
+ * @return {vec2_object}
  */
 getAnchorPoint : function (
 )
@@ -1142,16 +1278,6 @@ updateColor : function (
 },
 
 /**
- * @method getName
- * @return {String}
- */
-getName : function (
-)
-{
-    return ;
-},
-
-/**
  * @method setTransformDirty
  * @param {bool} arg0
  */
@@ -1243,16 +1369,6 @@ getBlendFunc : function (
 )
 {
     return cc.BlendFunc;
-},
-
-/**
- * @method setName
- * @param {String} arg0
- */
-setName : function (
-str 
-)
-{
 },
 
 /**
@@ -1353,7 +1469,7 @@ armature
 
 /**
  * @method getNodeToArmatureTransform
- * @return {cc.Mat4}
+ * @return {mat4_object}
  */
 getNodeToArmatureTransform : function (
 )
@@ -1531,6 +1647,16 @@ float
 },
 
 /**
+ * @method getAnimationData
+ * @return {ccs.AnimationData}
+ */
+getAnimationData : function (
+)
+{
+    return ccs.AnimationData;
+},
+
+/**
  * @method playWithIndex
  * @param {int} arg0
  * @param {int} arg1
@@ -1552,6 +1678,16 @@ getCurrentMovementID : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setAnimationData
+ * @param {ccs.AnimationData} arg0
+ */
+setAnimationData : function (
+animationdata 
+)
+{
 },
 
 /**
@@ -1914,16 +2050,6 @@ getParentBone : function (
 },
 
 /**
- * @method setArmatureData
- * @param {ccs.ArmatureData} arg0
- */
-setArmatureData : function (
-armaturedata 
-)
-{
-},
-
-/**
  * @method removeBone
  * @param {ccs.Bone} arg0
  * @param {bool} arg1
@@ -1943,16 +2069,6 @@ getBatchNode : function (
 )
 {
     return ccs.BatchNode;
-},
-
-/**
- * @method getName
- * @return {String}
- */
-getName : function (
-)
-{
-    return ;
 },
 
 /**
@@ -1980,14 +2096,6 @@ bone
 },
 
 /**
- * @method drawContour
- */
-drawContour : function (
-)
-{
-},
-
-/**
  * @method setBatchNode
  * @param {ccs.BatchNode} arg0
  */
@@ -2008,11 +2116,11 @@ getBlendFunc : function (
 },
 
 /**
- * @method setName
- * @param {String} arg0
+ * @method setArmatureData
+ * @param {ccs.ArmatureData} arg0
  */
-setName : function (
-str 
+setArmatureData : function (
+armaturedata 
 )
 {
 },
@@ -2067,6 +2175,16 @@ getAnimation : function (
 )
 {
     return ccs.ArmatureAnimation;
+},
+
+/**
+ * @method getOffsetPoints
+ * @return {vec2_object}
+ */
+getOffsetPoints : function (
+)
+{
+    return cc.Vec2;
 },
 
 /**
@@ -2131,7 +2249,7 @@ getBone : function (
 
 /**
  * @method getNodeToWorldTransformAR
- * @return {cc.Mat4}
+ * @return {mat4_object}
  */
 getNodeToWorldTransformAR : function (
 )
@@ -2784,6 +2902,16 @@ char
 ccs.GUIReader = {
 
 /**
+ * @method setFilePath
+ * @param {String} arg0
+ */
+setFilePath : function (
+str 
+)
+{
+},
+
+/**
  * @method widgetFromJsonFile
  * @param {char} arg0
  * @return {ccui.Widget}
@@ -2803,6 +2931,18 @@ getFilePath : function (
 )
 {
     return ;
+},
+
+/**
+ * @method widgetFromBinaryFile
+ * @param {char} arg0
+ * @return {ccui.Widget}
+ */
+widgetFromBinaryFile : function (
+char 
+)
+{
+    return ccui.Widget;
 },
 
 /**
@@ -2904,6 +3044,1648 @@ getInstance : function (
 )
 {
     return ccs.SceneReader;
+},
+
+};
+
+/**
+ * @class ActionTimelineCache
+ */
+ccs.ActionTimelineCache = {
+
+/**
+ * @method createActionFromJson
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+createActionFromJson : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method createActionFromProtocolBuffers
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+createActionFromProtocolBuffers : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method createActionFromXML
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+createActionFromXML : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method loadAnimationActionWithFileFromProtocolBuffers
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+loadAnimationActionWithFileFromProtocolBuffers : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method loadAnimationActionWithFileFromXML
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+loadAnimationActionWithFileFromXML : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method purge
+ */
+purge : function (
+)
+{
+},
+
+/**
+ * @method init
+ */
+init : function (
+)
+{
+},
+
+/**
+ * @method loadAnimationActionWithFile
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+loadAnimationActionWithFile : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method loadAnimationActionWithContent
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {ccs.timeline::ActionTimeline}
+ */
+loadAnimationActionWithContent : function (
+str, 
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method removeAction
+ * @param {String} arg0
+ */
+removeAction : function (
+str 
+)
+{
+},
+
+/**
+ * @method loadActionTimelineFromXML
+ * @param {tinyxml2::XMLElement} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+loadActionTimelineFromXML : function (
+xmlelement 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method createAction
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+createAction : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method getInstance
+ * @return {ccs.timeline::ActionTimelineCache}
+ */
+getInstance : function (
+)
+{
+    return ccs.timeline::ActionTimelineCache;
+},
+
+};
+
+/**
+ * @class Frame
+ */
+ccs.Frame = {
+
+/**
+ * @method clone
+ * @return {ccs.timeline::Frame}
+ */
+clone : function (
+)
+{
+    return ccs.timeline::Frame;
+},
+
+/**
+ * @method setNode
+ * @param {cc.Node} arg0
+ */
+setNode : function (
+node 
+)
+{
+},
+
+/**
+ * @method setTimeline
+ * @param {ccs.timeline::Timeline} arg0
+ */
+setTimeline : function (
+timeline 
+)
+{
+},
+
+/**
+ * @method isEnterWhenPassed
+ * @return {bool}
+ */
+isEnterWhenPassed : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getFrameIndex
+ * @return {unsigned int}
+ */
+getFrameIndex : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method apply
+ * @param {float} arg0
+ */
+apply : function (
+float 
+)
+{
+},
+
+/**
+ * @method isTween
+ * @return {bool}
+ */
+isTween : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setFrameIndex
+ * @param {unsigned int} arg0
+ */
+setFrameIndex : function (
+int 
+)
+{
+},
+
+/**
+ * @method setTween
+ * @param {bool} arg0
+ */
+setTween : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getTimeline
+ * @return {ccs.timeline::Timeline}
+ */
+getTimeline : function (
+)
+{
+    return ccs.timeline::Timeline;
+},
+
+/**
+ * @method getNode
+ * @return {cc.Node}
+ */
+getNode : function (
+)
+{
+    return cc.Node;
+},
+
+};
+
+/**
+ * @class VisibleFrame
+ */
+ccs.VisibleFrame = {
+
+/**
+ * @method isVisible
+ * @return {bool}
+ */
+isVisible : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setVisible
+ * @param {bool} arg0
+ */
+setVisible : function (
+bool 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::VisibleFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::VisibleFrame;
+},
+
+/**
+ * @method VisibleFrame
+ * @constructor
+ */
+VisibleFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TextureFrame
+ */
+ccs.TextureFrame = {
+
+/**
+ * @method getTextureName
+ * @return {String}
+ */
+getTextureName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setNode
+ * @param {cc.Node} arg0
+ */
+setNode : function (
+node 
+)
+{
+},
+
+/**
+ * @method setTextureName
+ * @param {String} arg0
+ */
+setTextureName : function (
+str 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::TextureFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::TextureFrame;
+},
+
+/**
+ * @method TextureFrame
+ * @constructor
+ */
+TextureFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RotationFrame
+ */
+ccs.RotationFrame = {
+
+/**
+ * @method setRotation
+ * @param {float} arg0
+ */
+setRotation : function (
+float 
+)
+{
+},
+
+/**
+ * @method getRotation
+ * @return {float}
+ */
+getRotation : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::RotationFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::RotationFrame;
+},
+
+/**
+ * @method RotationFrame
+ * @constructor
+ */
+RotationFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class SkewFrame
+ */
+ccs.SkewFrame = {
+
+/**
+ * @method getSkewY
+ * @return {float}
+ */
+getSkewY : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setSkewX
+ * @param {float} arg0
+ */
+setSkewX : function (
+float 
+)
+{
+},
+
+/**
+ * @method setSkewY
+ * @param {float} arg0
+ */
+setSkewY : function (
+float 
+)
+{
+},
+
+/**
+ * @method getSkewX
+ * @return {float}
+ */
+getSkewX : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::SkewFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::SkewFrame;
+},
+
+/**
+ * @method SkewFrame
+ * @constructor
+ */
+SkewFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RotationSkewFrame
+ */
+ccs.RotationSkewFrame = {
+
+/**
+ * @method create
+ * @return {ccs.timeline::RotationSkewFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::RotationSkewFrame;
+},
+
+/**
+ * @method RotationSkewFrame
+ * @constructor
+ */
+RotationSkewFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class PositionFrame
+ */
+ccs.PositionFrame = {
+
+/**
+ * @method getX
+ * @return {float}
+ */
+getX : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getY
+ * @return {float}
+ */
+getY : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setPosition
+ * @param {vec2_object} arg0
+ */
+setPosition : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method setX
+ * @param {float} arg0
+ */
+setX : function (
+float 
+)
+{
+},
+
+/**
+ * @method setY
+ * @param {float} arg0
+ */
+setY : function (
+float 
+)
+{
+},
+
+/**
+ * @method getPosition
+ * @return {vec2_object}
+ */
+getPosition : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::PositionFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::PositionFrame;
+},
+
+/**
+ * @method PositionFrame
+ * @constructor
+ */
+PositionFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ScaleFrame
+ */
+ccs.ScaleFrame = {
+
+/**
+ * @method setScaleY
+ * @param {float} arg0
+ */
+setScaleY : function (
+float 
+)
+{
+},
+
+/**
+ * @method setScaleX
+ * @param {float} arg0
+ */
+setScaleX : function (
+float 
+)
+{
+},
+
+/**
+ * @method getScaleY
+ * @return {float}
+ */
+getScaleY : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getScaleX
+ * @return {float}
+ */
+getScaleX : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setScale
+ * @param {float} arg0
+ */
+setScale : function (
+float 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::ScaleFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::ScaleFrame;
+},
+
+/**
+ * @method ScaleFrame
+ * @constructor
+ */
+ScaleFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class AnchorPointFrame
+ */
+ccs.AnchorPointFrame = {
+
+/**
+ * @method setAnchorPoint
+ * @param {vec2_object} arg0
+ */
+setAnchorPoint : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method getAnchorPoint
+ * @return {vec2_object}
+ */
+getAnchorPoint : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::AnchorPointFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::AnchorPointFrame;
+},
+
+/**
+ * @method AnchorPointFrame
+ * @constructor
+ */
+AnchorPointFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class InnerActionFrame
+ */
+ccs.InnerActionFrame = {
+
+/**
+ * @method getInnerActionType
+ * @return {ccs.timeline::InnerActionType}
+ */
+getInnerActionType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setStartFrameIndex
+ * @param {int} arg0
+ */
+setStartFrameIndex : function (
+int 
+)
+{
+},
+
+/**
+ * @method setInnerActionType
+ * @param {ccs.timeline::InnerActionType} arg0
+ */
+setInnerActionType : function (
+inneractiontype 
+)
+{
+},
+
+/**
+ * @method getStartFrameIndex
+ * @return {int}
+ */
+getStartFrameIndex : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::InnerActionFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::InnerActionFrame;
+},
+
+/**
+ * @method InnerActionFrame
+ * @constructor
+ */
+InnerActionFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ColorFrame
+ */
+ccs.ColorFrame = {
+
+/**
+ * @method getAlpha
+ * @return {unsigned char}
+ */
+getAlpha : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getColor
+ * @return {color3b_object}
+ */
+getColor : function (
+)
+{
+    return cc.Color3B;
+},
+
+/**
+ * @method setAlpha
+ * @param {unsigned char} arg0
+ */
+setAlpha : function (
+char 
+)
+{
+},
+
+/**
+ * @method setColor
+ * @param {color3b_object} arg0
+ */
+setColor : function (
+color3b 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::ColorFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::ColorFrame;
+},
+
+/**
+ * @method ColorFrame
+ * @constructor
+ */
+ColorFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EventFrame
+ */
+ccs.EventFrame = {
+
+/**
+ * @method setEvent
+ * @param {String} arg0
+ */
+setEvent : function (
+str 
+)
+{
+},
+
+/**
+ * @method init
+ */
+init : function (
+)
+{
+},
+
+/**
+ * @method getEvent
+ * @return {String}
+ */
+getEvent : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::EventFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::EventFrame;
+},
+
+/**
+ * @method EventFrame
+ * @constructor
+ */
+EventFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ZOrderFrame
+ */
+ccs.ZOrderFrame = {
+
+/**
+ * @method getZOrder
+ * @return {int}
+ */
+getZOrder : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setZOrder
+ * @param {int} arg0
+ */
+setZOrder : function (
+int 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::ZOrderFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::ZOrderFrame;
+},
+
+/**
+ * @method ZOrderFrame
+ * @constructor
+ */
+ZOrderFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Timeline
+ */
+ccs.Timeline = {
+
+/**
+ * @method clone
+ * @return {ccs.timeline::Timeline}
+ */
+clone : function (
+)
+{
+    return ccs.timeline::Timeline;
+},
+
+/**
+ * @method gotoFrame
+ * @param {int} arg0
+ */
+gotoFrame : function (
+int 
+)
+{
+},
+
+/**
+ * @method setNode
+ * @param {cc.Node} arg0
+ */
+setNode : function (
+node 
+)
+{
+},
+
+/**
+ * @method getActionTimeline
+ * @return {ccs.timeline::ActionTimeline}
+ */
+getActionTimeline : function (
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method insertFrame
+ * @param {ccs.timeline::Frame} arg0
+ * @param {int} arg1
+ */
+insertFrame : function (
+frame, 
+int 
+)
+{
+},
+
+/**
+ * @method setActionTag
+ * @param {int} arg0
+ */
+setActionTag : function (
+int 
+)
+{
+},
+
+/**
+ * @method addFrame
+ * @param {ccs.timeline::Frame} arg0
+ */
+addFrame : function (
+frame 
+)
+{
+},
+
+/**
+ * @method getFrames
+ * @return {Array}
+ */
+getFrames : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method getActionTag
+ * @return {int}
+ */
+getActionTag : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getNode
+ * @return {cc.Node}
+ */
+getNode : function (
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method removeFrame
+ * @param {ccs.timeline::Frame} arg0
+ */
+removeFrame : function (
+frame 
+)
+{
+},
+
+/**
+ * @method setActionTimeline
+ * @param {ccs.timeline::ActionTimeline} arg0
+ */
+setActionTimeline : function (
+actiontimeline 
+)
+{
+},
+
+/**
+ * @method stepToFrame
+ * @param {int} arg0
+ */
+stepToFrame : function (
+int 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::Timeline}
+ */
+create : function (
+)
+{
+    return ccs.timeline::Timeline;
+},
+
+/**
+ * @method Timeline
+ * @constructor
+ */
+Timeline : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ActionTimelineData
+ */
+ccs.ActionTimelineData = {
+
+/**
+ * @method setActionTag
+ * @param {int} arg0
+ */
+setActionTag : function (
+int 
+)
+{
+},
+
+/**
+ * @method getActionTag
+ * @return {int}
+ */
+getActionTag : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+ * @param {int} arg0
+ * @return {ccs.timeline::ActionTimelineData}
+ */
+create : function (
+int 
+)
+{
+    return ccs.timeline::ActionTimelineData;
+},
+
+};
+
+/**
+ * @class ActionTimeline
+ */
+ccs.ActionTimeline = {
+
+/**
+ * @method getTimelines
+ * @return {Array}
+ */
+getTimelines : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method getCurrentFrame
+ * @return {int}
+ */
+getCurrentFrame : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getStartFrame
+ * @return {int}
+ */
+getStartFrame : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method pause
+ */
+pause : function (
+)
+{
+},
+
+/**
+ * @method setFrameEventCallFunc
+ * @param {function} arg0
+ */
+setFrameEventCallFunc : function (
+func 
+)
+{
+},
+
+/**
+ * @method resume
+ */
+resume : function (
+)
+{
+},
+
+/**
+ * @method getDuration
+ * @return {int}
+ */
+getDuration : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method addTimeline
+ * @param {ccs.timeline::Timeline} arg0
+ */
+addTimeline : function (
+timeline 
+)
+{
+},
+
+/**
+ * @method getEndFrame
+ * @return {int}
+ */
+getEndFrame : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setCurrentFrame
+ * @param {int} arg0
+ */
+setCurrentFrame : function (
+int 
+)
+{
+},
+
+/**
+ * @method setTimeSpeed
+ * @param {float} arg0
+ */
+setTimeSpeed : function (
+float 
+)
+{
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setDuration
+ * @param {int} arg0
+ */
+setDuration : function (
+int 
+)
+{
+},
+
+/**
+ * @method getTimeSpeed
+ * @return {float}
+ */
+getTimeSpeed : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method gotoFrameAndPause
+ * @param {int} arg0
+ */
+gotoFrameAndPause : function (
+int 
+)
+{
+},
+
+/**
+ * @method isPlaying
+ * @return {bool}
+ */
+isPlaying : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method gotoFrameAndPlay
+* @param {int|int|int|int} int
+* @param {bool|int|int} bool
+* @param {bool|int} bool
+* @param {bool} bool
+*/
+gotoFrameAndPlay : function(
+int,
+int,
+int,
+bool 
+)
+{
+},
+
+/**
+ * @method removeTimeline
+ * @param {ccs.timeline::Timeline} arg0
+ */
+removeTimeline : function (
+timeline 
+)
+{
+},
+
+/**
+ * @method clearFrameEventCallFunc
+ */
+clearFrameEventCallFunc : function (
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::ActionTimeline}
+ */
+create : function (
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method ActionTimeline
+ * @constructor
+ */
+ActionTimeline : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CSLoader
+ */
+ccs.CSLoader = {
+
+/**
+ * @method createNodeFromJson
+ * @param {String} arg0
+ * @return {cc.Node}
+ */
+createNodeFromJson : function (
+str 
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method nodeFromXML
+ * @param {tinyxml2::XMLElement} arg0
+ * @param {String} arg1
+ * @return {cc.Node}
+ */
+nodeFromXML : function (
+xmlelement, 
+str 
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method createNodeFromProtocolBuffers
+ * @param {String} arg0
+ * @return {cc.Node}
+ */
+createNodeFromProtocolBuffers : function (
+str 
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method init
+ */
+init : function (
+)
+{
+},
+
+/**
+ * @method setRecordXMLPath
+ * @param {bool} arg0
+ */
+setRecordXMLPath : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setJsonPath
+ * @param {String} arg0
+ */
+setJsonPath : function (
+str 
+)
+{
+},
+
+/**
+ * @method loadNodeWithFile
+ * @param {String} arg0
+ * @return {cc.Node}
+ */
+loadNodeWithFile : function (
+str 
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method loadNodeWithContent
+ * @param {String} arg0
+ * @return {cc.Node}
+ */
+loadNodeWithContent : function (
+str 
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method isRecordProtocolBuffersPath
+ * @return {bool}
+ */
+isRecordProtocolBuffersPath : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isRecordXMLPath
+ * @return {bool}
+ */
+isRecordXMLPath : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getProtocolBuffersPath
+ * @return {String}
+ */
+getProtocolBuffersPath : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getXMLPath
+ * @return {String}
+ */
+getXMLPath : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method createNodeFromXML
+ * @param {String} arg0
+ * @return {cc.Node}
+ */
+createNodeFromXML : function (
+str 
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method isRecordJsonPath
+ * @return {bool}
+ */
+isRecordJsonPath : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setRecordProtocolBuffersPath
+ * @param {bool} arg0
+ */
+setRecordProtocolBuffersPath : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getJsonPath
+ * @return {String}
+ */
+getJsonPath : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setRecordJsonPath
+ * @param {bool} arg0
+ */
+setRecordJsonPath : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setProtocolBuffersPath
+ * @param {String} arg0
+ */
+setProtocolBuffersPath : function (
+str 
+)
+{
+},
+
+/**
+ * @method purge
+ */
+purge : function (
+)
+{
+},
+
+/**
+ * @method setXMLPath
+ * @param {String} arg0
+ */
+setXMLPath : function (
+str 
+)
+{
+},
+
+/**
+ * @method nodeFromXMLFile
+ * @param {String} arg0
+ * @return {cc.Node}
+ */
+nodeFromXMLFile : function (
+str 
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method createNode
+ * @param {String} arg0
+ * @return {cc.Node}
+ */
+createNode : function (
+str 
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method createTimeline
+ * @param {String} arg0
+ * @return {ccs.timeline::ActionTimeline}
+ */
+createTimeline : function (
+str 
+)
+{
+    return ccs.timeline::ActionTimeline;
+},
+
+/**
+ * @method getInstance
+ * @return {cc.CSLoader}
+ */
+getInstance : function (
+)
+{
+    return cc.CSLoader;
 },
 
 };

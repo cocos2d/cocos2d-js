@@ -156,11 +156,11 @@ var CocosDenshionTest = cc.LayerGradient.extend({
     ctor:function () {
         this._super(cc.color(0, 0, 0, 255), cc.color(148, 80, 120, 255));
 
-        this._itemMenu = cc.Menu.create();
+        this._itemMenu = new cc.Menu();
         var winSize = director.getWinSize();
         for (var i = 0; i < DenshionTests.length; i++) {
-            var label = cc.LabelTTF.create(DenshionTests[i].title, "Arial", 24);
-            var menuItem = cc.MenuItemLabel.create(label, this.onMenuCallback, this);
+            var label = new cc.LabelTTF(DenshionTests[i].title, "Arial", 24);
+            var menuItem = new cc.MenuItemLabel(label, this.onMenuCallback, this);
             this._itemMenu.addChild(menuItem, i + 10000);
             menuItem.x = winSize.width / 2;
             menuItem.y = winSize.height - (i + 1) * LINE_SPACE;
@@ -183,7 +183,7 @@ var CocosDenshionTest = cc.LayerGradient.extend({
              cc.eventManager.addListener({
                 event: cc.EventListener.MOUSE,
                  onMouseMove: function(event){
-                     if(event.getButton() != undefined)
+                     if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget().moveMenu(event.getDelta());
                  }
              }, this);
@@ -194,7 +194,8 @@ var CocosDenshionTest = cc.LayerGradient.extend({
     },
     onExit:function () {
         this._super();
-        audioEngine.end();
+        audioEngine.stopMusic();
+        audioEngine.stopAllEffects();
     },
 
     onMenuCallback:function (sender) {

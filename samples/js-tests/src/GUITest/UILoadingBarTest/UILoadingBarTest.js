@@ -32,7 +32,7 @@ var UILoadingBarTest = UIScene.extend({
     },
     init: function () {
         if (this._super()) {
-            var widgetSize = this._widget.getSize();
+            var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("LoadingBar");
@@ -53,7 +53,7 @@ var UILoadingBarTest = UIScene.extend({
             this._count = 0;
         }
 
-        this._loadingBar.setPercent(this._count);
+        this._loadingBar && this._loadingBar.setPercent(this._count);
     },
 
     previousCallback: function (sender, type) {
@@ -74,8 +74,8 @@ var UILoadingBarTest = UIScene.extend({
 
 var UILoadingBarTest_Left = UILoadingBarTest.extend({
     createLoadingBar: function () {
-        var widgetSize = this._widget.getSize();
-        var loadingBar = ccui.LoadingBar.create();
+        var widgetSize = this._widget.getContentSize();
+        var loadingBar = new ccui.LoadingBar();
         loadingBar.setName("LoadingBar");
         loadingBar.loadTexture("res/cocosui/sliderProgress.png");
         loadingBar.setPercent(0);
@@ -88,8 +88,8 @@ var UILoadingBarTest_Left = UILoadingBarTest.extend({
 
 var UILoadingBarTest_Right = UILoadingBarTest.extend({
     createLoadingBar: function () {
-        var widgetSize = this._widget.getSize();
-        var loadingBar = ccui.LoadingBar.create();
+        var widgetSize = this._widget.getContentSize();
+        var loadingBar = new ccui.LoadingBar();
         loadingBar.setName("LoadingBar");
         loadingBar.loadTexture("res/cocosui/sliderProgress.png");
         loadingBar.setDirection(ccui.LoadingBar.TYPE_RIGHT);
@@ -101,15 +101,30 @@ var UILoadingBarTest_Right = UILoadingBarTest.extend({
     }
 });
 
+var UILoadingBarTest_Fix = UILoadingBarTest.extend({
+    createLoadingBar: function () {
+        var widgetSize = this._widget.getContentSize();
+        var loadingBar = new ccui.LoadingBar();
+        loadingBar.setName("LoadingBar");
+        loadingBar.loadTexture("res/cocosui/sliderProgress.png");
+        loadingBar.setDirection(ccui.LoadingBar.TYPE_RIGHT);
+        loadingBar.setPercent(40);
+        loadingBar.x = widgetSize.width / 2;
+        loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
+        this._mainNode.addChild(loadingBar);
+        this._loadingBar = null;
+    }
+});
+
 var UILoadingBarTest_Left_Scale9 = UILoadingBarTest.extend({
     createLoadingBar: function () {
-        var widgetSize = this._widget.getSize();
-        var loadingBar = ccui.LoadingBar.create();
+        var widgetSize = this._widget.getContentSize();
+        var loadingBar = new ccui.LoadingBar();
         loadingBar.setName("LoadingBar");
         loadingBar.setScale9Enabled(true);
         loadingBar.loadTexture("res/cocosui/slider_bar_active_9patch.png");
         loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
-        loadingBar.setSize(cc.size(300, 30));
+        loadingBar.setContentSize(cc.size(300, 30));
         loadingBar.setPercent(0);
         loadingBar.x = widgetSize.width / 2;
         loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
@@ -120,18 +135,36 @@ var UILoadingBarTest_Left_Scale9 = UILoadingBarTest.extend({
 
 var UILoadingBarTest_Right_Scale9 = UILoadingBarTest.extend({
     createLoadingBar: function () {
-        var widgetSize = this._widget.getSize();
-        var loadingBar = ccui.LoadingBar.create();
+        var widgetSize = this._widget.getContentSize();
+        var loadingBar = new ccui.LoadingBar();
         loadingBar.setName("LoadingBar");
         loadingBar.setScale9Enabled(true);
         loadingBar.loadTexture("res/cocosui/slider_bar_active_9patch.png");
         loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
-        loadingBar.setSize(cc.size(300, 30));
+        loadingBar.setContentSize(cc.size(300, 30));
         loadingBar.setDirection(ccui.LoadingBar.TYPE_RIGHT);
         loadingBar.setPercent(0);
         loadingBar.x = widgetSize.width / 2;
         loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
         this._mainNode.addChild(loadingBar);
         this._loadingBar = loadingBar;
+    }
+});
+
+var UILoadingBarTest_Fix_Scale9 = UILoadingBarTest.extend({
+    createLoadingBar: function () {
+        var widgetSize = this._widget.getContentSize();
+        var loadingBar = new ccui.LoadingBar();
+        loadingBar.setName("LoadingBar");
+        loadingBar.setScale9Enabled(true);
+        loadingBar.loadTexture("res/cocosui/slider_bar_active_9patch.png");
+        loadingBar.setPercent(40);
+        loadingBar.setCapInsets(cc.rect(0, 0, 0, 0));
+        loadingBar.setContentSize(cc.size(300, 30));
+        loadingBar.setDirection(ccui.LoadingBar.TYPE_RIGHT);
+        loadingBar.x = widgetSize.width / 2;
+        loadingBar.y = widgetSize.height / 2 + loadingBar.height / 4;
+        this._mainNode.addChild(loadingBar);
+        this._loadingBar = null;
     }
 });

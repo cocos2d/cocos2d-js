@@ -62,98 +62,182 @@ cc.defineGetterSetter = function (proto, prop, getter, setter){
 };
 
 //+++++++++++++++++++++++++something about async begin+++++++++++++++++++++++++++++++
+/**
+ * Async Pool class, a helper of cc.async
+ * @param {Object|Array} srcObj
+ * @param {Number} limit the limit of parallel number
+ * @param {function} iterator
+ * @param {function} onEnd
+ * @param {object} target
+ * @constructor
+ */
+cc.AsyncPool = function(srcObj, limit, iterator, onEnd, target){
+    var self = this;
+    self._srcObj = srcObj;
+    self._limit = limit;
+    self._pool = [];
+    self._iterator = iterator;
+    self._iteratorTarget = target;
+    self._onEnd = onEnd;
+    self._onEndTarget = target;
+    self._results = srcObj instanceof Array ? [] : {};
+    self._isErr = false;
+
+    cc.each(srcObj, function(value, index){
+        self._pool.push({index : index, value : value});
+    });
+
+    self.size = self._pool.length;
+    self.finishedSize = 0;
+    self._workingSize = 0;
+
+    self._limit = self._limit || self.size;
+
+    self.onIterator = function(iterator, target){
+        self._iterator = iterator;
+        self._iteratorTarget = target;
+    };
+
+    self.onEnd = function(endCb, endCbTarget){
+        self._onEnd = endCb;
+        self._onEndTarget = endCbTarget;
+    };
+
+    self._handleItem = function(){
+        var self = this;
+        if(self._pool.length == 0)
+            return;                                                         //return directly if the array's length = 0
+        if(self._workingSize >= self._limit)
+            return;                                                         //return directly if the working size great equal limit number
+        var item = self._pool.shift();
+        var value = item.value, index = item.index;
+        self._workingSize++;
+        self._iterator.call(self._iteratorTarget, value, index, function(err){
+            if(self._isErr)
+                return;
+
+            self.finishedSize++;
+            self._workingSize--;
+            if(err) {
+                self._isErr = true;
+                if(self._onEnd)
+                    self._onEnd.call(self._onEndTarget, err);
+                return
+            }
+
+            var arr = Array.prototype.slice.call(arguments, 1);
+            self._results[this.index] = arr[0];
+            if(self.finishedSize == self.size) {
+                if(self._onEnd)
+                    self._onEnd.call(self._onEndTarget, null, self._results);
+                return;
+            }
+            self._handleItem();
+        }.bind(item), self);
+    };
+
+    self.flow = function(){
+        var self = this;
+        if(self._pool.length == 0) {
+            if(self._onEnd)
+                self._onEnd.call(self._onEndTarget, null, []);
+            return;
+        }
+        for(var i = 0; i < self._limit; i++)
+            self._handleItem();
+    }
+};
+
 cc.async = {
     /**
-     * Counter for cc.async
-     * @param err
+     * Do tasks series.
+     * @param {Array|Object} tasks
+     * @param {function} [cb] callback
+     * @param {Object} [target]
+     * @return {cc.AsyncPool}
      */
-    _counterFunc : function(err){
-        var counter = this.counter;
-        if(counter.err) return;
-        var length = counter.length;
-        var results = counter.results;
-        var option = counter.option;
-        var cb = option.cb, cbTarget = option.cbTarget, trigger = option.trigger, triggerTarget = option.triggerTarget;
-        if(err) {
-            counter.err = err;
-            if(cb) return cb.call(cbTarget, err);
-            return;
-        }
-        var result = Array.apply(null, arguments).slice(1);
-        var l = result.length;
-        if(l == 0) result = null;
-        else if(l == 1) result = result[0];
-        else result = result;
-        results[this.index] = result;
-        counter.count--;
-        if(trigger) trigger.call(triggerTarget, result, length - counter.count, length);
-        if(counter.count == 0 && cb) cb.apply(cbTarget, [null, results]);
+    series : function(tasks, cb, target){
+        var asyncPool = new cc.AsyncPool(tasks, 1, function(func, index, cb1){
+            func.call(target, cb1);
+        }, cb, target);
+        asyncPool.flow();
+        return asyncPool;
     },
-    
-    /**
-     * Empty function for async.
-     * @private
-     */
-    _emptyFunc : function(){},
+
     /**
      * Do tasks parallel.
-     * @param tasks
-     * @param option
-     * @param cb
+     * @param {Array|Object} tasks
+     * @param {function} cb callback
+     * @param {Object} [target]
+     * @return {cc.AsyncPool}
      */
-    parallel : function(tasks, option, cb){
-        var async = cc.async;
-        var l = arguments.length;
-        if(l == 3) {
-            if(typeof option == "function") option = {trigger : option};
-            option.cb = cb || option.cb;
-        }
-        else if(l == 2){
-            if(typeof option == "function") option = {cb : option};
-        }else if(l == 1) option = {};
-        else throw "arguments error!";
-        var isArr = tasks instanceof Array;
-        var li = isArr ? tasks.length : Object.keys(tasks).length;
-        if(li == 0){
-            if(option.cb) option.cb.call(option.cbTarget, null);
-            return;
-        }
-        var results = isArr ? [] : {};
-        var counter = { length : li, count : li, option : option, results : results};
-        
-        cc.each(tasks, function(task, index){
-                if(counter.err) return false;
-                var counterFunc = !option.cb && !option.trigger ? async._emptyFunc : async._counterFunc.bind({counter : counter, index : index});//bind counter and index
-                task(counterFunc, index);
-                });
+    parallel : function(tasks, cb, target){
+        var asyncPool = new cc.AsyncPool(tasks, 0, function(func, index, cb1){
+            func.call(target, cb1);
+        }, cb, target);
+        asyncPool.flow();
+        return asyncPool;
     },
-    
+
+    /**
+     * Do tasks waterfall.
+     * @param {Array|Object} tasks
+     * @param {function} cb callback
+     * @param {Object} [target]
+     * @return {cc.AsyncPool}
+     */
+    waterfall : function(tasks, cb, target){
+        var args = [];
+        var asyncPool = new cc.AsyncPool(tasks, 1,
+            function (func, index, cb1) {
+                args.push(function (err) {
+                    args = Array.prototype.slice.call(arguments, 1);
+                    cb1.apply(null, arguments);
+                });
+                func.apply(target, args);
+            }, function (err, results) {
+                if (!cb)
+                    return;
+                if (err)
+                    return cb.call(target, err);
+                cb.call(target, null, results[results.length - 1]);
+            });
+        asyncPool.flow();
+        return asyncPool;
+    },
+
     /**
      * Do tasks by iterator.
-     * @param tasks
-     * @param {{cb:{function}, target:{object}, iterator:{function}, iteratorTarget:{function}}|function} option
-     * @param cb
+     * @param {Array|Object} tasks
+     * @param {function|Object} iterator
+     * @param {function} cb callback
+     * @param {Object} [target]
+     * @return {cc.AsyncPool}
      */
-    map : function(tasks, option, cb){
-        var self = this;
-        var l = arguments.length;
-        if(typeof option == "function") option = {iterator : option};
-        if(l == 3) option.cb = cb || option.cb;
-        else if(l == 2);
-        else throw "arguments error!";
-        var isArr = tasks instanceof Array;
-        var li = isArr ? tasks.length : Object.keys(tasks).length;
-        if(li == 0){
-            if(option.cb) option.cb.call(option.cbTarget, null);
-            return;
+    map : function(tasks, iterator, cb, target){
+        var locIterator = iterator;
+        if(typeof(iterator) == "object"){
+            cb = iterator.cb;
+            target = iterator.iteratorTarget;
+            locIterator = iterator.iterator;
         }
-        var results = isArr ? [] : {};
-        var counter = { length : li, count : li, option : option, results : results};
-        cc.each(tasks, function(task, index){
-                if(counter.err) return false;
-                var counterFunc = !option.cb ? self._emptyFunc : self._counterFunc.bind({counter : counter, index : index});//bind counter and index
-                option.iterator.call(option.iteratorTarget, task, index, counterFunc);
-                });
+        var asyncPool = new cc.AsyncPool(tasks, 0, locIterator, cb, target);
+        asyncPool.flow();
+        return asyncPool;
+    },
+
+    /**
+     * Do tasks by iterator limit.
+     * @param {Array|Object} tasks
+     * @param {Number} limit
+     * @param {function} iterator
+     * @param {function} cb callback
+     * @param {Object} [target]
+     */
+    mapLimit : function(tasks, limit, iterator, cb, target){
+        var asyncPool = new cc.AsyncPool(tasks, limit, iterator, cb, target);
+        asyncPool.flow();
+        return asyncPool;
     }
 };
 //+++++++++++++++++++++++++something about async end+++++++++++++++++++++++++++++++++
@@ -363,7 +447,7 @@ cc.loader = {
      * @param {function} cb arguments are : err, txt
      */
     loadTxt : function(url, cb){
-        cb(null, cc.FileUtils.getInstance().getStringFromFile(url));
+        cb(null, jsb.fileUtils.getStringFromFile(url));
     },
     
     loadJson : function(url, cb){
@@ -386,30 +470,28 @@ cc.loader = {
      */
     loadImg : function(url, option, cb){
         var l = arguments.length;
-        var opt = {
-            isCrossOrigin : true
-        };
-        if(l == 3) {
-            opt.isCrossOrigin = option.isCrossOrigin == null ? opt.isCrossOrigin : option.isCrossOrigin;
+        if(l == 2) cb = option;
+
+        var cachedTex = cc.textureCache.getTextureForKey(url);
+        if (cachedTex) {
+            cb && cb(null, cachedTex);
         }
-        else if(l == 2) cb = option;
-        
-        var img = new Image();
-        if(opt.isCrossOrigin) img.crossOrigin = "Anonymous";
-        
-        img.addEventListener("load", function () {
-                             this.removeEventListener('load', arguments.callee, false);
-                             this.removeEventListener('error', arguments.callee, false);
-                             if(!cb) return;
-                             cb(null, img);
-                             });
-        img.addEventListener("error", function () {
-                             this.removeEventListener('error', arguments.callee, false);
-                             if(!cb) return;
-                             cb("error");
-                             });
-        img.src = url;
-        return img;
+        else if (url.match(jsb.urlRegExp)) {
+            jsb.loadRemoteImg(url, function(succeed, tex) {
+                if (succeed) {
+                    cb && cb(null, tex);
+                }
+                else {
+                    cb && cb("Load image failed");
+                }
+            });
+        }
+        else {
+            var tex = cc.textureCache._addImage(url);
+            if (tex instanceof cc.Texture2D)
+                cb && cb(null, tex);
+            else cb && cb("Load image failed");
+        }
     },
     /**
      * Load binary data by url.
@@ -417,10 +499,10 @@ cc.loader = {
      * @param {Function} cb
      */
     loadBinary : function(url, cb){
-        cb(null, cc.FileUtils.getInstance().getDataFromFile(url));
+        cb(null, jsb.fileUtils.getDataFromFile(url));
     },
     loadBinarySync : function(url){
-        return cc.FileUtils.getInstance().getDataFromFile(url);
+        return jsb.fileUtils.getDataFromFile(url);
     },
     
     /**
@@ -432,7 +514,38 @@ cc.loader = {
      * @private
      */
     _loadResIterator : function(item, index, cb){
-        cb();
+        var self = this, url = null;
+        var type = item.type;
+        if (type) {
+            type = "." + type.toLowerCase();
+            url = item.src ? item.src : item.name + type;
+        } else {
+            url = item;
+            type = cc.path.extname(url);
+        }
+
+        var obj = self.cache[url];
+        if (obj)
+            return cb(null, obj);
+        var loader = null;
+        if (type) {
+            loader = self._register[type.toLowerCase()];
+        }
+        if (!loader) {
+            cc.error("loader for [" + type + "] not exists!");
+            return cb();
+        }
+        var basePath = loader.getBasePath ? loader.getBasePath() : self.resPath;
+        var realUrl = self.getUrl(basePath, url);
+        var data = loader.load(realUrl, url);
+        if (data) {
+            self.cache[url] = data;
+            cb(null, data);
+        } else {
+            self.cache[url] = null;
+            delete self.cache[url];
+            cb();
+        }
     },
     
     /**
@@ -448,12 +561,15 @@ cc.loader = {
             var type = path.extname(url);
             type = type ? type.toLowerCase() : "";
             var loader = self._register[type];
-            if(!loader) basePath = self.resPath;
-            else basePath = loader.getBasePath ? loader.getBasePath() : self.resPath;
+            if(!loader)
+                basePath = self.resPath;
+            else
+                basePath = loader.getBasePath ? loader.getBasePath() : self.resPath;
         }
-        url = cc.path.join(basePath || "", url)
+        url = cc.path.join(basePath || "", url);
         if(url.match(/[\/(\\\\)]lang[\/(\\\\)]/i)){
-            if(langPathCache[url]) return langPathCache[url];
+            if(langPathCache[url])
+                return langPathCache[url];
             var extname = path.extname(url) || "";
             url = langPathCache[url] = url.substring(0, url.length - extname.length) + "_" + cc.sys.language + extname;
         }
@@ -466,26 +582,40 @@ cc.loader = {
      * @param [{function}|{}] option
      * @param {function} cb :
      */
-    load : function(res, option, cb){
-        var l = arguments.length;
-        if(l == 3) {
-            if(typeof option == "function") option = {trigger : option};
-        }
-        else if(l == 2){
-            if(typeof option == "function") {
-                cb = option;
-                option = {};
+    load : function(resources, option, cb){
+        var self = this;
+        var len = arguments.length;
+        if(len == 0)
+            throw "arguments error!";
+
+        if(len == 3){
+            if(typeof option == "function"){
+                if(typeof cb == "function")
+                    option = {trigger : option, cb : cb };
+                else
+                    option = { cb : option, cbTarget : cb};
             }
-        }else if(l == 1) option = {};
-        else throw "arguments error!";
-        option.cb = function(err, results){
-            if(err) cc.log(err);
-            if(cb) cb(results);
-        };
-        if(!(res instanceof Array)) res = [res];
-        option.iterator = this._loadResIterator;
-        option.iteratorTarget = this;
-        cc.async.map(res, option);
+        }else if(len == 2){
+            if(typeof option == "function")
+                option = {cb : option};
+        }else if(len == 1){
+            option = {};
+        }
+
+        if(!(resources instanceof Array))
+            resources = [resources];
+        var asyncPool = new cc.AsyncPool(resources, 0, function(value, index, cb1, aPool){
+            self._loadResIterator(value, index, function(err){
+                if(err)
+                    return cb1(err);
+                var arr = Array.prototype.slice.call(arguments, 1);
+                if(option.trigger)
+                    option.trigger.call(option.triggerTarget, arr[0], aPool.size, aPool.finishedSize); //call trigger
+                cb1(null, arr[0]);
+            });
+        }, option.cb, option.cbTarget);
+        asyncPool.flow();
+        return asyncPool;
     },
 
     /**
@@ -518,7 +648,7 @@ cc.loader = {
      * @param {Function} cb     callback
      */
     loadAliases : function(url, cb){
-        cc.fileUtils.loadFilenameLookup(url);
+        jsb.fileUtils.loadFilenameLookup(url);
         if(cb) cb();
     },
 
@@ -530,8 +660,9 @@ cc.loader = {
     register : function(extNames, loader){
         if(!extNames || !loader) return;
         var self = this;
-        if(typeof extNames == "string") return this._register[extNames.trim().toLowerCase()] = loader;
-        for(var i = 0, li = extNames.length; i < li; i++){
+        if(typeof extNames == "string")
+            return this._register[extNames.trim().toLowerCase()] = loader;
+        for(var i = 0, li = extNames.length; i < li; i++) {
             self._register["." + extNames[i].trim().toLowerCase()] = loader;
         }
     },
@@ -542,12 +673,14 @@ cc.loader = {
      * @returns {*}
      */
     getRes : function(url){
-        var self = this;
+        var cached = this.cache[url];
+        if (cached)
+            return cached;
         var type = cc.path.extname(url);
-        var loader = self._register[type.toLowerCase()];
+        var loader = this._register[type.toLowerCase()];
         if(!loader) return cc.log("loader for [" + type + "] not exists!");
-        var basePath = loader.getBasePath ? loader.getBasePath() : self.resPath;
-        var realUrl = self.getUrl(basePath, url);
+        var basePath = loader.getBasePath ? loader.getBasePath() : this.resPath;
+        var realUrl = this.getUrl(basePath, url);
         return loader.load(realUrl, url);
     },
     
@@ -569,22 +702,82 @@ cc.defineGetterSetter(cc.loader, "resPath", function(){
     return this._resPath;
 }, function(resPath){
     this._resPath = resPath || "";
-    cc.FileUtils.getInstance().addSearchPath(this._resPath);
+    jsb.fileUtils.addSearchPath(this._resPath);
 });
 cc.defineGetterSetter(cc.loader, "audioPath", function(){
     return this._audioPath;
 }, function(audioPath){
     this._audioPath = audioPath || "";
-    cc.FileUtils.getInstance().addSearchPath(this._audioPath);
+    jsb.fileUtils.addSearchPath(this._audioPath);
 });
 
 //+++++++++++++++++++++++++something about loader end+++++++++++++++++++++++++++++
 
+//+++++++++++++++++++++++++something about format string begin+++++++++++++++++++++++++++++
+
+/**
+ * A string tool to construct a string with format string.
+ * for example: cc.formatStr("a: %d, b: %b", a, b);
+ * @param {String} formatStr format String
+ * @returns {String}
+ */
+cc.formatStr = function(){
+    var args = arguments;
+    var l = args.length;
+    if(l < 1)
+        return "";
+
+    var str = args[0];
+    var needToFormat = true;
+    if(typeof str == "object"){
+        needToFormat = false;
+    }
+    for(var i = 1; i < l; ++i){
+        var arg = args[i];
+        if(needToFormat){
+            while(true){
+                var result = null;
+                if(typeof arg == "number"){
+                    result = str.match(/(%d)|(%s)/);
+                    if(result){
+                        str = str.replace(/(%d)|(%s)/, arg);
+                        break;
+                    }
+                }
+                result = str.match(/%s/);
+                if(result)
+                    str = str.replace(/%s/, arg);
+                else
+                    str += "    " + arg;
+                break;
+            }
+        }else
+            str += "    " + arg;
+    }
+    return str;
+};
+
+//+++++++++++++++++++++++Define singleton format string end+++++++++++++++++++++++++++
+
 //+++++++++++++++++++++++Define singleton objects begin+++++++++++++++++++++++++++
 
 // Define singleton objects
+/**
+ * @type {cc.Director}
+ * @name cc.director
+ */
 cc.director = cc.Director.getInstance();
+/**
+ * @type {cc.Size}
+ * @name cc.winSize
+ * cc.winSize is the alias object for the size of the current game window.
+ */
 cc.winSize = cc.director.getWinSize();
+/**
+ * @type {cc.EGLView}
+ * @name cc.view
+ * cc.view is the shared view object.
+ */
 cc.view = cc.director.getOpenGLView();
 cc.view.getDevicePixelRatio = function () {
     var sys = cc.sys;
@@ -608,42 +801,104 @@ cc.view._setDesignResolutionSize = cc.view.setDesignResolutionSize;
 cc.view.setDesignResolutionSize = function(width,height,resolutionPolicy){
     cc.view._setDesignResolutionSize(width,height,resolutionPolicy);
     cc.winSize = cc.director.getWinSize();
+    cc.visibleRect.init();
 };
 cc.view.setResolutionPolicy = function(resolutionPolicy){
-    var size = cc.view.getDesignResolutionSize()
+    var size = cc.view.getDesignResolutionSize();
     cc.view.setDesignResolutionSize(size.width,size.height,resolutionPolicy);
 };
 cc.view.setContentTranslateLeftTop = function(){return;};
 cc.view.getContentTranslateLeftTop = function(){return null;};
 cc.view.setFrameZoomFactor = function(){return;};
+cc.DENSITYDPI_DEVICE = "device-dpi";
+cc.DENSITYDPI_HIGH = "high-dpi";
+cc.DENSITYDPI_MEDIUM = "medium-dpi";
+cc.DENSITYDPI_LOW = "low-dpi";
+cc.view.setTargetDensityDPI = function() {};
+cc.view.getTargetDensityDPI = function() {return cc.DENSITYDPI_DEVICE;};
 
+/**
+ * @type {Object}
+ * @name cc.eventManager
+ */
 cc.eventManager = cc.director.getEventDispatcher();
+/**
+ * @type {cc.AudioEngine}
+ * @name cc.audioEngine
+ * A simple Audio Engine engine API.
+ */
 cc.audioEngine = cc.AudioEngine.getInstance();
 cc.audioEngine.end = function(){
-    cc.AudioEngine.end();
+    this.stopMusic();
+    this.stopAllEffects();
 };
+/**
+ * @type {Object}
+ * @name cc.configuration
+ * cc.configuration contains some openGL variables
+ */
 cc.configuration = cc.Configuration.getInstance();
+/**
+ * @type {Object}
+ * @name cc.textureCache
+ * cc.textureCache is the global cache for cc.Texture2D
+ */
 cc.textureCache = cc.director.getTextureCache();
-cc.textureCache._addImage = cc.textureCache.addImage;
-cc.textureCache.addImage = function(url, cb, target) {
-    if (cb) {
-        target && (cb = cb.bind(target));
-        this.addImageAsync(url, cb);
-    }
-    else
-        return this._addImage(url);
+cc.TextureCache.prototype._addImage = cc.TextureCache.prototype.addImage;
+cc.TextureCache.prototype.addImage = function(url, cb, target) {
+    var localTex = null;
+    cc.loader.loadImg(url, function(err, tex) {
+        if (err) tex = null;
+        if (cb) {
+            cb.call(target, tex);
+        }
+        localTex = tex;
+    });
+    return localTex;
 };
+/**
+ * @type {Object}
+ * @name cc.shaderCache
+ * cc.shaderCache is a singleton object that stores manages GL shaders
+ */
 cc.shaderCache = cc.ShaderCache.getInstance();
+/**
+ * @type {Object}
+ * @name cc.animationCache
+ */
 cc.animationCache = cc.AnimationCache.getInstance();
+/**
+ * @type {Object}
+ * @name cc.spriteFrameCache
+ */
 cc.spriteFrameCache = cc.SpriteFrameCache.getInstance();
-//cc.saxParser
+/**
+ * @type {cc.PlistParser}
+ * @name cc.plistParser
+ * A Plist Parser
+ */
 cc.plistParser = cc.PlistParser.getInstance();
 //cc.tiffReader;
 //cc.imeDispatcher;
 
-// File utils (only in JSB)
+// File utils (Temporary, won't be accessible)
 cc.fileUtils = cc.FileUtils.getInstance();
+cc.fileUtils.setPopupNotify(false);
 
+//ccs.nodeReader = ccs.NodeReader.getInstance();
+ccs.actionTimelineCache = ccs.ActionTimelineCache.getInstance();
+ccs.actionTimelineCache.createAction = ccs.ActionTimelineCache.createAction;
+
+ccs.csLoader = ccs.CSLoader.getInstance();
+ccs.csLoader.createNode = ccs.CSLoader.createNode;
+ccs.csLoader.createTimeLine = ccs.CSLoader.createTimeLine;
+
+/**
+ * @type {Object}
+ * @name cc.screen
+ * The fullscreen API provides an easy way for web content to be presented using the user's entire screen.
+ * It's invalid on safari,QQbrowser and android browser
+ */
 cc.screen = {
     init: function() {},
     fullScreen: function() {
@@ -660,29 +915,128 @@ cc.screen = {
     }
 };
 
-cc.reflection = {
-    callStaticMethod : function(){
-        cc.log("not supported on current platform");
-    }
-}
+cc.EditBox = ccui.EditBox;
+delete ccui.EditBox;
 
 // GUI
+/**
+ * @type {Object}
+ * UI Helper
+ */
 ccui.helper = ccui.Helper;
 
 // In extension
-ccs.uiReader = ccs.GUIReader.getInstance();
-ccs.armatureDataManager = ccs.ArmatureDataManager.getInstance();
+/**
+ * @type {Object} Base object for ccs.uiReader
+ * @name ccs.uiReader
+ */
+ccs.uiReader = null;
+cc.defineGetterSetter(ccs, "uiReader", function() {
+    return ccs.GUIReader.getInstance();
+});
+ccs.GUIReader.prototype.clear = function() {
+    ccs.GUIReader.destroyInstance();
+};
+/**
+ * @type {Object} Format and manage armature configuration and armature animation
+ * @name ccs.armatureDataManager
+ */
+ccs.armatureDataManager = null;
+cc.defineGetterSetter(ccs, "armatureDataManager", function() {
+    return ccs.ArmatureDataManager.getInstance();
+});
+ccs.ArmatureDataManager.prototype.clear = function() {
+    ccs.ArmatureDataManager.destroyInstance();
+};
+/**
+ * @type {Object} Base singleton object for ccs.sceneReader
+ * @name ccs.sceneReader
+ */
+ccs.sceneReader = null;
+cc.defineGetterSetter(ccs, "sceneReader", function() {
+    return ccs.SceneReader.getInstance();
+});
+ccs.SceneReader.prototype.clear = function() {
+    ccs.SceneReader.destroyInstance();
+};
+ccs.SceneReader.prototype.version = function() {
+    return ccs.SceneReader.sceneReaderVersion();
+};
+/**
+ * @type {Object} Base singleton object for ccs.ActionManager
+ * @name ccs.actionManager
+ */
 ccs.actionManager = ccs.ActionManager.getInstance();
-ccs.sceneReader = ccs.SceneReader.getInstance();
+ccs.ActionManager.prototype.clear = function() {
+    this.releaseActions();
+};
+
 //ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
 //ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
 
-ccs.sceneReader.clear = ccs.uiReader.clear = ccs.actionManager.clear = ccs.armatureDataManager.clear = function() {};
-ccs.sceneReader.version = function() {
-    return ccs.SceneReader.sceneReaderVersion();
+//+++++++++++++++++++++++Define singleton objects end+++++++++++++++++++++++++++
+
+
+//+++++++++++++++++++++++++Redefine JSB only APIs+++++++++++++++++++++++++++
+
+/**
+ * @namespace jsb
+ * @name jsb
+ */
+var jsb = jsb || {};
+/**
+ * @type {Object}
+ * @name jsb.fileUtils
+ * jsb.fileUtils is the native file utils singleton object,
+ * please refer to Cocos2d-x API to know how to use it.
+ * Only available in JSB
+ */
+jsb.fileUtils = cc.fileUtils;
+delete cc.FileUtils;
+delete cc.fileUtils;
+/**
+ * @type {Object}
+ * @name jsb.AssetsManager
+ * jsb.AssetsManager is the native AssetsManager for your game resources or scripts.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
+ * Only available in JSB
+ */
+jsb.AssetsManager = cc.AssetsManager;
+delete cc.AssetsManager;
+/**
+ * @type {Object}
+ * @name jsb.EventListenerAssetsManager
+ * jsb.EventListenerAssetsManager is the native event listener for AssetsManager.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
+ * Only available in JSB
+ */
+jsb.EventListenerAssetsManager = cc.EventListenerAssetsManager;
+delete cc.EventListenerAssetsManager;
+/**
+ * @type {Object}
+ * @name jsb.EventAssetsManager
+ * jsb.EventAssetsManager is the native event for AssetsManager.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
+ * Only available in JSB
+ */
+jsb.EventAssetsManager = cc.EventAssetsManager;
+delete cc.EventAssetsManager;
+
+/**
+ * @type {Object}
+ * @name jsb.reflection
+ * jsb.reflection is a bridge to let you invoke Java static functions.
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/reflection/en
+ * Only available on Android platform
+ */
+jsb.reflection = {
+    callStaticMethod : function(){
+        cc.log("not supported on current platform");
+    }
 };
 
-//+++++++++++++++++++++++Define singleton objects end+++++++++++++++++++++++++++
+//+++++++++++++++++++++++++Redefine JSB only APIs+++++++++++++++++++++++++++++
+
 
 //+++++++++++++++++++++++++something about window events begin+++++++++++++++++++++++++++
 cc.winEvents = {//TODO register hidden and show callback for window
@@ -699,120 +1053,238 @@ cc._initSys = function(config, CONFIG_KEY){
     /**
      * English language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_ENGLISH = "en";
     /**
      * Chinese language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_CHINESE = "zh";
     /**
      * French language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_FRENCH = "fr";
     /**
      * Italian language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_ITALIAN = "it";
     /**
      * German language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_GERMAN = "de";
     /**
      * Spanish language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_SPANISH = "es";
+    
+    /**
+     * Netherlands language code
+     * @type {string}
+     */
+    locSys.LANGUAGE_DUTCH = "nl";
+    /**
+     * Dutch language code
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.LANGUAGE_DUTCH = "du";
     /**
      * Russian language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_RUSSIAN = "ru";
     /**
      * Korean language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_KOREAN = "ko";
     /**
      * Japanese language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_JAPANESE = "ja";
     /**
      * Hungarian language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_HUNGARIAN = "hu";
     /**
      * Portuguese language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_PORTUGUESE = "pt";
     /**
      * Arabic language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_ARABIC = "ar";
     /**
      * Norwegian language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_NORWEGIAN = "no";
     /**
      * Polish language code
      * @constant
-     * @type Number
+     * @default
+     * @type {Number}
      */
     locSys.LANGUAGE_POLISH = "pl";
 
 
     /**
      * @constant
+     * @default
      * @type {string}
      */
     locSys.OS_WINDOWS = "Windows";
     /**
      * @constant
+     * @default
      * @type {string}
      */
     locSys.OS_IOS = "iOS";
     /**
      * @constant
+     * @default
      * @type {string}
      */
     locSys.OS_OSX = "OS X";
     /**
      * @constant
+     * @default
      * @type {string}
      */
     locSys.OS_UNIX = "UNIX";
     /**
      * @constant
+     * @default
      * @type {string}
      */
     locSys.OS_LINUX = "Linux";
     /**
      * @constant
+     * @default
      * @type {string}
      */
     locSys.OS_ANDROID = "Android";
     locSys.OS_UNKNOWN = "unknown";
+
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.WINDOWS = 0;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.LINUX = 1;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.MACOS = 2;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.ANDROID = 3;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.IPHONE = 4;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.IPAD = 5;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.BLACKBERRY = 6;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.NACL = 7;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.EMSCRIPTEN = 8;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.TIZEN = 9;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.WINRT = 10;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.WP8 = 11;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.MOBILE_BROWSER = 100;
+    /**
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    locSys.DESKTOP_BROWSER = 101;
 
     locSys.BROWSER_TYPE_WECHAT = "wechat";
     locSys.BROWSER_TYPE_ANDROID = "androidbrowser";
@@ -834,46 +1306,16 @@ cc._initSys = function(config, CONFIG_KEY){
     /**
      * Is native ? This is set to be true in jsb auto.
      * @constant
-     * @type Boolean
+     * @default
+     * @type {Boolean}
      */
     locSys.isNative = true;
-    locSys.isMobile = __getPlatform() == "mobile";
-    locSys.language = (function(){
-        var language = cc.Application.getInstance().getCurrentLanguage();
-        switch(language){
-            case 0: return locSys.LANGUAGE_ENGLISH;
-            case 1: return locSys.LANGUAGE_CHINESE;
-            case 2: return locSys.LANGUAGE_FRENCH;
-            case 3: return locSys.LANGUAGE_ITALIAN;
-            case 4: return locSys.LANGUAGE_GERMAN;
-            case 5: return locSys.LANGUAGE_SPANISH;
-            case 6: return locSys.LANGUAGE_RUSSIAN;
-            case 7: return locSys.LANGUAGE_KOREAN;
-            case 8: return locSys.LANGUAGE_JAPANESE;
-            case 9: return locSys.LANGUAGE_HUNGARIAN;
-            case 10: return locSys.LANGUAGE_PORTUGUESE;
-            case 11: return locSys.LANGUAGE_ARABIC;
-            case 12: return locSys.LANGUAGE_NORWEGIAN;
-            case 13: return locSys.LANGUAGE_POLISH;
-            default : return locSys.LANGUAGE_ENGLISH;
-        }
-    })();
-
-    /** The type of browser */
-    locSys.browserType = null;//null in jsb
-
-    var capabilities = locSys.capabilities = {"opengl":true};
-    if( locSys.isMobile ) {
-        capabilities["accelerometer"] = true;
-        capabilities["touches"] = true;
-    } else {
-        // desktop
-        capabilities["keyboard"] = true;
-        capabilities["mouse"] = true;
-    }
 
     /** Get the os of system */
     locSys.os = __getOS();
+
+    /** Get the target platform of system */
+    locSys.platform = __getPlatform();
 
     // Forces the garbage collector
     locSys.garbageCollect = function() {
@@ -898,7 +1340,45 @@ cc._initSys = function(config, CONFIG_KEY){
         str += "browserType : " + self.browserType + "\r\n";
         str += "capabilities : " + JSON.stringify(self.capabilities) + "\r\n";
         str += "os : " + self.os + "\r\n";
+        str += "platform : " + self.platform + "\r\n";
         cc.log(str);
+    }
+
+    locSys.isMobile = (locSys.os == locSys.OS_ANDROID || locSys.os == locSys.OS_IOS) ? true : false;
+
+    locSys.language = (function(){
+        var language = cc.Application.getInstance().getCurrentLanguage();
+        switch(language){
+            case 0: return locSys.LANGUAGE_ENGLISH;
+            case 1: return locSys.LANGUAGE_CHINESE;
+            case 2: return locSys.LANGUAGE_FRENCH;
+            case 3: return locSys.LANGUAGE_ITALIAN;
+            case 4: return locSys.LANGUAGE_GERMAN;
+            case 5: return locSys.LANGUAGE_SPANISH;
+            case 6: return locSys.LANGUAGE_DUTCH;
+            case 7: return locSys.LANGUAGE_RUSSIAN;
+            case 8: return locSys.LANGUAGE_KOREAN;
+            case 9: return locSys.LANGUAGE_JAPANESE;
+            case 10: return locSys.LANGUAGE_HUNGARIAN;
+            case 11: return locSys.LANGUAGE_PORTUGUESE;
+            case 12: return locSys.LANGUAGE_ARABIC;
+            case 13: return locSys.LANGUAGE_NORWEGIAN;
+            case 14: return locSys.LANGUAGE_POLISH;
+            default : return locSys.LANGUAGE_ENGLISH;
+        }
+    })();
+
+    /** The type of browser */
+    locSys.browserType = null;//null in jsb
+
+    var capabilities = locSys.capabilities = {"opengl":true};
+    if( locSys.isMobile ) {
+        capabilities["accelerometer"] = true;
+        capabilities["touches"] = true;
+    } else {
+        // desktop
+        capabilities["keyboard"] = true;
+        capabilities["mouse"] = true;
     }
 };
 
@@ -914,15 +1394,26 @@ cc._initDebugSetting = function (mode) {
     cc.log = cc.warn = cc.error = cc.assert = function(){};
     if(mode == ccGame.DEBUG_MODE_NONE){
     }else{
-        cc.error = bakLog.bind(cc);
+        cc.error = function(){
+            bakLog.call(this, "ERROR :  " + cc.formatStr.apply(cc, arguments));
+        };
         cc.assert = function(cond, msg) {
-            if (!cond) cc.log("Assert: " + msg);
-        }
+            if (!cond && msg) {
+                var args = [];
+                for (var i = 1; i < arguments.length; i++)
+                    args.push(arguments[i]);
+                bakLog("Assert: " + cc.formatStr.apply(cc, args));
+            }
+        };
         if(mode != ccGame.DEBUG_MODE_ERROR && mode != ccGame.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
-            cc.warn = bakLog.bind(cc);
+            cc.warn = function(){
+                bakLog.call(this, "WARN :  " + cc.formatStr.apply(cc, arguments));
+            };
         }
         if(mode == ccGame.DEBUG_MODE_INFO || mode == ccGame.DEBUG_MODE_INFO_FOR_WEB_PAGE){
-            cc.log = bakLog;
+            cc.log = function(){
+                bakLog.call(this, cc.formatStr.apply(cc, arguments));
+            };
         }
     }
 };
@@ -932,6 +1423,8 @@ cc._initDebugSetting = function (mode) {
 //+++++++++++++++++++++++++something about CCGame begin+++++++++++++++++++++++++++
 
 /**
+ * @type {Object}
+ * @name cc.game
  * An object to boot the game.
  */
 cc.game = {
@@ -949,7 +1442,8 @@ cc.game = {
     /**
      * Key of config
      * @constant
-     * @type Object
+     * @default
+     * @type {Object}
      */
     CONFIG_KEY : {
         engineDir : "engineDir",
@@ -972,39 +1466,39 @@ cc.game = {
     
     /**
      * Config of game
-     * @type Object
+     * @type {Object}
      */
     config : null,
     
     /**
      * Callback when the scripts of engine have been load.
-     * @type Function
+     * @type {Function}
      */
     onStart : null,
     
     /**
      * Callback when game exits.
-     * @type Function
+     * @type {Function}
      */
     onExit : null,
     /**
      * Callback before game resumes.
-     * @type Function
+     * @type {Function}
      */
     onBeforeResume : null,
     /**
      * Callback after game resumes.
-     * @type Function
+     * @type {Function}
      */
     onAfterResume : null,
     /**
      * Callback before game pauses.
-     * @type Function
+     * @type {Function}
      */
     onBeforePause : null,
     /**
      * Callback after game pauses.
-     * @type Function
+     * @type {Function}
      */
     onAfterPause : null,
     
@@ -1044,17 +1538,19 @@ cc.game = {
             cfg[CONFIG_KEY.debugMode] = cfg[CONFIG_KEY.debugMode] || 0;
             cfg[CONFIG_KEY.frameRate] = cfg[CONFIG_KEY.frameRate] || 60;
             cfg[CONFIG_KEY.renderMode] = cfg[CONFIG_KEY.renderMode] || 0;
+            cfg[CONFIG_KEY.showFPS] = cfg[CONFIG_KEY.showFPS] === false ? false : true;
             return cfg;
         };
         try{
-            var txt = cc.FileUtils.getInstance().getStringFromFile("project.json");
+            var txt = jsb.fileUtils.getStringFromFile("project.json");
             var data = JSON.parse(txt);
             this.config = _init(data || {});
         }catch(e){
-	        cc.log("Failed to read or parse project.json");
+            cc.log("Failed to read or parse project.json");
             this.config = _init({});
         }
 //        cc._initDebugSetting(this.config[CONFIG_KEY.debugMode]);
+        cc.director.setDisplayStats(this.config[CONFIG_KEY.showFPS]);
         cc._initSys(this.config, CONFIG_KEY);
     },
     
@@ -1086,7 +1582,7 @@ cc.game = {
      */
     prepare : function(cb){
         var self = this, config = self.config, CONFIG_KEY = self.CONFIG_KEY, loader = cc.loader;
-        require("jsb.js");
+        require("script/jsb.js");
         self._prepareCalled = true;
         loader.loadJsWithImg("", config[CONFIG_KEY.jsList] || [], function(err){
             if(err) throw err;
@@ -1102,12 +1598,47 @@ cc.game._initConfig();
 //+++++++++++++++++++++++++other initializations+++++++++++++++++++++++++++++
 
 // JS to Native bridges
-if(cc.sys.os == cc.sys.OS_ANDROID){
-    cc.reflection = new JavascriptJavaBridge();
+if(window.JavascriptJavaBridge && cc.sys.os == cc.sys.OS_ANDROID){
+    jsb.reflection = new JavascriptJavaBridge();
     cc.sys.capabilities["keyboard"] = true;
 }
-else if(cc.sys.os == cc.sys.OS_IOS){
-    //TODO
+else if(window.JavaScriptObjCBridge && (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX)){
+    jsb.reflection = new JavaScriptObjCBridge();
 }
+
+jsb.urlRegExp = new RegExp(
+    "^" +
+        // protocol identifier
+        "(?:(?:https?|ftp)://)" +
+        // user:pass authentication
+        "(?:\\S+(?::\\S*)?@)?" +
+        "(?:" +
+            // IP address exclusion
+            // private & local networks
+            "(?!(?:10|127)(?:\\.\\d{1,3}){3})" +
+            "(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})" +
+            "(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})" +
+            // IP address dotted notation octets
+            // excludes loopback network 0.0.0.0
+            // excludes reserved space >= 224.0.0.0
+            // excludes network & broacast addresses
+            // (first & last IP address of each class)
+            "(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])" +
+            "(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}" +
+            "(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))" +
+        "|" +
+            // host name
+            "(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)" +
+            // domain name
+            "(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*" +
+            // TLD identifier
+            "(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))" +
+        ")" +
+        // port number
+        "(?::\\d{2,5})?" +
+        // resource path
+        "(?:/\\S*)?" +
+    "$", "i"
+);
 
 //+++++++++++++++++++++++++other initializations end+++++++++++++++++++++++++++++

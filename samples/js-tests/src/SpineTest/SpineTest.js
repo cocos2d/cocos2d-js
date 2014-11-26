@@ -36,7 +36,7 @@ var ANIMATION_TYPE = {
 SpineTestScene = TestScene.extend({
 
     runThisTest:function () {
-        var layer = SpineTest.create();
+        var layer = new SpineTest();
         this.addChild(layer);
 
         director.runScene(this);
@@ -45,7 +45,7 @@ SpineTestScene = TestScene.extend({
 
 touchcount = 0;
 
-SpineTest = BaseTestLayer.extend({
+var SpineTest = BaseTestLayer.extend({
     _spineboy:null,
     _debugMode: 0,
     ctor:function () {
@@ -81,7 +81,7 @@ SpineTest = BaseTestLayer.extend({
         // Make Spine's Animated skeleton Node
         // You need 'json + atlas + image' resource files to make it.
         // No JS binding for spine-c in this version. So, only file loading is supported.
-        var spineBoy = sp.SkeletonAnimation.create('res/skeletons/spineboy.json', 'res/skeletons/spineboy.atlas');
+        var spineBoy = new sp.SkeletonAnimation('res/skeletons/spineboy.json', 'res/skeletons/spineboy.atlas');
         spineBoy.setPosition(cc.p(size.width / 2, size.height / 2 - 150));
         spineBoy.setAnimation(0, 'walk', true);
         spineBoy.setMix('walk', 'jump', 0.2);
@@ -137,7 +137,3 @@ SpineTest = BaseTestLayer.extend({
     }
 
 });
-
-SpineTest.create = function () {
-    return new SpineTest();
-};

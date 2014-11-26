@@ -8,17 +8,11 @@
     "copy_resources": [
         {
             "from": "../../../src",
-            "to": "src",
-             "exclude": [
-                "*.gz"
-            ]
+            "to": "src"
         },
         {
             "from": "../../../res",
-            "to": "res",
-            "exclude": [
-                "*.gz"
-            ]
+            "to": "res"
         },
         {
             "from": "../../../main.js",
@@ -28,11 +22,7 @@
     "must_copy_resources": [
         {
             "from": "../../js-bindings/bindings/script",
-            "to": ""
-        },
-        {
-            "from": "../../../runtime/rtres",
-            "to": "rtres"
+            "to": "script"
         },
         {
             "from": "../../../config.json",

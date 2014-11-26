@@ -22,265 +22,195 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-/****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+TAG_SETSERVERMODE = 0;
+TAG_GETPRODUCTLIST = 1;
+TAG_PAYMENT = 2;
+TAG_TOAST = 3;
 
- http://www.cocos2d-x.org
+TAG_SETSERVERMODE_RESULT = 4;
+TAG_GETPRODUCTLIST_RESULT = 5;
+TAG_PAYMENT_RESULT = 6;
 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
-
-
-
-var g_IOSIAP = null;
-var s_strAppKey = "";
-// The app key of flurry
-var FLURRY_KEY_IOS = "KMGG7CD9WPK2TW4X9VR8";
-var FLURRY_KEY_ANDROID = "SPKFH8KMPGHMMBWRBT5W";
-var UMENG_KEY_IOS = "50d2b18c5270152187000097";
-var UMENG_KEY_ANDROID = "";          // umeng key for android is setted in AndroidManifest.xml
-
-
-if (!plugin) {
-    var plugin = {};
-}
-
-plugin.onApplicationDidEnterBackground = function () {
-    if (g_IOSIAP != null) {
-        cc.log("plugin.onApplicationDidEnterBackground.");
-        g_IOSIAP.stopSession();
-    }
-};
-
-
-plugin.onApplicationWillEnterForeground = function () {
-    if (g_IOSIAP != null) {
-        cc.log("plugin.onApplicationWillEnterForeground.");
-        g_IOSIAP.startSession(s_strAppKey);
-    }
-};
-
-var loadIAPPlugin = function () {
-    var pluginManager = plugin.PluginManager.getInstance();
-    g_IOSIAP = pluginManager.loadPlugin("IOSIAP");
-    cc.log("i am in loadIAPPlugin,g_IOSIAP is "+g_IOSIAP);
-};
-
-
-TAG_LOG_EVENT_ID = 0;
-TAG_LOG_EVENT_ID_KV = 1;
-TAG_LOG_ONLINE_CONFIG = 2;
-TAG_LOG_EVENT_ID_DURATION = 3;
-TAG_LOG_EVENT_BEGIN = 4;
-TAG_LOG_EVENT_END = 5;
-TAG_MAKE_ME_CRASH = 6;
-
-var s_EventMenuItem2 = [
-    {id: "TestIap", tag: TAG_LOG_ONLINE_CONFIG},
-    {id: "LogEvent-eventId", tag: TAG_LOG_EVENT_ID},
-    {id: "LogEvent-eventId-kv", tag: TAG_LOG_EVENT_ID_KV},
-    {id: "LogEvent-eventId-Duration", tag: TAG_LOG_EVENT_ID_DURATION},
-    {id: "LogEvent-Begin", tag: TAG_LOG_EVENT_BEGIN},
-    {id: "LogEvent-End", tag: TAG_LOG_EVENT_END},
-    {id: "MakeMeCrash", tag: TAG_MAKE_ME_CRASH}
+var s_IAPFunctionItem = [
+    {name: "setServerMode", tag: TAG_SETSERVERMODE},
+    {name: "getProductList", tag: TAG_GETPRODUCTLIST},
+    {name: "PayForProduct", tag: TAG_PAYMENT}
 ];
-
-var IOSIAPTestLayer = cc.Layer.extend({
-    ctor: function () {
-        this._super();
-        cc.associateWithNative(this, cc.Layer);
-    },
-
+var s_IAPResultItem = [
+    {name: "false", tag: TAG_SETSERVERMODE_RESULT},
+    {name: "[ ]", tag: TAG_GETPRODUCTLIST_RESULT},
+    {name: "didn't call payFunction yet", tag: TAG_PAYMENT_RESULT}
+];
+var IAPTestLayer = PluginXTest.extend({
+    _serverMode: false,
     onEnter: function () {
         this._super();
-        var size = cc.Director.getInstance().getWinSize();
+        this.initPlugin();
+        this.addMenuItem();
+        this.initToast();
+    },
+    initPlugin: function () {
+        var pluginManager = plugin.PluginManager.getInstance();
+        this.PluginIAP = pluginManager.loadPlugin("IOSIAP");
+        this.PluginIAP.setListener(this);
+    },
+    addMenuItem: function () {
+        var payMenu = new cc.Menu();
+        for (var i = 0; i < s_IAPFunctionItem.length; i++) {
+            var text = new cc.LabelTTF(s_IAPFunctionItem[i].name, "Arial", 20);
+            var item = new cc.MenuItemLabel(text, this.menuCallBack, this);
+            item.tag = s_IAPFunctionItem[i].tag;
+            item.x = 200;
+            item.y = cc.winSize.height - 200 - i * 50;
 
-        cc.log("ENTERED");
-
-        /////////////////////////////
-        // 2. add a menu item with "X" image, which is clicked to quit the program
-        //    you may modify it.
-
-        // add a "close" icon to exit the progress. it's an autorelease object
-        var pCloseItem = cc.MenuItemImage.create(
-            "CloseNormal.png",
-            "CloseSelected.png",
-            this.menuCloseCallback,
-            this);
-        pCloseItem.setPosition(cc.p(size.width - 20, 20));
-
-        // create menu, it's an autorelease object
-        var pMenu = cc.Menu.create(pCloseItem);
-        pMenu.setPosition(cc.p(0, 0));
-        this.addChild(pMenu, 1);
-
-        var yPos = 0;
-        for (var i = 0; i < s_EventMenuItem2.length; i++) {
-            var label = cc.LabelTTF.create(s_EventMenuItem2[i].id, "Arial", 24);
-            var pMenuItem = cc.MenuItemLabel.create(label, this.eventMenuCallback, this);
-            pMenu.addChild(pMenuItem, 0, s_EventMenuItem2[i].tag);
-            yPos = size.height - 50 * i - 100;
-            pMenuItem.setPosition(cc.p(size.width / 2, yPos));
+            var resultLabel = new cc.LabelTTF(s_IAPResultItem[i].name, "Arial", 20);
+            resultLabel.color = cc.color(125, 125, 125);
+            resultLabel.anchorX = 0;
+            resultLabel.tag = s_IAPResultItem[i].tag;
+            resultLabel.x = 300;
+            resultLabel.y = cc.winSize.height - 200 - i * 50;
+            payMenu.addChild(item);
+            this.addChild(resultLabel);
         }
-
-        var strName = g_IOSIAP.getPluginName();
-        var strVer = g_IOSIAP.getPluginVersion();
-        var ret = "Plugin : " + strName + ", Ver : " + strVer;
-        var pLabel = cc.LabelTTF.create(ret, "Arial", 24, cc.size(size.width, 0), cc.TEXT_ALIGNMENT_CENTER);
-        pLabel.setPosition(cc.p(size.width / 2, yPos - 100));
-        this.addChild(pLabel);
-
-        var label = cc.LabelTTF.create("reload all plugins", "Arial", 24);
-        var pMenuItem = cc.MenuItemLabel.create(label, this.reloadPluginMenuCallback, this);
-        pMenuItem.setAnchorPoint(cc.p(0.5, 0));
-        pMenu.addChild(pMenuItem, 0);
-        pMenuItem.setPosition(cc.p(size.width / 2, 0));
-        this._listener = new plugin.IAPListener();
-        g_IOSIAP.setResultListener(this._listener);
+        payMenu.x = 0;
+        payMenu.y = 0;
+        this.addChild(payMenu);
     },
-
-    reloadPluginMenuCallback: function (pSender) {
-        cc.log("reloadPluginMenuCallback");
-        plugin.PluginManager.getInstance().unloadPlugin("AnalyticsFlurry");
-        plugin.PluginManager.getInstance().unloadPlugin("AnalyticsUmeng");
-
-        loadIAPPlugin();
+    closeFunction: function (sender) {
+        var scene = new ExtensionsTestScene();
+        scene.runThisTest();
+        cc.director.runScene(scene);
     },
-
-    eventMenuCallback: function (pSender) {
-        switch (pSender.getTag()) {
-            case TAG_LOG_EVENT_ID:
-            {
-                g_IOSIAP.logEvent("click");
-                g_IOSIAP.logEvent("music");
+    initToast: function () {
+        this.toastLayer = new cc.LayerColor();
+        var label = new cc.LabelTTF("loading", "Arial", 16);
+        this.toastLayer.addChild(label);
+        this.toastLayer.setTag(TAG_TOAST);
+        label.x = cc.winSize.width / 2;
+        label.y = cc.winSize.height / 2;
+        this.toastLayer.retain();
+        this.toastLayer.setColor(cc.color(100, 100, 100, 100));
+    },
+    addTouch: function (bool) {
+        if (bool) {
+            var self = this.toastLayer;
+            this.listener = cc.EventListener.create({
+                event: cc.EventListener.TOUCH_ONE_BY_ONE,
+                swallowTouches: true,
+                onTouchBegan: function (touch, event) {
+                    return true;
+                },
+                onTouchMoved: function (touch, event) {
+                },
+                onTouchEnded: function (touch, event) {
+                },
+                onTouchCancelled: function (touch, event) {
+                }
+            });
+            cc.eventManager.addListener(this.listener, self);
+        } else {
+            cc.eventManager.removeListener(this.listener);
+        }
+    },
+    toggleToast: function (show) {
+        if (show) {
+            if (!this.getChildByTag(TAG_TOAST)) {
+                this.addChild(this.toastLayer);
+                this.addTouch(true);
             }
-                break;
-            case TAG_LOG_EVENT_ID_KV:
-            {
-                var paramMap = {};
-                paramMap["type"] = "popular";
-                paramMap["artist"] = "JJLin";
-                g_IOSIAP.logEvent("music", paramMap);
+        } else {
+            this.toastLayer.removeFromParent(true);
+            this.addTouch(false);
+        }
+    },
+    menuCallBack: function (sender) {
+        this.toggleToast(true);
+        if (sender.tag === TAG_SETSERVERMODE) {
+            this.PluginIAP.callFuncWithParam("setServerMode");
+            var label = this.getChildByTag(TAG_SETSERVERMODE_RESULT);
+            this._serverMode = true;
+            if (label) {
+                label.setString("true");
+                this.toggleToast(false);
             }
-                break;
-            case TAG_LOG_ONLINE_CONFIG:
-            {
-                var array= ["001","002"];
-                var temp = {};
-                temp["ids"] = array.toString();
-                temp["str"] = "is just a string";
-                cc.log("in TAG_LOG_ONLINE_CONFIG functions");
-                g_IOSIAP.callFuncWithParam("initIAPInfo");
-//                g_IOSIAP.callStringFuncWithParam("requestProducts", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, temp));
-                g_IOSIAP.callFuncWithParam("requestProducts", plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, array.toString()));
+        } else if (sender.tag == TAG_GETPRODUCTLIST) {
+            //replace these ids to your own productIdentifiers
+            var pidList = ["001", "002"];
+            this.PluginIAP.callFuncWithParam("requestProducts", plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, pidList.toString()));
+        } else if (sender.tag == TAG_PAYMENT) {
+            if (!this.product) {
+                var label = this.getChildByTag(TAG_PAYMENT_RESULT);
+                if (label) {
+                    label.setString("please call requestProducts first");
+                    this.toggleToast(false);
+                    return;
+                }
             }
-                break;
-            case TAG_LOG_EVENT_ID_DURATION:
-            {
-                g_IOSIAP.callFuncWithParam("logEventWithDuration",
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "book"),
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeInt, 12000));
-                g_IOSIAP.callFuncWithParam("logEventWithDurationLabel",
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "book"),
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeInt, 23000),
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "chapter1"));
-                var paramMap = {};
-                paramMap["type"] = "popular";
-                paramMap["artist"] = "JJLin";
-                g_IOSIAP.callFuncWithParam("logEventWithDurationParams",
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music"),
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeInt, 2330000),
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, paramMap));
-            }
-                break;
-            case TAG_LOG_EVENT_BEGIN:
-            {
-                g_IOSIAP.logTimedEventBegin("music");
-
-                var paramMap = {};
-                paramMap["type"] = "popular";
-                paramMap["artist"] = "JJLin";
-
-                g_IOSIAP.callFuncWithParam("logTimedEventWithLabelBegin",
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music"),
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "one"));
-                g_IOSIAP.callFuncWithParam("logTimedKVEventBegin",
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music"),
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "flag0"),
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, paramMap));
-
-                g_IOSIAP.callFuncWithParam("logTimedEventBeginWithParams",
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music-kv"),
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, paramMap));
-            }
-                break;
-            case TAG_LOG_EVENT_END:
-            {
-                g_IOSIAP.logTimedEventEnd("music");
-
-                g_IOSIAP.callFuncWithParam("logTimedEventWithLabelEnd",
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music"),
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "one"));
-                g_IOSIAP.callFuncWithParam("logTimedKVEventEnd",
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music"),
-                    new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "flag0"));
-
-                g_IOSIAP.callFuncWithParam("logTimedEventEnd", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music-kv"));
-            }
-                break;
-            case TAG_MAKE_ME_CRASH:
-            {
-
-            }
-                break;
-            default:
-                break;
+            this.PluginIAP.payForProduct(this.product[0]);
         }
     },
 
-    menuCloseCallback: function () {
-        cc.log("menuCloseCallback");
-    }
-
-});
-
-var IOSIAPTest = cc.Scene.extend({
-    ctor: function () {
-        this._super();
-        cc.associateWithNative(this, cc.Scene);
+    onPayResult: function (ret, msg, productInfo) {
+        this.toggleToast(false);
+        cc.log("onPayResult ret is " + ret);
+        var str = "";
+        if (ret == plugin.ProtocolIAP.PayResultCode.PaySuccess) {
+            str = "payment Success pid is " + productInfo.productId;
+            //if you use server mode get the receive message and post to your server
+            if (this._serverMode && msg) {
+                str = "payment verify from server";
+                cc.log(str);
+                this.postServerData(msg);
+            }
+        } else if (ret == plugin.ProtocolIAP.PayResultCode.PayFail) {
+            str = "payment fail";
+        }
+        var label = this.getChildByTag(TAG_PAYMENT_RESULT);
+        if (label) {
+            label.setString(str);
+        }
     },
+    onRequestProductResult: function (ret, productInfo) {
+        var msgStr = "";
+        if (ret == plugin.ProtocolIAP.RequestProductCode.RequestFail) {
+            msgStr = "request error";
+            this.toggleToast(false);
+        } else if (ret == plugin.ProtocolIAP.RequestProductCode.RequestSuccess) {
+            cc.log("request RequestSuccees " + productInfo[0].productName);
+            this.product = productInfo;
+            msgStr = "list: [";
+            for (var i = 0; i < productInfo.length; i++) {
+                var product = productInfo[i];
+                msgStr += product.productName + " ";
+            }
+            msgStr += " ]";
+            this.toggleToast(false);
+        }
+        var label = this.getChildByTag(TAG_GETPRODUCTLIST_RESULT);
+        if (label) {
+            label.setString(msgStr);
+        }
+    },
+    postServerData: function (data) {
+        var that = this;
+        var xhr = cc.loader.getXMLHttpRequest();
 
-    onEnter: function () {
+        //replace to your own server address
+        xhr.open("POST", "http://localhost/");
+        that.toggleToast(true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                that.toggleToast(false);
+                var result = JSON.parse(xhr.responseText);
+                that.PluginIAP.callFuncWithParam("finishTransaction", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, result.receipt.in_app[0].product_id));
+            }
+        };
+        // you can add your data and post them to your server;
+        var result = {userid: 100, receipt: data};
+        xhr.send(JSON.stringify(result));
+    },
+    onExit: function () {
         this._super();
-        loadIAPPlugin();
-        var layer = new IOSIAPTestLayer();
-        layer.init();
-        this.addChild(layer);
+        this.toastLayer.release();
     }
 });
-
-plugin.IAPListener = cc.Class.extend({
-    onPayResult: function(ret, msg, productInfo) {
-        cc.log("---------onPayResult callback begin-----------------");
-        cc.log("onPayResult="+ ret + ";msg=" +msg + ";productinfo="+productInfo);
-        cc.log("---------onPayResult callback end-----------------");
-    }
-})

@@ -24,21 +24,33 @@
 // cocos2d constants
 //
 
-cc.ENGINE_VERSION = "Cocos2d-JS-v3.0 alpha 2";
+// CCConfig.js
+//
+cc.ENGINE_VERSION = "Cocos2d-JS v3.1";
 
-cc.TARGET_PLATFORM = {
-    WINDOWS:0,
-    LINUX:1,
-    MACOS:2,
-    ANDROID:3,
-    IPHONE:4,
-    IPAD:5,
-    BLACKBERRY:6,
-    NACL:7,
-    EMSCRIPTEN:8,
-    MOBILE_BROWSER:100,
-    PC_BROWSER:101
-};
+cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
+cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
+cc.DIRECTOR_FPS_INTERVAL = 0.5;
+cc.COCOSNODE_RENDER_SUBPIXEL = 1;
+cc.SPRITEBATCHNODE_RENDER_SUBPIXEL = 1;
+cc.OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA = 0;
+cc.TEXTURE_ATLAS_USE_TRIANGLE_STRIP = 0;
+cc.TEXTURE_ATLAS_USE_VAO = 0;
+cc.TEXTURE_NPOT_SUPPORT = 0;
+cc.RETINA_DISPLAY_SUPPORT = 1;
+cc.RETINA_DISPLAY_FILENAME_SUFFIX = "-hd";
+cc.USE_LA88_LABELS = 1;
+cc.SPRITE_DEBUG_DRAW = 0;
+cc.SPRITEBATCHNODE_DEBUG_DRAW = 0;
+cc.LABELBMFONT_DEBUG_DRAW = 0;
+cc.LABELATLAS_DEBUG_DRAW = 0;
+cc.IS_RETINA_DISPLAY_SUPPORTED = 1;
+cc.DEFAULT_ENGINE = cc.ENGINE_VERSION + "-native";
+cc.ENABLE_STACKABLE_ACTIONS = 1;
+cc.ENABLE_GL_STATE_CACHE = 1;
+
+
+// Resolution policies
 
 cc.ResolutionPolicy = {
     // The entire application is visible in the specified area without trying to preserve the original aspect ratio.
@@ -101,7 +113,8 @@ cc.TEXTURE_PIXELFORMAT_PVRTC4 = 9;
 cc.TEXTURE_PIXELFORMAT_DEFAULT = cc.TEXTURE_PIXELFORMAT_RGBA8888;
 
 cc.IMAGE_FORMAT_JPEG = 0;
-cc.IMAGE_FORMAT_PNG = 0;
+cc.IMAGE_FORMAT_PNG = 1;
+cc.IMAGE_FORMAT_RAWDATA = 9;
 
 cc.TOUCH_ALL_AT_ONCE = 0;
 cc.TOUCH_ONE_BY_ONE = 1;
@@ -122,21 +135,12 @@ cc.POINT_ZERO = {x:0, y:0};
 
 cc.PARTICLE_DEFAULT_CAPACITY = 500;
 
-// XXX: This definition is different than cocos2d-html5
-// cc.REPEAT_FOREVER = - 1;
-// We can't assign -1 to cc.REPEAT_FOREVER, since it will be a very big double value after
-// converting it to double by JS_ValueToNumber on android.
-// Then cast it to unsigned int, the value will be 0. The schedule will not be able to work.
-// I don't know why this occurs only on android.
-// So instead of passing -1 to it, I assign it with max value of unsigned int in c++.
-cc.REPEAT_FOREVER = 0xffffffff;
-
 cc.MENU_STATE_WAITING = 0;
 cc.MENU_STATE_TRACKING_TOUCH = 1;
 cc.MENU_HANDLER_PRIORITY = -128;
 cc.DEFAULT_PADDING = 5;
 
-cc.Scheduler.PRIORITY_SYSTEM	= -2147483648;
+cc.Scheduler.PRIORITY_SYSTEM    = -2147483648;
 
 var _Class = cc.Texture2D;
 _Class.PIXEL_FORMAT_AUTO = 0;
@@ -165,8 +169,8 @@ cc.ONE_MINUS_SRC_ALPHA = 0x0303;
 cc.ONE_MINUS_SRC_COLOR = 0x301;
 cc.ONE_MINUS_DST_ALPHA = 0x305;
 cc.ONE_MINUS_DST_COLOR = 0x0307;
-cc.ONE_MINUS_CONSTANT_ALPHA	= 0x8004;
-cc.ONE_MINUS_CONSTANT_COLOR	= 0x8002;
+cc.ONE_MINUS_CONSTANT_ALPHA = 0x8004;
+cc.ONE_MINUS_CONSTANT_COLOR = 0x8002;
 
 cc.VERTEX_ATTRIB_FLAG_NONE = 0;
 cc.VERTEX_ATTRIB_FLAG_POSITION = 1 << 0;
@@ -190,15 +194,21 @@ cc.UNIFORM_RANDOM01 = 6;
 cc.UNIFORM_SAMPLER = 7;
 cc.UNIFORM_MAX = 8;
 
+// Shaders 
+cc.UNIFORM_TIME_S = "CC_Time";
+cc.UNIFORM_COS_TIME_S   = 'CC_CosTime';
+cc.UNIFORM_COSTIME_S = "CC_CosTime";
+cc.UNIFORM_SIN_TIME_S   = 'CC_SinTime';
+cc.UNIFORM_SINTIME_S = "CC_SinTime";
 cc.UNIFORM_PMATRIX_S = "CC_PMatrix";
 cc.UNIFORM_MVMATRIX_S = "CC_MVMatrix";
 cc.UNIFORM_MVPMATRIX_S = "CC_MVPMatrix";
-cc.UNIFORM_TIME_S = "CC_Time";
-cc.UNIFORM_SINTIME_S = "CC_SinTime";
-cc.UNIFORM_COSTIME_S = "CC_CosTime";
-cc.UNIFORM_RANDOM01_S = "CC_Random01";
-cc.UNIFORM_SAMPLER_S = "CC_Texture0";
-cc.UNIFORM_ALPHA_TEST_VALUE_S = "CC_alpha_value";
+cc.UNIFORM_P_MATRIX_S   = 'CC_PMatrix';
+cc.UNIFORM_MV_MATRIX_S  = 'CC_MVMatrix';
+cc.UNIFORM_MVP_MATRIX_S = 'CC_MVPMatrix';
+cc.UNIFORM_RANDOM01_S   = 'CC_Random01';
+cc.UNIFORM_SAMPLER_S    = 'CC_Texture0';
+cc.UNIFORM_ALPHA_TEST_VALUE_S = "CC_AlphaValue";
 
 cc.ITEM_SIZE = 32;
 
@@ -215,11 +225,6 @@ cc.g_NumberOfDraws = 0;        //CCDirector.js
 
 cc.PRIORITY_NON_SYSTEM = cc.PRIORITY_SYSTEM + 1;          //CCScheduler.js
 
-cc.Node.ON_ENTER = 0;          //CCNode.js
-cc.Node.ON_EXIT = 1;
-cc.Node.ON_ENTER_TRANSITION_DID_FINISH = 2;
-cc.Node.ON_EXIT_TRANSITOIN_DID_START = 3;
-cc.Node.ON_CLEAN_UP = 4;
 cc.s_globalOrderOfArrival = 1;
 
 cc.Event.TOUCH = 0;                  //CCEvent.js
@@ -272,8 +277,8 @@ cc.SCENE_RADIAL = 0xc001;               //CCTransitionProgress.js
 
 cc.KEY = {
     //android
-    back:8,
-    menu:4199,
+    back:6,
+    menu:15,
     //desktop
     backspace:7,
     tab:8,
@@ -422,12 +427,12 @@ cc.UINT_MAX = 0xffffffff;
  * @deprecated
  */
 cc.swap = function (x, y, ref) {
-	if ((typeof ref) == 'object' && (typeof ref.x) != 'undefined' && (typeof ref.y) != 'undefined') {
-		var tmp = ref[x];
-		ref[x] = ref[y];
-		ref[y] = tmp;
-	} else
-		cc.log("cc.swap is being modified from original macro, please check usage");
+    if ((typeof ref) == 'object' && (typeof ref.x) != 'undefined' && (typeof ref.y) != 'undefined') {
+        var tmp = ref[x];
+        ref[x] = ref[y];
+        ref[y] = tmp;
+    } else
+        cc.log("cc.swap is being modified from original macro, please check usage");
 };
 
 /**
@@ -443,7 +448,7 @@ cc.swap = function (x, y, ref) {
  * cc.lerp(2,10,0.2)//returns 3.6
  */
 cc.lerp = function (a, b, r) {
-	return a + (b - a) * r;
+    return a + (b - a) * r;
 };
 
 /**
@@ -452,7 +457,7 @@ cc.lerp = function (a, b, r) {
  * @returns {number}
  */
 cc.rand = function () {
-	return Math.random() * 0xffffff;
+    return Math.random() * 0xffffff;
 };
 
 /**
@@ -461,7 +466,7 @@ cc.rand = function () {
  * @function
  */
 cc.randomMinus1To1 = function () {
-	return (Math.random() - 0.5) * 2;
+    return (Math.random() - 0.5) * 2;
 };
 
 /**
@@ -478,7 +483,7 @@ cc.random0To1 = Math.random;
  * @function
  */
 cc.degreesToRadians = function (angle) {
-	return angle * cc.RAD;
+    return angle * cc.RAD;
 };
 
 /**
@@ -487,15 +492,15 @@ cc.degreesToRadians = function (angle) {
  * @return {Number}
  * @function
  */
-cc.radiansToDegress = function (angle) {
-	return angle * cc.DEG;
+cc.radiansToDegrees = function (angle) {
+    return angle * cc.DEG;
 };
 
 /**
  * @constant
  * @type Number
  */
-cc.REPEAT_FOREVER = Number.MAX_VALUE - 1;
+cc.REPEAT_FOREVER = 0xffffffff;
 
 /**
  * default gl blend src function. Compatible with premultiplied alpha images.
@@ -517,12 +522,12 @@ cc.BLEND_DST = 0x0303;
  * @function
  */
 cc.nodeDrawSetup = function (node) {
-	//cc.glEnable(node._glServerState);
-	if (node._shaderProgram) {
-		//cc._renderContext.useProgram(node._shaderProgram._programObj);
-		node._shaderProgram.use();
-		node._shaderProgram.setUniformForModelViewAndProjectionMatrixWithMat4();
-	}
+    //cc.glEnable(node._glServerState);
+    if (node._shaderProgram) {
+        //cc._renderContext.useProgram(node._shaderProgram._programObj);
+        node._shaderProgram.use();
+        node._shaderProgram.setUniformForModelViewAndProjectionMatrixWithMat4();
+    }
 };
 
 /**
@@ -536,12 +541,12 @@ cc.nodeDrawSetup = function (node) {
  * @function
  */
 cc.enableDefaultGLStates = function () {
-	//TODO OPENGL STUFF
-	/*
-	 glEnableClientState(GL_VERTEX_ARRAY);
-	 glEnableClientState(GL_COLOR_ARRAY);
-	 glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	 glEnable(GL_TEXTURE_2D);*/
+    //TODO OPENGL STUFF
+    /*
+     glEnableClientState(GL_VERTEX_ARRAY);
+     glEnableClientState(GL_COLOR_ARRAY);
+     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+     glEnable(GL_TEXTURE_2D);*/
 };
 
 /**
@@ -554,13 +559,13 @@ cc.enableDefaultGLStates = function () {
  * @function
  */
 cc.disableDefaultGLStates = function () {
-	//TODO OPENGL
-	/*
-	 glDisable(GL_TEXTURE_2D);
-	 glDisableClientState(GL_COLOR_ARRAY);
-	 glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	 glDisableClientState(GL_VERTEX_ARRAY);
-	 */
+    //TODO OPENGL
+    /*
+     glDisable(GL_TEXTURE_2D);
+     glDisableClientState(GL_COLOR_ARRAY);
+     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+     glDisableClientState(GL_VERTEX_ARRAY);
+     */
 };
 
 /**
@@ -572,7 +577,7 @@ cc.disableDefaultGLStates = function () {
  * @function
  */
 cc.incrementGLDraws = function (addNumber) {
-	cc.g_NumberOfDraws += addNumber;
+    cc.g_NumberOfDraws += addNumber;
 };
 
 /**
@@ -589,9 +594,9 @@ cc.FLT_EPSILON = 0.0000001192092896;
  * @function
  */
 cc.contentScaleFactor = cc.IS_RETINA_DISPLAY_SUPPORTED ? function () {
-	return cc.director.getContentScaleFactor();
+    return cc.director.getContentScaleFactor();
 } : function () {
-	return 1;
+    return 1;
 };
 
 /**
@@ -601,8 +606,8 @@ cc.contentScaleFactor = cc.IS_RETINA_DISPLAY_SUPPORTED ? function () {
  * @function
  */
 cc.pointPointsToPixels = function (points) {
-	var scale = cc.contentScaleFactor();
-	return cc.p(points.x * scale, points.y * scale);
+    var scale = cc.contentScaleFactor();
+    return cc.p(points.x * scale, points.y * scale);
 };
 
 /**
@@ -611,14 +616,14 @@ cc.pointPointsToPixels = function (points) {
  * @function
  */
 cc.pointPixelsToPoints = function (pixels) {
-	var scale = cc.contentScaleFactor();
-	return cc.p(pixels.x / scale, pixels.y / scale);
+    var scale = cc.contentScaleFactor();
+    return cc.p(pixels.x / scale, pixels.y / scale);
 };
 
 cc._pointPixelsToPointsOut = function(pixels, outPoint){
-	var scale = cc.contentScaleFactor();
-	outPoint.x = pixels.x / scale;
-	outPoint.y = pixels.y / scale;
+    var scale = cc.contentScaleFactor();
+    outPoint.x = pixels.x / scale;
+    outPoint.y = pixels.y / scale;
 };
 
 /**
@@ -628,8 +633,8 @@ cc._pointPixelsToPointsOut = function(pixels, outPoint){
  * @function
  */
 cc.sizePointsToPixels = function (sizeInPoints) {
-	var scale = cc.contentScaleFactor();
-	return cc.size(sizeInPoints.width * scale, sizeInPoints.height * scale);
+    var scale = cc.contentScaleFactor();
+    return cc.size(sizeInPoints.width * scale, sizeInPoints.height * scale);
 };
 
 /**
@@ -639,14 +644,14 @@ cc.sizePointsToPixels = function (sizeInPoints) {
  * @function
  */
 cc.sizePixelsToPoints = function (sizeInPixels) {
-	var scale = cc.contentScaleFactor();
-	return cc.size(sizeInPixels.width / scale, sizeInPixels.height / scale);
+    var scale = cc.contentScaleFactor();
+    return cc.size(sizeInPixels.width / scale, sizeInPixels.height / scale);
 };
 
 cc._sizePixelsToPointsOut = function (sizeInPixels, outSize) {
-	var scale = cc.contentScaleFactor();
-	outSize.width = sizeInPixels.width / scale;
-	outSize.height = sizeInPixels.height / scale;
+    var scale = cc.contentScaleFactor();
+    outSize.width = sizeInPixels.width / scale;
+    outSize.height = sizeInPixels.height / scale;
 };
 
 /**
@@ -655,11 +660,11 @@ cc._sizePixelsToPointsOut = function (sizeInPixels, outSize) {
  * @function
  */
 cc.rectPixelsToPoints = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (pixel) {
-	var scale = cc.contentScaleFactor();
-	return cc.rect(pixel.x / scale, pixel.y / scale,
-		pixel.width / scale, pixel.height / scale);
+    var scale = cc.contentScaleFactor();
+    return cc.rect(pixel.x / scale, pixel.y / scale,
+        pixel.width / scale, pixel.height / scale);
 } : function (p) {
-	return p;
+    return p;
 };
 
 /**
@@ -668,20 +673,20 @@ cc.rectPixelsToPoints = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (pixel) {
  * @function
  */
 cc.rectPointsToPixels = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (point) {
-	var scale = cc.contentScaleFactor();
-	return cc.rect(point.x * scale, point.y * scale,
-		point.width * scale, point.height * scale);
+    var scale = cc.contentScaleFactor();
+    return cc.rect(point.x * scale, point.y * scale,
+        point.width * scale, point.height * scale);
 } : function (p) {
-	return p;
+    return p;
 };
 
 cc.checkGLErrorDebug = function () {
-	if (cc.renderMode == cc._RENDER_TYPE_WEBGL) {
-		var _error = cc._renderContext.getError();
-		if (_error) {
-			cc.log(CC._localZOrder.checkGLErrorDebug, _error);
-		}
-	}
+    if (cc.renderMode == cc._RENDER_TYPE_WEBGL) {
+        var _error = cc._renderContext.getError();
+        if (_error) {
+            cc.log(CC._localZOrder.checkGLErrorDebug, _error);
+        }
+    }
 };
 
 
@@ -1169,15 +1174,28 @@ cc.Color = function (r, g, b, a) {
     this.r = r || 0;
     this.g = g || 0;
     this.b = b || 0;
-    this.a = a || 0;
+    this.a = a || 255;
 };
 
 /**
+ * Generate a color object based on multiple forms of parameters
+ * @example
+ *
+ * // 1. All channels seperately as parameters
+ * var color1 = cc.color(255, 255, 255, 255);
+ *
+ * // 2. Convert a hex string to a color
+ * var color2 = cc.color("#000000");
+ *
+ * // 3. An color object as parameter
+ * var color3 = cc.color({r: 255, g: 255, b: 255, a: 255});
+ *
+ * Alpha channel is optional. Default value is 255
  *
  * @param {Number|String|cc.Color} r
  * @param {Number} g
  * @param {Number} b
- * @param {Number} a
+ * @param {Number} [a=255]
  * @returns {cc.Color}
  */
 cc.color = function (r, g, b, a) {
@@ -1186,8 +1204,8 @@ cc.color = function (r, g, b, a) {
     if (typeof r === "string")
         return cc.hexToColor(r);
     if (typeof r === "object")
-        return {r: r.r, g: r.g, b: r.b, a: r.a};
-    return  {r: r, g: g, b: b, a: a };
+        return {r: r.r, g: r.g, b: r.b, a: r.a || 255};
+    return  {r: r, g: g, b: b, a: a || 255};
 };
 
 /**
@@ -1354,51 +1372,64 @@ cc.associateWithNative = function( jsobj, superclass_or_instance ) {};
 // This is the recommended way to do it
 //
 cc.inherits = function (childCtor, parentCtor) {
-	/** @constructor */
-	function tempCtor() {};
-	tempCtor.prototype = parentCtor.prototype;
-	childCtor.superClass_ = parentCtor.prototype;
-	childCtor.prototype = new tempCtor();
-	childCtor.prototype.constructor = childCtor;
+    /** @constructor */
+    function tempCtor() {};
+    tempCtor.prototype = parentCtor.prototype;
+    childCtor.superClass_ = parentCtor.prototype;
+    childCtor.prototype = new tempCtor();
+    childCtor.prototype.constructor = childCtor;
 
     // Copy "static" method, but doesn't generate subclasses.
-//	for( var i in parentCtor ) {
-//		childCtor[ i ] = parentCtor[ i ];
-//	}
+//  for( var i in parentCtor ) {
+//      childCtor[ i ] = parentCtor[ i ];
+//  }
 };
 cc.base = function(me, opt_methodName, var_args) {
-	var caller = arguments.callee.caller;
-	if (caller.superClass_) {
-		// This is a constructor. Call the superclass constructor.
-		ret =  caller.superClass_.constructor.apply( me, Array.prototype.slice.call(arguments, 1));
-		return ret;
-	}
+    var caller = arguments.callee.caller;
+    if (caller.superClass_) {
+        // This is a constructor. Call the superclass constructor.
+        ret =  caller.superClass_.constructor.apply( me, Array.prototype.slice.call(arguments, 1));
+        return ret;
+    }
 
-	var args = Array.prototype.slice.call(arguments, 2);
-	var foundCaller = false;
-	for (var ctor = me.constructor;
+    var args = Array.prototype.slice.call(arguments, 2);
+    var foundCaller = false;
+    for (var ctor = me.constructor;
         ctor; ctor = ctor.superClass_ && ctor.superClass_.constructor) {
-		if (ctor.prototype[opt_methodName] === caller) {
-			foundCaller = true;
-		} else if (foundCaller) {
-			return ctor.prototype[opt_methodName].apply(me, args);
-		}
-	}
+        if (ctor.prototype[opt_methodName] === caller) {
+            foundCaller = true;
+        } else if (foundCaller) {
+            return ctor.prototype[opt_methodName].apply(me, args);
+        }
+    }
 
-	// If we did not find the caller in the prototype chain,
-	// then one of two things happened:
-	// 1) The caller is an instance method.
-	// 2) This method was not called by the right caller.
-	if (me[opt_methodName] === caller) {
-		return me.constructor.prototype[opt_methodName].apply(me, args);
-	} else {
-		throw Error(
-					'cc.base called from a method of one name ' +
-					'to a method of a different name');
-	}
+    // If we did not find the caller in the prototype chain,
+    // then one of two things happened:
+    // 1) The caller is an instance method.
+    // 2) This method was not called by the right caller.
+    if (me[opt_methodName] === caller) {
+        return me.constructor.prototype[opt_methodName].apply(me, args);
+    } else {
+        throw Error(
+                    'cc.base called from a method of one name ' +
+                    'to a method of a different name');
+    }
 };
 
 
+var ClassManager = {
+    id : (0|(Math.random()*998)),
+
+    instanceId : (0|(Math.random()*998)),
+
+    getNewID : function(){
+        return this.id++;
+    },
+
+    getNewInstanceId : function(){
+        return this.instanceId++;
+    }
+};
 //
 // 2) Using "extend" subclassing
 // Simple JavaScript Inheritance By John Resig http://ejohn.org/
@@ -1410,7 +1441,7 @@ cc.Class.extend = function (prop) {
     // Instantiate a base class (but only create the instance,
     // don't run the init constructor)
     initializing = true;
-    var prototype = new this();
+    var prototype = Object.create(_super);
     initializing = false;
     fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 
@@ -1452,6 +1483,13 @@ cc.Class.extend = function (prop) {
         }
     }
 
+    var classId = ClassManager.getNewID();
+    ClassManager[classId] = _super;
+    var desc = { writable: true, enumerable: false, configurable: true };
+    Class.id = classId;
+    desc.value = classId;
+    Object.defineProperty(prototype, '__pid', desc);
+
     // Populate our constructed prototype object
     Class.prototype = prototype;
 
@@ -1465,16 +1503,30 @@ cc.Class.extend = function (prop) {
 };
 
 cc.Node.extend = cc.Class.extend;
+cc.AtlasNode.extend = cc.Class.extend;
 cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
 cc.LayerColor.extend = cc.Class.extend;
+cc.LayerMultiplex.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
+cc.SpriteBatchNode.extend = cc.Class.extend;
 cc.SpriteFrame.extend = cc.Class.extend;
+cc.LabelTTF.extend = cc.Class.extend;
+cc.LabelBMFont.extend = cc.Class.extend;
+cc.LabelAtlas.extend = cc.Class.extend;
 cc.Menu.extend = cc.Class.extend;
 cc.MenuItem.extend = cc.Class.extend;
+cc.MenuItemLabel.extend = cc.Class.extend;
 cc.MenuItemFont.extend = cc.Class.extend;
+cc.MenuItemAtlasFont.extend = cc.Class.extend;
+cc.MenuItemSprite.extend = cc.Class.extend;
+cc.MenuItemImage.extend = cc.Class.extend;
 cc.MenuItemToggle.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
+cc.ClippingNode.extend = cc.Class.extend;
+cc.Scale9Sprite.extend = cc.Class.extend;
+cc.ProgressTimer.extend = cc.Class.extend;
+cc.ParallaxNode.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
 cc.Component.extend = cc.Class.extend;
 cc.GridBase.extend = cc.Class.extend;
@@ -1507,17 +1559,23 @@ ccui.Layout.extend = cc.Class.extend;
 ccui.ListView.extend = cc.Class.extend;
 ccui.PageView.extend = cc.Class.extend;
 ccui.ScrollView.extend = cc.Class.extend;
+cc.ControlButton.extend = cc.Class.extend;
+cc.ControlColourPicker.extend = cc.Class.extend;
+cc.ControlPotentiometer.extend = cc.Class.extend;
+cc.ControlSlider.extend = cc.Class.extend;
+cc.ControlStepper.extend = cc.Class.extend;
+cc.ControlSwitch.extend = cc.Class.extend;
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
 cc.Loader = cc.Class.extend({
-	initWith:function (resources, selector, target) {
-		if (selector) {
-			this._selector = selector;
-			this._target = target;
-		}
-		this._selector.call(this._target);
-	}
+    initWith:function (resources, selector, target) {
+        if (selector) {
+            this._selector = selector;
+            this._target = target;
+        }
+        this._selector.call(this._target);
+    }
 });
 
 cc.Loader.preload = function (resources, selector, target) {
@@ -1573,6 +1631,11 @@ var setTimeout = function (code, delay) {
     var target = new WindowTimeFun(code);
     if (arguments.length > 2)
         target._args = Array.prototype.slice.call(arguments, 2);
+    var original = target.fun;
+    target.fun = function () {
+        original.apply(this, arguments);
+        clearTimeout(target._intervalId);
+    }
     cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, 0, 0, false);
     _windowTimeFunHash[target._intervalId] = target;
     return target._intervalId;
@@ -1588,7 +1651,7 @@ var setInterval = function (code, delay) {
     var target = new WindowTimeFun(code);
     if (arguments.length > 2)
         target._args = Array.prototype.slice.call(arguments, 2);
-    cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, cc.REPEAT_FOREVER, 0, false);
+    cc.director.getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, cc.REPEAT_FOREVER, 0, false);
     _windowTimeFunHash[target._intervalId] = target;
     return target._intervalId;
 };
@@ -1650,7 +1713,10 @@ cc.EventListener.create = function(argObj){
     }
 
     for(var key in argObj) {
-        listener[key] = argObj[key];
+        // Temporary fix for EventMouse to support getDelta functions (doesn't exist in Cocos2d-x)
+        if (key == "onMouseDown" || key == "onMouseMove")
+            listener["_" + key] = argObj[key];
+        else listener[key] = argObj[key];
     }
 
     return listener;
@@ -1673,13 +1739,15 @@ cc.eventManager.addListener = function(listener, nodeOrPriority) {
     } else {
         cc.eventManager.addEventListenerWithSceneGraphPriority(listener, nodeOrPriority);
     }
+
+    return listener;
 };
 
 cc.eventManager.dispatchCustomEvent = function (eventName, optionalUserData) {
     var ev = new cc.EventCustom(eventName);
     ev.setUserData(optionalUserData);
     this.dispatchEvent(ev);
-}
+};
 
 cc.EventCustom.prototype.setUserData = function(userData) {
     this._userData = userData;
@@ -1721,8 +1789,62 @@ cc.EventListenerKeyboard.prototype.clone = function() {
     return ret;
 };
 
+cc.EventListenerMouse.prototype.clone = function() {
+    var ret = cc.EventListenerMouse.create();
+    ret._onMouseDown = this._onMouseDown;
+    ret._onMouseMove = this._onMouseMove;
+    ret.onMouseUp = this.onMouseUp;
+    ret.onMouseScroll = this.onMouseScroll;
+    return ret;
+};
+cc.EventListenerMouse.prototype.onMouseMove = function(event) {
+    if (!this._onMouseMove)
+        return;
+    event._listener = this;
+    this._onMouseMove(event);
+    this._previousX = event.getLocationX();
+    this._previousY = event.getLocationY();
+};
+cc.EventListenerMouse.prototype.onMouseDown = function(event) {
+    if (!this._onMouseDown)
+        return;
+    event._listener = this;
+    this._previousX = event.getLocationX();
+    this._previousY = event.getLocationY();
+    this._onMouseDown(event);
+};
+
 cc.EventMouse.prototype.getLocation = function(){
     return { x: this.getLocationX(), y: this.getLocationY() };
+};
+
+cc.EventMouse.prototype.getLocationInView = function() {
+    return {x: this.getLocationX(), y: cc.view.getDesignResolutionSize().height - this.getLocationY()};
+};
+
+// Temporary fix for EventMouse to support getDelta functions (doesn't exist in Cocos2d-x)
+cc.EventMouse.prototype.getDelta = function(){
+    if (isNaN(this._listener._previousX)) {
+        this._listener._previousX = this.getLocationX();
+        this._listener._previousY = this.getLocationY();
+    }
+    return { x: this.getLocationX() - this._listener._previousX, y: this.getLocationY() - this._listener._previousY };
+};
+
+cc.EventMouse.prototype.getDeltaX = function(){
+    if (isNaN(this._listener._previousX)) {
+        this._listener._previousX = this.getLocationX();
+        this._listener._previousY = this.getLocationY();
+    }
+    return this.getLocationX() - this._listener._previousX;
+};
+
+cc.EventMouse.prototype.getDeltaY = function(){
+    if (isNaN(this._listener._previousX)) {
+        this._listener._previousX = this.getLocationX();
+        this._listener._previousY = this.getLocationY();
+    }
+    return this.getLocationY() - this._listener._previousY;
 };
 
 cc.Touch.prototype.getLocationX = function(){
@@ -1732,8 +1854,6 @@ cc.Touch.prototype.getLocationX = function(){
 cc.Touch.prototype.getLocationY = function(){
     return this.getLocation().y;
 };
-
-cc.director = cc.Director.getInstance();
 
 cc.Director.EVENT_PROJECTION_CHANGED = "director_projection_changed";
 cc.Director.EVENT_AFTER_DRAW = "director_after_draw";
@@ -1750,104 +1870,58 @@ cc.Director.prototype.runScene = function(scene){
 };
 
 cc.visibleRect = {
-    _topLeft:cc.p(0,0),
-    _topRight:cc.p(0,0),
-    _top:cc.p(0,0),
-    _bottomLeft:cc.p(0,0),
-    _bottomRight:cc.p(0,0),
-    _bottom:cc.p(0,0),
-    _center:cc.p(0,0),
-    _left:cc.p(0,0),
-    _right:cc.p(0,0),
-    _width:0,
-    _height:0,
-    _isInitialized: false,
+    topLeft:cc.p(0,0),
+    topRight:cc.p(0,0),
+    top:cc.p(0,0),
+    bottomLeft:cc.p(0,0),
+    bottomRight:cc.p(0,0),
+    bottom:cc.p(0,0),
+    center:cc.p(0,0),
+    left:cc.p(0,0),
+    right:cc.p(0,0),
+    width:0,
+    height:0,
+
     init:function(){
-
-        var director = cc.Director.getInstance();
-        var origin = director.getVisibleOrigin();
-        var size = director.getVisibleSize();
-
-        this._width = size.width;
-        this._height = size.height;
-
-        var w = this._width;
-        var h = this._height;
+        var origin = cc.director.getVisibleOrigin();
+        var size = cc.director.getVisibleSize();
+        var w = this.width = size.width;
+        var h = this.height = size.height;
+        var l = origin.x,
+            b = origin.y,
+            t = b + h,
+            r = l + w;
 
         //top
-        this._topLeft.y = h;
-        this._topRight.x = w;
-        this._topRight.y = h;
-        this._top.x = w/2;
-        this._top.y = h;
+        this.topLeft.x = l;
+        this.topLeft.y = t;
+        this.topRight.x = r;
+        this.topRight.y = t;
+        this.top.x = l + w/2;
+        this.top.y = t;
 
         //bottom
-        this._bottomRight.x = w;
-        this._bottom.x = w/2;
+        this.bottomLeft.x = l;
+        this.bottomLeft.y = b;
+        this.bottomRight.x = r;
+        this.bottomRight.y = b;
+        this.bottom.x = l + w/2;
+        this.bottom.y = b;
 
         //center
-        this._center.x = w/2;
-        this._center.y = h/2;
+        this.center.x = l + w/2;
+        this.center.y = b + h/2;
 
         //left
-        this._left.y = h/2;
+        this.left.x = l;
+        this.left.y = b + h/2;
 
         //right
-        this._right.x = w;
-        this._right.y = h/2;
-    },
-    lazyInit: function(){
-        if (!this._isInitialized) {
-            this.init();
-            this._isInitialized = true;
-        }
+        this.right.x = r;
+        this.right.y = b + h/2;
     }
 };
-
-cc.defineGetterSetter(cc.visibleRect, "width", function(){
-    this.lazyInit();
-    return this._width;
-});
-cc.defineGetterSetter(cc.visibleRect, "height", function(){
-    this.lazyInit();
-    return this._height;
-});
-cc.defineGetterSetter(cc.visibleRect, "topLeft", function(){
-    this.lazyInit();
-    return this._topLeft;
-});
-cc.defineGetterSetter(cc.visibleRect, "topRight", function(){
-    this.lazyInit();
-    return this._topRight;
-});
-cc.defineGetterSetter(cc.visibleRect, "top", function(){
-    this.lazyInit();
-    return this._top;
-});
-cc.defineGetterSetter(cc.visibleRect, "bottomLeft", function(){
-    this.lazyInit();
-    return this._bottomLeft;
-});
-cc.defineGetterSetter(cc.visibleRect, "bottomRight", function(){
-    this.lazyInit();
-    return this._bottomRight;
-});
-cc.defineGetterSetter(cc.visibleRect, "bottom", function(){
-    this.lazyInit();
-    return this._bottom;
-});
-cc.defineGetterSetter(cc.visibleRect, "center", function(){
-    this.lazyInit();
-    return this._center;
-});
-cc.defineGetterSetter(cc.visibleRect, "left", function(){
-    this.lazyInit();
-    return this._left;
-});
-cc.defineGetterSetter(cc.visibleRect, "right", function(){
-    this.lazyInit();
-    return this._right;
-});
+cc.visibleRect.init();
 
 // Predefined font definition
 cc.FontDefinition = function () {
@@ -1857,7 +1931,7 @@ cc.FontDefinition = function () {
     this.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
     this.fillStyle = cc.color(255, 255, 255, 255);
     this.boundingWidth = 0;
-	this.boundingHeight = 0;
+    this.boundingHeight = 0;
 
     this.strokeEnabled = false;
     this.strokeStyle = cc.color(255, 255, 255, 255);
@@ -1865,7 +1939,7 @@ cc.FontDefinition = function () {
 
     this.shadowEnabled = false;
     this.shadowOffsetX = 0;
-	this.shadowOffsetY = 0;
+    this.shadowOffsetY = 0;
     this.shadowBlur = 0;
     this.shadowOpacity = 1.0;
 };
@@ -1932,6 +2006,18 @@ cc.arrayAppendObjectsToIndex = function(arr, addObjs,index){
     return arr;
 };
 
+/**
+ * Copy an array's item to a new array (its performance is better than Array.slice)
+ * @param {Array} arr
+ * @returns {Array}
+ */
+cc.copyArray = function(arr){
+    var i, len = arr.length, arr_clone = new Array(len);
+    for (i = 0; i < len; i += 1)
+        arr_clone[i] = arr[i];
+    return arr_clone;
+};
+
 
 
 //
@@ -1939,156 +2025,156 @@ cc.arrayAppendObjectsToIndex = function(arr, addObjs,index){
 //
 
 cc.cardinalSplineAt = function (p0, p1, p2, p3, tension, t) {
-	var t2 = t * t;
-	var t3 = t2 * t;
+    var t2 = t * t;
+    var t3 = t2 * t;
 
-	var s = (1 - tension) / 2;
+    var s = (1 - tension) / 2;
 
-	var b1 = s * ((-t3 + (2 * t2)) - t);                      // s(-t3 + 2 t2 - t)P1
-	var b2 = s * (-t3 + t2) + (2 * t3 - 3 * t2 + 1);          // s(-t3 + t2)P2 + (2 t3 - 3 t2 + 1)P2
-	var b3 = s * (t3 - 2 * t2 + t) + (-2 * t3 + 3 * t2);      // s(t3 - 2 t2 + t)P3 + (-2 t3 + 3 t2)P3
-	var b4 = s * (t3 - t2);                                   // s(t3 - t2)P4
+    var b1 = s * ((-t3 + (2 * t2)) - t);                      // s(-t3 + 2 t2 - t)P1
+    var b2 = s * (-t3 + t2) + (2 * t3 - 3 * t2 + 1);          // s(-t3 + t2)P2 + (2 t3 - 3 t2 + 1)P2
+    var b3 = s * (t3 - 2 * t2 + t) + (-2 * t3 + 3 * t2);      // s(t3 - 2 t2 + t)P3 + (-2 t3 + 3 t2)P3
+    var b4 = s * (t3 - t2);                                   // s(t3 - t2)P4
 
-	var x = (p0.x * b1 + p1.x * b2 + p2.x * b3 + p3.x * b4);
-	var y = (p0.y * b1 + p1.y * b2 + p2.y * b3 + p3.y * b4);
-	return cc.p(x, y);
+    var x = (p0.x * b1 + p1.x * b2 + p2.x * b3 + p3.x * b4);
+    var y = (p0.y * b1 + p1.y * b2 + p2.y * b3 + p3.y * b4);
+    return cc.p(x, y);
 };
 
 cc._DrawNode = cc.DrawNode;
 cc.DrawNode = cc._DrawNode.extend({
-	_drawColor: cc.color(255, 255, 255, 255),
-	_lineWidth: 1,
+    _drawColor: cc.color(255, 255, 255, 255),
+    _lineWidth: 1,
 
-	setLineWidth: function (width) {
-		this._lineWidth = width;
-	},
+    setLineWidth: function (width) {
+        this._lineWidth = width;
+    },
 
-	getLineWidth: function () {
-		return this._lineWidth;
-	},
+    getLineWidth: function () {
+        return this._lineWidth;
+    },
 
-	setDrawColor: function(color) {
-		var locDrawColor = this._drawColor;
-		locDrawColor.r = color.r;
-		locDrawColor.g = color.g;
-		locDrawColor.b = color.b;
-		locDrawColor.a = (color.a == null) ? 255 : color.a;
-	},
+    setDrawColor: function(color) {
+        var locDrawColor = this._drawColor;
+        locDrawColor.r = color.r;
+        locDrawColor.g = color.g;
+        locDrawColor.b = color.b;
+        locDrawColor.a = (color.a == null) ? 255 : color.a;
+    },
 
-	getDrawColor: function () {
-		return  cc.color(this._drawColor.r, this._drawColor.g, this._drawColor.b, this._drawColor.a);
-	},
+    getDrawColor: function () {
+        return  cc.color(this._drawColor.r, this._drawColor.g, this._drawColor.b, this._drawColor.a);
+    },
 
-	drawRect: function (origin, destination, fillColor, lineWidth, lineColor) {
-		lineWidth = lineWidth || this._lineWidth;
-		lineColor = lineColor || this._drawColor;
-		var points = [origin, cc.p(origin.x, destination.y), destination, cc.p(destination.x, origin.y)];
-		if (fillColor)
-			cc._DrawNode.prototype.drawPoly.call(this, points, fillColor, lineWidth, lineColor);
-		else {
-			points.push(origin);
-			var drawSeg = cc._DrawNode.prototype.drawSegment;
-			for (var i = 0, len = points.length; i < len - 1; i++)
-				drawSeg.call(this, points[i], points[i + 1], lineWidth, lineColor);
-		}
-	},
+    drawRect: function (origin, destination, fillColor, lineWidth, lineColor) {
+        lineWidth = lineWidth || this._lineWidth;
+        lineColor = lineColor || this._drawColor;
+        var points = [origin, cc.p(origin.x, destination.y), destination, cc.p(destination.x, origin.y)];
+        if (fillColor)
+            cc._DrawNode.prototype.drawPoly.call(this, points, fillColor, lineWidth, lineColor);
+        else {
+            points.push(origin);
+            var drawSeg = cc._DrawNode.prototype.drawSegment;
+            for (var i = 0, len = points.length; i < len - 1; i++)
+                drawSeg.call(this, points[i], points[i + 1], lineWidth, lineColor);
+        }
+    },
 
-	drawCircle: function (center, radius, angle, segments, drawLineToCenter, lineWidth, color) {
-		lineWidth = lineWidth || this._lineWidth;
-		color = color || this._drawColor;
-		if (color.a == null)
-			color.a = 255;
-		var coef = 2.0 * Math.PI / segments, vertices = [], i, len;
-		for (i = 0; i <= segments; i++) {
-			var rads = i * coef;
-			var j = radius * Math.cos(rads + angle) + center.x;
-			var k = radius * Math.sin(rads + angle) + center.y;
-			vertices.push(cc.p(j, k));
-		}
-		if (drawLineToCenter)
-			vertices.push(cc.p(center.x, center.y));
+    drawCircle: function (center, radius, angle, segments, drawLineToCenter, lineWidth, color) {
+        lineWidth = lineWidth || this._lineWidth;
+        color = color || this._drawColor;
+        if (color.a == null)
+            color.a = 255;
+        var coef = 2.0 * Math.PI / segments, vertices = [], i, len;
+        for (i = 0; i <= segments; i++) {
+            var rads = i * coef;
+            var j = radius * Math.cos(rads + angle) + center.x;
+            var k = radius * Math.sin(rads + angle) + center.y;
+            vertices.push(cc.p(j, k));
+        }
+        if (drawLineToCenter)
+            vertices.push(cc.p(center.x, center.y));
 
-		lineWidth *= 0.5;
-		var drawSeg = cc._DrawNode.prototype.drawSegment;
-		for (i = 0, len = vertices.length; i < len - 1; i++)
-			drawSeg.call(this, vertices[i], vertices[i + 1], lineWidth, color);
-	},
+        lineWidth *= 0.5;
+        var drawSeg = cc._DrawNode.prototype.drawSegment;
+        for (i = 0, len = vertices.length; i < len - 1; i++)
+            drawSeg.call(this, vertices[i], vertices[i + 1], lineWidth, color);
+    },
 
-	drawQuadBezier: function (origin, control, destination, segments, lineWidth, color) {
-		lineWidth = lineWidth || this._lineWidth;
-		color = color || this._drawColor;
-		cc._DrawNode.prototype.drawQuadBezier.call(this, origin, control, destination, segments, color);
-	},
+    drawQuadBezier: function (origin, control, destination, segments, lineWidth, color) {
+        lineWidth = lineWidth || this._lineWidth;
+        color = color || this._drawColor;
+        cc._DrawNode.prototype.drawQuadBezier.call(this, origin, control, destination, segments, color);
+    },
 
-	drawCubicBezier: function (origin, control1, control2, destination, segments, lineWidth, color) {
-		lineWidth = lineWidth || this._lineWidth;
-		color = color || this._drawColor;
-		cc._DrawNode.prototype.drawCubicBezier.call(this, origin, control1, control2, destination, segments, color);
-	},
+    drawCubicBezier: function (origin, control1, control2, destination, segments, lineWidth, color) {
+        lineWidth = lineWidth || this._lineWidth;
+        color = color || this._drawColor;
+        cc._DrawNode.prototype.drawCubicBezier.call(this, origin, control1, control2, destination, segments, color);
+    },
 
-	drawCatmullRom: function (points, segments, lineWidth, color) {
-		this.drawCardinalSpline(points, 0.5, segments, lineWidth, color);
-	},
+    drawCatmullRom: function (points, segments, lineWidth, color) {
+        this.drawCardinalSpline(points, 0.5, segments, lineWidth, color);
+    },
 
-	drawCardinalSpline: function (config, tension, segments, lineWidth, color) {
-		lineWidth = lineWidth || this._lineWidth;
-		color = color || this._drawColor;
-		if (color.a == null)
-			color.a = 255;
-		var vertices = [], p, lt, deltaT = 1.0 / config.length, m1len = config.length - 1;
+    drawCardinalSpline: function (config, tension, segments, lineWidth, color) {
+        lineWidth = lineWidth || this._lineWidth;
+        color = color || this._drawColor;
+        if (color.a == null)
+            color.a = 255;
+        var vertices = [], p, lt, deltaT = 1.0 / config.length, m1len = config.length - 1;
 
-		for (var i = 0; i < segments + 1; i++) {
-			var dt = i / segments;
+        for (var i = 0; i < segments + 1; i++) {
+            var dt = i / segments;
 
-			// border
-			if (dt == 1) {
-				p = m1len;
-				lt = 1;
-			} else {
-				p = 0 | (dt / deltaT);
-				lt = (dt - deltaT * p) / deltaT;
-			}
+            // border
+            if (dt == 1) {
+                p = m1len;
+                lt = 1;
+            } else {
+                p = 0 | (dt / deltaT);
+                lt = (dt - deltaT * p) / deltaT;
+            }
 
-			// Interpolate
-			var newPos = cc.cardinalSplineAt(
-				config[Math.min(m1len, Math.max(p - 1, 0))],
-				config[Math.min(m1len, Math.max(p + 0, 0))],
-				config[Math.min(m1len, Math.max(p + 1, 0))],
-				config[Math.min(m1len, Math.max(p + 2, 0))],
-				tension, lt);
-			vertices.push(newPos);
-		}
+            // Interpolate
+            var newPos = cc.cardinalSplineAt(
+                config[Math.min(m1len, Math.max(p - 1, 0))],
+                config[Math.min(m1len, Math.max(p + 0, 0))],
+                config[Math.min(m1len, Math.max(p + 1, 0))],
+                config[Math.min(m1len, Math.max(p + 2, 0))],
+                tension, lt);
+            vertices.push(newPos);
+        }
 
-		lineWidth *= 0.5;
-		var drawSeg = cc._DrawNode.prototype.drawSegment;
-		for (var j = 0, len = vertices.length; j < len - 1; j++)
-			drawSeg.call(this, vertices[j], vertices[j + 1], lineWidth, color);
-	},
+        lineWidth *= 0.5;
+        var drawSeg = cc._DrawNode.prototype.drawSegment;
+        for (var j = 0, len = vertices.length; j < len - 1; j++)
+            drawSeg.call(this, vertices[j], vertices[j + 1], lineWidth, color);
+    },
 
-	drawDot:function (pos, radius, color) {
-		color = color || this._drawColor;
-		cc._DrawNode.prototype.drawDot.call(this, pos, radius, color);
-	},
+    drawDot:function (pos, radius, color) {
+        color = color || this._drawColor;
+        cc._DrawNode.prototype.drawDot.call(this, pos, radius, color);
+    },
 
-	drawSegment:function (from, to, radius, color) {
-		color = color || this._drawColor;
-		cc._DrawNode.prototype.drawSegment.call(this, from, to, radius, color);
-	},
+    drawSegment:function (from, to, radius, color) {
+        color = color || this._drawColor;
+        cc._DrawNode.prototype.drawSegment.call(this, from, to, radius, color);
+    },
 
-	drawPoly:function (verts, fillColor, borderWidth, borderColor) {
-		borderColor = borderColor || this._drawColor;
-		if (fillColor)
-			cc._DrawNode.prototype.drawPoly.call(this, verts, fillColor, borderWidth, borderColor);
-		else {
-			verts.push(verts[0]);
-			var drawSeg = cc._DrawNode.prototype.drawSegment;
-			for (var i = 0, len = verts.length; i < len - 1; i++)
-				drawSeg.call(this, verts[i], verts[i + 1], borderWidth, borderColor);
-		}
-	}
+    drawPoly:function (verts, fillColor, borderWidth, borderColor) {
+        borderColor = borderColor || this._drawColor;
+        if (fillColor)
+            cc._DrawNode.prototype.drawPoly.call(this, verts, fillColor, borderWidth, borderColor);
+        else {
+            verts.push(verts[0]);
+            var drawSeg = cc._DrawNode.prototype.drawSegment;
+            for (var i = 0, len = verts.length; i < len - 1; i++)
+                drawSeg.call(this, verts[i], verts[i + 1], borderWidth, borderColor);
+        }
+    }
 });
 cc.DrawNode.create = function () {
-	return new cc.DrawNode();
+    return new cc.DrawNode();
 };
 
 
@@ -2166,7 +2252,6 @@ var templateSetBlendFunc = function(src, dst) {
         blendf = {src: src, dst: dst};
     this._setBlendFunc(blendf);
     var b = this.getBlendFunc();
-    cc.log((b.src == src) + ", " + (b.dst == dst));
 };
 for (var i = 0, l = protoHasBlend.length; i < l; i++) {
     var proto = protoHasBlend[i];
@@ -2197,12 +2282,29 @@ var easeActions = {
     easeBounceInOut : 14,
     easeBackIn : 15,
     easeBackOut : 16,
-    easeBackInOut : 17
+    easeBackInOut : 17,
+
+    easeBezierAction : 18,
+    easeQuadraticActionIn : 19,
+    easeQuadraticActionOut : 20,
+    easeQuadraticActionInOut : 21,
+    easeQuarticActionIn : 22,
+    easeQuarticActionOut : 23,
+    easeQuarticActionInOut : 24,
+    easeQuinticActionIn : 25,
+    easeQuinticActionOut : 26,
+    easeQuinticActionInOut : 27,
+    easeCircleActionIn : 28,
+    easeCircleActionOut : 29,
+    easeCircleActionInOut : 30,
+    easeCubicActionIn : 31,
+    easeCubicActionOut : 32,
+    easeCubicActionInOut : 33
 };
 
 function templateEaseActions(actionTag) {
-    return function(param) {
-        return {tag: actionTag, parameter: param};
+    return function(param, param2, param3, param4) {
+        return {tag: actionTag, param: param, param2: param2, param3: param3, param4: param4};
     }
 }
 
@@ -2211,6 +2313,7 @@ for (var a in easeActions) {
     cc[a] = templateEaseActions(actionTag);
 }
 
+// Action2d
 cc.action = cc.Action.create;
 cc.speed = cc.Speed.create;
 cc.follow = cc.Follow.create;
@@ -2225,7 +2328,7 @@ cc.toggleVisibility = cc.ToggleVisibility.create;
 cc.removeSelf = cc.RemoveSelf.create;
 cc.flipX = cc.FlipX.create;
 cc.flipY = cc.FlipY.create;
-cc.place = cc.Place.create;
+// cc.place = cc.Place.create;
 cc.callFunc = cc.CallFunc.create;
 cc.actionInterval = cc.ActionInterval.create;
 cc.sequence = cc.Sequence.create;
@@ -2234,12 +2337,12 @@ cc.repeatForever = cc.RepeatForever.create;
 cc.spawn = cc.Spawn.create;
 cc.rotateTo = cc.RotateTo.create;
 cc.rotateBy = cc.RotateBy.create;
-cc.moveBy = cc.MoveBy.create;
-cc.moveTo = cc.MoveTo.create;
+//cc.moveBy = cc.MoveBy.create;
+//cc.moveTo = cc.MoveTo.create;
 cc.skewTo = cc.SkewTo.create;
 cc.skewBy = cc.SkewBy.create;
-cc.jumpBy = cc.JumpBy.create;
-cc.jumpTo = cc.JumpTo.create;
+//cc.jumpBy = cc.JumpBy.create;
+//cc.jumpTo = cc.JumpTo.create;
 cc.bezierBy = cc.BezierBy.create;
 cc.bezierTo = cc.BezierTo.create;
 cc.scaleTo = cc.ScaleTo.create;
@@ -2251,13 +2354,153 @@ cc.fadeOut = cc.FadeOut.create;
 cc.tintTo = cc.TintTo.create;
 cc.tintBy = cc.TintBy.create;
 cc.delayTime = cc.DelayTime.create;
-//cc.reverseTime = cc.ReverseTime.create;
+cc.reverseTime = cc.ReverseTime.create;
 cc.animate = cc.Animate.create;
 cc.targetedAction = cc.TargetedAction.create;
 cc.actionTween = cc.ActionTween.create;
 
+cc.Place._create = cc.Place.create;
+cc.place = cc.Place.create = function(posOrX, y){
+    if (undefined === y){
+        return cc.Place._create(posOrX);
+    }else{
+        return cc.Place._create(cc.p(posOrX, y));
+    }
+};
+cc.MoveTo._create = cc.MoveTo.create;
+cc.moveTo = cc.MoveTo.create = function(duration, posOrX, y){
+    if (undefined === y){
+        return cc.MoveTo._create(duration, posOrX);
+    }else{
+        return cc.MoveTo._create(duration, cc.p(posOrX, y));
+    }
+};
+cc.MoveBy._create = cc.MoveBy.create;
+cc.moveBy = cc.MoveBy.create = function(duration, posOrX, y){
+    if (undefined === y){
+        return cc.MoveBy._create(duration, posOrX);
+    }else{
+        return cc.MoveBy._create(duration, cc.p(posOrX, y));
+    }
+};
+cc.JumpTo._create = cc.JumpTo.create;
+cc.jumpTo = cc.JumpTo.create = function(duration, position, y, height, jumps){
+    if (undefined === jumps){
+        jumps = height;
+        height = y;
+        return cc.JumpTo._create(duration, position, height, jumps);
+    }else{
+        return cc.JumpTo._create(duration, cc.p(position, y), height, jumps);
+    }
+};
+cc.JumpBy._create = cc.JumpBy.create;
+cc.jumpBy = cc.JumpBy.create = function(duration, position, y, height, jumps){
+    if (undefined === jumps){
+        jumps = height;
+        height = y;
+        return cc.JumpBy._create(duration, position, height, jumps);
+    }else{
+        return cc.JumpBy._create(duration, cc.p(position, y), height, jumps);
+    }
+};
 
+// Actions3d
+cc.gridAction = cc.GridAction.create;
+cc.grid3DAction = cc.Grid3DAction.create;
+cc.tiledGrid3DAction = cc.TiledGrid3DAction.create;
+cc.stopGrid = cc.StopGrid.create;
+cc.reuseGrid = cc.ReuseGrid.create;
+cc.waves3D = cc.Waves3D.create;
+cc.flipX3D = cc.FlipX3D.create;
+cc.flipY3D = cc.FlipY3D.create;
+cc.lens3D = cc.Lens3D.create;
+cc.ripple3D = cc.Ripple3D.create;
+cc.shaky3D = cc.Shaky3D.create;
+cc.liquid = cc.Liquid.create;
+cc.waves = cc.Waves.create;
+cc.twirl = cc.Twirl.create;
+cc.pageTurn3D = cc.PageTurn3D.create;
+cc.shakyTiles3D = cc.ShakyTiles3D.create;
+cc.shatteredTiles3D = cc.ShatteredTiles3D.create;
+cc.shuffleTiles = cc.ShuffleTiles.create;
+cc.fadeOutTRTiles = cc.FadeOutTRTiles.create;
+cc.fadeOutBLTiles = cc.FadeOutBLTiles.create;
+cc.fadeOutUpTiles = cc.FadeOutUpTiles.create;
+cc.fadeOutDownTiles = cc.FadeOutDownTiles.create;
+cc.turnOffTiles = cc.TurnOffTiles.create;
+cc.wavesTiles3D = cc.WavesTiles3D.create;
+cc.jumpTiles3D = cc.JumpTiles3D.create;
+cc.splitRows = cc.SplitRows.create;
+cc.splitCols = cc.SplitCols.create;
+cc.progressTo = cc.ProgressTo.create;
+cc.progressFromTo = cc.ProgressFromTo.create;
+
+// Speed functions
+cc.Speed.prototype.speed = cc.ActionInterval.prototype.speed = function(speed) {
+//    if (speed < 0) {
+//        cc.warn("cc.ActionInterval#speed : Speed must not be negative");
+//        return;
+//    }
+    var action = this, found = false;
+    while (action.getInnerAction && !found) {
+        if (action instanceof cc.Speed) {
+            found = true;
+        }
+        else {
+            action = action.getInnerAction();
+        }
+    }
+    if (found) {
+        speed = speed * action._getSpeed();
+        action._setSpeed(speed);
+    }
+    else {
+        this._speed(speed);
+    }
+    return this;
+};
+cc.Speed.prototype.setSpeed = cc.ActionInterval.prototype.setSpeed = function(speed) {
+//    if (speed < 0) {
+//        cc.warn("cc.ActionInterval#setSpeed : Speed must not be negative");
+//        return;
+//    }
+    var action = this, found = false;
+    while (action.getInnerAction && !found) {
+        if (action instanceof cc.Speed) {
+            found = true;
+        }
+        else {
+            action = action.getInnerAction();
+        }
+    }
+    if (found) {
+        action._setSpeed(speed);
+    }
+    else {
+        this._speed(speed);
+    }
+};
+cc.Speed.prototype.getSpeed = cc.ActionInterval.prototype.getSpeed = function() {
+    var action = this, found = false;
+    while (action.getInnerAction && !found) {
+        if (action instanceof cc.Speed) {
+            found = true;
+        }
+        else {
+            action = action.getInnerAction();
+        }
+    }
+    if (found) {
+        return action._getSpeed();
+    }
+    else {
+        return 1;
+    }
+};
+
+//
 //AffineTransform API
+//
 
 /**
  * @memberOf cc
@@ -2290,7 +2533,7 @@ cc.AffineTransform = function (a, b, c, d, tx, ty) {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformMake = function (a, b, c, d, tx, ty) {
+cc.affineTransformMake = function (a, b, c, d, tx, ty) {
     return {a: a, b: b, c: c, d: d, tx: tx, ty: ty};
 };
 
@@ -2302,11 +2545,11 @@ cc.AffineTransformMake = function (a, b, c, d, tx, ty) {
  * @return {cc.Point}
  * Constructor
  */
-cc.PointApplyAffineTransform = function (point, t) {
+cc.pointApplyAffineTransform = function (point, t) {
     return {x: t.a * point.x + t.c * point.y + t.tx, y: t.b * point.x + t.d * point.y + t.ty};
 };
 
-cc._PointApplyAffineTransform = function (x, y, t) {
+cc._pointApplyAffineTransform = function (x, y, t) {
     return {x: t.a * x + t.c * y + t.tx,
         y: t.b * x + t.d * y + t.ty};
 };
@@ -2319,7 +2562,7 @@ cc._PointApplyAffineTransform = function (x, y, t) {
  * @return {cc.Size}
  * Constructor
  */
-cc.SizeApplyAffineTransform = function (size, t) {
+cc.sizeApplyAffineTransform = function (size, t) {
     return {width: t.a * size.width + t.c * size.height, height: t.b * size.width + t.d * size.height};
 };
 
@@ -2329,7 +2572,7 @@ cc.SizeApplyAffineTransform = function (size, t) {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformMakeIdentity = function () {
+cc.affineTransformMakeIdentity = function () {
     return {a: 1.0, b: 0.0, c: 0.0, d: 1.0, tx: 0.0, ty: 0.0};
 };
 
@@ -2339,7 +2582,7 @@ cc.AffineTransformMakeIdentity = function () {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformIdentity = function () {
+cc.affineTransformIdentity = function () {
     return {a: 1.0, b: 0.0, c: 0.0, d: 1.0, tx: 0.0, ty: 0.0};
 };
 
@@ -2351,16 +2594,16 @@ cc.AffineTransformIdentity = function () {
  * @return {cc.Rect}
  * Constructor
  */
-cc.RectApplyAffineTransform = function (rect, anAffineTransform) {
+cc.rectApplyAffineTransform = function (rect, anAffineTransform) {
     var top = cc.rectGetMinY(rect);
     var left = cc.rectGetMinX(rect);
     var right = cc.rectGetMaxX(rect);
     var bottom = cc.rectGetMaxY(rect);
 
-    var topLeft = cc._PointApplyAffineTransform(left, top, anAffineTransform);
-    var topRight = cc._PointApplyAffineTransform(right, top, anAffineTransform);
-    var bottomLeft = cc._PointApplyAffineTransform(left, bottom, anAffineTransform);
-    var bottomRight = cc._PointApplyAffineTransform(right, bottom, anAffineTransform);
+    var topLeft = cc._pointApplyAffineTransform(left, top, anAffineTransform);
+    var topRight = cc._pointApplyAffineTransform(right, top, anAffineTransform);
+    var bottomLeft = cc._pointApplyAffineTransform(left, bottom, anAffineTransform);
+    var bottomRight = cc._pointApplyAffineTransform(right, bottom, anAffineTransform);
 
     var minX = Math.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
     var maxX = Math.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
@@ -2370,16 +2613,16 @@ cc.RectApplyAffineTransform = function (rect, anAffineTransform) {
     return cc.rect(minX, minY, (maxX - minX), (maxY - minY));
 };
 
-cc._RectApplyAffineTransformIn = function(rect, anAffineTransform){
+cc._rectApplyAffineTransformIn = function(rect, anAffineTransform){
     var top = cc.rectGetMinY(rect);
     var left = cc.rectGetMinX(rect);
     var right = cc.rectGetMaxX(rect);
     var bottom = cc.rectGetMaxY(rect);
 
-    var topLeft = cc._PointApplyAffineTransform(left, top, anAffineTransform);
-    var topRight = cc._PointApplyAffineTransform(right, top, anAffineTransform);
-    var bottomLeft = cc._PointApplyAffineTransform(left, bottom, anAffineTransform);
-    var bottomRight = cc._PointApplyAffineTransform(right, bottom, anAffineTransform);
+    var topLeft = cc._pointApplyAffineTransform(left, top, anAffineTransform);
+    var topRight = cc._pointApplyAffineTransform(right, top, anAffineTransform);
+    var bottomLeft = cc._pointApplyAffineTransform(left, bottom, anAffineTransform);
+    var bottomRight = cc._pointApplyAffineTransform(right, bottom, anAffineTransform);
 
     var minX = Math.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
     var maxX = Math.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
@@ -2402,7 +2645,7 @@ cc._RectApplyAffineTransformIn = function(rect, anAffineTransform){
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformTranslate = function (t, tx, ty) {
+cc.affineTransformTranslate = function (t, tx, ty) {
     return {
         a: t.a,
         b: t.b,
@@ -2422,7 +2665,7 @@ cc.AffineTransformTranslate = function (t, tx, ty) {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformScale = function (t, sx, sy) {
+cc.affineTransformScale = function (t, sx, sy) {
     return {a: t.a * sx, b: t.b * sx, c: t.c * sy, d: t.d * sy, tx: t.tx, ty: t.ty};
 };
 
@@ -2434,7 +2677,7 @@ cc.AffineTransformScale = function (t, sx, sy) {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformRotate = function (aTransform, anAngle) {
+cc.affineTransformRotate = function (aTransform, anAngle) {
     var fSin = Math.sin(anAngle);
     var fCos = Math.cos(anAngle);
 
@@ -2456,7 +2699,7 @@ cc.AffineTransformRotate = function (aTransform, anAngle) {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformConcat = function (t1, t2) {
+cc.affineTransformConcat = function (t1, t2) {
     return {a: t1.a * t2.a + t1.b * t2.c,                          //a
         b: t1.a * t2.b + t1.b * t2.d,                               //b
         c: t1.c * t2.a + t1.d * t2.c,                               //c
@@ -2474,7 +2717,7 @@ cc.AffineTransformConcat = function (t1, t2) {
  * @return {Boolean}
  * Constructor
  */
-cc.AffineTransformEqualToTransform = function (t1, t2) {
+cc.affineTransformEqualToTransform = function (t1, t2) {
     return ((t1.a === t2.a) && (t1.b === t2.b) && (t1.c === t2.c) && (t1.d === t2.d) && (t1.tx === t2.tx) && (t1.ty === t2.ty));
 };
 
@@ -2486,10 +2729,22 @@ cc.AffineTransformEqualToTransform = function (t1, t2) {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformInvert = function (t) {
+cc.affineTransformInvert = function (t) {
     var determinant = 1 / (t.a * t.d - t.b * t.c);
     return {a: determinant * t.d, b: -determinant * t.b, c: -determinant * t.c, d: determinant * t.a,
         tx: determinant * (t.c * t.ty - t.d * t.tx), ty: determinant * (t.b * t.tx - t.a * t.ty)};
+};
+
+
+//
+// Node API
+//
+
+cc.Node.prototype.setUserData = function (data) {
+    this.userData = data;
+};
+cc.Node.prototype.getUserData = function () {
+    return this.userData;
 };
 
 /** returns a "world" axis aligned bounding box of the node. <br/>
@@ -2498,9 +2753,8 @@ cc.AffineTransformInvert = function (t) {
 cc.Node.prototype.getBoundingBoxToWorld = function () {
     var contentSize = this.getContentSize();
     var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
-    var matrix = this.getNodeToWorldTransform();
-    var trans = cc.AffineTransformMake(matrix[0], matrix[4], matrix[1], matrix[5], matrix[12], matrix[13]);  
-    rect = cc.RectApplyAffineTransform(rect, trans);
+    var trans = this.getNodeToWorldTransform();
+    rect = cc.rectApplyAffineTransform(rect, trans);
 
     //query child's BoundingBox
     if (!this.getChildren())
@@ -2521,10 +2775,9 @@ cc.Node.prototype.getBoundingBoxToWorld = function () {
 cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
     var contentSize = this.getContentSize();
     var rect = cc.rect(0, 0, contentSize.width, contentSize.height);
-    var matrix = this.getNodeToParentTransform();
-    var _trans = cc.AffineTransformMake(matrix[0], matrix[4], matrix[1], matrix[5], matrix[12], matrix[13]); 
-    var trans = (parentTransform == null) ? _trans : cc.AffineTransformConcat(_trans, parentTransform);
-    rect = cc.RectApplyAffineTransform(rect, trans);
+    var _trans = this.getNodeToParentTransform();
+    var trans = (parentTransform == null) ? _trans : cc.affineTransformConcat(_trans, parentTransform);
+    rect = cc.rectApplyAffineTransform(rect, trans);
 
     //query child's BoundingBox
     if (!this.getChildren())
@@ -2540,4 +2793,42 @@ cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
         }
     }
     return rect;
+};
+
+
+//
+// cc.Layer bake/unbake/isBaked
+//
+cc.Layer.prototype.bake = cc.Layer.prototype.unbake = function() {};
+cc.Layer.prototype.isBaked = function() {return false;};
+
+
+//
+// RenderTexture beginWithClear
+//
+cc.RenderTexture.prototype._beginWithClear = cc.RenderTexture.prototype.beginWithClear;
+cc.RenderTexture.prototype.beginWithClear = function(r, g, b, a, depthValue, stencilValue) {
+    arguments[0] /= 255;
+    arguments[1] /= 255;
+    arguments[2] /= 255;
+    arguments[3] /= 255;
+    this._beginWithClear.apply(this, arguments);
+};
+
+
+//
+// Texture2D setTexParameters
+//
+cc.Texture2D.prototype._setTexParameters = cc.Texture2D.prototype.setTexParameters;
+cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS, wrapT) {
+    var minFilter;
+    if (magFilter === undefined) {
+        minFilter = texParams.minFilter;
+        magFilter = texParams.magFilter;
+        wrapS = texParams.wrapS;
+        wrapT = texParams.wrapT;
+    }
+    else minFilter = texParams;
+
+    this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
 };

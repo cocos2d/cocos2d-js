@@ -38,21 +38,21 @@ var SceneTestLayer1 = cc.Layer.extend({
         this.init();
 
         var s = director.getWinSize();
-        var item1 = cc.MenuItemFont.create("Test pushScene", this.onPushScene, this);
-        var item2 = cc.MenuItemFont.create("Test pushScene w/transition", this.onPushSceneTran, this);
-        var item3 = cc.MenuItemFont.create("Quit", function () {
+        var item1 = new cc.MenuItemFont("Test pushScene", this.onPushScene, this);
+        var item2 = new cc.MenuItemFont("Test pushScene w/transition", this.onPushSceneTran, this);
+        var item3 = new cc.MenuItemFont("Quit", function () {
             cc.log("quit!")
         }, this);
 
-        var menu = cc.Menu.create(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3);
         menu.alignItemsVertically();
         this.addChild(menu);
 
-        var sprite = cc.Sprite.create(s_pathGrossini);
+        var sprite = new cc.Sprite(s_pathGrossini);
         this.addChild(sprite);
         sprite.x = s.width - 40;
         sprite.y = s.height / 2;
-        var rotate = cc.RotateBy.create(2, 360);
+        var rotate = cc.rotateBy(2, 360);
         var repeat = rotate.repeatForever();
         sprite.runAction(repeat);
         //----end0----
@@ -87,7 +87,7 @@ var SceneTestLayer1 = cc.Layer.extend({
         var layer = new SceneTestLayer2();
         scene.addChild(layer, 0);
 
-        director.pushScene(cc.TransitionSlideInT.create(1, scene));
+        director.pushScene(new cc.TransitionSlideInT(1, scene));
     },
     onQuit:function (sender) {
     }
@@ -108,20 +108,20 @@ var SceneTestLayer2 = cc.Layer.extend({
 
         var s = director.getWinSize();
 
-        var item1 = cc.MenuItemFont.create("runScene", this.runScene, this);
-        var item2 = cc.MenuItemFont.create("runScene w/transition", this.runSceneTran, this);
-        var item3 = cc.MenuItemFont.create("Go Back", this.onGoBack, this);
+        var item1 = new cc.MenuItemFont("runScene", this.runScene, this);
+        var item2 = new cc.MenuItemFont("runScene w/transition", this.runSceneTran, this);
+        var item3 = new cc.MenuItemFont("Go Back", this.onGoBack, this);
 
-        var menu = cc.Menu.create(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3);
         menu.alignItemsVertically();
         this.addChild(menu);
 
-        var sprite = cc.Sprite.create(s_pathGrossini);
+        var sprite = new cc.Sprite(s_pathGrossini);
         this.addChild(sprite);
 
         sprite.x = s.width - 40;
         sprite.y = s.height / 2;
-        var rotate = cc.RotateBy.create(2, 360);
+        var rotate = cc.rotateBy(2, 360);
         var repeat = rotate.repeatForever();
         sprite.runAction(repeat);
         //----end0----
@@ -149,7 +149,7 @@ var SceneTestLayer2 = cc.Layer.extend({
         var scene = new SceneTestScene();
         var layer = new SceneTestLayer3();
         scene.addChild(layer, 0);
-        director.runScene(cc.TransitionSlideInT.create(2, scene));
+        director.runScene(new cc.TransitionSlideInT(2, scene));
     }
 
     //CREATE_NODE(SceneTestLayer2);
@@ -163,19 +163,19 @@ var SceneTestLayer3 = cc.LayerColor.extend({
         this._super();
         this.init( cc.color(0,128,255,255) );
 
-        var label = cc.LabelTTF.create("Touch to popScene", "Arial", 28);
+        var label = new cc.LabelTTF("Touch to popScene", "Arial", 28);
         this.addChild(label);
         var s = director.getWinSize();
         label.x = s.width / 2;
         label.y = s.height / 2;
 
-        var sprite = cc.Sprite.create(s_pathGrossini);
+        var sprite = new cc.Sprite(s_pathGrossini);
         this.addChild(sprite);
 
         sprite.x = s.width - 40;
 
         sprite.y = s.height / 2;
-        var rotate = cc.RotateBy.create(2, 360);
+        var rotate = cc.rotateBy(2, 360);
         var repeat = rotate.repeatForever();
         sprite.runAction(repeat);
         //----end0----
@@ -217,5 +217,5 @@ SceneTestScene = TestScene.extend({
 });
 
 var arrayOfSceneTest = [
-    'Scene Layer'
+    SceneTestLayer1
 ];

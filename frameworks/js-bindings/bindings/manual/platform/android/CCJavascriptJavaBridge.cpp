@@ -1,3 +1,25 @@
+/*
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+ 
 #include <android/log.h>
 #include "CCJavascriptJavaBridge.h"
 #include "cocos2d.h"
@@ -8,6 +30,24 @@
 
 #define  LOG_TAG    "CCJavascriptJavaBridge"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalString
+  (JNIEnv *env, jclass cls, jstring value)
+{
+    const char *_value = env->GetStringUTFChars(value, NULL);
+    ScriptingCore::getInstance()->evalString(_value,NULL);
+    env->ReleaseStringUTFChars(value, _value);
+    
+    return 1;
+}
+
+#ifdef __cplusplus
+}
+#endif
 
 JavascriptJavaBridge::CallInfo::~CallInfo(void)
 {
@@ -287,16 +327,18 @@ JS_BINDED_FUNC_IMPL(JavascriptJavaBridge, callStaticMethod)
 {
     jsval *argv = JS_ARGV(cx, vp);
     if (argc == 3) {
-    	JSStringWrapper arg0(argv[0]);
+        JSStringWrapper arg0(argv[0]);
         JSStringWrapper arg1(argv[1]);
         JSStringWrapper arg2(argv[2]);
 
         CallInfo call(arg0.get(), arg1.get(), arg2.get());
         if(call.isValid()){
-	        bool success = call.execute();
-			JS_ReportError(cx, "js_cocos2dx_JSJavaBridge : call result code: %d", call.getErrorCode());
-	        JS_SET_RVAL(cx, vp, convertReturnValue(cx, call.getReturnValue(), call.getReturnValueType()));
-	        return success;	
+            bool success = call.execute();
+            int errorCode = call.getErrorCode();
+            if(errorCode < 0)
+                JS_ReportError(cx, "js_cocos2dx_JSJavaBridge : call result code: %d", errorCode);
+            JS_SET_RVAL(cx, vp, convertReturnValue(cx, call.getReturnValue(), call.getReturnValueType()));
+            return success;	
         }
     }
     else if(argc > 3){
@@ -337,7 +379,9 @@ JS_BINDED_FUNC_IMPL(JavascriptJavaBridge, callStaticMethod)
             }
             bool success = call.executeWithArgs(args);
             if (args) delete []args;
-            JS_ReportError(cx, "js_cocos2dx_JSJavaBridge : call result code: %d", call.getErrorCode());
+            int errorCode = call.getErrorCode();
+            if(errorCode < 0)
+                JS_ReportError(cx, "js_cocos2dx_JSJavaBridge : call result code: %d", errorCode);
             JS_SET_RVAL(cx, vp, convertReturnValue(cx, call.getReturnValue(), call.getReturnValueType()));
             return success;
         }

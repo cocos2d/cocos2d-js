@@ -87,33 +87,33 @@ var extensionsTestItemNames = [
         testScene:function () {
             runSocketIOTest();
         }
+    },
+    {
+        itemTitle:"CCPoolTest",
+        testScene:function () {
+            runCCPoolTest();
+        }
+    },
+    {
+        itemTitle:"ActionTimelineTestScene",
+        testScene:function () {
+            var scene = new ActionTimelineTestScene();
+            scene.runThisTest();
+        }
     }
 ];
 
-if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {
-     extensionsTestItemNames.push({
-        itemTitle:"PluginXTest",
+if (cc.sys.isNative && cc.sys.OS_IOS == cc.sys.os) {
+    extensionsTestItemNames.push({
+        itemTitle:"PluginTest",
         testScene:function () {
-            var testScene = new PluginXTestScene();
-            if (testScene) {
-                cc.director.runScene(testScene);
-            }
+            var testScene = pluginXSceneManager.currentPluginXScene();
+            cc.director.runScene(testScene);
         }
-    });
+    })
 }
-//if (cc.sys.os == cc.sys.OS_IOS) {
-//    extensionsTestItemNames.push({
-//        itemTitle:"IOSIAPTest",
-//        testScene:function () {
-//            var testScene = new IOSIAPTest();
-//            if (testScene) {
-//                cc.director.runScene(testScene);
-//            }
-//        }
-//    });
-//}
 
-if (cc.sys.isNative) {
+if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
     extensionsTestItemNames.push({
         itemTitle:"AssetsManagerTest",
         testScene:function () {

@@ -28,14 +28,14 @@ cc.BuilderReader.registerController("TestTimelineLayer", {
     "onCallback1" : function(sender) {
         // Rotate the label when the button is pressed
         var label = this["helloLabel"];
-        label.runAction(cc.RotateBy.create(1,360));
+        label.runAction(cc.rotateBy(1,360));
         label.setString("Callback 1");
     },
 
     "onCallback2" : function(sender) {
         // Rotate the label when the button is pressed
         var label = this["helloLabel"];
-        label.runAction(cc.RotateBy.create(1,-360));
+        label.runAction(cc.rotateBy(1,-360));
         label.setString("Callback 2");
     }
 });

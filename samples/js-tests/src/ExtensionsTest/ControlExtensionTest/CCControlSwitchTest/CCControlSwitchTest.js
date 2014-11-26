@@ -29,7 +29,7 @@ var ControlSwitchTest = ControlScene.extend({
         if (this._super()) {
             var screenSize = cc.director.getWinSize();
 
-            var layer = cc.Node.create();
+            var layer = new cc.Node();
             layer.x = screenSize.width / 2;
             layer.y = screenSize.height / 2;
             this.addChild(layer, 1);
@@ -37,7 +37,7 @@ var ControlSwitchTest = ControlScene.extend({
             var layer_width = 0;
 
             // Add the black background for the text
-            var background = cc.Scale9Sprite.create("res/extensions/buttonBackground.png");
+            var background = new cc.Scale9Sprite("res/extensions/buttonBackground.png");
             background.width = 80;
 	        background.height = 50;
             background.x = layer_width + background.width / 2.0;
@@ -46,7 +46,7 @@ var ControlSwitchTest = ControlScene.extend({
 
             layer_width += background.width;
 
-            this._displayValueLabel = cc.LabelTTF.create("#color", "Marker Felt", 30);
+            this._displayValueLabel = new cc.LabelTTF("#color", "Marker Felt", 30);
             this._displayValueLabel.retain();
 
             this._displayValueLabel.x = background.x;
@@ -54,14 +54,14 @@ var ControlSwitchTest = ControlScene.extend({
             layer.addChild(this._displayValueLabel);
 
             // Create the switch
-            var switchControl = cc.ControlSwitch.create
+            var switchControl = new cc.ControlSwitch
                 (
-                    cc.Sprite.create("res/extensions/switch-mask.png"),
-                    cc.Sprite.create("res/extensions/switch-on.png"),
-                    cc.Sprite.create("res/extensions/switch-off.png"),
-                    cc.Sprite.create("res/extensions/switch-thumb.png"),
-                    cc.LabelTTF.create("On", "Arial-BoldMT", 16),
-                    cc.LabelTTF.create("Off", "Arial-BoldMT", 16)
+                    new cc.Sprite("res/extensions/switch-mask.png"),
+                    new cc.Sprite("res/extensions/switch-on.png"),
+                    new cc.Sprite("res/extensions/switch-off.png"),
+                    new cc.Sprite("res/extensions/switch-thumb.png"),
+                    new cc.LabelTTF("On", "Arial-BoldMT", 16),
+                    new cc.LabelTTF("Off", "Arial-BoldMT", 16)
                 );
             switchControl.x = layer_width + 10 + switchControl.width / 2;
             switchControl.y = 0;
@@ -92,7 +92,7 @@ var ControlSwitchTest = ControlScene.extend({
 });
 
 ControlSwitchTest.create = function (sceneTitle) {
-    var scene = cc.Scene.create();
+    var scene = new cc.Scene();
     var controlLayer = new ControlSwitchTest();
     if (controlLayer && controlLayer.init()) {
         controlLayer.getSceneTitleLabel().setString(sceneTitle);

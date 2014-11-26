@@ -53,12 +53,12 @@ var EnemyController = ccs.ComController.extend({
         var actualDuration = ( Math.random() % rangeDuration ) + minDuration;
 
         // Create the actions
-        var actionMove = cc.MoveTo.create(actualDuration, cc.p(0 - this.getOwner().width / 2, actualY));
-        var actionMoveDone = cc.CallFunc.create(function () {
+        var actionMove = cc.moveTo(actualDuration, cc.p(0 - this.getOwner().width / 2, actualY));
+        var actionMoveDone = cc.callFunc(function () {
             var comController = this.getOwner().parent.getComponent("SceneController");
             comController.spriteMoveFinished(this.getOwner());
         }, this);
-        this.getOwner().runAction(cc.Sequence.create(actionMove, actionMoveDone));
+        this.getOwner().runAction(cc.sequence(actionMove, actionMoveDone));
     },
 
     onExit: function () {

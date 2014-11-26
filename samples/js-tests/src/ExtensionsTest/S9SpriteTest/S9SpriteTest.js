@@ -46,23 +46,23 @@ var S9SpriteTestDemo = cc.LayerGradient.extend({
     onEnter:function () {
         this._super();
 
-        var label = cc.LabelTTF.create(this._title, "Arial", 28);
+        var label = new cc.LabelTTF(this._title, "Arial", 28);
         this.addChild(label, 1);
         label.x = winSize.width / 2;
         label.y = winSize.height - 50;
 
         if (this._subtitle !== "") {
-            var l = cc.LabelTTF.create(this._subtitle, "Thonburi", 16);
+            var l = new cc.LabelTTF(this._subtitle, "Thonburi", 16);
             this.addChild(l, 1);
             l.x = winSize.width / 2;
             l.y = winSize.height - 80;
         }
 
-        var item1 = cc.MenuItemImage.create(s_pathB1, s_pathB2, this.onBackCallback, this);
-        var item2 = cc.MenuItemImage.create(s_pathR1, s_pathR2, this.onRestartCallback, this);
-        var item3 = cc.MenuItemImage.create(s_pathF1, s_pathF2, this.onNextCallback, this);
+        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.onBackCallback, this);
+        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.onRestartCallback, this);
+        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.onNextCallback, this);
 
-        var menu = cc.Menu.create(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3);
 
         menu.x = 0;
         menu.y = 0;
@@ -113,10 +113,10 @@ var S9BatchNodeBasic = S9SpriteTestDemo.extend({
 
         cc.log("S9BatchNodeBasic ...");
 
-        var batchNode = cc.SpriteBatchNode.create("res/Images/blocks9.png");
+        var batchNode = new cc.SpriteBatchNode("res/Images/blocks9.png");
         cc.log("batchNode created with : " + "res/Images/blocks9.png");
 
-        var blocks = cc.Scale9Sprite.create();
+        var blocks = new cc.Scale9Sprite();
         cc.log("... created");
 
         blocks.updateWithBatchNode(batchNode, cc.rect(0, 0, 96, 96), false, cc.rect(0, 0, 96, 96));
@@ -148,7 +148,7 @@ var S9FrameNameSpriteSheet = S9SpriteTestDemo.extend({
 
         cc.log("S9FrameNameSpriteSheet ...");
 
-        var blocks = cc.Scale9Sprite.createWithSpriteFrameName('blocks9.png');
+        var blocks = new cc.Scale9Sprite('blocks9.png');
         cc.log("... created");
 
         blocks.x = x;
@@ -177,7 +177,7 @@ var S9FrameNameSpriteSheetRotated = S9SpriteTestDemo.extend({
 
         cc.log("S9FrameNameSpriteSheetRotated ...");
 
-        var blocks = cc.Scale9Sprite.createWithSpriteFrameName('blocks9r.png');
+        var blocks = new cc.Scale9Sprite('blocks9r.png');
         cc.log("... created");
 
         blocks.x = x;
@@ -207,10 +207,10 @@ var S9BatchNodeScaledNoInsets = S9SpriteTestDemo.extend({
         cc.log("S9BatchNodeScaledNoInsets ...");
 
         // scaled without insets
-        var batchNode_scaled = cc.SpriteBatchNode.create("res/Images/blocks9.png");
+        var batchNode_scaled = new cc.SpriteBatchNode("res/Images/blocks9.png");
         cc.log("batchNode_scaled created with : " + "res/Images/blocks9.png");
 
-        var blocks_scaled = cc.Scale9Sprite.create();
+        var blocks_scaled = new cc.Scale9Sprite();
         cc.log("... created");
         blocks_scaled.updateWithBatchNode(batchNode_scaled, cc.rect(0, 0, 96, 96), false, cc.rect(0, 0, 96, 96));
         cc.log("... updateWithBatchNode");
@@ -245,7 +245,7 @@ var S9FrameNameSpriteSheetScaledNoInsets = S9SpriteTestDemo.extend({
 
         cc.log("S9FrameNameSpriteSheetScaledNoInsets ...");
 
-        var blocks_scaled = cc.Scale9Sprite.createWithSpriteFrameName('blocks9.png');
+        var blocks_scaled = new cc.Scale9Sprite('blocks9.png');
         cc.log("... created");
 
         blocks_scaled.x = x;
@@ -278,7 +278,7 @@ var S9FrameNameSpriteSheetRotatedScaledNoInsets = S9SpriteTestDemo.extend({
 
         cc.log("S9FrameNameSpriteSheetRotatedScaledNoInsets ...");
 
-        var blocks_scaled = cc.Scale9Sprite.createWithSpriteFrameName('blocks9r.png');
+        var blocks_scaled = new cc.Scale9Sprite('blocks9r.png');
         cc.log("... created");
 
         blocks_scaled.x = x;
@@ -312,10 +312,10 @@ var S9BatchNodeScaleWithCapInsets = S9SpriteTestDemo.extend({
 
         cc.log("S9BatchNodeScaleWithCapInsets ...");
 
-        var batchNode_scaled_with_insets = cc.SpriteBatchNode.create("res/Images/blocks9.png");
+        var batchNode_scaled_with_insets = new cc.SpriteBatchNode("res/Images/blocks9.png");
         cc.log("batchNode_scaled_with_insets created with : " + "res/Images/blocks9.png");
 
-        var blocks_scaled_with_insets = cc.Scale9Sprite.create();
+        var blocks_scaled_with_insets = new cc.Scale9Sprite();
         cc.log("... created");
 
         blocks_scaled_with_insets.updateWithBatchNode(batchNode_scaled_with_insets, cc.rect(0, 0, 96, 96), false, cc.rect(32, 32, 32, 32));
@@ -351,7 +351,7 @@ var S9FrameNameSpriteSheetInsets = S9SpriteTestDemo.extend({
 
         cc.log("S9FrameNameSpriteSheetInsets ...");
 
-        var blocks_with_insets = cc.Scale9Sprite.createWithSpriteFrameName('blocks9.png', cc.rect(32, 32, 32, 32));
+        var blocks_with_insets = new cc.Scale9Sprite('blocks9.png', cc.rect(32, 32, 32, 32));
         cc.log("... created");
 
         blocks_with_insets.x = x;
@@ -380,7 +380,7 @@ var S9FrameNameSpriteSheetInsetsScaled = S9SpriteTestDemo.extend({
 
         cc.log("S9FrameNameSpriteSheetInsetsScaled ...");
 
-        var blocks_scaled_with_insets = cc.Scale9Sprite.createWithSpriteFrameName('blocks9.png', cc.rect(32, 32, 32, 32));
+        var blocks_scaled_with_insets = new cc.Scale9Sprite('blocks9.png', cc.rect(32, 32, 32, 32));
         cc.log("... created");
 
         blocks_scaled_with_insets.width = 96 * 4.5;
@@ -413,7 +413,7 @@ var S9FrameNameSpriteSheetRotatedInsets = S9SpriteTestDemo.extend({
 
         cc.log("S9FrameNameSpriteSheetRotatedInsets ...");
 
-        var blocks_with_insets = cc.Scale9Sprite.createWithSpriteFrameName('blocks9r.png', cc.rect(32, 32, 32, 32));
+        var blocks_with_insets = new cc.Scale9Sprite('blocks9r.png', cc.rect(32, 32, 32, 32));
         cc.log("... created");
 
         blocks_with_insets.x = x;
@@ -443,7 +443,7 @@ var S9_TexturePacker = S9SpriteTestDemo.extend({
 
         cc.log("S9_TexturePacker ...");
 
-        var s = cc.Scale9Sprite.createWithSpriteFrameName('button_normal.png');
+        var s = new cc.Scale9Sprite('button_normal.png');
         cc.log("... created");
 
         s.x = x;
@@ -461,7 +461,7 @@ var S9_TexturePacker = S9SpriteTestDemo.extend({
 
         x = winSize.width * 3/4;
 
-        var s2 = cc.Scale9Sprite.createWithSpriteFrameName('button_actived.png');
+        var s2 = new cc.Scale9Sprite('button_actived.png');
         cc.log("... created");
 
         s2.x = x;
@@ -494,7 +494,7 @@ var S9FrameNameSpriteSheetRotatedInsetsScaled = S9SpriteTestDemo.extend({
 
         cc.log("S9FrameNameSpriteSheetRotatedInsetsScaled ...");
 
-        var blocks_scaled_with_insets = cc.Scale9Sprite.createWithSpriteFrameName('blocks9.png', cc.rect(32, 32, 32, 32));
+        var blocks_scaled_with_insets = new cc.Scale9Sprite('blocks9.png', cc.rect(32, 32, 32, 32));
         cc.log("... created");
 
         blocks_scaled_with_insets.width = 96 * 4.5;
@@ -513,8 +513,8 @@ var S9FrameNameSpriteSheetRotatedInsetsScaled = S9SpriteTestDemo.extend({
 });
 
 var S9SpriteTestScene = TestScene.extend({
-    runThisTest:function () {
-        sceneIdx = -1;
+    runThisTest:function (num) {
+        sceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextS9SpriteTest();
         this.addChild(layer);
 

@@ -31,35 +31,36 @@ var UIRichTextTest = UIScene.extend({
             this._topDisplayLabel.setString("");
             this._bottomDisplayLabel.setString("RichText");
 
-            var widgetSize = this._widget.getSize();
-            var button = ccui.Button.create();
+            var widgetSize = this._widget.getContentSize();
+            var button = new ccui.Button();
             button.setTouchEnabled(true);
             button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
-            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getSize().height * 2.5));
+            button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
 
             // RichText
-            var richText = ccui.RichText.create();
+            var richText = new ccui.RichText();
             richText.ignoreContentAdaptWithSize(false);
-            richText.setSize(cc.size(120, 100));
+            richText.width = 120;
+            richText.height = 100;
 
-            var re1 = ccui.RichElementText.create(1, cc.color.WHITE, 255, "This color is white. ", "Helvetica", 10);
-            var re2 = ccui.RichElementText.create(2, cc.color.YELLOW, 255, "And this is yellow. ", "Helvetica", 10);
-            var re3 = ccui.RichElementText.create(3, cc.color.BLUE, 255, "This one is blue. ", "Helvetica", 10);
-            var re4 = ccui.RichElementText.create(4, cc.color.GREEN, 255, "And green. ", "Helvetica", 10);
-            var re5 = ccui.RichElementText.create(5, cc.color.RED, 255, "Last one is red ", "Helvetica", 10);
+            var re1 = new ccui.RichElementText(1, cc.color.WHITE, 255, "This color is white. ", "Helvetica", 10);
+            var re2 = new ccui.RichElementText(2, cc.color.YELLOW, 255, "And this is yellow. ", "Helvetica", 10);
+            var re3 = new ccui.RichElementText(3, cc.color.BLUE, 255, "This one is blue. ", "Helvetica", 10);
+            var re4 = new ccui.RichElementText(4, cc.color.GREEN, 255, "And green. ", "Helvetica", 10);
+            var re5 = new ccui.RichElementText(5, cc.color.RED, 255, "Last one is red ", "Helvetica", 10);
 
-            var reimg = ccui.RichElementImage.create(6, cc.color.WHITE, 255, "res/cocosui/sliderballnormal.png");
+            var reimg = new ccui.RichElementImage(6, cc.color.WHITE, 255, "res/cocosui/sliderballnormal.png");
 
             ccs.armatureDataManager.addArmatureFileInfo("res/cocosui/100/100.ExportJson");
             var pAr = ccs.Armature.create("100");
             pAr.getAnimation().play("Animation1");
 
-            var recustom = ccui.RichElementCustomNode.create(1, cc.color.WHITE, 255, pAr);
-            var re6 = ccui.RichElementText.create(7, cc.color.ORANGE, 255, "Have fun!! ", "Helvetica", 10);
+            var recustom = new ccui.RichElementCustomNode(1, cc.color.WHITE, 255, pAr);
+            var re6 = new ccui.RichElementText(7, cc.color.ORANGE, 255, "Have fun!! ", "Helvetica", 10);
             richText.pushBackElement(re1);
             richText.insertElement(re2, 1);
             richText.pushBackElement(re3);
@@ -69,7 +70,8 @@ var UIRichTextTest = UIScene.extend({
             richText.pushBackElement(recustom);
             richText.pushBackElement(re6);
 
-            richText.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
+            richText.x = widgetSize.width / 2;
+            richText.y = widgetSize.height / 2;
 
             this._mainNode.addChild(richText);
             this._richText = richText;
@@ -81,9 +83,8 @@ var UIRichTextTest = UIScene.extend({
         if (type == ccui.Widget.TOUCH_ENDED) {
             if (this._richText.isIgnoreContentAdaptWithSize()) {
                 this._richText.ignoreContentAdaptWithSize(false);
-                this._richText.setSize(cc.size(120, 100));
-            }
-            else {
+                this._richText.setContentSize(cc.size(120, 100));
+            } else {
                 this._richText.ignoreContentAdaptWithSize(true);
             }
         }

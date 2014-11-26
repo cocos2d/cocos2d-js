@@ -91,11 +91,6 @@ var cc = cc || {};
         return cc.Node.prototype.getNumberOfRunningActionsInTarget.apply(this, arguments);
     };
 
-    cc.TMXTiledMap.prototype.propertiesForGID = function() {
-        logW("cc.TMXTiledMap.propertiesForGID", "cc.TMXTiledMap.getPropertiesForGID");
-        return cc.TMXTiledMap.prototype.getPropertiesForGID.apply(this, arguments);
-    };
-
     cc.Menu.prototype.setHandlerPriority = function() {
         cc.log("cc.Menu.setHandlerPriority was deprecated, 3.0 uses new event dispatcher to dispatch touch event based on draw order, so setHandlerPriority is not needed now.");
     };
@@ -113,6 +108,21 @@ var cc = cc || {};
     cc.registerTargettedDelegate = function() {
         logW("cc.registerTargettedDelegate", "cc.registerTargetedDelegate");
         return cc.registerTargetedDelegate.apply(this, arguments);
+    };
+
+    ccui.Text.prototype.setText = function(text){
+        logW("ccui.Text.setText", "ccui.Text.setString");
+        this.setString(text);
+    };
+
+    ccui.Text.prototype.getStringValue = function(){
+        logW("ccui.Text.getStringValue", "ccui.Text.getString");
+        return this.getString();
+    };
+
+    cc.Touch.prototype.getId = function(){
+        logW("cc.Touch.getId", "cc.Touch.getID");
+        return this.getID();
     };
 
 })();

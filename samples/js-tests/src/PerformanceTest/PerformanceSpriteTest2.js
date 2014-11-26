@@ -95,23 +95,23 @@ var PerformanceTestBase = cc.Layer.extend({
     onEnter:function () {
         this._super();
 
-        var label = cc.LabelTTF.create(this._title, "Arial", 28);
+        var label = new cc.LabelTTF(this._title, "Arial", 28);
         this.addChild(label, 1);
         label.x = winSize.width / 2;
         label.y = winSize.height - 50;
 
         if (this._subtitle !== "") {
-            var l = cc.LabelTTF.create(this._subtitle, "Thonburi", 16);
+            var l = new cc.LabelTTF(this._subtitle, "Thonburi", 16);
             this.addChild(l, 1);
             l.x = winSize.width / 2;
             l.y = winSize.height - 80;
         }
 
-        var item1 = cc.MenuItemImage.create(s_pathB1, s_pathB2, this.onBackCallback, this);
-        var item2 = cc.MenuItemImage.create(s_pathR1, s_pathR2, this.onRestartCallback, this);
-        var item3 = cc.MenuItemImage.create(s_pathF1, s_pathF2, this.onNextCallback, this);
+        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.onBackCallback, this);
+        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.onRestartCallback, this);
+        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.onNextCallback, this);
 
-        var menu = cc.Menu.create(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3);
 
         menu.x = 0;
 
@@ -202,11 +202,11 @@ var PerformanceSpriteTest1 = PerformanceTestBase.extend({
 
         // use the same seed for the tests
         Math.seedrandom('perftest');
-        var parent = cc.Node.create();
+        var parent = new cc.Node();
         this.addChild(parent,0,10);
 
         for( var i=0; i<num; i++) {
-            var sprite = cc.Sprite.create('res/Images/grossini.png');
+            var sprite = new cc.Sprite('res/Images/grossini.png');
             parent.addChild( sprite );
 
             var x = Math.random() * winSize.width;
@@ -227,10 +227,10 @@ var PerformanceSpriteTest1 = PerformanceTestBase.extend({
 
         // use the same seed for the tests
         Math.seedrandom('perftest');
-        var parent = cc.SpriteBatchNode.create('res/Images/grossini.png',num);
+        var parent = new cc.SpriteBatchNode('res/Images/grossini.png',num);
         this.addChild(parent,0,10);
         for( var i=0; i<num; i++) {
-            var sprite = cc.Sprite.create('res/Images/grossini.png');
+            var sprite = new cc.Sprite('res/Images/grossini.png');
             parent.addChild( sprite );
 
             var x = Math.random() * winSize.width;
@@ -273,8 +273,8 @@ var arrayOfPerformanceSpriteTest = [
 
 ];
 var PerformanceSpriteTestScene = TestScene.extend({
-    runThisTest:function () {
-        performanceSpriteTestSceneIdx = -1;
+    runThisTest:function (num) {
+        performanceSpriteTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextPerformanceSpriteTest();
         this.addChild(layer);
 

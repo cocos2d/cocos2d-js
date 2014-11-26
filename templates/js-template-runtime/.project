@@ -11,6 +11,13 @@
 		<nature>org.ccdt.jsdt.core.jsNature</nature>
 	</natures>
 	<cocosprojecttemplate>
-		<version>1.1</version>
+		<version>1.2</version>
 	</cocosprojecttemplate>
+    <linkedResources>
+        <link>
+            <name>script</name>
+            <type>2</type>
+            <locationURI>PROJECT_LOC/frameworks/js-bindings/bindings/script</locationURI>
+        </link>
+	</linkedResources>
 </projectDescription>

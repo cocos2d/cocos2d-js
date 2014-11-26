@@ -23,18 +23,75 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.js_tests;
 
+import org.cocos2dx.js_tests.R;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
+import org.cocos2dx.lib.Cocos2dxJavascriptJavaBridge;
 import org.cocos2dx.plugin.PluginWrapper;
+import org.cocos2dx.plugin.FacebookWrapper;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 
 public class AppActivity extends Cocos2dxActivity {
+    
+    private static AppActivity app = null;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        app = this;
+    }
+
+    @Override
     public Cocos2dxGLSurfaceView onCreateView() {
         Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
         // TestCpp should create stencil buffer
         glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
-
+        
         PluginWrapper.init(this);
         PluginWrapper.setGLSurfaceView(glSurfaceView);
+        FacebookWrapper.onCreate(this);
+        
         return glSurfaceView;
+    }
+    
+    public static void showAlertDialog(final String title, final String message) {
+        app.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog alertDialog = new AlertDialog.Builder(app).create();
+                alertDialog.setTitle(title);
+                alertDialog.setMessage(message);
+                alertDialog.setCancelable(true);
+                alertDialog.setIcon(R.drawable.icon);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        app.runOnGLThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Cocos2dxJavascriptJavaBridge.evalString("cc.log(\"Javascript Java bridge!\")");
+                            }
+                        });
+                    }
+                });
+                alertDialog.show();
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        FacebookWrapper.onAcitivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        FacebookWrapper.onSaveInstanceState(outState);
     }
 }

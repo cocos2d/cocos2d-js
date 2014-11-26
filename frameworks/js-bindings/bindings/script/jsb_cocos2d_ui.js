@@ -55,6 +55,7 @@ ccui.Layout.BACKGROUND_RENDERER_ZORDER = -2;
  * UILayoutDefine
  */
 //LinearGravity
+//old
 ccui.LINEAR_GRAVITY_NONE = 0;
 ccui.LINEAR_GRAVITY_LEFT = 1;
 ccui.LINEAR_GRAVITY_TOP = 2;
@@ -62,8 +63,17 @@ ccui.LINEAR_GRAVITY_RIGHT = 3;
 ccui.LINEAR_GRAVITY_BOTTOM = 4;
 ccui.LINEAR_GRAVITY_CENTER_VERTICAL = 5;
 ccui.LINEAR_GRAVITY_CENTER_HORIZONTAL = 6;
+//new
+ccui.LinearLayoutParameter.NONE = 0;
+ccui.LinearLayoutParameter.LEFT = 1;
+ccui.LinearLayoutParameter.TOP = 2;
+ccui.LinearLayoutParameter.RIGHT = 3;
+ccui.LinearLayoutParameter.BOTTOM = 4;
+ccui.LinearLayoutParameter.CENTER_VERTICAL = 5;
+ccui.LinearLayoutParameter.CENTER_HORIZONTAL = 6;
 
 //RelativeAlign
+//old
 ccui.RELATIVE_ALIGN_NONE = 0;
 ccui.RELATIVE_ALIGN_PARENT_TOP_LEFT = 1;
 ccui.RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL = 2;
@@ -90,6 +100,33 @@ ccui.RELATIVE_ALIGN_LOCATION_RIGHT_BOTTOM = 18;
 ccui.RELATIVE_ALIGN_LOCATION_BELOW_TOP = 19;
 ccui.RELATIVE_ALIGN_LOCATION_BELOW_CENTER = 20;
 ccui.RELATIVE_ALIGN_LOCATION_BELOW_BOTTOM = 21;
+
+//new
+ccui.RelativeLayoutParameter.NONE = 0;
+ccui.RelativeLayoutParameter.PARENT_TOP_LEFT = 1;
+ccui.RelativeLayoutParameter.PARENT_TOP_CENTER_HORIZONTAL = 2;
+ccui.RelativeLayoutParameter.PARENT_TOP_RIGHT = 3;
+ccui.RelativeLayoutParameter.PARENT_LEFT_CENTER_VERTICAL = 4;
+
+ccui.RelativeLayoutParameter.CENTER_IN_PARENT = 5;
+
+ccui.RelativeLayoutParameter.PARENT_RIGHT_CENTER_VERTICAL = 6;
+ccui.RelativeLayoutParameter.PARENT_LEFT_BOTTOM = 7;
+ccui.RelativeLayoutParameter.PARENT_BOTTOM_CENTER_HORIZONTAL = 8;
+ccui.RelativeLayoutParameter.PARENT_RIGHT_BOTTOM = 9;
+
+ccui.RelativeLayoutParameter.LOCATION_ABOVE_LEFTALIGN = 10;
+ccui.RelativeLayoutParameter.LOCATION_ABOVE_CENTER = 11;
+ccui.RelativeLayoutParameter.LOCATION_ABOVE_RIGHTALIGN = 12;
+ccui.RelativeLayoutParameter.LOCATION_LEFT_OF_TOPALIGN = 13;
+ccui.RelativeLayoutParameter.LOCATION_LEFT_OF_CENTER = 14;
+ccui.RelativeLayoutParameter.LOCATION_LEFT_OF_BOTTOMALIGN = 15;
+ccui.RelativeLayoutParameter.LOCATION_RIGHT_OF_TOPALIGN = 16;
+ccui.RelativeLayoutParameter.LOCATION_RIGHT_OF_CENTER = 17;
+ccui.RelativeLayoutParameter.LOCATION_RIGHT_OF_BOTTOMALIGN = 18;
+ccui.RelativeLayoutParameter.LOCATION_BELOW_LEFTALIGN = 19;
+ccui.RelativeLayoutParameter.LOCATION_BELOW_CENTER = 20;
+ccui.RelativeLayoutParameter.LOCATION_BELOW_RIGHTALIGN = 21;
 
 /*
  * LayoutParameter
@@ -134,6 +171,8 @@ ccui.Widget.POSITION_PERCENT = 1;
  */
 //listView event type
 ccui.ListView.EVENT_SELECTED_ITEM = 0;
+ccui.ListView.ON_SELECTED_ITEM_START = 0;
+ccui.ListView.ON_SELECTED_ITEM_END = 1;
 
 //listView gravity
 ccui.ListView.GRAVITY_LEFT = 0;
@@ -254,8 +293,8 @@ ccui.TextBMFont.RENDERER_ZORDER = -1;
  * UITextField
  */
 //TextField event
-ccui.TextField.EVENT_ATTACH_WITH_ME = 0;
-ccui.TextField.EVENT_DETACH_WITH_ME = 1;
+ccui.TextField.EVENT_ATTACH_WITH_IME = 0;
+ccui.TextField.EVENT_DETACH_WITH_IME = 1;
 ccui.TextField.EVENT_INSERT_TEXT = 2;
 ccui.TextField.EVENT_DELETE_BACKWARD = 3;
 
@@ -306,3 +345,11 @@ ccui.MarginZero = function(){
  * addNode and addChild function should be merged in ccui.Widget
  */
 ccui.Widget.prototype.addNode = ccui.Widget.prototype.addChild;
+ccui.Widget.prototype.getSize = ccui.Widget.prototype.getContentSize;
+ccui.Widget.prototype.setSize = ccui.Widget.prototype.setContentSize;
+
+/*
+ * UITextField temporary solution to getString, wait for -x patch
+ */
+ccui.TextField.prototype.getString = ccui.TextField.prototype.getStringValue;
+ccui.TextField.prototype.setString = ccui.TextField.prototype.setText;

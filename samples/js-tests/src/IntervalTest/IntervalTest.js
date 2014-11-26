@@ -26,7 +26,7 @@
 
 
 
-IntervalLayer = cc.LayerGradient.extend({
+var IntervalLayer = cc.LayerGradient.extend({
 
     label0:null,
     label1:null,
@@ -47,7 +47,7 @@ IntervalLayer = cc.LayerGradient.extend({
 
         var s = director.getWinSize();
         // sun
-        var sun = cc.ParticleSun.create();
+        var sun = new cc.ParticleSun();
         sun.texture = cc.textureCache.addImage(s_fire);
         sun.x = s.width - 32;
         sun.y = s.height - 32;
@@ -57,11 +57,11 @@ IntervalLayer = cc.LayerGradient.extend({
         this.addChild(sun);
 
         // timers
-        this.label0 = cc.LabelTTF.create("0", "Arial", 24);
-        this.label1 = cc.LabelTTF.create("0", "Arial", 24);
-        this.label2 = cc.LabelTTF.create("0", "Arial", 24);
-        this.label3 = cc.LabelTTF.create("0", "Arial", 24);
-        this.label4 = cc.LabelTTF.create("0", "Arial", 24);
+        this.label0 = new cc.LabelTTF("0", "Arial", 24);
+        this.label1 = new cc.LabelTTF("0", "Arial", 24);
+        this.label2 = new cc.LabelTTF("0", "Arial", 24);
+        this.label3 = new cc.LabelTTF("0", "Arial", 24);
+        this.label4 = new cc.LabelTTF("0", "Arial", 24);
 
         this.scheduleUpdate();
         this.schedule(this.step1);
@@ -87,18 +87,18 @@ IntervalLayer = cc.LayerGradient.extend({
         this.addChild(this.label4);
 
         // Sprite
-        var sprite = cc.Sprite.create(s_pathGrossini);
+        var sprite = new cc.Sprite(s_pathGrossini);
         sprite.x = 40;
         sprite.y = 50;
 
-        var jump = cc.JumpBy.create(3, cc.p(s.width - 80, 0), 50, 4);
+        var jump = cc.jumpBy(3, cc.p(s.width - 80, 0), 50, 4);
 
         this.addChild(sprite);
-        sprite.runAction(cc.Sequence.create(jump, jump.reverse()).repeatForever());
+        sprite.runAction(cc.sequence(jump, jump.reverse()).repeatForever());
 
         // pause button
-        var item1 = cc.MenuItemFont.create("Pause", this.onPause, this);
-        var menu = cc.Menu.create(item1);
+        var item1 = new cc.MenuItemFont("Pause", this.onPause, this);
+        var menu = new cc.Menu(item1);
         menu.x = s.width / 2;
         menu.y = s.height - 50;
 
@@ -146,7 +146,7 @@ IntervalLayer = cc.LayerGradient.extend({
     //CREATE_NODE(IntervalLayer);
 });
 
-IntervalTestScene = TestScene.extend({
+var IntervalTestScene = TestScene.extend({
 
     runThisTest:function () {
         var layer = new IntervalLayer();

@@ -45,13 +45,26 @@ var cocoStudioTestItemNames = [
         testScene:function () {
             runSceneEditorTest();
         }
+    },
+    {
+        itemTitle:"ParserTest",
+        testScene:function(){
+            runParserTest();
+        }
     }
 ];
+
 if(!cc.sys.isNative){
     cocoStudioTestItemNames.push({
         itemTitle: "CocoStudioComponentsTest",
         testScene: function () {
             runComponentsTestLayer();
+        }
+    });
+    cocoStudioTestItemNames.push({
+        itemTitle:"CustomWidget",
+        testScene:function(){
+            runCustomGUITest();
         }
     });
 }

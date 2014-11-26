@@ -14,7 +14,7 @@
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS();     }, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ THE SOFTWARE IS PROVIDED "AS IS()", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -91,6 +91,12 @@ var s_testArray = [
         }
     },
     {
+        title: "UILoadingBarTest_Fix",
+        func: function(){
+            return new UILoadingBarTest_Fix();
+        }
+    },
+    {
         title: "UILoadingBarTest_Left_Scale9",
         func: function () {
             return new UILoadingBarTest_Left_Scale9();
@@ -100,6 +106,12 @@ var s_testArray = [
         title: "UILoadingBarTest_Right_Scale9",
         func: function () {
             return new UILoadingBarTest_Right_Scale9();
+        }
+    },
+    {
+        title: "UILoadingBarTest_Fix_Scale9",
+        func: function(){
+            return new UILoadingBarTest_Fix_Scale9();
         }
     },
     {
@@ -183,6 +195,12 @@ var s_testArray = [
         title: "UILayoutTest_Layout_Linear_Horizontal",
         func: function () {
             return new UILayoutTest_Layout_Linear_Horizontal();
+        }
+    },
+    {
+        title: "UILayoutTest_Layout_Relative",
+        func: function () {
+            return new UILayoutTest_Layout_Relative();
         }
     },
     {

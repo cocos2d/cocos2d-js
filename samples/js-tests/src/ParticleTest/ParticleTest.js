@@ -28,8 +28,8 @@ var TAG_LABEL_ATLAS = 1;
 var particleSceneIdx = -1;
 
 var ParticleTestScene = TestScene.extend({
-    runThisTest:function () {
-        particleSceneIdx = -1;
+    runThisTest:function (num) {
+        particleSceneIdx = (num || num == 0) ? (num - 1) : -1;
 
         this.addChild(nextParticleAction());
         director.runScene(this);
@@ -197,27 +197,27 @@ var ParticleDemo = BaseTestLayer.extend({
                     event.getCurrentTarget()._moveToTouchPoint(event.getLocation());
                 },
                 onMouseMove: function(event){
-                    if(event.getButton() != undefined)
+                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget()._moveToTouchPoint(event.getLocation());
                 }
             }, this);
 
         var s = director.getWinSize();
 
-        var freeBtnNormal = cc.Sprite.create(s_MovementMenuItem, cc.rect(0, 23 * 2, 123, 23));
-        var freeBtnSelected = cc.Sprite.create(s_MovementMenuItem, cc.rect(0, 23, 123, 23));
-        var freeBtnDisabled = cc.Sprite.create(s_MovementMenuItem, cc.rect(0, 0, 123, 23));
+        var freeBtnNormal = new cc.Sprite(s_MovementMenuItem, cc.rect(0, 23 * 2, 123, 23));
+        var freeBtnSelected = new cc.Sprite(s_MovementMenuItem, cc.rect(0, 23, 123, 23));
+        var freeBtnDisabled = new cc.Sprite(s_MovementMenuItem, cc.rect(0, 0, 123, 23));
 
-        var relativeBtnNormal = cc.Sprite.create(s_MovementMenuItem, cc.rect(123, 23 * 2, 138, 23));
-        var relativeBtnSelected = cc.Sprite.create(s_MovementMenuItem, cc.rect(123, 23, 138, 23));
-        var relativeBtnDisabled = cc.Sprite.create(s_MovementMenuItem, cc.rect(123, 0, 138, 23));
+        var relativeBtnNormal = new cc.Sprite(s_MovementMenuItem, cc.rect(123, 23 * 2, 138, 23));
+        var relativeBtnSelected = new cc.Sprite(s_MovementMenuItem, cc.rect(123, 23, 138, 23));
+        var relativeBtnDisabled = new cc.Sprite(s_MovementMenuItem, cc.rect(123, 0, 138, 23));
 
-        var groupBtnNormal = cc.Sprite.create(s_MovementMenuItem, cc.rect(261, 23 * 2, 136, 23));
-        var groupBtnSelected = cc.Sprite.create(s_MovementMenuItem, cc.rect(261, 23, 136, 23));
-        var groupBtnDisabled = cc.Sprite.create(s_MovementMenuItem, cc.rect(261, 0, 136, 23));
+        var groupBtnNormal = new cc.Sprite(s_MovementMenuItem, cc.rect(261, 23 * 2, 136, 23));
+        var groupBtnSelected = new cc.Sprite(s_MovementMenuItem, cc.rect(261, 23, 136, 23));
+        var groupBtnDisabled = new cc.Sprite(s_MovementMenuItem, cc.rect(261, 0, 136, 23));
 
         var selfPoint = this;
-        this._freeMovementButton = cc.MenuItemSprite.create(freeBtnNormal, freeBtnSelected, freeBtnDisabled,
+        this._freeMovementButton = new cc.MenuItemSprite(freeBtnNormal, freeBtnSelected, freeBtnDisabled,
             function () {
                 selfPoint._emitter.setPositionType(cc.ParticleSystem.TYPE_RELATIVE);
                 selfPoint._relativeMovementButton.setVisible(true);
@@ -228,7 +228,7 @@ var ParticleDemo = BaseTestLayer.extend({
         this._freeMovementButton.y = 150;
         this._freeMovementButton.setAnchorPoint(0, 0);
 
-        this._relativeMovementButton = cc.MenuItemSprite.create(relativeBtnNormal, relativeBtnSelected, relativeBtnDisabled,
+        this._relativeMovementButton = new cc.MenuItemSprite(relativeBtnNormal, relativeBtnSelected, relativeBtnDisabled,
             function () {
                 selfPoint._emitter.setPositionType(cc.ParticleSystem.TYPE_GROUPED);
                 selfPoint._relativeMovementButton.setVisible(false);
@@ -240,7 +240,7 @@ var ParticleDemo = BaseTestLayer.extend({
         this._relativeMovementButton.y = 150;
         this._relativeMovementButton.setAnchorPoint(0, 0);
 
-        this._groupMovementButton = cc.MenuItemSprite.create(groupBtnNormal, groupBtnSelected, groupBtnDisabled,
+        this._groupMovementButton = new cc.MenuItemSprite(groupBtnNormal, groupBtnSelected, groupBtnDisabled,
             function () {
                 selfPoint._emitter.setPositionType(cc.ParticleSystem.TYPE_FREE);
                 selfPoint._relativeMovementButton.setVisible(false);
@@ -252,11 +252,11 @@ var ParticleDemo = BaseTestLayer.extend({
         this._groupMovementButton.y = 150;
         this._groupMovementButton.setAnchorPoint(0, 0);
 
-        var spriteNormal = cc.Sprite.create(s_shapeModeMenuItem, cc.rect(0, 23 * 2, 115, 23));
-        var spriteSelected = cc.Sprite.create(s_shapeModeMenuItem, cc.rect(0, 23, 115, 23));
-        var spriteDisabled = cc.Sprite.create(s_shapeModeMenuItem, cc.rect(0, 0, 115, 23));
+        var spriteNormal = new cc.Sprite(s_shapeModeMenuItem, cc.rect(0, 23 * 2, 115, 23));
+        var spriteSelected = new cc.Sprite(s_shapeModeMenuItem, cc.rect(0, 23, 115, 23));
+        var spriteDisabled = new cc.Sprite(s_shapeModeMenuItem, cc.rect(0, 0, 115, 23));
 
-        this._shapeModeButton = cc.MenuItemSprite.create(spriteNormal, spriteSelected, spriteDisabled,
+        this._shapeModeButton = new cc.MenuItemSprite(spriteNormal, spriteSelected, spriteDisabled,
             function () {
                 if (selfPoint._emitter.setDrawMode)
                     selfPoint._emitter.setDrawMode(cc.ParticleSystem.TEXTURE_MODE);
@@ -272,11 +272,11 @@ var ParticleDemo = BaseTestLayer.extend({
             this._shapeModeButton.enabled = false;
         }
 
-        var spriteNormal_t = cc.Sprite.create(s_textureModeMenuItem, cc.rect(0, 23 * 2, 115, 23));
-        var spriteSelected_t = cc.Sprite.create(s_textureModeMenuItem, cc.rect(0, 23, 115, 23));
-        var spriteDisabled_t = cc.Sprite.create(s_textureModeMenuItem, cc.rect(0, 0, 115, 23));
+        var spriteNormal_t = new cc.Sprite(s_textureModeMenuItem, cc.rect(0, 23 * 2, 115, 23));
+        var spriteSelected_t = new cc.Sprite(s_textureModeMenuItem, cc.rect(0, 23, 115, 23));
+        var spriteDisabled_t = new cc.Sprite(s_textureModeMenuItem, cc.rect(0, 0, 115, 23));
 
-        this._textureModeButton = cc.MenuItemSprite.create(spriteNormal_t, spriteSelected_t, spriteDisabled_t,
+        this._textureModeButton = new cc.MenuItemSprite(spriteNormal_t, spriteSelected_t, spriteDisabled_t,
             function () {
                 if (selfPoint._emitter.setDrawMode)
                     selfPoint._emitter.setDrawMode(cc.ParticleSystem.SHAPE_MODE);
@@ -288,7 +288,7 @@ var ParticleDemo = BaseTestLayer.extend({
         this._textureModeButton.y = 100;
         this._textureModeButton.setAnchorPoint(0, 0);
 
-        var menu = cc.Menu.create( this._shapeModeButton, this._textureModeButton,
+        var menu = new cc.Menu( this._shapeModeButton, this._textureModeButton,
             this._freeMovementButton, this._relativeMovementButton, this._groupMovementButton);
 
         menu.x = 0;
@@ -297,21 +297,21 @@ var ParticleDemo = BaseTestLayer.extend({
 
         this.addChild(menu, 100);
         //TODO
-        var labelAtlas = cc.LabelAtlas.create("0123456789", s_fpsImages, 16, 24, '.');
+        var labelAtlas = new cc.LabelAtlas("0123456789", s_fpsImages, 16, 24, '.');
         this.addChild(labelAtlas, 100, TAG_LABEL_ATLAS);
         labelAtlas.x = s.width - 66;
         labelAtlas.y = 50;
 
         // moving background
-        this._background = cc.Sprite.create(s_back3);
+        this._background = new cc.Sprite(s_back3);
         this.addChild(this._background, 5);
         this._background.x = s.width / 2;
         this._background.y = s.height - 180;
 
-        var move = cc.MoveBy.create(4, cc.p(300, 0));
+        var move = cc.moveBy(4, cc.p(300, 0));
         var move_back = move.reverse();
 
-        var seq = cc.Sequence.create(move, move_back);
+        var seq = cc.sequence(move, move_back);
         this._background.runAction(seq.repeatForever());
 
         this.scheduleUpdate();
@@ -388,7 +388,7 @@ var DemoFirework = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleFireworks.create();
+        this._emitter = new cc.ParticleFireworks();
         this._background.addChild(this._emitter, 10);
         var myTexture = cc.textureCache.addImage(s_stars1);
         this._emitter.texture = myTexture;
@@ -405,7 +405,7 @@ var DemoFire = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleFire.create();
+        this._emitter = new cc.ParticleFire();
         this._background.addChild(this._emitter, 10);
 
         this._emitter.texture = cc.textureCache.addImage(s_fire);//.pvr"];
@@ -423,7 +423,7 @@ var DemoSun = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleSun.create();
+        this._emitter = new cc.ParticleSun();
         this._background.addChild(this._emitter, 10);
         var myTexture = cc.textureCache.addImage(s_fire);
         this._emitter.texture = myTexture;
@@ -441,7 +441,7 @@ var DemoGalaxy = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleGalaxy.create();
+        this._emitter = new cc.ParticleGalaxy();
         this._background.addChild(this._emitter, 10);
         var myTexture = cc.textureCache.addImage(s_fire);
         this._emitter.texture = myTexture;
@@ -461,7 +461,7 @@ var DemoFlower = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleFlower.create();
+        this._emitter = new cc.ParticleFlower();
         this._background.addChild(this._emitter, 10);
         var myTexture = cc.textureCache.addImage(s_stars1);
         this._emitter.texture = myTexture;
@@ -480,7 +480,7 @@ var DemoBigFlower = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleSystem.create(50);
+        this._emitter = new cc.ParticleSystem(50);
 
         this._background.addChild(this._emitter, 10);
         this._emitter.texture = cc.textureCache.addImage(s_stars1);
@@ -557,7 +557,7 @@ var DemoRotFlower = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleSystem.create(("opengl" in cc.sys.capabilities) ? 300 : 150);
+        this._emitter = new cc.ParticleSystem(("opengl" in cc.sys.capabilities) ? 300 : 150);
 
         this._background.addChild(this._emitter, 10);
         this._emitter.texture = cc.textureCache.addImage(s_stars2);
@@ -635,7 +635,7 @@ var DemoMeteor = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleMeteor.create();
+        this._emitter = new cc.ParticleMeteor();
         this._background.addChild(this._emitter, 10);
 
         this._emitter.texture = cc.textureCache.addImage(s_fire);
@@ -652,7 +652,7 @@ var DemoSpiral = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleSpiral.create();
+        this._emitter = new cc.ParticleSpiral();
         this._background.addChild(this._emitter, 10);
 
         this._emitter.texture = cc.textureCache.addImage(s_fire);
@@ -669,7 +669,7 @@ var DemoExplosion = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleExplosion.create();
+        this._emitter = new cc.ParticleExplosion();
         this._background.addChild(this._emitter, 10);
 
         this._emitter.texture = cc.textureCache.addImage(s_stars1);
@@ -678,6 +678,9 @@ var DemoExplosion = ParticleDemo.extend({
         this._emitter.setAutoRemoveOnFinish(true);
 
         this.setEmitterPosition();
+    },
+    onExit: function() {
+        this._super();
     },
     title:function () {
         return "ParticleExplosion";
@@ -688,7 +691,7 @@ var DemoSmoke = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleSmoke.create();
+        this._emitter = new cc.ParticleSmoke();
         this._background.addChild(this._emitter, 10);
         this._emitter.texture = cc.textureCache.addImage(s_fire);
 
@@ -703,7 +706,7 @@ var DemoSnow = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleSnow.create();
+        this._emitter = new cc.ParticleSnow();
         this._background.addChild(this._emitter, 10);
 
         this._emitter.life = 3;
@@ -743,7 +746,7 @@ var DemoRain = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleRain.create();
+        this._emitter = new cc.ParticleRain();
         this._background.addChild(this._emitter, 10);
 
         this._emitter.life = 4;
@@ -762,7 +765,7 @@ var DemoModernArt = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleSystem.create(("opengl" in cc.sys.capabilities) ? 1000 : 200);
+        this._emitter = new cc.ParticleSystem(("opengl" in cc.sys.capabilities) ? 1000 : 200);
 
         this._background.addChild(this._emitter, 10);
 
@@ -834,7 +837,7 @@ var DemoRing = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        this._emitter = cc.ParticleFlower.create();
+        this._emitter = new cc.ParticleFlower();
 
         this._background.addChild(this._emitter, 10);
 
@@ -862,29 +865,29 @@ var ParallaxParticle = ParticleDemo.extend({
         this._background = null;
 
         //TODO
-        var p = cc.ParallaxNode.create();
+        var p = new cc.ParallaxNode();
         this.addChild(p, 5);
 
-        var p1 = cc.Sprite.create(s_back3);
-        var p2 = cc.Sprite.create(s_back3);
+        var p1 = new cc.Sprite(s_back3);
+        var p2 = new cc.Sprite(s_back3);
 
         p.addChild(p1, 1, cc.p(0.5, 1), cc.p(0, 250));
         p.addChild(p2, 2, cc.p(1.5, 1), cc.p(0, 50));
 
-        this._emitter = cc.ParticleFlower.create();
+        this._emitter = new cc.ParticleFlower();
         this._emitter.texture = cc.textureCache.addImage(s_fire);
 
         p1.addChild(this._emitter, 10);
         this._emitter.x = 250;
         this._emitter.y = 200;
 
-        var par = cc.ParticleSun.create();
+        var par = new cc.ParticleSun();
         p2.addChild(par, 10);
         par.texture = cc.textureCache.addImage(s_fire);
 
-        var move = cc.MoveBy.create(4, cc.p(300, 0));
+        var move = cc.moveBy(4, cc.p(300, 0));
         var move_back = move.reverse();
-        var seq = cc.Sequence.create(move, move_back);
+        var seq = cc.sequence(move, move_back);
         p.runAction(seq.repeatForever());
     },
     title:function () {
@@ -904,7 +907,7 @@ var DemoParticleFromFile = ParticleDemo.extend({
         this.removeChild(this._background, true);
         this._background = null;
 
-        this._emitter = cc.ParticleSystem.create(s_resprefix + "Particles/" + this._title + ".plist");
+        this._emitter = new cc.ParticleSystem(s_resprefix + "Particles/" + this._title + ".plist");
         this.addChild(this._emitter, 10);
 
         if (this._title == "Flower") {
@@ -936,7 +939,7 @@ var RadiusMode1 = ParticleDemo.extend({
         this.removeChild(this._background, true);
         this._background = null;
 
-        this._emitter = cc.ParticleSystem.create(100);
+        this._emitter = new cc.ParticleSystem(100);
         this.addChild(this._emitter, 10);
         this._emitter.texture = cc.textureCache.addImage(s_starsGrayscale);
 
@@ -1014,7 +1017,7 @@ var RadiusMode2 = ParticleDemo.extend({
         this.removeChild(this._background, true);
         this._background = null;
 
-        this._emitter = cc.ParticleSystem.create(100);
+        this._emitter = new cc.ParticleSystem(100);
         this.addChild(this._emitter, 10);
         this._emitter.texture = cc.textureCache.addImage(s_starsGrayscale);
 
@@ -1091,7 +1094,7 @@ var Issue704 = ParticleDemo.extend({
         this.removeChild(this._background, true);
         this._background = null;
 
-        this._emitter = cc.ParticleSystem.create(100);
+        this._emitter = new cc.ParticleSystem(100);
         this.addChild(this._emitter, 10);
         this._emitter.texture = cc.textureCache.addImage(s_fire);
         this._emitter.shapeType = cc.ParticleSystem.BALL_SHAPE;
@@ -1156,7 +1159,7 @@ var Issue704 = ParticleDemo.extend({
         // additive
         this._emitter.setBlendAdditive(false);
 
-        var rot = cc.RotateBy.create(16, 360);
+        var rot = cc.rotateBy(16, 360);
         this._emitter.runAction(rot.repeatForever());
     },
     title:function () {
@@ -1176,7 +1179,7 @@ var Issue870 = ParticleDemo.extend({
         this.removeChild(this._background, true);
         this._background = null;
 
-        var system = cc.ParticleSystem.create(s_resprefix + "Particles/SpinningPeas.plist");
+        var system = new cc.ParticleSystem(s_resprefix + "Particles/SpinningPeas.plist");
         system.setTextureWithRect(cc.textureCache.addImage(s_particles), cc.rect(0, 0, 32, 32));
         this.addChild(system, 10);
         this._emitter = system;
@@ -1204,11 +1207,11 @@ var ParticleBatchTest = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        var emitter1 = cc.ParticleSystem.create(s_resprefix + 'Particles/LavaFlow.plist');
+        var emitter1 = new cc.ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
         emitter1.startColor = cc.color(255, 0, 0, 255);
-        var emitter2 = cc.ParticleSystem.create(s_resprefix + 'Particles/LavaFlow.plist');
+        var emitter2 = new cc.ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
         emitter2.startColor = cc.color(0, 255, 0, 255);
-        var emitter3 = cc.ParticleSystem.create(s_resprefix + 'Particles/LavaFlow.plist');
+        var emitter3 = new cc.ParticleSystem(s_resprefix + 'Particles/LavaFlow.plist');
         emitter3.startColor = cc.color(0, 0, 255, 255);
 
         emitter1.x = winSize.width / 1.25;
@@ -1219,7 +1222,7 @@ var ParticleBatchTest = ParticleDemo.extend({
         emitter3.x = winSize.width / 4;
         emitter3.y = winSize.height / 4;
 
-        var batch = cc.ParticleBatchNode.create(emitter1.texture);
+        var batch = new cc.ParticleBatchNode(emitter1.texture);
 
         batch.addChild(emitter1);
         batch.addChild(emitter2);
@@ -1245,7 +1248,7 @@ var ParticleResizeTest = ParticleDemo.extend({
     onEnter:function () {
         this._super();
 
-        var emitter1 = cc.ParticleSystem.create( s_resprefix + 'Particles/LavaFlow.plist');
+        var emitter1 = new cc.ParticleSystem( s_resprefix + 'Particles/LavaFlow.plist');
         emitter1.x = winSize.width/2;
         emitter1.y = winSize.height/2;
         this.addChild(emitter1);

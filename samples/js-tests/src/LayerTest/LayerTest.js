@@ -103,15 +103,18 @@ var LayerTest1 = LayerTest.extend({
             cc.eventManager.addListener({
                 event: cc.EventListener.MOUSE,
                 onMouseMove: function(event){
-                    if(event.getButton() != undefined)
+                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget().updateSize(event.getLocation());
                 }
             }, this);
 
         var s = director.getWinSize();
-        var layer = new cc.LayerColor(cc.color(255, 0, 0, 128), 200, 200);
+        var layer = new cc.LayerColor(cc.color(255, 0, 0, 128));
 
         layer.ignoreAnchor = false;
+        layer.anchorX = 0.5;
+        layer.anchorY = 0.5;
+        layer.setContentSize(200, 200);
         layer.x = s.width / 2;
         layer.y = s.height / 2;
         this.addChild(layer, 1, cc.TAG_LAYER);
@@ -158,9 +161,9 @@ var IgnoreAnchorpointTest1 = LayerTest.extend({
         this._super();
         //create layer
         var ws = director.getWinSize();
-        var layer1 = cc.LayerColor.create(cc.color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
+        var layer1 = new cc.LayerColor(cc.color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
         layer1.ignoreAnchorPointForPosition(true);
-        var layer2 = cc.LayerColor.create(cc.color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
+        var layer2 = new cc.LayerColor(cc.color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
         layer2.ignoreAnchorPointForPosition(true);
         layer1.addChild(layer2);
         layer1.x = ws.width / 2;
@@ -207,9 +210,9 @@ var IgnoreAnchorpointTest2 = LayerTest.extend({
         this._super();
         //create layer
         var ws = director.getWinSize();
-        var layer1 = cc.LayerColor.create(cc.color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
+        var layer1 = new cc.LayerColor(cc.color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
         layer1.ignoreAnchorPointForPosition(true);
-        var layer2 = cc.LayerColor.create(cc.color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
+        var layer2 = new cc.LayerColor(cc.color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
         layer2.ignoreAnchorPointForPosition(false);
         layer1.addChild(layer2);
         layer1.x = ws.width / 2;
@@ -257,9 +260,9 @@ var IgnoreAnchorpointTest3 = LayerTest.extend({
         this._super();
         //create layer
         var ws = director.getWinSize();
-        var layer1 = cc.LayerColor.create(cc.color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
+        var layer1 = new cc.LayerColor(cc.color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
         layer1.ignoreAnchorPointForPosition(false);
-        var layer2 = cc.LayerColor.create(cc.color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
+        var layer2 = new cc.LayerColor(cc.color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
         layer2.ignoreAnchorPointForPosition(false);
         layer1.addChild(layer2);
         layer1.x = ws.width / 2;
@@ -281,9 +284,9 @@ var IgnoreAnchorpointTest4 = LayerTest.extend({
         this._super();
         //create layer
         var ws = director.getWinSize();
-        var layer1 = cc.LayerColor.create(cc.color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
+        var layer1 = new cc.LayerColor(cc.color(255, 100, 100, 128), ws.width / 2, ws.height / 2);
         layer1.ignoreAnchorPointForPosition(false);
-        var layer2 = cc.LayerColor.create(cc.color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
+        var layer2 = new cc.LayerColor(cc.color(100, 255, 100, 128), ws.width / 4, ws.height / 4);
         layer2.ignoreAnchorPointForPosition(true);
         layer1.addChild(layer2);
         layer1.x = ws.width / 2;
@@ -312,30 +315,30 @@ var LayerTest2 = LayerTest.extend({
         this._super();
 
         var s = director.getWinSize();
-        var layer1 = cc.LayerColor.create(cc.color(255, 255, 0, 80), 100, 300);
+        var layer1 = new cc.LayerColor(cc.color(255, 255, 0, 80), 100, 300);
         layer1.x = s.width / 3;
         layer1.y = s.height / 2;
         layer1.ignoreAnchorPointForPosition(false);
         this.addChild(layer1, 1, LAYERTEST2_LAYER1_TAG);
 
-        var layer2 = cc.LayerColor.create(cc.color(0, 0, 255, 255), 100, 300);
+        var layer2 = new cc.LayerColor(cc.color(0, 0, 255, 255), 100, 300);
         layer2.x = (s.width / 3) * 2;
         layer2.y = s.height / 2;
         layer2.ignoreAnchorPointForPosition(false);
         this.addChild(layer2, 2, LAYERTEST2_LAYER2_TAG);
 
-        var actionTint = cc.TintBy.create(2, -255, -127, 0);
+        var actionTint = cc.tintBy(2, -255, -127, 0);
         var actionTintBack = actionTint.reverse();
 
-        var actionFade = cc.FadeOut.create(2.0);
+        var actionFade = cc.fadeOut(2.0);
         var actionFadeBack = actionFade.reverse();
 
         if (autoTestEnabled) {
-            var seq1 = cc.Sequence.create(actionTint, cc.DelayTime.create(0.25), actionTintBack);
-            var seq2 = cc.Sequence.create(actionFade, cc.DelayTime.create(0.25), actionFadeBack);
+            var seq1 = cc.sequence(actionTint, cc.delayTime(0.25), actionTintBack);
+            var seq2 = cc.sequence(actionFade, cc.delayTime(0.25), actionFadeBack);
         } else {
-            var seq1 = cc.Sequence.create(actionTint, actionTintBack);
-            var seq2 = cc.Sequence.create(actionFade, actionFadeBack);
+            var seq1 = cc.sequence(actionTint, actionTintBack);
+            var seq2 = cc.sequence(actionFade, actionFadeBack);
         }
 
         layer1.runAction(seq1);
@@ -391,10 +394,10 @@ var LayerTestBlend = LayerTest.extend({
     ctor:function () {
         //----start2----ctor
         this._super();
-        var layer1 = cc.LayerColor.create(cc.color(255, 255, 255, 80));
+        var layer1 = new cc.LayerColor(cc.color(255, 255, 255, 80));
 
-        var sister1 = cc.Sprite.create(s_pathSister1);
-        var sister2 = cc.Sprite.create(s_pathSister2);
+        var sister1 = new cc.Sprite(s_pathSister1);
+        var sister2 = new cc.Sprite(s_pathSister2);
 
         this.addChild(sister1);
         this.addChild(sister2);
@@ -407,7 +410,7 @@ var LayerTestBlend = LayerTest.extend({
         sister2.y = winSize.height / 2;
 
         if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
-            var label = cc.LabelTTF.create("Not supported on HTML5-canvas", "Times New Roman", 30);
+            var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;
             label.y = winSize.height / 2;
@@ -450,7 +453,7 @@ var LayerGradient = LayerTest.extend({
     ctor:function () {
         //----start7----onEnter
         this._super();
-        var layer1 = cc.LayerGradient.create(cc.color(255, 0, 0, 255), cc.color(0, 255, 0, 255), cc.p(0.9, 0.9));
+        var layer1 = new cc.LayerGradient(cc.color(255, 0, 0, 255), cc.color(0, 255, 0, 255), cc.p(0.9, 0.9));
         this.addChild(layer1, 0, cc.TAG_LAYER);
 
         if( 'touches' in cc.sys.capabilities ){
@@ -470,19 +473,19 @@ var LayerGradient = LayerTest.extend({
                     event.getCurrentTarget().updateGradient(event.getLocation());
                 },
                 onMouseMove: function(event){
-                    if(event.getButton() != undefined)
+                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget().updateGradient(event.getLocation());
                 }
             }, this);
         }
 
-        var label1 = cc.LabelTTF.create("Compressed Interpolation: Enabled", "Marker Felt", 26);
-        var label2 = cc.LabelTTF.create("Compressed Interpolation: Disabled", "Marker Felt", 26);
-        var item1 = cc.MenuItemLabel.create(label1);
-        var item2 = cc.MenuItemLabel.create(label2);
-        var item = cc.MenuItemToggle.create(item1, item2, this.onToggleItem, this);
+        var label1 = new cc.LabelTTF("Compressed Interpolation: Enabled", "Marker Felt", 26);
+        var label2 = new cc.LabelTTF("Compressed Interpolation: Disabled", "Marker Felt", 26);
+        var item1 = new cc.MenuItemLabel(label1);
+        var item2 = new cc.MenuItemLabel(label2);
+        var item = new cc.MenuItemToggle(item1, item2, this.onToggleItem, this);
 
-         var menu = cc.Menu.create(item);
+         var menu = new cc.Menu(item);
          this.addChild(menu);
          menu.x = winSize.width / 2;
          menu.y = 100;
@@ -542,6 +545,7 @@ var LayerGradient = LayerTest.extend({
 var arrayOfLayerTest = [
     LayerTest1,
     LayerTest2,
+    LayerGradient,
     LayerTestBlend,
     IgnoreAnchorpointTest1,
     IgnoreAnchorpointTest2,
@@ -557,8 +561,8 @@ var nextLayerTest = function () {
     layerTestSceneIdx++;
     layerTestSceneIdx = layerTestSceneIdx % arrayOfLayerTest.length;
 
-    if(window.sidebar){
-        layerTestSceneIdx = window.sidebar.changeTest(layerTestSceneIdx, 20);
+    if(window.sideIndexBar){
+        layerTestSceneIdx = window.sideIndexBar.changeTest(layerTestSceneIdx, 20);
     }
 
     return new arrayOfLayerTest[layerTestSceneIdx]();
@@ -568,8 +572,8 @@ var previousLayerTest = function () {
     if (layerTestSceneIdx < 0)
         layerTestSceneIdx += arrayOfLayerTest.length;
 
-    if(window.sidebar){
-        layerTestSceneIdx = window.sidebar.changeTest(layerTestSceneIdx, 20);
+    if(window.sideIndexBar){
+        layerTestSceneIdx = window.sideIndexBar.changeTest(layerTestSceneIdx, 20);
     }
 
     return new arrayOfLayerTest[layerTestSceneIdx]();

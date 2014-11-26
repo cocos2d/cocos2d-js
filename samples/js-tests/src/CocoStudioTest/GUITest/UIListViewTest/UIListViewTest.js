@@ -38,7 +38,7 @@ var UIListViewEditorTest = UIBaseLayer.extend({
         back_label.addTouchEventListener(this.backEvent, this);
 
         var listView = ccui.helper.seekWidgetByName(root, "ListView_1214");
-        listView.addEventListenerListView(this.selectedItemEvent,this);
+        listView.addEventListener(this.selectedItemEvent,this);
 
         var left_button = ccui.Button.create();
         left_button.loadTextures("res/Images/b1.png", "res/Images/b2.png", "");
