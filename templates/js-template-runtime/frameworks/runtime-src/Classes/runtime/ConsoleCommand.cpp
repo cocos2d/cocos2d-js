@@ -245,7 +245,7 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
                 }
 
                 dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
-            }else if(strcmp(strcmd.c_str(),"shutdownapp")==0)
+            } else if(strcmp(strcmd.c_str(), "shutdownapp") == 0)
             {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
                 extern void shutDownApp();
@@ -253,7 +253,7 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
 #else
                 exit(0);
 #endif	
-            } else if(strcmp(strcmd.c_str(),"getplatform") == 0)
+            } else if(strcmp(strcmd.c_str(), "getplatform") == 0)
             {
                 string platform="UNKNOW";
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -270,6 +270,18 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
                 platformValue.SetString(platform.c_str(), dReplyParse.GetAllocator());
                 bodyvalue.AddMember("platform", platformValue, dReplyParse.GetAllocator());
                 dReplyParse.AddMember("body", bodyvalue, dReplyParse.GetAllocator());
+                dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+            } else if(strcmp(strcmd.c_str(), "usewritablepath") == 0)
+            {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+                // only iOS and Android need to open using write path by Code IDE
+                FileServer::getShareInstance()->setIsUsingWritePath(true);
+                
+                std::vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
+                searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());
+                FileUtils::getInstance()->setSearchPaths(searchPathArray);
+#endif
+                
                 dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
             }
             

@@ -82,7 +82,7 @@ std::string& replaceAll(std::string& str, const std::string& old_value, const st
 
 const char* getRuntimeVersion()
 {
-    return "1.5";
+    return "1.6";
 }
 
 bool startScript()
@@ -101,22 +101,35 @@ bool runtime_FileUtils_addSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "cocos2dx_FileUtils_addSearchPath : Invalid Native Object");
-    if (argc == 1) {
+    if (argc == 1 || argc == 2) {
         std::string arg0;
+        bool arg1 = false;
+
         ok &= jsval_to_std_string(cx, argv[0], &arg0);
         JSB_PRECONDITION2(ok, cx, false, "cocos2dx_FileUtils_addSearchPath : Error processing arguments");
-        std::string originPath = arg0;
-        if (!FileUtils::getInstance()->isAbsolutePath(originPath))
-            arg0 = FileServer::getShareInstance()->getWritePath() + originPath;
-        cobj->addSearchPath(arg0);
 
-        if (!FileUtils::getInstance()->isAbsolutePath(originPath))
+        if (argc == 2)
+        {
+            arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
+        }
+
+        if (! FileUtils::getInstance()->isAbsolutePath(arg0))
+        {
+            // add write path to search path
+            if (FileServer::getShareInstance()->getIsUsingWritePath())
+            {
+                cobj->addSearchPath(FileServer::getShareInstance()->getWritePath() + arg0, arg1);
+            } else
+            {
+                cobj->addSearchPath(arg0, arg1);
+            }
+            
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-            cobj->addSearchPath(g_projectPath + originPath);
+            // add project path to search path
+            cobj->addSearchPath(g_projectPath + arg0, arg1);
 #endif
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-            cobj->addSearchPath(originPath);
-#endif
+        }
+
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
@@ -134,29 +147,36 @@ bool runtime_FileUtils_setSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_setSearchPaths : Invalid Native Object");
     if (argc == 1) {
-        std::vector<std::string> arg0;
-        ok &= jsval_to_std_vector_string(cx, argv[0], &arg0);
+        std::vector<std::string> vecPaths, writePaths;
+        ok &= jsval_to_std_vector_string(cx, argv[0], &vecPaths);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_setSearchPaths : Error processing arguments");
         
         std::vector<std::string> originPath; // for IOS platform.
         std::vector<std::string> projPath; // for Desktop platform.
-        for (int i = 0; i < arg0.size(); i++)
+        for (int i = 0; i < vecPaths.size(); i++)
         {
-            if (!FileUtils::getInstance()->isAbsolutePath(arg0[i]))
+            if (!FileUtils::getInstance()->isAbsolutePath(vecPaths[i]))
             {
-                originPath.push_back(arg0[i]); // for IOS platform.
-                projPath.push_back(g_projectPath+arg0[i]); //for Desktop platform.
-                arg0[i] = FileServer::getShareInstance()->getWritePath() + arg0[i];
+                originPath.push_back(vecPaths[i]); // for IOS platform.
+                projPath.push_back(g_projectPath+vecPaths[i]); //for Desktop platform.
+                writePaths[i] = FileServer::getShareInstance()->getWritePath() + vecPaths[i];
             }
         }
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        arg0.insert(arg0.end(),projPath.begin(),projPath.end());
-#endif
+        vecPaths.clear();
 
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        arg0.insert(arg0.end(),originPath.begin(),originPath.end());
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        vecPaths.insert(vecPaths.end(), projPath.begin(), projPath.end());
 #endif
-        cobj->setSearchPaths(arg0);
+        if (FileServer::getShareInstance()->getIsUsingWritePath())
+        {
+            vecPaths.insert(vecPaths.end(), writePaths.begin(), writePaths.end());
+        } else
+        {
+            vecPaths.insert(vecPaths.end(), originPath.begin(), originPath.end());
+        }
+        
+        cobj->setSearchPaths(vecPaths);
+
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
@@ -183,27 +203,26 @@ void register_FileUtils(JSContext *cx, JSObject *global) {
 
 void initRuntime()
 {
-    vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    // add peoject's root directory to search path
-    if (g_projectPath.empty())
-    {
-        extern std::string getCurAppPath();
-        std::string appPath = getCurAppPath();
+    vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
+    
+    extern std::string getCurAppPath();
+    std::string appPath = getCurAppPath();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        appPath.append("/../../");
+    appPath.append("/../../");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        appPath.append("/../../../");
+    appPath.append("/../../../");
 #endif
-        appPath = replaceAll(appPath, "\\", "/");
-        g_projectPath = appPath;
-    }    
+    appPath = replaceAll(appPath, "\\", "/");
+    g_projectPath = appPath;
+    
+    // add project's root directory to search path
     searchPathArray.insert(searchPathArray.begin(), g_projectPath);
-#endif
     
     // add writable path to search path
     searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
+#endif
     
 
     ConsoleCommand::getShareInstance()->init();
