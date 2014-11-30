@@ -93,13 +93,13 @@ if (cc.ControlButton) {
     require('script/extension/jsb_ext_create_apis.js');
 }
 
-if (cc.PhysicsSprite)
-{
+if (cc.PhysicsSprite) {
     cc.PhysicsSprite.extend = cc.Class.extend;// move from jsb_cocos2d.js
-    require('script/chipmunk/jsb_chipmunk_cocos2d_extension.js');
-    require('script/chipmunk/jsb_chipmunk_property_impls.js');
-    require('script/chipmunk/jsb_chipmunk_property_apis.js');
-    require('script/chipmunk/jsb_chipmunk_create_apis.js');
+    require('script/physicsSprite/jsb_physicsSprite.js');
+}
+
+if (window.cp) {
+    // chipmunk
     require('script/chipmunk/jsb_chipmunk_constants.js');
     require('script/chipmunk/jsb_chipmunk.js');
 }

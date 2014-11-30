@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,68 @@
  * THE SOFTWARE.
  */
 
+// move from extension
+// start
+//PhysicsDebugNode
+cc.PhysicsDebugNode.create = function( space ) {
+    var s = space;
+    if( space.handle !== undefined )
+        s = space.handle;
+    return cc.PhysicsDebugNode._create( s );
+};
+
+cc.PhysicsDebugNode.prototype._ctor = function(space){
+    this.init();
+    var s = space;
+    if( space.handle !== undefined )
+        s = space.handle;
+    this.setSpace(s);
+};
+
+cc.PhysicsDebugNode.prototype.setSpace = function( space ) {
+    var s = space;
+    if( space.handle !== undefined )
+        s = space.handle;
+    return this._setSpace( s );
+};
+
+// physicsSprite
+cc.PhysicsSprite.prototype.setBody = function( body ) {
+    var b = body;
+    if( body.handle !== undefined )
+        b = body.handle;
+    return this._setCPBody( b );
+};
+
+cc.PhysicsSprite.prototype.getBody = function() {
+    return this.getCPBody();
+};
+// end
+
+// move from property_impls
+// start
+_safeExtend(cc.PhysicsSprite.prototype, {
+    setPositionX: function(x) {
+        this.setPosition( cc.p(x, this.getPositionY()) );
+    },
+    setPositionY: function(y) {
+        this.setPosition( cc.p(this.getPositionX(), y) );
+    }
+});
+// end
+
+// move from property_apis
+// start
+var _proto = cc.PhysicsSprite.prototype;
+cc.defineGetterSetter(_proto, "body", _proto.getBody, _proto.setBody);
+cc.defineGetterSetter(_proto, "x", _proto.getPositionX, _proto.setPositionX);
+cc.defineGetterSetter(_proto, "y", _proto.getPositionY, _proto.setPositionY);
+cc.defineGetterSetter(_proto, "rotation", _proto.getRotation, _proto.setRotation);
+cc.defineGetterSetter(_proto, "dirty", _proto.isDirty, _proto.setDirty);
+// end
+
+// move from create_apis
+// start
 /************************  PhysicsSprite  *************************/
 var _p = cc.PhysicsSprite.prototype;
 _p._ctor = function(fileName, rect){
@@ -41,7 +103,7 @@ _p._ctor = function(fileName, rect){
     }else if (typeof(fileName) === "object") {
         if (fileName instanceof cc.Texture2D) {
             //init  with texture and rect
-           this.initWithTexture(fileName, rect);
+            this.initWithTexture(fileName, rect);
         } else if (fileName instanceof cc.SpriteFrame) {
             //init with a sprite frame
             this.initWithSpriteFrame(fileName);
@@ -88,3 +150,5 @@ cc.PhysicsSprite.create = function (fileName, rect) {
 
     return null;
 };
+// end
+
