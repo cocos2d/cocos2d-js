@@ -99,13 +99,15 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
         }
         
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-        
-        JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
+
+        JS::RootedObject proto(cx, const_cast<JSObject*>(typeProxy->proto.get()));
+        JS::RootedObject parent(cx, const_cast<JSObject*>(typeProxy->parentProto.get()));
+        JS::RootedObject js_obj(cx, JS_NewObject(cx, typeProxy->jsclass, proto, parent));
         proxy = jsb_new_proxy(native_obj, js_obj);
 #ifdef DEBUG
-        JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
+        AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
 #else
-        JS_AddObjectRoot(cx, &proxy->obj);
+        AddObjectRoot(cx, &proxy->obj);
 #endif
         return proxy;
     } else {

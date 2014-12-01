@@ -192,19 +192,20 @@ bool jsval_to_ccmap_string_key(JSContext *cx, jsval v, cocos2d::Map<std::string,
         return true;
     }
     
-    JSObject* tmp = JSVAL_TO_OBJECT(v);
+    JS::RootedObject tmp(cx, JSVAL_TO_OBJECT(v));
+
     if (!tmp) {
         CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
         return false;
     }
-    
-    JSObject* it = JS_NewPropertyIterator(cx, tmp);
+
+    JS::RootedObject it(cx, JS_NewPropertyIterator(cx, tmp));
     
     while (true)
     {
-        jsid idp;
-        jsval key;
-        if (! JS_NextProperty(cx, it, &idp) || ! JS_IdToValue(cx, idp, &key)) {
+        JS::RootedId idp(cx);
+        JS::RootedValue key(cx);
+        if (! JS_NextProperty(cx, it, idp.address()) || ! JS_IdToValue(cx, idp, &key)) {
             return false; // error
         }
         
@@ -272,7 +273,7 @@ js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj);
 template <class T>
 jsval ccvector_to_jsval(JSContext* cx, const cocos2d::Vector<T>& v)
 {
-    JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0));
     
     int i = 0;
     for (const auto& obj : v)
@@ -285,7 +286,7 @@ jsval ccvector_to_jsval(JSContext* cx, const cocos2d::Vector<T>& v)
             arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
         }
 
-        if (!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+        if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
             break;
         }
         ++i;
@@ -296,7 +297,9 @@ jsval ccvector_to_jsval(JSContext* cx, const cocos2d::Vector<T>& v)
 template <class T>
 jsval ccmap_string_key_to_jsval(JSContext* cx, const cocos2d::Map<std::string, T>& v)
 {
-    JSObject* jsRet = JS_NewObject(cx, NULL, NULL, NULL);
+    JS::RootedObject proto(cx, JSVAL_NULL);
+    JS::RootedObject parent(cx, JSVAL_NULL);
+    JS::RootedObject jsRet(cx, JS_NewObject(cx, NULL, proto, parent));
     
     for (auto iter = v.begin(); iter != v.end(); ++iter)
     {
