@@ -12,7 +12,15 @@
 #include "mozilla/Assertions.h"
 #include "mozilla/Atomics.h"
 #include "mozilla/Attributes.h"
+#include "mozilla/RefCountType.h"
 #include "mozilla/TypeTraits.h"
+#if defined(MOZILLA_INTERNAL_API)
+#include "nsXPCOM.h"
+#endif
+
+#if defined(MOZILLA_INTERNAL_API) && (defined(DEBUG) || defined(FORCE_BUILD_REFCNT_LOGGING))
+#define MOZ_REFCOUNTED_LEAK_CHECKING
+#endif
 
 namespace mozilla {
 
@@ -42,10 +50,36 @@ template<typename T> OutParamRef<T> byRef(RefPtr<T>&);
  * state is represented in DEBUG builds by refcount==0xffffdead.  This
  * state distinguishes use-before-ref (refcount==0) from
  * use-after-destroy (refcount==0xffffdead).
+ *
+ * Note that when deriving from RefCounted or AtomicRefCounted, you
+ * should add MOZ_DECLARE_REFCOUNTED_TYPENAME(ClassName) to the public
+ * section of your class, where ClassName is the name of your class.
  */
 namespace detail {
 #ifdef DEBUG
-static const int DEAD = 0xffffdead;
+const MozRefCountType DEAD = 0xffffdead;
+#endif
+
+// When building code that gets compiled into Gecko, try to use the
+// trace-refcount leak logging facilities.
+#ifdef MOZ_REFCOUNTED_LEAK_CHECKING
+class RefCountLogger
+{
+  public:
+    static void logAddRef(const void* aPointer, MozRefCountType aRefCount,
+                          const char* aTypeName, uint32_t aInstanceSize)
+    {
+      MOZ_ASSERT(aRefCount != DEAD);
+      NS_LogAddRef(const_cast<void*>(aPointer), aRefCount, aTypeName, aInstanceSize);
+    }
+
+    static void logRelease(const void* aPointer, MozRefCountType aRefCount,
+                           const char* aTypeName)
+    {
+      MOZ_ASSERT(aRefCount != DEAD);
+      NS_LogRelease(const_cast<void*>(aPointer), aRefCount, aTypeName);
+    }
+};
 #endif
 
 // This is used WeakPtr.h as well as this file.
@@ -69,13 +103,37 @@ class RefCounted
   public:
     // Compatibility with nsRefPtr.
     void AddRef() const {
-      MOZ_ASSERT(refCnt >= 0);
+      // Note: this method must be thread safe for AtomicRefCounted.
+      MOZ_ASSERT(int32_t(refCnt) >= 0);
+#ifndef MOZ_REFCOUNTED_LEAK_CHECKING
       ++refCnt;
+#else
+      const char* type = static_cast<const T*>(this)->typeName();
+      uint32_t size = static_cast<const T*>(this)->typeSize();
+      const void* ptr = static_cast<const T*>(this);
+      MozRefCountType cnt = ++refCnt;
+      detail::RefCountLogger::logAddRef(ptr, cnt, type, size);
+#endif
     }
 
     void Release() const {
-      MOZ_ASSERT(refCnt > 0);
-      if (0 == --refCnt) {
+      // Note: this method must be thread safe for AtomicRefCounted.
+      MOZ_ASSERT(int32_t(refCnt) > 0);
+#ifndef MOZ_REFCOUNTED_LEAK_CHECKING
+      MozRefCountType cnt = --refCnt;
+#else
+      const char* type = static_cast<const T*>(this)->typeName();
+      const void* ptr = static_cast<const T*>(this);
+      MozRefCountType cnt = --refCnt;
+      // Note: it's not safe to touch |this| after decrementing the refcount,
+      // except for below.
+      detail::RefCountLogger::logRelease(ptr, cnt, type);
+#endif
+      if (0 == cnt) {
+        // Because we have atomically decremented the refcount above, only
+        // one thread can get a 0 count here, so as long as we can assume that
+        // everything else in the system is accessing this object through
+        // RefPtrs, it's safe to access |this| here.
 #ifdef DEBUG
         refCnt = detail::DEAD;
 #endif
@@ -86,15 +144,28 @@ class RefCounted
     // Compatibility with wtf::RefPtr.
     void ref() { AddRef(); }
     void deref() { Release(); }
-    int refCount() const { return refCnt; }
+    MozRefCountType refCount() const { return refCnt; }
     bool hasOneRef() const {
       MOZ_ASSERT(refCnt > 0);
       return refCnt == 1;
     }
 
   private:
-    mutable typename Conditional<Atomicity == AtomicRefCount, Atomic<int>, int>::Type refCnt;
+    mutable typename Conditional<Atomicity == AtomicRefCount, Atomic<MozRefCountType>, MozRefCountType>::Type refCnt;
 };
+
+#ifdef MOZ_REFCOUNTED_LEAK_CHECKING
+#define MOZ_DECLARE_REFCOUNTED_TYPENAME(T) \
+  const char* typeName() const { return #T; } \
+  size_t typeSize() const { return sizeof(*this); }
+
+#define MOZ_DECLARE_REFCOUNTED_VIRTUAL_TYPENAME(T) \
+  virtual const char* typeName() const { return #T; } \
+  virtual size_t typeSize() const { return sizeof(*this); }
+#else
+#define MOZ_DECLARE_REFCOUNTED_TYPENAME(T)
+#define MOZ_DECLARE_REFCOUNTED_VIRTUAL_TYPENAME(T)
+#endif
 
 }
 
@@ -301,6 +372,7 @@ using namespace mozilla;
 
 struct Foo : public RefCounted<Foo>
 {
+  MOZ_DECLARE_REFCOUNTED_TYPENAME(Foo)
   Foo() : dead(false) { }
   ~Foo() {
     MOZ_ASSERT(!dead);

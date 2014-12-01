@@ -50,14 +50,16 @@ class Latin1CharsZ : public mozilla::RangedPtr<unsigned char>
     Latin1CharsZ(char *aBytes, size_t aLength)
       : Base(reinterpret_cast<unsigned char *>(aBytes), aLength)
     {
-        JS_ASSERT(aBytes[aLength] == '\0');
+        MOZ_ASSERT(aBytes[aLength] == '\0');
     }
 
     Latin1CharsZ(unsigned char *aBytes, size_t aLength)
       : Base(aBytes, aLength)
     {
-        JS_ASSERT(aBytes[aLength] == '\0');
+        MOZ_ASSERT(aBytes[aLength] == '\0');
     }
+
+    using Base::operator=;
 
     char *c_str() { return reinterpret_cast<char *>(get()); }
 };
@@ -89,14 +91,16 @@ class UTF8CharsZ : public mozilla::RangedPtr<unsigned char>
     UTF8CharsZ(char *aBytes, size_t aLength)
       : Base(reinterpret_cast<unsigned char *>(aBytes), aLength)
     {
-        JS_ASSERT(aBytes[aLength] == '\0');
+        MOZ_ASSERT(aBytes[aLength] == '\0');
     }
 
     UTF8CharsZ(unsigned char *aBytes, size_t aLength)
       : Base(aBytes, aLength)
     {
-        JS_ASSERT(aBytes[aLength] == '\0');
+        MOZ_ASSERT(aBytes[aLength] == '\0');
     }
+
+    using Base::operator=;
 
     char *c_str() { return reinterpret_cast<char *>(get()); }
 };
@@ -120,21 +124,6 @@ class TwoByteChars : public mozilla::Range<jschar>
 };
 
 /*
- * A non-convertible variant of TwoByteChars that does not refer to characters
- * inlined inside a JSShortString or a JSInlineString. StableTwoByteChars are
- * thus safe to hold across a GC.
- */
-class StableTwoByteChars : public mozilla::Range<jschar>
-{
-    typedef mozilla::Range<jschar> Base;
-
-  public:
-    StableTwoByteChars() : Base() {}
-    StableTwoByteChars(jschar *aChars, size_t aLength) : Base(aChars, aLength) {}
-    StableTwoByteChars(const jschar *aChars, size_t aLength) : Base(const_cast<jschar *>(aChars), aLength) {}
-};
-
-/*
  * A TwoByteChars, but \0 terminated for compatibility with JSFlatString.
  */
 class TwoByteCharsZ : public mozilla::RangedPtr<jschar>
@@ -147,9 +136,30 @@ class TwoByteCharsZ : public mozilla::RangedPtr<jschar>
     TwoByteCharsZ(jschar *chars, size_t length)
       : Base(chars, length)
     {
-        JS_ASSERT(chars[length] == '\0');
+        MOZ_ASSERT(chars[length] == '\0');
     }
+
+    using Base::operator=;
 };
+
+typedef mozilla::RangedPtr<const jschar> ConstCharPtr;
+
+/*
+ * Like TwoByteChars, but the chars are const.
+ */
+class ConstTwoByteChars : public mozilla::RangedPtr<const jschar>
+{
+  public:
+    ConstTwoByteChars(const ConstTwoByteChars &s) : ConstCharPtr(s) {}
+    ConstTwoByteChars(const mozilla::RangedPtr<const jschar> &s) : ConstCharPtr(s) {}
+    ConstTwoByteChars(const jschar *s, size_t len) : ConstCharPtr(s, len) {}
+    ConstTwoByteChars(const jschar *pos, const jschar *start, size_t len)
+      : ConstCharPtr(pos, start, len)
+    {}
+
+    using ConstCharPtr::operator=;
+};
+
 
 /*
  * Convert a 2-byte character sequence to "ISO-Latin-1". This works by

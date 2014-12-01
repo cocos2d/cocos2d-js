@@ -233,11 +233,11 @@ typedef enum JSWhyMagic
     JS_OPTIMIZED_ARGUMENTS,      /* optimized-away 'arguments' value */
     JS_IS_CONSTRUCTING,          /* magic value passed to natives to indicate construction */
     JS_OVERWRITTEN_CALLEE,       /* arguments.callee has been overwritten */
-    JS_FORWARD_TO_CALL_OBJECT,   /* args object element stored in call object */
     JS_BLOCK_NEEDS_CLONE,        /* value of static block object slot */
     JS_HASH_KEY_EMPTY,           /* see class js::HashableValue */
     JS_ION_ERROR,                /* error while running Ion code */
     JS_ION_BAILOUT,              /* status code to signal EnterIon will OSR into Interpret */
+    JS_OPTIMIZED_OUT,            /* optimized out slot */
     JS_GENERIC_MAGIC             /* for local use */
 } JSWhyMagic;
 
@@ -456,7 +456,7 @@ static inline jsval_layout
 STRING_TO_JSVAL_IMPL(JSString *str)
 {
     jsval_layout l;
-    MOZ_ASSERT(str);
+    MOZ_ASSERT(uintptr_t(str) > 0x1000);
     l.s.tag = JSVAL_TAG_STRING;
     l.s.payload.str = str;
     return l;
@@ -524,7 +524,7 @@ static inline jsval_layout
 OBJECT_TO_JSVAL_IMPL(JSObject *obj)
 {
     jsval_layout l;
-    MOZ_ASSERT(obj);
+    MOZ_ASSERT(uintptr_t(obj) > 0x1000 || uintptr_t(obj) == 0x42);
     l.s.tag = JSVAL_TAG_OBJECT;
     l.s.payload.obj = obj;
     return l;
@@ -596,6 +596,15 @@ MAGIC_TO_JSVAL_IMPL(JSWhyMagic why)
     jsval_layout l;
     l.s.tag = JSVAL_TAG_MAGIC;
     l.s.payload.why = why;
+    return l;
+}
+
+static inline jsval_layout
+MAGIC_UINT32_TO_JSVAL_IMPL(uint32_t payload)
+{
+    jsval_layout l;
+    l.s.tag = JSVAL_TAG_MAGIC;
+    l.s.payload.u32 = payload;
     return l;
 }
 
@@ -678,7 +687,7 @@ STRING_TO_JSVAL_IMPL(JSString *str)
 {
     jsval_layout l;
     uint64_t strBits = (uint64_t)str;
-    MOZ_ASSERT(str);
+    MOZ_ASSERT(uintptr_t(str) > 0x1000);
     MOZ_ASSERT((strBits >> JSVAL_TAG_SHIFT) == 0);
     l.asBits = strBits | JSVAL_SHIFTED_TAG_STRING;
     return l;
@@ -725,7 +734,7 @@ JSVAL_IS_PRIMITIVE_IMPL(jsval_layout l)
 static inline bool
 JSVAL_IS_OBJECT_IMPL(jsval_layout l)
 {
-    MOZ_ASSERT((l.asBits >> JSVAL_TAG_SHIFT) <= JSVAL_SHIFTED_TAG_OBJECT);
+    MOZ_ASSERT((l.asBits >> JSVAL_TAG_SHIFT) <= JSVAL_TAG_OBJECT);
     return l.asBits >= JSVAL_SHIFTED_TAG_OBJECT;
 }
 
@@ -749,7 +758,7 @@ OBJECT_TO_JSVAL_IMPL(JSObject *obj)
 {
     jsval_layout l;
     uint64_t objBits = (uint64_t)obj;
-    MOZ_ASSERT(obj);
+    MOZ_ASSERT(uintptr_t(obj) > 0x1000 || uintptr_t(obj) == 0x42);
     MOZ_ASSERT((objBits >> JSVAL_TAG_SHIFT) == 0);
     l.asBits = objBits | JSVAL_SHIFTED_TAG_OBJECT;
     return l;
@@ -825,6 +834,14 @@ MAGIC_TO_JSVAL_IMPL(JSWhyMagic why)
     return l;
 }
 
+static inline jsval_layout
+MAGIC_UINT32_TO_JSVAL_IMPL(uint32_t payload)
+{
+    jsval_layout l;
+    l.asBits = ((uint64_t)payload) | JSVAL_SHIFTED_TAG_MAGIC;
+    return l;
+}
+
 static inline bool
 JSVAL_SAME_TYPE_IMPL(jsval_layout lhs, jsval_layout rhs)
 {
@@ -859,7 +876,7 @@ static inline JS_VALUE_CONSTEXPR JS::Value UndefinedValue();
 static MOZ_ALWAYS_INLINE double
 GenericNaN()
 {
-  return mozilla::SpecificNaN(0, 0x8000000000000ULL);
+  return mozilla::SpecificNaN<double>(0, 0x8000000000000ULL);
 }
 
 /* MSVC with PGO miscompiles this function. */
@@ -887,12 +904,12 @@ CanonicalizeNaN(double d)
  *
  *   JS::Value also contains toX() for each of the non-singleton types.
  *
- * - Magic is a singleton type whose payload contains a JSWhyMagic "reason" for
- *   the magic value. By providing JSWhyMagic values when creating and checking
- *   for magic values, it is possible to assert, at runtime, that only magic
- *   values with the expected reason flow through a particular value. For
- *   example, if cx->exception has a magic value, the reason must be
- *   JS_GENERATOR_CLOSING.
+ * - Magic is a singleton type whose payload contains either a JSWhyMagic "reason" for
+ *   the magic value or a uint32_t value. By providing JSWhyMagic values when
+ *   creating and checking for magic values, it is possible to assert, at
+ *   runtime, that only magic values with the expected reason flow through a
+ *   particular value. For example, if cx->exception has a magic value, the
+ *   reason must be JS_GENERATOR_CLOSING.
  *
  * - The JS::Value operations are preferred.  The JSVAL_* operations remain for
  *   compatibility; they may be removed at some point.  These operations mostly
@@ -903,7 +920,7 @@ CanonicalizeNaN(double d)
  *       !JSVAL_IS_PRIMITIVE(v) === v.isObject()
  *
  *   Also, to help prevent mistakenly boxing a nullable JSObject* as an object,
- *   Value::setObject takes a JSObject&. (Conversely, Value::asObject returns a
+ *   Value::setObject takes a JSObject&. (Conversely, Value::toObject returns a
  *   JSObject&.)  A convenience member Value::setObjectOrNull is provided.
  *
  * - JSVAL_VOID is the same as the singleton value of the Undefined type.
@@ -974,6 +991,10 @@ class Value
         data = MAGIC_TO_JSVAL_IMPL(why);
     }
 
+    void setMagicUint32(uint32_t payload) {
+        data = MAGIC_UINT32_TO_JSVAL_IMPL(payload);
+    }
+
     bool setNumber(uint32_t ui) {
         if (ui > JSVAL_INT_MAX) {
             setDouble((double)ui);
@@ -986,7 +1007,7 @@ class Value
 
     bool setNumber(double d) {
         int32_t i;
-        if (mozilla::DoubleIsInt32(d, &i)) {
+        if (mozilla::NumberIsInt32(d, &i)) {
             setInt32(i);
             return true;
         }
@@ -1091,6 +1112,11 @@ class Value
     JSWhyMagic whyMagic() const {
         MOZ_ASSERT(isMagic());
         return data.s.payload.why;
+    }
+
+    uint32_t magicUint32() const {
+        MOZ_ASSERT(isMagic());
+        return data.s.payload.u32;
     }
 
     /*** Comparison ***/
@@ -1253,6 +1279,16 @@ IsPoisonedValue(const Value &v)
     return false;
 }
 
+inline bool
+IsOptimizedPlaceholderMagicValue(const Value &v)
+{
+    if (v.isMagic()) {
+        MOZ_ASSERT(v.whyMagic() == JS_OPTIMIZED_ARGUMENTS || v.whyMagic() == JS_OPTIMIZED_OUT);
+        return true;
+    }
+    return false;
+}
+
 /************************************************************************/
 
 static inline Value
@@ -1360,6 +1396,14 @@ MagicValue(JSWhyMagic why)
 {
     Value v;
     v.setMagic(why);
+    return v;
+}
+
+static inline Value
+MagicValueUint32(uint32_t payload)
+{
+    Value v;
+    v.setMagicUint32(payload);
     return v;
 }
 
@@ -1571,6 +1615,7 @@ class ValueOperations
     uint32_t toPrivateUint32() const { return value()->toPrivateUint32(); }
 
     JSWhyMagic whyMagic() const { return value()->whyMagic(); }
+    uint32_t magicUint32() const { return value()->magicUint32(); }
 };
 
 /*
@@ -1639,7 +1684,7 @@ class HeapBase<JS::Value> : public ValueOperations<JS::Heap<JS::Value> >
 
     bool setNumber(double d) {
         int32_t i;
-        if (mozilla::DoubleIsInt32(d, &i)) {
+        if (mozilla::NumberIsInt32(d, &i)) {
             setInt32(i);
             return true;
         }
@@ -1747,7 +1792,7 @@ inline Anchor<Value>::~Anchor()
 }
 #endif
 
-#ifdef DEBUG
+#ifdef JS_DEBUG
 namespace detail {
 
 struct ValueAlignmentTester { char c; JS::Value v; };
@@ -1759,7 +1804,7 @@ static_assert(sizeof(LayoutAlignmentTester) == 16,
               "jsval_layout must be 16-byte-aligned");
 
 } // namespace detail
-#endif /* DEBUG */
+#endif /* JS_DEBUG */
 
 } // namespace JS
 
@@ -1958,8 +2003,8 @@ extern JS_PUBLIC_DATA(const jsval) JSVAL_VOID;
 
 namespace JS {
 
-extern JS_PUBLIC_DATA(const Handle<Value>) NullHandleValue;
-extern JS_PUBLIC_DATA(const Handle<Value>) UndefinedHandleValue;
+extern JS_PUBLIC_DATA(const HandleValue) NullHandleValue;
+extern JS_PUBLIC_DATA(const HandleValue) UndefinedHandleValue;
 
 }
 

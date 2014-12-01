@@ -12,7 +12,8 @@
  */
 
 #include "mozilla/NullPtr.h"
- 
+
+#include "jsapi.h"
 #include "jsbytecode.h"
 
 #include "js/CallArgs.h"
@@ -21,15 +22,56 @@
 class JSAtom;
 class JSFreeOp;
 
-namespace js { class StackFrame; }
+namespace js {
+class InterpreterFrame;
+class ScriptFrameIter;
+}
+
+// Raw JSScript* because this needs to be callable from a signal handler.
+extern JS_PUBLIC_API(unsigned)
+JS_PCToLineNumber(JSContext *cx, JSScript *script, jsbytecode *pc);
+
+extern JS_PUBLIC_API(const char *)
+JS_GetScriptFilename(JSScript *script);
 
 namespace JS {
 
-struct FrameDescription
+class FrameDescription
 {
-    JSScript *script;
-    unsigned lineno;
-    JSFunction *fun;
+  public:
+    explicit FrameDescription(const js::ScriptFrameIter& iter);
+
+    unsigned lineno() {
+        if (!linenoComputed) {
+            lineno_ = JS_PCToLineNumber(nullptr, script_, pc_);
+            linenoComputed = true;
+        }
+        return lineno_;
+    }
+
+    const char *filename() const {
+        return JS_GetScriptFilename(script_);
+    }
+
+    JSFlatString *funDisplayName() const {
+        return funDisplayName_ ? JS_ASSERT_STRING_IS_FLAT(funDisplayName_) : nullptr;
+    }
+
+    // Both these locations should be traced during GC but otherwise not used;
+    // they are implementation details.
+    Heap<JSScript*> &markedLocation1() {
+        return script_;
+    }
+    Heap<JSString*> &markedLocation2() {
+        return funDisplayName_;
+    }
+
+  private:
+    Heap<JSScript*> script_;
+    Heap<JSString*> funDisplayName_;
+    jsbytecode *pc_;
+    unsigned lineno_;
+    bool linenoComputed;
 };
 
 struct StackDescription
@@ -47,12 +89,12 @@ FreeStackDescription(JSContext *cx, StackDescription *desc);
 extern JS_PUBLIC_API(char *)
 FormatStackDump(JSContext *cx, char *buf, bool showArgs, bool showLocals, bool showThisProps);
 
-}
+} // namespace JS
 
-# ifdef DEBUG
+# ifdef JS_DEBUG
 JS_FRIEND_API(void) js_DumpValue(const JS::Value &val);
 JS_FRIEND_API(void) js_DumpId(jsid id);
-JS_FRIEND_API(void) js_DumpStackFrame(JSContext *cx, js::StackFrame *start = nullptr);
+JS_FRIEND_API(void) js_DumpInterpreterFrame(JSContext *cx, js::InterpreterFrame *start = nullptr);
 # endif
 
 JS_FRIEND_API(void)
@@ -111,7 +153,7 @@ extern JS_PUBLIC_API(JSCompartment *)
 JS_EnterCompartmentOfScript(JSContext *cx, JSScript *target);
 
 extern JS_PUBLIC_API(JSString *)
-JS_DecompileScript(JSContext *cx, JSScript *script, const char *name, unsigned indent);
+JS_DecompileScript(JSContext *cx, JS::HandleScript script, const char *name, unsigned indent);
 
 /*
  * Currently, we only support runtime-wide debugging. In the future, we should
@@ -157,12 +199,12 @@ JS_SetDebugMode(JSContext *cx, bool debug);
 
 /* Turn on single step mode. */
 extern JS_PUBLIC_API(bool)
-JS_SetSingleStepMode(JSContext *cx, JSScript *script, bool singleStep);
+JS_SetSingleStepMode(JSContext *cx, JS::HandleScript script, bool singleStep);
 
 /* The closure argument will be marked. */
 extern JS_PUBLIC_API(bool)
-JS_SetTrap(JSContext *cx, JSScript *script, jsbytecode *pc,
-           JSTrapHandler handler, JS::Value closure);
+JS_SetTrap(JSContext *cx, JS::HandleScript script, jsbytecode *pc,
+           JSTrapHandler handler, JS::HandleValue closure);
 
 extern JS_PUBLIC_API(void)
 JS_ClearTrap(JSContext *cx, JSScript *script, jsbytecode *pc,
@@ -183,8 +225,8 @@ JS_ClearInterrupt(JSRuntime *rt, JSInterruptHook *handlerp, void **closurep);
 /************************************************************************/
 
 extern JS_PUBLIC_API(bool)
-JS_SetWatchPoint(JSContext *cx, JSObject *obj, jsid id,
-                 JSWatchPointHandler handler, JSObject *closure);
+JS_SetWatchPoint(JSContext *cx, JS::HandleObject obj, JS::HandleId id,
+                 JSWatchPointHandler handler, JS::HandleObject closure);
 
 extern JS_PUBLIC_API(bool)
 JS_ClearWatchPoint(JSContext *cx, JSObject *obj, jsid id,
@@ -194,10 +236,6 @@ extern JS_PUBLIC_API(bool)
 JS_ClearWatchPointsForObject(JSContext *cx, JSObject *obj);
 
 /************************************************************************/
-
-// Raw JSScript* because this needs to be callable from a signal handler.
-extern JS_PUBLIC_API(unsigned)
-JS_PCToLineNumber(JSContext *cx, JSScript *script, jsbytecode *pc);
 
 extern JS_PUBLIC_API(jsbytecode *)
 JS_LineNumberToPC(JSContext *cx, JSScript *script, unsigned lineno);
@@ -234,7 +272,7 @@ extern JS_PUBLIC_API(void)
 JS_ReleaseFunctionLocalNameArray(JSContext *cx, void *mark);
 
 extern JS_PUBLIC_API(JSScript *)
-JS_GetFunctionScript(JSContext *cx, JSFunction *fun);
+JS_GetFunctionScript(JSContext *cx, JS::HandleFunction fun);
 
 extern JS_PUBLIC_API(JSNative)
 JS_GetFunctionNative(JSContext *cx, JSFunction *fun);
@@ -263,9 +301,6 @@ extern JS_PUBLIC_API(const char *)
 JS_GetDebugClassName(JSObject *obj);
 
 /************************************************************************/
-
-extern JS_PUBLIC_API(const char *)
-JS_GetScriptFilename(JSContext *cx, JSScript *script);
 
 extern JS_PUBLIC_API(const jschar *)
 JS_GetScriptSourceMap(JSContext *cx, JSScript *script);
@@ -325,7 +360,7 @@ typedef struct JSPropertyDescArray {
 typedef struct JSScopeProperty JSScopeProperty;
 
 extern JS_PUBLIC_API(bool)
-JS_GetPropertyDescArray(JSContext *cx, JSObject *obj, JSPropertyDescArray *pda);
+JS_GetPropertyDescArray(JSContext *cx, JS::HandleObject obj, JSPropertyDescArray *pda);
 
 extern JS_PUBLIC_API(void)
 JS_PutPropertyDescArray(JSContext *cx, JSPropertyDescArray *pda);
@@ -339,16 +374,18 @@ JS_PutPropertyDescArray(JSContext *cx, JSPropertyDescArray *pda);
 class JS_PUBLIC_API(JSAbstractFramePtr)
 {
     uintptr_t ptr_;
+    jsbytecode *pc_;
 
   protected:
     JSAbstractFramePtr()
-      : ptr_(0)
+      : ptr_(0), pc_(nullptr)
     { }
 
   public:
-    explicit JSAbstractFramePtr(void *raw);
+    JSAbstractFramePtr(void *raw, jsbytecode *pc);
 
     uintptr_t raw() const { return ptr_; }
+    jsbytecode *pc() const { return pc_; }
 
     operator bool() const { return !!ptr_; }
 
@@ -492,16 +529,10 @@ JS_DefineProfilingFunctions(JSContext *cx, JSObject *obj);
 
 /* Defined in vm/Debugger.cpp. */
 extern JS_PUBLIC_API(bool)
-JS_DefineDebuggerObject(JSContext *cx, JSObject *obj);
+JS_DefineDebuggerObject(JSContext *cx, JS::HandleObject obj);
 
 extern JS_PUBLIC_API(void)
-JS_DumpBytecode(JSContext *cx, JSScript *script);
-
-extern JS_PUBLIC_API(void)
-JS_DumpCompartmentBytecode(JSContext *cx);
-
-extern JS_PUBLIC_API(void)
-JS_DumpPCCounts(JSContext *cx, JSScript *script);
+JS_DumpPCCounts(JSContext *cx, JS::HandleScript script);
 
 extern JS_PUBLIC_API(void)
 JS_DumpCompartmentPCCounts(JSContext *cx);

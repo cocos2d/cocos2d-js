@@ -35,32 +35,45 @@ class ProfileEntry
     // if a sample were taken it would be examining bogus information.
     //
     // A ProfileEntry represents both a C++ profile entry and a JS one. Both use
-    // the string as a description, but JS uses the sp as nullptr to indicate
-    // that it is a JS entry. The script_ is then only ever examined for a JS
-    // entry, and the idx is used by both, but with different meanings.
+    // the string as a description, but JS uses the sp as nullptr or (void*)1 to
+    // indicate that it is a JS entry. The script_ is then only ever examined for
+    // a JS entry, and the idx is used by both, but with different meanings.
     //
     const char * volatile string; // Descriptive string of this entry
-    void * volatile sp;           // Relevant stack pointer for the entry
-    JSScript * volatile script_;  // if js(), non-null script which is running
+    void * volatile sp;           // Relevant stack pointer for the entry,
+                                  // less than or equal to SCRIPT_OPT_STACKPOINTER for js
+                                  // script entries, greater for non-js entries.
+    JSScript * volatile script_;  // if js(), non-null script which is running - low bit
+                                  // indicates if script is optimized or not.
     int32_t volatile idx;         // if js(), idx of pc, otherwise line number
 
   public:
+    static const uintptr_t SCRIPT_OPT_STACKPOINTER = 0x1;
+
     // All of these methods are marked with the 'volatile' keyword because SPS's
     // representation of the stack is stored such that all ProfileEntry
     // instances are volatile. These methods would not be available unless they
     // were marked as volatile as well.
 
     bool js() const volatile {
-        JS_ASSERT_IF(sp == nullptr, script_ != nullptr);
-        return sp == nullptr;
+        MOZ_ASSERT_IF(uintptr_t(sp) <= SCRIPT_OPT_STACKPOINTER, script_ != nullptr);
+        return uintptr_t(sp) <= SCRIPT_OPT_STACKPOINTER;
     }
 
-    uint32_t line() const volatile { JS_ASSERT(!js()); return idx; }
-    JSScript *script() const volatile { JS_ASSERT(js()); return script_; }
-    void *stackAddress() const volatile { return sp; }
+    uint32_t line() const volatile { MOZ_ASSERT(!js()); return idx; }
+    JSScript *script() const volatile { MOZ_ASSERT(js()); return script_; }
+    bool scriptIsOptimized() const volatile {
+        MOZ_ASSERT(js());
+        return uintptr_t(sp) <= SCRIPT_OPT_STACKPOINTER;
+    }
+    void *stackAddress() const volatile {
+        if (js())
+            return nullptr;
+        return sp;
+    }
     const char *label() const volatile { return string; }
 
-    void setLine(uint32_t aLine) volatile { JS_ASSERT(!js()); idx = aLine; }
+    void setLine(uint32_t aLine) volatile { MOZ_ASSERT(!js()); idx = aLine; }
     void setLabel(const char *aString) volatile { string = aString; }
     void setStackAddress(void *aSp) volatile { sp = aSp; }
     void setScript(JSScript *aScript) volatile { script_ = aScript; }
@@ -78,6 +91,10 @@ class ProfileEntry
     // a pc into a script's code. To signify a nullptr pc, use a -1 index. This
     // is checked against in pc() and setPC() to set/get the right pc.
     static const int32_t NullPCIndex = -1;
+
+    // This bit is added to the stack address to indicate that copying the
+    // frame label is not necessary when taking a sample of the pseudostack.
+    static const uintptr_t NoCopyBit = 1;
 };
 
 JS_FRIEND_API(void)
@@ -86,6 +103,9 @@ SetRuntimeProfilingStack(JSRuntime *rt, ProfileEntry *stack, uint32_t *size,
 
 JS_FRIEND_API(void)
 EnableRuntimeProfilingStack(JSRuntime *rt, bool enabled);
+
+JS_FRIEND_API(void)
+RegisterRuntimeProfilingEventMarker(JSRuntime *rt, void (*fn)(const char *));
 
 JS_FRIEND_API(jsbytecode*)
 ProfilingGetPC(JSRuntime *rt, JSScript *script, void *ip);

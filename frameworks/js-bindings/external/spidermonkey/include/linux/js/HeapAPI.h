@@ -26,6 +26,8 @@ CurrentThreadCanAccessZone(JS::Zone *zone);
 
 namespace gc {
 
+struct Cell;
+
 const size_t ArenaShift = 12;
 const size_t ArenaSize = size_t(1) << ArenaShift;
 const size_t ArenaMask = ArenaSize - 1;
@@ -39,9 +41,10 @@ const size_t CellSize = size_t(1) << CellShift;
 const size_t CellMask = CellSize - 1;
 
 /* These are magic constants derived from actual offsets in gc/Heap.h. */
-const size_t ChunkMarkBitmapOffset = 1032368;
+const size_t ChunkMarkBitmapOffset = 1032360;
 const size_t ChunkMarkBitmapBits = 129024;
 const size_t ChunkRuntimeOffset = ChunkSize - sizeof(void*);
+const size_t ChunkLocationOffset = ChunkSize - sizeof(void*) - sizeof(uintptr_t);
 
 /*
  * Live objects are marked black. How many other additional colors are available
@@ -50,6 +53,13 @@ const size_t ChunkRuntimeOffset = ChunkSize - sizeof(void*);
  */
 static const uint32_t BLACK = 0;
 static const uint32_t GRAY = 1;
+
+/*
+ * Constants used to indicate whether a chunk is part of the tenured heap or the
+ * nusery.
+ */
+const uintptr_t ChunkLocationNursery = 0;
+const uintptr_t ChunkLocationTenuredHeap = 1;
 
 } /* namespace gc */
 } /* namespace js */
@@ -86,13 +96,13 @@ struct Zone
     }
 
     JSTracer *barrierTracer() {
-        JS_ASSERT(needsBarrier_);
-        JS_ASSERT(js::CurrentThreadCanAccessRuntime(runtime_));
+        MOZ_ASSERT(needsBarrier_);
+        MOZ_ASSERT(js::CurrentThreadCanAccessRuntime(runtime_));
         return barrierTracer_;
     }
 
     JSRuntime *runtimeFromMainThread() const {
-        JS_ASSERT(js::CurrentThreadCanAccessRuntime(runtime_));
+        MOZ_ASSERT(js::CurrentThreadCanAccessRuntime(runtime_));
         return runtime_;
     }
 
@@ -113,40 +123,40 @@ struct Zone
 namespace js {
 namespace gc {
 
-static JS_ALWAYS_INLINE uintptr_t *
+static MOZ_ALWAYS_INLINE uintptr_t *
 GetGCThingMarkBitmap(const void *thing)
 {
-    JS_ASSERT(thing);
+    MOZ_ASSERT(thing);
     uintptr_t addr = uintptr_t(thing);
     addr &= ~js::gc::ChunkMask;
     addr |= js::gc::ChunkMarkBitmapOffset;
     return reinterpret_cast<uintptr_t *>(addr);
 }
 
-static JS_ALWAYS_INLINE JS::shadow::Runtime *
+static MOZ_ALWAYS_INLINE JS::shadow::Runtime *
 GetGCThingRuntime(const void *thing)
 {
-    JS_ASSERT(thing);
+    MOZ_ASSERT(thing);
     uintptr_t addr = uintptr_t(thing);
     addr &= ~js::gc::ChunkMask;
     addr |= js::gc::ChunkRuntimeOffset;
     return *reinterpret_cast<JS::shadow::Runtime **>(addr);
 }
 
-static JS_ALWAYS_INLINE void
+static MOZ_ALWAYS_INLINE void
 GetGCThingMarkWordAndMask(const void *thing, uint32_t color,
                           uintptr_t **wordp, uintptr_t *maskp)
 {
     uintptr_t addr = uintptr_t(thing);
     size_t bit = (addr & js::gc::ChunkMask) / js::gc::CellSize + color;
-    JS_ASSERT(bit < js::gc::ChunkMarkBitmapBits);
+    MOZ_ASSERT(bit < js::gc::ChunkMarkBitmapBits);
     uintptr_t *bitmap = GetGCThingMarkBitmap(thing);
     const uintptr_t nbits = sizeof(*bitmap) * CHAR_BIT;
     *maskp = uintptr_t(1) << (bit % nbits);
     *wordp = &bitmap[bit / nbits];
 }
 
-static JS_ALWAYS_INLINE JS::shadow::ArenaHeader *
+static MOZ_ALWAYS_INLINE JS::shadow::ArenaHeader *
 GetGCThingArena(void *thing)
 {
     uintptr_t addr = uintptr_t(thing);
@@ -154,11 +164,29 @@ GetGCThingArena(void *thing)
     return reinterpret_cast<JS::shadow::ArenaHeader *>(addr);
 }
 
-JS_ALWAYS_INLINE bool
+MOZ_ALWAYS_INLINE bool
 IsInsideNursery(const JS::shadow::Runtime *runtime, const void *p)
 {
 #ifdef JSGC_GENERATIONAL
     return uintptr_t(p) >= runtime->gcNurseryStart_ && uintptr_t(p) < runtime->gcNurseryEnd_;
+#else
+    return false;
+#endif
+}
+
+MOZ_ALWAYS_INLINE bool
+IsInsideNursery(const js::gc::Cell *cell)
+{
+#ifdef JSGC_GENERATIONAL
+    if (!cell)
+        return false;
+    uintptr_t addr = uintptr_t(cell);
+    addr &= ~js::gc::ChunkMask;
+    addr |= js::gc::ChunkLocationOffset;
+    uint32_t location = *reinterpret_cast<uint32_t *>(addr);
+    JS_ASSERT(location == gc::ChunkLocationNursery ||
+              location == gc::ChunkLocationTenuredHeap);
+    return location == gc::ChunkLocationNursery;
 #else
     return false;
 #endif
@@ -170,20 +198,20 @@ IsInsideNursery(const JS::shadow::Runtime *runtime, const void *p)
 
 namespace JS {
 
-static JS_ALWAYS_INLINE Zone *
+static MOZ_ALWAYS_INLINE Zone *
 GetGCThingZone(void *thing)
 {
-    JS_ASSERT(thing);
+    MOZ_ASSERT(thing);
     return js::gc::GetGCThingArena(thing)->zone;
 }
 
-static JS_ALWAYS_INLINE Zone *
+static MOZ_ALWAYS_INLINE Zone *
 GetObjectZone(JSObject *obj)
 {
     return GetGCThingZone(obj);
 }
 
-static JS_ALWAYS_INLINE bool
+static MOZ_ALWAYS_INLINE bool
 GCThingIsMarkedGray(void *thing)
 {
 #ifdef JSGC_GENERATIONAL
@@ -201,7 +229,7 @@ GCThingIsMarkedGray(void *thing)
     return *word & mask;
 }
 
-static JS_ALWAYS_INLINE bool
+static MOZ_ALWAYS_INLINE bool
 IsIncrementalBarrierNeededOnGCThing(shadow::Runtime *rt, void *thing, JSGCTraceKind kind)
 {
     if (!rt->needsBarrier_)
