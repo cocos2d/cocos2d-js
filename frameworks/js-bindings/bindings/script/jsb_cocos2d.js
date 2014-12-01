@@ -2817,3 +2817,27 @@ cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS,
 
     this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
 };
+
+
+//
+// MenuItemImage support sprite frame name as paramter
+//
+var _p = cc.MenuItemImage.prototype;
+_p._setNormalSpriteFrame = _p.setNormalSpriteFrame;
+_p._setSelectedSpriteFrame = _p.setSelectedSpriteFrame;
+_p._setDisabledSpriteFrame = _p.setDisabledSpriteFrame;
+_p.setNormalSpriteFrame = function(frame) {
+    if (frame[0] == "#") 
+        frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
+    this._setNormalSpriteFrame(frame);
+}
+_p.setSelectedSpriteFrame = function(frame) {
+    if (frame[0] == "#") 
+        frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
+    this._setSelectedSpriteFrame(frame);
+}
+_p.setDisabledSpriteFrame = function(frame) {
+    if (frame[0] == "#") 
+        frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
+    this._setDisabledSpriteFrame(frame);
+}
