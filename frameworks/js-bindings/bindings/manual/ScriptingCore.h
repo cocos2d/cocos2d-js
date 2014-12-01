@@ -247,7 +247,7 @@ public:
     
  private:
     void string_report(jsval val);
-
+    void initRegister();
 public:
     int handleNodeEvent(void* data);
     int handleComponentEvent(void* data);
@@ -257,6 +257,8 @@ public:
     bool handleTouchEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, cocos2d::Touch* touch, cocos2d::Event* event, jsval* jsvalRet = nullptr);
     bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, jsval* jsvalRet = nullptr);
     bool handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
+
+    void restartVM();
 };
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug = false);

@@ -1327,6 +1327,12 @@ cc._initSys = function(config, CONFIG_KEY){
         __restartVM();
     };
 
+    // clean a singal js file
+    locSys.cleanScript = function(jsFile) {
+        __cleanScript(jsFile);
+    };
+
+
     locSys.dump = function(){
         var self = this;
         var str = "";
@@ -1505,6 +1511,13 @@ cc.game = {
         var self = this, config = self.config, CONFIG_KEY = self.CONFIG_KEY;
         config[CONFIG_KEY.frameRate] = frameRate;
         cc.director.setAnimationInterval(1.0/frameRate);
+    },
+    /**
+     * Run game.
+     */
+    restart: function () {
+        //window.location.href = window.location.href;
+        __restartVM();
     },
     /**
      * Run game.

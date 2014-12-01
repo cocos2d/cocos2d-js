@@ -4,18 +4,8 @@
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
 #include "jsb_cocos2dx_auto.hpp"
-#include "jsb_cocos2dx_extension_auto.hpp"
-#include "jsb_cocos2dx_builder_auto.hpp"
-#include "extension/jsb_cocos2dx_extension_manual.h"
 #include "cocos2d_specifics.hpp"
-#include "cocosbuilder/js_bindings_ccbreader.h"
 #include "localstorage/js_bindings_system_registration.h"
-#include "chipmunk/js_bindings_chipmunk_registration.h"
-#include "jsb_opengl_registration.h"
-#include "jsb_cocos2dx_ui_auto.hpp"
-#include "ui/jsb_cocos2dx_ui_manual.h"
-#include "cocostudio/jsb_cocos2dx_studio_manual.h"
-#include "jsb_cocos2dx_studio_auto.hpp"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -26,7 +16,7 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-	ScriptEngineManager::destroyInstance();
+    ScriptEngineManager::destroyInstance();
 }
 
 void AppDelegate::initGLContextAttrs()
@@ -54,27 +44,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_cocos2dx_js_core);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
     sc->addRegisterCallback(jsb_register_system);
-    
-    //sc->addRegisterCallback(register_all_cocos2dx_extension);
-    //sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
 
-    //sc->addRegisterCallback(jsb_register_chipmunk);
-
-    //sc->addRegisterCallback(register_all_cocos2dx_builder);
-    //sc->addRegisterCallback(register_CCBuilderReader);
-    
-    //sc->addRegisterCallback(JSB_register_opengl);
-    //sc->addRegisterCallback(register_all_cocos2dx_ui);
-    //sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
-    //sc->addRegisterCallback(register_all_cocos2dx_studio);
-    //sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
-    
     sc->start();
     sc->runScript("script/jsb_boot.js");
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     sc->enableDebugger();
 #endif
-    
+
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
 
@@ -90,7 +66,7 @@ void AppDelegate::applicationDidEnterBackground()
     director->stopAnimation();
     director->getEventDispatcher()->dispatchCustomEvent("game_on_hide");
     SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-    SimpleAudioEngine::getInstance()->pauseAllEffects();	
+    SimpleAudioEngine::getInstance()->pauseAllEffects();    
 }
 
 // this function will be called when the app is active again
