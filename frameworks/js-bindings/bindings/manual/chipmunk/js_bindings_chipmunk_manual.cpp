@@ -1687,10 +1687,10 @@ struct __PostStep_data{
     JS::Heap<JS::Value> func;
 };
 
-void __JSB_PostStep_callback(cpSpace *space, void *key, void *data)
+void __JSB_PostStep_callback(cpSpace *space, void *key, __PostStep_data *data)
 {
-    JSContext* cx = ((__PostStep_data*)data)->cx;
-    jsval func = const_cast<jsval&>(((__PostStep_data*)data)->func.get());
+    JSContext* cx = data->cx;
+    jsval func = const_cast<jsval&>(data->func.get());
     jsval rval;
     jsval argv;
 
@@ -1716,7 +1716,7 @@ bool JSB_cpSpace_addPostStepCallback(JSContext *cx, uint32_t argc, jsval *vp)
     data->cx = cx;
     data->func = args.get(0);
 
-    cpSpaceAddPostStepCallback(space, __JSB_PostStep_callback, data, data);
+    cpSpaceAddPostStepCallback(space, (cpPostStepFunc)__JSB_PostStep_callback, data, data);
 
 //    free(data);
     args.rval().setUndefined();
