@@ -1739,10 +1739,12 @@ bool js_cocos2dx_ui_Widget_addClickEventListener(JSContext *cx, uint32_t argc, j
     if (argc == 1) {
         std::function<void (cocos2d::Ref *)> arg0;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-		    auto lambda = [=](cocos2d::Ref* larg0) -> void {
-		        jsval largv[1];
-		        do {
+		    if(JS_TypeOfValue(cx, argv[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+		        auto lambda = [=](cocos2d::Ref* larg0) -> void {
+		            jsval largv[1];
+		            do {
 		            if (larg0) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Ref>(cx, (cocos2d::Ref*)larg0);
 		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -1750,13 +1752,18 @@ bool js_cocos2dx_ui_Widget_addClickEventListener(JSContext *cx, uint32_t argc, j
 		                largv[0] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg0 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_addClickEventListener : Error processing arguments");

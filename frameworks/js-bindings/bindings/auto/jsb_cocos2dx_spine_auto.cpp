@@ -784,17 +784,24 @@ bool js_cocos2dx_spine_SkeletonAnimation_setStartListener(JSContext *cx, uint32_
     if (argc == 1) {
         std::function<void (int)> arg0;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-		    auto lambda = [=](int larg0) -> void {
-		        jsval largv[1];
-		        largv[0] = int32_to_jsval(cx, larg0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg0 = lambda;
+		    if(JS_TypeOfValue(cx, argv[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+		        auto lambda = [=](int larg0) -> void {
+		            jsval largv[1];
+		            largv[0] = int32_to_jsval(cx, larg0);
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonAnimation_setStartListener : Error processing arguments");
@@ -820,11 +827,13 @@ bool js_cocos2dx_spine_SkeletonAnimation_setTrackEventListener(JSContext *cx, ui
         #pragma warning NO CONVERSION TO NATIVE FOR spTrackEntry*
 		ok = false;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-		    auto lambda = [=](int larg0, spEvent* larg1) -> void {
-		        jsval largv[2];
-		        largv[0] = int32_to_jsval(cx, larg0);
-		        do {
+		    if(JS_TypeOfValue(cx, argv[1]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+		        auto lambda = [=](int larg0, spEvent* larg1) -> void {
+		            jsval largv[2];
+		            largv[0] = int32_to_jsval(cx, larg0);
+		            do {
 		            if (larg1) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<spEvent>(cx, (spEvent*)larg1);
 		                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -832,13 +841,18 @@ bool js_cocos2dx_spine_SkeletonAnimation_setTrackEventListener(JSContext *cx, ui
 		                largv[1] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(2, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg1 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(2, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg1 = lambda;
+		    }
+		    else
+		    {
+		        arg1 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonAnimation_setTrackEventListener : Error processing arguments");
@@ -881,18 +895,25 @@ bool js_cocos2dx_spine_SkeletonAnimation_setTrackCompleteListener(JSContext *cx,
         #pragma warning NO CONVERSION TO NATIVE FOR spTrackEntry*
 		ok = false;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-		    auto lambda = [=](int larg0, int larg1) -> void {
-		        jsval largv[2];
-		        largv[0] = int32_to_jsval(cx, larg0);
-		        largv[1] = int32_to_jsval(cx, larg1);
-		        jsval rval;
-		        bool ok = func->invoke(2, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg1 = lambda;
+		    if(JS_TypeOfValue(cx, argv[1]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+		        auto lambda = [=](int larg0, int larg1) -> void {
+		            jsval largv[2];
+		            largv[0] = int32_to_jsval(cx, larg0);
+		            largv[1] = int32_to_jsval(cx, larg1);
+		            jsval rval;
+		            bool ok = func->invoke(2, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg1 = lambda;
+		    }
+		    else
+		    {
+		        arg1 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonAnimation_setTrackCompleteListener : Error processing arguments");
@@ -945,17 +966,24 @@ bool js_cocos2dx_spine_SkeletonAnimation_setTrackStartListener(JSContext *cx, ui
         #pragma warning NO CONVERSION TO NATIVE FOR spTrackEntry*
 		ok = false;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-		    auto lambda = [=](int larg0) -> void {
-		        jsval largv[1];
-		        largv[0] = int32_to_jsval(cx, larg0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg1 = lambda;
+		    if(JS_TypeOfValue(cx, argv[1]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+		        auto lambda = [=](int larg0) -> void {
+		            jsval largv[1];
+		            largv[0] = int32_to_jsval(cx, larg0);
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg1 = lambda;
+		    }
+		    else
+		    {
+		        arg1 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonAnimation_setTrackStartListener : Error processing arguments");
@@ -998,18 +1026,25 @@ bool js_cocos2dx_spine_SkeletonAnimation_setCompleteListener(JSContext *cx, uint
     if (argc == 1) {
         std::function<void (int, int)> arg0;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-		    auto lambda = [=](int larg0, int larg1) -> void {
-		        jsval largv[2];
-		        largv[0] = int32_to_jsval(cx, larg0);
-		        largv[1] = int32_to_jsval(cx, larg1);
-		        jsval rval;
-		        bool ok = func->invoke(2, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg0 = lambda;
+		    if(JS_TypeOfValue(cx, argv[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+		        auto lambda = [=](int larg0, int larg1) -> void {
+		            jsval largv[2];
+		            largv[0] = int32_to_jsval(cx, larg0);
+		            largv[1] = int32_to_jsval(cx, larg1);
+		            jsval rval;
+		            bool ok = func->invoke(2, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonAnimation_setCompleteListener : Error processing arguments");
@@ -1035,17 +1070,24 @@ bool js_cocos2dx_spine_SkeletonAnimation_setTrackEndListener(JSContext *cx, uint
         #pragma warning NO CONVERSION TO NATIVE FOR spTrackEntry*
 		ok = false;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-		    auto lambda = [=](int larg0) -> void {
-		        jsval largv[1];
-		        largv[0] = int32_to_jsval(cx, larg0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg1 = lambda;
+		    if(JS_TypeOfValue(cx, argv[1]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+		        auto lambda = [=](int larg0) -> void {
+		            jsval largv[1];
+		            largv[0] = int32_to_jsval(cx, larg0);
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg1 = lambda;
+		    }
+		    else
+		    {
+		        arg1 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonAnimation_setTrackEndListener : Error processing arguments");
@@ -1068,11 +1110,13 @@ bool js_cocos2dx_spine_SkeletonAnimation_setEventListener(JSContext *cx, uint32_
     if (argc == 1) {
         std::function<void (int, spEvent *)> arg0;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-		    auto lambda = [=](int larg0, spEvent* larg1) -> void {
-		        jsval largv[2];
-		        largv[0] = int32_to_jsval(cx, larg0);
-		        do {
+		    if(JS_TypeOfValue(cx, argv[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+		        auto lambda = [=](int larg0, spEvent* larg1) -> void {
+		            jsval largv[2];
+		            largv[0] = int32_to_jsval(cx, larg0);
+		            do {
 		            if (larg1) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<spEvent>(cx, (spEvent*)larg1);
 		                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -1080,13 +1124,18 @@ bool js_cocos2dx_spine_SkeletonAnimation_setEventListener(JSContext *cx, uint32_
 		                largv[1] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(2, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg0 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(2, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonAnimation_setEventListener : Error processing arguments");
@@ -1133,17 +1182,24 @@ bool js_cocos2dx_spine_SkeletonAnimation_setEndListener(JSContext *cx, uint32_t 
     if (argc == 1) {
         std::function<void (int)> arg0;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-		    auto lambda = [=](int larg0) -> void {
-		        jsval largv[1];
-		        largv[0] = int32_to_jsval(cx, larg0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg0 = lambda;
+		    if(JS_TypeOfValue(cx, argv[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+		        auto lambda = [=](int larg0) -> void {
+		            jsval largv[1];
+		            largv[0] = int32_to_jsval(cx, larg0);
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonAnimation_setEndListener : Error processing arguments");
