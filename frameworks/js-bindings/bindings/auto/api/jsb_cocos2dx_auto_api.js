@@ -2698,23 +2698,13 @@ eventdispatcher
 },
 
 /**
- * @method pushScene
- * @param {cc.Scene} arg0
+ * @method setContentScaleFactor
+ * @param {float} arg0
  */
-pushScene : function (
-scene 
+setContentScaleFactor : function (
+float 
 )
 {
-},
-
-/**
- * @method getDeltaTime
- * @return {float}
- */
-getDeltaTime : function (
-)
-{
-    return 0;
 },
 
 /**
@@ -2738,13 +2728,13 @@ getWinSizeInPixels : function (
 },
 
 /**
- * @method pushMatrix
- * @param {cc.MATRIX_STACK_TYPE} arg0
+ * @method getDeltaTime
+ * @return {float}
  */
-pushMatrix : function (
-matrix_stack_type 
+getDeltaTime : function (
 )
 {
+    return 0;
 },
 
 /**
@@ -2892,6 +2882,14 @@ getSecondsPerFrame : function (
 },
 
 /**
+ * @method resetMatrixStack
+ */
+resetMatrixStack : function (
+)
+{
+},
+
+/**
  * @method convertToUI
  * @param {vec2_object} arg0
  * @return {vec2_object}
@@ -2901,6 +2899,16 @@ vec2
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method pushMatrix
+ * @param {cc.MATRIX_STACK_TYPE} arg0
+ */
+pushMatrix : function (
+matrix_stack_type 
+)
+{
 },
 
 /**
@@ -2971,16 +2979,6 @@ setViewport : function (
  * @method stopAnimation
  */
 stopAnimation : function (
-)
-{
-},
-
-/**
- * @method setContentScaleFactor
- * @param {float} arg0
- */
-setContentScaleFactor : function (
-float 
 )
 {
 },
@@ -3082,16 +3080,6 @@ drawScene : function (
 },
 
 /**
- * @method getZEye
- * @return {float}
- */
-getZEye : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getMatrix
  * @param {cc.MATRIX_STACK_TYPE} arg0
  * @return {mat4_object}
@@ -3107,6 +3095,16 @@ matrix_stack_type
  * @method popScene
  */
 popScene : function (
+)
+{
+},
+
+/**
+ * @method loadIdentityMatrix
+ * @param {cc.MATRIX_STACK_TYPE} arg0
+ */
+loadIdentityMatrix : function (
+matrix_stack_type 
 )
 {
 },
@@ -3132,13 +3130,25 @@ projection
 },
 
 /**
- * @method loadIdentityMatrix
+ * @method multiplyMatrix
  * @param {cc.MATRIX_STACK_TYPE} arg0
+ * @param {mat4_object} arg1
  */
-loadIdentityMatrix : function (
-matrix_stack_type 
+multiplyMatrix : function (
+matrix_stack_type, 
+mat4 
 )
 {
+},
+
+/**
+ * @method getZEye
+ * @return {float}
+ */
+getZEye : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -3147,14 +3157,6 @@ matrix_stack_type
  */
 setNextDeltaTimeZero : function (
 bool 
-)
-{
-},
-
-/**
- * @method resetMatrixStack
- */
-resetMatrixStack : function (
 )
 {
 },
@@ -3190,11 +3192,11 @@ getScheduler : function (
 },
 
 /**
- * @method setAnimationInterval
- * @param {double} arg0
+ * @method pushScene
+ * @param {cc.Scene} arg0
  */
-setAnimationInterval : function (
-double 
+pushScene : function (
+scene 
 )
 {
 },
@@ -3250,13 +3252,11 @@ scene
 },
 
 /**
- * @method multiplyMatrix
- * @param {cc.MATRIX_STACK_TYPE} arg0
- * @param {mat4_object} arg1
+ * @method setAnimationInterval
+ * @param {double} arg0
  */
-multiplyMatrix : function (
-matrix_stack_type, 
-mat4 
+setAnimationInterval : function (
+double 
 )
 {
 },
@@ -4575,6 +4575,16 @@ Speed : function (
 cc.Follow = {
 
 /**
+ * @method setBoundarySet
+ * @param {bool} arg0
+ */
+setBoundarySet : function (
+bool 
+)
+{
+},
+
+/**
  * @method initWithTarget
  * @param {cc.Node} arg0
  * @param {rect_object} arg1
@@ -4586,16 +4596,6 @@ rect
 )
 {
     return false;
-},
-
-/**
- * @method setBoudarySet
- * @param {bool} arg0
- */
-setBoudarySet : function (
-bool 
-)
-{
 },
 
 /**
@@ -14678,10 +14678,10 @@ Menu : function (
 cc.ClippingNode = {
 
 /**
- * @method isInverted
+ * @method hasContent
  * @return {bool}
  */
-isInverted : function (
+hasContent : function (
 )
 {
     return false;
@@ -14747,6 +14747,16 @@ setAlphaThreshold : function (
 float 
 )
 {
+},
+
+/**
+ * @method isInverted
+ * @return {bool}
+ */
+isInverted : function (
+)
+{
+    return false;
 },
 
 /**

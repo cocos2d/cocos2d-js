@@ -2277,15 +2277,22 @@ bool js_cocos2dx_Node_setOnExitCallback(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 1) {
         std::function<void ()> arg0;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-		    auto lambda = [=]() -> void {
-		        jsval rval;
-		        bool ok = func->invoke(0, nullptr, rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg0 = lambda;
+		    if(JS_TypeOfValue(cx, argv[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+		        auto lambda = [=]() -> void {
+		            jsval rval;
+		            bool ok = func->invoke(0, nullptr, rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setOnExitCallback : Error processing arguments");
@@ -2527,15 +2534,22 @@ bool js_cocos2dx_Node_setonEnterTransitionDidFinishCallback(JSContext *cx, uint3
     if (argc == 1) {
         std::function<void ()> arg0;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-		    auto lambda = [=]() -> void {
-		        jsval rval;
-		        bool ok = func->invoke(0, nullptr, rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg0 = lambda;
+		    if(JS_TypeOfValue(cx, argv[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+		        auto lambda = [=]() -> void {
+		            jsval rval;
+		            bool ok = func->invoke(0, nullptr, rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setonEnterTransitionDidFinishCallback : Error processing arguments");
@@ -2881,15 +2895,22 @@ bool js_cocos2dx_Node_setOnEnterCallback(JSContext *cx, uint32_t argc, jsval *vp
     if (argc == 1) {
         std::function<void ()> arg0;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-		    auto lambda = [=]() -> void {
-		        jsval rval;
-		        bool ok = func->invoke(0, nullptr, rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg0 = lambda;
+		    if(JS_TypeOfValue(cx, argv[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+		        auto lambda = [=]() -> void {
+		            jsval rval;
+		            bool ok = func->invoke(0, nullptr, rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setOnEnterCallback : Error processing arguments");
@@ -2932,15 +2953,22 @@ bool js_cocos2dx_Node_setonExitTransitionDidStartCallback(JSContext *cx, uint32_
     if (argc == 1) {
         std::function<void ()> arg0;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-		    auto lambda = [=]() -> void {
-		        jsval rval;
-		        bool ok = func->invoke(0, nullptr, rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg0 = lambda;
+		    if(JS_TypeOfValue(cx, argv[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+		        auto lambda = [=]() -> void {
+		            jsval rval;
+		            bool ok = func->invoke(0, nullptr, rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setonExitTransitionDidStartCallback : Error processing arguments");
@@ -4863,10 +4891,12 @@ bool js_cocos2dx_Node_enumerateChildren(JSContext *cx, uint32_t argc, jsval *vp)
         std::function<bool (cocos2d::Node *)> arg1;
         ok &= jsval_to_std_string(cx, argv[0], &arg0);
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-		    auto lambda = [=](cocos2d::Node* larg0) -> bool {
-		        jsval largv[1];
-		        do {
+		    if(JS_TypeOfValue(cx, argv[1]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+		        auto lambda = [=](cocos2d::Node* larg0) -> bool {
+		            jsval largv[1];
+		            do {
 		            if (larg0) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)larg0);
 		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -4874,16 +4904,21 @@ bool js_cocos2dx_Node_enumerateChildren(JSContext *cx, uint32_t argc, jsval *vp)
 		                largv[0] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		        bool ret;
-		        ret = JS::ToBoolean(JS::RootedValue(cx, rval));
-		        return ret;
-		    };
-		    arg1 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            bool ret;
+		            ret = JS::ToBoolean(JS::RootedValue(cx, rval));
+		            return ret;
+		        };
+		        arg1 = lambda;
+		    }
+		    else
+		    {
+		        arg1 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_enumerateChildren : Error processing arguments");
@@ -6551,48 +6586,24 @@ bool js_cocos2dx_Director_setEventDispatcher(JSContext *cx, uint32_t argc, jsval
     JS_ReportError(cx, "js_cocos2dx_Director_setEventDispatcher : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_Director_pushScene(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_Director_setContentScaleFactor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
     bool ok = true;
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_pushScene : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_setContentScaleFactor : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::Scene* arg0;
-        do {
-            if (!argv[0].isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Scene*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_pushScene : Error processing arguments");
-        cobj->pushScene(arg0);
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_setContentScaleFactor : Error processing arguments");
+        cobj->setContentScaleFactor(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_Director_pushScene : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_Director_getDeltaTime(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_getDeltaTime : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getDeltaTime();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Director_getDeltaTime : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_Director_setContentScaleFactor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_Director_getContentScaleFactor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -6629,24 +6640,21 @@ bool js_cocos2dx_Director_getWinSizeInPixels(JSContext *cx, uint32_t argc, jsval
     JS_ReportError(cx, "js_cocos2dx_Director_getWinSizeInPixels : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_Director_pushMatrix(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_Director_getDeltaTime(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_pushMatrix : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::MATRIX_STACK_TYPE arg0;
-        ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_pushMatrix : Error processing arguments");
-        cobj->pushMatrix(arg0);
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_getDeltaTime : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getDeltaTime();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_Director_pushMatrix : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_Director_getDeltaTime : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_Director_setGLDefaultValues(JSContext *cx, uint32_t argc, jsval *vp)
@@ -6931,6 +6939,21 @@ bool js_cocos2dx_Director_getSecondsPerFrame(JSContext *cx, uint32_t argc, jsval
     JS_ReportError(cx, "js_cocos2dx_Director_getSecondsPerFrame : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_Director_resetMatrixStack(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_resetMatrixStack : Invalid Native Object");
+    if (argc == 0) {
+        cobj->resetMatrixStack();
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Director_resetMatrixStack : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_Director_convertToUI(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -6951,6 +6974,26 @@ bool js_cocos2dx_Director_convertToUI(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_Director_convertToUI : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_Director_pushMatrix(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_pushMatrix : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::MATRIX_STACK_TYPE arg0;
+        ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_pushMatrix : Error processing arguments");
+        cobj->pushMatrix(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Director_pushMatrix : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_Director_setDefaultValues(JSContext *cx, uint32_t argc, jsval *vp)
@@ -7103,26 +7146,6 @@ bool js_cocos2dx_Director_stopAnimation(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_Director_stopAnimation : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_Director_setContentScaleFactor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_setContentScaleFactor : Invalid Native Object");
-    if (argc == 1) {
-        double arg0;
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_setContentScaleFactor : Error processing arguments");
-        cobj->setContentScaleFactor(arg0);
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Director_setContentScaleFactor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_Director_popToSceneStackLevel(JSContext *cx, uint32_t argc, jsval *vp)
@@ -7327,23 +7350,6 @@ bool js_cocos2dx_Director_drawScene(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Director_drawScene : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_Director_getZEye(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_getZEye : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getZEye();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Director_getZEye : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_Director_getMatrix(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -7356,7 +7362,7 @@ bool js_cocos2dx_Director_getMatrix(JSContext *cx, uint32_t argc, jsval *vp)
         cocos2d::MATRIX_STACK_TYPE arg0;
         ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_getMatrix : Error processing arguments");
-        cocos2d::Mat4 ret = cobj->getMatrix(arg0);
+        const cocos2d::Mat4& ret = cobj->getMatrix(arg0);
         jsval jsret = JSVAL_NULL;
         jsret = matrix_to_jsval(cx, ret);
         JS_SET_RVAL(cx, vp, jsret);
@@ -7379,6 +7385,26 @@ bool js_cocos2dx_Director_popScene(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_Director_popScene : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_Director_loadIdentityMatrix(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_loadIdentityMatrix : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::MATRIX_STACK_TYPE arg0;
+        ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_loadIdentityMatrix : Error processing arguments");
+        cobj->loadIdentityMatrix(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Director_loadIdentityMatrix : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_Director_isDisplayStats(JSContext *cx, uint32_t argc, jsval *vp)
@@ -7418,24 +7444,43 @@ bool js_cocos2dx_Director_setProjection(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Director_setProjection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_Director_loadIdentityMatrix(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_Director_multiplyMatrix(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
     bool ok = true;
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_loadIdentityMatrix : Invalid Native Object");
-    if (argc == 1) {
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_multiplyMatrix : Invalid Native Object");
+    if (argc == 2) {
         cocos2d::MATRIX_STACK_TYPE arg0;
+        cocos2d::Mat4 arg1;
         ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_loadIdentityMatrix : Error processing arguments");
-        cobj->loadIdentityMatrix(arg0);
+        ok &= jsval_to_matrix(cx, argv[1], &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_multiplyMatrix : Error processing arguments");
+        cobj->multiplyMatrix(arg0, arg1);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_Director_loadIdentityMatrix : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_Director_multiplyMatrix : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_cocos2dx_Director_getZEye(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_getZEye : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getZEye();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Director_getZEye : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_Director_setNextDeltaTimeZero(JSContext *cx, uint32_t argc, jsval *vp)
@@ -7456,21 +7501,6 @@ bool js_cocos2dx_Director_setNextDeltaTimeZero(JSContext *cx, uint32_t argc, jsv
     }
 
     JS_ReportError(cx, "js_cocos2dx_Director_setNextDeltaTimeZero : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_Director_resetMatrixStack(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_resetMatrixStack : Invalid Native Object");
-    if (argc == 0) {
-        cobj->resetMatrixStack();
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Director_resetMatrixStack : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_Director_popMatrix(JSContext *cx, uint32_t argc, jsval *vp)
@@ -7534,24 +7564,31 @@ bool js_cocos2dx_Director_getScheduler(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Director_getScheduler : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_Director_setAnimationInterval(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_Director_pushScene(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
     bool ok = true;
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_setAnimationInterval : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_pushScene : Invalid Native Object");
     if (argc == 1) {
-        double arg0;
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_setAnimationInterval : Error processing arguments");
-        cobj->setAnimationInterval(arg0);
+        cocos2d::Scene* arg0;
+        do {
+            if (!argv[0].isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Scene*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_pushScene : Error processing arguments");
+        cobj->pushScene(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_Director_setAnimationInterval : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_Director_pushScene : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_Director_getAnimationInterval(JSContext *cx, uint32_t argc, jsval *vp)
@@ -7659,26 +7696,24 @@ bool js_cocos2dx_Director_replaceScene(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Director_replaceScene : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_Director_multiplyMatrix(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_Director_setAnimationInterval(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
     bool ok = true;
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_multiplyMatrix : Invalid Native Object");
-    if (argc == 2) {
-        cocos2d::MATRIX_STACK_TYPE arg0;
-        cocos2d::Mat4 arg1;
-        ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-        ok &= jsval_to_matrix(cx, argv[1], &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_multiplyMatrix : Error processing arguments");
-        cobj->multiplyMatrix(arg0, arg1);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_setAnimationInterval : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_setAnimationInterval : Error processing arguments");
+        cobj->setAnimationInterval(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_Director_multiplyMatrix : wrong number of arguments: %d, was expecting %d", argc, 2);
+    JS_ReportError(cx, "js_cocos2dx_Director_setAnimationInterval : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_Director_getActionManager(JSContext *cx, uint32_t argc, jsval *vp)
@@ -7752,11 +7787,10 @@ void js_register_cocos2dx_Director(JSContext *cx, JSObject *global) {
     static JSFunctionSpec funcs[] = {
         JS_FN("pause", js_cocos2dx_Director_pause, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setEventDispatcher", js_cocos2dx_Director_setEventDispatcher, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("pushScene", js_cocos2dx_Director_pushScene, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getDeltaTime", js_cocos2dx_Director_getDeltaTime, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setContentScaleFactor", js_cocos2dx_Director_setContentScaleFactor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getContentScaleFactor", js_cocos2dx_Director_getContentScaleFactor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getWinSizeInPixels", js_cocos2dx_Director_getWinSizeInPixels, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("pushMatrix", js_cocos2dx_Director_pushMatrix, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getDeltaTime", js_cocos2dx_Director_getDeltaTime, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setGLDefaultValues", js_cocos2dx_Director_setGLDefaultValues, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setActionManager", js_cocos2dx_Director_setActionManager, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAlphaBlending", js_cocos2dx_Director_setAlphaBlending, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -7772,7 +7806,9 @@ void js_register_cocos2dx_Director(JSContext *cx, JSObject *global) {
         JS_FN("setDepthTest", js_cocos2dx_Director_setDepthTest, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFrameRate", js_cocos2dx_Director_getFrameRate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSecondsPerFrame", js_cocos2dx_Director_getSecondsPerFrame, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("resetMatrixStack", js_cocos2dx_Director_resetMatrixStack, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("convertToUI", js_cocos2dx_Director_convertToUI, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("pushMatrix", js_cocos2dx_Director_pushMatrix, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDefaultValues", js_cocos2dx_Director_setDefaultValues, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_cocos2dx_Director_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setScheduler", js_cocos2dx_Director_setScheduler, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -7781,7 +7817,6 @@ void js_register_cocos2dx_Director(JSContext *cx, JSObject *global) {
         JS_FN("getRunningScene", js_cocos2dx_Director_getRunningScene, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setViewport", js_cocos2dx_Director_setViewport, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("stopAnimation", js_cocos2dx_Director_stopAnimation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setContentScaleFactor", js_cocos2dx_Director_setContentScaleFactor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("popToSceneStackLevel", js_cocos2dx_Director_popToSceneStackLevel, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("resume", js_cocos2dx_Director_resume, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isNextDeltaTimeZero", js_cocos2dx_Director_isNextDeltaTimeZero, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -7792,24 +7827,24 @@ void js_register_cocos2dx_Director(JSContext *cx, JSObject *global) {
         JS_FN("runWithScene", js_cocos2dx_Director_runWithScene, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setNotificationNode", js_cocos2dx_Director_setNotificationNode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawScene", js_cocos2dx_Director_drawScene, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getZEye", js_cocos2dx_Director_getZEye, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMatrix", js_cocos2dx_Director_getMatrix, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("popScene", js_cocos2dx_Director_popScene, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("loadIdentityMatrix", js_cocos2dx_Director_loadIdentityMatrix, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isDisplayStats", js_cocos2dx_Director_isDisplayStats, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setProjection", js_cocos2dx_Director_setProjection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("loadIdentityMatrix", js_cocos2dx_Director_loadIdentityMatrix, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("multiplyMatrix", js_cocos2dx_Director_multiplyMatrix, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getZEye", js_cocos2dx_Director_getZEye, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setNextDeltaTimeZero", js_cocos2dx_Director_setNextDeltaTimeZero, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("resetMatrixStack", js_cocos2dx_Director_resetMatrixStack, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("popMatrix", js_cocos2dx_Director_popMatrix, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getVisibleSize", js_cocos2dx_Director_getVisibleSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getScheduler", js_cocos2dx_Director_getScheduler, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setAnimationInterval", js_cocos2dx_Director_setAnimationInterval, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("pushScene", js_cocos2dx_Director_pushScene, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getAnimationInterval", js_cocos2dx_Director_getAnimationInterval, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isPaused", js_cocos2dx_Director_isPaused, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDisplayStats", js_cocos2dx_Director_setDisplayStats, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getEventDispatcher", js_cocos2dx_Director_getEventDispatcher, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("replaceScene", js_cocos2dx_Director_replaceScene, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("multiplyMatrix", js_cocos2dx_Director_multiplyMatrix, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnimationInterval", js_cocos2dx_Director_setAnimationInterval, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getActionManager", js_cocos2dx_Director_getActionManager, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -7881,15 +7916,22 @@ bool js_cocos2dx_Scheduler_performFunctionInCocosThread(JSContext *cx, uint32_t 
     if (argc == 1) {
         std::function<void ()> arg0;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-		    auto lambda = [=]() -> void {
-		        jsval rval;
-		        bool ok = func->invoke(0, nullptr, rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg0 = lambda;
+		    if(JS_TypeOfValue(cx, argv[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+		        auto lambda = [=]() -> void {
+		            jsval rval;
+		            bool ok = func->invoke(0, nullptr, rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Scheduler_performFunctionInCocosThread : Error processing arguments");
@@ -8908,10 +8950,12 @@ bool js_cocos2dx_EventDispatcher_addCustomEventListener(JSContext *cx, uint32_t 
         std::function<void (cocos2d::EventCustom *)> arg1;
         ok &= jsval_to_std_string(cx, argv[0], &arg0);
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-		    auto lambda = [=](cocos2d::EventCustom* larg0) -> void {
-		        jsval largv[1];
-		        do {
+		    if(JS_TypeOfValue(cx, argv[1]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+		        auto lambda = [=](cocos2d::EventCustom* larg0) -> void {
+		            jsval largv[1];
+		            do {
 		            if (larg0) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::EventCustom>(cx, (cocos2d::EventCustom*)larg0);
 		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -8919,13 +8963,18 @@ bool js_cocos2dx_EventDispatcher_addCustomEventListener(JSContext *cx, uint32_t 
 		                largv[0] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg1 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg1 = lambda;
+		    }
+		    else
+		    {
+		        arg1 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventDispatcher_addCustomEventListener : Error processing arguments");
@@ -10285,11 +10334,13 @@ bool js_cocos2dx_EventListenerAcceleration_init(JSContext *cx, uint32_t argc, js
     if (argc == 1) {
         std::function<void (cocos2d::Acceleration *, cocos2d::Event *)> arg0;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-		    auto lambda = [=](cocos2d::Acceleration* larg0, cocos2d::Event* larg1) -> void {
-		        jsval largv[2];
-		        largv[0] = ccacceleration_to_jsval(cx, *larg0);
-		        do {
+		    if(JS_TypeOfValue(cx, argv[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+		        auto lambda = [=](cocos2d::Acceleration* larg0, cocos2d::Event* larg1) -> void {
+		            jsval largv[2];
+		            largv[0] = ccacceleration_to_jsval(cx, *larg0);
+		            do {
 		            if (larg1) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Event>(cx, (cocos2d::Event*)larg1);
 		                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -10297,13 +10348,18 @@ bool js_cocos2dx_EventListenerAcceleration_init(JSContext *cx, uint32_t argc, js
 		                largv[1] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(2, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg0 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(2, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventListenerAcceleration_init : Error processing arguments");
@@ -10324,11 +10380,13 @@ bool js_cocos2dx_EventListenerAcceleration_create(JSContext *cx, uint32_t argc, 
     if (argc == 1) {
         std::function<void (cocos2d::Acceleration *, cocos2d::Event *)> arg0;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-		    auto lambda = [=](cocos2d::Acceleration* larg0, cocos2d::Event* larg1) -> void {
-		        jsval largv[2];
-		        largv[0] = ccacceleration_to_jsval(cx, *larg0);
-		        do {
+		    if(JS_TypeOfValue(cx, argv[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+		        auto lambda = [=](cocos2d::Acceleration* larg0, cocos2d::Event* larg1) -> void {
+		            jsval largv[2];
+		            largv[0] = ccacceleration_to_jsval(cx, *larg0);
+		            do {
 		            if (larg1) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Event>(cx, (cocos2d::Event*)larg1);
 		                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -10336,13 +10394,18 @@ bool js_cocos2dx_EventListenerAcceleration_create(JSContext *cx, uint32_t argc, 
 		                largv[1] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(2, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg0 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(2, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventListenerAcceleration_create : Error processing arguments");
@@ -10573,10 +10636,12 @@ bool js_cocos2dx_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval 
         std::function<void (cocos2d::EventCustom *)> arg1;
         ok &= jsval_to_std_string(cx, argv[0], &arg0);
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-		    auto lambda = [=](cocos2d::EventCustom* larg0) -> void {
-		        jsval largv[1];
-		        do {
+		    if(JS_TypeOfValue(cx, argv[1]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+		        auto lambda = [=](cocos2d::EventCustom* larg0) -> void {
+		            jsval largv[1];
+		            do {
 		            if (larg0) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::EventCustom>(cx, (cocos2d::EventCustom*)larg0);
 		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -10584,13 +10649,18 @@ bool js_cocos2dx_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval 
 		                largv[0] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg1 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg1 = lambda;
+		    }
+		    else
+		    {
+		        arg1 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventListenerCustom_create : Error processing arguments");
@@ -11648,6 +11718,26 @@ void js_register_cocos2dx_Speed(JSContext *cx, JSObject *global) {
 JSClass  *jsb_cocos2d_Follow_class;
 JSObject *jsb_cocos2d_Follow_prototype;
 
+bool js_cocos2dx_Follow_setBoundarySet(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Follow* cobj = (cocos2d::Follow *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Follow_setBoundarySet : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Follow_setBoundarySet : Error processing arguments");
+        cobj->setBoundarySet(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Follow_setBoundarySet : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_Follow_initWithTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -11694,26 +11784,6 @@ bool js_cocos2dx_Follow_initWithTarget(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_Follow_initWithTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_Follow_setBoudarySet(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Follow* cobj = (cocos2d::Follow *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Follow_setBoudarySet : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Follow_setBoudarySet : Error processing arguments");
-        cobj->setBoudarySet(arg0);
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Follow_setBoudarySet : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_Follow_isBoundarySet(JSContext *cx, uint32_t argc, jsval *vp)
@@ -11843,8 +11913,8 @@ void js_register_cocos2dx_Follow(JSContext *cx, JSObject *global) {
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("setBoundarySet", js_cocos2dx_Follow_setBoundarySet, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithTarget", js_cocos2dx_Follow_initWithTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setBoudarySet", js_cocos2dx_Follow_setBoudarySet, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isBoundarySet", js_cocos2dx_Follow_isBoundarySet, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -31028,10 +31098,12 @@ bool js_cocos2dx_GLProgramState_setUniformCallback(JSContext *cx, uint32_t argc,
             if (!ok) { ok = true; break; }
             std::function<void (cocos2d::GLProgram *, cocos2d::Uniform *)> arg1;
             do {
-			    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-			    auto lambda = [=](cocos2d::GLProgram* larg0, cocos2d::Uniform* larg1) -> void {
-			        jsval largv[2];
-			        do {
+			    if(JS_TypeOfValue(cx, argv[1]) == JSTYPE_FUNCTION)
+			    {
+			        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+			        auto lambda = [=](cocos2d::GLProgram* larg0, cocos2d::Uniform* larg1) -> void {
+			            jsval largv[2];
+			            do {
 			            if (larg0) {
 			                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::GLProgram>(cx, (cocos2d::GLProgram*)larg0);
 			                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -31039,7 +31111,7 @@ bool js_cocos2dx_GLProgramState_setUniformCallback(JSContext *cx, uint32_t argc,
 			                largv[0] = JSVAL_NULL;
 			            }
 			        } while (0);
-			        do {
+			            do {
 			            if (larg1) {
 			                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Uniform>(cx, (cocos2d::Uniform*)larg1);
 			                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -31047,13 +31119,18 @@ bool js_cocos2dx_GLProgramState_setUniformCallback(JSContext *cx, uint32_t argc,
 			                largv[1] = JSVAL_NULL;
 			            }
 			        } while (0);
-			        jsval rval;
-			        bool ok = func->invoke(2, &largv[0], rval);
-			        if (!ok && JS_IsExceptionPending(cx)) {
-			            JS_ReportPendingException(cx);
-			        }
-			    };
-			    arg1 = lambda;
+			            jsval rval;
+			            bool ok = func->invoke(2, &largv[0], rval);
+			            if (!ok && JS_IsExceptionPending(cx)) {
+			                JS_ReportPendingException(cx);
+			            }
+			        };
+			        arg1 = lambda;
+			    }
+			    else
+			    {
+			        arg1 = nullptr;
+			    }
 			} while(0)
 			;
             if (!ok) { ok = true; break; }
@@ -31070,10 +31147,12 @@ bool js_cocos2dx_GLProgramState_setUniformCallback(JSContext *cx, uint32_t argc,
             if (!ok) { ok = true; break; }
             std::function<void (cocos2d::GLProgram *, cocos2d::Uniform *)> arg1;
             do {
-			    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-			    auto lambda = [=](cocos2d::GLProgram* larg0, cocos2d::Uniform* larg1) -> void {
-			        jsval largv[2];
-			        do {
+			    if(JS_TypeOfValue(cx, argv[1]) == JSTYPE_FUNCTION)
+			    {
+			        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+			        auto lambda = [=](cocos2d::GLProgram* larg0, cocos2d::Uniform* larg1) -> void {
+			            jsval largv[2];
+			            do {
 			            if (larg0) {
 			                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::GLProgram>(cx, (cocos2d::GLProgram*)larg0);
 			                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -31081,7 +31160,7 @@ bool js_cocos2dx_GLProgramState_setUniformCallback(JSContext *cx, uint32_t argc,
 			                largv[0] = JSVAL_NULL;
 			            }
 			        } while (0);
-			        do {
+			            do {
 			            if (larg1) {
 			                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Uniform>(cx, (cocos2d::Uniform*)larg1);
 			                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -31089,13 +31168,18 @@ bool js_cocos2dx_GLProgramState_setUniformCallback(JSContext *cx, uint32_t argc,
 			                largv[1] = JSVAL_NULL;
 			            }
 			        } while (0);
-			        jsval rval;
-			        bool ok = func->invoke(2, &largv[0], rval);
-			        if (!ok && JS_IsExceptionPending(cx)) {
-			            JS_ReportPendingException(cx);
-			        }
-			    };
-			    arg1 = lambda;
+			            jsval rval;
+			            bool ok = func->invoke(2, &largv[0], rval);
+			            if (!ok && JS_IsExceptionPending(cx)) {
+			                JS_ReportPendingException(cx);
+			            }
+			        };
+			        arg1 = lambda;
+			    }
+			    else
+			    {
+			        arg1 = nullptr;
+			    }
 			} while(0)
 			;
             if (!ok) { ok = true; break; }
@@ -31412,10 +31496,12 @@ bool js_cocos2dx_GLProgramState_setVertexAttribCallback(JSContext *cx, uint32_t 
         std::function<void (cocos2d::VertexAttrib *)> arg1;
         ok &= jsval_to_std_string(cx, argv[0], &arg0);
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-		    auto lambda = [=](cocos2d::VertexAttrib* larg0) -> void {
-		        jsval largv[1];
-		        do {
+		    if(JS_TypeOfValue(cx, argv[1]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+		        auto lambda = [=](cocos2d::VertexAttrib* larg0) -> void {
+		            jsval largv[1];
+		            do {
 		            if (larg0) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::VertexAttrib>(cx, (cocos2d::VertexAttrib*)larg0);
 		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -31423,13 +31509,18 @@ bool js_cocos2dx_GLProgramState_setVertexAttribCallback(JSContext *cx, uint32_t 
 		                largv[0] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg1 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg1 = lambda;
+		    }
+		    else
+		    {
+		        arg1 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgramState_setVertexAttribCallback : Error processing arguments");
@@ -43653,10 +43744,12 @@ bool js_cocos2dx_MenuItem_initWithCallback(JSContext *cx, uint32_t argc, jsval *
     if (argc == 1) {
         std::function<void (cocos2d::Ref *)> arg0;
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-		    auto lambda = [=](cocos2d::Ref* larg0) -> void {
-		        jsval largv[1];
-		        do {
+		    if(JS_TypeOfValue(cx, argv[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+		        auto lambda = [=](cocos2d::Ref* larg0) -> void {
+		            jsval largv[1];
+		            do {
 		            if (larg0) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Ref>(cx, (cocos2d::Ref*)larg0);
 		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -43664,13 +43757,18 @@ bool js_cocos2dx_MenuItem_initWithCallback(JSContext *cx, uint32_t argc, jsval *
 		                largv[0] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg0 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MenuItem_initWithCallback : Error processing arguments");
@@ -43962,10 +44060,12 @@ bool js_cocos2dx_MenuItemLabel_initWithLabel(JSContext *cx, uint32_t argc, jsval
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
         } while (0);
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-		    auto lambda = [=](cocos2d::Ref* larg0) -> void {
-		        jsval largv[1];
-		        do {
+		    if(JS_TypeOfValue(cx, argv[1]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+		        auto lambda = [=](cocos2d::Ref* larg0) -> void {
+		            jsval largv[1];
+		            do {
 		            if (larg0) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Ref>(cx, (cocos2d::Ref*)larg0);
 		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -43973,13 +44073,18 @@ bool js_cocos2dx_MenuItemLabel_initWithLabel(JSContext *cx, uint32_t argc, jsval
 		                largv[0] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg1 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg1 = lambda;
+		    }
+		    else
+		    {
+		        arg1 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MenuItemLabel_initWithLabel : Error processing arguments");
@@ -44169,10 +44274,12 @@ bool js_cocos2dx_MenuItemAtlasFont_initWithString(JSContext *cx, uint32_t argc, 
         ok &= jsval_to_int32(cx, argv[3], (int32_t *)&arg3);
         ok &= jsval_to_int32(cx, argv[4], &arg4);
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[5]));
-		    auto lambda = [=](cocos2d::Ref* larg0) -> void {
-		        jsval largv[1];
-		        do {
+		    if(JS_TypeOfValue(cx, argv[5]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[5]));
+		        auto lambda = [=](cocos2d::Ref* larg0) -> void {
+		            jsval largv[1];
+		            do {
 		            if (larg0) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Ref>(cx, (cocos2d::Ref*)larg0);
 		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -44180,13 +44287,18 @@ bool js_cocos2dx_MenuItemAtlasFont_initWithString(JSContext *cx, uint32_t argc, 
 		                largv[0] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg5 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg5 = lambda;
+		    }
+		    else
+		    {
+		        arg5 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MenuItemAtlasFont_initWithString : Error processing arguments");
@@ -44376,10 +44488,12 @@ bool js_cocos2dx_MenuItemFont_initWithString(JSContext *cx, uint32_t argc, jsval
         std::function<void (cocos2d::Ref *)> arg1;
         ok &= jsval_to_std_string(cx, argv[0], &arg0);
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-		    auto lambda = [=](cocos2d::Ref* larg0) -> void {
-		        jsval largv[1];
-		        do {
+		    if(JS_TypeOfValue(cx, argv[1]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+		        auto lambda = [=](cocos2d::Ref* larg0) -> void {
+		            jsval largv[1];
+		            do {
 		            if (larg0) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Ref>(cx, (cocos2d::Ref*)larg0);
 		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -44387,13 +44501,18 @@ bool js_cocos2dx_MenuItemFont_initWithString(JSContext *cx, uint32_t argc, jsval
 		                largv[0] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg1 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg1 = lambda;
+		    }
+		    else
+		    {
+		        arg1 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MenuItemFont_initWithString : Error processing arguments");
@@ -44725,10 +44844,12 @@ bool js_cocos2dx_MenuItemSprite_initWithNormalSprite(JSContext *cx, uint32_t arg
             JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
         } while (0);
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[3]));
-		    auto lambda = [=](cocos2d::Ref* larg0) -> void {
-		        jsval largv[1];
-		        do {
+		    if(JS_TypeOfValue(cx, argv[3]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[3]));
+		        auto lambda = [=](cocos2d::Ref* larg0) -> void {
+		            jsval largv[1];
+		            do {
 		            if (larg0) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Ref>(cx, (cocos2d::Ref*)larg0);
 		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -44736,13 +44857,18 @@ bool js_cocos2dx_MenuItemSprite_initWithNormalSprite(JSContext *cx, uint32_t arg
 		                largv[0] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg3 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg3 = lambda;
+		    }
+		    else
+		    {
+		        arg3 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MenuItemSprite_initWithNormalSprite : Error processing arguments");
@@ -45100,10 +45226,12 @@ bool js_cocos2dx_MenuItemImage_initWithNormalImage(JSContext *cx, uint32_t argc,
         ok &= jsval_to_std_string(cx, argv[1], &arg1);
         ok &= jsval_to_std_string(cx, argv[2], &arg2);
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[3]));
-		    auto lambda = [=](cocos2d::Ref* larg0) -> void {
-		        jsval largv[1];
-		        do {
+		    if(JS_TypeOfValue(cx, argv[3]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[3]));
+		        auto lambda = [=](cocos2d::Ref* larg0) -> void {
+		            jsval largv[1];
+		            do {
 		            if (larg0) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Ref>(cx, (cocos2d::Ref*)larg0);
 		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -45111,13 +45239,18 @@ bool js_cocos2dx_MenuItemImage_initWithNormalImage(JSContext *cx, uint32_t argc,
 		                largv[0] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg3 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg3 = lambda;
+		    }
+		    else
+		    {
+		        arg3 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MenuItemImage_initWithNormalImage : Error processing arguments");
@@ -45748,21 +45881,21 @@ void js_register_cocos2dx_Menu(JSContext *cx, JSObject *global) {
 JSClass  *jsb_cocos2d_ClippingNode_class;
 JSObject *jsb_cocos2d_ClippingNode_prototype;
 
-bool js_cocos2dx_ClippingNode_isInverted(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_ClippingNode_hasContent(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::ClippingNode* cobj = (cocos2d::ClippingNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ClippingNode_isInverted : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ClippingNode_hasContent : Invalid Native Object");
     if (argc == 0) {
-        bool ret = cobj->isInverted();
+        bool ret = cobj->hasContent();
         jsval jsret = JSVAL_NULL;
         jsret = BOOLEAN_TO_JSVAL(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_ClippingNode_isInverted : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_ClippingNode_hasContent : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ClippingNode_setInverted(JSContext *cx, uint32_t argc, jsval *vp)
@@ -45917,6 +46050,23 @@ bool js_cocos2dx_ClippingNode_setAlphaThreshold(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_cocos2dx_ClippingNode_setAlphaThreshold : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_ClippingNode_isInverted(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ClippingNode* cobj = (cocos2d::ClippingNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ClippingNode_isInverted : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isInverted();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ClippingNode_isInverted : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ClippingNode_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -46020,13 +46170,14 @@ void js_register_cocos2dx_ClippingNode(JSContext *cx, JSObject *global) {
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("isInverted", js_cocos2dx_ClippingNode_isInverted, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("hasContent", js_cocos2dx_ClippingNode_hasContent, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setInverted", js_cocos2dx_ClippingNode_setInverted, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setStencil", js_cocos2dx_ClippingNode_setStencil, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getAlphaThreshold", js_cocos2dx_ClippingNode_getAlphaThreshold, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_cocos2dx_ClippingNode_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStencil", js_cocos2dx_ClippingNode_getStencil, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAlphaThreshold", js_cocos2dx_ClippingNode_setAlphaThreshold, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isInverted", js_cocos2dx_ClippingNode_isInverted, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -56478,10 +56629,12 @@ bool js_cocos2dx_TextureCache_addImageAsync(JSContext *cx, uint32_t argc, jsval 
         std::function<void (cocos2d::Texture2D *)> arg1;
         ok &= jsval_to_std_string(cx, argv[0], &arg0);
         do {
-		    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-		    auto lambda = [=](cocos2d::Texture2D* larg0) -> void {
-		        jsval largv[1];
-		        do {
+		    if(JS_TypeOfValue(cx, argv[1]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+		        auto lambda = [=](cocos2d::Texture2D* larg0) -> void {
+		            jsval largv[1];
+		            do {
 		            if (larg0) {
 		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Texture2D>(cx, (cocos2d::Texture2D*)larg0);
 		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -56489,13 +56642,18 @@ bool js_cocos2dx_TextureCache_addImageAsync(JSContext *cx, uint32_t argc, jsval 
 		                largv[0] = JSVAL_NULL;
 		            }
 		        } while (0);
-		        jsval rval;
-		        bool ok = func->invoke(1, &largv[0], rval);
-		        if (!ok && JS_IsExceptionPending(cx)) {
-		            JS_ReportPendingException(cx);
-		        }
-		    };
-		    arg1 = lambda;
+		            jsval rval;
+		            bool ok = func->invoke(1, &largv[0], rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg1 = lambda;
+		    }
+		    else
+		    {
+		        arg1 = nullptr;
+		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TextureCache_addImageAsync : Error processing arguments");
