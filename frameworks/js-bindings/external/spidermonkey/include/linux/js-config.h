@@ -19,7 +19,7 @@
 /* #undef JS_NO_JSVAL_JSID_STRUCT_TYPES */
 
 /* Define to 1 if SpiderMonkey should support multi-threaded clients.  */
-/* #undef JS_THREADSAFE */
+#define JS_THREADSAFE 1
 
 /* Define to 1 if SpiderMonkey should include ctypes support.  */
 /* #undef JS_HAS_CTYPES */
@@ -40,8 +40,14 @@
    useable.  See jscpucfg.h.  */
 /* #undef JS_HAVE_SYS_ISA_DEFS_H */
 
+/* Define to 1 if SpiderMonkey is in NUNBOX32 mode. */
+/* #undef JS_NUNBOX32 */
+
+/* Define to 1 if SpiderMonkey is in PUNBOX64 mode. */
+#define JS_PUNBOX64 1
+
 /* MOZILLA JSAPI version number components */
-#define MOZJS_MAJOR_VERSION 31
-#define MOZJS_MINOR_VERSION 2
+#define MOZJS_MAJOR_VERSION 33
+#define MOZJS_MINOR_VERSION 1
 
 #endif /* js_config_h */
