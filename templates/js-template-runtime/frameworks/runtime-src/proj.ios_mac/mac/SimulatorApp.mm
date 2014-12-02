@@ -34,19 +34,18 @@
 #include "AppDelegate.h"
 #include "glfw3.h"
 #include "glfw3native.h"
-#include "Runtime.h"
 #include "ConfigParser.h"
 
 #include "cocos2d.h"
 
 using namespace cocos2d;
 
-bool g_landscape=false;
+bool g_landscape = false;
 bool g_windTop = false;
 cocos2d::Size g_screenSize;
 GLViewImpl* g_eglView = nullptr;
 
-static AppController* g_nsAppDelegate=nullptr;
+static AppController* g_nsAppDelegate = nullptr;
 
 using namespace std;
 using namespace cocos2d;
@@ -58,6 +57,7 @@ std::string getCurAppPath(void)
 {
     return [[[NSBundle mainBundle] bundlePath] UTF8String];
 }
+
 std::string getCurAppName(void)
 {
     string appName = [[[NSProcessInfo processInfo] processName] UTF8String];
@@ -80,14 +80,9 @@ std::string getCurAppName(void)
 {
     NSArray *args = [[NSProcessInfo processInfo] arguments];
 
-    if (args!=nullptr && [args count]>=2) {
-        extern std::string g_resourcePath;
-        g_resourcePath = [[args objectAtIndex:1]UTF8String];
-        if (g_resourcePath.at(0) != '/') {
-            g_resourcePath="";
-        }
+    if (args != nullptr && [args count] >= 2) {
     }
-    g_nsAppDelegate =self;
+    g_nsAppDelegate = self;
     AppDelegate app;
     Application::getInstance()->run();
     
@@ -108,7 +103,7 @@ std::string getCurAppName(void)
     
     if(!g_landscape)
     {
-        float tmpvalue =width;
+        float tmpvalue = width;
         width = height;
         height = tmpvalue;
     }
@@ -122,7 +117,6 @@ std::string getCurAppName(void)
     
     [self createViewMenu];
     [self updateMenu];
-    [window center];
 
     [window becomeFirstResponder];
     [window makeKeyAndOrderFront:self];
