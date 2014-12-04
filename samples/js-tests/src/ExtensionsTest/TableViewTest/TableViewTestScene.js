@@ -48,14 +48,14 @@ var TableViewTestLayer = cc.Layer.extend({
         this.addChild(tableView);
         tableView.reloadData();
 
-        tableView = new cc.TableView(this, cc.size(60, 350));
-        tableView.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL);
-        tableView.x = winSize.width - 150;
-        tableView.y = winSize.height / 2 - 150;
-        tableView.setDelegate(this);
-        tableView.setVerticalFillOrder(cc.TABLEVIEW_FILL_TOPDOWN);
-        this.addChild(tableView);
-        tableView.reloadData();
+//        tableView = new cc.TableView(this, cc.size(60, 350));
+//        tableView.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL);
+//        tableView.x = winSize.width - 150;
+//        tableView.y = winSize.height / 2 - 150;
+//        tableView.setDelegate(this);
+//        tableView.setVerticalFillOrder(cc.TABLEVIEW_FILL_TOPDOWN);
+//        this.addChild(tableView);
+//        tableView.reloadData();
 
         // Back Menu
         var itemBack = new cc.MenuItemFont("Back", this.toExtensionsMainLayer, this);
@@ -116,15 +116,6 @@ var TableViewTestLayer = cc.Layer.extend({
             label.anchorY = 0;
             label.tag = 123;
             cell.addChild(label);
-
-            var itemBack = new cc.MenuItemFont("Back", this.tableCellTouched2, this);
-            itemBack.x = 0;
-            itemBack.y = 0;
-            var menuBack = new cc.Menu(itemBack);
-            menuBack.x = 0;
-            menuBack.y = 0;
-            cell.addChild(menuBack);
-
         } else {
             label = cell.getChildByTag(123);
             label.setString(strValue);
