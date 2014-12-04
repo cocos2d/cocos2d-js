@@ -128,12 +128,9 @@ var ScriptTestLayer = ScriptTestDemo.extend({
         }
     },
     clickMeShowTempLayer:function () {
-        if (this._tempLayer != null)
-        {
-            this._tempLayer.removeFromParent();
-        }
+        this.removeChildByTag(233, true);
         this._tempLayer = new ScriptTestTempLayer();
-        this.addChild(this._tempLayer);
+        this.addChild(this._tempLayer, 0, 233);
     },
     clickMeReloadTempLayer:function(){
         cc.sys.cleanScript(tempJSFileName);

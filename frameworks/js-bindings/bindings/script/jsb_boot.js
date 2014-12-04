@@ -1512,13 +1512,14 @@ cc.game = {
         config[CONFIG_KEY.frameRate] = frameRate;
         cc.director.setAnimationInterval(1.0/frameRate);
     },
+    
     /**
-     * Run game.
+     * Restart game.
      */
     restart: function () {
-        //window.location.href = window.location.href;
         __restartVM();
     },
+    
     /**
      * Run game.
      */
@@ -1532,6 +1533,7 @@ cc.game = {
             self.onStart();
         }
     },
+    
     /**
      * Init config.
      * @param cb
