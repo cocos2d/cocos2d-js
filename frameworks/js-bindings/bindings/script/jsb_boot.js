@@ -1327,6 +1327,12 @@ cc._initSys = function(config, CONFIG_KEY){
         __restartVM();
     };
 
+    // clean a singal js file
+    locSys.cleanScript = function(jsFile) {
+        __cleanScript(jsFile);
+    };
+
+
     locSys.dump = function(){
         var self = this;
         var str = "";
@@ -1506,6 +1512,14 @@ cc.game = {
         config[CONFIG_KEY.frameRate] = frameRate;
         cc.director.setAnimationInterval(1.0/frameRate);
     },
+    
+    /**
+     * Restart game.
+     */
+    restart: function () {
+        __restartVM();
+    },
+    
     /**
      * Run game.
      */
@@ -1519,6 +1533,7 @@ cc.game = {
             self.onStart();
         }
     },
+    
     /**
      * Init config.
      * @param cb
