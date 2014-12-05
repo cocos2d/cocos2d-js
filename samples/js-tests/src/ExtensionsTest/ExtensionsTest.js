@@ -125,18 +125,6 @@ if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
     });
 }
 
-if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
-    extensionsTestItemNames.push({
-        itemTitle:"ScriptTestLayer",
-        testScene:function () {
-            var testScene = new ScriptTestScene();
-            if (testScene) {
-                testScene.runThisTest();
-            }
-        }
-    });
-}
-
 var ExtensionsMainLayer = cc.Layer.extend({
     onEnter:function () {
         this._super();

@@ -70,6 +70,7 @@
         "src/EventTest/EventTest.js",
         "src/UnitTest/UnitTest.js",
         "src/SysTest/SysTest.js",
+        "src/SysTest/ScriptTestTempFile.js",
         "src/EffectsTest/EffectsTest.js",
         "src/EffectsAdvancedTest/EffectsAdvancedTest.js",
         "src/MotionStreakTest/MotionStreakTest.js",
@@ -83,8 +84,6 @@
 
         "src/ExtensionsTest/ExtensionsTest.js",
         "src/ExtensionsTest/AssetsManagerTest/AssetsManagerTest.js",
-        "src/ExtensionsTest/ScriptTest/ScriptTest.js",
-        "src/ExtensionsTest/ScriptTest/ScriptTestTempFile.js",
         "src/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.js",
         "src/ExtensionsTest/ControlExtensionTest/CCControlScene.js",
         "src/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.js",
