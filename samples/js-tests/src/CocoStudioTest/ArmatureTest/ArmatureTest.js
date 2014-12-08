@@ -481,8 +481,8 @@ var TestFrameEvent = ArmatureTestLayer.extend({
         armature.x = center.x - 50;
 	    armature.y = center.y - 100;
 
-	    this._nodeGrid = cc.NodeGrid.create();
-	    this._nodeGrid.addChild(armature);
+        this._nodeGrid = cc.NodeGrid.create();
+        this._nodeGrid.addChild(armature);
         this.addChild(this._nodeGrid);
         /*
          * Set armature's frame event callback function

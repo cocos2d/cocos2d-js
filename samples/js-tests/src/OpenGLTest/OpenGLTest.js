@@ -40,16 +40,17 @@ cc.GLNode = cc.GLNode || cc.Node.extend({
         this._super();
         this.init();
     },
-    _initRendererCmd:function(){
-        this._rendererCmd = new cc.CustomRenderCmdWebGL(this, function(){
+    init:function(){
+        this._renderCmd._needDraw = true;
+        this._renderCmd.rendering =  function(ctx){
             cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
             cc.kmGLPushMatrix();
             cc.kmGLLoadMatrix(this._stackMatrix);
 
-            this.draw();
+            this._node.draw(ctx);
 
             cc.kmGLPopMatrix();
-        });
+        };
     },
     draw:function(ctx){
         this._super(ctx);
@@ -585,17 +586,6 @@ var ShaderNode = cc.GLNode.extend({
             this.scheduleUpdate();
             this._time = 0;
         }
-    },
-    _initRendererCmd:function () {
-        this._rendererCmd = new cc.CustomRenderCmdWebGL(this, function(){
-            cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
-            cc.kmGLPushMatrix();
-            cc.kmGLLoadMatrix(this._stackMatrix);
-
-            this.draw();
-
-            cc.kmGLPopMatrix(); 
-        });
     },
     draw:function() {
         this.shader.use();
