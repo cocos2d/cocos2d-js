@@ -2940,6 +2940,18 @@ scheduler
 },
 
 /**
+ * @method getMatrix
+ * @param {cc.MATRIX_STACK_TYPE} arg0
+ * @return {mat4_object}
+ */
+getMatrix : function (
+matrix_stack_type 
+)
+{
+    return cc.Mat4;
+},
+
+/**
  * @method startAnimation
  */
 startAnimation : function (
@@ -3080,15 +3092,11 @@ drawScene : function (
 },
 
 /**
- * @method getMatrix
- * @param {cc.MATRIX_STACK_TYPE} arg0
- * @return {mat4_object}
+ * @method restart
  */
-getMatrix : function (
-matrix_stack_type 
+restart : function (
 )
 {
-    return cc.Mat4;
 },
 
 /**
