@@ -80,7 +80,7 @@ void JSTouchDelegate::setJSObject(JSObject *obj)
     if (!p)
     {
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_AddNamedObjectRoot(cx, &_obj, "JSB_TouchDelegateTarget, target");
+        JS::AddNamedObjectRoot(cx, &_obj, "JSB_TouchDelegateTarget, target");
         _needUnroot = true;
     }
 }

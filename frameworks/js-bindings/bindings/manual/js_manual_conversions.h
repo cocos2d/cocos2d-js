@@ -81,13 +81,13 @@ jsval c_class_to_jsval( JSContext *cx, void* handle, JSObject* object, JSClass *
 
 /* Converts a char ptr into a jsval (using JS string) */
 jsval charptr_to_jsval( JSContext *cx, const char *str);
-bool JSB_jsval_typedarray_to_dataptr( JSContext *cx, jsval vp, GLsizei *count, void **data, JSArrayBufferViewType t);
+bool JSB_jsval_typedarray_to_dataptr( JSContext *cx, jsval vp, GLsizei *count, void **data, js::Scalar::Type t);
 bool JSB_get_arraybufferview_dataptr( JSContext *cx, jsval vp, GLsizei *count, GLvoid **data );
 
 // some utility functions
 // to native
 bool jsval_to_ushort( JSContext *cx, jsval vp, unsigned short *ret );
-bool jsval_to_int32( JSContext *cx, jsval vp, int32_t *ret );
+bool jsval_to_int32( JSContext *cx, JS::HandleValue vp, int32_t *ret );
 bool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *ret );
 bool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *ret );
 bool jsval_to_long( JSContext *cx, jsval vp, long *out);
@@ -118,7 +118,8 @@ bool jsvals_variadic_to_ccvector( JSContext *cx, jsval *vp, int argc, cocos2d::V
     for (int i = 0; i < argc; i++)
     {
         js_proxy_t* p;
-        JSObject* obj = JSVAL_TO_OBJECT(*vp);
+        JSObject* obj = JS::RootedValue(cx, vp).toObject();
+
         p = jsb_get_js_proxy(obj);
         CCASSERT(p, "Native object not found!");
         if (p) {
@@ -159,7 +160,7 @@ bool jsval_to_ccvector(JSContext* cx, jsval v, cocos2d::Vector<T>* ret)
             CCASSERT(value.isObject(), "the element in Vector isn't a native object.");
 
             js_proxy_t *proxy;
-            JSObject *tmp = JSVAL_TO_OBJECT(value);
+            JSObject *tmp = value.toObjectOrNull();
             proxy = jsb_get_js_proxy(tmp);
             T cobj = (T)(proxy ? proxy->ptr : nullptr);
             if (cobj)
@@ -185,14 +186,14 @@ bool jsval_to_vector3(JSContext *cx, jsval vp, cocos2d::Vec3* ret);
 bool jsval_to_blendfunc(JSContext *cx, jsval vp, cocos2d::BlendFunc* ret);
 
 template <class T>
-bool jsval_to_ccmap_string_key(JSContext *cx, jsval v, cocos2d::Map<std::string, T>* ret)
+bool jsval_to_ccmap_string_key(JSContext *cx, JS::HandleValue v, cocos2d::Map<std::string, T>* ret)
 {
-    if (JSVAL_IS_NULL(v) || JSVAL_IS_VOID(v))
+    if (v.isNullOrUndefined())
     {
         return true;
     }
-    
-    JS::RootedObject tmp(cx, JSVAL_TO_OBJECT(v));
+
+    JS::RootedObject tmp(cx, v.toObject());
 
     if (!tmp) {
         CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
@@ -209,22 +210,22 @@ bool jsval_to_ccmap_string_key(JSContext *cx, jsval v, cocos2d::Map<std::string,
             return false; // error
         }
         
-        if (key == JSVAL_VOID) {
+        if (key.isUndefined()) {
             break; // end of iteration
         }
         
-        if (!JSVAL_IS_STRING(key)) {
+        if (!key.isString()) {
             continue; // ignore integer properties
         }
         
-        JSStringWrapper keyWrapper(JSVAL_TO_STRING(key), cx);
+        JSStringWrapper keyWrapper(key.toString(), cx);
         
         JS::RootedValue value(cx);
         JS_GetPropertyById(cx, tmp, idp, &value);
         if (value.isObject())
         {
             js_proxy_t *proxy = nullptr;
-            JSObject* jsobj = JSVAL_TO_OBJECT(value);
+            JSObject* jsobj = value.toString();
             proxy = jsb_get_js_proxy(jsobj);
             CCASSERT(proxy, "Native object should be added!");
             T cobj = (T)(proxy ? proxy->ptr : nullptr);
@@ -297,8 +298,8 @@ jsval ccvector_to_jsval(JSContext* cx, const cocos2d::Vector<T>& v)
 template <class T>
 jsval ccmap_string_key_to_jsval(JSContext* cx, const cocos2d::Map<std::string, T>& v)
 {
-    JS::RootedObject proto(cx, JSVAL_NULL);
-    JS::RootedObject parent(cx, JSVAL_NULL);
+    JS::RootedObject proto(cx);
+    JS::RootedObject parent(cx);
     JS::RootedObject jsRet(cx, JS_NewObject(cx, NULL, proto, parent));
     
     for (auto iter = v.begin(); iter != v.end(); ++iter)

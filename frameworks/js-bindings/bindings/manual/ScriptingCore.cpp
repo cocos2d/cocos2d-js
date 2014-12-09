@@ -121,20 +121,20 @@ static void ReportException(JSContext *cx)
     }
 }
 
-static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
-                                              jsval &dataVal, jsval &retval) {
+static void executeJSFunctionFromReservedSpot(JSContext *cx, JS::HandleObject obj,
+                                              const JS::HandleValueArray& dataVal, JS::MutableHandleValue retval) {
 
-    jsval func = JS_GetReservedSlot(obj, 0);
+    JS::RootedValue func(cx, JS_GetReservedSlot(obj, 0));
 
-    if (func == JSVAL_VOID) { return; }
-    jsval thisObj = JS_GetReservedSlot(obj, 1);
+    if (func.isNullOrUndefined()) { return; }
+    JS::RootedValue thisObj(cx, JS_GetReservedSlot(obj, 1));
     JSAutoCompartment ac(cx, obj);
     
-    if (thisObj == JSVAL_VOID) {
-        JS_CallFunctionValue(cx, obj, func, 1, &dataVal, &retval);
+    if (thisObj.isNullOrUndefined()) {
+        JS_CallFunctionValue(cx, obj, func, dataVal, retval);
     } else {
-        assert(!JSVAL_IS_PRIMITIVE(thisObj));
-        JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(thisObj), func, 1, &dataVal, &retval);
+        assert(!thisObj.isPrimitive());
+        JS_CallFunctionValue(cx, JS::RootedObject(cx, thisObj.toObjectOrNull()), func, dataVal, retval);
     }
 }
 
@@ -208,13 +208,13 @@ static std::string getMouseFuncName(EventMouse::MouseEventType eventType)
     return funcName;
 }
 
-static void rootObject(JSContext *cx, JSObject *obj) {
-    JS_AddNamedObjectRoot(cx, &obj, "unnamed");
+static void rootObject(JSContext *cx, JS::Heap<JSObject*> *obj) {
+    AddNamedObjectRoot(cx, obj, "unnamed");
 }
 
 
-static void unRootObject(JSContext *cx, JSObject *obj) {
-    JS_RemoveObjectRoot(cx, &obj);
+static void unRootObject(JSContext *cx, JS::Heap<JSObject*> *obj) {
+    RemoveObjectRoot(cx, obj);
 }
 
 void removeJSObject(JSContext* cx, void* nativeObj)
@@ -225,33 +225,38 @@ void removeJSObject(JSContext* cx, void* nativeObj)
     nproxy = jsb_get_native_proxy(nativeObj);
     if (nproxy) {
         jsproxy = jsb_get_js_proxy(nproxy->obj);
-        JS_RemoveObjectRoot(cx, &jsproxy->obj);
+        RemoveObjectRoot(cx, &jsproxy->obj);
         jsb_remove_proxy(nproxy, jsproxy);
     }
 }
 
-void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj,
-                                                 jsval callback,
-                                                 uint32_t argc/* = 0*/,
-                                                 jsval* vp/* = NULL*/,
-                                                 jsval* retVal/* = NULL*/)
+void ScriptingCore::executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback)
 {
-    if (callback != JSVAL_VOID || thisObj != JSVAL_VOID)
+    JS::RootedValue retVal(_cx);
+    executeJSFunctionWithThisObj(thisObj, callback, JS::HandleValueArray::empty(), &retVal);
+}
+
+void ScriptingCore::executeJSFunctionWithThisObj(JS::HandleValue thisObj,
+                                                 JS::HandleValue callback,
+                                                 const JS::HandleValueArray& vp,
+                                                 JS::MutableHandleValue retVal)
+{
+    if (!callback.isNullOrUndefined() || !thisObj.isNullOrUndefined())
     {
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
         
         // Very important: The last parameter 'retVal' passed to 'JS_CallFunctionValue' should not be a NULL pointer.
         // If it's a NULL pointer, crash will be triggered in 'JS_CallFunctionValue'. To find out the reason of this crash is very difficult.
         // So we have to check the availability of 'retVal'.
-        if (retVal)
-        {
-            JS_CallFunctionValue(_cx, JSVAL_TO_OBJECT(thisObj), callback, argc, vp, retVal);
-        }
-        else
-        {
-            jsval jsRet;
-            JS_CallFunctionValue(_cx, JSVAL_TO_OBJECT(thisObj), callback, argc, vp, &jsRet);
-        }
+//        if (retVal)
+//        {
+            JS_CallFunctionValue(_cx, JS::RootedObject(_cx, thisObj.toObjectOrNull()), callback, vp, retVal);
+//        }
+//        else
+//        {
+//            jsval jsRet;
+//            JS_CallFunctionValue(_cx, JSVAL_TO_OBJECT(thisObj), callback, argc, vp, &jsRet);
+//        }
     }
 }
 
@@ -281,7 +286,7 @@ bool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
         JS_ReportError(cx, "Invalid number of arguments in __getPlatform");
         return false;
     }
-
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     Application::Platform platform;
 
     // config.deviceType: Device Type
@@ -292,9 +297,7 @@ bool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
     platform = Application::getInstance()->getTargetPlatform();
     // #endif
 
-    jsval ret = INT_TO_JSVAL((int)platform);
-
-    JS_SET_RVAL(cx, vp, ret);
+    args.rval().set(INT_TO_JSVAL((int)platform));
 
     return true;
 };
@@ -307,12 +310,12 @@ bool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
         return false;
     }
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     char version[256];
     snprintf(version, sizeof(version)-1, "%s", cocos2dVersion());
     JSString * js_version = JS_InternString(cx, version);
 
-    jsval ret = STRING_TO_JSVAL(js_version);
-    JS_SET_RVAL(cx, vp, ret);
+    args.rval().set(STRING_TO_JSVAL(js_version));
 
     return true;
 };
@@ -324,6 +327,8 @@ bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
         JS_ReportError(cx, "Invalid number of arguments in __getOS");
         return false;
     }
+
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
     JSString * os;
 
@@ -348,8 +353,7 @@ bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
     os = JS_InternString(cx, "Unknown");
 #endif
 
-    jsval ret = STRING_TO_JSVAL(os);
-    JS_SET_RVAL(cx, vp, ret);
+    args.rval().set(STRING_TO_JSVAL(os));
 
     return true;
 };
@@ -357,18 +361,21 @@ bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
 bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments in executeScript");
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     ScriptingCore::getInstance()->reset();
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    args.rval().setUndefined();
     return true;
 };
 
-void registerDefaultClasses(JSContext* cx, JSObject* global) {
+void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
     // first, try to get the ns
     JS::RootedValue nsval(cx);
     JS::RootedObject ns(cx);
     JS_GetProperty(cx, global, "cc", &nsval);
     if (nsval == JSVAL_VOID) {
-        ns = JS_NewObject(cx, NULL, NULL, NULL);
+        JS::RootedObject proto(cx);
+        JS::RootedObject parent(cx);
+        ns = JS_NewObject(cx, NULL, proto, parent);
         nsval = OBJECT_TO_JSVAL(ns);
         JS_SetProperty(cx, global, "cc", nsval);
     } else {
@@ -378,7 +385,9 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     //
     // Javascript controller (__jsc__)
     //
-    JSObject *jsc = JS_NewObject(cx, NULL, NULL, NULL);
+    JS::RootedObject proto(cx);
+    JS::RootedObject parent(cx);
+    JS::RootedObject jsc(cx, JS_NewObject(cx, NULL, proto, parent));
     JS::RootedValue jscVal(cx);
     jscVal = OBJECT_TO_JSVAL(jsc);
     JS_SetProperty(cx, global, "__jsc__", jscVal);
@@ -405,11 +414,19 @@ static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (global class)", obj);
 }
 
-static JSClass global_class = {
+//static JSClass global_class = {
+//    "global", JSCLASS_GLOBAL_FLAGS,
+//    JS_PropertyStub, JS_DeletePropertyStub, JS_PropertyStub, JS_StrictPropertyStub,
+//    JS_EnumerateStub, JS_ResolveStub, JS_ConvertStub, sc_finalize,
+//    JSCLASS_NO_OPTIONAL_MEMBERS
+//};
+
+static const JSClass global_class = {
     "global", JSCLASS_GLOBAL_FLAGS,
     JS_PropertyStub, JS_DeletePropertyStub, JS_PropertyStub, JS_StrictPropertyStub,
     JS_EnumerateStub, JS_ResolveStub, JS_ConvertStub, sc_finalize,
-    JSCLASS_NO_OPTIONAL_MEMBERS
+    nullptr, nullptr, nullptr,
+    JS_GlobalObjectTraceHook
 };
 
 ScriptingCore::ScriptingCore()
@@ -426,31 +443,25 @@ ScriptingCore::ScriptingCore()
     this->_runLoop = new SimpleRunLoop();
 }
 
-void ScriptingCore::string_report(jsval val) {
-    if (JSVAL_IS_NULL(val)) {
+void ScriptingCore::string_report(JS::HandleValue val) {
+    if (val.isNull()) {
         LOGD("val : (JSVAL_IS_NULL(val)");
         // return 1;
-    } else if ((JSVAL_IS_BOOLEAN(val)) &&
-               (false == (JSVAL_TO_BOOLEAN(val)))) {
+    } else if (val.isBoolean() && false == val.toBoolean()) {
         LOGD("val : (return value is false");
         // return 1;
-    } else if (JSVAL_IS_STRING(val)) {
+    } else if (val.isString()) {
         JSContext* cx = this->getGlobalContext();
-        JSString *str = JS::ToString(cx, JS::RootedValue(cx, val));
-        if (NULL == str) {
+        JS::RootedString str(cx, val.toString());
+        if (str.get()) {
             LOGD("val : return string is NULL");
         } else {
             JSStringWrapper wrapper(str);
             LOGD("val : return string =\n%s\n", wrapper.get());
         }
-    } else if (JSVAL_IS_NUMBER(val)) {
-        double number;
-        if (false ==
-            JS::ToNumber(this->getGlobalContext(), JS::RootedValue(_cx, val), &number)) {
-            LOGD("val : return number could not be converted");
-        } else {
-            LOGD("val : return number =\n%f", number);
-        }
+    } else if (val.isNumber()) {
+        double number = val.toNumber();
+        LOGD("val : return number =\n%f", number);
     }
 }
 
@@ -462,11 +473,11 @@ bool ScriptingCore::evalString(const char *string, jsval *outVal, const char *fi
         global = _global;
     
     JSAutoCompartment ac(cx, global);
-    
-    JSScript* script = JS_CompileScript(cx, JS::RootedObject(cx, global), string, strlen(string), JS::CompileOptions(cx));
-    if (script)
+    JS::RootedScript script(cx);
+    bool ok = JS_CompileScript(cx, JS::RootedObject(cx, global), string, strlen(string), JS::CompileOptions(cx), &script);
+    if (ok)
     {
-        bool evaluatedOK = JS_ExecuteScript(cx, global, script, outVal);
+        bool evaluatedOK = JS_ExecuteScript(cx, JS::RootedObject(cx, global), script);
         if (false == evaluatedOK)
         {
             fprintf(stderr, "(evaluatedOK == false)\n");
@@ -489,7 +500,7 @@ void ScriptingCore::addRegisterCallback(sc_register_sth callback) {
 void ScriptingCore::removeAllRoots(JSContext *cx) {
     js_proxy_t *current, *tmp;
     HASH_ITER(hh, _js_native_global_ht, current, tmp) {
-        JS_RemoveObjectRoot(cx, &current->obj);
+        RemoveObjectRoot(cx, &current->obj);
         HASH_DEL(_js_native_global_ht, current);
         free(current);
     }
@@ -501,11 +512,10 @@ void ScriptingCore::removeAllRoots(JSContext *cx) {
     HASH_CLEAR(hh, _native_js_global_ht);
 }
 
-static JSPrincipals shellTrustedPrincipals = { 1 };
+static JSPrincipals shellTrustedPrincipals;
 
 static bool
-CheckObjectAccess(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JSAccessMode mode,
-                  JS::MutableHandleValue vp)
+CheckObjectAccess(JSContext *cx)
 {
     return true;
 }
@@ -530,7 +540,7 @@ void ScriptingCore::createGlobalContext() {
     
     // Removed from Spidermonkey 19.
     //JS_SetCStringsAreUTF8();
-    this->_rt = JS_NewRuntime(8L * 1024L * 1024L, JS_USE_HELPER_THREADS);
+    this->_rt = JS_NewRuntime(8L * 1024L * 1024L);
     JS_SetGCParameter(_rt, JSGC_MAX_BYTES, 0xffffffff);
     
     JS_SetTrustedPrincipals(_rt, &shellTrustedPrincipals);
@@ -541,9 +551,12 @@ void ScriptingCore::createGlobalContext() {
     
     // Removed in Firefox v27
 //    JS_SetOptions(this->_cx, JSOPTION_TYPE_INFERENCE);
-    JS::ContextOptionsRef(_cx).setTypeInference(true);
-    JS::ContextOptionsRef(_cx).setIon(true);
-    JS::ContextOptionsRef(_cx).setBaseline(true);
+//    JS::ContextOptionsRef(_cx).setTypeInference(true);
+//    JS::ContextOptionsRef(_cx).setIon(true);
+//    JS::ContextOptionsRef(_cx).setBaseline(true);
+
+    JS::RuntimeOptionsRef(_rt).setIon(true);
+    JS::RuntimeOptionsRef(_rt).setBaseline(true);
 
 //    JS_SetVersion(this->_cx, JSVERSION_LATEST);
     
@@ -558,7 +571,7 @@ void ScriptingCore::createGlobalContext() {
     
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
-        callback(this->_cx, this->_global);
+        callback(this->_cx, JS::RootedObject(this->_cx, this->_global));
     }
 }
 
@@ -620,7 +633,7 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
         Data data = futil->getDataFromFile(byteCodePath);
         if (!data.isNull())
         {
-            script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
+            script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr);
         }
     }
 
@@ -634,16 +647,17 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
         JS::CompileOptions options(cx);
         options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
 
+        bool ok;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         std::string jsFileContent = futil->getStringFromFile(fullPath);
         if (!jsFileContent.empty())
         {
-            script = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size());
+            ok = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size(), &script);
         }
 #else
-        script = JS::Compile(cx, obj, options, fullPath.c_str());
+        ok = JS::Compile(cx, obj, options, fullPath.c_str(), fullPath.size(), &script);
 #endif
-        if (script) {
+        if (ok) {
             filename_script[fullPath] = script;
         }
     }
@@ -679,19 +693,16 @@ void ScriptingCore::cleanAllScript()
     filename_script.clear();
 }
 
-bool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
+bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSContext* cx)
 {
-    if (global == NULL) {
-        global = _global;
-    }
     if (cx == NULL) {
         cx = _cx;
     }
     compileScript(path,global,cx);
-    JSScript * script = getScript(path);
+    JS::RootedScript script(cx, getScript(path));
     bool evaluatedOK = false;
     if (script) {
-        jsval rval;
+        JS::RootedValue rval(cx);
         JSAutoCompartment ac(cx, global);
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (false == evaluatedOK) {
@@ -754,14 +765,16 @@ void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorRepor
 
 bool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
 {
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc > 0) {
         JSString *string = NULL;
-        JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
+        JS_ConvertArguments(cx, args, "S", &string);
         if (string) {
             JSStringWrapper wrapper(string);
             js_log("%s", wrapper.get());
         }
     }
+    args.rval().setUndefined();
     return true;
 }
 
@@ -775,7 +788,7 @@ void ScriptingCore::removeScriptObjectByObject(Ref* pObj)
     if (nproxy) {
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
         jsproxy = jsb_get_js_proxy(nproxy->obj);
-        JS_RemoveObjectRoot(cx, &jsproxy->obj);
+        RemoveObjectRoot(cx, &jsproxy->obj);
         jsb_remove_proxy(nproxy, jsproxy);
     }
 }
@@ -788,16 +801,16 @@ bool ScriptingCore::setReservedSpot(uint32_t i, JSObject *obj, jsval value) {
 
 bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 {
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc >= 1) {
-        jsval* argv = JS_ARGV(cx, vp);
-        JSString* str = JS::ToString(cx, JS::RootedValue(cx, argv[0]));
+        JSString* str = JS::ToString(cx, JS::RootedValue(cx, args.get(0)));
         JSStringWrapper path(str);
         bool res = false;
-        if (argc == 2 && argv[1].isString()) {
-            JSString* globalName = JSVAL_TO_STRING(argv[1]);
+        if (argc == 2 && args.get(1).isString()) {
+            JSString* globalName = args.get(1).toString();
             JSStringWrapper name(globalName);
-//            JS::RootedObject* rootedGlobal = globals[name];
-            JSObject* debugObj = ScriptingCore::getInstance()->getDebugGlobal();
+
+            JS::RootedObject debugObj(cx, ScriptingCore::getInstance()->getDebugGlobal());
             if (debugObj) {
                 res = ScriptingCore::getInstance()->runScript(path.get(), debugObj);
             } else {
@@ -805,11 +818,12 @@ bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
                 return false;
             }
         } else {
-            JSObject* glob = JS::CurrentGlobalOrNull(cx);
+            JS::RootedObject glob(cx, JS::CurrentGlobalOrNull(cx));
             res = ScriptingCore::getInstance()->runScript(path.get(), glob);
         }
         return res;
     }
+    args.rval().setUndefined();
     return true;
 }
 
@@ -841,9 +855,11 @@ bool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 bool ScriptingCore::addRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc == 1) {
-        JSObject *o = NULL;
-        if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == true) {
-            if (JS_AddNamedObjectRoot(cx, &o, "from-js") == false) {
+        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+//        JSObject *o = NULL;
+        JS::Heap<JSObject*> *o = new JS::Heap<JSObject*>();
+        if (JS_ConvertArguments(cx, args, "o", o) == true) {
+            if (AddNamedObjectRoot(cx, o, "from-js") == false) {
                 LOGD("something went wrong when setting an object to the root");
             }
         }
@@ -855,9 +871,11 @@ bool ScriptingCore::addRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 bool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc == 1) {
-        JSObject *o = NULL;
-        if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == true) {
-            JS_RemoveObjectRoot(cx, &o);
+        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+//        JSObject *o = NULL;
+        JS::Heap<JSObject*> *o = new JS::Heap<JSObject*>();
+        if (JS_ConvertArguments(cx, args, "o", o) == true) {
+            RemoveObjectRoot(cx, o);
         }
         return true;
     }
@@ -905,11 +923,11 @@ void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
     }
 }
 
-bool ScriptingCore::isFunctionOverridedInJS(JSObject* obj, const std::string& name, JSNative native)
+bool ScriptingCore::isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native)
 {
     JS::RootedValue value(_cx);
     bool ok = JS_GetProperty(_cx, obj, name.c_str(), &value);
-    if (ok && !value.isNullOrUndefined() && !JS_IsNativeFunction(JSVAL_TO_OBJECT(value), native))
+    if (ok && !value.isNullOrUndefined() && !JS_IsNativeFunction(value.toObjectOrNull(), native))
     {
         return true;
     }
@@ -938,7 +956,7 @@ int ScriptingCore::handleNodeEvent(void* data)
 
     if (action == kNodeOnEnter)
     {
-        if (isFunctionOverridedInJS(p->obj, "onEnter", js_cocos2dx_Node_onEnter))
+        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onEnter", js_cocos2dx_Node_onEnter))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
         }
@@ -946,7 +964,7 @@ int ScriptingCore::handleNodeEvent(void* data)
     }
     else if (action == kNodeOnExit)
     {
-        if (isFunctionOverridedInJS(p->obj, "onExit", js_cocos2dx_Node_onExit))
+        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onExit", js_cocos2dx_Node_onExit))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
         }
@@ -954,14 +972,14 @@ int ScriptingCore::handleNodeEvent(void* data)
     }
     else if (action == kNodeOnEnterTransitionDidFinish)
     {
-        if (isFunctionOverridedInJS(p->obj, "onEnterTransitionDidFinish", js_cocos2dx_Node_onEnterTransitionDidFinish))
+        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onEnterTransitionDidFinish", js_cocos2dx_Node_onEnterTransitionDidFinish))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnterTransitionDidFinish", 1, &dataVal, &retval);
         }
     }
     else if (action == kNodeOnExitTransitionDidStart)
     {
-        if (isFunctionOverridedInJS(p->obj, "onExitTransitionDidStart", js_cocos2dx_Node_onExitTransitionDidStart))
+        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onExitTransitionDidStart", js_cocos2dx_Node_onExitTransitionDidStart))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExitTransitionDidStart", 1, &dataVal, &retval);
         }
@@ -994,7 +1012,7 @@ int ScriptingCore::handleComponentEvent(void* data)
     
     if (action == kComponentOnEnter)
     {
-        if (isFunctionOverridedInJS(p->obj, "onEnter", js_cocos2dx_Component_onEnter))
+        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onEnter", js_cocos2dx_Component_onEnter))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
         }
@@ -1002,7 +1020,7 @@ int ScriptingCore::handleComponentEvent(void* data)
     }
     else if (action == kComponentOnExit)
     {
-        if (isFunctionOverridedInJS(p->obj, "onExit", js_cocos2dx_Component_onExit))
+        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onExit", js_cocos2dx_Component_onExit))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
         }
@@ -1010,7 +1028,7 @@ int ScriptingCore::handleComponentEvent(void* data)
     }
     else if (action == kComponentOnUpdate)
     {
-        if (isFunctionOverridedInJS(p->obj, "update", js_cocos2dx_Component_update))
+        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "update", js_cocos2dx_Component_update))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "update", 1, &dataVal, &retval);
         }
@@ -1033,12 +1051,14 @@ int ScriptingCore::handleMenuClickedEvent(void* data)
     js_proxy_t * p = jsb_get_native_proxy(menuItem);
     if (!p) return 0;
 
-    jsval retval;
-    jsval dataVal;
+    JS::RootedValue retval(_cx);
+//    jsval dataVal;
+    JS::AutoValueVector dataVal(_cx);
     js_proxy_t *proxy = jsb_get_native_proxy(menuItem);
-    dataVal = (proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL);
+//    dataVal = (proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL);
+    dataVal[0].set(proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL);
 
-    executeJSFunctionFromReservedSpot(this->_cx, p->obj, dataVal, retval);
+    executeJSFunctionFromReservedSpot(this->_cx, JS::RootedObject(_cx, p->obj.get()), JS::HandleValueArray::subarray(dataVal, 0, 1), &retval);
 
     return 1;
 }
@@ -1051,15 +1071,15 @@ bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::Eve
     
     std::string funcName = getTouchesFuncName(eventCode);
 
-    JSObject *jsretArr = JS_NewArrayObject(this->_cx, 0, NULL);
+    JS::RootedObject jsretArr(_cx, JS_NewArrayObject(this->_cx, 0));
 
-    JS_AddNamedObjectRoot(this->_cx, &jsretArr, "touchArray");
+//    AddNamedObjectRoot(this->_cx, &jsretArr, "touchArray");
     int count = 0;
     
     for (const auto& touch : touches)
     {
         JS::RootedValue jsret(_cx, getJSObject(this->_cx, touch));
-        if (!JS_SetElement(this->_cx, jsretArr, count, &jsret))
+        if (!JS_SetElement(this->_cx, jsretArr, count, jsret))
         {
             break;
         }
@@ -1087,7 +1107,7 @@ bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::Eve
         
     } while(false);
 
-    JS_RemoveObjectRoot(this->_cx, &jsretArr);
+//    JS_RemoveObjectRoot(this->_cx, &jsretArr);
 
     for (auto& touch : touches)
     {
@@ -1121,15 +1141,15 @@ bool ScriptingCore::handleTouchEvent(void* nativeObj, cocos2d::EventTouch::Event
         }
         else
         {
-            jsval retval;
-            executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, &retval);
-            if(JSVAL_IS_NULL(retval))
+            JS::RootedValue retval(_cx);
+            executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, retval.address());
+            if(retval.isNull())
             {
                 ret = false;
             }
-            else if(JSVAL_IS_BOOLEAN(retval))
+            else if(retval.isBoolean())
             {
-                ret = JSVAL_TO_BOOLEAN(retval);
+                ret = retval.toBoolean();
             }
             else
             {
@@ -1165,15 +1185,15 @@ bool ScriptingCore::handleMouseEvent(void* nativeObj, cocos2d::EventMouse::Mouse
         }
         else
         {
-            jsval retval;
-            executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 1, dataVal, &retval);
-            if(JSVAL_IS_NULL(retval))
+            JS::RootedValue retval(_cx);
+            executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 1, dataVal, retval.address());
+            if(retval.isNull())
             {
                 ret = false;
             }
-            else if(JSVAL_IS_BOOLEAN(retval))
+            else if(retval.isBoolean())
             {
-                ret = JSVAL_TO_BOOLEAN(retval);
+                ret = retval.toBoolean();
             }
             else
             {
@@ -1192,15 +1212,15 @@ bool ScriptingCore::executeFunctionWithObjectData(void* nativeObj, const char *n
     js_proxy_t * p = jsb_get_native_proxy(nativeObj);
     if (!p) return false;
 
-    jsval retval;
+    JS::RootedValue retval(_cx);
     jsval dataVal = OBJECT_TO_JSVAL(obj);
 
-    executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), name, 1, &dataVal, &retval);
-    if (JSVAL_IS_NULL(retval)) {
+    executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), name, 1, &dataVal, retval.address());
+    if (retval.isNull()) {
         return false;
     }
-    else if (JSVAL_IS_BOOLEAN(retval)) {
-        return JSVAL_TO_BOOLEAN(retval);
+    else if (retval.isBoolean()) {
+        return retval.toBoolean();
     }
     return false;
 }
@@ -1211,7 +1231,7 @@ bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, uint
     bool hasAction;
     JSContext* cx = this->_cx;
     JS::RootedValue temp_retval(cx);
-    JSObject* obj = JSVAL_TO_OBJECT(owner);
+    JS::RootedObject obj(cx, JS::RootedValue(cx, owner).toObjectOrNull());
     
     do
     {
@@ -1226,11 +1246,13 @@ bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, uint
             }            
             
             if (retVal) {
-                bRet = JS_CallFunctionName(cx, obj, name, argc, vp, retVal);
+                JS::RootedValue ret(cx);
+                ret.set(*retVal);
+                bRet = JS_CallFunctionName(cx, obj, name, JS::HandleValueArray::fromMarkedLocation(argc, vp), &ret);
             }
             else {
-                jsval jsret;
-                bRet = JS_CallFunctionName(cx, obj, name, argc, vp, &jsret);
+                JS::RootedValue jsret(cx);
+                bRet = JS_CallFunctionName(cx, obj, name, JS::HandleValueArray::fromMarkedLocation(argc, vp), &jsret);
             }
         }
     }while(0);
@@ -1274,14 +1296,14 @@ int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
     jsval retval;
     std::string funcName = getTouchesFuncName(eventType);
 
-    JSObject *jsretArr = JS_NewArrayObject(this->_cx, 0, NULL);
-    JS_AddNamedObjectRoot(this->_cx, &jsretArr, "touchArray");
+    JS::RootedObject jsretArr(_cx, JS_NewArrayObject(this->_cx, 0));
+//    JS_AddNamedObjectRoot(this->_cx, &jsretArr, "touchArray");
     int count = 0;
     for (auto& touch : touches)
     {
         jsval jsret = getJSObject(this->_cx, touch);
         JS::RootedValue jsval(_cx, jsret);
-        if (!JS_SetElement(this->_cx, jsretArr, count, &jsval)) {
+        if (!JS_SetElement(this->_cx, jsretArr, count, jsval)) {
             break;
         }
         ++count;
@@ -1289,7 +1311,7 @@ int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
 
     jsval jsretArrVal = OBJECT_TO_JSVAL(jsretArr);
     executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsretArrVal, &retval);
-    JS_RemoveObjectRoot(this->_cx, &jsretArr);
+//    JS_RemoveObjectRoot(this->_cx, &jsretArr);
 
     for (auto& touch : touches)
     {
@@ -1418,9 +1440,9 @@ void ScriptingCore::debugProcessInput(const std::string& str)
     
     JSString* jsstr = JS_NewStringCopyZ(_cx, str.c_str());
     jsval argv = STRING_TO_JSVAL(jsstr);
-    jsval outval;
+    JS::RootedValue outval(_cx);
     
-    JS_CallFunctionName(_cx, _debugGlobal, "processInput", 1, &argv, &outval);
+    JS_CallFunctionName(_cx, JS::RootedObject(_cx, _debugGlobal), "processInput", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
 }
 
 static bool NS_ProcessNextEvent()
@@ -1467,26 +1489,32 @@ bool JSBDebug_enterNestedEventLoop(JSContext* cx, unsigned argc, jsval* vp)
     CCASSERT(s_nestedLoopLevel <= nestLevel,
              "nested event didn't unwind properly");
     
-    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    args.rval().set(UINT_TO_JSVAL(s_nestedLoopLevel));
+//    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
     return true;
 }
 
 bool JSBDebug_exitNestedEventLoop(JSContext* cx, unsigned argc, jsval* vp)
 {
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (s_nestedLoopLevel > 0) {
         --s_nestedLoopLevel;
     } else {
-        JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(0));
+        args.rval().set(UINT_TO_JSVAL(0));
+//        JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(0));
         return true;
     }
-    
-    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
+    args.rval().setUndefined();
+//    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
     return true;
 }
 
 bool JSBDebug_getEventLoopNestLevel(JSContext* cx, unsigned argc, jsval* vp)
 {
-    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    args.rval().set(UINT_TO_JSVAL(s_nestedLoopLevel));
+//    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
     return true;
 }
 
@@ -1611,8 +1639,8 @@ static void serverEntryPoint(unsigned int port)
 bool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 {
     if (argc == 1) {
-        jsval* argv = JS_ARGV(cx, vp);
-        JSStringWrapper strWrapper(argv[0]);
+        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+        JSStringWrapper strWrapper(args.get(0));
         // this is safe because we're already inside a lock (from clearBuffers)
         outData.append(strWrapper.get());
         _clientSocketWriteAndClearString(outData);
@@ -1630,24 +1658,24 @@ void ScriptingCore::enableDebugger(unsigned int port)
         
         _debugGlobal = NewGlobalObject(_cx, true);
         // Adds the debugger object to root, otherwise it may be collected by GC.
-        JS_AddObjectRoot(_cx, &_debugGlobal);
+        AddObjectRoot(_cx, &_debugGlobal);
         JS::RootedObject rootedDebugObj(_cx, _debugGlobal);
         JS_WrapObject(_cx, &rootedDebugObj);
         JSAutoCompartment ac(_cx, _debugGlobal);
         // these are used in the debug program
-        JS_DefineFunction(_cx, _debugGlobal, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(_cx, _debugGlobal, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(_cx, _debugGlobal, "_enterNestedEventLoop", JSBDebug_enterNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(_cx, _debugGlobal, "_exitNestedEventLoop", JSBDebug_exitNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(_cx, _debugGlobal, "_getEventLoopNestLevel", JSBDebug_getEventLoopNestLevel, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, rootedDebugObj, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, rootedDebugObj, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, rootedDebugObj, "_enterNestedEventLoop", JSBDebug_enterNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, rootedDebugObj, "_exitNestedEventLoop", JSBDebug_exitNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, rootedDebugObj, "_getEventLoopNestLevel", JSBDebug_getEventLoopNestLevel, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         
         
-        runScript("script/jsb_debugger.js", _debugGlobal);
+        runScript("script/jsb_debugger.js", rootedDebugObj);
         
         // prepare the debugger
         jsval argv = OBJECT_TO_JSVAL(_global);
-        jsval outval;
-        bool ok = JS_CallFunctionName(_cx, _debugGlobal, "_prepareDebugger", 1, &argv, &outval);
+        JS::RootedValue outval(_cx);
+        bool ok = JS_CallFunctionName(_cx, rootedDebugObj, "_prepareDebugger", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
         if (!ok) {
             JS_ReportPendingException(_cx);
         }

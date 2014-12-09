@@ -317,7 +317,7 @@ jsval charptr_to_jsval( JSContext *cx, const char *str)
     return c_string_to_jsval(cx, str);
 }
 
-bool JSB_jsval_typedarray_to_dataptr( JSContext *cx, jsval vp, GLsizei *count, void **data, JSArrayBufferViewType t)
+bool JSB_jsval_typedarray_to_dataptr( JSContext *cx, jsval vp, GLsizei *count, void **data, js::Scalar::Type t)
 {
     JS::RootedObject jsobj(cx);
     bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj );
@@ -329,26 +329,26 @@ bool JSB_jsval_typedarray_to_dataptr( JSContext *cx, jsval vp, GLsizei *count, v
     if( JS_IsTypedArrayObject( jsobj ) ) {
         
         *count = JS_GetTypedArrayLength(jsobj);
-        JSArrayBufferViewType type = JS_GetArrayBufferViewType(jsobj);
+        js::Scalar::Type type = JS_GetArrayBufferViewType(jsobj);
         JSB_PRECONDITION2(t==type, cx, false, "TypedArray type different than expected type");
         
         switch (t) {
-            case js::ArrayBufferView::TYPE_INT8:
-            case js::ArrayBufferView::TYPE_UINT8:
+            case js::Scalar::Int8:
+            case js::Scalar::Uint8:
                 *data = JS_GetUint8ArrayData(jsobj);
                 break;
                 
-            case js::ArrayBufferView::TYPE_INT16:
-            case js::ArrayBufferView::TYPE_UINT16:
+            case js::Scalar::Int16:
+            case js::Scalar::Uint16:
                 *data = JS_GetUint16ArrayData(jsobj);
                 break;
                 
-            case js::ArrayBufferView::TYPE_INT32:
-            case js::ArrayBufferView::TYPE_UINT32:
+            case js::Scalar::Int32:
+            case js::Scalar::Uint32:
                 *data = JS_GetUint32ArrayData(jsobj);
                 break;
                 
-            case js::ArrayBufferView::TYPE_FLOAT32:
+            case js::Scalar::Float32:
                 *data = JS_GetFloat32ArrayData(jsobj);
                 break;
                 
@@ -368,14 +368,14 @@ bool JSB_jsval_typedarray_to_dataptr( JSContext *cx, jsval vp, GLsizei *count, v
             JS_GetElement(cx, jsobj, i, &valarg);
             
             switch(t) {
-                case js::ArrayBufferView::TYPE_INT32:
-                case js::ArrayBufferView::TYPE_UINT32:
+                case js::Scalar::Int32:
+                case js::Scalar::Uint32:
                 {
                     uint32_t e = JSVAL_TO_INT(valarg);
                     ((uint32_t*)data)[i] = e;
                     break;
                 }
-                case js::ArrayBufferView::TYPE_FLOAT32:
+                case js::Scalar::Float32:
                 {
                     double e = JSVAL_TO_DOUBLE(valarg);
                     ((GLfloat*)data)[i] = (GLfloat)e;
@@ -422,11 +422,11 @@ bool jsval_to_ushort( JSContext *cx, jsval vp, unsigned short *outval )
     return ok;
 }
 
-bool jsval_to_int32( JSContext *cx, jsval vp, int32_t *outval )
+bool jsval_to_int32( JSContext *cx, JS::HandleValue vp, int32_t *outval )
 {
     bool ok = true;
     double dp;
-    ok &= JS::ToNumber(cx, JS::RootedValue(cx, vp), &dp);
+    ok &= JS::ToNumber(cx, vp, &dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     ok &= !isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
