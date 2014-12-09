@@ -1,4 +1,4 @@
-<img src="http://www.cocos2d-x.org/attachments/1508/2dh5-logo.png" width=200>
+<img src="http://www.cocos2d-x.org/images/orgsite/logo.png" width=200>
 
 Cocos2d-JS
 ===========
