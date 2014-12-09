@@ -370,6 +370,7 @@ bool js_cocos2dx_Director_pushMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_setDefaultValues(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_setScheduler(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Director_getMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_startAnimation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_getOpenGLView(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_getRunningScene(JSContext *cx, uint32_t argc, jsval *vp);
@@ -385,7 +386,7 @@ bool js_cocos2dx_Director_getTotalFrames(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_Director_runWithScene(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_setNotificationNode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_drawScene(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Director_getMatrix(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Director_restart(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_popScene(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_loadIdentityMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_isDisplayStats(JSContext *cx, uint32_t argc, jsval *vp);
