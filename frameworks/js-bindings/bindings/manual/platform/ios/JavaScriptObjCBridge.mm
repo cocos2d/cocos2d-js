@@ -29,7 +29,10 @@
 #import <Foundation/Foundation.h>
 JavaScriptObjCBridge::CallInfo::~CallInfo(void)
 {
-    
+    if (m_returnType == TypeString)
+    {
+        delete m_ret.stringValue;
+    }
 }
 JS::Value JavaScriptObjCBridge::convertReturnValue(JSContext *cx, ReturnValue retValue, ValueType type)
 {
@@ -188,9 +191,8 @@ void JavaScriptObjCBridge::CallInfo::pushValue(void *val){
     }
     else if ([oval isKindOfClass:[NSString class]])
     {
-        const char *abc = [oval cStringUsingEncoding:NSUTF8StringEncoding];
-        string str(abc);
-        m_ret.stringValue = &str;
+        const char *content = [oval cStringUsingEncoding:NSUTF8StringEncoding];
+        m_ret.stringValue = new string(content);
         m_returnType = TypeString;
     }
     else if ([oval isKindOfClass:[NSDictionary class]])
@@ -199,9 +201,8 @@ void JavaScriptObjCBridge::CallInfo::pushValue(void *val){
     }
     else
     {
-        const char *abc = [[NSString stringWithFormat:@"%@", oval] cStringUsingEncoding:NSUTF8StringEncoding];
-        string str(abc);
-        m_ret.stringValue = &str;
+        const char *content = [[NSString stringWithFormat:@"%@", oval] cStringUsingEncoding:NSUTF8StringEncoding];
+        m_ret.stringValue =  new string(content);
         m_returnType = TypeString;
     }
 }
