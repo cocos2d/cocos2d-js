@@ -191,7 +191,7 @@ var TextureCacheTest = TextureCacheTestBase.extend({
 var RemoteTextureTest = TextureCacheTestBase.extend({
     _title:"Remote Texture Test",
     _subtitle:"",
-    _remoteTex: "http://www.cocos2d-x.org/attachments/download/1508",
+    _remoteTex: "http://files.cocos2d-x.org/images/orgsite/logo.png",
     _sprite : null,
     onEnter:function () {
         this._super();
