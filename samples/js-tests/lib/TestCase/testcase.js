@@ -219,7 +219,6 @@
                 ,arrayOfClippingNodeTest
                 ,[CocosDenshionTest]//DenshionTests
                 ,null//cocoStudioTestItemNamescocostudio
-                ,null//cocosStudio 2.0
                 ,arrayOfCurrentLanguageTest
                 ,arrayOfDrawTest
                 ,arrayOfEaseActionsTest//arrayOfEaseActionsTest
