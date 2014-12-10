@@ -317,7 +317,12 @@ JS_BINDED_CONSTRUCTOR_IMPL(JavascriptJavaBridge)
  */
 static void basic_object_finalize(JSFreeOp *freeOp, JSObject *obj)
 {
-    CCLOG("basic_object_finalize %p ...", obj);
+    CCLOG("jsbindings: finalizing JS object %p (JavascriptJavaBridge)", obj);
+    JavascriptJavaBridge* native = (JavascriptJavaBridge*)JS_GetPrivate(obj);
+    if(native)
+    {
+        delete native;
+    }
 }
 
 /**
