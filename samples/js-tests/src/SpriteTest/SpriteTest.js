@@ -3306,7 +3306,6 @@ var SpriteHybrid = SpriteTestDemo.extend({
 //
 //------------------------------------------------------------------
 var SpriteBatchNodeChildren = SpriteTestDemo.extend({
-
     _title:"SpriteBatchNode Grand Children",
 
     ctor:function () {
