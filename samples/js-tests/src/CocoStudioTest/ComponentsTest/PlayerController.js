@@ -29,7 +29,7 @@ var PlayerController = ccs.ComController.extend({
         this._super();
         this._name = "PlayerController";
 
-        this._listener1 = cc.EventListener.create({
+        this._listener1 = new cc.EventListener({
             event: cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesEnded: this.onTouchesEnded.bind(this)
         });
@@ -44,7 +44,7 @@ var PlayerController = ccs.ComController.extend({
     onTouchesEnded: function (touch, event) {
         var location = touch[0].getLocation();
 
-        var projectile = cc.Sprite.create("res/components/Projectile.png", cc.rect(0, 0, 20, 20));
+        var projectile = new cc.Sprite("res/components/Projectile.png", cc.rect(0, 0, 20, 20));
         this.getOwner().parent.addChild(projectile, 1, 4);
 
         var com = ProjectileController.create();

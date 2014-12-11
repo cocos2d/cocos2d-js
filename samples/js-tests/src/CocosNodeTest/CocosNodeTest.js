@@ -766,7 +766,7 @@ var ConvertToNode = TestNodeDemo.extend({
         //----start9----ctor
         this._super();
         if ('touches' in cc.sys.capabilities){
-            cc.eventManager.addListener(cc.EventListener.create({
+            cc.eventManager.addListener(new cc.EventListener({
                 event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesEnded:function (touches, event) {
                     var target = event.getCurrentTarget();

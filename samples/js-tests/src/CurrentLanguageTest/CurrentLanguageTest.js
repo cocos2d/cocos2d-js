@@ -29,12 +29,12 @@ var CurrentLanguageTest = cc.Layer.extend({
         this._super();
 
         var s = cc.director.getWinSize();
-        var label = cc.LabelTTF.create("Current language Test", "Arial", 28);
+        var label = new cc.LabelTTF("Current language Test", "Arial", 28);
         this.addChild(label, 0);
         label.x = s.width / 2;
 	    label.y = s.height - 50;
 
-        var labelLanguage = cc.LabelTTF.create("", "Arial", 20);
+        var labelLanguage = new cc.LabelTTF("", "Arial", 20);
         labelLanguage.x = s.width / 2;
 	    labelLanguage.y = s.height / 2;
 

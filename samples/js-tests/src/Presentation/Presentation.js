@@ -64,7 +64,7 @@ PresentationBaseLayer.prototype.onEnter = function() {
 		fontSize = winSize.width * 0.09;
 	}
 
-	this.label = cc.LabelTTF.create(this._title, "Gill Sans", fontSize);
+	this.label = new cc.LabelTTF(this._title, "Gill Sans", fontSize);
 	this.addChild(this.label, 100);
 
 	var isMain = this.isMainTitle;
@@ -86,7 +86,7 @@ PresentationBaseLayer.prototype.onEnter = function() {
 			subfontSize = fontSize *0.4;
 		}
 
-		this.sublabel = cc.LabelTTF.create(subStr, "Thonburi", subfontSize);
+		this.sublabel = new cc.LabelTTF(subStr, "Thonburi", subfontSize);
 		this.addChild(this.sublabel, 90);
 		if( isMain ) {
 			this.sublabel.x = winSize.width / 2;
@@ -133,14 +133,14 @@ PresentationBaseLayer.prototype.createBulletList = function () {
 	}
 
 	var fontSize = winSize.height*0.07;
-	var bullets = cc.LabelTTF.create( str, "Gill Sans", fontSize );
+	var bullets = new cc.LabelTTF( str, "Gill Sans", fontSize );
 	bullets.x = centerPos.x;
 	bullets.y = centerPos.y;
 	this.addChild( bullets, 80 );
 };
 
 PresentationBaseLayer.prototype.createImage = function( file ) {
-	var sprite = cc.Sprite.create( file );
+	var sprite = new cc.Sprite( file );
 	sprite.x = centerPos.x;
 	sprite.y = centerPos.y;
 	this.addChild( sprite, 70 );
@@ -326,7 +326,7 @@ var ChipmunkPage = function() {
 	PresentationBaseLayer.call(this);
 
 	// batch node
-	this.batch = cc.SpriteBatchNode.create( s_pathGrossini, 50 );
+	this.batch = new cc.SpriteBatchNode( s_pathGrossini, 50 );
 	this.addChild( this.batch );
 
 	this.addSprite = function( pos ) {
@@ -357,8 +357,8 @@ ChipmunkPage.prototype.onTogglePhysicsDebug = function() {
 ChipmunkPage.prototype.initMenu = function() {
 	// menu
 	cc.MenuItemFont.setFontSize( 16 );
-	var menuItem = cc.MenuItemFont.create('Toggle Physics Debug', this.onTogglePhysicsDebug, this);
-	var menu = cc.Menu.create( menuItem );
+	var menuItem = new cc.MenuItemFont('Toggle Physics Debug', this.onTogglePhysicsDebug, this);
+	var menu = new cc.Menu( menuItem );
 	this.addChild( menu, 99 );
 	menu.x = winSize.width-80;
 	menu.y = winSize.height-100;
@@ -401,7 +401,7 @@ ChipmunkPage.prototype.createPhysicsSprite = function( pos ) {
 	shape.setFriction( 0.5 );
 	this.space.addShape( shape );
 
-	var sprite = cc.PhysicsSprite.create(s_pathGrossini);
+	var sprite = new cc.PhysicsSprite(s_pathGrossini);
 	sprite.setBody( body.handle );
 	return sprite;
 };
@@ -463,25 +463,25 @@ var ParticlesPage = function() {
 
 	// var tex = cc.textureCache.addImage(s_fire);
 
-	var firework = cc.ParticleFireworks.create();
+	var firework = new cc.ParticleFireworks();
 	// firework.texture = tex;
 	this.addChild( firework );
 	firework.x = centerPos.x;
 	firework.y = centerPos.y;
 
-	var sun = cc.ParticleSun.create();
+	var sun = new cc.ParticleSun();
 	// sun.texture = tex;
 	this.addChild( sun );
 	sun.x = winSize.width/4;
 	sun.y = winSize.height/2;
 
-	var meteor = cc.ParticleMeteor.create();
+	var meteor = new cc.ParticleMeteor();
 	// meteor.texture = tex;
 	this.addChild( meteor );
 	meteor.x = winSize.width*3/4;
 	meteor.y = winSize.height/2;
 
-	var flower = cc.ParticleSystem.create("res/Particles/Flower.plist");
+	var flower = new cc.ParticleSystem("res/Particles/Flower.plist");
 	this.addChild( flower );
 	flower.x = centerPos.x;
 	flower.y = centerPos.y;

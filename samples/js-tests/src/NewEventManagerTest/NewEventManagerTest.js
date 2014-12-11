@@ -89,7 +89,7 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
         sprite2.addChild(sprite3, 1);
 
         // Make sprite1 touchable
-        var listener1 = cc.EventListener.create({
+        var listener1 = new cc.EventListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
@@ -192,7 +192,7 @@ var TouchableSprite = cc.Sprite.extend({
         this._super();
 
         var selfPointer = this;
-        var listener = cc.EventListener.create({
+        var listener = new cc.EventListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
@@ -301,7 +301,7 @@ var RemoveListenerWhenDispatching =  EventDispatcherTestDemo.extend({
         this.addChild(sprite1, 10);
 
         // Make sprite1 touchable
-        var listener1 = cc.EventListener.create({
+        var listener1 = new cc.EventListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
@@ -384,7 +384,7 @@ var CustomEventTest =  EventDispatcherTestDemo.extend({
         statusLabel.setPosition(origin.x + size.width / 2, origin.y + size.height - 90);
         this.addChild(statusLabel);
 
-        this._listener1 = cc.EventListener.create({
+        this._listener1 = new cc.EventListener({
             event: cc.EventListener.CUSTOM,
             eventName: "game_custom_event1",
             callback: function(event){
@@ -405,7 +405,7 @@ var CustomEventTest =  EventDispatcherTestDemo.extend({
         statusLabel2.setPosition(origin.x + size.width/2, origin.y + size.height-120);
         this.addChild(statusLabel2);
 
-        this._listener2 = cc.EventListener.create({
+        this._listener2 = new cc.EventListener({
             event: cc.EventListener.CUSTOM,
             eventName: "game_custom_event2",
             callback: function(event){
@@ -585,7 +585,7 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
         this.addChild(this._sprite, 10);
 
         // Make sprite1 touchable
-        var listener1 = cc.EventListener.create({
+        var listener1 = new cc.EventListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
@@ -663,7 +663,7 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
         this._super();
         var selfPointer = this;
         var item1 = new cc.MenuItemFont("Click Me 1", function(sender){
-            var listener = cc.EventListener.create({
+            var listener = new cc.EventListener({
                 event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function (touch, event) {
                     cc.assert(false, "Should not come here!");
@@ -689,7 +689,7 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
         };
 
         var item2 = new cc.MenuItemFont("Click Me 2", function(sender){
-            var listener = cc.EventListener.create({
+            var listener = new cc.EventListener({
                 event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function(touch, event){
                     cc.assert("Should not come here!");
@@ -703,7 +703,7 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
         item2.setPosition(vCenter.x, vCenter.y + 40);
 
         var item3 = new cc.MenuItemFont("Click Me 3", function(sender){
-            var listener = cc.EventListener.create({
+            var listener = new cc.EventListener({
                 event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function(touch, event){
                     cc.assert(false, "Should not come here!");
@@ -854,7 +854,7 @@ var GlobalZTouchTest = EventDispatcherTestDemo.extend({
     ctor: function(){
         this._super();
 
-        var listener = cc.EventListener.create({
+        var listener = new cc.EventListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches:true,
             onTouchBegan: function(touch, event){
@@ -931,7 +931,7 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
         //----start9----ctor
         this._super();
 
-        var touchOneByOneListener = cc.EventListener.create({
+        var touchOneByOneListener = new cc.EventListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches:true,
             onTouchBegan: function(touch, event){
@@ -957,7 +957,7 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
             }
         });
 
-        var touchAllAtOnceListener = cc.EventListener.create({
+        var touchAllAtOnceListener = new cc.EventListener({
             event: cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesBegan: function(touches, event){
                 // Skip if don't touch top half screen.
@@ -989,7 +989,7 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
             }.bind(this)
         });
 
-        var keyboardEventListener = cc.EventListener.create({
+        var keyboardEventListener = new cc.EventListener({
             event: cc.EventListener.KEYBOARD,
             onKeyPressed: function(key, event){
                 var target = event.getCurrentTarget();
@@ -1144,13 +1144,13 @@ var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
             _this.addChild(colorLayer, 999); //set colorLayer to top
 
             // Add the button
-            var backgroundButton = cc.Scale9Sprite.create(s_extensions_button);
-            var backgroundHighlightedButton = cc.Scale9Sprite.create(s_extensions_buttonHighlighted);
+            var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
+            var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
 
             var titleButton = new cc.LabelTTF("Close Dialog", "Marker Felt", 26);
             titleButton.color = cc.color(159, 168, 176);
 
-            var controlButton = cc.ControlButton.create(titleButton, backgroundButton);
+            var controlButton = new cc.ControlButton(titleButton, backgroundButton);
             controlButton.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
             controlButton.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
@@ -1166,7 +1166,7 @@ var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
             }, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
 
             // Add the black background
-            var background = cc.Scale9Sprite.create(s_extensions_buttonBackground);
+            var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
             background.width = 300;
             background.height = 170;
             background.x = size.width / 2.0 + 50;

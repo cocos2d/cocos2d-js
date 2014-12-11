@@ -46,7 +46,7 @@ var ClickAndMoveTestLayer = cc.Layer.extend({
         this.init();
 
         if( 'touches' in cc.sys.capabilities )
-            cc.eventManager.addListener(cc.EventListener.create({
+            cc.eventManager.addListener(new cc.EventListener({
                 event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesEnded:function (touches, event) {
                     if (touches.length <= 0)

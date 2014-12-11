@@ -38,7 +38,7 @@ var Box2DTestLayer = cc.Layer.extend({
         //----start0----ctor
         this._super();
 
-        cc.eventManager.addListener(cc.EventListener.create({
+        cc.eventManager.addListener(new cc.EventListener({
             event: cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesEnded: function(touches, event){
                 //Add a new body/atlas sprite at the touched location
