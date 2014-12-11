@@ -58,6 +58,7 @@ tkowalski           @tkowalski      Add missing affine transform functions renam
 Minh Quy            @MQuy           Fix url matching regex issue
 
 Park Hyun Chen      @sincntx        Fix cc.ScrollView constructor issue in JSB
+                                    Added cc.rectOverlapsRect function in JSB
 
 Vincent Chou        @go3k           Update README.md, add submodule update command suggestion
                                     Fix bug: Runtime.cpp protobuf object parseFromString may result in an incomplete protobuf object
