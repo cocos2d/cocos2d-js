@@ -148,7 +148,7 @@ var MenuLayerMainMenu = cc.Layer.extend({
 
 	onEnter: function() {
 		this._super();
-		this._touchListener = new cc.EventListener({
+		this._touchListener = cc.EventListener.create({
 			event: cc.EventListener.TOUCH_ONE_BY_ONE,
 			swallowTouches: true,
 			onTouchBegan:function () {
@@ -488,7 +488,7 @@ var RemoveMenuItemWhenMove = cc.Layer.extend({
 
 	onEnter: function() {
 		this._super();
-		this._touchListener = new cc.EventListener({
+		this._touchListener = cc.EventListener.create({
 			event: cc.EventListener.TOUCH_ONE_BY_ONE,
 			swallowTouches: false,
 			onTouchBegan:function(touch, event){

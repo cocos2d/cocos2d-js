@@ -340,7 +340,7 @@ var HoleDemo = BaseClippingNodeTest.extend({
         this._outerClipper.addChild(holesClipper);
         this.addChild(this._outerClipper);
 
-        cc.eventManager.addListener(new cc.EventListener({
+        cc.eventManager.addListener(cc.EventListener.create({
             event: cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesBegan:function (touches, event) {
                 var target = event.getCurrentTarget();
@@ -431,7 +431,7 @@ var ScrollViewDemo = BaseClippingNodeTest.extend({
         clipper.addChild(content);
 
         this._scrolling = false;
-        cc.eventManager.addListener(new cc.EventListener({
+        cc.eventManager.addListener(cc.EventListener.create({
             event: cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesBegan: function (touches, event) {
                 if (!touches || touches.length == 0)

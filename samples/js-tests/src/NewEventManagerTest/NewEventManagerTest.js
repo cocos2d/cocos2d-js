@@ -89,7 +89,7 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
         sprite2.addChild(sprite3, 1);
 
         // Make sprite1 touchable
-        var listener1 = new cc.EventListener({
+        var listener1 = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
@@ -192,7 +192,7 @@ var TouchableSprite = cc.Sprite.extend({
         this._super();
 
         var selfPointer = this;
-        var listener = new cc.EventListener({
+        var listener = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
@@ -301,7 +301,7 @@ var RemoveListenerWhenDispatching =  EventDispatcherTestDemo.extend({
         this.addChild(sprite1, 10);
 
         // Make sprite1 touchable
-        var listener1 = new cc.EventListener({
+        var listener1 = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
@@ -384,7 +384,7 @@ var CustomEventTest =  EventDispatcherTestDemo.extend({
         statusLabel.setPosition(origin.x + size.width / 2, origin.y + size.height - 90);
         this.addChild(statusLabel);
 
-        this._listener1 = new cc.EventListener({
+        this._listener1 = cc.EventListener.create({
             event: cc.EventListener.CUSTOM,
             eventName: "game_custom_event1",
             callback: function(event){
@@ -405,7 +405,7 @@ var CustomEventTest =  EventDispatcherTestDemo.extend({
         statusLabel2.setPosition(origin.x + size.width/2, origin.y + size.height-120);
         this.addChild(statusLabel2);
 
-        this._listener2 = new cc.EventListener({
+        this._listener2 = cc.EventListener.create({
             event: cc.EventListener.CUSTOM,
             eventName: "game_custom_event2",
             callback: function(event){
@@ -585,7 +585,7 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
         this.addChild(this._sprite, 10);
 
         // Make sprite1 touchable
-        var listener1 = new cc.EventListener({
+        var listener1 = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
@@ -663,7 +663,7 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
         this._super();
         var selfPointer = this;
         var item1 = new cc.MenuItemFont("Click Me 1", function(sender){
-            var listener = new cc.EventListener({
+            var listener = cc.EventListener.create({
                 event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function (touch, event) {
                     cc.assert(false, "Should not come here!");
@@ -689,7 +689,7 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
         };
 
         var item2 = new cc.MenuItemFont("Click Me 2", function(sender){
-            var listener = new cc.EventListener({
+            var listener = cc.EventListener.create({
                 event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function(touch, event){
                     cc.assert("Should not come here!");
@@ -703,7 +703,7 @@ var RemoveListenerAfterAddingTest =  EventDispatcherTestDemo.extend({
         item2.setPosition(vCenter.x, vCenter.y + 40);
 
         var item3 = new cc.MenuItemFont("Click Me 3", function(sender){
-            var listener = new cc.EventListener({
+            var listener = cc.EventListener.create({
                 event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 onTouchBegan: function(touch, event){
                     cc.assert(false, "Should not come here!");
@@ -854,7 +854,7 @@ var GlobalZTouchTest = EventDispatcherTestDemo.extend({
     ctor: function(){
         this._super();
 
-        var listener = new cc.EventListener({
+        var listener = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches:true,
             onTouchBegan: function(touch, event){
@@ -931,7 +931,7 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
         //----start9----ctor
         this._super();
 
-        var touchOneByOneListener = new cc.EventListener({
+        var touchOneByOneListener = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches:true,
             onTouchBegan: function(touch, event){
@@ -957,7 +957,7 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
             }
         });
 
-        var touchAllAtOnceListener = new cc.EventListener({
+        var touchAllAtOnceListener = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesBegan: function(touches, event){
                 // Skip if don't touch top half screen.
@@ -989,7 +989,7 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
             }.bind(this)
         });
 
-        var keyboardEventListener = new cc.EventListener({
+        var keyboardEventListener = cc.EventListener.create({
             event: cc.EventListener.KEYBOARD,
             onKeyPressed: function(key, event){
                 var target = event.getCurrentTarget();

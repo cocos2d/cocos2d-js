@@ -29,7 +29,7 @@ var PlayerController = ccs.ComController.extend({
         this._super();
         this._name = "PlayerController";
 
-        this._listener1 = new cc.EventListener({
+        this._listener1 = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesEnded: this.onTouchesEnded.bind(this)
         });

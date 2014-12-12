@@ -94,7 +94,7 @@ var IAPTestLayer = PluginXTest.extend({
     addTouch: function (bool) {
         if (bool) {
             var self = this.toastLayer;
-            this.listener = new cc.EventListener({
+            this.listener = cc.EventListener.create({
                 event: cc.EventListener.TOUCH_ONE_BY_ONE,
                 swallowTouches: true,
                 onTouchBegan: function (touch, event) {
