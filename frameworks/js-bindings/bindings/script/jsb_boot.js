@@ -31,19 +31,106 @@ var window = window || this;
  * Iterate over an object or an array, executing a function for each matched element.
  * @param {object|array} obj
  * @param {function} iterator
- * @param [{object}] context
+ * @param {object} [context]
  */
-cc.each = function(obj, iterator, context){
-    if(!obj) return;
-    if(obj instanceof Array){
-        for(var i = 0, li = obj.length; i < li; i++){
-            if(iterator.call(context, obj[i], i) === false) return;
+cc.each = function (obj, iterator, context) {
+    if (!obj)
+        return;
+    if (obj instanceof Array) {
+        for (var i = 0, li = obj.length; i < li; i++) {
+            if (iterator.call(context, obj[i], i) === false)
+                return;
         }
-    }else{
+    } else {
         for (var key in obj) {
-            if(iterator.call(context, obj[key], key) === false) return;
+            if (iterator.call(context, obj[key], key) === false)
+                return;
         }
     }
+};
+
+/**
+ * Copy all of the properties in source objects to target object and return the target object.
+ * @param {object} target
+ * @param {object} *sources
+ * @returns {object}
+ */
+cc.extend = function(target) {
+    var sources = arguments.length >= 2 ? Array.prototype.slice.call(arguments, 1) : [];
+
+    cc.each(sources, function(src) {
+        for(var key in src) {
+            if (src.hasOwnProperty(key)) {
+                target[key] = src[key];
+            }
+        }
+    });
+    return target;
+};
+
+/**
+ * Check the obj whether is function or not
+ * @param {*} obj
+ * @returns {boolean}
+ */
+cc.isFunction = function(obj) {
+    return typeof obj == 'function';
+};
+
+/**
+ * Check the obj whether is number or not
+ * @param {*} obj
+ * @returns {boolean}
+ */
+cc.isNumber = function(obj) {
+    return typeof obj == 'number' || Object.prototype.toString.call(obj) == '[object Number]';
+};
+
+/**
+ * Check the obj whether is string or not
+ * @param {*} obj
+ * @returns {boolean}
+ */
+cc.isString = function(obj) {
+    return typeof obj == 'string' || Object.prototype.toString.call(obj) == '[object String]';
+};
+
+/**
+ * Check the obj whether is array or not
+ * @param {*} obj
+ * @returns {boolean}
+ */
+cc.isArray = function(obj) {
+    return Object.prototype.toString.call(obj) == '[object Array]';
+};
+
+/**
+ * Check the obj whether is undefined or not
+ * @param {*} obj
+ * @returns {boolean}
+ */
+cc.isUndefined = function(obj) {
+    return typeof obj == 'undefined';
+};
+
+/**
+ * Check the obj whether is object or not
+ * @param {*} obj
+ * @returns {boolean}
+ */
+cc.isObject = function(obj) {
+    var type = typeof obj;
+
+    return type == 'function' || (obj && type == 'object');
+};
+
+/**
+ * Check the url whether cross origin
+ * @param {String} url
+ * @returns {boolean}
+ */
+cc.isCrossOrigin = function (url) {
+    return false;
 };
 
 /**
@@ -885,13 +972,7 @@ cc.plistParser = cc.PlistParser.getInstance();
 cc.fileUtils = cc.FileUtils.getInstance();
 cc.fileUtils.setPopupNotify(false);
 
-//ccs.nodeReader = ccs.NodeReader.getInstance();
-ccs.actionTimelineCache = ccs.ActionTimelineCache.getInstance();
-ccs.actionTimelineCache.createAction = ccs.ActionTimelineCache.createAction;
 
-ccs.csLoader = ccs.CSLoader.getInstance();
-ccs.csLoader.createNode = ccs.CSLoader.createNode;
-ccs.csLoader.createTimeLine = ccs.CSLoader.createTimeLine;
 
 /**
  * @type {Object}
@@ -915,65 +996,6 @@ cc.screen = {
     }
 };
 
-cc.EditBox = ccui.EditBox;
-delete ccui.EditBox;
-
-// GUI
-/**
- * @type {Object}
- * UI Helper
- */
-ccui.helper = ccui.Helper;
-
-// In extension
-/**
- * @type {Object} Base object for ccs.uiReader
- * @name ccs.uiReader
- */
-ccs.uiReader = null;
-cc.defineGetterSetter(ccs, "uiReader", function() {
-    return ccs.GUIReader.getInstance();
-});
-ccs.GUIReader.prototype.clear = function() {
-    ccs.GUIReader.destroyInstance();
-};
-/**
- * @type {Object} Format and manage armature configuration and armature animation
- * @name ccs.armatureDataManager
- */
-ccs.armatureDataManager = null;
-cc.defineGetterSetter(ccs, "armatureDataManager", function() {
-    return ccs.ArmatureDataManager.getInstance();
-});
-ccs.ArmatureDataManager.prototype.clear = function() {
-    ccs.ArmatureDataManager.destroyInstance();
-};
-/**
- * @type {Object} Base singleton object for ccs.sceneReader
- * @name ccs.sceneReader
- */
-ccs.sceneReader = null;
-cc.defineGetterSetter(ccs, "sceneReader", function() {
-    return ccs.SceneReader.getInstance();
-});
-ccs.SceneReader.prototype.clear = function() {
-    ccs.SceneReader.destroyInstance();
-};
-ccs.SceneReader.prototype.version = function() {
-    return ccs.SceneReader.sceneReaderVersion();
-};
-/**
- * @type {Object} Base singleton object for ccs.ActionManager
- * @name ccs.actionManager
- */
-ccs.actionManager = ccs.ActionManager.getInstance();
-ccs.ActionManager.prototype.clear = function() {
-    this.releaseActions();
-};
-
-//ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
-//ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
-
 //+++++++++++++++++++++++Define singleton objects end+++++++++++++++++++++++++++
 
 
@@ -994,33 +1016,6 @@ var jsb = jsb || {};
 jsb.fileUtils = cc.fileUtils;
 delete cc.FileUtils;
 delete cc.fileUtils;
-/**
- * @type {Object}
- * @name jsb.AssetsManager
- * jsb.AssetsManager is the native AssetsManager for your game resources or scripts.
- * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
- * Only available in JSB
- */
-jsb.AssetsManager = cc.AssetsManager;
-delete cc.AssetsManager;
-/**
- * @type {Object}
- * @name jsb.EventListenerAssetsManager
- * jsb.EventListenerAssetsManager is the native event listener for AssetsManager.
- * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
- * Only available in JSB
- */
-jsb.EventListenerAssetsManager = cc.EventListenerAssetsManager;
-delete cc.EventListenerAssetsManager;
-/**
- * @type {Object}
- * @name jsb.EventAssetsManager
- * jsb.EventAssetsManager is the native event for AssetsManager.
- * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
- * Only available in JSB
- */
-jsb.EventAssetsManager = cc.EventAssetsManager;
-delete cc.EventAssetsManager;
 
 /**
  * @type {Object}
@@ -1332,6 +1327,12 @@ cc._initSys = function(config, CONFIG_KEY){
         __restartVM();
     };
 
+    // clean a singal js file
+    locSys.cleanScript = function(jsFile) {
+        __cleanScript(jsFile);
+    };
+
+
     locSys.dump = function(){
         var self = this;
         var str = "";
@@ -1511,6 +1512,14 @@ cc.game = {
         config[CONFIG_KEY.frameRate] = frameRate;
         cc.director.setAnimationInterval(1.0/frameRate);
     },
+    
+    /**
+     * Restart game.
+     */
+    restart: function () {
+        __restartVM();
+    },
+    
     /**
      * Run game.
      */
@@ -1524,6 +1533,7 @@ cc.game = {
             self.onStart();
         }
     },
+    
     /**
      * Init config.
      * @param cb
@@ -1549,8 +1559,9 @@ cc.game = {
             cc.log("Failed to read or parse project.json");
             this.config = _init({});
         }
-//        cc._initDebugSetting(this.config[CONFIG_KEY.debugMode]);
+        cc._initDebugSetting(this.config[CONFIG_KEY.debugMode]);
         cc.director.setDisplayStats(this.config[CONFIG_KEY.showFPS]);
+        cc.director.setAnimationInterval(1.0/this.config[CONFIG_KEY.frameRate]);
         cc._initSys(this.config, CONFIG_KEY);
     },
     

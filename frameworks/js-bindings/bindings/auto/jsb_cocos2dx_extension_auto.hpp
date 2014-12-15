@@ -27,47 +27,6 @@ bool js_cocos2dx_extension_Control_isHighlighted(JSContext *cx, uint32_t argc, j
 bool js_cocos2dx_extension_Control_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_Control_Control(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_cocos2d_ui_Scale9Sprite_class;
-extern JSObject *jsb_cocos2d_ui_Scale9Sprite_prototype;
-
-bool js_cocos2dx_extension_Scale9Sprite_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_extension_Scale9Sprite_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_Scale9Sprite(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_extension_Scale9Sprite_disableCascadeColor(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_updateWithSprite(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_isFlippedX(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setFlippedY(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setFlippedX(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setScale9Enabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_disableCascadeOpacity(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setInsetBottom(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_initWithSpriteFrameName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getSprite(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setInsetTop(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setPreferredSize(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getInsetRight(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getInsetBottom(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_resizableSpriteWithCapInsets(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_isScale9Enabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getCapInsets(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getOriginalSize(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_initWithFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getInsetTop(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setInsetLeft(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_initWithSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getPreferredSize(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setCapInsets(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_isFlippedY(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_getInsetLeft(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_setInsetRight(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_createWithSpriteFrameName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_createWithSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_Scale9Sprite_Scale9Sprite(JSContext *cx, uint32_t argc, jsval *vp);
-
 extern JSClass  *jsb_cocos2d_extension_ControlButton_class;
 extern JSObject *jsb_cocos2d_extension_ControlButton_prototype;
 

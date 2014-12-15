@@ -31,7 +31,7 @@ var SpriteDemo = BaseTestLayer.extend({
         return "ProgressActionsTest";
     },
 
-    title:function () {
+    subtitle:function () {
         return "";
     },
 

@@ -158,7 +158,7 @@ static bool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *cx
             
             return true;
         }
-        else if (argc == 2) {
+        else if (argc == 1 || argc == 2) {
             JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
             tmpObj->autorelease();
             
@@ -171,7 +171,14 @@ static bool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *cx
             dict->setObject(tmpObj, "moveEvent");
             
             tmpObj->setJSCallbackFunc(argv[0]);
-            tmpObj->setJSCallbackThis(argv[1]);
+            if (argc == 1)
+            {
+                tmpObj->setJSCallbackThis(JSVAL_NULL);
+            }
+            else
+            {
+                tmpObj->setJSCallbackThis(argv[1]);
+            }
             
             cobj->setMovementEventCallFunc(CC_CALLBACK_0(JSArmatureWrapper::movementCallbackFunc, tmpObj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
             
@@ -197,7 +204,7 @@ static bool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx, u
             
             return true;
         }
-        else if (argc == 2) {
+        else if (argc == 1 || argc == 2) {
             JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
             tmpObj->autorelease();
             
@@ -210,7 +217,14 @@ static bool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx, u
             dict->setObject(tmpObj, "frameEvent");
             
             tmpObj->setJSCallbackFunc(argv[0]);
-            tmpObj->setJSCallbackThis(argv[1]);
+            if (argc == 1)
+            {
+                tmpObj->setJSCallbackThis(JSVAL_NULL);
+            }
+            else
+            {
+                tmpObj->setJSCallbackThis(argv[1]);
+            }
             
             cobj->setFrameEventCallFunc(CC_CALLBACK_0(JSArmatureWrapper::frameCallbackFunc, tmpObj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
             

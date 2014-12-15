@@ -39,19 +39,54 @@ def check_environment_variables():
 
     return NDK_ROOT
 
-def select_toolchain_version():
-    pass
+def select_toolchain_version(ndk_root):
+    ret_version = "4.8"
+
+    version_file_path = os.path.join(ndk_root, "RELEASE.TXT")
+    try:
+        versionFile = open(version_file_path)
+        lines = versionFile.readlines()
+        versionFile.close()
+
+        version_num = None
+        version_char = None
+        pattern = r'^[a-zA-Z]+(\d+)(\w)'
+        for line in lines:
+            str_line = line.lstrip()
+            match = re.match(pattern, str_line)
+            if match:
+                version_num = int(match.group(1))
+                version_char = match.group(2)
+                break
+
+        if version_num is None:
+            print("Parse NDK version from file %s failed." % version_file_path)
+        else:
+            version_char = version_char.lower()
+            if version_num > 10 or (version_num == 10 and cmp(version_char, 'c') >= 0):
+                ret_version = "4.9"
+
+    except:
+        print("Parse NDK version from file %s failed." % version_file_path)
+
+    print("NDK_TOOLCHAIN_VERSION: %s" % ret_version)
+    if ret_version == "4.8":
+        print(
+            "Your application may crash when using c++ 11 regular expression with NDK_TOOLCHAIN_VERSION %s" % ret_version)
+
+    return ret_version
 
 def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,build_mode):
 
     ndk_path = os.path.join(ndk_root, "ndk-build")
+    ndk_toolchain_version = select_toolchain_version(ndk_root)
 
     # windows should use ";" to seperate module paths
     platform = sys.platform
     if platform == 'win32':
-        ndk_module_path = 'NDK_MODULE_PATH=%s/..;%s;%s/external;%s/cocos' % (cocos_root, cocos_root, cocos_root, cocos_root)
+        ndk_module_path = 'NDK_MODULE_PATH=%s/..;%s;%s/external;%s/cocos NDK_TOOLCHAIN_VERSION=%s' % (cocos_root, cocos_root, cocos_root, cocos_root, ndk_toolchain_version)
     else:
-        ndk_module_path = 'NDK_MODULE_PATH=%s/..:%s:%s/external:%s/cocos' % (cocos_root, cocos_root, cocos_root, cocos_root)
+        ndk_module_path = 'NDK_MODULE_PATH=%s/..:%s:%s/external:%s/cocos NDK_TOOLCHAIN_VERSION=%s' % (cocos_root, cocos_root, cocos_root, cocos_root, ndk_toolchain_version)
 
     num_of_cpu = get_num_of_cpu()
     if ndk_build_param == None:
@@ -108,7 +143,6 @@ def build(targets,ndk_build_param,build_mode):
 
     ndk_root = check_environment_variables()
     sdk_root = None
-    select_toolchain_version()
 
     project_root = os.path.dirname(os.path.realpath(__file__))
     cocos_root = os.path.join(project_root, "..", "..", "..", "frameworks/js-bindings/cocos2d-x")

@@ -42,6 +42,9 @@ include_directories(
   ../../frameworks/js-bindings/bindings/auto
   ../../frameworks/js-bindings/bindings/manual
   ../../frameworks/js-bindings/cocos2d-x/cocos/base
+  ../../frameworks/js-bindings/cocos2d-x/cocos/audio/include
+  ../../frameworks/js-bindings/external/spidermonkey/include/${PLATFORM_FOLDER}
+  ../../frameworks/js-bindings/cocos2d-x/external/chipmunk/include/chipmunk
 )
 
 # add the executable
@@ -50,9 +53,8 @@ add_executable(${APP_NAME}
 )
 
 target_link_libraries(${APP_NAME}
-  jsbindings  
+  jsbindings
   cocos2d
-  js_static
 )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")

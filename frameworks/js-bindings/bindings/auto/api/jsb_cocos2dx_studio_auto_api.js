@@ -4209,13 +4209,23 @@ int
 ccs.ActionTimeline = {
 
 /**
- * @method getTimelines
- * @return {Array}
+ * @method setFrameEventCallFunc
+ * @param {function} arg0
  */
-getTimelines : function (
+setFrameEventCallFunc : function (
+func 
 )
 {
-    return new Array();
+},
+
+/**
+ * @method addTimeline
+ * @param {ccs.timeline::Timeline} arg0
+ */
+addTimeline : function (
+timeline 
+)
+{
 },
 
 /**
@@ -4247,13 +4257,43 @@ pause : function (
 },
 
 /**
- * @method setFrameEventCallFunc
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method removeTimeline
+ * @param {ccs.timeline::Timeline} arg0
+ */
+removeTimeline : function (
+timeline 
+)
+{
+},
+
+/**
+ * @method setLastFrameCallFunc
  * @param {function} arg0
  */
-setFrameEventCallFunc : function (
+setLastFrameCallFunc : function (
 func 
 )
 {
+},
+
+/**
+ * @method getTimelines
+ * @return {Array}
+ */
+getTimelines : function (
+)
+{
+    return new Array();
 },
 
 /**
@@ -4265,80 +4305,20 @@ resume : function (
 },
 
 /**
- * @method getDuration
- * @return {int}
- */
-getDuration : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method addTimeline
- * @param {ccs.timeline::Timeline} arg0
- */
-addTimeline : function (
-timeline 
-)
-{
-},
-
-/**
- * @method getEndFrame
- * @return {int}
- */
-getEndFrame : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setCurrentFrame
- * @param {int} arg0
- */
-setCurrentFrame : function (
-int 
-)
-{
-},
-
-/**
- * @method setTimeSpeed
- * @param {float} arg0
- */
-setTimeSpeed : function (
-float 
-)
-{
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setDuration
- * @param {int} arg0
- */
-setDuration : function (
-int 
-)
-{
-},
-
-/**
  * @method getTimeSpeed
  * @return {float}
  */
 getTimeSpeed : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getDuration
+ * @return {int}
+ */
+getDuration : function (
 )
 {
     return 0;
@@ -4381,19 +4361,57 @@ bool
 },
 
 /**
- * @method removeTimeline
- * @param {ccs.timeline::Timeline} arg0
+ * @method clearFrameEventCallFunc
  */
-removeTimeline : function (
-timeline 
+clearFrameEventCallFunc : function (
 )
 {
 },
 
 /**
- * @method clearFrameEventCallFunc
+ * @method getEndFrame
+ * @return {int}
  */
-clearFrameEventCallFunc : function (
+getEndFrame : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setTimeSpeed
+ * @param {float} arg0
+ */
+setTimeSpeed : function (
+float 
+)
+{
+},
+
+/**
+ * @method clearLastFrameCallFunc
+ */
+clearLastFrameCallFunc : function (
+)
+{
+},
+
+/**
+ * @method setDuration
+ * @param {int} arg0
+ */
+setDuration : function (
+int 
+)
+{
+},
+
+/**
+ * @method setCurrentFrame
+ * @param {int} arg0
+ */
+setCurrentFrame : function (
+int 
 )
 {
 },
