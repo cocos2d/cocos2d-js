@@ -221,6 +221,20 @@ callfunc
 },
 
 /**
+ * @method stopActionByName
+* @param {char|char} char
+* @param {char|char} char
+* @return {ccs.ActionObject|ccs.ActionObject}
+*/
+stopActionByName : function(
+char,
+char
+)
+{
+    return ccs.ActionObject;
+},
+
+/**
  * @method getActionByName
  * @param {char} arg0
  * @param {char} arg1
