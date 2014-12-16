@@ -3066,11 +3066,11 @@ str
 },
 
 /**
- * @method createActionFromProtocolBuffers
+ * @method createActionWithFlatBuffersFile
  * @param {String} arg0
  * @return {ccs.timeline::ActionTimeline}
  */
-createActionFromProtocolBuffers : function (
+createActionWithFlatBuffersFile : function (
 str 
 )
 {
@@ -3078,35 +3078,11 @@ str
 },
 
 /**
- * @method createActionFromXML
+ * @method loadAnimationActionWithFlatBuffersFile
  * @param {String} arg0
  * @return {ccs.timeline::ActionTimeline}
  */
-createActionFromXML : function (
-str 
-)
-{
-    return ccs.timeline::ActionTimeline;
-},
-
-/**
- * @method loadAnimationActionWithFileFromProtocolBuffers
- * @param {String} arg0
- * @return {ccs.timeline::ActionTimeline}
- */
-loadAnimationActionWithFileFromProtocolBuffers : function (
-str 
-)
-{
-    return ccs.timeline::ActionTimeline;
-},
-
-/**
- * @method loadAnimationActionWithFileFromXML
- * @param {String} arg0
- * @return {ccs.timeline::ActionTimeline}
- */
-loadAnimationActionWithFileFromXML : function (
+loadAnimationActionWithFlatBuffersFile : function (
 str 
 )
 {
@@ -3166,12 +3142,12 @@ str
 },
 
 /**
- * @method loadActionTimelineFromXML
- * @param {tinyxml2::XMLElement} arg0
+ * @method createActionWithFlatBuffersForSimulator
+ * @param {String} arg0
  * @return {ccs.timeline::ActionTimeline}
  */
-loadActionTimelineFromXML : function (
-xmlelement 
+createActionWithFlatBuffersForSimulator : function (
+str 
 )
 {
     return ccs.timeline::ActionTimeline;
@@ -4443,6 +4419,16 @@ ActionTimeline : function (
 ccs.CSLoader = {
 
 /**
+ * @method setJsonPath
+ * @param {String} arg0
+ */
+setJsonPath : function (
+str 
+)
+{
+},
+
+/**
  * @method createNodeFromJson
  * @param {String} arg0
  * @return {cc.Node}
@@ -4455,57 +4441,27 @@ str
 },
 
 /**
- * @method nodeFromXML
- * @param {tinyxml2::XMLElement} arg0
- * @param {String} arg1
+ * @method nodeWithFlatBuffersForSimulator
+ * @param {flatbuffers::NodeTree} arg0
  * @return {cc.Node}
  */
-nodeFromXML : function (
-xmlelement, 
-str 
+nodeWithFlatBuffersForSimulator : function (
+nodetree 
 )
 {
     return cc.Node;
 },
 
 /**
- * @method createNodeFromProtocolBuffers
+ * @method createNodeWithFlatBuffersFile
  * @param {String} arg0
  * @return {cc.Node}
  */
-createNodeFromProtocolBuffers : function (
+createNodeWithFlatBuffersFile : function (
 str 
 )
 {
     return cc.Node;
-},
-
-/**
- * @method init
- */
-init : function (
-)
-{
-},
-
-/**
- * @method setRecordXMLPath
- * @param {bool} arg0
- */
-setRecordXMLPath : function (
-bool 
-)
-{
-},
-
-/**
- * @method setJsonPath
- * @param {String} arg0
- */
-setJsonPath : function (
-str 
-)
-{
 },
 
 /**
@@ -4521,6 +4477,52 @@ str
 },
 
 /**
+ * @method bindCallback
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {ccui.Widget} arg2
+ * @param {cc.Node} arg3
+ * @return {bool}
+ */
+bindCallback : function (
+str, 
+str, 
+widget, 
+node 
+)
+{
+    return false;
+},
+
+/**
+ * @method purge
+ */
+purge : function (
+)
+{
+},
+
+/**
+ * @method nodeWithFlatBuffers
+ * @param {flatbuffers::NodeTree} arg0
+ * @return {cc.Node}
+ */
+nodeWithFlatBuffers : function (
+nodetree 
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method init
+ */
+init : function (
+)
+{
+},
+
+/**
  * @method loadNodeWithContent
  * @param {String} arg0
  * @return {cc.Node}
@@ -4533,51 +4535,11 @@ str
 },
 
 /**
- * @method isRecordProtocolBuffersPath
- * @return {bool}
- */
-isRecordProtocolBuffersPath : function (
-)
-{
-    return false;
-},
-
-/**
- * @method isRecordXMLPath
- * @return {bool}
- */
-isRecordXMLPath : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getProtocolBuffersPath
- * @return {String}
- */
-getProtocolBuffersPath : function (
-)
-{
-    return ;
-},
-
-/**
- * @method getXMLPath
- * @return {String}
- */
-getXMLPath : function (
-)
-{
-    return ;
-},
-
-/**
- * @method createNodeFromXML
+ * @method nodeWithFlatBuffersFile
  * @param {String} arg0
  * @return {cc.Node}
  */
-createNodeFromXML : function (
+nodeWithFlatBuffersFile : function (
 str 
 )
 {
@@ -4592,16 +4554,6 @@ isRecordJsonPath : function (
 )
 {
     return false;
-},
-
-/**
- * @method setRecordProtocolBuffersPath
- * @param {bool} arg0
- */
-setRecordProtocolBuffersPath : function (
-bool 
-)
-{
 },
 
 /**
@@ -4625,39 +4577,11 @@ bool
 },
 
 /**
- * @method setProtocolBuffersPath
- * @param {String} arg0
- */
-setProtocolBuffersPath : function (
-str 
-)
-{
-},
-
-/**
- * @method purge
- */
-purge : function (
-)
-{
-},
-
-/**
- * @method setXMLPath
- * @param {String} arg0
- */
-setXMLPath : function (
-str 
-)
-{
-},
-
-/**
- * @method nodeFromXMLFile
+ * @method createNodeWithFlatBuffersForSimulator
  * @param {String} arg0
  * @return {cc.Node}
  */
-nodeFromXMLFile : function (
+createNodeWithFlatBuffersForSimulator : function (
 str 
 )
 {
