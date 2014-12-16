@@ -93,11 +93,11 @@ var CocostudioParserJsonScene = cc.Scene.extend({
     onEnter: function(){
         cc.Scene.prototype.onEnter.call(this);
 
-        var label = cc.LabelTTF.create("Back", "fonts/arial.ttf", 20);
+        var label = new cc.LabelTTF("Back", "fonts/arial.ttf", 20);
         //#endif
-        var pMenuItem = cc.MenuItemLabel.create(label, this.BackCallback, this);
+        var pMenuItem = new cc.MenuItemLabel(label, this.BackCallback, this);
 
-        var pMenu = cc.Menu.create(pMenuItem);
+        var pMenu = new cc.Menu(pMenuItem);
 
         pMenu.setPosition( cc.p(0, 0) );
         pMenuItem.setPosition( cc.pAdd(cc.visibleRect.bottomRight,cc.p(-50,25)) );
@@ -112,7 +112,7 @@ var CocostudioParserJsonScene = cc.Scene.extend({
         }else{
             var winSize = cc.director.getWinSize();
 
-            var pMenu = cc.Menu.create();
+            var pMenu = new cc.Menu();
             pMenu.x = 0;
             pMenu.y = 0;
             cc.MenuItemFont.setFontName("fonts/arial.ttf");
@@ -120,7 +120,7 @@ var CocostudioParserJsonScene = cc.Scene.extend({
 
             for (var i = 0; i < g_parsersTests.length; ++i) {
                 var selItem = g_parsersTests[i];
-                var pItem = cc.MenuItemFont.create(selItem.title,
+                var pItem = new cc.MenuItemFont(selItem.title,
                     selItem.test, this);
                 pItem.x = winSize.width / 2;
                 pItem.y = winSize.height - (i + 1) * LINE_SPACE;

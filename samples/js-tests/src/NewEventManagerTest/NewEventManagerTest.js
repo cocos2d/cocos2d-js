@@ -1144,13 +1144,13 @@ var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
             _this.addChild(colorLayer, 999); //set colorLayer to top
 
             // Add the button
-            var backgroundButton = cc.Scale9Sprite.create(s_extensions_button);
-            var backgroundHighlightedButton = cc.Scale9Sprite.create(s_extensions_buttonHighlighted);
+            var backgroundButton = new cc.Scale9Sprite(s_extensions_button);
+            var backgroundHighlightedButton = new cc.Scale9Sprite(s_extensions_buttonHighlighted);
 
             var titleButton = new cc.LabelTTF("Close Dialog", "Marker Felt", 26);
             titleButton.color = cc.color(159, 168, 176);
 
-            var controlButton = cc.ControlButton.create(titleButton, backgroundButton);
+            var controlButton = new cc.ControlButton(titleButton, backgroundButton);
             controlButton.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
             controlButton.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 
@@ -1166,7 +1166,7 @@ var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
             }, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
 
             // Add the black background
-            var background = cc.Scale9Sprite.create(s_extensions_buttonBackground);
+            var background = new cc.Scale9Sprite(s_extensions_buttonBackground);
             background.width = 300;
             background.height = 170;
             background.x = size.width / 2.0 + 50;
