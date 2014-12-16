@@ -44,7 +44,7 @@ var PlayerController = ccs.ComController.extend({
     onTouchesEnded: function (touch, event) {
         var location = touch[0].getLocation();
 
-        var projectile = cc.Sprite.create("res/components/Projectile.png", cc.rect(0, 0, 20, 20));
+        var projectile = new cc.Sprite("res/components/Projectile.png", cc.rect(0, 0, 20, 20));
         this.getOwner().parent.addChild(projectile, 1, 4);
 
         var com = ProjectileController.create();

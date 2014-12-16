@@ -29,10 +29,10 @@ var ComponentsTestLayer = cc.LayerColor.extend({
         if (cc.LayerColor.prototype.init.call(this, cc.color(255, 255, 255, 255))) {
             var root = this.createGameScene();
             this.addChild(root, 0, 1);
-            root.getChildByTag(1).addComponent(ccs.ComAudio.create());
+            root.getChildByTag(1).addComponent(new ccs.ComAudio());
             root.getChildByTag(1).addComponent(PlayerController.create());
-            root.addComponent(ccs.ComAudio.create());
-            root.addComponent(ccs.ComAttribute.create());
+            root.addComponent(new ccs.ComAudio());
+            root.addComponent(new ccs.ComAttribute());
             root.addComponent(SceneController.create());
             return true;
         }
@@ -40,18 +40,18 @@ var ComponentsTestLayer = cc.LayerColor.extend({
     },
 
     createGameScene: function () {
-        var root = cc.Node.create();
+        var root = new cc.Node();
         var winSize = cc.director.getWinSize();
-        var player = cc.Sprite.create("res/components/Player.png", cc.rect(0, 0, 27, 40));
+        var player = new cc.Sprite("res/components/Player.png", cc.rect(0, 0, 27, 40));
         player.x = 30;
         player.y = winSize.height / 2;
         root.addChild(player, 1, 1);
 
-        var itemBack = cc.MenuItemFont.create("Back", this.toExtensionsMainLayer, this);
+        var itemBack = new cc.MenuItemFont("Back", this.toExtensionsMainLayer, this);
         itemBack.color = cc.color(0, 0, 0);
         itemBack.x = cc.visibleRect.bottomRight.x - 50;
         itemBack.y = cc.visibleRect.bottomRight.y + 25;
-        var menuBack = cc.Menu.create(itemBack);
+        var menuBack = new cc.Menu(itemBack);
         menuBack.x = 0;
         menuBack.y = 0;
         this.addChild(menuBack);
@@ -65,7 +65,7 @@ var ComponentsTestLayer = cc.LayerColor.extend({
     }
 });
 ComponentsTestLayer.scene = function(){
-    var scene = cc.Scene.create();
+    var scene = new cc.Scene();
     var layer = new ComponentsTestLayer();
     layer.init();
     scene.addChild(layer);
