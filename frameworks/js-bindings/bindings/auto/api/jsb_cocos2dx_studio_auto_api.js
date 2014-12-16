@@ -3066,30 +3066,6 @@ str
 },
 
 /**
- * @method createActionWithFlatBuffersFile
- * @param {String} arg0
- * @return {ccs.timeline::ActionTimeline}
- */
-createActionWithFlatBuffersFile : function (
-str 
-)
-{
-    return ccs.timeline::ActionTimeline;
-},
-
-/**
- * @method loadAnimationActionWithFlatBuffersFile
- * @param {String} arg0
- * @return {ccs.timeline::ActionTimeline}
- */
-loadAnimationActionWithFlatBuffersFile : function (
-str 
-)
-{
-    return ccs.timeline::ActionTimeline;
-},
-
-/**
  * @method purge
  */
 purge : function (
@@ -3139,18 +3115,6 @@ removeAction : function (
 str 
 )
 {
-},
-
-/**
- * @method createActionWithFlatBuffersForSimulator
- * @param {String} arg0
- * @return {ccs.timeline::ActionTimeline}
- */
-createActionWithFlatBuffersForSimulator : function (
-str 
-)
-{
-    return ccs.timeline::ActionTimeline;
 },
 
 /**
@@ -4441,30 +4405,6 @@ str
 },
 
 /**
- * @method nodeWithFlatBuffersForSimulator
- * @param {flatbuffers::NodeTree} arg0
- * @return {cc.Node}
- */
-nodeWithFlatBuffersForSimulator : function (
-nodetree 
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method createNodeWithFlatBuffersFile
- * @param {String} arg0
- * @return {cc.Node}
- */
-createNodeWithFlatBuffersFile : function (
-str 
-)
-{
-    return cc.Node;
-},
-
-/**
  * @method loadNodeWithFile
  * @param {String} arg0
  * @return {cc.Node}
@@ -4503,18 +4443,6 @@ purge : function (
 },
 
 /**
- * @method nodeWithFlatBuffers
- * @param {flatbuffers::NodeTree} arg0
- * @return {cc.Node}
- */
-nodeWithFlatBuffers : function (
-nodetree 
-)
-{
-    return cc.Node;
-},
-
-/**
  * @method init
  */
 init : function (
@@ -4528,18 +4456,6 @@ init : function (
  * @return {cc.Node}
  */
 loadNodeWithContent : function (
-str 
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method nodeWithFlatBuffersFile
- * @param {String} arg0
- * @return {cc.Node}
- */
-nodeWithFlatBuffersFile : function (
 str 
 )
 {
@@ -4574,18 +4490,6 @@ setRecordJsonPath : function (
 bool 
 )
 {
-},
-
-/**
- * @method createNodeWithFlatBuffersForSimulator
- * @param {String} arg0
- * @return {cc.Node}
- */
-createNodeWithFlatBuffersForSimulator : function (
-str 
-)
-{
-    return cc.Node;
 },
 
 /**
