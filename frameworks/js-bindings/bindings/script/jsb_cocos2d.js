@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.1";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.2 RC0";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -171,6 +171,12 @@ cc.ONE_MINUS_DST_ALPHA = 0x305;
 cc.ONE_MINUS_DST_COLOR = 0x0307;
 cc.ONE_MINUS_CONSTANT_ALPHA = 0x8004;
 cc.ONE_MINUS_CONSTANT_COLOR = 0x8002;
+
+//texture parameters
+cc.LINEAR   = 0x2601;
+cc.REPEAT   = 0x2901;
+cc.CLAMP_TO_EDGE    = 0x812f;
+cc.MIRRORED_REPEAT   = 0x8370;
 
 cc.VERTEX_ATTRIB_FLAG_NONE = 0;
 cc.VERTEX_ATTRIB_FLAG_POSITION = 1 << 0;
@@ -2817,3 +2823,27 @@ cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS,
 
     this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
 };
+
+
+//
+// MenuItemImage support sprite frame name as paramter
+//
+var _p = cc.MenuItemImage.prototype;
+_p._setNormalSpriteFrame = _p.setNormalSpriteFrame;
+_p._setSelectedSpriteFrame = _p.setSelectedSpriteFrame;
+_p._setDisabledSpriteFrame = _p.setDisabledSpriteFrame;
+_p.setNormalSpriteFrame = function(frame) {
+    if (frame[0] == "#") 
+        frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
+    this._setNormalSpriteFrame(frame);
+}
+_p.setSelectedSpriteFrame = function(frame) {
+    if (frame[0] == "#") 
+        frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
+    this._setSelectedSpriteFrame(frame);
+}
+_p.setDisabledSpriteFrame = function(frame) {
+    if (frame[0] == "#") 
+        frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
+    this._setDisabledSpriteFrame(frame);
+}

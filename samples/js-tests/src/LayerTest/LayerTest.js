@@ -553,10 +553,6 @@ var arrayOfLayerTest = [
     IgnoreAnchorpointTest4
 ];
 
-if( 'opengl' in cc.sys.capabilities ){
-    arrayOfLayerTest.push(LayerGradient);
-}
-
 var nextLayerTest = function () {
     layerTestSceneIdx++;
     layerTestSceneIdx = layerTestSceneIdx % arrayOfLayerTest.length;

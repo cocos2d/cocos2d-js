@@ -3232,6 +3232,7 @@ void JSB_cpSpace_createClass(JSContext *cx, JSObject* globalObj, const char* nam
         JS_FN("nearestPointQuery", JSB_cpSpace_nearestPointQuery, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("segmentQuery", JSB_cpSpace_segmentQuery, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("bbQuery", JSB_cpSpace_bbQuery, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addPostStepCallback", JSB_cpSpace_addPostStepCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
     static JSFunctionSpec st_funcs[] = {

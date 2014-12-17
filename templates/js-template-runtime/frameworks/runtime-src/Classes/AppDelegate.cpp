@@ -25,6 +25,7 @@
 #include "platform/ios/JavaScriptObjCBridge.h"
 #endif
 
+#include "CodeIDESupport.h"
 #include "Runtime.h"
 #include "ConfigParser.h"
 
@@ -33,15 +34,17 @@ using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
 {
-#if (COCOS2D_DEBUG > 0)
-    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
-    initRuntime();
-#endif
 }
 
 AppDelegate::~AppDelegate()
 {
     ScriptEngineManager::destroyInstance();
+#if (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
+	// NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+	endRuntime();
+#endif
+
+	ConfigParser::purge();
 }
 
 void AppDelegate::initGLContextAttrs()
@@ -53,13 +56,17 @@ void AppDelegate::initGLContextAttrs()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+#if (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
+    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+    initRuntime();
+#endif
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();    
     if(!glview) {
         Size viewSize = ConfigParser::getInstance()->getInitViewSize();
         string title = ConfigParser::getInstance()->getInitViewName();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC) && (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
         extern void createSimulator(const char* viewName, float width, float height,bool isLandscape = true, float frameZoomFactor = 1.0f);
         bool isLanscape = ConfigParser::getInstance()->isLanscape();
         createSimulator(title.c_str(), viewSize.width,viewSize.height, isLanscape);
@@ -116,7 +123,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JavaScriptObjCBridge::_js_register);
 #endif
     
-#if (COCOS2D_DEBUG > 0)
+#if (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
     // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
     startRuntime();
 #else

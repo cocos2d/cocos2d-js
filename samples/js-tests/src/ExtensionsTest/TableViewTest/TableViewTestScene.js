@@ -116,15 +116,6 @@ var TableViewTestLayer = cc.Layer.extend({
             label.anchorY = 0;
             label.tag = 123;
             cell.addChild(label);
-
-            var itemBack = new cc.MenuItemFont("Back", this.tableCellTouched2, this);
-            itemBack.x = 0;
-            itemBack.y = 0;
-            var menuBack = new cc.Menu(itemBack);
-            menuBack.x = 0;
-            menuBack.y = 0;
-            cell.addChild(menuBack);
-
         } else {
             label = cell.getChildByTag(123);
             label.setString(strValue);

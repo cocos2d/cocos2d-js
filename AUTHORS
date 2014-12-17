@@ -58,10 +58,15 @@ tkowalski           @tkowalski      Add missing affine transform functions renam
 Minh Quy            @MQuy           Fix url matching regex issue
 
 Park Hyun Chen      @sincntx        Fix cc.ScrollView constructor issue in JSB
+                                    Added cc.rectOverlapsRect function in JSB
 
 Vincent Chou        @go3k           Update README.md, add submodule update command suggestion
                                     Fix bug: Runtime.cpp protobuf object parseFromString may result in an incomplete protobuf object
+                                    Fix bug: PrebuiltRuntime ios version can't support portrait orientation.
 
+Igor Mats           @IgorMats       Added outline shader sample
+
+G17hao              @G17hao         Fixed an typo issue in jsb_boot.js
 
 Cocos2d-JS can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!

@@ -1682,6 +1682,47 @@ bool JSB_cpSpace_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp)
     return true;
 }
 
+struct __PostStep_data{
+    JSContext* cx;
+    JS::Heap<JS::Value> func;
+};
+
+void __JSB_PostStep_callback(cpSpace *space, void *key, __PostStep_data *data)
+{
+    JSContext* cx = data->cx;
+    jsval func = const_cast<jsval&>(data->func.get());
+    jsval rval;
+    jsval argv;
+
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    JS_CallFunctionValue(cx, NULL, func, 0, &argv, &rval);
+
+    free(data);
+}
+
+bool JSB_cpSpace_addPostStepCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2(argc == 1, cx, false, "Invalid number of arguments");
+
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JSObject* jsthis = JSVAL_TO_OBJECT(args.thisv());
+    jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
+    cpSpace* space = (cpSpace*)proxy->handle;
+
+    __PostStep_data* volatile data = (__PostStep_data*)malloc(sizeof(__PostStep_data));
+    if (!data)
+        return false;
+
+    data->cx = cx;
+    data->func = args.get(0);
+
+    cpSpaceAddPostStepCallback(space, (cpPostStepFunc)__JSB_PostStep_callback, data, data);
+
+//    free(data);
+    args.rval().setUndefined();
+    return true;
+}
+
 template<typename T>
 void JSB_cpBody_each_func(cpBody* body, T* cpObject, void* data)
 {

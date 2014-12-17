@@ -31,19 +31,106 @@ var window = window || this;
  * Iterate over an object or an array, executing a function for each matched element.
  * @param {object|array} obj
  * @param {function} iterator
- * @param [{object}] context
+ * @param {object} [context]
  */
-cc.each = function(obj, iterator, context){
-    if(!obj) return;
-    if(obj instanceof Array){
-        for(var i = 0, li = obj.length; i < li; i++){
-            if(iterator.call(context, obj[i], i) === false) return;
+cc.each = function (obj, iterator, context) {
+    if (!obj)
+        return;
+    if (obj instanceof Array) {
+        for (var i = 0, li = obj.length; i < li; i++) {
+            if (iterator.call(context, obj[i], i) === false)
+                return;
         }
-    }else{
+    } else {
         for (var key in obj) {
-            if(iterator.call(context, obj[key], key) === false) return;
+            if (iterator.call(context, obj[key], key) === false)
+                return;
         }
     }
+};
+
+/**
+ * Copy all of the properties in source objects to target object and return the target object.
+ * @param {object} target
+ * @param {object} *sources
+ * @returns {object}
+ */
+cc.extend = function(target) {
+    var sources = arguments.length >= 2 ? Array.prototype.slice.call(arguments, 1) : [];
+
+    cc.each(sources, function(src) {
+        for(var key in src) {
+            if (src.hasOwnProperty(key)) {
+                target[key] = src[key];
+            }
+        }
+    });
+    return target;
+};
+
+/**
+ * Check the obj whether is function or not
+ * @param {*} obj
+ * @returns {boolean}
+ */
+cc.isFunction = function(obj) {
+    return typeof obj == 'function';
+};
+
+/**
+ * Check the obj whether is number or not
+ * @param {*} obj
+ * @returns {boolean}
+ */
+cc.isNumber = function(obj) {
+    return typeof obj == 'number' || Object.prototype.toString.call(obj) == '[object Number]';
+};
+
+/**
+ * Check the obj whether is string or not
+ * @param {*} obj
+ * @returns {boolean}
+ */
+cc.isString = function(obj) {
+    return typeof obj == 'string' || Object.prototype.toString.call(obj) == '[object String]';
+};
+
+/**
+ * Check the obj whether is array or not
+ * @param {*} obj
+ * @returns {boolean}
+ */
+cc.isArray = function(obj) {
+    return Object.prototype.toString.call(obj) == '[object Array]';
+};
+
+/**
+ * Check the obj whether is undefined or not
+ * @param {*} obj
+ * @returns {boolean}
+ */
+cc.isUndefined = function(obj) {
+    return typeof obj == 'undefined';
+};
+
+/**
+ * Check the obj whether is object or not
+ * @param {*} obj
+ * @returns {boolean}
+ */
+cc.isObject = function(obj) {
+    var type = typeof obj;
+
+    return type == 'function' || (obj && type == 'object');
+};
+
+/**
+ * Check the url whether cross origin
+ * @param {String} url
+ * @returns {boolean}
+ */
+cc.isCrossOrigin = function (url) {
+    return false;
 };
 
 /**
@@ -1240,6 +1327,12 @@ cc._initSys = function(config, CONFIG_KEY){
         __restartVM();
     };
 
+    // clean a singal js file
+    locSys.cleanScript = function(jsFile) {
+        __cleanScript(jsFile);
+    };
+
+
     locSys.dump = function(){
         var self = this;
         var str = "";
@@ -1419,6 +1512,14 @@ cc.game = {
         config[CONFIG_KEY.frameRate] = frameRate;
         cc.director.setAnimationInterval(1.0/frameRate);
     },
+    
+    /**
+     * Restart game.
+     */
+    restart: function () {
+        __restartVM();
+    },
+    
     /**
      * Run game.
      */
@@ -1432,6 +1533,7 @@ cc.game = {
             self.onStart();
         }
     },
+    
     /**
      * Init config.
      * @param cb

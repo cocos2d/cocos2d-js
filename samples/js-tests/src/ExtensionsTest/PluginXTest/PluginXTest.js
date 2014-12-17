@@ -51,7 +51,7 @@ var PluginXTest = cc.Layer.extend({
         this.addChild(background);
 
         // Add the ribbon
-        var ribbon = cc.Scale9Sprite.create(s_extensions_ribbon, cc.rect(1, 1, 48, 55));
+        var ribbon = new cc.Scale9Sprite(s_extensions_ribbon, cc.rect(1, 1, 48, 55));
         ribbon.width = screensize.width;
         ribbon.height = 57;
         ribbon.x = screensize.width / 2.0;
