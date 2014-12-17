@@ -37,7 +37,7 @@ var CustomImageView = ccui.ImageView.extend({
     _initRenderer: function(){
         ccui.ImageView.prototype._initRenderer.call(this);
 
-        this._label = cc.LabelTTF.create();
+        this._label = new cc.LabelTTF();
         cc.ProtectedNode.prototype.addChild.call(this, this._label, this.getLocalZOrder() + 1, -1);
     },
 

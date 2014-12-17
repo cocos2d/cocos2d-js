@@ -4205,7 +4205,7 @@ bool js_PlistParser_parse(JSContext *cx, unsigned argc, JS::Value *vp) {
         jsval strVal = std_string_to_jsval(cx, parsedStr);
         // create a new js obj of the parsed string
         JS::RootedValue outVal(cx);
-        ok = JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(strVal)), static_cast<uint32_t>(parsedStr.size()), &outVal);
+        ok = JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(strVal)), static_cast<uint32_t>(JS_GetStringLength(JSVAL_TO_STRING(strVal))), &outVal);
         
         if (ok)
             JS_SET_RVAL(cx, vp, outVal);

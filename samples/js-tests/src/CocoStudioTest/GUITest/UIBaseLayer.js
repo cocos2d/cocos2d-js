@@ -32,12 +32,12 @@ var UIBaseLayer = cc.Layer.extend({
         var winSize = cc.director.getWinSize();
 
         //add main node
-        var mainNode = cc.Node.create();
+        var mainNode = new cc.Node();
         var scale = winSize.height / 320;
         mainNode.attr({anchorX: 0, anchorY: 0, scale: scale, x: (winSize.width - 480 * scale) / 2, y: (winSize.height - 320 * scale) / 2});
         this.addChild(mainNode);
 
-        var topDisplayText = ccui.Text.create();
+        var topDisplayText = new ccui.Text();
         topDisplayText.attr({
             string: "",
             font: "20px Arial",
