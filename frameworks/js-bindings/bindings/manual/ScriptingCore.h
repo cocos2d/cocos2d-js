@@ -117,7 +117,11 @@ public:
     virtual bool isCalledFromScript() { return _callFromScript; };
     
     bool executeFunctionWithObjectData(void* nativeObj, const char *name, JSObject *obj);
-    bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
+
+    bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp);
+    bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp, JS::MutableHandleValue retVal);
+    bool executeFunctionWithOwner(jsval owner, const char *name, const JS::CallArgs& args);
+    bool executeFunctionWithOwner(jsval owner, const char *name, const JS::CallArgs& args, JS::MutableHandleValue retVal);
 
     void executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback);
     void executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback, const JS::HandleValueArray& vp, JS::MutableHandleValue retVal);
@@ -191,7 +195,7 @@ public:
 
 
     int executeCustomTouchEvent(cocos2d::EventTouch::EventCode eventType,
-                                cocos2d::Touch *pTouch, JSObject *obj, jsval &retval);
+                                cocos2d::Touch *pTouch, JSObject *obj, JS::MutableHandleValue retval);
     int executeCustomTouchEvent(cocos2d::EventTouch::EventCode eventType,
                                 cocos2d::Touch *pTouch, JSObject *obj);
     int executeCustomTouchesEvent(cocos2d::EventTouch::EventCode eventType,
@@ -255,9 +259,15 @@ public:
     int handleComponentEvent(void* data);
     int handleMenuClickedEvent(void* data);
     
-    bool handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event, jsval* jsvalRet = nullptr);
-    bool handleTouchEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, cocos2d::Touch* touch, cocos2d::Event* event, jsval* jsvalRet = nullptr);
-    bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, jsval* jsvalRet = nullptr);
+    bool handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    bool handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event, JS::MutableHandleValue jsvalRet);
+
+    bool handleTouchEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, cocos2d::Touch* touch, cocos2d::Event* event);
+    bool handleTouchEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, cocos2d::Touch* touch, cocos2d::Event* event, JS::MutableHandleValue jsvalRet);
+
+    bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event);
+    bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, JS::MutableHandleValue jsvalRet);
+
     bool handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
 
     void restartVM();
