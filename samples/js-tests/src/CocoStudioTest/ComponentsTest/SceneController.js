@@ -60,7 +60,7 @@ var SceneController = ccs.ComController.extend({
     },
 
     addTarget: function () {
-        var target = cc.Sprite.create("res/components/Target.png", cc.rect(0, 0, 27, 40));
+        var target = new cc.Sprite("res/components/Target.png", cc.rect(0, 0, 27, 40));
         this.getOwner().addChild(target, 1, 2);
         target.addComponent(EnemyController.create());
         target.tag = 2;

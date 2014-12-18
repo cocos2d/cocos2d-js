@@ -52,13 +52,13 @@ var CustomParticleWidget = ccui.Widget.extend({
     setParticlePlist: function(plist){
         if (!this._emitter)
         {
-            this._emitter = cc.ParticleSystem.create(plist);
+            this._emitter = new cc.ParticleSystem(plist);
 
         }
         else
         {
             this._emitter.removeFromParent();
-            this._emitter = cc.ParticleSystem.create(plist);
+            this._emitter = new cc.ParticleSystem(plist);
         }
         //Warning!!! don't forget to set the position
         this.addProtectedChild(this._emitter , this.getLocalZOrder() + 1, -1);

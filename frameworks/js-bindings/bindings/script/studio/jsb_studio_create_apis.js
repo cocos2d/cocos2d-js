@@ -23,7 +23,11 @@
 /************************  Cocostudio  *************************/
 
 ccs.Armature.prototype._ctor = function(name, parentBone) {
-    parentBone !== undefined && ccs.Armature.prototype.init.call(this, name, parentBone);
+    // parentBone !== undefined && ccs.Armature.prototype.init.call(this, name, parentBone);
+    if(parentBone !== undefined)
+        ccs.Armature.prototype.init.call(this, name, parentBone);
+    else if(name !== undefined)
+        ccs.Armature.prototype.init.call(this, name);
 };
 
 ccs.Bone.prototype._ctor = function(name) {

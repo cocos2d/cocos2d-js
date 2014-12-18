@@ -40,7 +40,7 @@ var UIListViewEditorTest = UIBaseLayer.extend({
         var listView = ccui.helper.seekWidgetByName(root, "ListView_1214");
         listView.addEventListener(this.selectedItemEvent,this);
 
-        var left_button = ccui.Button.create();
+        var left_button = new ccui.Button();
         left_button.loadTextures("res/Images/b1.png", "res/Images/b2.png", "");
         left_button.x = 240-50;
         left_button.y = 50;
@@ -50,7 +50,7 @@ var UIListViewEditorTest = UIBaseLayer.extend({
         left_button.addTouchEventListener(this.previousCallback, this);
         this._mainNode.addChild(left_button);
 
-        var right_button = ccui.Button.create();
+        var right_button = new ccui.Button();
         right_button.loadTextures("res/Images/f1.png", "res/Images/f2.png", "");
         right_button.x = 240+50;
         right_button.y = 50;
@@ -88,7 +88,7 @@ var UIListViewEditorTest = UIBaseLayer.extend({
         }
     },
     runNextScene: function () {
-        var scene = cc.Scene.create();
+        var scene = new cc.Scene();
         scene.addChild(new UIListViewEditorTest());
         cc.director.runScene(scene);
     }
