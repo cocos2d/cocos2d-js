@@ -116,9 +116,9 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
     return NULL;
 }
 
-jsval anonEvaluate(JSContext *cx, JSObject *thisObj, const char* string);
-void register_cocos2dx_js_core(JSContext* cx, JSObject* obj);
-void register_cocos2dx_js_extensions(JSContext* cx, JSObject* obj);
+JS::Value anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* string);
+void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject obj);
+void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject obj);
 
 
 class JSCallbackWrapper: public cocos2d::Ref {
@@ -266,6 +266,6 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 bool js_cocos2dx_Component_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_onExit(JSContext *cx, uint32_t argc, jsval *vp);
 
-void create_js_root_obj(JSContext* cx, JSObject* global, const std::string &name, JS::RootedObject *jsObj);
+void create_js_root_obj(JSContext* cx, JS::HandleObject global, const std::string &name, JS::MutableHandleObject jsObj);
 
 #endif
