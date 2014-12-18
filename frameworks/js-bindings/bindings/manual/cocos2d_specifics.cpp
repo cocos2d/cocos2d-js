@@ -4546,8 +4546,8 @@ bool js_cocos2dx_RenderTexture_saveToFile(JSContext *cx, uint32_t argc, jsval *v
                     do {
                         largv[1] = std_string_to_jsval(cx, larg1);
                     } while (0);
-                    jsval rval;
-                    bool ok = func->invoke(2, largv, rval);
+                    JS::RootedValue rval(cx);
+                    bool ok = func->invoke(2, largv, &rval);
                     if (!ok && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
@@ -4615,8 +4615,8 @@ bool js_cocos2dx_RenderTexture_saveToFile(JSContext *cx, uint32_t argc, jsval *v
                     do {
                         largv[1] = std_string_to_jsval(cx, larg1);
                     } while (0);
-                    jsval rval;
-                    bool ok = func->invoke(2, largv, rval);
+                    JS::RootedValue rval(cx);
+                    bool ok = func->invoke(2, largv, &rval);
                     if (!ok && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
