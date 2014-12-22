@@ -491,7 +491,7 @@ bool jsval_to_long( JSContext *cx, JS::HandleValue vp, long *r )
 #else
     // compatibility check
     assert( sizeof(int)==4);
-    long ret = JSVAL_TO_INT(vp);
+    long ret = vp.toInt32();
 #endif
     
     *r = ret;
@@ -1670,7 +1670,9 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
     }
     
     jsval ret = JSVAL_NULL;
-    int utf16_size = 0;
+
+    //XXX: JS_NewUCStringCopyN can't be resolved on Win32
+/*    int utf16_size = 0;
     jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v, (int)length, &utf16_size);
     
     if (strUTF16 && utf16_size > 0) {
@@ -1679,6 +1681,12 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
             ret = STRING_TO_JSVAL(str);
         }
         delete[] strUTF16;
+    }
+*/
+    JSString* str = JS_NewStringCopyN(cx, v, length);
+    if(str)
+    {
+        ret = STRING_TO_JSVAL(str);
     }
     return ret;
 }
