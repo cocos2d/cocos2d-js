@@ -68,48 +68,49 @@ namespace detail {
  * For more details, and examples of using these macros, see
  * https://developer.mozilla.org/en/Using_RAII_classes_in_Mozilla
  */
-class MOZ_EXPORT GuardObjectNotifier
+class GuardObjectNotifier
 {
-  private:
-    bool* statementDone;
+private:
+  bool* mStatementDone;
 
-  public:
-    GuardObjectNotifier() : statementDone(nullptr) { }
+public:
+  GuardObjectNotifier() : mStatementDone(nullptr) { }
 
-    ~GuardObjectNotifier() {
-      *statementDone = true;
-    }
+  ~GuardObjectNotifier() { *mStatementDone = true; }
 
-    void setStatementDone(bool* statementIsDone) {
-      statementDone = statementIsDone;
-    }
+  void setStatementDone(bool* aStatementIsDone)
+  {
+    mStatementDone = aStatementIsDone;
+  }
 };
 
-class MOZ_EXPORT GuardObjectNotificationReceiver
+class GuardObjectNotificationReceiver
 {
-  private:
-    bool statementDone;
+private:
+  bool mStatementDone;
 
-  public:
-    GuardObjectNotificationReceiver() : statementDone(false) { }
+public:
+  GuardObjectNotificationReceiver() : mStatementDone(false) { }
 
-    ~GuardObjectNotificationReceiver() {
-      /*
-       * Assert that the guard object was not used as a temporary.  (Note that
-       * this assert might also fire if init is not called because the guard
-       * object's implementation is not using the above macros correctly.)
-       */
-      MOZ_ASSERT(statementDone);
-    }
+  ~GuardObjectNotificationReceiver() {
+    /*
+     * Assert that the guard object was not used as a temporary.  (Note that
+     * this assert might also fire if init is not called because the guard
+     * object's implementation is not using the above macros correctly.)
+     */
+    MOZ_ASSERT(mStatementDone);
+  }
 
-    void init(const GuardObjectNotifier& constNotifier) {
-      /*
-       * constNotifier is passed as a const reference so that we can pass a
-       * temporary, but we really intend it as non-const.
-       */
-      GuardObjectNotifier& notifier = const_cast<GuardObjectNotifier&>(constNotifier);
-      notifier.setStatementDone(&statementDone);
-    }
+  void init(const GuardObjectNotifier& aConstNotifier)
+  {
+    /*
+     * aConstNotifier is passed as a const reference so that we can pass a
+     * temporary, but we really intend it as non-const.
+     */
+    GuardObjectNotifier& notifier =
+      const_cast<GuardObjectNotifier&>(aConstNotifier);
+    notifier.setStatementDone(&mStatementDone);
+  }
 };
 
 } /* namespace detail */
