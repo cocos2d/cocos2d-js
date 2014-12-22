@@ -441,12 +441,23 @@ static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
 //    JSCLASS_NO_OPTIONAL_MEMBERS
 //};
 
-static const JSClass global_class = {
-    "global", JSCLASS_GLOBAL_FLAGS,
-    JS_PropertyStub, JS_DeletePropertyStub, JS_PropertyStub, JS_StrictPropertyStub,
-    JS_EnumerateStub, JS_ResolveStub, JS_ConvertStub, sc_finalize,
-    nullptr, nullptr, nullptr,
-    JS_GlobalObjectTraceHook
+//static const JSClass global_class = {
+//    "global", JSCLASS_GLOBAL_FLAGS,
+//    JS_PropertyStub, JS_DeletePropertyStub, JS_PropertyStub, JS_StrictPropertyStub,
+//    JS_EnumerateStub, JS_ResolveStub, JS_ConvertStub, sc_finalize,
+//    nullptr, nullptr, nullptr,
+//    JS_GlobalObjectTraceHook
+//};
+static JSClass global_class = {
+    "global",
+    JSCLASS_GLOBAL_FLAGS,
+    JS_PropertyStub,
+    JS_DeletePropertyStub,
+    JS_PropertyStub,
+    JS_StrictPropertyStub,
+    JS_EnumerateStub,
+    JS_ResolveStub,
+    JS_ConvertStub
 };
 
 ScriptingCore::ScriptingCore()
@@ -496,20 +507,9 @@ bool ScriptingCore::evalString(const char *string, jsval *outVal, const char *fi
         cx = _cx;
     if (global == NULL)
         global = _global;
-    
-    JSAutoCompartment ac(cx, global);
-    JS::RootedScript script(cx);
-    bool ok = JS_CompileScript(cx, JS::RootedObject(cx, global), string, strlen(string), JS::CompileOptions(cx), &script);
-    if (ok)
-    {
-        bool evaluatedOK = JS_ExecuteScript(cx, JS::RootedObject(cx, global), script);
-        if (false == evaluatedOK)
-        {
-            fprintf(stderr, "(evaluatedOK == false)\n");
-        }
-        return evaluatedOK;
-    }
-    return false;
+
+    JSAutoCompartment ac(cx, _global);
+    return JS_EvaluateScript(cx, JS::RootedObject(cx, global), string, strlen(string), "ScriptingCore::evalString", 1);
 }
 
 void ScriptingCore::start()
@@ -537,7 +537,18 @@ void ScriptingCore::removeAllRoots(JSContext *cx) {
     HASH_CLEAR(hh, _native_js_global_ht);
 }
 
-static JSPrincipals shellTrustedPrincipals;
+// Just a wrapper around JSPrincipals that allows static construction.
+class CCJSPrincipals : public JSPrincipals
+{
+  public:
+    explicit CCJSPrincipals(int rc = 0)
+      : JSPrincipals()
+    {
+        refcount = rc;
+    }
+};
+
+static CCJSPrincipals shellTrustedPrincipals(1);
 
 static bool
 CheckObjectAccess(JSContext *cx)
@@ -576,6 +587,7 @@ void ScriptingCore::createGlobalContext() {
     
     // Removed in Firefox v27
 //    JS_SetOptions(this->_cx, JSOPTION_TYPE_INFERENCE);
+    // Removed in Firefox v33
 //    JS::ContextOptionsRef(_cx).setTypeInference(true);
 //    JS::ContextOptionsRef(_cx).setIon(true);
 //    JS::ContextOptionsRef(_cx).setBaseline(true);
@@ -638,16 +650,15 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
     cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
 
     if (global == NULL) {
-        global = _global;
+        global = _global.get();
     }
     if (cx == NULL) {
         cx = _cx;
     }
 
     JSAutoCompartment ac(cx, global);
-
-    JS::RootedScript script(cx);
     JS::RootedObject obj(cx, global);
+    JS::RootedScript script(cx);
 
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
@@ -669,10 +680,12 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
         ReportException(cx);
 
         std::string fullPath = futil->fullPathForFilename(path);
-        JS::CompileOptions options(cx);
-        options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
 
-        bool ok;
+        JSAutoCompartment ac(cx, global);
+        JS::CompileOptions op(cx);
+        op.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
+
+        bool ok = false;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         std::string jsFileContent = futil->getStringFromFile(fullPath);
         if (!jsFileContent.empty())
@@ -680,7 +693,7 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
             ok = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size(), &script);
         }
 #else
-        ok = JS::Compile(cx, obj, options, fullPath.c_str(), fullPath.size(), &script);
+        ok = JS::Compile(cx, obj, op, fullPath.c_str(), &script);
 #endif
         if (ok) {
             filename_script[fullPath] = script;
@@ -716,6 +729,12 @@ std::unordered_map<std::string, JSScript*>  &ScriptingCore::getFileScript()
 void ScriptingCore::cleanAllScript()
 {
     filename_script.clear();
+}
+
+bool ScriptingCore::runScript(const char *path)
+{
+    JS::RootedObject global(_cx, _global.get());
+    return runScript(path, global, _cx);
 }
 
 bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSContext* cx)
@@ -1757,7 +1776,7 @@ JSObject* NewGlobalObject(JSContext* cx, bool debug)
     JS::CompartmentOptions options;
     options.setVersion(JSVERSION_LATEST);
     
-    JS::RootedObject glob(cx, JS_NewGlobalObject(cx, &global_class, NULL, JS::DontFireOnNewGlobalHook, options));
+    JS::RootedObject glob(cx, JS_NewGlobalObject(cx, &global_class, &shellTrustedPrincipals, JS::DontFireOnNewGlobalHook, options));
     if (!glob) {
         return NULL;
     }

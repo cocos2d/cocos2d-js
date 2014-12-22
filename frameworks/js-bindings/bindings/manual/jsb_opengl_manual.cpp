@@ -34,10 +34,11 @@
 bool JSB_glGenTextures(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
-
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     GLuint texture;
     glGenTextures(1, &texture);
-    JS_SET_RVAL(cx, vp, INT_TO_JSVAL(texture));
+
+    args.rval().set(INT_TO_JSVAL(texture));
     return true;
 }
 

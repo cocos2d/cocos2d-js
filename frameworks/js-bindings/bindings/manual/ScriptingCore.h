@@ -151,6 +151,7 @@ public:
      * will run the specified string
      * @param string The path of the script to be run
      */
+    bool runScript(const char *path);
     bool runScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
 
     /**

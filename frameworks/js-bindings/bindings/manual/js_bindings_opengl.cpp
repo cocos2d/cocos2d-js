@@ -37,7 +37,8 @@ void GLNode::onDraw(Mat4 &transform, uint32_t flags)
     proxy = js_get_or_create_proxy<cocos2d::Node>(cx, this);
 
     if( proxy ) {
-        JSObject *jsObj = proxy->obj;
+//        JSObject *jsObj = proxy->obj;
+        JS::RootedObject jsObj(cx, proxy->obj.get());
         if (jsObj) {
              bool found = false;
              JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
@@ -50,10 +51,9 @@ void GLNode::onDraw(Mat4 &transform, uint32_t flags)
 
                  JS::RootedValue rval(cx);
                  JS::RootedValue fval(cx);
-                 jsval *argv = NULL; unsigned argc=0;
-
                  JS_GetProperty(cx, jsObj, "draw", &fval);
-                 JS_CallFunctionValue(cx, jsObj, fval, argc, argv, rval.address());
+
+                 JS_CallFunctionValue(cx, jsObj, fval, JS::HandleValueArray::empty(), &rval);
 
                  director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
              }
