@@ -33,6 +33,7 @@
 #include "js_bindings_core.h"
 #include "spidermonkey_specifics.h"
 #include "js_manual_conversions.h"
+#include "mozilla\Maybe.h"
 
 #include <assert.h>
 #include <memory>
@@ -57,7 +58,8 @@ class ScriptingCore : public cocos2d::ScriptEngineProtocol
 private:
     JSRuntime *_rt;
     JSContext *_cx;
-    JS::Heap<JSObject*> _global;
+    mozilla::Maybe<JS::PersistentRootedObject> _global;
+    //JS::Heap<JSObject*> _global;
     JS::Heap<JSObject*> _debugGlobal;
     SimpleRunLoop* _runLoop;
 
@@ -247,7 +249,7 @@ public:
     void debugProcessInput(const std::string& str);
     void enableDebugger(unsigned int port = 5086);
     JSObject* getDebugGlobal() { return _debugGlobal.get(); }
-    JSObject* getGlobalObject() { return _global.get(); }
+    JSObject* getGlobalObject() { return _global.ref().get(); }
 
     bool isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native);
     

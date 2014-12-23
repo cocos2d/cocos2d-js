@@ -463,7 +463,7 @@ static JSClass global_class = {
 ScriptingCore::ScriptingCore()
 : _rt(nullptr)
 , _cx(nullptr)
-, _global(nullptr)
+//, _global(nullptr)
 , _debugGlobal(nullptr)
 , _callFromScript(false)
 {
@@ -506,9 +506,9 @@ bool ScriptingCore::evalString(const char *string, jsval *outVal, const char *fi
     if (cx == NULL)
         cx = _cx;
     if (global == NULL)
-        global = _global;
+        global = _global.ref().get();
 
-    JSAutoCompartment ac(cx, _global);
+    JSAutoCompartment ac(cx, global);
     return JS_EvaluateScript(cx, JS::RootedObject(cx, global), string, strlen(string), "ScriptingCore::evalString", 1);
 }
 
@@ -601,14 +601,15 @@ void ScriptingCore::createGlobalContext() {
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
     //JS_SetGCZeal(this->_cx, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
-    this->_global = NewGlobalObject(_cx);
+    this->_global.construct(_cx);
+    this->_global.ref() = NewGlobalObject(_cx);
 
-    JSAutoCompartment ac(_cx, _global);
-    js::SetDefaultObjectForContext(_cx, _global);
+    JSAutoCompartment ac(_cx, _global.ref().get());
+    js::SetDefaultObjectForContext(_cx, _global.ref().get());
     
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
-        callback(this->_cx, JS::RootedObject(this->_cx, this->_global));
+        callback(this->_cx, JS::RootedObject(this->_cx, this->_global.ref().get()));
     }
 }
 
@@ -650,7 +651,7 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
     cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
 
     if (global == NULL) {
-        global = _global.get();
+        global = _global.ref().get();
     }
     if (cx == NULL) {
         cx = _cx;
@@ -683,10 +684,10 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
         std::string fullPath = futil->fullPathForFilename(path);
    
         //TODO : why break in JSAutoCompartment desctructor????
-        JSAutoCompartment ac(cx, global);
+        //JSAutoCompartment ac(cx, global);
         JS::CompileOptions op(cx);
         op.setUTF8(true);
-        op.setFileAndLine(path, 1);
+        op.setFileAndLine(fullPath.c_str(), 1);
 
         bool ok = false;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -738,7 +739,7 @@ void ScriptingCore::cleanAllScript()
 
 bool ScriptingCore::runScript(const char *path)
 {
-    JS::RootedObject global(_cx, _global.get());
+    JS::RootedObject global(_cx, _global.ref().get());
     return runScript(path, global, _cx);
 }
 
@@ -1453,7 +1454,7 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
         return 0;
     }
 
-    JSAutoCompartment ac(_cx, _global);
+    JSAutoCompartment ac(_cx, _global.ref().get());
     
     switch (evt->type)
     {
@@ -1497,7 +1498,7 @@ bool ScriptingCore::parseConfig(ConfigType type, const std::string &str)
     jsval args[2];
     args[0] = int32_to_jsval(_cx, static_cast<int>(type));
     args[1] = std_string_to_jsval(_cx, str);
-    return (true == executeFunctionWithOwner(OBJECT_TO_JSVAL(_global), "__onParseConfig", 2, args));
+    return (true == executeFunctionWithOwner(OBJECT_TO_JSVAL(_global.ref().get()), "__onParseConfig", 2, args));
 }
 
 #pragma mark - Debug
@@ -1739,7 +1740,7 @@ void ScriptingCore::enableDebugger(unsigned int port)
 {
     if (_debugGlobal == NULL)
     {
-        JSAutoCompartment ac0(_cx, _global);
+        JSAutoCompartment ac0(_cx, _global.ref().get());
         
         JS_SetDebugMode(_cx, true);
         
@@ -1760,7 +1761,7 @@ void ScriptingCore::enableDebugger(unsigned int port)
         runScript("script/jsb_debugger.js", rootedDebugObj);
         
         // prepare the debugger
-        jsval argv = OBJECT_TO_JSVAL(_global);
+        jsval argv = OBJECT_TO_JSVAL(_global.ref().get());
         JS::RootedValue outval(_cx);
         bool ok = JS_CallFunctionName(_cx, rootedDebugObj, "_prepareDebugger", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
         if (!ok) {
