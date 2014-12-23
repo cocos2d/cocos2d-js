@@ -205,16 +205,14 @@ ActionObject : function (
 ccs.ActionManager = {
 
 /**
- * @method playActionByName
-* @param {char|char} char
-* @param {char|char} char
-* @param {cc.CallFunc} callfunc
-* @return {ccs.ActionObject|ccs.ActionObject}
-*/
-playActionByName : function(
-char,
-char,
-callfunc 
+ * @method stopActionByName
+ * @param {char} arg0
+ * @param {char} arg1
+ * @return {ccs.ActionObject}
+ */
+stopActionByName : function (
+char, 
+char 
 )
 {
     return ccs.ActionObject;
@@ -248,6 +246,22 @@ cocoloader,
 stexpcoconode 
 )
 {
+},
+
+/**
+ * @method playActionByName
+* @param {char|char} char
+* @param {char|char} char
+* @param {cc.CallFunc} callfunc
+* @return {ccs.ActionObject|ccs.ActionObject}
+*/
+playActionByName : function(
+char,
+char,
+callfunc 
+)
+{
+    return ccs.ActionObject;
 },
 
 /**

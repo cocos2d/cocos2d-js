@@ -529,38 +529,23 @@ void js_register_cocos2dx_studio_ActionObject(JSContext *cx, JSObject *global) {
 JSClass  *jsb_cocostudio_ActionManagerEx_class;
 JSObject *jsb_cocostudio_ActionManagerEx_prototype;
 
-bool js_cocos2dx_studio_ActionManagerEx_playActionByName(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_studio_ActionManagerEx_stopActionByName(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
     bool ok = true;
-
-    JSObject *obj = NULL;
-    cocostudio::ActionManagerEx* cobj = NULL;
-    obj = JS_THIS_OBJECT(cx, vp);
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (cocostudio::ActionManagerEx *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionManagerEx_playActionByName : Invalid Native Object");
-    do {
-        if (argc == 3) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-            if (!ok) { ok = true; break; }
-            const char* arg1;
-            std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
-            if (!ok) { ok = true; break; }
-            cocos2d::CallFunc* arg2;
-            do {
-                if (!argv[2].isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = JSVAL_TO_OBJECT(argv[2]);
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg2 = (cocos2d::CallFunc*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
-            } while (0);
-            if (!ok) { ok = true; break; }
-            cocostudio::ActionObject* ret = cobj->playActionByName(arg0, arg1, arg2);
-            jsval jsret = JSVAL_NULL;
-            do {
+    cocostudio::ActionManagerEx* cobj = (cocostudio::ActionManagerEx *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionManagerEx_stopActionByName : Invalid Native Object");
+    if (argc == 2) {
+        const char* arg0;
+        const char* arg1;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionManagerEx_stopActionByName : Error processing arguments");
+        cocostudio::ActionObject* ret = cobj->stopActionByName(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
             if (ret) {
                 js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ActionObject>(cx, (cocostudio::ActionObject*)ret);
                 jsret = OBJECT_TO_JSVAL(jsProxy->obj);
@@ -568,35 +553,11 @@ bool js_cocos2dx_studio_ActionManagerEx_playActionByName(JSContext *cx, uint32_t
                 jsret = JSVAL_NULL;
             }
         } while (0);
-            JS_SET_RVAL(cx, vp, jsret);
-            return true;
-        }
-    } while(0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
 
-    do {
-        if (argc == 2) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-            if (!ok) { ok = true; break; }
-            const char* arg1;
-            std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
-            if (!ok) { ok = true; break; }
-            cocostudio::ActionObject* ret = cobj->playActionByName(arg0, arg1);
-            jsval jsret = JSVAL_NULL;
-            do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ActionObject>(cx, (cocostudio::ActionObject*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-            JS_SET_RVAL(cx, vp, jsret);
-            return true;
-        }
-    } while(0);
-
-    JS_ReportError(cx, "js_cocos2dx_studio_ActionManagerEx_playActionByName : wrong number of arguments");
+    JS_ReportError(cx, "js_cocos2dx_studio_ActionManagerEx_stopActionByName : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_cocos2dx_studio_ActionManagerEx_getActionByName(JSContext *cx, uint32_t argc, jsval *vp)
@@ -671,6 +632,76 @@ bool js_cocos2dx_studio_ActionManagerEx_initWithBinary(JSContext *cx, uint32_t a
     JS_ReportError(cx, "js_cocos2dx_studio_ActionManagerEx_initWithBinary : wrong number of arguments: %d, was expecting %d", argc, 4);
     return false;
 }
+bool js_cocos2dx_studio_ActionManagerEx_playActionByName(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+
+    JSObject *obj = NULL;
+    cocostudio::ActionManagerEx* cobj = NULL;
+    obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocostudio::ActionManagerEx *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionManagerEx_playActionByName : Invalid Native Object");
+    do {
+        if (argc == 3) {
+            const char* arg0;
+            std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+            if (!ok) { ok = true; break; }
+            const char* arg1;
+            std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
+            if (!ok) { ok = true; break; }
+            cocos2d::CallFunc* arg2;
+            do {
+                if (!argv[2].isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = JSVAL_TO_OBJECT(argv[2]);
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg2 = (cocos2d::CallFunc*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            cocostudio::ActionObject* ret = cobj->playActionByName(arg0, arg1, arg2);
+            jsval jsret = JSVAL_NULL;
+            do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ActionObject>(cx, (cocostudio::ActionObject*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+            JS_SET_RVAL(cx, vp, jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 2) {
+            const char* arg0;
+            std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+            if (!ok) { ok = true; break; }
+            const char* arg1;
+            std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
+            if (!ok) { ok = true; break; }
+            cocostudio::ActionObject* ret = cobj->playActionByName(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ActionObject>(cx, (cocostudio::ActionObject*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+            JS_SET_RVAL(cx, vp, jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_studio_ActionManagerEx_playActionByName : wrong number of arguments");
+    return false;
+}
 bool js_cocos2dx_studio_ActionManagerEx_releaseActions(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -742,9 +773,10 @@ void js_register_cocos2dx_studio_ActionManagerEx(JSContext *cx, JSObject *global
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("playActionByName", js_cocos2dx_studio_ActionManagerEx_playActionByName, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stopActionByName", js_cocos2dx_studio_ActionManagerEx_stopActionByName, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getActionByName", js_cocos2dx_studio_ActionManagerEx_getActionByName, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithBinary", js_cocos2dx_studio_ActionManagerEx_initWithBinary, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("playActionByName", js_cocos2dx_studio_ActionManagerEx_playActionByName, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("releaseActions", js_cocos2dx_studio_ActionManagerEx_releaseActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
