@@ -50,7 +50,8 @@ JSStringWrapper::JSStringWrapper(jsval val, JSContext* cx/* = NULL*/)
 
 JSStringWrapper::~JSStringWrapper()
 {
-    CC_SAFE_DELETE_ARRAY(_buffer);
+    //TODO : why break here
+    //CC_SAFE_DELETE_ARRAY(_buffer);
 }
 
 void JSStringWrapper::set(jsval val, JSContext* cx)

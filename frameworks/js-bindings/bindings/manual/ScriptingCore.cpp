@@ -101,7 +101,7 @@ static std::unordered_map<std::string, JSScript*> filename_script;
 // port ~> socket map
 static std::unordered_map<int,int> ports_sockets;
 // name ~> globals
-static std::unordered_map<std::string, JS::RootedObject*> globals;
+static std::unordered_map<std::string, JSObject*> globals;
 
 static void cc_closesocket(int fd)
 {
@@ -657,8 +657,9 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
     }
 
     JSAutoCompartment ac(cx, global);
-    JS::RootedObject obj(cx, global);
+
     JS::RootedScript script(cx);
+    JS::RootedObject obj(cx, global);
 
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
@@ -680,10 +681,12 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
         ReportException(cx);
 
         std::string fullPath = futil->fullPathForFilename(path);
-
+   
+        //TODO : why break in JSAutoCompartment desctructor????
         JSAutoCompartment ac(cx, global);
         JS::CompileOptions op(cx);
-        op.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
+        op.setUTF8(true);
+        op.setFileAndLine(path, 1);
 
         bool ok = false;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -693,6 +696,8 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
             ok = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size(), &script);
         }
 #else
+        //ok = JS::Compile(cx, obj, op, "C:\\GitHub\\cocos2d-js\\build\\Debug.win32\\js-tests-res\\script\\jsb_boot.js", &script);
+        //JS_ExecuteScript(cx, obj, script);
         ok = JS::Compile(cx, obj, op, fullPath.c_str(), &script);
 #endif
         if (ok) {
