@@ -165,8 +165,22 @@ var AssetsManagerLoaderScene = TestScene.extend({
                     case jsb.EventAssetsManager.ALREADY_UP_TO_DATE:
                     case jsb.EventAssetsManager.UPDATE_FINISHED:
                         cc.log("Update finished. " + event.getMessage());
-                        scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-                        cc.director.runScene(scene);
+
+                        // Restart the game to update scripts in scene 3
+                        if (currentScene == 2) {
+                            // Register the manifest's search path
+                            var searchPaths = that._am.getLocalManifest().getSearchPaths();
+                            // This value will be retrieved and appended to the default search path during game startup,
+                            // please refer to samples/js-tests/main.js for detailed usage.
+                            // !!! Re-add the search paths in main.js is very important, otherwise, new scripts won't take effect.
+                            cc.sys.localStorage.setItem("Scene3SearchPaths", JSON.stringify(searchPaths));
+                            // Restart the game to make all scripts take effect.
+                            cc.game.restart();
+                        }
+                        else {                                     
+                            scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
+                            cc.director.runScene(scene);
+                        }
                         break;
                     case jsb.EventAssetsManager.UPDATE_FAILED:
                         cc.log("Update failed. " + event.getMessage());
