@@ -30,25 +30,27 @@
 #include "js_bindings_system_functions.h"
 
 
-void jsb_register_system( JSContext *_cx, JSObject *object)
+void jsb_register_system( JSContext *_cx,  JS::HandleObject object)
 {
     //
     // sys
     //
-    JSObject *sys = JS_NewObject(_cx, NULL, NULL, NULL);
+    JS::RootedObject proto(_cx);
+    JS::RootedObject parent(_cx);
+    JSObject *sys = JS_NewObject(_cx, nullptr, proto, parent);
     JS::RootedValue systemVal(_cx);
     systemVal = OBJECT_TO_JSVAL(sys);
     JS_SetProperty(_cx, object, "sys", systemVal);
 
 
     // sys.localStorage
-    JSObject *ls = JS_NewObject(_cx, NULL, NULL, NULL);
+    JSObject *ls = JS_NewObject(_cx, nullptr, proto, parent);
     JS::RootedValue lsVal(_cx);
     lsVal = OBJECT_TO_JSVAL(ls);
-    JS_SetProperty(_cx, sys, "localStorage", lsVal);
+    JS_SetProperty(_cx, JS::RootedObject(_cx, sys), "localStorage", lsVal);
 
     // sys.localStorage functions
-    JSObject *system = ls;
+    JS::RootedObject system(_cx, ls);
 #include "js_bindings_system_functions_registration.h"
     
     
