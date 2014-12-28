@@ -40,7 +40,6 @@ var UIRichTextTest = UIScene.extend({
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
-
             // RichText
             var richText = new ccui.RichText();
             richText.ignoreContentAdaptWithSize(false);

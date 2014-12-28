@@ -48,6 +48,7 @@ touchcount = 0;
 var SpineTest = BaseTestLayer.extend({
     _spineboy:null,
     _debugMode: 0,
+    _flipped: false,
     ctor:function () {
         this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
@@ -122,6 +123,13 @@ var SpineTest = BaseTestLayer.extend({
                 break;
             case ANIMATION_TYPE.ANIMATION_COMPLETE:
                 cc.log(trackIndex + " complete: " + animationName + "," + loopCount);
+                if(this._flipped){
+                    this._flipped = false;
+                    this._spineboy.setScaleX(1);
+                }else{
+                    this._flipped = true;
+                    this._spineboy.setScaleX(-1);
+                }
                 break;
             default :
                 break;
