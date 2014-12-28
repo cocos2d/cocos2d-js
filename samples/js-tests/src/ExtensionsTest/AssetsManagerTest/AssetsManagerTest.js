@@ -115,12 +115,12 @@ var AssetsManagerLoaderScene = TestScene.extend({
         icon.y = cc.winSize.height/2;
         layer.addChild(icon);
 
-        this._loadingBar = ccui.LoadingBar.create("res/cocosui/sliderProgress.png");
+        this._loadingBar = new ccui.LoadingBar("res/cocosui/sliderProgress.png");
         this._loadingBar.x = cc.visibleRect.center.x;
         this._loadingBar.y = cc.visibleRect.top.y - 40;
         layer.addChild(this._loadingBar);
 
-        this._fileLoadingBar = ccui.LoadingBar.create("res/cocosui/sliderProgress.png");
+        this._fileLoadingBar = new ccui.LoadingBar("res/cocosui/sliderProgress.png");
         this._fileLoadingBar.x = cc.visibleRect.center.x;
         this._fileLoadingBar.y = cc.visibleRect.top.y - 80;
         layer.addChild(this._fileLoadingBar);
@@ -165,8 +165,22 @@ var AssetsManagerLoaderScene = TestScene.extend({
                     case jsb.EventAssetsManager.ALREADY_UP_TO_DATE:
                     case jsb.EventAssetsManager.UPDATE_FINISHED:
                         cc.log("Update finished. " + event.getMessage());
-                        scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-                        cc.director.runScene(scene);
+
+                        // Restart the game to update scripts in scene 3
+                        if (currentScene == 2) {
+                            // Register the manifest's search path
+                            var searchPaths = that._am.getLocalManifest().getSearchPaths();
+                            // This value will be retrieved and appended to the default search path during game startup,
+                            // please refer to samples/js-tests/main.js for detailed usage.
+                            // !!! Re-add the search paths in main.js is very important, otherwise, new scripts won't take effect.
+                            cc.sys.localStorage.setItem("Scene3SearchPaths", JSON.stringify(searchPaths));
+                            // Restart the game to make all scripts take effect.
+                            cc.game.restart();
+                        }
+                        else {                                     
+                            scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
+                            cc.director.runScene(scene);
+                        }
                         break;
                     case jsb.EventAssetsManager.UPDATE_FAILED:
                         cc.log("Update failed. " + event.getMessage());

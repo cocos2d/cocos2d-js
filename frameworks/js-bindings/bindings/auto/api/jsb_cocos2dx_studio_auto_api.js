@@ -205,16 +205,14 @@ ActionObject : function (
 ccs.ActionManager = {
 
 /**
- * @method playActionByName
-* @param {char|char} char
-* @param {char|char} char
-* @param {cc.CallFunc} callfunc
-* @return {ccs.ActionObject|ccs.ActionObject}
-*/
-playActionByName : function(
-char,
-char,
-callfunc 
+ * @method stopActionByName
+ * @param {char} arg0
+ * @param {char} arg1
+ * @return {ccs.ActionObject}
+ */
+stopActionByName : function (
+char, 
+char 
 )
 {
     return ccs.ActionObject;
@@ -248,6 +246,22 @@ cocoloader,
 stexpcoconode 
 )
 {
+},
+
+/**
+ * @method playActionByName
+* @param {char|char} char
+* @param {char|char} char
+* @param {cc.CallFunc} callfunc
+* @return {ccs.ActionObject|ccs.ActionObject}
+*/
+playActionByName : function(
+char,
+char,
+callfunc 
+)
+{
+    return ccs.ActionObject;
 },
 
 /**
@@ -3066,54 +3080,6 @@ str
 },
 
 /**
- * @method createActionFromProtocolBuffers
- * @param {String} arg0
- * @return {ccs.timeline::ActionTimeline}
- */
-createActionFromProtocolBuffers : function (
-str 
-)
-{
-    return ccs.timeline::ActionTimeline;
-},
-
-/**
- * @method createActionFromXML
- * @param {String} arg0
- * @return {ccs.timeline::ActionTimeline}
- */
-createActionFromXML : function (
-str 
-)
-{
-    return ccs.timeline::ActionTimeline;
-},
-
-/**
- * @method loadAnimationActionWithFileFromProtocolBuffers
- * @param {String} arg0
- * @return {ccs.timeline::ActionTimeline}
- */
-loadAnimationActionWithFileFromProtocolBuffers : function (
-str 
-)
-{
-    return ccs.timeline::ActionTimeline;
-},
-
-/**
- * @method loadAnimationActionWithFileFromXML
- * @param {String} arg0
- * @return {ccs.timeline::ActionTimeline}
- */
-loadAnimationActionWithFileFromXML : function (
-str 
-)
-{
-    return ccs.timeline::ActionTimeline;
-},
-
-/**
  * @method purge
  */
 purge : function (
@@ -3163,18 +3129,6 @@ removeAction : function (
 str 
 )
 {
-},
-
-/**
- * @method loadActionTimelineFromXML
- * @param {tinyxml2::XMLElement} arg0
- * @return {ccs.timeline::ActionTimeline}
- */
-loadActionTimelineFromXML : function (
-xmlelement 
-)
-{
-    return ccs.timeline::ActionTimeline;
 },
 
 /**
@@ -4443,6 +4397,16 @@ ActionTimeline : function (
 ccs.CSLoader = {
 
 /**
+ * @method setJsonPath
+ * @param {String} arg0
+ */
+setJsonPath : function (
+str 
+)
+{
+},
+
+/**
  * @method createNodeFromJson
  * @param {String} arg0
  * @return {cc.Node}
@@ -4452,60 +4416,6 @@ str
 )
 {
     return cc.Node;
-},
-
-/**
- * @method nodeFromXML
- * @param {tinyxml2::XMLElement} arg0
- * @param {String} arg1
- * @return {cc.Node}
- */
-nodeFromXML : function (
-xmlelement, 
-str 
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method createNodeFromProtocolBuffers
- * @param {String} arg0
- * @return {cc.Node}
- */
-createNodeFromProtocolBuffers : function (
-str 
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method init
- */
-init : function (
-)
-{
-},
-
-/**
- * @method setRecordXMLPath
- * @param {bool} arg0
- */
-setRecordXMLPath : function (
-bool 
-)
-{
-},
-
-/**
- * @method setJsonPath
- * @param {String} arg0
- */
-setJsonPath : function (
-str 
-)
-{
 },
 
 /**
@@ -4521,63 +4431,45 @@ str
 },
 
 /**
+ * @method bindCallback
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {ccui.Widget} arg2
+ * @param {cc.Node} arg3
+ * @return {bool}
+ */
+bindCallback : function (
+str, 
+str, 
+widget, 
+node 
+)
+{
+    return false;
+},
+
+/**
+ * @method purge
+ */
+purge : function (
+)
+{
+},
+
+/**
+ * @method init
+ */
+init : function (
+)
+{
+},
+
+/**
  * @method loadNodeWithContent
  * @param {String} arg0
  * @return {cc.Node}
  */
 loadNodeWithContent : function (
-str 
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method isRecordProtocolBuffersPath
- * @return {bool}
- */
-isRecordProtocolBuffersPath : function (
-)
-{
-    return false;
-},
-
-/**
- * @method isRecordXMLPath
- * @return {bool}
- */
-isRecordXMLPath : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getProtocolBuffersPath
- * @return {String}
- */
-getProtocolBuffersPath : function (
-)
-{
-    return ;
-},
-
-/**
- * @method getXMLPath
- * @return {String}
- */
-getXMLPath : function (
-)
-{
-    return ;
-},
-
-/**
- * @method createNodeFromXML
- * @param {String} arg0
- * @return {cc.Node}
- */
-createNodeFromXML : function (
 str 
 )
 {
@@ -4592,16 +4484,6 @@ isRecordJsonPath : function (
 )
 {
     return false;
-},
-
-/**
- * @method setRecordProtocolBuffersPath
- * @param {bool} arg0
- */
-setRecordProtocolBuffersPath : function (
-bool 
-)
-{
 },
 
 /**
@@ -4622,46 +4504,6 @@ setRecordJsonPath : function (
 bool 
 )
 {
-},
-
-/**
- * @method setProtocolBuffersPath
- * @param {String} arg0
- */
-setProtocolBuffersPath : function (
-str 
-)
-{
-},
-
-/**
- * @method purge
- */
-purge : function (
-)
-{
-},
-
-/**
- * @method setXMLPath
- * @param {String} arg0
- */
-setXMLPath : function (
-str 
-)
-{
-},
-
-/**
- * @method nodeFromXMLFile
- * @param {String} arg0
- * @return {cc.Node}
- */
-nodeFromXMLFile : function (
-str 
-)
-{
-    return cc.Node;
 },
 
 /**

@@ -33,7 +33,7 @@ var UIWidgetAddNodeEditorTest = UIBaseLayer.extend({
         var back_label =ccui.helper.seekWidgetByName(root, "back");
         back_label.addTouchEventListener(this.backEvent,this);
 
-        var sprite = cc.Sprite.create("res/cocosui/ccicon.png");
+        var sprite = new cc.Sprite("res/cocosui/ccicon.png");
         sprite.x = 240;
         sprite.y = 160;
         root.addNode(sprite,9999);

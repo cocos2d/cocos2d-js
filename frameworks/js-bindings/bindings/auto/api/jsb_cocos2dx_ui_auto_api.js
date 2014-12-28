@@ -247,13 +247,13 @@ bool
 },
 
 /**
- * @method init
- * @return {bool}
+ * @method setCallbackName
+ * @param {String} arg0
  */
-init : function (
+setCallbackName : function (
+str 
 )
 {
-    return false;
 },
 
 /**
@@ -387,15 +387,13 @@ getLayoutParameter : function (
 },
 
 /**
- * @method hitTest
- * @param {vec2_object} arg0
- * @return {bool}
+ * @method addCCSEventListener
+ * @param {function} arg0
  */
-hitTest : function (
-vec2 
+addCCSEventListener : function (
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -483,6 +481,16 @@ isTouchEnabled : function (
 },
 
 /**
+ * @method getCallbackName
+ * @return {String}
+ */
+getCallbackName : function (
+)
+{
+    return ;
+},
+
+/**
  * @method getActionTag
  * @return {int}
  */
@@ -550,6 +558,16 @@ setFlippedY : function (
 bool 
 )
 {
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
 },
 
 /**
@@ -633,6 +651,18 @@ isBright : function (
 },
 
 /**
+ * @method dispatchFocusEvent
+ * @param {ccui.Widget} arg0
+ * @param {ccui.Widget} arg1
+ */
+dispatchFocusEvent : function (
+widget, 
+widget 
+)
+{
+},
+
+/**
  * @method setUnifySizeEnabled
  * @param {bool} arg0
  */
@@ -660,6 +690,18 @@ getCurrentFocusedWidget : function (
 )
 {
     return ccui.Widget;
+},
+
+/**
+ * @method hitTest
+ * @param {vec2_object} arg0
+ * @return {bool}
+ */
+hitTest : function (
+vec2 
+)
+{
+    return false;
 },
 
 /**
@@ -713,17 +755,13 @@ getSizeType : function (
 },
 
 /**
- * @method interceptTouchEvent
- * @param {ccui.Widget::TouchEventType} arg0
- * @param {ccui.Widget} arg1
- * @param {cc.Touch} arg2
+ * @method getCallbackType
+ * @return {String}
  */
-interceptTouchEvent : function (
-toucheventtype, 
-widget, 
-touch 
+getCallbackType : function (
 )
 {
+    return ;
 },
 
 /**
@@ -813,13 +851,15 @@ sizetype
 },
 
 /**
- * @method dispatchFocusEvent
- * @param {ccui.Widget} arg0
+ * @method interceptTouchEvent
+ * @param {ccui.Widget::TouchEventType} arg0
  * @param {ccui.Widget} arg1
+ * @param {cc.Touch} arg2
  */
-dispatchFocusEvent : function (
+interceptTouchEvent : function (
+toucheventtype, 
 widget, 
-widget 
+touch 
 )
 {
 },
@@ -830,6 +870,16 @@ widget
  */
 setBright : function (
 bool 
+)
+{
+},
+
+/**
+ * @method setCallbackType
+ * @param {String} arg0
+ */
+setCallbackType : function (
+str 
 )
 {
 },

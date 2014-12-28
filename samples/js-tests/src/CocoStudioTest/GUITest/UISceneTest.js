@@ -119,7 +119,7 @@ var GuiTestMainLayer = cc.Layer.extend({
         var y = winSize.height - 10;
         for (var i = 0; i < s_GuiTestEditorArray.length; i++) {
             var guiTest = s_GuiTestEditorArray[i];
-            var text = ccui.Text.create();
+            var text = new ccui.Text();
             if (i % 2 == 0) {
                 x = winSize.width / 2 - 100;
                 y -= 30;
@@ -139,7 +139,7 @@ var GuiTestMainLayer = cc.Layer.extend({
             this.addChild(text);
         }
 
-        var backText = ccui.Text.create();
+        var backText = new ccui.Text();
         backText.attr({
             string: "Back",
             font: "20px Arial",
@@ -155,7 +155,7 @@ var GuiTestMainLayer = cc.Layer.extend({
     touchEvent:function(sender,type){
         if(type==ccui.Widget.TOUCH_ENDED){
             var tag = sender.tag;
-            var scene = cc.Scene.create();
+            var scene = new cc.Scene();
              var guiTest = s_GuiTestEditorArray[tag];
              scene.addChild(guiTest.layer());
              cc.director.runScene(scene);
@@ -170,7 +170,7 @@ var GuiTestMainLayer = cc.Layer.extend({
 });
 
 var runGuiTestMain = function(){
-    var scene = cc.Scene.create();
+    var scene = new cc.Scene();
     var main = new GuiTestMainLayer();
     scene.addChild(main);
     cc.director.runScene(scene);

@@ -47,11 +47,11 @@ var CustomParticleWidgetScene = cc.Scene.extend({
     onEnter: function(){
         cc.Scene.prototype.onEnter.call(this);
 
-        var label = cc.LabelTTF.create("Back", "fonts/arial.ttf", 20);
+        var label = new cc.LabelTTF("Back", "fonts/arial.ttf", 20);
         //#endif
-        var pMenuItem = cc.MenuItemLabel.create(label, this.BackCallback, this);
+        var pMenuItem = new cc.MenuItemLabel(label, this.BackCallback, this);
 
-        var pMenu = cc.Menu.create(pMenuItem);
+        var pMenu = new cc.Menu(pMenuItem);
 
         pMenu.setPosition( cc.p(0, 0) );
         pMenuItem.setPosition( cc.p( 750, 25) );
