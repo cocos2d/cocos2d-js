@@ -156,7 +156,6 @@ cc.defineGetterSetter(_proto, "scheduler", _proto.getScheduler, _proto.setSchedu
 cc.defineGetterSetter(_proto, "shaderProgram", _proto.getShaderProgram, _proto.setShaderProgram);
 cc.defineGetterSetter(_proto, "glServerState", _proto.getGLServerState, _proto.setGLServerState);
 cc.defineGetterSetter(_proto, "tag", _proto.getTag, _proto.setTag);
-cc.defineGetterSetter(_proto, "userData", _proto.getUserData, _proto.setUserData);
 cc.defineGetterSetter(_proto, "userObject", _proto.getUserObject, _proto.setUserObject);
 cc.defineGetterSetter(_proto, "arrivalOrder", _proto.getArrivalOrder, _proto.setArrivalOrder);
 
