@@ -442,29 +442,30 @@ var ScrollViewDemo = BaseClippingNodeTest.extend({
                 var clipper = target.getChildByTag(TAG_CLIPPERNODE);
                 var point = clipper.convertToNodeSpace(touch.getLocation());
                 var rect = cc.rect(0, 0, clipper.width, clipper.height);
-                this._scrolling = cc.rectContainsPoint(rect, point);
-                this._lastPoint = point;
+                target._scrolling = cc.rectContainsPoint(rect, point);
+                target._lastPoint = point;
             },
 
             onTouchesMoved: function (touches, event) {
-                if (!this._scrolling)
+                var target = event.getCurrentTarget();
+                if (!target._scrolling)
                     return;
-	            var target = event.getCurrentTarget();
 
                 if (!touches || touches.length == 0)
                     return;
                 var touch = touches[0];
                 var clipper = target.getChildByTag(TAG_CLIPPERNODE);
                 var point = clipper.convertToNodeSpace(touch.getLocation());
-                var diff = cc.pSub(point, this._lastPoint);
+                var diff = cc.pSub(point, target._lastPoint);
                 var content = clipper.getChildByTag(TAG_CONTENTNODE);
                 content.setPosition(cc.pAdd(content.getPosition(), diff));
-                this._lastPoint = point;
+                target._lastPoint = point;
             },
 
             onTouchesEnded: function (touches, event) {
-                if (!this._scrolling) return;
-                this._scrolling = false;
+                var target = event.getCurrentTarget();
+                if (!target._scrolling) return;
+                target._scrolling = false;
             }
         }), this);
     }

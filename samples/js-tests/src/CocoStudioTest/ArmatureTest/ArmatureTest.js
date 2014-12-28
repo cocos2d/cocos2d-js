@@ -223,6 +223,7 @@ var TestDirectLoading = ArmatureTestLayer.extend({
         armature.anchorY = 0.5;
         armature.x = winSize.width / 2;
         armature.y = winSize.height / 2;
+        armature.runAction(cc.sequence(cc.tintTo(5, 200,100,0), cc.tintTo(5, 255,255,255)));
         this.addChild(armature);
     },
     title:function () {
