@@ -29,8 +29,8 @@ This script will install environment variables needed to by cocos2d-x. It will s
 * COCOS_CONSOLE_ROOT: used to run cocos console tools, more information about cocos console tools please refer to 
 https://github.com/cocos2d/cocos2d-console
 * NDK_ROOT: used to build android native codes
-* ANDROID_SDK_ROOT: used to generate applicatoin on Android through commands
-* ANT_ROOT: used to generate applicatoin on Android through commands
+* ANDROID_SDK_ROOT: used to generate application on Android through commands
+* ANT_ROOT: used to generate application on Android through commands
 
 On Max OS X, when start a shell, it will read these files and execute commands in sequence:
 
