@@ -98,7 +98,7 @@ var GameOver = cc.Layer.extend({
 
 
         if(MW.SOUND){
-            cc.audioEngine.playMusic(res.mainMainMusic_mp3);
+            cc.audioEngine.playMusic(res.mainMainMusic_mp3, true);
         }
 
         return true;

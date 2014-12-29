@@ -56,7 +56,7 @@ MW.LIFE = 4;
 MW.SCORE = 0;
 
 //sound
-MW.SOUND = false;
+MW.SOUND = true;
 
 //enemy move type
 MW.ENEMY_MOVE_TYPE = {
