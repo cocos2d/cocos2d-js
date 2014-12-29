@@ -1,4 +1,4 @@
-# Cocos2d-JS v3.2 RC0 release note
+# Cocos2d-JS v3.2 release note
 
 <img src="http://files.cocos2d-x.org/images/orgsite/logo.png" height=180> 
 
@@ -28,9 +28,9 @@ For JSB build, there are some restrictions :
 
 ## Download
 
-- [Cocos2d-JS v3.2 RC0](http://www.cocos2d-x.org/filedown/cocos2d-js-v3.2-rc0.zip)
+- [Cocos2d-JS v3.2](http://www.cocos2d-x.org/filedown/cocos2d-js-v3.2.zip)
 - [Online API reference](http://www.cocos2d-x.org/reference/html5-js/V3.0/index.html)
-- [Downloadable API Reference](http://www.cocos2d-x.org/filedown/Cocos2d-JS-v3.2-RC0-API.zip)
+- [Downloadable API Reference](http://www.cocos2d-x.org/filedown/Cocos2d-JS-v3.2-API.zip)
 - [Online test cases](http://cocos2d-x.org/js-tests/)
 
 ## Workflows
@@ -45,14 +45,14 @@ For JSB build, there are some restrictions :
 
 Read more about all the features and bug fixes
 
-- [Cocos2d-JS v3.2 RC0 changelog](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.2rc0/changelog/en)
-- [Cocos2d-JS v3.2 RC0 upgrade guide](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.2rc0/upgrade-guide/en)
+- [Cocos2d-JS v3.2 changelog](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.2/changelog/en)
+- [Cocos2d-JS v3.2 upgrade guide](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.2rc0/upgrade-guide/en)
 
 ## Upgrade your project from previous versions
 
-If you want to upgrade your game based on v3.0 previous version to the v3.2 RC0 version, you should follow these steps:
+If you want to upgrade your game based on v3.x previous version to the v3.2 version, you should follow these steps:
 
-1. Download the Cocos2d-JS v3.2 RC0 package.
+1. Download the Cocos2d-JS v3.2 package.
 2. Upgrade cocos command with `setup.py`.
 3. Create a new project with `cocos new` command.
 4. Replace the "src", "res", "index.html", "project.json", "main.js" etc with your old project.
@@ -60,7 +60,7 @@ If you want to upgrade your game based on v3.0 previous version to the v3.2 RC0 
 
 ## About Cocos2d family
 
-- Cocos2d-JS v3.2 RC0 uses Cocos2d-x v3.3rc1 as base of JSB solution
+- Cocos2d-JS v3.2 uses Cocos2d-x v3.3 as base of JSB solution
 - Cocos2d-JS v3.2 is compatible with Cocos Code IDE v1.1.0
 - Cocos2d-JS v3.2 is compatible with Cocos Studio v1.2 - v1.6, Cocos Studio 2 support have been removed because flat buffer binary file can't be parsed in JS, we will support Cocos Studio 2 in v3.3 with a JSON format parser.
 
