@@ -180,6 +180,7 @@
             "src_project_name":"HelloJavascript",
             "files":[
                "config.json",
+               "manifest.webapp",
                ".project",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
