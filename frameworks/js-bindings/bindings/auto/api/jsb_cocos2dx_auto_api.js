@@ -884,14 +884,6 @@ func
 },
 
 /**
- * @method pause
- */
-pause : function (
-)
-{
-},
-
-/**
  * @method convertToWorldSpaceAR
  * @param {vec2_object} arg0
  * @return {vec2_object}
@@ -1277,14 +1269,6 @@ getName : function (
 )
 {
     return ;
-},
-
-/**
- * @method resume
- */
-resume : function (
-)
-{
 },
 
 /**
@@ -2714,23 +2698,13 @@ eventdispatcher
 },
 
 /**
- * @method pushScene
- * @param {cc.Scene} arg0
+ * @method setContentScaleFactor
+ * @param {float} arg0
  */
-pushScene : function (
-scene 
+setContentScaleFactor : function (
+float 
 )
 {
-},
-
-/**
- * @method getDeltaTime
- * @return {float}
- */
-getDeltaTime : function (
-)
-{
-    return 0;
 },
 
 /**
@@ -2754,13 +2728,13 @@ getWinSizeInPixels : function (
 },
 
 /**
- * @method pushMatrix
- * @param {cc.MATRIX_STACK_TYPE} arg0
+ * @method getDeltaTime
+ * @return {float}
  */
-pushMatrix : function (
-matrix_stack_type 
+getDeltaTime : function (
 )
 {
+    return 0;
 },
 
 /**
@@ -2908,6 +2882,14 @@ getSecondsPerFrame : function (
 },
 
 /**
+ * @method resetMatrixStack
+ */
+resetMatrixStack : function (
+)
+{
+},
+
+/**
  * @method convertToUI
  * @param {vec2_object} arg0
  * @return {vec2_object}
@@ -2917,6 +2899,16 @@ vec2
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method pushMatrix
+ * @param {cc.MATRIX_STACK_TYPE} arg0
+ */
+pushMatrix : function (
+matrix_stack_type 
+)
+{
 },
 
 /**
@@ -2945,6 +2937,18 @@ setScheduler : function (
 scheduler 
 )
 {
+},
+
+/**
+ * @method getMatrix
+ * @param {cc.MATRIX_STACK_TYPE} arg0
+ * @return {mat4_object}
+ */
+getMatrix : function (
+matrix_stack_type 
+)
+{
+    return cc.Mat4;
 },
 
 /**
@@ -2987,16 +2991,6 @@ setViewport : function (
  * @method stopAnimation
  */
 stopAnimation : function (
-)
-{
-},
-
-/**
- * @method setContentScaleFactor
- * @param {float} arg0
- */
-setContentScaleFactor : function (
-float 
 )
 {
 },
@@ -3098,31 +3092,27 @@ drawScene : function (
 },
 
 /**
- * @method getZEye
- * @return {float}
+ * @method restart
  */
-getZEye : function (
+restart : function (
 )
 {
-    return 0;
-},
-
-/**
- * @method getMatrix
- * @param {cc.MATRIX_STACK_TYPE} arg0
- * @return {mat4_object}
- */
-getMatrix : function (
-matrix_stack_type 
-)
-{
-    return cc.Mat4;
 },
 
 /**
  * @method popScene
  */
 popScene : function (
+)
+{
+},
+
+/**
+ * @method loadIdentityMatrix
+ * @param {cc.MATRIX_STACK_TYPE} arg0
+ */
+loadIdentityMatrix : function (
+matrix_stack_type 
 )
 {
 },
@@ -3148,13 +3138,25 @@ projection
 },
 
 /**
- * @method loadIdentityMatrix
+ * @method multiplyMatrix
  * @param {cc.MATRIX_STACK_TYPE} arg0
+ * @param {mat4_object} arg1
  */
-loadIdentityMatrix : function (
-matrix_stack_type 
+multiplyMatrix : function (
+matrix_stack_type, 
+mat4 
 )
 {
+},
+
+/**
+ * @method getZEye
+ * @return {float}
+ */
+getZEye : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -3163,14 +3165,6 @@ matrix_stack_type
  */
 setNextDeltaTimeZero : function (
 bool 
-)
-{
-},
-
-/**
- * @method resetMatrixStack
- */
-resetMatrixStack : function (
 )
 {
 },
@@ -3206,11 +3200,11 @@ getScheduler : function (
 },
 
 /**
- * @method setAnimationInterval
- * @param {double} arg0
+ * @method pushScene
+ * @param {cc.Scene} arg0
  */
-setAnimationInterval : function (
-double 
+pushScene : function (
+scene 
 )
 {
 },
@@ -3266,13 +3260,11 @@ scene
 },
 
 /**
- * @method multiplyMatrix
- * @param {cc.MATRIX_STACK_TYPE} arg0
- * @param {mat4_object} arg1
+ * @method setAnimationInterval
+ * @param {double} arg0
  */
-multiplyMatrix : function (
-matrix_stack_type, 
-mat4 
+setAnimationInterval : function (
+double 
 )
 {
 },
@@ -4591,6 +4583,16 @@ Speed : function (
 cc.Follow = {
 
 /**
+ * @method setBoundarySet
+ * @param {bool} arg0
+ */
+setBoundarySet : function (
+bool 
+)
+{
+},
+
+/**
  * @method initWithTarget
  * @param {cc.Node} arg0
  * @param {rect_object} arg1
@@ -4602,16 +4604,6 @@ rect
 )
 {
     return false;
-},
-
-/**
- * @method setBoudarySet
- * @param {bool} arg0
- */
-setBoudarySet : function (
-bool 
-)
-{
 },
 
 /**
@@ -10107,6 +10099,251 @@ ProtectedNode : function (
 };
 
 /**
+ * @class GLProgramState
+ */
+cc.GLProgramState = {
+
+/**
+ * @method setUniformTexture
+* @param {String|String|int|int} str
+* @param {unsigned int|cc.Texture2D|cc.Texture2D|unsigned int} int
+*/
+setUniformTexture : function(
+int,
+int 
+)
+{
+},
+
+/**
+ * @method setUniformMat4
+* @param {int|String} int
+* @param {mat4_object|mat4_object} mat4
+*/
+setUniformMat4 : function(
+str,
+mat4 
+)
+{
+},
+
+/**
+ * @method applyUniforms
+ */
+applyUniforms : function (
+)
+{
+},
+
+/**
+ * @method setUniformCallback
+* @param {int|String} int
+* @param {function|function} func
+*/
+setUniformCallback : function(
+str,
+func 
+)
+{
+},
+
+/**
+ * @method applyGLProgram
+ * @param {mat4_object} arg0
+ */
+applyGLProgram : function (
+mat4 
+)
+{
+},
+
+/**
+ * @method getUniformCount
+ * @return {long}
+ */
+getUniformCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method applyAttributes
+ */
+applyAttributes : function (
+)
+{
+},
+
+/**
+ * @method setUniformFloat
+* @param {int|String} int
+* @param {float|float} float
+*/
+setUniformFloat : function(
+str,
+float 
+)
+{
+},
+
+/**
+ * @method setUniformVec3
+* @param {int|String} int
+* @param {vec3_object|vec3_object} vec3
+*/
+setUniformVec3 : function(
+str,
+vec3 
+)
+{
+},
+
+/**
+ * @method setUniformInt
+* @param {int|String} int
+* @param {int|int} int
+*/
+setUniformInt : function(
+str,
+int 
+)
+{
+},
+
+/**
+ * @method getVertexAttribCount
+ * @return {long}
+ */
+getVertexAttribCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setGLProgram
+ * @param {cc.GLProgram} arg0
+ */
+setGLProgram : function (
+glprogram 
+)
+{
+},
+
+/**
+ * @method setUniformVec2
+* @param {int|String} int
+* @param {vec2_object|vec2_object} vec2
+*/
+setUniformVec2 : function(
+str,
+vec2 
+)
+{
+},
+
+/**
+ * @method getVertexAttribsFlags
+ * @return {unsigned int}
+ */
+getVertexAttribsFlags : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setVertexAttribCallback
+ * @param {String} arg0
+ * @param {function} arg1
+ */
+setVertexAttribCallback : function (
+str, 
+func 
+)
+{
+},
+
+/**
+ * @method apply
+ * @param {mat4_object} arg0
+ */
+apply : function (
+mat4 
+)
+{
+},
+
+/**
+ * @method setVertexAttribPointer
+ * @param {String} arg0
+ * @param {int} arg1
+ * @param {unsigned int} arg2
+ * @param {unsigned char} arg3
+ * @param {int} arg4
+ * @param {void} arg5
+ */
+setVertexAttribPointer : function (
+str, 
+int, 
+int, 
+char, 
+int, 
+void 
+)
+{
+},
+
+/**
+ * @method getGLProgram
+ * @return {cc.GLProgram}
+ */
+getGLProgram : function (
+)
+{
+    return cc.GLProgram;
+},
+
+/**
+ * @method create
+ * @param {cc.GLProgram} arg0
+ * @return {cc.GLProgramState}
+ */
+create : function (
+glprogram 
+)
+{
+    return cc.GLProgramState;
+},
+
+/**
+ * @method getOrCreateWithGLProgramName
+ * @param {String} arg0
+ * @return {cc.GLProgramState}
+ */
+getOrCreateWithGLProgramName : function (
+str 
+)
+{
+    return cc.GLProgramState;
+},
+
+/**
+ * @method getOrCreateWithGLProgram
+ * @param {cc.GLProgram} arg0
+ * @return {cc.GLProgramState}
+ */
+getOrCreateWithGLProgram : function (
+glprogram 
+)
+{
+    return cc.GLProgramState;
+},
+
+};
+
+/**
  * @class AtlasNode
  */
 cc.AtlasNode = {
@@ -14449,10 +14686,10 @@ Menu : function (
 cc.ClippingNode = {
 
 /**
- * @method isInverted
+ * @method hasContent
  * @return {bool}
  */
-isInverted : function (
+hasContent : function (
 )
 {
     return false;
@@ -14518,6 +14755,16 @@ setAlphaThreshold : function (
 float 
 )
 {
+},
+
+/**
+ * @method isInverted
+ * @return {bool}
+ */
+isInverted : function (
+)
+{
+    return false;
 },
 
 /**
@@ -18132,40 +18379,12 @@ getFragmentShaderLog : function (
 },
 
 /**
- * @method setUniformLocationWithMatrix2fv
- * @param {int} arg0
- * @param {float} arg1
- * @param {unsigned int} arg2
- */
-setUniformLocationWithMatrix2fv : function (
-int, 
-float, 
-int 
-)
-{
-},
-
-/**
  * @method bindAttribLocation
  * @param {String} arg0
  * @param {unsigned int} arg1
  */
 bindAttribLocation : function (
 str, 
-int 
-)
-{
-},
-
-/**
- * @method setUniformLocationWithMatrix4fv
- * @param {int} arg0
- * @param {float} arg1
- * @param {unsigned int} arg2
- */
-setUniformLocationWithMatrix4fv : function (
-int, 
-float, 
 int 
 )
 {
@@ -18228,6 +18447,18 @@ char
 },
 
 /**
+ * @method setUniformLocationWith1f
+ * @param {int} arg0
+ * @param {float} arg1
+ */
+setUniformLocationWith1f : function (
+int, 
+float 
+)
+{
+},
+
+/**
  * @method initWithFilenames
  * @param {String} arg0
  * @param {String} arg1
@@ -18239,6 +18470,22 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method setUniformLocationWith3f
+ * @param {int} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ */
+setUniformLocationWith3f : function (
+int, 
+float, 
+float, 
+float 
+)
+{
 },
 
 /**
@@ -18268,15 +18515,19 @@ int
 },
 
 /**
- * @method setUniformLocationWith3iv
+ * @method setUniformLocationWith4f
  * @param {int} arg0
- * @param {int} arg1
- * @param {unsigned int} arg2
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @param {float} arg4
  */
-setUniformLocationWith3iv : function (
+setUniformLocationWith4f : function (
 int, 
-int, 
-int 
+float, 
+float, 
+float, 
+float 
 )
 {
 },
@@ -18285,20 +18536,6 @@ int
  * @method updateUniforms
  */
 updateUniforms : function (
-)
-{
-},
-
-/**
- * @method setUniformLocationWith4iv
- * @param {int} arg0
- * @param {int} arg1
- * @param {unsigned int} arg2
- */
-setUniformLocationWith4iv : function (
-int, 
-int, 
-int 
 )
 {
 },
@@ -18323,34 +18560,6 @@ link : function (
 )
 {
     return false;
-},
-
-/**
- * @method setUniformLocationWith2iv
- * @param {int} arg0
- * @param {int} arg1
- * @param {unsigned int} arg2
- */
-setUniformLocationWith2iv : function (
-int, 
-int, 
-int 
-)
-{
-},
-
-/**
- * @method setUniformLocationWithMatrix3fv
- * @param {int} arg0
- * @param {float} arg1
- * @param {unsigned int} arg2
- */
-setUniformLocationWithMatrix3fv : function (
-int, 
-float, 
-int 
-)
-{
 },
 
 /**
@@ -18383,6 +18592,20 @@ str
 )
 {
     return cc.VertexAttrib;
+},
+
+/**
+ * @method setUniformLocationWith2f
+ * @param {int} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ */
+setUniformLocationWith2f : function (
+int, 
+float, 
+float 
+)
+{
 },
 
 /**

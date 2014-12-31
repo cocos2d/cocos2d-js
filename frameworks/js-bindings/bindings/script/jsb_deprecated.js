@@ -110,16 +110,6 @@ var cc = cc || {};
         return cc.registerTargetedDelegate.apply(this, arguments);
     };
 
-    ccui.Text.prototype.setText = function(text){
-        logW("ccui.Text.setText", "ccui.Text.setString");
-        this.setString(text);
-    };
-
-    ccui.Text.prototype.getStringValue = function(){
-        logW("ccui.Text.getStringValue", "ccui.Text.getString");
-        return this.getString();
-    };
-
     cc.Touch.prototype.getId = function(){
         logW("cc.Touch.getId", "cc.Touch.getID");
         return this.getID();

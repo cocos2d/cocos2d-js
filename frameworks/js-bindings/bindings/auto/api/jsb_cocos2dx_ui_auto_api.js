@@ -247,13 +247,13 @@ bool
 },
 
 /**
- * @method init
- * @return {bool}
+ * @method setCallbackName
+ * @param {String} arg0
  */
-init : function (
+setCallbackName : function (
+str 
 )
 {
-    return false;
 },
 
 /**
@@ -387,15 +387,13 @@ getLayoutParameter : function (
 },
 
 /**
- * @method hitTest
- * @param {vec2_object} arg0
- * @return {bool}
+ * @method addCCSEventListener
+ * @param {function} arg0
  */
-hitTest : function (
-vec2 
+addCCSEventListener : function (
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -483,6 +481,16 @@ isTouchEnabled : function (
 },
 
 /**
+ * @method getCallbackName
+ * @return {String}
+ */
+getCallbackName : function (
+)
+{
+    return ;
+},
+
+/**
  * @method getActionTag
  * @return {int}
  */
@@ -550,6 +558,16 @@ setFlippedY : function (
 bool 
 )
 {
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
 },
 
 /**
@@ -633,6 +651,18 @@ isBright : function (
 },
 
 /**
+ * @method dispatchFocusEvent
+ * @param {ccui.Widget} arg0
+ * @param {ccui.Widget} arg1
+ */
+dispatchFocusEvent : function (
+widget, 
+widget 
+)
+{
+},
+
+/**
  * @method setUnifySizeEnabled
  * @param {bool} arg0
  */
@@ -660,6 +690,18 @@ getCurrentFocusedWidget : function (
 )
 {
     return ccui.Widget;
+},
+
+/**
+ * @method hitTest
+ * @param {vec2_object} arg0
+ * @return {bool}
+ */
+hitTest : function (
+vec2 
+)
+{
+    return false;
 },
 
 /**
@@ -713,17 +755,13 @@ getSizeType : function (
 },
 
 /**
- * @method interceptTouchEvent
- * @param {ccui.Widget::TouchEventType} arg0
- * @param {ccui.Widget} arg1
- * @param {cc.Touch} arg2
+ * @method getCallbackType
+ * @return {String}
  */
-interceptTouchEvent : function (
-toucheventtype, 
-widget, 
-touch 
+getCallbackType : function (
 )
 {
+    return ;
 },
 
 /**
@@ -813,13 +851,15 @@ sizetype
 },
 
 /**
- * @method dispatchFocusEvent
- * @param {ccui.Widget} arg0
+ * @method interceptTouchEvent
+ * @param {ccui.Widget::TouchEventType} arg0
  * @param {ccui.Widget} arg1
+ * @param {cc.Touch} arg2
  */
-dispatchFocusEvent : function (
+interceptTouchEvent : function (
+toucheventtype, 
 widget, 
-widget 
+touch 
 )
 {
 },
@@ -830,6 +870,16 @@ widget
  */
 setBright : function (
 bool 
+)
+{
+},
+
+/**
+ * @method setCallbackType
+ * @param {String} arg0
+ */
+setCallbackType : function (
+str 
 )
 {
 },
@@ -4292,6 +4342,394 @@ size
  * @constructor
  */
 RelativeBox : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Scale9Sprite
+ */
+ccui.Scale9Sprite = {
+
+/**
+ * @method disableCascadeColor
+ */
+disableCascadeColor : function (
+)
+{
+},
+
+/**
+ * @method updateWithSprite
+* @param {cc.Sprite|cc.Sprite} sprite
+* @param {rect_object|rect_object} rect
+* @param {bool|bool} bool
+* @param {vec2_object|rect_object} vec2
+* @param {size_object} size
+* @param {rect_object} rect
+* @return {bool|bool}
+*/
+updateWithSprite : function(
+sprite,
+rect,
+bool,
+vec2,
+size,
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method isFlippedX
+ * @return {bool}
+ */
+isFlippedX : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setFlippedY
+ * @param {bool} arg0
+ */
+setFlippedY : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setFlippedX
+ * @param {bool} arg0
+ */
+setFlippedX : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setScale9Enabled
+ * @param {bool} arg0
+ */
+setScale9Enabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method disableCascadeOpacity
+ */
+disableCascadeOpacity : function (
+)
+{
+},
+
+/**
+ * @method setInsetBottom
+ * @param {float} arg0
+ */
+setInsetBottom : function (
+float 
+)
+{
+},
+
+/**
+ * @method initWithSpriteFrameName
+* @param {String|String} str
+* @param {rect_object} rect
+* @return {bool|bool}
+*/
+initWithSpriteFrameName : function(
+str,
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method getSprite
+ * @return {cc.Sprite}
+ */
+getSprite : function (
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method setInsetTop
+ * @param {float} arg0
+ */
+setInsetTop : function (
+float 
+)
+{
+},
+
+/**
+ * @method init
+* @param {cc.Sprite|cc.Sprite|cc.Sprite} sprite
+* @param {rect_object|rect_object|rect_object} rect
+* @param {bool|rect_object|bool} bool
+* @param {rect_object|vec2_object} rect
+* @param {size_object} size
+* @param {rect_object} rect
+* @return {bool|bool|bool|bool}
+*/
+init : function(
+sprite,
+rect,
+bool,
+vec2,
+size,
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method setPreferredSize
+ * @param {size_object} arg0
+ */
+setPreferredSize : function (
+size 
+)
+{
+},
+
+/**
+ * @method getInsetRight
+ * @return {float}
+ */
+getInsetRight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setSpriteFrame
+ * @param {cc.SpriteFrame} arg0
+ * @param {rect_object} arg1
+ */
+setSpriteFrame : function (
+spriteframe, 
+rect 
+)
+{
+},
+
+/**
+ * @method getInsetBottom
+ * @return {float}
+ */
+getInsetBottom : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method resizableSpriteWithCapInsets
+ * @param {rect_object} arg0
+ * @return {ccui.Scale9Sprite}
+ */
+resizableSpriteWithCapInsets : function (
+rect 
+)
+{
+    return ccui.Scale9Sprite;
+},
+
+/**
+ * @method isScale9Enabled
+ * @return {bool}
+ */
+isScale9Enabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getCapInsets
+ * @return {rect_object}
+ */
+getCapInsets : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method getOriginalSize
+ * @return {size_object}
+ */
+getOriginalSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method initWithFile
+* @param {String|String|rect_object|String} str
+* @param {rect_object|rect_object|String} rect
+* @param {rect_object} rect
+* @return {bool|bool|bool|bool}
+*/
+initWithFile : function(
+str,
+rect,
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method getInsetTop
+ * @return {float}
+ */
+getInsetTop : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setInsetLeft
+ * @param {float} arg0
+ */
+setInsetLeft : function (
+float 
+)
+{
+},
+
+/**
+ * @method initWithSpriteFrame
+* @param {cc.SpriteFrame|cc.SpriteFrame} spriteframe
+* @param {rect_object} rect
+* @return {bool|bool}
+*/
+initWithSpriteFrame : function(
+spriteframe,
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method getPreferredSize
+ * @return {size_object}
+ */
+getPreferredSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method setCapInsets
+ * @param {rect_object} arg0
+ */
+setCapInsets : function (
+rect 
+)
+{
+},
+
+/**
+ * @method isFlippedY
+ * @return {bool}
+ */
+isFlippedY : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getInsetLeft
+ * @return {float}
+ */
+getInsetLeft : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setInsetRight
+ * @param {float} arg0
+ */
+setInsetRight : function (
+float 
+)
+{
+},
+
+/**
+ * @method create
+* @param {String|rect_object|String|String} str
+* @param {rect_object|String|rect_object} rect
+* @param {rect_object} rect
+* @return {ccui.Scale9Sprite|ccui.Scale9Sprite|ccui.Scale9Sprite|ccui.Scale9Sprite|ccui.Scale9Sprite}
+*/
+create : function(
+str,
+rect,
+rect 
+)
+{
+    return ccui.Scale9Sprite;
+},
+
+/**
+ * @method createWithSpriteFrameName
+* @param {String|String} str
+* @param {rect_object} rect
+* @return {ccui.Scale9Sprite|ccui.Scale9Sprite}
+*/
+createWithSpriteFrameName : function(
+str,
+rect 
+)
+{
+    return ccui.Scale9Sprite;
+},
+
+/**
+ * @method createWithSpriteFrame
+* @param {cc.SpriteFrame|cc.SpriteFrame} spriteframe
+* @param {rect_object} rect
+* @return {ccui.Scale9Sprite|ccui.Scale9Sprite}
+*/
+createWithSpriteFrame : function(
+spriteframe,
+rect 
+)
+{
+    return ccui.Scale9Sprite;
+},
+
+/**
+ * @method Scale9Sprite
+ * @constructor
+ */
+Scale9Sprite : function (
 )
 {
 },

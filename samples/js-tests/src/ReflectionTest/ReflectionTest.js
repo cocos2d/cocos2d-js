@@ -32,8 +32,8 @@ var ReflectionTestLayer = BaseTestLayer.extend({
     ctor:function() {
         this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
-        var label = cc.LabelTTF.create("Show Alert Dialog", "Arial", 35);
-        var menuItem = cc.MenuItemLabel.create(label, function(){
+        var label = new cc.LabelTTF("Show Alert Dialog", "Arial", 35);
+        var menuItem = new cc.MenuItemLabel(label, function(){
             if(cc.sys.os == cc.sys.OS_ANDROID){
                 jsb.reflection.callStaticMethod("org/cocos2dx/js_tests/AppActivity", "showAlertDialog", "(Ljava/lang/String;Ljava/lang/String;)V", "How are you ?", "I'm great !");
             }else if(cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX){

@@ -44,7 +44,7 @@ var UILayoutEditorTest = UIBaseLayer.extend({
         var back_label = ccui.helper.seekWidgetByName(root, "back");
         back_label.addTouchEventListener(this.backEvent, this);
 
-        var left_button = ccui.Button.create();
+        var left_button = new ccui.Button();
         left_button.loadTextures("res/Images/b1.png", "res/Images/b2.png", "");
         left_button.x = 240-50;
         left_button.y = 50;
@@ -54,7 +54,7 @@ var UILayoutEditorTest = UIBaseLayer.extend({
         left_button.addTouchEventListener(this.previousCallback, this);
         this._mainNode.addChild(left_button);
 
-        var right_button = ccui.Button.create();
+        var right_button = new ccui.Button();
         right_button.loadTextures("res/Images/f1.png", "res/Images/f2.png", "");
         right_button.x = 240+50;
         right_button.y = 50;
@@ -81,7 +81,7 @@ var UILayoutEditorTest = UIBaseLayer.extend({
         }
     },
     runNextScene: function () {
-        var scene = cc.Scene.create();
+        var scene = new cc.Scene();
         scene.addChild(new UILayoutEditorTest());
         cc.director.runScene(scene);
     }

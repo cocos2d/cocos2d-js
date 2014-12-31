@@ -82,6 +82,9 @@ var TableViewTestLayer = cc.Layer.extend({
     tableCellTouched:function (table, cell) {
         cc.log("cell touched at index: " + cell.getIdx());
     },
+    tableCellTouched2:function () {
+        cc.log("cell touched at index: ");
+    },
 
     tableCellSizeForIndex:function (table, idx) {
         if (idx == 2) {
@@ -96,6 +99,9 @@ var TableViewTestLayer = cc.Layer.extend({
         var label;
         if (!cell) {
             cell = new CustomTableViewCell();
+
+
+
             var sprite = new cc.Sprite(s_image_icon);
             sprite.anchorX = 0;
             sprite.anchorY = 0;
