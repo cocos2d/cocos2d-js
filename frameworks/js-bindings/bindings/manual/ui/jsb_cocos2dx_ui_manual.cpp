@@ -663,7 +663,7 @@ extern JSObject* jsb_cocos2d_ui_ScrollView_prototype;
 extern JSObject* jsb_cocos2d_ui_ListView_prototype;
 extern JSObject* jsb_cocos2d_ui_EditBox_prototype;
 
-void register_all_cocos2dx_ui_manual(JSContext* cx, JSObject* global)
+void register_all_cocos2dx_ui_manual(JSContext* cx, JS::HandleObject global)
 {
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_ui_Widget_prototype), "addTouchEventListener", js_cocos2dx_UIWidget_addTouchEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
