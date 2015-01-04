@@ -759,7 +759,7 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
     auto& content = fileUtil->getStringFromFile(fullpath);
 
     JSAutoCompartment ac(cx, global);
-    bool evaluatedOK = JS_EvaluateScript(cx, global, content.c_str, content.length(), path, 0);
+    bool evaluatedOK = JS_EvaluateScript(cx, global, content.c_str(), content.length(), path, 0);
     return evaluatedOK;
 }
 
