@@ -441,24 +441,14 @@ static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
 //    JSCLASS_NO_OPTIONAL_MEMBERS
 //};
 
-//static const JSClass global_class = {
-//    "global", JSCLASS_GLOBAL_FLAGS,
-//    JS_PropertyStub, JS_DeletePropertyStub, JS_PropertyStub, JS_StrictPropertyStub,
-//    JS_EnumerateStub, JS_ResolveStub, JS_ConvertStub, sc_finalize,
-//    nullptr, nullptr, nullptr,
-//    JS_GlobalObjectTraceHook
-//};
-static JSClass global_class = {
-    "global",
-    JSCLASS_GLOBAL_FLAGS,
-    JS_PropertyStub,
-    JS_DeletePropertyStub,
-    JS_PropertyStub,
-    JS_StrictPropertyStub,
-    JS_EnumerateStub,
-    JS_ResolveStub,
-    JS_ConvertStub
+static const JSClass global_class = {
+    "global", JSCLASS_GLOBAL_FLAGS,
+    JS_PropertyStub, JS_DeletePropertyStub, JS_PropertyStub, JS_StrictPropertyStub,
+    JS_EnumerateStub, JS_ResolveStub, JS_ConvertStub, sc_finalize,
+    nullptr, nullptr, nullptr,
+    JS_GlobalObjectTraceHook
 };
+
 
 ScriptingCore::ScriptingCore()
 : _rt(nullptr)
@@ -748,6 +738,9 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
     if (cx == NULL) {
         cx = _cx;
     }
+
+    //Fix ME: compileScript will break after using SpiderMonkey v33, use JS_EvaluateScript now
+/*
     compileScript(path,global,cx);
     JS::RootedScript script(cx, getScript(path));
     bool evaluatedOK = false;
@@ -760,6 +753,13 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
             JS_ReportPendingException(cx);
         }
     }
+*/
+    auto fileUtil = FileUtils::getInstance();
+    auto& fullpath = fileUtil->fullPathForFilename(path);
+    auto& content = fileUtil->getStringFromFile(fullpath);
+
+    JSAutoCompartment ac(cx, global);
+    bool evaluatedOK = JS_EvaluateScript(cx, global, content.c_str, content.length(), path, 0);
     return evaluatedOK;
 }
 

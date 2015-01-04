@@ -43,13 +43,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_cocos2dx_js_core);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
-    //TODO:uncomment next line after fix jsb_register_system
-//    sc->addRegisterCallback(jsb_register_system);
+    sc->addRegisterCallback(jsb_register_system);
 
     sc->start();
     sc->runScript("script/jsb_boot.js");
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
-    sc->enableDebugger();
+    //sc->enableDebugger();
 #endif
 
     auto pEngine = ScriptingCore::getInstance();
