@@ -36,7 +36,7 @@
 static JSClass js_class; \
 static JSObject* js_proto; \
 static JSObject* js_parent; \
-static void _js_register(JSContext* cx, JSObject* global);
+static void _js_register(JSContext* cx, JS::HandleObject global);
 
 #define JS_BINDED_CLASS_GLUE_IMPL(klass) \
 JSClass klass::js_class = {}; \
@@ -109,10 +109,10 @@ JS_BINDED_PROP_GET(klass, propName); \
 JS_BINDED_PROP_SET(klass, propName);
 
 #define JS_BINDED_PROP_DEF_GETTER(klass, propName) \
-{#propName, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(_js_get_##klass##_##propName), NULL}
+{#propName, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(_js_get_##klass##_##propName), JSOP_NULLWRAPPER}
 
 #define JS_BINDED_PROP_DEF_ACCESSOR(klass, propName) \
-{#propName, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(_js_get_##klass##_##propName), JSOP_WRAPPER(_js_set_##klass##_##propName)}
+{#propName, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(_js_get_##klass##_##propName), JSOP_WRAPPER(_js_set_##klass##_##propName)}
 
 #define JS_CREATE_UINT_WRAPPED(valOut, propName, val) \
 do { \
