@@ -319,15 +319,16 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
     return false;
 }
 
-static bool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+static bool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JSObject* jsobj = args.thisv().toObjectOrNull();
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     
     if (cobj) {
-        vp.set(INT_TO_JSVAL((int)cobj->getReadyState()));
+        args.rval().set(INT_TO_JSVAL((int)cobj->getReadyState()));
         return true;
     } else {
         JS_ReportError(cx, "Error: WebSocket instance is invalid.");
@@ -350,7 +351,7 @@ void register_jsb_websocket(JSContext *cx, JS::HandleObject global) {
     js_cocos2dx_websocket_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
     
     static JSPropertySpec properties[] = {
-        {"readyState", JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_cocos2dx_extension_WebSocket_get_readyState), JSOP_NULLWRAPPER},
+        JS_PSG("readyState", js_cocos2dx_extension_WebSocket_get_readyState, JSPROP_ENUMERATE | JSPROP_PERMANENT),
         JS_PS_END
     };
     

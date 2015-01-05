@@ -323,10 +323,11 @@ bool js_cocos2dx_SocketIO_close(JSContext* cx, uint32_t argc, jsval* vp){
 
 }
 
-static bool _js_set_SIOClient_tag(JSContext* cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
+static bool _js_set_SIOClient_tag(JSContext* cx, uint32_t argc, jsval* vp)
 {
-     CCLOG("JSB SocketIO.setTag method called");
-    JSObject* jsobj = obj.get();
+    CCLOG("JSB SocketIO.setTag method called");
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JSObject* jsobj = args.thisv().toObjectOrNull();
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     SIOClient* cobj = (SIOClient *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
@@ -334,7 +335,7 @@ static bool _js_set_SIOClient_tag(JSContext* cx, JS::HandleObject obj, JS::Handl
     if (cobj) {
         std::string out = "";
 
-        jsval_to_std_string(cx, vp, &out);
+        jsval_to_std_string(cx, args.get(0), &out);
         cobj->setTag(out.c_str());
         return true;
     } else {
@@ -344,16 +345,17 @@ static bool _js_set_SIOClient_tag(JSContext* cx, JS::HandleObject obj, JS::Handl
 
 }
 
-static bool _js_get_SIOClient_tag(JSContext* cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+static bool _js_get_SIOClient_tag(JSContext* cx, uint32_t argc, jsval* vp)
 {
     CCLOG("JSB SocketIO.getTag method called");
-    JSObject* jsobj = obj.get();
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JSObject* jsobj = args.thisv().toObjectOrNull();
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     SIOClient* cobj = (SIOClient *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     
     if (cobj) {
-        vp.set(std_string_to_jsval(cx, cobj->getTag()));
+        args.rval().set(std_string_to_jsval(cx, cobj->getTag()));
         return true;
     } else {
         JS_ReportError(cx, "Error: SocketIO instance is invalid.");
@@ -415,7 +417,7 @@ void register_jsb_socketio(JSContext *cx, JS::HandleObject global) {
     js_cocos2dx_socketio_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_BINDED_PROP_DEF_ACCESSOR(SIOClient, tag),
+        JS_PSGS("tag", _js_get_SIOClient_tag, _js_set_SIOClient_tag, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -438,9 +440,9 @@ void register_jsb_socketio(JSContext *cx, JS::HandleObject global) {
                                                 JS::NullPtr(),
                                                 js_cocos2dx_socketio_class,
                                                 js_cocos2dx_SocketIO_constructor, 0, // constructor
-                                                properties,
+                                                nullptr,
                                                 funcs,
-                                                NULL, // no static properties
+                                                nullptr, // no static properties
                                                 st_funcs);
     
     JSObject* jsclassObj = anonEvaluate(cx, global, "(function () { return SocketIO; })()").toObjectOrNull();
