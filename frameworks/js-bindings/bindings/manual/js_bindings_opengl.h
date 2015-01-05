@@ -36,4 +36,4 @@ protected:
 
 NS_CC_END
 
-void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global);
+void js_register_cocos2dx_GLNode(JSContext *cx, JS::HandleObject global);

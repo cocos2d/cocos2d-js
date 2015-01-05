@@ -22,7 +22,7 @@ bool JSB_glActiveTexture(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0;
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glActiveTexture((GLenum)arg0  );
@@ -38,13 +38,13 @@ bool JSB_glAttachShader(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glAttachShader((GLuint)arg0 , (GLuint)arg1  );
 
-    args.rval.setUndefined();
+    args.rval().setUndefined();
     return true;
 }
 
@@ -56,9 +56,9 @@ bool JSB_glBindAttribLocation(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; const char* arg2; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_charptr(cx, *argvp++, &arg2 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_charptr(cx, args.get(2), &arg2 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glBindAttribLocation((GLuint)arg0 , (GLuint)arg1 , (char*)arg2  );
@@ -74,8 +74,8 @@ bool JSB_glBindBuffer(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glBindBuffer((GLenum)arg0 , (GLuint)arg1  );
@@ -91,8 +91,8 @@ bool JSB_glBindFramebuffer(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glBindFramebuffer((GLenum)arg0 , (GLuint)arg1  );
@@ -108,8 +108,8 @@ bool JSB_glBindRenderbuffer(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glBindRenderbuffer((GLenum)arg0 , (GLuint)arg1  );
@@ -125,8 +125,8 @@ bool JSB_glBindTexture(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glBindTexture((GLenum)arg0 , (GLuint)arg1  );
@@ -142,10 +142,10 @@ bool JSB_glBlendColor(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glBlendColor((GLclampf)arg0 , (GLclampf)arg1 , (GLclampf)arg2 , (GLclampf)arg3  );
@@ -161,7 +161,7 @@ bool JSB_glBlendEquation(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glBlendEquation((GLenum)arg0  );
@@ -177,8 +177,8 @@ bool JSB_glBlendEquationSeparate(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glBlendEquationSeparate((GLenum)arg0 , (GLenum)arg1  );
@@ -194,8 +194,8 @@ bool JSB_glBlendFunc(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glBlendFunc((GLenum)arg0 , (GLenum)arg1  );
@@ -211,10 +211,10 @@ bool JSB_glBlendFuncSeparate(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg3 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_uint32( cx, args.get(3), &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glBlendFuncSeparate((GLenum)arg0 , (GLenum)arg1 , (GLenum)arg2 , (GLenum)arg3  );
@@ -230,10 +230,10 @@ bool JSB_glBufferData(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; void* arg1; uint32_t arg2; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     GLsizei count;
-    ok &= JSB_get_arraybufferview_dataptr( cx, *argvp++, &count, &arg1);
-    ok &= jsval_to_uint32( cx, *argvp++, &arg2 );
+    ok &= JSB_get_arraybufferview_dataptr( cx, args.get(1), &count, &arg1);
+    ok &= jsval_to_uint32( cx, args.get(2), &arg2 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glBufferData((GLenum)arg0 , count, (GLvoid*)arg1 , (GLenum)arg2  );
@@ -249,10 +249,10 @@ bool JSB_glBufferSubData(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; void* arg2; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     GLsizei count;
-    ok &= JSB_get_arraybufferview_dataptr( cx, *argvp++, &count, &arg2);
+    ok &= JSB_get_arraybufferview_dataptr( cx, args.get(2), &count, &arg2);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glBufferSubData((GLenum)arg0 , (GLintptr)arg1 , count, (GLvoid*)arg2  );
@@ -268,12 +268,12 @@ bool JSB_glCheckFramebufferStatus(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     GLenum ret_val;
 
     ret_val = glCheckFramebufferStatus((GLenum)arg0  );
-    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL((uint32_t)ret_val));
+    args.rval().set(UINT_TO_JSVAL((uint32_t)ret_val));
     return true;
 }
 
@@ -285,7 +285,7 @@ bool JSB_glClear(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glClear((GLbitfield)arg0  );
@@ -301,10 +301,10 @@ bool JSB_glClearColor(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glClearColor((GLclampf)arg0 , (GLclampf)arg1 , (GLclampf)arg2 , (GLclampf)arg3  );
@@ -320,7 +320,7 @@ bool JSB_glClearDepthf(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glClearDepthf((GLclampf)arg0  );
@@ -336,7 +336,7 @@ bool JSB_glClearStencil(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glClearStencil((GLint)arg0  );
@@ -352,10 +352,10 @@ bool JSB_glColorMask(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint16_t arg0; uint16_t arg1; uint16_t arg2; uint16_t arg3; 
 
-    ok &= jsval_to_uint16( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint16( cx, *argvp++, &arg1 );
-    ok &= jsval_to_uint16( cx, *argvp++, &arg2 );
-    ok &= jsval_to_uint16( cx, *argvp++, &arg3 );
+    ok &= jsval_to_uint16( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint16( cx, args.get(1), &arg1 );
+    ok &= jsval_to_uint16( cx, args.get(2), &arg2 );
+    ok &= jsval_to_uint16( cx, args.get(3), &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glColorMask((GLboolean)arg0 , (GLboolean)arg1 , (GLboolean)arg2 , (GLboolean)arg3  );
@@ -371,7 +371,7 @@ bool JSB_glCompileShader(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glCompileShader((GLuint)arg0  );
@@ -387,15 +387,15 @@ bool JSB_glCompressedTexImage2D(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; uint32_t arg2; int32_t arg3; int32_t arg4; int32_t arg5; int32_t arg6; void* arg7; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg4 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg5 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg6 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
+    ok &= jsval_to_int32( cx, args.get(4), &arg4 );
+    ok &= jsval_to_int32( cx, args.get(5), &arg5 );
+    ok &= jsval_to_int32( cx, args.get(6), &arg6 );
     GLsizei count;
-    ok &= JSB_get_arraybufferview_dataptr( cx, *argvp++, &count, &arg7);
+    ok &= JSB_get_arraybufferview_dataptr( cx, args.get(7), &count, &arg7);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glCompressedTexImage2D((GLenum)arg0 , (GLint)arg1 , (GLenum)arg2 , (GLsizei)arg3 , (GLsizei)arg4 , (GLint)arg5 , (GLsizei)arg6 , (GLvoid*)arg7  );
@@ -411,16 +411,16 @@ bool JSB_glCompressedTexSubImage2D(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; int32_t arg4; int32_t arg5; uint32_t arg6; int32_t arg7; void* arg8; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg4 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg5 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg6 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg7 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
+    ok &= jsval_to_int32( cx, args.get(4), &arg4 );
+    ok &= jsval_to_int32( cx, args.get(5), &arg5 );
+    ok &= jsval_to_uint32( cx, args.get(6), &arg6 );
+    ok &= jsval_to_int32( cx, args.get(7), &arg7 );
     GLsizei count;
-    ok &= JSB_get_arraybufferview_dataptr( cx, *argvp++, &count, &arg8);
+    ok &= JSB_get_arraybufferview_dataptr( cx, args.get(8), &count, &arg8);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glCompressedTexSubImage2D((GLenum)arg0 , (GLint)arg1 , (GLint)arg2 , (GLint)arg3 , (GLsizei)arg4 , (GLsizei)arg5 , (GLenum)arg6 , (GLsizei)arg7 , (GLvoid*)arg8  );
@@ -436,14 +436,14 @@ bool JSB_glCopyTexImage2D(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; uint32_t arg2; int32_t arg3; int32_t arg4; int32_t arg5; int32_t arg6; int32_t arg7; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg4 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg5 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg6 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg7 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
+    ok &= jsval_to_int32( cx, args.get(4), &arg4 );
+    ok &= jsval_to_int32( cx, args.get(5), &arg5 );
+    ok &= jsval_to_int32( cx, args.get(6), &arg6 );
+    ok &= jsval_to_int32( cx, args.get(7), &arg7 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glCopyTexImage2D((GLenum)arg0 , (GLint)arg1 , (GLenum)arg2 , (GLint)arg3 , (GLint)arg4 , (GLsizei)arg5 , (GLsizei)arg6 , (GLint)arg7  );
@@ -459,14 +459,14 @@ bool JSB_glCopyTexSubImage2D(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; int32_t arg4; int32_t arg5; int32_t arg6; int32_t arg7; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg4 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg5 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg6 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg7 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
+    ok &= jsval_to_int32( cx, args.get(4), &arg4 );
+    ok &= jsval_to_int32( cx, args.get(5), &arg5 );
+    ok &= jsval_to_int32( cx, args.get(6), &arg6 );
+    ok &= jsval_to_int32( cx, args.get(7), &arg7 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glCopyTexSubImage2D((GLenum)arg0 , (GLint)arg1 , (GLint)arg2 , (GLint)arg3 , (GLint)arg4 , (GLint)arg5 , (GLsizei)arg6 , (GLsizei)arg7  );
@@ -478,10 +478,11 @@ bool JSB_glCopyTexSubImage2D(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: GLuint
 bool JSB_glCreateProgram(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     GLuint ret_val;
 
     ret_val = glCreateProgram( );
-    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL((uint32_t)ret_val));
+    args.rval().set(UINT_TO_JSVAL((uint32_t)ret_val));
     return true;
 }
 
@@ -493,12 +494,12 @@ bool JSB_glCreateShader(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     GLuint ret_val;
 
     ret_val = glCreateShader((GLenum)arg0  );
-    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL((uint32_t)ret_val));
+    args.rval().set(UINT_TO_JSVAL((uint32_t)ret_val));
     return true;
 }
 
@@ -510,7 +511,7 @@ bool JSB_glCullFace(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glCullFace((GLenum)arg0  );
@@ -526,7 +527,7 @@ bool JSB_glDeleteProgram(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glDeleteProgram((GLuint)arg0  );
@@ -542,7 +543,7 @@ bool JSB_glDeleteShader(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glDeleteShader((GLuint)arg0  );
@@ -558,7 +559,7 @@ bool JSB_glDepthFunc(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glDepthFunc((GLenum)arg0  );
@@ -574,7 +575,7 @@ bool JSB_glDepthMask(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint16_t arg0; 
 
-    ok &= jsval_to_uint16( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint16( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glDepthMask((GLboolean)arg0  );
@@ -590,8 +591,8 @@ bool JSB_glDepthRangef(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glDepthRangef((GLclampf)arg0 , (GLclampf)arg1  );
@@ -607,8 +608,8 @@ bool JSB_glDetachShader(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glDetachShader((GLuint)arg0 , (GLuint)arg1  );
@@ -624,7 +625,7 @@ bool JSB_glDisable(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glDisable((GLenum)arg0  );
@@ -640,7 +641,7 @@ bool JSB_glDisableVertexAttribArray(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glDisableVertexAttribArray((GLuint)arg0  );
@@ -656,9 +657,9 @@ bool JSB_glDrawArrays(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; int32_t arg2; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glDrawArrays((GLenum)arg0 , (GLint)arg1 , (GLsizei)arg2  );
@@ -674,11 +675,11 @@ bool JSB_glDrawElements(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; uint32_t arg2; void* arg3; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg2 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(2), &arg2 );
     GLsizei count;
-    ok &= JSB_get_arraybufferview_dataptr( cx, *argvp++, &count, &arg3);
+    ok &= JSB_get_arraybufferview_dataptr( cx, args.get(3), &count, &arg3);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , (GLvoid*)arg3  );
@@ -694,7 +695,7 @@ bool JSB_glEnable(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glEnable((GLenum)arg0  );
@@ -710,7 +711,7 @@ bool JSB_glEnableVertexAttribArray(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glEnableVertexAttribArray((GLuint)arg0  );
@@ -722,7 +723,7 @@ bool JSB_glEnableVertexAttribArray(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_glFinish(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
-
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     glFinish( );
     args.rval().setUndefined();
     return true;
@@ -732,7 +733,7 @@ bool JSB_glFinish(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_glFlush(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
-
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     glFlush( );
     args.rval().setUndefined();
     return true;
@@ -746,10 +747,10 @@ bool JSB_glFramebufferRenderbuffer(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg3 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_uint32( cx, args.get(3), &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glFramebufferRenderbuffer((GLenum)arg0 , (GLenum)arg1 , (GLenum)arg2 , (GLuint)arg3  );
@@ -765,11 +766,11 @@ bool JSB_glFramebufferTexture2D(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; int32_t arg4; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg3 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg4 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_uint32( cx, args.get(3), &arg3 );
+    ok &= jsval_to_int32( cx, args.get(4), &arg4 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glFramebufferTexture2D((GLenum)arg0 , (GLenum)arg1 , (GLenum)arg2 , (GLuint)arg3 , (GLint)arg4  );
@@ -785,7 +786,7 @@ bool JSB_glFrontFace(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glFrontFace((GLenum)arg0  );
@@ -801,7 +802,7 @@ bool JSB_glGenerateMipmap(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glGenerateMipmap((GLenum)arg0  );
@@ -817,13 +818,13 @@ bool JSB_glGetAttribLocation(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; const char* arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_charptr( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_charptr( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     int ret_val;
 
     ret_val = glGetAttribLocation((GLuint)arg0 , (char*)arg1  );
-    JS_SET_RVAL(cx, vp, INT_TO_JSVAL((int32_t)ret_val));
+    args.rval().set(INT_TO_JSVAL((int32_t)ret_val));
     return true;
 }
 
@@ -831,10 +832,11 @@ bool JSB_glGetAttribLocation(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: GLenum
 bool JSB_glGetError(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     GLenum ret_val;
 
     ret_val = glGetError( );
-    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL((uint32_t)ret_val));
+    args.rval().set(UINT_TO_JSVAL((uint32_t)ret_val));
     return true;
 }
 
@@ -846,14 +848,14 @@ bool JSB_glGetUniformLocation(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; const char* arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_charptr( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_charptr( cx, args.get(1), &arg1 );
     printf("%s ", arg1);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     int ret_val;
 
     ret_val = glGetUniformLocation((GLuint)arg0 , (char*)arg1  );
-    JS_SET_RVAL(cx, vp, INT_TO_JSVAL((int32_t)ret_val));
+    args.rval().set(INT_TO_JSVAL((int32_t)ret_val));
     return true;
 }
 
@@ -865,8 +867,8 @@ bool JSB_glHint(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glHint((GLenum)arg0 , (GLenum)arg1  );
@@ -882,12 +884,12 @@ bool JSB_glIsBuffer(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     GLboolean ret_val;
 
     ret_val = glIsBuffer((GLuint)arg0  );
-    JS_SET_RVAL(cx, vp, INT_TO_JSVAL((int32_t)ret_val));
+    args.rval().set(INT_TO_JSVAL((int32_t)ret_val));
     return true;
 }
 
@@ -899,12 +901,12 @@ bool JSB_glIsEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     GLboolean ret_val;
 
     ret_val = glIsEnabled((GLenum)arg0  );
-    JS_SET_RVAL(cx, vp, INT_TO_JSVAL((int32_t)ret_val));
+    args.rval().set(INT_TO_JSVAL((int32_t)ret_val));
     return true;
 }
 
@@ -916,12 +918,12 @@ bool JSB_glIsFramebuffer(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     GLboolean ret_val;
 
     ret_val = glIsFramebuffer((GLuint)arg0  );
-    JS_SET_RVAL(cx, vp, INT_TO_JSVAL((int32_t)ret_val));
+    args.rval().set(INT_TO_JSVAL((int32_t)ret_val));
     return true;
 }
 
@@ -933,12 +935,12 @@ bool JSB_glIsProgram(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     GLboolean ret_val;
 
     ret_val = glIsProgram((GLuint)arg0  );
-    JS_SET_RVAL(cx, vp, INT_TO_JSVAL((int32_t)ret_val));
+    args.rval().set(INT_TO_JSVAL((int32_t)ret_val));
     return true;
 }
 
@@ -950,12 +952,12 @@ bool JSB_glIsRenderbuffer(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     GLboolean ret_val;
 
     ret_val = glIsRenderbuffer((GLuint)arg0  );
-    JS_SET_RVAL(cx, vp, INT_TO_JSVAL((int32_t)ret_val));
+    args.rval().set(INT_TO_JSVAL((int32_t)ret_val));
     return true;
 }
 
@@ -967,12 +969,12 @@ bool JSB_glIsShader(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     GLboolean ret_val;
 
     ret_val = glIsShader((GLuint)arg0  );
-    JS_SET_RVAL(cx, vp, INT_TO_JSVAL((int32_t)ret_val));
+    args.rval().set(INT_TO_JSVAL((int32_t)ret_val));
     return true;
 }
 
@@ -984,12 +986,12 @@ bool JSB_glIsTexture(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     GLboolean ret_val;
 
     ret_val = glIsTexture((GLuint)arg0  );
-    JS_SET_RVAL(cx, vp, INT_TO_JSVAL((int32_t)ret_val));
+    args.rval().set(INT_TO_JSVAL((int32_t)ret_val));
     return true;
 }
 
@@ -1001,7 +1003,7 @@ bool JSB_glLineWidth(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glLineWidth((GLfloat)arg0  );
@@ -1017,7 +1019,7 @@ bool JSB_glLinkProgram(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glLinkProgram((GLuint)arg0  );
@@ -1033,8 +1035,8 @@ bool JSB_glPixelStorei(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glPixelStorei((GLenum)arg0 , (GLint)arg1  );
@@ -1050,8 +1052,8 @@ bool JSB_glPolygonOffset(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glPolygonOffset((GLfloat)arg0 , (GLfloat)arg1  );
@@ -1067,14 +1069,14 @@ bool JSB_glReadPixels(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; uint32_t arg4; uint32_t arg5; void* arg6; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg4 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg5 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
+    ok &= jsval_to_uint32( cx, args.get(4), &arg4 );
+    ok &= jsval_to_uint32( cx, args.get(5), &arg5 );
     GLsizei count;
-    ok &= JSB_get_arraybufferview_dataptr( cx, *argvp++, &count, &arg6);
+    ok &= JSB_get_arraybufferview_dataptr( cx, args.get(6), &count, &arg6);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glReadPixels((GLint)arg0 , (GLint)arg1 , (GLsizei)arg2 , (GLsizei)arg3 , (GLenum)arg4 , (GLenum)arg5 , (GLvoid*)arg6  );
@@ -1086,7 +1088,7 @@ bool JSB_glReadPixels(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_glReleaseShaderCompiler(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
-
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     glReleaseShaderCompiler( );
     args.rval().setUndefined();
     return true;
@@ -1100,10 +1102,10 @@ bool JSB_glRenderbufferStorage(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; int32_t arg2; int32_t arg3; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glRenderbufferStorage((GLenum)arg0 , (GLenum)arg1 , (GLsizei)arg2 , (GLsizei)arg3  );
@@ -1119,8 +1121,8 @@ bool JSB_glSampleCoverage(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; uint16_t arg1; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint16( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint16( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glSampleCoverage((GLclampf)arg0 , (GLboolean)arg1  );
@@ -1136,10 +1138,10 @@ bool JSB_glScissor(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glScissor((GLint)arg0 , (GLint)arg1 , (GLsizei)arg2 , (GLsizei)arg3  );
@@ -1155,9 +1157,9 @@ bool JSB_glStencilFunc(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; uint32_t arg2; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg2 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(2), &arg2 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glStencilFunc((GLenum)arg0 , (GLint)arg1 , (GLuint)arg2  );
@@ -1173,10 +1175,10 @@ bool JSB_glStencilFuncSeparate(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; int32_t arg2; uint32_t arg3; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg3 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_uint32( cx, args.get(3), &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glStencilFuncSeparate((GLenum)arg0 , (GLenum)arg1 , (GLint)arg2 , (GLuint)arg3  );
@@ -1192,7 +1194,7 @@ bool JSB_glStencilMask(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glStencilMask((GLuint)arg0  );
@@ -1208,8 +1210,8 @@ bool JSB_glStencilMaskSeparate(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glStencilMaskSeparate((GLenum)arg0 , (GLuint)arg1  );
@@ -1225,9 +1227,9 @@ bool JSB_glStencilOp(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; uint32_t arg2; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg2 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(2), &arg2 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glStencilOp((GLenum)arg0 , (GLenum)arg1 , (GLenum)arg2  );
@@ -1243,10 +1245,10 @@ bool JSB_glStencilOpSeparate(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg3 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_uint32( cx, args.get(3), &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glStencilOpSeparate((GLenum)arg0 , (GLenum)arg1 , (GLenum)arg2 , (GLenum)arg3  );
@@ -1262,16 +1264,16 @@ bool JSB_glTexImage2D(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; int32_t arg4; int32_t arg5; uint32_t arg6; uint32_t arg7; void* arg8; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg4 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg5 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg6 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg7 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
+    ok &= jsval_to_int32( cx, args.get(4), &arg4 );
+    ok &= jsval_to_int32( cx, args.get(5), &arg5 );
+    ok &= jsval_to_uint32( cx, args.get(6), &arg6 );
+    ok &= jsval_to_uint32( cx, args.get(7), &arg7 );
     GLsizei count;
-    ok &= JSB_get_arraybufferview_dataptr( cx, *argvp++, &count, &arg8);
+    ok &= JSB_get_arraybufferview_dataptr( cx, args.get(8), &count, &arg8);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glTexImage2D((GLenum)arg0 , (GLint)arg1 , (GLint)arg2 , (GLsizei)arg3 , (GLsizei)arg4 , (GLint)arg5 , (GLenum)arg6 , (GLenum)arg7 , (GLvoid*)arg8  );
@@ -1287,9 +1289,9 @@ bool JSB_glTexParameterf(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; int32_t arg2; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glTexParameterf((GLenum)arg0 , (GLenum)arg1 , (GLfloat)arg2  );
@@ -1305,9 +1307,9 @@ bool JSB_glTexParameteri(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; uint32_t arg1; int32_t arg2; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glTexParameteri((GLenum)arg0 , (GLenum)arg1 , (GLint)arg2  );
@@ -1323,16 +1325,16 @@ bool JSB_glTexSubImage2D(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; int32_t arg4; int32_t arg5; uint32_t arg6; uint32_t arg7; void* arg8; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg4 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg5 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg6 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg7 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
+    ok &= jsval_to_int32( cx, args.get(4), &arg4 );
+    ok &= jsval_to_int32( cx, args.get(5), &arg5 );
+    ok &= jsval_to_uint32( cx, args.get(6), &arg6 );
+    ok &= jsval_to_uint32( cx, args.get(7), &arg7 );
     GLsizei count;
-    ok &= JSB_get_arraybufferview_dataptr( cx, *argvp++, &count, &arg8);
+    ok &= JSB_get_arraybufferview_dataptr( cx, args.get(8), &count, &arg8);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glTexSubImage2D((GLenum)arg0 , (GLint)arg1 , (GLint)arg2 , (GLint)arg3 , (GLsizei)arg4 , (GLsizei)arg5 , (GLenum)arg6 , (GLenum)arg7 , (GLvoid*)arg8  );
@@ -1348,8 +1350,8 @@ bool JSB_glUniform1f(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform1f((GLint)arg0 , (GLfloat)arg1  );
@@ -1365,10 +1367,10 @@ bool JSB_glUniform1fv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; void* arg2; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg2, js::ArrayBufferView::TYPE_FLOAT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(2), &count, &arg2, js::Scalar::Float32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform1fv((GLint)arg0 , (GLsizei)arg1 , (GLfloat*)arg2  );
@@ -1384,8 +1386,8 @@ bool JSB_glUniform1i(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform1i((GLint)arg0 , (GLint)arg1  );
@@ -1401,10 +1403,10 @@ bool JSB_glUniform1iv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; void* arg2; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg2, js::ArrayBufferView::TYPE_INT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(2), &count, &arg2, js::Scalar::Int32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform1iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)arg2  );
@@ -1420,9 +1422,9 @@ bool JSB_glUniform2f(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; int32_t arg2; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform2f((GLint)arg0 , (GLfloat)arg1 , (GLfloat)arg2  );
@@ -1438,10 +1440,10 @@ bool JSB_glUniform2fv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; void* arg2; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg2, js::ArrayBufferView::TYPE_FLOAT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(2), &count, &arg2, js::Scalar::Float32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform2fv((GLint)arg0 , (GLsizei)arg1 , (GLfloat*)arg2  );
@@ -1457,9 +1459,9 @@ bool JSB_glUniform2i(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; int32_t arg2; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform2i((GLint)arg0 , (GLint)arg1 , (GLint)arg2  );
@@ -1475,10 +1477,10 @@ bool JSB_glUniform2iv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; void* arg2; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg2, js::ArrayBufferView::TYPE_INT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(2), &count, &arg2, js::Scalar::Int32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform2iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)arg2  );
@@ -1494,10 +1496,10 @@ bool JSB_glUniform3f(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform3f((GLint)arg0 , (GLfloat)arg1 , (GLfloat)arg2 , (GLfloat)arg3  );
@@ -1513,10 +1515,10 @@ bool JSB_glUniform3fv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; void* arg2; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg2, js::ArrayBufferView::TYPE_FLOAT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(2), &count, &arg2, js::Scalar::Float32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform3fv((GLint)arg0 , (GLsizei)arg1 , (GLfloat*)arg2  );
@@ -1532,10 +1534,10 @@ bool JSB_glUniform3i(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform3i((GLint)arg0 , (GLint)arg1 , (GLint)arg2 , (GLint)arg3  );
@@ -1551,10 +1553,10 @@ bool JSB_glUniform3iv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; void* arg2; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg2, js::ArrayBufferView::TYPE_INT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(2), &count, &arg2, js::Scalar::Int32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform3iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)arg2  );
@@ -1570,11 +1572,11 @@ bool JSB_glUniform4f(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; int32_t arg4; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg4 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
+    ok &= jsval_to_int32( cx, args.get(4), &arg4 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform4f((GLint)arg0 , (GLfloat)arg1 , (GLfloat)arg2 , (GLfloat)arg3 , (GLfloat)arg4  );
@@ -1590,10 +1592,10 @@ bool JSB_glUniform4fv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; void* arg2; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg2, js::ArrayBufferView::TYPE_FLOAT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(2), &count, &arg2, js::Scalar::Float32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform4fv((GLint)arg0 , (GLsizei)arg1 , (GLfloat*)arg2  );
@@ -1609,11 +1611,11 @@ bool JSB_glUniform4i(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; int32_t arg4; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg4 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
+    ok &= jsval_to_int32( cx, args.get(4), &arg4 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform4i((GLint)arg0 , (GLint)arg1 , (GLint)arg2 , (GLint)arg3 , (GLint)arg4  );
@@ -1629,10 +1631,10 @@ bool JSB_glUniform4iv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; void* arg2; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg2, js::ArrayBufferView::TYPE_INT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(2), &count, &arg2, js::Scalar::Int32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniform4iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)arg2  );
@@ -1648,10 +1650,10 @@ bool JSB_glUniformMatrix2fv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; uint16_t arg1; void* arg2; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint16( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint16( cx, args.get(1), &arg1 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg2, js::ArrayBufferView::TYPE_FLOAT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(2), &count, &arg2, js::Scalar::Float32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniformMatrix2fv(arg0, 1, (GLboolean)arg1 , (GLfloat*)arg2  );
@@ -1667,10 +1669,10 @@ bool JSB_glUniformMatrix3fv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; uint16_t arg1; void* arg2; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint16( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint16( cx, args.get(1), &arg1 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg2, js::ArrayBufferView::TYPE_FLOAT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(2), &count, &arg2, js::Scalar::Float32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniformMatrix3fv(arg0, 1, (GLboolean)arg1 , (GLfloat*)arg2  );
@@ -1686,10 +1688,10 @@ bool JSB_glUniformMatrix4fv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; uint16_t arg1; void* arg2; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_uint16( cx, *argvp++, &arg1 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint16( cx, args.get(1), &arg1 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg2, js::ArrayBufferView::TYPE_FLOAT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(2), &count, &arg2, js::Scalar::Float32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUniformMatrix4fv(arg0, 1, (GLboolean)arg1 , (GLfloat*)arg2  );
@@ -1705,7 +1707,7 @@ bool JSB_glUseProgram(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glUseProgram((GLuint)arg0  );
@@ -1721,7 +1723,7 @@ bool JSB_glValidateProgram(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glValidateProgram((GLuint)arg0  );
@@ -1737,8 +1739,8 @@ bool JSB_glVertexAttrib1f(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glVertexAttrib1f((GLuint)arg0 , (GLfloat)arg1  );
@@ -1754,9 +1756,9 @@ bool JSB_glVertexAttrib1fv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; void* arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg1, js::ArrayBufferView::TYPE_FLOAT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(1), &count, &arg1, js::Scalar::Float32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glVertexAttrib1fv((GLuint)arg0 , (GLfloat*)arg1  );
@@ -1772,9 +1774,9 @@ bool JSB_glVertexAttrib2f(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; int32_t arg2; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glVertexAttrib2f((GLuint)arg0 , (GLfloat)arg1 , (GLfloat)arg2  );
@@ -1790,9 +1792,9 @@ bool JSB_glVertexAttrib2fv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; void* arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg1, js::ArrayBufferView::TYPE_FLOAT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(1), &count, &arg1, js::Scalar::Float32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glVertexAttrib2fv((GLuint)arg0 , (GLfloat*)arg1  );
@@ -1808,10 +1810,10 @@ bool JSB_glVertexAttrib3f(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glVertexAttrib3f((GLuint)arg0 , (GLfloat)arg1 , (GLfloat)arg2 , (GLfloat)arg3  );
@@ -1827,9 +1829,9 @@ bool JSB_glVertexAttrib3fv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; void* arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg1, js::ArrayBufferView::TYPE_FLOAT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(1), &count, &arg1, js::Scalar::Float32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glVertexAttrib3fv((GLuint)arg0 , (GLfloat*)arg1  );
@@ -1845,11 +1847,11 @@ bool JSB_glVertexAttrib4f(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; int32_t arg4; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg4 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
+    ok &= jsval_to_int32( cx, args.get(4), &arg4 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glVertexAttrib4f((GLuint)arg0 , (GLfloat)arg1 , (GLfloat)arg2 , (GLfloat)arg3 , (GLfloat)arg4  );
@@ -1865,9 +1867,9 @@ bool JSB_glVertexAttrib4fv(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; void* arg1; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     GLsizei count;
-    ok &= JSB_jsval_typedarray_to_dataptr( cx, *argvp++, &count, &arg1, js::ArrayBufferView::TYPE_FLOAT32);
+    ok &= JSB_jsval_typedarray_to_dataptr( cx, args.get(1), &count, &arg1, js::Scalar::Float32);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glVertexAttrib4fv((GLuint)arg0 , (GLfloat*)arg1  );
@@ -1883,12 +1885,12 @@ bool JSB_glVertexAttribPointer(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     uint32_t arg0; int32_t arg1; uint32_t arg2; uint16_t arg3; int32_t arg4; int32_t arg5; 
 
-    ok &= jsval_to_uint32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_uint32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_uint16( cx, *argvp++, &arg3 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg4 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg5 );
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_uint32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_uint16( cx, args.get(3), &arg3 );
+    ok &= jsval_to_int32( cx, args.get(4), &arg4 );
+    ok &= jsval_to_int32( cx, args.get(5), &arg5 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glVertexAttribPointer((GLuint)arg0 , (GLint)arg1 , (GLenum)arg2 , (GLboolean)arg3 , (GLsizei)arg4 , (GLvoid*)arg5  );
@@ -1904,10 +1906,10 @@ bool JSB_glViewport(JSContext *cx, uint32_t argc, jsval *vp) {
     bool ok = true;
     int32_t arg0; int32_t arg1; int32_t arg2; int32_t arg3; 
 
-    ok &= jsval_to_int32( cx, *argvp++, &arg0 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg1 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg2 );
-    ok &= jsval_to_int32( cx, *argvp++, &arg3 );
+    ok &= jsval_to_int32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_int32( cx, args.get(1), &arg1 );
+    ok &= jsval_to_int32( cx, args.get(2), &arg2 );
+    ok &= jsval_to_int32( cx, args.get(3), &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     glViewport((GLint)arg0 , (GLint)arg1 , (GLsizei)arg2 , (GLsizei)arg3  );
