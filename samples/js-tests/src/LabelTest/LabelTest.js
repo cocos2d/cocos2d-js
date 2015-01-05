@@ -1388,6 +1388,7 @@ var BMFontChineseTest = AtlasDemo.extend({
 });
 
 var LongSentencesExample = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+var LongSentencesChineseExample = "美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天";
 var LineBreaksExample = "Lorem ipsum dolor\nsit amet\nconsectetur adipisicing elit\nblah\nblah";
 var MixedExample = "ABC\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\nDEF";
 
@@ -1411,6 +1412,7 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
     arrowsShouldRetain:null,
     lastSentenceItem:null,
     lastAlignmentItem:null,
+    changeTextItem:null, // show chinese mutiline
     ctor:function () {
         //----start11----ctor
         this._super();
@@ -1497,6 +1499,13 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
         this.addChild(this.arrowsShouldRetain);
         this.addChild(stringMenu);
         this.addChild(alignmentMenu);
+
+        this.changeTextItem = new cc.MenuItemFont("change chinese", this.onChangeChinese, this);
+        var changeTextMenu = new cc.Menu(this.changeTextItem);
+        changeTextMenu.x = 100;
+        changeTextMenu.y = size.height / 2;
+        this.addChild(changeTextMenu);
+
         //----end11----
     },
     __title: function(){
@@ -1507,6 +1516,12 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
     },
     subtitle:function () {
         return "";
+    },
+    onChangeChinese:function (sender) {
+        //this.labelShouldRetain = new cc.LabelBMFont(LongSentencesChineseExample, s_resprefix + "fonts/arial-unicode-26.fnt", director.getWinSize().width / 2, cc.TEXT_ALIGNMENT_CENTER, cc.p(0, 0));
+        this.labelShouldRetain.setFntFile(s_resprefix + "fonts/arial-unicode-26.fnt");
+        this.labelShouldRetain.setString(LongSentencesChineseExample);
+        this.changeTextItem.setString("change english");
     },
     onStringChanged:function (sender) {
         this.lastSentenceItem.color = cc.color(255, 255, 255);
