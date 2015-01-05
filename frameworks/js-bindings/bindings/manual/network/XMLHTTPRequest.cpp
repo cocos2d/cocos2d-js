@@ -345,12 +345,12 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, onreadystatechange)
         JS_SetProperty(cx, JS::RootedObject(cx, _onreadystateCallback), "readyState", tmpval);
         
         jsval out = OBJECT_TO_JSVAL(_onreadystateCallback);
-        vp.set(out);
+        args.rval().set(out);
         
     }
     else
     {
-        vp.set(JSVAL_NULL);
+        args.rval().set(JSVAL_NULL);
     }
     return true;
 }
@@ -362,7 +362,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, onreadystatechange)
  */
 JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, onreadystatechange)
 {
-    jsval callback = vp.get();
+    jsval callback = args.get(0);
     if (callback != JSVAL_NULL)
     {
         _onreadystateCallback = callback.toObjectOrNull();
@@ -378,7 +378,7 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, onreadystatechange)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, upload)
 {
-    vp.set(JSVAL_NULL);
+    args.rval().set(JSVAL_NULL);
     return true;
 }
 
@@ -389,7 +389,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, upload)
  */
 JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, upload)
 {
-    vp.set(JSVAL_NULL);
+    args.rval().set(JSVAL_NULL);
     return true;
 }
 
@@ -400,7 +400,7 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, upload)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, timeout)
 {
-    vp.set(INT_TO_JSVAL(_timeout));
+    args.rval().set(INT_TO_JSVAL(_timeout));
     return true;
 }
 
@@ -411,7 +411,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, timeout)
  */
 JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, timeout)
 {
-    jsval timeout_ms = vp.get();
+    jsval timeout_ms = args.get(0);
     
     _timeout = timeout_ms.toInt32();
     //curl_easy_setopt(curlHandle, CURLOPT_CONNECTTIMEOUT_MS, timeout);
@@ -427,7 +427,7 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, timeout)
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseType)
 {
     JSString* str = JS_NewStringCopyN(cx, "", 0);
-    vp.set(STRING_TO_JSVAL(str));
+    args.rval().set(STRING_TO_JSVAL(str));
     return true;
 }
 
@@ -438,7 +438,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseType)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseXML)
 {
-    vp.set(JSVAL_NULL);
+    args.rval().set(JSVAL_NULL);
     return true;
 }
 
@@ -449,7 +449,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseXML)
  */
 JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, responseType)
 {
-    jsval type = vp.get();
+    jsval type = args.get(0);
     if (type.isString()) {
         JSString* str = type.toString();
         bool equal;
@@ -488,7 +488,7 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, responseType)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, readyState)
 {
-    vp.set(INT_TO_JSVAL(_readyState));
+    args.rval().set(INT_TO_JSVAL(_readyState));
     return true;
 }
 
@@ -499,7 +499,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, readyState)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, status)
 {
-    vp.set(INT_TO_JSVAL(_status));
+    args.rval().set(INT_TO_JSVAL(_status));
     return true;
 }
 
@@ -514,7 +514,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, statusText)
     
     if (strVal != JSVAL_NULL)
     {
-        vp.set(strVal);
+        args.rval().set(strVal);
         return true;
     }
     else
@@ -530,7 +530,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, statusText)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, withCredentials)
 {
-    vp.set(BOOLEAN_TO_JSVAL(_withCredentialsValue));
+    args.rval().set(BOOLEAN_TO_JSVAL(_withCredentialsValue));
     return true;
 }
 
@@ -540,7 +540,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, withCredentials)
  */
 JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, withCredentials)
 {
-    jsval credential = vp.get();
+    jsval credential = args.get(0);
     if (credential != JSVAL_NULL)
     {
         _withCredentialsValue = credential.toBoolean();
@@ -561,7 +561,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseText)
 
         if (strVal != JSVAL_NULL)
         {
-            vp.set(strVal);
+            args.rval().set(strVal);
             return true;
         }
     }
@@ -569,7 +569,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseText)
     CCLOGERROR("ResponseText was empty, probably there is a network error!");
     
     // Return an empty string
-    vp.set(std_string_to_jsval(cx, ""));
+    args.rval().set(std_string_to_jsval(cx, ""));
 
     return true;
 }
@@ -582,13 +582,13 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
 {
     if (_responseType == ResponseType::STRING)
     {
-        return _js_get_responseText(cx, id, vp);
+        return _js_get_responseText(cx, args);
     }
     else
     {
         if (_readyState != DONE || _errorFlag)
         {
-            vp.set(JSVAL_NULL);
+            args.rval().set(JSVAL_NULL);
             return true;
         }
         
@@ -599,7 +599,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
             jsval strVal = std_string_to_jsval(cx, _data);
             if (JS_ParseJSON(cx, JS::RootedString(cx, strVal.toString()), &outVal))
             {
-                vp.set(outVal);
+                args.rval().set(outVal);
                 return true;
             }
         }
@@ -610,11 +610,11 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
             memcpy((void*)tmpData, (const void*)_data, _dataSize);
             jsval outVal = OBJECT_TO_JSVAL(tmp);
 
-            vp.set(outVal);
+            args.rval().set(outVal);
             return true;
         }
         // by default, return text
-        return _js_get_responseText(cx, id, vp);
+        return _js_get_responseText(cx, args);
     }
 }
 
