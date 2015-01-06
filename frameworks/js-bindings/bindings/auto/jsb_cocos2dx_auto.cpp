@@ -3683,30 +3683,6 @@ bool js_cocos2dx_Node_getAnchorPointInPoints(JSContext *cx, uint32_t argc, jsval
     JS_ReportError(cx, "js_cocos2dx_Node_getAnchorPointInPoints : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_Node_getRotationQuat(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getRotationQuat : Invalid Native Object");
-    if (argc == 0) {
-        cocos2d::Quaternion ret = cobj->getRotationQuat();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Quaternion>(cx, (cocos2d::Quaternion)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Node_getRotationQuat : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_Node_removeChildByName(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -5168,33 +5144,6 @@ bool js_cocos2dx_Node_isCascadeColorEnabled(JSContext *cx, uint32_t argc, jsval 
     JS_ReportError(cx, "js_cocos2dx_Node_isCascadeColorEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_Node_setRotationQuat(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_setRotationQuat : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Quaternion arg0;
-        do {
-            if (!argv[0].isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (const cocos2d::Quaternion&)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setRotationQuat : Error processing arguments");
-        cobj->setRotationQuat(arg0);
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Node_setRotationQuat : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_cocos2dx_Node_isOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -5445,7 +5394,6 @@ void js_register_cocos2dx_Node(JSContext *cx, JSObject *global) {
         JS_FN("setShaderProgram", js_cocos2dx_Node_setGLProgram, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getRotation", js_cocos2dx_Node_getRotation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getAnchorPointInPoints", js_cocos2dx_Node_getAnchorPointInPoints, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getRotationQuat", js_cocos2dx_Node_getRotationQuat, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeChildByName", js_cocos2dx_Node_removeChildByName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setVertexZ", js_cocos2dx_Node_setPositionZ, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getGLProgramState", js_cocos2dx_Node_getGLProgramState, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -5510,7 +5458,6 @@ void js_register_cocos2dx_Node(JSContext *cx, JSObject *global) {
         JS_FN("convertToNodeSpace", js_cocos2dx_Node_convertToNodeSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTag", js_cocos2dx_Node_setTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isCascadeColorEnabled", js_cocos2dx_Node_isCascadeColorEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setRotationQuat", js_cocos2dx_Node_setRotationQuat, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isOpacityModifyRGB", js_cocos2dx_Node_isOpacityModifyRGB, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("stopAction", js_cocos2dx_Node_stopAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getActionManager", js_cocos2dx_Node_getActionManager, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),

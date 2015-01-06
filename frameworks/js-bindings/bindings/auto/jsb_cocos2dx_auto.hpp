@@ -202,7 +202,6 @@ bool js_cocos2dx_Node_visit(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setGLProgram(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getRotation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getAnchorPointInPoints(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_getRotationQuat(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_removeChildByName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setPositionZ(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getGLProgramState(JSContext *cx, uint32_t argc, jsval *vp);
@@ -267,7 +266,6 @@ bool js_cocos2dx_Node_getNormalizedPosition(JSContext *cx, uint32_t argc, jsval 
 bool js_cocos2dx_Node_convertToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_isCascadeColorEnabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_setRotationQuat(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_isOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_stopAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getActionManager(JSContext *cx, uint32_t argc, jsval *vp);
