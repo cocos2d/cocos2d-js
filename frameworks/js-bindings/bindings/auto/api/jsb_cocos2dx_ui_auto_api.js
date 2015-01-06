@@ -207,6 +207,16 @@ RelativeLayoutParameter : function (
 ccui.Widget = {
 
 /**
+ * @method setLayoutComponentEnabled
+ * @param {bool} arg0
+ */
+setLayoutComponentEnabled : function (
+bool 
+)
+{
+},
+
+/**
  * @method setSizePercent
  * @param {vec2_object} arg0
  */
@@ -699,6 +709,16 @@ getCurrentFocusedWidget : function (
  */
 hitTest : function (
 vec2 
+)
+{
+    return false;
+},
+
+/**
+ * @method isLayoutComponentEnabled
+ * @return {bool}
+ */
+isLayoutComponentEnabled : function (
 )
 {
     return false;
@@ -1717,6 +1737,16 @@ texturerestype
 },
 
 /**
+ * @method getZoomScale
+ * @return {float}
+ */
+getZoomScale : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method loadTextureBackGround
  * @param {String} arg0
  * @param {ccui.Widget::TextureResType} arg1
@@ -1724,6 +1754,16 @@ texturerestype
 loadTextureBackGround : function (
 str, 
 texturerestype 
+)
+{
+},
+
+/**
+ * @method setZoomScale
+ * @param {float} arg0
+ */
+setZoomScale : function (
+float 
 )
 {
 },
@@ -1742,13 +1782,13 @@ texturerestype
 
 /**
  * @method create
-* @param {String} str
-* @param {String} str
-* @param {String} str
+* @param {String|String} str
+* @param {String|String} str
+* @param {String|ccui.Widget::TextureResType} str
 * @param {String} str
 * @param {String} str
 * @param {ccui.Widget::TextureResType} texturerestype
-* @return {ccui.CheckBox|ccui.CheckBox}
+* @return {ccui.CheckBox|ccui.CheckBox|ccui.CheckBox}
 */
 create : function(
 str,
@@ -2376,12 +2416,14 @@ getPercent : function (
 
 /**
  * @method create
-* @param {String} str
+* @param {String|String} str
+* @param {float|ccui.Widget::TextureResType} float
 * @param {float} float
-* @return {ccui.LoadingBar|ccui.LoadingBar}
+* @return {ccui.LoadingBar|ccui.LoadingBar|ccui.LoadingBar}
 */
 create : function(
 str,
+texturerestype,
 float 
 )
 {
@@ -3097,6 +3139,16 @@ bool
 },
 
 /**
+ * @method setZoomScale
+ * @param {float} arg0
+ */
+setZoomScale : function (
+float 
+)
+{
+},
+
+/**
  * @method setCapInsets
  * @param {rect_object} arg0
  */
@@ -3104,6 +3156,16 @@ setCapInsets : function (
 rect 
 )
 {
+},
+
+/**
+ * @method getZoomScale
+ * @return {float}
+ */
+getZoomScale : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -3150,9 +3212,15 @@ getPercent : function (
 
 /**
  * @method create
- * @return {ccui.Slider}
- */
-create : function (
+* @param {String} str
+* @param {String} str
+* @param {ccui.Widget::TextureResType} texturerestype
+* @return {ccui.Slider|ccui.Slider}
+*/
+create : function(
+str,
+str,
+texturerestype 
 )
 {
     return ccui.Slider;
@@ -3925,6 +3993,20 @@ int
 },
 
 /**
+ * @method restrictCapInsetRect
+ * @param {rect_object} arg0
+ * @param {size_object} arg1
+ * @return {rect_object}
+ */
+restrictCapInsetRect : function (
+rect, 
+size 
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method doLayout
  * @param {cc.Node} arg0
  */
@@ -4394,6 +4476,16 @@ isFlippedX : function (
 },
 
 /**
+ * @method setScale9Enabled
+ * @param {bool} arg0
+ */
+setScale9Enabled : function (
+bool 
+)
+{
+},
+
+/**
  * @method setFlippedY
  * @param {bool} arg0
  */
@@ -4414,19 +4506,31 @@ bool
 },
 
 /**
- * @method setScale9Enabled
- * @param {bool} arg0
+ * @method resizableSpriteWithCapInsets
+ * @param {rect_object} arg0
+ * @return {ccui.Scale9Sprite}
  */
-setScale9Enabled : function (
-bool 
+resizableSpriteWithCapInsets : function (
+rect 
 )
 {
+    return ccui.Scale9Sprite;
 },
 
 /**
  * @method disableCascadeOpacity
  */
 disableCascadeOpacity : function (
+)
+{
+},
+
+/**
+ * @method setState
+ * @param {ccui.Scale9Sprite::State} arg0
+ */
+setState : function (
+state 
 )
 {
 },
@@ -4508,16 +4612,6 @@ size
 },
 
 /**
- * @method getInsetRight
- * @return {float}
- */
-getInsetRight : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setSpriteFrame
  * @param {cc.SpriteFrame} arg0
  * @param {rect_object} arg1
@@ -4540,15 +4634,13 @@ getInsetBottom : function (
 },
 
 /**
- * @method resizableSpriteWithCapInsets
- * @param {rect_object} arg0
- * @return {ccui.Scale9Sprite}
+ * @method getCapInsets
+ * @return {rect_object}
  */
-resizableSpriteWithCapInsets : function (
-rect 
+getCapInsets : function (
 )
 {
-    return ccui.Scale9Sprite;
+    return cc.Rect;
 },
 
 /**
@@ -4562,13 +4654,13 @@ isScale9Enabled : function (
 },
 
 /**
- * @method getCapInsets
- * @return {rect_object}
+ * @method getInsetRight
+ * @return {float}
  */
-getCapInsets : function (
+getInsetRight : function (
 )
 {
-    return cc.Rect;
+    return 0;
 },
 
 /**

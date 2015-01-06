@@ -3884,6 +3884,16 @@ init : function (
 },
 
 /**
+ * @method setNode
+ * @param {cc.Node} arg0
+ */
+setNode : function (
+node 
+)
+{
+},
+
+/**
  * @method getEvent
  * @return {String}
  */
@@ -4211,6 +4221,22 @@ pause : function (
 },
 
 /**
+ * @method gotoFrameAndPlay
+* @param {int|int|int|int} int
+* @param {bool|int|int} bool
+* @param {bool|int} bool
+* @param {bool} bool
+*/
+gotoFrameAndPlay : function(
+int,
+int,
+int,
+bool 
+)
+{
+},
+
+/**
  * @method init
  * @return {bool}
  */
@@ -4248,6 +4274,18 @@ getTimelines : function (
 )
 {
     return new Array();
+},
+
+/**
+ * @method play
+ * @param {String} arg0
+ * @param {bool} arg1
+ */
+play : function (
+str, 
+bool 
+)
+{
 },
 
 /**
@@ -4299,17 +4337,11 @@ isPlaying : function (
 },
 
 /**
- * @method gotoFrameAndPlay
-* @param {int|int|int|int} int
-* @param {bool|int|int} bool
-* @param {bool|int} bool
-* @param {bool} bool
-*/
-gotoFrameAndPlay : function(
-int,
-int,
-int,
-bool 
+ * @method removeIndexes
+ * @param {String} arg0
+ */
+removeIndexes : function (
+str 
 )
 {
 },
@@ -4330,6 +4362,16 @@ getEndFrame : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setCurrentFrame
+ * @param {int} arg0
+ */
+setCurrentFrame : function (
+int 
+)
+{
 },
 
 /**
@@ -4361,11 +4403,11 @@ int
 },
 
 /**
- * @method setCurrentFrame
- * @param {int} arg0
+ * @method addIndexes
+ * @param {ccs.timeline::ActionIndexes} arg0
  */
-setCurrentFrame : function (
-int 
+addIndexes : function (
+actionindexes 
 )
 {
 },
@@ -4546,6 +4588,24 @@ getInstance : function (
 )
 {
     return cc.CSLoader;
+},
+
+/**
+ * @method createActionTimelineNode
+* @param {String|String} str
+* @param {int} int
+* @param {int} int
+* @param {bool} bool
+* @return {ccs.timeline::ActionTimelineNode|ccs.timeline::ActionTimelineNode}
+*/
+createActionTimelineNode : function(
+str,
+int,
+int,
+bool 
+)
+{
+    return ccs.timeline::ActionTimelineNode;
 },
 
 };
