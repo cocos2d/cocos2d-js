@@ -454,7 +454,7 @@ ScriptingCore::ScriptingCore()
 : _rt(nullptr)
 , _cx(nullptr)
 //, _global(nullptr)
-, _debugGlobal(nullptr)
+//, _debugGlobal(nullptr)
 , _callFromScript(false)
 {
     // set utf8 strings internally (we don't need utf16)
@@ -1524,13 +1524,13 @@ void SimpleRunLoop::update(float dt)
 
 void ScriptingCore::debugProcessInput(const std::string& str)
 {
-    JSAutoCompartment ac(_cx, _debugGlobal);
+    JSAutoCompartment ac(_cx, _debugGlobal.ref());
     
     JSString* jsstr = JS_NewStringCopyZ(_cx, str.c_str());
     jsval argv = STRING_TO_JSVAL(jsstr);
     JS::RootedValue outval(_cx);
     
-    JS_CallFunctionName(_cx, JS::RootedObject(_cx, _debugGlobal), "processInput", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
+    JS_CallFunctionName(_cx, JS::RootedObject(_cx, _debugGlobal.ref()), "processInput", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
 }
 
 static bool NS_ProcessNextEvent()
@@ -1738,18 +1738,19 @@ bool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 
 void ScriptingCore::enableDebugger(unsigned int port)
 {
-    if (_debugGlobal == NULL)
+    if (_debugGlobal.ref().get() == NULL)
     {
         JSAutoCompartment ac0(_cx, _global.ref().get());
         
         JS_SetDebugMode(_cx, true);
         
-        _debugGlobal = NewGlobalObject(_cx, true);
+        _debugGlobal.construct(_cx);
+        _debugGlobal.ref() = NewGlobalObject(_cx, true);
         // Adds the debugger object to root, otherwise it may be collected by GC.
-        AddObjectRoot(_cx, &_debugGlobal);
-        JS::RootedObject rootedDebugObj(_cx, _debugGlobal);
+        //AddObjectRoot(_cx, &_debugGlobal); no need, it's persistent rooted now
+        JS::RootedObject rootedDebugObj(_cx, _debugGlobal.ref());
         JS_WrapObject(_cx, &rootedDebugObj);
-        JSAutoCompartment ac(_cx, _debugGlobal);
+        JSAutoCompartment ac(_cx, _debugGlobal.ref());
         // these are used in the debug program
         JS_DefineFunction(_cx, rootedDebugObj, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);

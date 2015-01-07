@@ -59,8 +59,9 @@ private:
     JSRuntime *_rt;
     JSContext *_cx;
     mozilla::Maybe<JS::PersistentRootedObject> _global;
+    mozilla::Maybe<JS::PersistentRootedObject> _debugGlobal;
     //JS::Heap<JSObject*> _global;
-    JS::Heap<JSObject*> _debugGlobal;
+    //JS::Heap<JSObject*> _debugGlobal;
     SimpleRunLoop* _runLoop;
 
     bool _callFromScript;
@@ -248,7 +249,7 @@ public:
      */
     void debugProcessInput(const std::string& str);
     void enableDebugger(unsigned int port = 5086);
-    JSObject* getDebugGlobal() { return _debugGlobal.get(); }
+    JSObject* getDebugGlobal() { return _debugGlobal.ref().get(); }
     JSObject* getGlobalObject() { return _global.ref().get(); }
 
     bool isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native);
