@@ -1389,8 +1389,8 @@ var BMFontChineseTest = AtlasDemo.extend({
 
 var LongSentencesExample = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 var chineseExampleText = "美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天";
-var chineseMixEnglishText = "美好的一天bdgpy美b好b的d一b天d美好bd的p一g天美好b的d一d天bdgpybdgpybdgpybdgpy美好的一天bdgpy美好的一天美好的一天";
-var mixAllLanguageText = "美好良い一日を一Buen díabdgpy美b好b的d一b天d美Buen día好bd的p一g天良い一日を好b的d一d天Buen díabdgpy良い一日をdgpybdgpybdgpy美好的一天bdgpy美好的一天美好的一天";
+var chineseMixEnglishText = "美好的一天bdgpy美b好b的d一b天d美好bd的p一g天美好b的d一d天bdgpybdgpybdgpybdg美好的一天bdgpy美好的一天美好的一天";
+var mixAllLanguageText = "美好良い一日を一Buen díabdgpy美b好b的d一b天d美Buen い一日を好b的d一d天Buen py美好的一天bdgpy美好的一天美好的一天";
 var LineBreaksExample = "Lorem ipsum dolor\nsit amet\nconsectetur adipisicing elit\nblah\nblah";
 var MixedExample = "ABC\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\nDEF";
 
@@ -1529,16 +1529,16 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
 
         switch (sender.tag) {
             case LongSentences:
-                this.labelShouldRetain.setFntFile(s_resprefix + "fonts/markerFelt.fnt");
                 this.labelShouldRetain.setString(LongSentencesExample);
+                this.labelShouldRetain.setFntFile(s_resprefix + "fonts/markerFelt.fnt");
                 break;
             case LineBreaks:
-                this.labelShouldRetain.setFntFile(s_resprefix + "fonts/markerFelt.fnt");
                 this.labelShouldRetain.setString(LineBreaksExample);
+                this.labelShouldRetain.setFntFile(s_resprefix + "fonts/markerFelt.fnt");
                 break;
             case Mixed:
-                this.labelShouldRetain.setFntFile(s_resprefix + "fonts/markerFelt.fnt");
                 this.labelShouldRetain.setString(MixedExample);
+                this.labelShouldRetain.setFntFile(s_resprefix + "fonts/markerFelt.fnt");
                 break;
             case chineseText:
                 this.labelShouldRetain.setFntFile(s_resprefix + "fonts/arial-unicode-26.fnt");
@@ -1978,6 +1978,8 @@ var WrapAlgorithmTest = AtlasDemo.extend({
 // Flow control
 //
 var arrayOfLabelTest = [
+    // test by jl
+    BMFontMultiLineAlignmentTest,
     LabelAtlasOpacityTest,
     LabelAtlasOpacityColorTest,
     LabelAtlasHD,
@@ -1990,7 +1992,7 @@ var arrayOfLabelTest = [
     BMFontSpeedTest,
     BMFontMultiLineTest,
     BMFontMultiLine2Test,
-    BMFontMultiLineAlignmentTest,
+    //BMFontMultiLineAlignmentTest,
     BMFontOneAtlas,
     BMFontUnicode,
     BMFontInit,
