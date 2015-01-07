@@ -98,11 +98,11 @@ bool jsval_to_array_of_cpvect( JSContext *cx, jsval vp, cpVect**verts, int *numV
 
 
 // Object Oriented Chipmunk
-void JSB_cpBase_createClass(JSContext* cx, JSObject* globalObj, const char * name );
+void JSB_cpBase_createClass(JSContext* cx, JS::HandleObject globalObj, const char * name );
 extern JSObject* JSB_cpBase_object;
 extern JSClass* JSB_cpBase_class;
-extern void register_CCPhysicsSprite(JSContext *cx, JSObject *obj);
-extern void register_CCPhysicsDebugNode(JSContext *cx, JSObject *obj);
+extern void register_CCPhysicsSprite(JSContext *cx, JS::HandleObject obj);
+extern void register_CCPhysicsDebugNode(JSContext *cx, JS::HandleObject obj);
 
 // Manual constructor / destructors
 bool JSB_cpPolyShape_constructor(JSContext *cx, uint32_t argc, jsval *vp);

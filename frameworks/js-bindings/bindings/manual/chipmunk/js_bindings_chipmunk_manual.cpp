@@ -50,7 +50,7 @@ static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject *_tmp = JS_NewObject(cx, p->jsclass, p->proto, p->parentProto);
     js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
     JS_AddObjectRoot(cx, &pp->obj);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(_tmp));
+    args.rval().set(OBJECT_TO_JSVAL(_tmp));
 
     return true;
 }
@@ -75,22 +75,23 @@ void JSPROXY_CCPhysicsSprite_finalize(JSFreeOp *fop, JSObject *obj)
 // Arguments:
 // Ret value: BOOL (b)
 bool JSPROXY_CCPhysicsSprite_isDirty(JSContext *cx, uint32_t argc, jsval *vp) {
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     PhysicsSprite* real = (PhysicsSprite *)(proxy ? proxy->ptr : NULL);
     TEST_NATIVE_OBJECT(cx, real)
     
     if (real->isDirty()) {
-        JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+        args.rval().set(JSVAL_TRUE);
     }
-    else JS_SET_RVAL(cx, vp, JSVAL_FALSE);
+    else args.rval().set(JSVAL_FALSE);
     return true;
 }
 
 // Arguments:
 // Ret value: cpBody* (N/A)
 bool JSPROXY_CCPhysicsSprite_getCPBody(JSContext *cx, uint32_t argc, jsval *vp) {
-    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     PhysicsSprite* real = (PhysicsSprite *)(proxy ? proxy->ptr : NULL);
@@ -98,8 +99,8 @@ bool JSPROXY_CCPhysicsSprite_getCPBody(JSContext *cx, uint32_t argc, jsval *vp) 
     cpBody* ret_val;
     
     ret_val = real->getCPBody();
-    jsval ret_jsval = c_class_to_jsval( cx, ret_val, JSB_cpBody_object, JSB_cpBody_class, "cpBody" );
-    JS_SET_RVAL(cx, vp, ret_jsval);
+    jsval ret_jsval = c_class_to_jsval( cx, ret_val, JS::RootedObject(cx, JSB_cpBody_object), JSB_cpBody_class, "cpBody" );
+    args.rval().set(ret_jsval);
     
     return true;
 }
@@ -107,7 +108,7 @@ bool JSPROXY_CCPhysicsSprite_getCPBody(JSContext *cx, uint32_t argc, jsval *vp) 
 // Arguments:
 // Ret value: BOOL (b)
 bool JSPROXY_CCPhysicsSprite_ignoreBodyRotation(JSContext *cx, uint32_t argc, jsval *vp) {
-    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     PhysicsSprite* real = (PhysicsSprite *)(proxy ? proxy->ptr : NULL);
@@ -116,7 +117,7 @@ bool JSPROXY_CCPhysicsSprite_ignoreBodyRotation(JSContext *cx, uint32_t argc, js
     bool ret_val;
     
     ret_val = real->isIgnoreBodyRotation();
-    JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+    args.rval().set(BOOLEAN_TO_JSVAL(ret_val));
     return true;
 }
 
@@ -129,16 +130,16 @@ bool JSPROXY_CCPhysicsSprite_setCPBody_(JSContext *cx, uint32_t argc, jsval *vp)
     PhysicsSprite* real = (PhysicsSprite *)(proxy ? proxy->ptr : NULL);
     TEST_NATIVE_OBJECT(cx, real)
     
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     
     cpBody* arg0;
     
-    ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
+    ok &= jsval_to_opaque( cx, args.get(0), (void**)&arg0 );
     if( ! ok ) return false;
     
     real->setCPBody((cpBody*)arg0);
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    args.rval().setUndefined();
     return true;
 }
 
@@ -151,11 +152,11 @@ bool JSPROXY_CCPhysicsSprite_setIgnoreBodyRotation_(JSContext *cx, uint32_t argc
     PhysicsSprite* real = (PhysicsSprite *)(proxy ? proxy->ptr : NULL);
     TEST_NATIVE_OBJECT(cx, real)
     
-    jsval *argvp = JS_ARGV(cx,vp);
-    bool arg0 = JS::ToBoolean( JS::RootedValue(cx, *argvp++) );
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool arg0 = JS::ToBoolean( args.get(0) );
     
     real->setIgnoreBodyRotation((bool)arg0);
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    args.rval().setUndefined();
     return true;
 }
 
@@ -180,11 +181,11 @@ void JSB_CCPhysicsDebugNode_finalize(JSFreeOp *fop, JSObject *obj)
 // Ret value: PhysicsDebugNode* (o)
 bool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpSpace* arg0; 
 
-    ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
+    ok &= jsval_to_opaque( cx, args.get(0), (void**)&arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     PhysicsDebugNode* ret = PhysicsDebugNode::create(arg0);
@@ -200,15 +201,15 @@ bool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_t 
             typeClass = typeMapIter->second;
             CCASSERT(typeClass, "The value is null.");
             
-            JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+            JSObject *obj = JS_NewObject(cx, typeClass->jsclass, JS::RootedObject(cx, typeClass->proto), JS::RootedObject(cx, typeClass->parentProto));
             jsret = OBJECT_TO_JSVAL(obj);
             js_proxy_t *p = jsb_new_proxy(ret, obj);
-            JS_AddNamedObjectRoot(cx, &p->obj, "CCDebugNode");
+            JS::AddNamedObjectRoot(cx, &p->obj, "CCDebugNode");
         } else {
             jsret = JSVAL_NULL;
         }
     } while (0);
-    JS_SET_RVAL(cx, vp, jsret);
+    args.rval().set(jsret);
 
     return true;
 }
@@ -223,22 +224,22 @@ bool JSB_CCPhysicsDebugNode_setSpace_(JSContext *cx, uint32_t argc, jsval *vp) {
     TEST_NATIVE_OBJECT(cx, real)
 
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpSpace* arg0; 
 
-    ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
+    ok &= jsval_to_opaque( cx, args.get(0), (void**)&arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     real->setSpace(arg0);
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    args.rval().setUndefined();
     return true;
 }
 
 // Arguments: 
 // Ret value: cpSpace* (N/A)
 bool JSB_CCPhysicsDebugNode_space(JSContext *cx, uint32_t argc, jsval *vp) {
-
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(jsthis);
     PhysicsDebugNode* real = (PhysicsDebugNode *)(proxy ? proxy->ptr : NULL);
@@ -249,14 +250,14 @@ bool JSB_CCPhysicsDebugNode_space(JSContext *cx, uint32_t argc, jsval *vp) {
     ret_val = real->getSpace();
 
     jsval ret_jsval = opaque_to_jsval( cx, ret_val );
-    JS_SET_RVAL(cx, vp, ret_jsval);
+    args.rval().set(ret_jsval);
     
     return true;
 }
 
 bool JSB_CCPhysicsDebugNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    jsval *argv = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     PhysicsDebugNode* cobj = new (std::nothrow) PhysicsDebugNode();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
@@ -270,17 +271,17 @@ bool JSB_CCPhysicsDebugNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, JS::RootedObject(cx, typeClass->proto), JS::RootedObject(cx, typeClass->parentProto)));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "PhysicsDebugNode");
+    JS::AddNamedObjectRoot(cx, &p->obj, "PhysicsDebugNode");
     if (JS_HasProperty(cx, obj, "_ctor", &ok))
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
 
-void JSB_CCPhysicsDebugNode_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+void JSB_CCPhysicsDebugNode_createClass(JSContext *cx, JS::HandleObject globalObj, const char* name )
 {
     JSB_CCPhysicsDebugNode_class = (JSClass *)calloc(1, sizeof(JSClass));
     JSB_CCPhysicsDebugNode_class->name = name;
@@ -295,7 +296,7 @@ void JSB_CCPhysicsDebugNode_createClass(JSContext *cx, JSObject* globalObj, cons
     JSB_CCPhysicsDebugNode_class->flags = 0;
 
     static JSPropertySpec properties[] = {
-        {0, 0, 0, 0, 0}
+        JS_PS_END
     };
     static JSFunctionSpec funcs[] = {
         JS_FN("_setSpace", JSB_CCPhysicsDebugNode_setSpace_, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
@@ -316,7 +317,7 @@ void JSB_CCPhysicsDebugNode_createClass(JSContext *cx, JSObject* globalObj, cons
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
 
-    JSB_CCPhysicsDebugNode_object = JS_InitClass(cx, globalObj, typeClass->proto, JSB_CCPhysicsDebugNode_class, JSB_CCPhysicsDebugNode_constructor, 0,properties,funcs,NULL,st_funcs);
+    JSB_CCPhysicsDebugNode_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, typeClass->proto), JSB_CCPhysicsDebugNode_class, JSB_CCPhysicsDebugNode_constructor, 0,properties,funcs,NULL,st_funcs);
 
     TypeTest<PhysicsDebugNode> t;
     js_type_class_t *p;
@@ -336,13 +337,13 @@ void JSB_CCPhysicsDebugNode_createClass(JSContext *cx, JSObject* globalObj, cons
 // Ret value: PhysicsSprite* (o)
 bool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
 
-    jsval *argv = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     if (argc == 2) {
         const char* arg0;
-        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
         cocos2d::Rect arg1;
-        ok &= jsval_to_ccrect(cx, argv[1], &arg1);
+        ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
         PhysicsSprite* ret = PhysicsSprite::create(arg0, arg1);
@@ -358,20 +359,20 @@ bool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t
                 typeClass = typeMapIter->second;
                 CCASSERT(typeClass, "The value is null.");
                 
-                JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+                JSObject *obj = JS_NewObject(cx, typeClass->jsclass, JS::RootedObject(cx, typeClass->proto), JS::RootedObject(cx, typeClass->parentProto));
                 jsret = OBJECT_TO_JSVAL(obj);
                 js_proxy_t *p = jsb_new_proxy(ret, obj);
-                JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
+                JS::AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
             } else {
                 jsret = JSVAL_NULL;
             }
         } while (0);
-        JS_SET_RVAL(cx, vp, jsret);
+        args.rval().set(jsret);
         return true;
     }
     if (argc == 1) {
         const char* arg0;
-        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
         PhysicsSprite* ret = PhysicsSprite::create(arg0);
@@ -386,15 +387,15 @@ bool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t
                 CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
                 typeClass = typeMapIter->second;
                 CCASSERT(typeClass, "The value is null.");
-                JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+                JSObject *obj = JS_NewObject(cx, typeClass->jsclass, JS::RootedObject(cx, typeClass->proto), JS::RootedObject(cx, typeClass->parentProto));
                 jsret = OBJECT_TO_JSVAL(obj);
                 js_proxy_t *p = jsb_new_proxy(ret, obj);
-                JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
+                JS::AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
             } else {
                 jsret = JSVAL_NULL;
             }
         } while (0);
-        JS_SET_RVAL(cx, vp, jsret);
+        args.rval().set(jsret);
         return true;
     }
     return false;
@@ -404,12 +405,12 @@ bool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t
 // Arguments: SpriteFrame*
 // Ret value: PhysicsSprite* (o)
 bool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint32_t argc, jsval *vp) {
-    jsval *argv = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     cocos2d::SpriteFrame* arg0;
     if (argc >= 1) {
         do {
             js_proxy_t *proxy;
-            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
             proxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::SpriteFrame*)(proxy ? proxy->ptr : NULL);
             TEST_NATIVE_OBJECT(cx, arg0)
@@ -427,27 +428,27 @@ bool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint32
             CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
             typeClass = typeMapIter->second;
             CCASSERT(typeClass, "The value is null.");
-            JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+            JSObject *obj = JS_NewObject(cx, typeClass->jsclass, JS::RootedObject(cx, typeClass->proto), JS::RootedObject(cx, typeClass->parentProto));
             jsret = OBJECT_TO_JSVAL(obj);
             js_proxy_t *p = jsb_new_proxy(ret, obj);
-            JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
+            JS::AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
         } else {
             jsret = JSVAL_NULL;
         }
     } while (0);
-    JS_SET_RVAL(cx, vp, jsret);
+    args.rval().set(jsret);
     return true;
 }
 
 // Arguments: NSString*
 // Ret value: PhysicsSprite* (o)
 bool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, uint32_t argc, jsval *vp) {
-    jsval *argv = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     const char* arg0;
     std::string arg0_tmp;
     if (argc == 1) {
-        ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
 
         PhysicsSprite* ret = PhysicsSprite::createWithSpriteFrameName(arg0);
 
@@ -461,15 +462,15 @@ bool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, ui
                 CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
                 typeClass = typeMapIter->second;
                 CCASSERT(typeClass, "The value is null.");
-                JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+                JSObject *obj = JS_NewObject(cx, typeClass->jsclass, JS::RootedObject(cx, typeClass->proto), JS::RootedObject(cx, typeClass->parentProto));
                 jsret = OBJECT_TO_JSVAL(obj);
                 js_proxy_t *p = jsb_new_proxy(ret, obj);
-                JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
+                JS::AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
             } else {
                 jsret = JSVAL_NULL;
             }
         } while (0);
-        JS_SET_RVAL(cx, vp, jsret);
+        args.rval().set(jsret);
         return true;
     }
     
@@ -478,7 +479,7 @@ bool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, ui
 }
 
 bool JSPROXY_CCPhysicsSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    jsval *argv = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     PhysicsSprite* cobj = new PhysicsSprite();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
@@ -492,34 +493,34 @@ bool JSPROXY_CCPhysicsSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, JS::RootedObject(cx, typeClass->proto), JS::RootedObject(cx, typeClass->parentProto)));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::extension::PhysicsSprite");
+    JS::AddNamedObjectRoot(cx, &p->obj, "cocos2d::extension::PhysicsSprite");
     if (JS_HasProperty(cx, obj, "_ctor", &ok))
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
 
 static bool JSPROXY_CCPhysicsSprite_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    jsval *argv = JS_ARGV(cx, vp);
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     PhysicsSprite *nobj = new PhysicsSprite();
     if (nobj) {
         nobj->autorelease();
     }
     js_proxy_t* p = jsb_new_proxy(nobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::extension::SpriteFrame");
+    JS::AddNamedObjectRoot(cx, &p->obj, "cocos2d::extension::SpriteFrame");
     bool isFound = false;
     if (JS_HasProperty(cx, obj, "_ctor", &isFound))
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
     return true;
 }
 
-void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
+void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JS::HandleObject globalObj)
 {
     JSPROXY_CCPhysicsSprite_class = (JSClass *)calloc(1, sizeof(JSClass));
     JSPROXY_CCPhysicsSprite_class->name = "PhysicsSprite";
@@ -534,7 +535,7 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
     JSPROXY_CCPhysicsSprite_class->flags = 0;
 
     static JSPropertySpec properties[] = {
-        {0, 0, 0, 0, 0}
+        JS_PS_END
     };
     static JSFunctionSpec funcs[] = {
         JS_FN("isDirty", JSPROXY_CCPhysicsSprite_isDirty, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
@@ -560,7 +561,7 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
 
-    JSPROXY_CCPhysicsSprite_object = JS_InitClass(cx, globalObj, typeClass->proto, JSPROXY_CCPhysicsSprite_class,/* dummy_constructor<PhysicsSprite>*/JSPROXY_CCPhysicsSprite_constructor, 0,properties,funcs,NULL,st_funcs);
+    JSPROXY_CCPhysicsSprite_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, typeClass->proto), JSPROXY_CCPhysicsSprite_class,/* dummy_constructor<PhysicsSprite>*/JSPROXY_CCPhysicsSprite_constructor, 0,properties,funcs,NULL,st_funcs);
 
     TypeTest<PhysicsSprite> t;
     js_type_class_t *p;
@@ -576,34 +577,34 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
 }
 
 
-void register_CCPhysicsSprite(JSContext *cx, JSObject *obj) {
+void register_CCPhysicsSprite(JSContext *cx, JS::HandleObject obj) {
     JS::RootedValue nsval(cx);
     JS::RootedObject ns(cx);
     JS_GetProperty(cx, obj, "cc", &nsval);
     if (nsval == JSVAL_VOID) {
-        ns = JS_NewObject(cx, NULL, NULL, NULL);
+        ns = JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr());
         nsval = OBJECT_TO_JSVAL(ns);
         JS_SetProperty(cx, obj, "cc", nsval);
     } else {
         JS_ValueToObject(cx, nsval, &ns);
     }
-    obj = ns;
-    JSPROXY_CCPhysicsSprite_createClass(cx, obj);
+    //obj = ns;
+    JSPROXY_CCPhysicsSprite_createClass(cx, ns);
 }
 
-void register_CCPhysicsDebugNode(JSContext *cx, JSObject *obj) {
+void register_CCPhysicsDebugNode(JSContext *cx, JS::HandleObject obj) {
     JS::RootedValue nsval(cx);
     JS::RootedObject ns(cx);
     JS_GetProperty(cx, obj, "cc", &nsval);
     if (nsval == JSVAL_VOID) {
-        ns = JS_NewObject(cx, NULL, NULL, NULL);
+        ns = JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr());
         nsval = OBJECT_TO_JSVAL(ns);
         JS_SetProperty(cx, obj, "cc", nsval);
     } else {
         JS_ValueToObject(cx, nsval, &ns);
     }
-    obj = ns;
-    JSB_CCPhysicsDebugNode_createClass(cx, obj, "PhysicsDebugNode");
+    //obj = ns;
+    JSB_CCPhysicsDebugNode_createClass(cx, ns, "PhysicsDebugNode");
 }
 
 bool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )
@@ -641,14 +642,14 @@ bool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )
 
 jsval cpBB_to_jsval(JSContext *cx, cpBB bb )
 {
-    JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
+    JS::RootedObject object(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!object)
         return JSVAL_VOID;
     
-    if (!JS_DefineProperty(cx, object, "l", DOUBLE_TO_JSVAL(bb.l), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-        !JS_DefineProperty(cx, object, "b", DOUBLE_TO_JSVAL(bb.b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-        !JS_DefineProperty(cx, object, "r", DOUBLE_TO_JSVAL(bb.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-        !JS_DefineProperty(cx, object, "t", DOUBLE_TO_JSVAL(bb.t), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+    if (!JS_DefineProperty(cx, object, "l", bb.l, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+        !JS_DefineProperty(cx, object, "b", bb.b, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+        !JS_DefineProperty(cx, object, "r", bb.r, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+        !JS_DefineProperty(cx, object, "t", bb.t, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
         return JSVAL_VOID;
     
     return OBJECT_TO_JSVAL(object);
@@ -700,11 +701,11 @@ struct collision_handler {
     cpCollisionType     typeA;
     cpCollisionType     typeB;
     
-    JSObject            *begin;
-    JSObject            *pre;
-    JSObject            *post;
-    JSObject            *separate;
-    JSObject            *jsthis;
+    JS::Heap<JSObject*> begin;
+    JS::Heap<JSObject*> pre;
+    JS::Heap<JSObject*> post;
+    JS::Heap<JSObject*> separate;
+    JS::Heap<JSObject*> jsthis;
     JSContext           *cx;
 
     // "owner" of the collision handler
@@ -736,8 +737,8 @@ static cpBool myCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
     
     jsval args[2];
     if( handler->is_oo ) {
-        args[0] = c_class_to_jsval(handler->cx, arb, JSB_cpArbiter_object, JSB_cpArbiter_class, "cpArbiter");
-        args[1] = c_class_to_jsval(handler->cx, space, JSB_cpSpace_object, JSB_cpSpace_class, "cpArbiter");
+        args[0] = c_class_to_jsval(handler->cx, arb, JS::RootedObject(handler->cx, JSB_cpArbiter_object), JSB_cpArbiter_class, "cpArbiter");
+        args[1] = c_class_to_jsval(handler->cx, space, JS::RootedObject(handler->cx, JSB_cpSpace_object), JSB_cpSpace_class, "cpArbiter");
     } else {
         args[0] = opaque_to_jsval( handler->cx, arb);
         args[1] = opaque_to_jsval( handler->cx, space );
@@ -745,12 +746,12 @@ static cpBool myCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
     
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    jsval rval;
-    bool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, OBJECT_TO_JSVAL(handler->begin), 2, args, &rval);
+    JS::RootedValue rval(handler->cx);
+    bool ok = JS_CallFunctionValue( handler->cx, JS::RootedObject(handler->cx, handler->jsthis), JS::RootedValue(handler->cx, OBJECT_TO_JSVAL(handler->begin)), JS::HandleValueArray::fromMarkedLocation(2, args), &rval);
     JSB_PRECONDITION2(ok, handler->cx, cpFalse, "Error calling collision callback: begin");
 
-    if( JSVAL_IS_BOOLEAN(rval) ) {
-        bool ret = JSVAL_TO_BOOLEAN(rval);
+    if( rval.isBoolean() ) {
+        bool ret = rval.toBoolean();
         return (cpBool)ret;
     }
     return cpTrue;  
@@ -762,8 +763,8 @@ static cpBool myCollisionPre(cpArbiter *arb, cpSpace *space, void *data)
     
     jsval args[2];
     if( handler->is_oo ) {
-        args[0] = c_class_to_jsval(handler->cx, arb, JSB_cpArbiter_object, JSB_cpArbiter_class, "cpArbiter");
-        args[1] = c_class_to_jsval(handler->cx, space, JSB_cpSpace_object, JSB_cpSpace_class, "cpArbiter");
+        args[0] = c_class_to_jsval(handler->cx, arb, JS::RootedObject(handler->cx, JSB_cpArbiter_object), JSB_cpArbiter_class, "cpArbiter");
+        args[1] = c_class_to_jsval(handler->cx, space, JS::RootedObject(handler->cx, JSB_cpSpace_object), JSB_cpSpace_class, "cpArbiter");
     } else {
         args[0] = opaque_to_jsval( handler->cx, arb);
         args[1] = opaque_to_jsval( handler->cx, space );
@@ -771,12 +772,12 @@ static cpBool myCollisionPre(cpArbiter *arb, cpSpace *space, void *data)
     
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    jsval rval;
-    bool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, OBJECT_TO_JSVAL(handler->pre), 2, args, &rval);
+    JS::RootedValue rval(handler->cx);
+    bool ok = JS_CallFunctionValue( handler->cx, JS::RootedObject(handler->cx, handler->jsthis), JS::RootedValue(handler->cx, OBJECT_TO_JSVAL(handler->pre)), JS::HandleValueArray::fromMarkedLocation(2, args), &rval);
     JSB_PRECONDITION2(ok, handler->cx, false, "Error calling collision callback: pre");
     
-    if( JSVAL_IS_BOOLEAN(rval) ) {
-        bool ret = JSVAL_TO_BOOLEAN(rval);
+    if( rval.isBoolean() ) {
+        bool ret = rval.toBoolean();
         return (cpBool)ret;
     }
     return cpTrue;  
@@ -789,8 +790,8 @@ static void myCollisionPost(cpArbiter *arb, cpSpace *space, void *data)
     jsval args[2];
     
     if( handler->is_oo ) {
-        args[0] = c_class_to_jsval(handler->cx, arb, JSB_cpArbiter_object, JSB_cpArbiter_class, "cpArbiter");
-        args[1] = c_class_to_jsval(handler->cx, space, JSB_cpSpace_object, JSB_cpSpace_class, "cpArbiter");
+        args[0] = c_class_to_jsval(handler->cx, arb, JS::RootedObject(handler->cx, JSB_cpArbiter_object), JSB_cpArbiter_class, "cpArbiter");
+        args[1] = c_class_to_jsval(handler->cx, space, JS::RootedObject(handler->cx, JSB_cpSpace_object), JSB_cpSpace_class, "cpArbiter");
     } else {
         args[0] = opaque_to_jsval( handler->cx, arb);
         args[1] = opaque_to_jsval( handler->cx, space );
@@ -798,8 +799,8 @@ static void myCollisionPost(cpArbiter *arb, cpSpace *space, void *data)
     
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    jsval ignore;
-    bool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, OBJECT_TO_JSVAL(handler->post), 2, args, &ignore);
+    JS::RootedValue ignore(handler->cx);
+    bool ok = JS_CallFunctionValue( handler->cx, JS::RootedObject(handler->cx, handler->jsthis), JS::RootedValue(handler->cx, OBJECT_TO_JSVAL(handler->post)), JS::HandleValueArray::fromMarkedLocation(2, args), &ignore);
     JSB_PRECONDITION2(ok, handler->cx, , "Error calling collision callback: Post");
 }
 
@@ -811,8 +812,8 @@ static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
 
     jsval args[2];
     if( handler->is_oo ) {
-        args[0] = c_class_to_jsval(handler->cx, arb, JSB_cpArbiter_object, JSB_cpArbiter_class, "cpArbiter");
-        args[1] = c_class_to_jsval(handler->cx, space, JSB_cpSpace_object, JSB_cpSpace_class, "cpArbiter");
+        args[0] = c_class_to_jsval(handler->cx, arb, JS::RootedObject(handler->cx, JSB_cpArbiter_object), JSB_cpArbiter_class, "cpArbiter");
+        args[1] = c_class_to_jsval(handler->cx, space, JS::RootedObject(handler->cx, JSB_cpSpace_object), JSB_cpSpace_class, "cpArbiter");
     } else {
         args[0] = opaque_to_jsval( handler->cx, arb);
         args[1] = opaque_to_jsval( handler->cx, space );
@@ -820,8 +821,8 @@ static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
     
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    jsval ignore;
-    bool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, OBJECT_TO_JSVAL(handler->separate), 2, args, &ignore);
+    JS::RootedValue ignore(handler->cx);
+    bool ok = JS_CallFunctionValue( handler->cx, JS::RootedObject(handler->cx, handler->jsthis), JS::RootedValue(handler->cx, OBJECT_TO_JSVAL(handler->separate)), JS::HandleValueArray::fromMarkedLocation(2, args), &ignore);
     JSB_PRECONDITION2(ok, handler->cx, , "Error calling collision callback: Separate");}
 
 #pragma mark - cpSpace
@@ -847,14 +848,14 @@ void JSB_cpSpace_finalize(JSFreeOp *fop, JSObject *jsthis)
 
                 // unroot it
                 if( current->begin ) {
-                    JS_RemoveObjectRoot(cx, &current->begin);
+                    JS::RemoveObjectRoot(cx, &current->begin);
                 }
                 if( current->pre )
-                    JS_RemoveObjectRoot(cx, &current->pre);
+                    JS::RemoveObjectRoot(cx, &current->pre);
                 if( current->post )
-                    JS_RemoveObjectRoot(cx, &current->post);
+                    JS::RemoveObjectRoot(cx, &current->post);
                 if( current->separate )
-                    JS_RemoveObjectRoot(cx, &current->separate);
+                    JS::RemoveObjectRoot(cx, &current->separate);
                 
                 HASH_DEL(collision_handler_hash,current);  /* delete; users advances to next */
                 free(current);            /* optional- if you want to free  */
@@ -884,20 +885,20 @@ bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, c
     bool ok = true;
     
     // args
-    ok &= jsval_to_int(cx, *argvp++, (int32_t*) &handler->typeA );
-    ok &= jsval_to_int(cx, *argvp++, (int32_t*) &handler->typeB );
+    ok &= jsval_to_int(cx, JS::RootedValue(cx, *argvp++), (int32_t*) &handler->typeA );
+    ok &= jsval_to_int(cx, JS::RootedValue(cx, *argvp++), (int32_t*) &handler->typeB );
     
     // this is no longer passed, so "this" is going to be "this".
 //  ok &= JS_ValueToObject(cx, *argvp++, &handler->jsthis );
     handler->jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     
-    handler->begin = !JSVAL_IS_NULL(*argvp) ? JSVAL_TO_OBJECT(*argvp) : NULL;
+    handler->begin = argvp->toObjectOrNull();
     argvp++;
-    handler->pre = !JSVAL_IS_NULL(*argvp) ? JSVAL_TO_OBJECT(*argvp) : NULL;
+    handler->pre = argvp->toObjectOrNull();
     argvp++;
-    handler->post = !JSVAL_IS_NULL(*argvp) ? JSVAL_TO_OBJECT(*argvp) : NULL;
+    handler->post = argvp->toObjectOrNull();
     argvp++;
-    handler->separate = !JSVAL_IS_NULL(*argvp) ? JSVAL_TO_OBJECT(*argvp) : NULL;
+    handler->separate = argvp->toObjectOrNull();
     argvp++;
     
     JSB_PRECONDITION(ok, "Error parsing arguments");
@@ -910,13 +911,13 @@ bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, c
     
     // Root it
     if( handler->begin )
-        JS_AddNamedObjectRoot(cx, &handler->begin, "begin collision_handler");
+        JS::AddNamedObjectRoot(cx, &handler->begin, "begin collision_handler");
     if( handler->pre )
-        JS_AddNamedObjectRoot(cx, &handler->pre, "pre collision_handler");
+        JS::AddNamedObjectRoot(cx, &handler->pre, "pre collision_handler");
     if( handler->post )
-        JS_AddNamedObjectRoot(cx, &handler->post, "post collision_handler");
+        JS::AddNamedObjectRoot(cx, &handler->post, "post collision_handler");
     if( handler->separate )
-        JS_AddNamedObjectRoot(cx, &handler->separate, "separate collision_handler");
+        JS::AddNamedObjectRoot(cx, &handler->separate, "separate collision_handler");
     
     handler->cx = cx;
     
@@ -943,8 +944,6 @@ bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, c
     handler->hash_key = paired_key;
     HASH_ADD_INT( collision_handler_hash, hash_key, handler );
     
-    
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
     return true;
 }
 
@@ -953,11 +952,12 @@ bool JSB_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2(argc==7, cx, false, "Invalid number of arguments");
 
 
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
     // args
     cpSpace *space;
-    bool ok = jsval_to_opaque( cx, *argvp++, (void**)&space);
+    jsval* argvp = args.array();
+    bool ok = jsval_to_opaque( cx, JS::RootedValue(cx, *argvp++), (void**)&space);
     JSB_PRECONDITION(ok, "Error parsing arguments");
     
     return __jsb_cpSpace_addCollisionHandler(cx, vp, argvp, space, 0);
@@ -969,11 +969,11 @@ bool JSB_cpSpace_addCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2(argc==6, cx, false, "Invalid number of arguments");
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     JSB_PRECONDITION( jsthis, "Invalid jsthis object");
-    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     void *handle = proxy->handle;
     
-    return __jsb_cpSpace_addCollisionHandler(cx, vp, JS_ARGV(cx,vp), (cpSpace*)handle, 1);
+    return __jsb_cpSpace_addCollisionHandler(cx, vp, args.array(), (cpSpace*)handle, 1);
 }
 
 bool JSB_cpSpace_setDefaultCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
@@ -990,11 +990,11 @@ bool JSB_cpSpace_setDefaultCollisionHandler(JSContext *cx, uint32_t argc, jsval 
     handler->typeB = 0;
     handler->jsthis = jsthis;
 
-    jsval *argv = JS_ARGV(cx,vp);
-    handler->begin = !JSVAL_IS_NULL(argv[0]) ? JSVAL_TO_OBJECT(argv[0]) : NULL;
-    handler->pre = !JSVAL_IS_NULL(argv[1]) ? JSVAL_TO_OBJECT(argv[1]) : NULL;
-    handler->post = !JSVAL_IS_NULL(argv[2]) ? JSVAL_TO_OBJECT(argv[2]) : NULL;
-    handler->separate = !JSVAL_IS_NULL(argv[3]) ? JSVAL_TO_OBJECT(argv[3]) : NULL;
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    handler->begin = args.get(0).toObjectOrNull();
+    handler->pre = args.get(1).toObjectOrNull();
+    handler->post = args.get(2).toObjectOrNull();
+    handler->separate = args.get(3).toObjectOrNull();
 
     // Object Oriented API ?
     handler->is_oo = 1;
@@ -1019,14 +1019,14 @@ bool JSB_cpSpace_setDefaultCollisionHandler(JSContext *cx, uint32_t argc, jsval 
     HASH_FIND_INT(collision_handler_hash, &paired_key, hashElement);
     if( hashElement ) {
         if( hashElement->begin ) {
-            JS_RemoveObjectRoot(cx, &hashElement->begin);
+            JS::RemoveObjectRoot(cx, &hashElement->begin);
         }
         if( hashElement->pre )
-            JS_RemoveObjectRoot(cx, &hashElement->pre);
+            JS::RemoveObjectRoot(cx, &hashElement->pre);
         if( hashElement->post )
-            JS_RemoveObjectRoot(cx, &hashElement->post);
+            JS::RemoveObjectRoot(cx, &hashElement->post);
         if( hashElement->separate )
-            JS_RemoveObjectRoot(cx, &hashElement->separate);
+            JS::RemoveObjectRoot(cx, &hashElement->separate);
         HASH_DEL( collision_handler_hash, hashElement );
         free( hashElement );
     }
@@ -1036,15 +1036,15 @@ bool JSB_cpSpace_setDefaultCollisionHandler(JSContext *cx, uint32_t argc, jsval 
 
     // Root it
     if( handler->begin )
-        JS_AddNamedObjectRoot(cx, &handler->begin, "begin collision_handler");
+        JS::AddNamedObjectRoot(cx, &handler->begin, "begin collision_handler");
     if( handler->pre )
-        JS_AddNamedObjectRoot(cx, &handler->pre, "pre collision_handler");
+        JS::AddNamedObjectRoot(cx, &handler->pre, "pre collision_handler");
     if( handler->post )
-        JS_AddNamedObjectRoot(cx, &handler->post, "post collision_handler");
+        JS::AddNamedObjectRoot(cx, &handler->post, "post collision_handler");
     if( handler->separate )
-        JS_AddNamedObjectRoot(cx, &handler->separate, "separate collision_handler");
+        JS::AddNamedObjectRoot(cx, &handler->separate, "separate collision_handler");
 
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    args.rval().setUndefined();
 
     return true;
 }
@@ -1058,8 +1058,8 @@ bool __jsb_cpSpace_removeCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp
     
     cpCollisionType typeA;
     cpCollisionType typeB;
-    ok &= jsval_to_int(cx, *argvp++, (int32_t*) &typeA );
-    ok &= jsval_to_int(cx, *argvp++, (int32_t*) &typeB );
+    ok &= jsval_to_int(cx, JS::RootedValue(cx, *argvp++), (int32_t*) &typeA );
+    ok &= jsval_to_int(cx, JS::RootedValue(cx, *argvp++), (int32_t*) &typeB );
 
     JSB_PRECONDITION(ok, "Error parsing arguments");
     
@@ -1073,19 +1073,18 @@ bool __jsb_cpSpace_removeCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp
         
         // unroot it
         if( hashElement->begin )
-            JS_RemoveObjectRoot(cx, &hashElement->begin);
+            JS::RemoveObjectRoot(cx, &hashElement->begin);
         if( hashElement->pre )
-            JS_RemoveObjectRoot(cx, &hashElement->pre);
+            JS::RemoveObjectRoot(cx, &hashElement->pre);
         if( hashElement->post )
-            JS_RemoveObjectRoot(cx, &hashElement->post);
+            JS::RemoveObjectRoot(cx, &hashElement->post);
         if( hashElement->separate )
-            JS_RemoveObjectRoot(cx, &hashElement->separate);
+            JS::RemoveObjectRoot(cx, &hashElement->separate);
         
         HASH_DEL( collision_handler_hash, hashElement );
         free( hashElement );
     }
     
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
     return true;
 }
 
@@ -1094,10 +1093,11 @@ bool JSB_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==3, cx, false, "Invalid number of arguments");
 
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     
     cpSpace* space;
-    bool ok = jsval_to_opaque( cx, *argvp++, (void**)&space);
+    jsval* argvp = args.array();
+    bool ok = jsval_to_opaque( cx, JS::RootedValue(cx, *argvp++), (void**)&space);
     
     JSB_PRECONDITION(ok, "Error parsing arguments");
 
@@ -1108,14 +1108,14 @@ bool JSB_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
 bool JSB_cpSpace_removeCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==2, cx, false, "Invalid number of arguments");
-
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     JSB_PRECONDITION( jsthis, "Invalid jsthis object");
     
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     void *handle = proxy->handle;
     
-    return __jsb_cpSpace_removeCollisionHandler(cx, vp, JS_ARGV(cx,vp), (cpSpace*)handle);
+    return __jsb_cpSpace_removeCollisionHandler(cx, vp, args.array(), (cpSpace*)handle);
 }
 
 #pragma mark Add functios. Root JSObjects
@@ -1128,21 +1128,21 @@ bool JSB_cpSpace_addBody(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg1;
     
-    jsval retval = *argvp; struct jsb_c_proxy_s *retproxy;
-    ok &= jsval_to_c_class( cx, *argvp++, (void**)&arg1, &retproxy );
+    jsval retval = args.get(0); struct jsb_c_proxy_s *retproxy;
+    ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, &retproxy );
     JSB_PRECONDITION(ok, "Error processing arguments");
     
     cpSpaceAddBody((cpSpace*)arg0 , (cpBody*)arg1  );
     
     // Root it:
-    JS_AddNamedObjectRoot(cx, &retproxy->jsobj, "cpBody");
+    JS::AddNamedObjectRoot(cx, &retproxy->jsobj, "cpBody");
     
     // addBody returns the same object that was added, so return it without conversions
-    JS_SET_RVAL(cx, vp, retval);
+    args.rval().set(retval);
     
     return true;
 }
@@ -1155,21 +1155,21 @@ bool JSB_cpSpace_addConstraint(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpConstraint* arg1;
     
-    jsval retval = *argvp; struct jsb_c_proxy_s *retproxy;
-    ok &= jsval_to_c_class( cx, *argvp++, (void**)&arg1, &retproxy );
+    jsval retval = args.get(0); struct jsb_c_proxy_s *retproxy;
+    ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, &retproxy );
     JSB_PRECONDITION(ok, "Error processing arguments");
     
     cpSpaceAddConstraint((cpSpace*)arg0 , (cpConstraint*)arg1  );
     
     // Root it:
-    JS_AddNamedObjectRoot(cx, &retproxy->jsobj, "cpConstraint");
+    JS::AddNamedObjectRoot(cx, &retproxy->jsobj, "cpConstraint");
     
     // addConstraint returns the same object that was added, so return it without conversions
-    JS_SET_RVAL(cx, vp, retval);
+    args.rval().set(retval);
     
     return true;
 }
@@ -1182,21 +1182,21 @@ bool JSB_cpSpace_addShape(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpShape* arg1;
 
-    jsval retval = *argvp; struct jsb_c_proxy_s *retproxy;
-    ok &= jsval_to_c_class( cx, *argvp++, (void**)&arg1, &retproxy );
+    jsval retval = args.get(0); struct jsb_c_proxy_s *retproxy;
+    ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, &retproxy );
     JSB_PRECONDITION(ok, "Error processing arguments");
     
     cpSpaceAddShape((cpSpace*)arg0 , (cpShape*)arg1  );
     
     // Root it:
-    JS_AddNamedObjectRoot(cx, &retproxy->jsobj, "cpShape");
+    JS::AddNamedObjectRoot(cx, &retproxy->jsobj, "cpShape");
     
     // addShape returns the same object that was added, so return it without conversions
-    JS_SET_RVAL(cx, vp, retval);
+    args.rval().set(retval);
     
     return true;
 }
@@ -1209,21 +1209,21 @@ bool JSB_cpSpace_addStaticShape(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpShape* arg1;
     
-    jsval retval = *argvp; struct jsb_c_proxy_s *retproxy;
-    ok &= jsval_to_c_class( cx, *argvp++, (void**)&arg1, &retproxy );
+    jsval retval = args.get(0); struct jsb_c_proxy_s *retproxy;
+    ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, &retproxy );
     JSB_PRECONDITION(ok, "Error processing arguments");
     
     cpSpaceAddStaticShape((cpSpace*)arg0 , (cpShape*)arg1  );
     
     // Root it:
-    JS_AddNamedObjectRoot(cx, &retproxy->jsobj, "cpShape (static)");
+    JS::AddNamedObjectRoot(cx, &retproxy->jsobj, "cpShape (static)");
 
     // addStaticShape returns the same object that was added, so return it without conversions
-    JS_SET_RVAL(cx, vp, retval);
+    args.rval().set(retval);
     
     return true;
 }
@@ -1238,18 +1238,18 @@ bool JSB_cpSpace_removeBody(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg1;
     
     struct jsb_c_proxy_s *retproxy;
-    ok &= jsval_to_c_class( cx, *argvp++, (void**)&arg1, &retproxy );
+    ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, &retproxy );
     JSB_PRECONDITION(ok, "Error processing arguments");
     
     cpSpaceRemoveBody((cpSpace*)arg0 , (cpBody*)arg1  );
-    JS_RemoveObjectRoot(cx, &retproxy->jsobj);
+    JS::RemoveObjectRoot(cx, &retproxy->jsobj);
     
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    args.rval().setUndefined();
     return true;
 }
 
@@ -1261,18 +1261,18 @@ bool JSB_cpSpace_removeConstraint(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpConstraint* arg1;
     
     struct jsb_c_proxy_s *retproxy;
-    ok &= jsval_to_c_class( cx, *argvp++, (void**)&arg1, &retproxy );
+    ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, &retproxy );
     JSB_PRECONDITION(ok, "Error processing arguments");
     
     cpSpaceRemoveConstraint((cpSpace*)arg0 , (cpConstraint*)arg1  );
-    JS_RemoveObjectRoot(cx, &retproxy->jsobj);
+    JS::RemoveObjectRoot(cx, &retproxy->jsobj);
 
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    args.rval().setUndefined();
     return true;
 }
 
@@ -1284,18 +1284,18 @@ bool JSB_cpSpace_removeShape(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpShape* arg1;
     
     struct jsb_c_proxy_s *retproxy;
-    ok &= jsval_to_c_class( cx, *argvp++, (void**)&arg1, &retproxy );
+    ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, &retproxy );
     JSB_PRECONDITION(ok, "Error processing arguments");
     
     cpSpaceRemoveShape((cpSpace*)arg0 , (cpShape*)arg1  );
-    JS_RemoveObjectRoot(cx, &retproxy->jsobj);
+    JS::RemoveObjectRoot(cx, &retproxy->jsobj);
     
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    args.rval().setUndefined();
     return true;
 }
 
@@ -1307,18 +1307,18 @@ bool JSB_cpSpace_removeStaticShape(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpShape* arg1;
     
     struct jsb_c_proxy_s *retproxy;
-    ok &= jsval_to_c_class( cx, *argvp++, (void**)&arg1, &retproxy );
+    ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, &retproxy );
     JSB_PRECONDITION(ok, "Error processing arguments");
     
     cpSpaceRemoveStaticShape((cpSpace*)arg0 , (cpShape*)arg1  );
-    JS_RemoveObjectRoot(cx, &retproxy->jsobj);
+    JS::RemoveObjectRoot(cx, &retproxy->jsobj);
     
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    args.rval().setUndefined();
     return true;
 }
 
@@ -1328,17 +1328,17 @@ bool JSB_cpSpace_segmentQueryFirst(JSContext *cx, uint32_t argc, jsval *vp){
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* space = (cpSpace*) proxy->handle;
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     
     cpVect start;
     cpVect end;
     cpLayers layers;
     cpGroup group;
     bool ok = true;
-    ok &= jsval_to_cpVect( cx, argvp[0], &start );
-    ok &= jsval_to_cpVect( cx, argvp[1], &end );
-    ok &= jsval_to_uint32( cx, argvp[2], &layers );
-    ok &= jsval_to_uint( cx, argvp[3], (unsigned int*)&group );
+    ok &= jsval_to_cpVect( cx, args.get(0), &start );
+    ok &= jsval_to_cpVect( cx, args.get(1), &end );
+    ok &= jsval_to_uint32( cx, args.get(2), &layers );
+    ok &= jsval_to_uint( cx, args.get(3), (unsigned int*)&group );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     
     cpSegmentQueryInfo *out = new cpSegmentQueryInfo();
@@ -1346,15 +1346,15 @@ bool JSB_cpSpace_segmentQueryFirst(JSContext *cx, uint32_t argc, jsval *vp){
     
     if(target)
     {
-        JSObject *jsobj = JS_NewObject(cx, JSB_cpSegmentQueryInfo_class, JSB_cpSegmentQueryInfo_object, NULL);
+        JSObject *jsobj = JS_NewObject(cx, JSB_cpSegmentQueryInfo_class, JS::RootedObject(cx, JSB_cpSegmentQueryInfo_object), JS::NullPtr());
         jsb_set_jsobject_for_proxy(jsobj, out);
         jsb_set_c_proxy_for_jsobject(jsobj, out, JSB_C_FLAG_CALL_FREE);
-        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
     }
     else
     {
         delete out;
-        JS_SET_RVAL(cx, vp, JSVAL_NULL);
+        args.rval().set(JSVAL_NULL);
     }
     return true;
 }
@@ -1365,26 +1365,17 @@ bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *v
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* space = (cpSpace*) proxy->handle;
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     
     cpVect point;
     cpFloat maxDistance;
     cpLayers layers;
     cpGroup group;
     bool ok = true;
-    ok &= jsval_to_cpVect( cx, argvp[0], &point );
-    if(JSVAL_IS_INT(argvp[1]))
-    {
-        int arg1;
-        ok &= jsval_to_int(cx, argvp[1], &arg1);
-        maxDistance = (cpFloat) arg1;
-    }
-    else
-    {
-        maxDistance = JSVAL_TO_DOUBLE(argvp[1]);
-    }
-    ok &= jsval_to_uint32( cx, argvp[2], &layers );
-    ok &= jsval_to_uint( cx, argvp[3], (unsigned int*)&group );
+    ok &= jsval_to_cpVect( cx, args.get(0), &point );
+    ok &= JS::ToNumber(cx, args.get(1), &maxDistance);
+    ok &= jsval_to_uint32( cx, args.get(2), &layers );
+    ok &= jsval_to_uint( cx, args.get(3), (unsigned int*)&group );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     
     cpNearestPointQueryInfo* info = new cpNearestPointQueryInfo();
@@ -1392,15 +1383,15 @@ bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *v
     
     if(target)
     {
-        JSObject *jsobj = JS_NewObject(cx, JSB_cpNearestPointQueryInfo_class, JSB_cpNearestPointQueryInfo_object, NULL);
+        JSObject *jsobj = JS_NewObject(cx, JSB_cpNearestPointQueryInfo_class, JS::RootedObject(cx, JSB_cpNearestPointQueryInfo_object), JS::NullPtr());
         jsb_set_jsobject_for_proxy(jsobj, info);
         jsb_set_c_proxy_for_jsobject(jsobj, info, JSB_C_FLAG_CALL_FREE);
-        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
     }
     else
     {
         delete info;
-        JS_SET_RVAL(cx, vp, JSVAL_NULL);
+        args.rval().set(JSVAL_NULL);
     }
     return true;
 }
@@ -1418,11 +1409,11 @@ void JSB_cpSpace_pointQuery_func(cpShape *shape, void *data)
     {
         JSContext* cx = ((JSB_cp_each_UserData*)data)->cx;
         jsval* func = ((JSB_cp_each_UserData*)data)->func;
-        jsval rval;
+        JS::RootedValue rval(cx);
         jsval argv = OBJECT_TO_JSVAL(jsCpObject);
 
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-        JS_CallFunctionValue(cx, NULL, *func, 1, &argv, &rval);
+        JS_CallFunctionValue(cx, JS::NullPtr(), JS::RootedValue(cx, *func), JS::HandleValueArray::fromMarkedLocation(1, &argv), &rval);
 
     }
 }
@@ -1432,7 +1423,7 @@ bool JSB_cpSpace_pointQuery(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2(argc == 4, cx, false, "Invalid number of arguments");
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
-    JSObject* jsthis = JSVAL_TO_OBJECT(args.thisv());
+    JSObject* jsthis = args.thisv().toObjectOrNull();
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* space = (cpSpace*) proxy->handle;
 
@@ -1467,14 +1458,14 @@ void JSB_cpSpace_nearestPointQuery_func(cpShape *shape, cpFloat distance, cpVect
     {
         JSContext* cx = ((JSB_cp_each_UserData*)data)->cx;
         jsval* func = ((JSB_cp_each_UserData*)data)->func;
-        jsval rval;
+        JS::RootedValue rval(cx);
         jsval argv[3];
         argv[0] = OBJECT_TO_JSVAL(jsCpObject);
         argv[1] = DOUBLE_TO_JSVAL(distance);
         argv[2] = cpVect_to_jsval(cx, point);
 
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-        JS_CallFunctionValue(cx, NULL, *func, 3, argv, &rval);
+        JS_CallFunctionValue(cx, JS::NullPtr(), JS::RootedValue(cx, *func), JS::HandleValueArray::fromMarkedLocation(3, argv), &rval);
 
     }
 }
@@ -1484,7 +1475,7 @@ bool JSB_cpSpace_nearestPointQuery(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2(argc == 5, cx, false, "Invalid number of arguments");
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
-    JSObject* jsthis = JSVAL_TO_OBJECT(args.thisv());
+    JSObject* jsthis = args.thisv().toObjectOrNull();
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* space = (cpSpace*) proxy->handle;
 
@@ -1520,14 +1511,14 @@ void JSB_cpSpace_segmentQuery_func(cpShape *shape, cpFloat t, cpVect n, void *da
     {
         JSContext* cx = ((JSB_cp_each_UserData*)data)->cx;
         jsval* func = ((JSB_cp_each_UserData*)data)->func;
-        jsval rval;
+        JS::RootedValue rval(cx);
         jsval argv[3];
         argv[0] = OBJECT_TO_JSVAL(jsCpObject);
         argv[1] = DOUBLE_TO_JSVAL(t);
         argv[2] = cpVect_to_jsval(cx, n);
 
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-        JS_CallFunctionValue(cx, NULL, *func, 3, argv, &rval);
+        JS_CallFunctionValue(cx, JS::NullPtr(), JS::RootedValue(cx, *func), JS::HandleValueArray::fromMarkedLocation(3, argv), &rval);
 
     }
 }
@@ -1537,7 +1528,7 @@ bool JSB_cpSpace_segmentQuery(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2(argc == 5, cx, false, "Invalid number of arguments");
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
-    JSObject* jsthis = JSVAL_TO_OBJECT(args.thisv());
+    JSObject* jsthis = args.thisv().toObjectOrNull();
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* space = (cpSpace*) proxy->handle;
 
@@ -1574,7 +1565,7 @@ bool JSB_cpSpace_bbQuery(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2(argc == 4, cx, false, "Invalid number of arguments");
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
-    JSObject* jsthis = JSVAL_TO_OBJECT(args.thisv());
+    JSObject* jsthis = args.thisv().toObjectOrNull();
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* space = (cpSpace*) proxy->handle;
 
@@ -1611,10 +1602,10 @@ void JSB_cpSpace_each_func(T* cpObject, void *data)
     {
         JSContext* cx = ((JSB_cp_each_UserData*)data)->cx;
         jsval* func = ((JSB_cp_each_UserData*)data)->func;
-        jsval rval;
+        JS::RootedValue rval(cx);
         jsval argv = OBJECT_TO_JSVAL(jsCpObject);
 
-        JS_CallFunctionValue(cx, NULL, *func, 1, &argv, &rval);
+        JS_CallFunctionValue(cx, JS::NullPtr(), JS::RootedValue(cx, *func), JS::HandleValueArray::fromMarkedLocation(1, &argv), &rval);
         
     }
 }
@@ -1626,14 +1617,14 @@ bool JSB_cpSpace_eachShape(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* space = (cpSpace*)proxy->handle;
-    jsval *argvp = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
     JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
     if (!data)
         return false;
 
     data->cx = cx;
-    data->func = argvp;
+    data->func = const_cast<JS::Value*>(args.get(0).address());
 
     cpSpaceEachShape(space, JSB_cpSpace_each_func, data);
     free(data);
@@ -1647,14 +1638,14 @@ bool JSB_cpSpace_eachBody(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* space = (cpSpace*)proxy->handle;
-    jsval *argvp = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
     JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
     if (!data)
         return false;
 
     data->cx = cx;
-    data->func = argvp;
+    data->func = const_cast<JS::Value*>(args.get(0).address());
 
     cpSpaceEachBody(space, JSB_cpSpace_each_func, data);
     free(data);
@@ -1668,14 +1659,14 @@ bool JSB_cpSpace_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* space = (cpSpace*)proxy->handle;
-    jsval *argvp = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
     JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
     if (!data)
         return false;
 
     data->cx = cx;
-    data->func = argvp;
+    data->func = const_cast<JS::Value*>(args.get(0).address());
 
     cpSpaceEachConstraint(space, JSB_cpSpace_each_func, data);
     free(data);
@@ -1690,12 +1681,11 @@ struct __PostStep_data{
 void __JSB_PostStep_callback(cpSpace *space, void *key, __PostStep_data *data)
 {
     JSContext* cx = data->cx;
-    jsval func = const_cast<jsval&>(data->func.get());
-    jsval rval;
-    jsval argv;
+    JS::RootedValue func(cx, data->func);
+    JS::RootedValue rval(cx);
 
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-    JS_CallFunctionValue(cx, NULL, func, 0, &argv, &rval);
+    JS_CallFunctionValue(cx, JS::NullPtr(), func, JS::HandleValueArray::empty(), &rval);
 
     free(data);
 }
@@ -1705,7 +1695,7 @@ bool JSB_cpSpace_addPostStepCallback(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2(argc == 1, cx, false, "Invalid number of arguments");
 
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = JSVAL_TO_OBJECT(args.thisv());
+    JSObject* jsthis = args.thisv().toObjectOrNull();
     jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* space = (cpSpace*)proxy->handle;
 
@@ -1733,10 +1723,10 @@ void JSB_cpBody_each_func(cpBody* body, T* cpObject, void* data)
     {
         JSContext* cx = ((JSB_cp_each_UserData*)data)->cx;
         jsval* func = ((JSB_cp_each_UserData*)data)->func;
-        jsval rval;
+        JS::RootedValue rval(cx);
         jsval argv = OBJECT_TO_JSVAL(jsCpObject);
 
-        JS_CallFunctionValue(cx, NULL, *func, 1, &argv, &rval);
+        JS_CallFunctionValue(cx, JS::NullPtr(), JS::RootedValue(cx, *func), JS::HandleValueArray::fromMarkedLocation(1, &argv), &rval);
 
     }
 }
@@ -1748,14 +1738,14 @@ bool JSB_cpBody_eachShape(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* body = (cpBody*)proxy->handle;
-    jsval *argvp = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
     JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
     if (!data)
         return false;
 
     data->cx = cx;
-    data->func = argvp;
+    data->func = const_cast<JS::Value*>(args.get(0).address());
 
     cpBodyEachShape(body, JSB_cpBody_each_func, data);
     free(data);
@@ -1769,14 +1759,14 @@ bool JSB_cpBody_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* body = (cpBody*)proxy->handle;
-    jsval *argvp = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
     JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
     if (!data)
         return false;
 
     data->cx = cx;
-    data->func = argvp;
+    data->func = const_cast<JS::Value*>(args.get(0).address());
 
     cpBodyEachConstraint(body, JSB_cpBody_each_func, data);
     free(data);
@@ -1790,14 +1780,14 @@ bool JSB_cpBody_eachArbiter(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* body = (cpBody*)proxy->handle;
-    jsval *argvp = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
     JSB_cp_each_UserData *data = (JSB_cp_each_UserData*)malloc(sizeof(JSB_cp_each_UserData));
     if (!data)
         return false;
 
     data->cx = cx;
-    data->func = argvp;
+    data->func = const_cast<JS::Value*>(args.get(0).address());
 
     cpBodyEachArbiter(body, JSB_cpBody_each_func, data);
     free(data);
@@ -1808,7 +1798,7 @@ bool JSB_cpBody_eachArbiter(JSContext *cx, uint32_t argc, jsval *vp)
 
 #pragma mark getBodies
 static
-bool __jsb_cpArbiter_getBodies(JSContext *cx, jsval *vp, jsval *argvp, cpArbiter *arbiter, unsigned int is_oo)
+bool __jsb_cpArbiter_getBodies(JSContext *cx, const JS::CallArgs& args, cpArbiter *arbiter, unsigned int is_oo)
 {
     cpBody *bodyA;
     cpBody *bodyB;
@@ -1817,18 +1807,18 @@ bool __jsb_cpArbiter_getBodies(JSContext *cx, jsval *vp, jsval *argvp, cpArbiter
     JS::RootedValue valA(cx);
     JS::RootedValue valB(cx);
     if( is_oo ) {
-        valA = c_class_to_jsval(cx, bodyA, JSB_cpBody_object, JSB_cpBody_class, "cpArbiter");
-        valB = c_class_to_jsval(cx, bodyB, JSB_cpBody_object, JSB_cpBody_class, "cpArbiter");
+        valA = c_class_to_jsval(cx, bodyA, JS::RootedObject(cx, JSB_cpBody_object), JSB_cpBody_class, "cpArbiter");
+        valB = c_class_to_jsval(cx, bodyB, JS::RootedObject(cx, JSB_cpBody_object), JSB_cpBody_class, "cpArbiter");
     } else {
         valA = opaque_to_jsval(cx, bodyA);
         valB = opaque_to_jsval(cx, bodyB);      
     }
     
-    JS::RootedObject jsobj(cx, JS_NewArrayObject(cx, 2, NULL));
-    JS_SetElement(cx, jsobj, 0, &valA);
-    JS_SetElement(cx, jsobj, 1, &valB);
+    JS::RootedObject jsobj(cx, JS_NewArrayObject(cx, 2));
+    JS_SetElement(cx, jsobj, 0, valA);
+    JS_SetElement(cx, jsobj, 1, valB);
     
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
     
     return true;    
 }
@@ -1838,13 +1828,13 @@ bool JSB_cpArbiterGetBodies(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==1, cx, false, "Invalid number of arguments");
     
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     
     cpArbiter* arbiter;
-    if( ! jsval_to_opaque( cx, *argvp++, (void**)&arbiter ) )
+    if( ! jsval_to_opaque( cx, args.get(0), (void**)&arbiter ) )
         return false;
 
-    return __jsb_cpArbiter_getBodies(cx, vp, argvp, arbiter, 0);
+    return __jsb_cpArbiter_getBodies(cx, args, arbiter, 0);
 }
 
 // Method
@@ -1858,13 +1848,13 @@ bool JSB_cpArbiter_getBodies(JSContext *cx, uint32_t argc, jsval *vp)
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     JSB_PRECONDITION( proxy, "Invalid private object");
     void *handle = proxy->handle;
-    
-    return __jsb_cpArbiter_getBodies(cx, vp, JS_ARGV(cx,vp), (cpArbiter*)handle, 1);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    return __jsb_cpArbiter_getBodies(cx, args, (cpArbiter*)handle, 1);
 }
 
 #pragma mark getShapes
 static
-bool __jsb_cpArbiter_getShapes(JSContext *cx, jsval *vp, jsval *argvp, cpArbiter *arbiter, unsigned int is_oo)
+bool __jsb_cpArbiter_getShapes(JSContext *cx, const JS::CallArgs& args, cpArbiter *arbiter, unsigned int is_oo)
 {
     cpShape *shapeA;
     cpShape *shapeB;
@@ -1873,18 +1863,18 @@ bool __jsb_cpArbiter_getShapes(JSContext *cx, jsval *vp, jsval *argvp, cpArbiter
     JS::RootedValue valA(cx);
     JS::RootedValue valB(cx);
     if( is_oo ) {
-        valA = c_class_to_jsval(cx, shapeA, JSB_cpShape_object, JSB_cpShape_class, "cpShape");
-        valB = c_class_to_jsval(cx, shapeB, JSB_cpShape_object, JSB_cpShape_class, "cpShape");
+        valA = c_class_to_jsval(cx, shapeA, JS::RootedObject(cx, JSB_cpShape_object), JSB_cpShape_class, "cpShape");
+        valB = c_class_to_jsval(cx, shapeB, JS::RootedObject(cx, JSB_cpShape_object), JSB_cpShape_class, "cpShape");
     } else {
         valA = opaque_to_jsval(cx, shapeA);
         valB = opaque_to_jsval(cx, shapeB);
     }
     
-    JS::RootedObject jsobj(cx, JS_NewArrayObject(cx, 2, NULL));
-    JS_SetElement(cx, jsobj, 0, &valA);
-    JS_SetElement(cx, jsobj, 1, &valB);
+    JS::RootedObject jsobj(cx, JS_NewArrayObject(cx, 2));
+    JS_SetElement(cx, jsobj, 0, valA);
+    JS_SetElement(cx, jsobj, 1, valB);
     
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
     
     return true;
 }
@@ -1894,13 +1884,13 @@ bool JSB_cpArbiterGetShapes(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==1, cx, false, "Invalid number of arguments");
     
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     
     cpArbiter* arbiter;
-    if( ! jsval_to_opaque( cx, *argvp++, (void**) &arbiter ) )
+    if( ! jsval_to_opaque( cx, args.get(0), (void**) &arbiter ) )
        return false;
 
-    return __jsb_cpArbiter_getShapes(cx, vp, argvp, arbiter, 0);
+    return __jsb_cpArbiter_getShapes(cx, args, arbiter, 0);
 }
 
 // method
@@ -1912,8 +1902,8 @@ bool JSB_cpArbiter_getShapes(JSContext *cx, uint32_t argc, jsval *vp)
     
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     void *handle = proxy->handle;
-    
-    return __jsb_cpArbiter_getShapes(cx, vp, JS_ARGV(cx,vp), (cpArbiter*)handle, 1);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    return __jsb_cpArbiter_getShapes(cx, args, (cpArbiter*)handle, 1);
 }
 
 #pragma mark - Body
@@ -1924,13 +1914,13 @@ bool JSB_cpArbiter_getShapes(JSContext *cx, uint32_t argc, jsval *vp)
 bool JSB_cpBody_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==2, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpBody_class, JSB_cpBody_object, NULL);
-    JS::CallArgs argvp = JS::CallArgsFromVp(argc, vp);
+    JSObject *jsobj = JS_NewObject(cx, JSB_cpBody_class, JS::RootedObject(cx, JSB_cpBody_object), JS::NullPtr());
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double m; double i;
     
-    ok &= JS::ToNumber( cx, argvp[0], &m );
-    ok &= JS::ToNumber( cx, argvp[1], &i );
+    ok &= JS::ToNumber( cx, args.get(0), &m );
+    ok &= JS::ToNumber( cx, args.get(1), &i );
     JSB_PRECONDITION(ok, "Error processing arguments");
     
     cpBody *ret_body = NULL;
@@ -1948,17 +1938,17 @@ bool JSB_cpBody_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     
     jsb_set_jsobject_for_proxy(jsobj, ret_body);
     
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
     return true;
 }
 
 #pragma mark getUserData
 
 static
-bool __jsb_cpBody_getUserData(JSContext *cx, jsval *vp, jsval *argvp, cpBody *body)
+bool __jsb_cpBody_getUserData(JSContext *cx, const JS::CallArgs& args, cpBody *body)
 {
     JSObject *data = (JSObject*) cpBodyGetUserData(body);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(data));
+    args.rval().set(OBJECT_TO_JSVAL(data));
     
     return true;
 }
@@ -1968,12 +1958,12 @@ bool JSB_cpBodyGetUserData(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==1, cx, false, "Invalid number of arguments");
 
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     cpBody *body;
-    if( ! jsval_to_opaque( cx, *argvp++, (void**) &body ) )
+    if( ! jsval_to_opaque( cx, args.get(0), (void**) &body ) )
         return false;
 
-    return __jsb_cpBody_getUserData(cx, vp, argvp, body);
+    return __jsb_cpBody_getUserData(cx, args, body);
 }
 
 // method
@@ -1985,8 +1975,8 @@ bool JSB_cpBody_getUserData(JSContext *cx, uint32_t argc, jsval *vp)
     
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     void *handle = proxy->handle;
-    
-    return __jsb_cpBody_getUserData(cx, vp, JS_ARGV(cx,vp), (cpBody*)handle);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    return __jsb_cpBody_getUserData(cx, args, (cpBody*)handle);
 }
 
 
@@ -2002,7 +1992,6 @@ bool __jsb_cpBody_setUserData(JSContext *cx, jsval *vp, jsval *argvp, cpBody *bo
     JSB_PRECONDITION(ok, "Error parsing arguments");
     
     cpBodySetUserData(body, jsobj);
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
     
     return true;
 }
@@ -2012,9 +2001,10 @@ bool JSB_cpBodySetUserData(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==2, cx, false, "Invalid number of arguments");
 
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     cpBody *body;
-    bool ok = jsval_to_opaque( cx, *argvp++, (void**) &body );
+    jsval* argvp = args.array();
+    bool ok = jsval_to_opaque( cx, JS::RootedValue(cx, *argvp++), (void**) &body );
     JSB_PRECONDITION(ok, "Error parsing arguments");
     return __jsb_cpBody_setUserData(cx, vp, argvp, body);
 }
@@ -2028,8 +2018,8 @@ bool JSB_cpBody_setUserData(JSContext *cx, uint32_t argc, jsval *vp)
     
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     void *handle = proxy->handle;
-    
-    return __jsb_cpBody_setUserData(cx, vp, JS_ARGV(cx,vp), (cpBody*)handle);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    return __jsb_cpBody_setUserData(cx, vp, args.array(), (cpBody*)handle);
 }
 
 #pragma mark - Poly related
@@ -2038,19 +2028,19 @@ bool JSB_cpBody_setUserData(JSContext *cx, uint32_t argc, jsval *vp)
 bool JSB_cpAreaForPoly(JSContext *cx, uint32_t argc, jsval *vp)
 {   
     JSB_PRECONDITION2(argc==1, cx, false, "Invalid number of arguments");
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect *verts;
     int numVerts;
     
-    ok &= jsval_to_array_of_cpvect( cx, *argvp++, &verts, &numVerts);
+    ok &= jsval_to_array_of_cpvect( cx, args.get(0), &verts, &numVerts);
     JSB_PRECONDITION2(ok, cx, false, "Error parsing array");
     
     cpFloat area = cpAreaForPoly(numVerts, verts);
     
     free(verts);
     
-    JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(area));
+    args.rval().set(DOUBLE_TO_JSVAL(area));
     return true;
 }
 
@@ -2058,15 +2048,15 @@ bool JSB_cpAreaForPoly(JSContext *cx, uint32_t argc, jsval *vp)
 bool JSB_cpMomentForPoly(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==3, cx, false, "Invalid number of arguments");
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect *verts; cpVect offset;
     int numVerts;
     double m;
     
-    ok &= JS::ToNumber(cx, JS::RootedValue(cx, *argvp++), &m);
-    ok &= jsval_to_array_of_cpvect( cx, *argvp++, &verts, &numVerts);
-    ok &= jsval_to_cpVect( cx, *argvp++, (cpVect*) &offset );
+    ok &= JS::ToNumber(cx, args.get(0), &m);
+    ok &= jsval_to_array_of_cpvect( cx, args.get(1), &verts, &numVerts);
+    ok &= jsval_to_cpVect( cx, args.get(2), (cpVect*) &offset );
 
     JSB_PRECONDITION2(ok, cx, false, "Error parsing args");
     
@@ -2074,7 +2064,7 @@ bool JSB_cpMomentForPoly(JSContext *cx, uint32_t argc, jsval *vp)
     
     free(verts);
     
-    JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(moment));
+    args.rval().set(DOUBLE_TO_JSVAL(moment));
     return true;
 }
 
@@ -2082,19 +2072,19 @@ bool JSB_cpMomentForPoly(JSContext *cx, uint32_t argc, jsval *vp)
 bool JSB_cpCentroidForPoly(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==1, cx, false, "Invalid number of arguments");
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect *verts;
     int numVerts;
     
-    ok &= jsval_to_array_of_cpvect( cx, *argvp++, &verts, &numVerts);
+    ok &= jsval_to_array_of_cpvect( cx, args.get(0), &verts, &numVerts);
     JSB_PRECONDITION2(ok, cx, false, "Error parsing args");
     
     cpVect centroid = cpCentroidForPoly(numVerts, verts);
     
     free(verts);
     
-    JS_SET_RVAL(cx, vp, cpVect_to_jsval(cx, (cpVect)centroid));
+    args.rval().set(cpVect_to_jsval(cx, (cpVect)centroid));
     return true;
 }
 
@@ -2118,21 +2108,21 @@ bool JSB_cpBase_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2( argc==1, cx, false, "Invalid arguments. Expecting 1");
     
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpBase_class, JSB_cpBase_object, NULL);
+    JSObject *jsobj = JS_NewObject(cx, JSB_cpBase_class, JS::RootedObject(cx, JSB_cpBase_object), JS::NullPtr());
     
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     
     void *handle = NULL;
     
-    ok = jsval_to_opaque(cx, *argvp++, &handle);
+    ok = jsval_to_opaque(cx, args.get(0), &handle);
     
     JSB_PRECONDITION(ok, "Error converting arguments for JSB_cpBase_constructor");
 
     jsb_set_c_proxy_for_jsobject(jsobj, handle, JSB_C_FLAG_DO_NOT_CALL_FREE);
     jsb_set_jsobject_for_proxy(jsobj, handle);
     
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
     return true;
 }
 
@@ -2150,11 +2140,12 @@ bool JSB_cpBase_getHandle(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION( jsthis, "Invalid jsthis object");
     JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments");
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     void *handle = proxy->handle;
     
     jsval ret_val = opaque_to_jsval(cx, handle);
-    JS_SET_RVAL(cx, vp, ret_val);
+    args.rval().set(ret_val);
     return true;
 }
 
@@ -2164,21 +2155,21 @@ bool JSB_cpBase_setHandle(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION( jsthis, "Invalid jsthis object");
     JSB_PRECONDITION2(argc==1, cx, false, "Invalid number of arguments");
     
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     
     void *handle;
-    bool ok = jsval_to_opaque(cx, *argvp++, &handle);
+    bool ok = jsval_to_opaque(cx, args.get(0), &handle);
     JSB_PRECONDITION( ok, "Invalid parsing arguments");
 
     jsb_set_c_proxy_for_jsobject(jsthis, handle, JSB_C_FLAG_DO_NOT_CALL_FREE);
     jsb_set_jsobject_for_proxy(jsthis, handle);
     
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    args.rval().setUndefined();
     return true;
 }
 
 
-void JSB_cpBase_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+void JSB_cpBase_createClass(JSContext *cx, JS::HandleObject globalObj, const char* name )
 {
     JSB_cpBase_class = (JSClass *)calloc(1, sizeof(JSClass));
     JSB_cpBase_class->name = name;
@@ -2193,7 +2184,7 @@ void JSB_cpBase_createClass(JSContext *cx, JSObject* globalObj, const char* name
     JSB_cpBase_class->flags = JSCLASS_HAS_PRIVATE;
     
     static JSPropertySpec properties[] = {
-        {0, 0, 0, 0, 0}
+        JS_PS_END
     };
     static JSFunctionSpec funcs[] = {
         JS_FN("getHandle", JSB_cpBase_getHandle, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
@@ -2204,7 +2195,7 @@ void JSB_cpBase_createClass(JSContext *cx, JSObject* globalObj, const char* name
         JS_FS_END
     };
     
-    JSB_cpBase_object = JS_InitClass(cx, globalObj, NULL, JSB_cpBase_class, JSB_cpBase_constructor,0,properties,funcs,NULL,st_funcs);
+    JSB_cpBase_object = JS_InitClass(cx, globalObj, JS::NullPtr(), JSB_cpBase_class, JSB_cpBase_constructor,0,properties,funcs,NULL,st_funcs);
 //  bool found;
 //  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 }
@@ -2214,22 +2205,22 @@ void JSB_cpBase_createClass(JSContext *cx, JSObject* globalObj, const char* name
 bool JSB_cpPolyShape_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==3, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpPolyShape_class, JSB_cpPolyShape_object, NULL);
-    jsval *argvp = JS_ARGV(cx,vp);
+    JSObject *jsobj = JS_NewObject(cx, JSB_cpPolyShape_class, JS::RootedObject(cx, JSB_cpPolyShape_object), JS::NullPtr());
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* body; cpVect *verts; cpVect offset;
     int numVerts;
     
-    ok &= jsval_to_c_class( cx, *argvp++, (void**)&body, NULL );
-    ok &= jsval_to_array_of_cpvect( cx, *argvp++, &verts, &numVerts);
-    ok &= jsval_to_cpVect( cx, *argvp++, (cpVect*) &offset );
+    ok &= jsval_to_c_class( cx, args.get(0), (void**)&body, NULL );
+    ok &= jsval_to_array_of_cpvect( cx, args.get(1), &verts, &numVerts);
+    ok &= jsval_to_cpVect( cx, args.get(2), (cpVect*) &offset );
     JSB_PRECONDITION(ok, "Error processing arguments");
     cpShape *shape = cpPolyShapeNew(body, numVerts, verts, offset);
 
     jsb_set_c_proxy_for_jsobject(jsobj, shape, JSB_C_FLAG_CALL_FREE);
     jsb_set_jsobject_for_proxy(jsobj, shape);
     
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
     
     free(verts);
     
@@ -2257,7 +2248,7 @@ static void unroot_jsobject_from_handle(void *handle)
     
         // HACK context from global
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_RemoveObjectRoot(cx, &proxy->jsobj);
+        JS::RemoveObjectRoot(cx, &proxy->jsobj);
     }
     
 }
