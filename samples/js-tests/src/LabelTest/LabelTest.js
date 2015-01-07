@@ -1991,8 +1991,6 @@ var WrapAlgorithmTest = AtlasDemo.extend({
 // Flow control
 //
 var arrayOfLabelTest = [
-    // test by jl
-    BMFontMultiLineAlignmentTest,
     LabelAtlasOpacityTest,
     LabelAtlasOpacityColorTest,
     LabelAtlasHD,
@@ -2005,7 +2003,7 @@ var arrayOfLabelTest = [
     BMFontSpeedTest,
     BMFontMultiLineTest,
     BMFontMultiLine2Test,
-    //BMFontMultiLineAlignmentTest,
+    BMFontMultiLineAlignmentTest,
     BMFontOneAtlas,
     BMFontUnicode,
     BMFontInit,
