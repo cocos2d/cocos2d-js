@@ -31,6 +31,7 @@
             for (var i = 0; i < textures.length; i++) {
                 cc.spriteFrameCache.addSpriteFrames(resourcePath + textures[i]);
             }
+
         },
 
         pretreatment: function(json, resourcePath){
@@ -39,7 +40,7 @@
 
         deferred: function(json, resourcePath, node, file){
             if(node){
-                ccs.actionManager.initWithDictionary(file, json["animation"], node);
+                ccs.actionManager.initWithDictionary(file, JSON.stringify(json["animation"]), node);
                 node.setContentSize(cc.size(json["designWidth"], json["designHeight"]));
             }
         }
@@ -129,7 +130,12 @@
                 var mgt = layoutParameterDic["marginTop"]||0;
                 var mgr = layoutParameterDic["marginRight"]||0;
                 var mgb = layoutParameterDic["marginDown"]||0;
-                parameter.setMargin(mgl, mgt, mgr, mgb);
+                var objectTemp = {};
+                objectTemp.left = mgl;
+                objectTemp.top = mgt;
+                objectTemp.right = mgr;
+                objectTemp.bottom = mgb;
+                parameter.setMargin(objectTemp);
                 widget.setLayoutParameter(parameter);
             }
         }

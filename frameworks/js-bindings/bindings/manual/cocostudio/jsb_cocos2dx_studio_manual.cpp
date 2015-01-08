@@ -286,6 +286,40 @@ static bool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32
     return false;
 }
 
+static bool js_cocos2dx_studio_ActionManagerEx_initWithDictionary(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::ActionManagerEx* cobj = (cocostudio::ActionManagerEx *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionManagerEx_initWithDictionary : Invalid Native Object");
+    if (argc == 3) {
+        const char* arg0;
+        const char* arg1;
+        cocos2d::Ref* arg2;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
+        rapidjson::Value arg1Json(arg1);
+        //ok &= jsval_to_ccvalue(cx, argv[1], &arg1);
+        do {
+            if (!argv[2].isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[2]);
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg2 = (cocos2d::Ref*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionManagerEx_initWithDictionary : Error processing arguments");
+        cobj->initWithDictionary(arg0, arg1Json, arg2);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_ActionManagerEx_initWithDictionary : wrong number of arguments: %d, was expecting %d", argc, 3);
+    return false;
+}
+
 bool js_cocos2dx_studio_ColliderBody_getCalculatedVertexList(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -1008,6 +1042,7 @@ extern JSObject* jsb_cocostudio_ColliderBody_prototype;
 extern JSObject* jsb_cocostudio_BaseData_prototype;
 extern JSObject* jsb_cocostudio_AnimationData_prototype;
 extern JSObject* jsb_cocostudio_MovementData_prototype;
+extern JSObject* jsb_cocostudio_ActionManagerEx_prototype;
 
 void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
 {
@@ -1019,6 +1054,8 @@ void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
 
     JS_DefineFunction(cx, jsb_cocostudio_ArmatureDataManager_prototype, "addArmatureFileInfoAsync", jsb_Animation_addArmatureFileInfoAsyncCallFunc, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
+    JS_DefineFunction(cx, jsb_cocostudio_ActionManagerEx_prototype, "initWithDictionary", js_cocos2dx_studio_ActionManagerEx_initWithDictionary, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+
     static JSPropertySpec baseDataProps[] = {
         {"x", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_BaseData_x), JSOP_WRAPPER(js_set_BaseData_x)},
         {"y", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_BaseData_y), JSOP_WRAPPER(js_set_BaseData_y)},
@@ -1056,4 +1093,5 @@ void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
         {0, 0, 0, 0, 0}
     };
     JS_DefineProperties(cx, jsb_cocostudio_AnimationData_prototype, movementDataProps);
+    
 }
