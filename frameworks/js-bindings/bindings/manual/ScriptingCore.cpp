@@ -1298,23 +1298,27 @@ bool ScriptingCore::executeFunctionWithObjectData(void* nativeObj, const char *n
 
 bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    return executeFunctionWithOwner(owner, name, args);
+    JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(argc, vp);
+    JS::RootedValue rval(_cx);
+    return executeFunctionWithOwner(owner, name, args, &rval);
 }
 
 bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp, JS::MutableHandleValue retVal)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    //should not use CallArgs here, use HandleValueArray instead !!
+    //because the "jsval* vp" is not the standard format from JSNative, the array doesn't contain this and retval
+    //JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(argc, vp);
     return executeFunctionWithOwner(owner, name, args, retVal);
 }
 
-bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, const JS::CallArgs& args)
+bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, const JS::HandleValueArray& args)
 {
     JS::RootedValue ret(_cx);
     return executeFunctionWithOwner(owner, name, args, &ret);
 }
 
-bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, const JS::CallArgs& args, JS::MutableHandleValue retVal)
+bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, const JS::HandleValueArray& args, JS::MutableHandleValue retVal)
 {
     bool bRet = false;
     bool hasAction;

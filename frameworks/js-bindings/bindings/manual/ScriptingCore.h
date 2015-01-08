@@ -123,8 +123,8 @@ public:
 
     bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp);
     bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp, JS::MutableHandleValue retVal);
-    bool executeFunctionWithOwner(jsval owner, const char *name, const JS::CallArgs& args);
-    bool executeFunctionWithOwner(jsval owner, const char *name, const JS::CallArgs& args, JS::MutableHandleValue retVal);
+    bool executeFunctionWithOwner(jsval owner, const char *name, const JS::HandleValueArray& args);
+    bool executeFunctionWithOwner(jsval owner, const char *name, const JS::HandleValueArray& args, JS::MutableHandleValue retVal);
 
     void executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback);
     void executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback, const JS::HandleValueArray& vp, JS::MutableHandleValue retVal);
