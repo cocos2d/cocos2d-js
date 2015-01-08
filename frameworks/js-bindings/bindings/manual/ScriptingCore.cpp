@@ -1738,7 +1738,7 @@ bool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 
 void ScriptingCore::enableDebugger(unsigned int port)
 {
-    if (_debugGlobal.ref().get() == NULL)
+    if (_debugGlobal.empty())
     {
         JSAutoCompartment ac0(_cx, _global.ref().get());
         
@@ -1750,9 +1750,9 @@ void ScriptingCore::enableDebugger(unsigned int port)
         //AddObjectRoot(_cx, &_debugGlobal); no need, it's persistent rooted now
         JS::RootedObject rootedDebugObj(_cx, _debugGlobal.ref());
         JS_WrapObject(_cx, &rootedDebugObj);
-        JSAutoCompartment ac(_cx, _debugGlobal.ref());
+        //JSAutoCompartment ac(_cx, _debugGlobal.ref()); //really needed?
         // these are used in the debug program
-        JS_DefineFunction(_cx, rootedDebugObj, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, rootedDebugObj, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_ENUMERATE | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_enterNestedEventLoop", JSBDebug_enterNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_exitNestedEventLoop", JSBDebug_exitNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
