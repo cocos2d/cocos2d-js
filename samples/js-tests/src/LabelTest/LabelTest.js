@@ -1534,7 +1534,15 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
     },
 
     onScaleChange:function(sener){
-        this.labelShouldRetain.setScale(2.0);
+        if (this.labelShouldRetain.getScale() > 1)
+        {
+            this.labelShouldRetain.setScale(1.0);
+        }
+        else
+        {
+            this.labelShouldRetain.setScale(2.0);
+        }
+
     },
     onLineBreakChanged:function(sender){
         this.lineBreakFlag = !this.lineBreakFlag;
@@ -1996,8 +2004,6 @@ var WrapAlgorithmTest = AtlasDemo.extend({
 // Flow control
 //
 var arrayOfLabelTest = [
-    // test by jl
-    BMFontMultiLineAlignmentTest,
     LabelAtlasOpacityTest,
     LabelAtlasOpacityColorTest,
     LabelAtlasHD,
@@ -2010,7 +2016,7 @@ var arrayOfLabelTest = [
     BMFontSpeedTest,
     BMFontMultiLineTest,
     BMFontMultiLine2Test,
-    //BMFontMultiLineAlignmentTest,
+    BMFontMultiLineAlignmentTest,
     BMFontOneAtlas,
     BMFontUnicode,
     BMFontInit,
