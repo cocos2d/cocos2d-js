@@ -942,14 +942,14 @@ static bool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
                         
                         //TODO: really need root?
 //                        JS_AddValueRoot(cx, valArr);
-                        JS::CallArgs args = JS::CallArgsFromVp(2, valArr);
+                        JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(2, valArr);
                         JS_CallFunctionValue(cx, thisObj, jsvalCallback, args, &retval);
 //                        JS_RemoveValueRoot(cx, valArr);
                     }
                     else
                     {
                         jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
-                        JS::CallArgs args = JS::CallArgsFromVp(1, &senderVal);
+                        JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(1, &senderVal);
 //                        JS_AddValueRoot(cx, &senderVal);
                         JS_CallFunctionValue(cx, thisObj, jsvalCallback, args, &retval);
 //                        JS_RemoveValueRoot(cx, &senderVal);
@@ -1037,7 +1037,7 @@ bool js_cocos2dx_CallFunc_initWithFunction(JSContext *cx, uint32_t argc, jsval *
 //                        JS_CallFunctionValue(cx, thisObj, jsvalCallback, 2, valArr, &retval);
 //                        JS_RemoveValueRoot(cx, valArr);
 
-                        JS::CallArgs args = JS::CallArgsFromVp(2, valArr);
+                        JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(2, valArr);
                         JS_CallFunctionValue(cx, thisObj, jsvalCallback, args, &retval);
                     }
                     else
@@ -1047,7 +1047,7 @@ bool js_cocos2dx_CallFunc_initWithFunction(JSContext *cx, uint32_t argc, jsval *
 //                        JS_CallFunctionValue(cx, thisObj, jsvalCallback, 1, &senderVal, &retval);
 //                        JS_RemoveValueRoot(cx, &senderVal);
 
-                        JS::CallArgs args = JS::CallArgsFromVp(1, &senderVal);
+                        JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(1, &senderVal);
                         JS_CallFunctionValue(cx, thisObj, jsvalCallback, args, &retval);
                     }
                 }
