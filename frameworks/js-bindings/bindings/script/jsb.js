@@ -114,11 +114,11 @@ require('script/jsb_pool.js');
 require('script/studio/jsb_studio_load.js');
 require('script/studio/parsers/jsb_studio_action-1.x.js');
 require('script/studio/parsers/jsb_studio_action-2.x.js');
-//require('script/studio/parsers/jsb_studio_compatible.js');
 require('script/studio/parsers/jsb_studio_scene-1.x.js');
 require('script/studio/parsers/jsb_studio_timelineParser-1.x.js');
 require('script/studio/parsers/jsb_studio_timelineParser-2.x.js');
 require('script/studio/parsers/jsb_studio_uiParser-1.x.js');
+require('script/studio/parsers/jsb_studio_compatible.js');
 
 if (jsb.fileUtils.isFileExist('jsb_pluginx.js')) {
     if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {

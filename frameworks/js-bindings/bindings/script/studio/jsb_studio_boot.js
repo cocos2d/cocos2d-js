@@ -21,25 +21,35 @@
  */
 
 //ccs.nodeReader = ccs.NodeReader.getInstance();
-ccs.actionTimelineCache = ccs.ActionTimelineCache.getInstance();
-ccs.actionTimelineCache.createAction = ccs.ActionTimelineCache.createAction;
+// the logic code modify to js in jsb_studio_load.js
+//ccs.actionTimelineCache start-----------------------------------
+//ccs.actionTimelineCache = ccs.ActionTimelineCache.getInstance();
+//ccs.actionTimelineCache.createAction = ccs.ActionTimelineCache.createAction;
+// ccs.actionTimelineCache end-----------------------------------
 
-ccs.csLoader = ccs.CSLoader.getInstance();
-ccs.csLoader.createNode = ccs.CSLoader.createNode;
-ccs.csLoader.createTimeline = ccs.CSLoader.createTimeline;
+// the logic code modify to js in jsb_studio_load.js
+// ccs.csLoader start-----------------------------------
+//ccs.csLoader = ccs.CSLoader.getInstance();
+//ccs.csLoader.createNode = ccs.CSLoader.createNode;
+//ccs.csLoader.createTimeline = ccs.CSLoader.createTimeline;
+// ccs.csLoader end-----------------------------------
 
+// the logic code modify to js in jsb_studio_compatible.js
+// ccs.uiReader start-----------------------------------
 // In extension
 /**
  * @type {Object} Base object for ccs.uiReader
  * @name ccs.uiReader
  */
-ccs.uiReader = null;
-cc.defineGetterSetter(ccs, "uiReader", function() {
-    return ccs.GUIReader.getInstance();
-});
-ccs.GUIReader.prototype.clear = function() {
-    ccs.GUIReader.destroyInstance();
-};
+//ccs.uiReader = null;
+//cc.defineGetterSetter(ccs, "uiReader", function() {
+//    return ccs.GUIReader.getInstance();
+//});
+//ccs.GUIReader.prototype.clear = function() {
+//    ccs.GUIReader.destroyInstance();
+//};
+// ccs.uiReader end-----------------------------------
+
 /**
  * @type {Object} Format and manage armature configuration and armature animation
  * @name ccs.armatureDataManager
@@ -55,16 +65,20 @@ ccs.ArmatureDataManager.prototype.clear = function() {
  * @type {Object} Base singleton object for ccs.sceneReader
  * @name ccs.sceneReader
  */
-ccs.sceneReader = null;
-cc.defineGetterSetter(ccs, "sceneReader", function() {
-    return ccs.SceneReader.getInstance();
-});
-ccs.SceneReader.prototype.clear = function() {
-    ccs.SceneReader.destroyInstance();
-};
-ccs.SceneReader.prototype.version = function() {
-    return ccs.SceneReader.sceneReaderVersion();
-};
+// the logic code modify to js in jsb_studio_compatible.js
+// ccs.sceneReader start-----------------------------------
+//ccs.sceneReader = null;
+//cc.defineGetterSetter(ccs, "sceneReader", function() {
+//    return ccs.SceneReader.getInstance();
+//});
+//ccs.SceneReader.prototype.clear = function() {
+//    ccs.SceneReader.destroyInstance();
+//};
+//ccs.SceneReader.prototype.version = function() {
+//    return ccs.SceneReader.sceneReaderVersion();
+//};
+// ccs.sceneReader end-----------------------------------
+
 /**
  * @type {Object} Base singleton object for ccs.ActionManager
  * @name ccs.actionManager
@@ -73,6 +87,8 @@ ccs.actionManager = ccs.ActionManager.getInstance();
 ccs.ActionManager.prototype.clear = function() {
     this.releaseActions();
 };
-
+ccs.ActionManager.prototype.initWithDictionary = function(file, dic, node) {
+    ccs.actionManager.initWithDictionaryEx(file, JSON.stringify(dic), node);
+}
 //ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
 //ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
