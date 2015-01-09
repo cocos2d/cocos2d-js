@@ -300,8 +300,11 @@ static bool js_cocos2dx_studio_ActionManagerEx_initWithDictionary(JSContext *cx,
         cocos2d::Ref* arg2;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
         std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
-        rapidjson::Value arg1Json(arg1);
-        //ok &= jsval_to_ccvalue(cx, argv[1], &arg1);
+        rapidjson::Document arg1Jsondoc;
+        arg1Jsondoc.Parse<0>(arg1);
+        if (arg1Jsondoc.HasParseError()) {
+            CCLOG("GetParseError %s\n",arg1Jsondoc.GetParseError());
+        }
         do {
             if (!argv[2].isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
@@ -311,7 +314,7 @@ static bool js_cocos2dx_studio_ActionManagerEx_initWithDictionary(JSContext *cx,
             JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionManagerEx_initWithDictionary : Error processing arguments");
-        cobj->initWithDictionary(arg0, arg1Json, arg2);
+        cobj->initWithDictionary(arg0, arg1Jsondoc, arg2);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
