@@ -40,7 +40,7 @@
 
         deferred: function(json, resourcePath, node, file){
             if(node){
-                ccs.actionManager.initWithDictionary(file, JSON.stringify(json["animation"]), node);
+                ccs.actionManager.initWithDictionary(file, json["animation"], node);
                 node.setContentSize(cc.size(json["designWidth"], json["designHeight"]));
             }
         }
