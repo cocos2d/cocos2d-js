@@ -92,3 +92,27 @@ ccs.ActionManager.prototype.initWithDictionary = function(file, dic, node) {
 }
 //ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
 //ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
+
+/**
+ * The same as cc.Node
+ * @class
+ * @extends ccs.Class
+ */
+ccs.Node = ccs.Node || cc.Node;
+ccs.Node.extend = ccs.Node.extend || cc.Node.extend;
+
+/**
+ * The same as cc.Sprite
+ * @class
+ * @extends ccs.Class
+ */
+ccs.Sprite = ccs.Sprite || cc.Sprite;
+ccs.Sprite.extend = ccs.Sprite.extend || cc.Sprite.extend;
+
+/**
+ * The same as cc.Component
+ * @class
+ * @extends ccs.Class
+ */
+ccs.Component = ccs.Component || cc.Component;
+ccs.Component.extend = ccs.Component.extend || cc.Component.extend;
