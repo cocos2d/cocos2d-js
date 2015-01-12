@@ -92,7 +92,7 @@ ccs.ComRender.prototype._ctor = function() {
 };
 
 ccs.ActionTimelineData.prototype._ctor = function(actionTag) {
-    if (actionTag != undefined)
+    if (actionTag !== undefined)
     {
         ccs.ActionTimelineData.prototype.init.call(this,actionTag);
     }
