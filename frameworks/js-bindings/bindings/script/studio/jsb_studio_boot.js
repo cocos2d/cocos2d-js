@@ -20,36 +20,6 @@
  * THE SOFTWARE.
  */
 
-//ccs.nodeReader = ccs.NodeReader.getInstance();
-// the logic code modify to js in jsb_studio_load.js
-//ccs.actionTimelineCache start-----------------------------------
-//ccs.actionTimelineCache = ccs.ActionTimelineCache.getInstance();
-//ccs.actionTimelineCache.createAction = ccs.ActionTimelineCache.createAction;
-// ccs.actionTimelineCache end-----------------------------------
-
-// the logic code modify to js in jsb_studio_load.js
-// ccs.csLoader start-----------------------------------
-//ccs.csLoader = ccs.CSLoader.getInstance();
-//ccs.csLoader.createNode = ccs.CSLoader.createNode;
-//ccs.csLoader.createTimeline = ccs.CSLoader.createTimeline;
-// ccs.csLoader end-----------------------------------
-
-// the logic code modify to js in jsb_studio_compatible.js
-// ccs.uiReader start-----------------------------------
-// In extension
-/**
- * @type {Object} Base object for ccs.uiReader
- * @name ccs.uiReader
- */
-//ccs.uiReader = null;
-//cc.defineGetterSetter(ccs, "uiReader", function() {
-//    return ccs.GUIReader.getInstance();
-//});
-//ccs.GUIReader.prototype.clear = function() {
-//    ccs.GUIReader.destroyInstance();
-//};
-// ccs.uiReader end-----------------------------------
-
 /**
  * @type {Object} Format and manage armature configuration and armature animation
  * @name ccs.armatureDataManager
@@ -61,23 +31,6 @@ cc.defineGetterSetter(ccs, "armatureDataManager", function() {
 ccs.ArmatureDataManager.prototype.clear = function() {
     ccs.ArmatureDataManager.destroyInstance();
 };
-/**
- * @type {Object} Base singleton object for ccs.sceneReader
- * @name ccs.sceneReader
- */
-// the logic code modify to js in jsb_studio_compatible.js
-// ccs.sceneReader start-----------------------------------
-//ccs.sceneReader = null;
-//cc.defineGetterSetter(ccs, "sceneReader", function() {
-//    return ccs.SceneReader.getInstance();
-//});
-//ccs.SceneReader.prototype.clear = function() {
-//    ccs.SceneReader.destroyInstance();
-//};
-//ccs.SceneReader.prototype.version = function() {
-//    return ccs.SceneReader.sceneReaderVersion();
-//};
-// ccs.sceneReader end-----------------------------------
 
 /**
  * @type {Object} Base singleton object for ccs.ActionManager
@@ -90,8 +43,6 @@ ccs.ActionManager.prototype.clear = function() {
 ccs.ActionManager.prototype.initWithDictionary = function(file, dic, node) {
     ccs.actionManager.initWithDictionaryEx(file, JSON.stringify(dic), node);
 }
-//ccs.spriteFrameCacheHelper = ccs.SpriteFrameCacheHelper.getInstance();
-//ccs.dataReaderHelper = ccs.DataReaderHelper.getInstance();
 
 /**
  * The same as cc.Node

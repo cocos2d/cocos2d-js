@@ -114,7 +114,7 @@
 
 
         node.setTag(tag);
-        node.setUserObject(ccs.ActionTimelineData.create(actionTag));
+        node.setUserObject(new ccs.ActionTimelineData(actionTag));
     };
 
     parser.parseComponent = function(node, options){
@@ -249,7 +249,7 @@
                 node.setSkewY(skewy);
 
             var actionTag = options["actionTag"];
-            node.setUserObject(ccs.ActionTimelineData.create(actionTag));
+            node.setUserObject(new ccs.ActionTimelineData(actionTag));
         }
         return node;
     };

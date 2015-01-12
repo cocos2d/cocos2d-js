@@ -103,7 +103,7 @@
             node.setTag(json["Tag"]);
 
         if (json["ActionTag"] != null)
-            node.setUserObject(ccs.ActionTimelineData.create(json["ActionTag"]));
+            node.setUserObject(new ccs.ActionTimelineData(json["ActionTag"]));
 
         node.setCascadeColorEnabled(true);
         node.setCascadeOpacityEnabled(true);
@@ -214,7 +214,7 @@
         var actionTag = json["ActionTag"];
         if(actionTag){
             widget.setActionTag(actionTag);
-            widget.setUserObject(ccs.ActionTimelineData.create(actionTag));
+            widget.setUserObject(new ccs.ActionTimelineData(actionTag));
         }
 
         var rotationSkewX = json["RotationSkewX"];
