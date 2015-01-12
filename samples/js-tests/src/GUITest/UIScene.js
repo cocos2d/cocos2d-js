@@ -44,7 +44,7 @@ UIScene = cc.Scene.extend({
             this.addChild(mainNode);
 
             var widget;
-            if(cocoStudioTestScene_api == 0){
+            if(cocoStudioOldApiFlag == 0){
                 var json = ccs.load("res/cocosui/UITest/UITest.json");
                 widget = json.node;
             }else{

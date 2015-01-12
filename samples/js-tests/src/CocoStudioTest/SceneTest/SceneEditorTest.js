@@ -152,7 +152,7 @@ var LoadSceneEdtiorFileTest = SceneEditorTestLayer.extend({
         this._super();
         var node,
             file = "res/scenetest/LoadSceneEdtiorFileTest/FishJoy2.json";
-        if(cocoStudioTestScene_api == 0){
+        if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
             node = json.node;
@@ -184,7 +184,7 @@ var SpriteComponentTest = SceneEditorTestLayer.extend({
         this._super();
         var node,
             file = "res/scenetest/SpriteComponentTest/SpriteComponentTest.json";
-        if(cocoStudioTestScene_api == 0){
+        if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
             node = json.node;
@@ -220,7 +220,7 @@ var ArmatureComponentTest = SceneEditorTestLayer.extend({
         this._super();
         var node,
             file = "res/scenetest/ArmatureComponentTest/ArmatureComponentTest.json";
-        if(cocoStudioTestScene_api == 0){
+        if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
             node = json.node;ccs.load(file);
@@ -255,7 +255,7 @@ var UIComponentTest = SceneEditorTestLayer.extend({
         this._super();
         var node,
             file = "res/scenetest/UIComponentTest/UIComponentTest.json";
-        if(cocoStudioTestScene_api == 0){
+        if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
             node = json.node;
@@ -300,7 +300,7 @@ var TmxMapComponentTest = SceneEditorTestLayer.extend({
         this._super();
         var node,
             file = "res/scenetest/TmxMapComponentTest/TmxMapComponentTest.json";
-        if(cocoStudioTestScene_api == 0){
+        if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
             node = json.node;
@@ -341,7 +341,7 @@ var ParticleComponentTest = SceneEditorTestLayer.extend({
         this._super();
         var node,
             file = "res/scenetest/ParticleComponentTest/ParticleComponentTest.json";
-        if(cocoStudioTestScene_api == 0){
+        if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
             node = json.node;
@@ -375,7 +375,7 @@ var EffectComponentTest = SceneEditorTestLayer.extend({
         this._super();
         var node,
             file = "res/scenetest/EffectComponentTest/EffectComponentTest.json";
-        if(cocoStudioTestScene_api == 0){
+        if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
             node = json.node;
@@ -415,7 +415,7 @@ var BackgroundComponentTest = SceneEditorTestLayer.extend({
         this._super();
         var node,
             file = "res/scenetest/BackgroundComponentTest/BackgroundComponentTest.json";
-        if(cocoStudioTestScene_api == 0){
+        if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
             node = json.node;
@@ -451,7 +451,7 @@ var AttributeComponentTest = SceneEditorTestLayer.extend({
         this._super();
         var node,
             file = "res/scenetest/AttributeComponentTest/AttributeComponentTest.json";
-        if(cocoStudioTestScene_api == 0){
+        if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
             node = json.node;
@@ -489,7 +489,7 @@ var TriggerTest = SceneEditorTestLayer.extend({
         this._super();
         var node,
             file = "res/scenetest/TriggerTest/TriggerTest.json";
-        if(cocoStudioTestScene_api == 0){
+        if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
             node = json.node;
