@@ -97,7 +97,7 @@ var CocoStudioMainLayer = cc.Layer.extend({
     }
 });
 
-var cocoStudioTestScene_api = 0;
+var cocoStudioOldApiFlag = 0;
 var CocoStudioTestScene = TestScene.extend({
 
     onEnter: function(){
@@ -111,16 +111,16 @@ var CocoStudioTestScene = TestScene.extend({
         cc.MenuItemFont.setFontName("Arial");
         cc.MenuItemFont.setFontSize(24);
         var str = "new api";
-        if(cocoStudioTestScene_api){
+        if(cocoStudioOldApiFlag){
             str = "old api";
         }
         var pItem = new cc.MenuItemFont(str,
             function(){
-                if(cocoStudioTestScene_api){
-                    cocoStudioTestScene_api = 0;
+                if(cocoStudioOldApiFlag){
+                    cocoStudioOldApiFlag = 0;
                     pItem.setString("new api");
                 }else{
-                    cocoStudioTestScene_api = 1;
+                    cocoStudioOldApiFlag = 1;
                     pItem.setString("old api");
                 }
             }, this);
