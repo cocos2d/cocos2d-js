@@ -78,10 +78,12 @@ var CocostudioParserJsonLayer = cc.Layer.extend({
             var guiReader = ccs.uiReader;
             layout = guiReader.widgetFromJsonFile(this._jsonFile);
         }
-        if(layout.getScale() == 1)
-            layout.setScale(0.7);
+        if(layout){
+            if(layout.getScale() == 1)
+                layout.setScale(0.7);
 
-        this.addChild(layout);
+            this.addChild(layout);
+        }
     }
 });
 
