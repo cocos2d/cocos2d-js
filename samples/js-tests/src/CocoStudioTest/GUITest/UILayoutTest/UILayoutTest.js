@@ -38,7 +38,7 @@ var LAYOUT_INDEX = 0;
 var UILayoutEditorTest = UIBaseLayer.extend({
     ctor: function () {
         this._super();
-        var root = ccs.uiReader.widgetFromJsonFile(LAYOUT_RES[LAYOUT_INDEX]);
+        var root = this._parseUIFile(LAYOUT_RES[LAYOUT_INDEX]);
         this._mainNode.addChild(root);
 
         var back_label = ccui.helper.seekWidgetByName(root, "back");
