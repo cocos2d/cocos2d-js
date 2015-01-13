@@ -4144,6 +4144,18 @@ int
 },
 
 /**
+ * @method init
+ * @param {int} arg0
+ * @return {bool}
+ */
+init : function (
+int 
+)
+{
+    return false;
+},
+
+/**
  * @method getActionTag
  * @return {int}
  */
@@ -4163,6 +4175,15 @@ int
 )
 {
     return ccs.timeline::ActionTimelineData;
+},
+
+/**
+ * @method ActionTimelineData
+ * @constructor
+ */
+ActionTimelineData : function (
+)
+{
 },
 
 };
