@@ -1362,7 +1362,8 @@ bool jsval_to_vector3(JSContext *cx, jsval vp, cocos2d::Vec3* ret)
     JS_GetProperty(cx, tmp, "z", &jsz) &&
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y) &&
-    JS::ToNumber(cx, jsz, &z);
+    JS::ToNumber(cx, jsz, &z) &&
+    !isnan(x) && !isnan(y) && !isnan(z);
     
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     
