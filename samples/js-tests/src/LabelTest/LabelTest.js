@@ -1463,9 +1463,11 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
         stringMenu.alignItemsVertically();
 
         var setLineBreakItem = new cc.MenuItemFont("setLineBreakWithoutSpace", this.onLineBreakChanged, this);
-        var lineBreakMenu = new cc.Menu(setLineBreakItem);
+        var setScale = new cc.MenuItemFont("setScale", this.onScaleChange, this);
+        var lineBreakMenu = new cc.Menu(setLineBreakItem, setScale);
         lineBreakMenu.x = 100;
         lineBreakMenu.y = winSize.height / 2;
+        lineBreakMenu.alignItemsVertically();
 
         longSentences.color = cc.color(255, 0, 0);
         this.lastSentenceItem = longSentences;
@@ -1531,6 +1533,17 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
         return "";
     },
 
+    onScaleChange:function(sener){
+        if (this.labelShouldRetain.getScale() > 1)
+        {
+            this.labelShouldRetain.setScale(1.0);
+        }
+        else
+        {
+            this.labelShouldRetain.setScale(2.0);
+        }
+
+    },
     onLineBreakChanged:function(sender){
         this.lineBreakFlag = !this.lineBreakFlag;
         this.labelShouldRetain.setLineBreakWithoutSpace(this.lineBreakFlag);
