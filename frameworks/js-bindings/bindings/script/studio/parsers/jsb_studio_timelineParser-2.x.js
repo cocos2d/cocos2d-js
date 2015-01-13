@@ -194,7 +194,7 @@
             self = this;
         loadTexture(json["FileData"], resourcePath, function(path, type){
             if(!cc.loader.getRes(path))
-                cc.log("%s need to pre load", path);
+                cc.log("%s need to be preloaded", path);
             node = new cc.ParticleSystem(path);
             self.generalAttributes(node, json);
         });
@@ -766,7 +766,7 @@
         textureList.forEach(function(item){
             loadTexture(json[item.name], resourcePath, function(path, type){
                 if(type == 0 && !loader.getRes(path))
-                    cc.log("%s need to pre load", path);
+                    cc.log("%s need to be preloaded", path);
                 item.handle.call(widget, path, type);
             });
         });
@@ -953,7 +953,7 @@
 
         loadTexture(json["LabelAtlasFileImage_CNB"], resourcePath, function(path, type){
             if(!cc.loader.getRes(path))
-                cc.log("%s need to pre load", path);
+                cc.log("%s need to be preloaded", path);
             if(type == 0){
                 widget.setProperty(stringValue, path, itemWidth, itemHeight, startCharMap);
             }
@@ -1098,7 +1098,7 @@
             if(cc.loader.getRes(file))
                 return ccs._load(file);
             else
-                cc.log("%s need to pre load", file);
+                cc.log("%s need to be preloaded", file);
         }
     };
 
@@ -1130,7 +1130,7 @@
             var plists, pngs;
             var armJson = cc.loader.getRes(path);
             if(!armJson)
-                cc.log("%s need to pre load", path);
+                cc.log("%s need to be preloaded", path);
             else{
                 plists = armJson["config_file_path"];
                 pngs = armJson["config_png_path"];
@@ -1164,7 +1164,7 @@
                     cc.spriteFrameCache.addSpriteFrames(resourcePath + plist);
                 }else{
                     if(!loadedPlist[resourcePath + plist])
-                        cc.log("%s need to pre load", resourcePath + plist);
+                        cc.log("%s need to be preloaded", resourcePath + plist);
                 }
             }
             if(type !== 0)
