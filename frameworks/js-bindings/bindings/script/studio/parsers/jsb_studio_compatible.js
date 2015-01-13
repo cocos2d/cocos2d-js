@@ -44,6 +44,13 @@
             var json = cc.loader.getRes(file);
             if(json)
                 this._fileDesignSizes[file] = cc.size(json["designWidth"]||0, json["designHeight"]||0);
+
+            var version = json["Version"];
+            var versionNum = ccs.uiReader.getVersionInteger(version);
+            if(!version || versionNum >= 1700){
+                cc.warn("Not supported file types, Please try use the ccs.load");
+                return null;
+            }
             return ccs._load(file, "ccui");
         },
 
