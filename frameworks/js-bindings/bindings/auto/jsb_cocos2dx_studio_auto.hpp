@@ -705,8 +705,10 @@ void js_cocos2dx_studio_ActionTimelineData_finalize(JSContext *cx, JSObject *obj
 void js_register_cocos2dx_studio_ActionTimelineData(JSContext *cx, JSObject *global);
 void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_studio_ActionTimelineData_setActionTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineData_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimelineData_getActionTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimelineData_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineData_ActionTimelineData(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocostudio_timeline_ActionTimeline_class;
 extern JSObject *jsb_cocostudio_timeline_ActionTimeline_prototype;

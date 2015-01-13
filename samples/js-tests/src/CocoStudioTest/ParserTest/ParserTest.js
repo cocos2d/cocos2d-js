@@ -68,7 +68,7 @@ var CocostudioParserJsonLayer = cc.Layer.extend({
         cc.Layer.prototype.onEnter.call(this);
 
         var layout;
-        if(cocoStudioTestScene_api == 0){
+        if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", this._jsonFile);
             var json = ccs.load(this._jsonFile);
             layout = json.node;

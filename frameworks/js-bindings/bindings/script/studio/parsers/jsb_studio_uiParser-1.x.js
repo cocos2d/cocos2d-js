@@ -31,6 +31,7 @@
             for (var i = 0; i < textures.length; i++) {
                 cc.spriteFrameCache.addSpriteFrames(resourcePath + textures[i]);
             }
+
         },
 
         pretreatment: function(json, resourcePath){
@@ -53,8 +54,16 @@
         if(ignoreSizeExsit != null)
             widget.ignoreContentAdaptWithSize(ignoreSizeExsit);
 
-        widget.setSizeType(options["sizeType"]);
-        widget.setPositionType(options["positionType"]);
+        if (options["sizeType"])
+        {
+            widget.setSizeType(options["sizeType"]);
+        }
+
+        if (options["positionType"])
+        {
+            widget.setPositionType(options["positionType"]);
+        }
+
 
         widget.setSizePercent(cc.p(options["sizePercentX"], options["sizePercentY"]));
         widget.setPositionPercent(cc.p(options["positionPercentX"], options["positionPercentY"]));
@@ -129,7 +138,12 @@
                 var mgt = layoutParameterDic["marginTop"]||0;
                 var mgr = layoutParameterDic["marginRight"]||0;
                 var mgb = layoutParameterDic["marginDown"]||0;
-                parameter.setMargin(mgl, mgt, mgr, mgb);
+                var objectTemp = {};
+                objectTemp.left = mgl;
+                objectTemp.top = mgt;
+                objectTemp.right = mgr;
+                objectTemp.bottom = mgb;
+                parameter.setMargin(objectTemp);
                 widget.setLayoutParameter(parameter);
             }
         }
@@ -262,7 +276,10 @@
             var ch = options["capInsetsHeight"];
             widget.setBackGroundImageCapInsets(cc.rect(cx, cy, cw, ch));
         }
-        widget.setLayoutType(options["layoutType"]);
+        if (options["layoutType"])
+        {
+            widget.setLayoutType(options["layoutType"]);
+        }
     };
     /**
      * Button parser (UIButton)

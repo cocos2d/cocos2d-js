@@ -50,8 +50,8 @@ var UIBaseLayer = cc.Layer.extend({
         this._topDisplayText = topDisplayText;
     },
 
-    _parseUiFile: function(file){
-        if(cocoStudioTestScene_api == 0){
+    _parseUIFile: function(file){
+        if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
             return json.node;
