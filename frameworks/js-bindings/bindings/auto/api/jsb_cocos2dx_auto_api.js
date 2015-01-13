@@ -834,6 +834,18 @@ getGLProgram : function (
 },
 
 /**
+ * @method updateTransformFromPhysics
+ * @param {mat4_object} arg0
+ * @param {unsigned int} arg1
+ */
+updateTransformFromPhysics : function (
+mat4, 
+int 
+)
+{
+},
+
+/**
  * @method getDescription
  * @return {String}
  */
@@ -1663,6 +1675,24 @@ str
 */
 setAdditionalTransform : function(
 mat4 
+)
+{
+},
+
+/**
+ * @method updatePhysicsBodyTransform
+ * @param {cc.Scene} arg0
+ * @param {mat4_object} arg1
+ * @param {unsigned int} arg2
+ * @param {float} arg3
+ * @param {float} arg4
+ */
+updatePhysicsBodyTransform : function (
+scene, 
+mat4, 
+int, 
+float, 
+float 
 )
 {
 },
@@ -5866,6 +5896,24 @@ JumpBy : function (
  * @class JumpTo
  */
 cc.JumpTo = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {vec2_object} arg1
+ * @param {float} arg2
+ * @param {int} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+vec2, 
+float, 
+int 
+)
+{
+    return false;
+},
 
 /**
  * @method create
@@ -10562,13 +10610,15 @@ color4f
 
 /**
  * @method drawPoints
- * @param {vec2_object} arg0
- * @param {unsigned int} arg1
- * @param {color4f_object} arg2
- */
-drawPoints : function (
-vec2, 
-int, 
+* @param {vec2_object|vec2_object} vec2
+* @param {unsigned int|unsigned int} int
+* @param {float|color4f_object} float
+* @param {color4f_object} color4f
+*/
+drawPoints : function(
+vec2,
+int,
+float,
 color4f 
 )
 {
