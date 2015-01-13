@@ -39,6 +39,11 @@ var g_parsersTests = [
         test: function(){
             new CocostudioParserJsonScene("res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson").runThisTest();
         }
+    },{
+        title: "cocostudio 2.0",
+        test: function(){
+            new CocostudioParserJsonScene("res/cocosui/UIEditorTest/2.0.5/res/MainScene.json").runThisTest();
+        }
     }
 ];
 
@@ -73,8 +78,9 @@ var CocostudioParserJsonLayer = cc.Layer.extend({
             var guiReader = ccs.uiReader;
             layout = guiReader.widgetFromJsonFile(this._jsonFile);
         }
+        if(layout.getScale() == 1)
+            layout.setScale(0.7);
 
-        layout.setScale(0.7);
         this.addChild(layout);
     }
 });
