@@ -5051,3 +5051,519 @@ EditBox : function (
 },
 
 };
+
+/**
+ * @class LayoutComponent
+ */
+ccui.LayoutComponent = {
+
+/**
+ * @method setStretchWidthEnabled
+ * @param {bool} arg0
+ */
+setStretchWidthEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setPercentWidth
+ * @param {float} arg0
+ */
+setPercentWidth : function (
+float 
+)
+{
+},
+
+/**
+ * @method getAnchorPosition
+ * @return {vec2_object}
+ */
+getAnchorPosition : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method setPositionPercentXEnabled
+ * @param {bool} arg0
+ */
+setPositionPercentXEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setStretchHeightEnabled
+ * @param {bool} arg0
+ */
+setStretchHeightEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setActiveEnabled
+ * @param {bool} arg0
+ */
+setActiveEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getRightMargin
+ * @return {float}
+ */
+getRightMargin : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getSize
+ * @return {size_object}
+ */
+getSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method setAnchorPosition
+ * @param {vec2_object} arg0
+ */
+setAnchorPosition : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method refreshLayout
+ */
+refreshLayout : function (
+)
+{
+},
+
+/**
+ * @method isPercentWidthEnabled
+ * @return {bool}
+ */
+isPercentWidthEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setVerticalEdge
+ * @param {ccui.LayoutComponent::VerticalEdge} arg0
+ */
+setVerticalEdge : function (
+verticaledge 
+)
+{
+},
+
+/**
+ * @method getTopMargin
+ * @return {float}
+ */
+getTopMargin : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setSizeWidth
+ * @param {float} arg0
+ */
+setSizeWidth : function (
+float 
+)
+{
+},
+
+/**
+ * @method getPercentContentSize
+ * @return {vec2_object}
+ */
+getPercentContentSize : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method getVerticalEdge
+ * @return {ccui.LayoutComponent::VerticalEdge}
+ */
+getVerticalEdge : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setPercentWidthEnabled
+ * @param {bool} arg0
+ */
+setPercentWidthEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method isStretchWidthEnabled
+ * @return {bool}
+ */
+isStretchWidthEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setLeftMargin
+ * @param {float} arg0
+ */
+setLeftMargin : function (
+float 
+)
+{
+},
+
+/**
+ * @method getSizeWidth
+ * @return {float}
+ */
+getSizeWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setPositionPercentYEnabled
+ * @param {bool} arg0
+ */
+setPositionPercentYEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getSizeHeight
+ * @return {float}
+ */
+getSizeHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPositionPercentY
+ * @return {float}
+ */
+getPositionPercentY : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPositionPercentX
+ * @return {float}
+ */
+getPositionPercentX : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setTopMargin
+ * @param {float} arg0
+ */
+setTopMargin : function (
+float 
+)
+{
+},
+
+/**
+ * @method getPercentHeight
+ * @return {float}
+ */
+getPercentHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getUsingPercentContentSize
+ * @return {bool}
+ */
+getUsingPercentContentSize : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setPositionPercentY
+ * @param {float} arg0
+ */
+setPositionPercentY : function (
+float 
+)
+{
+},
+
+/**
+ * @method setPositionPercentX
+ * @param {float} arg0
+ */
+setPositionPercentX : function (
+float 
+)
+{
+},
+
+/**
+ * @method setRightMargin
+ * @param {float} arg0
+ */
+setRightMargin : function (
+float 
+)
+{
+},
+
+/**
+ * @method isPositionPercentYEnabled
+ * @return {bool}
+ */
+isPositionPercentYEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setPercentHeight
+ * @param {float} arg0
+ */
+setPercentHeight : function (
+float 
+)
+{
+},
+
+/**
+ * @method setHorizontalEdge
+ * @param {ccui.LayoutComponent::HorizontalEdge} arg0
+ */
+setHorizontalEdge : function (
+horizontaledge 
+)
+{
+},
+
+/**
+ * @method setPosition
+ * @param {vec2_object} arg0
+ */
+setPosition : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method setUsingPercentContentSize
+ * @param {bool} arg0
+ */
+setUsingPercentContentSize : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getLeftMargin
+ * @return {float}
+ */
+getLeftMargin : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPosition
+ * @return {vec2_object}
+ */
+getPosition : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method setSizeHeight
+ * @param {float} arg0
+ */
+setSizeHeight : function (
+float 
+)
+{
+},
+
+/**
+ * @method isPositionPercentXEnabled
+ * @return {bool}
+ */
+isPositionPercentXEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getBottomMargin
+ * @return {float}
+ */
+getBottomMargin : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setPercentHeightEnabled
+ * @param {bool} arg0
+ */
+setPercentHeightEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setPercentContentSize
+ * @param {vec2_object} arg0
+ */
+setPercentContentSize : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method isPercentHeightEnabled
+ * @return {bool}
+ */
+isPercentHeightEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getPercentWidth
+ * @return {float}
+ */
+getPercentWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getHorizontalEdge
+ * @return {ccui.LayoutComponent::HorizontalEdge}
+ */
+getHorizontalEdge : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method isStretchHeightEnabled
+ * @return {bool}
+ */
+isStretchHeightEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setBottomMargin
+ * @param {float} arg0
+ */
+setBottomMargin : function (
+float 
+)
+{
+},
+
+/**
+ * @method setSize
+ * @param {size_object} arg0
+ */
+setSize : function (
+size 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccui.LayoutComponent}
+ */
+create : function (
+)
+{
+    return ccui.LayoutComponent;
+},
+
+/**
+ * @method bindLayoutComponent
+ * @param {cc.Node} arg0
+ * @return {ccui.LayoutComponent}
+ */
+bindLayoutComponent : function (
+node 
+)
+{
+    return ccui.LayoutComponent;
+},
+
+/**
+ * @method LayoutComponent
+ * @constructor
+ */
+LayoutComponent : function (
+)
+{
+},
+
+};
