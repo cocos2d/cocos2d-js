@@ -13583,6 +13583,1101 @@ void js_register_cocos2dx_ui_EditBox(JSContext *cx, JSObject *global) {
     }
 }
 
+JSClass  *jsb_cocos2d_ui_LayoutComponent_class;
+JSObject *jsb_cocos2d_ui_LayoutComponent_prototype;
+
+bool js_cocos2dx_ui_LayoutComponent_setStretchWidthEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setStretchWidthEnabled : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setStretchWidthEnabled : Error processing arguments");
+        cobj->setStretchWidthEnabled(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setStretchWidthEnabled : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setPercentWidth(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setPercentWidth : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setPercentWidth : Error processing arguments");
+        cobj->setPercentWidth(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setPercentWidth : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getAnchorPosition(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getAnchorPosition : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::Point& ret = cobj->getAnchorPosition();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccpoint_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getAnchorPosition : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setPositionPercentXEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setPositionPercentXEnabled : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setPositionPercentXEnabled : Error processing arguments");
+        cobj->setPositionPercentXEnabled(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setPositionPercentXEnabled : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setStretchHeightEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setStretchHeightEnabled : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setStretchHeightEnabled : Error processing arguments");
+        cobj->setStretchHeightEnabled(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setStretchHeightEnabled : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setActiveEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setActiveEnabled : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setActiveEnabled : Error processing arguments");
+        cobj->setActiveEnabled(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setActiveEnabled : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getRightMargin(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getRightMargin : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getRightMargin();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getRightMargin : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getSize : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::Size& ret = cobj->getSize();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccsize_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getSize : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setAnchorPosition(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setAnchorPosition : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Point arg0;
+        ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setAnchorPosition : Error processing arguments");
+        cobj->setAnchorPosition(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setAnchorPosition : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_refreshLayout(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_refreshLayout : Invalid Native Object");
+    if (argc == 0) {
+        cobj->refreshLayout();
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_refreshLayout : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_isPercentWidthEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_isPercentWidthEnabled : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isPercentWidthEnabled();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_isPercentWidthEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setVerticalEdge(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setVerticalEdge : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::ui::LayoutComponent::VerticalEdge arg0;
+        ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setVerticalEdge : Error processing arguments");
+        cobj->setVerticalEdge(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setVerticalEdge : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getTopMargin(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getTopMargin : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getTopMargin();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getTopMargin : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setSizeWidth(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setSizeWidth : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setSizeWidth : Error processing arguments");
+        cobj->setSizeWidth(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setSizeWidth : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getPercentContentSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getPercentContentSize : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Vec2 ret = cobj->getPercentContentSize();
+        jsval jsret = JSVAL_NULL;
+        jsret = vector2_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getPercentContentSize : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getVerticalEdge(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getVerticalEdge : Invalid Native Object");
+    if (argc == 0) {
+        int ret = (int)cobj->getVerticalEdge();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getVerticalEdge : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setPercentWidthEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setPercentWidthEnabled : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setPercentWidthEnabled : Error processing arguments");
+        cobj->setPercentWidthEnabled(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setPercentWidthEnabled : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_isStretchWidthEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_isStretchWidthEnabled : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isStretchWidthEnabled();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_isStretchWidthEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setLeftMargin(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setLeftMargin : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setLeftMargin : Error processing arguments");
+        cobj->setLeftMargin(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setLeftMargin : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getSizeWidth(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getSizeWidth : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getSizeWidth();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getSizeWidth : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setPositionPercentYEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setPositionPercentYEnabled : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setPositionPercentYEnabled : Error processing arguments");
+        cobj->setPositionPercentYEnabled(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setPositionPercentYEnabled : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getSizeHeight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getSizeHeight : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getSizeHeight();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getSizeHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getPositionPercentY(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getPositionPercentY : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getPositionPercentY();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getPositionPercentY : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getPositionPercentX(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getPositionPercentX : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getPositionPercentX();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getPositionPercentX : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setTopMargin(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setTopMargin : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setTopMargin : Error processing arguments");
+        cobj->setTopMargin(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setTopMargin : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getPercentHeight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getPercentHeight : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getPercentHeight();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getPercentHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getUsingPercentContentSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getUsingPercentContentSize : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->getUsingPercentContentSize();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getUsingPercentContentSize : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setPositionPercentY(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setPositionPercentY : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setPositionPercentY : Error processing arguments");
+        cobj->setPositionPercentY(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setPositionPercentY : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setPositionPercentX(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setPositionPercentX : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setPositionPercentX : Error processing arguments");
+        cobj->setPositionPercentX(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setPositionPercentX : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setRightMargin(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setRightMargin : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setRightMargin : Error processing arguments");
+        cobj->setRightMargin(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setRightMargin : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_isPositionPercentYEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_isPositionPercentYEnabled : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isPositionPercentYEnabled();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_isPositionPercentYEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setPercentHeight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setPercentHeight : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setPercentHeight : Error processing arguments");
+        cobj->setPercentHeight(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setPercentHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setHorizontalEdge(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setHorizontalEdge : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::ui::LayoutComponent::HorizontalEdge arg0;
+        ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setHorizontalEdge : Error processing arguments");
+        cobj->setHorizontalEdge(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setHorizontalEdge : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setPosition : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Point arg0;
+        ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setPosition : Error processing arguments");
+        cobj->setPosition(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setPosition : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setUsingPercentContentSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setUsingPercentContentSize : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setUsingPercentContentSize : Error processing arguments");
+        cobj->setUsingPercentContentSize(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setUsingPercentContentSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getLeftMargin(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getLeftMargin : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getLeftMargin();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getLeftMargin : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getPosition(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getPosition : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::Point& ret = cobj->getPosition();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccpoint_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getPosition : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setSizeHeight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setSizeHeight : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setSizeHeight : Error processing arguments");
+        cobj->setSizeHeight(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setSizeHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_isPositionPercentXEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_isPositionPercentXEnabled : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isPositionPercentXEnabled();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_isPositionPercentXEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getBottomMargin(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getBottomMargin : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getBottomMargin();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getBottomMargin : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setPercentHeightEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setPercentHeightEnabled : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setPercentHeightEnabled : Error processing arguments");
+        cobj->setPercentHeightEnabled(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setPercentHeightEnabled : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setPercentContentSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setPercentContentSize : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Vec2 arg0;
+        ok &= jsval_to_vector2(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setPercentContentSize : Error processing arguments");
+        cobj->setPercentContentSize(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setPercentContentSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_isPercentHeightEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_isPercentHeightEnabled : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isPercentHeightEnabled();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_isPercentHeightEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getPercentWidth(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getPercentWidth : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getPercentWidth();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getPercentWidth : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_getHorizontalEdge(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getHorizontalEdge : Invalid Native Object");
+    if (argc == 0) {
+        int ret = (int)cobj->getHorizontalEdge();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_getHorizontalEdge : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_isStretchHeightEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_isStretchHeightEnabled : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isStretchHeightEnabled();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_isStretchHeightEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setBottomMargin(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setBottomMargin : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setBottomMargin : Error processing arguments");
+        cobj->setBottomMargin(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setBottomMargin : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_setSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setSize : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Size arg0;
+        ok &= jsval_to_ccsize(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setSize : Error processing arguments");
+        cobj->setSize(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_LayoutComponent_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc == 0) {
+        cocos2d::ui::LayoutComponent* ret = cocos2d::ui::LayoutComponent::create();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ui::LayoutComponent>(cx, (cocos2d::ui::LayoutComponent*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_ui_LayoutComponent_bindLayoutComponent(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    if (argc == 1) {
+        cocos2d::Node* arg0;
+        do {
+            if (!argv[0].isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_bindLayoutComponent : Error processing arguments");
+        cocos2d::ui::LayoutComponent* ret = cocos2d::ui::LayoutComponent::bindLayoutComponent(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ui::LayoutComponent>(cx, (cocos2d::ui::LayoutComponent*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_bindLayoutComponent : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_ui_LayoutComponent_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    cocos2d::ui::LayoutComponent* cobj = new (std::nothrow) cocos2d::ui::LayoutComponent();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::ui::LayoutComponent> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::ui::LayoutComponent");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
+
+extern JSObject *jsb_cocos2d_Component_prototype;
+
+void js_cocos2d_ui_LayoutComponent_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (LayoutComponent)", obj);
+}
+
+static bool js_cocos2d_ui_LayoutComponent_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::ui::LayoutComponent *nobj = new (std::nothrow) cocos2d::ui::LayoutComponent();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::ui::LayoutComponent");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
+void js_register_cocos2dx_ui_LayoutComponent(JSContext *cx, JSObject *global) {
+    jsb_cocos2d_ui_LayoutComponent_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_ui_LayoutComponent_class->name = "LayoutComponent";
+    jsb_cocos2d_ui_LayoutComponent_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_ui_LayoutComponent_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_ui_LayoutComponent_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_ui_LayoutComponent_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_ui_LayoutComponent_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_ui_LayoutComponent_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_ui_LayoutComponent_class->convert = JS_ConvertStub;
+    jsb_cocos2d_ui_LayoutComponent_class->finalize = js_cocos2d_ui_LayoutComponent_finalize;
+    jsb_cocos2d_ui_LayoutComponent_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        {"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+        {0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("setStretchWidthEnabled", js_cocos2dx_ui_LayoutComponent_setStretchWidthEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPercentWidth", js_cocos2dx_ui_LayoutComponent_setPercentWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnchorPosition", js_cocos2dx_ui_LayoutComponent_getAnchorPosition, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPositionPercentXEnabled", js_cocos2dx_ui_LayoutComponent_setPositionPercentXEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setStretchHeightEnabled", js_cocos2dx_ui_LayoutComponent_setStretchHeightEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setActiveEnabled", js_cocos2dx_ui_LayoutComponent_setActiveEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getRightMargin", js_cocos2dx_ui_LayoutComponent_getRightMargin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getSize", js_cocos2dx_ui_LayoutComponent_getSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnchorPosition", js_cocos2dx_ui_LayoutComponent_setAnchorPosition, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("refreshLayout", js_cocos2dx_ui_LayoutComponent_refreshLayout, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isPercentWidthEnabled", js_cocos2dx_ui_LayoutComponent_isPercentWidthEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setVerticalEdge", js_cocos2dx_ui_LayoutComponent_setVerticalEdge, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTopMargin", js_cocos2dx_ui_LayoutComponent_getTopMargin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setSizeWidth", js_cocos2dx_ui_LayoutComponent_setSizeWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPercentContentSize", js_cocos2dx_ui_LayoutComponent_getPercentContentSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getVerticalEdge", js_cocos2dx_ui_LayoutComponent_getVerticalEdge, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPercentWidthEnabled", js_cocos2dx_ui_LayoutComponent_setPercentWidthEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isStretchWidthEnabled", js_cocos2dx_ui_LayoutComponent_isStretchWidthEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setLeftMargin", js_cocos2dx_ui_LayoutComponent_setLeftMargin, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getSizeWidth", js_cocos2dx_ui_LayoutComponent_getSizeWidth, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPositionPercentYEnabled", js_cocos2dx_ui_LayoutComponent_setPositionPercentYEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getSizeHeight", js_cocos2dx_ui_LayoutComponent_getSizeHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPositionPercentY", js_cocos2dx_ui_LayoutComponent_getPositionPercentY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPositionPercentX", js_cocos2dx_ui_LayoutComponent_getPositionPercentX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTopMargin", js_cocos2dx_ui_LayoutComponent_setTopMargin, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPercentHeight", js_cocos2dx_ui_LayoutComponent_getPercentHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getUsingPercentContentSize", js_cocos2dx_ui_LayoutComponent_getUsingPercentContentSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPositionPercentY", js_cocos2dx_ui_LayoutComponent_setPositionPercentY, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPositionPercentX", js_cocos2dx_ui_LayoutComponent_setPositionPercentX, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setRightMargin", js_cocos2dx_ui_LayoutComponent_setRightMargin, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isPositionPercentYEnabled", js_cocos2dx_ui_LayoutComponent_isPositionPercentYEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPercentHeight", js_cocos2dx_ui_LayoutComponent_setPercentHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setHorizontalEdge", js_cocos2dx_ui_LayoutComponent_setHorizontalEdge, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPosition", js_cocos2dx_ui_LayoutComponent_setPosition, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setUsingPercentContentSize", js_cocos2dx_ui_LayoutComponent_setUsingPercentContentSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getLeftMargin", js_cocos2dx_ui_LayoutComponent_getLeftMargin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPosition", js_cocos2dx_ui_LayoutComponent_getPosition, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setSizeHeight", js_cocos2dx_ui_LayoutComponent_setSizeHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isPositionPercentXEnabled", js_cocos2dx_ui_LayoutComponent_isPositionPercentXEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getBottomMargin", js_cocos2dx_ui_LayoutComponent_getBottomMargin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPercentHeightEnabled", js_cocos2dx_ui_LayoutComponent_setPercentHeightEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPercentContentSize", js_cocos2dx_ui_LayoutComponent_setPercentContentSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isPercentHeightEnabled", js_cocos2dx_ui_LayoutComponent_isPercentHeightEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPercentWidth", js_cocos2dx_ui_LayoutComponent_getPercentWidth, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getHorizontalEdge", js_cocos2dx_ui_LayoutComponent_getHorizontalEdge, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isStretchHeightEnabled", js_cocos2dx_ui_LayoutComponent_isStretchHeightEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBottomMargin", js_cocos2dx_ui_LayoutComponent_setBottomMargin, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setSize", js_cocos2dx_ui_LayoutComponent_setSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_ui_LayoutComponent_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_ui_LayoutComponent_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("bindLayoutComponent", js_cocos2dx_ui_LayoutComponent_bindLayoutComponent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_ui_LayoutComponent_prototype = JS_InitClass(
+        cx, global,
+        jsb_cocos2d_Component_prototype,
+        jsb_cocos2d_ui_LayoutComponent_class,
+        js_cocos2dx_ui_LayoutComponent_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "LayoutComponent", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::ui::LayoutComponent> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_ui_LayoutComponent_class;
+        p->proto = jsb_cocos2d_ui_LayoutComponent_prototype;
+        p->parentProto = jsb_cocos2d_Component_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
 void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj) {
     // first, try to get the ns
     JS::RootedValue nsval(cx);
@@ -13612,6 +14707,7 @@ void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj) {
     js_register_cocos2dx_ui_Slider(cx, obj);
     js_register_cocos2dx_ui_ScrollView(cx, obj);
     js_register_cocos2dx_ui_ListView(cx, obj);
+    js_register_cocos2dx_ui_LayoutComponent(cx, obj);
     js_register_cocos2dx_ui_Button(cx, obj);
     js_register_cocos2dx_ui_LayoutParameter(cx, obj);
     js_register_cocos2dx_ui_LinearLayoutParameter(cx, obj);
