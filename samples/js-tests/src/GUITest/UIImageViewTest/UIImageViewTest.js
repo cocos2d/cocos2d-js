@@ -66,3 +66,119 @@ var UIImageViewTest_Scale9 = UIScene.extend({
         return false;
     }
 });
+
+//2015-01-14
+var UIImageViewTest_ContentSize = UIScene.extend({
+
+    init: function(){
+        if (this._super()) {
+            var widgetSize = this._widget.getContentSize();
+
+            var alert = new ccui.Text("ImageView ContentSize Change", "fonts/Marker Felt.ttf", 26);
+            alert.setColor(cc.color(159, 168, 176));
+            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 2.125));
+
+            this._mainNode.addChild(alert);
+
+            var status = new ccui.Text("child ImageView position percent", "fonts/Marker Felt.ttf", 16);
+            status.setColor(cc.color.RED);
+            status.setPosition(cc.p(widgetSize.width/2, widgetSize.height/2 + 80));
+            this._mainNode.addChild(status,20);
+
+            // Create the imageview
+            var imageView = new ccui.ImageView("cocosui/buttonHighlighted.png");
+            imageView.setScale9Enabled(true);
+            imageView.setContentSize(cc.size(200, 80));
+            imageView.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
+
+
+            var imageViewChild = new ccui.ImageView("cocosui/buttonHighlighted.png");
+            imageViewChild.setScale9Enabled(true);
+            imageViewChild.setSizeType(ccui.Widget.SIZE_PERCENT);
+            imageViewChild.setPositionType(ccui.Widget.POSITION_PERCENT);
+            imageViewChild.setSizePercent(cc.p(0.5, 0.5));
+            imageViewChild.setPositionPercent(cc.p(0.5, 0.5));
+            imageViewChild.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
+
+            var imageViewChild2 = new ccui.ImageView("cocosui/buttonHighlighted.png");
+            imageViewChild2.setScale9Enabled(true);
+            imageViewChild2.setSizeType(ccui.Widget.SIZE_PERCENT);
+            imageViewChild2.setPositionType(ccui.Widget.POSITION_PERCENT);
+            imageViewChild2.setSizePercent(cc.p(0.5, 0.5));
+            imageViewChild2.setPositionPercent(cc.p(0.5, 0.5));
+            imageViewChild.addChild(imageViewChild2);
+
+
+            imageView.addChild(imageViewChild);
+
+            imageView.setTouchEnabled(true);
+            imageView.addTouchEventListener(function(sender, type){
+                if (type == ccui.Widget.TOUCH_ENDED) {
+                    var width = Math.random() * 200 + 50;
+                    var height = Math.random() * 80 + 30;
+                    imageView.setContentSize(cc.size(width, height));
+
+                    imageViewChild.setPositionPercent(cc.p(Math.random(), Math.random()));
+                    status.setString("child ImageView position percent: %f, %f", imageViewChild.getPositionPercent().x, imageViewChild.getPositionPercent().y);
+                }
+            });
+
+            this._mainNode.addChild(imageView);
+
+            return true;
+
+        }
+    }
+
+});
+
+//2015-01-14
+var UIImageViewFlipTest = UIScene.extend({
+
+    init: function(){
+        if (this._super()) {
+            cc.spriteFrameCache.addSpriteFrames("res/Images/blocks9ss.plist");
+            var widgetSize = this._widget.getContentSize();
+
+            var alert = new ccui.Text("ImageView flip test", "fonts/Marker Felt.ttf", 26);
+            alert.setColor(cc.color(159, 168, 176));
+            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 2.125));
+
+            this._mainNode.addChild(alert);
+
+            // Create the imageview
+            var imageView = new ccui.ImageView("blocks9r.png", ccui.Widget.PLIST_TEXTURE);
+            imageView.setScale9Enabled(true);
+            imageView.setContentSize(cc.size(250, 115));
+            imageView.setFlippedX(true);
+            imageView.setScale(0.5);
+            imageView.ignoreContentAdaptWithSize(false);
+            imageView.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
+
+            this._mainNode.addChild(imageView);
+
+            var toggleButton = new ccui.Button();
+            toggleButton.setTitleText("Toggle FlipX");
+            toggleButton.setPosition(imageView.getPosition() + cc.p(-50, - imageView.getContentSize().height/2 - 20));
+            this.addChild(toggleButton);
+            toggleButton.addClickEventListener(function(){
+                imageView.setFlippedX(!imageView.isFlippedX());
+            });
+
+            var toggleScale9 = new ccui.Button();
+            toggleScale9.setTitleText("Toggle Scale9");
+            toggleScale9.setPosition(imageView.getPosition() + cc.p(+50, - imageView.getContentSize().height/2- 20));
+            this.addChild(toggleScale9);
+            toggleScale9.addClickEventListener(function(){
+                imageView.setScale9Enabled(!imageView.isScale9Enabled());
+                //after switching scale9, you must call setContentSize to keep the size not change
+                imageView.setContentSize(cc.size(250, 115));
+            });
+
+            return true;
+
+        }
+
+    }
+
+});

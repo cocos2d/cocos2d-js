@@ -163,6 +163,8 @@
         "src/GUITest/UISliderTest/UISliderTest.js",
         "src/GUITest/UITextFieldTest/UITextFieldTest.js",
         "src/GUITest/UIRichTextTest/UIRichTextTest.js",
+        "src/GUITest/UITextTest/UITextTest.js",
+
         "src/CocoStudioTest/SceneTest/TriggerCode/Acts.js",
         "src/CocoStudioTest/SceneTest/TriggerCode/Cons.js",
         "src/CocoStudioTest/SceneTest/TriggerCode/EventDef.js",

@@ -99,3 +99,87 @@ var UISliderTest_Scale9 = UIScene.extend({
         }
     }
 });
+
+//2015-01-14
+var UISliderNormalDefaultTest = UIScene.extend({
+    init: function () {
+        if (this._super()) {
+            var widgetSize = this._widget.getContentSize();
+
+            // Add a label in which the slider alert will be displayed
+            this._displayValueLabel = new ccui.Text("","Arial",32);
+            this._displayValueLabel.setAnchorPoint(cc.p(0.5, -1));
+            this._displayValueLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + 100));
+            this._mainNode.addChild(this._displayValueLabel);
+
+            // Add the alert
+            var alert = new ccui.Text("when pressed, the slider ball should scale","fonts/Marker Felt.ttf",20);
+            alert.setColor(cc.color(159, 168, 176));
+            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 3.75));
+            this._mainNode.addChild(alert);
+
+            // Create the slider
+            var slider = new ccui.Slider();
+            slider.loadBarTexture("cocosui/sliderTrack.png");
+            slider.loadSlidBallTextures("cocosui/sliderThumb.png");
+            slider.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + 50));
+            this._mainNode.addChild(slider);
+
+            var sliderScale9 = new ccui.Slider("cocosui/sliderTrack2.png", "cocosui/sliderThumb.png");
+            sliderScale9.setScale9Enabled(true);
+            sliderScale9.setCapInsets(cc.rect(0, 0, 0, 0));
+            sliderScale9.setZoomScale(1);
+            sliderScale9.setContentSize(cc.size(250, 19));
+            sliderScale9.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - 20));
+            this._mainNode.addChild(sliderScale9);
+
+
+            return true;
+        }
+        return false;
+    }
+});
+
+//2015-01-14
+var UISliderDisabledDefaultTest = UIScene.extend({
+    init: function () {
+        if (this._super()) {
+            var widgetSize = this._widget.getContentSize();
+
+            // Add a label in which the slider alert will be displayed
+            this._displayValueLabel = new ccui.Text("","Arial",32);
+            this._displayValueLabel.setAnchorPoint(cc.p(0.5, -1));
+            this._displayValueLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + 100));
+            this._mainNode.addChild(this._displayValueLabel);
+
+            // Add the alert
+            var alert = new ccui.Text("slider ball should be gray.","fonts/Marker Felt.ttf",20);
+            alert.setColor(cc.color(159, 168, 176));
+            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 3.75));
+            this._mainNode.addChild(alert);
+
+            // Create the slider
+            var slider = new ccui.Slider();
+            slider.loadBarTexture("cocosui/slidbar.png");
+            slider.loadSlidBallTextureNormal("cocosui/sliderballnormal.png");
+            slider.setEnabled(false);
+            slider.setBright(false);
+            slider.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + 50));
+            this._mainNode.addChild(slider);
+
+            var sliderScale9 = new ccui.Slider("cocosui/slidbar.png", "cocosui/sliderballnormal.png");
+            sliderScale9.setScale9Enabled(true);
+            sliderScale9.setEnabled(false);
+            sliderScale9.setBright(false);
+            sliderScale9.setCapInsets(cc.rect(0, 0, 0, 0));
+            sliderScale9.setContentSize(cc.size(250, 10));
+            sliderScale9.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - 20));
+            this._mainNode.addChild(sliderScale9);
+
+
+            return true;
+
+        }
+        return false;
+    }
+});
