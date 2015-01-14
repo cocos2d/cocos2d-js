@@ -194,7 +194,7 @@
             self = this;
         loadTexture(json["FileData"], resourcePath, function(path, type){
             if(!cc.loader.getRes(path))
-                cc.log("%s need to pre load", path);
+                cc.log("%s need to be preloaded", path);
             node = new cc.ParticleSystem(path);
             self.generalAttributes(node, json);
         });
@@ -288,26 +288,70 @@
         setContentSize(widget, json["Size"]);
 
         if(widget instanceof ccui.Layout){
-            //todo update UILayoutComponent.bindLayoutComponent
-            var positionXPercentEnabled = json["PositionPercentXEnable"];
-            var positionYPercentEnabled = json["PositionPercentYEnable"];
-            var sizeXPercentEnable = json["PercentWidthEnable"];
-            var sizeYPercentEnable = json["PercentHeightEnable"];
-            var stretchHorizontalEnabled = json["StretchWidthEnable"];
-            var stretchVerticalEnabled = json["StretchHeightEnable"];
-            var horizontalEdge = json["HorizontalEdge"];
-            var verticalEdge = json["VerticalEdge"];
-            var leftMargin = json["LeftMargin"];
-            var rightMargin = json["RightMargin"];
-            var topMargin = json["TopMargin"];
-            var bottomMargin = json["BottomMargin"];
-            //var prePosition = json["PrePosition"];
-            //if(prePosition)
-            //    prePosition["X"], prePosition["Y"]
+            var layoutComponent = ccui.LayoutComponent.bindLayoutComponent(widget);
 
-            //var preSize = json["PreSize"];
-            //if(preSize)
-            //    preSize["X"], preSize["Y"]
+            var positionXPercentEnabled = json["PositionPercentXEnable"] || false;
+            var positionYPercentEnabled = json["PositionPercentYEnable"] || false;
+            var positionXPercent = 0,
+                positionYPercent = 0,
+                PrePosition = json["PrePosition"];
+            if(PrePosition != null){
+                positionXPercent = PrePosition["X"] || 0;
+                positionYPercent = PrePosition["Y"] || 0;
+            }
+            var sizeXPercentEnable = json["PercentWidthEnable"] || false;
+            var sizeYPercentEnable = json["PercentHeightEnable"] || false;
+            var sizeXPercent = 0,
+                sizeYPercent = 0,
+                PreSize = json["PreSize"];
+            if(PrePosition != null){
+                sizeXPercent = PreSize["X"] || 0;
+                sizeYPercent = PreSize["Y"] || 0;
+            }
+            var stretchHorizontalEnabled = json["StretchWidthEnable"] || false;
+            var stretchVerticalEnabled = json["StretchHeightEnable"] || false;
+            var horizontalEdge = json["HorizontalEdge"] = ccui.LayoutComponent.horizontalEdge.LEFT;
+            var verticalEdge = json["VerticalEdge"] = ccui.LayoutComponent.verticalEdge.TOP;
+            var leftMargin = json["LeftMargin"] || 0;
+            var rightMargin = json["RightMargin"] || 0;
+            var topMargin = json["TopMargin"] || 0;
+            var bottomMargin = json["BottomMargin"] || 0;
+
+            layoutComponent.setPositionPercentXEnabled(positionXPercentEnabled);
+            layoutComponent.setPositionPercentYEnabled(positionYPercentEnabled);
+            layoutComponent.setPositionPercentX(positionXPercent);
+            layoutComponent.setPositionPercentY(positionYPercent);
+            layoutComponent.setPercentWidthEnabled(sizeXPercentEnable);
+            layoutComponent.setPercentHeightEnabled(sizeYPercentEnable);
+            layoutComponent.setPercentWidth(sizeXPercent);
+            layoutComponent.setPercentHeight(sizeYPercent);
+            layoutComponent.setStretchWidthEnabled(stretchHorizontalEnabled);
+            layoutComponent.setStretchHeightEnabled(stretchVerticalEnabled);
+
+            var horizontalEdgeType = ccui.LayoutComponent.horizontalEdge.NONE;
+            if (horizontalEdge == "LeftEdge"){
+                horizontalEdgeType = ccui.LayoutComponent.horizontalEdge.LEFT;
+            }else if (horizontalEdge == "RightEdge"){
+                horizontalEdgeType = ccui.LayoutComponent.horizontalEdge.RIGHT;
+            }else if (horizontalEdge == "BothEdge"){
+                horizontalEdgeType = ccui.LayoutComponent.horizontalEdge.CENTER;
+            }
+            layoutComponent.setHorizontalEdge(horizontalEdgeType);
+
+            var verticalEdgeType = ccui.LayoutComponent.verticalEdge.NONE;
+            if (verticalEdge == "TopEdge"){
+                verticalEdgeType = ccui.LayoutComponent.verticalEdge.TOP;
+            }else if (verticalEdge == "BottomEdge"){
+                verticalEdgeType = ccui.LayoutComponent.verticalEdge.BOTTOM;
+            }else if (verticalEdge == "BothEdge"){
+                verticalEdgeType = ccui.LayoutComponent.verticalEdge.CENTER;
+            }
+            layoutComponent.setVerticalEdge(verticalEdgeType);
+
+            layoutComponent.setTopMargin(topMargin);
+            layoutComponent.setBottomMargin(bottomMargin);
+            layoutComponent.setLeftMargin(leftMargin);
+            layoutComponent.setRightMargin(rightMargin);
         }
 
     };
@@ -722,7 +766,7 @@
         textureList.forEach(function(item){
             loadTexture(json[item.name], resourcePath, function(path, type){
                 if(type == 0 && !loader.getRes(path))
-                    cc.log("%s need to pre load", path);
+                    cc.log("%s need to be preloaded", path);
                 item.handle.call(widget, path, type);
             });
         });
@@ -909,7 +953,7 @@
 
         loadTexture(json["LabelAtlasFileImage_CNB"], resourcePath, function(path, type){
             if(!cc.loader.getRes(path))
-                cc.log("%s need to pre load", path);
+                cc.log("%s need to be preloaded", path);
             if(type == 0){
                 widget.setProperty(stringValue, path, itemWidth, itemHeight, startCharMap);
             }
@@ -1054,7 +1098,7 @@
             if(cc.loader.getRes(file))
                 return ccs._load(file);
             else
-                cc.log("%s need to pre load", file);
+                cc.log("%s need to be preloaded", file);
         }
     };
 
@@ -1086,7 +1130,7 @@
             var plists, pngs;
             var armJson = cc.loader.getRes(path);
             if(!armJson)
-                cc.log("%s need to pre load", path);
+                cc.log("%s need to be preloaded", path);
             else{
                 plists = armJson["config_file_path"];
                 pngs = armJson["config_png_path"];
@@ -1120,7 +1164,7 @@
                     cc.spriteFrameCache.addSpriteFrames(resourcePath + plist);
                 }else{
                     if(!loadedPlist[resourcePath + plist])
-                        cc.log("%s need to pre load", resourcePath + plist);
+                        cc.log("%s need to be preloaded", resourcePath + plist);
                 }
             }
             if(type !== 0)
