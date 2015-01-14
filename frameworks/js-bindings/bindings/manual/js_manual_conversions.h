@@ -31,7 +31,8 @@
 #include "js_bindings_config.h"
 #include "cocos2d.h"
 #include "spidermonkey_specifics.h"
-#include "chipmunk_private.h"
+
+#define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 
 // just a simple utility to avoid mem leaking when using JSString
 class JSStringWrapper
@@ -258,13 +259,6 @@ jsval ccarray_to_jsval(JSContext* cx, cocos2d::__Array *arr);
 jsval ccacceleration_to_jsval(JSContext* cx, const cocos2d::Acceleration& v);
 jsval ccaffinetransform_to_jsval(JSContext* cx, const cocos2d::AffineTransform& t);
 jsval FontDefinition_to_jsval(JSContext* cx, const cocos2d::FontDefinition& t);
-
-bool jsval_to_CGPoint( JSContext *cx, jsval vp, cpVect *out );
-jsval CGPoint_to_jsval( JSContext *cx, cpVect p );
-
-#define cpVect_to_jsval CGPoint_to_jsval
-#define jsval_to_cpVect jsval_to_CGPoint
-
 
 template<class T>
 js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj);
