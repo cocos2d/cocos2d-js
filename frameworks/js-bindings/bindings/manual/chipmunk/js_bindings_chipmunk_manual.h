@@ -31,6 +31,7 @@
 #include "ScriptingCore.h"
 #ifdef JSB_INCLUDE_CHIPMUNK
 
+#include "chipmunk_private.h"
 #include "js_bindings_chipmunk_auto_classes.h"
 
 // Free Functions
@@ -91,11 +92,8 @@ bool JSB_cpBody_eachArbiter(JSContext *cx, uint32_t argc, jsval *vp);
 jsval cpBB_to_jsval(JSContext *cx, cpBB bb );
 bool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret );
 bool jsval_to_array_of_cpvect( JSContext *cx, jsval vp, cpVect**verts, int *numVerts);
-
-// requires cocos2d
-#define cpVect_to_jsval CGPoint_to_jsval
-#define jsval_to_cpVect jsval_to_CGPoint
-
+bool jsval_to_cpVect( JSContext *cx, jsval vp, cpVect *out );
+jsval cpVect_to_jsval( JSContext *cx, cpVect p );
 
 // Object Oriented Chipmunk
 void JSB_cpBase_createClass(JSContext* cx, JSObject* globalObj, const char * name );
