@@ -119,7 +119,7 @@ var UIImageViewTest_ContentSize = UIScene.extend({
                     var height = (Math.random() * 80 | 0) + 30;
                     imageView.setContentSize(cc.size(width, height));
 
-                    imageViewChild.setPositionPercent(cc.p(Math.random(), Math.random()));
+                    imageViewChild.setPositionPercent(cc.p(Math.random().toFixed(2), Math.random().toFixed(2)));
                     status.setString("child ImageView position percent: "+imageViewChild.getPositionPercent().x+", "+imageViewChild.getPositionPercent().y);
                 }
             });

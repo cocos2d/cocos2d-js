@@ -274,7 +274,7 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
     init: function(){
         if (this._super()){
 
-            var widgetSize = this._widget.getContentSize()();
+            var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the dragpanel events will be displayed
             this.displayValueLabel = new ccui.Text("Move by horizontal direction", "Marker Felt", 32);
@@ -442,7 +442,7 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
     init: function(){
         if (this._super()){
 
-            var widgetSize = this._widget.getContentSize()();
+            var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the dragpanel events will be displayed
             this.displayValueLabel = new ccui.Text("Click Buttons on the Left", "Marker Felt", 32);
