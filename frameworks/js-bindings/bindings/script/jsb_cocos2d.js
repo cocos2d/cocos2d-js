@@ -2847,3 +2847,5 @@ _p.setDisabledSpriteFrame = function(frame) {
         frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
     this._setDisabledSpriteFrame(frame);
 }
+
+cc.MenuItemToggle.prototype.selectedItem = cc.MenuItemToggle.prototype.getSelectedItem;
