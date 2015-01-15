@@ -43,7 +43,7 @@ var SettingsLayer = cc.Layer.extend({
         this.addChild(sp, 0, 1);
 
         var cacheImage = cc.textureCache.addImage(res.menuTitle_png);
-        var title = new cc.Sprite(cacheImage, cc.rect(0, 0, 134, 34));
+        var title = new cc.Sprite(cacheImage, cc.rect(0, 0, 134, 39));
         title.x = winSize.width / 2;
         title.y = winSize.height - 120;
         this.addChild(title);
@@ -53,6 +53,7 @@ var SettingsLayer = cc.Layer.extend({
         cc.MenuItemFont.setFontSize(18);
         var title1 = new cc.MenuItemFont("Sound");
         title1.setEnabled(false);
+        title1.getLabel().setColor(cc.color("#1f2d96"));
 
         cc.MenuItemFont.setFontName("Arial");
         cc.MenuItemFont.setFontSize(26);

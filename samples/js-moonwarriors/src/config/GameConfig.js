@@ -123,7 +123,7 @@ MW.BULLET_SPEED = {
 // the counter of active enemies
 MW.ACTIVE_ENEMIES = 0;
 
-MW.LOGOY = 375;
+MW.LOGOY = 350;
 MW.FLAREY = 445;
 MW.SCALE = 1.5;
 MW.WIDTH = 480;
