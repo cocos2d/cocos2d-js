@@ -80,19 +80,19 @@ var UIImageViewTest_ContentSize = UIScene.extend({
 
             this._mainNode.addChild(alert);
 
-            var status = new ccui.Text("child ImageView position percent", "fonts/Marker Felt.ttf", 16);
+            var status = new ccui.Text("child ImageView position percent", "Marker Felt", 16);
             status.setColor(cc.color.RED);
             status.setPosition(cc.p(widgetSize.width/2, widgetSize.height/2 + 80));
             this._mainNode.addChild(status,20);
 
             // Create the imageview
-            var imageView = new ccui.ImageView("cocosui/buttonHighlighted.png");
+            var imageView = new ccui.ImageView("res/cocosui/buttonHighlighted.png");
             imageView.setScale9Enabled(true);
             imageView.setContentSize(cc.size(200, 80));
             imageView.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
 
 
-            var imageViewChild = new ccui.ImageView("cocosui/buttonHighlighted.png");
+            var imageViewChild = new ccui.ImageView("res/cocosui/buttonHighlighted.png");
             imageViewChild.setScale9Enabled(true);
             imageViewChild.setSizeType(ccui.Widget.SIZE_PERCENT);
             imageViewChild.setPositionType(ccui.Widget.POSITION_PERCENT);
@@ -100,7 +100,7 @@ var UIImageViewTest_ContentSize = UIScene.extend({
             imageViewChild.setPositionPercent(cc.p(0.5, 0.5));
             imageViewChild.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
 
-            var imageViewChild2 = new ccui.ImageView("cocosui/buttonHighlighted.png");
+            var imageViewChild2 = new ccui.ImageView("res/cocosui/buttonHighlighted.png");
             imageViewChild2.setScale9Enabled(true);
             imageViewChild2.setSizeType(ccui.Widget.SIZE_PERCENT);
             imageViewChild2.setPositionType(ccui.Widget.POSITION_PERCENT);
@@ -140,7 +140,7 @@ var UIImageViewFlipTest = UIScene.extend({
             cc.spriteFrameCache.addSpriteFrames("res/Images/blocks9ss.plist");
             var widgetSize = this._widget.getContentSize();
 
-            var alert = new ccui.Text("ImageView flip test", "fonts/Marker Felt.ttf", 26);
+            var alert = new ccui.Text("ImageView flip test", "Marker Felt", 26);
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 2.125));
 

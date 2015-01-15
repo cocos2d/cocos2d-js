@@ -30,7 +30,7 @@ var UITextTest = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
 
-            var alert = new ccui.Text("Text", "fonts/Marker Felt.ttf", 30);
+            var alert = new ccui.Text("Text", "Marker Felt", 30);
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 1.75));
             this._mainNode.addChild(alert);
@@ -53,7 +53,7 @@ var UITextTest_LineWrap = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
 
-            var alert = new ccui.Text("Text line wrap","fonts/Marker Felt.ttf",30);
+            var alert = new ccui.Text("Text line wrap","Marker Felt",30);
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 1.75));
             this._mainNode.addChild(alert);

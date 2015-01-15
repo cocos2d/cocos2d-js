@@ -97,7 +97,7 @@ var UIPageViewButtonTest = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the dragpanel events will be displayed
-            this.displayValueLabel = new ccui.Text("Move by horizontal direction", "fonts/Marker Felt.ttf", 32);
+            this.displayValueLabel = new ccui.Text("Move by horizontal direction", "Marker Felt", 32);
             this.displayValueLabel.setAnchorPoint(cc.p(0.5, -1.0));
             this.displayValueLabel.setPosition(cc.p(widgetSize.width / 2.0,
                 widgetSize.height / 2.0 +
@@ -105,7 +105,7 @@ var UIPageViewButtonTest = UIScene.extend({
             this._mainNode.addChild(this.displayValueLabel);
 
             // Add the black background
-            var alert = new ccui.Text("PageView with Buttons", "fonts/Marker Felt.ttf", 30);
+            var alert = new ccui.Text("PageView with Buttons", "Marker Felt", 30);
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 3.075));
             this._mainNode.addChild(alert);
@@ -135,8 +135,7 @@ var UIPageViewButtonTest = UIScene.extend({
                 var innerBox = new ccui.VBox();
 
                 for (var j = 0; j < 3; j++) {
-                    var btn = new ccui.Button("cocosui/animationbuttonnormal.png",
-                        "cocosui/animationbuttonpressed.png");
+                    var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
                     btn.setName("button " + j);
                     btn.addTouchEventListener( this.onButtonClicked, this);
 
@@ -190,7 +189,7 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the dragpanel events will be displayed
-            this.displayValueLabel = new ccui.Text("Scroll Threshold", "fonts/Marker Felt.ttf", 32);
+            this.displayValueLabel = new ccui.Text("Scroll Threshold", "Marker Felt", 32);
             this.displayValueLabel.setAnchorPoint(cc.p(0.5, -1.0));
             this.displayValueLabel.setPosition(cc.p(widgetSize.width / 2.0,
                 widgetSize.height / 2.0 +
@@ -198,7 +197,7 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
             this._mainNode.addChild(this.displayValueLabel);
 
             // Add the black background
-            var alert = new ccui.Text("PageView", "fonts/Marker Felt.ttf", 30);
+            var alert = new ccui.Text("PageView", "Marker Felt", 30);
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 3.075));
             this._mainNode.addChild(alert);
@@ -222,13 +221,13 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
                 var layout = new ccui.Layout();
                 layout.setContentSize(cc.size(240.0, 130.0));
 
-                var imageView = new ccui.ImageView("cocosui/scrollviewbg.png");
+                var imageView = new ccui.ImageView("res/cocosui/scrollviewbg.png");
                 imageView.setScale9Enabled(true);
                 imageView.setContentSize(cc.size(240, 130));
                 imageView.setPosition(cc.p(layout.getContentSize().width / 2.0, layout.getContentSize().height / 2.0));
                 layout.addChild(imageView);
 
-                var label = new ccui.Text("page " + (i+1) , "fonts/Marker Felt.ttf", 30);
+                var label = new ccui.Text("page " + (i+1) , "Marker Felt", 30);
                 label.setColor(cc.color(192, 192, 192));
                 label.setPosition(cc.p(layout.getContentSize().width / 2.0, layout.getContentSize().height / 2.0));
                 layout.addChild(label);
@@ -240,9 +239,9 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
             pageView.setName("pageView");
 
             var slider = new ccui.Slider();
-            slider.loadBarTexture("cocosui/sliderTrack.png");
-            slider.loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
-            slider.loadProgressBarTexture("cocosui/sliderProgress.png");
+            slider.loadBarTexture("res/cocosui/sliderTrack.png");
+            slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
+            slider.loadProgressBarTexture("res/cocosui/sliderProgress.png");
             slider.setPosition(cc.p(widgetSize.width / 2.0 , widgetSize.height / 2.0 - 40));
             slider.addEventListener(this.sliderEvent, this);
             slider.setPercent(50);
@@ -279,7 +278,7 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
             var widgetSize = this._widget.getContentSize()();
 
             // Add a label in which the dragpanel events will be displayed
-            this.displayValueLabel = new ccui.Text("Move by horizontal direction", "fonts/Marker Felt.ttf", 32);
+            this.displayValueLabel = new ccui.Text("Move by horizontal direction", "Marker Felt", 32);
             this.displayValueLabel.setAnchorPoint(cc.p(0.5, -1.0));
             this.displayValueLabel.setPosition(cc.p(widgetSize.width / 2.0,
                 widgetSize.height / 2.0 +
@@ -287,7 +286,7 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
             this._mainNode.addChild(this.displayValueLabel);
 
             // Add the black background
-            var alert = new ccui.Text("PageView Touch Propagation", "fonts/Marker Felt.ttf", 30);
+            var alert = new ccui.Text("PageView Touch Propagation", "Marker Felt", 30);
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 3.075));
             this._mainNode.addChild(alert);
@@ -314,7 +313,7 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
                 var innerBox = new ccui.VBox();
 
                 for (var j = 0; j < 3; j++) {
-                    var btn = new ccui.Button("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+                    var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
                     btn.setName("button " + j);
                     btn.addTouchEventListener(this.onButtonClicked, this);
 
@@ -360,11 +359,11 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
             this._mainNode.addChild(swallowTouchText);
 
             // Create the checkbox
-            var checkBox1 = new ccui.CheckBox("cocosui/check_box_normal.png",
-                "cocosui/check_box_normal_press.png",
-                "cocosui/check_box_active.png",
-                "cocosui/check_box_normal_disable.png",
-                "cocosui/check_box_active_disable.png");
+            var checkBox1 = new ccui.CheckBox("res/cocosui/check_box_normal.png",
+                "res/cocosui/check_box_normal_press.png",
+                "res/cocosui/check_box_active.png",
+                "res/cocosui/check_box_normal_disable.png",
+                "res/cocosui/check_box_active_disable.png");
             checkBox1.setPosition(propagationText.getPosition() + cc.p(propagationText.getContentSize().width/2, -20));
 
             checkBox1.setName("propagation");
@@ -372,11 +371,11 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
 
 
             // Create the checkbox
-            var checkBox2 = new ccui.CheckBox("cocosui/check_box_normal.png",
-                "cocosui/check_box_normal_press.png",
-                "cocosui/check_box_active.png",
-                "cocosui/check_box_normal_disable.png",
-                "cocosui/check_box_active_disable.png");
+            var checkBox2 = new ccui.CheckBox("res/cocosui/check_box_normal.png",
+                "res/cocosui/check_box_normal_press.png",
+                "res/cocosui/check_box_active.png",
+                "res/cocosui/check_box_normal_disable.png",
+                "res/cocosui/check_box_active_disable.png");
             checkBox2.setPosition(swallowTouchText.getPosition() + cc.p(swallowTouchText.getContentSize().width/2, -20));
 
             checkBox2.setName("swallow");
@@ -447,7 +446,7 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
             var widgetSize = this._widget.getContentSize()();
 
             // Add a label in which the dragpanel events will be displayed
-            this.displayValueLabel = new ccui.Text("Click Buttons on the Left", "fonts/Marker Felt.ttf", 32);
+            this.displayValueLabel = new ccui.Text("Click Buttons on the Left", "Marker Felt", 32);
             this.displayValueLabel.setAnchorPoint(cc.p(0.5, -1.0));
             this.displayValueLabel.setPosition(cc.p(widgetSize.width / 2.0,
                 widgetSize.height / 2.0 +
@@ -455,7 +454,7 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
             this._mainNode.addChild(this.displayValueLabel);
 
             // Add the black background
-            var alert = new ccui.Text("PageView Dynamic Modification", "fonts/Marker Felt.ttf", 30);
+            var alert = new ccui.Text("PageView Dynamic Modification", "Marker Felt", 30);
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 3.075));
             this._mainNode.addChild(alert);
@@ -482,8 +481,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
                     var innerBox = new ccui.VBox();
 
                     for (var j = 0; j < 3; j++){
-                        var btn = new ccui.Button("cocosui/animationbuttonnormal.png",
-                            "cocosui/animationbuttonpressed.png");
+                        var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png",
+                            "res/cocosui/animationbuttonpressed.png");
                         btn.setName(StringUtils.format("button %d", j));
 
                         innerBox.addChild(btn);
@@ -519,8 +518,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
                     var innerBox = new ccui.VBox();
 
                     for (var j = 0; j < 3; j++){
-                        var btn = new ccui.Button("cocosui/animationbuttonnormal.png",
-                            "cocosui/animationbuttonpressed.png");
+                        var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png",
+                            "res/cocosui/animationbuttonpressed.png");
                         btn.setName(StringUtils.format("button %d", j));
 
                         innerBox.addChild(btn);

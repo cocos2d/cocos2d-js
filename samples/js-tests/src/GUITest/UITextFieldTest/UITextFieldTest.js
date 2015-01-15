@@ -182,19 +182,19 @@ var UITextFieldTest_LineWrap = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the textfield events will be displayed
-            this._displayValueLabel = new ccui.Text("No Event","fonts/Marker Felt.ttf",30);
+            this._displayValueLabel = new ccui.Text("No Event","Marker Felt",30);
             this._displayValueLabel.setAnchorPoint(cc.p(0.5, -1));
             this._displayValueLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + this._displayValueLabel.getContentSize().height * 1.5));
             this._mainNode.addChild(this._displayValueLabel);
 
             // Add the alert
-            var alert = new ccui.Text("TextField line wrap","fonts/Marker Felt.ttf",30);
+            var alert = new ccui.Text("TextField line wrap","Marker Felt",30);
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 3.075));
             this._mainNode.addChild(alert);
 
             // Create the textfield
-            var textField = new ccui.TextField("input words here","fonts/Marker Felt.ttf",30);
+            var textField = new ccui.TextField("input words here", "Marker Felt",30);
             textField.ignoreContentAdaptWithSize(false);
             //textField.getVirtualRenderer().setLineBreakWithoutSpace(true);
             textField.setContentSize(cc.size(240, 170));
@@ -252,18 +252,18 @@ var UITextFieldTest_TrueTypeFont = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the textfield events will be displayed
-            this._displayValueLabel = new ccui.Text("True Type Font Test - No Event","fonts/Marker Felt.ttf",32);
+            this._displayValueLabel = new ccui.Text("True Type Font Test - No Event","Marker Felt",32);
             this._displayValueLabel.setAnchorPoint(cc.p(0.5, -1));
             this._displayValueLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + this._displayValueLabel.getContentSize().height * 1.5));
             this._mainNode.addChild(this._displayValueLabel);
 
             // Add the alert
-            var alert = new ccui.Text("TextField","fonts/Marker Felt.ttf",30);
+            var alert = new ccui.Text("TextField","Marker Felt",30);
             alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 3.075));
             this._mainNode.addChild(alert);
 
             // Create the textfield
-            var textField = new ccui.TextField("input words here","fonts/A Damn Mess.ttf",30);
+            var textField = new ccui.TextField("input words here","A Damn Mess",30);
 
             textField.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
             textField.addEventListener(this.textFieldEvent, this);
@@ -311,13 +311,13 @@ var UITextFieldTest_PlaceHolderColor = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the textfield events will be displayed
-            this._displayValueLabel = new ccui.Text("Set place hold color","fonts/Marker Felt.ttf",32);
+            this._displayValueLabel = new ccui.Text("Set place hold color","Marker Felt",32);
             this._displayValueLabel.setAnchorPoint(cc.p(0.5, -1));
             this._displayValueLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + this._displayValueLabel.getContentSize().height * 1.5));
             this._mainNode.addChild(this._displayValueLabel);
 
             // Add the alert
-            var alert = new ccui.Text("TextField","fonts/Marker Felt.ttf",30);
+            var alert = new ccui.Text("TextField","Marker Felt",30);
             alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 3.075));
             this._mainNode.addChild(alert);
 

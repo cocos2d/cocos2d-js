@@ -290,14 +290,14 @@ var UIScrollViewNestTest = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the scrollview alert will be displayed
-            this._displayValueLabel = new ccui.Text("Move by vertical direction", "fonts/Marker Felt.ttf", 32);
+            this._displayValueLabel = new ccui.Text("Move by vertical direction", "Marker Felt", 32);
             this._displayValueLabel.setAnchorPoint(cc.p(0.5, -1.0));
             this._displayValueLabel.setPosition(cc.p(widgetSize.width / 2.0,
                 widgetSize.height / 2.0 + this._displayValueLabel.getContentSize().height * 1.5));
             this._mainNode.addChild(this._displayValueLabel);
 
             // Add the alert
-            var alert = new ccui.Text("ScrollView vertical", "fonts/Marker Felt.ttf", 30);
+            var alert = new ccui.Text("ScrollView vertical", "Marker Felt", 30);
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 3.075));
             this._mainNode.addChild(alert);
@@ -317,7 +317,7 @@ var UIScrollViewNestTest = UIScene.extend({
                 (backgroundSize.height - scrollView.getContentSize().height) / 2.0));
             this._mainNode.addChild(scrollView);
 
-            var imageView = new ccui.ImageView("cocosui/ccicon.png");
+            var imageView = new ccui.ImageView("res/cocosui/ccicon.png");
 
             var innerWidth = scrollView.getContentSize().width;
             var innerHeight = scrollView.getContentSize().height + imageView.getContentSize().height;
@@ -355,7 +355,7 @@ var UIScrollViewNestTest = UIScene.extend({
             sc.setPropagateTouchEvents(false);
             sc.setPosition(cc.p(180,100));
             sc.scrollToPercentBothDirection(cc.p(50, 50), 1, true);
-            var iv = new ccui.ImageView("cocosui/Hello.png");
+            var iv = new ccui.ImageView("res/cocosui/Hello.png");
             iv.setPosition(cc.p(240, 160));
             sc.addChild(iv);
 
@@ -376,14 +376,14 @@ var UIScrollViewRotated = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the scrollview alert will be displayed
-            this._displayValueLabel = new ccui.Text("Move by vertical direction", "fonts/Marker Felt.ttf", 32);
+            this._displayValueLabel = new ccui.Text("Move by vertical direction", "Marker Felt", 32);
             this._displayValueLabel.setAnchorPoint(cc.p(0.5, -1.0));
             this._displayValueLabel.setPosition(cc.p(widgetSize.width / 2.0,
                 widgetSize.height / 2.0 + this._displayValueLabel.getContentSize().height * 1.5));
             this._mainNode.addChild(this._displayValueLabel);
 
             // Add the alert
-            var alert = new ccui.Text("ScrollView vertical", "fonts/Marker Felt.ttf", 30);
+            var alert = new ccui.Text("ScrollView vertical", "Marker Felt", 30);
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 3.075));
             this._mainNode.addChild(alert);
@@ -404,23 +404,23 @@ var UIScrollViewRotated = UIScene.extend({
             scrollView.setRotation(45);
             this._mainNode.addChild(scrollView);
 
-            var imageView = new ccui.ImageView("cocosui/ccicon.png");
+            var imageView = new ccui.ImageView("res/cocosui/ccicon.png");
 
             var innerWidth = scrollView.getContentSize().width;
             var innerHeight = scrollView.getContentSize().height + imageView.getContentSize().height;
 
             scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
 
-            var button = new ccui.Button("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
             button.setPosition(cc.p(innerWidth / 2.0, scrollView.getInnerContainerSize().height - button.getContentSize().height / 2.0));
             scrollView.addChild(button);
 
-            var titleButton = new ccui.Button("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
+            var titleButton = new ccui.Button("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png");
             titleButton.setTitleText("Title Button");
             titleButton.setPosition(cc.p(innerWidth / 2.0, button.getBottomBoundary() - button.getContentSize().height));
             scrollView.addChild(titleButton);
 
-            var button_scale9 = new ccui.Button("cocosui/button.png", "cocosui/buttonHighlighted.png");
+            var button_scale9 = new ccui.Button("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png");
             button_scale9.setScale9Enabled(true);
             button_scale9.setContentSize(cc.size(100.0, button_scale9.getVirtualRendererSize().height));
             button_scale9.setPosition(cc.p(innerWidth / 2.0, titleButton.getBottomBoundary() - titleButton.getContentSize().height));
