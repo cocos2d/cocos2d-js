@@ -175,6 +175,10 @@ void parse(const double_cr_section_t & section, server_sent_event_t * sse_ptr, c
             // ignore
         }
     }
+    
+    // remove trailing \n character
+    if (sse_ptr->data.size() > 0)
+        sse_ptr->data.pop_back();
 }
 
 void extract(std::vector<char> * buf, std::vector<server_sent_event_t> * ptr, conn_context_t * ctx)
