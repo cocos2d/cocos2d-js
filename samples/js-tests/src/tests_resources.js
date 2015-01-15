@@ -945,7 +945,8 @@ var g_ui = [
     "res/cocosui/UITest/UITest.json",
     "res/cocosui/100/100.ExportJson",
     "res/cocosui/100/1000.plist",
-    "res/cocosui/100/1000.png"
+    "res/cocosui/100/1000.png",
+    s_s9s_blocks9_plist
 ];
 
 var g_performace = [

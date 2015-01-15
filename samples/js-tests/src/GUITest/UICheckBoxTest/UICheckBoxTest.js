@@ -72,19 +72,19 @@ var UICheckBoxDefaultBehaviorTest = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the checkbox events will be displayed
-            this._displayValueLabel = new ccui.Text("No Event", "fonts/Marker Felt.ttf", 32);
+            this._displayValueLabel = new ccui.Text("No Event", "Marker Felt", 32);
             this._displayValueLabel.setAnchorPoint(cc.p(0.5, -1));
             this._displayValueLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
             this._mainNode.addChild(this._displayValueLabel);
 
             // Add the alert
-            var alert = new ccui.Text("Only left two and the last checkbox can be cliked!","fonts/Marker Felt.ttf",20 );
+            var alert = new ccui.Text("Only left two and the last checkbox can be cliked!","Marker Felt",20 );
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 1.75));
             this._mainNode.addChild(alert);
 
             // Create the checkbox
-            var checkBox = new ccui.CheckBox("res/cocosui/check_box_normal.png", "res/cocosui/check_box_active.png");
+            var checkBox = new ccui.CheckBox("res/cocosui/check_box_normal.png", "res/cocosui/check_box_active.png", null, 0);
             checkBox.setPosition(cc.p(widgetSize.width / 2 - 50, widgetSize.height / 2));
 
             this._mainNode.addChild(checkBox);

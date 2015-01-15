@@ -126,29 +126,28 @@ var UIPageViewButtonTest = UIScene.extend({
             pageView.removeAllPages();
 
             var pageCount = 4;
-            for (var i = 0; i < pageCount; ++i)
-            {
+            for (var i = 0; i < pageCount; ++i){
                 var outerBox = new ccui.HBox();
                 outerBox.setContentSize(cc.size(240.0, 130.0));
 
                 for (var k = 0; k < 2; ++k) {
-                var innerBox = new ccui.VBox();
+                    var innerBox = new ccui.VBox();
 
-                for (var j = 0; j < 3; j++) {
-                    var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
-                    btn.setName("button " + j);
-                    btn.addTouchEventListener( this.onButtonClicked, this);
+                    for (var j = 0; j < 3; j++) {
+                        var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+                        btn.setName("button " + j);
+                        btn.addTouchEventListener( this.onButtonClicked, this);
 
-                    innerBox.addChild(btn);
+                        innerBox.addChild(btn);
+                    }
+
+                    var parameter = new ccui.LinearLayoutParameter();
+                    parameter.setMargin({left: 0, top: 0, right: 100, bottom: 0});
+                    innerBox.setLayoutParameter(parameter);
+
+                    outerBox.addChild(innerBox);
+
                 }
-
-                var parameter = new ccui.LinearLayoutParameter();
-                parameter.setMargin({left: 0, top: 0, right: 100, bottom: 0});
-                innerBox.setLayoutParameter(parameter);
-
-                outerBox.addChild(innerBox);
-
-            }
 
                 pageView.insertPage(outerBox,i);
             }

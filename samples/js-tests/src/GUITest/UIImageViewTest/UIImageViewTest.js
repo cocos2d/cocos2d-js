@@ -74,7 +74,7 @@ var UIImageViewTest_ContentSize = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
 
-            var alert = new ccui.Text("ImageView ContentSize Change", "fonts/Marker Felt.ttf", 26);
+            var alert = new ccui.Text("ImageView ContentSize Change", "Marker Felt", 26);
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 2.125));
 
@@ -98,7 +98,7 @@ var UIImageViewTest_ContentSize = UIScene.extend({
             imageViewChild.setPositionType(ccui.Widget.POSITION_PERCENT);
             imageViewChild.setSizePercent(cc.p(0.5, 0.5));
             imageViewChild.setPositionPercent(cc.p(0.5, 0.5));
-            imageViewChild.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
+            //imageViewChild.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
 
             var imageViewChild2 = new ccui.ImageView("res/cocosui/buttonHighlighted.png");
             imageViewChild2.setScale9Enabled(true);
@@ -110,16 +110,17 @@ var UIImageViewTest_ContentSize = UIScene.extend({
 
 
             imageView.addChild(imageViewChild);
+            window.aa = imageView;
 
             imageView.setTouchEnabled(true);
             imageView.addTouchEventListener(function(sender, type){
                 if (type == ccui.Widget.TOUCH_ENDED) {
-                    var width = Math.random() * 200 + 50;
-                    var height = Math.random() * 80 + 30;
+                    var width = (Math.random() * 200 | 0) + 50;
+                    var height = (Math.random() * 80 | 0) + 30;
                     imageView.setContentSize(cc.size(width, height));
 
                     imageViewChild.setPositionPercent(cc.p(Math.random(), Math.random()));
-                    status.setString("child ImageView position percent: %f, %f", imageViewChild.getPositionPercent().x, imageViewChild.getPositionPercent().y);
+                    status.setString("child ImageView position percent: "+imageViewChild.getPositionPercent().x+", "+imageViewChild.getPositionPercent().y);
                 }
             });
 
