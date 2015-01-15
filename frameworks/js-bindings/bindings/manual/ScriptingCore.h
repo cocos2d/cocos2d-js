@@ -29,6 +29,7 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"
 #include "spidermonkey_specifics.h"
@@ -257,6 +258,7 @@ public:
     bool handleTouchEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, cocos2d::Touch* touch, cocos2d::Event* event, jsval* jsvalRet = nullptr);
     bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, jsval* jsvalRet = nullptr);
     bool handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
+    bool handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus);
 
     void restartVM();
 };

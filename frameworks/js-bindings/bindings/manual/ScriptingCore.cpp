@@ -1298,6 +1298,28 @@ bool ScriptingCore::handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::
     return ret;
 }
 
+bool ScriptingCore::handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus)
+{
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+
+    js_proxy_t * p = jsb_get_native_proxy(nativeObj);
+
+    if (nullptr == p)
+        return false;
+
+    jsval args[2] = {
+        getJSObject(_cx, widgetLoseFocus),
+        getJSObject(_cx, widgetGetFocus)
+    };
+
+    bool ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onFocusChanged", 2, args);
+
+    removeJSObject(_cx, widgetLoseFocus);
+    removeJSObject(_cx, widgetGetFocus);
+
+    return ret;
+}
+
 
 int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
                                        const std::vector<Touch*>& touches, JSObject *obj)
