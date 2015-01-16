@@ -237,7 +237,9 @@ cc.Event.TOUCH = 0;                  //CCEvent.js
 cc.Event.KEYBOARD = 1;
 cc.Event.ACCELERATION = 2;
 cc.Event.MOUSE = 3;
-cc.Event.CUSTOM = 4;
+cc.Event.FOCUS = 4
+//game controller 5
+cc.Event.CUSTOM = 6;
 cc.EventMouse.NONE = 0;
 cc.EventMouse.DOWN = 1;
 cc.EventMouse.UP = 2;
@@ -1669,8 +1671,10 @@ cc.EventListener.TOUCH_ALL_AT_ONCE = 2;
 cc.EventListener.KEYBOARD = 3;
 cc.EventListener.MOUSE = 4;
 cc.EventListener.ACCELERATION = 5;
-cc.EventListener.CUSTOM = 6;
-cc.EventListener.FOCUS = 7;
+cc.EventListener.FOCUS = 6;
+//game controller 7
+cc.EventListener.CUSTOM = 8;
+
 
 cc.EventListener.create = function(argObj){
     if(!argObj || !argObj.event){

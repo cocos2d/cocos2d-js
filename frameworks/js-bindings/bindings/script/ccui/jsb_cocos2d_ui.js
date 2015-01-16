@@ -166,6 +166,12 @@ ccui.Widget.SIZE_PERCENT = 1;
 ccui.Widget.POSITION_ABSOLUTE = 0;
 ccui.Widget.POSITION_PERCENT = 1;
 
+//focus direction
+ccui.Widget.LEFT = 0;
+ccui.Widget.RIGHT = 1;
+ccui.Widget.UP = 2;
+ccui.Widget.DOWN = 3;
+
 /*
  * UIListView
  */
