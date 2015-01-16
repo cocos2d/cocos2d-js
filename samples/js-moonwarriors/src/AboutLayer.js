@@ -56,9 +56,11 @@ var AboutLayer = cc.Layer.extend({
             anchorX: 0.5,
             anchorY: 0.5
         });
+        about.setColor(cc.color(MW.FONTCOLOR));
         this.addChild(about);
 
         var label = new cc.LabelTTF("Go back", "Arial", 21);
+        label.setColor(cc.color(MW.FONTCOLOR));
         var back = new cc.MenuItemLabel(label, this.onBackCallback);
         var menu = new cc.Menu(back);
         menu.x = winSize.width / 2;

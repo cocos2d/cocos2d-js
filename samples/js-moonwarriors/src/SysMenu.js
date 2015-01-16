@@ -67,8 +67,8 @@ var SysMenu = cc.Layer.extend({
         });
         this.addChild(logoBack, 9);
 
-        var singalHeight = 36;
-        var singalWidth = 123;
+        var singalHeight = MW.menuHeight;
+        var singalWidth = MW.menuWidth;
         var newGameNormal = new cc.Sprite(res.menu_png, cc.rect(0, 0, singalWidth, singalHeight));
         var newGameSelected = new cc.Sprite(res.menu_png, cc.rect(0, singalHeight, singalWidth, singalHeight));
         var newGameDisabled = new cc.Sprite(res.menu_png, cc.rect(0, singalHeight * 2, singalWidth, singalHeight));
@@ -99,6 +99,13 @@ var SysMenu = cc.Layer.extend({
         this.addChild(menu, 1, 2);
         menu.x = winSize.width / 2;
         menu.y = winSize.height / 2 - 140;
+
+        var label = new cc.LabelTTF("Power by Cocos2d-JS", "Arial", 21);
+        label.setColor(cc.color(MW.FONTCOLOR));
+        this.addChild(label, 1);
+        label.x = winSize.width  / 2;
+        label.y = 80;
+
         this.schedule(this.update, 0.1);
 
         this._ship = new cc.Sprite("#ship03.png");

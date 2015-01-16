@@ -25,9 +25,9 @@
  THE SOFTWARE.
 
  @Authors:
- Programmer: Shengxiang Chen (³ÂÉıÏë), Dingping Lv (ÂÀ¶¨Æ½), Ricardo Quesada
- Effects animation: Hao Wu (Îâê»)
- Quality Assurance: Sean Lin (ÁÖË³)
+ Programmer: Shengxiang Chen (é™ˆå‡æƒ³), Dingping Lv (å•å®šå¹³), Ricardo Quesada
+ Effects animation: Hao Wu (å´æ˜Š)
+ Quality Assurance: Sean Lin (æ—é¡º)
  ****************************************************************************/
 
 var res = {
