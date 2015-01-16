@@ -5799,6 +5799,30 @@ bool js_cocos2dx_Scene_initWithSize(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Scene_initWithSize : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_Scene_getDefaultCamera(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Scene* cobj = (cocos2d::Scene *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Scene_getDefaultCamera : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Camera* ret = cobj->getDefaultCamera();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Camera>(cx, (cocos2d::Camera*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Scene_getDefaultCamera : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_Scene_createWithSize(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -5938,6 +5962,7 @@ void js_register_cocos2dx_Scene(JSContext *cx, JSObject *global) {
         JS_FN("init", js_cocos2dx_Scene_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPhysicsWorld", js_cocos2dx_Scene_getPhysicsWorld, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithSize", js_cocos2dx_Scene_initWithSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getDefaultCamera", js_cocos2dx_Scene_getDefaultCamera, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2d_Scene_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -17241,33 +17266,61 @@ bool js_cocos2dx_TintTo_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
     bool ok = true;
-    if (argc == 4) {
-        double arg0;
-        uint16_t arg1;
-        uint16_t arg2;
-        uint16_t arg3;
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-        ok &= jsval_to_uint16(cx, argv[1], &arg1);
-        ok &= jsval_to_uint16(cx, argv[2], &arg2);
-        ok &= jsval_to_uint16(cx, argv[3], &arg3);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TintTo_create : Error processing arguments");
-        cocos2d::TintTo* ret = cocos2d::TintTo::create(arg0, arg1, arg2, arg3);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::TintTo>(cx, (cocos2d::TintTo*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
+    
+    do {
+        if (argc == 2) {
+            double arg0;
+            ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+            if (!ok) { ok = true; break; }
+            cocos2d::Color3B arg1;
+            ok &= jsval_to_cccolor3b(cx, argv[1], &arg1);
+            if (!ok) { ok = true; break; }
+            cocos2d::TintTo* ret = cocos2d::TintTo::create(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::TintTo>(cx, (cocos2d::TintTo*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            JS_SET_RVAL(cx, vp, jsret);
+            return true;
         }
     } while (0);
-        JS_SET_RVAL(cx, vp, jsret);
-        return true;
-    }
+    
+    do {
+        if (argc == 4) {
+            double arg0;
+            ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+            if (!ok) { ok = true; break; }
+            uint16_t arg1;
+            ok &= jsval_to_uint16(cx, argv[1], &arg1);
+            if (!ok) { ok = true; break; }
+            uint16_t arg2;
+            ok &= jsval_to_uint16(cx, argv[2], &arg2);
+            if (!ok) { ok = true; break; }
+            uint16_t arg3;
+            ok &= jsval_to_uint16(cx, argv[3], &arg3);
+            if (!ok) { ok = true; break; }
+            cocos2d::TintTo* ret = cocos2d::TintTo::create(arg0, arg1, arg2, arg3);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::TintTo>(cx, (cocos2d::TintTo*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            JS_SET_RVAL(cx, vp, jsret);
+            return true;
+        }
+    } while (0);
     JS_ReportError(cx, "js_cocos2dx_TintTo_create : wrong number of arguments");
     return false;
 }
-
 bool js_cocos2dx_TintTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -17325,7 +17378,7 @@ void js_register_cocos2dx_TintTo(JSContext *cx, JSObject *global) {
     };
 
     static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_cocos2dx_TintTo_create, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("create", js_cocos2dx_TintTo_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -55631,26 +55684,26 @@ bool js_cocos2dx_Camera_getType(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Camera_getType : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_Camera_enableFrustumCulling(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_Camera_getDepthInView(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
     bool ok = true;
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_enableFrustumCulling : Invalid Native Object");
-    if (argc == 2) {
-        bool arg0;
-        bool arg1;
-        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
-        arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_enableFrustumCulling : Error processing arguments");
-        cobj->enableFrustumCulling(arg0, arg1);
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_getDepthInView : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Mat4 arg0;
+        ok &= jsval_to_matrix(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_getDepthInView : Error processing arguments");
+        double ret = cobj->getDepthInView(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_Camera_enableFrustumCulling : wrong number of arguments: %d, was expecting %d", argc, 2);
+    JS_ReportError(cx, "js_cocos2dx_Camera_getDepthInView : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_Camera_lookAt(JSContext *cx, uint32_t argc, jsval *vp)
@@ -55661,6 +55714,14 @@ bool js_cocos2dx_Camera_lookAt(JSContext *cx, uint32_t argc, jsval *vp)
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_lookAt : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Vec3 arg0;
+        ok &= jsval_to_vector3(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_lookAt : Error processing arguments");
+        cobj->lookAt(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
     if (argc == 2) {
         cocos2d::Vec3 arg0;
         cocos2d::Vec3 arg1;
@@ -55672,7 +55733,7 @@ bool js_cocos2dx_Camera_lookAt(JSContext *cx, uint32_t argc, jsval *vp)
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_Camera_lookAt : wrong number of arguments: %d, was expecting %d", argc, 2);
+    JS_ReportError(cx, "js_cocos2dx_Camera_lookAt : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_Camera_isVisibleInFrustum(JSContext *cx, uint32_t argc, jsval *vp)
@@ -55899,6 +55960,26 @@ bool js_cocos2dx_Camera_createOrthographic(JSContext *cx, uint32_t argc, jsval *
     return false;
 }
 
+bool js_cocos2dx_Camera_getDefaultCamera(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc == 0) {
+        cocos2d::Camera* ret = cocos2d::Camera::getDefaultCamera();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Camera>(cx, (cocos2d::Camera*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_Camera_getDefaultCamera : wrong number of arguments");
+    return false;
+}
+
 bool js_cocos2dx_Camera_getVisitingCamera(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc == 0) {
@@ -55977,8 +56058,8 @@ void js_register_cocos2dx_Camera(JSContext *cx, JSObject *global) {
         JS_FN("getViewMatrix", js_cocos2dx_Camera_getViewMatrix, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCameraFlag", js_cocos2dx_Camera_getCameraFlag, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getType", js_cocos2dx_Camera_getType, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("enableFrustumCulling", js_cocos2dx_Camera_enableFrustumCulling, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("lookAt", js_cocos2dx_Camera_lookAt, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getDepthInView", js_cocos2dx_Camera_getDepthInView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("lookAt", js_cocos2dx_Camera_lookAt, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isVisibleInFrustum", js_cocos2dx_Camera_isVisibleInFrustum, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCameraFlag", js_cocos2dx_Camera_setCameraFlag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initOrthographic", js_cocos2dx_Camera_initOrthographic, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -55992,6 +56073,7 @@ void js_register_cocos2dx_Camera(JSContext *cx, JSObject *global) {
         JS_FN("create", js_cocos2dx_Camera_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("createPerspective", js_cocos2dx_Camera_createPerspective, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("createOrthographic", js_cocos2dx_Camera_createOrthographic, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getDefaultCamera", js_cocos2dx_Camera_getDefaultCamera, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getVisitingCamera", js_cocos2dx_Camera_getVisitingCamera, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
