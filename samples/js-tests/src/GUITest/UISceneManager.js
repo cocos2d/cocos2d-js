@@ -25,6 +25,36 @@
 
 var s_testArray = [
     {
+        title: "UIFocusTestNestedLayout3",
+        func: function () {
+            return new UIFocusTestNestedLayout3();
+        }
+    },
+    {
+        title: "UIFocusTestNestedLayout2",
+        func: function () {
+            return new UIFocusTestNestedLayout2();
+        }
+    },
+    {
+        title: "UIFocusTestNestedLayout1",
+        func: function () {
+            return new UIFocusTestNestedLayout1();
+        }
+    },
+    {
+        title: "UIFocusTestVertical",
+        func: function () {
+            return new UIFocusTestVertical();
+        }
+    },
+    {
+        title: "UIFocusTestHorizontal",
+        func: function () {
+            return new UIFocusTestHorizontal();
+        }
+    },
+    {
         title: "UIButtonTest",
         func: function () {
             return new UIButtonTest();
