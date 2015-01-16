@@ -80,7 +80,7 @@ var UIPageViewTest = UIScene.extend({
         switch (type) {
             case ccui.PageView.EVENT_TURNING:
                 var pageView = sender;
-                this._topDisplayLabel.setString("page = " + (pageView.getCurPageIndex() + 1));
+                this._topDisplayLabel.setString("page = " + (pageView.getCurPageIndex().valueOf()-0 + 1));
                 break;
             default:
                 break;
@@ -170,7 +170,7 @@ var UIPageViewButtonTest = UIScene.extend({
     pageViewEvent: function(pageView, type){
         switch (type){
             case ccui.PageView.EVENT_TURNING:
-                this.displayValueLabel.setString("page = ", pageView.getCurPageIndex() + 1);
+                this.displayValueLabel.setString("page = " + pageView.getCurPageIndex() + 1);
                 break;
             default:
                 break;
@@ -363,7 +363,11 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
                 "res/cocosui/check_box_active.png",
                 "res/cocosui/check_box_normal_disable.png",
                 "res/cocosui/check_box_active_disable.png");
-            checkBox1.setPosition(propagationText.getPosition() + cc.p(propagationText.getContentSize().width/2, -20));
+            var propagationPosition = propagationText.getPosition();
+            checkBox1.setPosition(
+                propagationPosition.x + propagationText.getContentSize().width/2,
+                propagationPosition.y - 20
+            );
 
             checkBox1.setName("propagation");
             this._mainNode.addChild(checkBox1);
@@ -375,18 +379,22 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
                 "res/cocosui/check_box_active.png",
                 "res/cocosui/check_box_normal_disable.png",
                 "res/cocosui/check_box_active_disable.png");
-            checkBox2.setPosition(swallowTouchText.getPosition() + cc.p(swallowTouchText.getContentSize().width/2, -20));
+            var swallowPosition = swallowTouchText.getPosition();
+            checkBox2.setPosition(
+                swallowPosition.x + swallowTouchText.getContentSize().width/2,
+                swallowPosition.y - 20
+            );
 
             checkBox2.setName("swallow");
             this._mainNode.addChild(checkBox2);
 
 
-            var eventListener = new cc.EventListenerTouchOneByOne();
-            eventListener.onTouchBegan = function(touch, event){
-                cc.log("layout recieves touches");
-                return true;
-            };
-            this._eventDispatcher.addEventListenerWithSceneGraphPriority(eventListener, this);
+//            var eventListener = new cc.EventListenerTouchOneByOne();
+//            eventListener.onTouchBegan = function(touch, event){
+//                cc.log("layout recieves touches");
+//                return true;
+//            };
+//            this._eventDispatcher.addEventListenerWithSceneGraphPriority(eventListener, this);
 
             return true;
 
@@ -425,7 +433,7 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
     pageViewEvent: function(pageView, type){
         switch (type){
             case ccui.PageView.EVENT_TURNING:
-                this.displayValueLabel.setString("page = " + pageView.getCurPageIndex() + 1);
+                this.displayValueLabel.setString("page = " + (pageView.getCurPageIndex()-0 + 1));
                 break;
 
             default:
@@ -440,6 +448,7 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
 var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
 
     init: function(){
+        var self = this;
         if (this._super()){
 
             var widgetSize = this._widget.getContentSize();
@@ -482,13 +491,13 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
                     for (var j = 0; j < 3; j++){
                         var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png",
                             "res/cocosui/animationbuttonpressed.png");
-                        btn.setName(StringUtils.format("button %d", j));
+                        btn.setName("button " + j);
 
                         innerBox.addChild(btn);
                     }
 
                     var parameter = new ccui.LinearLayoutParameter();
-                    parameter.setMargin(Margin(0,0,100,0));
+                    parameter.setMargin({left: 0, top: 0, right: 100, bottom:0});
                     innerBox.setLayoutParameter(parameter);
 
                     outerBox.addChild(innerBox);
@@ -504,7 +513,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
 
             //add buttons
             var button = new ccui.Button();
-            button.setNormalizedPosition(cc.p(0.12,0.7));
+//            button.setNormalizedPosition(cc.p(0.12,0.7));
+            button.setPosition(cc.p(20, 220));
             button.setTitleText("Add A Page");
             button.setZoomScale(0.3);
             button.setPressedActionEnabled(true);
@@ -519,12 +529,12 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
                     for (var j = 0; j < 3; j++){
                         var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png",
                             "res/cocosui/animationbuttonpressed.png");
-                        btn.setName(StringUtils.format("button %d", j));
+                        btn.setName("button " + j);
 
                         innerBox.addChild(btn);
                     }
 
-                    var parameter = ccui.LinearLayoutParameter();
+                    var parameter = new ccui.LinearLayoutParameter();
                     parameter.setMargin({left: 0, top: 0, right: 100, bottom: 0});
                     innerBox.setLayoutParameter(parameter);
 
@@ -533,37 +543,39 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
                 }
 
                 pageView.addPage(outerBox);
-                this.displayValueLabel.setString("page count = " + pageView.getPages().length);
+                self.displayValueLabel.setString("page count = " + pageView.getPages().length);
 
             });
             this._mainNode.addChild(button);
 
             var button2 = new ccui.Button();
-            button2.setNormalizedPosition(cc.p(0.12,0.5));
+//            button2.setNormalizedPosition(cc.p(0.12,0.5));
+            button2.setPosition(cc.p(20, 180));
             button2.setTitleText("Remove A Page");
             button2.setZoomScale(0.3);
             button2.setPressedActionEnabled(true);
             button2.setTitleColor(cc.color.RED);
             button2.addClickEventListener(function(sender){
-                if (pageView.getPages().size() > 0){
-                    pageView.removePageAtIndex(pageView.getPages().size()-1);
+                if (pageView.getPages().length > 0){
+                    pageView.removePageAtIndex(pageView.getPages().length-1);
                 }else{
                     cc.log("There is no page to remove!");
                 }
-                this.displayValueLabel.setString("page count = %ld", pageView.getPages().length);
+                self.displayValueLabel.setString("page count = " + pageView.getPages().length);
 
             });
             this._mainNode.addChild(button2);
 
             var button3 = new ccui.Button();
-            button3.setNormalizedPosition(cc.p(0.12,0.3));
+//            button3.setNormalizedPosition(cc.p(0.12,0.3));
+            button3.setPosition(cc.p(20, 140));
             button3.setTitleText("Remove All Pages");
             button3.setZoomScale(0.3);
             button3.setPressedActionEnabled(true);
             button3.setTitleColor(cc.color.RED);
             button3.addClickEventListener(function(sender){
                 pageView.removeAllPages();
-                this.displayValueLabel.setString("page count = %ld", pageView.getPages().length);
+                self.displayValueLabel.setString("page count = " + pageView.getPages().length);
 
             });
             this._mainNode.addChild(button3);
@@ -579,7 +591,7 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
     pageViewEvent: function(pageView, type){
         switch (type){
             case ccui.PageView.EVENT_TURNING:
-                this.displayValueLabel.setString("page = %ld", pageView.getCurPageIndex() + 1);
+                this.displayValueLabel.setString("page = " + (pageView.getCurPageIndex() + 1));
                 break;
 
             default:
