@@ -44,13 +44,13 @@ if (window.ccs) {
     require('script/studio/jsb_studio_create_apis.js');
 
     require('script/studio/jsb_studio_load.js');
-    require('script/studio/parsers/jsb_studio_action-1.x.js');
-    require('script/studio/parsers/jsb_studio_action-2.x.js');
-    require('script/studio/parsers/jsb_studio_scene-1.x.js');
-    require('script/studio/parsers/jsb_studio_timelineParser-1.x.js');
-    require('script/studio/parsers/jsb_studio_timelineParser-2.x.js');
-    require('script/studio/parsers/jsb_studio_uiParser-1.x.js');
-    require('script/studio/parsers/jsb_studio_compatible.js');
+    require('script/studio/parsers/action-1.x.js');
+    require('script/studio/parsers/action-2.x.js');
+    require('script/studio/parsers/scene-1.x.js');
+    require('script/studio/parsers/timelineParser-1.x.js');
+    require('script/studio/parsers/timelineParser-2.x.js');
+    require('script/studio/parsers/uiParser-1.x.js');
+    require('script/studio/parsers/compatible.js');
 }
 
 if (window.ccui) {
