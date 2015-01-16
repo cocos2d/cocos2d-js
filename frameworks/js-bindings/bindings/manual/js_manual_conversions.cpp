@@ -1362,7 +1362,8 @@ bool jsval_to_vector3(JSContext *cx, jsval vp, cocos2d::Vec3* ret)
     JS_GetProperty(cx, tmp, "z", &jsz) &&
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y) &&
-    JS::ToNumber(cx, jsz, &z);
+    JS::ToNumber(cx, jsz, &z) &&
+    !isnan(x) && !isnan(y) && !isnan(z);
     
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     
@@ -2036,8 +2037,6 @@ bool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     return true;
 }
 
-#define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-
 bool jsval_to_CCPoint( JSContext *cx, jsval vp, Point *ret )
 {
 #ifdef JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
@@ -2085,83 +2084,6 @@ bool jsval_to_CCPoint( JSContext *cx, jsval vp, Point *ret )
 #endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
-
-bool jsval_to_CGPoint( JSContext *cx, jsval vp, cpVect *ret )
-{
-#ifdef JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-    
-    JS::RootedObject jsobj(cx);
-    if( ! JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj ) )
-        return false;
-    
-    JSB_PRECONDITION( jsobj, "Not a valid JS object");
-    
-    JS::RootedValue valx(cx);
-    JS::RootedValue valy(cx);
-    bool ok = true;
-    ok &= JS_GetProperty(cx, jsobj, "x", &valx);
-    ok &= JS_GetProperty(cx, jsobj, "y", &valy);
-    
-    if( ! ok )
-        return false;
-    
-    double x, y;
-    ok &= JS::ToNumber(cx, valx, &x);
-    ok &= JS::ToNumber(cx, valy, &y);
-    
-    if( ! ok )
-        return false;
-    
-    ret->x = x;
-    ret->y = y;
-    
-    return true;
-    
-#else // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-    
-    JSObject *tmp_arg;
-    if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-        return false;
-    
-    JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-    
-    JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(cpVect), "Invalid length");
-    
-    *ret = *(cpVect*)JS_GetArrayBufferViewData( tmp_arg, cx );
-    
-    return true;
-#endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-}
-
-
-jsval CGPoint_to_jsval( JSContext *cx, cpVect p)
-{
-    
-#ifdef JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-    
-    JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
-    if (!object)
-        return JSVAL_VOID;
-    
-    if (!JS_DefineProperty(cx, object, "x", DOUBLE_TO_JSVAL(p.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-        !JS_DefineProperty(cx, object, "y", DOUBLE_TO_JSVAL(p.y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
-        return JSVAL_VOID;
-    
-    return OBJECT_TO_JSVAL(object);
-    
-#else // JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-    
-#ifdef __LP64__
-    JSObject *typedArray = JS_NewFloat64Array( cx, 2 );
-#else
-    JSObject *typedArray = JS_NewFloat32Array( cx, 2 );
-#endif
-    
-    cpVect *buffer = (cpVect*)JS_GetArrayBufferViewData(typedArray, cx );
-    *buffer = p;
-    return OBJECT_TO_JSVAL(typedArray);
-#endif // ! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-}
 
 jsval ccvalue_to_jsval(JSContext* cx, const cocos2d::Value& v)
 {

@@ -90,3 +90,11 @@ ccs.ComController.prototype._ctor = function() {
 ccs.ComRender.prototype._ctor = function() {
     ccs.ComRender.prototype.init.call(this);
 };
+
+ccs.ActionTimelineData.prototype._ctor = function(actionTag) {
+    if (actionTag !== undefined)
+    {
+        ccs.ActionTimelineData.prototype.init.call(this,actionTag);
+    }
+
+};

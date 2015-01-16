@@ -834,6 +834,18 @@ getGLProgram : function (
 },
 
 /**
+ * @method updateTransformFromPhysics
+ * @param {mat4_object} arg0
+ * @param {unsigned int} arg1
+ */
+updateTransformFromPhysics : function (
+mat4, 
+int 
+)
+{
+},
+
+/**
  * @method getDescription
  * @return {String}
  */
@@ -1480,6 +1492,20 @@ action
 },
 
 /**
+ * @method visit
+* @param {cc.Renderer} renderer
+* @param {mat4_object} mat4
+* @param {unsigned int} int
+*/
+visit : function(
+renderer,
+mat4,
+int 
+)
+{
+},
+
+/**
  * @method setGLProgram
  * @param {cc.GLProgram} arg0
  */
@@ -1507,20 +1533,6 @@ getAnchorPointInPoints : function (
 )
 {
     return cc.Vec2;
-},
-
-/**
- * @method visit
-* @param {cc.Renderer} renderer
-* @param {mat4_object} mat4
-* @param {unsigned int} int
-*/
-visit : function(
-renderer,
-mat4,
-int 
-)
-{
 },
 
 /**
@@ -1663,6 +1675,24 @@ str
 */
 setAdditionalTransform : function(
 mat4 
+)
+{
+},
+
+/**
+ * @method updatePhysicsBodyTransform
+ * @param {cc.Scene} arg0
+ * @param {mat4_object} arg1
+ * @param {unsigned int} arg2
+ * @param {float} arg3
+ * @param {float} arg4
+ */
+updatePhysicsBodyTransform : function (
+scene, 
+mat4, 
+int, 
+float, 
+float 
 )
 {
 },
@@ -3024,6 +3054,16 @@ isNextDeltaTimeZero : function (
 },
 
 /**
+ * @method setClearColor
+ * @param {color4f_object} arg0
+ */
+setClearColor : function (
+color4f 
+)
+{
+},
+
+/**
  * @method setOpenGLView
  * @param {cc.GLView} arg0
  */
@@ -3591,6 +3631,16 @@ str
 },
 
 /**
+ * @method setWritablePath
+ * @param {String} arg0
+ */
+setWritablePath : function (
+str 
+)
+{
+},
+
+/**
  * @method setPopupNotify
  * @param {bool} arg0
  */
@@ -3610,6 +3660,16 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method setDefaultResourceRootPath
+ * @param {String} arg0
+ */
+setDefaultResourceRootPath : function (
+str 
+)
+{
 },
 
 /**
@@ -3642,6 +3702,16 @@ getWritablePath : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setDelegate
+ * @param {cc.FileUtils} arg0
+ */
+setDelegate : function (
+fileutils 
+)
+{
 },
 
 /**
@@ -5593,12 +5663,12 @@ cc.MoveBy = {
 
 /**
  * @method initWithDuration
- * @param {float} arg0
- * @param {vec2_object} arg1
- * @return {bool}
- */
-initWithDuration : function (
-float, 
+* @param {float|float} float
+* @param {vec3_object|vec2_object} vec3
+* @return {bool|bool}
+*/
+initWithDuration : function(
+float,
 vec2 
 )
 {
@@ -5607,12 +5677,12 @@ vec2
 
 /**
  * @method create
- * @param {float} arg0
- * @param {vec2_object} arg1
- * @return {cc.MoveBy}
- */
-create : function (
-float, 
+* @param {float|float} float
+* @param {vec3_object|vec2_object} vec3
+* @return {cc.MoveBy|cc.MoveBy}
+*/
+create : function(
+float,
 vec2 
 )
 {
@@ -5637,12 +5707,12 @@ cc.MoveTo = {
 
 /**
  * @method initWithDuration
- * @param {float} arg0
- * @param {vec2_object} arg1
- * @return {bool}
- */
-initWithDuration : function (
-float, 
+* @param {float|float} float
+* @param {vec3_object|vec2_object} vec3
+* @return {bool|bool}
+*/
+initWithDuration : function(
+float,
 vec2 
 )
 {
@@ -5651,12 +5721,12 @@ vec2
 
 /**
  * @method create
- * @param {float} arg0
- * @param {vec2_object} arg1
- * @return {cc.MoveTo}
- */
-create : function (
-float, 
+* @param {float|float} float
+* @param {vec3_object|vec2_object} vec3
+* @return {cc.MoveTo|cc.MoveTo}
+*/
+create : function(
+float,
 vec2 
 )
 {
@@ -5826,6 +5896,24 @@ JumpBy : function (
  * @class JumpTo
  */
 cc.JumpTo = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {vec2_object} arg1
+ * @param {float} arg2
+ * @param {int} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+vec2, 
+float, 
+int 
+)
+{
+    return false;
+},
 
 /**
  * @method create
@@ -10522,13 +10610,15 @@ color4f
 
 /**
  * @method drawPoints
- * @param {vec2_object} arg0
- * @param {unsigned int} arg1
- * @param {color4f_object} arg2
- */
-drawPoints : function (
-vec2, 
-int, 
+* @param {vec2_object|vec2_object} vec2
+* @param {unsigned int|unsigned int} int
+* @param {float|color4f_object} float
+* @param {color4f_object} color4f
+*/
+drawPoints : function(
+vec2,
+int,
+float,
 color4f 
 )
 {
@@ -18219,6 +18309,18 @@ getType : function (
 },
 
 /**
+ * @method enableFrustumCulling
+ * @param {bool} arg0
+ * @param {bool} arg1
+ */
+enableFrustumCulling : function (
+bool, 
+bool 
+)
+{
+},
+
+/**
  * @method lookAt
  * @param {vec3_object} arg0
  * @param {vec3_object} arg1
@@ -18228,6 +18330,18 @@ vec3,
 vec3 
 )
 {
+},
+
+/**
+ * @method isVisibleInFrustum
+ * @param {cc.AABB} arg0
+ * @return {bool}
+ */
+isVisibleInFrustum : function (
+aabb 
+)
+{
+    return false;
 },
 
 /**
