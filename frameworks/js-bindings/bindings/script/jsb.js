@@ -27,7 +27,7 @@
 // DO NOT ALTER THE ORDER
 require('script/jsb_cocos2d_constants.js');
 require('script/jsb_cocos2d.js');
-
+require('script/jsb_common.js');
 require('script/jsb_property_impls.js');
 require('script/jsb_property_apis.js');
 require('script/jsb_create_apis.js');

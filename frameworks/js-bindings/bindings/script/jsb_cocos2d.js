@@ -281,193 +281,6 @@ cc.SCENE_FADE = 4208917214;             //CCTransition.js
 cc.SCENE_RADIAL = 0xc001;               //CCTransitionProgress.js
 
 
-cc.KEY = {
-    //android
-    back:6,
-    menu:18,
-    //desktop
-    none:0,
-    pause:1,
-    scrolllock:2,
-    printscreen:3,
-    sysreq:4,
-    sysbreak:5,
-    escape:6,
-    backspace:7,
-    tab:8,
-    back_tab:9,
-    keyreturn:10,
-    capslock:11,
-    shift:12,// oldname
-    leftshift:12,
-    rightshift:13,
-    ctrl:14,// oldname
-    leftctrl:14,
-    rightctrl:15,
-    alt:16,// oldname
-    leftalt:16,
-    rightalt:17,
-    keymenu:18,
-    keyhyper:19,
-    insert:20,
-    home:21,
-    pgup:22,
-    keydelete:23,
-    end:24,
-    pgdown:25,
-    left:26,
-    right:27,
-    up:28,
-    down:29,
-    numlock:30,
-    '+':31,// oldname
-    kpplus:31,
-    '-':32,// oldname
-    kpminus:32,
-    '*':33,// oldname
-    kpmultiply:33,
-    kpdivide:34,
-    kpenter:35,
-    kphome:36,
-    kpup:37,
-    kppageup:38,
-    kpleft:39,
-    kpfive:40,
-    kpright:41,
-    kpend:42,
-    kpdown:43,
-    kppagedown:44,
-    kpinsert:45,
-    kpdelete:46,
-    f1:47,
-    f2:48,
-    f3:49,
-    f4:50,
-    f5:51,
-    f6:52,
-    f7:53,
-    f8:54,
-    f9:55,
-    f10:56,
-    f11:57,
-    f12:58,
-    space:59,
-    exclam:60,
-    quote:61,
-    number:62,
-    dollar:63,
-    percent:64,
-    circumflex:65,
-    ampersand:66,
-    apostrophe:67,
-    leftparenthesis:68,
-    rightparenthesis:69,
-    asterisk:70,
-    plus:71,
-    ',':72,// oldname
-    comma:72,
-    minus:73,
-    '.':74,// oldname
-    period:74,
-    '/':75,// oldname
-    forwardslash:75,// oldname
-    slash:75,
-    0:76,
-    1:77,
-    2:78,
-    3:79,
-    4:80,
-    5:81,
-    6:82,
-    7:83,
-    8:84,
-    9:85,
-    colon:86,
-    ';':87,// oldname
-    semicolon:87,
-    lessthan:88,
-    '=':89,
-    equal:89,
-    greaterthan:90,
-    question:91,
-    at:92,
-    capital_A:93,
-    capital_B:94,
-    capital_C:95,
-    capital_D:96,
-    capital_E:97,
-    capital_F:98,
-    capital_G:99,
-    capital_H:100,
-    capital_I:101,
-    capital_J:102,
-    capital_K:103,
-    capital_L:104,
-    capital_M:105,
-    capital_N:106,
-    capital_O:107,
-    capital_P:108,
-    capital_Q:109,
-    capital_R:110,
-    capital_S:111,
-    capital_T:112,
-    capital_U:113,
-    capital_V:114,
-    capital_W:115,
-    capital_X:116,
-    capital_Y:117,
-    capital_Z:118,
-    '[':119,
-    openbracket:119, // old name
-    leftbracket:119,
-    backslash:120,
-    ']':121,
-    closebracket:121, // old name
-    rightbracket:121,
-    grave:123,
-    a:124,
-    b:125,
-    c:126,
-    d:127,
-    e:128,
-    f:129,
-    g:130,
-    h:131,
-    i:132,
-    j:133,
-    k:134,
-    l:135,
-    m:136,
-    n:137,
-    o:138,
-    p:139,
-    q:140,
-    r:141,
-    s:142,
-    t:143,
-    u:144,
-    v:145,
-    w:146,
-    x:147,
-    y:148,
-    z:149,
-    leftbrace:150,
-    bar:151,
-    rightbrace:152,
-    tilde:153,
-    euro:154,
-    pound:155,
-    yen:156,
-    middledot:157,
-    search:158,
-    dpadleft:159,
-    dpadright:160,
-    dpadup:161,
-    dpaddown:162,
-    dpadcenter:163,
-    enter:164,
-    play:165
-};
 //
 // CCMacro.js export
 //
@@ -1893,6 +1706,18 @@ cc.EventListenerMouse.prototype.onMouseDown = function(event) {
     this._previousX = event.getLocationX();
     this._previousY = event.getLocationY();
     this._onMouseDown(event);
+};
+
+cc.EventListenerKeyboard.prototype._onKeyPressed = function(keyCode, event) {
+    if (!this.onKeyPressed)
+        return;
+    this.onKeyPressed(jsbkeyArr[keyCode], event);
+};
+
+cc.EventListenerKeyboard.prototype._onKeyReleased = function(keyCode, event) {
+    if (!this.onKeyReleased)
+        return;
+    this.onKeyReleased(jsbkeyArr[keyCode], event);
 };
 
 cc.EventMouse.prototype.getLocation = function(){

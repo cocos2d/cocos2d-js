@@ -394,22 +394,48 @@ var MouseTest = EventTest.extend({
 //
 //------------------------------------------------------------------
 var KeyboardTest = EventTest.extend({
-    init:function () {
+    init: function () {
         this._super();
-
-        if( 'keyboard' in cc.sys.capabilities ) {
+        var self = this;
+        if ('keyboard' in cc.sys.capabilities) {
             cc.eventManager.addListener({
                 event: cc.EventListener.KEYBOARD,
-                onKeyPressed:function(key, event) {
+                onKeyPressed: function (key, event) {
                     cc.log("Key down:" + key);
+                    var keyStr = self.getKeyStr(key);
+                    if (keyStr.length > 0)
+                    {
+                        cc.log(" the key name is:" + keyStr);
+                    }
                 },
-                onKeyReleased:function(key, event) {
+                onKeyReleased: function (key, event) {
                     cc.log("Key up:" + key);
+                    var keyStr = self.getKeyStr(key);
+                    if (keyStr.length > 0)
+                    {
+                        cc.log(" the key name is:" + keyStr);
+                    }
                 }
             }, this);
         } else {
             cc.log("KEYBOARD Not supported");
         }
+    },
+    getKeyStr: function (keycode)
+    {
+        if (keycode == cc.KEY.none)
+        {
+            return "";
+        }
+
+        for (var keyTemp in cc.KEY)
+        {
+            if (cc.KEY[keyTemp] == keycode)
+            {
+                return keyTemp;
+            }
+        }
+        return "";
     },
     subtitle:function () {
         return "Keyboard test. Press keyboard and see console";
