@@ -898,6 +898,7 @@ var g_cocoStudio = [
 ];
 
 var g_ui = [
+    "res/cocosui/switch-mask.png",
     "res/cocosui/animationbuttonnormal.png",
     "res/cocosui/animationbuttonpressed.png",
     "res/cocosui/arrow.png",

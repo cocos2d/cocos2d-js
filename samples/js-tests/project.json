@@ -149,6 +149,7 @@
         "src/GUITest/UIScene.js",
         "src/GUITest/UIButtonTest/UIButtonTest.js",
         "src/GUITest/UICheckBoxTest/UICheckBoxTest.js",
+        "src/GUITest/UIFocusTest/UIFocusTest.js",
         "src/GUITest/UIImageViewTest/UIImageViewTest.js",
         "src/GUITest/UILabelAtlasTest/UILabelAtlasTest.js",
         "src/GUITest/UILabelBMFontTest/UILabelBMFontTest.js",

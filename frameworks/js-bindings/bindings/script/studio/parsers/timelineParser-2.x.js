@@ -197,6 +197,7 @@
                 cc.log("%s need to be preloaded", path);
             node = new cc.ParticleSystem(path);
             self.generalAttributes(node, json);
+            !cc.sys.isNative && node.setDrawMode(cc.ParticleSystem.TEXTURE_MODE);
         });
         return node;
     };
@@ -978,6 +979,8 @@
         widget.setString(text);
 
         loadTexture(json["LabelBMFontFile_CNB"], resourcePath, function(path, type){
+            if(!cc.loader.getRes(path))
+                cc.log("%s need to be pre loaded", path);
             widget.setFntFile(path);
         });
         return widget;
@@ -1058,7 +1061,10 @@
         if(volume != null)
             cc.audioEngine.setMusicVolume(volume);
         //var name = json["Name"];
-        var resPath = (cc.loader.resPath + "/").replace(/\/\/$/, "/");
+        var resPath = "";
+        if(cc.loader.resPath)
+            resPath = (cc.loader.resPath + "/").replace(/\/\/$/, "/");
+
         loadTexture(json["FileData"], resourcePath, function(path, type){
             cc.loader.load(path, function(){
                 cc.audioEngine.playMusic(resPath + path, loop);
@@ -1136,7 +1142,7 @@
                 pngs = armJson["config_png_path"];
                 plists.forEach(function(plist, index){
                     if(pngs[index])
-                        cc.spriteFrameCache.addSpriteFrame(plist, pngs[index]);
+                        cc.spriteFrameCache.addSpriteFrames(plist, pngs[index]);
                 });
             }
             ccs.armatureDataManager.addArmatureFileInfo(path);
