@@ -52,6 +52,98 @@
                 func: function () {
                     return new UIButtonTest_Title();
                 }
+            },
+            {
+                title: "UIButtonTestRemoveSelf",
+                func: function () {
+                    return new UIButtonTestRemoveSelf();
+                }
+            },
+            {
+                title: "UIButtonTestSwitchScale9",
+                func: function () {
+                    return new UIButtonTestSwitchScale9();
+                }
+            },
+            {
+                title: "UIButtonTestZoomScale",
+                func: function () {
+                    return new UIButtonTestZoomScale();
+                }
+            },
+            {
+                title: "UIButtonTextOnly",
+                func: function () {
+                    return new UIButtonTextOnly();
+                }
+            },
+            {
+                title: "UIButtonIgnoreContentSizeTest",
+                func: function () {
+                    return new UIButtonIgnoreContentSizeTest();
+                }
+            },
+            {
+                title: "UIButtonTitleEffectTest",
+                func: function () {
+                    return new UIButtonTitleEffectTest();
+                }
+            },
+            {
+                title: "UIButtonFlipTest",
+                func: function () {
+                    return new UIButtonFlipTest();
+                }
+            },
+            {
+                title: "UIButtonNormalDefaultTest",
+                func: function () {
+                    return new UIButtonNormalDefaultTest();
+                }
+            },
+            {
+                title: "UIButtonDisableDefaultTest",
+                func: function () {
+                    return new UIButtonDisableDefaultTest();
+                }
+            }
+        ],
+        "UIFoces": [
+            {
+                title: "UIFocusTestHorizontal",
+                func: function () {
+                    return new UIFocusTestHorizontal();
+                }
+            },
+            {
+                title: "UIFocusTestVertical",
+                func: function () {
+                    return new UIFocusTestVertical();
+                }
+            },
+            {
+                title: "UIFocusTestNestedLayout1",
+                func: function () {
+                    return new UIFocusTestNestedLayout1();
+                }
+            },
+            {
+                title: "UIFocusTestNestedLayout2",
+                func: function () {
+                    return new UIFocusTestNestedLayout2();
+                }
+            },
+            {
+                title: "UIFocusTestNestedLayout3",
+                func: function () {
+                    return new UIFocusTestNestedLayout3();
+                }
+            },
+            {
+                title: "UIFocusTestListView",
+                func: function () {
+                    return new UIFocusTestListView();
+                }
             }
         ],
         "UICheckBox": [
@@ -214,6 +306,12 @@
                 func: function () {
                     return new UILabelBMFontTest();
                 }
+            },
+            {
+                title: "UILabelTest_TTF",
+                func: function () {
+                    return new UILabelTest_TTF();
+                }
             }
         ],
         "UITextFiled": [
@@ -300,6 +398,30 @@
                 title: "UILayoutTest_Layout_Relative",
                 func: function () {
                     return new UILayoutTest_Layout_Relative();
+                }
+            },
+            {
+                title: "UILayoutTest_Layout_Relative_Align_Parent",
+                func: function () {
+                    return new UILayoutTest_Layout_Relative_Align_Parent();
+                }
+            },
+            {
+                title: "UILayoutTest_Layout_Relative_Location",
+                func: function () {
+                    return new UILayoutTest_Layout_Relative_Location();
+                }
+            },
+            {
+                title: "UILayoutComponent_Berth_Test",
+                func: function () {
+                    return new UILayoutComponent_Berth_Test();
+                }
+            },
+            {
+                title: "UILayoutComponent_Berth_Stretch_Test",
+                func: function () {
+                    return new UILayoutComponent_Berth_Stretch_Test();
                 }
             }
         ],
