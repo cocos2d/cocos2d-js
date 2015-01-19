@@ -138,13 +138,13 @@
                 func: function () {
                     return new UIFocusTestNestedLayout3();
                 }
-            },
-            {
+            }
+            /*{     //need test
                 title: "UIFocusTestListView",
                 func: function () {
                     return new UIFocusTestListView();
                 }
-            }
+            }*/
         ],
         "UICheckBox": [
             {
