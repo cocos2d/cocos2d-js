@@ -107,11 +107,14 @@ UIScene = cc.Scene.extend({
     toExtensionsMainLayer: function (sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             UISceneManager.purge();
+            /*
             var scene = new cc.Scene();
             var layer = new TestController();
             scene.addChild(layer);
             var transition = new cc.TransitionProgressRadialCCW(0.5,scene);
             director.runScene(transition);
+            */
+            GUITestScene.prototype.runThisTest();
         }
     },
 
