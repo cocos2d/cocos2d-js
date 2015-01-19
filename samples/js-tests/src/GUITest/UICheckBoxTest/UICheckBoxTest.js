@@ -84,7 +84,7 @@ var UICheckBoxDefaultBehaviorTest = UIScene.extend({
             this._mainNode.addChild(alert);
 
             // Create the checkbox
-            var checkBox = new ccui.CheckBox("res/cocosui/check_box_normal.png", "res/cocosui/check_box_active.png", null, 0);
+            var checkBox = new ccui.CheckBox("res/cocosui/check_box_normal.png", "res/cocosui/check_box_active.png");
             checkBox.setPosition(cc.p(widgetSize.width / 2 - 50, widgetSize.height / 2));
 
             this._mainNode.addChild(checkBox);
