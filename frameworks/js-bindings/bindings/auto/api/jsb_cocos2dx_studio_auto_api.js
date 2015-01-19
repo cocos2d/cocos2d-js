@@ -3512,6 +3512,26 @@ AnchorPointFrame : function (
 ccs.InnerActionFrame = {
 
 /**
+ * @method getEndFrameIndex
+ * @return {int}
+ */
+getEndFrameIndex : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getStartFrameIndex
+ * @return {int}
+ */
+getStartFrameIndex : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getInnerActionType
  * @return {ccs.timeline::InnerActionType}
  */
@@ -3519,6 +3539,36 @@ getInnerActionType : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setEndFrameIndex
+ * @param {int} arg0
+ */
+setEndFrameIndex : function (
+int 
+)
+{
+},
+
+/**
+ * @method setEnterWithName
+ * @param {bool} arg0
+ */
+setEnterWithName : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setSingleFrameIndex
+ * @param {int} arg0
+ */
+setSingleFrameIndex : function (
+int 
+)
+{
 },
 
 /**
@@ -3532,6 +3582,16 @@ int
 },
 
 /**
+ * @method getSingleFrameIndex
+ * @return {int}
+ */
+getSingleFrameIndex : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setInnerActionType
  * @param {ccs.timeline::InnerActionType} arg0
  */
@@ -3542,13 +3602,13 @@ inneractiontype
 },
 
 /**
- * @method getStartFrameIndex
- * @return {int}
+ * @method setAnimationName
+ * @param {String} arg0
  */
-getStartFrameIndex : function (
+setAnimationName : function (
+str 
 )
 {
-    return 0;
 },
 
 /**
@@ -3632,6 +3692,52 @@ create : function (
  * @constructor
  */
 ColorFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class AlphaFrame
+ */
+ccs.AlphaFrame = {
+
+/**
+ * @method getAlpha
+ * @return {unsigned char}
+ */
+getAlpha : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setAlpha
+ * @param {unsigned char} arg0
+ */
+setAlpha : function (
+char 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::AlphaFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::AlphaFrame;
+},
+
+/**
+ * @method AlphaFrame
+ * @constructor
+ */
+AlphaFrame : function (
 )
 {
 },
@@ -4020,22 +4126,6 @@ pause : function (
 },
 
 /**
- * @method gotoFrameAndPlay
-* @param {int|int|int|int} int
-* @param {bool|int|int} bool
-* @param {bool|int} bool
-* @param {bool} bool
-*/
-gotoFrameAndPlay : function(
-int,
-int,
-int,
-bool 
-)
-{
-},
-
-/**
  * @method init
  * @return {bool}
  */
@@ -4051,6 +4141,14 @@ init : function (
  */
 removeTimeline : function (
 timeline 
+)
+{
+},
+
+/**
+ * @method clearFrameEventCallFunc
+ */
+clearFrameEventCallFunc : function (
 )
 {
 },
@@ -4088,9 +4186,31 @@ bool
 },
 
 /**
+ * @method getAnimationInfo
+ * @param {String} arg0
+ * @return {ccs.timeline::AnimationInfo}
+ */
+getAnimationInfo : function (
+str 
+)
+{
+    return ccs.timeline::AnimationInfo;
+},
+
+/**
  * @method resume
  */
 resume : function (
+)
+{
+},
+
+/**
+ * @method removeAnimationInfo
+ * @param {String} arg0
+ */
+removeAnimationInfo : function (
+str 
 )
 {
 },
@@ -4103,6 +4223,16 @@ getTimeSpeed : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method addAnimationInfo
+ * @param {ccs.timeline::AnimationInfo} arg0
+ */
+addAnimationInfo : function (
+animationinfo 
+)
+{
 },
 
 /**
@@ -4136,21 +4266,31 @@ isPlaying : function (
 },
 
 /**
- * @method removeIndexes
- * @param {String} arg0
- */
-removeIndexes : function (
-str 
+ * @method gotoFrameAndPlay
+* @param {int|int|int|int} int
+* @param {bool|int|int} bool
+* @param {bool|int} bool
+* @param {bool} bool
+*/
+gotoFrameAndPlay : function(
+int,
+int,
+int,
+bool 
 )
 {
 },
 
 /**
- * @method clearFrameEventCallFunc
+ * @method IsAnimationInfoExists
+ * @param {String} arg0
+ * @return {bool}
  */
-clearFrameEventCallFunc : function (
+IsAnimationInfoExists : function (
+str 
 )
 {
+    return false;
 },
 
 /**
@@ -4161,16 +4301,6 @@ getEndFrame : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setCurrentFrame
- * @param {int} arg0
- */
-setCurrentFrame : function (
-int 
-)
-{
 },
 
 /**
@@ -4202,11 +4332,11 @@ int
 },
 
 /**
- * @method addIndexes
- * @param {ccs.timeline::ActionIndexes} arg0
+ * @method setCurrentFrame
+ * @param {int} arg0
  */
-addIndexes : function (
-actionindexes 
+setCurrentFrame : function (
+int 
 )
 {
 },

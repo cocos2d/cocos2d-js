@@ -31,7 +31,6 @@
             for (var i = 0; i < textures.length; i++) {
                 cc.spriteFrameCache.addSpriteFrames(resourcePath + textures[i]);
             }
-
         },
 
         pretreatment: function(json, resourcePath){
@@ -63,7 +62,6 @@
         {
             widget.setPositionType(options["positionType"]);
         }
-
 
         widget.setSizePercent(cc.p(options["sizePercentX"], options["sizePercentY"]));
         widget.setPositionPercent(cc.p(options["positionPercentX"], options["positionPercentY"]));
@@ -138,12 +136,7 @@
                 var mgt = layoutParameterDic["marginTop"]||0;
                 var mgr = layoutParameterDic["marginRight"]||0;
                 var mgb = layoutParameterDic["marginDown"]||0;
-                var objectTemp = {};
-                objectTemp.left = mgl;
-                objectTemp.top = mgt;
-                objectTemp.right = mgr;
-                objectTemp.bottom = mgb;
-                parameter.setMargin(objectTemp);
+                parameter.setMargin(mgl, mgt, mgr, mgb);
                 widget.setLayoutParameter(parameter);
             }
         }

@@ -2347,6 +2347,16 @@ size
 },
 
 /**
+ * @method getDefaultCamera
+ * @return {cc.Camera}
+ */
+getDefaultCamera : function (
+)
+{
+    return cc.Camera;
+},
+
+/**
  * @method createWithSize
  * @param {size_object} arg0
  * @return {cc.Scene}
@@ -6251,16 +6261,16 @@ char
 
 /**
  * @method create
- * @param {float} arg0
- * @param {unsigned char} arg1
- * @param {unsigned char} arg2
- * @param {unsigned char} arg3
- * @return {cc.TintTo}
- */
-create : function (
-float, 
-char, 
-char, 
+* @param {float|float} float
+* @param {color3b_object|unsigned char} color3b
+* @param {unsigned char} char
+* @param {unsigned char} char
+* @return {cc.TintTo|cc.TintTo}
+*/
+create : function(
+float,
+char,
+char,
 char 
 )
 {
@@ -18309,15 +18319,15 @@ getType : function (
 },
 
 /**
- * @method enableFrustumCulling
- * @param {bool} arg0
- * @param {bool} arg1
+ * @method getDepthInView
+ * @param {mat4_object} arg0
+ * @return {float}
  */
-enableFrustumCulling : function (
-bool, 
-bool 
+getDepthInView : function (
+mat4 
 )
 {
+    return 0;
 },
 
 /**
@@ -18451,6 +18461,16 @@ float,
 float, 
 float, 
 float 
+)
+{
+    return cc.Camera;
+},
+
+/**
+ * @method getDefaultCamera
+ * @return {cc.Camera}
+ */
+getDefaultCamera : function (
 )
 {
     return cc.Camera;
