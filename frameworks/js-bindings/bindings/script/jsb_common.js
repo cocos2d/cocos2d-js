@@ -121,11 +121,11 @@ cc.KEY = {
     numlock:144,
     scrolllock:145,
 
+    ';':186,
     semicolon:186,
-    ',':186,
     equal:187,
     '=':187,
-    ';':188,
+    ',':188,
     comma:188,
     dash:189,
     '.':190,
@@ -140,183 +140,180 @@ cc.KEY = {
     quote:222
 };
 
-var jsbkeyArr = [];
-jsbkeyArr[0]=0;
-jsbkeyArr[1]=cc.KEY["pause"];
-jsbkeyArr[2]=cc.KEY["scrolllock"];
-jsbkeyArr[3]=0;
-jsbkeyArr[4]=0;
-jsbkeyArr[5]=0;
-if (cc.sys.os == cc.sys.OS_ANDROID)
-{
-    jsbkeyArr[6]=cc.KEY["back"];
-}
-else
-{
-    jsbkeyArr[6]=cc.KEY["escape"];
-}
+var jsbkeyArr = [
+    cc.KEY["none"],//0
+    cc.KEY["pause"],//1
+    cc.KEY["scrolllock"],//2
+    cc.KEY["none"],//3
+    cc.KEY["none"],//4
+    cc.KEY["none"],//5
+    cc.KEY["back"],//6
+    cc.KEY["backspace"],//7
+    cc.KEY["tab"],//8
+    cc.KEY["none"],//9
+    cc.KEY["none"],//10
+    cc.KEY["capslock"],//11
+    cc.KEY["shift"],//12//should use shiftkey instead
+    cc.KEY["shift"],//13
+    cc.KEY["ctrl"],//14//should use ctrlkey
+    cc.KEY["ctrl"],//15
+    cc.KEY["alt"],//16//should use altkey
+    cc.KEY["alt"],//17
+    cc.KEY["menu"],//18
+    cc.KEY["none"],//19
+    cc.KEY["insert"],//20
+    cc.KEY["home"],//21
+    cc.KEY["pageup"],//22
+    cc.KEY["Delete"],//23
+    cc.KEY["end"],//24
+    cc.KEY["pagedown"],//25
+    cc.KEY["left"],//26
+    cc.KEY["right"],//27
+    cc.KEY["up"],//28
+    cc.KEY["down"],//29
+    cc.KEY["numlock"],//30
+    cc.KEY["+"],//31
+    cc.KEY["-"],//32
+    cc.KEY["*"],//33
+    cc.KEY["none"],//34
+    cc.KEY["enter"],//35
+    cc.KEY["home"],//36
+    cc.KEY["up"],//37
+    cc.KEY["pageup"],//38
+    cc.KEY["left"],//39
+    cc.KEY["num5"],//40
+    cc.KEY["right"],//41
+    cc.KEY["end"],//42
+    cc.KEY["down"],//43
+    cc.KEY["pagedown"],//44
+    cc.KEY["insert"],//45
+    cc.KEY["Delete"],//46
+    cc.KEY["f1"],//47
+    cc.KEY["f2"],//48
+    cc.KEY["f3"],//49
+    cc.KEY["f4"],//50
+    cc.KEY["f5"],//51
+    cc.KEY["f6"],//52
+    cc.KEY["f7"],//53
+    cc.KEY["f8"],//54
+    cc.KEY["f9"],//55
+    cc.KEY["f10"],//56
+    cc.KEY["f11"],//57
+    cc.KEY["f12"],//58
+    cc.KEY["space"],//59
+    cc.KEY["none"],//60
+    cc.KEY["quote"],//61
+    cc.KEY["none"],//62
+    cc.KEY["none"],//63
+    cc.KEY["none"],//64
+    cc.KEY["none"],//65
+    cc.KEY["none"],//66
+    cc.KEY["quote"],//67
+    cc.KEY["none"],//68
+    cc.KEY["none"],//69
+    cc.KEY["none"],//70
+    cc.KEY["none"],//71
+    cc.KEY["comma"],//72
+    cc.KEY["-"],//73
+    cc.KEY["period"],//74
+    cc.KEY["forwardslash"],//75//word keyboard
+    cc.KEY["num0"],//76
+    cc.KEY["num1"],//77
+    cc.KEY["num2"],//78
+    cc.KEY["num3"],//79
+    cc.KEY["num4"],//80
+    cc.KEY["num5"],//81
+    cc.KEY["num6"],//82
+    cc.KEY["num7"],//83
+    cc.KEY["num8"],//84
+    cc.KEY["num9"],//85
+    cc.KEY["none"],//86
+    cc.KEY["semicolon"],//87
+    cc.KEY["none"],//88
+    cc.KEY["equal"],//89
+    cc.KEY["none"],//90
+    cc.KEY["none"],//91
+    cc.KEY["none"],//92
+    cc.KEY["a"],//93
+    cc.KEY["b"],//94
+    cc.KEY["c"],//95
+    cc.KEY["d"],//96
+    cc.KEY["e"],//97
+    cc.KEY["f"],//98
+    cc.KEY["g"],//99
+    cc.KEY["h"],//100
+    cc.KEY["i"],//101
+    cc.KEY["j"],//102
+    cc.KEY["k"],//103
+    cc.KEY["l"],//104
+    cc.KEY["m"],//105
+    cc.KEY["n"],//106
+    cc.KEY["o"],//107
+    cc.KEY["p"],//108
+    cc.KEY["q"],//109
+    cc.KEY["r"],//110
+    cc.KEY["s"],//111
+    cc.KEY["t"],//112
+    cc.KEY["u"],//113
+    cc.KEY["v"],//114
+    cc.KEY["w"],//115
+    cc.KEY["x"],//116
+    cc.KEY["y"],//117
+    cc.KEY["z"],//118
+    cc.KEY["openbracket"],//119
+    cc.KEY["backslash"],//120
+    cc.KEY["closebracket"],//121
+    cc.KEY["none"],//122
+    cc.KEY["grave"],//123
+    cc.KEY["a"],//124
+    cc.KEY["b"],//125
+    cc.KEY["c"],//126
+    cc.KEY["d"],//127
+    cc.KEY["e"],//128
+    cc.KEY["f"],//129
+    cc.KEY["g"],//130
+    cc.KEY["h"],//131
+    cc.KEY["i"],//132
+    cc.KEY["j"],//133
+    cc.KEY["k"],//134
+    cc.KEY["l"],//135
+    cc.KEY["m"],//136
+    cc.KEY["n"],//137
+    cc.KEY["o"],//138
+    cc.KEY["p"],//139
+    cc.KEY["q"],//140
+    cc.KEY["r"],//141
+    cc.KEY["s"],//142
+    cc.KEY["t"],//143
+    cc.KEY["u"],//144
+    cc.KEY["v"],//145
+    cc.KEY["w"],//146
+    cc.KEY["x"],//147
+    cc.KEY["y"],//148
+    cc.KEY["z"],//149
+    cc.KEY["none"],//150
+    cc.KEY["none"],//151
+    cc.KEY["none"],//152
+    cc.KEY["none"],//153
+    cc.KEY["none"],//154
+    cc.KEY["none"],//155
+    cc.KEY["none"],//156
+    cc.KEY["none"],//157
+    cc.KEY["none"],//158
+    cc.KEY["none"],//159
+    cc.KEY["none"],//160
+    cc.KEY["none"],//161
+    cc.KEY["none"],//162
+    cc.KEY["none"],//163
+    cc.KEY["enter"],//164
+    cc.KEY["none"]//165
+    // html5 more key, these key can not trigge
+    //'numdel'
+    //select
+    //dash
+];
 
-jsbkeyArr[7]=cc.KEY["backspace"];
-jsbkeyArr[8]=cc.KEY["tab"];
-jsbkeyArr[9]=0;
-jsbkeyArr[10]=0;
-jsbkeyArr[11]=cc.KEY["capslock"];
-jsbkeyArr[12]=cc.KEY["shift"];//should use shiftkey instead
-jsbkeyArr[13]=cc.KEY["shift"];
-jsbkeyArr[14]=cc.KEY["ctrl"];//should use ctrlkey
-jsbkeyArr[15]=cc.KEY["ctrl"];
-jsbkeyArr[16]=cc.KEY["alt"];//should use altkey
-jsbkeyArr[17]=cc.KEY["alt"];
-jsbkeyArr[18]=cc.KEY["menu"];
-jsbkeyArr[19]=0;
-jsbkeyArr[20]=cc.KEY["insert"];
-jsbkeyArr[21]=cc.KEY["home"];
-jsbkeyArr[22]=cc.KEY["pageup"];
-jsbkeyArr[23]=cc.KEY["Delete"];
-jsbkeyArr[24]=cc.KEY["end"];
-jsbkeyArr[25]=cc.KEY["pagedown"];
-jsbkeyArr[26]=cc.KEY["left"];
-jsbkeyArr[27]=cc.KEY["right"];
-jsbkeyArr[28]=cc.KEY["up"];
-jsbkeyArr[29]=cc.KEY["down"];
-jsbkeyArr[30]=cc.KEY["numlock"];
-jsbkeyArr[31]=cc.KEY["+"];
-jsbkeyArr[32]=cc.KEY["-"];
-jsbkeyArr[33]=cc.KEY["*"];
-jsbkeyArr[34]=0;
-jsbkeyArr[35]=cc.KEY["enter"];
-jsbkeyArr[36]=cc.KEY["home"];
-jsbkeyArr[37]=cc.KEY["up"];
-jsbkeyArr[38]=cc.KEY["pageup"];
-jsbkeyArr[39]=cc.KEY["left"];
-jsbkeyArr[40]=cc.KEY["num5"];
-jsbkeyArr[41]=cc.KEY["right"];
-jsbkeyArr[42]=cc.KEY["end"];
-jsbkeyArr[43]=cc.KEY["down"];
-jsbkeyArr[44]=cc.KEY["pagedown"];
-jsbkeyArr[45]=cc.KEY["insert"];
-jsbkeyArr[46]=cc.KEY["Delete"];
-jsbkeyArr[47]=cc.KEY["f1"];//f1-f12;
-jsbkeyArr[48]=cc.KEY["f2"];
-jsbkeyArr[49]=cc.KEY["f3"];
-jsbkeyArr[50]=cc.KEY["f4"];
-jsbkeyArr[51]=cc.KEY["f5"];
-jsbkeyArr[52]=cc.KEY["f6"];
-jsbkeyArr[53]=cc.KEY["f7"];
-jsbkeyArr[54]=cc.KEY["f8"];
-jsbkeyArr[55]=cc.KEY["f9"];
-jsbkeyArr[56]=cc.KEY["f10"];
-jsbkeyArr[57]=cc.KEY["f11"];
-jsbkeyArr[58]=cc.KEY["f12"];
-jsbkeyArr[59]=cc.KEY["space"];
-jsbkeyArr[60]=0;
-jsbkeyArr[61]=cc.KEY["quote"];
-jsbkeyArr[62]=0;
-jsbkeyArr[63]=0;
-jsbkeyArr[64]=0;
-jsbkeyArr[65]=0;
-jsbkeyArr[66]=0;
-jsbkeyArr[67]=cc.KEY["comma"]; // it's apostrophe in chinese input mode
-jsbkeyArr[68]=0;
-jsbkeyArr[69]=0;
-jsbkeyArr[70]=0;
-jsbkeyArr[71]=0;
-jsbkeyArr[72]=cc.KEY["comma"];
-jsbkeyArr[73]=cc.KEY["-"];
-jsbkeyArr[74]=cc.KEY["period"];
-jsbkeyArr[75]=cc.KEY["forwardslash"];//word keyboard
-jsbkeyArr[76]=cc.KEY["num0"];
-jsbkeyArr[77]=cc.KEY["num1"];
-jsbkeyArr[78]=cc.KEY["num2"];
-jsbkeyArr[79]=cc.KEY["num3"];
-jsbkeyArr[80]=cc.KEY["num4"];
-jsbkeyArr[81]=cc.KEY["num5"];
-jsbkeyArr[82]=cc.KEY["num6"];
-jsbkeyArr[83]=cc.KEY["num7"];
-jsbkeyArr[84]=cc.KEY["num8"];
-jsbkeyArr[85]=cc.KEY["num9"];
-jsbkeyArr[86]=0;
-jsbkeyArr[87]=cc.KEY["semicolon"];
-jsbkeyArr[88]=0;
-jsbkeyArr[89]=cc.KEY["equal"];
-jsbkeyArr[90]=0;
-jsbkeyArr[91]=0;
-jsbkeyArr[92]=0;
-jsbkeyArr[93]=cc.KEY["a"];
-jsbkeyArr[94]=cc.KEY["b"];
-jsbkeyArr[95]=cc.KEY["c"];
-jsbkeyArr[96]=cc.KEY["d"];
-jsbkeyArr[97]=cc.KEY["e"];
-jsbkeyArr[98]=cc.KEY["f"];
-jsbkeyArr[99]=cc.KEY["g"];
-jsbkeyArr[100]=cc.KEY["h"];
-jsbkeyArr[101]=cc.KEY["i"];
-jsbkeyArr[102]=cc.KEY["j"];
-jsbkeyArr[103]=cc.KEY["k"];
-jsbkeyArr[104]=cc.KEY["l"];
-jsbkeyArr[105]=cc.KEY["m"];
-jsbkeyArr[106]=cc.KEY["n"];
-jsbkeyArr[107]=cc.KEY["o"];
-jsbkeyArr[108]=cc.KEY["p"];
-jsbkeyArr[109]=cc.KEY["q"];
-jsbkeyArr[110]=cc.KEY["r"];
-jsbkeyArr[111]=cc.KEY["s"];
-jsbkeyArr[112]=cc.KEY["t"];
-jsbkeyArr[113]=cc.KEY["u"];
-jsbkeyArr[114]=cc.KEY["v"];
-jsbkeyArr[115]=cc.KEY["w"];
-jsbkeyArr[116]=cc.KEY["x"];
-jsbkeyArr[117]=cc.KEY["y"];
-jsbkeyArr[118]=cc.KEY["z"];
-jsbkeyArr[119]=cc.KEY["["];
-jsbkeyArr[119]=cc.KEY["openbracket"];
-jsbkeyArr[120]=cc.KEY["backslash"];
-jsbkeyArr[121]=cc.KEY["]"];
-jsbkeyArr[121]=cc.KEY["closebracket"];
-jsbkeyArr[123]=cc.KEY["grave"];
-jsbkeyArr[124]=cc.KEY["a"];
-jsbkeyArr[125]=cc.KEY["b"];
-jsbkeyArr[126]=cc.KEY["c"];
-jsbkeyArr[127]=cc.KEY["d"];
-jsbkeyArr[128]=cc.KEY["e"];
-jsbkeyArr[129]=cc.KEY["f"];
-jsbkeyArr[130]=cc.KEY["g"];
-jsbkeyArr[131]=cc.KEY["h"];
-jsbkeyArr[132]=cc.KEY["i"];
-jsbkeyArr[133]=cc.KEY["j"];
-jsbkeyArr[134]=cc.KEY["k"];
-jsbkeyArr[135]=cc.KEY["l"];
-jsbkeyArr[136]=cc.KEY["m"];
-jsbkeyArr[137]=cc.KEY["n"];
-jsbkeyArr[138]=cc.KEY["o"];
-jsbkeyArr[139]=cc.KEY["p"];
-jsbkeyArr[140]=cc.KEY["q"];
-jsbkeyArr[141]=cc.KEY["r"];
-jsbkeyArr[142]=cc.KEY["s"];
-jsbkeyArr[143]=cc.KEY["t"];
-jsbkeyArr[144]=cc.KEY["u"];
-jsbkeyArr[145]=cc.KEY["v"];
-jsbkeyArr[146]=cc.KEY["w"];
-jsbkeyArr[147]=cc.KEY["x"];
-jsbkeyArr[148]=cc.KEY["y"];
-jsbkeyArr[149]=cc.KEY["z"];
-jsbkeyArr[150]=0;
-jsbkeyArr[151]=0;
-jsbkeyArr[152]=0;
-jsbkeyArr[153]=0;
-jsbkeyArr[154]=0;
-jsbkeyArr[155]=0;
-jsbkeyArr[156]=0;
-jsbkeyArr[157]=0;
-jsbkeyArr[158]=0;
-jsbkeyArr[159]=0;
-jsbkeyArr[160]=0;
-jsbkeyArr[161]=0;
-jsbkeyArr[162]=0;
-jsbkeyArr[163]=0;
-jsbkeyArr[164]=cc.KEY["enter"];
-jsbkeyArr[165]=0;
-// html5 more key, these key can not trigge
-//'numdel'
-//select
-//dash
+if (cc.sys.os != cc.sys.OS_ANDROID)
+{
+    jsbkeyArr[6] = cc.KEY["escape"];//6
+}

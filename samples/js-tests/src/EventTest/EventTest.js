@@ -397,24 +397,30 @@ var KeyboardTest = EventTest.extend({
     init: function () {
         this._super();
         var self = this;
+        var label = new cc.LabelTTF("show key Code");
+        var size = cc.director.getWinSize();
+        label.setPosition(size.width / 2, size.height / 2);
+        this.addChild(label);
         if ('keyboard' in cc.sys.capabilities) {
             cc.eventManager.addListener({
                 event: cc.EventListener.KEYBOARD,
                 onKeyPressed: function (key, event) {
-                    cc.log("Key down:" + key);
+                    var strTemp = "Key down:" + key;
                     var keyStr = self.getKeyStr(key);
                     if (keyStr.length > 0)
                     {
-                        cc.log(" the key name is:" + keyStr);
+                        strTemp += " the key name is:" + keyStr;
                     }
+                    label.setString(strTemp);
                 },
                 onKeyReleased: function (key, event) {
-                    cc.log("Key up:" + key);
+                    var strTemp = "Key up:" + key;
                     var keyStr = self.getKeyStr(key);
                     if (keyStr.length > 0)
                     {
-                        cc.log(" the key name is:" + keyStr);
+                        strTemp += " the key name is:" + keyStr;
                     }
+                    label.setString(strTemp);
                 }
             }, this);
         } else {
