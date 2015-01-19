@@ -202,14 +202,15 @@ var UIButtonTestRemoveSelf = UIScene.extend({
         if (this._super()) {
             //init text
             this._topDisplayLabel.setString("No Event");
-            this._bottomDisplayLabel.setString("Button Pressed Action");
+            this._bottomDisplayLabel.setString("Remove Self in the Button's Callback shouldn't cause crash!");
+            this._bottomDisplayLabel.setFontSize(15);
 
             var widgetSize = this._widget.getContentSize();
 
             var layout = new ccui.Layout();
-            layout.setContentSize(widgetSize * 0.6);
+            layout.setContentSize(widgetSize.width * 0.6, widgetSize.height * 0.6);
             layout.setBackGroundColor(cc.color.GREEN);
-            layout.setBackGroundColorType(cc.Layout.BG_COLOR_SOLID);
+            layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
             layout.setBackGroundColorOpacity(100);
             layout.setPosition(widgetSize.width/2, widgetSize.height/2);
             layout.setAnchorPoint(0.5, 0.5);
@@ -230,21 +231,21 @@ var UIButtonTestRemoveSelf = UIScene.extend({
     touchEvent: function(sender, type){
         switch (type) {
             case ccui.Widget.TOUCH_BEGAN:
-                this._displayValueLabel.setString("Touch Down");
+                this._topDisplayLabel.setString("Touch Down");
                 break;
 
             case ccui.Widget.TOUCH_MOVED:
-                this._displayValueLabel.setString("Touch Move");
+                this._topDisplayLabel.setString("Touch Move");
                 break;
 
             case ccui.Widget.TOUCH_ENDED:
-                this._displayValueLabel.setString("Touch Up");
+                this._topDisplayLabel.setString("Touch Up");
                 var layout = this._mainNode.getChildByTag(12);
                 layout.removeFromParent(true);
                 break;
 
             case ccui.Widget.TOUCH_CANCELED:
-                this._displayValueLabel.setString("Touch Cancelled");
+                this._topDisplayLabel.setString("Touch Cancelled");
                 break;
 
             default:
@@ -259,7 +260,8 @@ var UIButtonTestSwitchScale9 = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the button events will be displayed
-            this._displayValueLabel.setString("No Event");
+            this._topDisplayLabel.setString("No Event");
+            this._bottomDisplayLabel.setString("");
 
             // Create the button
             var button = new ccui.Button("res/cocosui/animationbuttonnormal.png",
@@ -278,21 +280,21 @@ var UIButtonTestSwitchScale9 = UIScene.extend({
     touchEvent: function(sender, type){
         switch (type) {
             case ccui.Widget.TOUCH_BEGAN:
-                this._displayValueLabel.setString("Touch Down");
+                this._topDisplayLabel.setString("Touch Down");
                 break;
 
             case ccui.Widget.TOUCH_MOVED:
-                this._displayValueLabel.setString("Touch Move");
+                this._topDisplayLabel.setString("Touch Move");
                 break;
 
             case ccui.Widget.TOUCH_ENDED:
-                this._displayValueLabel.setString("Touch Up");
+                this._topDisplayLabel.setString("Touch Up");
                 sender.setScale9Enabled(!sender.isScale9Enabled());
                 sender.setContentSize(200,100);
                 break;
 
             case ccui.Widget.TOUCH_CANCELED:
-                this._displayValueLabel.setString("Touch Cancelled");
+                this._topDisplayLabel.setString("Touch Cancelled");
                 break;
 
             default:
@@ -307,15 +309,14 @@ var UIButtonTestZoomScale = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the button events will be displayed
-            this._displayValueLabel.setString("Zoom Scale: -0.5");
-            this._displayValueLabel.setAnchorPoint(0.5, -1.0);
-            this._displayValueLabel.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 + 20);
+            this._topDisplayLabel.setString("Zoom Scale: -0.5");
+            this._bottomDisplayLabel.setString("");
 
             // Create the button
             var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
-            button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 + 20);
+            button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 );
             button.setPressedActionEnabled(true);
-            button.addClickEventListener(function (sender) {
+            button.addClickEventListener(function () {
                 cc.log("Button clicked, position = (" + button.x + ", " + button.y + ")");
             });
             button.setName("button");
@@ -326,7 +327,7 @@ var UIButtonTestZoomScale = UIScene.extend({
             slider.loadBarTexture("res/cocosui/sliderTrack.png");
             slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
             slider.loadProgressBarTexture("res/cocosui/sliderProgress.png");
-            slider.setPosition(widgetSize.width / 2.0 , widgetSize.height / 2.0 - 20);
+            slider.setPosition(widgetSize.width / 2.0 , widgetSize.height / 2.0 - 50);
             slider.addEventListener(this.sliderEvent, this);
             slider.setPercent(button.getZoomScale() * 100);
             this._mainNode.addChild(slider);
@@ -341,7 +342,7 @@ var UIButtonTestZoomScale = UIScene.extend({
             var btn = this._mainNode.getChildByName("button");
             var zoomScale = percent * 0.01;
             btn.setZoomScale(zoomScale);
-            this._displayValueLabel.setString("Zoom Scale: %f", zoomScale);
+            this._topDisplayLabel.setString("Zoom Scale: "+ zoomScale.toFixed(2));
         }
     }
 });
@@ -349,12 +350,9 @@ var UIButtonTestZoomScale = UIScene.extend({
 var UIButtonTextOnly = UIScene.extend({
     init: function(){
         if (this._super()) {
-            var widgetSize = this._widget.getContentSize();
-
             // Add a label in which the button events will be displayed
-            this._displayValueLabel.setString("Text Only Button");
-            this._displayValueLabel.setAnchorPoint(0.5, -1.0);
-            this._displayValueLabel.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 + 20);
+            this._topDisplayLabel.setString("Text Only Button");
+            this._bottomDisplayLabel.setString("");
 
             // Create the button
             var button = new ccui.Button();
@@ -364,10 +362,10 @@ var UIButtonTextOnly = UIScene.extend({
             cc.log("content size should be greater than 0:  width = %f, height = %f", button.width, button.height);
             button.setZoomScale(0.3);
             button.setPressedActionEnabled(true);
-            button.addClickEventListener(function (sender) {
+            button.addClickEventListener(function () {
                 cc.log("clicked!");
             });
-            this._mainNode.addChild(button);
+            this.addChild(button);
             return true;
         }
         return false;
@@ -380,9 +378,8 @@ var UIButtonIgnoreContentSizeTest = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the button events will be displayed
-            this._displayValueLabel.setString("Button IgnoreContent Size Test");
-            this._displayValueLabel.setAnchorPoint(0.5, -1.0);
-            this._displayValueLabel.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 + 20);
+            this._topDisplayLabel.setString("Button IgnoreContent Size Test");
+            this._bottomDisplayLabel.setString("");
 
             // Create the button
             var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
@@ -392,11 +389,11 @@ var UIButtonIgnoreContentSizeTest = UIScene.extend({
             button.setTitleText("PLAY GAME");
             button.setZoomScale(0.3);
             button.setPressedActionEnabled(true);
-            button.addClickEventListener(function (sender) {
+            button.addClickEventListener(function () {
                 cc.log("clicked!");
                 button.setScale(1.2);
             });
-            this._mainNode.addChild(button);
+            this.addChild(button);
 
             // Create the button
             var button2 = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
@@ -406,11 +403,11 @@ var UIButtonIgnoreContentSizeTest = UIScene.extend({
             button2.setTitleText("PLAY GAME");
             button2.setZoomScale(0.3);
             button2.setPressedActionEnabled(true);
-            button2.addClickEventListener(function (sender) {
+            button2.addClickEventListener(function () {
                 button2.runAction(cc.scaleTo(1.0, 1.2));
                 cc.log("clicked!");
             });
-            this._mainNode.addChild(button2);
+            this.addChild(button2);
 
             return true;
         }
@@ -424,9 +421,8 @@ var UIButtonTitleEffectTest = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the button events will be displayed
-            this._displayValueLabel.setString("Button Title Effect");
-            this._displayValueLabel.setAnchorPoint(0.5, -1.0);
-            this._displayValueLabel.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 + 20);
+            this._topDisplayLabel.setString("Button Title Effect");
+            this._bottomDisplayLabel.setString("");
 
             // Create the button
             var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
@@ -438,16 +434,16 @@ var UIButtonTitleEffectTest = UIScene.extend({
             button.setPressedActionEnabled(true);
             var title = button.getTitleRenderer();
             button.setTitleColor(cc.color.RED);
-            title.enableShadow(cc.color.BLACK,cc.p(2,-2));
-            this._mainNode.addChild(button);
+            title.enableShadow(cc.color.BLACK, cc.p(2,-2));
+            this.addChild(button);
 
             // Create the button
             var button2 = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
             button2.setNormalizedPosition(0.8, 0.5);
             button2.setTitleText("PLAY GAME");
             var title2 = button2.getTitleRenderer();
-            title2.enableOutline(cc.color.GREEN, 3);
-            this._mainNode.addChild(button2);
+            title2.enableStroke(cc.color.GREEN, 3);
+            this.addChild(button2);
             return true;
         }
         return false;
@@ -457,11 +453,10 @@ var UIButtonTitleEffectTest = UIScene.extend({
 var UIButtonFlipTest = UIScene.extend({
     init: function(){
         if (this._super()) {
-            var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the button events will be displayed
-            this._displayValueLabel.setString("Button X Flipped");
-            this._displayValueLabel.setNormalizedPosition(0.3, 0.7);
+            this._topDisplayLabel.setString("");
+            this._bottomDisplayLabel.setString("");
 
             // Create the button
             var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
@@ -472,16 +467,20 @@ var UIButtonFlipTest = UIScene.extend({
             button.setScale(2.0);
             button.setFlippedX(true);
             button.setPressedActionEnabled(true);
-            this._mainNode.addChild(button);
+            this.addChild(button);
+
+            var titleLabel = new ccui.Text("Button X flipped", "Arial", 20);
+            titleLabel.setNormalizedPosition(0.3, 0.7);
+            this.addChild(titleLabel);
 
             // Create the button
             var button2 = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
             button2.setNormalizedPosition(0.8, 0.5);
             button2.setTitleText("PLAY GAME");
             button2.setFlippedY(true);
-            this._mainNode.addChild(button2);
+            this.addChild(button2);
 
-            var titleLabel = new ccui.Text("Button Y flipped", "Arial", 20);
+            titleLabel = new ccui.Text("Button Y flipped", "Arial", 20);
             titleLabel.setNormalizedPosition(0.8, 0.7);
             this.addChild(titleLabel);
             return true;
@@ -496,9 +495,8 @@ var UIButtonNormalDefaultTest = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the button events will be displayed
-            this._displayValueLabel.setString("");
-            this._displayValueLabel.setAnchorPoint(0.5, -1.0);
-            this._displayValueLabel.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
+            this._topDisplayLabel.setString("");
+            this._bottomDisplayLabel.setString("");
 
             // Add the alert
             var alert = new ccui.Text("Button should scale when clicked","Arial",20);
@@ -532,6 +530,9 @@ var UIButtonDisableDefaultTest = UIScene.extend({
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
+
+            this._topDisplayLabel.setString("");
+            this._bottomDisplayLabel.setString("");
 
             // Add the alert
             var alert = new ccui.Text("Left button will turn normal when clicked","Arial",20);

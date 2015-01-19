@@ -458,26 +458,26 @@ var UILayoutComponent_Berth_Test = UILayoutComponentTest.extend({
          if (this._super()){
              var leftTopSprite = new cc.Sprite("res/cocosui/CloseSelected.png");
              var leftTop = ccui.LayoutComponent.bindLayoutComponent(leftTopSprite);
-             leftTop.setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.LEFT);
-             leftTop.setVerticalEdge(ccui.LayoutComponent.VerticalEdge.TOP);
+             leftTop.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.LEFT);
+             leftTop.setVerticalEdge(ccui.LayoutComponent.verticalEdge.TOP);
              this._mainNode.addChild(leftTopSprite);
 
              var leftBottomSprite = new cc.Sprite("res/cocosui/CloseSelected.png");
              var leftBottom = ccui.LayoutComponent.bindLayoutComponent(leftBottomSprite);
-             leftBottom.setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.LEFT);
-             leftBottom.setVerticalEdge(ccui.LayoutComponent.VerticalEdge.BOTTOM);
+             leftBottom.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.LEFT);
+             leftBottom.setVerticalEdge(ccui.LayoutComponent.verticalEdge.BOTTOM);
              this._mainNode.addChild(leftBottomSprite);
 
              var rightTopSprite = new cc.Sprite("res/cocosui/CloseSelected.png");
              var rightTop = ccui.LayoutComponent.bindLayoutComponent(rightTopSprite);
-             rightTop.setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.RIGHT);
-             rightTop.setVerticalEdge(ccui.LayoutComponent.VerticalEdge.TOP);
+             rightTop.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.RIGHT);
+             rightTop.setVerticalEdge(ccui.LayoutComponent.verticalEdge.TOP);
              this._mainNode.addChild(rightTopSprite);
 
              var rightBottomSprite = new cc.Sprite("res/cocosui/CloseSelected.png");
              var rightBottom = ccui.LayoutComponent.bindLayoutComponent(rightBottomSprite);
-             rightBottom.setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.RIGHT);
-             rightBottom.setVerticalEdge(ccui.LayoutComponent.VerticalEdge.BOTTOM);
+             rightBottom.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.RIGHT);
+             rightBottom.setVerticalEdge(ccui.LayoutComponent.verticalEdge.BOTTOM);
              this._mainNode.addChild(rightBottomSprite);
 
              ccui.helper.doLayout(this._baseLayer);
@@ -493,8 +493,8 @@ var UILayoutComponent_Berth_Stretch_Test = UILayoutComponentTest.extend({
             var leftTopSprite = new ccui.ImageView("res/cocosui/CloseSelected.png");
             leftTopSprite.ignoreContentAdaptWithSize(false);
             var leftTop = ccui.LayoutComponent.bindLayoutComponent(leftTopSprite);
-            leftTop.setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.LEFT);
-            leftTop.setVerticalEdge(ccui.LayoutComponent.VerticalEdge.TOP);
+            leftTop.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.LEFT);
+            leftTop.setVerticalEdge(ccui.LayoutComponent.verticalEdge.TOP);
             leftTop.setStretchWidthEnabled(true);
             leftTop.setStretchHeightEnabled(true);
             this._baseLayer.addChild(leftTopSprite);
@@ -505,8 +505,8 @@ var UILayoutComponent_Berth_Stretch_Test = UILayoutComponentTest.extend({
             var leftBottomSprite = new ccui.ImageView("res/cocosui/CloseSelected.png");
             leftBottomSprite.ignoreContentAdaptWithSize(false);
             var leftBottom = ccui.LayoutComponent.bindLayoutComponent(leftBottomSprite);
-            leftBottom.setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.LEFT);
-            leftBottom.setVerticalEdge(ccui.LayoutComponent.VerticalEdge.BOTTOM);
+            leftBottom.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.LEFT);
+            leftBottom.setVerticalEdge(ccui.LayoutComponent.verticalEdge.BOTTOM);
             leftBottom.setStretchWidthEnabled(true);
             leftBottom.setStretchHeightEnabled(true);
             this._baseLayer.addChild(leftBottomSprite);
@@ -517,8 +517,8 @@ var UILayoutComponent_Berth_Stretch_Test = UILayoutComponentTest.extend({
             var rightTopSprite = new ccui.ImageView("res/cocosui/CloseSelected.png");
             rightTopSprite.ignoreContentAdaptWithSize(false);
             var rightTop = ccui.LayoutComponent.bindLayoutComponent(rightTopSprite);
-            rightTop.setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.RIGHT);
-            rightTop.setVerticalEdge(ccui.LayoutComponent.VerticalEdge.TOP);
+            rightTop.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.RIGHT);
+            rightTop.setVerticalEdge(ccui.LayoutComponent.verticalEdge.TOP);
             rightTop.setStretchWidthEnabled(true);
             rightTop.setStretchHeightEnabled(true);
             this._baseLayer.addChild(rightTopSprite);
@@ -529,8 +529,8 @@ var UILayoutComponent_Berth_Stretch_Test = UILayoutComponentTest.extend({
             var rightBottomSprite = new ccui.ImageView("res/cocosui/CloseSelected.png");
             rightBottomSprite.ignoreContentAdaptWithSize(false);
             var rightBottom = ccui.LayoutComponent.bindLayoutComponent(rightBottomSprite);
-            rightBottom.setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.RIGHT);
-            rightBottom.setVerticalEdge(ccui.LayoutComponent.VerticalEdge.BOTTOM);
+            rightBottom.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.RIGHT);
+            rightBottom.setVerticalEdge(ccui.LayoutComponent.verticalEdge.BOTTOM);
             rightBottom.setStretchWidthEnabled(true);
             rightBottom.setStretchHeightEnabled(true);
             this._baseLayer.addChild(rightBottomSprite);

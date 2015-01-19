@@ -57,7 +57,7 @@ var UIFocusTestBase = UIScene.extend({
             this.addChild(this._dpadMenu);
 
             //call this method to enable Dpad focus navigation
-            ccui.Widget.prototype.enableDpadNavigation.call(this, true);
+            ccui.Widget.enableDpadNavigation(true);
 
             this._eventListener = cc.EventListener.create({
                 event: cc.EventListener.FOCUS,                            //TODO Need add focus event in JSB
@@ -118,8 +118,8 @@ var UIFocusTestHorizontal = UIFocusTestBase.extend({
             var winSize = cc.director.getVisibleSize();
 
             this._horizontalLayout = new ccui.HBox();
-            this._horizontalLayout.setPosition(20, winSize.height/2 + 40);
-            this._mainNode.addChild(this._horizontalLayout);
+            this._horizontalLayout.setPosition(winSize.height/2 - 20, winSize.height/2 + 40);
+            this.addChild(this._horizontalLayout);
 
             this._horizontalLayout.setFocused(true);
             this._horizontalLayout.setLoopFocus(true);

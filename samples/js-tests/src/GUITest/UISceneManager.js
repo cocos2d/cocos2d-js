@@ -25,36 +25,6 @@
 
 var s_testArray = [
     {
-        title: "UIFocusTestNestedLayout3",
-        func: function () {
-            return new UIFocusTestNestedLayout3();
-        }
-    },
-    {
-        title: "UIFocusTestNestedLayout2",
-        func: function () {
-            return new UIFocusTestNestedLayout2();
-        }
-    },
-    {
-        title: "UIFocusTestNestedLayout1",
-        func: function () {
-            return new UIFocusTestNestedLayout1();
-        }
-    },
-    {
-        title: "UIFocusTestVertical",
-        func: function () {
-            return new UIFocusTestVertical();
-        }
-    },
-    {
-        title: "UIFocusTestHorizontal",
-        func: function () {
-            return new UIFocusTestHorizontal();
-        }
-    },
-    {
         title: "UIButtonTest",
         func: function () {
             return new UIButtonTest();
@@ -76,6 +46,90 @@ var s_testArray = [
         title: "UIButtonTest_Title",
         func: function () {
             return new UIButtonTest_Title();
+        }
+    },
+    {
+        title: "UIButtonTestRemoveSelf",
+        func: function () {
+            return new UIButtonTestRemoveSelf();
+        }
+    },
+    {
+        title: "UIButtonTestSwitchScale9",
+        func: function () {
+            return new UIButtonTestSwitchScale9();
+        }
+    },
+    {
+        title: "UIButtonTestZoomScale",
+        func: function () {
+            return new UIButtonTestZoomScale();
+        }
+    },
+    {
+        title: "UIButtonTextOnly",
+        func: function () {
+            return new UIButtonTextOnly();
+        }
+    },
+    {
+        title: "UIButtonIgnoreContentSizeTest",
+        func: function () {
+            return new UIButtonIgnoreContentSizeTest();
+        }
+    },
+    {
+        title: "UIButtonTitleEffectTest",
+        func: function () {
+            return new UIButtonTitleEffectTest();
+        }
+    },
+    {
+        title: "UIButtonFlipTest",
+        func: function () {
+            return new UIButtonFlipTest();
+        }
+    },
+    {
+        title: "UIButtonNormalDefaultTest",
+        func: function () {
+            return new UIButtonNormalDefaultTest();
+        }
+    },
+    {
+        title: "UIButtonDisableDefaultTest",
+        func: function () {
+            return new UIButtonDisableDefaultTest();
+        }
+    },
+    {
+        title: "UIFocusTestHorizontal",
+        func: function () {
+            return new UIFocusTestHorizontal();
+        }
+    },
+    {
+        title: "UIFocusTestVertical",
+        func: function () {
+            return new UIFocusTestVertical();
+        }
+    },
+    {
+        title: "UIFocusTestNestedLayout1",
+        func: function () {
+            return new UIFocusTestNestedLayout1();
+        }
+    },
+    {
+        title: "UIFocusTestNestedLayout2",
+        func: function () {
+            return new UIFocusTestNestedLayout2();
+        }
+    },
+    {
+        title: "UIFocusTestNestedLayout3",
+        func: function () {
+            return new UIFocusTestNestedLayout3();
         }
     },
     {
