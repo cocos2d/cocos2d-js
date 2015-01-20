@@ -149,6 +149,7 @@
         "src/GUITest/UIScene.js",
         "src/GUITest/UIButtonTest/UIButtonTest.js",
         "src/GUITest/UICheckBoxTest/UICheckBoxTest.js",
+        "src/GUITest/UIFocusTest/UIFocusTest.js",
         "src/GUITest/UIImageViewTest/UIImageViewTest.js",
         "src/GUITest/UILabelAtlasTest/UILabelAtlasTest.js",
         "src/GUITest/UILabelBMFontTest/UILabelBMFontTest.js",
@@ -163,6 +164,8 @@
         "src/GUITest/UISliderTest/UISliderTest.js",
         "src/GUITest/UITextFieldTest/UITextFieldTest.js",
         "src/GUITest/UIRichTextTest/UIRichTextTest.js",
+        "src/GUITest/UITextTest/UITextTest.js",
+
         "src/CocoStudioTest/SceneTest/TriggerCode/Acts.js",
         "src/CocoStudioTest/SceneTest/TriggerCode/Cons.js",
         "src/CocoStudioTest/SceneTest/TriggerCode/EventDef.js",

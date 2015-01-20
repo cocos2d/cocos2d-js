@@ -57,17 +57,29 @@ var SysMenu = cc.Layer.extend({
         });
         this.addChild(logo, 10, 1);
 
-        var newGameNormal = new cc.Sprite(res.menu_png, cc.rect(0, 0, 126, 33));
-        var newGameSelected = new cc.Sprite(res.menu_png, cc.rect(0, 33, 126, 33));
-        var newGameDisabled = new cc.Sprite(res.menu_png, cc.rect(0, 33 * 2, 126, 33));
+        var logoBack = new cc.Sprite(res.logoBack_png);
+        logoBack.attr({
+            anchorX: 0,
+            anchorY: 0,
+            x: 60,
+            y: MW.LOGOY + logo.height,
+            scale: MW.SCALE
+        });
+        this.addChild(logoBack, 9);
 
-        var gameSettingsNormal = new cc.Sprite(res.menu_png, cc.rect(126, 0, 126, 33));
-        var gameSettingsSelected = new cc.Sprite(res.menu_png, cc.rect(126, 33, 126, 33));
-        var gameSettingsDisabled = new cc.Sprite(res.menu_png, cc.rect(126, 33 * 2, 126, 33));
+        var singalHeight = MW.menuHeight;
+        var singalWidth = MW.menuWidth;
+        var newGameNormal = new cc.Sprite(res.menu_png, cc.rect(0, 0, singalWidth, singalHeight));
+        var newGameSelected = new cc.Sprite(res.menu_png, cc.rect(0, singalHeight, singalWidth, singalHeight));
+        var newGameDisabled = new cc.Sprite(res.menu_png, cc.rect(0, singalHeight * 2, singalWidth, singalHeight));
 
-        var aboutNormal = new cc.Sprite(res.menu_png, cc.rect(252, 0, 126, 33));
-        var aboutSelected = new cc.Sprite(res.menu_png, cc.rect(252, 33, 126, 33));
-        var aboutDisabled = new cc.Sprite(res.menu_png, cc.rect(252, 33 * 2, 126, 33));
+        var gameSettingsNormal = new cc.Sprite(res.menu_png, cc.rect(singalWidth, 0, singalWidth, singalHeight));
+        var gameSettingsSelected = new cc.Sprite(res.menu_png, cc.rect(singalWidth, singalHeight, singalWidth, singalHeight));
+        var gameSettingsDisabled = new cc.Sprite(res.menu_png, cc.rect(singalWidth, singalHeight * 2, singalWidth, singalHeight));
+
+        var aboutNormal = new cc.Sprite(res.menu_png, cc.rect(singalWidth * 2, 0, singalWidth, singalHeight));
+        var aboutSelected = new cc.Sprite(res.menu_png, cc.rect(singalWidth * 2, singalHeight, singalWidth, singalHeight));
+        var aboutDisabled = new cc.Sprite(res.menu_png, cc.rect(singalWidth * 2, singalHeight * 2, singalWidth, singalHeight));
         var flare = new cc.Sprite(res.flare_jpg);
         this.addChild(flare, 15, 10);
         flare.visible = false;
@@ -83,10 +95,17 @@ var SysMenu = cc.Layer.extend({
         about.scale = MW.SCALE;
 
         var menu = new cc.Menu(newGame, gameSettings, about);
-        menu.alignItemsVerticallyWithPadding(10);
+        menu.alignItemsVerticallyWithPadding(15);
         this.addChild(menu, 1, 2);
         menu.x = winSize.width / 2;
-        menu.y = winSize.height / 2 - 80;
+        menu.y = winSize.height / 2 - 140;
+
+        var label = new cc.LabelTTF("Power by Cocos2d-JS", "Arial", 21);
+        label.setColor(cc.color(MW.FONTCOLOR));
+        this.addChild(label, 1);
+        label.x = winSize.width  / 2;
+        label.y = 80;
+
         this.schedule(this.update, 0.1);
 
         this._ship = new cc.Sprite("#ship03.png");

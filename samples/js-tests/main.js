@@ -111,7 +111,6 @@ cc.game.onStart = function(){
         }
         jsb.fileUtils.setSearchPaths(searchPaths);
     }
-    
     cc.LoaderScene.preload(g_resources, function () {
         if(window.sideIndexBar && typeof sideIndexBar.start === 'function'){
             sideIndexBar.start();
