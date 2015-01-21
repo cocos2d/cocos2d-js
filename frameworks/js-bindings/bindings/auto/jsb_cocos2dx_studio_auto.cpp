@@ -1,6 +1,7 @@
 #include "jsb_cocos2dx_studio_auto.hpp"
 #include "cocos2d_specifics.hpp"
 #include "CocoStudio.h"
+#include "jsb_cocos2dx_studio_conversions.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -11700,7 +11701,7 @@ bool js_cocos2dx_studio_ActionTimeline_getAnimationInfo(JSContext *cx, uint32_t 
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionTimeline_getAnimationInfo : Error processing arguments");
         cocostudio::timeline::AnimationInfo ret = cobj->getAnimationInfo(arg0);
         jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR AnimationInfo;
+        jsret = animationInfo_to_jsval(cx, ret);
         JS_SET_RVAL(cx, vp, jsret);
         return true;
     }
@@ -11770,8 +11771,7 @@ bool js_cocos2dx_studio_ActionTimeline_addAnimationInfo(JSContext *cx, uint32_t 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionTimeline_addAnimationInfo : Invalid Native Object");
     if (argc == 1) {
         cocostudio::timeline::AnimationInfo arg0;
-        #pragma warning NO CONVERSION TO NATIVE FOR AnimationInfo
-		ok = false;
+        ok &= jsval_to_animationInfo(cx, argv[0], &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionTimeline_addAnimationInfo : Error processing arguments");
         cobj->addAnimationInfo(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
