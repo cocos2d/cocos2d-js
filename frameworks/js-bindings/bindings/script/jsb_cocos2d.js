@@ -237,7 +237,9 @@ cc.Event.TOUCH = 0;                  //CCEvent.js
 cc.Event.KEYBOARD = 1;
 cc.Event.ACCELERATION = 2;
 cc.Event.MOUSE = 3;
-cc.Event.CUSTOM = 4;
+cc.Event.FOCUS = 4
+//game controller 5
+cc.Event.CUSTOM = 6;
 cc.EventMouse.NONE = 0;
 cc.EventMouse.DOWN = 1;
 cc.EventMouse.UP = 2;
@@ -252,6 +254,7 @@ cc.EventMouse.BUTTON_6 = 5;
 cc.EventMouse.BUTTON_7 = 6;
 cc.EventMouse.BUTTON_8 = 7;
 cc.EventTouch.MAX_TOUCHES = 5;
+cc.EventTouch.EventCode = {BEGAN: 0, MOVED: 1, ENDED: 2, CANCELLED: 3};
 
 cc.DEFAULT_SPRITE_BATCH_CAPACITY = 29;                  //CCSpriteBatchNode.js
 
@@ -1571,7 +1574,10 @@ cc.EventListener.TOUCH_ALL_AT_ONCE = 2;
 cc.EventListener.KEYBOARD = 3;
 cc.EventListener.MOUSE = 4;
 cc.EventListener.ACCELERATION = 5;
-cc.EventListener.CUSTOM = 6;
+cc.EventListener.FOCUS = 6;
+//game controller 7
+cc.EventListener.CUSTOM = 8;
+
 
 cc.EventListener.create = function(argObj){
     if(!argObj || !argObj.event){
@@ -1600,6 +1606,8 @@ cc.EventListener.create = function(argObj){
     else if(listenerType === cc.EventListener.ACCELERATION){
         listener = cc.EventListenerAcceleration.create(argObj.callback);
         delete argObj.callback;
+    }else if(listenerType === cc.EventListener.FOCUS){
+        listener = cc.EventListenerFocus.create();
     }
     else
     {
@@ -1680,6 +1688,12 @@ cc.EventListenerKeyboard.prototype.clone = function() {
     var ret = cc.EventListenerKeyboard.create();
     ret.onKeyPressed = this.onKeyPressed;
     ret.onKeyReleased = this.onKeyReleased;
+    return ret;
+};
+
+cc.EventListenerFocus.prototype.clone = function() {
+    var ret = cc.EventListenerFocus.create();
+    ret.onFocusChanged = this.onFocusChanged;
     return ret;
 };
 
