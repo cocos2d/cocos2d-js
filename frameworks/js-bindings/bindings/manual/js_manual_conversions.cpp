@@ -50,8 +50,7 @@ JSStringWrapper::JSStringWrapper(jsval val, JSContext* cx/* = NULL*/)
 
 JSStringWrapper::~JSStringWrapper()
 {
-    //TODO : why break here
-    //CC_SAFE_DELETE_ARRAY(_buffer);
+    CC_SAFE_DELETE_ARRAY(_buffer);
 }
 
 void JSStringWrapper::set(jsval val, JSContext* cx)
@@ -82,7 +81,7 @@ void JSStringWrapper::set(JSString* str, JSContext* cx)
 
 //    _buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
 
-    _buffer = JS_EncodeStringToUTF8(cx, JS::RootedString(cx, str));
+    _buffer = JS_EncodeString(cx, str);
 }
 
 const char* JSStringWrapper::get()
