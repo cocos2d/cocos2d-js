@@ -96,13 +96,12 @@ var UIPageViewButtonTest = UIScene.extend({
 
             // Add a label in which the dragpanel events will be displayed
             this._topDisplayLabel.setString("Move by horizontal direction");
-            this._bottomDisplayLabel.setString("");
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
 
             // Add the black background
-            var alert = new ccui.Text("PageView with Buttons", "Marker Felt", 30);
-            alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 3.075));
-            this._mainNode.addChild(alert);
+            this._bottomDisplayLabel.setString("PageView with Buttons");
+            this._bottomDisplayLabel.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075);
 
             var root = this._mainNode.getChildByTag(81);
             var background = root.getChildByName("background_Panel");
@@ -173,6 +172,8 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
 
             // Add a label in which the dragpanel events will be displayed
             this._topDisplayLabel.setString("Scroll Threshold");
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
 
             // Add the black background
             this._bottomDisplayLabel.setString("PageView");
@@ -246,6 +247,8 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
 
             // Add a label in which the dragpanel events will be displayed
             this._topDisplayLabel.setString("Move by horizontal direction");
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
 
             // Add the black background
             this._bottomDisplayLabel.setString("PageView Touch Propagation");
@@ -401,6 +404,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
 
             // Add a label in which the dragpanel events will be displayed
             this._topDisplayLabel.setString("Click Buttons on the Left");
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
 
             // Add the black background
             this._bottomDisplayLabel.setString("PageView Dynamic Modification");

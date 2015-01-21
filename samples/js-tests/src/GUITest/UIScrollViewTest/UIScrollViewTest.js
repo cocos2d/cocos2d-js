@@ -290,13 +290,10 @@ var UIScrollViewNestTest = UIScene.extend({
 
             // Add a label in which the scrollview alert will be displayed
             this._topDisplayLabel.setString("Move by vertical direction");
-            this._bottomDisplayLabel.setString("");
 
             // Add the alert
-            var alert = new ccui.Text("ScrollView vertical", "Marker Felt", 30);
-            alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 3.075));
-            this._mainNode.addChild(alert);
+            this._bottomDisplayLabel.setString("ScrollView vertical");
+            this._bottomDisplayLabel.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075);
 
             var root = this._mainNode.getChildByTag(81);
 
@@ -352,7 +349,6 @@ var UIScrollViewNestTest = UIScene.extend({
             var iv = new ccui.ImageView("res/cocosui/Hello.png");
             iv.setPosition(cc.p(240, 160));
             sc.addChild(iv);
-
             scrollView.addChild(sc);
 
             return true;
@@ -371,13 +367,10 @@ var UIScrollViewRotated = UIScene.extend({
             this._topDisplayLabel.setString("Move by vertical direction");
 
             // Add the alert
-            var alert = new ccui.Text("ScrollView vertical", "Marker Felt", 30);
-            alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 3.075));
-            this._mainNode.addChild(alert);
+            this._bottomDisplayLabel.setString("ScrollView vertical");
+            this._bottomDisplayLabel.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075);
 
             var root = this._mainNode.getChildByTag(81);
-
             var background = root.getChildByName("background_Panel");
 
             // Create the scrollview by vertical
@@ -396,7 +389,6 @@ var UIScrollViewRotated = UIScene.extend({
 
             var innerWidth = scrollView.getContentSize().width;
             var innerHeight = scrollView.getContentSize().height + imageView.getContentSize().height;
-
             scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
 
             var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
