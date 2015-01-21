@@ -27,6 +27,7 @@ LOCAL_SRC_FILES := auto/jsb_cocos2dx_auto.cpp \
                    manual/chipmunk/js_bindings_chipmunk_manual.cpp \
                    manual/chipmunk/js_bindings_chipmunk_registration.cpp \
                    manual/cocosbuilder/js_bindings_ccbreader.cpp \
+                   manual/cocostudio/jsb_cocos2dx_studio_conversions.cpp \
                    manual/cocostudio/jsb_cocos2dx_studio_manual.cpp \
                    manual/extension/jsb_cocos2dx_extension_manual.cpp \
                    manual/localstorage/js_bindings_system_functions.cpp \
@@ -43,6 +44,7 @@ LOCAL_CFLAGS := -DCOCOS2D_JAVASCRIPT
 LOCAL_EXPORT_CFLAGS := -DCOCOS2D_JAVASCRIPT
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/manual \
+                    $(LOCAL_PATH)/manual/cocostudio \
                     $(LOCAL_PATH)/auto \
                     $(LOCAL_PATH)/../cocos2d-x/cocos/2d \
                     $(LOCAL_PATH)/../cocos2d-x/cocos/base \
