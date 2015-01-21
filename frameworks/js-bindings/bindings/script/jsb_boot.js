@@ -909,6 +909,23 @@ cc.view.getTargetDensityDPI = function() {return cc.DENSITYDPI_DEVICE;};
  * @name cc.eventManager
  */
 cc.eventManager = cc.director.getEventDispatcher();
+
+cc._EventKeyboard = cc.EventKeyboard;
+
+cc.EventKeyboard = function (keycode, ispress)
+{
+    var jsbKeyCode = cc.KEY.none;
+    for (var keyIndex in jsbkeyArr)
+    {
+        if (jsbkeyArr[keyIndex] == keycode)
+        {
+            jsbKeyCode = keyIndex;
+            break;
+        }
+    }
+    return new cc._EventKeyboard(jsbKeyCode, ispress);
+}
+
 /**
  * @type {cc.AudioEngine}
  * @name cc.audioEngine

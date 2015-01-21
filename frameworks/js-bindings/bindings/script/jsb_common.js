@@ -137,7 +137,14 @@ cc.KEY = {
     backslash:220,
     ']':221,
     closebracket:221,
-    quote:222
+    quote:222,
+
+    // gamepad controll
+    dpadLeft:1000,
+    dpadRight:1001,
+    dpadUp:1003,
+    dpadDown:1004,
+    dpadCenter:1005
 };
 
 var jsbkeyArr = [
@@ -300,11 +307,11 @@ var jsbkeyArr = [
     cc.KEY["none"],//156
     cc.KEY["none"],//157
     cc.KEY["none"],//158
-    cc.KEY["none"],//159
-    cc.KEY["none"],//160
-    cc.KEY["none"],//161
-    cc.KEY["none"],//162
-    cc.KEY["none"],//163
+    cc.KEY["dpadLeft"],//159
+    cc.KEY["dpadRight"],//160
+    cc.KEY["dpadUp"],//161
+    cc.KEY["dpadDown"],//162
+    cc.KEY["dpadCenter"],//163
     cc.KEY["enter"],//164
     cc.KEY["none"]//165
     // html5 more key, these key can not trigge
