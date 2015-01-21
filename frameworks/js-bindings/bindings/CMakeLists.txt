@@ -53,6 +53,7 @@ set(JSBINDING_SRC
   manual/chipmunk/js_bindings_chipmunk_registration.cpp
   manual/cocosbuilder/js_bindings_ccbreader.cpp
   manual/cocostudio/jsb_cocos2dx_studio_manual.cpp
+  manual/cocostudio/jsb_cocos2dx_studio_conversions.cpp
   manual/extension/jsb_cocos2dx_extension_manual.cpp
   manual/localstorage/js_bindings_system_functions.cpp
   manual/localstorage/js_bindings_system_registration.cpp
