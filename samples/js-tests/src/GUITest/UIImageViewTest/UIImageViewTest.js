@@ -69,11 +69,11 @@ var UIImageViewTest_Scale9 = UIScene.extend({
 
 //2015-01-14
 var UIImageViewTest_ContentSize = UIScene.extend({
-
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
 
+            this._bottomDisplayLabel.setString("");
             var alert = new ccui.Text("ImageView ContentSize Change", "Marker Felt", 26);
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 2.125));
@@ -91,7 +91,6 @@ var UIImageViewTest_ContentSize = UIScene.extend({
             imageView.setContentSize(cc.size(200, 80));
             imageView.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
 
-
             var imageViewChild = new ccui.ImageView("res/cocosui/buttonHighlighted.png");
             imageViewChild.setScale9Enabled(true);
             imageViewChild.setSizeType(ccui.Widget.SIZE_PERCENT);
@@ -108,7 +107,6 @@ var UIImageViewTest_ContentSize = UIScene.extend({
             imageViewChild2.setPositionPercent(cc.p(0.5, 0.5));
             imageViewChild.addChild(imageViewChild2);
 
-
             imageView.addChild(imageViewChild);
             window.aa = imageView;
 
@@ -123,29 +121,20 @@ var UIImageViewTest_ContentSize = UIScene.extend({
                     status.setString("child ImageView position percent: "+imageViewChild.getPositionPercent().x+", "+imageViewChild.getPositionPercent().y);
                 }
             });
-
             this._mainNode.addChild(imageView);
-
             return true;
-
         }
     }
-
 });
 
 //2015-01-14
 var UIImageViewFlipTest = UIScene.extend({
-
     init: function(){
         if (this._super()) {
             cc.spriteFrameCache.addSpriteFrames("res/Images/blocks9ss.plist");
             var widgetSize = this._widget.getContentSize();
 
-            var alert = new ccui.Text("ImageView flip test", "Marker Felt", 26);
-            alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 2.125));
-
-            this._mainNode.addChild(alert);
+            this._bottomDisplayLabel.setString("ImageView flip test");
 
             // Create the imageview
             var imageView = new ccui.ImageView("blocks9r.png", ccui.Widget.PLIST_TEXTURE);
@@ -175,11 +164,7 @@ var UIImageViewFlipTest = UIScene.extend({
                 //after switching scale9, you must call setContentSize to keep the size not change
                 imageView.setContentSize(cc.size(250, 115));
             });
-
             return true;
-
         }
-
     }
-
 });
