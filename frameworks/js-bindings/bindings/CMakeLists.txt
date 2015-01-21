@@ -68,6 +68,7 @@ set(JSBINDING_SRC
 include_directories(
   auto
   manual
+  manual/cocostudio
   ../external/spidermonkey/include/${PLATFORM_FOLDER}
   ../cocos2d-x/cocos/base
   ../cocos2d-x/cocos/2d
