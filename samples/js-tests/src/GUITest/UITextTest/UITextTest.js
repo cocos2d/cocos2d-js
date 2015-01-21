@@ -25,38 +25,29 @@
 
 //2015-01-14
 var UITextTest = UIScene.extend({
-
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
 
-            var alert = new ccui.Text("Text", "Marker Felt", 30);
-            alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 1.75));
-            this._mainNode.addChild(alert);
+            this._bottomDisplayLabel.setString("Text");
 
             // Create the text
             var text = new ccui.Text("Text", "AmericanTypewriter", 30);
-            text.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + text.getContentSize().height / 4));
+            text.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + text.height / 4));
             this._mainNode.addChild(text);
 
             return true;
         }
     }
-
 });
 
 //2015-01-14
 var UITextTest_LineWrap = UIScene.extend({
-
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
 
-            var alert = new ccui.Text("Text line wrap","Marker Felt",30);
-            alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 1.75));
-            this._mainNode.addChild(alert);
+            this._bottomDisplayLabel.setString("Text line wrap");
 
             // Create the line wrap
             var text = new ccui.Text("TextArea Widget can line wrap","AmericanTypewriter",32);
@@ -67,99 +58,83 @@ var UITextTest_LineWrap = UIScene.extend({
             text.setTouchEnabled(true);
             text.addTouchEventListener(function(sender, type){
                 if (type == ccui.Widget.TOUCH_ENDED){
-                    if (text.getContentSize().width == 280){
+                    if (text.width == 280){
                         text.setContentSize(cc.size(380,100));
-                    }else
-                    {
+                    }else {
                         text.setContentSize(cc.size(280, 150));
                     }
                 }
             });
-            text.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - text.getContentSize().height / 8));
+            text.setPosition(widgetSize.width / 2, widgetSize.height / 2 - text.height / 8);
             this._mainNode.addChild(text);
 
             return true;
         }
     }
-
 });
 
 //2015-01-14
 var UILabelTest_Effect = UIScene.extend({
-
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
+
+            this._bottomDisplayLabel.setString("");
 
             var alert = new ccui.Text();
             alert.setString("Label Effect");
             alert.setFontName("Marker Felt");
             alert.setFontSize(30);
             alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 3.05));
+            alert.setPosition(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.05);
             this._mainNode.addChild(alert);
-
 
             // create the shadow only label
             var shadow_label = new ccui.Text();
 
             shadow_label.enableShadow(cc.color.GRAY, cc.p(10, -10));
             shadow_label.setString("Shadow");
-            shadow_label.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + shadow_label.getContentSize().height));
+            shadow_label.setPosition(widgetSize.width / 2, widgetSize.height / 2 + shadow_label.height);
 
             this._mainNode.addChild(shadow_label);
-
 
             // create the stroke only label
             var glow_label = new ccui.Text();
             glow_label.setFontName("Marker Felt");
-
             glow_label.setString("Glow");
             glow_label.enableGlow(cc.color.RED);
-
-
-            glow_label.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
-
+            glow_label.setPosition(widgetSize.width / 2, widgetSize.height / 2);
             this._mainNode.addChild(glow_label);
-
 
             // create the label stroke and shadow
             var outline_label = new ccui.Text();
             outline_label.enableOutline(cc.color.BLUE, 2);
             outline_label.setString("Outline");
-            outline_label.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - shadow_label.getContentSize().height));
+            outline_label.setPosition(widgetSize.width / 2, widgetSize.height / 2 - shadow_label.height);
 
             this._mainNode.addChild(outline_label);
-
 
             return true;
         }
     }
-
 });
 
 //2015-01-14
 var UITextTest_TTF = UIScene.extend({
-
     init: function(){
         if(this._super()){
             var widgetSize = this._widget.getContentSize();
 
-            var alert = new ccui.Text("Text set TTF font","Marker Felt",30);
-            alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 1.75));
-            this._mainNode.addChild(alert);
+            this._bottomDisplayLabel.setString("Text set TTF font");
 
             // Create the text, and set font with .ttf
             var text = new ccui.Text("Text","A Damn Mess",30);
-            text.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + text.getContentSize().height / 4));
+            text.setPosition(widgetSize.width / 2, widgetSize.height / 2 + text.height / 4);
             this._mainNode.addChild(text);
 
             return true;
-
         }
     }
-
 });
 
 //2015-01-14
@@ -168,6 +143,8 @@ var UITextTest_IgnoreConentSize = UIScene.extend({
     init: function(){
         if(this._super()){
             var widgetSize = this._widget.getContentSize();
+
+            this._bottomDisplayLabel.setString("");
 
             var leftText = new ccui.Text("ignore conent", "Marker Felt",10);
             leftText.setPosition(cc.p(widgetSize.width / 2 - 50,
@@ -179,7 +156,6 @@ var UITextTest_IgnoreConentSize = UIScene.extend({
             leftText.setTouchEnabled(true);
             this._mainNode.addChild(leftText);
 
-
             var rightText = new ccui.Text("ignore conent", "Marker Felt",10);
             rightText.setPosition(cc.p(widgetSize.width / 2 + 50,
                 widgetSize.height / 2));
@@ -188,7 +164,6 @@ var UITextTest_IgnoreConentSize = UIScene.extend({
             rightText.setTextAreaSize(cc.size(100,30));
             rightText.ignoreContentAdaptWithSize(false);
             this._mainNode.addChild(rightText);
-
 
             var halighButton = new ccui.Button();
             halighButton.setTitleText("Alignment Right");
@@ -199,7 +174,6 @@ var UITextTest_IgnoreConentSize = UIScene.extend({
             halighButton.setPosition(cc.p(widgetSize.width/2 - 50,
                     widgetSize.height/2 - 50));
             this._mainNode.addChild(halighButton);
-
 
             return true;
         }

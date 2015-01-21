@@ -90,19 +90,13 @@ var UIPageViewTest = UIScene.extend({
 
 //2015-01-14
 var UIPageViewButtonTest = UIScene.extend({
-
     init: function(){
         if (this._super()){
-
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the dragpanel events will be displayed
-            this.displayValueLabel = new ccui.Text("Move by horizontal direction", "Marker Felt", 32);
-            this.displayValueLabel.setAnchorPoint(cc.p(0.5, -1.0));
-            this.displayValueLabel.setPosition(cc.p(widgetSize.width / 2.0,
-                widgetSize.height / 2.0 +
-            this.displayValueLabel.getContentSize().height * 1.5));
-            this._mainNode.addChild(this.displayValueLabel);
+            this._topDisplayLabel.setString("Move by horizontal direction");
+            this._bottomDisplayLabel.setString("");
 
             // Add the black background
             var alert = new ccui.Text("PageView with Buttons", "Marker Felt", 30);
@@ -111,7 +105,6 @@ var UIPageViewButtonTest = UIScene.extend({
             this._mainNode.addChild(alert);
 
             var root = this._mainNode.getChildByTag(81);
-
             var background = root.getChildByName("background_Panel");
 
             // Create the page view
@@ -137,7 +130,6 @@ var UIPageViewButtonTest = UIScene.extend({
                         var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
                         btn.setName("button " + j);
                         btn.addTouchEventListener( this.onButtonClicked, this);
-
                         innerBox.addChild(btn);
                     }
 
@@ -146,20 +138,15 @@ var UIPageViewButtonTest = UIScene.extend({
                     innerBox.setLayoutParameter(parameter);
 
                     outerBox.addChild(innerBox);
-
                 }
-
                 pageView.insertPage(outerBox,i);
             }
 
             pageView.removePageAtIndex(0);
-
             pageView.addEventListener(this.pageViewEvent, this);
-
             this._mainNode.addChild(pageView);
 
             return true;
-
         }
     },
 
@@ -170,39 +157,28 @@ var UIPageViewButtonTest = UIScene.extend({
     pageViewEvent: function(pageView, type){
         switch (type){
             case ccui.PageView.EVENT_TURNING:
-                this.displayValueLabel.setString("page = " + pageView.getCurPageIndex() + 1);
+                this._topDisplayLabel.setString("page = " + pageView.getCurPageIndex() + 1);
                 break;
             default:
                 break;
         }
     }
-
 });
 
 //2015-01-14
 var UIPageViewCustomScrollThreshold = UIScene.extend({
-
     init: function(){
         if (this._super()){
-
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the dragpanel events will be displayed
-            this.displayValueLabel = new ccui.Text("Scroll Threshold", "Marker Felt", 32);
-            this.displayValueLabel.setAnchorPoint(cc.p(0.5, -1.0));
-            this.displayValueLabel.setPosition(cc.p(widgetSize.width / 2.0,
-                widgetSize.height / 2.0 +
-            this.displayValueLabel.getContentSize().height * 1.5));
-            this._mainNode.addChild(this.displayValueLabel);
+            this._topDisplayLabel.setString("Scroll Threshold");
 
             // Add the black background
-            var alert = new ccui.Text("PageView", "Marker Felt", 30);
-            alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 3.075));
-            this._mainNode.addChild(alert);
+            this._bottomDisplayLabel.setString("PageView");
+            this._bottomDisplayLabel.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075));
 
             var root = this._mainNode.getChildByTag(81);
-
             var background = root.getChildByName("background_Panel");
 
             // Create the page view
@@ -215,8 +191,7 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
                 (backgroundSize.height - pageView.getContentSize().height) / 2.0 + 20));
 
             var pageCount = 4;
-            for (var i = 0; i < pageCount; ++i)
-            {
+            for (var i = 0; i < pageCount; ++i) {
                 var layout = new ccui.Layout();
                 layout.setContentSize(cc.size(240.0, 130.0));
 
@@ -246,9 +221,7 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
             slider.setPercent(50);
             this._mainNode.addChild(slider);
 
-
             return true;
-
         }
     },
 
@@ -256,42 +229,29 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
         if (type == ccui.Slider.EVENT_PERCENT_CHANGED){
             var percent = slider.getPercent();
             var pageView = this._mainNode.getChildByName("pageView");
-            if (percent == 0) {
+            if (percent == 0)
                 percent = 1;
-            }
-            pageView.setCustomScrollThreshold(percent * 0.01 * pageView.getContentSize().width);
+            pageView.setCustomScrollThreshold(percent * 0.01 * pageView.width);
 
-            this.displayValueLabel.setString("Scroll Threshold: " + pageView.getCustomScrollThreshold());
+            this._topDisplayLabel.setString("Scroll Threshold: " + pageView.getCustomScrollThreshold().toFixed(2));
         }
-
     }
-
 });
 
 //2015-01-14
 var UIPageViewTouchPropagationTest = UIScene.extend({
-
     init: function(){
         if (this._super()){
-
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the dragpanel events will be displayed
-            this.displayValueLabel = new ccui.Text("Move by horizontal direction", "Marker Felt", 32);
-            this.displayValueLabel.setAnchorPoint(cc.p(0.5, -1.0));
-            this.displayValueLabel.setPosition(cc.p(widgetSize.width / 2.0,
-                widgetSize.height / 2.0 +
-            this.displayValueLabel.getContentSize().height * 1.5));
-            this._mainNode.addChild(this.displayValueLabel);
+            this._topDisplayLabel.setString("Move by horizontal direction");
 
             // Add the black background
-            var alert = new ccui.Text("PageView Touch Propagation", "Marker Felt", 30);
-            alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 3.075));
-            this._mainNode.addChild(alert);
+            this._bottomDisplayLabel.setString("PageView Touch Propagation");
+            this._bottomDisplayLabel.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075);
 
             var root = this._mainNode.getChildByTag(81);
-
             var background = root.getChildByName("background_Panel");
 
             // Create the page view
@@ -304,30 +264,27 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
             pageView.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
 
             var pageCount = 4;
-            for (var i = 0; i < pageCount; ++i){
+            for (var i = 0; i < pageCount; ++i) {
                 var outerBox = new ccui.HBox();
                 outerBox.setContentSize(cc.size(240.0, 130.0));
 
                 for (var k = 0; k < 2; ++k) {
-                var innerBox = new ccui.VBox();
+                    var innerBox = new ccui.VBox();
 
-                for (var j = 0; j < 3; j++) {
-                    var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
-                    btn.setName("button " + j);
-                    btn.addTouchEventListener(this.onButtonClicked, this);
+                    for (var j = 0; j < 3; j++) {
+                        var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+                        btn.setName("button " + j);
+                        btn.addTouchEventListener(this.onButtonClicked, this);
+                        innerBox.addChild(btn);
+                    }
 
-                    innerBox.addChild(btn);
+                    var parameter = new ccui.LinearLayoutParameter();
+                    parameter.setMargin({left: 0, top: 0, right: 100, bottom: 0});
+                    innerBox.setLayoutParameter(parameter);
+
+                    outerBox.addChild(innerBox);
                 }
-
-                var parameter = new ccui.LinearLayoutParameter();
-                parameter.setMargin({left: 0, top: 0, right: 100, bottom: 0});
-                innerBox.setLayoutParameter(parameter);
-
-                outerBox.addChild(innerBox);
-
-            }
-
-                pageView.insertPage(outerBox,i);
+                pageView.insertPage(outerBox, i);
             }
 
             pageView.addEventListener(this.pageViewEvent, this);
@@ -372,7 +329,6 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
             checkBox1.setName("propagation");
             this._mainNode.addChild(checkBox1);
 
-
             // Create the checkbox
             var checkBox2 = new ccui.CheckBox("res/cocosui/check_box_normal.png",
                 "res/cocosui/check_box_normal_press.png",
@@ -388,7 +344,6 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
             checkBox2.setName("swallow");
             this._mainNode.addChild(checkBox2);
 
-
 //            var eventListener = new cc.EventListenerTouchOneByOne();
 //            eventListener.onTouchBegan = function(touch, event){
 //                cc.log("layout recieves touches");
@@ -397,7 +352,6 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
 //            this._eventDispatcher.addEventListenerWithSceneGraphPriority(eventListener, this);
 
             return true;
-
         }
     },
 
@@ -410,7 +364,6 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
             if (ck1.isSelected()){
                 btn.setPropagateTouchEvents(true);
                 pageView.setPropagateTouchEvents(true);
-
             }else{
                 btn.setPropagateTouchEvents(false);
                 pageView.setPropagateTouchEvents(false);
@@ -424,51 +377,36 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
                 pageView.setSwallowTouches(false);
             }
         }
-        if (type == ccui.Widget.TOUCH_ENDED) {
+        if (type == ccui.Widget.TOUCH_ENDED)
             cc.log("button clicked");
-        }
-
     },
 
     pageViewEvent: function(pageView, type){
         switch (type){
             case ccui.PageView.EVENT_TURNING:
-                this.displayValueLabel.setString("page = " + (pageView.getCurPageIndex()-0 + 1));
+                this._topDisplayLabel.setString("page = " + (pageView.getCurPageIndex()-0 + 1));
                 break;
-
             default:
                 break;
         }
-
     }
-
 });
 
 //2015-01-14
 var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
-
     init: function(){
         var self = this;
         if (this._super()){
-
             var widgetSize = this._widget.getContentSize();
 
             // Add a label in which the dragpanel events will be displayed
-            this.displayValueLabel = new ccui.Text("Click Buttons on the Left", "Marker Felt", 32);
-            this.displayValueLabel.setAnchorPoint(cc.p(0.5, -1.0));
-            this.displayValueLabel.setPosition(cc.p(widgetSize.width / 2.0,
-                widgetSize.height / 2.0 +
-            this.displayValueLabel.getContentSize().height * 1.5));
-            this._mainNode.addChild(this.displayValueLabel);
+            this._topDisplayLabel.setString("Click Buttons on the Left");
 
             // Add the black background
-            var alert = new ccui.Text("PageView Dynamic Modification", "Marker Felt", 30);
-            alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.getContentSize().height * 3.075));
-            this._mainNode.addChild(alert);
+            this._bottomDisplayLabel.setString("PageView Dynamic Modification");
+            this._bottomDisplayLabel.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075);
 
             var root = this._mainNode.getChildByTag(81);
-
             var background = root.getChildByName("background_Panel");
 
             // Create the page view
@@ -487,12 +425,10 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
 
                 for (var k = 0; k < 2; ++k){
                     var innerBox = new ccui.VBox();
-
                     for (var j = 0; j < 3; j++){
                         var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png",
                             "res/cocosui/animationbuttonpressed.png");
                         btn.setName("button " + j);
-
                         innerBox.addChild(btn);
                     }
 
@@ -501,9 +437,7 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
                     innerBox.setLayoutParameter(parameter);
 
                     outerBox.addChild(innerBox);
-
                 }
-
                 pageView.insertPage(outerBox,i);
             }
 
@@ -514,7 +448,7 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
             //add buttons
             var button = new ccui.Button();
 //            button.setNormalizedPosition(cc.p(0.12,0.7));
-            button.setPosition(cc.p(20, 220));
+            button.setPosition(20, 220);
             button.setTitleText("Add A Page");
             button.setZoomScale(0.3);
             button.setPressedActionEnabled(true);
@@ -525,12 +459,10 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
 
                 for (var k = 0; k < 2; ++k){
                     var innerBox = new ccui.VBox();
-
                     for (var j = 0; j < 3; j++){
                         var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png",
                             "res/cocosui/animationbuttonpressed.png");
                         btn.setName("button " + j);
-
                         innerBox.addChild(btn);
                     }
 
@@ -539,18 +471,16 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
                     innerBox.setLayoutParameter(parameter);
 
                     outerBox.addChild(innerBox);
-
                 }
 
                 pageView.addPage(outerBox);
-                self.displayValueLabel.setString("page count = " + pageView.getPages().length);
-
+                self._topDisplayLabel.setString("page count = " + pageView.getPages().length);
             });
             this._mainNode.addChild(button);
 
             var button2 = new ccui.Button();
 //            button2.setNormalizedPosition(cc.p(0.12,0.5));
-            button2.setPosition(cc.p(20, 180));
+            button2.setPosition(20, 180);
             button2.setTitleText("Remove A Page");
             button2.setZoomScale(0.3);
             button2.setPressedActionEnabled(true);
@@ -561,7 +491,7 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
                 }else{
                     cc.log("There is no page to remove!");
                 }
-                self.displayValueLabel.setString("page count = " + pageView.getPages().length);
+                self._topDisplayLabel.setString("page count = " + pageView.getPages().length);
 
             });
             this._mainNode.addChild(button2);
@@ -575,29 +505,21 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
             button3.setTitleColor(cc.color.RED);
             button3.addClickEventListener(function(sender){
                 pageView.removeAllPages();
-                self.displayValueLabel.setString("page count = " + pageView.getPages().length);
-
+                self._topDisplayLabel.setString("page count = " + pageView.getPages().length);
             });
             this._mainNode.addChild(button3);
 
-
-
             return true;
-
-
         }
     },
 
     pageViewEvent: function(pageView, type){
         switch (type){
             case ccui.PageView.EVENT_TURNING:
-                this.displayValueLabel.setString("page = " + (pageView.getCurPageIndex() + 1));
+                this._topDisplayLabel.setString("page = " + (pageView.getCurPageIndex() + 1));
                 break;
-
             default:
                 break;
         }
-
     }
-
 });
