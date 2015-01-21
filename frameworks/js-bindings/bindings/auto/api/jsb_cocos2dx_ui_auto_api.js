@@ -1315,6 +1315,16 @@ Layout : function (
 ccui.Button = {
 
 /**
+ * @method getNormalTextureSize
+ * @return {size_object}
+ */
+getNormalTextureSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
  * @method getTitleText
  * @return {String}
  */
@@ -2084,6 +2094,16 @@ getStringLength : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getAutoRenderSize
+ * @return {size_object}
+ */
+getAutoRenderSize : function (
+)
+{
+    return cc.Size;
 },
 
 /**
@@ -3426,6 +3446,16 @@ getStringLength : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getAutoRenderSize
+ * @return {size_object}
+ */
+getAutoRenderSize : function (
+)
+{
+    return cc.Size;
 },
 
 /**
@@ -5371,6 +5401,16 @@ isPositionPercentYEnabled : function (
  */
 setPercentHeight : function (
 float 
+)
+{
+},
+
+/**
+ * @method setPercentOnlyEnabled
+ * @param {bool} arg0
+ */
+setPercentOnlyEnabled : function (
+bool 
 )
 {
 },

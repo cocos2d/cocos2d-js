@@ -11662,12 +11662,12 @@ enableShadow : function (
 
 /**
  * @method setDimensions
- * @param {unsigned int} arg0
- * @param {unsigned int} arg1
+ * @param {float} arg0
+ * @param {float} arg1
  */
 setDimensions : function (
-int, 
-int 
+float, 
+float 
 )
 {
 },
@@ -11684,7 +11684,7 @@ getString : function (
 
 /**
  * @method getHeight
- * @return {unsigned int}
+ * @return {float}
  */
 getHeight : function (
 )
@@ -11712,17 +11712,17 @@ getTextColor : function (
 
 /**
  * @method setWidth
- * @param {unsigned int} arg0
+ * @param {float} arg0
  */
 setWidth : function (
-int 
+float 
 )
 {
 },
 
 /**
  * @method getMaxLineWidth
- * @return {unsigned int}
+ * @return {float}
  */
 getMaxLineWidth : function (
 )
@@ -11894,10 +11894,10 @@ getDimensions : function (
 
 /**
  * @method setMaxLineWidth
- * @param {unsigned int} arg0
+ * @param {float} arg0
  */
 setMaxLineWidth : function (
-int 
+float 
 )
 {
 },
@@ -11964,17 +11964,17 @@ color4b
 
 /**
  * @method setHeight
- * @param {unsigned int} arg0
+ * @param {float} arg0
  */
 setHeight : function (
-int 
+float 
 )
 {
 },
 
 /**
  * @method getWidth
- * @return {unsigned int}
+ * @return {float}
  */
 getWidth : function (
 )

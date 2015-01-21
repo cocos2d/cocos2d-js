@@ -35400,10 +35400,10 @@ bool js_cocos2dx_Label_setDimensions(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_setDimensions : Invalid Native Object");
     if (argc == 2) {
-        unsigned int arg0;
-        unsigned int arg1;
-        ok &= jsval_to_uint32(cx, argv[0], &arg0);
-        ok &= jsval_to_uint32(cx, argv[1], &arg1);
+        double arg0;
+        double arg1;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_setDimensions : Error processing arguments");
         cobj->setDimensions(arg0, arg1);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -35437,9 +35437,9 @@ bool js_cocos2dx_Label_getHeight(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_getHeight : Invalid Native Object");
     if (argc == 0) {
-        unsigned int ret = cobj->getHeight();
+        double ret = cobj->getHeight();
         jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
+        jsret = DOUBLE_TO_JSVAL(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return true;
     }
@@ -35488,8 +35488,8 @@ bool js_cocos2dx_Label_setWidth(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_setWidth : Invalid Native Object");
     if (argc == 1) {
-        unsigned int arg0;
-        ok &= jsval_to_uint32(cx, argv[0], &arg0);
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_setWidth : Error processing arguments");
         cobj->setWidth(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -35506,9 +35506,9 @@ bool js_cocos2dx_Label_getMaxLineWidth(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_getMaxLineWidth : Invalid Native Object");
     if (argc == 0) {
-        unsigned int ret = cobj->getMaxLineWidth();
+        double ret = cobj->getMaxLineWidth();
         jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
+        jsret = DOUBLE_TO_JSVAL(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return true;
     }
@@ -35887,8 +35887,8 @@ bool js_cocos2dx_Label_setMaxLineWidth(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_setMaxLineWidth : Invalid Native Object");
     if (argc == 1) {
-        unsigned int arg0;
-        ok &= jsval_to_uint32(cx, argv[0], &arg0);
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_setMaxLineWidth : Error processing arguments");
         cobj->setMaxLineWidth(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -36015,8 +36015,8 @@ bool js_cocos2dx_Label_setHeight(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_setHeight : Invalid Native Object");
     if (argc == 1) {
-        unsigned int arg0;
-        ok &= jsval_to_uint32(cx, argv[0], &arg0);
+        double arg0;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_setHeight : Error processing arguments");
         cobj->setHeight(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -36033,9 +36033,9 @@ bool js_cocos2dx_Label_getWidth(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_getWidth : Invalid Native Object");
     if (argc == 0) {
-        unsigned int ret = cobj->getWidth();
+        double ret = cobj->getWidth();
         jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
+        jsret = DOUBLE_TO_JSVAL(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return true;
     }
