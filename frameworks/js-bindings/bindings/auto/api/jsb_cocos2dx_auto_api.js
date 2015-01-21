@@ -4391,16 +4391,6 @@ init : function (
 },
 
 /**
- * @method create
- * @return {cc.EventListenerFocus}
- */
-create : function (
-)
-{
-    return cc.EventListenerFocus;
-},
-
-/**
  * @method EventListenerFocus
  * @constructor
  */
