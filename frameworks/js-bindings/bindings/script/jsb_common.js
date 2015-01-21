@@ -147,7 +147,7 @@ cc.KEY = {
     dpadCenter:1005
 };
 
-var jsbkeyArr = [
+var jsbKeyArr = [
     cc.KEY["none"],//0
     cc.KEY["pause"],//1
     cc.KEY["scrolllock"],//2
@@ -322,5 +322,12 @@ var jsbkeyArr = [
 
 if (cc.sys.os != cc.sys.OS_ANDROID)
 {
-    jsbkeyArr[6] = cc.KEY["escape"];//6
+    jsbKeyArr[6] = cc.KEY["escape"];//6
+}
+
+var parseKeyCode = function (keycode)
+{
+    var keyIndex = jsbKeyArr.indexOf(keycode);
+    var jsbKeyCode = keyIndex == -1 ? cc.KEY.none : keyIndex;
+    return jsbKeyCode;
 }

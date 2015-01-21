@@ -108,7 +108,7 @@
                 }
             }
         ],
-        "UIFoces": [
+        "UIFocus": [
             {
                 title: "UIFocusTestHorizontal",
                 func: function () {
