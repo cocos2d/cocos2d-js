@@ -106,16 +106,12 @@ var UISliderNormalDefaultTest = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
 
-            // Add a label in which the slider alert will be displayed
-            this._displayValueLabel = new ccui.Text("","Arial",32);
-            this._displayValueLabel.setAnchorPoint(cc.p(0.5, -1));
-            this._displayValueLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + 100));
-            this._mainNode.addChild(this._displayValueLabel);
+            this._bottomDisplayLabel.setString("");
 
             // Add the alert
             var alert = new ccui.Text("when pressed, the slider ball should scale","Marker Felt",20);
             alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 3.75));
+            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.75));
             this._mainNode.addChild(alert);
 
             // Create the slider
@@ -146,16 +142,12 @@ var UISliderDisabledDefaultTest = UIScene.extend({
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
 
-            // Add a label in which the slider alert will be displayed
-            this._displayValueLabel = new ccui.Text("","Arial",32);
-            this._displayValueLabel.setAnchorPoint(cc.p(0.5, -1));
-            this._displayValueLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + 100));
-            this._mainNode.addChild(this._displayValueLabel);
+            this._bottomDisplayLabel.setString("");
 
             // Add the alert
             var alert = new ccui.Text("slider ball should be gray.","Marker Felt",20);
             alert.setColor(cc.color(159, 168, 176));
-            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 3.75));
+            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.75));
             this._mainNode.addChild(alert);
 
             // Create the slider
@@ -176,9 +168,7 @@ var UISliderDisabledDefaultTest = UIScene.extend({
             sliderScale9.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - 20));
             this._mainNode.addChild(sliderScale9);
 
-
             return true;
-
         }
         return false;
     }

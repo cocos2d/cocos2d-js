@@ -76,6 +76,7 @@ var UICheckBoxDefaultBehaviorTest = UIScene.extend({
             this._displayValueLabel.setAnchorPoint(cc.p(0.5, -1));
             this._displayValueLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
             this._mainNode.addChild(this._displayValueLabel);
+            this._bottomDisplayLabel.setString("");
 
             // Add the alert
             var alert = new ccui.Text("Only left two and the last checkbox can be cliked!","Marker Felt",20 );
