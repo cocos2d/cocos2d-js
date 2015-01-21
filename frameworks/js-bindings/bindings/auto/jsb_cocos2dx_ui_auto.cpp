@@ -3105,6 +3105,23 @@ void js_register_cocos2dx_ui_Layout(JSContext *cx, JSObject *global) {
 JSClass  *jsb_cocos2d_ui_Button_class;
 JSObject *jsb_cocos2d_ui_Button_prototype;
 
+bool js_cocos2dx_ui_Button_getNormalTextureSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::Button* cobj = (cocos2d::ui::Button *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getNormalTextureSize : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Size ret = cobj->getNormalTextureSize();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccsize_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_Button_getNormalTextureSize : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_Button_getTitleText(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -3911,6 +3928,7 @@ void js_register_cocos2dx_ui_Button(JSContext *cx, JSObject *global) {
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("getNormalTextureSize", js_cocos2dx_ui_Button_getNormalTextureSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTitleText", js_cocos2dx_ui_Button_getTitleText, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleFontSize", js_cocos2dx_ui_Button_setTitleFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setScale9Enabled", js_cocos2dx_ui_Button_setScale9Enabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -5226,6 +5244,23 @@ bool js_cocos2dx_ui_Text_getStringLength(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_cocos2dx_ui_Text_getStringLength : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_ui_Text_getAutoRenderSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::Text* cobj = (cocos2d::ui::Text *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getAutoRenderSize : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Size ret = cobj->getAutoRenderSize();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccsize_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_Text_getAutoRenderSize : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_Text_enableOutline(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -5556,6 +5591,7 @@ void js_register_cocos2dx_ui_Text(JSContext *cx, JSObject *global) {
         JS_FN("getFontName", js_cocos2dx_ui_Text_getFontName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTextAreaSize", js_cocos2dx_ui_Text_setTextAreaSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStringLength", js_cocos2dx_ui_Text_getStringLength, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAutoRenderSize", js_cocos2dx_ui_Text_getAutoRenderSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("enableOutline", js_cocos2dx_ui_Text_enableOutline, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getType", js_cocos2dx_ui_Text_getType, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTextHorizontalAlignment", js_cocos2dx_ui_Text_getTextHorizontalAlignment, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -8584,6 +8620,23 @@ bool js_cocos2dx_ui_TextField_getStringLength(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "js_cocos2dx_ui_TextField_getStringLength : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_ui_TextField_getAutoRenderSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::TextField* cobj = (cocos2d::ui::TextField *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getAutoRenderSize : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Size ret = cobj->getAutoRenderSize();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccsize_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_TextField_getAutoRenderSize : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_TextField_setPasswordEnabled(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -9120,6 +9173,7 @@ void js_register_cocos2dx_ui_TextField(JSContext *cx, JSObject *global) {
         JS_FN("setTextAreaSize", js_cocos2dx_ui_TextField_setTextAreaSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("attachWithIME", js_cocos2dx_ui_TextField_attachWithIME, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStringLength", js_cocos2dx_ui_TextField_getStringLength, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAutoRenderSize", js_cocos2dx_ui_TextField_getAutoRenderSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setPasswordEnabled", js_cocos2dx_ui_TextField_setPasswordEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPlaceHolderColor", js_cocos2dx_ui_TextField_getPlaceHolderColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPasswordStyleText", js_cocos2dx_ui_TextField_getPasswordStyleText, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -14176,6 +14230,26 @@ bool js_cocos2dx_ui_LayoutComponent_setPercentHeight(JSContext *cx, uint32_t arg
     JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setPercentHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_ui_LayoutComponent_setPercentOnlyEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::LayoutComponent* cobj = (cocos2d::ui::LayoutComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_setPercentOnlyEnabled : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_LayoutComponent_setPercentOnlyEnabled : Error processing arguments");
+        cobj->setPercentOnlyEnabled(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_LayoutComponent_setPercentOnlyEnabled : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_ui_LayoutComponent_setHorizontalEdge(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -14624,6 +14698,7 @@ void js_register_cocos2dx_ui_LayoutComponent(JSContext *cx, JSObject *global) {
         JS_FN("setRightMargin", js_cocos2dx_ui_LayoutComponent_setRightMargin, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isPositionPercentYEnabled", js_cocos2dx_ui_LayoutComponent_isPositionPercentYEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setPercentHeight", js_cocos2dx_ui_LayoutComponent_setPercentHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPercentOnlyEnabled", js_cocos2dx_ui_LayoutComponent_setPercentOnlyEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setHorizontalEdge", js_cocos2dx_ui_LayoutComponent_setHorizontalEdge, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setPosition", js_cocos2dx_ui_LayoutComponent_setPosition, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUsingPercentContentSize", js_cocos2dx_ui_LayoutComponent_setUsingPercentContentSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
