@@ -58,8 +58,10 @@ ccui.CheckBox.prototype._ctor = function (backGround, backGroundSelected, cross,
 };
 
 ccui.ImageView.prototype._ctor = function(imageFileName, texType){
-    if(texType !== undefined)
+    if(imageFileName !== undefined){
+        texType = texType || ccui.Widget.LOCAL_TEXTURE;
         ccui.ImageView.prototype._init.call(this, imageFileName, texType);
+    }
     else
         ccui.Widget.prototype.init.call(this);
 }
