@@ -62,5 +62,4 @@ bool jsval_to_animationInfo(JSContext* cx, jsval vp, cocostudio::timeline::Anima
     ret->startIndex = (int)startIndex;
     ret->endIndex = (int)endIndex;
     return true;
-    return true;
 }
