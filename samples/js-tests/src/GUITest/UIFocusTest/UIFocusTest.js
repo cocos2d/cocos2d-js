@@ -70,19 +70,19 @@ var UIFocusTestBase = UIScene.extend({
     },
 
     onLeftKeyPressed: function(){
-        var event = new cc.EventKeyboard(cc.KEY.left, false);
+        var event = new cc.EventKeyboard(cc.KEY.dpadLeft, false);
         cc.eventManager.dispatchEvent(event);
     },
     onRightKeyPressed: function(){
-        var event = new cc.EventKeyboard(cc.KEY.right, false);
+        var event = new cc.EventKeyboard(cc.KEY.dpadRight, false);
         cc.eventManager.dispatchEvent(event);
     },
     onUpKeyPressed: function(){
-        var event = new cc.EventKeyboard(cc.KEY.up, false);
+        var event = new cc.EventKeyboard(cc.KEY.dpadUp, false);
         cc.eventManager.dispatchEvent(event);
     },
     onDownKeyPressed: function(){
-        var event = new cc.EventKeyboard(cc.KEY.down, false);
+        var event = new cc.EventKeyboard(cc.KEY.dpadDown, false);
         cc.eventManager.dispatchEvent(event);
     },
     onFocusChanged: function(widgetLostFocus, widgetGetFocus){
