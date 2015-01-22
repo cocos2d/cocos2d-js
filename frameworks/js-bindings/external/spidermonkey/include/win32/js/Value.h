@@ -1238,7 +1238,10 @@ class Value
         JS_STATIC_ASSERT(sizeof(Value) == 8);
     }
 
-    friend jsval_layout (::JSVAL_TO_IMPL)(Value);
+    //this may result in error of "JSVAL_TO_IMPL is not a function" on Visual Studio
+    //so we remove it , data is a public member on windows
+    //more detail: https://bugzilla.mozilla.org/show_bug.cgi?id=1082033
+    //friend jsval_layout (::JSVAL_TO_IMPL)(Value);
     friend Value JS_VALUE_CONSTEXPR (::IMPL_TO_JSVAL)(jsval_layout l);
     friend Value JS_VALUE_CONSTEXPR (JS::UndefinedValue)();
 };
