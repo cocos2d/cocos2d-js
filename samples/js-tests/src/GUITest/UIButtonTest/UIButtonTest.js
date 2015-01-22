@@ -442,7 +442,10 @@ var UIButtonTitleEffectTest = UIScene.extend({
             button2.setNormalizedPosition(0.8, 0.5);
             button2.setTitleText("PLAY GAME");
             var title2 = button2.getTitleRenderer();
-            title2.enableStroke(cc.color.GREEN, 3);
+            if(cc.sys.isNative)
+                title2.enableOutline(cc.color.GREEN, 3);
+            else
+                title2.enableStroke(cc.color.GREEN, 3);
             this.addChild(button2);
             return true;
         }

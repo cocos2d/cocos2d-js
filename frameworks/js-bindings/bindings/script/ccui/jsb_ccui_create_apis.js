@@ -40,8 +40,18 @@ ccui.Widget.prototype._ctor
         this.init();
     }
 
-ccui.Button.prototype._ctor = function (normalImage, selectedImage,disableImage, texType) {
-    texType !== undefined ? ccui.Button.prototype.init.call(this, normalImage, selectedImage,disableImage, texType) : ccui.Widget.prototype.init.call(this);
+ccui.Button.prototype._ctor = function (normalImage, selectedImage, disableImage, texType) {
+    if(texType !== undefined)
+        ccui.Button.prototype.init.call(this, normalImage, selectedImage, disableImage, texType);
+    else if(disableImage !== undefined)
+        ccui.Button.prototype.init.call(this, normalImage, selectedImage, disableImage);
+    else if(selectedImage !== undefined)
+        ccui.Button.prototype.init.call(this, normalImage, selectedImage);
+    else if(normalImage !== undefined)
+        ccui.Button.prototype.init.call(this, normalImage);
+    else
+        ccui.Widget.prototype.init.call(this);
+    
     this.setTouchEnabled(true);
 };
 

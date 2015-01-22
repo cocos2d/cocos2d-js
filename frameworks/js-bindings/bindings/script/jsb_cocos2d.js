@@ -2667,6 +2667,15 @@ cc.Node.prototype.getUserData = function () {
     return this.userData;
 };
 
+//for compatibility with html5
+cc.Node.prototype._setNormalizedPosition = cc.Node.prototype.setNormalizedPosition;
+cc.Node.prototype.setNormalizedPosition = function(pos, y){
+    if(y === undefined)
+        cc.Node.prototype._setNormalizedPosition.call(this, pos);
+    else
+        cc.Node.prototype._setNormalizedPosition.call(this, cc.p(pos, y));
+};
+
 /** returns a "world" axis aligned bounding box of the node. <br/>
  * @return {cc.Rect}
  */
