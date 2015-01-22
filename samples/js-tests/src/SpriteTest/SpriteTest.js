@@ -1706,7 +1706,7 @@ var SpriteBatchNodeAliased = SpriteTestDemo.extend({
 //
 //------------------------------------------------------------------
 var SpriteNewTexture = SpriteTestDemo.extend({
-    _usingTexture1:false,
+    _usingTexture1:0,
     _texture1:null,
     _texture2:null,
     _title:"Sprite New texture (tap)",
@@ -1735,8 +1735,6 @@ var SpriteNewTexture = SpriteTestDemo.extend({
 
         this._texture1 = cc.textureCache.addImage(s_grossini_dance_atlas);
         this._texture2 = cc.textureCache.addImage(s_grossini_dance_atlas_mono);
-
-        this._usingTexture1 = true;
 
         for (var i = 0; i < 30; i++) {
             this.addNewSprite();
@@ -1787,22 +1785,30 @@ var SpriteNewTexture = SpriteTestDemo.extend({
         var node = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
         var children = node.children, sprite, i;
 
-        if (this._usingTexture1) {                         //-. win32 : Let's it make just simple sentence
+        if (this._usingTexture1 == 0) {                         //-. win32 : Let's it make just simple sentence
+            for (i = 0; i < children.length; i++) {
+                sprite = children[i];
+                if (!sprite)
+                    break;
+                sprite.texture = null;
+            }
+            this._usingTexture1 = 1;
+        } else if(this._usingTexture1 == 1){
             for (i = 0; i < children.length; i++) {
                 sprite = children[i];
                 if (!sprite)
                     break;
                 sprite.texture = this._texture2;
             }
-            this._usingTexture1 = false;
-        } else {
+            this._usingTexture1 = 2;
+        }else {
             for (i = 0; i < children.length; i++) {
                 sprite = children[i];
                 if (!sprite)
                     break;
                 sprite.texture = this._texture1;
             }
-            this._usingTexture1 = true;
+            this._usingTexture1 = 0;
         }
         //----end26----
     },
@@ -1915,6 +1921,8 @@ var SpriteBatchNodeNewTexture = SpriteTestDemo.extend({
         var batch = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
 
         if (batch.texture == this._texture1)
+            batch.texture = null;
+        else if(batch.texture == null)
             batch.texture = this._texture2;
         else
             batch.texture = this._texture1;
