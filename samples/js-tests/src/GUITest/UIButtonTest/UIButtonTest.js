@@ -434,7 +434,7 @@ var UIButtonTitleEffectTest = UIScene.extend({
             button.setPressedActionEnabled(true);
             var title = button.getTitleRenderer();
             button.setTitleColor(cc.color.RED);
-            title.enableShadow(cc.color.BLACK, cc.p(2,-2));
+            title.enableShadow(cc.color.BLACK, cc.size(2,-2));
             this.addChild(button);
 
             // Create the button
