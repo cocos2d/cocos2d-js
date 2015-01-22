@@ -71,12 +71,6 @@ var extensionsTestItemNames = [
         }
     },
     {
-        itemTitle:"EditBoxTest",
-        testScene:function () {
-            runEditBoxTest();
-        }
-    },
-    {
         itemTitle:"WebSocketTest",
         testScene:function () {
             runWebSocketTest();
@@ -102,6 +96,15 @@ var extensionsTestItemNames = [
         }
     }
 ];
+
+if(!cc.sys.isNative || cc.sys.OS_LINUX !== cc.sys.os){
+    extensionsTestItemNames.push({
+        itemTitle:"EditBoxTest",
+        testScene:function () {
+            runEditBoxTest();
+        }
+    });
+}
 
 if (cc.sys.isNative && cc.sys.OS_IOS == cc.sys.os) {
     extensionsTestItemNames.push({
