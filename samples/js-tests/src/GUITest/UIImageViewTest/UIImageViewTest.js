@@ -159,7 +159,7 @@ var UIImageViewFlipTest = UIScene.extend({
             var toggleScale9 = new ccui.Button();
             toggleScale9.setTitleText("Toggle Scale9");
             var ip9 = imageView.getPosition();
-            toggleScale9.setPosition(ip9 + 50, ip9 - imageView.getContentSize().height/2- 20);
+            toggleScale9.setPosition(ip9.x + 50, ip9.y - imageView.getContentSize().height/2- 20);
             this.addChild(toggleScale9);
             toggleScale9.addClickEventListener(function(){
                 imageView.setScale9Enabled(!imageView.isScale9Enabled());
