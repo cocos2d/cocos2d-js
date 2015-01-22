@@ -909,6 +909,7 @@ cc.view.getTargetDensityDPI = function() {return cc.DENSITYDPI_DEVICE;};
  * @name cc.eventManager
  */
 cc.eventManager = cc.director.getEventDispatcher();
+
 /**
  * @type {cc.AudioEngine}
  * @name cc.audioEngine

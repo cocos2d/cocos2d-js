@@ -1725,13 +1725,13 @@ cc.EventListenerMouse.prototype.onMouseDown = function(event) {
 cc.EventListenerKeyboard.prototype._onKeyPressed = function(keyCode, event) {
     if (!this.onKeyPressed)
         return;
-    this.onKeyPressed(jsbkeyArr[keyCode], event);
+    this.onKeyPressed(jsbKeyArr[keyCode], event);
 };
 
 cc.EventListenerKeyboard.prototype._onKeyReleased = function(keyCode, event) {
     if (!this.onKeyReleased)
         return;
-    this.onKeyReleased(jsbkeyArr[keyCode], event);
+    this.onKeyReleased(jsbKeyArr[keyCode], event);
 };
 
 cc.EventMouse.prototype.getLocation = function(){
