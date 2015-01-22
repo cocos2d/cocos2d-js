@@ -149,7 +149,8 @@ var UIImageViewFlipTest = UIScene.extend({
 
             var toggleButton = new ccui.Button();
             toggleButton.setTitleText("Toggle FlipX");
-            toggleButton.setPosition(imageView.getPosition() + cc.p(-50, - imageView.getContentSize().height/2 - 20));
+            var ip = imageView.getPosition();
+            toggleButton.setPosition(ip.x - 50, ip.y - imageView.getContentSize().height/2 - 20);
             this.addChild(toggleButton);
             toggleButton.addClickEventListener(function(){
                 imageView.setFlippedX(!imageView.isFlippedX());
@@ -157,7 +158,8 @@ var UIImageViewFlipTest = UIScene.extend({
 
             var toggleScale9 = new ccui.Button();
             toggleScale9.setTitleText("Toggle Scale9");
-            toggleScale9.setPosition(imageView.getPosition() + cc.p(+50, - imageView.getContentSize().height/2- 20));
+            var ip9 = imageView.getPosition();
+            toggleScale9.setPosition(ip9 + 50, ip9 - imageView.getContentSize().height/2- 20);
             this.addChild(toggleScale9);
             toggleScale9.addClickEventListener(function(){
                 imageView.setScale9Enabled(!imageView.isScale9Enabled());
