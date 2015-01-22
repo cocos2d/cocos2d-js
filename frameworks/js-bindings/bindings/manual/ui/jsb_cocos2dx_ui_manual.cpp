@@ -514,6 +514,20 @@ static bool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc, 
         cobj->setMargin(ui::Margin(left,top,right,bottom));
         return true;
     }
+    else if (argc == 4) {
+        jsval *argv = JS_ARGV(cx, vp);
+        bool ok = true;
+        double left, top,right,bottom;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &left);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &top);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[2]), &right);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[3]), &bottom);
+
+        JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+
+        cobj->setMargin(ui::Margin(left,top,right,bottom));
+        return true;
+    }
     JS_ReportError(cx, "Invalid number of arguments");
     return false;
 }
