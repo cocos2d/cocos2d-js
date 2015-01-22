@@ -115,15 +115,6 @@ bool js_cocos2dx_EventTouch_getEventCode(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_EventTouch_setEventCode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventTouch_EventTouch(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_cocos2d_EventKeyboard_class;
-extern JSObject *jsb_cocos2d_EventKeyboard_prototype;
-
-bool js_cocos2dx_EventKeyboard_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_EventKeyboard_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_EventKeyboard(JSContext *cx, JSObject *global);
-void register_all_cocos2dx(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_EventKeyboard_EventKeyboard(JSContext *cx, uint32_t argc, jsval *vp);
-
 extern JSClass  *jsb_cocos2d_Node_class;
 extern JSObject *jsb_cocos2d_Node_prototype;
 

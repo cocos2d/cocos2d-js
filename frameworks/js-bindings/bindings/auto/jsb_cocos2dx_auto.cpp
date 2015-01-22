@@ -1880,99 +1880,6 @@ void js_register_cocos2dx_EventTouch(JSContext *cx, JSObject *global) {
     }
 }
 
-JSClass  *jsb_cocos2d_EventKeyboard_class;
-JSObject *jsb_cocos2d_EventKeyboard_prototype;
-
-bool js_cocos2dx_EventKeyboard_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    cocos2d::EventKeyboard::KeyCode arg0;
-    bool arg1;
-    ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-    arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
-    JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventKeyboard_constructor : Error processing arguments");
-    cocos2d::EventKeyboard* cobj = new (std::nothrow) cocos2d::EventKeyboard(arg0, arg1);
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::EventKeyboard> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::EventKeyboard");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
-    return true;
-}
-
-
-extern JSObject *jsb_cocos2d_Event_prototype;
-
-void js_cocos2d_EventKeyboard_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (EventKeyboard)", obj);
-}
-
-void js_register_cocos2dx_EventKeyboard(JSContext *cx, JSObject *global) {
-    jsb_cocos2d_EventKeyboard_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_cocos2d_EventKeyboard_class->name = "EventKeyboard";
-    jsb_cocos2d_EventKeyboard_class->addProperty = JS_PropertyStub;
-    jsb_cocos2d_EventKeyboard_class->delProperty = JS_DeletePropertyStub;
-    jsb_cocos2d_EventKeyboard_class->getProperty = JS_PropertyStub;
-    jsb_cocos2d_EventKeyboard_class->setProperty = JS_StrictPropertyStub;
-    jsb_cocos2d_EventKeyboard_class->enumerate = JS_EnumerateStub;
-    jsb_cocos2d_EventKeyboard_class->resolve = JS_ResolveStub;
-    jsb_cocos2d_EventKeyboard_class->convert = JS_ConvertStub;
-    jsb_cocos2d_EventKeyboard_class->finalize = js_cocos2d_EventKeyboard_finalize;
-    jsb_cocos2d_EventKeyboard_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
-
-    static JSPropertySpec properties[] = {
-        {"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
-        {0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
-    };
-
-    static JSFunctionSpec funcs[] = {
-        JS_FS_END
-    };
-
-    JSFunctionSpec *st_funcs = NULL;
-
-    jsb_cocos2d_EventKeyboard_prototype = JS_InitClass(
-        cx, global,
-        jsb_cocos2d_Event_prototype,
-        jsb_cocos2d_EventKeyboard_class,
-        js_cocos2dx_EventKeyboard_constructor, 0, // constructor
-        properties,
-        funcs,
-        NULL, // no static properties
-        st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "EventKeyboard", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
-
-    // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::EventKeyboard> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_EventKeyboard_class;
-        p->proto = jsb_cocos2d_EventKeyboard_prototype;
-        p->parentProto = jsb_cocos2d_Event_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
-}
-
 JSClass  *jsb_cocos2d_Node_class;
 JSObject *jsb_cocos2d_Node_prototype;
 
@@ -63202,7 +63109,8 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
     js_register_cocos2dx_Event(cx, obj);
     js_register_cocos2dx_EventMouse(cx, obj);
     js_register_cocos2dx_GLView(cx, obj);
-    js_register_cocos2dx_EaseBezierAction(cx, obj);
+    js_register_cocos2dx_EaseRateAction(cx, obj);
+    js_register_cocos2dx_EaseOut(cx, obj);
     js_register_cocos2dx_ParticleFireworks(cx, obj);
     js_register_cocos2dx_MenuItem(cx, obj);
     js_register_cocos2dx_MenuItemSprite(cx, obj);
@@ -63210,7 +63118,6 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
     js_register_cocos2dx_ParticleFire(cx, obj);
     js_register_cocos2dx_ProgressTo(cx, obj);
     js_register_cocos2dx_TransitionZoomFlipAngular(cx, obj);
-    js_register_cocos2dx_EaseRateAction(cx, obj);
     js_register_cocos2dx_EaseIn(cx, obj);
     js_register_cocos2dx_EaseExponentialInOut(cx, obj);
     js_register_cocos2dx_EaseBackInOut(cx, obj);
@@ -63239,7 +63146,6 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
     js_register_cocos2dx_TMXLayer(cx, obj);
     js_register_cocos2dx_FlipX(cx, obj);
     js_register_cocos2dx_FlipY(cx, obj);
-    js_register_cocos2dx_EventKeyboard(cx, obj);
     js_register_cocos2dx_TransitionSplitCols(cx, obj);
     js_register_cocos2dx_RepeatForever(cx, obj);
     js_register_cocos2dx_Place(cx, obj);
@@ -63348,7 +63254,7 @@ void register_all_cocos2dx(JSContext* cx, JSObject* obj) {
     js_register_cocos2dx_TextFieldTTF(cx, obj);
     js_register_cocos2dx_ParticleRain(cx, obj);
     js_register_cocos2dx_Waves(cx, obj);
-    js_register_cocos2dx_EaseOut(cx, obj);
+    js_register_cocos2dx_EaseBezierAction(cx, obj);
     js_register_cocos2dx_MenuItemFont(cx, obj);
     js_register_cocos2dx_TransitionFadeUp(cx, obj);
     js_register_cocos2dx_EaseSineOut(cx, obj);
