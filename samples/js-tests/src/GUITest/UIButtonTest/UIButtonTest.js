@@ -434,7 +434,7 @@ var UIButtonTitleEffectTest = UIScene.extend({
             button.setPressedActionEnabled(true);
             var title = button.getTitleRenderer();
             button.setTitleColor(cc.color.RED);
-            title.enableShadow(cc.color.BLACK, cc.p(2,-2));
+            title.enableShadow(cc.color.BLACK, cc.size(2,-2));
             this.addChild(button);
 
             // Create the button
@@ -442,7 +442,10 @@ var UIButtonTitleEffectTest = UIScene.extend({
             button2.setNormalizedPosition(0.8, 0.5);
             button2.setTitleText("PLAY GAME");
             var title2 = button2.getTitleRenderer();
-            title2.enableStroke(cc.color.GREEN, 3);
+            if(cc.sys.isNative)
+                title2.enableOutline(cc.color.GREEN, 3);
+            else
+                title2.enableStroke(cc.color.GREEN, 3);
             this.addChild(button2);
             return true;
         }
