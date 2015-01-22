@@ -59,10 +59,16 @@ ccui.CheckBox.prototype._ctor = function (backGround, backGroundSelected, cross,
     if (frontCrossDisabled !== undefined) {
         texType = texType || ccui.Widget.LOCAL_TEXTURE;
         ccui.CheckBox.prototype.init.call(this, backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled, texType);
+    }else if(backGroundSelected !== undefined){
+        texType = ccui.Widget.LOCAL_TEXTURE;
+        cross = backGroundSelected;
+        backGroundSelected = backGroundDisabled = frontCrossDisabled = backGround;
+        ccui.CheckBox.prototype.init.call(this, backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled, texType);
     }
     else {
         ccui.Widget.prototype.init.call(this);
     }
+
     this.setSelected(false);
     this.setTouchEnabled(true);
 };
