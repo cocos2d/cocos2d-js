@@ -195,7 +195,7 @@ var RemoteTextureTest = TextureCacheTestBase.extend({
     _sprite : null,
     onEnter:function () {
         this._super();
-        if('opengl' in cc.sys.capabilities){
+        if('opengl' in cc.sys.capabilities && !cc.sys.isNative){
             var label = new cc.LabelTTF("Not support Loading texture from remote site on HTML5-WebGL", "Times New Roman", 28);
             label.x = winSize.width / 2;
             label.y = winSize.height / 2;
