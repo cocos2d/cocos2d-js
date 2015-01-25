@@ -735,6 +735,10 @@ cc.Animation.prototype._ctor = function(frames, delay, loops) {
     }
 };
 
+cc.AnimationFrame.prototype._ctor = function(spriteFrame, delayUnits, userInfo) {
+    delayUnits !== undefined && this.initWithSpriteFrame(spriteFrame, delayUnits, userInfo);
+};
+
 
 /************************  Nodes  *************************/
 
