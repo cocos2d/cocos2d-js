@@ -4421,12 +4421,13 @@ var AnimationCacheTest = SpriteTestDemo.extend({
         // create animation "dance"
         //
         var animFrames = [];
-        var frame;
+        var frame, animFrame;
         var str = "";
         for (var i = 1; i < 15; i++) {
             str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
             frame = spriteFrameCache.getSpriteFrame(str);
-            animFrames.push(frame);
+            animFrame = new cc.AnimationFrame(frame, 1);
+            animFrames.push(animFrame);
         }
 
         var animation = new cc.Animation(animFrames, 0.2);
