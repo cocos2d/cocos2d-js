@@ -866,6 +866,7 @@ JSCallbackWrapper::~JSCallbackWrapper()
 {
     JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
     JS::RemoveValueRoot(cx, &_jsCallback);
+    JS::RemoveValueRoot(cx, &_jsThisObj);
 }
 
 void JSCallbackWrapper::setJSCallbackFunc(jsval func) {
@@ -877,6 +878,9 @@ void JSCallbackWrapper::setJSCallbackFunc(jsval func) {
 
 void JSCallbackWrapper::setJSCallbackThis(jsval thisObj) {
     _jsThisObj = thisObj;
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    // Root the this object.
+    JS::AddNamedValueRoot(cx, &_jsThisObj, "JSCallbackWrapper_callback_this");
 }
 
 void JSCallbackWrapper::setJSExtraData(jsval data) {
@@ -951,6 +955,9 @@ static bool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
                         jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
                         JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(1, &senderVal);
 //                        JS_AddValueRoot(cx, &senderVal);
+
+                        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+
                         JS_CallFunctionValue(cx, thisObj, jsvalCallback, args, &retval);
 //                        JS_RemoveValueRoot(cx, &senderVal);
                     }
