@@ -60,6 +60,8 @@ var ActionTimelineTestScene = (function(){
             var self = this;
             cc.loader.load([
                 "res/ActionTimeline/boy_1.ExportJson",
+                "res/ActionTimeline/boy0.plist",
+                "res/ActionTimeline/boy0.png",
                 "res/armatures/Cowboy0.plist",
                 "res/armatures/Cowboy0.png"
             ], function(){

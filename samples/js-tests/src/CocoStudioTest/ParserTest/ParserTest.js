@@ -39,6 +39,11 @@ var g_parsersTests = [
         test: function(){
             new CocostudioParserJsonScene("res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson").runThisTest();
         }
+    },{
+        title: "cocostudio 2.0",
+        test: function(){
+            new CocostudioParserJsonScene("res/cocosui/UIEditorTest/2.0.5/res/MainScene.json").runThisTest();
+        }
     }
 ];
 
@@ -62,20 +67,23 @@ var CocostudioParserJsonLayer = cc.Layer.extend({
         this._super();
         cc.Layer.prototype.onEnter.call(this);
 
-        var guiReader = ccs.uiReader;
+        var layout;
+        if(cocoStudioOldApiFlag == 0){
+            cc.log("ccs.load : %s", this._jsonFile);
+            var json = ccs.load(this._jsonFile);
+            layout = json.node;
+        }else{
+            //old api
+            cc.log("ccs.uiReader.widgetFromJsonFile : %s", this._jsonFile);
+            var guiReader = ccs.uiReader;
+            layout = guiReader.widgetFromJsonFile(this._jsonFile);
+        }
+        if(layout){
+            if(layout.getScale() == 1)
+                layout.setScale(0.7);
 
-//        guiReader.registerTypeAndCallBack("CustomImageView",
-//            CustomImageView,
-//            customImageViewReader,
-//            customImageViewReader.setProperties);
-//        guiReader.registerTypeAndCallBack("CustomParticleWidget",
-//            CustomParticleWidget,
-//            customParticleWidgetReader,
-//            customParticleWidgetReader.setProperties);
-
-        var layout = guiReader.widgetFromJsonFile(this._jsonFile);
-        layout.setScale(0.7);
-        this.addChild(layout);
+            this.addChild(layout);
+        }
     }
 });
 

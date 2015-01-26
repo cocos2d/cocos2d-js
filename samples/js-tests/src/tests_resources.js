@@ -872,6 +872,25 @@ var g_cocoStudio = [
     "res/cocosui/UIEditorTest/cocostudio1_5/GUI/missing-font.fnt",
     "res/cocosui/UIEditorTest/cocostudio1_5/GUI/missing-font.png",
 
+    "res/cocosui/UIEditorTest/2.0.5/res/MainScene.json",
+    "res/cocosui/UIEditorTest/2.0.5/res/plist1/Plist.plist",
+    "res/cocosui/UIEditorTest/2.0.5/res/Plist/ui.plist",
+    "res/cocosui/UIEditorTest/2.0.5/res/LoadingBar/pipe2.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Slider/2013-8-13 15-44-11.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Slider/teehanlax - iOS 6 - iPhone_slider01.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/particle/blue.plist",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/Slider_Back.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/SliderNode_Normal.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/SliderNode_Press.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/SliderNode_Disable.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/Slider_PressBar.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/defaultParticle.plist",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/TextAtlas.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/fonts_weapon_001-hd.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/FNT/futura.fnt",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/defaultBMFont.fnt",
+    "res/cocosui/UIEditorTest/2.0.5/res/FNT/Heiti18.fnt",
+
     "res/Particles/BoilingFoam.plist",
     "res/cocosui/CustomImageViewTest/NewProject_2_1.ExportJson",
     "res/cocosui/CustomImageViewTest/NewProject_20.plist",
@@ -879,6 +898,7 @@ var g_cocoStudio = [
 ];
 
 var g_ui = [
+    "res/cocosui/switch-mask.png",
     "res/cocosui/animationbuttonnormal.png",
     "res/cocosui/animationbuttonpressed.png",
     "res/cocosui/arrow.png",
@@ -926,7 +946,9 @@ var g_ui = [
     "res/cocosui/UITest/UITest.json",
     "res/cocosui/100/100.ExportJson",
     "res/cocosui/100/1000.plist",
-    "res/cocosui/100/1000.png"
+    "res/cocosui/100/1000.png",
+    s_s9s_blocks9_plist,
+    "res/cocosui/CloseSelected.png"
 ];
 
 var g_performace = [

@@ -40,8 +40,18 @@ ccui.Widget.prototype._ctor
         this.init();
     }
 
-ccui.Button.prototype._ctor = function (normalImage, selectedImage,disableImage, texType) {
-    texType !== undefined ? ccui.Button.prototype.init.call(this, normalImage, selectedImage,disableImage, texType) : ccui.Widget.prototype.init.call(this);
+ccui.Button.prototype._ctor = function (normalImage, selectedImage, disableImage, texType) {
+    if(texType !== undefined)
+        ccui.Button.prototype.init.call(this, normalImage, selectedImage, disableImage, texType);
+    else if(disableImage !== undefined)
+        ccui.Button.prototype.init.call(this, normalImage, selectedImage, disableImage);
+    else if(selectedImage !== undefined)
+        ccui.Button.prototype.init.call(this, normalImage, selectedImage);
+    else if(normalImage !== undefined)
+        ccui.Button.prototype.init.call(this, normalImage);
+    else
+        ccui.Widget.prototype.init.call(this);
+    
     this.setTouchEnabled(true);
 };
 
@@ -49,17 +59,25 @@ ccui.CheckBox.prototype._ctor = function (backGround, backGroundSelected, cross,
     if (frontCrossDisabled !== undefined) {
         texType = texType || ccui.Widget.LOCAL_TEXTURE;
         ccui.CheckBox.prototype.init.call(this, backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled, texType);
+    }else if(backGroundSelected !== undefined){
+        texType = ccui.Widget.LOCAL_TEXTURE;
+        cross = backGroundSelected;
+        backGroundSelected = backGroundDisabled = frontCrossDisabled = backGround;
+        ccui.CheckBox.prototype.init.call(this, backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled, texType);
     }
     else {
         ccui.Widget.prototype.init.call(this);
     }
+
     this.setSelected(false);
     this.setTouchEnabled(true);
 };
 
 ccui.ImageView.prototype._ctor = function(imageFileName, texType){
-    if(texType !== undefined)
+    if(imageFileName !== undefined){
+        texType = texType || ccui.Widget.LOCAL_TEXTURE;
         ccui.ImageView.prototype._init.call(this, imageFileName, texType);
+    }
     else
         ccui.Widget.prototype.init.call(this);
 }

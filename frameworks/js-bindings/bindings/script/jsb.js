@@ -27,7 +27,7 @@
 // DO NOT ALTER THE ORDER
 require('script/jsb_cocos2d_constants.js');
 require('script/jsb_cocos2d.js');
-
+require('script/jsb_common.js');
 require('script/jsb_property_impls.js');
 require('script/jsb_property_apis.js');
 require('script/jsb_create_apis.js');
@@ -42,6 +42,15 @@ if (window.ccs) {
     require('script/studio/jsb_cocos2d_studio.js');
     require('script/studio/jsb_studio_property_apis.js');
     require('script/studio/jsb_studio_create_apis.js');
+
+    require('script/studio/jsb_studio_load.js');
+    require('script/studio/parsers/action-1.x.js');
+    require('script/studio/parsers/action-2.x.js');
+    require('script/studio/parsers/scene-1.x.js');
+    require('script/studio/parsers/timelineParser-1.x.js');
+    require('script/studio/parsers/timelineParser-2.x.js');
+    require('script/studio/parsers/uiParser-1.x.js');
+    require('script/studio/parsers/compatible.js');
 }
 
 if (window.ccui) {

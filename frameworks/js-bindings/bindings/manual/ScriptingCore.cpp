@@ -617,12 +617,12 @@ JSScript* ScriptingCore::getScript(const char *path)
 {
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-    if (filename_script[byteCodePath])
+    if (filename_script.find(byteCodePath) != filename_script.end())
         return filename_script[byteCodePath];
     
     // b) no jsc file, check js file
     std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(path);
-    if (filename_script[fullPath])
+    if (filename_script.find(fullPath) != filename_script.end())
         return filename_script[fullPath];
     
     return NULL;
@@ -1363,15 +1363,37 @@ bool ScriptingCore::handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::
     
     if (isPressed)
     {
-        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onKeyPressed", 2, args);
+        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "_onKeyPressed", 2, args);
     }
     else
     {
-        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onKeyReleased", 2, args);
+        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "_onKeyReleased", 2, args);
     }
 
     removeJSObject(_cx, event);
     
+    return ret;
+}
+
+bool ScriptingCore::handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus)
+{
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+
+    js_proxy_t * p = jsb_get_native_proxy(nativeObj);
+
+    if (nullptr == p)
+        return false;
+
+    jsval args[2] = {
+        getJSObject(_cx, widgetLoseFocus),
+        getJSObject(_cx, widgetGetFocus)
+    };
+
+    bool ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onFocusChanged", 2, args);
+
+    removeJSObject(_cx, widgetLoseFocus);
+    removeJSObject(_cx, widgetGetFocus);
+
     return ret;
 }
 

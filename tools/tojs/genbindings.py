@@ -98,6 +98,7 @@ def main():
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
     cocos_root = os.path.abspath(os.path.join(project_root, 'frameworks/js-bindings/cocos2d-x'))
+    jsb_root = os.path.abspath(os.path.join(project_root, 'frameworks/js-bindings'))
     cxx_generator_root = os.path.abspath(os.path.join(project_root, 'tools/bindings-generator'))
 
     # save config to file
@@ -105,6 +106,7 @@ def main():
     config.set('DEFAULT', 'androidndkdir', ndk_root)
     config.set('DEFAULT', 'clangllvmdir', llvm_path)
     config.set('DEFAULT', 'cocosdir', cocos_root)
+    config.set('DEFAULT', 'jsbdir', jsb_root)
     config.set('DEFAULT', 'cxxgeneratordir', cxx_generator_root)
     config.set('DEFAULT', 'extra_flags', '')
 

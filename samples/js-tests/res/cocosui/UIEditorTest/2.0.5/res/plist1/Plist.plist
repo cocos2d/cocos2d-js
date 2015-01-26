@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>actor_fish_denglong_dead_001.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,362},{296,166}}</string>
+				<key>offset</key>
+				<string>{19,10}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{412,300}</string>
+			</dict>
+			<key>actor_fish_denglong_dead_002.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{296,512},{286,152}}</string>
+				<key>offset</key>
+				<string>{26,-22}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{412,300}</string>
+			</dict>
+			<key>actor_fish_denglong_dead_003.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{318,0},{297,192}}</string>
+				<key>offset</key>
+				<string>{18,-21}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{412,300}</string>
+			</dict>
+			<key>actor_fish_denglong_dead_004.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{615,170},{300,178}}</string>
+				<key>offset</key>
+				<string>{7,-32}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{412,300}</string>
+			</dict>
+			<key>actor_fish_denglong_dead_005.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,192},{309,170}}</string>
+				<key>offset</key>
+				<string>{5,-19}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{412,300}</string>
+			</dict>
+			<key>actor_fish_denglong_dead_006.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{318,192}}</string>
+				<key>offset</key>
+				<string>{3,16}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{412,300}</string>
+			</dict>
+			<key>actor_fish_denglong_dead_007.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{615,0},{316,170}}</string>
+				<key>offset</key>
+				<string>{5,14}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{412,300}</string>
+			</dict>
+			<key>actor_fish_denglong_dead_008.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{309,192},{320,158}}</string>
+				<key>offset</key>
+				<string>{4,-17}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{412,300}</string>
+			</dict>
+		</dict>
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>textureFileName</key>
+			<string>Plist.png</string>
+			<key>realTextureFileName</key>
+			<string>Plist.png</string>
+			<key>size</key>
+			<string>{931,798}</string>
+		</dict>
+		<key>texture</key>
+		<dict>
+			<key>width</key>
+			<integer>931</integer>
+			<key>height</key>
+			<integer>798</integer>
+		</dict>
+	</dict>
+</plist>

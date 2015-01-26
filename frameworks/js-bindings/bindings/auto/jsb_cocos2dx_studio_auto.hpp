@@ -39,9 +39,10 @@ bool js_cocos2dx_studio_ActionManagerEx_constructor(JSContext *cx, uint32_t argc
 void js_cocos2dx_studio_ActionManagerEx_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_studio_ActionManagerEx(JSContext *cx, JSObject *global);
 void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_studio_ActionManagerEx_playActionByName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionManagerEx_stopActionByName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionManagerEx_getActionByName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionManagerEx_initWithBinary(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionManagerEx_playActionByName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionManagerEx_releaseActions(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionManagerEx_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionManagerEx_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
@@ -366,15 +367,16 @@ void js_cocos2dx_studio_ComAttribute_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_studio_ComAttribute(JSContext *cx, JSObject *global);
 void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_studio_ComAttribute_getFloat(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ComAttribute_getBool(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComAttribute_getString(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComAttribute_setFloat(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComAttribute_setString(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ComAttribute_getBool(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComAttribute_setInt(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComAttribute_parse(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComAttribute_getInt(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComAttribute_setBool(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComAttribute_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ComAttribute_ComAttribute(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocostudio_ComAudio_class;
 extern JSObject *jsb_cocostudio_ComAudio_prototype;
@@ -410,6 +412,7 @@ bool js_cocos2dx_studio_ComAudio_setEffectsVolume(JSContext *cx, uint32_t argc, 
 bool js_cocos2dx_studio_ComAudio_getFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComAudio_resumeEffect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComAudio_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ComAudio_ComAudio(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocostudio_InputDelegate_class;
 extern JSObject *jsb_cocostudio_InputDelegate_prototype;
@@ -446,55 +449,10 @@ bool js_cocos2dx_studio_ComRender_constructor(JSContext *cx, uint32_t argc, jsva
 void js_cocos2dx_studio_ComRender_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_studio_ComRender(JSContext *cx, JSObject *global);
 void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_studio_ComRender_setNode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComRender_getNode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ComRender_setNode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComRender_create(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocostudio_GUIReader_class;
-extern JSObject *jsb_cocostudio_GUIReader_prototype;
-
-bool js_cocos2dx_studio_GUIReader_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_studio_GUIReader_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_studio_GUIReader(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_studio_GUIReader_setFilePath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_GUIReader_widgetFromJsonFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_GUIReader_getFilePath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_GUIReader_widgetFromBinaryFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_GUIReader_getVersionInteger(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_GUIReader_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_GUIReader_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocostudio_SceneReader_class;
-extern JSObject *jsb_cocostudio_SceneReader_prototype;
-
-bool js_cocos2dx_studio_SceneReader_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_studio_SceneReader_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_studio_SceneReader(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_studio_SceneReader_createNodeWithSceneFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_SceneReader_getAttachComponentType(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_SceneReader_getNodeByTag(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_SceneReader_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_SceneReader_sceneReaderVersion(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_SceneReader_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocostudio_timeline_ActionTimelineCache_class;
-extern JSObject *jsb_cocostudio_timeline_ActionTimelineCache_prototype;
-
-bool js_cocos2dx_studio_ActionTimelineCache_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_studio_ActionTimelineCache_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_studio_ActionTimelineCache(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_studio_ActionTimelineCache_createActionFromJson(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ActionTimelineCache_purge(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ActionTimelineCache_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ActionTimelineCache_loadAnimationActionWithFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ActionTimelineCache_loadAnimationActionWithContent(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ActionTimelineCache_removeAction(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ActionTimelineCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ActionTimelineCache_createAction(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ActionTimelineCache_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ComRender_ComRender(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocostudio_timeline_Frame_class;
 extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
@@ -626,10 +584,16 @@ bool js_cocos2dx_studio_InnerActionFrame_constructor(JSContext *cx, uint32_t arg
 void js_cocos2dx_studio_InnerActionFrame_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_studio_InnerActionFrame(JSContext *cx, JSObject *global);
 void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_studio_InnerActionFrame_getInnerActionType(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_InnerActionFrame_setStartFrameIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_InnerActionFrame_setInnerActionType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_getEndFrameIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_InnerActionFrame_getStartFrameIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_getInnerActionType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_setEndFrameIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_setEnterWithName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_setSingleFrameIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_setStartFrameIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_getSingleFrameIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_setInnerActionType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_InnerActionFrame_setAnimationName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_InnerActionFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_InnerActionFrame_InnerActionFrame(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -647,6 +611,18 @@ bool js_cocos2dx_studio_ColorFrame_setColor(JSContext *cx, uint32_t argc, jsval 
 bool js_cocos2dx_studio_ColorFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ColorFrame_ColorFrame(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocostudio_timeline_AlphaFrame_class;
+extern JSObject *jsb_cocostudio_timeline_AlphaFrame_prototype;
+
+bool js_cocos2dx_studio_AlphaFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_AlphaFrame_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_AlphaFrame(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_AlphaFrame_getAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_AlphaFrame_setAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_AlphaFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_AlphaFrame_AlphaFrame(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocostudio_timeline_EventFrame_class;
 extern JSObject *jsb_cocostudio_timeline_EventFrame_prototype;
 
@@ -656,6 +632,7 @@ void js_register_cocos2dx_studio_EventFrame(JSContext *cx, JSObject *global);
 void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_studio_EventFrame_setEvent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_EventFrame_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_EventFrame_setNode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_EventFrame_getEvent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_EventFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_EventFrame_EventFrame(JSContext *cx, uint32_t argc, jsval *vp);
@@ -703,8 +680,10 @@ void js_cocos2dx_studio_ActionTimelineData_finalize(JSContext *cx, JSObject *obj
 void js_register_cocos2dx_studio_ActionTimelineData(JSContext *cx, JSObject *global);
 void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
 bool js_cocos2dx_studio_ActionTimelineData_setActionTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineData_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimelineData_getActionTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimelineData_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimelineData_ActionTimelineData(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocostudio_timeline_ActionTimeline_class;
 extern JSObject *jsb_cocostudio_timeline_ActionTimeline_prototype;
@@ -720,15 +699,20 @@ bool js_cocos2dx_studio_ActionTimeline_getStartFrame(JSContext *cx, uint32_t arg
 bool js_cocos2dx_studio_ActionTimeline_pause(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_removeTimeline(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_clearFrameEventCallFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_setLastFrameCallFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_getTimelines(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_play(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_getAnimationInfo(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_resume(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_removeAnimationInfo(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_getTimeSpeed(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_addAnimationInfo(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_getDuration(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_gotoFrameAndPause(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_isPlaying(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_gotoFrameAndPlay(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ActionTimeline_clearFrameEventCallFunc(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ActionTimeline_IsAnimationInfoExists(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_getEndFrame(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_setTimeSpeed(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_clearLastFrameCallFunc(JSContext *cx, uint32_t argc, jsval *vp);
@@ -736,27 +720,5 @@ bool js_cocos2dx_studio_ActionTimeline_setDuration(JSContext *cx, uint32_t argc,
 bool js_cocos2dx_studio_ActionTimeline_setCurrentFrame(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_ActionTimeline(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_CSLoader_class;
-extern JSObject *jsb_cocos2d_CSLoader_prototype;
-
-bool js_cocos2dx_studio_CSLoader_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_studio_CSLoader_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_studio_CSLoader(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
-bool js_cocos2dx_studio_CSLoader_setJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_CSLoader_createNodeFromJson(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_CSLoader_loadNodeWithFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_CSLoader_bindCallback(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_CSLoader_purge(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_CSLoader_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_CSLoader_loadNodeWithContent(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_CSLoader_isRecordJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_CSLoader_getJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_CSLoader_setRecordJsonPath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_CSLoader_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_CSLoader_createNode(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_CSLoader_createTimeline(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_CSLoader_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 

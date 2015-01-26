@@ -909,6 +909,7 @@ cc.view.getTargetDensityDPI = function() {return cc.DENSITYDPI_DEVICE;};
  * @name cc.eventManager
  */
 cc.eventManager = cc.director.getEventDispatcher();
+
 /**
  * @type {cc.AudioEngine}
  * @name cc.audioEngine
@@ -1624,11 +1625,6 @@ jsb.urlRegExp = new RegExp(
         // user:pass authentication
         "(?:\\S+(?::\\S*)?@)?" +
         "(?:" +
-            // IP address exclusion
-            // private & local networks
-            "(?!(?:10|127)(?:\\.\\d{1,3}){3})" +
-            "(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})" +
-            "(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})" +
             // IP address dotted notation octets
             // excludes loopback network 0.0.0.0
             // excludes reserved space >= 224.0.0.0

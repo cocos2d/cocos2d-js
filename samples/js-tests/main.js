@@ -80,6 +80,10 @@
  *
  */
 
+var scene3SearchPaths = cc.sys.localStorage.getItem("Scene3SearchPaths");
+if (scene3SearchPaths)
+    jsb.fileUtils.setSearchPaths(JSON.parse(scene3SearchPaths));
+
 cc.game.onStart = function(){
     
     if (cc.sys.isNative) {
@@ -107,7 +111,6 @@ cc.game.onStart = function(){
         }
         jsb.fileUtils.setSearchPaths(searchPaths);
     }
-    
     cc.LoaderScene.preload(g_resources, function () {
         if(window.sideIndexBar && typeof sideIndexBar.start === 'function'){
             sideIndexBar.start();

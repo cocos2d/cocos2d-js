@@ -29,6 +29,7 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"
 #include "spidermonkey_specifics.h"
@@ -38,7 +39,7 @@
 #include <assert.h>
 #include <memory>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.2 RC0"
+#define ENGINE_VERSION "Cocos2d-JS v3.3 Beta0"
 
 void js_log(const char *format, ...);
 
@@ -273,6 +274,7 @@ public:
     bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, JS::MutableHandleValue jsvalRet);
 
     bool handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
+    bool handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus);
 
     void restartVM();
 };
