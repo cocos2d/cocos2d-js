@@ -419,6 +419,41 @@ bool js_cocos2dx_ui_Slider_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Slider_createInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Slider_Slider(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_ui_UICCTextField_class;
+extern JSObject *jsb_cocos2d_ui_UICCTextField_prototype;
+
+bool js_cocos2dx_ui_UICCTextField_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_UICCTextField_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_UICCTextField(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_ui(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_ui_UICCTextField_onTextFieldAttachWithIME(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_setPasswordText(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_setAttachWithIME(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_getDeleteBackward(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_getAttachWithIME(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_onTextFieldDeleteBackward(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_getInsertText(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_deleteBackward(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_setInsertText(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_getDetachWithIME(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_getCharCount(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_closeIME(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_setPasswordEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_setMaxLengthEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_isPasswordEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_insertText(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_setPasswordStyleText(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_onTextFieldInsertText(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_onTextFieldDetachWithIME(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_getMaxLength(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_isMaxLengthEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_openIME(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_setDetachWithIME(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_setMaxLength(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_setDeleteBackward(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_UICCTextField_UICCTextField(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_ui_TextField_class;
 extern JSObject *jsb_cocos2d_ui_TextField_prototype;
 

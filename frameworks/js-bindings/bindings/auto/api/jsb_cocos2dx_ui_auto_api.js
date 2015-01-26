@@ -2088,7 +2088,7 @@ size
 
 /**
  * @method getStringLength
- * @return {long}
+ * @return {int}
  */
 getStringLength : function (
 )
@@ -2242,7 +2242,7 @@ ccui.TextAtlas = {
 
 /**
  * @method getStringLength
- * @return {long}
+ * @return {int}
  */
 getStringLength : function (
 )
@@ -2837,7 +2837,7 @@ ccui.ListView = {
 /**
  * @method getIndex
  * @param {ccui.Widget} arg0
- * @return {long}
+ * @return {int}
  */
 getIndex : function (
 widget 
@@ -2886,17 +2886,17 @@ getItems : function (
 
 /**
  * @method removeItem
- * @param {long} arg0
+ * @param {int} arg0
  */
 removeItem : function (
-long 
+int 
 )
 {
 },
 
 /**
  * @method getCurSelectedIndex
- * @return {long}
+ * @return {int}
  */
 getCurSelectedIndex : function (
 )
@@ -2906,10 +2906,10 @@ getCurSelectedIndex : function (
 
 /**
  * @method insertDefaultItem
- * @param {long} arg0
+ * @param {int} arg0
  */
 insertDefaultItem : function (
-long 
+int 
 )
 {
 },
@@ -2960,11 +2960,11 @@ getItemsMargin : function (
 
 /**
  * @method getItem
- * @param {long} arg0
+ * @param {int} arg0
  * @return {ccui.Widget}
  */
 getItem : function (
-long 
+int 
 )
 {
     return ccui.Widget;
@@ -2999,11 +2999,11 @@ pushBackDefaultItem : function (
 /**
  * @method insertCustomItem
  * @param {ccui.Widget} arg0
- * @param {long} arg1
+ * @param {int} arg1
  */
 insertCustomItem : function (
 widget, 
-long 
+int 
 )
 {
 },
@@ -3261,6 +3261,300 @@ createInstance : function (
  * @constructor
  */
 Slider : function (
+)
+{
+},
+
+};
+
+/**
+ * @class UICCTextField
+ */
+ccui.UICCTextField = {
+
+/**
+ * @method onTextFieldAttachWithIME
+ * @param {cc.TextFieldTTF} arg0
+ * @return {bool}
+ */
+onTextFieldAttachWithIME : function (
+textfieldttf 
+)
+{
+    return false;
+},
+
+/**
+ * @method setPasswordText
+ * @param {String} arg0
+ */
+setPasswordText : function (
+str 
+)
+{
+},
+
+/**
+ * @method setAttachWithIME
+ * @param {bool} arg0
+ */
+setAttachWithIME : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getDeleteBackward
+ * @return {bool}
+ */
+getDeleteBackward : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getAttachWithIME
+ * @return {bool}
+ */
+getAttachWithIME : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method onTextFieldDeleteBackward
+ * @param {cc.TextFieldTTF} arg0
+ * @param {char} arg1
+ * @param {unsigned long} arg2
+ * @return {bool}
+ */
+onTextFieldDeleteBackward : function (
+textfieldttf, 
+char, 
+long 
+)
+{
+    return false;
+},
+
+/**
+ * @method getInsertText
+ * @return {bool}
+ */
+getInsertText : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method deleteBackward
+ */
+deleteBackward : function (
+)
+{
+},
+
+/**
+ * @method setInsertText
+ * @param {bool} arg0
+ */
+setInsertText : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getDetachWithIME
+ * @return {bool}
+ */
+getDetachWithIME : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getCharCount
+ * @return {int}
+ */
+getCharCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method closeIME
+ */
+closeIME : function (
+)
+{
+},
+
+/**
+ * @method setPasswordEnabled
+ * @param {bool} arg0
+ */
+setPasswordEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setMaxLengthEnabled
+ * @param {bool} arg0
+ */
+setMaxLengthEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method isPasswordEnabled
+ * @return {bool}
+ */
+isPasswordEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method insertText
+ * @param {char} arg0
+ * @param {unsigned long} arg1
+ */
+insertText : function (
+char, 
+long 
+)
+{
+},
+
+/**
+ * @method setPasswordStyleText
+ * @param {String} arg0
+ */
+setPasswordStyleText : function (
+str 
+)
+{
+},
+
+/**
+ * @method onTextFieldInsertText
+ * @param {cc.TextFieldTTF} arg0
+ * @param {char} arg1
+ * @param {unsigned long} arg2
+ * @return {bool}
+ */
+onTextFieldInsertText : function (
+textfieldttf, 
+char, 
+long 
+)
+{
+    return false;
+},
+
+/**
+ * @method onTextFieldDetachWithIME
+ * @param {cc.TextFieldTTF} arg0
+ * @return {bool}
+ */
+onTextFieldDetachWithIME : function (
+textfieldttf 
+)
+{
+    return false;
+},
+
+/**
+ * @method getMaxLength
+ * @return {int}
+ */
+getMaxLength : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method isMaxLengthEnabled
+ * @return {bool}
+ */
+isMaxLengthEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method openIME
+ */
+openIME : function (
+)
+{
+},
+
+/**
+ * @method setDetachWithIME
+ * @param {bool} arg0
+ */
+setDetachWithIME : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setMaxLength
+ * @param {int} arg0
+ */
+setMaxLength : function (
+int 
+)
+{
+},
+
+/**
+ * @method setDeleteBackward
+ * @param {bool} arg0
+ */
+setDeleteBackward : function (
+bool 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {float} arg2
+ * @return {ccui.UICCTextField}
+ */
+create : function (
+str, 
+str, 
+float 
+)
+{
+    return ccui.UICCTextField;
+},
+
+/**
+ * @method UICCTextField
+ * @constructor
+ */
+UICCTextField : function (
 )
 {
 },
@@ -3704,7 +3998,7 @@ str
 
 /**
  * @method getStringLength
- * @return {long}
+ * @return {int}
  */
 getStringLength : function (
 )
@@ -3784,7 +4078,7 @@ getCustomScrollThreshold : function (
 
 /**
  * @method getCurPageIndex
- * @return {long}
+ * @return {int}
  */
 getCurPageIndex : function (
 )
@@ -3795,12 +4089,12 @@ getCurPageIndex : function (
 /**
  * @method addWidgetToPage
  * @param {ccui.Widget} arg0
- * @param {long} arg1
+ * @param {int} arg1
  * @param {bool} arg2
  */
 addWidgetToPage : function (
 widget, 
-long, 
+int, 
 bool 
 )
 {
@@ -3818,11 +4112,11 @@ isUsingCustomScrollThreshold : function (
 
 /**
  * @method getPage
- * @param {long} arg0
+ * @param {int} arg0
  * @return {ccui.Layout}
  */
 getPage : function (
-long 
+int 
 )
 {
     return ccui.Layout;
@@ -3872,20 +4166,20 @@ int
 
 /**
  * @method scrollToPage
- * @param {long} arg0
+ * @param {int} arg0
  */
 scrollToPage : function (
-long 
+int 
 )
 {
 },
 
 /**
  * @method removePageAtIndex
- * @param {long} arg0
+ * @param {int} arg0
  */
 removePageAtIndex : function (
-long 
+int 
 )
 {
 },
