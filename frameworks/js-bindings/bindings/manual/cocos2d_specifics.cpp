@@ -4257,7 +4257,7 @@ bool js_PlistParser_parse(JSContext *cx, unsigned argc, JS::Value *vp) {
         JS::RootedValue outVal(cx);
 
         //JS_GetStringCharsZ was removed in SpiderMonkey 33
-//        ok = JS_ParseJSON(cx, JS_GetStringCharsZ(cx, strVal), static_cast<uint32_t>(JS_GetStringLength(JSVAL_TO_STRING(strVal))), &outVal);
+        //ok = JS_ParseJSON(cx, JS_GetStringCharsZ(cx, strVal), static_cast<uint32_t>(JS_GetStringEncodingLength(JSVAL_TO_STRING(strVal))), &outVal);
         ok = JS_ParseJSON(cx, JS::RootedString(cx, strVal.toString()), &outVal);
         
         if (ok)
@@ -4695,7 +4695,8 @@ void js_cocos2d_EventKeyboard_finalize(JSFreeOp *fop, JSObject *obj) {
 
 static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    vp.set(BOOLEAN_TO_JSVAL(true));
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    args.rval().set(BOOLEAN_TO_JSVAL(true));
     return true;
 }
 

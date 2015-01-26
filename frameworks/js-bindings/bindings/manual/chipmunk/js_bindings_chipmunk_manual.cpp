@@ -749,12 +749,12 @@ jsval cpVect_to_jsval( JSContext *cx, cpVect p)
 
 #ifdef JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 
-    JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
+    JS::RootedObject object(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr() ));
     if (!object)
         return JSVAL_VOID;
 
-    if (!JS_DefineProperty(cx, object, "x", DOUBLE_TO_JSVAL(p.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-        !JS_DefineProperty(cx, object, "y", DOUBLE_TO_JSVAL(p.y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+    if (!JS_DefineProperty(cx, object, "x", p.x, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+        !JS_DefineProperty(cx, object, "y", p.y, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
         return JSVAL_VOID;
 
     return OBJECT_TO_JSVAL(object);

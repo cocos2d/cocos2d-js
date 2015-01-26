@@ -27,18 +27,18 @@
 
 jsval animationInfo_to_jsval(JSContext* cx, const cocostudio::timeline::AnimationInfo& v)
 {
-    JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
-    bool ok = JS_DefineProperty(cx, tmp, "name", std_string_to_jsval(cx, v.name), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "startIndex", uint32_to_jsval(cx, v.startIndex), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "endIndex", uint32_to_jsval(cx, v.endIndex), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    bool ok = JS_DefineProperty(cx, tmp, "name", JS::RootedValue(cx, std_string_to_jsval(cx, v.name)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "startIndex", v.startIndex, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "endIndex", v.endIndex, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }
     return JSVAL_NULL;
 }
 
-bool jsval_to_animationInfo(JSContext* cx, jsval vp, cocostudio::timeline::AnimationInfo* ret)
+bool jsval_to_animationInfo(JSContext* cx, JS::HandleValue vp, cocostudio::timeline::AnimationInfo* ret)
 {
     JS::RootedObject tmp(cx);
     JS::RootedValue jsName(cx);
@@ -48,7 +48,7 @@ bool jsval_to_animationInfo(JSContext* cx, jsval vp, cocostudio::timeline::Anima
     double startIndex, endIndex;
     
     bool ok = vp.isObject() &&
-    JS_ValueToObject(cx, JS::RootedValue(cx, vp), &tmp) &&
+    JS_ValueToObject(cx, vp, &tmp) &&
     JS_GetProperty(cx, tmp, "name", &jsName) &&
     JS_GetProperty(cx, tmp, "startIndex", &jsStartId) &&
     JS_GetProperty(cx, tmp, "endIndex", &jsEndId) &&

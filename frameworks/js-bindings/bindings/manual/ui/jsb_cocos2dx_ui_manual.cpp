@@ -515,7 +515,7 @@ static bool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc, 
         return true;
     }
     else if (argc == 4) {
-        jsval *argv = JS_ARGV(cx, vp);
+        JS::CallArgs argv = CallArgsFromVp(argc, vp);
         bool ok = true;
         double left, top,right,bottom;
         ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &left);

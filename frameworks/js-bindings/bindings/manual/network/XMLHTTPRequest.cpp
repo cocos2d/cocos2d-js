@@ -598,9 +598,10 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
             
             jsval strVal = std_string_to_jsval(cx, _data);
 
-            size_t utf16Count = 0;
-            const jschar* utf16Buf = JS_GetStringCharsZAndLength(cx, JSVAL_TO_STRING(strVal), &utf16Count);
-            bool ok = JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
+            //size_t utf16Count = 0;
+            //const jschar* utf16Buf = JS_GetStringCharsZAndLength(cx, JSVAL_TO_STRING(strVal), &utf16Count);
+            //bool ok = JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
+            bool ok = JS_ParseJSON(cx, JS::RootedString(cx, strVal.toString()), &outVal);
             
             if (ok)
             {
