@@ -44,6 +44,12 @@ ccs.InnerActionType = {
     SingleFrame: 2
 };
 
+ccs.AnimationInfo = function (name, startIndex, endIndex) {
+    this.name = name || "";
+    this.startIndex = startIndex != undefined ? startIndex : 0;
+    this.endIndex = endIndex != undefined ? endIndex : 0;
+};
+
 // Armature
 if(ccs.Armature){
     ccs.Armature.prototype.setBody = function( body ) {
