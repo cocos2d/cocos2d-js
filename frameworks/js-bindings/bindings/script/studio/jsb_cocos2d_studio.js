@@ -41,7 +41,7 @@ ccs.MovementEventType = {
 ccs.InnerActionType = {
     LoopAction: 0,
     NoLoopAction: 1,
-    SingleFrame: 2,
+    SingleFrame: 2
 };
 
 // Armature
