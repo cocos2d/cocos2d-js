@@ -2282,7 +2282,7 @@ reset : function (
 
 /**
  * @method getIdx
- * @return {long}
+ * @return {int}
  */
 getIdx : function (
 )
@@ -2292,10 +2292,10 @@ getIdx : function (
 
 /**
  * @method setIdx
- * @param {long} arg0
+ * @param {int} arg0
  */
 setIdx : function (
-long 
+int 
 )
 {
 },
@@ -2328,10 +2328,10 @@ cc.TableView = {
 
 /**
  * @method updateCellAtIndex
- * @param {long} arg0
+ * @param {int} arg0
  */
 updateCellAtIndex : function (
-long 
+int 
 )
 {
 },
@@ -2376,10 +2376,10 @@ getVerticalFillOrder : function (
 
 /**
  * @method removeCellAtIndex
- * @param {long} arg0
+ * @param {int} arg0
  */
 removeCellAtIndex : function (
-long 
+int 
 )
 {
 },
@@ -2418,21 +2418,21 @@ reloadData : function (
 
 /**
  * @method insertCellAtIndex
- * @param {long} arg0
+ * @param {int} arg0
  */
 insertCellAtIndex : function (
-long 
+int 
 )
 {
 },
 
 /**
  * @method cellAtIndex
- * @param {long} arg0
+ * @param {int} arg0
  * @return {cc.TableViewCell}
  */
 cellAtIndex : function (
-long 
+int 
 )
 {
     return cc.TableViewCell;
