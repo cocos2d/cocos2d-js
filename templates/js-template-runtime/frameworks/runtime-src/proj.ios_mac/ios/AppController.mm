@@ -29,7 +29,7 @@
 #import "AppController.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
-#import "CCEAGLView.h"
+#import "platform/ios/CCEAGLView-ios.h"
 
 @implementation AppController
 
@@ -43,7 +43,7 @@ static AppDelegate s_sharedApplication;
 {
 
     // Override point for customization after application launch.
-    
+
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
     CCEAGLView *eaglView = [CCEAGLView viewWithFrame: [window bounds]
@@ -78,7 +78,7 @@ static AppDelegate s_sharedApplication;
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
 
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
-    cocos2d::GLView *glview = cocos2d::GLView::createWithEAGLView(eaglView);
+    cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
 
     cocos2d::Application::getInstance()->run();

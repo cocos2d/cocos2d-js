@@ -39,6 +39,11 @@ var g_parsersTests = [
         test: function(){
             new CocostudioParserJsonScene("res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson").runThisTest();
         }
+    },{
+        title: "cocostudio 2.0",
+        test: function(){
+            new CocostudioParserJsonScene("res/cocosui/UIEditorTest/2.0.5/res/MainScene.json").runThisTest();
+        }
     }
 ];
 
@@ -62,20 +67,23 @@ var CocostudioParserJsonLayer = cc.Layer.extend({
         this._super();
         cc.Layer.prototype.onEnter.call(this);
 
-        var guiReader = ccs.uiReader;
+        var layout;
+        if(cocoStudioOldApiFlag == 0){
+            cc.log("ccs.load : %s", this._jsonFile);
+            var json = ccs.load(this._jsonFile);
+            layout = json.node;
+        }else{
+            //old api
+            cc.log("ccs.uiReader.widgetFromJsonFile : %s", this._jsonFile);
+            var guiReader = ccs.uiReader;
+            layout = guiReader.widgetFromJsonFile(this._jsonFile);
+        }
+        if(layout){
+            if(layout.getScale() == 1)
+                layout.setScale(0.7);
 
-        guiReader.registerTypeAndCallBack("CustomImageView",
-            CustomImageView,
-            customImageViewReader,
-            customImageViewReader.setProperties);
-        guiReader.registerTypeAndCallBack("CustomParticleWidget",
-            CustomParticleWidget,
-            customParticleWidgetReader,
-            customParticleWidgetReader.setProperties);
-
-        var layout = guiReader.widgetFromJsonFile(this._jsonFile);
-        layout.setScale(0.7);
-        this.addChild(layout);
+            this.addChild(layout);
+        }
     }
 });
 
@@ -93,11 +101,11 @@ var CocostudioParserJsonScene = cc.Scene.extend({
     onEnter: function(){
         cc.Scene.prototype.onEnter.call(this);
 
-        var label = cc.LabelTTF.create("Back", "fonts/arial.ttf", 20);
+        var label = new cc.LabelTTF("Back", "fonts/arial.ttf", 20);
         //#endif
-        var pMenuItem = cc.MenuItemLabel.create(label, this.BackCallback, this);
+        var pMenuItem = new cc.MenuItemLabel(label, this.BackCallback, this);
 
-        var pMenu = cc.Menu.create(pMenuItem);
+        var pMenu = new cc.Menu(pMenuItem);
 
         pMenu.setPosition( cc.p(0, 0) );
         pMenuItem.setPosition( cc.pAdd(cc.visibleRect.bottomRight,cc.p(-50,25)) );
@@ -112,7 +120,7 @@ var CocostudioParserJsonScene = cc.Scene.extend({
         }else{
             var winSize = cc.director.getWinSize();
 
-            var pMenu = cc.Menu.create();
+            var pMenu = new cc.Menu();
             pMenu.x = 0;
             pMenu.y = 0;
             cc.MenuItemFont.setFontName("fonts/arial.ttf");
@@ -120,7 +128,7 @@ var CocostudioParserJsonScene = cc.Scene.extend({
 
             for (var i = 0; i < g_parsersTests.length; ++i) {
                 var selItem = g_parsersTests[i];
-                var pItem = cc.MenuItemFont.create(selItem.title,
+                var pItem = new cc.MenuItemFont(selItem.title,
                     selItem.test, this);
                 pItem.x = winSize.width / 2;
                 pItem.y = winSize.height - (i + 1) * LINE_SPACE;

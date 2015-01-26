@@ -28,7 +28,7 @@
 #import "AppController.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
-#import "cocos/platform/ios/CCEAGLView-ios.h"
+#import "platform/ios/CCEAGLView-ios.h"
 #import <FacebookSDK/FacebookSDK.h>
 @implementation AppController
 
@@ -46,12 +46,12 @@ static AppDelegate s_sharedApplication;
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
     CCEAGLView *eaglView = [CCEAGLView viewWithFrame: [window bounds]
-                                     pixelFormat: kEAGLColorFormatRGBA8
-                                     depthFormat: GL_DEPTH24_STENCIL8_OES
-                              preserveBackbuffer: NO
-                                      sharegroup: nil
-                                   multiSampling: NO
-                                 numberOfSamples: 0 ];
+                                         pixelFormat: kEAGLColorFormatRGBA8
+                                         depthFormat: GL_DEPTH24_STENCIL8_OES
+                                  preserveBackbuffer: NO
+                                          sharegroup: nil
+                                       multiSampling: NO
+                                     numberOfSamples: 0 ];
 
     [eaglView setMultipleTouchEnabled:YES];
     

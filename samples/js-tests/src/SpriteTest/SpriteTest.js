@@ -1013,7 +1013,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
             node.anchorX = 0.5;
             node.anchorY = 0.5;
             node.x = winSize.width / 2;
-            node.y = winSize.height / 3;
+            node.y = winSize.height / 2;
 
             this.addChild(node, 0);
             var sprite;
@@ -3306,7 +3306,6 @@ var SpriteHybrid = SpriteTestDemo.extend({
 //
 //------------------------------------------------------------------
 var SpriteBatchNodeChildren = SpriteTestDemo.extend({
-
     _title:"SpriteBatchNode Grand Children",
 
     ctor:function () {
@@ -4422,12 +4421,13 @@ var AnimationCacheTest = SpriteTestDemo.extend({
         // create animation "dance"
         //
         var animFrames = [];
-        var frame;
+        var frame, animFrame;
         var str = "";
         for (var i = 1; i < 15; i++) {
             str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
             frame = spriteFrameCache.getSpriteFrame(str);
-            animFrames.push(frame);
+            animFrame = new cc.AnimationFrame(frame, 1);
+            animFrames.push(animFrame);
         }
 
         var animation = new cc.Animation(animFrames, 0.2);
@@ -5179,11 +5179,11 @@ var TextureColorCacheIssue = SpriteTestDemo.extend({
         spriteFrameCache.addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
         spriteFrameCache.addSpriteFrames(s_tcc_issue_2_plist, s_tcc_issue_2);
 
-        var grossini = new cc.Sprite('#grossini_dance_01.png');
+        var grossini = new cc.Sprite('#tcc_grossini_dance_01.png');
         grossini.x = winSize.width / 3;
         grossini.y = winSize.height / 2;
 
-        var sister = new cc.Sprite('#grossinis_sister1.png');
+        var sister = new cc.Sprite('#tcc_grossinis_sister1.png');
         sister.x = winSize.width / 3 * 2;
         sister.y = winSize.height / 2;
 
@@ -5230,11 +5230,11 @@ var TextureColorCacheIssue2 = SpriteTestDemo.extend({
         spriteFrameCache.addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
         spriteFrameCache.addSpriteFrames(s_tcc_issue_2_plist, s_tcc_issue_2);
 
-        var grossini = new cc.Sprite('#grossini_dance_01.png');
+        var grossini = new cc.Sprite('#tcc_grossini_dance_01.png');
         grossini.x = winSize.width / 3;
         grossini.y = winSize.height / 2;
 
-        var sister = new cc.Sprite('#grossinis_sister1.png');
+        var sister = new cc.Sprite('#tcc_grossinis_sister1.png');
         sister.x = winSize.width / 3 * 2;
         sister.y = winSize.height / 2;
 
@@ -5305,6 +5305,27 @@ var TextureRotatedSpriteFrame = SpriteTestDemo.extend({
         var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, true, 5) ? "yes" : "no",
             "pixel2":this.containsPixel(ret2, this.pixel2, true, 5) ? "yes" : "no"};
         return JSON.stringify(ret);
+    }
+});
+
+var SpriteWithRepeatingTexture = SpriteTestDemo.extend({
+
+    _title:"Sprite with Repeating texture",
+    _subtitle:"aTexture.setTexParameters(cc.LINEAR, cc.LINEAR, cc.REPEAT, cc.REPEAT);",
+
+    ctor:function () {
+        //----start58----ctor
+        this._super();
+        var block = new cc.Sprite(s_pathBlock);
+
+        var x = winSize.width / 2;
+        var y = (winSize.height / 2);
+
+        block.setTextureRect(cc.rect(0,0, 320,240));
+        block.setPosition(x, y);
+        block.getTexture().setTexParameters(cc.LINEAR, cc.LINEAR, cc.REPEAT, cc.REPEAT);
+        this.addChild(block);
+        //----end58----
     }
 });
 
@@ -5379,7 +5400,8 @@ var arrayOfSpriteTest = [
     AnimationCacheFile,
     TextureColorCacheIssue,
     TextureColorCacheIssue2,
-    TextureRotatedSpriteFrame
+    TextureRotatedSpriteFrame,
+    SpriteWithRepeatingTexture
 ];
 
 var nextSpriteTest = function () {

@@ -35,33 +35,41 @@
 #include "js_bindings_chipmunk_manual.h"
 
 
-void jsb_register_chipmunk(JSContext* cx, JSObject *object)
+void jsb_register_chipmunk(JSContext* cx, JS::HandleObject object)
 {
-	//
-	// Chipmunk
-	//
-	JSObject *chipmunk = JS_NewObject(cx, NULL, NULL, NULL);
+    //
+    // Chipmunk
+    //
+    JS::RootedObject chipmunk(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     JS::RootedValue chipmunkVal(cx);
     
     chipmunkVal = OBJECT_TO_JSVAL(chipmunk);
-	JS_SetProperty(cx, object, "cp", chipmunkVal);
-	
-	JSB_cpBase_createClass(cx, chipmunk, "Base");  // manual base class registration
+    JS_SetProperty(cx, object, "cp", chipmunkVal);
+    
+    JSB_cpBase_createClass(cx, chipmunk, "Base");  // manual base class registration
 #include "js_bindings_chipmunk_auto_classes_registration.h"
 #include "js_bindings_chipmunk_functions_registration.h"
-	
-	// manual
-	JS_DefineFunction(cx, chipmunk, "spaceAddCollisionHandler", JSB_cpSpaceAddCollisionHandler, 8, JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(cx, chipmunk, "spaceRemoveCollisionHandler", JSB_cpSpaceRemoveCollisionHandler, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(cx, chipmunk, "arbiterGetBodies", JSB_cpArbiterGetBodies, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(cx, chipmunk, "arbiterGetShapes", JSB_cpArbiterGetShapes, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(cx, chipmunk, "bodyGetUserData", JSB_cpBodyGetUserData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(cx, chipmunk, "bodySetUserData", JSB_cpBodySetUserData, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
-	JS_DefineFunction(cx, chipmunk, "areaForPoly", JSB_cpAreaForPoly, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(cx, chipmunk, "momentForPoly", JSB_cpMomentForPoly, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(cx, chipmunk, "centroidForPoly", JSB_cpCentroidForPoly, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(cx, chipmunk, "recenterPoly", JSB_cpRecenterPoly, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    // manual
+    JS_DefineFunction(cx, chipmunk, "spaceAddCollisionHandler", JSB_cpSpaceAddCollisionHandler, 8, JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    JS_DefineFunction(cx, chipmunk, "spaceRemoveCollisionHandler", JSB_cpSpaceRemoveCollisionHandler, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    JS_DefineFunction(cx, chipmunk, "arbiterGetBodies", JSB_cpArbiterGetBodies, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    JS_DefineFunction(cx, chipmunk, "arbiterGetShapes", JSB_cpArbiterGetShapes, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    JS_DefineFunction(cx, chipmunk, "bodyGetUserData", JSB_cpBodyGetUserData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    JS_DefineFunction(cx, chipmunk, "bodySetUserData", JSB_cpBodySetUserData, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE );
+
+    JS_DefineFunction(cx, chipmunk, "areaForPoly", JSB_cpAreaForPoly, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    JS_DefineFunction(cx, chipmunk, "momentForPoly", JSB_cpMomentForPoly, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    JS_DefineFunction(cx, chipmunk, "centroidForPoly", JSB_cpCentroidForPoly, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    JS_DefineFunction(cx, chipmunk, "recenterPoly", JSB_cpRecenterPoly, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
+
+    JS::RootedObject space(cx, JSB_cpSpace_object);
+    JS_DefineFunction(cx, space, "segmentQueryFirst", JSB_cpSpace_segmentQueryFirst, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, space, "nearestPointQueryNearest", JSB_cpSpace_nearestPointQueryNearest, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, space, "eachShape", JSB_cpSpace_eachShape, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, space, "eachBody", JSB_cpSpace_eachBody, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, space, "eachConstraint", JSB_cpSpace_eachConstraint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+
     register_CCPhysicsSprite(cx, object);
     register_CCPhysicsDebugNode(cx, object);
 }

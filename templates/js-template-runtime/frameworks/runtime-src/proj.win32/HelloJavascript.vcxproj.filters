@@ -94,6 +94,15 @@
     <ClCompile Include="..\Classes\runtime\Protos.pb.cc">
       <Filter>Classes\runtime</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\runtime\ConnectWaitLayer.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\ConsoleCommand.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\FileServer.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h">
@@ -188,6 +197,15 @@
       <Filter>Classes\runtime\protobuf-lite</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\runtime\Protos.pb.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\ConnectWaitLayer.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\ConsoleCommand.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\FileServer.h">
       <Filter>Classes\runtime</Filter>
     </ClInclude>
   </ItemGroup>

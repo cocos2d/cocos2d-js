@@ -96,7 +96,7 @@ FontTestScene = TestScene.extend({
     }
 });
 
-FontTest = BaseTestLayer.extend({
+var FontTest = BaseTestLayer.extend({
     ctor:function () {
         this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 

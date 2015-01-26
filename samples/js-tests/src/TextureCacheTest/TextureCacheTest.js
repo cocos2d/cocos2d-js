@@ -191,10 +191,20 @@ var TextureCacheTest = TextureCacheTestBase.extend({
 var RemoteTextureTest = TextureCacheTestBase.extend({
     _title:"Remote Texture Test",
     _subtitle:"",
-    _remoteTex: "http://www.cocos2d-x.org/attachments/download/1508",
+    _remoteTex: "http://cn.cocos2d-x.org/image/logo.png",
     _sprite : null,
     onEnter:function () {
         this._super();
+        if('opengl' in cc.sys.capabilities && !cc.sys.isNative){
+            var label = new cc.LabelTTF("Not support Loading texture from remote site on HTML5-WebGL", "Times New Roman", 28);
+            label.x = winSize.width / 2;
+            label.y = winSize.height / 2;
+            this.addChild(label, 100);
+        } else
+            this.scheduleOnce(this.startDownload, 0.1);
+    },
+
+    startDownload: function() {
         cc.textureCache.addImage(this._remoteTex, this.texLoaded, this);
     },
 
@@ -223,8 +233,8 @@ var RemoteTextureTest = TextureCacheTestBase.extend({
 var texCacheTestSceneIdx = -1;
 
 var TexCacheTestScene = TestScene.extend({
-    runThisTest:function () {
-        texCacheTestSceneIdx = -1;
+    runThisTest:function (num) {
+        texCacheTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextTexCacheTest();
         this.addChild(layer);
 

@@ -37,13 +37,20 @@ AppDelegate::~AppDelegate()
     ScriptEngineManager::destroyInstance();
 }
 
+void AppDelegate::initGLContextAttrs()
+{
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
 	auto glview = director->getOpenGLView();
 	if(!glview) {
-		glview = GLView::createWithRect("HelloJavascript", Rect(0,0,900,640));
+		glview = cocos2d::GLViewImpl::createWithRect("HelloJavascript", Rect(0,0,900,640));
 		director->setOpenGLView(glview);
 	}
 
@@ -52,27 +59,41 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
-    sc->addRegisterCallback(register_all_cocos2dx_extension);
+    sc->addRegisterCallback(register_cocos2dx_js_core);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
-    sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
-    sc->addRegisterCallback(jsb_register_chipmunk);
     sc->addRegisterCallback(jsb_register_system);
+
+    // extension can be commented out to reduce the package
+    sc->addRegisterCallback(register_all_cocos2dx_extension);
+    sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
+
+    // chipmunk can be commented out to reduce the package
+    sc->addRegisterCallback(jsb_register_chipmunk);
+    // opengl can be commented out to reduce the package
     sc->addRegisterCallback(JSB_register_opengl);
     
+    // builder can be commented out to reduce the package
     sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
     
-	sc->addRegisterCallback(register_all_cocos2dx_ui);
-	sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
-	sc->addRegisterCallback(register_all_cocos2dx_studio);
-	sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
+    // ui can be commented out to reduce the package, attension studio need ui module
+    sc->addRegisterCallback(register_all_cocos2dx_ui);
+    sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
+
+    // studio can be commented out to reduce the package, 
+    sc->addRegisterCallback(register_all_cocos2dx_studio);
+    sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
     
+    // spine can be commented out to reduce the package
     sc->addRegisterCallback(register_all_cocos2dx_spine);
     sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
     
+    // XmlHttpRequest can be commented out to reduce the package
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
+    // websocket can be commented out to reduce the package
     sc->addRegisterCallback(register_jsb_websocket);
-	sc->addRegisterCallback(register_jsb_socketio);
+    // sokcet io can be commented out to reduce the package
+    sc->addRegisterCallback(register_jsb_socketio);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);

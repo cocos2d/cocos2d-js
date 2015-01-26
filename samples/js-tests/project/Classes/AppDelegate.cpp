@@ -47,6 +47,13 @@ AppDelegate::~AppDelegate()
     ScriptEngineManager::destroyInstance();
 }
 
+void AppDelegate::initGLContextAttrs()
+{
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
@@ -62,12 +69,16 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
-    sc->addRegisterCallback(register_all_cocos2dx_extension);
+    sc->addRegisterCallback(register_cocos2dx_js_core);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
+    sc->addRegisterCallback(jsb_register_system);
+    
+    sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
+
     sc->addRegisterCallback(jsb_register_chipmunk);
     sc->addRegisterCallback(JSB_register_opengl);
-    sc->addRegisterCallback(jsb_register_system);
+    
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     sc->addRegisterCallback(register_jsb_websocket);
 	sc->addRegisterCallback(register_jsb_socketio);

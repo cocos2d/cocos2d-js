@@ -152,384 +152,6 @@ Control : function (
 };
 
 /**
- * @class Scale9Sprite
- */
-cc.Scale9Sprite = {
-
-/**
- * @method disableCascadeColor
- */
-disableCascadeColor : function (
-)
-{
-},
-
-/**
- * @method updateWithSprite
- * @param {cc.Sprite} arg0
- * @param {rect_object} arg1
- * @param {bool} arg2
- * @param {rect_object} arg3
- * @return {bool}
- */
-updateWithSprite : function (
-sprite, 
-rect, 
-bool, 
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method isFlippedX
- * @return {bool}
- */
-isFlippedX : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setFlippedY
- * @param {bool} arg0
- */
-setFlippedY : function (
-bool 
-)
-{
-},
-
-/**
- * @method setFlippedX
- * @param {bool} arg0
- */
-setFlippedX : function (
-bool 
-)
-{
-},
-
-/**
- * @method setScale9Enabled
- * @param {bool} arg0
- */
-setScale9Enabled : function (
-bool 
-)
-{
-},
-
-/**
- * @method disableCascadeOpacity
- */
-disableCascadeOpacity : function (
-)
-{
-},
-
-/**
- * @method setInsetBottom
- * @param {float} arg0
- */
-setInsetBottom : function (
-float 
-)
-{
-},
-
-/**
- * @method initWithSpriteFrameName
-* @param {String|String} str
-* @param {rect_object} rect
-* @return {bool|bool}
-*/
-initWithSpriteFrameName : function(
-str,
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method getSprite
- * @return {cc.Sprite}
- */
-getSprite : function (
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method setInsetTop
- * @param {float} arg0
- */
-setInsetTop : function (
-float 
-)
-{
-},
-
-/**
- * @method init
-* @param {cc.Sprite|cc.Sprite} sprite
-* @param {rect_object|rect_object} rect
-* @param {bool|rect_object} bool
-* @param {rect_object} rect
-* @return {bool|bool|bool}
-*/
-init : function(
-sprite,
-rect,
-bool,
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method setPreferredSize
- * @param {size_object} arg0
- */
-setPreferredSize : function (
-size 
-)
-{
-},
-
-/**
- * @method getInsetRight
- * @return {float}
- */
-getInsetRight : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setSpriteFrame
- * @param {cc.SpriteFrame} arg0
- */
-setSpriteFrame : function (
-spriteframe 
-)
-{
-},
-
-/**
- * @method getInsetBottom
- * @return {float}
- */
-getInsetBottom : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method resizableSpriteWithCapInsets
- * @param {rect_object} arg0
- * @return {ccui.Scale9Sprite}
- */
-resizableSpriteWithCapInsets : function (
-rect 
-)
-{
-    return ccui.Scale9Sprite;
-},
-
-/**
- * @method isScale9Enabled
- * @return {bool}
- */
-isScale9Enabled : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getCapInsets
- * @return {rect_object}
- */
-getCapInsets : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
- * @method getOriginalSize
- * @return {size_object}
- */
-getOriginalSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method initWithFile
-* @param {String|String|rect_object|String} str
-* @param {rect_object|rect_object|String} rect
-* @param {rect_object} rect
-* @return {bool|bool|bool|bool}
-*/
-initWithFile : function(
-str,
-rect,
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method getInsetTop
- * @return {float}
- */
-getInsetTop : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setInsetLeft
- * @param {float} arg0
- */
-setInsetLeft : function (
-float 
-)
-{
-},
-
-/**
- * @method initWithSpriteFrame
-* @param {cc.SpriteFrame|cc.SpriteFrame} spriteframe
-* @param {rect_object} rect
-* @return {bool|bool}
-*/
-initWithSpriteFrame : function(
-spriteframe,
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method getPreferredSize
- * @return {size_object}
- */
-getPreferredSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method setCapInsets
- * @param {rect_object} arg0
- */
-setCapInsets : function (
-rect 
-)
-{
-},
-
-/**
- * @method isFlippedY
- * @return {bool}
- */
-isFlippedY : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getInsetLeft
- * @return {float}
- */
-getInsetLeft : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setInsetRight
- * @param {float} arg0
- */
-setInsetRight : function (
-float 
-)
-{
-},
-
-/**
- * @method create
-* @param {String|rect_object|String|String} str
-* @param {rect_object|String|rect_object} rect
-* @param {rect_object} rect
-* @return {ccui.Scale9Sprite|ccui.Scale9Sprite|ccui.Scale9Sprite|ccui.Scale9Sprite|ccui.Scale9Sprite}
-*/
-create : function(
-str,
-rect,
-rect 
-)
-{
-    return ccui.Scale9Sprite;
-},
-
-/**
- * @method createWithSpriteFrameName
-* @param {String|String} str
-* @param {rect_object} rect
-* @return {ccui.Scale9Sprite|ccui.Scale9Sprite}
-*/
-createWithSpriteFrameName : function(
-str,
-rect 
-)
-{
-    return ccui.Scale9Sprite;
-},
-
-/**
- * @method createWithSpriteFrame
-* @param {cc.SpriteFrame|cc.SpriteFrame} spriteframe
-* @param {rect_object} rect
-* @return {ccui.Scale9Sprite|ccui.Scale9Sprite}
-*/
-createWithSpriteFrame : function(
-spriteframe,
-rect 
-)
-{
-    return ccui.Scale9Sprite;
-},
-
-/**
- * @method Scale9Sprite
- * @constructor
- */
-Scale9Sprite : function (
-)
-{
-},
-
-};
-
-/**
  * @class ControlButton
  */
 cc.ControlButton = {
@@ -1535,16 +1157,6 @@ getValue : function (
 },
 
 /**
- * @method getPreviousLocation
- * @return {vec2_object}
- */
-getPreviousLocation : function (
-)
-{
-    return cc.Vec2;
-},
-
-/**
  * @method distanceBetweenPointAndPoint
  * @param {vec2_object} arg0
  * @param {vec2_object} arg1
@@ -1566,6 +1178,16 @@ potentiometerEnded : function (
 vec2 
 )
 {
+},
+
+/**
+ * @method getPreviousLocation
+ * @return {vec2_object}
+ */
+getPreviousLocation : function (
+)
+{
+    return cc.Vec2;
 },
 
 /**
@@ -2725,16 +2347,6 @@ verticalfillorder
 },
 
 /**
- * @method scrollViewDidZoom
- * @param {cc.ScrollView} arg0
- */
-scrollViewDidZoom : function (
-scrollview 
-)
-{
-},
-
-/**
  * @method _updateContentSize
  */
 _updateContentSize : function (
@@ -2795,6 +2407,16 @@ reloadData : function (
 },
 
 /**
+ * @method scrollViewDidZoom
+ * @param {cc.ScrollView} arg0
+ */
+scrollViewDidZoom : function (
+scrollview 
+)
+{
+},
+
+/**
  * @method insertCellAtIndex
  * @param {long} arg0
  */
@@ -2838,116 +2460,162 @@ TableView : function (
 };
 
 /**
- * @class AssetsManager
+ * @class EventAssetsManagerEx
  */
-cc.AssetsManager = {
+cc.EventAssetsManager = {
 
 /**
- * @method setStoragePath
- * @param {char} arg0
+ * @method getAssetsManagerEx
+ * @return {cc.AssetsManagerEx}
  */
-setStoragePath : function (
-char 
+getAssetsManagerEx : function (
+)
+{
+    return cc.AssetsManagerEx;
+},
+
+/**
+ * @method getAssetId
+ * @return {String}
+ */
+getAssetId : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getCURLECode
+ * @return {int}
+ */
+getCURLECode : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getMessage
+ * @return {String}
+ */
+getMessage : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getCURLMCode
+ * @return {int}
+ */
+getCURLMCode : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPercentByFile
+ * @return {float}
+ */
+getPercentByFile : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getEventCode
+ * @return {cc.EventAssetsManagerEx::EventCode}
+ */
+getEventCode : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPercent
+ * @return {float}
+ */
+getPercent : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method EventAssetsManagerEx
+ * @constructor
+ * @param {String} arg0
+ * @param {cc.AssetsManagerEx} arg1
+ * @param {cc.EventAssetsManagerEx::EventCode} arg2
+ * @param {float} arg3
+ * @param {float} arg4
+ * @param {String} arg5
+ * @param {String} arg6
+ * @param {int} arg7
+ * @param {int} arg8
+ */
+EventAssetsManagerEx : function (
+str, 
+assetsmanagerex, 
+eventcode, 
+float, 
+float, 
+str, 
+str, 
+int, 
+int 
 )
 {
 },
 
+};
+
 /**
- * @method getDelegate
- * @return {cc.AssetsManagerDelegateProtocol}
+ * @class Manifest
  */
-getDelegate : function (
+cc.Manifest = {
+
+/**
+ * @method getManifestFileUrl
+ * @return {String}
+ */
+getManifestFileUrl : function (
 )
 {
-    return cc.AssetsManagerDelegateProtocol;
+    return ;
 },
 
 /**
- * @method setPackageUrl
- * @param {char} arg0
- */
-setPackageUrl : function (
-char 
-)
-{
-},
-
-/**
- * @method checkUpdate
+ * @method isVersionLoaded
  * @return {bool}
  */
-checkUpdate : function (
+isVersionLoaded : function (
 )
 {
     return false;
 },
 
 /**
- * @method getStoragePath
- * @return {char}
+ * @method isLoaded
+ * @return {bool}
  */
-getStoragePath : function (
+isLoaded : function (
 )
 {
-    return 0;
-},
-
-/**
- * @method update
- */
-update : function (
-)
-{
-},
-
-/**
- * @method setConnectionTimeout
- * @param {unsigned int} arg0
- */
-setConnectionTimeout : function (
-int 
-)
-{
-},
-
-/**
- * @method setVersionFileUrl
- * @param {char} arg0
- */
-setVersionFileUrl : function (
-char 
-)
-{
+    return false;
 },
 
 /**
  * @method getPackageUrl
- * @return {char}
+ * @return {String}
  */
 getPackageUrl : function (
 )
 {
-    return 0;
-},
-
-/**
- * @method setDelegate
- * @param {cc.AssetsManagerDelegateProtocol} arg0
- */
-setDelegate : function (
-assetsmanagerdelegateprotocol 
-)
-{
-},
-
-/**
- * @method getConnectionTimeout
- * @return {unsigned int}
- */
-getConnectionTimeout : function (
-)
-{
-    return 0;
+    return ;
 },
 
 /**
@@ -2962,49 +2630,118 @@ getVersion : function (
 
 /**
  * @method getVersionFileUrl
- * @return {char}
+ * @return {String}
  */
 getVersionFileUrl : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getSearchPaths
+ * @return {Array}
+ */
+getSearchPaths : function (
+)
+{
+    return new Array();
+},
+
+};
+
+/**
+ * @class AssetsManagerEx
+ */
+cc.AssetsManager = {
+
+/**
+ * @method getState
+ * @return {cc.AssetsManagerEx::State}
+ */
+getState : function (
 )
 {
     return 0;
 },
 
 /**
- * @method deleteVersion
+ * @method checkUpdate
  */
-deleteVersion : function (
+checkUpdate : function (
+)
+{
+},
+
+/**
+ * @method getStoragePath
+ * @return {String}
+ */
+getStoragePath : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method update
+ */
+update : function (
+)
+{
+},
+
+/**
+ * @method getLocalManifest
+ * @return {cc.Manifest}
+ */
+getLocalManifest : function (
+)
+{
+    return cc.Manifest;
+},
+
+/**
+ * @method getRemoteManifest
+ * @return {cc.Manifest}
+ */
+getRemoteManifest : function (
+)
+{
+    return cc.Manifest;
+},
+
+/**
+ * @method downloadFailedAssets
+ */
+downloadFailedAssets : function (
 )
 {
 },
 
 /**
  * @method create
- * @param {char} arg0
- * @param {char} arg1
- * @param {char} arg2
- * @param {function} arg3
- * @param {function} arg4
- * @param {function} arg5
- * @return {cc.AssetsManager}
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {cc.AssetsManagerEx}
  */
 create : function (
-char, 
-char, 
-char, 
-func, 
-func, 
-func 
+str, 
+str 
 )
 {
-    return cc.AssetsManager;
+    return cc.AssetsManagerEx;
 },
 
 /**
- * @method AssetsManager
+ * @method AssetsManagerEx
  * @constructor
+ * @param {String} arg0
+ * @param {String} arg1
  */
-AssetsManager : function (
+AssetsManagerEx : function (
+str, 
+str 
 )
 {
 },
@@ -3012,223 +2749,43 @@ AssetsManager : function (
 };
 
 /**
- * @class EditBox
+ * @class EventListenerAssetsManagerEx
  */
-cc.EditBox = {
+cc.EventListenerAssetsManager = {
 
 /**
- * @method getText
- * @return {char}
+ * @method init
+ * @param {cc.AssetsManagerEx} arg0
+ * @param {function} arg1
+ * @return {bool}
  */
-getText : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setFontSize
- * @param {int} arg0
- */
-setFontSize : function (
-int 
-)
-{
-},
-
-/**
- * @method setPlaceholderFontName
- * @param {char} arg0
- */
-setPlaceholderFontName : function (
-char 
-)
-{
-},
-
-/**
- * @method getPlaceHolder
- * @return {char}
- */
-getPlaceHolder : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setFontName
- * @param {char} arg0
- */
-setFontName : function (
-char 
-)
-{
-},
-
-/**
- * @method setText
- * @param {char} arg0
- */
-setText : function (
-char 
-)
-{
-},
-
-/**
- * @method setPlaceholderFontSize
- * @param {int} arg0
- */
-setPlaceholderFontSize : function (
-int 
-)
-{
-},
-
-/**
- * @method setInputMode
- * @param {ccui.EditBox::InputMode} arg0
- */
-setInputMode : function (
-inputmode 
-)
-{
-},
-
-/**
- * @method setPlaceholderFontColor
- * @param {color3b_object} arg0
- */
-setPlaceholderFontColor : function (
-color3b 
-)
-{
-},
-
-/**
- * @method setFontColor
- * @param {color3b_object} arg0
- */
-setFontColor : function (
-color3b 
-)
-{
-},
-
-/**
- * @method setPlaceholderFont
- * @param {char} arg0
- * @param {int} arg1
- */
-setPlaceholderFont : function (
-char, 
-int 
-)
-{
-},
-
-/**
- * @method initWithSizeAndBackgroundSprite
-* @param {size_object|size_object} size
-* @param {ccui.Scale9Sprite|String} scale9sprite
-* @param {ccui.Widget::TextureResType} texturerestype
-* @return {bool|bool}
-*/
-initWithSizeAndBackgroundSprite : function(
-size,
-str,
-texturerestype 
+init : function (
+assetsmanagerex, 
+func 
 )
 {
     return false;
 },
 
 /**
- * @method setPlaceHolder
- * @param {char} arg0
- */
-setPlaceHolder : function (
-char 
-)
-{
-},
-
-/**
- * @method setReturnType
- * @param {ccui.EditBox::KeyboardReturnType} arg0
- */
-setReturnType : function (
-keyboardreturntype 
-)
-{
-},
-
-/**
- * @method setInputFlag
- * @param {ccui.EditBox::InputFlag} arg0
- */
-setInputFlag : function (
-inputflag 
-)
-{
-},
-
-/**
- * @method getMaxLength
- * @return {int}
- */
-getMaxLength : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setMaxLength
- * @param {int} arg0
- */
-setMaxLength : function (
-int 
-)
-{
-},
-
-/**
- * @method setFont
- * @param {char} arg0
- * @param {int} arg1
- */
-setFont : function (
-char, 
-int 
-)
-{
-},
-
-/**
  * @method create
-* @param {size_object|size_object} size
-* @param {String|ccui.Scale9Sprite} str
-* @param {ccui.Widget::TextureResType|ccui.Scale9Sprite} texturerestype
-* @param {ccui.Scale9Sprite} scale9sprite
-* @return {ccui.EditBox|ccui.EditBox}
-*/
-create : function(
-size,
-scale9sprite,
-scale9sprite,
-scale9sprite 
+ * @param {cc.AssetsManagerEx} arg0
+ * @param {function} arg1
+ * @return {cc.EventListenerAssetsManagerEx}
+ */
+create : function (
+assetsmanagerex, 
+func 
 )
 {
-    return ccui.EditBox;
+    return cc.EventListenerAssetsManagerEx;
 },
 
 /**
- * @method EditBox
+ * @method EventListenerAssetsManagerEx
  * @constructor
  */
-EditBox : function (
+EventListenerAssetsManagerEx : function (
 )
 {
 },

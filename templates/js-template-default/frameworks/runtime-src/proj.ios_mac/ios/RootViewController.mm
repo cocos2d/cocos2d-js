@@ -25,7 +25,7 @@
 
 #import "RootViewController.h"
 #import "cocos2d.h"
-#import "CCEAGLView.h"
+#import "platform/ios/CCEAGLView-ios.h"
 
 @implementation RootViewController
 
@@ -75,7 +75,7 @@
     cocos2d::GLView *glview = cocos2d::Director::getInstance()->getOpenGLView();
     if (glview)
     {
-        CCEAGLView *eaglview = (CCEAGLView*) glview->getEAGLView();
+        cocos2d::CCEGLView *eaglview = (cocos2d::CCEGLView*) glview->getEAGLView();
         
         if (eaglview)
         {

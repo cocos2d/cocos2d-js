@@ -25,6 +25,7 @@
 #include "platform/ios/JavaScriptObjCBridge.h"
 #endif
 
+#include "CodeIDESupport.h"
 #include "Runtime.h"
 #include "ConfigParser.h"
 
@@ -38,27 +39,39 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
     ScriptEngineManager::destroyInstance();
+#if (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
+	// NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+	endRuntime();
+#endif
+
+	ConfigParser::purge();
+}
+
+void AppDelegate::initGLContextAttrs()
+{
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    
+    GLView::setGLContextAttrs(glContextAttrs);
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    
-#if (COCOS2D_DEBUG > 0)
+#if (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
+    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
     initRuntime();
 #endif
-
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();    
     if(!glview) {
         Size viewSize = ConfigParser::getInstance()->getInitViewSize();
         string title = ConfigParser::getInstance()->getInitViewName();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC) && (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
         extern void createSimulator(const char* viewName, float width, float height,bool isLandscape = true, float frameZoomFactor = 1.0f);
         bool isLanscape = ConfigParser::getInstance()->isLanscape();
-        createSimulator(title.c_str(),viewSize.width,viewSize.height,isLanscape);
+        createSimulator(title.c_str(), viewSize.width,viewSize.height, isLanscape);
 #else
-        glview = GLView::createWithRect(title.c_str(), Rect(0,0,viewSize.width,viewSize.height));
+        glview = cocos2d::GLViewImpl::createWithRect(title.c_str(), Rect(0, 0, viewSize.width, viewSize.height));
         director->setOpenGLView(glview);
 #endif
     }
@@ -68,27 +81,41 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
-    sc->addRegisterCallback(register_all_cocos2dx_extension);
+    sc->addRegisterCallback(register_cocos2dx_js_core);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
-    sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
-    sc->addRegisterCallback(jsb_register_chipmunk);
     sc->addRegisterCallback(jsb_register_system);
+
+    // extension can be commented out to reduce the package
+    sc->addRegisterCallback(register_all_cocos2dx_extension);
+    sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
+
+    // chipmunk can be commented out to reduce the package
+    sc->addRegisterCallback(jsb_register_chipmunk);
+    // opengl can be commented out to reduce the package
     sc->addRegisterCallback(JSB_register_opengl);
     
+    // builder can be commented out to reduce the package
     sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
     
+    // ui can be commented out to reduce the package, attension studio need ui module
     sc->addRegisterCallback(register_all_cocos2dx_ui);
     sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
+
+    // studio can be commented out to reduce the package, 
     sc->addRegisterCallback(register_all_cocos2dx_studio);
     sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
     
+    // spine can be commented out to reduce the package
     sc->addRegisterCallback(register_all_cocos2dx_spine);
     sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
     
+    // XmlHttpRequest can be commented out to reduce the package
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
+    // websocket can be commented out to reduce the package
     sc->addRegisterCallback(register_jsb_websocket);
-	sc->addRegisterCallback(register_jsb_socketio);
+    // sokcet io can be commented out to reduce the package
+    sc->addRegisterCallback(register_jsb_socketio);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
@@ -96,16 +123,16 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JavaScriptObjCBridge::_js_register);
 #endif
     
-#if (COCOS2D_DEBUG > 0)
-    if (startRuntime())
-        return true;
-#endif
-
+#if (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
+    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+    startRuntime();
+#else
     sc->start();
     sc->runScript("script/jsb_boot.js");
     auto engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
+#endif
     
     return true;
 }

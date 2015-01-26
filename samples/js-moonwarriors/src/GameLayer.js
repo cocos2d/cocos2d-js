@@ -1,8 +1,34 @@
-//
-// MoonWarriors
-//
-// Handles the Game Logic
-//
+/****************************************************************************
+ Cocos2d-html5 show case : Moon Warriors
+
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+
+ @Authors:
+ Programmer: Shengxiang Chen (陈升想), Dingping Lv (吕定平), Ricardo Quesada
+ Effects animation: Hao Wu (吴昊)
+ Quality Assurance: Sean Lin (林顺)
+ ****************************************************************************/
 
 STATE_PLAYING = 0;
 STATE_GAMEOVER = 1;
@@ -56,8 +82,10 @@ var GameLayer = cc.Layer.extend({
         // OpaqueBatch
         var texOpaque = cc.textureCache.addImage(res.textureOpaquePack_png);
         this._texOpaqueBatch = new cc.SpriteBatchNode(texOpaque);
-        this._texOpaqueBatch.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
+        this._sparkBatch = new cc.SpriteBatchNode(texOpaque);
+        if(cc.sys.isNative) this._sparkBatch.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
         this.addChild(this._texOpaqueBatch);
+        this.addChild(this._sparkBatch);
 
         // TransparentBatch
         var texTransparent = cc.textureCache.addImage(res.textureTransparentPack_png);
@@ -75,24 +103,25 @@ var GameLayer = cc.Layer.extend({
             anchorX: 1,
             anchorY: 0,
             x: winSize.width - 5,
-            y: winSize.height - 30
+            y: winSize.height - 30,
+            scale: MW.SCALE
         });
         this.lbScore.textAlign = cc.TEXT_ALIGNMENT_RIGHT;
         this.addChild(this.lbScore, 1000);
 
         // ship life
-        var life = new cc.Sprite("#ship01.png");
+        var life = new cc.Sprite("#ship03.png");
         life.attr({
             scale: 0.6,
             x: 30,
-            y: 460
+            y: MW.HEIGHT - 30
         });
         this._texTransparentBatch.addChild(life, 1, 5);
 
         // ship Life count
         this._lbLife = new cc.LabelTTF("0", "Arial", 20);
         this._lbLife.x = 60;
-        this._lbLife.y = 463;
+        this._lbLife.y = MW.HEIGHT - 25;
         this._lbLife.color = cc.color(255, 0, 0);
         this.addChild(this._lbLife, 1000);
 
@@ -108,8 +137,7 @@ var GameLayer = cc.Layer.extend({
         this.addChild(this._explosions);
         Explosion.sharedExplosion();
 
-        // accept touch now!
-       if (cc.sys.capabilities.hasOwnProperty('keyboard'))
+        if (cc.sys.capabilities.hasOwnProperty('keyboard'))
             cc.eventManager.addListener({
                 event: cc.EventListener.KEYBOARD,
                 onKeyPressed:function (key, event) {
@@ -135,8 +163,8 @@ var GameLayer = cc.Layer.extend({
                 event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesMoved:function (touches, event) {
                     var touch = touches[0];
-                    if (this.prevTouchId != touch.getId())
-                        this.prevTouchId = touch.getId();
+                    if (this.prevTouchId != touch.getID())
+                        this.prevTouchId = touch.getID();
                     else event.getCurrentTarget().processEvent(touches[0]);
                 }
             }, this);
@@ -228,8 +256,15 @@ var GameLayer = cc.Layer.extend({
         }
     },
     removeInactiveUnit:function (dt) {
-        var selChild, children = this._texOpaqueBatch.children;
-        for (var i in children) {
+        var i, selChild, children = this._texOpaqueBatch.children;
+        for (i in children) {
+            selChild = children[i];
+            if (selChild && selChild.active)
+                selChild.update(dt);
+        }
+
+        children = this._sparkBatch.children;
+        for (i in children) {
             selChild = children[i];
             if (selChild && selChild.active)
                 selChild.update(dt);
@@ -284,7 +319,7 @@ var GameLayer = cc.Layer.extend({
         var ran = Math.random();
         backTileMap.x = ran * 320;
 	    backTileMap.y = winSize.height;
-        var move = cc.moveBy(ran * 2 + 10, cc.p(0, -winSize.height-240));
+        var move = cc.moveBy(ran * 2 + 10, cc.p(0, -winSize.height-backTileMap.height));
         var fun = cc.callFunc(function(){
             backTileMap.destroy();
         },this);
@@ -307,7 +342,7 @@ var GameLayer = cc.Layer.extend({
             //create a new background
             this._backSky = BackSky.getOrCreate();
             locBackSky = this._backSky;
-            locBackSky.y = currPosY + locSkyHeight - 2;
+            locBackSky.y = currPosY + locSkyHeight - 5;
         } else
             locBackSky.y = currPosY;
 
@@ -351,7 +386,7 @@ GameLayer.prototype.addBulletHits = function (hit, zOrder) {
 };
 
 GameLayer.prototype.addSpark = function (spark) {
-    this._texOpaqueBatch.addChild(spark);
+    this._sparkBatch.addChild(spark);
 };
 
 GameLayer.prototype.addBullet = function (bullet, zOrder, mode) {

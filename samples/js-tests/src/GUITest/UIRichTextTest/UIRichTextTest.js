@@ -40,7 +40,6 @@ var UIRichTextTest = UIScene.extend({
             button.addTouchEventListener(this.touchEvent,this);
             this._mainNode.addChild(button);
 
-
             // RichText
             var richText = new ccui.RichText();
             richText.ignoreContentAdaptWithSize(false);
@@ -56,7 +55,7 @@ var UIRichTextTest = UIScene.extend({
             var reimg = new ccui.RichElementImage(6, cc.color.WHITE, 255, "res/cocosui/sliderballnormal.png");
 
             ccs.armatureDataManager.addArmatureFileInfo("res/cocosui/100/100.ExportJson");
-            var pAr = ccs.Armature.create("100");
+            var pAr = new ccs.Armature("100");
             pAr.getAnimation().play("Animation1");
 
             var recustom = new ccui.RichElementCustomNode(1, cc.color.WHITE, 255, pAr);

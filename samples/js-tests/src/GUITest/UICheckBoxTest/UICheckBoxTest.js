@@ -63,3 +63,58 @@ var UICheckBoxTest = UIScene.extend({
         }
     }
 });
+
+//2015-01-14
+var UICheckBoxDefaultBehaviorTest = UIScene.extend({
+
+    init: function(){
+        if(this._super()){
+            var widgetSize = this._widget.getContentSize();
+
+            // Add a label in which the checkbox events will be displayed
+            this._displayValueLabel = new ccui.Text("No Event", "Marker Felt", 32);
+            this._displayValueLabel.setAnchorPoint(cc.p(0.5, -1));
+            this._displayValueLabel.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
+            this._mainNode.addChild(this._displayValueLabel);
+            this._bottomDisplayLabel.setString("");
+
+            // Add the alert
+            var alert = new ccui.Text("Only left two and the last checkbox can be cliked!","Marker Felt",20 );
+            alert.setColor(cc.color(159, 168, 176));
+            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 1.75));
+            this._mainNode.addChild(alert);
+
+            // Create the checkbox
+            var checkBox = new ccui.CheckBox("res/cocosui/check_box_normal.png", "res/cocosui/check_box_active.png");
+            checkBox.setPosition(cc.p(widgetSize.width / 2 - 50, widgetSize.height / 2));
+
+            this._mainNode.addChild(checkBox);
+
+
+            // Create the checkbox
+            var checkBox2 = new ccui.CheckBox("res/cocosui/check_box_normal.png", "res/cocosui/check_box_active.png");
+            checkBox2.setPosition(cc.p(widgetSize.width / 2 - 150, widgetSize.height / 2));
+            checkBox2.ignoreContentAdaptWithSize(false);
+            checkBox2.setZoomScale(0.5);
+            checkBox2.setContentSize(cc.size(80,80));
+            checkBox2.setName("bigCheckBox");
+            this._mainNode.addChild(checkBox2);
+
+
+            // Create the checkbox
+            var checkBoxDisabled = new ccui.CheckBox("res/cocosui/check_box_normal.png", "res/cocosui/check_box_active.png");
+            checkBoxDisabled.setPosition(cc.p(widgetSize.width / 2 + 20, widgetSize.height / 2));
+            checkBoxDisabled.setEnabled(false);
+            checkBoxDisabled.setBright(false);
+            this._mainNode.addChild(checkBoxDisabled);
+
+            var checkBoxDisabled2 = new ccui.CheckBox("res/cocosui/check_box_normal.png", "res/cocosui/check_box_active.png");
+            checkBoxDisabled2.setPosition(cc.p(widgetSize.width / 2 + 70, widgetSize.height / 2));
+            checkBoxDisabled2.setBright(false);
+            checkBoxDisabled2.setSelected(true);
+            this._mainNode.addChild(checkBoxDisabled2);
+            return true;
+        }
+    }
+
+});

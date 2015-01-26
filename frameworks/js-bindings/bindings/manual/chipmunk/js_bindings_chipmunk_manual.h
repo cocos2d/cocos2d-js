@@ -31,6 +31,7 @@
 #include "ScriptingCore.h"
 #ifdef JSB_INCLUDE_CHIPMUNK
 
+#include "chipmunk_private.h"
 #include "js_bindings_chipmunk_auto_classes.h"
 
 // Free Functions
@@ -50,6 +51,7 @@ bool JSB_cpCentroidForPoly(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpRecenterPoly(JSContext *cx, uint32_t argc, jsval *vp);
 
 // "Methods" from the OO API
+bool JSB_cpSpace_setDefaultCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpSpace_addCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpSpace_removeCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -62,7 +64,16 @@ bool JSB_cpSpace_removeBody(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpSpace_removeConstraint(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpSpace_removeShape(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpSpace_removeStaticShape(JSContext *cx, uint32_t argc, jsval *vp);
-
+bool JSB_cpSpace_segmentQueryFirst(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_eachShape(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_eachBody(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_pointQuery(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_nearestPointQuery(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_segmentQuery(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_bbQuery(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpSpace_addPostStepCallback(JSContext *cx, uint32_t argc, jsval *vp);
 
 bool JSB_cpArbiter_getBodies(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpArbiter_getShapes(JSContext *cx, uint32_t argc, jsval *vp);
@@ -71,24 +82,25 @@ bool JSB_cpBody_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpBody_getUserData(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpBody_setUserData(JSContext *cx, uint32_t argc, jsval *vp);
 
+bool JSB_cpBody_eachShape(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpBody_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_cpBody_eachArbiter(JSContext *cx, uint32_t argc, jsval *vp);
+
 
 // convertions
 
 jsval cpBB_to_jsval(JSContext *cx, cpBB bb );
 bool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret );
 bool jsval_to_array_of_cpvect( JSContext *cx, jsval vp, cpVect**verts, int *numVerts);
-
-// requires cocos2d
-#define cpVect_to_jsval CGPoint_to_jsval
-#define jsval_to_cpVect jsval_to_CGPoint
-
+bool jsval_to_cpVect( JSContext *cx, jsval vp, cpVect *out );
+jsval cpVect_to_jsval( JSContext *cx, cpVect p );
 
 // Object Oriented Chipmunk
-void JSB_cpBase_createClass(JSContext* cx, JSObject* globalObj, const char * name );
+void JSB_cpBase_createClass(JSContext* cx, JS::HandleObject globalObj, const char * name );
 extern JSObject* JSB_cpBase_object;
 extern JSClass* JSB_cpBase_class;
-extern void register_CCPhysicsSprite(JSContext *cx, JSObject *obj);
-extern void register_CCPhysicsDebugNode(JSContext *cx, JSObject *obj);
+extern void register_CCPhysicsSprite(JSContext *cx, JS::HandleObject obj);
+extern void register_CCPhysicsDebugNode(JSContext *cx, JS::HandleObject obj);
 
 // Manual constructor / destructors
 bool JSB_cpPolyShape_constructor(JSContext *cx, uint32_t argc, jsval *vp);

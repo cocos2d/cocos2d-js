@@ -29,25 +29,28 @@
 #import <Foundation/Foundation.h>
 JavaScriptObjCBridge::CallInfo::~CallInfo(void)
 {
-    
+    if (m_returnType == TypeString)
+    {
+        delete m_ret.stringValue;
+    }
 }
 JS::Value JavaScriptObjCBridge::convertReturnValue(JSContext *cx, ReturnValue retValue, ValueType type)
 {
-	JS::Value ret = JSVAL_NULL;
+    JS::Value ret = JSVAL_NULL;
     
-	switch (type)
-	{
-		case TypeInteger:
-			return INT_TO_JSVAL(retValue.intValue);
-		case TypeFloat:
-			return DOUBLE_TO_JSVAL((double)retValue.floatValue);
-		case TypeBoolean:
-			return BOOLEAN_TO_JSVAL(retValue.boolValue);
-		case TypeString:
-			return c_string_to_jsval(cx, retValue.stringValue->c_str(),retValue.stringValue->size());
-	}
+    switch (type)
+    {
+        case TypeInteger:
+            return INT_TO_JSVAL(retValue.intValue);
+        case TypeFloat:
+            return DOUBLE_TO_JSVAL((double)retValue.floatValue);
+        case TypeBoolean:
+            return BOOLEAN_TO_JSVAL(retValue.boolValue);
+        case TypeString:
+            return c_string_to_jsval(cx, retValue.stringValue->c_str(),retValue.stringValue->size());
+    }
     
-	return ret;
+    return ret;
 }
 
 bool JavaScriptObjCBridge::CallInfo::execute(JSContext *cx,jsval *argv,unsigned argc)
@@ -188,9 +191,8 @@ void JavaScriptObjCBridge::CallInfo::pushValue(void *val){
     }
     else if ([oval isKindOfClass:[NSString class]])
     {
-        const char *abc = [oval cStringUsingEncoding:NSUTF8StringEncoding];
-        string str(abc);
-        m_ret.stringValue = &str;
+        const char *content = [oval cStringUsingEncoding:NSUTF8StringEncoding];
+        m_ret.stringValue = new string(content);
         m_returnType = TypeString;
     }
     else if ([oval isKindOfClass:[NSDictionary class]])
@@ -199,9 +201,8 @@ void JavaScriptObjCBridge::CallInfo::pushValue(void *val){
     }
     else
     {
-        const char *abc = [[NSString stringWithFormat:@"%@", oval] cStringUsingEncoding:NSUTF8StringEncoding];
-        string str(abc);
-        m_ret.stringValue = &str;
+        const char *content = [[NSString stringWithFormat:@"%@", oval] cStringUsingEncoding:NSUTF8StringEncoding];
+        m_ret.stringValue =  new string(content);
         m_returnType = TypeString;
     }
 }
@@ -247,7 +248,7 @@ static void basic_object_finalize(JSFreeOp *freeOp, JSObject *obj)
 JS_BINDED_FUNC_IMPL(JavaScriptObjCBridge, callStaticMethod){
     jsval *argv = JS_ARGV(cx, vp);
     if (argc >= 2) {
-    	JSStringWrapper arg0(argv[0]);
+        JSStringWrapper arg0(argv[0]);
         JSStringWrapper arg1(argv[1]);
         CallInfo call(arg0.get(),arg1.get());
         bool ok = call.execute(cx,argv,argc);

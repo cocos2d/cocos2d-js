@@ -31,7 +31,7 @@ var SpriteDemo = BaseTestLayer.extend({
         return "ProgressActionsTest";
     },
 
-    title:function () {
+    subtitle:function () {
         return "";
     },
 
@@ -68,8 +68,8 @@ var SpriteProgressToRadial = SpriteDemo.extend({
         //----start0----onEnter
         this._super();
 
-        var to1 = cc.progressTo(2, 100);
-        var to2 = cc.progressTo(2, 100);
+        var to1 = cc.progressFromTo(2, 0, 100);
+        var to2 = cc.progressFromTo(2, 0, 100);
 
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_RADIAL;
@@ -89,7 +89,7 @@ var SpriteProgressToRadial = SpriteDemo.extend({
     },
 
     title:function () {
-        return "ProgressTo Radial";
+        return "ProgressFromTo Radial";
     }
 });
 
@@ -98,8 +98,8 @@ var SpriteProgressToHorizontal = SpriteDemo.extend({
         //----start1----onEnter
         this._super();
 
-        var to1 = cc.progressTo(2, 100);
-        var to2 = cc.progressTo(2, 100);
+        var to1 = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
+        var to2 = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
 
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;
@@ -134,8 +134,8 @@ var SpriteProgressToVertical = SpriteDemo.extend({
         //----start2----onEnter
         this._super();
 
-        var to1 = cc.progressTo(2, 100);
-        var to2 = cc.progressTo(2, 100);
+        var to1 = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
+        var to2 = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
 
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;
@@ -170,7 +170,7 @@ var SpriteProgressToRadialMidpointChanged = SpriteDemo.extend({
         //----start3----onEnter
         this._super();
 
-        var action = cc.progressTo(2, 100);
+        var action = cc.sequence(cc.progressTo(2, 100), cc.progressTo(0, 0));
 
         /**
          *  Our image on the left should be a radial progress indicator, clockwise
@@ -210,7 +210,7 @@ var SpriteProgressBarVarious = SpriteDemo.extend({
         //----start4----onEnter
         this._super();
 
-        var to = cc.progressTo(2, 100);
+        var to = cc.progressFromTo(2, 0, 100);
 
         var left = new cc.ProgressTimer(new cc.Sprite(s_pathSister1));
         left.type = cc.ProgressTimer.TYPE_BAR;
@@ -249,7 +249,7 @@ var SpriteProgressBarVarious = SpriteDemo.extend({
     },
 
     title:function () {
-        return "ProgressTo Bar Mid";
+        return "ProgressFromTo Bar Mid";
     }
 });
 
@@ -258,7 +258,7 @@ var SpriteProgressBarTintAndFade = SpriteDemo.extend({
         //----start5----onEnter
         this._super();
 
-        var to = cc.progressTo(6, 100);
+        var to = cc.progressFromTo(6, 0, 100);
         var tint = cc.sequence(
             cc.tintTo(1, 255, 0, 0),
             cc.tintTo(1, 0, 255, 0),
@@ -314,7 +314,7 @@ var SpriteProgressBarTintAndFade = SpriteDemo.extend({
     },
 
     title:function () {
-        return "ProgressTo Bar Mid";
+        return "ProgressFromTo Bar Mid";
     }
 });
 
@@ -323,7 +323,7 @@ var SpriteProgressWithSpriteFrame = SpriteDemo.extend({
         //----start6----onEnter
         this._super();
 
-        var to = cc.progressTo(6, 100);
+        var to = cc.progressFromTo(6, 0, 100);
 
         cc.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
 

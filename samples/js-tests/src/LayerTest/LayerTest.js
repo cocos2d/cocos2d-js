@@ -545,16 +545,13 @@ var LayerGradient = LayerTest.extend({
 var arrayOfLayerTest = [
     LayerTest1,
     LayerTest2,
+    LayerGradient,
     LayerTestBlend,
     IgnoreAnchorpointTest1,
     IgnoreAnchorpointTest2,
     IgnoreAnchorpointTest3,
     IgnoreAnchorpointTest4
 ];
-
-if( 'opengl' in cc.sys.capabilities ){
-    arrayOfLayerTest.push(LayerGradient);
-}
 
 var nextLayerTest = function () {
     layerTestSceneIdx++;

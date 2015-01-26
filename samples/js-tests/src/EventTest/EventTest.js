@@ -151,7 +151,7 @@ var TouchOneByOneTest = EventTest.extend({
 
     onTouchBegan:function(touch, event) {
         var pos = touch.getLocation();
-        var id = touch.getId();
+        var id = touch.getID();
         cc.log("onTouchBegan at: " + pos.x + " " + pos.y + " Id:" + id );
         if( pos.x < winSize.width/2) {
             event.getCurrentTarget().new_id(id,pos);
@@ -161,19 +161,19 @@ var TouchOneByOneTest = EventTest.extend({
     },
     onTouchMoved:function(touch, event) {
         var pos = touch.getLocation();
-        var id = touch.getId();
+        var id = touch.getID();
         cc.log("onTouchMoved at: " + pos.x + " " + pos.y + " Id:" + id );
         event.getCurrentTarget().update_id(id,pos);
     },
     onTouchEnded:function(touch, event) {
         var pos = touch.getLocation();
-        var id = touch.getId();
+        var id = touch.getID();
         cc.log("onTouchEnded at: " + pos.x + " " + pos.y + " Id:" + id );
         event.getCurrentTarget().release_id(id,pos);
     },
     onTouchCancelled:function(touch, event) {
         var pos = touch.getLocation();
-        var id = touch.getId();
+        var id = touch.getID();
         cc.log("onTouchCancelled at: " + pos.x + " " + pos.y + " Id:" + id );
         event.getCurrentTarget().update_id(id,pos);
     }
@@ -242,7 +242,7 @@ var TouchAllAtOnce = EventTest.extend({
         for (var i=0; i < touches.length;i++ ) {
             var touch = touches[i];
             var pos = touch.getLocation();
-            var id = touch.getId();
+            var id = touch.getID();
             cc.log("Touch #" + i + ". onTouchesBegan at: " + pos.x + " " + pos.y + " Id:" + id);
             target.new_id(id,pos);
         }
@@ -252,7 +252,7 @@ var TouchAllAtOnce = EventTest.extend({
         for (var i=0; i < touches.length;i++ ) {
             var touch = touches[i];
             var pos = touch.getLocation();
-            var id = touch.getId();
+            var id = touch.getID();
             cc.log("Touch #" + i + ". onTouchesMoved at: " + pos.x + " " + pos.y + " Id:" + id);
             target.update_id(id, pos);
         }
@@ -262,7 +262,7 @@ var TouchAllAtOnce = EventTest.extend({
         for (var i=0; i < touches.length;i++ ) {
             var touch = touches[i];
             var pos = touch.getLocation();
-            var id = touch.getId();
+            var id = touch.getID();
             cc.log("Touch #" + i + ". onTouchesEnded at: " + pos.x + " " + pos.y + " Id:" + id);
             target.release_id(id);
         }
@@ -272,7 +272,7 @@ var TouchAllAtOnce = EventTest.extend({
         for (var i=0; i < touches.length;i++ ) {
             var touch = touches[i];
             var pos = touch.getLocation();
-            var id = touch.getId();
+            var id = touch.getID();
             cc.log("Touch #" + i + ". onTouchesCancelled at: " + pos.x + " " + pos.y + " Id:" + id);
             target.release_id(id);
         }
@@ -394,22 +394,54 @@ var MouseTest = EventTest.extend({
 //
 //------------------------------------------------------------------
 var KeyboardTest = EventTest.extend({
-    init:function () {
+    init: function () {
         this._super();
-
-        if( 'keyboard' in cc.sys.capabilities ) {
+        var self = this;
+        var label = new cc.LabelTTF("show key Code");
+        var size = cc.director.getWinSize();
+        label.setPosition(size.width / 2, size.height / 2);
+        this.addChild(label);
+        if ('keyboard' in cc.sys.capabilities) {
             cc.eventManager.addListener({
                 event: cc.EventListener.KEYBOARD,
-                onKeyPressed:function(key, event) {
-                    cc.log("Key down:" + key);
+                onKeyPressed: function (key, event) {
+                    var strTemp = "Key down:" + key;
+                    var keyStr = self.getKeyStr(key);
+                    if (keyStr.length > 0)
+                    {
+                        strTemp += " the key name is:" + keyStr;
+                    }
+                    label.setString(strTemp);
                 },
-                onKeyReleased:function(key, event) {
-                    cc.log("Key up:" + key);
+                onKeyReleased: function (key, event) {
+                    var strTemp = "Key up:" + key;
+                    var keyStr = self.getKeyStr(key);
+                    if (keyStr.length > 0)
+                    {
+                        strTemp += " the key name is:" + keyStr;
+                    }
+                    label.setString(strTemp);
                 }
             }, this);
         } else {
             cc.log("KEYBOARD Not supported");
         }
+    },
+    getKeyStr: function (keycode)
+    {
+        if (keycode == cc.KEY.none)
+        {
+            return "";
+        }
+
+        for (var keyTemp in cc.KEY)
+        {
+            if (cc.KEY[keyTemp] == keycode)
+            {
+                return keyTemp;
+            }
+        }
+        return "";
     },
     subtitle:function () {
         return "Keyboard test. Press keyboard and see console";

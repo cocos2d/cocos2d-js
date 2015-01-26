@@ -27,7 +27,7 @@ class ConfigParser
 {
 public:
     static ConfigParser *getInstance(void);
-    void readConfig();
+	static void purge();
 
     // predefined screen size
     int getScreenSizeCount(void);
@@ -43,8 +43,9 @@ public:
     bool isWindowTop();
     
 private:
+    void readConfig();
     ConfigParser(void);
-    static ConfigParser *s_sharedInstance;
+    static ConfigParser *s_sharedConfigParserInstance;
     ScreenSizeArray _screenSizeArray;
     cocos2d::Size _initViewSize;
     string _viewName;

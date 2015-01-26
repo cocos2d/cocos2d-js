@@ -80,6 +80,10 @@
  *
  */
 
+var scene3SearchPaths = cc.sys.localStorage.getItem("Scene3SearchPaths");
+if (scene3SearchPaths)
+    jsb.fileUtils.setSearchPaths(JSON.parse(scene3SearchPaths));
+
 cc.game.onStart = function(){
     
     if (cc.sys.isNative) {
@@ -107,12 +111,13 @@ cc.game.onStart = function(){
         }
         jsb.fileUtils.setSearchPaths(searchPaths);
     }
-    
     cc.LoaderScene.preload(g_resources, function () {
         if(window.sideIndexBar && typeof sideIndexBar.start === 'function'){
             sideIndexBar.start();
         }else{
-            cc.director.runScene(new TestController());
+            var scene = new cc.Scene();
+            scene.addChild(new TestController());
+            cc.director.runScene(scene);
         }
     }, this);
 };

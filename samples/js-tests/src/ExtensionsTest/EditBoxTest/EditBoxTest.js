@@ -51,6 +51,8 @@ var EditBoxTestLayer = cc.Layer.extend({
         this._box2.y = 190;
         this._box2.setInputFlag(cc.EDITBOX_INPUT_FLAG_PASSWORD);
         this._box2.setFontColor(cc.color(255, 250, 0));
+        this._box2.setPlaceHolder("please enter password");
+        this._box2.setPlaceholderFontColor(cc.color(255, 255, 255));
         this._box2.setDelegate(this);
         this.addChild(this._box2);
 

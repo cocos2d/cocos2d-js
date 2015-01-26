@@ -254,7 +254,9 @@ var g_resources = [
     s_bitmapFontTest5,
     s_playNormal,
     s_playSelect,
-    s_bitmapFontTest5_fnt
+    s_bitmapFontTest5_fnt,
+    s_extensions_background,
+    s_extensions_ribbon
 ];
 
 var g_sprites = [
@@ -311,6 +313,8 @@ var g_s9s_blocks = [
 
 var g_opengl_resources = [
     //preload shader source
+    "res/Shaders/example_Outline.fsh",
+    "res/Shaders/example_Outline.vsh",
     "res/Shaders/example_Blur.fsh",
     "res/Shaders/example_ColorBars.fsh",
     "res/Shaders/example_ColorBars.vsh",
@@ -868,6 +872,25 @@ var g_cocoStudio = [
     "res/cocosui/UIEditorTest/cocostudio1_5/GUI/missing-font.fnt",
     "res/cocosui/UIEditorTest/cocostudio1_5/GUI/missing-font.png",
 
+    "res/cocosui/UIEditorTest/2.0.5/res/MainScene.json",
+    "res/cocosui/UIEditorTest/2.0.5/res/plist1/Plist.plist",
+    "res/cocosui/UIEditorTest/2.0.5/res/Plist/ui.plist",
+    "res/cocosui/UIEditorTest/2.0.5/res/LoadingBar/pipe2.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Slider/2013-8-13 15-44-11.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Slider/teehanlax - iOS 6 - iPhone_slider01.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/particle/blue.plist",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/Slider_Back.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/SliderNode_Normal.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/SliderNode_Press.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/SliderNode_Disable.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/Slider_PressBar.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/defaultParticle.plist",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/TextAtlas.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/fonts_weapon_001-hd.png",
+    "res/cocosui/UIEditorTest/2.0.5/res/FNT/futura.fnt",
+    "res/cocosui/UIEditorTest/2.0.5/res/Default/defaultBMFont.fnt",
+    "res/cocosui/UIEditorTest/2.0.5/res/FNT/Heiti18.fnt",
+
     "res/Particles/BoilingFoam.plist",
     "res/cocosui/CustomImageViewTest/NewProject_2_1.ExportJson",
     "res/cocosui/CustomImageViewTest/NewProject_20.plist",
@@ -875,6 +898,7 @@ var g_cocoStudio = [
 ];
 
 var g_ui = [
+    "res/cocosui/switch-mask.png",
     "res/cocosui/animationbuttonnormal.png",
     "res/cocosui/animationbuttonpressed.png",
     "res/cocosui/arrow.png",
@@ -922,7 +946,9 @@ var g_ui = [
     "res/cocosui/UITest/UITest.json",
     "res/cocosui/100/100.ExportJson",
     "res/cocosui/100/1000.plist",
-    "res/cocosui/100/1000.png"
+    "res/cocosui/100/1000.png",
+    s_s9s_blocks9_plist,
+    "res/cocosui/CloseSelected.png"
 ];
 
 var g_performace = [
@@ -1046,4 +1072,21 @@ var g_spine = [
     "res/skeletons/spineboy.atlas",
     "res/skeletons/spineboy.json",
     "res/skeletons/spineboy.png"
+];
+
+var g_ccs2 = [
+    "res/cocosui/UIEditorTest/UIButton_Editor/crossplatform_UIButton_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UICheckBox_Editor/crossplatform_UICheckBox_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UIImageView_Editor/crossplatform_UIImageView_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UILabel_Editor/crossplatform_UILabel_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UILabelAtlas_Editor/crossplatform_UILabelAtlas_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/crossplatform_UILabelBMFont_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UILoadingBar_Editor/crossplatform_UILoadingBar_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UIPageView_Editor/crossplatform_UIPageView_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UISlider_Editor/crossplatform_UISlider_Editor_1.csb",
+    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.csb",
+    "res/ActionTimeline/boy_1.csb",
+    "res/ActionTimeline/armature/Cowboy0.plist",
+    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.fnt",
+    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.png"
 ];

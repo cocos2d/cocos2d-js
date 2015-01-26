@@ -1,58 +1,6 @@
 (function(){
-
-
     //show code function
     var code = {
-
-        list: [
-            'src/ActionManagerTest/ActionManagerTest.js'
-            ,'src/ActionsTest/ActionsTest.js'
-            ,'src/Box2dTest/Box2dTest.js'
-            ,'src/ChipmunkTest/ChipmunkTest.js'
-            ,'src/ClickAndMoveTest/ClickAndMoveTest.js'
-            ,'src/ClippingNodeTest/ClippingNodeTest.js'
-            ,'src/CocosDenshionTest/CocosDenshionTest.js'
-            ,null
-            ,'src/CurrentLanguageTest/CurrentLanguageTest.js'
-            ,'src/DrawPrimitivesTest/DrawPrimitivesTest.js'
-            ,'src/EaseActionsTest/EaseActionsTest.js'
-            ,'src/NewEventManagerTest/NewEventManagerTest.js'
-            ,'src/EventTest/EventTest.js'
-            ,null
-            ,'src/EffectsTest/EffectsTest.js'
-            ,'src/EffectsAdvancedTest/EffectsAdvancedTest.js'
-            ,'src/FontTest/FontTest.js'
-            ,null//UI
-            ,null//Interval
-            ,'src/LabelTest/LabelTest.js'//Label
-            ,'src/LayerTest/LayerTest.js'//layer
-            ,null//loader
-            ,'src/MenuTest/MenuTest.js'//menu
-            ,null//motionstreak
-            ,'src/CocosNodeTest/CocosNodeTest.js'//node
-            ,null//opengl
-            ,null//parallax
-            ,null//particle
-            ,null//path
-            ,null//performance
-            ,'src/ProgressActionsTest/ProgressActionsTest.js'//progressActions
-            ,null//RenderTexture
-            ,null//rotateWorld
-            ,'src/SceneTest/SceneTest.js'//scene
-            ,'src/SchedulerTest/SchedulerTest.js'//scheduler
-            ,null//spine
-            ,'src/SpriteTest/SpriteTest.js'//sprite
-            ,null//scale9sprite
-            ,null//textinput
-            ,null//texturecache
-            ,null//tilemap
-            ,null//touches
-            ,null//transitions
-            ,null//unit
-            ,null//sys
-            ,null//cocos2d js presentation
-            ,null//xmlhttprequest
-        ],
 
         cache: {},
 
@@ -60,24 +8,48 @@
             this._dom = document.getElementById('code');
 
             if(!this._dom) return;
+
             code.showCode(0, 0);
         },
 
-        showCode: function(s, t){
+        showCode: function(actualSceneNum, actualTestNum){
 
-            code.getJson(code.list[s], function(err, text){
+            code.getJson(sidebar.actualDisplayList[actualSceneNum].linksrc, function(err, text){
                 if(err){
                     return;
                 }
-                var result = text.match(new RegExp('//----start'+t+'----(.|\r\n|\r|\n)*?//----end'+t+'----', "g"));
-                if(!result){
+
+                var objectNamStr = sidebar._childNameList[sidebar.diplayRecordArr[actualSceneNum]][actualTestNum];
+
+                var codeResult = text.match(new RegExp('var '+objectNamStr+'( |=|[a-z]|[A-Z]|[0-9]|\\.)*\\.extend(.|\r\n|\r|\n)*?^\\}\\);', "m"));
+                if(!codeResult){
                     document.getElementById('code').innerHTML = 'The corresponding code not found.';
                     return;
                 }
-                var list = {};
+
+                var codeText = codeResult[0];
+
+                var result = codeText.match(new RegExp('//----start(.|\r\n|\r|\n)*?//----end[0-9]*----', "g"));
+                if(!result && !codeResult){
+                    document.getElementById('code').innerHTML = 'The corresponding code not found.';
+                    return;
+                }
+
+                var list = [];
+
+                if (codeResult && !result)
+                {
+                    var html = '<pre class="brush: javascript;">' + codeText + '</pre>';
+                    //var html = codeText.replace(/^\actualSceneNum*?(\r\n|\r|\n)/, '<pre class="brush: javascript;">').replace(/(\r\n|\r|\n)\actualSceneNum*?(\r\n|\r|\n)?$/, '</pre>');
+                    document.getElementById('code').innerHTML = html;
+                    SyntaxHighlighter.highlight();
+                    return;
+                }
+
+
                 result.forEach(function(_data){
                     var on;
-                    _data = _data.replace(new RegExp('//----start'+t+'----'), '').replace(new RegExp('//----end'+t+'----'), '');
+                    _data = _data.replace(new RegExp('//----start[0-9]*----'), '').replace(new RegExp('----end[0-9]*----'), '');
                     _data = _data.replace(/\S*/, function(name){
                         on = name;
                         return '';
@@ -123,298 +95,178 @@
 
         _sceneNum: 0,
         _testNum: 0,
+        _childNameList:[],
+        _windowBeseLayer:[],
+
+        actualDisplayList:[],
+        diplayRecordArr:[], // record the actual diaplay difference with testNames
+
+        initActualList:function(childNameList){
+            var actualIndex = 0;
+            for (var i = 0, len = testNames.length; i < len; i++) {
+                var title = testNames[i].linksrc;
+                var isAdd = false;
+
+                if ( !cc.sys.isNative) {
+                    if( 'opengl' in cc.sys.capabilities ){
+                        isAdd = (testNames[i].platforms & PLATFORM_HTML5) | (testNames[i].platforms & PLATFORM_HTML5_WEBGL);
+                    }else{
+                        isAdd = testNames[i].platforms & PLATFORM_HTML5;
+                    }
+                } else {
+                    if(cc.sys.os == cc.sys.OS_ANDROID)
+                    {
+                        isAdd = testNames[i].platforms & ( PLATFORM_JSB | PLATFROM_ANDROID ) ;
+                    }else if(cc.sys.os == cc.sys.OS_IOS|| cc.sys.os == cc.sys.OS_OSX){
+                        isAdd = testNames[i].platforms & ( PLATFORM_JSB | PLATFROM_IOS) ;
+                    }else{
+                        isAdd = testNames[i].platforms & PLATFORM_JSB ;
+                    }
+                }
+
+                if (childNameList[i] == null)
+                {
+                    isAdd = false;
+                }
+
+                if (isAdd)
+                {
+                    sidebar.diplayRecordArr[actualIndex] = i;
+                    sidebar.actualDisplayList[actualIndex] = testNames[i];
+                    actualIndex++;
+                }
+            }
+        },
+
+        getTitle:function(childData) {
+            var titleArr = [];
+            if (typeof childData == "string" || childData == null)
+            {
+                return childData
+            }
+
+            if (childData.prototype instanceof cc.Layer)
+            {
+                for (var layerIndex in this._windowBeseLayer)
+                {
+                    var layerStr = this._windowBeseLayer[layerIndex];
+                    if (window[layerStr] == childData)
+                    {
+                        return layerStr;
+                    }
+                }
+                return null;
+            }
+
+            if (typeof childData == "object")
+            {
+                return childData;
+            }
+            return titleArr;
+        },
+
+        // get the baseTestLayer object string from window
+        initWindowPropery:function()
+        {
+            for (var property in window)
+            {
+                if (window[property] && window[property].prototype instanceof cc.Layer)
+                {
+                    this._windowBeseLayer.push(property);
+                }
+            }
+        },
+
+        // change the childArr[object, object] to childarr[string, string]
+        // if some menu have a submodule, childarr will be [{title:xxx, childarr:[]}]
+        translationChildArr:function(childArr) {
+            var newChildArr = [];
+            if (this._windowBeseLayer.length <= 0)
+            {
+                sidebar.initWindowPropery();
+            }
+
+            for (var childIndex in childArr)
+            {
+                newChildArr.push(sidebar.getTitle(childArr[childIndex]));
+            }
+
+            return newChildArr;
+        },
+
+        initChildTitleList: function(childtitleList) {
+            for (var i = 0, len = childtitleList.length; i < len; i++) {
+                var childArr = sidebar.translationChildArr(childtitleList[i]);
+
+                this._childNameList.push(childArr);
+            }
+        },
 
         /**
          * init sidebar
          */
         init: function(){
 
-            this._testNameList = [
-                [
-                    "should not crash",
-                    "Sequence logic",
-                    "Pause",
-                    "Remove",
-                    "Resume"
-                ]//arrayOfActionMgrTest - actionManager
-                ,[
-                    "Sprite properties",
-                    "cc.MoveTo / cc.MoveBy",
-                    "cc.ScaleTo / cc.ScaleBy",
-                    "cc.RotateTo / cc.RotateBy",
-                    "cc.RotateTo / cc.RotateBy",
-                    "cc.SkewTo / cc.SkewBy",
-                    "Skew + Rotate + Scale",
-                    "cc.JumpTo / cc.JumpBy",
-                    "cc.BezierTo / cc.BezierBy",
-                    "cc.BezierTo copy",
-                    null,
-                    "CardinalSplineAt / CardinalSplineBy",
-                    "CatmullRomTo / CatmullRomTo",
-                    "cc.Blink",
-                    "cc.FadeIn / cc.FadeOut",
-                    "cc.TintTo / cc.TintBy",
-                    "cc.Sequence: Move + Rotate",
-                    "Sequence of InstantActions",
-                    "cc.Spawn: Jump + Rotate",
-                    "Reverse Jump action",
-                    "DelayTime: m + delay + m",
-                    "Repeat / RepeatForever actions",
-                    "cc.CallFunc + cc.RepeatForever",
-                    "Repeat / RepeatForever + RotateTo",
-                    "RepeatForever / Repeat + Rotate",
-                    "Callbacks: CallFunc and friends",
-                    "cc.CallFunc + auto remove",
-                    "cc.CallFunc + parameters",
-                    "Reverse a sequence",
-                    null,
-                    "Follow action",
-                    "ActionTargeted",
-                    "Testing copy on TargetedAction",
-                    "Stackable actions: MoveBy + MoveBy",
-                    "Stackable actions: MoveBy + JumpBy",
-                    "Stackable actions: MoveBy + BezierBy",
-                    "Stackable actions: MoveBy + CatmullRomBy",
-                    "Stackable actions: MoveBy + CardinalSplineBy",
-                    "PauseResumeActions",
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    "Animation 1",
-                    null,
-                    null,
-                    "OrbitCamera action"
-                ]//arrayOfActionsTest - action
-                ,null//arrayOfBox2DTest
-                ,null//arrayOfChipmunkTest
+
+
+            var childNameList = [
+                arrayOfActionMgrTest//arrayOfActionMgrTest - actionManager
+                ,arrayOfActionsTest//arrayOfActionsTest - action
+                ,arrayOfBakeLayerTest//arrayOfBakeLayerTest
+                ,arrayOfBox2DTest//arrayOfBox2DTest
+                ,arrayOfChipmunkTest//arrayOfChipmunkTest
                 ,arrayOfClickMoveTest
                 ,arrayOfClippingNodeTest
-                ,_DenshionTests
-                ,null//cocostudio
+                ,[CocosDenshionTest]//DenshionTests
+                ,null//cocoStudioTestItemNamescocostudio
                 ,arrayOfCurrentLanguageTest
-                ,[
-                    "cc.DrawNode 1",
-                    "cc.DrawNode 2"
-                ]
-                ,[
-                    "EaseIn - EaseOut",
-                    "EaseInOut and rates",
-                    "ExpIn - ExpOut actions",
-                    "EaseExponentialInOut action",
-                    "EaseSineIn - EaseSineOut",
-                    "EaseSineInOut action",
-                    "Elastic In - Out actions",
-                    "EaseElasticInOut action",
-                    "Bounce In - Out actions",
-                    "EaseBounceInOut action",
-                    "Back In - Out actions",
-                    "EaseBackInOut action",
-                    "Speed action",
-                    "Scheduler scaleTime Test",
-                    "SpriteEaseBezier action",
-                    "SpriteEaseQuadratic action",
-                    "SpriteEaseQuadraticInOut action",
-                    "SpriteEaseQuartic action",
-                    "SpriteEaseQuarticInOut action",
-                    "SpriteEaseQuintic action",
-                    "SpriteEaseQuinticInOut action",
-                    "SpriteEaseCircle action",
-                    "SpriteEaseCircleInOut action",
-                    "SpriteEaseCubic action",
-                    "SpriteEaseCubicInOut action"
-                ]//arrayOfEaseActionsTest
-                ,[
-                    "Touchable Sprite",
-                    "Fixed priority",
-                    "Add and remove listener",
-                    "Send custom event",
-                    "Label Receives Keyboard Event",
-                    "Sprite Receives Acceleration Event",
-                    "RemoveAndRetainNodeTest",
-                    "RemoveListenerAfterAddingTest",
-                    "Testing Director Events",
-                    "Stop Propagation",
-                    null,
-                    "PauseResumeTarget"
-                ]//arrayOfEventDispatcherTest
-                ,[
-                    'Touches One by One. Touch the left / right and see console',
-                    'Touches All At Once. Touch and see console',
-                    'Accelerometer test. Move device and see console',
-                    'Mouse test. Move mouse and see console',
-                    'Keyboard test. Press keyboard and see console'
-                ]//arrayOfEventsTest
+                ,arrayOfDrawTest
+                ,arrayOfEaseActionsTest//arrayOfEaseActionsTest
+                ,arrayOfEventDispatcherTest//arrayOfEventDispatcherTest
+                ,arrayOfEventsTest//arrayOfEventsTest
                 ,null//extensions
                 ,arrayOfEffectsTest
                 ,arrayOfEffectsAdvancedTest
-                ,fontList
+                ,null//facebook
+                ,null//FontTest
                 ,null//UI
-                ,null//Interval
-                ,[
-                    "LabelAtlas Opacity",
-                    "LabelAtlas Opacity Color",
-                    "LabelAtlas with Retina Display",
-                    "cc.LabelBMFont",
-                    "cc.LabelBMFont BMFontSubSpriteTest",
-                    "cc.LabelBMFont BMFontPaddingTest",
-                    "cc.LabelBMFont",
-                    "cc.LabelBMFont BMFontTintTest",
-                    "cc.LabelBMFont",
-                    "cc.LabelBMFont BMFontMultiLineTest",
-                    "cc.LabelBMFont BMFontMultiLine2Test",
-                    "Typesetting",
-                    "cc.LabelBMFont with one texture",
-                    "cc.LabelBMFont with Unicode support",
-                    "cc.LabelBMFont init",
-                    "cc.LabelBMFont color parent / child",
-                    "Testing Retina Display BMFont",
-                    "Testing Glyph Designer",
-                    "Testing cc.LabelBMFont with Chinese character",
-                    "Testing cc.LabelTTF",
-                    "Testing cc.LabelTTF Word Wrap",
-                    "Testing cc.LabelTTF with Chinese character",
-                    "Testing A8 Format",
-                    "cc.LabelTTF init",
-                    "cc.LabelTTF alignment",
-                    "Testing empty labels",
-                    "Testing cc.LabelTTF + shadow and stroke"
-                ]//arrayOfLabelTest
-                ,[
-                    "ColorLayer resize (tap & move)",
-                    "ColorLayer: fade and tint",
-                    "ColorLayer: blend",
-                    "ignore Anchorpoint Test #1",
-                    "ignore Anchorpoint Test #2",
-                    "ignore Anchorpoint Test #3",
-                    "ignore Anchorpoint Test #4",
-                    "LayerGradient"
-                ]//arrayOfLayerTest//layer
-                ,null//loader
-                ,arrayOfMenuTest//menu
-                ,null//motionstreak
-                ,[
-                    "anchorPoint and children",
-                    "tags",
-                    "remove and cleanup",
-                    "remove/cleanup with children",
-                    "stress test #1: no crashes",
-                    "stress test #2: no leaks",
-                    "nodeToParent transform",
-                    "cocosnode scheduler test #1",
-                    "Bounding Box Test",
-                    "Convert To Node Space",
-                    "Camera Center test",
-                    "Camera Orbit test",
-                    "Camera Zoom test",
-                    "Node Opaque Test",
-                    "Node Non Opaque Test"
-                ]//arrayOfNodeTest
-                ,null//opengl
-                ,null//parallax
+                ,[IntervalLayer]//Interval
+                ,arrayOfLabelTest//arrayOfLabelTest
+                ,arrayOfLayerTest//arrayOfLayerTest//layer
+                ,[LoaderTestLayer]//loader
+                ,null//menu
+                ,arrayOfMotionStreakTest//motionstreak
+                ,arrayOfNodeTest//arrayOfNodeTest
+                ,arrayOfOpenGLTest//opengl
+                ,arrayOfParallaxTest//parallax
                 ,null//particle
-                ,null//path
+                ,[PathTestLayer]//path
                 ,null//performance
-                ,[
-                    "ProgressTo Radial",
-                    "ProgressTo Horizontal",
-                    "ProgressTo Vertical",
-                    "Radial w/ Different Midpoints",
-                    "ProgressTo Bar Mid",
-                    "ProgressTo Bar Mid",
-                    "Progress With Sprite Frame",
-                    "Progress With Sprite Frame"
-                ]//arrayOfProgressTest//progressActions
-                ,null//RenderTexture
-                ,null//rotateWorld
+                ,arrayOfProgressTest//arrayOfProgressTest//progressActions
+                ,[ReflectionTestLayer]//Reflection Test
+                ,arrayOfRenderTextureTest//RenderTexture
+                ,[RotateWorldMainLayer]//rotateWorld
                 ,arrayOfSceneTest//scene
-                ,[
-                    "Self-remove an scheduler",
-                    "Pause / Resume",
-                    "Unschedule All callbacks",
-                    "Unschedule All callbacks #2",
-                    "Schedule from Schedule",
-                    "Schedule update with priority",
-                    "Schedule Update + custom callback",
-                    "Schedule Update in 2 sec",
-                    "Reschedule Callback",
-                    "Schedule / Unschedule using Scheduler"
-                ]//arrayOfSchedulerTest//scheduler
-                ,null//spine
-                ,[
-                    "Non Batched Sprite ",
-                    "Batched Sprite ",
-                    null,//"Sprite vs. SpriteBatchNode animation",
-                    "SpriteFrame Alias Name",
-                    "Sprite: anchor point",
-                    "SpriteBatchNode: anchor point",
-                    "Sprite offset + anchor + rot",
-                    "SpriteBatchNode offset + anchor + rot",
-                    "Sprite offset + anchor + scale",
-                    "SpriteBatchNode offset + anchor + scale",
-                    "Sprite: Animation + flip",
-                    "Sprite: Color & Opacity",
-                    "SpriteBatchNode: Color & Opacity",
-                    "Sprite: Z order",
-                    "SpriteBatch: Z order",
-                    "SpriteBatchNode: reorder #1",
-                    null,//"SpriteBatchNode: reorder issue #744",
-                    null,//"SpriteBatchNode: reorder issue #766",
-                    null,//"SpriteBatchNode: reorder issue #767",
-                    "Sprite: openGL Z vertex",
-                    "SpriteBatchNode: openGL Z vertex",
-                    "SpriteBatchNode transformation",
-                    "Sprite Flip X & Y",
-                    "SpriteBatchNode Flip X & Y",
-                    "Sprite Aliased",
-                    "SpriteBatchNode Aliased",
-                    "Sprite New texture (tap)",
-                    "SpriteBatchNode new texture (tap)",
-                    "Hybrid.Sprite* sprite Test",
-                    "SpriteBatchNode Grand Children",
-                    "SpriteBatchNode Children Z",
-                    "Sprite & SpriteBatchNode Visibility",
-                    "Sprite & SpriteBatchNode Visibility",
-                    "Sprite: children + anchor",
-                    "SpriteBatchNode: children + anchor",
-                    "Sprite/BatchNode + child + scale + rot",
-                    "Sprite multiple levels of children",
-                    "SpriteBatchNode multiple levels of children",
-                    "Sprite without texture",
-                    "Sprite subclass",
-                    "AnimationCache",
-                    "Sprite offset + anchor + skew",
-                    "SpriteBatchNode offset + anchor + skew",
-                    "Sprite anchor + skew + scale",
-                    "SpriteBatchNode anchor + skew + scale",
-                    "Sprite offset + anchor + flip",
-                    null,//"SpriteBatchNode offset + anchor + flip",
-                    null,//"SpriteBatchNodeReorder same index",
-                    "SpriteBatchNode reorder 1 child",
-                    "node sort same index",
-                    "Sprite + children + skew",
-                    "SpriteBatchNode + children + skew",
-                    "Sprite Double resolution",
-                    null,//"SpriteBatch - Bug 1217",
-                    "AnimationCache - Load file",
-                    null,//"Texture Color Cache Issue Test",
-                    null,//"Texture Color Cache Issue Test #2",
-                    "Sub Sprite (rotated source)"
-                ]//arrayOfSpriteTest//sprite
-                ,null//scale9sprite
-                ,null//textinput
-                ,null//texturecache
-                ,null//tilemap
-                ,null//touches
+                ,arrayOfSchedulerTest//arrayOfSchedulerTest//scheduler
+                ,[SpineTest]//spine
+                ,arrayOfSpriteTest//arrayOfSpriteTest//sprite
+                ,arrayOfS9SpriteTest//scale9sprite
+                ,arrayOfTextInputTest//textinput
+                ,arrayOfTexCacheTest//texturecache
+                ,arrayOfTileMapTest//tilemap
+                ,[PongLayer]//touches
                 ,null//transitions
-                ,null//unit
-                ,null//sys
-                ,null//cocos2d js presentation
-                ,null//xmlhttprequest
+                ,arrayOfUnitTest//unit
+                ,arrayOfSysTest//sys
+                ,arrayOfPresentation//cocos2d js presentation
+                ,[XHRTestLayer]//xmlhttprequest
             ];
 
-            this._sidebar = document.getElementById('sidebar');
+            sidebar.initActualList(childNameList);
+
+            sidebar.initChildTitleList(childNameList);
+
+            sidebar.createSidebar();
 
             if(!this._sidebar){
                 return;
@@ -431,14 +283,28 @@
             this._hiddenOtherUl(0);
         },
 
+        createSidebar:function (){
+            this._sidebar = document.getElementById('sidebar');
+            if(!this._sidebar){
+                return;
+            }
+            for (var i = 0, len = sidebar.actualDisplayList.length; i < len; i++) {
+                var li = document.createElement("li");
+                li.innerHTML = '<a><span class="hitarea"></span>' + sidebar.actualDisplayList[i].title + '</a><ul class="list"  data-scene="0"></ul>';
+                this._sidebar.appendChild(li);
+            }
+
+        },
+
         /**
          * init default scene
          */
         defaultScene: function(){
             window.director = cc.director;
             window.winSize = director.getWinSize();
-            cc.LoaderScene.preload(testNames[0].resource || [], function () {
-                var scene = testNames[0].testScene();
+
+            cc.LoaderScene.preload(testNames[sidebar.diplayRecordArr[0]].resource || [], function () {
+                var scene = testNames[sidebar.diplayRecordArr[0]].testScene();
                 if (scene) {
                     scene.runThisTest();
                 }
@@ -449,15 +315,18 @@
 
         createBtnDOM: function(){
 
-            this.list && this.list.forEach(function(btnArray, i){
+            this.list && this.list.forEach(function(btnArray, actualIndex){
                 //btnArray[0] -> <a>
                 //btnArray[1] -> <ul>
-                if(btnArray[0] && btnArray[1] && sidebar._testNameList[i]){
+                if(btnArray[0] && btnArray[1] && sidebar._childNameList[sidebar.diplayRecordArr[actualIndex]]){
                     var html = '';
-                    sidebar._testNameList[i].forEach(function(o, j){
+                    sidebar._childNameList[sidebar.diplayRecordArr[actualIndex]].forEach(function(o, j){
                         var title = '';
                         if(typeof o === 'string'){
                             title = o;
+                        }
+                        if(typeof o === 'object'){
+                            title = o.title || o.itemTitle;
                         }
                         html += '<li><a data-num="'+ j +'">'+ title +'</a></li>'
                     });
@@ -494,7 +363,7 @@
                     Array.prototype.forEach.call(aArray, function(a, i){
                         a.addEventListener('click', function(){
                             sidebar._testNum = i;
-                            sidebar.changeTest(i, num);
+                            sidebar.changeTestScene(i, num);
                         });
                     });
                 }
@@ -519,46 +388,71 @@
             });
         },
 
-        changeTest: function(testNum, sceneNum){
-            if(sidebar._sceneNum == sceneNum){
+        changeTest: function(testChangeNum) {
+            if (sidebar._testNum == testChangeNum)
+            {
+                return testChangeNum;
+            }
+            sidebar.changeHover(testChangeNum, sidebar._sceneNum);
+            return testChangeNum;
+        },
 
-                if(sidebar._testNum < testNum){
-                    while(this._testNameList[sceneNum][testNum] == null){
-                        testNum++;
-                        if(testNum >= this._testNameList[sceneNum].length){
-                            testNum = 0;
+        changeHover:function (actualTestNum, actualSceneNum) {
+            if(sidebar._sceneNum == actualSceneNum){
+
+                if(sidebar._testNum < actualTestNum){
+                    while(this._childNameList[sidebar.diplayRecordArr[actualSceneNum]][actualTestNum] == null){
+                        actualTestNum++;
+                        if(actualTestNum >= this._childNameList[actualSceneNum].length){
+                            actualTestNum = 0;
                         }
                     }
                 }else{
-                    while(this._testNameList[sceneNum][testNum] == null){
-                        testNum--;
-                        if(testNum < 0){
-                            testNum = this._testNameList[sceneNum].length - 1;
+                    while(this._childNameList[sidebar.diplayRecordArr[actualSceneNum]][actualTestNum] == null){
+                        actualTestNum--;
+                        if(actualTestNum < 0){
+                            actualTestNum = this._childNameList[sidebar.diplayRecordArr[actualSceneNum]].length - 1;
                         }
                     }
                 }
             }
 
-            sidebar._sceneNum = sceneNum;
-            sidebar._testNum = testNum;
+            sidebar._sceneNum = actualSceneNum;
+            sidebar._testNum = actualTestNum;
 
-            this._hiddenOtherHover(testNum, sceneNum);
+            this._hiddenOtherHover(actualTestNum, actualSceneNum);
+        },
+
+        changeTestScene: function(actualTestNum, actualSceneNum){
+            sidebar.changeHover(actualTestNum, actualSceneNum);
 
             //The same scene
-            cc.LoaderScene.preload(testNames[sceneNum].resource || [], function () {
+            cc.LoaderScene.preload(testNames[sidebar.diplayRecordArr[actualSceneNum]].resource || [], function () {
                 //Click on the sidebar to allow
                 cc._silderClick = true;
 
-                var scene = testNames[sceneNum].testScene();
-                if (scene) {
-                    scene.runThisTest(testNum);
+                // subchild
+                if (typeof sidebar._childNameList[sidebar.diplayRecordArr[actualSceneNum]][actualTestNum] == "object")
+                {
+                    var scene = sidebar._childNameList[sidebar.diplayRecordArr[actualSceneNum]][actualTestNum].testScene();
+                    if (scene) {
+                        scene.runThisTest(actualTestNum);
+                    }
                 }
+                else
+                {
+                    var scene = testNames[sidebar.diplayRecordArr[actualSceneNum]].testScene();
+                    if (scene) {
+                        scene.runThisTest(actualTestNum);
+                    }
+                }
+
 
             }, this);
 
             //show code
-            code && code.showCode && code.showCode(sceneNum, testNum);
-            return testNum;
+            code && code.showCode && code.showCode(actualSceneNum, actualTestNum);
+            return actualTestNum;
         },
 
         _hiddenOtherHover: function(testNum, sceneNum){
@@ -612,8 +506,8 @@
             }, false);
         },
         start: function(){
-            this.defaultScene();
             sidebar.init();
+            this.defaultScene();
             code.init();
         }
     };

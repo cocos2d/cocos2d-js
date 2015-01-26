@@ -100,7 +100,7 @@ var WebSocketTestLayer = cc.Layer.extend({
         var itemBack = new cc.MenuItemFont("Back", this.toExtensionsMainLayer, this);
         itemBack.x = winSize.width - 50;
         itemBack.y = 25;
-        var menuBack = cc.Menu.create(itemBack);
+        var menuBack = new cc.Menu(itemBack);
         menuBack.x = 0;
         menuBack.y = 0;
         this.addChild(menuBack);
@@ -257,7 +257,7 @@ WebSocketTestLayer.create = function () {
 
 
 var runWebSocketTest = function () {
-    var pScene = cc.Scene.create();
+    var pScene = new cc.Scene();
     var pLayer = WebSocketTestLayer.create();
     pScene.addChild(pLayer);
     cc.director.runScene(pScene);

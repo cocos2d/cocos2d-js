@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.0 Final";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.3 Beta0";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -140,7 +140,7 @@ cc.MENU_STATE_TRACKING_TOUCH = 1;
 cc.MENU_HANDLER_PRIORITY = -128;
 cc.DEFAULT_PADDING = 5;
 
-cc.Scheduler.PRIORITY_SYSTEM	= -2147483648;
+cc.Scheduler.PRIORITY_SYSTEM    = -2147483648;
 
 var _Class = cc.Texture2D;
 _Class.PIXEL_FORMAT_AUTO = 0;
@@ -169,8 +169,14 @@ cc.ONE_MINUS_SRC_ALPHA = 0x0303;
 cc.ONE_MINUS_SRC_COLOR = 0x301;
 cc.ONE_MINUS_DST_ALPHA = 0x305;
 cc.ONE_MINUS_DST_COLOR = 0x0307;
-cc.ONE_MINUS_CONSTANT_ALPHA	= 0x8004;
-cc.ONE_MINUS_CONSTANT_COLOR	= 0x8002;
+cc.ONE_MINUS_CONSTANT_ALPHA = 0x8004;
+cc.ONE_MINUS_CONSTANT_COLOR = 0x8002;
+
+//texture parameters
+cc.LINEAR   = 0x2601;
+cc.REPEAT   = 0x2901;
+cc.CLAMP_TO_EDGE    = 0x812f;
+cc.MIRRORED_REPEAT   = 0x8370;
 
 cc.VERTEX_ATTRIB_FLAG_NONE = 0;
 cc.VERTEX_ATTRIB_FLAG_POSITION = 1 << 0;
@@ -196,18 +202,18 @@ cc.UNIFORM_MAX = 8;
 
 // Shaders 
 cc.UNIFORM_TIME_S = "CC_Time";
-cc.UNIFORM_COS_TIME_S	= 'CC_CosTime';
+cc.UNIFORM_COS_TIME_S   = 'CC_CosTime';
 cc.UNIFORM_COSTIME_S = "CC_CosTime";
-cc.UNIFORM_SIN_TIME_S	= 'CC_SinTime';
+cc.UNIFORM_SIN_TIME_S   = 'CC_SinTime';
 cc.UNIFORM_SINTIME_S = "CC_SinTime";
 cc.UNIFORM_PMATRIX_S = "CC_PMatrix";
 cc.UNIFORM_MVMATRIX_S = "CC_MVMatrix";
 cc.UNIFORM_MVPMATRIX_S = "CC_MVPMatrix";
-cc.UNIFORM_P_MATRIX_S	= 'CC_PMatrix';
-cc.UNIFORM_MV_MATRIX_S	= 'CC_MVMatrix';
-cc.UNIFORM_MVP_MATRIX_S	= 'CC_MVPMatrix';
-cc.UNIFORM_RANDOM01_S	= 'CC_Random01';
-cc.UNIFORM_SAMPLER_S	= 'CC_Texture0';
+cc.UNIFORM_P_MATRIX_S   = 'CC_PMatrix';
+cc.UNIFORM_MV_MATRIX_S  = 'CC_MVMatrix';
+cc.UNIFORM_MVP_MATRIX_S = 'CC_MVPMatrix';
+cc.UNIFORM_RANDOM01_S   = 'CC_Random01';
+cc.UNIFORM_SAMPLER_S    = 'CC_Texture0';
 cc.UNIFORM_ALPHA_TEST_VALUE_S = "CC_AlphaValue";
 
 cc.ITEM_SIZE = 32;
@@ -231,7 +237,9 @@ cc.Event.TOUCH = 0;                  //CCEvent.js
 cc.Event.KEYBOARD = 1;
 cc.Event.ACCELERATION = 2;
 cc.Event.MOUSE = 3;
-cc.Event.CUSTOM = 4;
+cc.Event.FOCUS = 4
+//game controller 5
+cc.Event.CUSTOM = 6;
 cc.EventMouse.NONE = 0;
 cc.EventMouse.DOWN = 1;
 cc.EventMouse.UP = 2;
@@ -246,6 +254,7 @@ cc.EventMouse.BUTTON_6 = 5;
 cc.EventMouse.BUTTON_7 = 6;
 cc.EventMouse.BUTTON_8 = 7;
 cc.EventTouch.MAX_TOUCHES = 5;
+cc.EventTouch.EventCode = {BEGAN: 0, MOVED: 1, ENDED: 2, CANCELLED: 3};
 
 cc.DEFAULT_SPRITE_BATCH_CAPACITY = 29;                  //CCSpriteBatchNode.js
 
@@ -275,103 +284,6 @@ cc.SCENE_FADE = 4208917214;             //CCTransition.js
 cc.SCENE_RADIAL = 0xc001;               //CCTransitionProgress.js
 
 
-cc.KEY = {
-    //android
-    back:6,
-    menu:15,
-    //desktop
-    backspace:7,
-    tab:8,
-    enter:32,
-    shift:12,
-    ctrl:13,
-    alt:14,
-    pause:1,
-    capslock:11,
-    escape:6,
-    pageup:35,
-    pagedown:41,
-    end:21,
-    home:33,
-    left:23,
-    up:25,
-    right:24,
-    down:26,
-    insert:17,
-    Delete:20,
-    0:73,
-    1:74,
-    2:75,
-    3:76,
-    4:77,
-    5:78,
-    6:79,
-    7:80,
-    8:81,
-    9:82,
-    a:121,
-    b:122,
-    c:123,
-    d:124,
-    e:125,
-    f:126,
-    g:127,
-    h:128,
-    i:129,
-    j:130,
-    k:131,
-    l:132,
-    m:133,
-    n:134,
-    o:135,
-    p:136,
-    q:137,
-    r:138,
-    s:139,
-    t:140,
-    u:141,
-    v:142,
-    w:143,
-    x:144,
-    y:145,
-    z:146,
-    '*':30,
-    '+':28,
-    '-':29,
-    'numdel':71,
-    '/':31,
-    f1:44,
-    f2:45,
-    f3:46,
-    f4:47,
-    f5:48,
-    f6:49,
-    f7:50,
-    f8:51,
-    f9:52,
-    f10:53,
-    f11:54,
-    f12:55,
-    numlock:27,
-    scrolllock:2,
-    semicolon:84,
-    ',':69,
-    equal:86,
-    '=':86,
-    ';':84,
-    comma:69,
-    '.':71,
-    period:71,
-    forwardslash:72,
-    grave:120,
-    '[':116,
-    openbracket:116,
-    ']':118,
-    closebracket:118,
-    backslash:117,
-    quote:58,
-    space:56
-};
 //
 // CCMacro.js export
 //
@@ -427,12 +339,12 @@ cc.UINT_MAX = 0xffffffff;
  * @deprecated
  */
 cc.swap = function (x, y, ref) {
-	if ((typeof ref) == 'object' && (typeof ref.x) != 'undefined' && (typeof ref.y) != 'undefined') {
-		var tmp = ref[x];
-		ref[x] = ref[y];
-		ref[y] = tmp;
-	} else
-		cc.log("cc.swap is being modified from original macro, please check usage");
+    if ((typeof ref) == 'object' && (typeof ref.x) != 'undefined' && (typeof ref.y) != 'undefined') {
+        var tmp = ref[x];
+        ref[x] = ref[y];
+        ref[y] = tmp;
+    } else
+        cc.log("cc.swap is being modified from original macro, please check usage");
 };
 
 /**
@@ -448,7 +360,7 @@ cc.swap = function (x, y, ref) {
  * cc.lerp(2,10,0.2)//returns 3.6
  */
 cc.lerp = function (a, b, r) {
-	return a + (b - a) * r;
+    return a + (b - a) * r;
 };
 
 /**
@@ -457,7 +369,7 @@ cc.lerp = function (a, b, r) {
  * @returns {number}
  */
 cc.rand = function () {
-	return Math.random() * 0xffffff;
+    return Math.random() * 0xffffff;
 };
 
 /**
@@ -466,7 +378,7 @@ cc.rand = function () {
  * @function
  */
 cc.randomMinus1To1 = function () {
-	return (Math.random() - 0.5) * 2;
+    return (Math.random() - 0.5) * 2;
 };
 
 /**
@@ -483,7 +395,7 @@ cc.random0To1 = Math.random;
  * @function
  */
 cc.degreesToRadians = function (angle) {
-	return angle * cc.RAD;
+    return angle * cc.RAD;
 };
 
 /**
@@ -493,7 +405,7 @@ cc.degreesToRadians = function (angle) {
  * @function
  */
 cc.radiansToDegrees = function (angle) {
-	return angle * cc.DEG;
+    return angle * cc.DEG;
 };
 
 /**
@@ -522,12 +434,12 @@ cc.BLEND_DST = 0x0303;
  * @function
  */
 cc.nodeDrawSetup = function (node) {
-	//cc.glEnable(node._glServerState);
-	if (node._shaderProgram) {
-		//cc._renderContext.useProgram(node._shaderProgram._programObj);
-		node._shaderProgram.use();
-		node._shaderProgram.setUniformForModelViewAndProjectionMatrixWithMat4();
-	}
+    //cc.glEnable(node._glServerState);
+    if (node._shaderProgram) {
+        //cc._renderContext.useProgram(node._shaderProgram._programObj);
+        node._shaderProgram.use();
+        node._shaderProgram.setUniformForModelViewAndProjectionMatrixWithMat4();
+    }
 };
 
 /**
@@ -541,12 +453,12 @@ cc.nodeDrawSetup = function (node) {
  * @function
  */
 cc.enableDefaultGLStates = function () {
-	//TODO OPENGL STUFF
-	/*
-	 glEnableClientState(GL_VERTEX_ARRAY);
-	 glEnableClientState(GL_COLOR_ARRAY);
-	 glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	 glEnable(GL_TEXTURE_2D);*/
+    //TODO OPENGL STUFF
+    /*
+     glEnableClientState(GL_VERTEX_ARRAY);
+     glEnableClientState(GL_COLOR_ARRAY);
+     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+     glEnable(GL_TEXTURE_2D);*/
 };
 
 /**
@@ -559,13 +471,13 @@ cc.enableDefaultGLStates = function () {
  * @function
  */
 cc.disableDefaultGLStates = function () {
-	//TODO OPENGL
-	/*
-	 glDisable(GL_TEXTURE_2D);
-	 glDisableClientState(GL_COLOR_ARRAY);
-	 glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	 glDisableClientState(GL_VERTEX_ARRAY);
-	 */
+    //TODO OPENGL
+    /*
+     glDisable(GL_TEXTURE_2D);
+     glDisableClientState(GL_COLOR_ARRAY);
+     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+     glDisableClientState(GL_VERTEX_ARRAY);
+     */
 };
 
 /**
@@ -577,7 +489,7 @@ cc.disableDefaultGLStates = function () {
  * @function
  */
 cc.incrementGLDraws = function (addNumber) {
-	cc.g_NumberOfDraws += addNumber;
+    cc.g_NumberOfDraws += addNumber;
 };
 
 /**
@@ -594,9 +506,9 @@ cc.FLT_EPSILON = 0.0000001192092896;
  * @function
  */
 cc.contentScaleFactor = cc.IS_RETINA_DISPLAY_SUPPORTED ? function () {
-	return cc.director.getContentScaleFactor();
+    return cc.director.getContentScaleFactor();
 } : function () {
-	return 1;
+    return 1;
 };
 
 /**
@@ -606,8 +518,8 @@ cc.contentScaleFactor = cc.IS_RETINA_DISPLAY_SUPPORTED ? function () {
  * @function
  */
 cc.pointPointsToPixels = function (points) {
-	var scale = cc.contentScaleFactor();
-	return cc.p(points.x * scale, points.y * scale);
+    var scale = cc.contentScaleFactor();
+    return cc.p(points.x * scale, points.y * scale);
 };
 
 /**
@@ -616,14 +528,14 @@ cc.pointPointsToPixels = function (points) {
  * @function
  */
 cc.pointPixelsToPoints = function (pixels) {
-	var scale = cc.contentScaleFactor();
-	return cc.p(pixels.x / scale, pixels.y / scale);
+    var scale = cc.contentScaleFactor();
+    return cc.p(pixels.x / scale, pixels.y / scale);
 };
 
 cc._pointPixelsToPointsOut = function(pixels, outPoint){
-	var scale = cc.contentScaleFactor();
-	outPoint.x = pixels.x / scale;
-	outPoint.y = pixels.y / scale;
+    var scale = cc.contentScaleFactor();
+    outPoint.x = pixels.x / scale;
+    outPoint.y = pixels.y / scale;
 };
 
 /**
@@ -633,8 +545,8 @@ cc._pointPixelsToPointsOut = function(pixels, outPoint){
  * @function
  */
 cc.sizePointsToPixels = function (sizeInPoints) {
-	var scale = cc.contentScaleFactor();
-	return cc.size(sizeInPoints.width * scale, sizeInPoints.height * scale);
+    var scale = cc.contentScaleFactor();
+    return cc.size(sizeInPoints.width * scale, sizeInPoints.height * scale);
 };
 
 /**
@@ -644,14 +556,14 @@ cc.sizePointsToPixels = function (sizeInPoints) {
  * @function
  */
 cc.sizePixelsToPoints = function (sizeInPixels) {
-	var scale = cc.contentScaleFactor();
-	return cc.size(sizeInPixels.width / scale, sizeInPixels.height / scale);
+    var scale = cc.contentScaleFactor();
+    return cc.size(sizeInPixels.width / scale, sizeInPixels.height / scale);
 };
 
 cc._sizePixelsToPointsOut = function (sizeInPixels, outSize) {
-	var scale = cc.contentScaleFactor();
-	outSize.width = sizeInPixels.width / scale;
-	outSize.height = sizeInPixels.height / scale;
+    var scale = cc.contentScaleFactor();
+    outSize.width = sizeInPixels.width / scale;
+    outSize.height = sizeInPixels.height / scale;
 };
 
 /**
@@ -660,11 +572,11 @@ cc._sizePixelsToPointsOut = function (sizeInPixels, outSize) {
  * @function
  */
 cc.rectPixelsToPoints = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (pixel) {
-	var scale = cc.contentScaleFactor();
-	return cc.rect(pixel.x / scale, pixel.y / scale,
-		pixel.width / scale, pixel.height / scale);
+    var scale = cc.contentScaleFactor();
+    return cc.rect(pixel.x / scale, pixel.y / scale,
+        pixel.width / scale, pixel.height / scale);
 } : function (p) {
-	return p;
+    return p;
 };
 
 /**
@@ -673,20 +585,20 @@ cc.rectPixelsToPoints = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (pixel) {
  * @function
  */
 cc.rectPointsToPixels = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (point) {
-	var scale = cc.contentScaleFactor();
-	return cc.rect(point.x * scale, point.y * scale,
-		point.width * scale, point.height * scale);
+    var scale = cc.contentScaleFactor();
+    return cc.rect(point.x * scale, point.y * scale,
+        point.width * scale, point.height * scale);
 } : function (p) {
-	return p;
+    return p;
 };
 
 cc.checkGLErrorDebug = function () {
-	if (cc.renderMode == cc._RENDER_TYPE_WEBGL) {
-		var _error = cc._renderContext.getError();
-		if (_error) {
-			cc.log(CC._localZOrder.checkGLErrorDebug, _error);
-		}
-	}
+    if (cc.renderMode == cc._RENDER_TYPE_WEBGL) {
+        var _error = cc._renderContext.getError();
+        if (_error) {
+            cc.log(CC._localZOrder.checkGLErrorDebug, _error);
+        }
+    }
 };
 
 
@@ -1145,6 +1057,14 @@ cc.rectIntersectsRect = function( rectA, rectB )
     return bool;
 };
 
+cc.rectOverlapsRect = function (rectA, rectB)
+{
+    return !((rectA.x + rectA.width < rectB.x) ||
+             (rectB.x + rectB.width < rectA.x) ||
+             (rectA.y + rectA.height < rectB.y) ||
+             (rectB.y + rectB.height < rectA.y));
+};
+
 cc.rectUnion = function (rectA, rectB) {
     var rect = cc.rect(0, 0, 0, 0);
     rect.x = Math.min(rectA.x, rectB.x);
@@ -1372,48 +1292,48 @@ cc.associateWithNative = function( jsobj, superclass_or_instance ) {};
 // This is the recommended way to do it
 //
 cc.inherits = function (childCtor, parentCtor) {
-	/** @constructor */
-	function tempCtor() {};
-	tempCtor.prototype = parentCtor.prototype;
-	childCtor.superClass_ = parentCtor.prototype;
-	childCtor.prototype = new tempCtor();
-	childCtor.prototype.constructor = childCtor;
+    /** @constructor */
+    function tempCtor() {};
+    tempCtor.prototype = parentCtor.prototype;
+    childCtor.superClass_ = parentCtor.prototype;
+    childCtor.prototype = new tempCtor();
+    childCtor.prototype.constructor = childCtor;
 
     // Copy "static" method, but doesn't generate subclasses.
-//	for( var i in parentCtor ) {
-//		childCtor[ i ] = parentCtor[ i ];
-//	}
+//  for( var i in parentCtor ) {
+//      childCtor[ i ] = parentCtor[ i ];
+//  }
 };
 cc.base = function(me, opt_methodName, var_args) {
-	var caller = arguments.callee.caller;
-	if (caller.superClass_) {
-		// This is a constructor. Call the superclass constructor.
-		ret =  caller.superClass_.constructor.apply( me, Array.prototype.slice.call(arguments, 1));
-		return ret;
-	}
+    var caller = arguments.callee.caller;
+    if (caller.superClass_) {
+        // This is a constructor. Call the superclass constructor.
+        ret =  caller.superClass_.constructor.apply( me, Array.prototype.slice.call(arguments, 1));
+        return ret;
+    }
 
-	var args = Array.prototype.slice.call(arguments, 2);
-	var foundCaller = false;
-	for (var ctor = me.constructor;
+    var args = Array.prototype.slice.call(arguments, 2);
+    var foundCaller = false;
+    for (var ctor = me.constructor;
         ctor; ctor = ctor.superClass_ && ctor.superClass_.constructor) {
-		if (ctor.prototype[opt_methodName] === caller) {
-			foundCaller = true;
-		} else if (foundCaller) {
-			return ctor.prototype[opt_methodName].apply(me, args);
-		}
-	}
+        if (ctor.prototype[opt_methodName] === caller) {
+            foundCaller = true;
+        } else if (foundCaller) {
+            return ctor.prototype[opt_methodName].apply(me, args);
+        }
+    }
 
-	// If we did not find the caller in the prototype chain,
-	// then one of two things happened:
-	// 1) The caller is an instance method.
-	// 2) This method was not called by the right caller.
-	if (me[opt_methodName] === caller) {
-		return me.constructor.prototype[opt_methodName].apply(me, args);
-	} else {
-		throw Error(
-					'cc.base called from a method of one name ' +
-					'to a method of a different name');
-	}
+    // If we did not find the caller in the prototype chain,
+    // then one of two things happened:
+    // 1) The caller is an instance method.
+    // 2) This method was not called by the right caller.
+    if (me[opt_methodName] === caller) {
+        return me.constructor.prototype[opt_methodName].apply(me, args);
+    } else {
+        throw Error(
+                    'cc.base called from a method of one name ' +
+                    'to a method of a different name');
+    }
 };
 
 
@@ -1441,7 +1361,7 @@ cc.Class.extend = function (prop) {
     // Instantiate a base class (but only create the instance,
     // don't run the init constructor)
     initializing = true;
-    var prototype = new this();
+    var prototype = Object.create(_super);
     initializing = false;
     fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 
@@ -1509,6 +1429,7 @@ cc.LayerGradient.extend = cc.Class.extend;
 cc.LayerColor.extend = cc.Class.extend;
 cc.LayerMultiplex.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
+cc.SpriteBatchNode.extend = cc.Class.extend;
 cc.SpriteFrame.extend = cc.Class.extend;
 cc.LabelTTF.extend = cc.Class.extend;
 cc.LabelBMFont.extend = cc.Class.extend;
@@ -1523,7 +1444,6 @@ cc.MenuItemImage.extend = cc.Class.extend;
 cc.MenuItemToggle.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
 cc.ClippingNode.extend = cc.Class.extend;
-cc.Scale9Sprite.extend = cc.Class.extend;
 cc.ProgressTimer.extend = cc.Class.extend;
 cc.ParallaxNode.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
@@ -1534,7 +1454,6 @@ cc.TiledGrid3D.extend = cc.Class.extend;
 cc.MotionStreak.extend = cc.Class.extend;
 cc.ParticleBatchNode.extend = cc.Class.extend;
 cc.ParticleSystem.extend = cc.Class.extend;
-cc.PhysicsSprite.extend = cc.Class.extend;
 cc.TextFieldTTF.extend = cc.Class.extend;
 cc.RenderTexture.extend = cc.Class.extend;
 cc.TileMapAtlas.extend = cc.Class.extend;
@@ -1542,39 +1461,18 @@ cc.TMXLayer.extend = cc.Class.extend;
 cc.TMXTiledMap.extend = cc.Class.extend;
 cc.TMXMapInfo.extend = cc.Class.extend;
 cc.TransitionScene.extend = cc.Class.extend;
-ccs.Armature.extend = cc.Class.extend;
-ccui.Widget.extend = cc.Class.extend;
-ccui.Button.extend = cc.Class.extend;
-ccui.CheckBox.extend = cc.Class.extend;
-ccui.ImageView.extend = cc.Class.extend;
-ccui.LoadingBar.extend = cc.Class.extend;
-ccui.RichText.extend = cc.Class.extend;
-ccui.Slider.extend = cc.Class.extend;
-ccui.Text.extend = cc.Class.extend;
-ccui.TextAtlas.extend = cc.Class.extend;
-ccui.TextBMFont.extend = cc.Class.extend;
-ccui.TextField.extend = cc.Class.extend;
-ccui.Layout.extend = cc.Class.extend;
-ccui.ListView.extend = cc.Class.extend;
-ccui.PageView.extend = cc.Class.extend;
-ccui.ScrollView.extend = cc.Class.extend;
-cc.ControlButton.extend = cc.Class.extend;
-cc.ControlColourPicker.extend = cc.Class.extend;
-cc.ControlPotentiometer.extend = cc.Class.extend;
-cc.ControlSlider.extend = cc.Class.extend;
-cc.ControlStepper.extend = cc.Class.extend;
-cc.ControlSwitch.extend = cc.Class.extend;
+
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
 cc.Loader = cc.Class.extend({
-	initWith:function (resources, selector, target) {
-		if (selector) {
-			this._selector = selector;
-			this._target = target;
-		}
-		this._selector.call(this._target);
-	}
+    initWith:function (resources, selector, target) {
+        if (selector) {
+            this._selector = selector;
+            this._target = target;
+        }
+        this._selector.call(this._target);
+    }
 });
 
 cc.Loader.preload = function (resources, selector, target) {
@@ -1676,7 +1574,10 @@ cc.EventListener.TOUCH_ALL_AT_ONCE = 2;
 cc.EventListener.KEYBOARD = 3;
 cc.EventListener.MOUSE = 4;
 cc.EventListener.ACCELERATION = 5;
-cc.EventListener.CUSTOM = 6;
+cc.EventListener.FOCUS = 6;
+//game controller 7
+cc.EventListener.CUSTOM = 8;
+
 
 cc.EventListener.create = function(argObj){
     if(!argObj || !argObj.event){
@@ -1705,6 +1606,8 @@ cc.EventListener.create = function(argObj){
     else if(listenerType === cc.EventListener.ACCELERATION){
         listener = cc.EventListenerAcceleration.create(argObj.callback);
         delete argObj.callback;
+    }else if(listenerType === cc.EventListener.FOCUS){
+        listener = cc.EventListenerFocus.create();
     }
     else
     {
@@ -1738,6 +1641,8 @@ cc.eventManager.addListener = function(listener, nodeOrPriority) {
     } else {
         cc.eventManager.addEventListenerWithSceneGraphPriority(listener, nodeOrPriority);
     }
+
+    return listener;
 };
 
 cc.eventManager.dispatchCustomEvent = function (eventName, optionalUserData) {
@@ -1786,6 +1691,12 @@ cc.EventListenerKeyboard.prototype.clone = function() {
     return ret;
 };
 
+cc.EventListenerFocus.prototype.clone = function() {
+    var ret = cc.EventListenerFocus.create();
+    ret.onFocusChanged = this.onFocusChanged;
+    return ret;
+};
+
 cc.EventListenerMouse.prototype.clone = function() {
     var ret = cc.EventListenerMouse.create();
     ret._onMouseDown = this._onMouseDown;
@@ -1809,6 +1720,18 @@ cc.EventListenerMouse.prototype.onMouseDown = function(event) {
     this._previousX = event.getLocationX();
     this._previousY = event.getLocationY();
     this._onMouseDown(event);
+};
+
+cc.EventListenerKeyboard.prototype._onKeyPressed = function(keyCode, event) {
+    if (!this.onKeyPressed)
+        return;
+    this.onKeyPressed(jsbKeyArr[keyCode], event);
+};
+
+cc.EventListenerKeyboard.prototype._onKeyReleased = function(keyCode, event) {
+    if (!this.onKeyReleased)
+        return;
+    this.onKeyReleased(jsbKeyArr[keyCode], event);
 };
 
 cc.EventMouse.prototype.getLocation = function(){
@@ -1928,7 +1851,7 @@ cc.FontDefinition = function () {
     this.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
     this.fillStyle = cc.color(255, 255, 255, 255);
     this.boundingWidth = 0;
-	this.boundingHeight = 0;
+    this.boundingHeight = 0;
 
     this.strokeEnabled = false;
     this.strokeStyle = cc.color(255, 255, 255, 255);
@@ -1936,7 +1859,7 @@ cc.FontDefinition = function () {
 
     this.shadowEnabled = false;
     this.shadowOffsetX = 0;
-	this.shadowOffsetY = 0;
+    this.shadowOffsetY = 0;
     this.shadowBlur = 0;
     this.shadowOpacity = 1.0;
 };
@@ -2022,156 +1945,156 @@ cc.copyArray = function(arr){
 //
 
 cc.cardinalSplineAt = function (p0, p1, p2, p3, tension, t) {
-	var t2 = t * t;
-	var t3 = t2 * t;
+    var t2 = t * t;
+    var t3 = t2 * t;
 
-	var s = (1 - tension) / 2;
+    var s = (1 - tension) / 2;
 
-	var b1 = s * ((-t3 + (2 * t2)) - t);                      // s(-t3 + 2 t2 - t)P1
-	var b2 = s * (-t3 + t2) + (2 * t3 - 3 * t2 + 1);          // s(-t3 + t2)P2 + (2 t3 - 3 t2 + 1)P2
-	var b3 = s * (t3 - 2 * t2 + t) + (-2 * t3 + 3 * t2);      // s(t3 - 2 t2 + t)P3 + (-2 t3 + 3 t2)P3
-	var b4 = s * (t3 - t2);                                   // s(t3 - t2)P4
+    var b1 = s * ((-t3 + (2 * t2)) - t);                      // s(-t3 + 2 t2 - t)P1
+    var b2 = s * (-t3 + t2) + (2 * t3 - 3 * t2 + 1);          // s(-t3 + t2)P2 + (2 t3 - 3 t2 + 1)P2
+    var b3 = s * (t3 - 2 * t2 + t) + (-2 * t3 + 3 * t2);      // s(t3 - 2 t2 + t)P3 + (-2 t3 + 3 t2)P3
+    var b4 = s * (t3 - t2);                                   // s(t3 - t2)P4
 
-	var x = (p0.x * b1 + p1.x * b2 + p2.x * b3 + p3.x * b4);
-	var y = (p0.y * b1 + p1.y * b2 + p2.y * b3 + p3.y * b4);
-	return cc.p(x, y);
+    var x = (p0.x * b1 + p1.x * b2 + p2.x * b3 + p3.x * b4);
+    var y = (p0.y * b1 + p1.y * b2 + p2.y * b3 + p3.y * b4);
+    return cc.p(x, y);
 };
 
 cc._DrawNode = cc.DrawNode;
 cc.DrawNode = cc._DrawNode.extend({
-	_drawColor: cc.color(255, 255, 255, 255),
-	_lineWidth: 1,
+    _drawColor: cc.color(255, 255, 255, 255),
+    _lineWidth: 1,
 
-	setLineWidth: function (width) {
-		this._lineWidth = width;
-	},
+    setLineWidth: function (width) {
+        this._lineWidth = width;
+    },
 
-	getLineWidth: function () {
-		return this._lineWidth;
-	},
+    getLineWidth: function () {
+        return this._lineWidth;
+    },
 
-	setDrawColor: function(color) {
-		var locDrawColor = this._drawColor;
-		locDrawColor.r = color.r;
-		locDrawColor.g = color.g;
-		locDrawColor.b = color.b;
-		locDrawColor.a = (color.a == null) ? 255 : color.a;
-	},
+    setDrawColor: function(color) {
+        var locDrawColor = this._drawColor;
+        locDrawColor.r = color.r;
+        locDrawColor.g = color.g;
+        locDrawColor.b = color.b;
+        locDrawColor.a = (color.a == null) ? 255 : color.a;
+    },
 
-	getDrawColor: function () {
-		return  cc.color(this._drawColor.r, this._drawColor.g, this._drawColor.b, this._drawColor.a);
-	},
+    getDrawColor: function () {
+        return  cc.color(this._drawColor.r, this._drawColor.g, this._drawColor.b, this._drawColor.a);
+    },
 
-	drawRect: function (origin, destination, fillColor, lineWidth, lineColor) {
-		lineWidth = lineWidth || this._lineWidth;
-		lineColor = lineColor || this._drawColor;
-		var points = [origin, cc.p(origin.x, destination.y), destination, cc.p(destination.x, origin.y)];
-		if (fillColor)
-			cc._DrawNode.prototype.drawPoly.call(this, points, fillColor, lineWidth, lineColor);
-		else {
-			points.push(origin);
-			var drawSeg = cc._DrawNode.prototype.drawSegment;
-			for (var i = 0, len = points.length; i < len - 1; i++)
-				drawSeg.call(this, points[i], points[i + 1], lineWidth, lineColor);
-		}
-	},
+    drawRect: function (origin, destination, fillColor, lineWidth, lineColor) {
+        lineWidth = lineWidth || this._lineWidth;
+        lineColor = lineColor || this._drawColor;
+        var points = [origin, cc.p(origin.x, destination.y), destination, cc.p(destination.x, origin.y)];
+        if (fillColor)
+            cc._DrawNode.prototype.drawPoly.call(this, points, fillColor, lineWidth, lineColor);
+        else {
+            points.push(origin);
+            var drawSeg = cc._DrawNode.prototype.drawSegment;
+            for (var i = 0, len = points.length; i < len - 1; i++)
+                drawSeg.call(this, points[i], points[i + 1], lineWidth, lineColor);
+        }
+    },
 
-	drawCircle: function (center, radius, angle, segments, drawLineToCenter, lineWidth, color) {
-		lineWidth = lineWidth || this._lineWidth;
-		color = color || this._drawColor;
-		if (color.a == null)
-			color.a = 255;
-		var coef = 2.0 * Math.PI / segments, vertices = [], i, len;
-		for (i = 0; i <= segments; i++) {
-			var rads = i * coef;
-			var j = radius * Math.cos(rads + angle) + center.x;
-			var k = radius * Math.sin(rads + angle) + center.y;
-			vertices.push(cc.p(j, k));
-		}
-		if (drawLineToCenter)
-			vertices.push(cc.p(center.x, center.y));
+    drawCircle: function (center, radius, angle, segments, drawLineToCenter, lineWidth, color) {
+        lineWidth = lineWidth || this._lineWidth;
+        color = color || this._drawColor;
+        if (color.a == null)
+            color.a = 255;
+        var coef = 2.0 * Math.PI / segments, vertices = [], i, len;
+        for (i = 0; i <= segments; i++) {
+            var rads = i * coef;
+            var j = radius * Math.cos(rads + angle) + center.x;
+            var k = radius * Math.sin(rads + angle) + center.y;
+            vertices.push(cc.p(j, k));
+        }
+        if (drawLineToCenter)
+            vertices.push(cc.p(center.x, center.y));
 
-		lineWidth *= 0.5;
-		var drawSeg = cc._DrawNode.prototype.drawSegment;
-		for (i = 0, len = vertices.length; i < len - 1; i++)
-			drawSeg.call(this, vertices[i], vertices[i + 1], lineWidth, color);
-	},
+        lineWidth *= 0.5;
+        var drawSeg = cc._DrawNode.prototype.drawSegment;
+        for (i = 0, len = vertices.length; i < len - 1; i++)
+            drawSeg.call(this, vertices[i], vertices[i + 1], lineWidth, color);
+    },
 
-	drawQuadBezier: function (origin, control, destination, segments, lineWidth, color) {
-		lineWidth = lineWidth || this._lineWidth;
-		color = color || this._drawColor;
-		cc._DrawNode.prototype.drawQuadBezier.call(this, origin, control, destination, segments, color);
-	},
+    drawQuadBezier: function (origin, control, destination, segments, lineWidth, color) {
+        lineWidth = lineWidth || this._lineWidth;
+        color = color || this._drawColor;
+        cc._DrawNode.prototype.drawQuadBezier.call(this, origin, control, destination, segments, color);
+    },
 
-	drawCubicBezier: function (origin, control1, control2, destination, segments, lineWidth, color) {
-		lineWidth = lineWidth || this._lineWidth;
-		color = color || this._drawColor;
-		cc._DrawNode.prototype.drawCubicBezier.call(this, origin, control1, control2, destination, segments, color);
-	},
+    drawCubicBezier: function (origin, control1, control2, destination, segments, lineWidth, color) {
+        lineWidth = lineWidth || this._lineWidth;
+        color = color || this._drawColor;
+        cc._DrawNode.prototype.drawCubicBezier.call(this, origin, control1, control2, destination, segments, color);
+    },
 
-	drawCatmullRom: function (points, segments, lineWidth, color) {
-		this.drawCardinalSpline(points, 0.5, segments, lineWidth, color);
-	},
+    drawCatmullRom: function (points, segments, lineWidth, color) {
+        this.drawCardinalSpline(points, 0.5, segments, lineWidth, color);
+    },
 
-	drawCardinalSpline: function (config, tension, segments, lineWidth, color) {
-		lineWidth = lineWidth || this._lineWidth;
-		color = color || this._drawColor;
-		if (color.a == null)
-			color.a = 255;
-		var vertices = [], p, lt, deltaT = 1.0 / config.length, m1len = config.length - 1;
+    drawCardinalSpline: function (config, tension, segments, lineWidth, color) {
+        lineWidth = lineWidth || this._lineWidth;
+        color = color || this._drawColor;
+        if (color.a == null)
+            color.a = 255;
+        var vertices = [], p, lt, deltaT = 1.0 / config.length, m1len = config.length - 1;
 
-		for (var i = 0; i < segments + 1; i++) {
-			var dt = i / segments;
+        for (var i = 0; i < segments + 1; i++) {
+            var dt = i / segments;
 
-			// border
-			if (dt == 1) {
-				p = m1len;
-				lt = 1;
-			} else {
-				p = 0 | (dt / deltaT);
-				lt = (dt - deltaT * p) / deltaT;
-			}
+            // border
+            if (dt == 1) {
+                p = m1len;
+                lt = 1;
+            } else {
+                p = 0 | (dt / deltaT);
+                lt = (dt - deltaT * p) / deltaT;
+            }
 
-			// Interpolate
-			var newPos = cc.cardinalSplineAt(
-				config[Math.min(m1len, Math.max(p - 1, 0))],
-				config[Math.min(m1len, Math.max(p + 0, 0))],
-				config[Math.min(m1len, Math.max(p + 1, 0))],
-				config[Math.min(m1len, Math.max(p + 2, 0))],
-				tension, lt);
-			vertices.push(newPos);
-		}
+            // Interpolate
+            var newPos = cc.cardinalSplineAt(
+                config[Math.min(m1len, Math.max(p - 1, 0))],
+                config[Math.min(m1len, Math.max(p + 0, 0))],
+                config[Math.min(m1len, Math.max(p + 1, 0))],
+                config[Math.min(m1len, Math.max(p + 2, 0))],
+                tension, lt);
+            vertices.push(newPos);
+        }
 
-		lineWidth *= 0.5;
-		var drawSeg = cc._DrawNode.prototype.drawSegment;
-		for (var j = 0, len = vertices.length; j < len - 1; j++)
-			drawSeg.call(this, vertices[j], vertices[j + 1], lineWidth, color);
-	},
+        lineWidth *= 0.5;
+        var drawSeg = cc._DrawNode.prototype.drawSegment;
+        for (var j = 0, len = vertices.length; j < len - 1; j++)
+            drawSeg.call(this, vertices[j], vertices[j + 1], lineWidth, color);
+    },
 
-	drawDot:function (pos, radius, color) {
-		color = color || this._drawColor;
-		cc._DrawNode.prototype.drawDot.call(this, pos, radius, color);
-	},
+    drawDot:function (pos, radius, color) {
+        color = color || this._drawColor;
+        cc._DrawNode.prototype.drawDot.call(this, pos, radius, color);
+    },
 
-	drawSegment:function (from, to, radius, color) {
-		color = color || this._drawColor;
-		cc._DrawNode.prototype.drawSegment.call(this, from, to, radius, color);
-	},
+    drawSegment:function (from, to, radius, color) {
+        color = color || this._drawColor;
+        cc._DrawNode.prototype.drawSegment.call(this, from, to, radius, color);
+    },
 
-	drawPoly:function (verts, fillColor, borderWidth, borderColor) {
-		borderColor = borderColor || this._drawColor;
-		if (fillColor)
-			cc._DrawNode.prototype.drawPoly.call(this, verts, fillColor, borderWidth, borderColor);
-		else {
-			verts.push(verts[0]);
-			var drawSeg = cc._DrawNode.prototype.drawSegment;
-			for (var i = 0, len = verts.length; i < len - 1; i++)
-				drawSeg.call(this, verts[i], verts[i + 1], borderWidth, borderColor);
-		}
-	}
+    drawPoly:function (verts, fillColor, borderWidth, borderColor) {
+        borderColor = borderColor || this._drawColor;
+        if (fillColor)
+            cc._DrawNode.prototype.drawPoly.call(this, verts, fillColor, borderWidth, borderColor);
+        else {
+            verts.push(verts[0]);
+            var drawSeg = cc._DrawNode.prototype.drawSegment;
+            for (var i = 0, len = verts.length; i < len - 1; i++)
+                drawSeg.call(this, verts[i], verts[i + 1], borderWidth, borderColor);
+        }
+    }
 });
 cc.DrawNode.create = function () {
-	return new cc.DrawNode();
+    return new cc.DrawNode();
 };
 
 
@@ -2744,6 +2667,15 @@ cc.Node.prototype.getUserData = function () {
     return this.userData;
 };
 
+//for compatibility with html5
+cc.Node.prototype._setNormalizedPosition = cc.Node.prototype.setNormalizedPosition;
+cc.Node.prototype.setNormalizedPosition = function(pos, y){
+    if(y === undefined)
+        cc.Node.prototype._setNormalizedPosition.call(this, pos);
+    else
+        cc.Node.prototype._setNormalizedPosition.call(this, cc.p(pos, y));
+};
+
 /** returns a "world" axis aligned bounding box of the node. <br/>
  * @return {cc.Rect}
  */
@@ -2829,3 +2761,29 @@ cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS,
 
     this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
 };
+
+
+//
+// MenuItemImage support sprite frame name as paramter
+//
+var _p = cc.MenuItemImage.prototype;
+_p._setNormalSpriteFrame = _p.setNormalSpriteFrame;
+_p._setSelectedSpriteFrame = _p.setSelectedSpriteFrame;
+_p._setDisabledSpriteFrame = _p.setDisabledSpriteFrame;
+_p.setNormalSpriteFrame = function(frame) {
+    if (frame[0] == "#") 
+        frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
+    this._setNormalSpriteFrame(frame);
+}
+_p.setSelectedSpriteFrame = function(frame) {
+    if (frame[0] == "#") 
+        frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
+    this._setSelectedSpriteFrame(frame);
+}
+_p.setDisabledSpriteFrame = function(frame) {
+    if (frame[0] == "#") 
+        frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
+    this._setDisabledSpriteFrame(frame);
+}
+
+cc.MenuItemToggle.prototype.selectedItem = cc.MenuItemToggle.prototype.getSelectedItem;

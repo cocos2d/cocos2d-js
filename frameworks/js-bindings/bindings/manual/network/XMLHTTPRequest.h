@@ -94,7 +94,7 @@ private:
     std::string                       _type;
     char*                             _data;
     uint32_t                          _dataSize;
-    JSObject*                         _onreadystateCallback;
+    JS::Heap<JSObject*>               _onreadystateCallback;
     int                               _readyState;
     int                               _status;
     std::string                       _statusText;

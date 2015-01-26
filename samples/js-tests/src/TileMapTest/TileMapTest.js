@@ -1663,8 +1663,8 @@ var TMXIsoOffsetTest = TileDemo.extend({
 });
 
 var TileMapTestScene = TestScene.extend({
-    runThisTest:function () {
-        tileTestSceneIdx = -1;
+    runThisTest:function (num) {
+        tileTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextTileMapTest();
         this.addChild(layer);
         // fix bug #486, #419.

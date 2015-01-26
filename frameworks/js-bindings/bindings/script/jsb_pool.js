@@ -25,8 +25,6 @@
  ****************************************************************************/
 
 /**
- * @namespace
- * @name cc.pool
  * <p>
  *  cc.pool is a singleton object serves as an object cache pool.<br/>
  *  It can helps you to improve your game performance for objects which need frequent release and recreate operations<br/>
@@ -42,29 +40,40 @@
  * cc.pool.putInPool(sp);
  *
  * cc.pool.getFromPool(cc.Sprite, "a.png");
+ * @class
+ * @name cc.pool
  */
-cc.pool = {
+cc.pool = /** @lends cc.pool# */{
     _pool: {},
+
+    _releaseCB: function () {
+        this.release();
+    },
+
+    _autoRelease: function (obj) {
+        var running = obj._running === undefined ? false : !obj._running;
+        cc.director.getScheduler().scheduleCallbackForTarget(obj, this._releaseCB, 0, 0, 0, running)
+    },
 
     /**
      * Put the obj in pool
      * @param obj
      */
     putInPool: function (obj) {
-        if (obj instanceof cc.Node) {
-            var pid = obj.constructor.prototype.__pid;
-            if (!pid) {
-                var desc = { writable: true, enumerable: false, configurable: true };
-                desc.value = ClassManager.getNewID();
-                Object.defineProperty(obj.constructor.prototype, '__pid', desc);
-            }
-            if (!this._pool[pid]) {
-                this._pool[pid] = [];
-            }
-            obj.unuse();
-            obj.retain();//use for jsb
-            this._pool[pid].push(obj);
+        var pid = obj.constructor.prototype.__pid;
+        if (!pid) {
+            var desc = { writable: true, enumerable: false, configurable: true };
+            desc.value = ClassManager.getNewID();
+            Object.defineProperty(obj.constructor.prototype, '__pid', desc);
         }
+        if (!this._pool[pid]) {
+            this._pool[pid] = [];
+        }
+        // JSB retain to avoid being auto released
+        obj.retain && obj.retain();
+        // User implementation for disable the object
+        obj.unuse && obj.unuse();
+        this._pool[pid].push(obj);
     },
 
     /**
@@ -92,7 +101,8 @@ cc.pool = {
             if (list) {
                 for (var i = 0; i < list.length; i++) {
                     if (obj === list[i]) {
-                        obj.release()//use for jsb
+                        // JSB release to avoid memory leak
+                        obj.release && obj.release();
                         list.splice(i, 1);
                     }
                 }
@@ -112,7 +122,10 @@ cc.pool = {
             var args = Array.prototype.slice.call(arguments);
             args.shift();
             var obj = list.pop();
-            obj.reuse.apply(obj, args);
+            // User implementation for re-enable the object
+            obj.reuse && obj.reuse.apply(obj, args);
+            // JSB release to avoid memory leak
+            cc.sys.isNative && obj.release && this._autoRelease(obj);
             return obj;
         }
     },
@@ -124,7 +137,8 @@ cc.pool = {
         for (var i in this._pool) {
             for (var j = 0; j < this._pool[i].length; j++) {
                 var obj = this._pool[i][j];
-                obj.release()
+                // JSB release to avoid memory leak
+                obj.release && obj.release();
             }
         }
         this._pool = {};

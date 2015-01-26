@@ -26,9 +26,9 @@
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-/*#include "extensions/assets-manager/Downloader.h"
+#include "extensions/assets-manager/Downloader.h"
 
-class CC_DLL __JSDownloaderDelegator : cocos2d::Ref
+class __JSDownloaderDelegator : cocos2d::Ref
 {
 public:
     static void download(JSContext *cx, JSObject *obj, const std::string &url, const jsval &callback);
@@ -40,15 +40,15 @@ protected:
 private:
     void onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
     void onError(const cocos2d::extension::Downloader::Error &error);
-    jsval _jsCallback;
+    JS::Heap<jsval> _jsCallback;
     unsigned char *_buffer;
     long _size;
     std::shared_ptr<cocos2d::extension::Downloader> _downloader;
     std::string _url;
     JSContext *_cx;
-    JSObject *_obj;
-};*/
+    JS::Heap<JSObject*> _obj;
+};
 
-void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global);
+void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject global);
 
 #endif /* defined(__jsb_cocos2dx_extension_manual__) */
