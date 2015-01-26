@@ -1157,16 +1157,6 @@ getValue : function (
 },
 
 /**
- * @method getPreviousLocation
- * @return {vec2_object}
- */
-getPreviousLocation : function (
-)
-{
-    return cc.Vec2;
-},
-
-/**
  * @method distanceBetweenPointAndPoint
  * @param {vec2_object} arg0
  * @param {vec2_object} arg1
@@ -1188,6 +1178,16 @@ potentiometerEnded : function (
 vec2 
 )
 {
+},
+
+/**
+ * @method getPreviousLocation
+ * @return {vec2_object}
+ */
+getPreviousLocation : function (
+)
+{
+    return cc.Vec2;
 },
 
 /**
@@ -2282,7 +2282,7 @@ reset : function (
 
 /**
  * @method getIdx
- * @return {int}
+ * @return {long}
  */
 getIdx : function (
 )
@@ -2292,10 +2292,10 @@ getIdx : function (
 
 /**
  * @method setIdx
- * @param {int} arg0
+ * @param {long} arg0
  */
 setIdx : function (
-int 
+long 
 )
 {
 },
@@ -2328,10 +2328,10 @@ cc.TableView = {
 
 /**
  * @method updateCellAtIndex
- * @param {int} arg0
+ * @param {long} arg0
  */
 updateCellAtIndex : function (
-int 
+long 
 )
 {
 },
@@ -2342,16 +2342,6 @@ int
  */
 setVerticalFillOrder : function (
 verticalfillorder 
-)
-{
-},
-
-/**
- * @method scrollViewDidZoom
- * @param {cc.ScrollView} arg0
- */
-scrollViewDidZoom : function (
-scrollview 
 )
 {
 },
@@ -2376,10 +2366,10 @@ getVerticalFillOrder : function (
 
 /**
  * @method removeCellAtIndex
- * @param {int} arg0
+ * @param {long} arg0
  */
 removeCellAtIndex : function (
-int 
+long 
 )
 {
 },
@@ -2417,22 +2407,32 @@ reloadData : function (
 },
 
 /**
+ * @method scrollViewDidZoom
+ * @param {cc.ScrollView} arg0
+ */
+scrollViewDidZoom : function (
+scrollview 
+)
+{
+},
+
+/**
  * @method insertCellAtIndex
- * @param {int} arg0
+ * @param {long} arg0
  */
 insertCellAtIndex : function (
-int 
+long 
 )
 {
 },
 
 /**
  * @method cellAtIndex
- * @param {int} arg0
+ * @param {long} arg0
  * @return {cc.TableViewCell}
  */
 cellAtIndex : function (
-int 
+long 
 )
 {
     return cc.TableViewCell;
