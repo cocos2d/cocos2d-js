@@ -607,13 +607,6 @@
 
         this.widgetAttributes(widget, json);
 
-        var selectedState = getParam(json["CheckedState"], false);
-        widget.setSelected(selectedState);
-
-        var displaystate = getParam(json["DisplayState"], true);
-        widget.setBright(displaystate);
-        widget.setEnabled(displaystate);
-
         var dataList = [
             {name: "NormalBackFileData", handle: widget.loadTextureBackGround},
             {name: "PressedBackFileData", handle: widget.loadTextureBackGroundSelected},
@@ -627,6 +620,13 @@
                 item.handle.call(widget, path, type);
             });
         });
+
+        var selectedState = getParam(json["CheckedState"], false);
+        widget.setSelected(selectedState);
+
+        var displaystate = getParam(json["DisplayState"], true);
+        widget.setBright(displaystate);
+        widget.setEnabled(displaystate);
 
         return widget;
     };
@@ -766,8 +766,8 @@
             widget.loadTexture(path, type);
         });
 
-        var direction = json["ProgressType"];
-        widget.setDirection((direction != "Left_To_Right") | 0);
+        var direction = json["ProgressType"] === "Right_To_Left" ? 1 : 0;
+        widget.setDirection(direction);
 
         var percent = getParam(json["ProgressInfo"], 80);
         if(percent != null)
