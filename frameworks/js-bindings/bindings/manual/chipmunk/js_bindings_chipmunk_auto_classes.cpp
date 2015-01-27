@@ -2556,7 +2556,8 @@ bool JSB_cpSpace_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments");
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpSpace_class, JS::RootedObject(cx, JSB_cpSpace_object), JS::NullPtr());
+    JSObject* jsobj = JS_NewObjectForConstructor(cx, JSB_cpSpace_class, args);
+    //JSObject *jsobj = JS_NewObject(cx, JSB_cpSpace_class, JS::RootedObject(cx, JSB_cpSpace_object), JS::NullPtr());
     void*   ret_val = cpSpaceNew( );
 
     jsb_set_jsobject_for_proxy(jsobj, ret_val);
@@ -5269,7 +5270,7 @@ void JSB_cpSplittingPlane_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool js_get_cpSplitting_n(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(args.rval().toObjectOrNull());
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(args.thisv().toObjectOrNull());
     cpSplittingPlane* plane = (cpSplittingPlane*) proxy->handle;
     cpVect vec = plane->n;
     args.rval().set(cpVect_to_jsval(cx, vec));
@@ -5279,7 +5280,7 @@ bool js_get_cpSplitting_n(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_get_cpSplitting_d(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(args.rval().toObjectOrNull());
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(args.thisv().toObjectOrNull());
     cpSplittingPlane* plane = (cpSplittingPlane*) proxy->handle;
     args.rval().set(DOUBLE_TO_JSVAL(plane->d));
     return true;

@@ -8218,7 +8218,7 @@ bool js_cocos2dx_studio_ComRender_constructor(JSContext *cx, uint32_t argc, jsva
             // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.get());
             JS::RootedObject parent(cx, typeClass->parentProto.get());
-            JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+            obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "cocostudio::ComRender");
@@ -8242,7 +8242,7 @@ bool js_cocos2dx_studio_ComRender_constructor(JSContext *cx, uint32_t argc, jsva
             // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.get());
             JS::RootedObject parent(cx, typeClass->parentProto.get());
-            JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+            obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "cocostudio::ComRender");
@@ -8250,7 +8250,7 @@ bool js_cocos2dx_studio_ComRender_constructor(JSContext *cx, uint32_t argc, jsva
     } while(0);
 
     if (cobj) {
-        if (JS_HasProperty(cx, JS::RootedObject(cx, obj), "_ctor", &ok) && ok)
+        if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
                 ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
 
         args.rval().set(OBJECT_TO_JSVAL(obj));

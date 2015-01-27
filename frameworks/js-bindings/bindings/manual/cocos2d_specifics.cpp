@@ -1388,7 +1388,7 @@ void JSScheduleWrapper::scheduleFunc(float dt)
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
     if(!_jsCallback.isNullOrUndefined()) {
-        JS::CallArgs args = JS::CallArgsFromVp(1, &data);
+        JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(1, &data);
         JS::RootedValue retval(cx);
         JS_CallFunctionValue(cx, JS::RootedObject(cx, _jsThisObj.toObjectOrNull()), JS::RootedValue(cx, _jsCallback.get()), args, &retval);
     }

@@ -1058,6 +1058,8 @@ void register_all_cocos2dx_studio_manual(JSContext* cx, JS::HandleObject global)
 
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocostudio_ArmatureDataManager_prototype), "addArmatureFileInfoAsync", jsb_Animation_addArmatureFileInfoAsyncCallFunc, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
    
+    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocostudio_ActionManagerEx_prototype), "initWithDictionaryEx", js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+
     JS::RootedObject baseData(cx, jsb_cocostudio_BaseData_prototype);
     JS_DefineProperty(cx, baseData, "x", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_BaseData_x, js_set_BaseData_x);
     JS_DefineProperty(cx, baseData, "y", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_BaseData_y, js_set_BaseData_y); 
