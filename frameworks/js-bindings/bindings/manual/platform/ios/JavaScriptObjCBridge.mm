@@ -26,6 +26,7 @@
 #include "ScriptingCore.h"
 #include "js_manual_conversions.h"
 #include "cocos2d.h"
+using namespace cocos2d;
 #import <Foundation/Foundation.h>
 JavaScriptObjCBridge::CallInfo::~CallInfo(void)
 {
