@@ -245,7 +245,7 @@ var testNames = [
     {
         title:"Box2D Test",
         resource:g_box2d,
-        platforms: PLATFORM_HTML5,
+        platforms: PLATFORM_ALL,
         linksrc:"src/Box2dTest/Box2dTest.js",
         testScene:function () {
             return new Box2DTestScene();

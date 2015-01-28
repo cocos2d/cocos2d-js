@@ -23,6 +23,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+
+//box2d
+require('script/box2d/Box2D_v2.3.1_min.js');
+
 var TAG_SPRITE_MANAGER = 1;
 var PTM_RATIO = 32;
 
@@ -48,54 +53,18 @@ var Box2DTestLayer = cc.Layer.extend({
             }
         }), this);
 
-        var b2Vec2 = Box2D.Common.Math.b2Vec2
-            , b2BodyDef = Box2D.Dynamics.b2BodyDef
-            , b2Body = Box2D.Dynamics.b2Body
-            , b2FixtureDef = Box2D.Dynamics.b2FixtureDef
-            , b2World = Box2D.Dynamics.b2World
-            , b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
-
         var screenSize = cc.director.getWinSize();
-        //UXLog(L"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
 
         // Construct a world object, which will hold and simulate the rigid bodies.
-        this.world = new b2World(new b2Vec2(0, -10), true);
-        this.world.SetContinuousPhysics(true);
+        var gravity = new Box2D.b2Vec2(0.0, -10.0);
+        this.world = new Box2D.b2World(gravity);
 
-        // Define the ground body.
-        //var groundBodyDef = new b2BodyDef(); // TODO
-        //groundBodyDef.position.Set(screenSize.width / 2 / PTM_RATIO, screenSize.height / 2 / PTM_RATIO); // bottom-left corner
+        var bd_ground = new Box2D.b2BodyDef();
+        var ground = this.world.CreateBody(bd_ground);
 
-        // Call the body factory which allocates memory for the ground body
-        // from a pool and creates the ground box shape (also from a pool).
-        // The body is also added to the world.
-        //var groundBody = this.world.CreateBody(groundBodyDef);
-
-        var fixDef = new b2FixtureDef;
-        fixDef.density = 1.0;
-        fixDef.friction = 0.5;
-        fixDef.restitution = 0.2;
-
-        var bodyDef = new b2BodyDef;
-
-        //create ground
-        bodyDef.type = b2Body.b2_staticBody;
-        fixDef.shape = new b2PolygonShape;
-        fixDef.shape.SetAsBox(20, 2);
-        // upper
-        bodyDef.position.Set(10, screenSize.height / PTM_RATIO + 1.8);
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef);
-        // bottom
-        bodyDef.position.Set(10, -1.8);
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef);
-
-        fixDef.shape.SetAsBox(2, 14);
-        // left
-        bodyDef.position.Set(-1.8, 13);
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef);
-        // right
-        bodyDef.position.Set(26.8, 13);
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+        var groundShape = new Box2D.b2EdgeShape();
+        groundShape.Set(new Box2D.b2Vec2(-40.0, 0.0), new Box2D.b2Vec2(40.0, 0.0));
+        ground.CreateFixture(groundShape, 0.0);
 
         //Set up sprite
 
@@ -129,58 +98,40 @@ var Box2DTestLayer = cc.Layer.extend({
         sprite.x = p.x;
         sprite.y = p.y;
 
-        // Define the dynamic body.
-        //Set up a 1m squared box in the physics world
-        var b2BodyDef = Box2D.Dynamics.b2BodyDef
-            , b2Body = Box2D.Dynamics.b2Body
-            , b2FixtureDef = Box2D.Dynamics.b2FixtureDef
-            , b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
+        var shape = new Box2D.b2PolygonShape();
+        shape.SetAsBox(0.5, 0.5);
 
-        var bodyDef = new b2BodyDef();
-        bodyDef.type = b2Body.b2_dynamicBody;
-        bodyDef.position.Set(p.x / PTM_RATIO, p.y / PTM_RATIO);
-        bodyDef.userData = sprite;
-        var body = this.world.CreateBody(bodyDef);
+        var ZERO = new Box2D.b2Vec2(0.0, 0.0);
+        var temp = new Box2D.b2Vec2(0.0, 0.0);
 
-        // Define another box shape for our dynamic body.
-        var dynamicBox = new b2PolygonShape();
-        dynamicBox.SetAsBox(0.5, 0.5);//These are mid points for our 1m box
+        var bd = new Box2D.b2BodyDef();
+        bd.set_type(Box2D.b2_dynamicBody);
+        bd.set_position(new Box2D.b2Vec2(p.x / PTM_RATIO, p.y / PTM_RATIO));
+        var body = this.world.CreateBody(bd);
+        body.CreateFixture(shape, 5.0);
 
-        // Define the dynamic body fixture.
-        var fixtureDef = new b2FixtureDef();
-        fixtureDef.shape = dynamicBox;
-        fixtureDef.density = 1.0;
-        fixtureDef.friction = 0.3;
-        body.CreateFixture(fixtureDef);
+        body.SetLinearVelocity(ZERO);
+        body.SetAwake(1);
+        body.SetActive(1);
+
+        body.userData = sprite;
+
         //----end0----
     },
     update:function (dt) {
-        //----start0----update
-        //It is recommended that a fixed time step is used with Box2D for stability
-        //of the simulation, however, we are using a variable time step here.
-        //You need to make an informed choice, the following URL is useful
-        //http://gafferongames.com/game-physics/fix-your-timestep/
+        this.world.Step(dt, 2, 2);
 
-        var velocityIterations = 8;
-        var positionIterations = 1;
-
-        // Instruct the world to perform a single step of simulation. It is
-        // generally best to keep the time step and iterations fixed.
-        this.world.Step(dt, velocityIterations, positionIterations);
-
-        //Iterate over the bodies in the physics world
-        for (var b = this.world.GetBodyList(); b; b = b.GetNext()) {
-            if (b.GetUserData() != null) {
+        for (var b = this.world.GetBodyList(); b.ptr; b = b.GetNext()) {
+            if (b.userData) {
                 //Synchronize the AtlasSprites position and rotation with the corresponding body
-                var myActor = b.GetUserData();
-                myActor.x = b.GetPosition().x * PTM_RATIO;
-                myActor.y = b.GetPosition().y * PTM_RATIO;
+                var myActor = b.userData;
+                myActor.x = b.GetPosition().get_x() * PTM_RATIO;
+                myActor.y = b.GetPosition().get_y() * PTM_RATIO;
                 myActor.rotation = -1 * cc.radiansToDegrees(b.GetAngle());
             }
         }
-        //----end0----
     }
-    //CREATE_NODE(Box2DTestLayer);
+
 });
 
 var Box2DTestScene = TestScene.extend({
