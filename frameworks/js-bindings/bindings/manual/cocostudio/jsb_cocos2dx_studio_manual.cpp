@@ -1039,6 +1039,267 @@ bool js_set_MovementData_tweenEasing(JSContext *cx, JS::HandleObject obj, JS::Ha
     return false;
 }
 
+// ContourData properties
+
+bool js_get_ContourData_vertexList(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    cocostudio::ContourData* cobj = (cocostudio::ContourData*)JS_GetPrivate(obj);
+    if (cobj) {
+        const std::vector<cocos2d::Vec2>& ret = cobj->vertexList;
+        JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0, nullptr));
+        jsval jsret;
+        //CCObject* obj;
+        int i = 0;
+        for(const auto& vec2 : ret)
+        {
+            JS::RootedValue arrElement(cx);
+            arrElement = vector2_to_jsval(cx, vec2);
+            
+            if (!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+                break;
+            }
+            ++i;
+        }
+        jsret = OBJECT_TO_JSVAL(jsretArr);
+    }
+    JS_ReportError(cx, "js_get_ContourData_vertexList : Invalid native object.");
+    return false;
+}
+bool js_set_ContourData_vertexList(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
+{
+    cocostudio::ContourData* cobj = (cocostudio::ContourData*)JS_GetPrivate(obj);
+    if (cobj) {
+        JS::RootedObject jsobj(cx);
+        jsobj = JSVAL_TO_OBJECT(vp.get());
+        JSB_PRECONDITION3( jsobj && JS_IsArrayObject(cx, jsobj),  cx, false, "Object must be an array");
+        
+        std::vector<cocos2d::Vec2> list;
+        uint32_t len = 0;
+        JS_GetArrayLength(cx, jsobj, &len);
+        bool ok;
+        
+        for (uint32_t i=0; i < len; i++)
+        {
+            JS::RootedValue value(cx);
+            if (JS_GetElement(cx, jsobj, i, &value))
+            {
+                cocos2d::Vec2 vec2;
+                ok = jsval_to_vector2(cx, value, &vec2);
+                if (ok)
+                {
+                    list.push_back(vec2);
+                }
+            }
+        }
+        
+        cobj->vertexList = list;
+        return true;
+    }
+    JS_ReportError(cx, "js_set_ContourData_vertexList : Invalid native object.");
+    return false;
+}
+
+// TextureData properties
+
+bool js_get_TextureData_contourDataList(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    cocostudio::TextureData* cobj = (cocostudio::TextureData*)JS_GetPrivate(obj);
+    if (cobj) {
+        const cocos2d::Vector<cocostudio::ContourData *>& ret = cobj->contourDataList;
+        JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0, nullptr));
+        jsval jsret;
+        //CCObject* obj;
+        int i = 0;
+        for(const auto& contourData : ret)
+        {
+            JS::RootedValue arrElement(cx);
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ContourData>(cx, (cocostudio::ContourData*)contourData);
+            arrElement = OBJECT_TO_JSVAL(jsProxy->obj);
+            
+            if (!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+                break;
+            }
+            ++i;
+        }
+        jsret = OBJECT_TO_JSVAL(jsretArr);
+    }
+    JS_ReportError(cx, "js_get_TextureData_contourDataList : Invalid native object.");
+    return false;
+}
+bool js_set_TextureData_contourDataList(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
+{
+    cocostudio::TextureData* cobj = (cocostudio::TextureData*)JS_GetPrivate(obj);
+    if (cobj) {
+        JS::RootedObject jsobj(cx);
+        jsobj = JSVAL_TO_OBJECT(vp.get());
+        JSB_PRECONDITION3( jsobj && JS_IsArrayObject(cx, jsobj),  cx, false, "Object must be an array");
+        
+        cocos2d::Vector<cocostudio::ContourData *> list;
+        uint32_t len = 0;
+        JS_GetArrayLength(cx, jsobj, &len);
+        bool ok;
+        
+        for (uint32_t i=0; i < len; i++)
+        {
+            JS::RootedValue value(cx);
+            if (JS_GetElement(cx, jsobj, i, &value))
+            {
+                cocostudio::ContourData* contourData;
+                do {
+                    if (!value.isObject()) { ok = false; break; }
+                    js_proxy_t *jsProxy;
+                    JSObject *tmpObj = JSVAL_TO_OBJECT(value);
+                    jsProxy = jsb_get_js_proxy(tmpObj);
+                    contourData = (cocostudio::ContourData*)(jsProxy ? jsProxy->ptr : NULL);
+                    JSB_PRECONDITION2(contourData, cx, false, "Invalid Native Object");
+                } while (0);
+                JSB_PRECONDITION2(ok, cx, false, "js_set_TextureData_contourDataList : Error processing arguments");
+                
+                list.pushBack(contourData);
+            }
+        }
+        
+        cobj->contourDataList = list;
+        return true;
+    }
+    JS_ReportError(cx, "js_set_TextureData_contourDataList : Invalid native object.");
+    return false;
+}
+
+bool js_get_TextureData_width(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    cocostudio::TextureData* cobj = (cocostudio::TextureData*)JS_GetPrivate(obj);
+    if (cobj) {
+        jsval ret = DOUBLE_TO_JSVAL(cobj->width);
+        
+        if (ret != JSVAL_NULL)
+        {
+            vp.set(ret);
+            return true;
+        }
+        CCLOGERROR("js_get_TextureData_width : Fail to retrieve property from MovementData.");
+        return false;
+    }
+    JS_ReportError(cx, "js_get_TextureData_width : Invalid native object.");
+    return false;
+}
+bool js_set_TextureData_width(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp) {
+    cocostudio::TextureData* cobj = (cocostudio::TextureData*)JS_GetPrivate(obj);
+    if (cobj) {
+        cobj->width = (float)JSVAL_TO_DOUBLE(vp.get());
+        return true;
+    }
+    JS_ReportError(cx, "js_set_TextureData_width : Invalid native object.");
+    return false;
+}
+
+bool js_get_TextureData_height(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    cocostudio::TextureData* cobj = (cocostudio::TextureData*)JS_GetPrivate(obj);
+    if (cobj) {
+        jsval ret = DOUBLE_TO_JSVAL(cobj->height);
+        
+        if (ret != JSVAL_NULL)
+        {
+            vp.set(ret);
+            return true;
+        }
+        CCLOGERROR("js_get_TextureData_height : Fail to retrieve property from MovementData.");
+        return false;
+    }
+    JS_ReportError(cx, "js_get_TextureData_height : Invalid native object.");
+    return false;
+}
+bool js_set_TextureData_height(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp) {
+    cocostudio::TextureData* cobj = (cocostudio::TextureData*)JS_GetPrivate(obj);
+    if (cobj) {
+        cobj->height = (float)JSVAL_TO_DOUBLE(vp.get());
+        return true;
+    }
+    JS_ReportError(cx, "js_set_TextureData_height : Invalid native object.");
+    return false;
+}
+
+bool js_get_TextureData_pivotX(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    cocostudio::TextureData* cobj = (cocostudio::TextureData*)JS_GetPrivate(obj);
+    if (cobj) {
+        jsval ret = DOUBLE_TO_JSVAL(cobj->pivotX);
+        
+        if (ret != JSVAL_NULL)
+        {
+            vp.set(ret);
+            return true;
+        }
+        CCLOGERROR("js_get_TextureData_pivotX : Fail to retrieve property from MovementData.");
+        return false;
+    }
+    JS_ReportError(cx, "js_get_TextureData_pivotX : Invalid native object.");
+    return false;
+}
+bool js_set_TextureData_pivotX(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp) {
+    cocostudio::TextureData* cobj = (cocostudio::TextureData*)JS_GetPrivate(obj);
+    if (cobj) {
+        cobj->pivotX = (float)JSVAL_TO_DOUBLE(vp.get());
+        return true;
+    }
+    JS_ReportError(cx, "js_set_TextureData_pivotX : Invalid native object.");
+    return false;
+}
+
+bool js_get_TextureData_pivotY(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    cocostudio::TextureData* cobj = (cocostudio::TextureData*)JS_GetPrivate(obj);
+    if (cobj) {
+        jsval ret = DOUBLE_TO_JSVAL(cobj->pivotY);
+        
+        if (ret != JSVAL_NULL)
+        {
+            vp.set(ret);
+            return true;
+        }
+        CCLOGERROR("js_get_TextureData_pivotY : Fail to retrieve property from MovementData.");
+        return false;
+    }
+    JS_ReportError(cx, "js_get_TextureData_pivotY : Invalid native object.");
+    return false;
+}
+bool js_set_TextureData_pivotY(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp) {
+    cocostudio::TextureData* cobj = (cocostudio::TextureData*)JS_GetPrivate(obj);
+    if (cobj) {
+        cobj->pivotY = (float)JSVAL_TO_DOUBLE(vp.get());
+        return true;
+    }
+    JS_ReportError(cx, "js_set_TextureData_pivotY : Invalid native object.");
+    return false;
+}
+
+bool js_get_TextureData_name(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    cocostudio::TextureData* cobj = (cocostudio::TextureData*)JS_GetPrivate(obj);
+    if (cobj) {
+        jsval ret = std_string_to_jsval(cx, cobj->name);
+        
+        if (ret != JSVAL_NULL)
+        {
+            vp.set(ret);
+            return true;
+        }
+        CCLOGERROR("js_get_TextureData_name : Fail to retrieve property name of AnimationData.");
+        return false;
+    }
+    JS_ReportError(cx, "js_get_TextureData_name : Invalid native object.");
+    return false;
+}
+bool js_set_TextureData_name(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp) {
+    cocostudio::TextureData* cobj = (cocostudio::TextureData*)JS_GetPrivate(obj);
+    if (cobj) {
+        std::string name;
+        bool ok = jsval_to_std_string(cx, vp.get(), &name);
+        JSB_PRECONDITION2(ok, cx, false, "js_set_TextureData_name : Error processing arguments");
+        cobj->name = name;
+        return true;
+    }
+    JS_ReportError(cx, "js_set_TextureData_name : Invalid native object.");
+    return false;
+}
+
+
 extern JSObject* jsb_cocostudio_ArmatureAnimation_prototype;
 extern JSObject* jsb_cocostudio_ArmatureDataManager_prototype;
 extern JSObject* jsb_cocostudio_ColliderBody_prototype;
@@ -1046,6 +1307,8 @@ extern JSObject* jsb_cocostudio_BaseData_prototype;
 extern JSObject* jsb_cocostudio_AnimationData_prototype;
 extern JSObject* jsb_cocostudio_MovementData_prototype;
 extern JSObject* jsb_cocostudio_ActionManagerEx_prototype;
+extern JSObject* jsb_cocostudio_ContourData_prototype;
+extern JSObject* jsb_cocostudio_TextureData_prototype;
 
 void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
 {
@@ -1096,5 +1359,22 @@ void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
         {0, 0, 0, 0, 0}
     };
     JS_DefineProperties(cx, jsb_cocostudio_AnimationData_prototype, movementDataProps);
+    
+    static JSPropertySpec contourDataProps[] = {
+        {"vertexList", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_ContourData_vertexList), JSOP_WRAPPER(js_set_ContourData_vertexList)},
+        {0, 0, 0, 0, 0}
+    };
+    JS_DefineProperties(cx, jsb_cocostudio_ContourData_prototype, contourDataProps);
+    
+    static JSPropertySpec textureDataProps[] = {
+        {"contourDataList", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_TextureData_contourDataList), JSOP_WRAPPER(js_set_TextureData_contourDataList)},
+        {"name", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_TextureData_name), JSOP_WRAPPER(js_set_TextureData_name)},
+        {"width", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_TextureData_width), JSOP_WRAPPER(js_set_TextureData_width)},
+        {"height", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_TextureData_height), JSOP_WRAPPER(js_set_TextureData_height)},
+        {"pivotX", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_TextureData_pivotX), JSOP_WRAPPER(js_set_TextureData_pivotX)},
+        {"pivotY", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_TextureData_pivotY), JSOP_WRAPPER(js_set_TextureData_pivotY)},
+        {0, 0, 0, 0, 0}
+    };
+    JS_DefineProperties(cx, jsb_cocostudio_TextureData_prototype, textureDataProps);
     
 }
