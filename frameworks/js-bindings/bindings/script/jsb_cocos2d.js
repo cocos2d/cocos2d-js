@@ -256,7 +256,7 @@ cc.EventMouse.BUTTON_8 = 7;
 cc.EventTouch.MAX_TOUCHES = 5;
 cc.EventTouch.EventCode = {BEGAN: 0, MOVED: 1, ENDED: 2, CANCELLED: 3};
 
-cc.DEFAULT_SPRITE_BATCH_CAPACITY = 29;                  //CCSpriteBatchNode.js
+cc.SpriteBatchNode.DEFAULT_CAPACITY = 29;                  //CCSpriteBatchNode.js
 
 cc.ParticleSystem.SHAPE_MODE = 0;            //CCParticleSystem.js
 cc.ParticleSystem.TEXTURE_MODE = 1;
