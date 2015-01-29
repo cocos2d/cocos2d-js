@@ -3941,31 +3941,22 @@ bool js_cocos2dx_Node_updatePhysicsBodyTransform(JSContext *cx, uint32_t argc, j
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_updatePhysicsBodyTransform : Invalid Native Object");
-    if (argc == 5) {
-        cocos2d::Scene* arg0;
-        cocos2d::Mat4 arg1;
-        unsigned int arg2;
+    if (argc == 4) {
+        cocos2d::Mat4 arg0;
+        unsigned int arg1;
+        double arg2;
         double arg3;
-        double arg4;
-        do {
-            if (!argv[0].isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Scene*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_matrix(cx, argv[1], &arg1);
-        ok &= jsval_to_uint32(cx, argv[2], &arg2);
+        ok &= jsval_to_matrix(cx, argv[0], &arg0);
+        ok &= jsval_to_uint32(cx, argv[1], &arg1);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[2]), &arg2);
         ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[3]), &arg3);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[4]), &arg4);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_updatePhysicsBodyTransform : Error processing arguments");
-        cobj->updatePhysicsBodyTransform(arg0, arg1, arg2, arg3, arg4);
+        cobj->updatePhysicsBodyTransform(arg0, arg1, arg2, arg3);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_Node_updatePhysicsBodyTransform : wrong number of arguments: %d, was expecting %d", argc, 5);
+    JS_ReportError(cx, "js_cocos2dx_Node_updatePhysicsBodyTransform : wrong number of arguments: %d, was expecting %d", argc, 4);
     return false;
 }
 bool js_cocos2dx_Node_getDisplayedOpacity(JSContext *cx, uint32_t argc, jsval *vp)
@@ -5373,7 +5364,7 @@ void js_register_cocos2dx_Node(JSContext *cx, JSObject *global) {
         JS_FN("setRotationY", js_cocos2dx_Node_setRotationSkewY, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setName", js_cocos2dx_Node_setName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAdditionalTransform", js_cocos2dx_Node_setAdditionalTransform, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("updatePhysicsBodyTransform", js_cocos2dx_Node_updatePhysicsBodyTransform, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("updatePhysicsBodyTransform", js_cocos2dx_Node_updatePhysicsBodyTransform, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDisplayedOpacity", js_cocos2dx_Node_getDisplayedOpacity, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getLocalZOrder", js_cocos2dx_Node_getLocalZOrder, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getScheduler", js_cocos2dx_Node_getScheduler, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
