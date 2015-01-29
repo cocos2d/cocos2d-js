@@ -476,10 +476,214 @@ var Box2DTest_car = (function(){
                 this.rearWheelJoint.SetMotorSpeed(-50);
             else
                 this.rearWheelJoint.SetMotorSpeed(0);
+        },
+
+        subtitle: function(){
+            return cc.sys.isMobile ? "press right/left side of the screen to go forward/backward" : "press j/k to go forward/backward";
         }
     });
 })();
 
+
+var Box2DTest_dominos = Box2DTest.extend({
+    ctor:function(){
+        this._super();
+
+        var b2EdgeShape = Box2D.b2EdgeShape,
+            b2Vec2 = Box2D.b2Vec2,
+            b2BodyDef = Box2D.b2BodyDef,
+            b2PolygonShape = Box2D.b2PolygonShape,
+            b2FixtureDef = Box2D.b2FixtureDef,
+            b2RevoluteJointDef = Box2D.b2RevoluteJointDef,
+            b2DistanceJointDef = Box2D.b2DistanceJointDef,
+            b2CircleShape = Box2D.b2CircleShape;
+
+        var shape = new b2EdgeShape();
+        shape.Set(new b2Vec2(-40.0, 0.0), new b2Vec2(40.0, 0.0));
+
+        var ground = this.world.CreateBody(new b2BodyDef());
+        ground.CreateFixture(shape, 0.0);
+
+        shape = new b2PolygonShape();
+        shape.SetAsBox(6.0, 0.25, new b2Vec2(-1.5, 10.0), 0);
+        ground.CreateFixture(shape, 0.0);
+
+        shape.SetAsBox(7.0, 0.25, new b2Vec2(1.0, 6.0), 0.3);
+        ground.CreateFixture(shape, 0.0);
+
+        shape.SetAsBox(0.25, 1.5, new b2Vec2(-7.0, 4.0), 0.0);
+        ground.CreateFixture(shape, 0.0);
+
+        //dominos
+        {
+            var shape = new b2PolygonShape();
+            shape.SetAsBox(0.1, 1.0);
+
+            var fd = new b2FixtureDef();
+            fd.set_shape(shape);
+            fd.set_density(20.0);
+            fd.set_friction(0.1);
+
+            for (var i = 0; i < 10; ++i)
+            {
+                var bd = new b2BodyDef();
+                // bd.set_type(b2_dynamicBody);
+                bd.set_type(Box2D.b2_dynamicBody);
+                bd.set_position(new b2Vec2(-6.0 + 1.0 * i, 11.25));
+                var body = this.world.CreateBody(bd);
+                body.CreateFixture(fd);
+            }
+        }
+
+        var jd = new b2RevoluteJointDef();
+
+        //see-saw
+        var seesawBody;
+        {
+            var shape = new b2PolygonShape();
+            shape.SetAsBox(6.0, 0.125);
+
+            var bd = new b2BodyDef();
+            // bd.set_type(b2_dynamicBody);
+            bd.set_type(Box2D.b2_dynamicBody);
+            bd.set_position(new b2Vec2(-0.9, 1.0));
+            bd.set_angle(-0.15);
+
+            seesawBody = this.world.CreateBody(bd);
+            seesawBody.CreateFixture(shape, 10.0);
+
+            var anchor = new b2Vec2(-2.0, 1.0);
+            jd.Initialize(ground, seesawBody, anchor);
+            jd.set_collideConnected(true);
+            this.world.CreateJoint(jd);
+        }
+
+        //pendulum
+        {
+            var shape = new b2PolygonShape();
+            shape.SetAsBox(0.25, 0.25);
+
+            var bd = new b2BodyDef();
+            // bd.set_type(b2_dynamicBody);
+            bd.set_type(Box2D.b2_dynamicBody);
+            bd.set_position(new b2Vec2(-10.0, 15.0));
+            var b4 = this.world.CreateBody(bd);
+            b4.CreateFixture(shape, 10.0);
+
+            anchor.Set(-7.0, 15.0);
+            jd.Initialize(ground, b4, anchor);
+            this.world.CreateJoint(jd);
+        }
+
+        //cradle holding balls
+        var cradleBody;
+        {
+            var bd = new b2BodyDef();
+            // bd.set_type(b2_dynamicBody);
+            bd.set_type(Box2D.b2_dynamicBody);
+            bd.set_position(new b2Vec2(6.5, 3.0));
+            cradleBody = this.world.CreateBody(bd);
+
+            var shape = new b2PolygonShape();
+            var fd = new b2FixtureDef();
+
+            fd.set_shape(shape);
+            fd.set_density(10.0);
+            fd.set_friction(0.1);
+
+            shape.SetAsBox(1.0, 0.1, new b2Vec2(0.0, -0.9), 0.0);
+            cradleBody.CreateFixture(fd);
+
+            shape.SetAsBox(0.1, 1.0, new b2Vec2(-0.9, 0.0), 0.0);
+            cradleBody.CreateFixture(fd);
+
+            shape.SetAsBox(0.1, 1.0, new b2Vec2(0.9, 0.0), 0.0);
+            cradleBody.CreateFixture(fd);
+
+            anchor.Set(6.0, 2.0);
+            jd.Initialize(ground, cradleBody, anchor);
+            this.world.CreateJoint(jd);
+        }
+
+        //lid on top of cradle
+        var lidBody;
+        {
+            var shape = new b2PolygonShape();
+            shape.SetAsBox(1.0, 0.1);
+
+            var bd = new b2BodyDef();
+            // bd.set_type(b2_dynamicBody);
+            bd.set_type(Box2D.b2_dynamicBody);
+            bd.set_position(new b2Vec2(6.5, 4.1));
+            lidBody = this.world.CreateBody(bd);
+            lidBody.CreateFixture(shape, 30.0);
+
+            anchor.Set(7.5, 4.0);
+            jd.Initialize(cradleBody, lidBody, anchor);
+            this.world.CreateJoint(jd);
+        }
+
+        //prop to support cradle
+        var propBody;
+        {
+            var shape = new b2PolygonShape();
+            shape.SetAsBox(0.1, 1.0);
+
+            var bd = new b2BodyDef();
+            // bd.set_type(b2_dynamicBody);
+            bd.set_type(Box2D.b2_dynamicBody);
+            bd.set_position(new b2Vec2(7.4, 1.0));
+
+            propBody = this.world.CreateBody(bd);
+            propBody.CreateFixture(shape, 10.0);
+        }
+
+        var djd = new b2DistanceJointDef();
+        djd.set_bodyA(seesawBody);
+        djd.set_bodyB(propBody);
+        djd.set_localAnchorA(new b2Vec2(6.0, 0.0));
+        djd.set_localAnchorB(new b2Vec2(0.0, -1.0));
+        var wpA = copyVec2(seesawBody.GetWorldPoint(djd.get_localAnchorA()));
+        var wpB = copyVec2(propBody.GetWorldPoint(djd.get_localAnchorB()));
+
+        //wpB.op_sub(wpA); wtf... why does op_add work fine but op_sub does nothing?
+        var d = new b2Vec2( wpB.get_x() - wpA.get_x(), wpB.get_y() - wpA.get_y() );
+
+        djd.set_length(d.Length());
+        this.world.CreateJoint(djd);
+
+        //balls
+        {
+            var radius = 0.2;
+
+            var shape = new b2CircleShape();
+            shape.set_m_radius(radius);
+
+            for (var i = 0; i < 4; ++i)
+            {
+                var bd = new b2BodyDef();
+                // bd.set_type(b2_dynamicBody);
+                bd.set_type(Box2D.b2_dynamicBody);
+                bd.set_position(new b2Vec2(5.9 + 2.0 * radius * i, 2.4));
+                var body = this.world.CreateBody(bd);
+                body.CreateFixture(shape, 10.0);
+            }
+        }
+
+
+        this.enableDebugDraw();
+        this.debug.drawNode.x = cc.winSize.width / 2;
+        this.scheduleUpdate();
+    },
+    update:function(dt){
+        this.world.Step(dt, 2, 2);
+        this.debugDraw();
+    },
+
+    subtitle: function(){
+        return "Dominos";
+    }
+});
 
 var Box2DTestSceneIdx = -1;
 
@@ -494,7 +698,8 @@ var Box2DTestScene = TestScene.extend({
 
 var arrayOfBox2DTest = [
     Box2DTest_sprite,
-    Box2DTest_car
+    Box2DTest_car,
+    Box2DTest_dominos
 ];
 
 var nextBox2DTest = function () {

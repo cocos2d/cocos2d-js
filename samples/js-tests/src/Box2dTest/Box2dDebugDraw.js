@@ -97,3 +97,8 @@ function createPolygonShape(vertices) {
     shape.Set(ptr_wrapped, vertices.length);
     return shape;
 }
+
+//to replace original C++ operator =
+function copyVec2(vec) {
+    return new Box2D.b2Vec2(vec.get_x(), vec.get_y());
+}
