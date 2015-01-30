@@ -105,6 +105,7 @@ var TestController = cc.LayerGradient.extend({
         toggleAutoTestItem.setCallback(this.onToggleAutoTest, this);
         toggleAutoTestItem.x = winSize.width - toggleAutoTestItem.width / 2 - 10;
 	    toggleAutoTestItem.y = 20;
+        toggleAutoTestItem.setVisible(false);
         if( autoTestEnabled )
             toggleAutoTestItem.setSelectedIndex(1);
 
