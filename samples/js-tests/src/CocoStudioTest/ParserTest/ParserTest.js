@@ -140,6 +140,8 @@ var CocostudioParserJsonScene = cc.Scene.extend({
         cc.director.runScene(this);
     },
     BackCallback: function(){
+        cc.audioEngine.stopMusic();
+        cc.audioEngine.stopAllEffects();
         if(this._jsonFile){
             new CocostudioParserJsonScene().runThisTest();
         }else{
