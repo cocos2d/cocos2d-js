@@ -2787,3 +2787,15 @@ _p.setDisabledSpriteFrame = function(frame) {
 }
 
 cc.MenuItemToggle.prototype.selectedItem = cc.MenuItemToggle.prototype.getSelectedItem;
+
+
+//
+// LabelTTF setDimensions support two parameters
+//
+cc.LabelTTF.prototype._setDimensions = cc.LabelTTF.prototype.setDimensions;
+cc.LabelTTF.prototype.setDimensions = function (dim, height) {
+    if (!isNaN(height)) {
+        dim = {width: dim, height: height};
+    }
+    this._setDimensions(dim);
+};
