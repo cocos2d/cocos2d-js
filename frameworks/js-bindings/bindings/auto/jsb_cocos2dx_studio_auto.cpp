@@ -1319,6 +1319,341 @@ void js_register_cocos2dx_studio_AnimationData(JSContext *cx, JSObject *global) 
     }
 }
 
+JSClass  *jsb_cocostudio_ContourData_class;
+JSObject *jsb_cocostudio_ContourData_prototype;
+
+bool js_cocos2dx_studio_ContourData_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::ContourData* cobj = (cocostudio::ContourData *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ContourData_init : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->init();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_ContourData_init : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_ContourData_addVertex(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::ContourData* cobj = (cocostudio::ContourData *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ContourData_addVertex : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Vec2 arg0;
+        ok &= jsval_to_vector2(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ContourData_addVertex : Error processing arguments");
+        cobj->addVertex(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_ContourData_addVertex : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_ContourData_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc == 0) {
+        cocostudio::ContourData* ret = cocostudio::ContourData::create();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ContourData>(cx, (cocostudio::ContourData*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_studio_ContourData_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_studio_ContourData_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    cocostudio::ContourData* cobj = new (std::nothrow) cocostudio::ContourData();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocostudio::ContourData> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::ContourData");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
+
+
+void js_cocostudio_ContourData_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (ContourData)", obj);
+}
+
+void js_register_cocos2dx_studio_ContourData(JSContext *cx, JSObject *global) {
+    jsb_cocostudio_ContourData_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocostudio_ContourData_class->name = "ContourData";
+    jsb_cocostudio_ContourData_class->addProperty = JS_PropertyStub;
+    jsb_cocostudio_ContourData_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocostudio_ContourData_class->getProperty = JS_PropertyStub;
+    jsb_cocostudio_ContourData_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocostudio_ContourData_class->enumerate = JS_EnumerateStub;
+    jsb_cocostudio_ContourData_class->resolve = JS_ResolveStub;
+    jsb_cocostudio_ContourData_class->convert = JS_ConvertStub;
+    jsb_cocostudio_ContourData_class->finalize = js_cocostudio_ContourData_finalize;
+    jsb_cocostudio_ContourData_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        {"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+        {0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("init", js_cocos2dx_studio_ContourData_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addVertex", js_cocos2dx_studio_ContourData_addVertex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_studio_ContourData_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocostudio_ContourData_prototype = JS_InitClass(
+        cx, global,
+        NULL, // parent proto
+        jsb_cocostudio_ContourData_class,
+        js_cocos2dx_studio_ContourData_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "ContourData", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocostudio::ContourData> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocostudio_ContourData_class;
+        p->proto = jsb_cocostudio_ContourData_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
+JSClass  *jsb_cocostudio_TextureData_class;
+JSObject *jsb_cocostudio_TextureData_prototype;
+
+bool js_cocos2dx_studio_TextureData_getContourData(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::TextureData* cobj = (cocostudio::TextureData *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_TextureData_getContourData : Invalid Native Object");
+    if (argc == 1) {
+        int arg0;
+        ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_TextureData_getContourData : Error processing arguments");
+        cocostudio::ContourData* ret = cobj->getContourData(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ContourData>(cx, (cocostudio::ContourData*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_TextureData_getContourData : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_TextureData_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::TextureData* cobj = (cocostudio::TextureData *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_TextureData_init : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->init();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_TextureData_init : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_TextureData_addContourData(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::TextureData* cobj = (cocostudio::TextureData *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_TextureData_addContourData : Invalid Native Object");
+    if (argc == 1) {
+        cocostudio::ContourData* arg0;
+        do {
+            if (!argv[0].isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocostudio::ContourData*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_TextureData_addContourData : Error processing arguments");
+        cobj->addContourData(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_TextureData_addContourData : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_TextureData_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc == 0) {
+        cocostudio::TextureData* ret = cocostudio::TextureData::create();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::TextureData>(cx, (cocostudio::TextureData*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_studio_TextureData_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_studio_TextureData_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    cocostudio::TextureData* cobj = new (std::nothrow) cocostudio::TextureData();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocostudio::TextureData> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocostudio::TextureData");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    return true;
+}
+
+
+
+void js_cocostudio_TextureData_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (TextureData)", obj);
+}
+
+void js_register_cocos2dx_studio_TextureData(JSContext *cx, JSObject *global) {
+    jsb_cocostudio_TextureData_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocostudio_TextureData_class->name = "TextureData";
+    jsb_cocostudio_TextureData_class->addProperty = JS_PropertyStub;
+    jsb_cocostudio_TextureData_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocostudio_TextureData_class->getProperty = JS_PropertyStub;
+    jsb_cocostudio_TextureData_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocostudio_TextureData_class->enumerate = JS_EnumerateStub;
+    jsb_cocostudio_TextureData_class->resolve = JS_ResolveStub;
+    jsb_cocostudio_TextureData_class->convert = JS_ConvertStub;
+    jsb_cocostudio_TextureData_class->finalize = js_cocostudio_TextureData_finalize;
+    jsb_cocostudio_TextureData_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        {"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+        {0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("getContourData", js_cocos2dx_studio_TextureData_getContourData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_cocos2dx_studio_TextureData_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addContourData", js_cocos2dx_studio_TextureData_addContourData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_studio_TextureData_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocostudio_TextureData_prototype = JS_InitClass(
+        cx, global,
+        NULL, // parent proto
+        jsb_cocostudio_TextureData_class,
+        js_cocos2dx_studio_TextureData_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "TextureData", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocostudio::TextureData> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocostudio_TextureData_class;
+        p->proto = jsb_cocostudio_TextureData_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
 JSClass  *jsb_cocostudio_ProcessBase_class;
 JSObject *jsb_cocostudio_ProcessBase_prototype;
 
@@ -12174,6 +12509,7 @@ void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj) {
     js_register_cocos2dx_studio_ScaleFrame(cx, obj);
     js_register_cocos2dx_studio_ProcessBase(cx, obj);
     js_register_cocos2dx_studio_Tween(cx, obj);
+    js_register_cocos2dx_studio_ContourData(cx, obj);
     js_register_cocos2dx_studio_ComAudio(cx, obj);
     js_register_cocos2dx_studio_ActionTimeline(cx, obj);
     js_register_cocos2dx_studio_InnerActionFrame(cx, obj);
@@ -12196,7 +12532,7 @@ void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj) {
     js_register_cocos2dx_studio_ColliderDetector(cx, obj);
     js_register_cocos2dx_studio_BatchNode(cx, obj);
     js_register_cocos2dx_studio_ActionObject(cx, obj);
-    js_register_cocos2dx_studio_AnimationData(cx, obj);
+    js_register_cocos2dx_studio_Skin(cx, obj);
     js_register_cocos2dx_studio_EventFrame(cx, obj);
     js_register_cocos2dx_studio_ComRender(cx, obj);
     js_register_cocos2dx_studio_DisplayManager(cx, obj);
@@ -12205,8 +12541,9 @@ void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj) {
     js_register_cocos2dx_studio_ActionManagerEx(cx, obj);
     js_register_cocos2dx_studio_Bone(cx, obj);
     js_register_cocos2dx_studio_ComAttribute(cx, obj);
+    js_register_cocos2dx_studio_TextureData(cx, obj);
     js_register_cocos2dx_studio_AlphaFrame(cx, obj);
-    js_register_cocos2dx_studio_Skin(cx, obj);
+    js_register_cocos2dx_studio_AnimationData(cx, obj);
     js_register_cocos2dx_studio_AnchorPointFrame(cx, obj);
     js_register_cocos2dx_studio_TextureFrame(cx, obj);
     js_register_cocos2dx_studio_BaseData(cx, obj);
