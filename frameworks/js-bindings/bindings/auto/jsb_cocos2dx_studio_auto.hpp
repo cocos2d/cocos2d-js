@@ -84,6 +84,31 @@ bool js_cocos2dx_studio_AnimationData_addMovement(JSContext *cx, uint32_t argc, 
 bool js_cocos2dx_studio_AnimationData_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_AnimationData_AnimationData(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocostudio_ContourData_class;
+extern JSObject *jsb_cocostudio_ContourData_prototype;
+
+bool js_cocos2dx_studio_ContourData_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_ContourData_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_ContourData(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_ContourData_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ContourData_addVertex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ContourData_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ContourData_ContourData(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_TextureData_class;
+extern JSObject *jsb_cocostudio_TextureData_prototype;
+
+bool js_cocos2dx_studio_TextureData_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_TextureData_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_TextureData(JSContext *cx, JSObject *global);
+void register_all_cocos2dx_studio(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_studio_TextureData_getContourData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_TextureData_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_TextureData_addContourData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_TextureData_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_TextureData_TextureData(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocostudio_ProcessBase_class;
 extern JSObject *jsb_cocostudio_ProcessBase_prototype;
 

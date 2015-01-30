@@ -20,13 +20,13 @@
  * THE SOFTWARE.
  */
 
+#import <Foundation/Foundation.h>
 
 #import "JavaScriptObjCBridge.h"
 #include "spidermonkey_specifics.h"
 #include "ScriptingCore.h"
 #include "js_manual_conversions.h"
 #include "cocos2d.h"
-#import <Foundation/Foundation.h>
 JavaScriptObjCBridge::CallInfo::~CallInfo(void)
 {
     if (m_returnType == TypeString)
