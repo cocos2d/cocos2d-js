@@ -1287,6 +1287,7 @@ var LabelTTFMultiline = AtlasDemo.extend({
         // cc.LabelBMFont
         var center = new cc.LabelTTF("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
             "Arial", 32, cc.size(s.width / 2, 200), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
+        center.setDimensions(s.width / 2, 200);
         center.x = s.width / 2;
         center.y = 150;
 

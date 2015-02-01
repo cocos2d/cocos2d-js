@@ -32,10 +32,7 @@ var UITextFieldTest = UIScene.extend({
             this._bottomDisplayLabel.setString("TextField");
 
             // Create the textfield
-            var textField = new ccui.TextField();
-            textField.setTouchEnabled(true);
-            textField.fontName = "Marker Felt";
-            textField.fontSize = 30;
+            var textField = new ccui.TextField("PlaceHolder", "Marker Felt", 30);
             textField.x = widgetSize.width / 2.0;
             textField.y = widgetSize.height / 2.0;
             textField.addEventListener(this.textFieldEvent, this);

@@ -32,8 +32,7 @@ var UIImageViewTest = UIScene.extend({
 
             var widgetSize = this._widget.getContentSize();
             // Create the imageview
-            var imageView = new ccui.ImageView();
-            imageView.loadTexture("res/cocosui/ccicon.png");
+            var imageView = new ccui.ImageView("res/cocosui/ccicon.png");
             imageView.x = widgetSize.width / 2;
 	        imageView.y = widgetSize.height / 2 + imageView.height / 4;
             this._mainNode.addChild(imageView);
