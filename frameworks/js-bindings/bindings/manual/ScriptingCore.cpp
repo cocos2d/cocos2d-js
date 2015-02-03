@@ -34,7 +34,7 @@
 #include "jsb_cocos2dx_auto.hpp"
 #include "js_bindings_config.h"
 // for debug socket
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include <io.h>
 #include <WS2tcpip.h>
 #else
@@ -105,7 +105,7 @@ static std::unordered_map<std::string, JSObject*> globals;
 
 static void cc_closesocket(int fd)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     closesocket(fd);
 #else
     close(fd);
@@ -1672,7 +1672,7 @@ static void serverEntryPoint(unsigned int port)
     
     int err = 0;
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     WSADATA wsaData;
     err = WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
