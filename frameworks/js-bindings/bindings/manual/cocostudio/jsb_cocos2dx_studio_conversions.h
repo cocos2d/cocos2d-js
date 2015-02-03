@@ -24,8 +24,14 @@
 #ifndef __cocos2d_js_bindings__jsb_cocos2dx_studio_conversions__
 #define __cocos2d_js_bindings__jsb_cocos2dx_studio_conversions__
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#include "jsapi.h"
+#else
 #include "js/Value.h"
 #include "js/TypeDecls.h"
+#endif
+
+
 
 namespace cocostudio
 {
