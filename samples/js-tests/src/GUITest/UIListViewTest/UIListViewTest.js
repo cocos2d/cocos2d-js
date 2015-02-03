@@ -38,9 +38,9 @@ var UIListViewTest_Vertical = UIScene.extend({
             // Create the list view
             var listView = new ccui.ListView();
             // set list view ex direction
-            listView.setDirection(ccui.ScrollView.DIR_VERTICAL);
-            listView.setTouchEnabled(true);
-            listView.setBounceEnabled(true);
+            listView.setDirection(ccui.ScrollView.DIR_NONE);
+            listView.setTouchEnabled(false);
+            listView.setBounceEnabled(false);
             listView.setBackGroundImage("res/cocosui/green_edit.png");
             listView.setBackGroundImageScale9Enabled(true);
             listView.setContentSize(cc.size(240, 130));

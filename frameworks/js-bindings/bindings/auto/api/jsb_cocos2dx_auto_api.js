@@ -1661,14 +1661,12 @@ mat4
 
 /**
  * @method updatePhysicsBodyTransform
- * @param {cc.Scene} arg0
- * @param {mat4_object} arg1
- * @param {unsigned int} arg2
+ * @param {mat4_object} arg0
+ * @param {unsigned int} arg1
+ * @param {float} arg2
  * @param {float} arg3
- * @param {float} arg4
  */
 updatePhysicsBodyTransform : function (
-scene, 
 mat4, 
 int, 
 float, 

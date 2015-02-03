@@ -1,4 +1,4 @@
-# Cocos2d-JS v3.3 Beta release note
+# Cocos2d-JS v3.3 RC0 release note
 
 <img src="http://files.cocos2d-x.org/images/orgsite/logo.png" height=180> 
 
@@ -16,7 +16,7 @@ One more thing, Facebook Integration for Cocos2d-JS have brought a huge opportun
 * Upgraded UI system with the new flow layout system and added full featured test cases.
 * Provided [Cocos Dev Tool](http://h5.cocoachina.com/static/cocos-devtools/) beta version. It's a web based playground for manipulating all coocs nodes in runtime. It will greatly improve your developement and debug experience.
 
-![](https://raw.githubusercontent.com/pandamicro/cocos-docs/master/manual/framework/html5/release-notes/res/devtool.jpg)
+![](../../res/devtool.jpg)
 
 ## Notice
 
@@ -28,10 +28,10 @@ For JSB build, there are some restrictions :
 
 ## Download
 
-- [Cocos2d-JS v3.3 Beta](http://www.cocos2d-x.org/filedown/cocos2d-js-v3.2-beta.zip)
-- [Cocos Dev Tool](http://h5.cocoachina.com/static/cocos-devtools/)
+- [Cocos2d-JS v3.3 RC0](http://www.cocos2d-x.org/filedown/cocos2d-js-v3.3-rc0.zip)
+- [Cocos Dev Tool](http://h5.cocos.com/static/cocos-devtools/index-en.html)
 - [Online API reference](http://www.cocos2d-x.org/wiki/reference/)
-- [Downloadable API Reference](http://www.cocos2d-x.org/filedown/Cocos2d-JS-v3.3-Beta-API.zip)
+- [Downloadable API Reference](http://www.cocos2d-x.org/filedown/Cocos2d-JS-v3.3-API.zip)
 - [Online test cases](http://cocos2d-x.org/js-tests/)
 
 ## Workflows
@@ -40,20 +40,20 @@ For JSB build, there are some restrictions :
 
 - Casual web game developers can download the Lite Version and start to develop just like using other web frameworks (e.g. jQuery).
 
-![](workflows.jpg)
+![](../../v3.0/release-note/workflows.jpg)
 
 ## More information
 
 Read more about all the features and bug fixes
 
-- [Cocos2d-JS v3.3 Beta changelog](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.3b/changelog/en)
-- [Cocos2d-JS v3.3 Beta upgrade guide](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.3b/upgrade-guide/en)
+- [Cocos2d-JS v3.3 RC0 changelog](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.3rc0/changelog/en)
+- [Cocos2d-JS v3.3 upgrade guide](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.3b/upgrade-guide/en)
 
 ## Upgrade your project from previous versions
 
 If you want to upgrade your game based on v3.0 previous version to the v3.3, you should follow these steps:
 
-1. Download the Cocos2d-JS v3.3 Beta package.
+1. Download the Cocos2d-JS v3.3 RC0 package.
 2. Upgrade cocos command with `setup.py`.
 3. Create a new project with `cocos new` command.
 4. Replace the "src", "res", "index.html", "project.json", "main.js" etc with your old project.
@@ -61,9 +61,9 @@ If you want to upgrade your game based on v3.0 previous version to the v3.3, you
 
 ## About Cocos2d family
 
-- Cocos2d-JS v3.3 Beta uses Cocos2d-x v3.4rc1 as base of JSB solution
-- Cocos2d-JS v3.3 Beta is compatible with Cocos Code IDE v1.1.0
-- Cocos2d-JS v3.3 Beta is compatible with Cocos Studio v1.2 - v1.6 and Cocos Studio 2.1+. Cocos Studio 2.x support need JSON export file, and Cocos2d-JS won't support flatbuffer files.
+- Cocos2d-JS v3.3 RC0 uses Cocos2d-x v3.4 as base of JSB solution
+- Cocos2d-JS v3.3 RC0 is compatible with Cocos Code IDE v1.1.0
+- Cocos2d-JS v3.3 RC0 is compatible with Cocos Studio v1.2 - v1.6 and Cocos Studio 2.1+. Cocos Studio 2.x support need JSON export file, and Cocos2d-JS won't support flatbuffer files.
 
 With any problems you might have, our communities are happy to help:
 
