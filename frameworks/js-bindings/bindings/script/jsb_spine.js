@@ -21,7 +21,10 @@
  */
 
 sp.SkeletonAnimation.prototype._ctor = function(skeletonDataFile, atlasFile, scale) {
-	atlasFile !== undefined && this.initWithFiles(skeletonDataFile, atlasFile, scale || 1);
+	if(atlasFile) {
+		this.initWithFile(skeletonDataFile, atlasFile, scale);
+		this.initialize();
+	}
 };
 
 sp.SkeletonAnimation.extend = cc.Class.extend;
