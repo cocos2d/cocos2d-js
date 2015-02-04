@@ -108,32 +108,131 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Resources\project.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Resources\res\arial-14.fnt" />
+    <None Include="Assets\Resources\res\arial-14.GlyphProject" />
+    <None Include="Assets\Resources\res\b01.plist" />
+    <None Include="Assets\Resources\res\explode.plist" />
+    <None Include="Assets\Resources\res\explosion.plist" />
+    <None Include="Assets\Resources\res\level01.tmx" />
+    <None Include="Assets\Resources\res\Music\bgMusic.ogg" />
+    <None Include="Assets\Resources\res\Music\buttonEffet.ogg" />
+    <None Include="Assets\Resources\res\Music\explodeEffect.ogg" />
+    <None Include="Assets\Resources\res\Music\fireEffect.ogg" />
+    <None Include="Assets\Resources\res\Music\mainMainMusic.ogg" />
+    <None Include="Assets\Resources\res\Music\shipDestroyEffect.ogg" />
+    <None Include="Assets\Resources\res\textureOpaquePack.plist" />
+    <None Include="Assets\Resources\res\textureTransparentPack.plist" />
+    <None Include="Assets\Resources\script\debugger\README.md" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\AlignmentGrid.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ApplicationIcon.png" />
+    <Content Include="Assets\Resources\main.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\res\arial-14.png" />
+    <Content Include="Assets\Resources\res\b01.png" />
+    <Content Include="Assets\Resources\res\cocos2d-html5.png" />
+    <Content Include="Assets\Resources\res\explosion.png" />
+    <Content Include="Assets\Resources\res\flare.jpg" />
+    <Content Include="Assets\Resources\res\gameOver.png" />
+    <Content Include="Assets\Resources\res\gameoverBack.png" />
+    <Content Include="Assets\Resources\res\loading.png" />
+    <Content Include="Assets\Resources\res\logo.png" />
+    <Content Include="Assets\Resources\res\logoBack.png" />
+    <Content Include="Assets\Resources\res\menu.png" />
+    <Content Include="Assets\Resources\res\menuTitle.png" />
+    <Content Include="Assets\Resources\res\Music\bgMusic.mp3" />
+    <Content Include="Assets\Resources\res\Music\buttonEffet.mp3" />
+    <Content Include="Assets\Resources\res\Music\explodeEffect.mp3" />
+    <Content Include="Assets\Resources\res\Music\fireEffect.mp3" />
+    <Content Include="Assets\Resources\res\Music\mainMainMusic.mp3" />
+    <Content Include="Assets\Resources\res\Music\shipDestroyEffect.mp3" />
+    <Content Include="Assets\Resources\res\textureOpaquePack.png" />
+    <Content Include="Assets\Resources\res\textureTransparentPack.png" />
+    <Content Include="Assets\Resources\script\ccui\jsb_ccui_create_apis.js" />
+    <Content Include="Assets\Resources\script\ccui\jsb_ccui_deprecated.js" />
+    <Content Include="Assets\Resources\script\ccui\jsb_ccui_property_apis.js" />
+    <Content Include="Assets\Resources\script\ccui\jsb_ccui_property_impls.js" />
+    <Content Include="Assets\Resources\script\ccui\jsb_cocos2d_ui.js" />
+    <Content Include="Assets\Resources\script\chipmunk\jsb_chipmunk.js" />
+    <Content Include="Assets\Resources\script\chipmunk\jsb_chipmunk_constants.js" />
+    <Content Include="Assets\Resources\script\debugger\actors\root.js" />
+    <Content Include="Assets\Resources\script\debugger\actors\script.js" />
+    <Content Include="Assets\Resources\script\debugger\core\promise.js" />
+    <Content Include="Assets\Resources\script\debugger\DevToolsUtils.js" />
+    <Content Include="Assets\Resources\script\debugger\main.js" />
+    <Content Include="Assets\Resources\script\debugger\transport.js" />
+    <Content Include="Assets\Resources\script\extension\jsb_cocos2d_extension.js" />
+    <Content Include="Assets\Resources\script\extension\jsb_ext_create_apis.js" />
+    <Content Include="Assets\Resources\script\extension\jsb_ext_property_apis.js" />
+    <Content Include="Assets\Resources\script\jsb.js" />
+    <Content Include="Assets\Resources\script\jsb_boot.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\script\jsb_cocos2d.js" />
+    <Content Include="Assets\Resources\script\jsb_cocos2d_constants.js" />
+    <Content Include="Assets\Resources\script\jsb_cocosbuilder.js" />
+    <Content Include="Assets\Resources\script\jsb_common.js" />
+    <Content Include="Assets\Resources\script\jsb_create_apis.js" />
+    <Content Include="Assets\Resources\script\jsb_debugger.js" />
+    <Content Include="Assets\Resources\script\jsb_deprecated.js" />
+    <Content Include="Assets\Resources\script\jsb_loaders.js" />
+    <Content Include="Assets\Resources\script\jsb_opengl.js" />
+    <Content Include="Assets\Resources\script\jsb_opengl_constants.js" />
+    <Content Include="Assets\Resources\script\jsb_pool.js" />
+    <Content Include="Assets\Resources\script\jsb_property_apis.js" />
+    <Content Include="Assets\Resources\script\jsb_property_impls.js" />
+    <Content Include="Assets\Resources\script\physicsSprite\jsb_physicsSprite.js" />
+    <Content Include="Assets\Resources\script\studio\jsb_cocos2d_studio.js" />
+    <Content Include="Assets\Resources\script\studio\jsb_studio_boot.js" />
+    <Content Include="Assets\Resources\script\studio\jsb_studio_create_apis.js" />
+    <Content Include="Assets\Resources\script\studio\jsb_studio_load.js" />
+    <Content Include="Assets\Resources\script\studio\jsb_studio_property_apis.js" />
+    <Content Include="Assets\Resources\script\studio\parsers\action-1.x.js" />
+    <Content Include="Assets\Resources\script\studio\parsers\action-2.x.js" />
+    <Content Include="Assets\Resources\script\studio\parsers\compatible.js" />
+    <Content Include="Assets\Resources\script\studio\parsers\scene-1.x.js" />
+    <Content Include="Assets\Resources\script\studio\parsers\timelineParser-1.x.js" />
+    <Content Include="Assets\Resources\script\studio\parsers\timelineParser-2.x.js" />
+    <Content Include="Assets\Resources\script\studio\parsers\uiParser-1.x.js" />
+    <Content Include="Assets\Resources\src\AboutLayer.js" />
+    <Content Include="Assets\Resources\src\Background.js" />
+    <Content Include="Assets\Resources\src\Bullet.js" />
+    <Content Include="Assets\Resources\src\config\EnemyType.js" />
+    <Content Include="Assets\Resources\src\config\GameConfig.js" />
+    <Content Include="Assets\Resources\src\config\Level.js" />
+    <Content Include="Assets\Resources\src\Effect.js" />
+    <Content Include="Assets\Resources\src\Enemy.js" />
+    <Content Include="Assets\Resources\src\Explosion.js" />
+    <Content Include="Assets\Resources\src\GameController.js" />
+    <Content Include="Assets\Resources\src\GameControlMenu.js" />
+    <Content Include="Assets\Resources\src\GameLayer.js" />
+    <Content Include="Assets\Resources\src\GameOver.js" />
+    <Content Include="Assets\Resources\src\HitEffect.js" />
+    <Content Include="Assets\Resources\src\LevelManager.js" />
+    <Content Include="Assets\Resources\src\Resource.js" />
+    <Content Include="Assets\Resources\src\SettingsLayer.js" />
+    <Content Include="Assets\Resources\src\Ship.js" />
+    <Content Include="Assets\Resources\src\SparkEffect.js" />
+    <Content Include="Assets\Resources\src\SysMenu.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Tiles\FlipCycleTileLarge.png" />
+    <Content Include="Assets\Tiles\FlipCycleTileMedium.png" />
+    <Content Include="Assets\Tiles\FlipCycleTileSmall.png" />
+    <Content Include="Assets\Tiles\IconicTileMediumLarge.png" />
+    <Content Include="Assets\Tiles\IconicTileSmall.png" />
     <Content Include="SplashScreenImage.jpg" />
-    <Content Include="Assets\AlignmentGrid.png" />
-    <Content Include="Assets\ApplicationIcon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\FlipCycleTileMedium.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\FlipCycleTileSmall.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\IconicTileMediumLarge.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\IconicTileSmall.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppResources.resx">
@@ -169,6 +268,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Resources\fonts\" />
+    <Folder Include="Assets\Resources\ipadhd\" />
+    <Folder Include="Assets\Resources\ipad\" />
+    <Folder Include="Assets\Resources\iphone\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
