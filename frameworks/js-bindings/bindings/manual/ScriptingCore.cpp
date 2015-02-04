@@ -349,6 +349,8 @@ bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
     os = JS_InternString(cx, "Blackberry");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     os = JS_InternString(cx, "OS X");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    os = JS_InternString(cx, "WP8");
 #else
     os = JS_InternString(cx, "Unknown");
 #endif

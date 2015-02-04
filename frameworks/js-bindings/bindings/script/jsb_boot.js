@@ -1195,6 +1195,7 @@ cc._initSys = function(config, CONFIG_KEY){
      * @type {string}
      */
     locSys.OS_ANDROID = "Android";
+    locSys.OS_WP8 = "WP8";
     locSys.OS_UNKNOWN = "unknown";
 
     /**
@@ -1346,7 +1347,7 @@ cc._initSys = function(config, CONFIG_KEY){
         cc.log(str);
     }
 
-    locSys.isMobile = (locSys.os == locSys.OS_ANDROID || locSys.os == locSys.OS_IOS) ? true : false;
+    locSys.isMobile = (locSys.os == locSys.OS_ANDROID || locSys.os == locSys.OS_IOS || locSys.os == locSys.OS_WP8) ? true : false;
 
     locSys.language = (function(){
         var language = cc.Application.getInstance().getCurrentLanguage();
