@@ -53,6 +53,7 @@ set(JSBINDING_SRC
   manual/chipmunk/js_bindings_chipmunk_registration.cpp
   manual/cocosbuilder/js_bindings_ccbreader.cpp
   manual/cocostudio/jsb_cocos2dx_studio_manual.cpp
+  manual/cocostudio/jsb_cocos2dx_studio_conversions.cpp
   manual/extension/jsb_cocos2dx_extension_manual.cpp
   manual/localstorage/js_bindings_system_functions.cpp
   manual/localstorage/js_bindings_system_registration.cpp
@@ -67,6 +68,7 @@ set(JSBINDING_SRC
 include_directories(
   auto
   manual
+  manual/cocostudio
   ../external/spidermonkey/include/${PLATFORM_FOLDER}
   ../cocos2d-x/cocos/base
   ../cocos2d-x/cocos/2d
@@ -77,10 +79,11 @@ include_directories(
   ../cocos2d-x/cocos/platform
   ../cocos2d-x/extensions
   ../cocos2d-x/external
+  ../cocos2d-x/cocos/editor-support
   ../cocos2d-x/cocos/editor-support/spine
   ../cocos2d-x/cocos/editor-support/cocosbuilder
   ../cocos2d-x/cocos/editor-support/cocostudio
-  ../cocos2d-x/external/chipmunk/include
+  ../cocos2d-x/external/chipmunk/include/chipmunk
 )
 
 add_library(jsbindings STATIC
@@ -89,6 +92,7 @@ add_library(jsbindings STATIC
 
 target_link_libraries(jsbindings
   sqlite3
+  js_static
 )
 
 set_target_properties(jsbindings

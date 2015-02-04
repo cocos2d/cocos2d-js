@@ -263,7 +263,7 @@ var ChipmunkCollisionTest_no_specific_type = ChipmunkBaseLayer.extend({
         var staticBody = this.space.staticBody;
 
         // Walls
-        var walls = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),               // bottom
+        var walls = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 )               // bottom
             // new cp.SegmentShape( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),    // top
             // new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),             // left
             // new cp.SegmentShape( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)  // right
@@ -438,11 +438,22 @@ var ChipmunkCollisionTest = ChipmunkBaseLayer.extend( {
         var collTypeB = shapes[1].collision_type;
         cc.log( 'Collision Type A:' + collTypeA );
         cc.log( 'Collision Type B:' + collTypeB );
+
+        //test addPostStepCallback
+        space.addPostStepCallback(function(){
+            cc.log("post step callback 1");
+        });
+        space.addPostStepCallback(function(){
+            cc.log("post step callback 2");
+        });
         return true;
     },
 
     collisionPre : function ( arbiter, space ) {
         cc.log('collision pre');
+        cc.log("arbiter e : " + arbiter.e);
+        cc.log("arbiter u : " +arbiter.u);
+        cc.log("arbiter surface_vr : " + arbiter.surface_vr.x + "," + arbiter.surface_vr.y);
         return true;
     },
 
@@ -1110,7 +1121,11 @@ var Joints = ChipmunkDemo.extend({
         body1 = addBall(posA);
         body2 = addBall(posB);
         body2.setAngle(Math.PI);
-        space.addConstraint(new cp.PinJoint(body1, body2, v(15,0), v(15,0)));
+        var pinJoint = new cp.PinJoint(body1, body2, v(15,0), v(15,0));
+        space.addConstraint(pinJoint);
+        cc.log("pin joint anchr1 : " + pinJoint.anchr1.x + "," + pinJoint.anchr1.y);
+        cc.log("pin joint anchr2 : " + pinJoint.anchr2.x + "," + pinJoint.anchr2.y);
+        cc.log("pin joint dist : " + pinJoint.dist);
 
         // Slide Joints - Like pin joints but with a min/max distance.
         // Can be used for a cheap approximation of a rope.
@@ -1119,7 +1134,12 @@ var Joints = ChipmunkDemo.extend({
         body1 = addBall(posA);
         body2 = addBall(posB);
         body2.setAngle(Math.PI);
-        space.addConstraint(new cp.SlideJoint(body1, body2, v(15,0), v(15,0), 20, 40));
+        var slideJoint = new cp.SlideJoint(body1, body2, v(15,0), v(15,0), 20, 40);
+        space.addConstraint(slideJoint);
+        cc.log("slide joint anchr1 : " + slideJoint.anchr1.x + "," + slideJoint.anchr1.y);
+        cc.log("slide joint anchr2 : " + slideJoint.anchr2.x + "," + slideJoint.anchr2.y);
+        cc.log("slide joint min : " + slideJoint.min);
+        cc.log("slide joint max : " + slideJoint.max);
 
         // Pivot Joints - Holds the two anchor points together. Like a swivel.
         boxOffset = v(320, 0);
@@ -1129,14 +1149,21 @@ var Joints = ChipmunkDemo.extend({
         body2.setAngle(Math.PI);
         // cp.PivotJoint(a, b, v) takes it's anchor parameter in world coordinates. The anchors are calculated from that
         // Alternately, specify two anchor points using cp.PivotJoint(a, b, anch1, anch2)
-        space.addConstraint(new cp.PivotJoint(body1, body2, cp.v.add(boxOffset, v(80,60))));
+        var pivotJoint = new cp.PivotJoint(body1, body2, cp.v.add(boxOffset, v(80,60)));
+        space.addConstraint(pivotJoint);
+        cc.log("pivot joint anchr1 : " + pivotJoint.anchr1.x + "," + pivotJoint.anchr1.y);
+        cc.log("pivot joint anchr2 : " + pivotJoint.anchr2.x + "," + pivotJoint.anchr2.y);
 
         // Groove Joints - Like a pivot joint, but one of the anchors is a line segment that the pivot can slide in
         boxOffset = v(480, 0);
         label('Groove Joint');
         body1 = addBall(posA);
         body2 = addBall(posB);
-        space.addConstraint(new cp.GrooveJoint(body1, body2, v(30,30), v(30,-30), v(-30,0)));
+        var grooveJoint = new cp.GrooveJoint(body1, body2, v(30,30), v(30,-30), v(-30,0));
+        space.addConstraint(grooveJoint);
+        cc.log("groove joint anchr2 : " + grooveJoint.anchr2.x + "," + grooveJoint.anchr2.y);
+        cc.log("groove joint grv_a : " +grooveJoint.grv_a.x + "," + grooveJoint.grv_a.y);
+        cc.log("groove joint grv_b : " +grooveJoint.grv_b.x + "," + grooveJoint.grv_b.y);
 
         // Damped Springs
         boxOffset = v(0, 120);
@@ -1144,7 +1171,13 @@ var Joints = ChipmunkDemo.extend({
         body1 = addBall(posA);
         body2 = addBall(posB);
         body2.setAngle(Math.PI);
-        space.addConstraint(new cp.DampedSpring(body1, body2, v(15,0), v(15,0), 20, 5, 0.3));
+        var dampedSpring = new cp.DampedSpring(body1, body2, v(15,0), v(15,0), 20, 5, 0.3);
+        space.addConstraint(dampedSpring);
+        cc.log("damped spring anchr1 : " + dampedSpring.anchr1.x + "," + dampedSpring.anchr1.y);
+        cc.log("damped spring anchr2 : " + dampedSpring.anchr2.x + "," + dampedSpring.anchr2.y);
+        cc.log("damped spring damping : " + dampedSpring.damping);
+        cc.log("damped spring restLength : " + dampedSpring.restLength);
+        cc.log("damped spring stiffness : " + dampedSpring.stiffness);
 
         // Damped Rotary Springs
         boxOffset = v(160, 120);
@@ -1154,7 +1187,11 @@ var Joints = ChipmunkDemo.extend({
         // Add some pin joints to hold the circles in place.
         space.addConstraint(new cp.PivotJoint(body1, staticBody, POS_A()));
         space.addConstraint(new cp.PivotJoint(body2, staticBody, POS_B()));
-        space.addConstraint(new cp.DampedRotarySpring(body1, body2, 0, 3000, 60));
+        var dampedRotarySpring = new cp.DampedRotarySpring(body1, body2, 0, 3000, 60);
+        space.addConstraint(dampedRotarySpring);
+        cc.log("damped rotary spring restAngle : " + dampedRotarySpring.restAngle);
+        cc.log("damped rotary spring stiffness : " + dampedRotarySpring.stiffness);
+        cc.log("damped rotary spring damping : " + dampedRotarySpring.damping);
 
         // Rotary Limit Joint
         boxOffset = v(320, 120);
@@ -1165,7 +1202,10 @@ var Joints = ChipmunkDemo.extend({
         space.addConstraint(new cp.PivotJoint(body1, staticBody, POS_A()));
         space.addConstraint(new cp.PivotJoint(body2, staticBody, POS_B()));
         // Hold their rotation within 90 degrees of each other.
-        space.addConstraint(new cp.RotaryLimitJoint(body1, body2, -Math.PI/2, Math.PI/2));
+        var rotaryLimitJoint = new cp.RotaryLimitJoint(body1, body2, -Math.PI/2, Math.PI/2);
+        space.addConstraint(rotaryLimitJoint);
+        cc.log("rotary limit joint min : " + rotaryLimitJoint.min);
+        cc.log("rotary limit joint max : " + rotaryLimitJoint.max);
 
         // Ratchet Joint - A rotary ratchet, like a socket wrench
         boxOffset = v(480, 120);
@@ -1176,7 +1216,11 @@ var Joints = ChipmunkDemo.extend({
         space.addConstraint(new cp.PivotJoint(body1, staticBody, POS_A()));
         space.addConstraint(new cp.PivotJoint(body2, staticBody, POS_B()));
         // Ratchet every 90 degrees
-        space.addConstraint(new cp.RatchetJoint(body1, body2, 0, Math.PI/2));
+        var ratchet = new cp.RatchetJoint(body1, body2, 0, Math.PI/2);
+        space.addConstraint(ratchet);
+        cc.log("ratchet phase : " + ratchet.phase);
+        cc.log("ratchet ratchet : " + ratchet.ratchet);
+        cc.log("ratchet angle : " + ratchet.angle);
 
         // Gear Joint - Maintain a specific angular velocity ratio
         boxOffset = v(0, 240);
@@ -1187,7 +1231,10 @@ var Joints = ChipmunkDemo.extend({
         space.addConstraint(new cp.PivotJoint(body1, staticBody, POS_A()));
         space.addConstraint(new cp.PivotJoint(body2, staticBody, POS_B()));
         // Force one to sping 2x as fast as the other
-        space.addConstraint(new cp.GearJoint(body1, body2, 0, 2));
+        var gearJoint = new cp.GearJoint(body1, body2, 0, 2);
+        space.addConstraint(gearJoint);
+        cc.log("gear joint phase : " + gearJoint.phase);
+        cc.log("gear jonit ratio : " + gearJoint.ratio);
 
         // Simple Motor - Maintain a specific angular relative velocity
         boxOffset = v(160, 240);
@@ -1198,7 +1245,9 @@ var Joints = ChipmunkDemo.extend({
         space.addConstraint(new cp.PivotJoint(body1, staticBody, POS_A()));
         space.addConstraint(new cp.PivotJoint(body2, staticBody, POS_B()));
         // Make them spin at 1/2 revolution per second in relation to each other.
-        space.addConstraint(new cp.SimpleMotor(body1, body2, Math.PI));
+        var simpleMotor = new cp.SimpleMotor(body1, body2, Math.PI);
+        space.addConstraint(simpleMotor);
+        cc.log("simple motor rate : " + simpleMotor.rate);
 
         // Make a car with some nice soft suspension
         boxOffset = v(320, 240);

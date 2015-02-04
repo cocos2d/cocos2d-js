@@ -48,6 +48,7 @@ touchcount = 0;
 var SpineTest = BaseTestLayer.extend({
     _spineboy:null,
     _debugMode: 0,
+    _flipped: false,
     ctor:function () {
         this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
@@ -81,12 +82,13 @@ var SpineTest = BaseTestLayer.extend({
         // Make Spine's Animated skeleton Node
         // You need 'json + atlas + image' resource files to make it.
         // No JS binding for spine-c in this version. So, only file loading is supported.
-        var spineBoy = new sp.SkeletonAnimation('res/skeletons/spineboy.json', 'res/skeletons/spineboy.atlas');
+        var spineBoy = sp.SkeletonAnimation.create('res/skeletons/spineboy.json', 'res/skeletons/spineboy.atlas');
         spineBoy.setPosition(cc.p(size.width / 2, size.height / 2 - 150));
         spineBoy.setAnimation(0, 'walk', true);
         spineBoy.setMix('walk', 'jump', 0.2);
         spineBoy.setMix('jump', 'walk', 0.4);
         spineBoy.setAnimationListener(this, this.animationStateEvent);
+        spineBoy.setScale(0.5);
         this.addChild(spineBoy, 4);
         this._spineboy = spineBoy;
     },
@@ -96,7 +98,7 @@ var SpineTest = BaseTestLayer.extend({
     },
     onNextCallback:function (sender) {
         touchcount++;
-        this._spineboy.setAnimation(0, ['walk', 'jump'][touchcount % 2], true);
+        this._spineboy.setAnimation(0, ['walk', 'jump','run', 'shoot'][touchcount % 4], true);
     },
     subtitle:function () {
         return "Spine test";
@@ -122,6 +124,13 @@ var SpineTest = BaseTestLayer.extend({
                 break;
             case ANIMATION_TYPE.ANIMATION_COMPLETE:
                 cc.log(trackIndex + " complete: " + animationName + "," + loopCount);
+                if(this._flipped){
+                    this._flipped = false;
+                    this._spineboy.setScaleX(0.5);
+                }else{
+                    this._flipped = true;
+                    this._spineboy.setScaleX(-0.5);
+                }
                 break;
             default :
                 break;

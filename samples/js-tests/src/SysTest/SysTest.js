@@ -123,15 +123,166 @@ var SysTestScene = TestScene.extend({
     }
 });
 
+//------------------------------------------------------------------
+//
+// Script dynamic reload test
+//
+//------------------------------------------------------------------
+var tempJSFileName = "ScriptTestTempFile.js";
+var ScriptTestLayer = SysTestBase.extend({
+    _tempLayer:null,
+    _am : null,
+    startDownload:function () {
+        if (!cc.sys.isNative)
+        {
+            return;
+        }
+        var manifestPath = "Manifests/ScriptTest/project.manifest";
+        var storagePath = ((jsb.fileUtils ? jsb.fileUtils.getWritablePath() : "/") + "JSBTests/AssetsManagerTest/ScriptTest/");
+        cc.log("Storage path for this test : " + storagePath);
+
+        if (this._am)
+        {
+            this._am.release();
+            this._am = null;
+        }
+
+        this._am = new jsb.AssetsManager(manifestPath, storagePath);
+        this._am.retain();
+        if (!this._am.getLocalManifest().isLoaded())
+        {
+            cc.log("Fail to update assets, step skipped.");
+            that.clickMeShowTempLayer();
+        }
+        else {
+            var that = this;
+            var listener = new jsb.EventListenerAssetsManager(this._am, function (event) {
+                var scene;
+                switch (event.getEventCode()) {
+                    case jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST:
+                        cc.log("No local manifest file found, skip assets update.");
+                        that.clickMeShowTempLayer();
+                        break;
+                    case jsb.EventAssetsManager.UPDATE_PROGRESSION:
+                        cc.log(event.getPercent() + "%");
+                        break;
+                    case jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
+                    case jsb.EventAssetsManager.ERROR_PARSE_MANIFEST:
+                        cc.log("Fail to download manifest file, update skipped.");
+                        that.clickMeShowTempLayer();
+                        break;
+                    case jsb.EventAssetsManager.ALREADY_UP_TO_DATE:
+                    case jsb.EventAssetsManager.UPDATE_FINISHED:
+                        cc.log("Update finished. " + event.getMessage());
+                        require(tempJSFileName);
+                        that.clickMeShowTempLayer();
+                        break;
+                    case jsb.EventAssetsManager.UPDATE_FAILED:
+                        cc.log("Update failed. " + event.getMessage());
+                        break;
+                    case jsb.EventAssetsManager.ERROR_UPDATING:
+                        cc.log("Asset update error: " + event.getAssetId() + ", " + event.getMessage());
+                        break;
+                    case jsb.EventAssetsManager.ERROR_DECOMPRESS:
+                        cc.log(event.getMessage());
+                        break;
+                    default:
+                        break;
+                }
+            });
+            cc.eventManager.addListener(listener, 1);
+            this._am.update();
+        }
+    },
+    clickMeShowTempLayer:function () {
+        this.removeChildByTag(233, true);
+        this._tempLayer = new ScriptTestTempLayer();
+        this.addChild(this._tempLayer, 0, 233);
+    },
+    clickMeReloadTempLayer:function(){
+        cc.sys.cleanScript(tempJSFileName);
+        if (!cc.sys.isNative)
+        {
+            this.clickMeShowTempLayer();
+        }
+        else
+        {
+            this.startDownload();
+        }
+
+    },
+    onExit : function () {
+        if (this._am)
+        {
+            this._am.release();
+            this._am = null;
+        }
+
+        this._super();
+    },
+    ctor : function () {
+        this._super();
+
+        var menu = new cc.Menu();
+        menu.setPosition(cc.p(0, 0));
+        menu.width = winSize.width;
+        menu.height = winSize.height;
+        this.addChild(menu, 1);
+        var item1 = new cc.MenuItemLabel(new cc.LabelTTF("Click me show tempLayer", "Arial", 22), this.clickMeShowTempLayer, this);
+        menu.addChild(item1);
+
+        var item2 = new cc.MenuItemLabel(new cc.LabelTTF("Click me reload tempLayer", "Arial", 22), this.clickMeReloadTempLayer, this);
+        menu.addChild(item2);
+
+        menu.alignItemsVerticallyWithPadding(8);
+        menu.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(+180, 0)));
+    },
+
+    getTitle : function() {
+        return "ScriptTest only used in native";
+    }
+
+});
+
+//------------------------------------------------------------------
+//
+// Restart game test
+//
+//------------------------------------------------------------------
+var RestartGameLayerTest = SysTestBase.extend({
+    getTitle : function() {
+        return "RestartGameTest only used in native";
+    },
+    restartGame:function()
+    {
+        cc.game.restart();
+    },
+    ctor : function () {
+        this._super();
+        var menu = new cc.Menu();
+        menu.setPosition(cc.p(0, 0));
+        menu.width = winSize.width;
+        menu.height = winSize.height;
+        this.addChild(menu, 1);
+        var item1 = new cc.MenuItemLabel(new cc.LabelTTF("restartGame", "Arial", 22), this.restartGame, this);
+        menu.addChild(item1);
+        menu.setPosition(cc.pAdd(cc.visibleRect.left, cc.p(+180, 0)));
+    }
+});
+
 //
 // Flow control
 //
 
 var arrayOfSysTest = [
-
     LocalStorageTest,
     CapabilitiesTest
 ];
+
+if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
+    arrayOfSysTest.push(ScriptTestLayer);
+    arrayOfSysTest.push(RestartGameLayerTest);
+}
 
 var nextSysTest = function () {
     sysTestSceneIdx++;

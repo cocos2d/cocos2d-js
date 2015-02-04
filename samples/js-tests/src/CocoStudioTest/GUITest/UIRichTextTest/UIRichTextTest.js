@@ -33,7 +33,7 @@ var UIRichTextTest = UISceneEditor.extend({
             this._bottomDisplayLabel.setString("RichText");
 
             var widgetSize = this._widget.getContentSize();
-            var button = ccui.Button.create();
+            var button = new ccui.Button();
             button.setTouchEnabled(true);
             button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
@@ -43,24 +43,24 @@ var UIRichTextTest = UISceneEditor.extend({
 
 
             // RichText
-            var richText = ccui.RichText.create();
+            var richText = new ccui.RichText();
             richText.ignoreContentAdaptWithSize(false);
             richText.setContentSize(cc.size(120, 100));
 
-            var re1 = ccui.RichElementText.create(1, cc.color.WHITE, 255, "This color is white. ", "Helvetica", 10);
-            var re2 = ccui.RichElementText.create(2, cc.color.YELLOW, 255, "And this is yellow. ", "Helvetica", 10);
-            var re3 = ccui.RichElementText.create(3, cc.color.BLUE, 255, "This one is blue. ", "Helvetica", 10);
-            var re4 = ccui.RichElementText.create(4, cc.color.GREEN, 255, "And green. ", "Helvetica", 10);
-            var re5 = ccui.RichElementText.create(5, cc.color.RED, 255, "Last one is red ", "Helvetica", 10);
+            var re1 = new ccui.RichElementText(1, cc.color.WHITE, 255, "This color is white. ", "Helvetica", 10);
+            var re2 = new ccui.RichElementText(2, cc.color.YELLOW, 255, "And this is yellow. ", "Helvetica", 10);
+            var re3 = new ccui.RichElementText(3, cc.color.BLUE, 255, "This one is blue. ", "Helvetica", 10);
+            var re4 = new ccui.RichElementText(4, cc.color.GREEN, 255, "And green. ", "Helvetica", 10);
+            var re5 = new ccui.RichElementText(5, cc.color.RED, 255, "Last one is red ", "Helvetica", 10);
 
-            var reimg = ccui.RichElementImage.create(6, cc.color.WHITE, 255, "res/cocosui/sliderballnormal.png");
+            var reimg = new ccui.RichElementImage(6, cc.color.WHITE, 255, "res/cocosui/sliderballnormal.png");
 
             ccs.armatureDataManager.addArmatureFileInfo("res/cocosui/100/100.ExportJson");
-            var pAr = ccs.Armature.create("100");
+            var pAr = new ccs.Armature("100");
             pAr.getAnimation().play("Animation1");
 
-            var recustom = ccui.RichElementCustomNode.create(1, cc.color.WHITE, 255, pAr);
-            var re6 = ccui.RichElementText.create(7, cc.color.ORANGE, 255, "Have fun!! ", "Helvetica", 10);
+            var recustom = new ccui.RichElementCustomNode(1, cc.color.WHITE, 255, pAr);
+            var re6 = new ccui.RichElementText(7, cc.color.ORANGE, 255, "Have fun!! ", "Helvetica", 10);
             richText.pushBackElement(re1);
             richText.insertElement(re2, 1);
             richText.pushBackElement(re3);

@@ -19,6 +19,38 @@ float
 },
 
 /**
+ * @method isOpacityModifyRGB
+ * @return {bool}
+ */
+isOpacityModifyRGB : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method drawSkeleton
+ * @param {mat4_object} arg0
+ * @param {unsigned int} arg1
+ */
+drawSkeleton : function (
+mat4, 
+int 
+)
+{
+},
+
+/**
+ * @method setDebugSlotsEnabled
+ * @param {bool} arg0
+ */
+setDebugSlotsEnabled : function (
+bool 
+)
+{
+},
+
+/**
  * @method getDebugSlotsEnabled
  * @return {bool}
  */
@@ -26,6 +58,22 @@ getDebugSlotsEnabled : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setBonesToSetupPose
+ */
+setBonesToSetupPose : function (
+)
+{
+},
+
+/**
+ * @method setSlotsToSetupPose
+ */
+setSlotsToSetupPose : function (
+)
+{
 },
 
 /**
@@ -43,60 +91,6 @@ str
 },
 
 /**
- * @method setBonesToSetupPose
- */
-setBonesToSetupPose : function (
-)
-{
-},
-
-/**
- * @method isOpacityModifyRGB
- * @return {bool}
- */
-isOpacityModifyRGB : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setDebugSlotsEnabled
- * @param {bool} arg0
- */
-setDebugSlotsEnabled : function (
-bool 
-)
-{
-},
-
-/**
- * @method setSlotsToSetupPose
- */
-setSlotsToSetupPose : function (
-)
-{
-},
-
-/**
- * @method setOpacityModifyRGB
- * @param {bool} arg0
- */
-setOpacityModifyRGB : function (
-bool 
-)
-{
-},
-
-/**
- * @method setToSetupPose
- */
-setToSetupPose : function (
-)
-{
-},
-
-/**
  * @method getBlendFunc
  * @return {cc.BlendFunc}
  */
@@ -104,74 +98,6 @@ getBlendFunc : function (
 )
 {
     return cc.BlendFunc;
-},
-
-/**
- * @method drawSkeleton
- * @param {mat4_object} arg0
- * @param {unsigned int} arg1
- */
-drawSkeleton : function (
-mat4, 
-int 
-)
-{
-},
-
-/**
- * @method updateWorldTransform
- */
-updateWorldTransform : function (
-)
-{
-},
-
-/**
- * @method initialize
- */
-initialize : function (
-)
-{
-},
-
-/**
- * @method setDebugBonesEnabled
- * @param {bool} arg0
- */
-setDebugBonesEnabled : function (
-bool 
-)
-{
-},
-
-/**
- * @method getDebugBonesEnabled
- * @return {bool}
- */
-getDebugBonesEnabled : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getTimeScale
- * @return {float}
- */
-getTimeScale : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setBlendFunc
- * @param {cc.BlendFunc} arg0
- */
-setBlendFunc : function (
-blendfunc 
-)
-{
 },
 
 /**
@@ -187,6 +113,42 @@ str
 },
 
 /**
+ * @method setToSetupPose
+ */
+setToSetupPose : function (
+)
+{
+},
+
+/**
+ * @method updateWorldTransform
+ */
+updateWorldTransform : function (
+)
+{
+},
+
+/**
+ * @method setOpacityModifyRGB
+ * @param {bool} arg0
+ */
+setOpacityModifyRGB : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setDebugBonesEnabled
+ * @param {bool} arg0
+ */
+setDebugBonesEnabled : function (
+bool 
+)
+{
+},
+
+/**
  * @method getSkeleton
  * @return {spSkeleton}
  */
@@ -194,6 +156,36 @@ getSkeleton : function (
 )
 {
     return spSkeleton;
+},
+
+/**
+ * @method getDebugBonesEnabled
+ * @return {bool}
+ */
+getDebugBonesEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
+ * @method getTimeScale
+ * @return {float}
+ */
+getTimeScale : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -210,21 +202,6 @@ float
 )
 {
     return sp.SkeletonRenderer;
-},
-
-/**
- * @method SkeletonRenderer
- * @constructor
-* @param {spSkeletonData|String|String} spskeletondata
-* @param {bool|spAtlas|String} bool
-* @param {float|float} float
-*/
-SkeletonRenderer : function(
-str,
-str,
-float 
-)
-{
 },
 
 };
@@ -373,14 +350,6 @@ func
 },
 
 /**
- * @method initialize
- */
-initialize : function (
-)
-{
-},
-
-/**
  * @method clearTracks
  */
 clearTracks : function (
@@ -426,21 +395,6 @@ float
 )
 {
     return sp.SkeletonAnimation;
-},
-
-/**
- * @method SkeletonAnimation
- * @constructor
-* @param {String|spSkeletonData|String} str
-* @param {spAtlas|String} spatlas
-* @param {float|float} float
-*/
-SkeletonAnimation : function(
-str,
-str,
-float 
-)
-{
 },
 
 };

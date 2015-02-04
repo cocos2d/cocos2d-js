@@ -217,7 +217,7 @@ var BaseTestLayerProps = {
 
     runNextTest:function() {
         if( this.numberOfPendingTests() <= 0 ) {
-            var scene = cc.Scene.create();
+            var scene = new cc.Scene();
             var layer = new TestController();
             scene.addChild(layer);
             director.runScene(scene);

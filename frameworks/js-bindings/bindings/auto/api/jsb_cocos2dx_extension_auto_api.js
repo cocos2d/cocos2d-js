@@ -2638,6 +2638,16 @@ getVersionFileUrl : function (
     return ;
 },
 
+/**
+ * @method getSearchPaths
+ * @return {Array}
+ */
+getSearchPaths : function (
+)
+{
+    return new Array();
+},
+
 };
 
 /**

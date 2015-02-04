@@ -136,6 +136,18 @@ ccui.LayoutParameter.NONE = 0;
 ccui.LayoutParameter.LINEAR = 1;
 ccui.LayoutParameter.RELATIVE = 2;
 
+//LayoutComponent
+ccui.LayoutComponent.horizontalEdge = {};
+ccui.LayoutComponent.horizontalEdge.NONE = 0;
+ccui.LayoutComponent.horizontalEdge.LEFT = 1;
+ccui.LayoutComponent.horizontalEdge.RIGHT = 2;
+ccui.LayoutComponent.horizontalEdge.CENTER = 3;
+
+ccui.LayoutComponent.verticalEdge = {};
+ccui.LayoutComponent.verticalEdge.NONE = 0;
+ccui.LayoutComponent.verticalEdge.BOTTOM = 1;
+ccui.LayoutComponent.verticalEdge.TOP = 2;
+ccui.LayoutComponent.verticalEdge.CENTER = 3;
 /*
  * UIWidget
  */
@@ -165,6 +177,12 @@ ccui.Widget.SIZE_PERCENT = 1;
 //position type
 ccui.Widget.POSITION_ABSOLUTE = 0;
 ccui.Widget.POSITION_PERCENT = 1;
+
+//focus direction
+ccui.Widget.LEFT = 0;
+ccui.Widget.RIGHT = 1;
+ccui.Widget.UP = 2;
+ccui.Widget.DOWN = 3;
 
 /*
  * UIListView

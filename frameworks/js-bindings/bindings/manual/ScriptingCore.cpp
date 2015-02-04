@@ -126,14 +126,13 @@ static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
 
     jsval func = JS_GetReservedSlot(obj, 0);
 
-    if (func == JSVAL_VOID) { return; }
+    if (func == JSVAL_VOID || func.isPrimitive()) { return; }
     jsval thisObj = JS_GetReservedSlot(obj, 1);
     JSAutoCompartment ac(cx, obj);
     
-    if (thisObj == JSVAL_VOID) {
+    if (thisObj == JSVAL_VOID || thisObj.isPrimitive()) {
         JS_CallFunctionValue(cx, obj, func, 1, &dataVal, &retval);
     } else {
-        assert(!JSVAL_IS_PRIMITIVE(thisObj));
         JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(thisObj), func, 1, &dataVal, &retval);
     }
 }
@@ -354,6 +353,24 @@ bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
     return true;
 };
 
+bool JSB_cleanScript(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc != 1)
+    {
+        JS_ReportError(cx, "Invalid number of arguments in JSB_cleanScript");
+        return false;
+    }
+    jsval *argv = JS_ARGV(cx, vp);
+    JSString *jsPath = JSVAL_TO_STRING(argv[0]);
+    JSB_PRECONDITION2(jsPath, cx, false, "Error js file in clean script");
+    JSStringWrapper wrapper(jsPath);
+    ScriptingCore::getInstance()->cleanScript(wrapper.get());
+
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+
+    return true;
+};
+
 bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments in executeScript");
@@ -394,11 +411,12 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-
+    
     JS_DefineFunction(cx, global, "__getPlatform", JSBCore_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__getOS", JSBCore_os, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    JS_DefineFunction(cx, global, "__cleanScript", JSB_cleanScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
 static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
@@ -422,6 +440,11 @@ ScriptingCore::ScriptingCore()
     // set utf8 strings internally (we don't need utf16)
     // XXX: Removed in SpiderMonkey 19.0
     //JS_SetCStringsAreUTF8();
+    initRegister();
+}
+
+void ScriptingCore::initRegister()
+{
     this->addRegisterCallback(registerDefaultClasses);
     this->_runLoop = new SimpleRunLoop();
 }
@@ -576,12 +599,12 @@ JSScript* ScriptingCore::getScript(const char *path)
 {
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-    if (filename_script[byteCodePath])
+    if (filename_script.find(byteCodePath) != filename_script.end())
         return filename_script[byteCodePath];
     
     // b) no jsc file, check js file
     std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(path);
-    if (filename_script[fullPath])
+    if (filename_script.find(fullPath) != filename_script.end())
         return filename_script[fullPath];
     
     return NULL;
@@ -704,8 +727,14 @@ bool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
 
 void ScriptingCore::reset()
 {
+    Director::getInstance()->restart();
+}
+
+void ScriptingCore::restartVM()
+{
     cleanup();
-    start();
+    initRegister();
+    CCApplication::getInstance()->applicationDidFinishLaunching();
 }
 
 ScriptingCore::~ScriptingCore()
@@ -741,6 +770,7 @@ void ScriptingCore::cleanup()
     
     _js_global_type_map.clear();
     filename_script.clear();
+    registrationList.clear();
 }
 
 void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)
@@ -1019,30 +1049,6 @@ int ScriptingCore::handleComponentEvent(void* data)
     return ret;
 }
 
-int ScriptingCore::handleMenuClickedEvent(void* data)
-{
-    if (NULL == data)
-        return 0;
-    
-    BasicScriptData* basicScriptData = static_cast<BasicScriptData*>(data);
-    if (NULL == basicScriptData->nativeObject)
-        return 0;
-    
-    MenuItem* menuItem = static_cast<MenuItem*>(basicScriptData->nativeObject);
-    
-    js_proxy_t * p = jsb_get_native_proxy(menuItem);
-    if (!p) return 0;
-
-    jsval retval;
-    jsval dataVal;
-    js_proxy_t *proxy = jsb_get_native_proxy(menuItem);
-    dataVal = (proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL);
-
-    executeJSFunctionFromReservedSpot(this->_cx, p->obj, dataVal, retval);
-
-    return 1;
-}
-
 bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event, jsval* jsvalRet/* = nullptr */)
 {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
@@ -1255,15 +1261,37 @@ bool ScriptingCore::handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::
     
     if (isPressed)
     {
-        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onKeyPressed", 2, args);
+        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "_onKeyPressed", 2, args);
     }
     else
     {
-        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onKeyReleased", 2, args);
+        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "_onKeyReleased", 2, args);
     }
 
     removeJSObject(_cx, event);
     
+    return ret;
+}
+
+bool ScriptingCore::handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus)
+{
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+
+    js_proxy_t * p = jsb_get_native_proxy(nativeObj);
+
+    if (nullptr == p)
+        return false;
+
+    jsval args[2] = {
+        getJSObject(_cx, widgetLoseFocus),
+        getJSObject(_cx, widgetGetFocus)
+    };
+
+    bool ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onFocusChanged", 2, args);
+
+    removeJSObject(_cx, widgetLoseFocus);
+    removeJSObject(_cx, widgetGetFocus);
+
     return ret;
 }
 
@@ -1344,6 +1372,13 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
     if (NULL == evt)
         return 0;
  
+    // special type, can't use this code after JSAutoCompartment
+    if (evt->type == kRestartGame)
+    {
+        restartVM();
+        return 0;
+    }
+
     JSAutoCompartment ac(_cx, _global);
     
     switch (evt->type)
@@ -1354,9 +1389,6 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
             }
             break;
         case kMenuClickedEvent:
-            {
-                return handleMenuClickedEvent(evt->data);
-            }
             break;
         case kTouchEvent:
             {

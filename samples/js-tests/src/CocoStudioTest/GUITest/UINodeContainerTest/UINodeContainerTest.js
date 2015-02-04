@@ -27,13 +27,13 @@
 var UIWidgetAddNodeEditorTest = UIBaseLayer.extend({
     ctor: function () {
         this._super();
-        var root = ccs.uiReader.widgetFromJsonFile("res/cocosui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json");
+        var root = this._parseUIFile("res/cocosui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json");
         this._mainNode.addChild(root);
 
         var back_label =ccui.helper.seekWidgetByName(root, "back");
         back_label.addTouchEventListener(this.backEvent,this);
 
-        var sprite = cc.Sprite.create("res/cocosui/ccicon.png");
+        var sprite = new cc.Sprite("res/cocosui/ccicon.png");
         sprite.x = 240;
         sprite.y = 160;
         root.addNode(sprite,9999);

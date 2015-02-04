@@ -30,7 +30,7 @@ UIScene = cc.Scene.extend({
     _bottomDisplayLabel:null,
     _mainNode:null,
     ctor: function () {
-        cc.Scene.prototype.ctor.call(this)
+        cc.Scene.prototype.ctor.call(this);
         this._widget = null;
     },
     init: function () {
@@ -43,8 +43,14 @@ UIScene = cc.Scene.extend({
             mainNode.attr({anchorX: 0, anchorY: 0, scale: scale, x: (winSize.width - 480 * scale) / 2, y: (winSize.height - 320 * scale) / 2});
             this.addChild(mainNode);
 
-            //read widget
-            var widget = ccs.uiReader.widgetFromJsonFile("res/cocosui/UITest/UITest.json");
+            var widget;
+            if(cocoStudioOldApiFlag == 0){
+                var json = ccs.load("res/cocosui/UITest/UITest.json");
+                widget = json.node;
+            }else{
+                //old api
+                widget = ccs.uiReader.widgetFromJsonFile("res/cocosui/UITest/UITest.json");
+            }
             mainNode.addChild(widget,-1);
 
             this._sceneTitle = widget.getChildByName("UItest");
@@ -101,11 +107,14 @@ UIScene = cc.Scene.extend({
     toExtensionsMainLayer: function (sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             UISceneManager.purge();
+            /*
             var scene = new cc.Scene();
             var layer = new TestController();
             scene.addChild(layer);
             var transition = new cc.TransitionProgressRadialCCW(0.5,scene);
             director.runScene(transition);
+            */
+            GUITestScene.prototype.runThisTest();
         }
     },
 

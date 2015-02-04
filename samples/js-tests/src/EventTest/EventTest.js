@@ -394,22 +394,54 @@ var MouseTest = EventTest.extend({
 //
 //------------------------------------------------------------------
 var KeyboardTest = EventTest.extend({
-    init:function () {
+    init: function () {
         this._super();
-
-        if( 'keyboard' in cc.sys.capabilities ) {
+        var self = this;
+        var label = new cc.LabelTTF("show key Code");
+        var size = cc.director.getWinSize();
+        label.setPosition(size.width / 2, size.height / 2);
+        this.addChild(label);
+        if ('keyboard' in cc.sys.capabilities) {
             cc.eventManager.addListener({
                 event: cc.EventListener.KEYBOARD,
-                onKeyPressed:function(key, event) {
-                    cc.log("Key down:" + key);
+                onKeyPressed: function (key, event) {
+                    var strTemp = "Key down:" + key;
+                    var keyStr = self.getKeyStr(key);
+                    if (keyStr.length > 0)
+                    {
+                        strTemp += " the key name is:" + keyStr;
+                    }
+                    label.setString(strTemp);
                 },
-                onKeyReleased:function(key, event) {
-                    cc.log("Key up:" + key);
+                onKeyReleased: function (key, event) {
+                    var strTemp = "Key up:" + key;
+                    var keyStr = self.getKeyStr(key);
+                    if (keyStr.length > 0)
+                    {
+                        strTemp += " the key name is:" + keyStr;
+                    }
+                    label.setString(strTemp);
                 }
             }, this);
         } else {
             cc.log("KEYBOARD Not supported");
         }
+    },
+    getKeyStr: function (keycode)
+    {
+        if (keycode == cc.KEY.none)
+        {
+            return "";
+        }
+
+        for (var keyTemp in cc.KEY)
+        {
+            if (cc.KEY[keyTemp] == keycode)
+            {
+                return keyTemp;
+            }
+        }
+        return "";
     },
     subtitle:function () {
         return "Keyboard test. Press keyboard and see console";

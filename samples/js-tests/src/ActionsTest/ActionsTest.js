@@ -2638,6 +2638,30 @@ var Issue1446 = ActionsDemo.extend({
     }
 });
 
+var SequenceRepeatTest = ActionsDemo.extend({
+    onEnter:function () {
+        //----start47----onEnter
+        this._super();
+        this.centerSprites(2);
+
+        this._kathia.runAction(cc.repeat(cc.sequence(cc.blink(2, 3), cc.delayTime(2)), 3));
+
+        var move = cc.moveBy(1, cc.p(50, 0));
+        var move_back = move.reverse();
+        var move_seq = cc.sequence(move, cc.delayTime(1), move_back, cc.delayTime(1));
+        this._tamara.runAction(move_seq.repeat(3));
+        //----end47----
+    },
+
+    title:function () {
+        return "Sequence.repeat()";
+    },
+
+    subtitle:function () {
+        return "Tests sequence.repeat function.";
+    }
+});
+
 //-
 //
 // Flow control
@@ -2692,7 +2716,8 @@ var arrayOfActionsTest = [
     Issue1327,
     ActionAnimate,
     Issue1438,
-    Issue1446
+    Issue1446,
+    SequenceRepeatTest
 ];
 
 if("opengl" in cc.sys.capabilities){

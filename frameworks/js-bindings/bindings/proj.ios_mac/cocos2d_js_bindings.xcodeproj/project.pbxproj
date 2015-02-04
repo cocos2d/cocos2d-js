@@ -142,6 +142,10 @@
 		83A5661A18DA878400FC31A0 /* jsb_socketio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A5661718DA878400FC31A0 /* jsb_socketio.cpp */; };
 		83A5661B18DA878400FC31A0 /* jsb_socketio.h in Headers */ = {isa = PBXBuildFile; fileRef = 83A5661818DA878400FC31A0 /* jsb_socketio.h */; };
 		83A5661C18DA878400FC31A0 /* jsb_socketio.h in Headers */ = {isa = PBXBuildFile; fileRef = 83A5661818DA878400FC31A0 /* jsb_socketio.h */; };
+		BA4095C21A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4095C01A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.cpp */; };
+		BA4095C31A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4095C01A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.cpp */; };
+		BA4095C41A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.h in Headers */ = {isa = PBXBuildFile; fileRef = BA4095C11A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.h */; };
+		BA4095C51A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.h in Headers */ = {isa = PBXBuildFile; fileRef = BA4095C11A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.h */; };
 		BA623E09191A195F00761F37 /* jsb_pluginx_basic_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA623DFC191A195F00761F37 /* jsb_pluginx_basic_conversions.cpp */; };
 		BA623E0A191A195F00761F37 /* jsb_pluginx_basic_conversions.h in Headers */ = {isa = PBXBuildFile; fileRef = BA623DFD191A195F00761F37 /* jsb_pluginx_basic_conversions.h */; };
 		BA623E0B191A195F00761F37 /* jsb_pluginx_extension_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA623DFE191A195F00761F37 /* jsb_pluginx_extension_registration.cpp */; };
@@ -238,6 +242,8 @@
 		1AB5E63218D05BF30088DAA4 /* jsb_cocos2dx_ui_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_cocos2dx_ui_manual.h; sourceTree = "<group>"; };
 		83A5661718DA878400FC31A0 /* jsb_socketio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_socketio.cpp; sourceTree = "<group>"; };
 		83A5661818DA878400FC31A0 /* jsb_socketio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_socketio.h; sourceTree = "<group>"; };
+		BA4095C01A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_studio_conversions.cpp; sourceTree = "<group>"; };
+		BA4095C11A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_cocos2dx_studio_conversions.h; sourceTree = "<group>"; };
 		BA623DFC191A195F00761F37 /* jsb_pluginx_basic_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_pluginx_basic_conversions.cpp; path = "../../cocos2d-x/plugin/jsbindings/manual/jsb_pluginx_basic_conversions.cpp"; sourceTree = "<group>"; };
 		BA623DFD191A195F00761F37 /* jsb_pluginx_basic_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsb_pluginx_basic_conversions.h; path = "../../cocos2d-x/plugin/jsbindings/manual/jsb_pluginx_basic_conversions.h"; sourceTree = "<group>"; };
 		BA623DFE191A195F00761F37 /* jsb_pluginx_extension_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_pluginx_extension_registration.cpp; path = "../../cocos2d-x/plugin/jsbindings/manual/jsb_pluginx_extension_registration.cpp"; sourceTree = "<group>"; };
@@ -392,6 +398,8 @@
 				1A119E5618BDF19200352BAA /* Android.mk */,
 				1A119E5718BDF19200352BAA /* jsb_cocos2dx_studio_manual.cpp */,
 				1A119E5818BDF19200352BAA /* jsb_cocos2dx_studio_manual.h */,
+				BA4095C01A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.cpp */,
+				BA4095C11A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.h */,
 			);
 			path = cocostudio;
 			sourceTree = "<group>";
@@ -541,6 +549,7 @@
 				0541A74F1973876100E45470 /* JavaScriptObjCBridge.h in Headers */,
 				1AB5E62D18D05BC80088DAA4 /* jsb_cocos2dx_ui_auto.hpp in Headers */,
 				1A119ED918BDF19200352BAA /* js_bindings_opengl.h in Headers */,
+				BA4095C41A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.h in Headers */,
 				1A119EC718BDF19200352BAA /* jsb_cocos2dx_studio_manual.h in Headers */,
 				1A119EAB18BDF19200352BAA /* js_bindings_chipmunk_auto_classes_registration.h in Headers */,
 				1A119EB918BDF19200352BAA /* js_bindings_chipmunk_registration.h in Headers */,
@@ -562,6 +571,7 @@
 				83A5661C18DA878400FC31A0 /* jsb_socketio.h in Headers */,
 				1A1D3B7B18C44FD000922D3C /* jsb_event_dispatcher_manual.h in Headers */,
 				1A119EF618BDF19200352BAA /* js_bindings_system_registration.h in Headers */,
+				BA4095C51A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.h in Headers */,
 				1A119EC018BDF19200352BAA /* cocosbuilder_specifics.hpp in Headers */,
 				1A119ED218BDF19200352BAA /* js_bindings_config.h in Headers */,
 				1A119EB618BDF19200352BAA /* js_bindings_chipmunk_manual.h in Headers */,
@@ -692,6 +702,7 @@
 				1A119EE518BDF19200352BAA /* jsb_opengl_manual.cpp in Sources */,
 				1A119F0518BDF19200352BAA /* jsb_cocos2dx_spine_manual.cpp in Sources */,
 				1A119EB718BDF19200352BAA /* js_bindings_chipmunk_registration.cpp in Sources */,
+				BA4095C21A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.cpp in Sources */,
 				1A119E8318BDF19200352BAA /* jsb_cocos2dx_auto.cpp in Sources */,
 				1AB5E63318D05BF30088DAA4 /* jsb_cocos2dx_ui_manual.cpp in Sources */,
 				1A119EC918BDF19200352BAA /* jsb_cocos2dx_extension_manual.cpp in Sources */,
@@ -739,6 +750,7 @@
 				83A5661A18DA878400FC31A0 /* jsb_socketio.cpp in Sources */,
 				1A119EE218BDF19200352BAA /* jsb_opengl_functions.cpp in Sources */,
 				1A119EA818BDF19200352BAA /* js_bindings_chipmunk_auto_classes.cpp in Sources */,
+				BA4095C31A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.cpp in Sources */,
 				BA623E0B191A195F00761F37 /* jsb_pluginx_extension_registration.cpp in Sources */,
 				BA623E11191A195F00761F37 /* jsb_pluginx_spidermonkey_specifics.cpp in Sources */,
 				BA623E18191A196F00761F37 /* jsb_cocos2dx_pluginx_auto.cpp in Sources */,

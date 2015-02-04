@@ -40,16 +40,17 @@ cc.GLNode = cc.GLNode || cc.Node.extend({
         this._super();
         this.init();
     },
-    _initRendererCmd:function(){
-        this._rendererCmd = new cc.CustomRenderCmdWebGL(this, function(){
+    init:function(){
+        this._renderCmd._needDraw = true;
+        this._renderCmd.rendering =  function(ctx){
             cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
             cc.kmGLPushMatrix();
             cc.kmGLLoadMatrix(this._stackMatrix);
 
-            this.draw();
+            this._node.draw(ctx);
 
             cc.kmGLPopMatrix();
-        });
+        };
     },
     draw:function(ctx){
         this._super(ctx);
@@ -586,17 +587,6 @@ var ShaderNode = cc.GLNode.extend({
             this._time = 0;
         }
     },
-    _initRendererCmd:function () {
-        this._rendererCmd = new cc.CustomRenderCmdWebGL(this, function(){
-            cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
-            cc.kmGLPushMatrix();
-            cc.kmGLLoadMatrix(this._stackMatrix);
-
-            this.draw();
-
-            cc.kmGLPopMatrix(); 
-        });
-    },
     draw:function() {
         this.shader.use();
         this.shader.setUniformsForBuiltins();
@@ -868,34 +858,47 @@ var ShaderJuliaTest = OpenGLTestLayer.extend({
 // ShaderOutline
 //
 //------------------------------------------------------------------
+//FIX ME:
+//The renderers of webgl and opengl is quite different now, so we have to use different shader and different js code
+//This is a bug, need to be fixed in the future
 var ShaderOutlineEffect = OpenGLTestLayer.extend({
     ctor:function() {
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            this.shader = new cc.GLProgram("res/Shaders/example_Outline.vsh", "res/Shaders/example_Outline.fsh");
-            this.shader.addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION);
-            this.shader.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS);
-            this.shader.link();
-            this.shader.use();
-            this.shader.setUniformLocationWith1f(this.shader.getUniformLocationForName('u_threshold'), 1.75);
-            this.shader.setUniformLocationWith3f(this.shader.getUniformLocationForName('u_outlineColor'), 0 / 255, 255 / 255, 0 / 255);
-            this.shader.updateUniforms();
+            if(cc.sys.isNative){
+                this.shader = new cc.GLProgram("res/Shaders/example_Outline_noMVP.vsh", "res/Shaders/example_Outline.fsh");
+                this.shader.link();
+                this.shader.updateUniforms();
+            }
+            else{
+                this.shader = new cc.GLProgram("res/Shaders/example_Outline.vsh", "res/Shaders/example_Outline.fsh");
+                this.shader.addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION);
+                this.shader.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS);
+                this.shader.addAttribute(cc.ATTRIBUTE_NAME_COLOR, cc.VERTEX_ATTRIB_COLOR);
 
-            this.sprite = cc.Sprite.create('res/Images/grossini.png');
+                this.shader.link();
+                this.shader.updateUniforms();
+                this.shader.use();
+                this.shader.setUniformLocationWith1f(this.shader.getUniformLocationForName('u_threshold'), 1.75);
+                this.shader.setUniformLocationWith3f(this.shader.getUniformLocationForName('u_outlineColor'), 0 / 255, 255 / 255, 0 / 255);
+            }
+
+            this.sprite = new cc.Sprite('res/Images/grossini.png');
             this.sprite.attr({
                 x: winSize.width / 2,
                 y: winSize.height / 2
             });
-            this.sprite.runAction(
-                cc.RepeatForever.create(
-                    cc.Sequence.create(
-                        cc.RotateTo.create(1.0, 10),
-                        cc.RotateTo.create(1.0, -10)
-                    )
-                )
-            );
-            this.sprite.setShaderProgram(this.shader);
+            this.sprite.runAction(cc.sequence(cc.rotateTo(1.0, 10), cc.rotateTo(1.0, -10)).repeatForever());
+
+            if(cc.sys.isNative){
+                var glProgram_state = cc.GLProgramState.getOrCreateWithGLProgram(this.shader);
+                glProgram_state.setUniformFloat("u_threshold", 1.75);
+                glProgram_state.setUniformVec3("u_outlineColor", {x: 0/255, y: 255/255, z: 0/255});
+                this.sprite.setGLProgramState(glProgram_state);
+            }else{
+                this.sprite.shaderProgram = this.shader;
+            }
                                      
             this.addChild(this.sprite);
 
@@ -904,9 +907,13 @@ var ShaderOutlineEffect = OpenGLTestLayer.extend({
     },
     update:function(dt) {
         if( 'opengl' in cc.sys.capabilities ) {
-        this.shader.use();
-        this.shader.setUniformLocationWith1f(this.shader.getUniformLocationForName('u_radius'), Math.abs(this.sprite.getRotation() / 500));
-        this.shader.updateUniforms();
+            if(cc.sys.isNative){
+                this.sprite.getGLProgramState().setUniformFloat("u_radius", Math.abs(this.sprite.getRotation() / 500));
+            }else{
+                this.shader.use();
+                this.shader.setUniformLocationWith1f(this.shader.getUniformLocationForName('u_radius'), Math.abs(this.sprite.getRotation() / 500));
+                this.shader.updateUniforms();
+            }
         }
     },
     title:function () {
