@@ -461,7 +461,7 @@ static bool js_cocos2dx_UIListView_addEventListener(JSContext *cx, uint32_t argc
     else if(argc == 1){
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
         std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0)));
-        cobj->addEventListener([=](Ref* widget, ListView::EventType type)->void{
+        auto lambda = [=](Ref* widget, ListView::EventType type)->void{
             jsval arg[2];
             js_proxy_t *proxy = js_get_or_create_proxy(cx, widget);
             if(proxy)
@@ -475,7 +475,9 @@ static bool js_cocos2dx_UIListView_addEventListener(JSContext *cx, uint32_t argc
             if (!ok && JS_IsExceptionPending(cx)) {
                 JS_ReportPendingException(cx);
             }
-        });
+        };
+        cocos2d::ui::ListView::ccListViewCallback cb = lambda;
+        cobj->addEventListener(cb);
         return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
@@ -506,6 +508,20 @@ static bool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc, 
         top = jstop.toNumber();
         right = jsright.toNumber();
         bottom = jsbottom.toNumber();
+
+        JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+
+        cobj->setMargin(ui::Margin(left,top,right,bottom));
+        return true;
+    }
+    else if (argc == 4) {
+        jsval *argv = JS_ARGV(cx, vp);
+        bool ok = true;
+        double left, top,right,bottom;
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &left);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &top);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[2]), &right);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[3]), &bottom);
 
         JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 

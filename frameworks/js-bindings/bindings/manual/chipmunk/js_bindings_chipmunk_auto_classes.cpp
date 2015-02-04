@@ -2433,6 +2433,62 @@ bool JSB_cpArbiter_totalKE(JSContext *cx, uint32_t argc, jsval *vp) {
     return true;
 }
 
+bool js_get_cpArbiter_a(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpArbiter* arbiter = (cpArbiter*) proxy->handle;
+    cpShape* shape = arbiter->a;
+    if(shape){
+        JSObject* jsobj = jsb_get_jsobject_for_proxy(shape);
+        if(jsobj){
+            vp.set(OBJECT_TO_JSVAL(jsobj));
+            return true;
+        }
+    }
+    return false;
+}
+
+bool js_get_cpArbiter_b(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpArbiter* arbiter = (cpArbiter*) proxy->handle;
+    cpShape* shape = arbiter->b;
+    if(shape){
+        JSObject* jsobj = jsb_get_jsobject_for_proxy(shape);
+        if(jsobj){
+            vp.set(OBJECT_TO_JSVAL(jsobj));
+            return true;
+        }
+    }
+    return false;
+}
+
+bool js_get_cpArbiter_body_a(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpArbiter* arbiter = (cpArbiter*) proxy->handle;
+    cpBody* body = arbiter->body_a;
+    if(body){
+        JSObject* jsobj = jsb_get_jsobject_for_proxy(body);
+        if(jsobj){
+            vp.set(OBJECT_TO_JSVAL(jsobj));
+            return true;
+        }
+    }
+    return false;
+}
+
+bool js_get_cpArbiter_body_b(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
+    struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(obj);
+    cpArbiter* arbiter = (cpArbiter*) proxy->handle;
+    cpBody* body = arbiter->body_b;
+    if(body){
+        JSObject* jsobj = jsb_get_jsobject_for_proxy(body);
+        if(jsobj){
+            vp.set(OBJECT_TO_JSVAL(jsobj));
+            return true;
+        }
+    }
+    return false;
+}
+
 void JSB_cpArbiter_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
     JSB_cpArbiter_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -2448,6 +2504,10 @@ void JSB_cpArbiter_createClass(JSContext *cx, JSObject* globalObj, const char* n
     JSB_cpArbiter_class->flags = JSCLASS_HAS_PRIVATE;
 
     static JSPropertySpec properties[] = {
+        {"a", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpArbiter_a), JSOP_NULLWRAPPER},
+        {"b", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpArbiter_b), JSOP_NULLWRAPPER},
+        {"body_a", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpArbiter_body_a), JSOP_NULLWRAPPER},
+        {"body_b", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_cpArbiter_body_b), JSOP_NULLWRAPPER},
         {0, 0, 0, 0, 0}
     };
     static JSFunctionSpec funcs[] = {
@@ -3172,6 +3232,7 @@ void JSB_cpSpace_createClass(JSContext *cx, JSObject* globalObj, const char* nam
         JS_FN("nearestPointQuery", JSB_cpSpace_nearestPointQuery, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("segmentQuery", JSB_cpSpace_segmentQuery, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("bbQuery", JSB_cpSpace_bbQuery, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addPostStepCallback", JSB_cpSpace_addPostStepCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
     static JSFunctionSpec st_funcs[] = {

@@ -1287,6 +1287,7 @@ var LabelTTFMultiline = AtlasDemo.extend({
         // cc.LabelBMFont
         var center = new cc.LabelTTF("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
             "Arial", 32, cc.size(s.width / 2, 200), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP);
+        center.setDimensions(s.width / 2, 200);
         center.x = s.width / 2;
         center.y = 150;
 
@@ -1388,6 +1389,9 @@ var BMFontChineseTest = AtlasDemo.extend({
 });
 
 var LongSentencesExample = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+var chineseExampleText = "美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天美好的一天";
+var chineseMixEnglishText = "美好的一天bdgpy美b好b的d一b天d美好bd的p一g天美好b的d一d天bdgpybdgpybdgpybdg美好的一天bdgpy美好的一天美好的一天";
+var mixAllLanguageText = "美好良い一日を一Buen díabdgpy美b好b的d一b天d美Buen い一日を好b的d一d天Buen py美好的一天bdgpy美好的一天美好的一天";
 var LineBreaksExample = "Lorem ipsum dolor\nsit amet\nconsectetur adipisicing elit\nblah\nblah";
 var MixedExample = "ABC\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\nDEF";
 
@@ -1401,9 +1405,12 @@ var RightAlign = 2;
 var LongSentences = 0;
 var LineBreaks = 1;
 var Mixed = 2;
+var chineseText = 3;
+var chineseMixEnglish = 4;
+var mixAllLanguage = 5;
 
-var alignmentItemPadding = 50;
-var menuItemPaddingCenter = 50;
+var alignmentItemPadding = 40;
+var menuItemPaddingCenter = 80;
 
 var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
     labelShouldRetain:null,
@@ -1411,6 +1418,7 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
     arrowsShouldRetain:null,
     lastSentenceItem:null,
     lastAlignmentItem:null,
+    lineBreakFlag:false,
     ctor:function () {
         //----start11----ctor
         this._super();
@@ -1448,14 +1456,28 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
         var longSentences = new cc.MenuItemFont("Long Flowing Sentences", this.onStringChanged, this);
         var lineBreaks = new cc.MenuItemFont("Short Sentences With Intentional Line Breaks", this.onStringChanged, this);
         var mixed = new cc.MenuItemFont("Long Sentences Mixed With Intentional Line Breaks", this.onStringChanged.bind(this)); // another way to pass 'this'
-        var stringMenu = new cc.Menu(longSentences, lineBreaks, mixed);
+        var changeChineseItem = new cc.MenuItemFont("change chinese", this.onStringChanged, this);
+        var mixEnglishItem = new cc.MenuItemFont("change chinesemixEnglish", this.onStringChanged, this);
+        var mixAllLanItem = new cc.MenuItemFont("change mixAllLan", this.onStringChanged, this);
+
+        var stringMenu = new cc.Menu(longSentences, lineBreaks, mixed, changeChineseItem,mixEnglishItem, mixAllLanItem);
         stringMenu.alignItemsVertically();
+
+        var setLineBreakItem = new cc.MenuItemFont("setLineBreakWithoutSpace", this.onLineBreakChanged, this);
+        var setScale = new cc.MenuItemFont("setScale", this.onScaleChange, this);
+        var lineBreakMenu = new cc.Menu(setLineBreakItem, setScale);
+        lineBreakMenu.x = 100;
+        lineBreakMenu.y = winSize.height / 2;
+        lineBreakMenu.alignItemsVertically();
 
         longSentences.color = cc.color(255, 0, 0);
         this.lastSentenceItem = longSentences;
         longSentences.tag = LongSentences;
         lineBreaks.tag = LineBreaks;
         mixed.tag = Mixed;
+        changeChineseItem.tag = chineseText;
+        mixEnglishItem.tag = chineseMixEnglish;
+        mixAllLanItem.tag = mixAllLanguage;
 
         cc.MenuItemFont.setFontSize(30);
 
@@ -1497,6 +1519,9 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
         this.addChild(this.arrowsShouldRetain);
         this.addChild(stringMenu);
         this.addChild(alignmentMenu);
+        this.addChild(lineBreakMenu);
+
+
         //----end11----
     },
     __title: function(){
@@ -1508,6 +1533,22 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
     subtitle:function () {
         return "";
     },
+
+    onScaleChange:function(sener){
+        if (this.labelShouldRetain.getScale() > 1)
+        {
+            this.labelShouldRetain.setScale(1.0);
+        }
+        else
+        {
+            this.labelShouldRetain.setScale(2.0);
+        }
+
+    },
+    onLineBreakChanged:function(sender){
+        this.lineBreakFlag = !this.lineBreakFlag;
+        this.labelShouldRetain.setLineBreakWithoutSpace(this.lineBreakFlag);
+    },
     onStringChanged:function (sender) {
         this.lastSentenceItem.color = cc.color(255, 255, 255);
         sender.color = cc.color(255, 0, 0);
@@ -1516,14 +1557,28 @@ var BMFontMultiLineAlignmentTest = AtlasDemo.extend({
         switch (sender.tag) {
             case LongSentences:
                 this.labelShouldRetain.setString(LongSentencesExample);
+                this.labelShouldRetain.setFntFile(s_resprefix + "fonts/markerFelt.fnt");
                 break;
             case LineBreaks:
                 this.labelShouldRetain.setString(LineBreaksExample);
+                this.labelShouldRetain.setFntFile(s_resprefix + "fonts/markerFelt.fnt");
                 break;
             case Mixed:
                 this.labelShouldRetain.setString(MixedExample);
+                this.labelShouldRetain.setFntFile(s_resprefix + "fonts/markerFelt.fnt");
                 break;
-
+            case chineseText:
+                this.labelShouldRetain.setFntFile(s_resprefix + "fonts/arial-unicode-26.fnt");
+                this.labelShouldRetain.setString(chineseExampleText);
+                break;
+            case chineseMixEnglish:
+                this.labelShouldRetain.setFntFile(s_resprefix + "fonts/arial-unicode-26.fnt");
+                this.labelShouldRetain.setString(chineseMixEnglishText);
+                break;
+            case mixAllLanguage:
+                this.labelShouldRetain.setFntFile(s_resprefix + "fonts/arial-unicode-26.fnt");
+                this.labelShouldRetain.setString(mixAllLanguageText);
+                break;
             default:
                 break;
         }

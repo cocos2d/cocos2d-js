@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.1";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.3 RC0";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -172,6 +172,12 @@ cc.ONE_MINUS_DST_COLOR = 0x0307;
 cc.ONE_MINUS_CONSTANT_ALPHA = 0x8004;
 cc.ONE_MINUS_CONSTANT_COLOR = 0x8002;
 
+//texture parameters
+cc.LINEAR   = 0x2601;
+cc.REPEAT   = 0x2901;
+cc.CLAMP_TO_EDGE    = 0x812f;
+cc.MIRRORED_REPEAT   = 0x8370;
+
 cc.VERTEX_ATTRIB_FLAG_NONE = 0;
 cc.VERTEX_ATTRIB_FLAG_POSITION = 1 << 0;
 cc.VERTEX_ATTRIB_FLAG_COLOR = 1 << 1;
@@ -231,7 +237,9 @@ cc.Event.TOUCH = 0;                  //CCEvent.js
 cc.Event.KEYBOARD = 1;
 cc.Event.ACCELERATION = 2;
 cc.Event.MOUSE = 3;
-cc.Event.CUSTOM = 4;
+cc.Event.FOCUS = 4
+//game controller 5
+cc.Event.CUSTOM = 6;
 cc.EventMouse.NONE = 0;
 cc.EventMouse.DOWN = 1;
 cc.EventMouse.UP = 2;
@@ -246,8 +254,9 @@ cc.EventMouse.BUTTON_6 = 5;
 cc.EventMouse.BUTTON_7 = 6;
 cc.EventMouse.BUTTON_8 = 7;
 cc.EventTouch.MAX_TOUCHES = 5;
+cc.EventTouch.EventCode = {BEGAN: 0, MOVED: 1, ENDED: 2, CANCELLED: 3};
 
-cc.DEFAULT_SPRITE_BATCH_CAPACITY = 29;                  //CCSpriteBatchNode.js
+cc.SpriteBatchNode.DEFAULT_CAPACITY = 29;                  //CCSpriteBatchNode.js
 
 cc.ParticleSystem.SHAPE_MODE = 0;            //CCParticleSystem.js
 cc.ParticleSystem.TEXTURE_MODE = 1;
@@ -275,103 +284,6 @@ cc.SCENE_FADE = 4208917214;             //CCTransition.js
 cc.SCENE_RADIAL = 0xc001;               //CCTransitionProgress.js
 
 
-cc.KEY = {
-    //android
-    back:6,
-    menu:15,
-    //desktop
-    backspace:7,
-    tab:8,
-    enter:32,
-    shift:12,
-    ctrl:13,
-    alt:14,
-    pause:1,
-    capslock:11,
-    escape:6,
-    pageup:35,
-    pagedown:41,
-    end:21,
-    home:33,
-    left:23,
-    up:25,
-    right:24,
-    down:26,
-    insert:17,
-    Delete:20,
-    0:73,
-    1:74,
-    2:75,
-    3:76,
-    4:77,
-    5:78,
-    6:79,
-    7:80,
-    8:81,
-    9:82,
-    a:121,
-    b:122,
-    c:123,
-    d:124,
-    e:125,
-    f:126,
-    g:127,
-    h:128,
-    i:129,
-    j:130,
-    k:131,
-    l:132,
-    m:133,
-    n:134,
-    o:135,
-    p:136,
-    q:137,
-    r:138,
-    s:139,
-    t:140,
-    u:141,
-    v:142,
-    w:143,
-    x:144,
-    y:145,
-    z:146,
-    '*':30,
-    '+':28,
-    '-':29,
-    'numdel':71,
-    '/':31,
-    f1:44,
-    f2:45,
-    f3:46,
-    f4:47,
-    f5:48,
-    f6:49,
-    f7:50,
-    f8:51,
-    f9:52,
-    f10:53,
-    f11:54,
-    f12:55,
-    numlock:27,
-    scrolllock:2,
-    semicolon:84,
-    ',':69,
-    equal:86,
-    '=':86,
-    ';':84,
-    comma:69,
-    '.':71,
-    period:71,
-    forwardslash:72,
-    grave:120,
-    '[':116,
-    openbracket:116,
-    ']':118,
-    closebracket:118,
-    backslash:117,
-    quote:58,
-    space:56
-};
 //
 // CCMacro.js export
 //
@@ -1663,7 +1575,10 @@ cc.EventListener.TOUCH_ALL_AT_ONCE = 2;
 cc.EventListener.KEYBOARD = 3;
 cc.EventListener.MOUSE = 4;
 cc.EventListener.ACCELERATION = 5;
-cc.EventListener.CUSTOM = 6;
+cc.EventListener.FOCUS = 6;
+//game controller 7
+cc.EventListener.CUSTOM = 8;
+
 
 cc.EventListener.create = function(argObj){
     if(!argObj || !argObj.event){
@@ -1692,6 +1607,8 @@ cc.EventListener.create = function(argObj){
     else if(listenerType === cc.EventListener.ACCELERATION){
         listener = cc.EventListenerAcceleration.create(argObj.callback);
         delete argObj.callback;
+    }else if(listenerType === cc.EventListener.FOCUS){
+        listener = cc.EventListenerFocus.create();
     }
     else
     {
@@ -1775,6 +1692,12 @@ cc.EventListenerKeyboard.prototype.clone = function() {
     return ret;
 };
 
+cc.EventListenerFocus.prototype.clone = function() {
+    var ret = cc.EventListenerFocus.create();
+    ret.onFocusChanged = this.onFocusChanged;
+    return ret;
+};
+
 cc.EventListenerMouse.prototype.clone = function() {
     var ret = cc.EventListenerMouse.create();
     ret._onMouseDown = this._onMouseDown;
@@ -1798,6 +1721,18 @@ cc.EventListenerMouse.prototype.onMouseDown = function(event) {
     this._previousX = event.getLocationX();
     this._previousY = event.getLocationY();
     this._onMouseDown(event);
+};
+
+cc.EventListenerKeyboard.prototype._onKeyPressed = function(keyCode, event) {
+    if (!this.onKeyPressed)
+        return;
+    this.onKeyPressed(jsbKeyArr[keyCode], event);
+};
+
+cc.EventListenerKeyboard.prototype._onKeyReleased = function(keyCode, event) {
+    if (!this.onKeyReleased)
+        return;
+    this.onKeyReleased(jsbKeyArr[keyCode], event);
 };
 
 cc.EventMouse.prototype.getLocation = function(){
@@ -2733,6 +2668,15 @@ cc.Node.prototype.getUserData = function () {
     return this.userData;
 };
 
+//for compatibility with html5
+cc.Node.prototype._setNormalizedPosition = cc.Node.prototype.setNormalizedPosition;
+cc.Node.prototype.setNormalizedPosition = function(pos, y){
+    if(y === undefined)
+        cc.Node.prototype._setNormalizedPosition.call(this, pos);
+    else
+        cc.Node.prototype._setNormalizedPosition.call(this, cc.p(pos, y));
+};
+
 /** returns a "world" axis aligned bounding box of the node. <br/>
  * @return {cc.Rect}
  */
@@ -2817,4 +2761,42 @@ cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS,
     else minFilter = texParams;
 
     this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
+};
+
+
+//
+// MenuItemImage support sprite frame name as paramter
+//
+var _p = cc.MenuItemImage.prototype;
+_p._setNormalSpriteFrame = _p.setNormalSpriteFrame;
+_p._setSelectedSpriteFrame = _p.setSelectedSpriteFrame;
+_p._setDisabledSpriteFrame = _p.setDisabledSpriteFrame;
+_p.setNormalSpriteFrame = function(frame) {
+    if (frame[0] == "#") 
+        frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
+    this._setNormalSpriteFrame(frame);
+}
+_p.setSelectedSpriteFrame = function(frame) {
+    if (frame[0] == "#") 
+        frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
+    this._setSelectedSpriteFrame(frame);
+}
+_p.setDisabledSpriteFrame = function(frame) {
+    if (frame[0] == "#") 
+        frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
+    this._setDisabledSpriteFrame(frame);
+}
+
+cc.MenuItemToggle.prototype.selectedItem = cc.MenuItemToggle.prototype.getSelectedItem;
+
+
+//
+// LabelTTF setDimensions support two parameters
+//
+cc.LabelTTF.prototype._setDimensions = cc.LabelTTF.prototype.setDimensions;
+cc.LabelTTF.prototype.setDimensions = function (dim, height) {
+    if (!isNaN(height)) {
+        dim = {width: dim, height: height};
+    }
+    this._setDimensions(dim);
 };

@@ -125,19 +125,19 @@ _safeExtend(ccui.TextField.prototype, {
 
 _safeExtend(ccui.ScrollView.prototype, {
     _getInnerWidth: function() {
-        return this.getInnerContentSize().width;
+        return this.getInnerContainerSize().width;
     },
     _getInnerHeight: function() {
-        return this.getInnerContentSize().height;
+        return this.getInnerContainerSize().height;
     },
 
     _setInnerWidth: function(w) {
-        var size = cc.size(w, this.getInnerContentSize().height);
-        this.setInnerContentSize(size);
+        var size = cc.size(w, this.getInnerContainerSize().height);
+        this.setInnerContainerSize(size);
     },
     _setInnerHeight: function(h) {
-        var size = cc.size(this.getInnerContentSize().width, h);
-        this.setInnerContentSize(size);
+        var size = cc.size(this.getInnerContainerSize().width, h);
+        this.setInnerContainerSize(size);
     }
 });
 

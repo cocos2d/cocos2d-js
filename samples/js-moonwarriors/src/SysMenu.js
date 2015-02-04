@@ -1,3 +1,34 @@
+/****************************************************************************
+ Cocos2d-html5 show case : Moon Warriors
+
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+
+ @Authors:
+ Programmer: Shengxiang Chen (陈升想), Dingping Lv (吕定平), Ricardo Quesada
+ Effects animation: Hao Wu (吴昊)
+ Quality Assurance: Sean Lin (林顺)
+ ****************************************************************************/
 
 var SysMenu = cc.Layer.extend({
     _ship:null,
@@ -26,17 +57,29 @@ var SysMenu = cc.Layer.extend({
         });
         this.addChild(logo, 10, 1);
 
-        var newGameNormal = new cc.Sprite(res.menu_png, cc.rect(0, 0, 126, 33));
-        var newGameSelected = new cc.Sprite(res.menu_png, cc.rect(0, 33, 126, 33));
-        var newGameDisabled = new cc.Sprite(res.menu_png, cc.rect(0, 33 * 2, 126, 33));
+        var logoBack = new cc.Sprite(res.logoBack_png);
+        logoBack.attr({
+            anchorX: 0,
+            anchorY: 0,
+            x: 60,
+            y: MW.LOGOY + logo.height,
+            scale: MW.SCALE
+        });
+        this.addChild(logoBack, 9);
 
-        var gameSettingsNormal = new cc.Sprite(res.menu_png, cc.rect(126, 0, 126, 33));
-        var gameSettingsSelected = new cc.Sprite(res.menu_png, cc.rect(126, 33, 126, 33));
-        var gameSettingsDisabled = new cc.Sprite(res.menu_png, cc.rect(126, 33 * 2, 126, 33));
+        var singalHeight = MW.menuHeight;
+        var singalWidth = MW.menuWidth;
+        var newGameNormal = new cc.Sprite(res.menu_png, cc.rect(0, 0, singalWidth, singalHeight));
+        var newGameSelected = new cc.Sprite(res.menu_png, cc.rect(0, singalHeight, singalWidth, singalHeight));
+        var newGameDisabled = new cc.Sprite(res.menu_png, cc.rect(0, singalHeight * 2, singalWidth, singalHeight));
 
-        var aboutNormal = new cc.Sprite(res.menu_png, cc.rect(252, 0, 126, 33));
-        var aboutSelected = new cc.Sprite(res.menu_png, cc.rect(252, 33, 126, 33));
-        var aboutDisabled = new cc.Sprite(res.menu_png, cc.rect(252, 33 * 2, 126, 33));
+        var gameSettingsNormal = new cc.Sprite(res.menu_png, cc.rect(singalWidth, 0, singalWidth, singalHeight));
+        var gameSettingsSelected = new cc.Sprite(res.menu_png, cc.rect(singalWidth, singalHeight, singalWidth, singalHeight));
+        var gameSettingsDisabled = new cc.Sprite(res.menu_png, cc.rect(singalWidth, singalHeight * 2, singalWidth, singalHeight));
+
+        var aboutNormal = new cc.Sprite(res.menu_png, cc.rect(singalWidth * 2, 0, singalWidth, singalHeight));
+        var aboutSelected = new cc.Sprite(res.menu_png, cc.rect(singalWidth * 2, singalHeight, singalWidth, singalHeight));
+        var aboutDisabled = new cc.Sprite(res.menu_png, cc.rect(singalWidth * 2, singalHeight * 2, singalWidth, singalHeight));
         var flare = new cc.Sprite(res.flare_jpg);
         this.addChild(flare, 15, 10);
         flare.visible = false;
@@ -52,10 +95,17 @@ var SysMenu = cc.Layer.extend({
         about.scale = MW.SCALE;
 
         var menu = new cc.Menu(newGame, gameSettings, about);
-        menu.alignItemsVerticallyWithPadding(10);
+        menu.alignItemsVerticallyWithPadding(15);
         this.addChild(menu, 1, 2);
         menu.x = winSize.width / 2;
-        menu.y = winSize.height / 2 - 80;
+        menu.y = winSize.height / 2 - 140;
+
+        var label = new cc.LabelTTF("Power by Cocos2d-JS", "Arial", 21);
+        label.setColor(cc.color(MW.FONTCOLOR));
+        this.addChild(label, 1);
+        label.x = winSize.width  / 2;
+        label.y = 80;
+
         this.schedule(this.update, 0.1);
 
         this._ship = new cc.Sprite("#ship03.png");

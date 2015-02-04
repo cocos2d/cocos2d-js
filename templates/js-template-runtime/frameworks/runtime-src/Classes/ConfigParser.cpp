@@ -4,6 +4,7 @@
 #include "json/stringbuffer.h"
 #include "json/writer.h"
 #include "ConfigParser.h"
+#include "FileServer.h"
 
 #define CONFIG_FILE "config.json"
 #define CONSOLE_PORT 6050
@@ -13,21 +14,40 @@
 #define WIN_HEIGHT  640
 
 // ConfigParser
-ConfigParser *ConfigParser::s_sharedInstance = NULL;
+ConfigParser *ConfigParser::s_sharedConfigParserInstance = NULL;
 ConfigParser *ConfigParser::getInstance(void)
 {
-    if (!s_sharedInstance)
+    if (!s_sharedConfigParserInstance)
     {
-        s_sharedInstance = new ConfigParser();
-        s_sharedInstance->readConfig();
+        s_sharedConfigParserInstance = new ConfigParser();
+        s_sharedConfigParserInstance->readConfig();
     }
-    return s_sharedInstance;
+    return s_sharedConfigParserInstance;
+}
+
+void ConfigParser::purge()
+{
+	CC_SAFE_DELETE(s_sharedConfigParserInstance);
 }
 
 void ConfigParser::readConfig()
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // add writable path to search path temporarily for reading config file
+    vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
+    searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());
+    FileUtils::getInstance()->setSearchPaths(searchPathArray);
+#endif
+    
+    // read config file
     string fullPathFile = FileUtils::getInstance()->fullPathForFilename(CONFIG_FILE);
     string fileContent = FileUtils::getInstance()->getStringFromFile(fullPathFile);
+  
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // revert search path
+    searchPathArray.erase(searchPathArray.end() - 1);
+    FileUtils::getInstance()->setSearchPaths(searchPathArray);
+#endif
 
     if(fileContent.empty())
         return;
@@ -48,9 +68,9 @@ void ConfigParser::readConfig()
                 _initViewSize.height = objectInitView["height"].GetUint();
                 if (_initViewSize.height>_initViewSize.width)
                 {
-                    float tmpvalue =_initViewSize.height;
+                    float tmpvalue = _initViewSize.height;
                     _initViewSize.height = _initViewSize.width;
-                     _initViewSize.width = tmpvalue;
+                    _initViewSize.width = tmpvalue;
                 }
                 
             }
@@ -69,7 +89,7 @@ void ConfigParser::readConfig()
             if (objectInitView.HasMember("consolePort"))
             {
                 _consolePort = objectInitView["consolePort"].GetUint();
-                if(_consolePort<=0)
+                if(_consolePort <= 0)
                     _consolePort = CONSOLE_PORT;
             }
             if (objectInitView.HasMember("debugPort"))
@@ -81,7 +101,7 @@ void ConfigParser::readConfig()
             if (objectInitView.HasMember("uploadPort"))
             {
                 _uploadPort = objectInitView["uploadPort"].GetUint();
-                if(_uploadPort<=0)
+                if(_uploadPort <= 0)
                     _uploadPort = UPLOAD_PORT;
             }
             if (objectInitView.HasMember("isWindowTop") && objectInitView["isWindowTop"].IsBool())
@@ -147,12 +167,10 @@ bool ConfigParser::isWindowTop()
 {
     return _isWindowTop;
 }
-
 int ConfigParser::getConsolePort()
 {
     return _consolePort;
 }
-
 int ConfigParser::getUploadPort()
 {
     return _uploadPort;

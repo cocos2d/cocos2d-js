@@ -99,7 +99,7 @@ _p._ctor = function(fileName, rect) {
 
 _p = cc.SpriteBatchNode.prototype;
 _p._ctor = function(fileImage, capacity) {
-    capacity = capacity || cc.DEFAULT_SPRITE_BATCH_CAPACITY;
+    capacity = capacity || cc.SpriteBatchNode.DEFAULT_CAPACITY;
     if (typeof(fileImage) == "string")
         this.initWithFile(fileImage, capacity);
     else
@@ -733,6 +733,10 @@ cc.Animation.prototype._ctor = function(frames, delay, loops) {
             }
         }
     }
+};
+
+cc.AnimationFrame.prototype._ctor = function(spriteFrame, delayUnits, userInfo) {
+    delayUnits !== undefined && this.initWithSpriteFrame(spriteFrame, delayUnits, userInfo);
 };
 
 

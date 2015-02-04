@@ -48,10 +48,10 @@ var TestScene = cc.Scene.extend({
         this._super();
         this.init();
 
-        var label = cc.LabelTTF.create("Main Menu", "Arial", 20);
-        var menuItem = cc.MenuItemLabel.create(label, this.onMainMenuCallback, this);
+        var label = new cc.LabelTTF("Main Menu", "Arial", 20);
+        var menuItem = new cc.MenuItemLabel(label, this.onMainMenuCallback, this);
 
-        var menu = cc.Menu.create(menuItem);
+        var menu = new cc.Menu(menuItem);
         menu.x = 0;
         menu.y = 0;
         menuItem.x = winSize.width - 50;
@@ -62,10 +62,10 @@ var TestScene = cc.Scene.extend({
         }
     },
     onMainMenuCallback:function () {
-        var scene = cc.Scene.create();
+        var scene = new cc.Scene();
         var layer = new TestController();
         scene.addChild(layer);
-        var transition = cc.TransitionProgressRadialCCW.create(0.5,scene);
+        var transition = new cc.TransitionProgressRadialCCW(0.5,scene);
         director.runScene(transition);
     },
 
@@ -92,33 +92,34 @@ var TestController = cc.LayerGradient.extend({
         winSize = director.getWinSize();
 
         // add close menu
-        var closeItem = cc.MenuItemImage.create(s_pathClose, s_pathClose, this.onCloseCallback, this);
+        var closeItem = new cc.MenuItemImage(s_pathClose, s_pathClose, this.onCloseCallback, this);
         closeItem.x = winSize.width - 30;
 	    closeItem.y = winSize.height - 30;
 
-        var subItem1 = cc.MenuItemFont.create("Automated Test: Off");
+        var subItem1 = new cc.MenuItemFont("Automated Test: Off");
         subItem1.fontSize = 18;
-        var subItem2 = cc.MenuItemFont.create("Automated Test: On");
+        var subItem2 = new cc.MenuItemFont("Automated Test: On");
         subItem2.fontSize = 18;
 
-        var toggleAutoTestItem = cc.MenuItemToggle.create(subItem1, subItem2);
+        var toggleAutoTestItem = new cc.MenuItemToggle(subItem1, subItem2);
         toggleAutoTestItem.setCallback(this.onToggleAutoTest, this);
         toggleAutoTestItem.x = winSize.width - toggleAutoTestItem.width / 2 - 10;
-	    toggleAutoTestItem.y = 20;
+        toggleAutoTestItem.y = 20;
+        toggleAutoTestItem.setVisible(false);
         if( autoTestEnabled )
             toggleAutoTestItem.setSelectedIndex(1);
 
 
-        var menu = cc.Menu.create(closeItem, toggleAutoTestItem);//pmenu is just a holder for the close button
+        var menu = new cc.Menu(closeItem, toggleAutoTestItem);//pmenu is just a holder for the close button
         menu.x = 0;
 	    menu.y = 0;
 
         // add menu items for tests
-        this._itemMenu = cc.Menu.create();//item menu is where all the label goes, and the one gets scrolled
+        this._itemMenu = new cc.Menu();//item menu is where all the label goes, and the one gets scrolled
 
         for (var i = 0, len = testNames.length; i < len; i++) {
-            var label = cc.LabelTTF.create(testNames[i].title, "Arial", 24);
-            var menuItem = cc.MenuItemLabel.create(label, this.onMenuCallback, this);
+            var label = new cc.LabelTTF(testNames[i].title, "Arial", 24);
+            var menuItem = new cc.MenuItemLabel(label, this.onMenuCallback, this);
             this._itemMenu.addChild(menuItem, i + 10000);
             menuItem.x = winSize.width / 2;
 	        menuItem.y = (winSize.height - (i + 1) * LINE_SPACE);
@@ -292,15 +293,6 @@ var testNames = [
         linksrc:"",
         testScene:function () {
             return new CocoStudioTestScene();
-        }
-    },
-    {
-        title: "Cocos Studio 2.0 Test",
-        resource: g_ccs2,
-        platforms: PLATFORM_ALL,
-        linksrc: "",
-        testScene: function(){
-            return new CocosStudio2();
         }
     },
     {
