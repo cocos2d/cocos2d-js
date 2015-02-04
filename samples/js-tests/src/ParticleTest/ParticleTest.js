@@ -263,14 +263,10 @@ var ParticleDemo = BaseTestLayer.extend({
                 selfPoint._textureModeButton.setVisible(true);
                 selfPoint._shapeModeButton.setVisible(false);
             });
+        this._shapeModeButton.setVisible(false);
         this._shapeModeButton.x = 10;
         this._shapeModeButton.y = 100;
         this._shapeModeButton.setAnchorPoint(0, 0);
-
-        if ('opengl' in cc.sys.capabilities ) {
-            // Shape type is not compatible with JSB
-            this._shapeModeButton.enabled = false;
-        }
 
         var spriteNormal_t = new cc.Sprite(s_textureModeMenuItem, cc.rect(0, 23 * 2, 115, 23));
         var spriteSelected_t = new cc.Sprite(s_textureModeMenuItem, cc.rect(0, 23, 115, 23));
@@ -283,16 +279,18 @@ var ParticleDemo = BaseTestLayer.extend({
                 selfPoint._textureModeButton.setVisible(false);
                 selfPoint._shapeModeButton.setVisible(true);
             });
-        this._textureModeButton.setVisible(false);
         this._textureModeButton.x = 10;
         this._textureModeButton.y = 100;
         this._textureModeButton.setAnchorPoint(0, 0);
 
+        if ('opengl' in cc.sys.capabilities ) {
+            // Shape type is not compatible with JSB
+            this._textureModeButton.enabled = false;
+        }
+
         var menu = new cc.Menu( this._shapeModeButton, this._textureModeButton,
             this._freeMovementButton, this._relativeMovementButton, this._groupMovementButton);
-
         menu.x = 0;
-
         menu.y = 0;
 
         this.addChild(menu, 100);
@@ -313,7 +311,6 @@ var ParticleDemo = BaseTestLayer.extend({
 
         var seq = cc.sequence(move, move_back);
         this._background.runAction(seq.repeatForever());
-
         this.scheduleUpdate();
     },
 
@@ -390,8 +387,7 @@ var DemoFirework = ParticleDemo.extend({
 
         this._emitter = new cc.ParticleFireworks();
         this._background.addChild(this._emitter, 10);
-        var myTexture = cc.textureCache.addImage(s_stars1);
-        this._emitter.texture = myTexture;
+        this._emitter.texture = cc.textureCache.addImage(s_stars1);
         if (this._emitter.setShapeType)
             this._emitter.setShapeType(cc.ParticleSystem.STAR_SHAPE);
         this.setEmitterPosition();
@@ -425,8 +421,7 @@ var DemoSun = ParticleDemo.extend({
 
         this._emitter = new cc.ParticleSun();
         this._background.addChild(this._emitter, 10);
-        var myTexture = cc.textureCache.addImage(s_fire);
-        this._emitter.texture = myTexture;
+        this._emitter.texture = cc.textureCache.addImage(s_fire);
         if (this._emitter.setShapeType)
             this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
 
@@ -443,8 +438,7 @@ var DemoGalaxy = ParticleDemo.extend({
 
         this._emitter = new cc.ParticleGalaxy();
         this._background.addChild(this._emitter, 10);
-        var myTexture = cc.textureCache.addImage(s_fire);
-        this._emitter.texture = myTexture;
+        this._emitter.texture = cc.textureCache.addImage(s_fire);
         if (this._emitter.setShapeType)
             this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
 
@@ -463,8 +457,7 @@ var DemoFlower = ParticleDemo.extend({
 
         this._emitter = new cc.ParticleFlower();
         this._background.addChild(this._emitter, 10);
-        var myTexture = cc.textureCache.addImage(s_stars1);
-        this._emitter.texture = myTexture;
+        this._emitter.texture = cc.textureCache.addImage(s_stars1);
 
         if (this._emitter.setShapeType)
             this._emitter.setShapeType(cc.ParticleSystem.STAR_SHAPE);
@@ -523,17 +516,10 @@ var DemoBigFlower = ParticleDemo.extend({
         this._emitter.endSpinVar = 0;
 
         // color of particles
-        var startColor = cc.color(128, 128, 128, 255);
-        this._emitter.startColor = startColor;
-
-        var startColorVar = cc.color(128, 128, 128, 255);
-        this._emitter.startColorVar = startColorVar;
-
-        var endColor = cc.color(26, 26, 26, 50);
-        this._emitter.endColor = endColor;
-
-        var endColorVar = cc.color(26, 26, 26, 50);
-        this._emitter.endColorVar = endColorVar;
+        this._emitter.startColor = cc.color(128, 128, 128, 255);
+        this._emitter.startColorVar = cc.color(128, 128, 128, 255);
+        this._emitter.endColor = cc.color(26, 26, 26, 50);
+        this._emitter.endColorVar = cc.color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 80.0;
@@ -582,7 +568,7 @@ var DemoRotFlower = ParticleDemo.extend({
         this._emitter.radialAccel = -120;
         this._emitter.radialAccelVar = 0;
 
-        // tagential
+        // tangential
         this._emitter.tangentialAccel = 30;
         this._emitter.tangentialAccelVar = 0;
 
@@ -601,17 +587,10 @@ var DemoRotFlower = ParticleDemo.extend({
         this._emitter.endSpin = 0;
         this._emitter.endSpinVar = 2000;
 
-        var startColor = cc.color(128, 128, 128, 255);
-        this._emitter.startColor = startColor;
-
-        var startColorVar = cc.color(128, 128, 128, 255);
-        this._emitter.startColorVar = startColorVar;
-
-        var endColor = cc.color(26, 26, 26, 50);
-        this._emitter.endColor = endColor;
-
-        var endColorVar = cc.color(26, 26, 26, 50);
-        this._emitter.endColorVar = endColorVar;
+        this._emitter.startColor = cc.color(128, 128, 128, 255);
+        this._emitter.startColorVar = cc.color(128, 128, 128, 255);
+        this._emitter.endColor = cc.color(26, 26, 26, 50);
+        this._emitter.endColorVar = cc.color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 30.0;
@@ -785,7 +764,7 @@ var DemoModernArt = ParticleDemo.extend({
         this._emitter.radialAccel = 70;
         this._emitter.radialAccelVar = 10;
 
-        // tagential
+        // tangential
         this._emitter.tangentialAccel = 80;
         this._emitter.tangentialAccelVar = 0;
 
@@ -801,17 +780,10 @@ var DemoModernArt = ParticleDemo.extend({
         this._emitter.emissionRate = this._emitter.totalParticles / this._emitter.life;
 
         // color of particles
-        var startColor = cc.color(128, 128, 128, 255);
-        this._emitter.startColor = startColor;
-
-        var startColorVar = cc.color(128, 128, 128, 255);
-        this._emitter.startColorVar = startColorVar;
-
-        var endColor = cc.color(26, 26, 26, 50);
-        this._emitter.endColor = endColor;
-
-        var endColorVar = cc.color(26, 26, 26, 50);
-        this._emitter.endColorVar = endColorVar;
+        this._emitter.startColor = cc.color(128, 128, 128, 255);
+        this._emitter.startColorVar = cc.color(128, 128, 128, 255);
+        this._emitter.endColor = cc.color(26, 26, 26, 50);
+        this._emitter.endColorVar = cc.color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 1.0;
@@ -981,17 +953,10 @@ var RadiusMode1 = ParticleDemo.extend({
         this._emitter.endSpinVar = 0;
 
         // color of particles
-        var startColor = cc.color(128, 128, 128, 255);
-        this._emitter.startColor = startColor;
-
-        var startColorVar = cc.color(128, 128, 128, 255);
-        this._emitter.startColorVar = startColorVar;
-
-        var endColor = cc.color(26, 26, 26, 50);
-        this._emitter.endColor = endColor;
-
-        var endColorVar = cc.color(26, 26, 26, 50);
-        this._emitter.endColorVar = endColorVar;
+        this._emitter.startColor = cc.color(128, 128, 128, 255);
+        this._emitter.startColorVar = cc.color(128, 128, 128, 255);
+        this._emitter.endColor = cc.color(26, 26, 26, 50);
+        this._emitter.endColorVar = cc.color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 32;
@@ -1058,17 +1023,10 @@ var RadiusMode2 = ParticleDemo.extend({
         this._emitter.endSpinVar = 0;
 
         // color of particles
-        var startColor = cc.color(128, 128, 128, 255);
-        this._emitter.startColor = startColor;
-
-        var startColorVar = cc.color(128, 128, 128, 255);
-        this._emitter.startColorVar = startColorVar;
-
-        var endColor = cc.color(26, 26, 26, 50);
-        this._emitter.endColor = endColor;
-
-        var endColorVar = cc.color(26, 26, 26, 50);
-        this._emitter.endColorVar = endColorVar;
+        this._emitter.startColor = cc.color(128, 128, 128, 255);
+        this._emitter.startColorVar = cc.color(128, 128, 128, 255);
+        this._emitter.endColor = cc.color(26, 26, 26, 50);
+        this._emitter.endColorVar = cc.color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 32;
@@ -1136,17 +1094,10 @@ var Issue704 = ParticleDemo.extend({
         this._emitter.endSpinVar = 0;
 
         // color of particles
-        var startColor = cc.color(128, 128, 128, 255);
-        this._emitter.startColor = startColor;
-
-        var startColorVar = cc.color(128, 128, 128, 255);
-        this._emitter.startColorVar = startColorVar;
-
-        var endColor = cc.color(26, 26, 26, 50);
-        this._emitter.endColor = endColor;
-
-        var endColorVar = cc.color(26, 26, 26, 50);
-        this._emitter.endColorVar = endColorVar;
+        this._emitter.startColor = cc.color(128, 128, 128, 255);
+        this._emitter.startColorVar = cc.color(128, 128, 128, 255);
+        this._emitter.endColor = cc.color(26, 26, 26, 50);
+        this._emitter.endColorVar = cc.color(26, 26, 26, 50);
 
         // size, in pixels
         this._emitter.startSize = 16;
