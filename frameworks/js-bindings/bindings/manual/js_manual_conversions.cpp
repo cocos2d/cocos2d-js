@@ -50,7 +50,9 @@ JSStringWrapper::JSStringWrapper(jsval val, JSContext* cx/* = NULL*/)
 
 JSStringWrapper::~JSStringWrapper()
 {
-    CC_SAFE_DELETE_ARRAY(_buffer);
+#if(CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+    CC_SAFE_DELETE_ARRAY(_buffer); //XXX: why break on wp8?
+#endif
 }
 
 void JSStringWrapper::set(jsval val, JSContext* cx)

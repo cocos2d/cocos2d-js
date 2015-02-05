@@ -34,7 +34,7 @@
 #include "jsb_cocos2dx_auto.hpp"
 #include "js_bindings_config.h"
 // for debug socket
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include <io.h>
 #include <WS2tcpip.h>
 #else
@@ -105,7 +105,7 @@ static std::unordered_map<std::string, JSObject*> globals;
 
 static void cc_closesocket(int fd)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     closesocket(fd);
 #else
     close(fd);
@@ -349,6 +349,8 @@ bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
     os = JS_InternString(cx, "Blackberry");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     os = JS_InternString(cx, "OS X");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    os = JS_InternString(cx, "WP8");
 #else
     os = JS_InternString(cx, "Unknown");
 #endif
@@ -1672,7 +1674,7 @@ static void serverEntryPoint(unsigned int port)
     
     int err = 0;
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     WSADATA wsaData;
     err = WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
