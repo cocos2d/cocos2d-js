@@ -36,5 +36,7 @@
     <None Include="$(CurlBinPath)libcurl.dll" />
     <None Include="$(CurlBinPath)libeay32.dll" />
     <None Include="$(CurlBinPath)ssleay32.dll" />
+    <None Include="..\..\..\..\..\frameworks\js-bindings\external\spidermonkey\prebuilt\wp8\win32\mozjs-33.dll" />
+    <None Include="..\..\..\..\..\frameworks\js-bindings\external\spidermonkey\prebuilt\wp8\arm\mozjs-33.dll" />
   </ItemGroup>
 </Project>
