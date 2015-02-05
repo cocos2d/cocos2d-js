@@ -22,8 +22,12 @@
 
 sp.SkeletonAnimation.prototype._ctor = function(skeletonDataFile, atlasFile, scale) {
 	if(atlasFile) {
-		this.initWithFile(skeletonDataFile, atlasFile, scale);
-		this.initialize();
+        if (isNaN(scale)) {
+            scale = 1;
+        }
+        
+        this.initWithFile(skeletonDataFile, atlasFile, scale);
+        this.initialize();
 	}
 };
 
