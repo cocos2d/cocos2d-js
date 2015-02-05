@@ -57012,6 +57012,22 @@ void js_cocos2d_GLProgram_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (GLProgram)", obj);
 }
 
+static bool js_cocos2d_GLProgram_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    cocos2d::GLProgram *nobj = new (std::nothrow) cocos2d::GLProgram();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::GLProgram");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_GLProgram(JSContext *cx, JSObject *global) {
     jsb_cocos2d_GLProgram_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_GLProgram_class->name = "GLProgram";
@@ -57054,6 +57070,7 @@ void js_register_cocos2dx_GLProgram(JSContext *cx, JSObject *global) {
         JS_FN("setUniformLocationWith4i", js_cocos2dx_GLProgram_setUniformLocationWith4i, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUniformLocationI32", js_cocos2dx_GLProgram_setUniformLocationWith1i, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUniformLocationWith2i", js_cocos2dx_GLProgram_setUniformLocationWith2i, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_GLProgram_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
