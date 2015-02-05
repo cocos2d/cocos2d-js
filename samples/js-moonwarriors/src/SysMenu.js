@@ -158,7 +158,8 @@ var SysMenu = cc.Layer.extend({
         if (MW.SOUND) {
             //TODO: why buttonEffet_wav play failed on wp8?
             //var s = cc.audioEngine.playEffect(cc.sys.os == cc.sys.OS_WP8 ? res.buttonEffet_wav : res.buttonEffet_mp3);
-            var s = cc.audioEngine.playEffect(res.buttonEffet_mp3);
+            if(cc.sys.os !== cc.sys.OS_WP8)
+                var s = cc.audioEngine.playEffect(res.buttonEffet_mp3);
         }
     }
 });
