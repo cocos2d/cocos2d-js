@@ -1461,6 +1461,7 @@ cc.TMXLayer.extend = cc.Class.extend;
 cc.TMXTiledMap.extend = cc.Class.extend;
 cc.TMXMapInfo.extend = cc.Class.extend;
 cc.TransitionScene.extend = cc.Class.extend;
+cc.GLProgram.extend = cc.Class.extend;
 
 
 // Cocos2d-html5 supports multi scene resources preloading.

@@ -125,3 +125,7 @@ if (jsb.fileUtils.isFileExist('jsb_pluginx.js')) {
         require('jsb_pluginx.js');
     }
 }
+
+if (window.sp) {
+    require('script/jsb_spine.js');
+}
