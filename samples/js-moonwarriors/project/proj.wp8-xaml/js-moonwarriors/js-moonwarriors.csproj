@@ -108,55 +108,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Resources\fonts\arial.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\project.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\arial-14.fnt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\arial-14.GlyphProject">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\b01.plist">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\explode.plist">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\explosion.plist">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\level01.tmx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\Music\bgMusic.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\Music\buttonEffet.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\Music\explodeEffect.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\Music\fireEffect.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\Music\mainMainMusic.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\Music\shipDestroyEffect.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\textureOpaquePack.plist">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\res\textureTransparentPack.plist">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Resources\script\debugger\README.md" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
@@ -167,193 +118,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\ApplicationIcon.png" />
-    <Content Include="Assets\Resources\main.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\arial-14.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\b01.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\cocos2d-html5.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\explosion.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\flare.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\gameOver.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\gameoverBack.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\loading.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\logo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\logoBack.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\menu.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\menuTitle.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\Music\bgMusic.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\Music\bgMusic.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\Music\buttonEffet.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\Music\buttonEffet.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\Music\explodeEffect.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\Music\explodeEffect.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\Music\fireEffect.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\Music\fireEffect.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\Music\mainMainMusic.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\Music\mainMainMusic.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\Music\shipDestroyEffect.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\Music\shipDestroyEffect.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\textureOpaquePack.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\res\textureTransparentPack.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\script\ccui\jsb_ccui_create_apis.js" />
-    <Content Include="Assets\Resources\script\ccui\jsb_ccui_deprecated.js" />
-    <Content Include="Assets\Resources\script\ccui\jsb_ccui_property_apis.js" />
-    <Content Include="Assets\Resources\script\ccui\jsb_ccui_property_impls.js" />
-    <Content Include="Assets\Resources\script\ccui\jsb_cocos2d_ui.js" />
-    <Content Include="Assets\Resources\script\chipmunk\jsb_chipmunk.js" />
-    <Content Include="Assets\Resources\script\chipmunk\jsb_chipmunk_constants.js" />
-    <Content Include="Assets\Resources\script\debugger\actors\root.js" />
-    <Content Include="Assets\Resources\script\debugger\actors\script.js" />
-    <Content Include="Assets\Resources\script\debugger\core\promise.js" />
-    <Content Include="Assets\Resources\script\debugger\DevToolsUtils.js" />
-    <Content Include="Assets\Resources\script\debugger\main.js" />
-    <Content Include="Assets\Resources\script\debugger\transport.js" />
-    <Content Include="Assets\Resources\script\extension\jsb_cocos2d_extension.js" />
-    <Content Include="Assets\Resources\script\extension\jsb_ext_create_apis.js" />
-    <Content Include="Assets\Resources\script\extension\jsb_ext_property_apis.js" />
-    <Content Include="Assets\Resources\script\jsb.js" />
-    <Content Include="Assets\Resources\script\jsb_boot.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\script\jsb_cocos2d.js" />
-    <Content Include="Assets\Resources\script\jsb_cocos2d_constants.js" />
-    <Content Include="Assets\Resources\script\jsb_cocosbuilder.js" />
-    <Content Include="Assets\Resources\script\jsb_common.js" />
-    <Content Include="Assets\Resources\script\jsb_create_apis.js" />
-    <Content Include="Assets\Resources\script\jsb_debugger.js" />
-    <Content Include="Assets\Resources\script\jsb_deprecated.js" />
-    <Content Include="Assets\Resources\script\jsb_loaders.js" />
-    <Content Include="Assets\Resources\script\jsb_opengl.js" />
-    <Content Include="Assets\Resources\script\jsb_opengl_constants.js" />
-    <Content Include="Assets\Resources\script\jsb_pool.js" />
-    <Content Include="Assets\Resources\script\jsb_property_apis.js" />
-    <Content Include="Assets\Resources\script\jsb_property_impls.js" />
-    <Content Include="Assets\Resources\script\physicsSprite\jsb_physicsSprite.js" />
-    <Content Include="Assets\Resources\script\studio\jsb_cocos2d_studio.js" />
-    <Content Include="Assets\Resources\script\studio\jsb_studio_boot.js" />
-    <Content Include="Assets\Resources\script\studio\jsb_studio_create_apis.js" />
-    <Content Include="Assets\Resources\script\studio\jsb_studio_load.js" />
-    <Content Include="Assets\Resources\script\studio\jsb_studio_property_apis.js" />
-    <Content Include="Assets\Resources\script\studio\parsers\action-1.x.js" />
-    <Content Include="Assets\Resources\script\studio\parsers\action-2.x.js" />
-    <Content Include="Assets\Resources\script\studio\parsers\compatible.js" />
-    <Content Include="Assets\Resources\script\studio\parsers\scene-1.x.js" />
-    <Content Include="Assets\Resources\script\studio\parsers\timelineParser-1.x.js" />
-    <Content Include="Assets\Resources\script\studio\parsers\timelineParser-2.x.js" />
-    <Content Include="Assets\Resources\script\studio\parsers\uiParser-1.x.js" />
-    <Content Include="Assets\Resources\src\AboutLayer.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\Background.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\Bullet.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\config\EnemyType.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\config\GameConfig.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\config\Level.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\Effect.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\Enemy.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\Explosion.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\GameController.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\GameControlMenu.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\GameLayer.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\GameOver.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\HitEffect.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\LevelManager.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\Resource.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\SettingsLayer.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\Ship.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\SparkEffect.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Resources\src\SysMenu.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png" />
     <Content Include="Assets\Tiles\FlipCycleTileMedium.png" />
     <Content Include="Assets\Tiles\FlipCycleTileSmall.png" />
@@ -374,7 +138,31 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Resources\**\*">
+    <Content Include="..\..\..\res\**\*">
+      <Link>Assets\Resources\res\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\src\**\*">
+      <Link>Assets\Resources\src\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\..\..\frameworks\js-bindings\bindings\script\**\*">
+      <Link>Assets\Resources\script\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\main.js">
+      <Link>Assets\Resources\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\project.json">
       <Link>Assets\Resources\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -397,6 +185,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\Resources\fonts\" />
     <Folder Include="Assets\Resources\ipadhd\" />
     <Folder Include="Assets\Resources\ipad\" />
     <Folder Include="Assets\Resources\iphone\" />
