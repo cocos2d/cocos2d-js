@@ -487,7 +487,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_getSkeleton(JSContext *cx, uint32_t argc
     if (argc == 0) {
         spSkeleton* ret = cobj->getSkeleton();
         jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR spSkeleton*;
+        jsret = spskeleton_to_jsval(cx, *ret);
         JS_SET_RVAL(cx, vp, jsret);
         return true;
     }
@@ -901,6 +901,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_setStartListener(JSContext *cx, uint32_
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
 		        auto lambda = [=](int larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[1];
 		            largv[0] = int32_to_jsval(cx, larg0);
 		            jsval rval;
@@ -944,16 +945,10 @@ bool js_cocos2dx_spine_SkeletonAnimation_setTrackEventListener(JSContext *cx, ui
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
 		        auto lambda = [=](int larg0, spEvent* larg1) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            largv[0] = int32_to_jsval(cx, larg0);
-		            do {
-		            if (larg1) {
-		                js_proxy_t *jsProxy = js_get_or_create_proxy<spEvent>(cx, (spEvent*)larg1);
-		                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
-		            } else {
-		                largv[1] = JSVAL_NULL;
-		            }
-		        } while (0);
+		            largv[1] = spevent_to_jsval(cx, *larg1);
 		            jsval rval;
 		            bool ok = func->invoke(2, &largv[0], rval);
 		            if (!ok && JS_IsExceptionPending(cx)) {
@@ -986,7 +981,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_getState(JSContext *cx, uint32_t argc, 
     if (argc == 0) {
         spAnimationState* ret = cobj->getState();
         jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR spAnimationState*;
+        jsret = spanimationstate_to_jsval(cx, *ret);
         JS_SET_RVAL(cx, vp, jsret);
         return true;
     }
@@ -1012,6 +1007,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_setTrackCompleteListener(JSContext *cx,
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
 		        auto lambda = [=](int larg0, int larg1) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            largv[0] = int32_to_jsval(cx, larg0);
 		            largv[1] = int32_to_jsval(cx, larg1);
@@ -1083,6 +1079,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_setTrackStartListener(JSContext *cx, ui
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
 		        auto lambda = [=](int larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[1];
 		            largv[0] = int32_to_jsval(cx, larg0);
 		            jsval rval;
@@ -1143,6 +1140,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_setCompleteListener(JSContext *cx, uint
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
 		        auto lambda = [=](int larg0, int larg1) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            largv[0] = int32_to_jsval(cx, larg0);
 		            largv[1] = int32_to_jsval(cx, larg1);
@@ -1187,6 +1185,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_setTrackEndListener(JSContext *cx, uint
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
 		        auto lambda = [=](int larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[1];
 		            largv[0] = int32_to_jsval(cx, larg0);
 		            jsval rval;
@@ -1227,16 +1226,10 @@ bool js_cocos2dx_spine_SkeletonAnimation_setEventListener(JSContext *cx, uint32_
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
 		        auto lambda = [=](int larg0, spEvent* larg1) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            largv[0] = int32_to_jsval(cx, larg0);
-		            do {
-		            if (larg1) {
-		                js_proxy_t *jsProxy = js_get_or_create_proxy<spEvent>(cx, (spEvent*)larg1);
-		                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
-		            } else {
-		                largv[1] = JSVAL_NULL;
-		            }
-		        } while (0);
+		            largv[1] = spevent_to_jsval(cx, *larg1);
 		            jsval rval;
 		            bool ok = func->invoke(2, &largv[0], rval);
 		            if (!ok && JS_IsExceptionPending(cx)) {
@@ -1299,6 +1292,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_setEndListener(JSContext *cx, uint32_t 
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
 		        auto lambda = [=](int larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[1];
 		            largv[0] = int32_to_jsval(cx, larg0);
 		            jsval rval;
