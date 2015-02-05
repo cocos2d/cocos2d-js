@@ -1691,6 +1691,22 @@ void js_spine_SkeletonAnimation_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (SkeletonAnimation)", obj);
 }
 
+static bool js_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    spine::SkeletonAnimation *nobj = new (std::nothrow) spine::SkeletonAnimation();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    JS_AddNamedObjectRoot(cx, &p->obj, "spine::SkeletonAnimation");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return true;
+}
 void js_register_cocos2dx_spine_SkeletonAnimation(JSContext *cx, JSObject *global) {
     jsb_spine_SkeletonAnimation_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_spine_SkeletonAnimation_class->name = "SkeletonAnimation";
@@ -1726,6 +1742,7 @@ void js_register_cocos2dx_spine_SkeletonAnimation(JSContext *cx, JSObject *globa
         JS_FN("clearTracks", js_cocos2dx_spine_SkeletonAnimation_clearTracks, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("clearTrack", js_cocos2dx_spine_SkeletonAnimation_clearTrack, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onAnimationStateEvent", js_cocos2dx_spine_SkeletonAnimation_onAnimationStateEvent, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_spine_SkeletonAnimation_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
