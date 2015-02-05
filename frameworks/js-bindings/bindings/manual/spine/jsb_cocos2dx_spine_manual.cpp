@@ -593,30 +593,6 @@ public:
     }
 };
 
-static bool jsb_cocos2dx_spine_setAnimationListener(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    
-    spine::SkeletonAnimation* node = (spine::SkeletonAnimation *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( node, cx, false, "Invalid Native Object");
-    if (argc == 2) {
-        JSSkeletonAnimationWrapper *tmpCobj = new JSSkeletonAnimationWrapper();
-        jsval *argv = JS_ARGV(cx, vp);
-        
-        tmpCobj->setJSCallbackFunc(argv[1]);
-        tmpCobj->setJSCallbackThis(argv[0]);
-        
-        //node->setAnimationListener(tmpCobj, animationStateEvent_selector(JSSkeletonAnimationWrapper::animationCallbackFunc));
-        
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        
-        return true;
-    }
-    JS_ReportError(cx, "Invalid number of arguments");
-    return false;
-}
-
 extern JSObject* jsb_spine_SkeletonRenderer_prototype;
 extern JSObject* jsb_spine_SkeletonAnimation_prototype;
 
@@ -630,5 +606,4 @@ void register_all_cocos2dx_spine_manual(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_spine_SkeletonAnimation_prototype, "getCurrent", jsb_cocos2dx_spine_getCurrent, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_spine_SkeletonAnimation_prototype, "setAnimation", jsb_cocos2dx_spine_setAnimation, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_spine_SkeletonAnimation_prototype, "addAnimation", jsb_cocos2dx_spine_addAnimation, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_spine_SkeletonAnimation_prototype, "setAnimationListener", jsb_cocos2dx_spine_setAnimationListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 }
