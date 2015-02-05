@@ -138,6 +138,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\..\res\fonts\arial.ttf">
+      <Link>Assets\Resources\fonts\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+    <ItemGroup>
     <Content Include="..\..\..\res\**\*">
       <Link>Assets\Resources\res\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
