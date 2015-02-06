@@ -47,9 +47,10 @@ static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
     p = typeMapIter->second;
     CCASSERT(p, "The value is null.");
     
-    JSObject *_tmp = JS_NewObject(cx, p->jsclass, p->proto, p->parentProto);
+    JSObject *_tmp = JS_NewObject(cx, p->jsclass, JS::RootedObject(cx, p->proto), JS::RootedObject(cx, p->parentProto));
     js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
-    JS_AddObjectRoot(cx, &pp->obj);
+    JS::AddObjectRoot(cx, &pp->obj);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().set(OBJECT_TO_JSVAL(_tmp));
 
     return true;
