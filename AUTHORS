@@ -66,6 +66,7 @@ Vincent Chou        @go3k           Update README.md, add submodule update comma
                                     Fix bug: PrebuiltRuntime ios version can't support portrait orientation.
 
 Igor Mats           @IgorMats       Added outline shader sample
+                                    Add SkeletonAnimation and GLProgram to the list of extendable classes
 
 G17hao              @G17hao         Fixed an typo issue in jsb_boot.js
 
