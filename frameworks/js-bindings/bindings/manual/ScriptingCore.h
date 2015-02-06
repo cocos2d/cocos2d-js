@@ -34,7 +34,7 @@
 #include "js_bindings_core.h"
 #include "spidermonkey_specifics.h"
 #include "js_manual_conversions.h"
-#include "mozilla\Maybe.h"
+#include "mozilla/Maybe.h"
 
 #include <assert.h>
 #include <memory>

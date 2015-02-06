@@ -686,7 +686,7 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
         std::string jsFileContent = futil->getStringFromFile(fullPath);
         if (!jsFileContent.empty())
         {
-            ok = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size(), &script);
+            ok = JS::Compile(cx, obj, op, jsFileContent.c_str(), jsFileContent.size(), &script);
         }
 #else
         //ok = JS::Compile(cx, obj, op, "C:\\GitHub\\cocos2d-js\\build\\Debug.win32\\js-tests-res\\script\\jsb_boot.js", &script);
@@ -757,8 +757,8 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
     }
 */
     auto fileUtil = FileUtils::getInstance();
-    auto& fullpath = fileUtil->fullPathForFilename(path);
-    auto& content = fileUtil->getStringFromFile(fullpath);
+    auto fullpath = fileUtil->fullPathForFilename(path);
+    auto content = fileUtil->getStringFromFile(fullpath);
 
     JSAutoCompartment ac(cx, global);
     bool evaluatedOK = JS_EvaluateScript(cx, global, content.c_str(), content.length(), path, 0);
