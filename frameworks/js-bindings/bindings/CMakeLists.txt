@@ -69,6 +69,7 @@ include_directories(
   auto
   manual
   manual/cocostudio
+  manual/spine
   ../external/spidermonkey/include/${PLATFORM_FOLDER}
   ../cocos2d-x/cocos/base
   ../cocos2d-x/cocos/2d
