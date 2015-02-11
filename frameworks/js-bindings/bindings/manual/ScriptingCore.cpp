@@ -675,8 +675,6 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
 
         std::string fullPath = futil->fullPathForFilename(path);
    
-        //TODO : why break in JSAutoCompartment desctructor????
-        //JSAutoCompartment ac(cx, global);
         JS::CompileOptions op(cx);
         op.setUTF8(true);
         op.setFileAndLine(fullPath.c_str(), 1);
@@ -689,8 +687,6 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
             ok = JS::Compile(cx, obj, op, jsFileContent.c_str(), jsFileContent.size(), &script);
         }
 #else
-        //ok = JS::Compile(cx, obj, op, "C:\\GitHub\\cocos2d-js\\build\\Debug.win32\\js-tests-res\\script\\jsb_boot.js", &script);
-        //JS_ExecuteScript(cx, obj, script);
         ok = JS::Compile(cx, obj, op, fullPath.c_str(), &script);
 #endif
         if (ok) {
@@ -741,8 +737,6 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
         cx = _cx;
     }
 
-    //Fix ME: compileScript will break after using SpiderMonkey v33, use JS_EvaluateScript now
-/*
     compileScript(path,global,cx);
     JS::RootedScript script(cx, getScript(path));
     bool evaluatedOK = false;
@@ -755,13 +749,7 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
             JS_ReportPendingException(cx);
         }
     }
-*/
-    auto fileUtil = FileUtils::getInstance();
-    auto fullpath = fileUtil->fullPathForFilename(path);
-    auto content = fileUtil->getStringFromFile(fullpath);
 
-    JSAutoCompartment ac(cx, global);
-    bool evaluatedOK = JS_EvaluateScript(cx, global, content.c_str(), content.length(), path, 0);
     return evaluatedOK;
 }
 
