@@ -191,7 +191,7 @@ bool jsval_to_ccmap_string_key(JSContext *cx, JS::HandleValue v, cocos2d::Map<st
         return true;
     }
 
-    JS::RootedObject tmp(cx, v.toObject());
+    JS::RootedObject tmp(cx, v.toObjectOrNull());
 
     if (!tmp) {
         CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
@@ -223,7 +223,7 @@ bool jsval_to_ccmap_string_key(JSContext *cx, JS::HandleValue v, cocos2d::Map<st
         if (value.isObject())
         {
             js_proxy_t *proxy = nullptr;
-            JSObject* jsobj = value.toString();
+            JSObject* jsobj = value.toObjectOrNull();
             proxy = jsb_get_js_proxy(jsobj);
             CCASSERT(proxy, "Native object should be added!");
             T cobj = (T)(proxy ? proxy->ptr : nullptr);
