@@ -4212,6 +4212,12 @@ bool js_PlistParser_parse(JSContext *cx, unsigned argc, JS::Value *vp) {
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
         std::string parsedStr = delegator->parseText(arg0);
+        
+	std::string::size_type pos = 0;
+        while((pos = parsedStr.find("\n", pos)) != -1) {
+            parsedStr.replace(parsedStr.begin() + pos, parsedStr.begin() + pos + 1, "\\n");
+        }
+        
         jsval strVal = std_string_to_jsval(cx, parsedStr);
         // create a new js obj of the parsed string
         JS::RootedValue outVal(cx);
