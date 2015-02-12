@@ -74,6 +74,7 @@
          "project_replace_project_name":{
             "src_project_name":"HelloJavascript",
             "files":[
+               "manifest.webapp",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
