@@ -39,7 +39,7 @@
 #include <assert.h>
 #include <memory>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.3 Beta0"
+#define ENGINE_VERSION "Cocos2d-JS v3.3"
 
 void js_log(const char *format, ...);
 
@@ -262,7 +262,6 @@ private:
 public:
     int handleNodeEvent(void* data);
     int handleComponentEvent(void* data);
-    int handleMenuClickedEvent(void* data);
     
     bool handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     bool handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event, JS::MutableHandleValue jsvalRet);

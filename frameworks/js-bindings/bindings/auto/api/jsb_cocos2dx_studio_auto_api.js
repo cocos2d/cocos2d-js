@@ -445,6 +445,110 @@ AnimationData : function (
 };
 
 /**
+ * @class ContourData
+ */
+ccs.ContourData = {
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method addVertex
+ * @param {vec2_object} arg0
+ */
+addVertex : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.ContourData}
+ */
+create : function (
+)
+{
+    return ccs.ContourData;
+},
+
+/**
+ * @method ContourData
+ * @constructor
+ */
+ContourData : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TextureData
+ */
+ccs.TextureData = {
+
+/**
+ * @method getContourData
+ * @param {int} arg0
+ * @return {ccs.ContourData}
+ */
+getContourData : function (
+int 
+)
+{
+    return ccs.ContourData;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method addContourData
+ * @param {ccs.ContourData} arg0
+ */
+addContourData : function (
+contourdata 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.TextureData}
+ */
+create : function (
+)
+{
+    return ccs.TextureData;
+},
+
+/**
+ * @method TextureData
+ * @constructor
+ */
+TextureData : function (
+)
+{
+},
+
+};
+
+/**
  * @class ProcessBase
  */
 ccs.ProcessBase = {

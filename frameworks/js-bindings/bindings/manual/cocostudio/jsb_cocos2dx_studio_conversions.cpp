@@ -59,6 +59,7 @@ bool jsval_to_animationInfo(JSContext* cx, JS::HandleValue vp, cocostudio::timel
     
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     
+    ret->name = name;
     ret->startIndex = (int)startIndex;
     ret->endIndex = (int)endIndex;
     return true;

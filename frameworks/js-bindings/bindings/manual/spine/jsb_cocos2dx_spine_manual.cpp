@@ -593,29 +593,6 @@ public:
     }
 };
 
-static bool jsb_cocos2dx_spine_setAnimationListener(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    
-    spine::SkeletonAnimation* node = (spine::SkeletonAnimation *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( node, cx, false, "Invalid Native Object");
-    if (argc == 2) {
-        JSSkeletonAnimationWrapper *tmpCobj = new JSSkeletonAnimationWrapper();
-        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        
-        tmpCobj->setJSCallbackFunc(args.get(1));
-        tmpCobj->setJSCallbackThis(args.get(0));
-        
-        //node->setAnimationListener(tmpCobj, animationStateEvent_selector(JSSkeletonAnimationWrapper::animationCallbackFunc));
-        
-        args.rval().setUndefined();
-        
-        return true;
-    }
-    JS_ReportError(cx, "Invalid number of arguments");
-    return false;
-}
 
 extern JSObject* jsb_spine_SkeletonRenderer_prototype;
 extern JSObject* jsb_spine_SkeletonAnimation_prototype;
@@ -628,9 +605,10 @@ void register_all_cocos2dx_spine_manual(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, skeletonRenderer, "setDebugBones", jsb_cocos2dx_spine_setDebugBones, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, skeletonRenderer, "setDebugSolots", jsb_cocos2dx_spine_setDebugSolots, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, skeletonRenderer, "getAttachment", jsb_cocos2dx_spine_getAttachment, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+
     JS::RootedObject skeletonAnimation(cx, jsb_spine_SkeletonAnimation_prototype);
     JS_DefineFunction(cx, skeletonAnimation, "getCurrent", jsb_cocos2dx_spine_getCurrent, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, skeletonAnimation, "setAnimation", jsb_cocos2dx_spine_setAnimation, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, skeletonAnimation, "addAnimation", jsb_cocos2dx_spine_addAnimation, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, skeletonAnimation, "setAnimationListener", jsb_cocos2dx_spine_setAnimationListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+
 }

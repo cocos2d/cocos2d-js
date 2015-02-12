@@ -1096,32 +1096,6 @@ int ScriptingCore::handleComponentEvent(void* data)
     return ret;
 }
 
-int ScriptingCore::handleMenuClickedEvent(void* data)
-{
-    if (NULL == data)
-        return 0;
-    
-    BasicScriptData* basicScriptData = static_cast<BasicScriptData*>(data);
-    if (NULL == basicScriptData->nativeObject)
-        return 0;
-    
-    MenuItem* menuItem = static_cast<MenuItem*>(basicScriptData->nativeObject);
-    
-    js_proxy_t * p = jsb_get_native_proxy(menuItem);
-    if (!p) return 0;
-
-    JS::RootedValue retval(_cx);
-//    jsval dataVal;
-    JS::AutoValueVector dataVal(_cx);
-    js_proxy_t *proxy = jsb_get_native_proxy(menuItem);
-//    dataVal = (proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL);
-    dataVal[0].set(proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL);
-
-    executeJSFunctionFromReservedSpot(this->_cx, JS::RootedObject(_cx, p->obj.get()), JS::HandleValueArray::subarray(dataVal, 0, 1), &retval);
-
-    return 1;
-}
-
 bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
 {
     JS::RootedValue ret(_cx);
@@ -1489,9 +1463,6 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
             }
             break;
         case kMenuClickedEvent:
-            {
-                return handleMenuClickedEvent(evt->data);
-            }
             break;
         case kTouchEvent:
             {

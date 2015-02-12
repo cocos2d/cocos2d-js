@@ -2936,6 +2936,31 @@ bool js_cocos2dx_Sprite_createWithSpriteFrameName(JSContext *cx, uint32_t argc, 
 bool js_cocos2dx_Sprite_createWithSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_Sprite(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_Image_class;
+extern JSObject *jsb_cocos2d_Image_prototype;
+
+bool js_cocos2dx_Image_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_Image_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_Image(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+bool js_cocos2dx_Image_hasPremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getDataLen(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_saveToFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_hasAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_isCompressed(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getHeight(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_initWithImageFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getWidth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getBitPerPixel(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getFileType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getNumberOfMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getRenderFormat(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_initWithRawData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_setPVRImagesHavePremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_Image(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_RenderTexture_class;
 extern JSObject *jsb_cocos2d_RenderTexture_prototype;
 
