@@ -105,7 +105,7 @@ namespace mozilla {
  *
  *   c2 = Move(c1);
  *
- * This destroys c1, moves c1's value to c2, and leaves c1 in an undefined but
+ * This destroys c2, moves c1's value to c2, and leaves c1 in an undefined but
  * destructible state.
  *
  * As we say, a move must leave the original in a "destructible" state. The
@@ -132,7 +132,7 @@ namespace mozilla {
  *
  * To avoid this, C++11 has tweaks to make it possible to write what you mean.
  * The four constructor overloads above can be written as one constructor
- * template like so:
+ * template like so[0]:
  *
  *   template <typename XArg, typename YArg>
  *   C::C(XArg&& x, YArg&& y) : x(Forward<XArg>(x)), y(Forward<YArg>(y)) { }
@@ -144,8 +144,8 @@ namespace mozilla {
  * - First, when a function template takes an argument that is an rvalue
  *   reference to a template argument (like 'XArg&& x' and 'YArg&& y' above),
  *   then when the argument is applied to an lvalue, the template argument
- *   resolves to 'T &'; and when it is applied to an rvalue, the template
- *   argument resolves to 'T &&'. Thus, in a call to C::C like:
+ *   resolves to 'T&'; and when it is applied to an rvalue, the template
+ *   argument resolves to 'T&&'. Thus, in a call to C::C like:
  *
  *      X foo(int);
  *      Y yy;
@@ -180,6 +180,28 @@ namespace mozilla {
  * 'std::forward', which are just like our 'Move' and 'Forward'; but those
  * definitions aren't available in that header on all our platforms, so we
  * define them ourselves here.)
+ *
+ * 0. This pattern is known as "perfect forwarding".  Interestingly, it is not
+ *    actually perfect, and it can't forward all possible argument expressions!
+ *    There are two issues: one that's a C++11 issue, and one that's a legacy
+ *    compiler issue.
+ *
+ *    The C++11 issue is that you can't form a reference to a bit-field.  As a
+ *    workaround, assign the bit-field to a local variable and use that:
+ *
+ *      // C is as above
+ *      struct S { int x : 1; } s;
+ *      C(s.x, 0); // BAD: s.x is a reference to a bit-field, can't form those
+ *      int tmp = s.x;
+ *      C(tmp, 0); // OK: tmp not a bit-field
+ *
+ *    The legacy issue is that when we don't have true nullptr and must emulate
+ *    it (gcc 4.4/4.5), forwarding |nullptr| results in an |int| or |long|
+ *    forwarded reference.  But such a reference, even if its value is a null
+ *    pointer constant expression, is not itself a null pointer constant
+ *    expression.  This causes -Werror=conversion-null errors and pointer-to-
+ *    integer comparison errors.  Until we always have true nullptr, users of
+ *    forwarding methods must not pass |nullptr| to them.
  */
 
 /**
@@ -188,9 +210,9 @@ namespace mozilla {
  */
 template<typename T>
 inline typename RemoveReference<T>::Type&&
-Move(T&& a)
+Move(T&& aX)
 {
-  return static_cast<typename RemoveReference<T>::Type&&>(a);
+  return static_cast<typename RemoveReference<T>::Type&&>(aX);
 }
 
 /**
@@ -199,28 +221,28 @@ Move(T&& a)
  */
 template<typename T>
 inline T&&
-Forward(typename RemoveReference<T>::Type& a)
+Forward(typename RemoveReference<T>::Type& aX)
 {
-  return static_cast<T&&>(a);
+  return static_cast<T&&>(aX);
 }
 
 template<typename T>
 inline T&&
-Forward(typename RemoveReference<T>::Type&& t)
+Forward(typename RemoveReference<T>::Type&& aX)
 {
   static_assert(!IsLvalueReference<T>::value,
                 "misuse of Forward detected!  try the other overload");
-  return static_cast<T&&>(t);
+  return static_cast<T&&>(aX);
 }
 
-/** Swap |t| and |u| using move-construction if possible. */
+/** Swap |aX| and |aY| using move-construction if possible. */
 template<typename T>
 inline void
-Swap(T& t, T& u)
+Swap(T& aX, T& aY)
 {
-  T tmp(Move(t));
-  t = Move(u);
-  u = Move(tmp);
+  T tmp(Move(aX));
+  aX = Move(aY);
+  aY = Move(tmp);
 }
 
 } // namespace mozilla

@@ -9,38 +9,10 @@
 #ifndef mozilla_TypedEnum_h
 #define mozilla_TypedEnum_h
 
-#include "mozilla/Attributes.h"
+#include "mozilla/TypedEnumInternal.h"
+#include "mozilla/MacroArgs.h"
 
 #if defined(__cplusplus)
-
-#if defined(__clang__)
-   /*
-    * Per Clang documentation, "Note that marketing version numbers should not
-    * be used to check for language features, as different vendors use different
-    * numbering schemes. Instead, use the feature checking macros."
-    */
-#  ifndef __has_extension
-#    define __has_extension __has_feature /* compatibility, for older versions of clang */
-#  endif
-#  if __has_extension(cxx_strong_enums)
-#    define MOZ_HAVE_CXX11_ENUM_TYPE
-#    define MOZ_HAVE_CXX11_STRONG_ENUMS
-#  endif
-#elif defined(__GNUC__)
-#  if defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
-#    if MOZ_GCC_VERSION_AT_LEAST(4, 6, 3)
-#      define MOZ_HAVE_CXX11_ENUM_TYPE
-#      define MOZ_HAVE_CXX11_STRONG_ENUMS
-#    endif
-#  endif
-#elif defined(_MSC_VER)
-#  if _MSC_VER >= 1400
-#    define MOZ_HAVE_CXX11_ENUM_TYPE
-#  endif
-#  if _MSC_VER >= 1700
-#    define MOZ_HAVE_CXX11_STRONG_ENUMS
-#  endif
-#endif
 
 /**
  * MOZ_ENUM_TYPE specifies the underlying numeric type for an enum.  It's
@@ -97,13 +69,12 @@
  * in namespace scope to handle bits that can only be implemented with
  * namespace-scoped code.  For example:
  *
- *   class FooBar {
- *
+ *   class FooBar
+ *   {
  *     MOZ_BEGIN_NESTED_ENUM_CLASS(Enum, int32_t)
  *       A,
  *       B = 6
  *     MOZ_END_NESTED_ENUM_CLASS(Enum)
- *
  *   };
  *
  *   MOZ_FINISH_NESTED_ENUM_CLASS(FooBar::Enum)
@@ -131,6 +102,10 @@
    * these are already integer types so there is nothing more to do.
    */
 #  define MOZ_ENUM_CLASS_ENUM_TYPE(Name) Name
+  /*
+   * See the comment below about MOZ_TEMPLATE_ENUM_CLASS_ENUM_TYPE.
+   */
+#  define MOZ_TEMPLATE_ENUM_CLASS_ENUM_TYPE(Name) Name
 #else
    /**
     * We need Name to both name a type, and scope the provided enumerator
@@ -172,24 +147,28 @@
 #  define MOZ_BEGIN_NESTED_ENUM_CLASS_HELPER1(Name) \
      class Name \
      { \
-       public: \
-         enum Enum \
-         {
+     public: \
+       enum Enum \
+       {
    /* Two-argument form. */
 #  define MOZ_BEGIN_NESTED_ENUM_CLASS_HELPER2(Name, type) \
      class Name \
      { \
-       public: \
-         enum Enum MOZ_ENUM_TYPE(type) \
-         {
+     public: \
+       enum Enum MOZ_ENUM_TYPE(type) \
+       {
 #  define MOZ_END_NESTED_ENUM_CLASS(Name) \
-         }; \
-         Name() {} \
-         Name(Enum aEnum) : mEnum(aEnum) {} \
-         explicit Name(int num) : mEnum((Enum)num) {} \
-         operator Enum() const { return mEnum; } \
-       private: \
-         Enum mEnum; \
+       }; \
+       Name() {} \
+       MOZ_CONSTEXPR Name(Enum aEnum) : mEnum(aEnum) {} \
+       template<typename Other> \
+       explicit MOZ_CONSTEXPR Name(Other num) : mEnum((Enum)num) {} \
+       MOZ_CONSTEXPR operator Enum() const { return mEnum; } \
+       explicit MOZ_CONSTEXPR Name(const mozilla::CastableTypedEnumResult<Name>& aOther) \
+         : mEnum(aOther.get()) \
+       {} \
+     private: \
+       Enum mEnum; \
      };
 #  define MOZ_FINISH_NESTED_ENUM_CLASS(Name) \
      inline int operator+(const int&, const Name::Enum&) MOZ_DELETE; \
@@ -225,7 +204,6 @@
      inline bool operator&&(const Name::Enum&, const bool&) MOZ_DELETE; \
      inline bool operator||(const bool&, const Name::Enum&) MOZ_DELETE; \
      inline bool operator||(const Name::Enum&, const bool&) MOZ_DELETE; \
-     inline int operator~(const Name::Enum&) MOZ_DELETE; \
      inline int operator&(const int&, const Name::Enum&) MOZ_DELETE; \
      inline int operator&(const Name::Enum&, const int&) MOZ_DELETE; \
      inline int operator|(const int&, const Name::Enum&) MOZ_DELETE; \
@@ -253,35 +231,45 @@
    * In the present case, the integer type is the Enum nested type.
    */
 #  define MOZ_ENUM_CLASS_ENUM_TYPE(Name) Name::Enum
+  /*
+   * MOZ_TEMPLATE_ENUM_CLASS_ENUM_TYPE is a variant of MOZ_ENUM_CLASS_ENUM_TYPE
+   * to be used when the enum class at hand depends on template parameters.
+   *
+   * Indeed, if T depends on template parameters, in order to name a nested type
+   * in T, C++ does not allow to just write "T::NestedType". Instead, we have
+   * to write "typename T::NestedType". The role of this macro is to add
+   * this "typename" keywords where needed.
+   *
+   * Example:
+   *
+   *    template<typename T, MOZ_TEMPLATE_ENUM_CLASS_ENUM_TYPE(T) Value>
+   *    struct S {};
+   *
+   *    MOZ_BEGIN_ENUM_CLASS(E)
+   *      Foo,
+   *      Bar
+   *    MOZ_END_ENUM_CLASS(E)
+   *
+   *    S<E, E::Bar> s;
+   *
+   * In this example, the second template parameter to S is meant to be of type
+   * T, but on non-C++11 compilers, type T is a class type, not an integer
+   * type, so it is not accepted as the type of a constant template parameter.
+   * One would then want to use MOZ_ENUM_CLASS_ENUM_TYPE(T), but that doesn't
+   * work either as T depends on template parameters (more specifically here, T
+   * _is_ a template parameter) so as MOZ_ENUM_CLASS_ENUM_TYPE(T) expands to
+   * T::Enum, we are missing the required "typename" keyword. So here,
+   * MOZ_TEMPLATE_ENUM_CLASS_ENUM_TYPE is needed.
+   */
+#  define MOZ_TEMPLATE_ENUM_CLASS_ENUM_TYPE(Name) typename Name::Enum
 #endif
 
-   /*
-    * Count the number of arguments passed to MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS,
-    * very carefully tiptoeing around an MSVC bug where it improperly expands
-    * __VA_ARGS__ as a single token in argument lists. See these URLs for
-    * details:
-    *
-    *   http://connect.microsoft.com/VisualStudio/feedback/details/380090/variadic-macro-replacement
-    *   http://cplusplus.co.il/2010/07/17/variadic-macro-to-count-number-of-arguments/#comment-644
-    */
-#  define MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS_IMPL2(_1, _2, count, ...) \
-     count
-#  define MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS_IMPL(args) \
-     MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS_IMPL2 args
-#  define MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS(...) \
-     MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS_IMPL((__VA_ARGS__, 2, 1, 0))
-   /* Pick the right helper macro to invoke. */
-#  define MOZ_BEGIN_NESTED_ENUM_CLASS_CHOOSE_HELPER2(count) \
-    MOZ_BEGIN_NESTED_ENUM_CLASS_HELPER##count
-#  define MOZ_BEGIN_NESTED_ENUM_CLASS_CHOOSE_HELPER1(count) \
-     MOZ_BEGIN_NESTED_ENUM_CLASS_CHOOSE_HELPER2(count)
-#  define MOZ_BEGIN_NESTED_ENUM_CLASS_CHOOSE_HELPER(count) \
-     MOZ_BEGIN_NESTED_ENUM_CLASS_CHOOSE_HELPER1(count)
-   /* The actual macro. */
-#  define MOZ_BEGIN_NESTED_ENUM_CLASS_GLUE(x, y) x y
+#  define MOZ_BEGIN_NESTED_ENUM_CLASS_GLUE(a, b) a b
 #  define MOZ_BEGIN_NESTED_ENUM_CLASS(...) \
-     MOZ_BEGIN_NESTED_ENUM_CLASS_GLUE(MOZ_BEGIN_NESTED_ENUM_CLASS_CHOOSE_HELPER(MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS(__VA_ARGS__)), \
-                                      (__VA_ARGS__))
+     MOZ_BEGIN_NESTED_ENUM_CLASS_GLUE( \
+       MOZ_PASTE_PREFIX_AND_ARG_COUNT(MOZ_BEGIN_NESTED_ENUM_CLASS_HELPER, \
+                                      __VA_ARGS__), \
+       (__VA_ARGS__))
 
 #  define MOZ_BEGIN_ENUM_CLASS(...) MOZ_BEGIN_NESTED_ENUM_CLASS(__VA_ARGS__)
 #  define MOZ_END_ENUM_CLASS(Name) \
