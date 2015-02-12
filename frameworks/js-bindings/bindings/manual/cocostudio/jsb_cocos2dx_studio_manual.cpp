@@ -1413,15 +1413,12 @@ void register_all_cocos2dx_studio_manual(JSContext* cx, JS::HandleObject global)
 
     JS_DefineProperty(cx, JS::RootedObject(cx, jsb_cocostudio_ContourData_prototype), "vertextList", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_ContourData_vertexList, js_set_ContourData_vertexList);
     
-    //static JSPropertySpec textureDataProps[] = {
-    //    {"contourDataList", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_TextureData_contourDataList), JSOP_WRAPPER(js_set_TextureData_contourDataList)},
-    //    {"name", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_TextureData_name), JSOP_WRAPPER(js_set_TextureData_name)},
-    //    {"width", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_TextureData_width), JSOP_WRAPPER(js_set_TextureData_width)},
-    //    {"height", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_TextureData_height), JSOP_WRAPPER(js_set_TextureData_height)},
-    //    {"pivotX", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_TextureData_pivotX), JSOP_WRAPPER(js_set_TextureData_pivotX)},
-    //    {"pivotY", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_get_TextureData_pivotY), JSOP_WRAPPER(js_set_TextureData_pivotY)},
-    //    {0, 0, 0, 0, 0}
-    //};
-    //JS_DefineProperties(cx, jsb_cocostudio_TextureData_prototype, textureDataProps);
+    JS::RootedObject textureData(cx, jsb_cocostudio_TextureData_prototype);
+    JS_DefineProperty(cx, textureData, "contourDataList", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_TextureData_contourDataList, js_set_TextureData_contourDataList);
+    JS_DefineProperty(cx, textureData, "name", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_TextureData_name, js_set_TextureData_name);
+    JS_DefineProperty(cx, textureData, "width", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_TextureData_width, js_set_TextureData_width);
+    JS_DefineProperty(cx, textureData, "height", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_TextureData_height, js_set_TextureData_height);
+    JS_DefineProperty(cx, textureData, "pivotX", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_TextureData_pivotX, js_set_TextureData_pivotX);
+    JS_DefineProperty(cx, textureData, "pivotY", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_TextureData_pivotY, js_set_TextureData_pivotY);
 
 }
