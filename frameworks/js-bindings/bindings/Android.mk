@@ -45,6 +45,7 @@ LOCAL_EXPORT_CFLAGS := -DCOCOS2D_JAVASCRIPT
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/manual \
                     $(LOCAL_PATH)/manual/cocostudio \
+                    $(LOCAL_PATH)/manual/spine \
                     $(LOCAL_PATH)/auto \
                     $(LOCAL_PATH)/../cocos2d-x/cocos/2d \
                     $(LOCAL_PATH)/../cocos2d-x/cocos/base \

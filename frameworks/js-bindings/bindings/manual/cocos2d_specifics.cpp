@@ -636,43 +636,53 @@ bool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *vp
     return false;
 }
 
-// "setCallback" in JS
-// item.setCallback( callback_fn, [this]);
-template<class T>
-bool js_cocos2dx_setCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_MenuItem_setCallback(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    if(argc == 1 || argc == 2)
-    {
-        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        JSObject *obj = JS_THIS_OBJECT(cx, vp);
-        jsval jsThis = JSVAL_VOID;
-        jsval jsFunc = args.get(0);
-        
-        if (jsFunc.isUndefined())
-        {
-            JS_ReportError(cx, "The callback function is undefined.");
-            return false;
-        }
-        
-        if (argc == 2)
-        {
-            jsThis = args.get(1);
-        }
-        
-        js_proxy_t *proxy = jsb_get_js_proxy(obj);
-        T* item = (T*)(proxy ? proxy->ptr : NULL);
-        TEST_NATIVE_OBJECT(cx, item)
-        bind_menu_item(cx, item, jsFunc, jsThis);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::MenuItem* cobj = (cocos2d::MenuItem *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_MenuItem_setCallback : Invalid Native Object");
+    if (argc == 1 || argc == 2) {
+        std::function<void (cocos2d::Ref *)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args[0]) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), args[0]));
+		        auto lambda = [=](cocos2d::Ref* larg0) -> void {
+		            jsval largv[1];
+		            do {
+		            if (larg0) {
+		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Ref>(cx, (cocos2d::Ref*)larg0);
+		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
+		            } else {
+		                largv[0] = JSVAL_NULL;
+		            }
+		        } while (0);
+		            JS::RootedValue rval(cx);
+		            bool ok = func->invoke(1, &largv[0], &rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MenuItem_setCallback : Error processing arguments");
+        cobj->setCallback(arg0);
+        args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d or %d", argc, 1, 2);
+
+    JS_ReportError(cx, "js_cocos2dx_MenuItem_setCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-
-bool js_cocos2dx_CCMenuItem_setCallback(JSContext *cx, uint32_t argc, jsval *vp) {
-    return js_cocos2dx_setCallback<cocos2d::MenuItem>(cx, argc, vp);
-}
-
 
 bool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -4933,7 +4943,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Animation_prototype), "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_SpriteFrame_prototype), "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_SpriteFrame_prototype), "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_MenuItem_prototype), "setCallback", js_cocos2dx_CCMenuItem_setCallback, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_MenuItem_prototype), "setCallback", js_cocos2dx_MenuItem_setCallback, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_TMXLayer_prototype), "getTileFlagsAt", js_cocos2dx_CCTMXLayer_tileFlagsAt, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_TMXLayer_prototype), "getTiles", js_cocos2dx_CCTMXLayer_getTiles, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
