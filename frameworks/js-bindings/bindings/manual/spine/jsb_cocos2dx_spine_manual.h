@@ -24,12 +24,7 @@
 #ifndef __jsb_cocos2dx_spine_manual__
 #define __jsb_cocos2dx_spine_manual__
 
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include "jsapi.h"
-#else
-#include "js/Value.h"
-#include "js/TypeDecls.h"
-#endif
 #include "spine/spine-cocos2dx.h"
 
 void register_all_cocos2dx_spine_manual(JSContext* cx, JS::HandleObject global);
