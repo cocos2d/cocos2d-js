@@ -342,7 +342,10 @@ typedef union jsval_layout
 # endif /* JS_PUNBOX64 */
 #endif  /* defined(IS_LITTLE_ENDIAN) */
 
+//this is a workaround for fixing binding-generator errors
+#ifndef NO_JS_ASSERT
 JS_STATIC_ASSERT(sizeof(jsval_layout) == 8);
+#endif
 
 /*
  * For codesize purposes on some platforms, it's important that the
@@ -1331,7 +1334,10 @@ class Value
         JS_STATIC_ASSERT(sizeof(JSValueType) == 1);
         JS_STATIC_ASSERT(sizeof(JSValueTag) == 4);
         JS_STATIC_ASSERT(sizeof(JSWhyMagic) <= 4);
+        //this is a workaround for fixing binding-generator errors
+        #ifndef NO_JS_ASSERT
         JS_STATIC_ASSERT(sizeof(Value) == 8);
+        #endif
     }
 
     friend jsval_layout (::JSVAL_TO_IMPL)(Value);
