@@ -24,7 +24,6 @@
 #include "cocos2d_specifics.hpp"
 #include "cocos2d.h"
 #include <typeinfo>
-#include <regex>
 #include "js_bindings_config.h"
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_event_dispatcher_manual.h"
@@ -4213,8 +4212,7 @@ bool js_PlistParser_parse(JSContext *cx, unsigned argc, JS::Value *vp) {
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
         std::string parsedStr = delegator->parseText(arg0);
-        std::regex pat("\n");
-        parsedStr = std::regex_replace(parsedStr, pat, "\\n");
+        std::replace(parsedStr.begin(), parsedStr.end(), '\n', ' ');
         
         jsval strVal = std_string_to_jsval(cx, parsedStr);
         // create a new js obj of the parsed string
