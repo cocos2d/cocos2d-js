@@ -42,7 +42,7 @@ var g_parsersTests = [
     },{
         title: "cocostudio 2.1",
         test: function(){
-            new CocostudioParserJsonScene("res/cocosui/UIEditorTest/2.0.5/res/MainScene.json").runThisTest();
+            new CocostudioParserJsonScene("res/cocosui/UIEditorTest/2.1/res/MainScene.json").runThisTest();
         }
     }
 ];
