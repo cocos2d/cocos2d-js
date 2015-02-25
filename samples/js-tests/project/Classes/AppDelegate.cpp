@@ -107,14 +107,15 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->start();
     sc->runScript("script/jsb_boot.js");
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
-    sc->enableDebugger();
+    //cannot use debugger when use a release compiled asm.js file (Box2d)
+    //sc->enableDebugger();
 #endif
     
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     
     ScriptingCore::getInstance()->runScript("main.js");
-    
+
     return true;
 }
 

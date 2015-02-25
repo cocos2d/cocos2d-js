@@ -567,6 +567,7 @@ void ScriptingCore::createGlobalContext() {
     JS::ContextOptionsRef(_cx).setTypeInference(true);
     JS::ContextOptionsRef(_cx).setIon(true);
     JS::ContextOptionsRef(_cx).setBaseline(true);
+    JS::ContextOptionsRef(_cx).setAsmJS(true);
 
 //    JS_SetVersion(this->_cx, JSVERSION_LATEST);
     
@@ -656,6 +657,7 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
         std::string fullPath = futil->fullPathForFilename(path);
         JS::CompileOptions options(cx);
         options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
+        options.setCompileAndGo(true);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         std::string jsFileContent = futil->getStringFromFile(fullPath);
