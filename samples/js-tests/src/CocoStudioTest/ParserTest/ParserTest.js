@@ -40,7 +40,7 @@ var g_parsersTests = [
             new CocostudioParserJsonScene("res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson").runThisTest();
         }
     },{
-        title: "cocostudio 2.0",
+        title: "cocostudio 2.1",
         test: function(){
             new CocostudioParserJsonScene("res/cocosui/UIEditorTest/2.0.5/res/MainScene.json").runThisTest();
         }
