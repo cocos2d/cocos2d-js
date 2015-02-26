@@ -7,7 +7,7 @@
 //
 
 #import "RootViewController.h"
-
+#include "platform/CCApplication.h"
 
 @implementation RootViewController
 
@@ -45,6 +45,12 @@
 #ifdef __IPHONE_6_0
     return UIInterfaceOrientationMaskAllButUpsideDown;
 #endif
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    cocos2d::Application::getInstance()->applicationScreenSizeChanged(size.width, size.height);
 }
 
 - (BOOL) shouldAutorotate {

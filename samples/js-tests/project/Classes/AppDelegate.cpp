@@ -137,3 +137,9 @@ void AppDelegate::applicationWillEnterForeground()
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     SimpleAudioEngine::getInstance()->resumeAllEffects();
 }
+
+void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight) {
+    ResizeScriptData data(newWidth, newHeight);
+    ScriptEvent scriptEvent(kResizeEvent, (void*)&data);
+    ScriptingCore::getInstance()->sendEvent(&scriptEvent);
+}

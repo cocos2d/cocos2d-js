@@ -880,8 +880,6 @@ cc.view.isRetinaEnabled = function() {
     return (sys.os == sys.OS_IOS || sys.os == sys.OS_OSX) ? true : false;
 };
 cc.view.adjustViewPort = function() {};
-cc.view.resizeWithBrowserSize = function () {return;};
-cc.view.setResizeCallback = function() {return;};
 cc.view.enableAutoFullScreen = function () {return;};
 cc.view.isAutoFullScreenEnabled = function() {return true;};
 cc.view._setDesignResolutionSize = cc.view.setDesignResolutionSize;
@@ -894,6 +892,27 @@ cc.view.setResolutionPolicy = function(resolutionPolicy){
     var size = cc.view.getDesignResolutionSize();
     cc.view.setDesignResolutionSize(size.width,size.height,resolutionPolicy);
 };
+cc.view.resizeWithBrowserSize = function () {return;};
+cc.view.setResizeCallback = function(callback) {
+    if (cc.isFunction(callback) || callback == null) {
+        this._resizeCallback = callback;
+    }
+};
+cc.view._resizeEvent = function (width, height) {
+    if (width > 0 && height > 0) {
+        var pixelRatio = this.getDevicePixelRatio();
+        var size = this.getDesignResolutionSize();
+        
+        this.setFrameSize(width * pixelRatio, height * pixelRatio);
+        // Frame size changed, do resize works
+        if (this._resizeCallback) {
+            this._resizeCallback.call();
+        }
+        if (size.width > 0)
+            this.setDesignResolutionSize(size.width, size.height, this.getResolutionPolicy());
+    }
+};
+
 cc.view.setContentTranslateLeftTop = function(){return;};
 cc.view.getContentTranslateLeftTop = function(){return null;};
 cc.view.setFrameZoomFactor = function(){return;};

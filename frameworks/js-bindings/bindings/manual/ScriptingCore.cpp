@@ -1295,6 +1295,23 @@ bool ScriptingCore::handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widge
     return ret;
 }
 
+bool ScriptingCore::handleResizeEvent(int width, int height)
+{
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
+    bool ret = false;
+    
+    jsval args[2] = {
+        int32_to_jsval(_cx, (int32_t)width),
+        int32_to_jsval(_cx, (int32_t)height)
+    };
+    
+    JSObject *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(_cx, _global, "(function () { return cc.view; })()"));
+    ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(tmpObj), "_resizeEvent", 2, args);
+    
+    return ret;
+}
+
 
 int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
                                        const std::vector<Touch*>& touches, JSObject *obj)
@@ -1407,6 +1424,11 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
                 return handleComponentEvent(evt->data);
             }
             break;
+        case kResizeEvent:
+            {
+                ResizeScriptData* data = (ResizeScriptData*)evt->data;
+                return handleResizeEvent(data->width, data->height);
+            }
         default:
             CCASSERT(false, "Invalid script event.");
             break;
