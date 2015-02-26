@@ -60,11 +60,16 @@ public:
     
     JS_BINDED_CLASS_GLUE(MinXmlHttpRequest);
     JS_BINDED_CONSTRUCTOR(MinXmlHttpRequest);
+    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onloadstart);
     JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onreadystatechange);
-    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, responseType);
+    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onabort);
+    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onerror);
+    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onload);
+    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onloadend);
     JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, withCredentials);
     JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, upload);
     JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, timeout);
+    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, responseType);
     JS_BINDED_PROP_GET(MinXmlHttpRequest, readyState);
     JS_BINDED_PROP_GET(MinXmlHttpRequest, status);
     JS_BINDED_PROP_GET(MinXmlHttpRequest, statusText);
@@ -87,6 +92,7 @@ private:
     void _setRequestHeader(const char* field, const char* value);
     void _setHttpRequestHeader();
     void _sendRequest(JSContext *cx);
+    void _notify(JSObject * callback);
     
     std::string                       _url;
     JSContext*                        _cx;
@@ -94,6 +100,11 @@ private:
     std::string                       _type;
     char*                             _data;
     uint32_t                          _dataSize;
+    JSObject*                         _onloadstartCallback;
+    JSObject*                         _onabortCallback;
+    JSObject*                         _onerrorCallback;
+    JSObject*                         _onloadCallback;
+    JSObject*                         _onloadendCallback;
     JSObject*                         _onreadystateCallback;
     int                               _readyState;
     int                               _status;
