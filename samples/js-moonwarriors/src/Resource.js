@@ -48,7 +48,6 @@ var res = {
     b01_plist : 'res/b01.plist',
     b01_png : 'res/b01.png',
     cocos2d_html5_png : 'res/cocos2d-html5.png',
-    explode_plist : 'res/explode.plist',              //unused
     explosion_plist : 'res/explosion.plist',
     explosion_png : 'res/explosion.png',
     flare_jpg : 'res/flare.jpg',
