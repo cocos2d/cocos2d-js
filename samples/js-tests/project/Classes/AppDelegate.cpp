@@ -60,7 +60,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+        glview = cocos2d::GLViewImpl::create("js-tests");
+#else
         glview = cocos2d::GLViewImpl::createWithRect("js-tests", Rect(0,0,900,640));
+#endif
         director->setOpenGLView(glview);
     }
 

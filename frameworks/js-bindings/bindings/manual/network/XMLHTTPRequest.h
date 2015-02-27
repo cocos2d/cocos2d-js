@@ -100,12 +100,12 @@ private:
     std::string                       _type;
     char*                             _data;
     uint32_t                          _dataSize;
-    JSObject*                         _onloadstartCallback;
-    JSObject*                         _onabortCallback;
-    JSObject*                         _onerrorCallback;
-    JSObject*                         _onloadCallback;
-    JSObject*                         _onloadendCallback;
-    JSObject*                         _onreadystateCallback;
+    JS::Heap<JSObject*>               _onloadstartCallback;
+    JS::Heap<JSObject*>               _onabortCallback;
+    JS::Heap<JSObject*>               _onerrorCallback;
+    JS::Heap<JSObject*>               _onloadCallback;
+    JS::Heap<JSObject*>               _onloadendCallback;
+    JS::Heap<JSObject*>               _onreadystateCallback;
     int                               _readyState;
     int                               _status;
     std::string                       _statusText;

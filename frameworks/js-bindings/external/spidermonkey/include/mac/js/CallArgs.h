@@ -44,7 +44,7 @@ typedef bool
 
 /* Typedef for native functions that may be called in parallel. */
 typedef bool
-(* JSParallelNative)(js::ForkJoinSlice *slice, unsigned argc, JS::Value *vp);
+(* JSParallelNative)(js::ForkJoinContext *cx, unsigned argc, JS::Value *vp);
 
 /*
  * Typedef for native functions that may be called either in parallel or
@@ -63,7 +63,7 @@ JSNativeThreadSafeWrapper(JSContext *cx, unsigned argc, JS::Value *vp);
 
 template <JSThreadSafeNative threadSafeNative>
 inline bool
-JSParallelNativeThreadSafeWrapper(js::ForkJoinSlice *slice, unsigned argc, JS::Value *vp);
+JSParallelNativeThreadSafeWrapper(js::ForkJoinContext *cx, unsigned argc, JS::Value *vp);
 
 /*
  * Compute |this| for the |vp| inside a JSNative, either boxing primitives or
@@ -118,7 +118,7 @@ extern JS_PUBLIC_DATA(const HandleValue) UndefinedHandleValue;
 
 namespace detail {
 
-#ifdef DEBUG
+#ifdef JS_DEBUG
 extern JS_PUBLIC_API(void)
 CheckIsValidConstructible(Value v);
 #endif
@@ -147,7 +147,7 @@ class MOZ_STACK_CLASS UsedRvalBase<NoUsedRval>
 
 template<UsedRval WantUsedRval>
 class MOZ_STACK_CLASS CallReceiverBase : public UsedRvalBase<
-#ifdef DEBUG
+#ifdef JS_DEBUG
         WantUsedRval
 #else
         NoUsedRval
@@ -197,7 +197,7 @@ class MOZ_STACK_CLASS CallReceiverBase : public UsedRvalBase<
     }
 
     bool isConstructing() const {
-#ifdef DEBUG
+#ifdef JS_DEBUG
         if (this->usedRval_)
             CheckIsValidConstructible(calleev());
 #endif
@@ -388,11 +388,7 @@ CallArgsFromSp(unsigned argc, Value *sp)
  * take a const JS::CallArgs&.
  */
 
-#define JS_CALLEE(cx,vp)        ((vp)[0])
-#define JS_THIS_OBJECT(cx,vp)   (JSVAL_TO_OBJECT(JS_THIS(cx,vp)))
-#define JS_ARGV(cx,vp)          ((vp) + 2)
-#define JS_RVAL(cx,vp)          (*(vp))
-#define JS_SET_RVAL(cx,vp,v)    (*(vp) = (v))
+#define JS_THIS_OBJECT(cx,vp)   (JS_THIS(cx,vp).toObjectOrNull())
 
 /*
  * Note: if this method returns null, an error has occurred and must be
@@ -401,7 +397,7 @@ CallArgsFromSp(unsigned argc, Value *sp)
 MOZ_ALWAYS_INLINE JS::Value
 JS_THIS(JSContext *cx, JS::Value *vp)
 {
-    return JSVAL_IS_PRIMITIVE(vp[1]) ? JS_ComputeThis(cx, vp) : vp[1];
+    return vp[1].isPrimitive() ? JS_ComputeThis(cx, vp) : vp[1];
 }
 
 /*

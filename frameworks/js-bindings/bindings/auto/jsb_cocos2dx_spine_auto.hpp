@@ -10,8 +10,8 @@ extern JSObject *jsb_spine_SkeletonRenderer_prototype;
 
 bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_spine_SkeletonRenderer_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_spine_SkeletonRenderer(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_spine(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_spine_SkeletonRenderer(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_spine(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_spine_SkeletonRenderer_setTimeScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_spine_SkeletonRenderer_getDebugSlotsEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_spine_SkeletonRenderer_setAttachment(JSContext *cx, uint32_t argc, jsval *vp);
@@ -41,8 +41,8 @@ extern JSObject *jsb_spine_SkeletonAnimation_prototype;
 
 bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_spine_SkeletonAnimation_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_spine_SkeletonAnimation(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_spine(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_spine_SkeletonAnimation(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_spine(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_spine_SkeletonAnimation_setStartListener(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_spine_SkeletonAnimation_setTrackEventListener(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_spine_SkeletonAnimation_getState(JSContext *cx, uint32_t argc, jsval *vp);

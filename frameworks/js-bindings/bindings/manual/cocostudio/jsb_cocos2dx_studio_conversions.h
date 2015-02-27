@@ -24,8 +24,7 @@
 #ifndef __cocos2d_js_bindings__jsb_cocos2dx_studio_conversions__
 #define __cocos2d_js_bindings__jsb_cocos2dx_studio_conversions__
 
-#include "js/Value.h"
-#include "js/TypeDecls.h"
+#include "jsapi.h"
 
 namespace cocostudio
 {
@@ -36,6 +35,6 @@ namespace cocostudio
 }
 
 extern jsval animationInfo_to_jsval(JSContext* cx, const cocostudio::timeline::AnimationInfo& v);
-extern bool jsval_to_animationInfo(JSContext* cx, jsval vp, cocostudio::timeline::AnimationInfo* ret);
+extern bool jsval_to_animationInfo(JSContext* cx, JS::HandleValue vp, cocostudio::timeline::AnimationInfo* ret);
 
 #endif /* defined(__cocos2d_js_bindings__jsb_cocos2dx_studio_conversions__) */

@@ -32,12 +32,12 @@
 // system
 #include "jsb_opengl_functions.h"
 
-void JSB_register_opengl(JSContext *_cx, JSObject *object)
+void JSB_register_opengl(JSContext *_cx, JS::HandleObject object)
 {
     //
     // gl
     //
-    JSObject *opengl = JS_NewObject(_cx, NULL, NULL, NULL);
+    JS::RootedObject opengl(_cx, JS_NewObject(_cx, NULL, JS::NullPtr(), JS::NullPtr()));
     
     JS::RootedValue openglVal(_cx);
     openglVal = OBJECT_TO_JSVAL(opengl);
@@ -47,7 +47,7 @@ void JSB_register_opengl(JSContext *_cx, JSObject *object)
     JS::RootedObject ccns(_cx);
     JS_GetProperty(_cx, object, "cc", &nsval);
     if (nsval == JSVAL_VOID) {
-        ccns = JS_NewObject(_cx, NULL, NULL, NULL);
+        ccns = JS_NewObject(_cx, NULL, JS::NullPtr(), JS::NullPtr());
         nsval = OBJECT_TO_JSVAL(ccns);
         JS_SetProperty(_cx, object, "cc", nsval);
     } else {
