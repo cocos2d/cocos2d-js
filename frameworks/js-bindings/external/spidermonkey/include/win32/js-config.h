@@ -13,7 +13,7 @@
    and installed along with jsapi.h.  */
 
 /* Define to 1 if SpiderMonkey is in debug mode. */
-#define JS_DEBUG 1
+/* #undef JS_DEBUG */
 
 /* Define to 1 if SpiderMonkey should not use struct types in debug builds. */
 /* #undef JS_NO_JSVAL_JSID_STRUCT_TYPES */
@@ -26,7 +26,7 @@
 
 /* Define to 1 if SpiderMonkey should support the ability to perform
    entirely too much GC.  */
-#define JS_GC_ZEAL 1
+/* #undef JS_GC_ZEAL */
 
 /* Define to 1 if the <endian.h> header is present and
    useable.  See jscpucfg.h.  */
