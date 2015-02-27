@@ -113,7 +113,7 @@ var GameOver = cc.Layer.extend({
 
 
         if(MW.SOUND){
-            cc.audioEngine.playMusic(res.mainMainMusic_mp3, true);
+            cc.audioEngine.playMusic(cc.sys.os == cc.sys.OS_WP8 ? res.mainMainMusic_wav : res.mainMainMusic_mp3, true);
         }
 
         return true;

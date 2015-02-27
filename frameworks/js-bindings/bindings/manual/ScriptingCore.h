@@ -34,6 +34,7 @@
 #include "js_bindings_core.h"
 #include "spidermonkey_specifics.h"
 #include "js_manual_conversions.h"
+#include "mozilla/Maybe.h"
 
 #include <assert.h>
 #include <memory>
@@ -42,9 +43,9 @@
 
 void js_log(const char *format, ...);
 
-typedef void (*sc_register_sth)(JSContext* cx, JSObject* global);
+typedef void (*sc_register_sth)(JSContext* cx, JS::HandleObject global);
 
-void registerDefaultClasses(JSContext* cx, JSObject* global);
+void registerDefaultClasses(JSContext* cx, JS::HandleObject global);
 
 
 class SimpleRunLoop : public cocos2d::Ref
@@ -58,8 +59,10 @@ class ScriptingCore : public cocos2d::ScriptEngineProtocol
 private:
     JSRuntime *_rt;
     JSContext *_cx;
-    JSObject  *_global;
-    JSObject  *_debugGlobal;
+    mozilla::Maybe<JS::PersistentRootedObject> _global;
+    mozilla::Maybe<JS::PersistentRootedObject> _debugGlobal;
+    //JS::Heap<JSObject*> _global;
+    //JS::Heap<JSObject*> _debugGlobal;
     SimpleRunLoop* _runLoop;
 
     bool _callFromScript;
@@ -118,9 +121,14 @@ public:
     virtual bool isCalledFromScript() { return _callFromScript; };
     
     bool executeFunctionWithObjectData(void* nativeObj, const char *name, JSObject *obj);
-    bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
-    void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
+    bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp);
+    bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp, JS::MutableHandleValue retVal);
+    bool executeFunctionWithOwner(jsval owner, const char *name, const JS::HandleValueArray& args);
+    bool executeFunctionWithOwner(jsval owner, const char *name, const JS::HandleValueArray& args, JS::MutableHandleValue retVal);
+
+    void executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback);
+    void executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback, const JS::HandleValueArray& vp, JS::MutableHandleValue retVal);
 
     /**
      * will eval the specified string
@@ -147,7 +155,8 @@ public:
      * will run the specified string
      * @param string The path of the script to be run
      */
-    bool runScript(const char *path, JSObject* global = NULL, JSContext* cx = NULL);
+    bool runScript(const char *path);
+    bool runScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
 
     /**
      * will clean script object the specified string
@@ -191,7 +200,7 @@ public:
 
 
     int executeCustomTouchEvent(cocos2d::EventTouch::EventCode eventType,
-                                cocos2d::Touch *pTouch, JSObject *obj, jsval &retval);
+                                cocos2d::Touch *pTouch, JSObject *obj, JS::MutableHandleValue retval);
     int executeCustomTouchEvent(cocos2d::EventTouch::EventCode eventType,
                                 cocos2d::Touch *pTouch, JSObject *obj);
     int executeCustomTouchesEvent(cocos2d::EventTouch::EventCode eventType,
@@ -241,22 +250,28 @@ public:
      */
     void debugProcessInput(const std::string& str);
     void enableDebugger(unsigned int port = 5086);
-    JSObject* getDebugGlobal() { return _debugGlobal; }
-    JSObject* getGlobalObject() { return _global; }
+    JSObject* getDebugGlobal() { return _debugGlobal.ref().get(); }
+    JSObject* getGlobalObject() { return _global.ref().get(); }
 
-    bool isFunctionOverridedInJS(JSObject* obj, const std::string& name, JSNative native);
+    bool isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native);
     
- private:
-    void string_report(jsval val);
+private:
+    void string_report(JS::HandleValue val);
     void initRegister();
+
 public:
     int handleNodeEvent(void* data);
     int handleComponentEvent(void* data);
-    int handleMenuClickedEvent(void* data);
     
-    bool handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event, jsval* jsvalRet = nullptr);
-    bool handleTouchEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, cocos2d::Touch* touch, cocos2d::Event* event, jsval* jsvalRet = nullptr);
-    bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, jsval* jsvalRet = nullptr);
+    bool handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    bool handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event, JS::MutableHandleValue jsvalRet);
+
+    bool handleTouchEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, cocos2d::Touch* touch, cocos2d::Event* event);
+    bool handleTouchEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, cocos2d::Touch* touch, cocos2d::Event* event, JS::MutableHandleValue jsvalRet);
+
+    bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event);
+    bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, JS::MutableHandleValue jsvalRet);
+
     bool handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
     bool handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus);
 

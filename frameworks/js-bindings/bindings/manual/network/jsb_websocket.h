@@ -27,6 +27,6 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 
-void register_jsb_websocket(JSContext* cx, JSObject* global);
+void register_jsb_websocket(JSContext* cx, JS::HandleObject global);
 
 #endif /* defined(__jsb_websocket__) */

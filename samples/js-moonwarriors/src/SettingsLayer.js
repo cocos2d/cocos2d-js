@@ -104,7 +104,7 @@ var SettingsLayer = cc.Layer.extend({
         MW.SOUND = !MW.SOUND;
         var audioEngine = cc.audioEngine;
         if(MW.SOUND){
-            audioEngine.playMusic(res.mainMainMusic_mp3);
+            audioEngine.playMusic(cc.sys.os == cc.sys.OS_WP8 ? res.mainMainMusic_wav : res.mainMainMusic_mp3);
         }
         else{
             audioEngine.stopMusic();

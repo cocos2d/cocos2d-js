@@ -24,12 +24,10 @@
 #ifndef __jsb_cocos2dx_spine_manual__
 #define __jsb_cocos2dx_spine_manual__
 
-
-#include "js/Value.h"
-#include "js/TypeDecls.h"
+#include "jsapi.h"
 #include "spine/spine-cocos2dx.h"
 
-void register_all_cocos2dx_spine_manual(JSContext* cx, JSObject* global);
+void register_all_cocos2dx_spine_manual(JSContext* cx, JS::HandleObject global);
 
 extern jsval speventdata_to_jsval(JSContext* cx, spEventData& v);
 extern jsval spevent_to_jsval(JSContext* cx, spEvent& v);
