@@ -1157,6 +1157,16 @@ getValue : function (
 },
 
 /**
+ * @method getPreviousLocation
+ * @return {vec2_object}
+ */
+getPreviousLocation : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
  * @method distanceBetweenPointAndPoint
  * @param {vec2_object} arg0
  * @param {vec2_object} arg1
@@ -1178,16 +1188,6 @@ potentiometerEnded : function (
 vec2 
 )
 {
-},
-
-/**
- * @method getPreviousLocation
- * @return {vec2_object}
- */
-getPreviousLocation : function (
-)
-{
-    return cc.Vec2;
 },
 
 /**
@@ -2347,6 +2347,16 @@ verticalfillorder
 },
 
 /**
+ * @method scrollViewDidZoom
+ * @param {cc.ScrollView} arg0
+ */
+scrollViewDidZoom : function (
+scrollview 
+)
+{
+},
+
+/**
  * @method _updateContentSize
  */
 _updateContentSize : function (
@@ -2402,16 +2412,6 @@ scrollview
  * @method reloadData
  */
 reloadData : function (
-)
-{
-},
-
-/**
- * @method scrollViewDidZoom
- * @param {cc.ScrollView} arg0
- */
-scrollViewDidZoom : function (
-scrollview 
 )
 {
 },
