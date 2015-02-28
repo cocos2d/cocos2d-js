@@ -48,11 +48,15 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
-	auto glview = director->getOpenGLView();
-	if(!glview) {
-		glview = cocos2d::GLViewImpl::createWithRect("HelloJavascript", Rect(0,0,900,640));
-		director->setOpenGLView(glview);
-	}
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+        glview = cocos2d::GLViewImpl::create("HelloJavascript");
+#else
+        glview = cocos2d::GLViewImpl::createWithRect("HelloJavascript", Rect(0,0,900,640));
+#endif
+        director->setOpenGLView(glview);
+}
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
@@ -103,8 +107,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->start();    
     sc->runScript("script/jsb_boot.js");
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
-	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->runScript("main.js");
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    ScriptingCore::getInstance()->runScript("main.js");
 
     return true;
 }
