@@ -45,7 +45,7 @@ void AppDelegate::initGLContextAttrs()
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
-    {
+{
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
@@ -56,7 +56,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         glview = cocos2d::GLViewImpl::createWithRect("HelloJavascript", Rect(0,0,900,640));
 #endif
         director->setOpenGLView(glview);
-    }
+}
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
