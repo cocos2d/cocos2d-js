@@ -872,7 +872,7 @@ void MinXmlHttpRequest::_notify(JSObject * callback)
         {
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             //JS_IsExceptionPending(cx) && JS_ReportPendingException(cx);
-            JS::RootedValue fval(cx, OBJECT_TO_JSVAL(CALLBACK));
+            JS::RootedValue fval(cx, OBJECT_TO_JSVAL(callback));
             JS::RootedValue out(cx);
             JS_CallFunctionValue(cx, JS::NullPtr(), fval, JS::HandleValueArray::empty(), &out);
         }
