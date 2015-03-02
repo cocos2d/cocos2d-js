@@ -198,8 +198,556 @@ var AsyncLoadSprite3DTest = Sprite3DTestDemo.extend({
         path.push("Sprite3DTest/ReskinGirl.c3b");
         path.push("Sprite3DTest/axe.c3b");
 
-        var label = new cc.LabelTTF("AsyncLoad Sprite3D");
-        this.addChild(label);
+        // var label = new cc.LabelTTF("AsyncLoad Sprite3D");
+        // this.addChild(label);
+    }
+});
+
+var Sprite3DWithSkinTest = Sprite3DTestDemo.extend({
+    _title:"Testing Sprite3D",
+    _subtitle:"Tap screen to add more sprite3D",
+    
+    ctor:function(){
+        this._super();
+
+        var size = cc.winSize;
+        this.addNewSpriteWithCoords(cc.p(size.width/2, size.height/2));
+
+        var that = this;
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesEnded: function(touches, event){
+                for(var i in touches){
+                    that.addNewSpriteWithCoords(touches[i].getLocation());
+                }
+            }
+        }, this);
+    },
+
+    addNewSpriteWithCoords:function(position){
+        var sprite = cc.Sprite3D.create("Sprite3DTest/orc.c3b");
+        sprite.setScale(3);
+        sprite.setRotation3D({x : 0, y : 180, z: 0});
+        this.addChild(sprite);
+        sprite.setPosition(position);
+
+        var animation = cc.Animation3D.create("Sprite3DTest/orc.c3b");
+        if(animation){
+            var animate = cc.Animate3D.create(animation);
+            var inverse = Math.random() < 0.33 ? true : false;
+
+            var rand2 = Math.random();
+            var speed = 1.0;
+            if(rand2 < 0.33)
+                speed = animate.getSpeed() + Math.random();
+            else if(rand2 < 0.66)            
+                spped = animate.getSpeed() - 0.5 * Math.random();
+
+            animate.setSpeed(inverse ? -speed : speed);
+            sprite.runAction(new cc.RepeatForever(animate));
+        }
+    }
+});
+
+var Animate3DTest = (function(){
+
+    var State = {
+        SWIMMING : 0,
+        SWIMMING_TO_HURT : 1,
+        HURT : 2,
+        HURT_TO_SWIMMING : 3
+    };
+
+    return Sprite3DTestDemo.extend({
+        _title:"Testing Animate3D",
+        _subtitle:"Touch to beat the tortoise",
+        _sprite:null,
+        _swim:null,
+        _hurt:null,
+        _moveAction:null,
+        _state:0,
+        _elapseTransTime:0,
+
+        ctor:function(){
+            this._super();
+
+            this.addSprite3D();
+
+            cc.eventManager.addListener({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+                onTouchesEnded: this.onTouchesEnded.bind(this)
+            }, this);
+
+            this.scheduleUpdate();
+        },
+
+        onExit:function(){
+            this._super();
+            this._moveAction.release();
+            this._hurt.release();
+            this._swim.release();
+        },
+
+        addSprite3D:function(){
+            var sprite = cc.Sprite3D.create("Sprite3DTest/tortoise.c3b");
+            sprite.setScale(0.1);
+            var s = cc.winSize;
+            sprite.setPosition(cc.p(s.width * 4 / 5, s.height / 2));
+            this.addChild(sprite);
+            this._sprite = sprite;
+
+            var animation = cc.Animation3D.create("Sprite3DTest/tortoise.c3b");
+            if(animation){
+                var animate = cc.Animate3D.create(animation, 0, 1.933);
+                this._swim = new cc.RepeatForever(animate);
+                sprite.runAction(this._swim);
+
+                this._swim.retain();
+                this._hurt = cc.Animate3D.create(animation, 1.933, 2.8);
+                this._hurt.retain();
+
+                this._state = State.SWIMMING;
+            }
+
+            this._moveAction = cc.moveTo(4.0, cc.p(s.width / 5, s.height / 2));
+            this._moveAction.retain();
+            var seq = cc.sequence(this._moveAction, cc.callFunc(this.reachEndCallBack, this));
+            seq.setTag(100);
+            sprite.runAction(seq);
+        },
+
+        reachEndCallBack:function(sender){
+            var sprite = this._sprite;
+            sprite.stopActionByTag(100);
+            var inverse = this._moveAction.reverse();
+            inverse.retain();
+            this._moveAction.release();
+            this._moveAction = inverse;
+            var rot = cc.rotateBy(1, {x : 0, y : 180, z : 0});
+            var seq = cc.sequence(rot, this._moveAction, cc.callFunc(this.reachEndCallBack, this));
+            seq.setTag(100);
+            sprite.runAction(seq);
+        },
+
+        renewCallBack:function(){
+            this._sprite.runAction(this._swim);
+            this._state = State.HURT_TO_SWIMMING;
+            this._elapseTransTime = 0.0;
+        },
+
+        onTouchesEnded:function(touches, event){
+            for(var i in touches){
+                var location = touches[i].getLocation();
+
+                if(this._sprite){
+                    var len = cc.pDistance(this._sprite.getPosition(), location);
+
+                    if(len < 40){
+                        //hurt the tortoise
+                        if(this._state == State.SWIMMING){
+                            this._elapseTransTime = 0;
+                            this._state = State.SWIMMING_TO_HURT;
+                            this._sprite.stopAction(this._hurt);
+                            this._sprite.runAction(this._hurt);
+                            var delay = cc.delayTime(this._hurt.getDuration() - cc.Animate3D.getTransitionTime());
+                            var seq = cc.sequence(delay, cc.callFunc(this.renewCallBack, this));
+                            seq.setTag(101);
+                            this._sprite.runAction(seq);
+                        }
+                    }
+                }
+            }
+        },
+
+        update:function(dt){
+            if(this._state == State.HURT_TO_SWIMMING){
+                this._elapseTransTime += dt;
+
+                if(this._elapseTransTime >= cc.Animate3D.getTransitionTime()){
+                    this._sprite.stopAction(this._hurt);
+                    this._state = State.SWIMMING;
+                }
+            }else if(this._state == State.SWIMMING_TO_HURT){
+                this._elapseTransTime += dt;
+
+                if(this._elapseTransTime >= cc.Animate3D.getTransitionTime()){
+                    this._sprite.stopAction(this._swim);
+                    this._state = State.HURT;
+                }
+            }
+        }
+    });
+})();
+
+
+var AttachmentTest = Sprite3DTestDemo.extend({
+    _title:"Testing Sprite3D Attachment",
+    _subtitle:"touch to switch weapon",
+    _hasWeapon:false,
+    _sprite:null,
+
+    ctor:function(){
+        this._super();
+
+        var s = cc.winSize;
+        this.addNewSpriteWithCoords(cc.p(s.width/2, s.height/2));
+
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesEnded: this.onTouchesEnded.bind(this)
+        }, this);
+    },
+
+    addNewSpriteWithCoords:function(position){
+        var sprite = cc.Sprite3D.create("Sprite3DTest/orc.c3b");
+        sprite.setScale(5);
+        sprite.setRotation3D({x:0, y:180, z:0});
+        this.addChild(sprite);
+        sprite.setPosition(position);
+
+        //test attach
+        var sp = cc.Sprite3D.create("Sprite3DTest/axe.c3b");
+        sprite.getAttachNode("Bip001 R Hand").addChild(sp);
+
+        var animation = cc.Animation3D.create("Sprite3DTest/orc.c3b");
+        if(animation){
+            var animate = cc.Animate3D.create(animation);
+            sprite.runAction(cc.repeatForever(animate));
+        }
+
+        this._sprite = sprite;
+        this._hasWeapon = true;
+    },
+
+    onTouchesEnded:function(touches, event){
+        if(this._hasWeapon){
+            this._sprite.removeAllAttachNode();
+        }else{
+            var sp = cc.Sprite3D.create("Sprite3DTest/axe.c3b");
+            this._sprite.getAttachNode("Bip001 R Hand").addChild(sp);
+        }
+        this._hasWeapon = !this._hasWeapon;
+    }
+});
+
+var Sprite3DReskinTest = (function(){
+    var SkinType = {
+        UPPER_BODY : 0,
+        PANTS : 1,
+        SHOES : 2,
+        HAIR : 3,
+        FACE : 4,
+        HAND : 5,
+        GLASSES : 6,
+        MAX_TYPE : 7
+    };
+
+    return Sprite3DTestDemo.extend({
+        _title:"Testing Sprite3D Reskin",
+        _subtitle:"",
+        _sprite:null,
+        _skins:[["Girl_UpperBody01", "Girl_UpperBody02"], ["Girl_LowerBody01", "Girl_LowerBody02"], ["Girl_Shoes01", "Girl_Shoes02"], ["Girl_Hair01", "Girl_Hair02"], ["Girl_Face01", "Girl_Face02"], ["Girl_Hand01", "Girl_Hand02"], ["", "Girl_Glasses01"]],
+        _curSkin:["Girl_UpperBody01", "Girl_LowerBody01", "Girl_Shoes01", "Girl_Hair01", "Girl_Face01", "Girl_Hand01", ""],
+
+        ctor:function(){
+            this._super();
+
+            var s = cc.winSize;
+            this.addNewSpriteWithCoords(cc.p(s.width/2, s.height/2));
+
+            var label1 = new cc.LabelTTF("Hair", "Arial", 20);
+            var item1 = new cc.MenuItemLabel(label1, this.menuCallback_reSkin, this );
+            item1.setPosition(cc.p(50, item1.getContentSize().height * 4));
+            item1.setUserData(SkinType.HAIR);
+
+            var label2 = new cc.LabelTTF("Glasses", "Arial", 20);
+            var item2 = new cc.MenuItemLabel(label2, this.menuCallback_reSkin, this);
+            item2.setPosition(cc.p(50, item2.getContentSize().height * 5));
+            item2.setUserData(SkinType.GLASSES);
+
+            var label3 = new cc.LabelTTF("Coat", "Arial", 20);
+            var item3 = new cc.MenuItemLabel(label3, this.menuCallback_reSkin, this);
+            item3.setPosition(cc.p(50, item3.getContentSize().height * 6));
+            item3.setUserData(SkinType.UPPER_BODY);
+
+            var label4 = new cc.LabelTTF("Pants", "Arial", 20);
+            var item4 = new cc.MenuItemLabel(label4, this.menuCallback_reSkin, this);
+            item4.setPosition(cc.p(50, item4.getContentSize().height * 7));
+            item4.setUserData(SkinType.PANTS);
+
+            var label5 = new cc.LabelTTF("Shoes", "Arial", 20);
+            var item5 = new cc.MenuItemLabel(label5, this.menuCallback_reSkin, this);
+            item5.setPosition(cc.p(50, item5.getContentSize().height * 8));
+            item5.setUserData(SkinType.SHOES);
+
+            var menu = new cc.Menu(item1, item2, item3, item4, item5);
+            this.addChild(menu);
+            menu.setPosition(cc.p(0, 0));
+        },
+
+        addNewSpriteWithCoords:function(position){
+            var sprite = cc.Sprite3D.create("Sprite3DTest/ReskinGirl.c3b");
+            sprite.setScale(4);
+            sprite.setRotation3D({x:0, y:0, z:0});
+            this.addChild(sprite);
+            sprite.setPosition(cc.p(position.x, position.y - 60));
+            var animation = cc.Animation3D.create("Sprite3DTest/ReskinGirl.c3b");
+            if(animation){
+                var animate = cc.Animate3D.create(animation);
+                sprite.runAction(cc.repeatForever(animate));
+            }
+            this._sprite = sprite;
+
+            this.applyCurSkin();
+        },
+
+        applyCurSkin:function(){
+            for(var i = 0; i < this._sprite.getMeshCount(); i++){
+                var mesh = this._sprite.getMeshByIndex(i);
+                var isVisible = false;
+                for(var j = 0; j < SkinType.MAX_TYPE; j++){
+                    if(mesh.getName() == this._curSkin[j]){
+                        isVisible = true;
+                        break;
+                    }
+                }
+                mesh.setVisible(isVisible);
+            }
+        },
+
+        menuCallback_reSkin:function(sender){
+            var index = sender.getUserData();
+            if(index < SkinType.MAX_TYPE){
+                var curr = (this._skins[index].indexOf(this._curSkin[index]) + 1) % this._skins[index].length;
+                this._curSkin[index] = this._skins[index][curr];
+            }
+            this.applyCurSkin();
+        }
+    });
+})();
+
+
+var Sprite3DMirrorTest = Sprite3DTestDemo.extend({
+    _title:"Sprite3D Mirror Test",
+    _subtitle:"",
+
+    ctor:function(){
+        this._super();
+
+        var s = cc.winSize;
+        this.addNewSpriteWithCoords(cc.p(s.width / 2, s.height / 2));
+    },
+
+    addNewSpriteWithCoords:function(position){
+        var fileName = "Sprite3DTest/orc.c3b";
+        var sprite = cc.Sprite3D.create("Sprite3DTest/orc.c3b");
+        sprite.setScale(5);
+        sprite.setRotation3D({x:0, y:180, z:0});
+        this.addChild(sprite);
+        sprite.setPosition(cc.p(position.x - 80, position.y));
+
+        //test attach
+        var sp = cc.Sprite3D.create("Sprite3DTest/axe.c3b");
+        sprite.getAttachNode("Bip001 R Hand").addChild(sp);
+
+        var animation = cc.Animation3D.create(fileName);
+        if(animation){
+            var animate = cc.Animate3D.create(animation);
+            sprite.runAction(cc.repeatForever(animate));
+        }
+
+        //create mirror Sprite3D
+        sprite = cc.Sprite3D.create(fileName);
+        sprite.setScale(5);
+        sprite.setScaleX(-5);
+        sprite.setCullFace(gl.FRONT);
+        sprite.setRotation3D({x:0, y:180, z:0});
+        this.addChild(sprite);
+        sprite.setPosition(cc.p(position.x + 80, position.y));
+
+        //test attach
+        sp = cc.Sprite3D.create("Sprite3DTest/axe.c3b");
+        sprite.getAttachNode("Bip001 R Hand").addChild(sp);
+        
+        var animation = cc.Animation3D.create(fileName);
+        if(animation){
+            var animate = cc.Animate3D.create(animation);
+            sprite.runAction(cc.repeatForever(animate));
+        }
+    }
+
+});
+
+var Sprite3DEmptyTest = Sprite3DTestDemo.extend({
+    _title:"Testing Sprite3D Container",
+    _subtitle:"Sprite3D can act as containers for 2D objects",
+
+    ctor:function(){
+        this._super();
+
+        var s = cc.Sprite3D.create();
+        s.setNormalizedPosition(cc.p(0.5, 0.5));
+        var l = new cc.LabelTTF("Test");
+        s.addChild(l);
+        this.addChild(s);
+    }
+});
+
+var Sprite3DForceDepthTest = Sprite3DTestDemo.extend({
+    _title:"Force Depth Write Error Test",
+    _subtitle:"Ship should always appear behind orc",
+
+    ctor:function(){
+        this._super();
+
+        var orc = cc.Sprite3D.create("Sprite3DTest/orc.c3b");
+        orc.setScale(5);
+        orc.setNormalizedPosition(cc.p(0.5, 0.3));
+        // orc.setPositionZ(40);
+        orc.setVertexZ(40);
+        orc.setRotation3D({x:0, y:180, z:0});
+        orc.setGlobalZOrder(-1);
+
+        this.addChild(orc);
+
+        var ship = cc.Sprite3D.create("Sprite3DTest/boss1.obj");
+        ship.setScale(5);
+        ship.setTexture("Sprite3DTest/boss.png");
+        ship.setNormalizedPosition(cc.p(0.5, 0.5));
+        ship.setRotation3D({x:90, y:0, z:0});
+        ship.setForceDepthWrite(true);
+
+        this.addChild(ship);
+    }
+});
+
+var UseCaseSprite3D1 = Sprite3DTestDemo.extend({
+    _title:"Use Case For 2D + 3D",
+    _subtitle:"3d transparent sprite + 2d sprite",
+    _accAngle:0,
+
+    ctor:function(){
+        this._super();
+
+        var s = cc.winSize;
+        //setup camera
+        var camera = cc.Camera.createPerspective(40, s.width/s.height, 0.01, 1000);
+        camera.setCameraFlag(cc.CameraFlag.USER1);
+        camera.setPosition3D({x:0, y:30, z:100});
+        camera.lookAt({x:0, y:0, z:0});
+        this.addChild(camera);
+
+        var sprite = cc.Sprite3D.create("Sprite3DTest/girl.c3b");
+        sprite.setScale(0.15);
+        var animation = cc.Animation3D.create("Sprite3DTest/girl.c3b");
+        if(animation){
+            var animate = cc.Animate3D.create(animation);
+            sprite.runAction(cc.repeatForever(animate));
+        }
+
+        var circleBack = cc.Sprite3D.create();
+        var circle = new cc.Sprite("Sprite3DTest/circle.png");
+        circleBack.setScale(0.5);
+        circleBack.addChild(circle);
+        circle.runAction(cc.rotateBy(3, {x:0, y:0, z:360}).repeatForever());
+
+        circleBack.setRotation3D({x:90, y:0, z:0});
+
+        var pos = sprite.getPosition3D();
+        circleBack.setPosition3D({x:pos.x, y:pos.y, z:pos.z-1});
+
+        sprite.setOpacity(250);
+        sprite.setCameraMask(2);
+        circleBack.setCameraMask(2);
+        sprite.setTag(3);
+        circleBack.setTag(2);
+
+        this.addChild(sprite);
+        this.addChild(circleBack);
+
+        this.scheduleUpdate();
+        this.update(0.1);
+    },
+
+    update:function(dt){
+        this._accAngle += dt * cc.degreesToRadians(60);
+
+        var radius = 30;
+        var x = Math.cos(this._accAngle) * radius;
+        var z = Math.sin(this._accAngle) * radius;
+
+        var sprite = this.getChildByTag(3);
+        var circle = this.getChildByTag(2);
+
+        sprite.setPositionX(x);
+        sprite.setVertexZ(z);
+        circle.setPositionX(x);
+        circle.setVertexZ(z);
+    }
+});
+
+var UseCaseSprite3D2 = Sprite3DTestDemo.extend({
+    _title:"Use Case For 2D + 3D",
+    _subtitle:"ui - 3d - ui, last ui should on the top",
+    ctor:function(){
+        this._super();
+
+        var s = cc.winSize;
+        //setup camera
+        var camera = cc.Camera.createPerspective(40, s.width/s.height, 0.01, 1000);
+        camera.setCameraFlag(cc.CameraFlag.USER1);
+        camera.setPosition3D({x:0, y:30, z:100});
+        camera.lookAt({x:0, y:0, z:0});
+        this.addChild(camera);
+
+        var layer = new cc.LayerColor(cc.color(0, 0, 100, 255), s.width/2, s.height/2);
+        layer.setPosition(s.width/4, s.height/4);
+        layer.setGlobalZOrder(-1);
+        layer.setTag(101);
+        this.addChild(layer);
+
+        var sprite = cc.Sprite3D.create("Sprite3DTest/girl.c3b");
+        sprite.setScale(0.5);
+        var animation = cc.Animation3D.create("Sprite3DTest/girl.c3b");
+        if(animation){
+            var animate = cc.Animate3D.create(animation);
+            sprite.runAction(cc.repeatForever(animate));
+        }
+        sprite.setPosition(s.width/4, s.height/4);
+        layer.addChild(sprite);
+
+        var label1 = new cc.LabelTTF("Message", "Arial", 15);
+        var item1 = new cc.MenuItemLabel(label1, this.menuCallback_Message, this);
+        var label2 = new cc.LabelTTF("Message", "Arial", 15);
+        var item2 = new cc.MenuItemLabel(label2, this.menuCallback_Message, this);
+
+        item1.setPosition(cc.p(s.width/2 - item1.getContentSize().width/2, s.height/2 - item1.getContentSize().height));
+        item2.setPosition(cc.p(s.width/2 - item1.getContentSize().width/2, s.height/2 - item1.getContentSize().height * 2));
+
+        var menu = new cc.Menu(item1, item2);
+        menu.setPosition(cc.p(0, 0));
+        layer.addChild(menu);
+
+    },
+
+    menuCallback_Message:function(sender){
+        var layer = this.getChildByTag(101);
+        var message = layer.getChildByTag(102);
+        if(message)
+            layer.removeChild(message);
+        else{
+            // create a new message layer on the top
+            var s = layer.getContentSize();
+            var messagelayer = new cc.LayerColor(cc.color(100, 100, 0, 255));
+            messagelayer.setContentSize(cc.size(s.width/2, s.height/2));
+            messagelayer.setPosition(cc.p(s.width/4, s.height/4));
+            var label = new cc.LabelTTF("This Message Layer \n Should Be On Top");
+            label.setPosition(cc.p(s.width/4, s.height/4));
+            messagelayer.addChild(label);
+            messagelayer.setTag(102);
+            layer.addChild(messagelayer);
+        }
+
     }
 });
 
@@ -209,7 +757,18 @@ var AsyncLoadSprite3DTest = Sprite3DTestDemo.extend({
 var arrayOfSprite3DTest = [
     Sprite3DBasicTest,
     Sprite3DHitTest,
-    AsyncLoadSprite3DTest
+    // AsyncLoadSprite3DTest,//TODO bind createAsync
+    Sprite3DWithSkinTest,
+    Animate3DTest,
+    AttachmentTest,
+    Sprite3DReskinTest,
+    // Sprite3DWithOBBPerformanceTest, //TODO bind DrawNode3D
+    Sprite3DMirrorTest,
+    //QuaternionTest, //TODO bind setRotationQat
+    Sprite3DEmptyTest,
+    Sprite3DForceDepthTest,
+    UseCaseSprite3D1,
+    UseCaseSprite3D2
 ];
 
 var nextSprite3DTest = function () {
