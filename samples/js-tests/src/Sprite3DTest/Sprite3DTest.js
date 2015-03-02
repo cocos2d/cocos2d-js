@@ -206,19 +206,50 @@ var Sprite3DHitTest = Sprite3DTestDemo.extend({
 var AsyncLoadSprite3DTest = Sprite3DTestDemo.extend({
     _title:"Testing Sprite3D::createAsync",
     _subtitle:"",
-    _path:[],
+    _path:["Sprite3DTest/boss.obj", "Sprite3DTest/girl.c3b", "Sprite3DTest/orc.c3b", "Sprite3DTest/ReskinGirl.c3b", "Sprite3DTest/axe.c3b"],
+    
     ctor:function(){
         this._super();
 
-        var path = this._path;
-        path.push("Sprite3DTest/boss.obj");
-        path.push("Sprite3DTest/girl.c3b");
-        path.push("Sprite3DTest/orc.c3b");
-        path.push("Sprite3DTest/ReskinGirl.c3b");
-        path.push("Sprite3DTest/axe.c3b");
+        var label = new cc.LabelTTF("AsyncLoad Sprite3D", "Arial", 15);
+        var item = new cc.MenuItemLabel(label, this. menuCallback_asyncLoadSprite, this);
 
-        // var label = new cc.LabelTTF("AsyncLoad Sprite3D");
-        // this.addChild(label);
+        var s = cc.winSize;
+        item.setPosition(s.width / 2, s.height / 2);
+
+        var menu = new cc.Menu(item);
+        menu.setPosition(cc.p(0, 0));
+        this.addChild(menu, 10);
+
+        var node = new cc.Node();
+        node.setTag(101);
+        this.addChild(node);
+
+        this.menuCallback_asyncLoadSprite();
+    },
+
+    menuCallback_asyncLoadSprite:function(sender){
+        //Note that you must stop the tasks before leaving the scene.
+        cc.AsyncTaskPool.getInstance().stopTasks(cc.AsyncTaskPool.TaskType.TASK_IO);
+
+        var node = this.getChildByTag(101);
+        node.removeAllChildren(); // remove all loaded sprites
+
+        //remove cache data
+        cc.Sprite3DCache.getInstance().removeAllSprite3DData();
+
+        for(var i = 0; i < this._path.length; ++i){
+            cc.Sprite3D.createAsync(this._path[i], this.asyncLoad_Callback, this, i);
+        }
+
+    },
+
+    asyncLoad_Callback:function(sprite, data){
+        var node = this.getChildByTag(101);
+        var s = cc.winSize;
+        var width = s.width / this._path.length;
+        sprite.setPosition(width * (0.5 + data), s.height / 2);
+        node.addChild(sprite);
     }
 });
 
@@ -776,7 +807,7 @@ var UseCaseSprite3D2 = Sprite3DTestDemo.extend({
 var arrayOfSprite3DTest = [
     Sprite3DBasicTest,
     Sprite3DHitTest,
-    // AsyncLoadSprite3DTest,//TODO bind createAsync
+    AsyncLoadSprite3DTest,
     Sprite3DWithSkinTest,
     Animate3DTest,
     AttachmentTest,

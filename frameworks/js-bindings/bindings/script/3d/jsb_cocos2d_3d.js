@@ -35,3 +35,10 @@ cc.LightFlag = {
     LIGHT14 : 1 << 14,
     LIGHT15 : 1 << 15,
 };
+
+cc.AsyncTaskPool.TaskType = {
+    TASK_IO : 0,
+    TASK_NETWORK : 1,
+    TASK_OTHER : 2,
+    TASK_MAX_TYPE : 3
+};
