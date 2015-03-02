@@ -66,7 +66,26 @@ var LightTestDemo = cc.Layer.extend({
     },
 });
 
-var LightTestScene = TestScene.extend({
+var LightTestScene = cc.Scene.extend({
+    ctor:function () {
+        this._super();
+
+        var label = new cc.LabelTTF("Main Menu", "Arial", 20);
+        var menuItem = new cc.MenuItemLabel(label, this.onMainMenuCallback, this);
+
+        var menu = new cc.Menu(menuItem);
+        menu.x = 0;
+        menu.y = 0;
+        menuItem.x = winSize.width - 50;
+        menuItem.y = 25;
+        this.addChild(menu);
+    },
+    onMainMenuCallback:function () {
+        var scene = new cc.Scene();
+        var layer = new TestController();
+        scene.addChild(layer);
+        director.runScene(scene);
+    },
     runThisTest:function (num) {
         LightTestIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextLightTest();
@@ -129,10 +148,6 @@ var LightTest = LightTestDemo.extend({
 
     },
 
-    onExit:function(){
-        this._super();
-    },
-
     addSprite:function(){
         var s = cc.winSize;
 
@@ -170,25 +185,21 @@ var LightTest = LightTestDemo.extend({
 
     addLights:function(){
         this._ambientLight = cc.AmbientLight.create(cc.color(200, 200, 200));
-        this._ambientLight.retain();
         this._ambientLight.setEnabled(true);
         this.addChild(this._ambientLight);
         this._ambientLight.setCameraMask(2);
 
         this._directionalLight = cc.DirectionLight.create({x:-1, y:-1, z:0}, cc.color(200, 200, 200));
-        this._directionalLight.retain();
         this._directionalLight.setEnabled(false);
         this.addChild(this._directionalLight);
         this._directionalLight.setCameraMask(2);
 
         this._pointLight = cc.PointLight.create({x:0, y:0, z:0}, cc.color(200, 200, 200), 10000);
-        this._pointLight.retain();
         this._pointLight.setEnabled(false);
         this.addChild(this._pointLight);
         this._pointLight.setCameraMask(2);
 
         this._spotLight = cc.SpotLight.create({x:-1, y:-1, z:0}, {x:0, y:0, z:0}, cc.color(200, 200, 200), 0, 0.5, 10000);
-        this._spotLight.retain();
         this._spotLight.setEnabled(false);
         this.addChild(this._spotLight);
         this._spotLight.setCameraMask(2);

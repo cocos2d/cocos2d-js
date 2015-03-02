@@ -66,7 +66,26 @@ var Sprite3DTestDemo = cc.Layer.extend({
     },
 });
 
-var Sprite3DTestScene = TestScene.extend({
+var Sprite3DTestScene = cc.Scene.extend({
+    ctor:function () {
+        this._super();
+
+        var label = new cc.LabelTTF("Main Menu", "Arial", 20);
+        var menuItem = new cc.MenuItemLabel(label, this.onMainMenuCallback, this);
+
+        var menu = new cc.Menu(menuItem);
+        menu.x = 0;
+        menu.y = 0;
+        menuItem.x = winSize.width - 50;
+        menuItem.y = 25;
+        this.addChild(menu);
+    },
+    onMainMenuCallback:function () {
+        var scene = new cc.Scene();
+        var layer = new TestController();
+        scene.addChild(layer);
+        director.runScene(scene);
+    },
     runThisTest:function (num) {
         Sprite3DTestIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextSprite3DTest();
