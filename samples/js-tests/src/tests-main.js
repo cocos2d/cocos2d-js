@@ -220,14 +220,6 @@ var TestController = cc.LayerGradient.extend({
 TestController.YOffset = 0;
 var testNames = [
     {
-        title:"Sprite3D Test",
-        platforms: PLATFORM_JSB,
-        linksrc:"src/Sprite3DTest/Sprite3DTest.js",
-        testScene:function () {
-            return new Sprite3DTestScene();
-        }
-    },
-    {
         title:"ActionManager Test",
         platforms: PLATFORM_ALL,
         linksrc:"src/ActionManagerTest/ActionManagerTest.js",
@@ -420,6 +412,14 @@ var testNames = [
         linksrc:"src/LayerTest/LayerTest.js",
         testScene:function () {
             return new LayerTestScene();
+        }
+    },
+    {
+        title:"Light Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/LightTest/LightTest.js",
+        testScene:function () {
+            return new LightTestScene();
         }
     },
     {

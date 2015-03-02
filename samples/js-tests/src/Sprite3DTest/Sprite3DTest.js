@@ -769,6 +769,7 @@ var arrayOfSprite3DTest = [
     Sprite3DForceDepthTest,
     UseCaseSprite3D1,
     UseCaseSprite3D2
+    //TODO 3D effects test
 ];
 
 var nextSprite3DTest = function () {

@@ -44,6 +44,7 @@
         "src/SpineTest/SpineTest.js",
         "src/SpriteTest/SpriteTest.js",
         "src/Sprite3DTest/Sprite3DTest.js",
+        "src/LightTest/LightTest.js",
         "src/TextureCacheTest/TextureCacheTest.js",
         "src/CocosDenshionTest/CocosDenshionTest.js",
         "src/CocosNodeTest/CocosNodeTest.js",
