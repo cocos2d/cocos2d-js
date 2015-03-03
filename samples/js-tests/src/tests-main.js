@@ -244,6 +244,14 @@ var testNames = [
         }
     },
     {
+        title:"BillBoard Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/BillBoardTest/BillBoardTest.js",
+        testScene:function () {
+            return new BillBoardTestScene();
+        }
+    },
+    {
         title:"Box2D Test",
         resource:g_box2d,
         platforms: PLATFORM_HTML5,
