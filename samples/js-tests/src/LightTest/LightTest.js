@@ -1,3 +1,28 @@
+/****************************************************************************
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 var LightTestIdx = -1;
 
 var LightTestDemo = cc.Layer.extend({
@@ -151,11 +176,11 @@ var LightTest = LightTestDemo.extend({
     addSprite:function(){
         var s = cc.winSize;
 
-        var orc = cc.Sprite3D.create("Sprite3DTest/orc.c3b");
+        var orc = new cc.Sprite3D("Sprite3DTest/orc.c3b");
         orc.setRotation3D({x:0, y:180, z:0});
         orc.setPosition(cc.p(0, 0));
         orc.setScale(2.0);
-        var axe = cc.Sprite3D.create("Sprite3DTest/axe.c3b");
+        var axe = new cc.Sprite3D("Sprite3DTest/axe.c3b");
         orc.getAttachNode("Bip001 R Hand").addChild(axe);
         var animation = cc.Animation3D.create("Sprite3DTest/orc.c3b");
         if(animation){
@@ -165,18 +190,18 @@ var LightTest = LightTestDemo.extend({
         this.addChild(orc);
         orc.setCameraMask(2);
 
-        var sphere1 = cc.Sprite3D.create("Sprite3DTest/sphere.c3b");
+        var sphere1 = new cc.Sprite3D("Sprite3DTest/sphere.c3b");
         sphere1.setPosition(cc.p(30, 0));
         this.addChild(sphere1);
         sphere1.setCameraMask(2);
 
-        var sphere2 = cc.Sprite3D.create("Sprite3DTest/sphere.c3b");
+        var sphere2 = new cc.Sprite3D("Sprite3DTest/sphere.c3b");
         sphere2.setPosition(cc.p(-50, 0));
         sphere2.setScale(0.5);
         this.addChild(sphere2);
         sphere2.setCameraMask(2);
 
-        var sphere3 = cc.Sprite3D.create("Sprite3DTest/sphere.c3b");
+        var sphere3 = new cc.Sprite3D("Sprite3DTest/sphere.c3b");
         sphere3.setPosition(cc.p(-30, 0));
         sphere3.setScale(0.5);
         this.addChild(sphere3);
