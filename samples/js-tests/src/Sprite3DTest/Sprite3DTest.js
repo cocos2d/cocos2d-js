@@ -476,7 +476,7 @@ var AttachmentTest = Sprite3DTestDemo.extend({
     addNewSpriteWithCoords:function(position){
         var sprite = new cc.Sprite3D("Sprite3DTest/orc.c3b");
         sprite.setScale(5);
-        sprite.setRotation3D({x:0, y:180, z:0});
+        sprite.setRotation3D(cc.vec3(0, 180, 0));
         this.addChild(sprite);
         sprite.setPosition(position);
 
@@ -563,7 +563,7 @@ var Sprite3DReskinTest = (function(){
         addNewSpriteWithCoords:function(position){
             var sprite = new cc.Sprite3D("Sprite3DTest/ReskinGirl.c3b");
             sprite.setScale(4);
-            sprite.setRotation3D({x:0, y:0, z:0});
+            sprite.setRotation3D(cc.vec3(0, 0, 0));
             this.addChild(sprite);
             sprite.setPosition(cc.p(position.x, position.y - 60));
             var animation = cc.Animation3D.create("Sprite3DTest/ReskinGirl.c3b");
@@ -617,7 +617,7 @@ var Sprite3DMirrorTest = Sprite3DTestDemo.extend({
         var fileName = "Sprite3DTest/orc.c3b";
         var sprite = new cc.Sprite3D("Sprite3DTest/orc.c3b");
         sprite.setScale(5);
-        sprite.setRotation3D({x:0, y:180, z:0});
+        sprite.setRotation3D(cc.vec3(0, 180, 0));
         this.addChild(sprite);
         sprite.setPosition(cc.p(position.x - 80, position.y));
 
@@ -636,7 +636,7 @@ var Sprite3DMirrorTest = Sprite3DTestDemo.extend({
         sprite.setScale(5);
         sprite.setScaleX(-5);
         sprite.setCullFace(gl.FRONT);
-        sprite.setRotation3D({x:0, y:180, z:0});
+        sprite.setRotation3D(cc.vec3(0, 180, 0));
         this.addChild(sprite);
         sprite.setPosition(cc.p(position.x + 80, position.y));
 
@@ -680,7 +680,7 @@ var Sprite3DForceDepthTest = Sprite3DTestDemo.extend({
         orc.setNormalizedPosition(cc.p(0.5, 0.3));
         // orc.setPositionZ(40);
         orc.setVertexZ(40);
-        orc.setRotation3D({x:0, y:180, z:0});
+        orc.setRotation3D(cc.vec3(0, 180, 0));
         orc.setGlobalZOrder(-1);
 
         this.addChild(orc);
@@ -689,7 +689,7 @@ var Sprite3DForceDepthTest = Sprite3DTestDemo.extend({
         ship.setScale(5);
         ship.setTexture("Sprite3DTest/boss.png");
         ship.setNormalizedPosition(cc.p(0.5, 0.5));
-        ship.setRotation3D({x:90, y:0, z:0});
+        ship.setRotation3D(cc.vec3(90, 0, 0));
         ship.setForceDepthWrite(true);
 
         this.addChild(ship);
@@ -708,8 +708,8 @@ var UseCaseSprite3D1 = Sprite3DTestDemo.extend({
         //setup camera
         var camera = cc.Camera.createPerspective(40, s.width/s.height, 0.01, 1000);
         camera.setCameraFlag(cc.CameraFlag.USER1);
-        camera.setPosition3D({x:0, y:30, z:100});
-        camera.lookAt({x:0, y:0, z:0});
+        camera.setPosition3D(cc.vec3(0, 30, 100));
+        camera.lookAt(cc.vec3(0, 0, 0));
         this.addChild(camera);
 
         var sprite = new cc.Sprite3D("Sprite3DTest/girl.c3b");
@@ -724,12 +724,12 @@ var UseCaseSprite3D1 = Sprite3DTestDemo.extend({
         var circle = new cc.Sprite("Sprite3DTest/circle.png");
         circleBack.setScale(0.5);
         circleBack.addChild(circle);
-        circle.runAction(cc.rotateBy(3, {x:0, y:0, z:360}).repeatForever());
+        circle.runAction(cc.rotateBy(3, cc.vec3(0, 0, 360)).repeatForever());
 
-        circleBack.setRotation3D({x:90, y:0, z:0});
+        circleBack.setRotation3D(cc.vec3(90, 0, 0));
 
         var pos = sprite.getPosition3D();
-        circleBack.setPosition3D({x:pos.x, y:pos.y, z:pos.z-1});
+        circleBack.setPosition3D(cc.vec3(pos.x, pos.y, pos.z-1));
 
         sprite.setOpacity(250);
         sprite.setCameraMask(2);
@@ -771,8 +771,8 @@ var UseCaseSprite3D2 = Sprite3DTestDemo.extend({
         //setup camera
         var camera = cc.Camera.createPerspective(40, s.width/s.height, 0.01, 1000);
         camera.setCameraFlag(cc.CameraFlag.USER1);
-        camera.setPosition3D({x:0, y:30, z:100});
-        camera.lookAt({x:0, y:0, z:0});
+        camera.setPosition3D(cc.vec3(0, 30, 100));
+        camera.lookAt(cc.vec3(0, 0, 0));
         this.addChild(camera);
 
         var layer = new cc.LayerColor(cc.color(0, 0, 100, 255), s.width/2, s.height/2);

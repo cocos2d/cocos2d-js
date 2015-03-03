@@ -133,7 +133,7 @@ var BillBoardRotationTest = BillBoardTestDemo.extend({
 
         var model = new cc.Sprite3D("Sprite3DTest/orc.c3b");
         model.setScale(5);
-        model.setRotation3D({x:0, y:180, z:0});
+        model.setRotation3D(cc.vec3(0, 180, 0));
         root.addChild(model);
 
         var bill = new cc.BillBoard();
@@ -147,11 +147,11 @@ var BillBoardRotationTest = BillBoardTestDemo.extend({
         label.setPosition(0, 30);
         bill.addChild(label);
 
-        root.runAction(cc.rotateBy(10, {x:0, y:360, z:0}).repeatForever());
+        root.runAction(cc.rotateBy(10, cc.vec3(0, 360, 0)).repeatForever());
 
         var jump = cc.jumpBy(1, cc.p(0, 0), 30, 1);
         var scale = cc.scaleBy(2, 2, 2, 0.1);
-        var rot = cc.rotateBy(2, {x:-90, y:0, z:0});
+        var rot = cc.rotateBy(2, cc.vec3(-90, 0, 0));
         model.runAction(cc.sequence(cc.spawn(cc.sequence(jump, scale), rot), cc.spawn(scale.reverse(), rot.reverse())).repeatForever());
     }
 });
@@ -183,21 +183,21 @@ var BillBoardTest = BillBoardTestDemo.extend({
             var layer = new cc.Layer();
             var billboard = new cc.BillBoard(imgs[Math.floor(Math.random() + 0.5)]);
             billboard.setScale(0.5);
-            billboard.setPosition3D({x:0, y:0, z:(Math.random() * 2 - 1) * 150});
+            billboard.setPosition3D(cc.vec3(0, 0, (Math.random() * 2 - 1) * 150));
             billboard.setOpacity(Math.random() * 128 + 128);
             this._billboards.push(billboard);
             layer.addChild(billboard);
             this._layerBillBorad.addChild(layer);
-            layer.runAction(cc.rotateBy(Math.random() * 10, {x:0, y:45, z:0}).repeatForever());
+            layer.runAction(cc.rotateBy(Math.random() * 10, cc.vec3(0, 45, 0)).repeatForever());
         }
 
         {
             var billboard1 = new cc.BillBoard("Images/Icon.png");
             billboard1.setScale(0.2);
-            billboard1.setPosition3D({x:0, y:30, z:0});
+            billboard1.setPosition3D(cc.vec3(0, 30, 0));
 
             var billboard2 = new cc.BillBoard("Images/r2.png");
-            billboard2.setPosition3D({x:0, y:0, z:100});
+            billboard2.setPosition3D(cc.vec3(0, 0, 100));
             billboard1.addChild(billboard2);
             this._billboards.push(billboard1);
             this._billboards.push(billboard2);
@@ -205,24 +205,24 @@ var BillBoardTest = BillBoardTestDemo.extend({
             var sprite3d = new cc.Sprite3D("Sprite3DTest/orc.c3b");
             sprite3d.setScale(2);
             sprite3d.addChild(billboard1);
-            sprite3d.runAction(cc.rotateBy(10, {x:0, y:360, z:0}).repeatForever());
+            sprite3d.runAction(cc.rotateBy(10, cc.vec3(0, 360, 0)).repeatForever());
             this._layerBillBorad.addChild(sprite3d);
         }
 
-        this.addNewBillBoradWithCoords({x:20, y:5, z:0});
-        this.addNewBillBoradWithCoords({x:60, y:5, z:0});
-        this.addNewBillBoradWithCoords({x:100, y:5, z:0});
-        this.addNewBillBoradWithCoords({x:140, y:5, z:0});
-        this.addNewBillBoradWithCoords({x:180, y:5, z:0});
+        this.addNewBillBoradWithCoords(cc.vec3(20, 5, 0));
+        this.addNewBillBoradWithCoords(cc.vec3(60, 5, 0));
+        this.addNewBillBoradWithCoords(cc.vec3(100, 5, 0));
+        this.addNewBillBoradWithCoords(cc.vec3(140, 5, 0));
+        this.addNewBillBoradWithCoords(cc.vec3(180, 5, 0));
 
-        this.addNewAniBillBoradWithCoords({x:-20, y:0, z:0});
-        this.addNewAniBillBoradWithCoords({x:-60, y:0, z:0});
-        this.addNewAniBillBoradWithCoords({x:-100, y:0, z:0});
-        this.addNewAniBillBoradWithCoords({x:-140, y:0, z:0});
-        this.addNewAniBillBoradWithCoords({x:-180, y:0, z:0});
+        this.addNewAniBillBoradWithCoords(cc.vec3(-20, 0, 0));
+        this.addNewAniBillBoradWithCoords(cc.vec3(-60, 0, 0));
+        this.addNewAniBillBoradWithCoords(cc.vec3(-100, 0, 0));
+        this.addNewAniBillBoradWithCoords(cc.vec3(-140, 0, 0));
+        this.addNewAniBillBoradWithCoords(cc.vec3(-180, 0, 0));
 
-        this._camera.setPosition3D({x:0, y:100, z:230});
-        this._camera.lookAt({x:0, y:0, z:0}, {x:0, y:1, z:0});
+        this._camera.setPosition3D(cc.vec3(0, 100, 230));
+        this._camera.lookAt(cc.vec3(0, 0, 0), cc.vec3(0, 1, 0));
 
         this._layerBillBorad.setCameraMask(2);
 
@@ -258,7 +258,7 @@ var BillBoardTest = BillBoardTestDemo.extend({
         for(var i = 0; i < 10; ++i){
             var billboard = new cc.BillBoard(imgs[Math.floor(Math.random() + 0.5)]);
             billboard.setScale(0.5);
-            billboard.setPosition3D({x:position.x, y:position.y, z:-150+30*i});
+            billboard.setPosition3D(cc.vec3(position.x, position.y, -150+30*i));
             billboard.setOpacity(Math.random() * 128 + 128);
             this._layerBillBorad.addChild(billboard);
             this._billboards.push(billboard);
@@ -269,7 +269,7 @@ var BillBoardTest = BillBoardTestDemo.extend({
         for(var i = 0; i < 10; ++i){
             var billboardAni = new cc.BillBoard("Images/grossini.png");
             billboardAni.setScale(0.5);
-            billboardAni.setPosition3D({x:position.x, y:position.y, z:-150+30*i});
+            billboardAni.setPosition3D(cc.vec3(position.x, position.y, -150+30*i));
             this._layerBillBorad.addChild(billboardAni);
 
             var animation = new cc.Animation();
