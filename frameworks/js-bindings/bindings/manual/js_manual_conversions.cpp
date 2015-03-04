@@ -2344,13 +2344,13 @@ jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v)
 
 jsval matrix_to_jsval(JSContext *cx, const cocos2d::Mat4& v)
 {
-    JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 16));
     
     for (int i = 0; i < 16; i++) {
         JS::RootedValue arrElement(cx);
         arrElement = DOUBLE_TO_JSVAL(v.m[i]);
         
-        if (!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+        if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
             break;
         }
     }
