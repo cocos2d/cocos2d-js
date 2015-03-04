@@ -206,15 +206,6 @@ var CameraRotationTest = Camera3DTestDemo.extend({
     }
 });
 
-var FogTestDemo = Camera3DTestDemo.extend({
-    _title:"Fog Test Demo",
-    _subtitle:"",
-
-    ctor:function(){
-        this._super();
-    }
-});
-
 //
 // Flow control
 //
@@ -225,9 +216,6 @@ var arrayOfCamera3DTest = [
     // CameraCullingDemo,
     // CameraArcBallDemo
 ];
-
-if(cc.sys.OS !== cc.sys.OS_WP8)
-    arrayOfCamera3DTest.push(FogTestDemo);
 
 var nextCamera3DTest = function () {
     Camera3DTestIdx++;
