@@ -100,11 +100,11 @@ var XHRTestLayer = cc.Layer.extend({
         responseLabel.y = winSize.height / 2;
 
         var xhr = cc.loader.getXMLHttpRequest();
+        streamXHREventsToLabel(xhr, statusGetLabel, responseLabel, "GET");
+
         //set arguments with <URL>?xxx=xxx&yyy=yyy
         xhr.open("GET", "http://httpbin.org/get?show_env=1", true);
         xhr.send();
-
-        streamXHREventsToLabel(xhr, statusGetLabel, responseLabel, "GET");
     },
 
     sendPostPlainText: function() {
@@ -124,12 +124,12 @@ var XHRTestLayer = cc.Layer.extend({
         responseLabel.y = winSize.height / 2;
         
         var xhr = cc.loader.getXMLHttpRequest();
+        streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST");
+
         xhr.open("POST", "http://httpbin.org/post");
         //set Content-type "text/plain;charset=UTF-8" to post plain text
         xhr.setRequestHeader("Content-Type","text/plain;charset=UTF-8");
         xhr.send("plain text message");
-
-        streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST");
     },
 
     sendPostForms: function() {
@@ -149,6 +149,8 @@ var XHRTestLayer = cc.Layer.extend({
         responseLabel.y = winSize.height / 2;
 
         var xhr = cc.loader.getXMLHttpRequest();
+        streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST");
+
         xhr.open("POST", "http://httpbin.org/post");
         //set Content-Type "application/x-www-form-urlencoded" to post form data
         //mulipart/form-data for upload
@@ -161,8 +163,6 @@ var XHRTestLayer = cc.Layer.extend({
         **/
         var args = "a=hello&b=world";
         xhr.send(args);
-        
-        streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST");
     },
 
     scrollViewDidScroll:function (view) {
