@@ -91,6 +91,24 @@ cc.vec3 = function(x, y, z){
     return new cc.Vec3(x, y, z);
 };
 
+cc.Quaternion = function(x, y, z, w){
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.w = w;
+};
+
+cc.Quaternion.createFromAxisAngle = function(axis, angle){
+    var sinHalfAngle = Math.sin(angle / 2);
+    var normal = cc.vec3(axis.x, axis.y, axis.z);
+    normal.normalize();
+    return cc.quaternion(normal.x * sinHalfAngle, normal.y * sinHalfAngle, normal.z * sinHalfAngle, Math.cos(angle / 2));
+};
+
+cc.quaternion = function(x, y, z, w){
+    return new cc.Quaternion(x, y, z, w);
+};
+
 cc.Sprite3D.prototype._ctor = function(modelPath, texturePath){
     if(modelPath === undefined){
         this.init();

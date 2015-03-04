@@ -589,6 +589,31 @@ bool jsval_to_ccacceleration(JSContext* cx, JS::HandleValue v, Acceleration* ret
     return true;
 }
 
+bool jsval_to_quaternion( JSContext *cx, JS::HandleValue v, cocos2d::Quaternion* ret)
+{
+    JS::RootedObject tmp(cx);
+    JS::RootedValue x(cx);
+    JS::RootedValue y(cx);
+    JS::RootedValue z(cx);
+    JS::RootedValue w(cx);
+    
+    bool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
+        JS_GetProperty(cx, tmp, "x", &x) &&
+        JS_GetProperty(cx, tmp, "y", &y) &&
+        JS_GetProperty(cx, tmp, "z", &z) &&
+        JS_GetProperty(cx, tmp, "w", &w);
+    
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+
+    ret->x = x.toNumber();
+    ret->y = y.toNumber();
+    ret->z = z.toNumber();
+    ret->w = w.toNumber();
+
+    return true;
+}
+
 bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, __Array** ret)
 {
     bool ok = true;
@@ -1818,6 +1843,20 @@ jsval ccaffinetransform_to_jsval(JSContext* cx, const AffineTransform& t)
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }
+    return JSVAL_NULL;
+}
+
+jsval quaternion_to_jsval(JSContext* cx, const cocos2d::Quaternion& q)
+{
+    JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
+    if(!tmp) return JSVAL_NULL;
+    bool ok = JS_DefineProperty(cx, tmp, "x", q.x, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "y", q.y, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "z", q.z, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "w", q.w, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if(ok)
+        return OBJECT_TO_JSVAL(tmp);
+
     return JSVAL_NULL;
 }
 
