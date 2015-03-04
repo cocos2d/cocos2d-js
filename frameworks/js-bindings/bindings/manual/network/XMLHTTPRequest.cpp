@@ -277,10 +277,18 @@ MinXmlHttpRequest::MinXmlHttpRequest()
  */
 MinXmlHttpRequest::~MinXmlHttpRequest()
 {
-    if (_onreadystateCallback != NULL)
-    {
-        JS::RemoveObjectRoot(_cx, &_onreadystateCallback);
+
+#define SAFE_REMOVE_OBJECT(callback) if (callback != NULL)\
+    {\
+        JS::RemoveObjectRoot(_cx, &callback);\
     }
+
+    SAFE_REMOVE_OBJECT(_onreadystateCallback);
+    SAFE_REMOVE_OBJECT(_onloadstartCallback);
+    SAFE_REMOVE_OBJECT(_onloadendCallback);
+    SAFE_REMOVE_OBJECT(_onloadCallback);
+    SAFE_REMOVE_OBJECT(_onerrorCallback);
+    SAFE_REMOVE_OBJECT(_onabortCallback);
     
     if (_httpRequest)
     {
