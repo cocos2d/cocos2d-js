@@ -184,8 +184,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\wp8-xaml\xaml\MainPage.xaml">
-      <Link>MainPage.xaml</Link>
+    <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
