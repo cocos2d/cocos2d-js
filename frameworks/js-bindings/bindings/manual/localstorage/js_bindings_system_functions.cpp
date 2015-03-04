@@ -16,18 +16,18 @@ USING_NS_CC;
 // Ret value: const char*
 bool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     std::string arg0; 
 
-    ok &= jsval_to_std_string( cx, *argvp++, &arg0 );
+    ok &= jsval_to_std_string( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     std::string ret_val;
 
     ret_val = localStorageGetItem(arg0);
 
     jsval ret_jsval = std_string_to_jsval(cx, ret_val);
-    JS_SET_RVAL(cx, vp, ret_jsval );
+    args.rval().set(ret_jsval);
 
     return true;
 }
@@ -36,15 +36,15 @@ bool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_localStorageRemoveItem(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     std::string arg0; 
 
-    ok &= jsval_to_std_string( cx, *argvp++, &arg0 );
+    ok &= jsval_to_std_string( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     localStorageRemoveItem(arg0);
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    args.rval().setUndefined();
     return true;
 }
 
@@ -52,16 +52,16 @@ bool JSB_localStorageRemoveItem(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
-    jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     std::string arg0; std::string arg1; 
 
-    ok &= jsval_to_std_string( cx, *argvp++, &arg0 );
-    ok &= jsval_to_std_string( cx, *argvp++, &arg1 );
+    ok &= jsval_to_std_string( cx, args.get(0), &arg0 );
+    ok &= jsval_to_std_string( cx, args.get(1), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     localStorageSetItem(arg0 , arg1);
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    args.rval().setUndefined();
     return true;
 }
 

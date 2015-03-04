@@ -10,8 +10,8 @@ extern JSObject *jsb_cocos2d_extension_Control_prototype;
 
 bool js_cocos2dx_extension_Control_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_Control_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_Control(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_Control(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_Control_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_Control_getState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_Control_sendActionsForControlEvents(JSContext *cx, uint32_t argc, jsval *vp);
@@ -32,8 +32,8 @@ extern JSObject *jsb_cocos2d_extension_ControlButton_prototype;
 
 bool js_cocos2dx_extension_ControlButton_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_ControlButton_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_ControlButton(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_ControlButton(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_ControlButton_isPushed(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_setSelected(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlButton_setTitleLabelForState(JSContext *cx, uint32_t argc, jsval *vp);
@@ -84,8 +84,8 @@ extern JSObject *jsb_cocos2d_extension_ControlHuePicker_prototype;
 
 bool js_cocos2dx_extension_ControlHuePicker_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_ControlHuePicker_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_ControlHuePicker(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_ControlHuePicker(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_ControlHuePicker_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlHuePicker_initWithTargetAndPos(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlHuePicker_setHue(JSContext *cx, uint32_t argc, jsval *vp);
@@ -105,8 +105,8 @@ extern JSObject *jsb_cocos2d_extension_ControlSaturationBrightnessPicker_prototy
 
 bool js_cocos2dx_extension_ControlSaturationBrightnessPicker_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_ControlSaturationBrightnessPicker_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_ControlSaturationBrightnessPicker(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_ControlSaturationBrightnessPicker(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_ControlSaturationBrightnessPicker_getShadow(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlSaturationBrightnessPicker_initWithTargetAndPos(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlSaturationBrightnessPicker_getStartPos(JSContext *cx, uint32_t argc, jsval *vp);
@@ -124,8 +124,8 @@ extern JSObject *jsb_cocos2d_extension_ControlColourPicker_prototype;
 
 bool js_cocos2dx_extension_ControlColourPicker_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_ControlColourPicker_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_ControlColourPicker(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_ControlColourPicker(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_ControlColourPicker_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlColourPicker_getHuePicker(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlColourPicker_setColor(JSContext *cx, uint32_t argc, jsval *vp);
@@ -144,8 +144,8 @@ extern JSObject *jsb_cocos2d_extension_ControlPotentiometer_prototype;
 
 bool js_cocos2dx_extension_ControlPotentiometer_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_ControlPotentiometer_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_ControlPotentiometer(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_ControlPotentiometer(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_ControlPotentiometer_setPreviousLocation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlPotentiometer_setValue(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlPotentiometer_getProgressTimer(JSContext *cx, uint32_t argc, jsval *vp);
@@ -172,8 +172,8 @@ extern JSObject *jsb_cocos2d_extension_ControlSlider_prototype;
 
 bool js_cocos2dx_extension_ControlSlider_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_ControlSlider_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_ControlSlider(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_ControlSlider(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_ControlSlider_getSelectedThumbSprite(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlSlider_locationFromTouch(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlSlider_setSelectedThumbSprite(JSContext *cx, uint32_t argc, jsval *vp);
@@ -205,8 +205,8 @@ extern JSObject *jsb_cocos2d_extension_ControlStepper_prototype;
 
 bool js_cocos2dx_extension_ControlStepper_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_ControlStepper_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_ControlStepper(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_ControlStepper(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_ControlStepper_setMinusSprite(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlStepper_getMinusLabel(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlStepper_setWraps(JSContext *cx, uint32_t argc, jsval *vp);
@@ -236,8 +236,8 @@ extern JSObject *jsb_cocos2d_extension_ControlSwitch_prototype;
 
 bool js_cocos2dx_extension_ControlSwitch_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_ControlSwitch_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_ControlSwitch(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_ControlSwitch(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_ControlSwitch_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlSwitch_setOn(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ControlSwitch_isOn(JSContext *cx, uint32_t argc, jsval *vp);
@@ -252,8 +252,8 @@ extern JSObject *jsb_cocos2d_extension_ScrollView_prototype;
 
 bool js_cocos2dx_extension_ScrollView_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_ScrollView_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_ScrollView(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_ScrollView(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_ScrollView_isClippingToBounds(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_setContainer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_setContentOffsetInDuration(JSContext *cx, uint32_t argc, jsval *vp);
@@ -294,8 +294,8 @@ extern JSObject *jsb_cocos2d_extension_TableViewCell_prototype;
 
 bool js_cocos2dx_extension_TableViewCell_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_TableViewCell_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_TableViewCell(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_TableViewCell(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_TableViewCell_reset(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_TableViewCell_getIdx(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_TableViewCell_setIdx(JSContext *cx, uint32_t argc, jsval *vp);
@@ -307,8 +307,8 @@ extern JSObject *jsb_cocos2d_extension_TableView_prototype;
 
 bool js_cocos2dx_extension_TableView_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_TableView_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_TableView(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_TableView(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_TableView_updateCellAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_TableView_setVerticalFillOrder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_TableView_scrollViewDidZoom(JSContext *cx, uint32_t argc, jsval *vp);
@@ -328,8 +328,8 @@ extern JSObject *jsb_cocos2d_extension_EventAssetsManagerEx_prototype;
 
 bool js_cocos2dx_extension_EventAssetsManagerEx_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_EventAssetsManagerEx_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_EventAssetsManagerEx(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_EventAssetsManagerEx(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_EventAssetsManagerEx_getAssetsManagerEx(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_EventAssetsManagerEx_getAssetId(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_EventAssetsManagerEx_getCURLECode(JSContext *cx, uint32_t argc, jsval *vp);
@@ -345,8 +345,8 @@ extern JSObject *jsb_cocos2d_extension_Manifest_prototype;
 
 bool js_cocos2dx_extension_Manifest_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_Manifest_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_Manifest(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_Manifest(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_Manifest_getManifestFileUrl(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_Manifest_isVersionLoaded(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_Manifest_isLoaded(JSContext *cx, uint32_t argc, jsval *vp);
@@ -360,8 +360,8 @@ extern JSObject *jsb_cocos2d_extension_AssetsManagerEx_prototype;
 
 bool js_cocos2dx_extension_AssetsManagerEx_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_AssetsManagerEx_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_AssetsManagerEx(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_AssetsManagerEx(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_AssetsManagerEx_getState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManagerEx_checkUpdate(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManagerEx_getStoragePath(JSContext *cx, uint32_t argc, jsval *vp);
@@ -377,8 +377,8 @@ extern JSObject *jsb_cocos2d_extension_EventListenerAssetsManagerEx_prototype;
 
 bool js_cocos2dx_extension_EventListenerAssetsManagerEx_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_extension_EventListenerAssetsManagerEx_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_extension_EventListenerAssetsManagerEx(JSContext *cx, JSObject *global);
-void register_all_cocos2dx_extension(JSContext* cx, JSObject* obj);
+void js_register_cocos2dx_extension_EventListenerAssetsManagerEx(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_EventListenerAssetsManagerEx_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_EventListenerAssetsManagerEx_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_EventListenerAssetsManagerEx_EventListenerAssetsManagerEx(JSContext *cx, uint32_t argc, jsval *vp);

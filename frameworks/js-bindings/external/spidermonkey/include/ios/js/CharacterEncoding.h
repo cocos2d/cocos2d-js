@@ -17,6 +17,8 @@ namespace js {
 struct ThreadSafeContext;
 }
 
+class JSFlatString;
+
 namespace JS {
 
 /*
@@ -25,39 +27,44 @@ namespace JS {
  * byte is treated as a 2-byte character, and there is no way to pass in a
  * string containing characters beyond U+00FF.
  */
-class Latin1Chars : public mozilla::Range<unsigned char>
+class Latin1Chars : public mozilla::Range<Latin1Char>
 {
-    typedef mozilla::Range<unsigned char> Base;
+    typedef mozilla::Range<Latin1Char> Base;
 
   public:
     Latin1Chars() : Base() {}
-    Latin1Chars(char *aBytes, size_t aLength) : Base(reinterpret_cast<unsigned char *>(aBytes), aLength) {}
+    Latin1Chars(char *aBytes, size_t aLength) : Base(reinterpret_cast<Latin1Char *>(aBytes), aLength) {}
+    Latin1Chars(const Latin1Char *aBytes, size_t aLength)
+      : Base(const_cast<Latin1Char *>(aBytes), aLength)
+    {}
     Latin1Chars(const char *aBytes, size_t aLength)
-      : Base(reinterpret_cast<unsigned char *>(const_cast<char *>(aBytes)), aLength)
+      : Base(reinterpret_cast<Latin1Char *>(const_cast<char *>(aBytes)), aLength)
     {}
 };
 
 /*
  * A Latin1Chars, but with \0 termination for C compatibility.
  */
-class Latin1CharsZ : public mozilla::RangedPtr<unsigned char>
+class Latin1CharsZ : public mozilla::RangedPtr<Latin1Char>
 {
-    typedef mozilla::RangedPtr<unsigned char> Base;
+    typedef mozilla::RangedPtr<Latin1Char> Base;
 
   public:
     Latin1CharsZ() : Base(nullptr, 0) {}
 
     Latin1CharsZ(char *aBytes, size_t aLength)
-      : Base(reinterpret_cast<unsigned char *>(aBytes), aLength)
+      : Base(reinterpret_cast<Latin1Char *>(aBytes), aLength)
     {
-        JS_ASSERT(aBytes[aLength] == '\0');
+        MOZ_ASSERT(aBytes[aLength] == '\0');
     }
 
-    Latin1CharsZ(unsigned char *aBytes, size_t aLength)
+    Latin1CharsZ(Latin1Char *aBytes, size_t aLength)
       : Base(aBytes, aLength)
     {
-        JS_ASSERT(aBytes[aLength] == '\0');
+        MOZ_ASSERT(aBytes[aLength] == '\0');
     }
+
+    using Base::operator=;
 
     char *c_str() { return reinterpret_cast<char *>(get()); }
 };
@@ -89,14 +96,16 @@ class UTF8CharsZ : public mozilla::RangedPtr<unsigned char>
     UTF8CharsZ(char *aBytes, size_t aLength)
       : Base(reinterpret_cast<unsigned char *>(aBytes), aLength)
     {
-        JS_ASSERT(aBytes[aLength] == '\0');
+        MOZ_ASSERT(aBytes[aLength] == '\0');
     }
 
     UTF8CharsZ(unsigned char *aBytes, size_t aLength)
       : Base(aBytes, aLength)
     {
-        JS_ASSERT(aBytes[aLength] == '\0');
+        MOZ_ASSERT(aBytes[aLength] == '\0');
     }
+
+    using Base::operator=;
 
     char *c_str() { return reinterpret_cast<char *>(get()); }
 };
@@ -120,21 +129,6 @@ class TwoByteChars : public mozilla::Range<jschar>
 };
 
 /*
- * A non-convertible variant of TwoByteChars that does not refer to characters
- * inlined inside a JSShortString or a JSInlineString. StableTwoByteChars are
- * thus safe to hold across a GC.
- */
-class StableTwoByteChars : public mozilla::Range<jschar>
-{
-    typedef mozilla::Range<jschar> Base;
-
-  public:
-    StableTwoByteChars() : Base() {}
-    StableTwoByteChars(jschar *aChars, size_t aLength) : Base(aChars, aLength) {}
-    StableTwoByteChars(const jschar *aChars, size_t aLength) : Base(const_cast<jschar *>(aChars), aLength) {}
-};
-
-/*
  * A TwoByteChars, but \0 terminated for compatibility with JSFlatString.
  */
 class TwoByteCharsZ : public mozilla::RangedPtr<jschar>
@@ -147,9 +141,30 @@ class TwoByteCharsZ : public mozilla::RangedPtr<jschar>
     TwoByteCharsZ(jschar *chars, size_t length)
       : Base(chars, length)
     {
-        JS_ASSERT(chars[length] == '\0');
+        MOZ_ASSERT(chars[length] == '\0');
     }
+
+    using Base::operator=;
 };
+
+typedef mozilla::RangedPtr<const jschar> ConstCharPtr;
+
+/*
+ * Like TwoByteChars, but the chars are const.
+ */
+class ConstTwoByteChars : public mozilla::RangedPtr<const jschar>
+{
+  public:
+    ConstTwoByteChars(const ConstTwoByteChars &s) : ConstCharPtr(s) {}
+    MOZ_IMPLICIT ConstTwoByteChars(const mozilla::RangedPtr<const jschar> &s) : ConstCharPtr(s) {}
+    ConstTwoByteChars(const jschar *s, size_t len) : ConstCharPtr(s, len) {}
+    ConstTwoByteChars(const jschar *pos, const jschar *start, size_t len)
+      : ConstCharPtr(pos, start, len)
+    {}
+
+    using ConstCharPtr::operator=;
+};
+
 
 /*
  * Convert a 2-byte character sequence to "ISO-Latin-1". This works by
@@ -162,10 +177,12 @@ class TwoByteCharsZ : public mozilla::RangedPtr<jschar>
  * This method cannot trigger GC.
  */
 extern Latin1CharsZ
-LossyTwoByteCharsToNewLatin1CharsZ(js::ThreadSafeContext *cx, TwoByteChars tbchars);
+LossyTwoByteCharsToNewLatin1CharsZ(js::ThreadSafeContext *cx,
+                                   const mozilla::Range<const jschar> tbchars);
 
+template <typename CharT>
 extern UTF8CharsZ
-TwoByteCharsToNewUTF8CharsZ(js::ThreadSafeContext *cx, TwoByteChars tbchars);
+CharsToNewUTF8CharsZ(js::ThreadSafeContext *cx, const mozilla::Range<const CharT> chars);
 
 uint32_t
 Utf8ToOneUcs4Char(const uint8_t *utf8Buffer, int utf8Length);
@@ -186,6 +203,20 @@ UTF8CharsToNewTwoByteCharsZ(JSContext *cx, const UTF8Chars utf8, size_t *outlen)
  */
 extern TwoByteCharsZ
 LossyUTF8CharsToNewTwoByteCharsZ(JSContext *cx, const UTF8Chars utf8, size_t *outlen);
+
+/*
+ * Returns the length of the char buffer required to encode |s| as UTF8.
+ * Does not include the null-terminator.
+ */
+JS_PUBLIC_API(size_t)
+GetDeflatedUTF8StringLength(JSFlatString *s);
+
+/*
+ * Encode |src| as UTF8. The caller must ensure |dst| has enough space.
+ * Does not write the null terminator.
+ */
+JS_PUBLIC_API(void)
+DeflateStringToUTF8Buffer(JSFlatString *src, mozilla::RangedPtr<char> dst);
 
 } // namespace JS
 
