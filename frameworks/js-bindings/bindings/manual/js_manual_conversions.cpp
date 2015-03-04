@@ -2344,7 +2344,7 @@ jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v)
 
 jsval matrix_to_jsval(JSContext *cx, const cocos2d::Mat4& v)
 {
-    /*JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
     
     for (int i = 0; i < 16; i++) {
         JS::RootedValue arrElement(cx);
@@ -2355,12 +2355,7 @@ jsval matrix_to_jsval(JSContext *cx, const cocos2d::Mat4& v)
         }
     }
     
-    return OBJECT_TO_JSVAL(jsretArr);*/
-    
-    //convert Mat4 to AffineTransform to be compatible with html5
-    cocos2d::AffineTransform affineTransform;
-    cocos2d::GLToCGAffine(v.m, &affineTransform);
-    return ccaffinetransform_to_jsval(cx, affineTransform);
+    return OBJECT_TO_JSVAL(jsretArr);
 }
 
 jsval vector2_to_jsval(JSContext *cx, const cocos2d::Vec2& v)
