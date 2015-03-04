@@ -574,10 +574,11 @@ cc.loader = {
             });
         }
         else {
-            var tex = cc.textureCache._addImage(url);
-            if (tex instanceof cc.Texture2D)
-                cb && cb(null, tex);
-            else cb && cb("Load image failed");
+            cc.textureCache._addImageAsync(url, function (tex){
+                if (tex instanceof cc.Texture2D)
+                    cb && cb(null, tex);
+                else cb && cb("Load image failed");
+            });
         }
     },
     /**
@@ -932,8 +933,8 @@ cc.configuration = cc.Configuration.getInstance();
  * cc.textureCache is the global cache for cc.Texture2D
  */
 cc.textureCache = cc.director.getTextureCache();
-cc.TextureCache.prototype._addImage = cc.TextureCache.prototype.addImage;
-cc.TextureCache.prototype.addImage = function(url, cb, target) {
+cc.TextureCache.prototype._addImageAsync = cc.TextureCache.prototype.addImageAsync;
+cc.TextureCache.prototype.addImageAsync = function(url, cb, target) {
     var localTex = null;
     cc.loader.loadImg(url, function(err, tex) {
         if (err) tex = null;
