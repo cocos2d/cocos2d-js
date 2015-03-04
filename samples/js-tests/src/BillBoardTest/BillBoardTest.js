@@ -23,7 +23,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
- var BillBoardTestIdx = -1;
+var BillBoardTestIdx = -1;
 
 var BillBoardTestDemo = cc.Layer.extend({
     _title:"",
@@ -166,6 +166,12 @@ var BillBoardTest = BillBoardTestDemo.extend({
     ctor:function(){
         this._super();
 
+        //Create touch listener
+        cc.eventManager.addListener({
+            event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesMoved:this.onTouchesMoved.bind(this)
+        }, this);
+
         var layer3D = new cc.Layer();
         this.addChild(layer3D, 0);
         this._layerBillBorad = layer3D;
@@ -300,6 +306,30 @@ var BillBoardTest = BillBoardTestDemo.extend({
         for(var i = 0; i < this._billboards.length; ++i){
             this._billboards[i].setMode(cc.BillBoard.Mode.VIEW_PLANE_ORIENTED);
         }
+    },
+
+    onTouchesMoved:function(touches, event){
+        if(touches.length == 1){
+            var touch = touches[0];
+            var location = touch.getLocation();
+            var previousLocation = touch.getPreviousLocation();
+            var newPos = cc.p(previousLocation.x - location.x, previousLocation.y - location.y);
+
+            var m = this._camera.getNodeToWorldTransform3D();
+            var cameraDir = cc.vec3(-m[8], -m[9], -m[10]);
+            cameraDir.normalize();
+            cameraDir.y = 0;
+
+            var cameraRightDir = cc.vec3(m[0], m[1], m[2]);
+            cameraRightDir.normalize();
+            cameraRightDir.y = 0;
+
+            var cameraPos = this._camera.getPosition3D();
+            cameraPos.x += cameraDir.x * newPos.y * 0.5 + cameraRightDir.x * newPos.x * 0.5;
+            cameraPos.y += cameraDir.y * newPos.y * 0.5 + cameraRightDir.y * newPos.x * 0.5;
+            cameraPos.z += cameraDir.z * newPos.y * 0.5 + cameraRightDir.z * newPos.x * 0.5;
+            this._camera.setPosition3D(cameraPos);
+        } 
     }
 });
 

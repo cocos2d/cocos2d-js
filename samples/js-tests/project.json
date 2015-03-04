@@ -46,6 +46,7 @@
         "src/Sprite3DTest/Sprite3DTest.js",
         "src/LightTest/LightTest.js",
         "src/BillBoardTest/BillBoardTest.js",
+        "src/Camera3DTest/Camera3DTest.js",
         "src/TextureCacheTest/TextureCacheTest.js",
         "src/CocosDenshionTest/CocosDenshionTest.js",
         "src/CocosNodeTest/CocosNodeTest.js",

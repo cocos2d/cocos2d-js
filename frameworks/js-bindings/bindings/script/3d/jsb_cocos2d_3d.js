@@ -79,6 +79,14 @@ cc.Vec3 = function(x, y, z){
     this.z = z;
 };
 
+cc.Vec3.prototype.normalize = function(){
+    var n = this.x * this.x + this.y * this.y + this.z * this.z;
+    n = 1 / Math.sqrt(n);
+    this.x *= n;
+    this.y *= n;
+    this.z *= n;
+};
+
 cc.vec3 = function(x, y, z){
     return new cc.Vec3(x, y, z);
 };

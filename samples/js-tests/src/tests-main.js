@@ -261,6 +261,14 @@ var testNames = [
         }
     },
     {
+        title:"Camera3D Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/Camera3DTest/Camera3DTest.js",
+        testScene:function () {
+            return new Camera3DTestScene();
+        }
+    },
+    {
         title:"Chipmunk Test",
         platforms: PLATFORM_ALL,
         linksrc:"src/ChipmunkTest/ChipmunkTest.js",
