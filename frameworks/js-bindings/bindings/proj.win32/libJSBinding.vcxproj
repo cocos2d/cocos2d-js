@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\auto\jsb_cocos2dx_3d_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_builder_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_extension_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_spine_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_studio_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_ui_auto.cpp" />
+    <ClCompile Include="..\manual\3d\jsb_cocos2dx_3d_manual.cpp" />
     <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_auto_classes.cpp" />
     <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_functions.cpp" />
     <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_manual.cpp" />
@@ -43,12 +45,14 @@
     <ClCompile Include="..\manual\ui\jsb_cocos2dx_ui_manual.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\auto\jsb_cocos2dx_3d_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_builder_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_extension_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_spine_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_studio_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_ui_auto.hpp" />
+    <ClInclude Include="..\manual\3d\jsb_cocos2dx_3d_manual.h" />
     <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_auto_classes.h" />
     <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_auto_classes_registration.h" />
     <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_functions.h" />

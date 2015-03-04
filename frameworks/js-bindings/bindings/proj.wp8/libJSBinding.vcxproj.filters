@@ -31,6 +31,9 @@
     <Filter Include="manual\ui">
       <UniqueIdentifier>{23253176-9614-4dbf-8f84-32fdb9383b3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="manual\3d">
+      <UniqueIdentifier>{87cb2246-a309-48b4-82bc-c24ec9ad1bda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\auto\jsb_cocos2dx_auto.cpp">
@@ -122,6 +125,12 @@
     </ClCompile>
     <ClCompile Include="..\manual\ui\jsb_cocos2dx_ui_manual.cpp">
       <Filter>manual\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\jsb_cocos2dx_3d_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\3d\jsb_cocos2dx_3d_manual.cpp">
+      <Filter>manual\3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +244,12 @@
     </ClInclude>
     <ClInclude Include="..\manual\ui\jsb_cocos2dx_ui_manual.h">
       <Filter>manual\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\jsb_cocos2dx_3d_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\3d\jsb_cocos2dx_3d_manual.h">
+      <Filter>manual\3d</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
