@@ -597,19 +597,22 @@ bool jsval_to_quaternion( JSContext *cx, JS::HandleValue v, cocos2d::Quaternion*
     JS::RootedValue z(cx);
     JS::RootedValue w(cx);
     
+    double xx, yy, zz, ww;
     bool ok = v.isObject() &&
         JS_ValueToObject(cx, v, &tmp) &&
         JS_GetProperty(cx, tmp, "x", &x) &&
         JS_GetProperty(cx, tmp, "y", &y) &&
         JS_GetProperty(cx, tmp, "z", &z) &&
-        JS_GetProperty(cx, tmp, "w", &w);
+        JS_GetProperty(cx, tmp, "w", &w) &&
+        JS::ToNumber(cx, x, &xx) &&
+        JS::ToNumber(cx, y, &yy) &&
+        JS::ToNumber(cx, z, &zz) &&
+        JS::ToNumber(cx, w, &ww) &&
+        !isnan(xx) && !isnan(yy) && !isnan(zz) && !isnan(ww);
     
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
-    ret->x = x.toNumber();
-    ret->y = y.toNumber();
-    ret->z = z.toNumber();
-    ret->w = w.toNumber();
+    ret->set(xx, yy, zz, ww);
 
     return true;
 }
