@@ -4654,6 +4654,30 @@ bool js_cocos2dx_RenderTexture_saveToFile(JSContext *cx, uint32_t argc, jsval *v
     return false;
 }
 
+bool js_cocos2dx_Camera_unproject(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_unproject : Invalid Native Object");
+    if (argc == 2) {
+        cocos2d::Size arg0;
+        cocos2d::Vec3 arg1;
+        cocos2d::Vec3 arg2;
+        ok &= jsval_to_ccsize(cx, args.get(0), &arg0);
+        ok &= jsval_to_vector3(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_unproject : Error processing arguments");
+        cobj->unproject(arg0, &arg1, &arg2);
+        args.rval().set(vector3_to_jsval(cx, arg2));
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_unproject : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+
 
 // EventKeyboard class bindings, need manual bind for transform key codes
 
@@ -4991,6 +5015,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     tmpObj = anonEvaluate(cx, global, "(function () { return this; })()").toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
+    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Camera_prototype), "unproject", js_cocos2dx_Camera_unproject, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     JS::RootedObject ccObj(cx);
     create_js_root_obj(cx, global, "cc", &ccObj);
