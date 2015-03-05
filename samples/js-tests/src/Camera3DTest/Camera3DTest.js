@@ -206,13 +206,494 @@ var CameraRotationTest = Camera3DTestDemo.extend({
     }
 });
 
+var Camera3DTestDemo = (function(){
+    var State = {
+        State_None : 0,
+        State_Idle : 0x01,
+        State_Move : 0x02,
+        State_Rotate : 0x04,
+        State_Speak : 0x08,
+        State_MeleeAttack : 0x10,
+        State_RemoteAttack : 0x20,
+        State_Attack : 0x40      
+    };
+
+    var CameraType = {
+        Free : 0,
+        FirstPerson : 1,
+        ThirdPerson : 2,      
+    };
+
+    return Camera3DTestDemo.extend({
+        _title:"Testing Camera",
+        _subtitle:"",
+        _layer3D:null,
+        _sprite3D:null,
+        _targetPos:null,
+        _camera:null,
+        _cameraType:-1,
+        _curState:0,
+        _bZoomOut:false,
+        _bZoomIn:false,
+        _bRotateLeft:false,
+        _bRotateRight:false,
+        _ZoomOutlabel:null,
+        _ZoomInlabel:null,
+        _RotateLeftlabel:null,
+        _RotateRightlabel:null,
+        
+        ctor:function(){
+            this._super();
+        },
+
+        onEnter:function(){
+            this._super();
+
+            cc.eventManager.addListener({
+                event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+                // onTouchesBegan: this.onTouchesBegan,
+                onTouchesMoved: this.onTouchesMoved.bind(this),
+                onTouchesEnded: this.onTouchesEnded.bind(this)
+            }, this);
+
+            var layer3D = new cc.Layer();
+            this.addChild(layer3D, 0);
+            this._layer3D = layer3D;
+            this._curState = State.State_None;
+            this.addNewSpriteWithCoords(cc.vec3(0, 0, 0), "Sprite3DTest/girl.c3b", true, 0.2, true);
+
+            var s = cc.winSize;
+            var containerForLabel1 = new cc.Node();
+            this._ZoomOutlabel = new cc.LabelTTF("zoom out", "Arial", 20);
+            this._ZoomOutlabel.setPosition(s.width-50, cc.visibleRect.top.y-30);
+            containerForLabel1.addChild(this._ZoomOutlabel);
+            this.addChild(containerForLabel1, 10);
+
+            cc.eventManager.addListener({
+                event:cc.EventListener.TOUCH_ONE_BY_ONE,
+                swallowTouches: true,
+                onTouchBegan:this.onTouchZoomOut.bind(this),
+                onTouchEnded:this.onTouchZoomOutEnd.bind(this)
+            }, this._ZoomOutlabel);
+
+            var containerForLabel2 = new cc.Node();
+            this._ZoomInlabel = new cc.LabelTTF("zoom in", "Arial", 20);
+            this._ZoomInlabel.setPosition(s.width-50, cc.visibleRect.top.y - 100);
+            containerForLabel2.addChild(this._ZoomInlabel);
+            this.addChild(containerForLabel2, 10);
+
+            cc.eventManager.addListener({
+                event:cc.EventListener.TOUCH_ONE_BY_ONE,
+                swallowTouches:true,
+                onTouchBegan:this.onTouchZoomIn.bind(this),
+                onTouchEnded:this.onTouchZoomInEnd.bind(this)
+            }, this._ZoomInlabel);
+
+            var containerForLabel3 = new cc.Node();
+            this._RotateLeftlabel = new cc.LabelTTF("rotate left", "Arial", 20);
+            this._RotateLeftlabel.setPosition(s.width-50, cc.visibleRect.top.y - 170);
+            containerForLabel3.addChild(this._RotateLeftlabel);
+            this.addChild(containerForLabel3);
+
+            cc.eventManager.addListener({
+                event:cc.EventListener.TOUCH_ONE_BY_ONE,
+                swallowTouches:true,
+                onTouchBegan:this.onTouchRotateLeft.bind(this),
+                onTouchEnded:this.onTouchRotateLeftEnd.bind(this)
+            }, this._RotateLeftlabel);
+
+            var containerForLabel4 = new cc.Node();
+            this._RotateRightlabel = new cc.LabelTTF("rotate right", "Arial", 20);
+            this._RotateRightlabel.setPosition(s.width-50, cc.visibleRect.top.y - 240);
+            containerForLabel4.addChild(this._RotateRightlabel);
+            this.addChild(containerForLabel4, 10);
+
+            cc.eventManager.addListener({
+                event:cc.EventListener.TOUCH_ONE_BY_ONE,
+                swallowTouches:true,
+                onTouchBegan:this.onTouchRotateRight.bind(this),
+                onTouchEnded:this.onTouchRotateRightEnd.bind(this)
+            }, this._RotateRightlabel);
+
+            var label1 = new cc.LabelTTF("free", "Arial", 20);
+            var item1 = new cc.MenuItemLabel(label1, this.switchViewCallback, this);
+            item1.type = CameraType.Free;
+            item1.setPosition(cc.visibleRect.left.x+100, cc.visibleRect.top.y-50);
+
+            var label2 = new cc.LabelTTF("third person", "Arial", 20);
+            var item2 = new cc.MenuItemLabel(label2, this.switchViewCallback, this);
+            item2.type = CameraType.ThirdPerson;
+            item2.setPosition(cc.visibleRect.left.x+100, cc.visibleRect.top.y-100);
+
+            var label3 = new cc.LabelTTF("first person", "Arial", 20);
+            var item3 = new cc.MenuItemLabel(label3, this.switchViewCallback, this);
+            item3.type = CameraType.FirstPerson;
+            item3.setPosition(cc.visibleRect.left.x+100, cc.visibleRect.top.y-150);
+
+            var menu = new cc.Menu(item1, item2, item3);
+            menu.setPosition(cc.p(0, 0));
+            this.addChild(menu);
+
+            this.schedule(this.updateCamera, 0);
+
+            if(this._camera == null){
+                this._camera = cc.Camera.createPerspective(60, s.width/s.height, 1, 1000);
+                this._camera.setCameraFlag(cc.CameraFlag.USER1);
+                layer3D.addChild(this._camera);
+            }
+            this.switchViewCallback(item2);//third person
+
+            var line = new cc.DrawNode3D();
+            //draw x
+            for(var i = -20; i < 20; ++i)
+                line.drawLine(cc.vec3(-100, 0, 5*i), cc.vec3(100, 0, 5*i), cc.color(255, 0, 0, 1));
+
+            //draw z
+            for(var j = -20; j < 20; ++j)
+                line.drawLine(cc.vec3(5*j, 0, -100), cc.vec3(5*j, 0, 100), cc.color(0, 0, 255, 1));
+
+            //draw y
+            line.drawLine(cc.vec3(0, -50, 0), cc.vec3(0, 0, 0), cc.color(0, 128, 0, 1));
+            line.drawLine(cc.vec3(0, 0, 0), cc.vec3(0, 50, 0), cc.color(0, 255, 0, 1));
+            layer3D.addChild(line);
+            layer3D.setCameraMask(2);
+        },
+
+        addNewSpriteWithCoords:function(postion, file, playAnimation, scale, bindCamera){
+            var sprite = new cc.Sprite3D(file);
+            this._layer3D.addChild(sprite);
+            var globalZOrder = sprite.getGlobalZOrder();
+            sprite.setPosition3D(postion);
+            sprite.setGlobalZOrder(globalZOrder);
+            if(playAnimation){
+                var animation = cc.Animation3D.create(file, "Take 001");
+                if(animation){
+                    var animate = cc.Animate3D.create(animation);
+                    sprite.runAction(cc.repeatForever(animate));
+                }
+            }
+            if(bindCamera)
+                this._sprite3D = sprite;
+
+            sprite.setScale(scale);
+        },
+
+        updateState:function(dt){
+            if(!this._targetPos)
+                return;
+            var curPos = this._sprite3D.getPosition3D();
+            var m = this._sprite3D.getNodeToWorldTransform3D();
+            var curFaceDir = cc.vec3(m[8], m[9], m[10]);
+            curFaceDir.normalize();
+            var newFaceDir = cc.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
+            newFaceDir.y = 0;
+            newFaceDir.normalize();
+            var cosAngle = Math.abs(cc.vec3dot(curFaceDir, newFaceDir) - 1);
+            
+            var dx = curPos.x - this._targetPos.x,
+                dy = curPos.y - this._targetPos.y,
+                dz = curPos.z - this._targetPos.z;
+            var dist = dx * dx + dy * dy + dz * dz;
+
+            if(dist <= 4){
+                if(cosAngle <= 0.01)
+                    this._curState = State.State_Idle;
+                else
+                    this._curState = State.State_Rotate;
+            }else{
+                if(cosAngle > 0.01)
+                    this._curState = State.State_Rotate | State.State_Move;
+                else
+                    this._curState = State.State_Move;
+            }
+        },
+
+        move3D:function(dt){
+            if(!this._targetPos)
+                return;
+            var curPos = this._sprite3D.getPosition3D();
+            var newFaceDir = cc.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
+            newFaceDir.y = 0;
+            newFaceDir.normalize();
+            var offset = cc.vec3(newFaceDir.x * 25 * dt, newFaceDir.y * 25 * dt, newFaceDir.z * 25 * dt);
+            curPos.x += offset.x;
+            curPos.y += offset.y;
+            curPos.z += offset.z;
+            this._sprite3D.setPosition3D(curPos);
+            if(this._cameraType == CameraType.ThirdPerson){
+                var cameraPos = this._camera.getPosition3D();
+                cameraPos.x += offset.x;
+                cameraPos.z += offset.z;
+                this._camera.setPosition3D(cameraPos);
+            }
+        },
+
+        updateCamera:function(dt){
+            if(this._cameraType == CameraType.ThirdPerson){
+                this.updateState(dt)
+                
+                if(this.isState(State.State_Move)){
+                    this.move3D(dt);
+                    if(this.isState(State.State_Rotate)){
+                        var curPos = this._sprite3D.getPosition3D();
+                        var newFaceDir = cc.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
+                        newFaceDir.y = 0;
+                        newFaceDir.normalize();
+
+                        var m = this._sprite3D.getNodeToWorldTransform3D();
+                        var up = cc.vec3(m[4], m[5], m[6]);
+                        up.normalize();
+
+                        var right = cc.vec3cross(cc.vec3(-newFaceDir.x, -newFaceDir.y, -newFaceDir.z), up);
+                        right.normalize();
+
+                        var mat = [right.x,      right.y,      right.z,      0,
+                                   up.x,         up.y,         up.z,         0,
+                                   newFaceDir.x, newFaceDir.y, newFaceDir.z, 0,
+                                   0,            0,            0,            1];
+
+                        this._sprite3D.setAdditionalTransform(mat);
+                    }
+                }
+            }
+
+            if(this._bZoomOut == true){
+                if(this._cameraType == CameraType.ThirdPerson){
+                    var cameraPos = this._camera.getPosition3D();
+                    var spritePos = this._sprite3D.getPosition3D();
+                    var lookDir = cc.vec3(cameraPos.x - spritePos.x, cameraPos.y - spritePos.y, cameraPos.z - spritePos.z);
+                    if(cc.vec3length(lookDir) <= 300){
+                        lookDir.normalize();
+                        cameraPos.x += lookDir.x;
+                        cameraPos.y += lookDir.y;
+                        cameraPos.z += lookDir.z;
+                        this._camera.setPosition3D(cameraPos);
+                    }
+                }else if(this._cameraType == CameraType.Free){
+                    var cameraPos = this._camera.getPosition3D();
+                    if(cc.vec3length(cameraPos) <= 300){
+                        var n = cc.vec3normalize(cameraPos);
+                        cameraPos.x += n.x;
+                        cameraPos.y += n.y;
+                        cameraPos.z += n.z;
+                        this._camera.setPosition3D(cameraPos);
+                    }
+                }
+            }
+
+            if(this._bZoomIn == true){
+                if(this._cameraType == CameraType.ThirdPerson){
+                    var cameraPos = this._camera.getPosition3D();
+                    var spritePos = this._sprite3D.getPosition3D();
+                    var lookDir = cc.vec3(cameraPos.x - spritePos.x, cameraPos.y - spritePos.y, cameraPos.z - spritePos.z);
+                    if(cc.vec3length(lookDir) >= 50){
+                        lookDir.normalize();
+                        cameraPos.x -= lookDir.x;
+                        cameraPos.y -= lookDir.y;
+                        cameraPos.z -= lookDir.z;
+                        this._camera.setPosition3D(cameraPos);
+                    }
+                }else if(this._cameraType == CameraType.Free){
+                    var cameraPos = this._camera.getPosition3D();
+                    if(cc.vec3length(cameraPos) >= 50){
+                        var n = cc.vec3normalize(cameraPos);
+                        cameraPos.x -= n.x;
+                        cameraPos.y -= n.y;
+                        cameraPos.z -= n.z;
+                        this._camera.setPosition3D(cameraPos);
+                    }
+                }
+            }
+
+            if(this._bRotateLeft == true){
+                if(this._cameraType == CameraType.Free || this._cameraType == CameraType.FirstPerson){
+                    var rotation3D = this._camera.getRotation3D();
+                    rotation3D.y += 1;
+                    this._camera.setRotation3D(rotation3D);
+                }
+            }
+            if(this._bRotateRight == true){
+                if(this._cameraType == CameraType.Free || this._cameraType == CameraType.FirstPerson){
+                    var rotation3D = this._camera.getRotation3D();
+                    rotation3D.y -= 1;
+                    this._camera.setRotation3D(rotation3D);
+                }
+            }
+        },
+
+        isState:function(bit){
+            return (this._curState & bit) == bit;
+        },
+
+        switchViewCallback:function(sender){
+            if(this._cameraType == sender.type)
+                return;
+            this._cameraType = sender.type;
+
+            if(this._cameraType == CameraType.Free){                var p = this._sprite3D.getPosition3D();
+                this._camera.setPosition3D(cc.vec3(p.x, p.y+130, p.z+130));
+
+                this._RotateRightlabel.setColor(cc.color.WHITE);
+                this._RotateLeftlabel.setColor(cc.color.WHITE);
+                this._ZoomInlabel.setColor(cc.color.WHITE);
+                this._ZoomOutlabel.setColor(cc.color.WHITE);
+
+            }else if(this._cameraType == CameraType.FirstPerson){
+                var m = this._sprite3D.getWorldToNodeTransform3D();
+                var newFaceDir = cc.vec3(-m[8], -m[9], -m[10]);
+                var p = this._sprite3D.getPosition3D();
+                this._camera.setPosition3D(cc.vec3(p.x, p.y + 35, p.z));
+                this._camera.lookAt(cc.vec3(p.x + newFaceDir.x*50, p.y + newFaceDir.y*50, p.z+newFaceDir.z*50));
+
+                this._RotateRightlabel.setColor(cc.color.WHITE);
+                this._RotateLeftlabel.setColor(cc.color.WHITE);
+                this._ZoomInlabel.setColor(cc.color.GRAY);
+                this._ZoomOutlabel.setColor(cc.color.GRAY);
+
+            }else{
+                var p = this._sprite3D.getPosition3D();
+                this._camera.setPosition3D(cc.vec3(p.x, p.y+130, p.z+130));
+                this._camera.lookAt(p);
+
+                this._RotateRightlabel.setColor(cc.color.GRAY);
+                this._RotateLeftlabel.setColor(cc.color.GRAY);
+                this._ZoomInlabel.setColor(cc.color.WHITE);
+                this._ZoomOutlabel.setColor(cc.color.WHITE);
+            }
+        },
+
+        onTouchesMoved:function(touches, event){
+            if(touches.length == 1){
+                var touch = touches[0];
+                var location = touch.getLocation();
+                var previousLocation = touch.getPreviousLocation();
+                var newPos = cc.vec3(previousLocation.x - location.x, previousLocation.y - location.y, previousLocation.z - location.z);
+                if(this._cameraType == CameraType.Free || this._cameraType == CameraType.FirstPerson){
+                    var m = this._camera.getNodeToWorldTransform3D();
+                    var cameraDir = cc.vec3(-m[8], -m[9], -m[10]);
+                    cameraDir.normalize();
+                    cameraDir.y = 0;
+                    var cameraRightDir = cc.vec3(m[0], m[1], m[2]);
+                    cameraRightDir.normalize();
+                    cameraRightDir.y = 0;
+
+                    var cameraPos = this._camera.getPosition3D();
+                    cameraPos.x += cameraDir.x*newPos.y*0.1 + cameraRightDir.x*newPos.x*0.1;
+                    cameraPos.y += cameraDir.y*newPos.y*0.1 + cameraRightDir.y*newPos.x*0.1;
+                    cameraPos.z += cameraDir.z*newPos.y*0.1 + cameraRightDir.z*newPos.x*0.1;
+                    this._camera.setPosition3D(cameraPos);
+                    if(this._sprite3D && this._cameraType == CameraType.FirstPerson){
+                        this._sprite3D.setPosition3D(cc.vec3(this._camera.x, 0, this._camera.getVertexZ()));
+                        this._targetPos = this._sprite3D.getPosition3D();
+                    }
+                }                
+            }
+        },
+
+        onTouchesEnded:function(touches, event){
+            for(var i in touches){
+                var touch = touches[i];
+                var location = touch.getLocationInView();
+                if(this._sprite3D && this._cameraType == CameraType.ThirdPerson && this._bZoomOut == false && this._bZoomIn == false && this._bRotateLeft == false && this._bRotateRight == false){
+                    var nearP = cc.vec3(location.x, location.y, -1);
+                    var farP = cc.vec3(location.x, location.y, 1);
+
+                    var size = cc.winSize;
+                    nearP = this._camera.unproject(size, nearP);
+                    farP = this._camera.unproject(size, farP);
+
+                    var dir = cc.vec3(farP.x-nearP.x, farP.y-nearP.y, farP.z-nearP.z);
+                    var ndd = dir.y; // (0, 1, 0) * dir
+                    var ndo = nearP.y; // (0, 1, 0) * nearP
+                    var dist = - ndo / ndd;
+                    var p = cc.vec3(nearP.x+dist*dir.x, nearP.y+dist*dir.y, nearP.z+dist*dir.z);
+
+                    if(p.x > 100)
+                        p.x = 100;
+                    if(p.x < -100)
+                        p.x = -100;
+                    if(p.z > 100)
+                        p.z = 100
+                    if(p.z < -100)
+                        p.z = -100;
+
+                    this._targetPos = p;
+                }
+            }
+        },
+
+        onTouchZoomOut:function(touch, event){
+            var target = event.getCurrentTarget();
+            var locationInNode = target.convertToNodeSpace(touch.getLocation());
+            var s = target.getContentSize();
+            var rect = cc.rect(0, 0, s.width, s.height);
+            if(cc.rectContainsPoint(rect, locationInNode)){
+                this._bZoomOut = true;
+                return true;
+            }
+            return false;
+        },
+
+        onTouchZoomOutEnd:function(touch, event){
+            this._bZoomOut = false;
+        },
+
+        onTouchZoomIn:function(touch, event){
+            var target = event.getCurrentTarget();
+            var locationInNode = target.convertToNodeSpace(touch.getLocation());
+            var s = target.getContentSize();
+            var rect = cc.rect(0, 0, s.width, s.height);
+            if(cc.rectContainsPoint(rect, locationInNode)){
+                this._bZoomIn = true;
+                return true;
+            }
+            return false;
+        },
+
+        onTouchZoomInEnd:function(touch, event){
+            this._bZoomIn = false;
+        },
+
+        onTouchRotateLeft:function(touch, event){
+            var target = event.getCurrentTarget();
+            var locationInNode = target.convertToNodeSpace(touch.getLocation());
+            var s = target.getContentSize();
+            var rect = cc.rect(0, 0, s.width, s.height);
+            if(cc.rectContainsPoint(rect, locationInNode)){
+                this._bRotateLeft = true;
+                return true;
+            }
+            return false;
+        },
+
+        onTouchRotateLeftEnd:function(touch, event){
+            this._bRotateLeft = false;
+        },
+
+        onTouchRotateRight:function(touch, event){
+            var target = event.getCurrentTarget();
+            var locationInNode = target.convertToNodeSpace(touch.getLocation());
+            var s = target.getContentSize();
+            var rect = cc.rect(0, 0, s.width, s.height);
+            if(cc.rectContainsPoint(rect, locationInNode)){
+                this._bRotateRight = true;
+                return true;
+            }
+            return false;
+        },
+
+        onTouchRotateRightEnd:function(touch, event){
+            this._bRotateRight = false;
+        }
+    });
+})();
+
 //
 // Flow control
 //
 var arrayOfCamera3DTest = [
     CameraRotationTest,
-    //TODO bind DrawNode3D
-    // Camera3DTestDemo,
+    Camera3DTestDemo,
     // CameraCullingDemo,
     // CameraArcBallDemo
 ];

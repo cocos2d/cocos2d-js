@@ -91,6 +91,26 @@ cc.vec3 = function(x, y, z){
     return new cc.Vec3(x, y, z);
 };
 
+cc.vec3cross = function(v1, v2){
+    return new cc.Vec3(v1.y * v2.z - v1.z * v2.y,
+                       v1.z * v2.x - v1.x * v2.z,
+                       v1.x * v2.y - v1.y * v2.x);
+};
+
+cc.vec3dot = function(v1, v2){
+    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+};
+
+cc.vec3length = function(v){
+    return Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+};
+
+cc.vec3normalize = function(v){
+    var n = v.x * v.x + v.y * v.y + v.z * v.z;
+    n = 1 / Math.sqrt(n);
+    return cc.vec3(v.x * n, v.y * n, v.z * n);
+};
+
 cc.Quaternion = function(x=0, y=0, z=0, w=0){
     this.x = x;
     this.y = y;

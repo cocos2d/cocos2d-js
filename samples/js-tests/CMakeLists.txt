@@ -34,6 +34,7 @@ endif()
 
 set(SAMPLE_SRC
   project/Classes/AppDelegate.cpp
+  project/Classes/js_tests_bindings.cpp
   ${PLATFORM_SRC}
 )
 
