@@ -665,6 +665,44 @@ var Sprite3DMirrorTest = Sprite3DTestDemo.extend({
 
 });
 
+var QuaternionTest = Sprite3DTestDemo.extend({
+    _title:"Test Rotation With Quaternion",
+    _subtitle:"",
+    _sprite:null,
+    _radius:100,
+    _accAngle:0,
+
+    ctor:function(){
+        this._super();
+
+        var sprite = new cc.Sprite3D("Sprite3DTest/tortoise.c3b");
+        sprite.setScale(0.1);
+        var s = cc.winSize;
+        sprite.setPosition(cc.p(s.width/2 + this._radius * Math.cos(this._accAngle), s.height / 2 + this._radius * Math.sin(this._accAngle)));
+        this.addChild(sprite);
+        this._sprite = sprite;
+        var animation = cc.Animation3D.create("Sprite3DTest/tortoise.c3b");
+        if(animation){
+            var animate = cc.Animate3D.create(animation, 0, 1.933);
+            sprite.runAction(cc.repeatForever(animate));
+        }
+
+        this.scheduleUpdate();
+    },
+
+    update:function(dt){
+        this._accAngle += dt * cc.degreesToRadians(90);
+        if(this._accAngle >= 2 * Math.PI)
+            this._accAngle -= 2 * Math.PI;
+
+        var s = cc.winSize;
+        this._sprite.setPosition(cc.p(s.width / 2 + this._radius * Math.cos(this._accAngle), s.height / 2 + this._radius * Math.sin(this._accAngle)));
+
+        var quat = cc.quaternion(cc.vec3(0, 0, 1), this._accAngle - Math.PI * 0.5);
+        this._sprite.setRotationQuat(quat);
+    }
+});
+
 var Sprite3DEmptyTest = Sprite3DTestDemo.extend({
     _title:"Testing Sprite3D Container",
     _subtitle:"Sprite3D can act as containers for 2D objects",
@@ -851,7 +889,7 @@ var arrayOfSprite3DTest = [
     Sprite3DReskinTest,
     Sprite3DWithOBBPerformanceTest,
     Sprite3DMirrorTest,
-    //QuaternionTest, //TODO bind setRotationQat
+    QuaternionTest,
     Sprite3DEmptyTest,
     Sprite3DForceDepthTest,
     UseCaseSprite3D1,

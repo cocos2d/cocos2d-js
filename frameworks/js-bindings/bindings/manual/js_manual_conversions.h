@@ -107,6 +107,7 @@ bool jsval_to_ccarray(JSContext* cx, JS::HandleValue v, cocos2d::__Array** ret);
 bool jsval_to_ccdictionary(JSContext* cx, JS::HandleValue v, cocos2d::__Dictionary** ret);
 bool jsval_to_ccacceleration(JSContext* cx, JS::HandleValue v, cocos2d::Acceleration* ret);
 bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, cocos2d::__Array** ret);
+bool jsval_to_quaternion( JSContext *cx, JS::HandleValue vp, cocos2d::Quaternion* ret);
 
 // forward declaration
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
@@ -258,6 +259,7 @@ jsval ccarray_to_jsval(JSContext* cx, cocos2d::__Array *arr);
 jsval ccacceleration_to_jsval(JSContext* cx, const cocos2d::Acceleration& v);
 jsval ccaffinetransform_to_jsval(JSContext* cx, const cocos2d::AffineTransform& t);
 jsval FontDefinition_to_jsval(JSContext* cx, const cocos2d::FontDefinition& t);
+jsval quaternion_to_jsval(JSContext* cx, const cocos2d::Quaternion& q);
 
 template<class T>
 js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj);

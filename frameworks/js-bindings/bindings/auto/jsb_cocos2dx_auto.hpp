@@ -150,8 +150,8 @@ bool js_cocos2dx_Node_getOpacity(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setCameraMask(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getonEnterTransitionDidFinishCallback(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_isOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getNodeToWorldAffineTransform(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_getNodeToWorldTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getPosition3D(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_removeChild(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_convertToWorldSpace(JSContext *cx, uint32_t argc, jsval *vp);
@@ -166,12 +166,12 @@ bool js_cocos2dx_Node_convertTouchToNodeSpace(JSContext *cx, uint32_t argc, jsva
 bool js_cocos2dx_Node_removeAllChildrenWithCleanup(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getRotationSkewX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getRotationSkewY(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_getNodeToParentAffineTransform(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_getNodeToWorldTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_isCascadeOpacityEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setParent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getRotation3D(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_getNodeToParentTransform(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_getNodeToParentAffineTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_convertTouchToNodeSpaceAR(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getOnEnterCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getPhysicsBody(JSContext *cx, uint32_t argc, jsval *vp);
@@ -187,6 +187,7 @@ bool js_cocos2dx_Node_getNumberOfRunningActions(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_Node_updateTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_isVisible(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getChildrenCount(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_getNodeToParentTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_convertToNodeSpaceAR(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_addComponent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_runAction(JSContext *cx, uint32_t argc, jsval *vp);
@@ -212,19 +213,19 @@ bool js_cocos2dx_Node_updatePhysicsBodyTransform(JSContext *cx, uint32_t argc, j
 bool js_cocos2dx_Node_getDisplayedOpacity(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getLocalZOrder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getScheduler(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_getParentToNodeAffineTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getOrderOfArrival(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setActionManager(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_isRunning(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getParent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_getWorldToNodeTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getPositionY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getPositionX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_removeChildByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setPositionY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_updateDisplayedColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setVisible(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_getParentToNodeTransform(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_getParentToNodeAffineTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getPositionZ(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setGlobalZOrder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setScale(JSContext *cx, uint32_t argc, jsval *vp);
@@ -235,7 +236,6 @@ bool js_cocos2dx_Node_getScaleZ(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getScaleY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getScaleX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setLocalZOrder(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_getWorldToNodeAffineTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setCascadeColorEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setOpacity(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_cleanup(JSContext *cx, uint32_t argc, jsval *vp);
@@ -253,13 +253,13 @@ bool js_cocos2dx_Node_removeFromParentAndCleanup(JSContext *cx, uint32_t argc, j
 bool js_cocos2dx_Node_setPosition3D(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_update(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_getWorldToNodeTransform(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_getWorldToNodeAffineTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_getParentToNodeTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_convertToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_isCascadeColorEnabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_isOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_stopAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getActionManager(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_create(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3380,6 +3380,77 @@ bool js_cocos2dx_Camera_getDefaultCamera(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_Camera_getVisitingCamera(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_Camera(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_BaseLight_class;
+extern JSObject *jsb_cocos2d_BaseLight_prototype;
+
+bool js_cocos2dx_BaseLight_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_BaseLight_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_BaseLight(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_BaseLight_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_BaseLight_getIntensity(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_BaseLight_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_BaseLight_getLightType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_BaseLight_setLightFlag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_BaseLight_setIntensity(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_BaseLight_getLightFlag(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_DirectionLight_class;
+extern JSObject *jsb_cocos2d_DirectionLight_prototype;
+
+bool js_cocos2dx_DirectionLight_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_DirectionLight_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_DirectionLight(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_DirectionLight_getDirection(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_DirectionLight_getDirectionInWorld(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_DirectionLight_setDirection(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_DirectionLight_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_DirectionLight_DirectionLight(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_PointLight_class;
+extern JSObject *jsb_cocos2d_PointLight_prototype;
+
+bool js_cocos2dx_PointLight_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_PointLight_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_PointLight(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_PointLight_getRange(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_PointLight_setRange(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_PointLight_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_PointLight_PointLight(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_SpotLight_class;
+extern JSObject *jsb_cocos2d_SpotLight_prototype;
+
+bool js_cocos2dx_SpotLight_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_SpotLight_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_SpotLight(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_SpotLight_getRange(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpotLight_setDirection(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpotLight_getCosInnerAngle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpotLight_getOuterAngle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpotLight_getInnerAngle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpotLight_getDirection(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpotLight_getCosOuterAngle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpotLight_setOuterAngle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpotLight_setInnerAngle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpotLight_getDirectionInWorld(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpotLight_setRange(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpotLight_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpotLight_SpotLight(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_AmbientLight_class;
+extern JSObject *jsb_cocos2d_AmbientLight_prototype;
+
+bool js_cocos2dx_AmbientLight_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_AmbientLight_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_AmbientLight(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_AmbientLight_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_AmbientLight_AmbientLight(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_GLProgram_class;
 extern JSObject *jsb_cocos2d_GLProgram_prototype;
 
@@ -3776,5 +3847,16 @@ bool js_cocos2dx_SimpleAudioEngine_unloadEffect(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_SimpleAudioEngine_resumeEffect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SimpleAudioEngine_end(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SimpleAudioEngine_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_AsyncTaskPool_class;
+extern JSObject *jsb_cocos2d_AsyncTaskPool_prototype;
+
+bool js_cocos2dx_AsyncTaskPool_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_AsyncTaskPool_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_AsyncTaskPool(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_AsyncTaskPool_stopTasks(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_AsyncTaskPool_destoryInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_AsyncTaskPool_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 
