@@ -73,7 +73,7 @@ cc.BillBoard.Mode = {
     VIEW_PLANE_ORIENTED : 1  // orient to the XOY plane of camera
 };
 
-cc.Vec3 = function(x, y, z){
+cc.Vec3 = function(x=0, y=0, z=0){
     this.x = x;
     this.y = y;
     this.z = z;
@@ -91,22 +91,23 @@ cc.vec3 = function(x, y, z){
     return new cc.Vec3(x, y, z);
 };
 
-cc.Quaternion = function(x, y, z, w){
+cc.Quaternion = function(x=0, y=0, z=0, w=0){
     this.x = x;
     this.y = y;
     this.z = z;
     this.w = w;
 };
 
-cc.Quaternion.createFromAxisAngle = function(axis, angle){
-    var sinHalfAngle = Math.sin(angle / 2);
-    var normal = cc.vec3(axis.x, axis.y, axis.z);
-    normal.normalize();
-    return cc.quaternion(normal.x * sinHalfAngle, normal.y * sinHalfAngle, normal.z * sinHalfAngle, Math.cos(angle / 2));
-};
-
-cc.quaternion = function(x, y, z, w){
-    return new cc.Quaternion(x, y, z, w);
+cc.quaternion = function(xOrAxis, yOrAngle, z, w){
+    if(w !== undefined){
+        return new cc.Quaternion(xOrAxis, yOrAngle, z, w);
+    }
+    else if(yOrAngle !== undefined){
+        var sinHalfAngle = Math.sin(yOrAngle / 2);
+        var normal = cc.vec3(xOrAxis.x, xOrAxis.y, xOrAxis.z);
+        normal.normalize();
+        return cc.quaternion(normal.x * sinHalfAngle, normal.y * sinHalfAngle, normal.z * sinHalfAngle, Math.cos(yOrAngle / 2));
+    }
 };
 
 cc.Sprite3D.prototype._ctor = function(modelPath, texturePath){

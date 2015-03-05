@@ -686,7 +686,7 @@ var QuaternionTest = Sprite3DTestDemo.extend({
         var s = cc.winSize;
         this._sprite.setPosition(cc.p(s.width / 2 + this._radius * Math.cos(this._accAngle), s.height / 2 + this._radius * Math.sin(this._accAngle)));
 
-        var quat = cc.Quaternion.createFromAxisAngle(cc.vec3(0, 0, 1), this._accAngle - Math.PI * 0.5);
+        var quat = cc.quaternion(cc.vec3(0, 0, 1), this._accAngle - Math.PI * 0.5);
         this._sprite.setRotationQuat(quat);
     }
 });
