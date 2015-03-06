@@ -48,6 +48,9 @@
  */
 
 cc.game.onStart = function(){
+    if(!cc.sys.isNative) //If referenced loading.js, please remove it
+        document.body.removeChild(document.getElementById("cocosLoading"));
+
     cc.view.adjustViewPort(true);
     cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.SHOW_ALL);
     cc.view.resizeWithBrowserSize(true);
