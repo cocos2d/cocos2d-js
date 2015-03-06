@@ -47,12 +47,16 @@ _p._ctor = function(color, w, h) {
 
 
 _p = cc.LayerGradient.prototype;
-_p._ctor = function(start, end, v) {
+_p._ctor = function(start, end, v, colorStops) {
     start = start || cc.color(0,0,0,255);
     end = end || cc.color(0,0,0,255);
     v = v || cc.p(0, -1);
 
     this.initWithColor(start, end, v);
+
+    if (colorStops instanceof Array) {
+        cc.log("Warning: Color stops parameter is not supported in JSB.");
+    }
 };
 
 
