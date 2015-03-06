@@ -4678,6 +4678,39 @@ bool js_cocos2dx_Camera_unproject(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+bool js_cocos2dx_Camera_isVisibleInFrustum(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_isVisibleInFrustum : Invalid Native Object");
+    if (argc == 1) {
+         cocos2d::Vec3  min;
+        JS::RootedValue jsmin(cx);
+        ok &= JS_GetProperty(cx, JS::RootedObject(cx, args.get(0).toObjectOrNull()), "min", &jsmin);
+        ok &= jsval_to_vector3(cx, jsmin, &min);
+
+        cocos2d::Vec3 max;
+        JS::RootedValue jsmax(cx);
+        ok &= JS_GetProperty(cx, JS::RootedObject(cx, args.get(0).toObjectOrNull()), "max", &jsmax);
+        ok &= jsval_to_vector3(cx, jsmax, &max);
+
+        cocos2d::AABB aabb(min, max);
+
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_isVisibleInFrustum : Error processing arguments");
+        bool ret = cobj->isVisibleInFrustum(&aabb);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_isVisibleInFrustum : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
 bool js_cocos2dx_Node_setAdditionalTransform(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -5053,8 +5086,10 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     tmpObj = anonEvaluate(cx, global, "(function () { return this; })()").toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Camera_prototype), "unproject", js_cocos2dx_Camera_unproject, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-
+    JS::RootedObject camera(cx, jsb_cocos2d_Camera_prototype);
+    JS_DefineFunction(cx, camera, "unproject", js_cocos2dx_Camera_unproject, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, camera, "isVisibleInFrustum", js_cocos2dx_Camera_isVisibleInFrustum, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
     JS::RootedObject ccObj(cx);
     create_js_root_obj(cx, global, "cc", &ccObj);
 
