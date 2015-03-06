@@ -23,6 +23,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+var CameraType = {
+    Free : 0,
+    FirstPerson : 1,
+    ThirdPerson : 2,      
+};
+
 var Camera3DTestIdx = -1;
 
 var Camera3DTestDemo = cc.Layer.extend({
@@ -206,7 +213,7 @@ var CameraRotationTest = Camera3DTestDemo.extend({
     }
 });
 
-var Camera3DTestDemo = (function(){
+var Camera3DTest = (function(){
     var State = {
         State_None : 0,
         State_Idle : 0x01,
@@ -216,12 +223,6 @@ var Camera3DTestDemo = (function(){
         State_MeleeAttack : 0x10,
         State_RemoteAttack : 0x20,
         State_Attack : 0x40      
-    };
-
-    var CameraType = {
-        Free : 0,
-        FirstPerson : 1,
-        ThirdPerson : 2,      
     };
 
     return Camera3DTestDemo.extend({
@@ -688,13 +689,244 @@ var Camera3DTestDemo = (function(){
     });
 })();
 
+var CameraCullingDemo = Camera3DTestDemo.extend({
+    _title:"Camera Frustum Clipping",
+    _subtitle:"",
+    _objects:[],
+    _layer3D:null,
+    _labelSprite3DCount:null,
+    _drawAABB:null,
+    _drawFrustum:null,
+    _row:3,
+    _cameraType:CameraType.FirstPerson,
+    _cameraFirst:null,
+    _cameraThird:null,
+    _moveAction:null,
+
+    ctor:function(){
+        this._super();
+
+        this.scheduleUpdate();
+
+        var layer3D = new cc.Layer();
+        this.addChild(layer3D, 0);
+        this._layer3D = layer3D;
+
+        // swich camera
+        cc.MenuItemFont.setFontName("Arial");
+        cc.MenuItemFont.setFontSize(20);
+
+        var menuItem1 = new cc.MenuItemFont("Switch Camera", this.switchViewCallback, this);
+        menuItem1.setColor(cc.color(0, 200, 20));
+        var menu = new cc.Menu(menuItem1);
+        menu.setPosition(cc.p(0, 0));
+        menuItem1.setPosition(cc.visibleRect.left.x + 80, cc.visibleRect.top.y - 70);
+        this.addChild(menu);
+
+        // + -
+        cc.MenuItemFont.setFontSize(40);
+        var decrease = new cc.MenuItemFont(" - ", this.delSpriteCallback, this);
+        decrease.setColor(cc.color(0, 200, 20));
+        var increase = new cc.MenuItemFont(" + ", this.addSpriteCallback, this);
+        increase.setColor(cc.color(0, 200, 20));
+
+        menu = new cc.Menu(decrease, increase);
+        menu.alignItemsHorizontally();
+        menu.setPosition(cc.winSize.width - 60, cc.visibleRect.top.y - 70);
+        this.addChild(menu, 1);
+
+        this._labelSprite3DCount = new cc.LabelTTF("0 sprites", "Marker Felt", 30);
+        this._labelSprite3DCount.setColor(cc.color(0, 200, 20));
+        this._labelSprite3DCount.setPosition(cc.p(cc.winSize.width / 2, cc.visibleRect.top.y - 70));
+        this.addChild(this._labelSprite3DCount);
+
+        // aabb drawNode3D
+        this._drawAABB = new cc.DrawNode3D();
+        this._drawAABB.setCameraMask(cc.CameraFlag.USER1);
+        this.addChild(this._drawAABB);
+
+        // frustum drawNode3D
+        this._drawFrustum = new cc.DrawNode3D();
+        this._drawFrustum.setCameraMask(cc.CameraFlag.USER1);
+        this.addChild(this._drawFrustum);
+
+        // set camera
+        this.switchViewCallback();
+
+        // add sprite
+        this.addSpriteCallback();
+    },
+
+    onExit:function(){
+        this._super();
+        this._moveAction.release();
+    },
+
+    switchViewCallback:function(sender){
+        if(!this._cameraFirst){
+            var camera = cc.Camera.createPerspective(30, cc.winSize.width/cc.winSize.height, 10, 200);
+            camera.setCameraFlag(cc.CameraFlag.USER8);
+            camera.setPosition3D(cc.vec3(-100, 0, 0));
+            camera.lookAt(cc.vec3(1000, 0, 0));
+            this._moveAction = cc.moveTo(4, cc.p(100, 0));
+            this._moveAction.retain();
+            var seq = cc.sequence(this._moveAction, cc.callFunc(this.reachEndCallBack, this));
+            seq.setTag(100);
+            camera.runAction(seq);
+            this.addChild(camera);
+            this._cameraFirst = camera;
+        }
+
+        if(!this._cameraThird){
+            var camera = cc.Camera.createPerspective(60, cc.winSize.width/ cc.winSize.height, 1, 1000);
+            camera.setCameraFlag(cc.CameraFlag.USER8);
+            camera.setPosition3D(cc.vec3(0, 130, 130));
+            camera.lookAt(cc.vec3(0, 0, 0));
+            this.addChild(camera);
+            this._cameraThird = camera;
+        }
+
+        if(this._cameraType == CameraType.FirstPerson){
+            this._cameraType = CameraType.ThirdPerson;
+            this._cameraThird.setCameraFlag(cc.CameraFlag.USER1);
+            this._cameraFirst.setCameraFlag(cc.CameraFlag.USER8);
+        }else if(this._cameraType == CameraType.ThirdPerson){
+            this._cameraType = CameraType.FirstPerson;
+            this._cameraThird.setCameraFlag(cc.CameraFlag.USER8);
+            this._cameraFirst.setCameraFlag(cc.CameraFlag.USER1);
+            this._drawFrustum.clear();
+        }
+    },
+
+    reachEndCallBack:function(){
+        this._cameraFirst.stopActionByTag(100);
+        var inverse = this._moveAction.reverse();
+        inverse.retain();
+        this._moveAction.release();
+        this._moveAction = inverse;
+        var rot = cc.rotateBy(1, cc.vec3(0, 180, 0));
+        var seq = cc.sequence(rot, this._moveAction, cc.callFunc(this.reachEndCallBack, this));
+        seq.setTag(100);
+        this._cameraFirst.runAction(seq);
+    },
+
+    delSpriteCallback:function(sender){
+        if(this._row == 0)
+            return;
+
+        this._layer3D.removeAllChildren();
+        this._objects.length = 0;
+        
+        this._row--;
+        for(var x = -this._row; x < this._row; ++x){
+            for(var z = -this._row; z < this._row; ++z){
+                var sprite = new cc.Sprite3D("Sprite3DTest/orc.c3b");
+                sprite.setPosition3D(cc.vec3(x * 30, 0, z * 30));
+                sprite.setRotation3D(cc.vec3(0, 180, 0));
+                this._objects.push(sprite);
+                this._layer3D.addChild(sprite);
+            }
+        }
+
+        //set layer mask
+        this._layer3D.setCameraMask(cc.CameraFlag.USER1);
+
+        //update sprite number
+        this._labelSprite3DCount.setString(this._layer3D.getChildrenCount() + " sprites");
+    },
+
+    addSpriteCallback:function(sender){
+        this._layer3D.removeAllChildren();
+        this._objects.length = 0;
+        this._drawAABB.clear();
+
+        this._row++;
+        for(var x = -this._row; x < this._row; ++x){
+            for(var z = -this._row; z < this._row; ++z){
+                var sprite = new cc.Sprite3D("Sprite3DTest/orc.c3b");
+                sprite.setPosition3D(cc.vec3(x * 30, 0, z * 30));
+                sprite.setRotation3D(cc.vec3(0, 180, 0));
+                this._objects.push(sprite);
+                this._layer3D.addChild(sprite);
+            }
+        }
+
+        //set layer mask
+        this._layer3D.setCameraMask(cc.CameraFlag.USER1);
+
+        //update sprite number
+        this._labelSprite3DCount.setString(this._layer3D.getChildrenCount() + " sprites");
+    },
+
+    update:function(dt){
+        this._drawAABB.clear();
+
+        if(this._cameraType == CameraType.ThirdPerson)
+            this.drawCameraFrustum();
+
+        var children = this._layer3D.getChildren();
+
+        for(var i in children){
+            var aabb = children[i].getAABB();
+            if(this._cameraFirst.isVisibleInFrustum(aabb)){
+                var corners = cc.aabbGetCorners(aabb);
+                this._drawAABB.drawCube(corners, cc.color(0, 255, 0));
+            }
+        }
+    },
+
+    drawCameraFrustum:function(){
+        this._drawFrustum.clear();
+        var size = cc.winSize;
+        var color = cc.color(255, 255, 0);
+
+        // top-left
+        var src = cc.vec3(0, 0, 0);
+        var tl_0 = this._cameraFirst.unproject(size, src);
+        src = cc.vec3(0, 0, 1);
+        var tl_1 = this._cameraFirst.unproject(size, src);
+
+        // top-right
+        src = cc.vec3(size.width, 0, 0);
+        var tr_0 = this._cameraFirst.unproject(size, src);
+        src = cc.vec3(size.width, 0, 1);
+        var tr_1 = this._cameraFirst.unproject(size, src);
+
+        // bottom-left
+        src = cc.vec3(0, size.height, 0);
+        var bl_0 = this._cameraFirst.unproject(size, src);
+        src = cc.vec3(0, size.height, 1);
+        var bl_1 = this._cameraFirst.unproject(size, src);
+
+        // bottom-right
+        src = cc.vec3(size.width, size.height, 0);
+        var br_0 = this._cameraFirst.unproject(size, src);
+        src = cc.vec3(size.width, size.height, 1);
+        var br_1 = this._cameraFirst.unproject(size, src);
+
+        this._drawFrustum.drawLine(tl_0, tl_1, color);
+        this._drawFrustum.drawLine(tr_0, tr_1, color);
+        this._drawFrustum.drawLine(bl_0, bl_1, color);
+        this._drawFrustum.drawLine(br_0, br_1, color);
+        
+        this._drawFrustum.drawLine(tl_0, tr_0, color);
+        this._drawFrustum.drawLine(tr_0, br_0, color);
+        this._drawFrustum.drawLine(br_0, bl_0, color);
+        this._drawFrustum.drawLine(bl_0, tl_0, color);
+        
+        this._drawFrustum.drawLine(tl_1, tr_1, color);
+        this._drawFrustum.drawLine(tr_1, br_1, color);
+        this._drawFrustum.drawLine(br_1, bl_1, color);
+        this._drawFrustum.drawLine(bl_1, tl_1, color);
+    }
+});
 //
 // Flow control
 //
 var arrayOfCamera3DTest = [
     CameraRotationTest,
-    Camera3DTestDemo,
-    // CameraCullingDemo,
+    Camera3DTest,
+    CameraCullingDemo,
     // CameraArcBallDemo
 ];
 

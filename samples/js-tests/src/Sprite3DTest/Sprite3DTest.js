@@ -887,7 +887,7 @@ var arrayOfSprite3DTest = [
     Animate3DTest,
     AttachmentTest,
     Sprite3DReskinTest,
-    Sprite3DWithOBBPerformanceTest,
+    // Sprite3DWithOBBPerformanceTest, TODO obb
     Sprite3DMirrorTest,
     QuaternionTest,
     Sprite3DEmptyTest,
