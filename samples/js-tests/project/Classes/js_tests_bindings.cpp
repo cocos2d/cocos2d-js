@@ -445,19 +445,34 @@ bool js_cocos2dx_DrawNode3D_drawCube(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::DrawNode3D* cobj = (cocos2d::DrawNode3D *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode3D_drawCube : Invalid Native Object");
     if (argc == 2) {
-        cocos2d::Vec3* arg0;
+        cocos2d::Vec3 arg0[8];
         cocos2d::Color4F arg1;
-        do {
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Vec3*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
+  
+        JS::RootedObject jsVec3Array(cx, args.get(0).toObjectOrNull());
+        JSB_PRECONDITION3( jsVec3Array && JS_IsArrayObject( cx, jsVec3Array),  cx, false, "augument must be an array");
+        uint32_t len = 0;
+        JS_GetArrayLength(cx, jsVec3Array, &len);
+    
+        if (len != 8)
+        {
+            JS_ReportError(cx, "array length error: %d, was expecting 8", len);
+        }
+        for (uint32_t i=0; i < len; i++)
+        {
+            JS::RootedValue value(cx);
+            if (JS_GetElement(cx, jsVec3Array, i, &value))
+            {
+                ok &= jsval_to_vector3(cx, value, &arg0[i]);
+                if(!ok)
+                    break;
+            }
+        }
+
         ok &= jsval_to_cccolor4f(cx, args.get(1), &arg1);
+        
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_DrawNode3D_drawCube : Error processing arguments");
         cobj->drawCube(arg0, arg1);
+
         args.rval().setUndefined();
         return true;
     }
