@@ -518,16 +518,14 @@ bool jsval_to_ulong( JSContext *cx, JS::HandleValue vp, unsigned long *out)
 
 bool jsval_to_long_long(JSContext *cx, JS::HandleValue vp, long long* r)
 {
-    JS::RootedObject tmp_arg(cx);
-    bool ok = JS_ValueToObject( cx, vp, &tmp_arg );
-    JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
-    JSB_PRECONDITION3( tmp_arg && JS_IsTypedArrayObject( tmp_arg ), cx, false, "Not a TypedArray object");
-    JSB_PRECONDITION3( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), cx, false, "Invalid Typed Array length");
+    JSString *jsstr = JS::ToString(cx, vp);
+    JSB_PRECONDITION2(jsstr, cx, false, "Error converting value to string");
     
-    uint32_t* arg_array = (uint32_t*)JS_GetArrayBufferViewData( tmp_arg );
-    long long ret =  arg_array[0];
-    ret = ret << 32;
-    ret |= arg_array[1];
+    char *str = JS_EncodeString(cx, jsstr);
+    JSB_PRECONDITION2(str, cx, false, "Error encoding string");
+    
+    char *endptr;
+    long long ret = strtoll(str, &endptr, 10);
     
     *r = ret;
     return true;

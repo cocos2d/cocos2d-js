@@ -33,7 +33,7 @@ function ensureLeftAligned (label) {
 
 function streamXHREventsToLabel ( xhr, label, textbox, method ) {
     // Simple events
-    ['loadstart', 'abort', 'error', 'load', 'loadend'].forEach(function (eventname) {
+    ['loadstart', 'abort', 'error', 'load', 'loadend', 'timeout'].forEach(function (eventname) {
         xhr["on" + eventname] = function () {
             label.string += "\nEvent : " + eventname
         }
@@ -101,7 +101,9 @@ var XHRTestLayer = cc.Layer.extend({
 
         var xhr = cc.loader.getXMLHttpRequest();
         streamXHREventsToLabel(xhr, statusGetLabel, responseLabel, "GET");
-
+        // 5 seconds for timeout
+        xhr.timeout = 5000;
+        
         //set arguments with <URL>?xxx=xxx&yyy=yyy
         xhr.open("GET", "http://httpbin.org/get?show_env=1", true);
         xhr.send();
