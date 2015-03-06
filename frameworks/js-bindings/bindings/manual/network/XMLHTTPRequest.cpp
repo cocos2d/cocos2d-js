@@ -172,7 +172,10 @@ void MinXmlHttpRequest::_setHttpRequestHeader()
  */
 void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response)
 {
-    if(_isAborted)
+    _elapsedTime = 0;
+    _scheduler->unscheduleAllForTarget(this);
+    
+    if(_isAborted || _readyState == UNSENT)
     {
         return;
     }
@@ -255,11 +258,13 @@ MinXmlHttpRequest::MinXmlHttpRequest()
 , _onerrorCallback(nullptr)
 , _onloadCallback(nullptr)
 , _onloadendCallback(nullptr)
+, _ontimeoutCallback(nullptr)
 , _readyState(UNSENT)
 , _status(0)
 , _statusText()
 , _responseType()
 , _timeout(0)
+, _elapsedTime(.0)
 , _isAsync()
 , _httpRequest(new cocos2d::network::HttpRequest())
 , _isNetwork(true)
@@ -269,6 +274,8 @@ MinXmlHttpRequest::MinXmlHttpRequest()
 , _requestHeader()
 , _isAborted(false)
 {
+    _scheduler = cocos2d::Director::getInstance()->getScheduler();
+    _scheduler->retain();
 }
 
 /**
@@ -289,6 +296,7 @@ MinXmlHttpRequest::~MinXmlHttpRequest()
     SAFE_REMOVE_OBJECT(_onloadCallback);
     SAFE_REMOVE_OBJECT(_onerrorCallback);
     SAFE_REMOVE_OBJECT(_onabortCallback);
+    SAFE_REMOVE_OBJECT(_ontimeoutCallback);
     
     if (_httpRequest)
     {
@@ -297,6 +305,7 @@ MinXmlHttpRequest::~MinXmlHttpRequest()
     }
 
     CC_SAFE_FREE(_data);
+    CC_SAFE_RELEASE_NULL(_scheduler);
 }
 
 /**
@@ -369,6 +378,7 @@ GETTER_SETTER_FOR_CALLBACK_PROP(onabort, _onabortCallback)
 GETTER_SETTER_FOR_CALLBACK_PROP(onerror, _onerrorCallback)
 GETTER_SETTER_FOR_CALLBACK_PROP(onload, _onloadCallback)
 GETTER_SETTER_FOR_CALLBACK_PROP(onloadend, _onloadendCallback)
+GETTER_SETTER_FOR_CALLBACK_PROP(ontimeout, _ontimeoutCallback)
 
 
 /**
@@ -396,25 +406,22 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, upload)
 /**
  *  @brief timeout getter - TODO
  *
- *  Placeholder for further implementations
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, timeout)
 {
-    args.rval().set(INT_TO_JSVAL(_timeout));
+    args.rval().set(long_long_to_jsval(cx, _timeout));
     return true;
 }
 
 /**
  *  @brief timeout setter - TODO
  *
- *  Placeholder for further implementations
  */
 JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, timeout)
 {
-    jsval timeout_ms = args.get(0);
-    
-    _timeout = timeout_ms.toInt32();
-    //curl_easy_setopt(curlHandle, CURLOPT_CONNECTTIMEOUT_MS, timeout);
+    long long tmp;
+    jsval_to_long_long(cx, args.get(0), &tmp);
+    _timeout = (unsigned long long)tmp;
     return true;
     
 }
@@ -724,8 +731,26 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
     _setHttpRequestHeader();
     _sendRequest(cx);
     _notify(_onloadstartCallback);
+    
+    //begin schedule for timeout
+    if(_timeout > 0)
+    {
+        _scheduler->scheduleUpdate(this, 0, false);
+    }
 
     return true;
+}
+
+void MinXmlHttpRequest::update(float dt)
+{
+    _elapsedTime += dt;
+    if(_elapsedTime * 1000 >= _timeout)
+    {
+        _notify(_ontimeoutCallback);
+        _elapsedTime = 0;
+        _readyState = UNSENT;
+        _scheduler->unscheduleAllForTarget(this);
+    }
 }
 
 /**
@@ -909,6 +934,7 @@ void MinXmlHttpRequest::_js_register(JSContext *cx, JS::HandleObject global)
         JS_BINDED_PROP_DEF_ACCESSOR(MinXmlHttpRequest, onerror),
         JS_BINDED_PROP_DEF_ACCESSOR(MinXmlHttpRequest, onload),
         JS_BINDED_PROP_DEF_ACCESSOR(MinXmlHttpRequest, onloadend),
+        JS_BINDED_PROP_DEF_ACCESSOR(MinXmlHttpRequest, ontimeout),
         JS_BINDED_PROP_DEF_ACCESSOR(MinXmlHttpRequest, onreadystatechange),
         JS_BINDED_PROP_DEF_ACCESSOR(MinXmlHttpRequest, responseType),
         JS_BINDED_PROP_DEF_ACCESSOR(MinXmlHttpRequest, withCredentials),
