@@ -24,7 +24,7 @@
 #include "network/jsb_websocket.h"
 #include "network/jsb_socketio.h"
 #include "cocosbuilder/js_bindings_ccbreader.h"
-#include "js_tests_bindings.h"
+#include "js_DrawNode3D_bindings.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "jsb_cocos2dx_pluginx_auto.hpp"
@@ -115,7 +115,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JavaScriptObjCBridge::_js_register);
 #endif
 
-    sc->addRegisterCallback(register_tests_bindings);
+    sc->addRegisterCallback(register_DrawNode3D_bindings);
 
     sc->start();
     sc->runScript("script/jsb_boot.js");

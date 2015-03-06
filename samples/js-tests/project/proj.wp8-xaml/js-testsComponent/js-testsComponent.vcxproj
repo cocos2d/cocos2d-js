@@ -179,7 +179,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Classes\js_tests_bindings.cpp" />
+    <ClCompile Include="..\..\Classes\js_DrawNode3D_bindings.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -194,7 +194,7 @@
     <ClCompile Include="..\..\Classes\AppDelegate.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Classes\js_tests_bindings.h" />
+    <ClInclude Include="..\..\Classes\js_DrawNode3D_bindings.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
     <ClInclude Include="..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />

@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "cocos2d.h"
 #include "cocos2d_specifics.hpp"
-#include "js_tests_bindings.h"
+#include "js_DrawNode3D_bindings.h"
 
 NS_CC_BEGIN
 
@@ -585,7 +585,7 @@ void js_register_cocos2dx_DrawNode3D(JSContext *cx, JS::HandleObject global) {
     }
 }
 
-void register_tests_bindings(JSContext *cx, JS::HandleObject global)
+void register_DrawNode3D_bindings(JSContext *cx, JS::HandleObject global)
 {
     JS::RootedObject ccobj(cx);
     JS::RootedValue ccval(cx);

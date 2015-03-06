@@ -26,6 +26,6 @@
 
 #include "jsapi.h"
 
-void register_tests_bindings(JSContext *cx, JS::HandleObject global);
+void register_DrawNode3D_bindings(JSContext *cx, JS::HandleObject global);
 
 #endif

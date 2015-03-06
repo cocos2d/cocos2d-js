@@ -15,7 +15,7 @@
     <ClCompile Include="..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
     <ClCompile Include="..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\wp8-xaml\cpp\DirectXBase.cpp" />
     <ClCompile Include="..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
-    <ClCompile Include="..\..\Classes\js_tests_bindings.cpp">
+    <ClCompile Include="..\..\Classes\js_DrawNode3D_bindings.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -30,7 +30,7 @@
     <ClInclude Include="..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\wp8-xaml\cpp\DirectXBase.h" />
     <ClInclude Include="..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\wp8-xaml\cpp\DirectXHelper.h" />
     <ClInclude Include="..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\wp8-xaml\cpp\EditBoxEvent.h" />
-    <ClInclude Include="..\..\Classes\js_tests_bindings.h">
+    <ClInclude Include="..\..\Classes\js_DrawNode3D_bindings.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
