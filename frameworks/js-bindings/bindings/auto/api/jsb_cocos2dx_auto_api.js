@@ -1526,6 +1526,16 @@ getAnchorPointInPoints : function (
 },
 
 /**
+ * @method getRotationQuat
+ * @return {cc.Quaternion}
+ */
+getRotationQuat : function (
+)
+{
+    return cc.Quaternion;
+},
+
+/**
  * @method removeChildByName
  * @param {String} arg0
  * @param {bool} arg1
@@ -2198,6 +2208,16 @@ isCascadeColorEnabled : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setRotationQuat
+ * @param {cc.Quaternion} arg0
+ */
+setRotationQuat : function (
+quaternion 
+)
+{
 },
 
 /**
