@@ -1670,16 +1670,6 @@ str
 },
 
 /**
- * @method setAdditionalTransform
-* @param {cc.AffineTransform|mat4_object} affinetransform
-*/
-setAdditionalTransform : function(
-mat4 
-)
-{
-},
-
-/**
  * @method updatePhysicsBodyTransform
  * @param {mat4_object} arg0
  * @param {unsigned int} arg1
@@ -18522,18 +18512,6 @@ vec3,
 vec3 
 )
 {
-},
-
-/**
- * @method isVisibleInFrustum
- * @param {cc.AABB} arg0
- * @return {bool}
- */
-isVisibleInFrustum : function (
-aabb 
-)
-{
-    return false;
 },
 
 /**
