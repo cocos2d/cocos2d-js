@@ -25,6 +25,7 @@
  ****************************************************************************/
 #include "jsb_cocos2dx_3d_manual.h"
 #include "cocos2d_specifics.hpp"
+#include "jsb_cocos2dx_3d_auto.hpp"
 
 using namespace cocos2d;
 
@@ -91,9 +92,38 @@ static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval
     return false;
 }
 
+bool js_cocos2dx_Sprite3D_getAABB(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Sprite3D* cobj = (cocos2d::Sprite3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Sprite3D_setCullFaceEnabled : Invalid Native Object");
+    if(argc == 0)
+    {
+        cocos2d::AABB aabb = cobj->getAABB();
+
+        JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
+        JS::RootedValue min(cx, vector3_to_jsval(cx, aabb._min));
+        JS::RootedValue max(cx, vector3_to_jsval(cx, aabb._max));
+
+        bool ok = JS_DefineProperty(cx, tmp, "min", min, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+            JS_DefineProperty(cx, tmp, "max", max, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Sprite3D_setCullFaceEnabled : Error processing arguments");
+
+        args.rval().set(OBJECT_TO_JSVAL(tmp));
+        return true;
+    }
+    JS_ReportError(cx, "wrong number of arguments");
+    return false;
+}
+
 void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
 {
     JS::RootedObject tmpObj(cx);
     tmpObj = anonEvaluate(cx, global, "(function () { return cc.Sprite3D; })()").toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "createAsync", js_cocos2dx_Sprite3D_createAsync, 4, JSPROP_READONLY | JSPROP_PERMANENT);
+
+    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Sprite3D_prototype), "getAABB", js_cocos2dx_Sprite3D_getAABB, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 }

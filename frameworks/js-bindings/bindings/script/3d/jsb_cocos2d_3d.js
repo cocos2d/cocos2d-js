@@ -91,6 +91,26 @@ cc.vec3 = function(x, y, z){
     return new cc.Vec3(x, y, z);
 };
 
+cc.vec3cross = function(v1, v2){
+    return new cc.Vec3(v1.y * v2.z - v1.z * v2.y,
+                       v1.z * v2.x - v1.x * v2.z,
+                       v1.x * v2.y - v1.y * v2.x);
+};
+
+cc.vec3dot = function(v1, v2){
+    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+};
+
+cc.vec3length = function(v){
+    return Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+};
+
+cc.vec3normalize = function(v){
+    var n = v.x * v.x + v.y * v.y + v.z * v.z;
+    n = 1 / Math.sqrt(n);
+    return cc.vec3(v.x * n, v.y * n, v.z * n);
+};
+
 cc.Quaternion = function(x=0, y=0, z=0, w=0){
     this.x = x;
     this.y = y;
@@ -108,6 +128,29 @@ cc.quaternion = function(xOrAxis, yOrAngle, z, w){
         normal.normalize();
         return cc.quaternion(normal.x * sinHalfAngle, normal.y * sinHalfAngle, normal.z * sinHalfAngle, Math.cos(yOrAngle / 2));
     }
+};
+
+cc.AABB = function(min=cc.vec3(99999, 99999, 99999), max=cc.vec3(-99999, -99999, -99999)){
+    this.min = min;
+    this.max = max;
+};
+
+cc.aabb = function(min, max){
+    return new cc.AABB(min, max);
+};
+
+cc.aabbGetCorners = function(aabb){
+    var corners = new Array(8);
+    corners[0] = cc.vec3(aabb.min.x, aabb.max.y, aabb.max.z);
+    corners[1] = cc.vec3(aabb.min.x, aabb.min.y, aabb.max.z);
+    corners[2] = cc.vec3(aabb.max.x, aabb.min.y, aabb.max.z);
+    corners[3] = cc.vec3(aabb.max.x, aabb.max.y, aabb.max.z);
+
+    corners[4] = cc.vec3(aabb.max.x, aabb.max.y, aabb.min.z);
+    corners[5] = cc.vec3(aabb.max.x, aabb.min.y, aabb.min.z);
+    corners[6] = cc.vec3(aabb.min.x, aabb.min.y, aabb.min.z);
+    corners[7] = cc.vec3(aabb.min.x, aabb.max.y, aabb.min.z);
+    return corners;
 };
 
 cc.Sprite3D.prototype._ctor = function(modelPath, texturePath){

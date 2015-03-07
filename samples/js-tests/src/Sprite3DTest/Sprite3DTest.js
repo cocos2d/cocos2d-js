@@ -601,6 +601,18 @@ var Sprite3DReskinTest = (function(){
     });
 })();
 
+var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
+    _title:"OBB Collison Performance Test",
+    _subtitle:"",
+
+    ctor:function(){
+        this._super();
+
+        var d = new cc.DrawNode3D();
+        this.addChild(d);
+        d.drawLine(cc.vec3(0, 0, 0), cc.vec3(100, 100, 50), cc.color(255, 0, 0));
+    }
+});
 
 var Sprite3DMirrorTest = Sprite3DTestDemo.extend({
     _title:"Sprite3D Mirror Test",
@@ -875,7 +887,7 @@ var arrayOfSprite3DTest = [
     Animate3DTest,
     AttachmentTest,
     Sprite3DReskinTest,
-    // Sprite3DWithOBBPerformanceTest, //TODO bind DrawNode3D
+    // Sprite3DWithOBBPerformanceTest, TODO obb
     Sprite3DMirrorTest,
     QuaternionTest,
     Sprite3DEmptyTest,
