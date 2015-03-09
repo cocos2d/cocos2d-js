@@ -604,13 +604,188 @@ var Sprite3DReskinTest = (function(){
 var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
     _title:"OBB Collison Performance Test",
     _subtitle:"",
+    _drawOBB:null,
+    _drawDebug:null,
+    _sprite:null,
+    _moveAction:null,
+    _obbt:null,
+    _obb:[],
+    _labelCubeCount:null,
+    _targetObbIndex:-1,
 
     ctor:function(){
         this._super();
 
-        var d = new cc.DrawNode3D();
-        this.addChild(d);
-        d.drawLine(cc.vec3(0, 0, 0), cc.vec3(100, 100, 50), cc.color(255, 0, 0));
+        cc.eventManager.addListener({
+            event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesBegan:this.onTouchesBegan.bind(this),
+            onTouchesMoved:this.onTouchesMoved.bind(this)
+        }, this);
+
+        this.initDrawBox();
+        this.addSprite();
+
+        var s = cc.winSize;
+        cc.MenuItemFont.setFontName("Arial");
+        cc.MenuItemFont.setFontSize(65);
+        var decrease = new cc.MenuItemFont(" - ", this.delOBBCallback, this);
+        decrease.setColor(cc.color(0, 200, 20));
+        var increase = new cc.MenuItemFont(" + ", this.addOBBCallback, this);
+        increase.setColor(cc.color(0, 200, 20));
+
+        var menu = new cc.Menu(decrease, increase);
+        menu.alignItemsHorizontally();
+        menu.setPosition(s.width / 2, s.height - 65);
+        this.addChild(menu, 1);
+
+        this._labelCubeCount = new cc.LabelTTF("0 cubes", "Arial", 30);
+        this._labelCubeCount.setColor(cc.color(0, 200, 20));
+        this._labelCubeCount.setPosition(cc.p(s.width / 2, s.height - 90));
+        this.addChild(this._labelCubeCount);
+
+        this.addOBBCallback();
+        this.scheduleUpdate();
+    },
+
+    onExit:function(){
+        this._super();
+        this._moveAction.release();
+    },
+
+    update:function(){
+        if(this._drawDebug !== undefined){
+            this._drawDebug.clear();
+
+            var mat = this._sprite.getNodeToWorldTransform3D();
+            this._obbt.xAxis.x = mat[0];
+            this._obbt.xAxis.y = mat[1];
+            this._obbt.xAxis.z = mat[2];
+            this._obbt.xAxis.normalize();
+
+            this._obbt.yAxis.x = mat[4];
+            this._obbt.yAxis.y = mat[5];
+            this._obbt.yAxis.z = mat[6];
+            this._obbt.yAxis.normalize();
+
+            this._obbt.zAxis.x = -mat[8];
+            this._obbt.zAxis.y = -mat[9];
+            this._obbt.zAxis.z = -mat[10];
+            this._obbt.zAxis.normalize();
+
+            this._obbt.center = this._sprite.getPosition3D();
+
+            var corners = cc.obbGetCorners(this._obbt);
+            this._drawDebug.drawCube(corners, cc.color(0, 0, 255));
+        }
+
+        if(this._obb.length > 0){
+            this._drawOBB.clear();
+            for(var i = 0; i < this._obb.length; ++i){
+                corners = cc.obbGetCorners(this._obb[i]);
+                this._drawOBB.drawCube(corners, cc.obbIntersectsObb(this._obbt, this._obb[i]) ? cc.color(255, 0, 0) : cc.color(0, 255, 0));
+            }
+        }
+    },
+
+    initDrawBox:function(){
+        this._drawOBB = new cc.DrawNode3D();
+        this.addChild(this._drawOBB);
+    },
+
+    addSprite:function(){
+        var  sprite = new cc.Sprite3D("Sprite3DTest/tortoise.c3b");
+        sprite.setScale(0.1);
+        var s = cc.winSize;
+        sprite.setPosition(cc.p(s.width * 4 / 5, s.height / 2));
+        this.addChild(sprite);
+
+        this._sprite = sprite;
+        var animation = cc.Animation3D.create("Sprite3DTest/tortoise.c3b");
+        if(animation){
+            var animate = cc.Animate3D.create(animation);
+            sprite.runAction(cc.repeatForever(animate));
+        }
+
+        this._moveAction = cc.moveTo(4, cc.p(s.width / 5, s.height / 2));
+        this._moveAction.retain();
+        var seq = cc.sequence(this._moveAction, cc.callFunc(this.reachEndCallBack, this));
+        seq.setTag(100);
+        sprite.runAction(seq);
+
+        var aabb = sprite.getAABB();
+        this._obbt = cc.obb(aabb);
+
+        this._drawDebug = new cc.DrawNode3D();
+        this.addChild(this._drawDebug);
+    },
+
+    reachEndCallBack:function(){
+        var sprite = this._sprite;
+        sprite.stopActionByTag(100);
+        var inverse = this._moveAction.reverse();
+        inverse.retain();
+        this._moveAction.release();
+        this._moveAction = inverse;
+        var rot = cc.rotateBy(1, {x : 0, y : 180, z : 0});
+        var seq = cc.sequence(rot, this._moveAction, cc.callFunc(this.reachEndCallBack, this));
+        seq.setTag(100);
+        sprite.runAction(seq);
+    },
+
+    addOBBCallback:function(sender){
+        var s = cc.winSize;
+        for(var i = 0; i < 10; ++i){
+            var randompos = cc.p(Math.random() * s.width, Math.random() * s.height);
+            var extents = cc.vec3(-10, -10, -10);
+            var aabb = cc.aabb(cc.vec3(-10, -10, -10), cc.vec3(10, 10, 10));
+            var obb = cc.obb(aabb);
+            obb.center = cc.vec3(randompos.x, randompos.y, 0);
+            this._obb.push(obb);
+        }
+        this._labelCubeCount.setString(this._obb.length + " cubes");
+    },
+
+    delOBBCallback:function(sender){
+        if(this._obb.length >= 10){
+            this._obb.splice(0, 10);
+            this._drawOBB.clear();
+        }
+        this._labelCubeCount.setString(this._obb.length + " cubes");
+    },
+
+    onTouchesBegan:function(touches, event){
+        var location = touches[0].getLocationInView();
+        var ray = this.calculateRayByLocationInView(location);
+        cc.log(ray.origin.x)
+        for(var j = 0; j < this._obb.length; ++j){
+            if(cc.rayIntersectsObb(ray, this._obb[j])){
+                this._targetObbIndex = j;
+                return;
+            }
+        }
+        this._targetObbIndex = -1;
+    },
+
+    onTouchesMoved:function(touches, event){
+        if(this._targetObbIndex >= 0){
+            var location = touches[0].getLocation();
+            this._obb[this._targetObbIndex].center = cc.vec3(location.x, location.y, 0);    
+        }
+    },
+
+    calculateRayByLocationInView:function(location){
+        var camera = cc.Camera.getDefaultCamera();
+        var size = cc.winSize;
+
+        var src = cc.vec3(location.x, location.y, -1);
+        var nearPoint = camera.unproject(size, src);
+
+        src = cc.vec3(location.x, location.y, 1);
+        var farPoint = camera.unproject(size, src);
+
+        var direction = cc.vec3(farPoint.x - nearPoint.x, farPoint.y - nearPoint.y, farPoint.z - nearPoint.z);
+
+        return cc.ray(nearPoint, direction);
     }
 });
 
@@ -887,7 +1062,7 @@ var arrayOfSprite3DTest = [
     Animate3DTest,
     AttachmentTest,
     Sprite3DReskinTest,
-    // Sprite3DWithOBBPerformanceTest, TODO obb
+    Sprite3DWithOBBPerformanceTest,
     Sprite3DMirrorTest,
     QuaternionTest,
     Sprite3DEmptyTest,
