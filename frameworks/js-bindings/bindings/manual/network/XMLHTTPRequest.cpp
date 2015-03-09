@@ -701,7 +701,6 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 {
-    JSString *str = NULL;
     std::string data;
     
     // Clean up header map. New request, new headers!
@@ -712,11 +711,11 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
     if (argc == 1)
     {
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        if (!JS_ConvertArguments(cx, args, "S", &str))
+        if (!args.get(0).isString())
         {
             return false;
         }
-        JSStringWrapper strWrap(str);
+        JSStringWrapper strWrap(args.get(0).toString());
         data = strWrap.get();
     }
 
@@ -814,9 +813,10 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, getResponseHeader)
     JSString *header_value;
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (!JS_ConvertArguments(cx, args, "S", &header_value)) {
+    if (!args.get(0).isString()) {
         return false;
     };
+    header_value = args.get(0).toString();
     
     std::string data;
     JSStringWrapper strWrap(header_value);
