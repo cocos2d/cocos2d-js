@@ -619,6 +619,71 @@ bool jsval_to_quaternion( JSContext *cx, JS::HandleValue v, cocos2d::Quaternion*
     return true;
 }
 
+bool jsval_to_obb(JSContext *cx, JS::HandleValue v, cocos2d::OBB* ret)
+{
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jscenter(cx);
+    JS::RootedValue jsxAxis(cx);
+    JS::RootedValue jsyAxis(cx);
+    JS::RootedValue jszAxis(cx);
+    JS::RootedValue jsextents(cx);
+    JS::RootedValue jsextentx(cx);
+    JS::RootedValue jsextenty(cx);
+    JS::RootedValue jsextentz(cx);
+    
+    cocos2d::Vec3 center, xAxis, yAxis, zAxis, extents, extentx, extenty, extentz;
+    bool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
+        JS_GetProperty(cx, tmp, "center", &jscenter) &&
+        JS_GetProperty(cx, tmp, "xAxis", &jsxAxis) &&
+        JS_GetProperty(cx, tmp, "yAxis", &jsyAxis) &&
+        JS_GetProperty(cx, tmp, "zAxis", &jszAxis) &&
+        JS_GetProperty(cx, tmp, "extents", &jsextents) &&
+        JS_GetProperty(cx, tmp, "extentX", &jsextentx) &&
+        JS_GetProperty(cx, tmp, "extentY", &jsextenty) &&
+        JS_GetProperty(cx, tmp, "extentZ", &jsextentz) &&
+        jsval_to_vector3(cx, jscenter, &center) &&
+        jsval_to_vector3(cx, jsxAxis, &xAxis) &&
+        jsval_to_vector3(cx, jsyAxis, &yAxis) &&
+        jsval_to_vector3(cx, jszAxis, &zAxis) &&
+        jsval_to_vector3(cx, jsextents, &extents) &&
+        jsval_to_vector3(cx, jsextentx, &extentx) &&
+        jsval_to_vector3(cx, jsextenty, &extenty) &&
+        jsval_to_vector3(cx, jsextentz, &extentz);
+
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+
+    ret->_center.set(center);
+    ret->_xAxis.set(xAxis);
+    ret->_yAxis.set(yAxis);
+    ret->_zAxis.set(zAxis);
+    ret->_extents.set(extents);
+    ret->_extentX.set(extentx);
+    ret->_extentY.set(extenty);
+    ret->_extentZ.set(extentz);
+    return true;
+}
+
+bool jsval_to_ray(JSContext *cx, JS::HandleValue v, cocos2d::Ray* ret)
+{
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jsorigin(cx);
+    JS::RootedValue jsdirection(cx);
+
+    cocos2d::Vec3 origin, direction;
+    bool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
+        JS_GetProperty(cx, tmp, "origin", &jsorigin) &&
+        JS_GetProperty(cx, tmp, "direction", &jsdirection) &&
+        jsval_to_vector3(cx, jsorigin, &origin) && 
+        jsval_to_vector3(cx, jsdirection, &direction);
+
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+    
+    ret->set(origin, direction);
+    return true;
+}
+
 bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, __Array** ret)
 {
     bool ok = true;

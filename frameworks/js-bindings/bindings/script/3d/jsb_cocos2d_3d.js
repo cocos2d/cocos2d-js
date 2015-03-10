@@ -153,6 +153,30 @@ cc.aabbGetCorners = function(aabb){
     return corners;
 };
 
+cc.OBB = function(aabb){
+    this.center = cc.vec3((aabb.min.x + aabb.max.x)/2, (aabb.min.y + aabb.max.y)/2, (aabb.min.z + aabb.max.z)/2);   // obb center
+    this.xAxis = cc.vec3(1, 0, 0);    // x axis of obb, unit vector
+    this.yAxis = cc.vec3(0, 1, 0);    // y axis of obb, unit vecotr
+    this.zAxis = cc.vec3(0, 0, 1);    // z axis of obb, unit vector
+    this.extents = cc.vec3((aabb.max.x - aabb.min.x)/2, (aabb.max.y - aabb.min.y)/2, (aabb.max.z - aabb.min.z)/2);  // obb length along each axis
+    this.extentX = cc.vec3((aabb.max.x - aabb.min.x)/2, 0, 0);  // _xAxis * _extents.x
+    this.extentY = cc.vec3(0, (aabb.max.y - aabb.min.y)/2, 0);  // _yAxis * _extents.y
+    this.extentZ = cc.vec3(0, 0, (aabb.max.z - aabb.min.z)/2);  // _zAxis * _extents.z
+};
+
+cc.obb = function(aabb){
+    return new cc.OBB(aabb);
+};
+
+cc.Ray = function(origin = cc.vec(0, 0, 0), direction = cc.vec3(0, 0, 1)){
+    this.origin = origin;
+    this.direction = direction;
+};
+
+cc.ray = function(origin, direction){
+    return new cc.Ray(origin, direction);
+};
+
 cc.Sprite3D.prototype._ctor = function(modelPath, texturePath){
     if(modelPath === undefined){
         this.init();

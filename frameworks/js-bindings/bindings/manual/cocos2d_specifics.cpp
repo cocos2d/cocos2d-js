@@ -3616,6 +3616,78 @@ bool js_cocos2dx_ccpNormalize(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+bool js_cocos2dx_ccobbGetCorners(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 1)
+    {
+        cocos2d::OBB obb;
+        bool ok = jsval_to_obb(cx, args.get(0), &obb);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        cocos2d::Vec3 verts[8];
+        obb.getCorners(verts);
+
+        JS::RootedObject array(cx, JS_NewArrayObject(cx, 8));
+        for(int i = 0; i < 8; ++i)
+        {
+            JS::RootedValue vec(cx, vector3_to_jsval(cx, verts[i]));
+            ok &= JS_SetElement(cx, array, i, vec);
+            if(!ok)
+                break;
+        }
+
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+        args.rval().set(OBJECT_TO_JSVAL(array));
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
+bool js_cocos2dx_ccobbIntersects(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 2)
+    {
+        cocos2d::OBB obb1, obb2;
+        bool ok = jsval_to_obb(cx, args.get(0), &obb1);
+        ok &= jsval_to_obb(cx, args.get(1), &obb2);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        bool ret = obb1.intersects(obb2);
+
+        args.rval().set(BOOLEAN_TO_JSVAL(ret));
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
+bool js_cocos2dx_ccrayIntersectsObb(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 2)
+    {
+        cocos2d::Ray ray;
+        cocos2d::OBB obb;
+
+        bool ok = jsval_to_ray(cx, args.get(0), &ray);
+        ok &= jsval_to_obb(cx, args.get(1), &obb);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        bool ret = ray.intersects(obb);
+
+        args.rval().set(BOOLEAN_TO_JSVAL(ret));
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
 bool js_cocos2dx_CCSprite_textureLoaded(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -5119,6 +5191,9 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, ccObj, "registerStandardDelegate", js_cocos2dx_JSTouchDelegate_registerStandardDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ccObj, "unregisterTouchDelegate", js_cocos2dx_JSTouchDelegate_unregisterTouchDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
+    JS_DefineFunction(cx, ccObj, "obbGetCorners", js_cocos2dx_ccobbGetCorners, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ccObj, "obbIntersectsObb", js_cocos2dx_ccobbIntersects, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ccObj, "rayIntersectsObb", js_cocos2dx_ccrayIntersectsObb, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
     js_register_cocos2dx_EventKeyboard(cx, ccObj);
 
