@@ -736,7 +736,6 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
         var s = cc.winSize;
         for(var i = 0; i < 10; ++i){
             var randompos = cc.p(Math.random() * s.width, Math.random() * s.height);
-            var extents = cc.vec3(-10, -10, -10);
             var aabb = cc.aabb(cc.vec3(-10, -10, -10), cc.vec3(10, 10, 10));
             var obb = cc.obb(aabb);
             obb.center = cc.vec3(randompos.x, randompos.y, 0);
@@ -756,7 +755,6 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
     onTouchesBegan:function(touches, event){
         var location = touches[0].getLocationInView();
         var ray = this.calculateRayByLocationInView(location);
-        cc.log(ray.origin.x)
         for(var j = 0; j < this._obb.length; ++j){
             if(cc.rayIntersectsObb(ray, this._obb[j])){
                 this._targetObbIndex = j;
@@ -784,6 +782,7 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
         var farPoint = camera.unproject(size, src);
 
         var direction = cc.vec3(farPoint.x - nearPoint.x, farPoint.y - nearPoint.y, farPoint.z - nearPoint.z);
+        direction.normalize();
 
         return cc.ray(nearPoint, direction);
     }
