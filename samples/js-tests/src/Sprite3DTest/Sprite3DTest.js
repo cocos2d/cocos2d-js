@@ -1226,6 +1226,83 @@ var Sprite3DLightMapTest = Sprite3DTestDemo.extend({
         }
     }
 });
+
+var Sprite3DUVAnimationTest = Sprite3DTestDemo.extend({
+    _title:"Testing UV Animation",
+    _subtitle:"",
+    _cylinder_texture_offset:0,
+    _shining_duraion:0,
+    _state:null,
+    fade_in:true,
+
+    ctor:function(){
+        this._super();
+
+        var visibleSize = cc.director.getVisibleSize();
+        //use custom camera
+        var camera = cc.Camera.createPerspective(60, visibleSize.width/visibleSize.height, 0.1, 200);
+        camera.setCameraFlag(cc.CameraFlag.USER1);
+        this.addChild(camera);
+        this.setCameraMask(2);
+
+        //create cylinder
+        var cylinder = new cc.Sprite3D("Sprite3DTest/cylinder.c3b");
+        this.addChild(cylinder);
+        cylinder.setScale(3);
+        cylinder.setPosition(visibleSize.width/2, visibleSize.height/2);
+        cylinder.setRotation3D(cc.vec3(-90, 0, 0));
+
+        //create and set our custom shader
+        var shader = new cc.GLProgram("Sprite3DTest/cylinder.vert","Sprite3DTest/cylinder.frag");
+        this._state = cc.GLProgramState.create(shader);
+        cylinder.setGLProgramState(this._state);
+
+        this._state.setUniformFloat("offset", this._cylinder_texture_offset);
+        this._state.setUniformFloat("duration", this._shining_duraion);
+
+        //pass mesh's attribute to shader
+        var offset = 0;
+        var attributeCount = cylinder.getMesh().getMeshVertexAttribCount();
+        for(var i = 0; i < attributeCount; ++i){
+            var meshattribute = cylinder.getMesh().getMeshVertexAttribute(i);
+            this._state.setVertexAttribPointer(cc.attributeNames[meshattribute.vertexAttrib],
+                meshattribute.size,
+                meshattribute.type,
+                gl.FALSE,
+                cylinder.getMesh().getVertexSizeInBytes(),
+                offset);
+            offset += meshattribute.attribSizeBytes;
+        }
+
+        //create the second texture for cylinder
+        var shining_texture = cc.textureCache.addImage("Sprite3DTest/caustics.png");
+        shining_texture.setTexParameters(gl.NEAREST, gl.NEAREST, gl.REPEAT, gl.REPEAT);
+        //pass the texture sampler to our custom shader
+        this._state.setUniformTexture("caustics", shining_texture);
+
+        this.scheduleUpdate();
+    },
+
+    update:function(dt){
+        //callback function to update cylinder's texcoord
+        this._cylinder_texture_offset += 0.3 * dt;
+        this._cylinder_texture_offset = this._cylinder_texture_offset > 1 ? 0 : this._cylinder_texture_offset;
+
+        if(this.fade_in){
+            this._shining_duraion += 0.5 * dt;
+            if(this._shining_duraion > 1)
+                this.fade_in = false;
+        }else{
+            this._shining_duraion -= 0.5 * dt;
+            if(this._shining_duraion < 0)
+                this.fade_in = true;
+        }
+
+        //pass the result to shader
+        this._state.setUniformFloat("offset", this._cylinder_texture_offset);
+        this._state.setUniformFloat("duration", this._shining_duraion);
+    }
+});
 //
 // Flow control
 //
@@ -1252,7 +1329,7 @@ if(cc.sys.OS !== cc.sys.OS_WP8){
         Sprite3DEffectTest,
         Sprite3DWithSkinOutlineTest,
         Sprite3DLightMapTest,
-        // Sprite3DUVAnimationTest,
+        Sprite3DUVAnimationTest,
         // Sprite3DFakeShadowTest,
         // Sprite3DBasicToonShaderTest,
     ]);
