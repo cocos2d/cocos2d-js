@@ -1050,6 +1050,64 @@ var UseCaseSprite3D2 = Sprite3DTestDemo.extend({
     }
 });
 
+var Sprite3DEffectTest = Sprite3DTestDemo.extend({
+    _title:"Testing Sprite3D",
+    _subtitle:"Sprite3d with effects",
+
+    ctor:function(){
+        this._super();
+
+        cc.eventManager.addListener({
+            event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesBegan:this.onTouchesBegan.bind(this)
+        }, this);
+
+        this.addNewSpriteWithCoords(cc.p(cc.winSize.width/2, cc.winSize.height/2));
+    },
+
+    addNewSpriteWithCoords:function(position){
+        var sprite = new cc.EffectSprite3D("Sprite3DTest/boss1.obj", "Sprite3DTest/boss.png");
+        var effect = new cc.Effect3DOutline();
+        effect.setOutlineColor(cc.vec3(1, 0, 0));
+        effect.setOutlineWidth(0.01);
+        sprite.addEffect(effect, -1);
+
+        var effect2 = new cc.Effect3DOutline();
+        effect2.setOutlineColor(cc.vec3(1, 1, 0));
+        effect2.setOutlineWidth(0.02);
+        sprite.addEffect(effect2, -2);
+
+        sprite.setScale(6);
+        this.addChild(sprite);
+        sprite.setPosition(position);
+
+        var action;
+        var random = Math.random();
+        if(random < 0.2)
+            action = cc.scaleBy(3, 2);
+        else if(random < 0.4)
+            action = cc.rotateBy(3, 360);
+        else if(random < 0.6)
+            action = cc.blink(1, 3);
+        else if(random < 0.8)
+            action = cc.tintBy(2, 0, -255, -255);
+        else
+            action = cc.fadeOut(2);
+
+        var action_back = action.reverse();
+        var seq = cc.sequence(action, action_back);
+
+        sprite.runAction(seq.repeatForever());
+    },
+
+    onTouchesBegan:function(touches, event){
+        for(var i = 0; i < touches.length; ++i){
+            var location = touches[i].getLocation();
+            this.addNewSpriteWithCoords(location);
+        }
+    }
+});
+
 var Sprite3DWithSkinOutlineTest = Sprite3DTestDemo.extend({
     _title:"Testing Sprite3D for skinned outline",
     _subtitle:"Tap screen to add more sprite3D",
@@ -1062,7 +1120,6 @@ var Sprite3DWithSkinOutlineTest = Sprite3DTestDemo.extend({
             onTouchesBegan:this.onTouchesBegan.bind(this)
         }, this);
 
-        cc.log(cc.EffectSprite3D);
         this.addNewSpriteWithCoords(cc.p(cc.winSize.width/2, cc.winSize.height/2));
     },
 
@@ -1108,6 +1165,67 @@ var Sprite3DWithSkinOutlineTest = Sprite3DTestDemo.extend({
     }
 });
 
+var Sprite3DLightMapTest = Sprite3DTestDemo.extend({
+    _title:"light map test",
+    _subtitle:"drag the screen to move around",
+    _camera:null,
+
+    ctor:function(){
+        this._super();
+
+        //the assets are from the OpenVR demo
+        //get the visible size.
+        var visibleSize = cc.director.getVisibleSize();
+        this._camera = cc.Camera.createPerspective(60, visibleSize.width/visibleSize.height, 0.1, 200);
+        this._camera.setCameraFlag(cc.CameraFlag.USER1);
+        this._camera.setPosition3D(cc.vec3(0, 25, 15));
+        this._camera.setRotation3D(cc.vec3(-35, 0, 0));
+
+        var LightMapScene = new cc.Sprite3D("Sprite3DTest/LightMapScene.c3b");
+        LightMapScene.setScale(0.1);
+        this.addChild(LightMapScene);
+        this.addChild(this._camera);
+        this.setCameraMask(2);
+
+        //add a point light
+        var light = cc.PointLight.create(cc.vec3(35, 75, -20.5), cc.color(255, 255, 255), 150);
+        this.addChild(light);
+        //set the ambient light 
+        var ambient = cc.AmbientLight.create(cc.color(55, 55, 55));
+        this.addChild(ambient);
+
+        //create a listener
+        cc.eventManager.addListener({
+            event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesMoved:this.onTouchesMoved.bind(this)
+        }, this);
+    },
+
+    onTouchesMoved:function(touches, event){
+        if(touches.length === 1){
+            var dt = cc.director.getDeltaTime();
+            var touch = touches[0];
+            var location = touch.getLocation();
+            var previousLocation = touch.getPreviousLocation();
+            var newPos = cc.p(previousLocation.x - location.x, previousLocation.y - location.y);
+
+            var m = this._camera.getNodeToWorldTransform3D();
+            var cameraDir = cc.vec3(-m[8], -m[9], -m[10]);
+            cameraDir.normalize();
+            cameraDir.y = 0;
+
+            var cameraRightDir = cc.vec3(m[0], m[1], m[2]);
+            cameraRightDir.normalize();
+            cameraRightDir.y = 0;
+
+            var cameraPos = this._camera.getPosition3D();
+            cameraPos.x += cameraDir.x * newPos.y * dt + cameraRightDir.x * newPos.x * dt;
+            cameraPos.y += cameraDir.y * newPos.y * dt + cameraRightDir.y * newPos.x * dt;
+            cameraPos.z += cameraDir.z * newPos.y * dt + cameraRightDir.z * newPos.x * dt;
+            this._camera.setPosition3D(cameraPos);
+        }
+    }
+});
 //
 // Flow control
 //
@@ -1131,12 +1249,12 @@ var arrayOfSprite3DTest = [
 // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
 if(cc.sys.OS !== cc.sys.OS_WP8){
     arrayOfSprite3DTest = arrayOfSprite3DTest.concat([
+        Sprite3DEffectTest,
         Sprite3DWithSkinOutlineTest,
-        // Sprite3DEffectTest,
+        Sprite3DLightMapTest,
         // Sprite3DUVAnimationTest,
         // Sprite3DFakeShadowTest,
         // Sprite3DBasicToonShaderTest,
-        // Sprite3DLightMapTest
     ]);
 }
 

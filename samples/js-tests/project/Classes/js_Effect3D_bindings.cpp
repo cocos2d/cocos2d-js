@@ -677,11 +677,17 @@ bool jsb_EffectSprite3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     EffectSprite3D* cobj = new (std::nothrow) EffectSprite3D();
-    if(argc == 1)
+    if(argc == 1 || argc == 2)
     {
         std::string path;
         jsval_to_std_string(cx, args.get(0), &path);
         cobj->initWithFile(path);
+        if(argc == 2)
+        {
+            std::string texture;
+            jsval_to_std_string(cx, args.get(1), &texture);
+            cobj->setTexture(texture);
+        }
     }
     cobj->autorelease();
     TypeTest<EffectSprite3D> t;
