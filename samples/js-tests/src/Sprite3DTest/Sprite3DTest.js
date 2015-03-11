@@ -1303,6 +1303,47 @@ var Sprite3DUVAnimationTest = Sprite3DTestDemo.extend({
         this._state.setUniformFloat("duration", this._shining_duraion);
     }
 });
+
+var Sprite3DBasicToonShaderTest = Sprite3DTestDemo.extend({
+    _title:"basic toon shader test",
+    _subtitle:"",
+
+    ctor:function(){
+        this._super();
+
+        var camera = cc.Camera.createPerspective(60, cc.winSize.width/cc.winSize.height, 1, 1000);
+        camera.setCameraFlag(cc.CameraFlag.USER1);
+        this.addChild(camera);
+        this.setCameraMask(2);
+
+        //create a teapot
+        var teapot = new cc.Sprite3D("Sprite3DTest/teapot.c3b");
+        //create and set out custom shader
+        var shader = new cc.GLProgram("Sprite3DTest/toon.vert", "Sprite3DTest/toon.frag");
+        var state = cc.GLProgramState.create(shader);
+        teapot.setGLProgramState(state);
+        teapot.setPosition3D(cc.vec3(cc.winSize.width/2, cc.winSize.height/2, -20));
+        teapot.setRotation3D(cc.vec3(-90, 180, 0));
+        teapot.setScale(10);
+        teapot.runAction(cc.rotateBy(1.5, cc.vec3(0, 30, 0)).repeatForever());
+        this.addChild(teapot);
+
+        //pass mesh's attribute to shader
+        var offset = 0;
+        var attributeCount = teapot.getMesh().getMeshVertexAttribCount();
+        for(var i = 0; i < attributeCount; ++i){
+            var meshattribute = teapot.getMesh().getMeshVertexAttribute(i);
+            state.setVertexAttribPointer(cc.attributeNames[meshattribute.vertexAttrib],
+                meshattribute.size,
+                meshattribute.type,
+                gl.FALSE,
+                teapot.getMesh().getVertexSizeInBytes(),
+                offset);
+            offset += meshattribute.attribSizeBytes;
+        }
+    }
+});
+
 //
 // Flow control
 //
@@ -1330,8 +1371,7 @@ if(cc.sys.OS !== cc.sys.OS_WP8){
         Sprite3DWithSkinOutlineTest,
         Sprite3DLightMapTest,
         Sprite3DUVAnimationTest,
-        // Sprite3DFakeShadowTest,
-        // Sprite3DBasicToonShaderTest,
+        Sprite3DBasicToonShaderTest,
     ]);
 }
 
