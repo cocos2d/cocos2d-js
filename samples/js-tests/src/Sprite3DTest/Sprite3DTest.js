@@ -1050,6 +1050,489 @@ var UseCaseSprite3D2 = Sprite3DTestDemo.extend({
     }
 });
 
+var Sprite3DEffectTest = Sprite3DTestDemo.extend({
+    _title:"Testing Sprite3D",
+    _subtitle:"Sprite3d with effects",
+
+    ctor:function(){
+        this._super();
+
+        cc.eventManager.addListener({
+            event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesBegan:this.onTouchesBegan.bind(this)
+        }, this);
+
+        this.addNewSpriteWithCoords(cc.p(cc.winSize.width/2, cc.winSize.height/2));
+    },
+
+    addNewSpriteWithCoords:function(position){
+        var sprite = new cc.EffectSprite3D("Sprite3DTest/boss1.obj", "Sprite3DTest/boss.png");
+        var effect = new cc.Effect3DOutline();
+        effect.setOutlineColor(cc.vec3(1, 0, 0));
+        effect.setOutlineWidth(0.01);
+        sprite.addEffect(effect, -1);
+
+        var effect2 = new cc.Effect3DOutline();
+        effect2.setOutlineColor(cc.vec3(1, 1, 0));
+        effect2.setOutlineWidth(0.02);
+        sprite.addEffect(effect2, -2);
+
+        sprite.setScale(6);
+        this.addChild(sprite);
+        sprite.setPosition(position);
+
+        var action;
+        var random = Math.random();
+        if(random < 0.2)
+            action = cc.scaleBy(3, 2);
+        else if(random < 0.4)
+            action = cc.rotateBy(3, 360);
+        else if(random < 0.6)
+            action = cc.blink(1, 3);
+        else if(random < 0.8)
+            action = cc.tintBy(2, 0, -255, -255);
+        else
+            action = cc.fadeOut(2);
+
+        var action_back = action.reverse();
+        var seq = cc.sequence(action, action_back);
+
+        sprite.runAction(seq.repeatForever());
+    },
+
+    onTouchesBegan:function(touches, event){
+        for(var i = 0; i < touches.length; ++i){
+            var location = touches[i].getLocation();
+            this.addNewSpriteWithCoords(location);
+        }
+    }
+});
+
+var Sprite3DWithSkinOutlineTest = Sprite3DTestDemo.extend({
+    _title:"Testing Sprite3D for skinned outline",
+    _subtitle:"Tap screen to add more sprite3D",
+
+    ctor:function(){
+        this._super();
+
+        cc.eventManager.addListener({
+            event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesBegan:this.onTouchesBegan.bind(this)
+        }, this);
+
+        this.addNewSpriteWithCoords(cc.p(cc.winSize.width/2, cc.winSize.height/2));
+    },
+
+    addNewSpriteWithCoords:function(p){
+        var sprite = new cc.EffectSprite3D("Sprite3DTest/orc.c3b");
+        sprite.setScale(3);
+        sprite.setRotation3D(cc.vec3(0, 180, 0));
+        this.addChild(sprite);
+        sprite.setPosition(p);
+
+        var effect = new cc.Effect3DOutline();
+        effect.setOutlineColor(cc.vec3(1, 0, 0));
+        effect.setOutlineWidth(0.01);
+        sprite.addEffect(effect, -1);
+
+        var effect2 = new cc.Effect3DOutline();
+        effect2.setOutlineColor(cc.vec3(1, 1, 0));
+        effect2.setOutlineWidth(0.02);
+        sprite.addEffect(effect2, -2);
+
+        var animation = cc.Animation3D.create("Sprite3DTest/orc.c3b");
+        if(animation){
+            var animate = cc.Animate3D.create(animation);
+            var inverse = Math.random() < 0.33 ? true : false;
+
+            var rand2 = Math.random();
+            var speed = 1.0;
+            if(rand2 < 0.33)
+                speed = animate.getSpeed() + Math.random();
+            else if(rand2 < 0.66)            
+                spped = animate.getSpeed() - 0.5 * Math.random();
+
+            animate.setSpeed(inverse ? -speed : speed);
+            sprite.runAction(new cc.RepeatForever(animate));
+        }
+    },
+
+    onTouchesBegan:function(touches, event){
+        for(var i = 0; i < touches.length; ++i){
+            var location = touches[i].getLocation();
+            this.addNewSpriteWithCoords(location);
+        }
+    }
+});
+
+var Sprite3DLightMapTest = Sprite3DTestDemo.extend({
+    _title:"light map test",
+    _subtitle:"drag the screen to move around",
+    _camera:null,
+
+    ctor:function(){
+        this._super();
+
+        //the assets are from the OpenVR demo
+        //get the visible size.
+        var visibleSize = cc.director.getVisibleSize();
+        this._camera = cc.Camera.createPerspective(60, visibleSize.width/visibleSize.height, 0.1, 200);
+        this._camera.setCameraFlag(cc.CameraFlag.USER1);
+        this._camera.setPosition3D(cc.vec3(0, 25, 15));
+        this._camera.setRotation3D(cc.vec3(-35, 0, 0));
+
+        var LightMapScene = new cc.Sprite3D("Sprite3DTest/LightMapScene.c3b");
+        LightMapScene.setScale(0.1);
+        this.addChild(LightMapScene);
+        this.addChild(this._camera);
+        this.setCameraMask(2);
+
+        //add a point light
+        var light = cc.PointLight.create(cc.vec3(35, 75, -20.5), cc.color(255, 255, 255), 150);
+        this.addChild(light);
+        //set the ambient light 
+        var ambient = cc.AmbientLight.create(cc.color(55, 55, 55));
+        this.addChild(ambient);
+
+        //create a listener
+        cc.eventManager.addListener({
+            event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesMoved:this.onTouchesMoved.bind(this)
+        }, this);
+    },
+
+    onTouchesMoved:function(touches, event){
+        if(touches.length === 1){
+            var dt = cc.director.getDeltaTime();
+            var touch = touches[0];
+            var location = touch.getLocation();
+            var previousLocation = touch.getPreviousLocation();
+            var newPos = cc.p(previousLocation.x - location.x, previousLocation.y - location.y);
+
+            var m = this._camera.getNodeToWorldTransform3D();
+            var cameraDir = cc.vec3(-m[8], -m[9], -m[10]);
+            cameraDir.normalize();
+            cameraDir.y = 0;
+
+            var cameraRightDir = cc.vec3(m[0], m[1], m[2]);
+            cameraRightDir.normalize();
+            cameraRightDir.y = 0;
+
+            var cameraPos = this._camera.getPosition3D();
+            cameraPos.x += cameraDir.x * newPos.y * dt + cameraRightDir.x * newPos.x * dt;
+            cameraPos.y += cameraDir.y * newPos.y * dt + cameraRightDir.y * newPos.x * dt;
+            cameraPos.z += cameraDir.z * newPos.y * dt + cameraRightDir.z * newPos.x * dt;
+            this._camera.setPosition3D(cameraPos);
+        }
+    }
+});
+
+var Sprite3DUVAnimationTest = Sprite3DTestDemo.extend({
+    _title:"Testing UV Animation",
+    _subtitle:"",
+    _cylinder_texture_offset:0,
+    _shining_duraion:0,
+    _state:null,
+    fade_in:true,
+
+    ctor:function(){
+        this._super();
+
+        var visibleSize = cc.director.getVisibleSize();
+        //use custom camera
+        var camera = cc.Camera.createPerspective(60, visibleSize.width/visibleSize.height, 0.1, 200);
+        camera.setCameraFlag(cc.CameraFlag.USER1);
+        this.addChild(camera);
+        this.setCameraMask(2);
+
+        //create cylinder
+        var cylinder = new cc.Sprite3D("Sprite3DTest/cylinder.c3b");
+        this.addChild(cylinder);
+        cylinder.setScale(3);
+        cylinder.setPosition(visibleSize.width/2, visibleSize.height/2);
+        cylinder.setRotation3D(cc.vec3(-90, 0, 0));
+
+        //create and set our custom shader
+        var shader = new cc.GLProgram("Sprite3DTest/cylinder.vert","Sprite3DTest/cylinder.frag");
+        this._state = cc.GLProgramState.create(shader);
+        cylinder.setGLProgramState(this._state);
+
+        this._state.setUniformFloat("offset", this._cylinder_texture_offset);
+        this._state.setUniformFloat("duration", this._shining_duraion);
+
+        //pass mesh's attribute to shader
+        var offset = 0;
+        var attributeCount = cylinder.getMesh().getMeshVertexAttribCount();
+        for(var i = 0; i < attributeCount; ++i){
+            var meshattribute = cylinder.getMesh().getMeshVertexAttribute(i);
+            this._state.setVertexAttribPointer(cc.attributeNames[meshattribute.vertexAttrib],
+                meshattribute.size,
+                meshattribute.type,
+                gl.FALSE,
+                cylinder.getMesh().getVertexSizeInBytes(),
+                offset);
+            offset += meshattribute.attribSizeBytes;
+        }
+
+        //create the second texture for cylinder
+        var shining_texture = cc.textureCache.addImage("Sprite3DTest/caustics.png");
+        shining_texture.setTexParameters(gl.NEAREST, gl.NEAREST, gl.REPEAT, gl.REPEAT);
+        //pass the texture sampler to our custom shader
+        this._state.setUniformTexture("caustics", shining_texture);
+
+        this.scheduleUpdate();
+    },
+
+    update:function(dt){
+        //callback function to update cylinder's texcoord
+        this._cylinder_texture_offset += 0.3 * dt;
+        this._cylinder_texture_offset = this._cylinder_texture_offset > 1 ? 0 : this._cylinder_texture_offset;
+
+        if(this.fade_in){
+            this._shining_duraion += 0.5 * dt;
+            if(this._shining_duraion > 1)
+                this.fade_in = false;
+        }else{
+            this._shining_duraion -= 0.5 * dt;
+            if(this._shining_duraion < 0)
+                this.fade_in = true;
+        }
+
+        //pass the result to shader
+        this._state.setUniformFloat("offset", this._cylinder_texture_offset);
+        this._state.setUniformFloat("duration", this._shining_duraion);
+    }
+});
+
+var State = {
+    State_None : 0,
+    State_Idle : 0x01,
+    State_Move : 0x02,
+    State_Rotate : 0x04,
+    State_Speak : 0x08,
+    State_MeleeAttack : 0x10,
+    State_RemoteAttack : 0x20,
+    State_Attack : 0x40      
+};
+
+var Sprite3DFakeShadowTest = Sprite3DTestDemo.extend({
+    _title:"fake shadow effect",
+    _subtitle:"touch the screen to move around",
+    _camera:null,
+    _plane:null,
+    _orc:null,
+    _targetPos:null,
+    _curState:0,
+
+    ctor:function(){
+        this._super();
+
+        cc.eventManager.addListener({
+            event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesEnded:this.onTouchesEnded.bind(this)
+        }, this);
+
+        var visibleSize = cc.director.getVisibleSize();
+        var s = cc.winSize;
+
+        this._orc = new cc.Sprite3D("Sprite3DTest/orc.c3b");
+        this._orc.setScale(0.2);
+        this._orc.setRotation3D(cc.vec3(0, 180, 0));
+        this._orc.setPosition3D(cc.vec3(0, 0, 0));
+
+        this._targetPos = this._orc.getPosition3D();
+        this.addChild(this._orc);
+
+        //create a plane
+        this._plane = new cc.Sprite3D("Sprite3DTest/plane.c3t");
+        this._plane.setRotation3D(cc.vec3(90, 0, 0));
+        this.addChild(this._plane);
+
+        //use a custom shader
+        var shader = new cc.GLProgram("Sprite3DTest/simple_shadow.vert", "Sprite3DTest/simple_shadow.frag");
+        var state = cc.GLProgramState.create(shader);
+        this._plane.setGLProgramState(state);
+
+        //pass mesh's attribute to shader
+        var offset = 0;
+        var attributeCount = this._plane.getMesh().getMeshVertexAttribCount();
+        for(var i = 0; i < attributeCount; ++i){
+            var meshattribute = this._plane.getMesh().getMeshVertexAttribute(i);
+            state.setVertexAttribPointer(cc.attributeNames[meshattribute.vertexAttrib],
+                meshattribute.size,
+                meshattribute.type,
+                gl.FALSE,
+                this._plane.getMesh().getVertexSizeInBytes(),
+                offset);
+            offset += meshattribute.attribSizeBytes;
+        }
+        state.setUniformMat4("u_model_matrix", this._plane.getNodeToWorldTransform3D());
+
+        //create shadow texture
+        var shadowTexture = cc.textureCache.addImage("Sprite3DTest/shadowCircle.png");
+        shadowTexture.setTexParameters(gl.LINEAR, gl.LINEAR, gl.CLAMP_TO_EDGE, gl.CLAMP_TO_EDGE);
+        state.setUniformTexture("u_shadowTexture", shadowTexture);
+        state.setUniformVec3("u_target_pos", this._targetPos);
+        
+        this._camera = cc.Camera.createPerspective(60, s.width/s.height, 1, 1000);
+        this._camera.setCameraFlag(cc.CameraFlag.USER1);
+        this._camera.setPosition3D(cc.vec3(0, 20, 25));
+        this._camera.lookAt(cc.vec3(0, 0, 0));
+        this.addChild(this._camera);
+        this.setCameraMask(2);
+
+        this.scheduleUpdate();
+    },
+
+    update:function(dt){
+        this.updateState(dt)
+        
+        if(this.isState(State.State_Move)){
+            this.move3D(dt);
+            if(this.isState(State.State_Rotate)){
+                var curPos = this._orc.getPosition3D();
+                var newFaceDir = cc.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
+                newFaceDir.y = 0;
+                newFaceDir.normalize();
+
+                var m = this._orc.getNodeToWorldTransform3D();
+                var up = cc.vec3(m[4], m[5], m[6]);
+                up.normalize();
+
+                var right = cc.vec3cross(cc.vec3(-newFaceDir.x, -newFaceDir.y, -newFaceDir.z), up);
+                right.normalize();
+
+                var mat = [right.x,      right.y,      right.z,      0,
+                           up.x,         up.y,         up.z,         0,
+                           newFaceDir.x, newFaceDir.y, newFaceDir.z, 0,
+                           0,            0,            0,            1];
+
+                this._orc.setAdditionalTransform(mat);
+            }
+        }
+    },
+
+    updateState:function(dt){
+        if(!this._targetPos)
+            return;
+        var curPos = this._orc.getPosition3D();
+        var m = this._orc.getNodeToWorldTransform3D();
+        var curFaceDir = cc.vec3(m[8], m[9], m[10]);
+        curFaceDir.normalize();
+        var newFaceDir = cc.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
+        newFaceDir.y = 0;
+        newFaceDir.normalize();
+        var cosAngle = Math.abs(cc.vec3dot(curFaceDir, newFaceDir) - 1);
+        
+        var dx = curPos.x - this._targetPos.x,
+            dy = curPos.y - this._targetPos.y,
+            dz = curPos.z - this._targetPos.z;
+        var dist = dx * dx + dy * dy + dz * dz;
+
+        if(dist <= 4){
+            if(cosAngle <= 0.01)
+                this._curState = State.State_Idle;
+            else
+                this._curState = State.State_Rotate;
+        }else{
+            if(cosAngle > 0.01)
+                this._curState = State.State_Rotate | State.State_Move;
+            else
+                this._curState = State.State_Move;
+        }
+    },
+
+    isState:function(bit){
+        return (this._curState & bit) == bit;
+    },
+
+    move3D:function(dt){
+        if(!this._targetPos)
+            return;
+        var curPos = this._orc.getPosition3D();
+        var newFaceDir = cc.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
+        newFaceDir.y = 0;
+        newFaceDir.normalize();
+        var offset = cc.vec3(newFaceDir.x * 25 * dt, newFaceDir.y * 25 * dt, newFaceDir.z * 25 * dt);
+        curPos.x += offset.x;
+        curPos.y += offset.y;
+        curPos.z += offset.z;
+        this._orc.setPosition3D(curPos);
+        //pass the newest orc position
+        this._plane.getGLProgramState().setUniformVec3("u_target_pos",curPos);
+    },
+
+    onTouchesEnded:function(touches, event){
+        var touch = touches[0];
+        var location = touch.getLocationInView();
+        if(this._camera !== null){
+           var nearP = cc.vec3(location.x, location.y, -1);
+            var farP = cc.vec3(location.x, location.y, 1);
+
+            var size = cc.winSize;
+            nearP = this._camera.unproject(size, nearP);
+            farP = this._camera.unproject(size, farP);
+
+            var dir = cc.vec3(farP.x-nearP.x, farP.y-nearP.y, farP.z-nearP.z);
+            var ndd = dir.y; // (0, 1, 0) * dir
+            var ndo = nearP.y; // (0, 1, 0) * nearP
+            var dist = - ndo / ndd;
+            var p = cc.vec3(nearP.x+dist*dir.x, nearP.y+dist*dir.y, nearP.z+dist*dir.z);
+
+            if(p.x > 100)
+                p.x = 100;
+            if(p.x < -100)
+                p.x = -100;
+            if(p.z > 100)
+                p.z = 100
+            if(p.z < -100)
+                p.z = -100;
+
+            this._targetPos = p;
+        }
+    }
+});
+
+var Sprite3DBasicToonShaderTest = Sprite3DTestDemo.extend({
+    _title:"basic toon shader test",
+    _subtitle:"",
+
+    ctor:function(){
+        this._super();
+
+        var camera = cc.Camera.createPerspective(60, cc.winSize.width/cc.winSize.height, 1, 1000);
+        camera.setCameraFlag(cc.CameraFlag.USER1);
+        this.addChild(camera);
+        this.setCameraMask(2);
+
+        //create a teapot
+        var teapot = new cc.Sprite3D("Sprite3DTest/teapot.c3b");
+        //create and set out custom shader
+        var shader = new cc.GLProgram("Sprite3DTest/toon.vert", "Sprite3DTest/toon.frag");
+        var state = cc.GLProgramState.create(shader);
+        teapot.setGLProgramState(state);
+        teapot.setPosition3D(cc.vec3(cc.winSize.width/2, cc.winSize.height/2, -20));
+        teapot.setRotation3D(cc.vec3(-90, 180, 0));
+        teapot.setScale(10);
+        teapot.runAction(cc.rotateBy(1.5, cc.vec3(0, 30, 0)).repeatForever());
+        this.addChild(teapot);
+
+        //pass mesh's attribute to shader
+        var offset = 0;
+        var attributeCount = teapot.getMesh().getMeshVertexAttribCount();
+        for(var i = 0; i < attributeCount; ++i){
+            var meshattribute = teapot.getMesh().getMeshVertexAttribute(i);
+            state.setVertexAttribPointer(cc.attributeNames[meshattribute.vertexAttrib],
+                meshattribute.size,
+                meshattribute.type,
+                gl.FALSE,
+                teapot.getMesh().getVertexSizeInBytes(),
+                offset);
+            offset += meshattribute.attribSizeBytes;
+        }
+    }
+});
+
 //
 // Flow control
 //
@@ -1068,8 +1551,19 @@ var arrayOfSprite3DTest = [
     Sprite3DForceDepthTest,
     UseCaseSprite3D1,
     UseCaseSprite3D2
-    //TODO 3D effects test
 ];
+
+// 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
+if(cc.sys.OS !== cc.sys.OS_WP8){
+    arrayOfSprite3DTest = arrayOfSprite3DTest.concat([
+        Sprite3DEffectTest,
+        Sprite3DWithSkinOutlineTest,
+        Sprite3DLightMapTest,
+        Sprite3DUVAnimationTest,
+        Sprite3DFakeShadowTest,
+        Sprite3DBasicToonShaderTest,
+    ]);
+}
 
 var nextSprite3DTest = function () {
     Sprite3DTestIdx++;
