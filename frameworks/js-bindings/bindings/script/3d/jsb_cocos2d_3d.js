@@ -73,6 +73,16 @@ cc.BillBoard.Mode = {
     VIEW_PLANE_ORIENTED : 1  // orient to the XOY plane of camera
 };
 
+cc.attributeNames = [cc.ATTRIBUTE_NAME_POSITION, 
+    cc.ATTRIBUTE_NAME_COLOR, 
+    cc.ATTRIBUTE_NAME_TEX_COORD,
+    cc.ATTRIBUTE_NAME_TEX_COORD1,
+    cc.ATTRIBUTE_NAME_TEX_COORD2,
+    cc.ATTRIBUTE_NAME_TEX_COORD3,
+    cc.ATTRIBUTE_NAME_NORMAL,
+    cc.ATTRIBUTE_NAME_BLEND_WEIGHT,
+    cc.ATTRIBUTE_NAME_BLEND_INDEX];
+
 cc.Vec3 = function(x=0, y=0, z=0){
     this.x = x;
     this.y = y;
