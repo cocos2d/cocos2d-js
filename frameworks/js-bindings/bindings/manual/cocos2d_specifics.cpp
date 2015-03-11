@@ -4207,6 +4207,38 @@ bool js_cocos2dx_CCGLProgram_getProgram(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+bool js_cocos2dx_GLProgramState_setVertexAttribPointer(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::GLProgramState* cobj = (cocos2d::GLProgramState *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramState_setVertexAttribPointer : Invalid Native Object");
+    if (argc == 6) {
+        std::string arg0;
+        int arg1;
+        unsigned int arg2;
+        uint16_t arg3;
+        int arg4;
+        long arg5;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        ok &= jsval_to_uint32(cx, args.get(2), &arg2);
+        ok &= jsval_to_uint16(cx, args.get(3), &arg3);
+        ok &= jsval_to_int32(cx, args.get(4), (int32_t *)&arg4);
+        ok &= jsval_to_long(cx, args.get(5), &arg5);
+
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgramState_setVertexAttribPointer : Error processing arguments");
+        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (GLvoid*)arg5);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_GLProgramState_setVertexAttribPointer : wrong number of arguments: %d, was expecting %d", argc, 6);
+    return false;
+}
+
 #define js_cocos2dx_CCCamera_getXYZ(funcName) \
     bool ok = true;                                                                                                  \
     JSObject *obj = JS_THIS_OBJECT(cx, vp);                                                                               \
@@ -5028,6 +5060,8 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, glProgramProto, "setUniformLocationF32", js_cocos2dx_CCGLProgram_setUniformLocationWith4f, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, glProgramProto, "getProgram", js_cocos2dx_CCGLProgram_getProgram, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
+    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_GLProgramState_prototype), "setVertexAttribPointer", js_cocos2dx_GLProgramState_setVertexAttribPointer, 6, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
     JS::RootedObject componentProto(cx, jsb_cocos2d_Component_prototype);
     JS_DefineFunction(cx, componentProto, "onEnter", js_cocos2dx_Component_onEnter, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
     JS_DefineFunction(cx, componentProto, "onExit", js_cocos2dx_Component_onExit, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
