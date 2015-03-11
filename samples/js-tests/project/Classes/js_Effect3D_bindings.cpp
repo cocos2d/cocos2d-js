@@ -55,13 +55,13 @@ public:
     
     virtual void draw(const Mat4 &transform) override;
     virtual void setTarget(EffectSprite3D *sprite) override;
-protected:
+
     
     Effect3DOutline();
     virtual ~Effect3DOutline();
     
     bool init();
-    
+protected: 
     Vec3 _outlineColor;
     float _outlineWidth;
     //weak reference
@@ -91,10 +91,10 @@ public:
     void setEffect3D(Effect3D* effect);
     void addEffect(Effect3DOutline* effect, ssize_t order);
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-protected:
+
     EffectSprite3D();
     virtual ~EffectSprite3D();
-    
+protected:
     std::vector<std::tuple<ssize_t,Effect3D*,CustomCommand>> _effects;
     Effect3D* _defaultEffect;
     CustomCommand _command;
@@ -469,6 +469,33 @@ void js_Effect3DOutline_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Effect3DOutline)", obj);
 }
 
+bool jsb_Effect3DOutline_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    Effect3DOutline* cobj = new (std::nothrow) Effect3DOutline();
+    cobj->init();
+    cobj->autorelease();
+    TypeTest<Effect3DOutline> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Effect3DOutline");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
 void js_register_cocos2dx_Effect3DOutline(JSContext *cx, JS::HandleObject global) {
     jsb_Effect3DOutline_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_Effect3DOutline_class->name = "Effect3DOutline";
@@ -502,7 +529,7 @@ void js_register_cocos2dx_Effect3DOutline(JSContext *cx, JS::HandleObject global
                                                  cx, global,
                                                  JS::RootedObject(cx, jsb_Effect3D_prototype),
                                                  jsb_Effect3DOutline_class,
-                                                 nullptr, 0, // no constructor
+                                                 jsb_Effect3DOutline_constructor, 0, 
                                                  properties,
                                                  funcs,
                                                  NULL, // no static properties
@@ -645,6 +672,38 @@ void js_EffectSprite3D_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EffectSprite3D)", obj);
 }
 
+bool jsb_EffectSprite3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    EffectSprite3D* cobj = new (std::nothrow) EffectSprite3D();
+    if(argc == 1)
+    {
+        std::string path;
+        jsval_to_std_string(cx, args.get(0), &path);
+        cobj->initWithFile(path);
+    }
+    cobj->autorelease();
+    TypeTest<EffectSprite3D> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::EffectSprite3D");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
 void js_register_cocos2dx_EffectSprite3D(JSContext *cx, JS::HandleObject global) {
     jsb_EffectSprite3D_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_EffectSprite3D_class->name = "EffectSprite3D";
@@ -679,7 +738,7 @@ void js_register_cocos2dx_EffectSprite3D(JSContext *cx, JS::HandleObject global)
                                                 cx, global,
                                                 JS::RootedObject(cx, jsb_cocos2d_Sprite3D_prototype),
                                                 jsb_EffectSprite3D_class,
-                                                nullptr, 0, // no constructor
+                                                jsb_EffectSprite3D_constructor, 1,
                                                 properties,
                                                 funcs,
                                                 NULL, // no static properties

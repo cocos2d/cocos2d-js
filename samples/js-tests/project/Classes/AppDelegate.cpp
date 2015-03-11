@@ -37,6 +37,10 @@
 #include "platform/ios/JavaScriptObjCBridge.h"
 #endif
 
+#if(CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#include "js_Effect3D_bindings.h"
+#endif
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace CocosDenshion;
@@ -116,6 +120,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
 
     sc->addRegisterCallback(register_DrawNode3D_bindings);
+#if(CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+    sc->addRegisterCallback(register_Effect3D_bindings);
+#endif
 
     sc->start();
     sc->runScript("script/jsb_boot.js");

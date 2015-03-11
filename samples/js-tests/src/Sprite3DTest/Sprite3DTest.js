@@ -1050,6 +1050,64 @@ var UseCaseSprite3D2 = Sprite3DTestDemo.extend({
     }
 });
 
+var Sprite3DWithSkinOutlineTest = Sprite3DTestDemo.extend({
+    _title:"Testing Sprite3D for skinned outline",
+    _subtitle:"Tap screen to add more sprite3D",
+
+    ctor:function(){
+        this._super();
+
+        cc.eventManager.addListener({
+            event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesBegan:this.onTouchesBegan.bind(this)
+        }, this);
+
+        cc.log(cc.EffectSprite3D);
+        this.addNewSpriteWithCoords(cc.p(cc.winSize.width/2, cc.winSize.height/2));
+    },
+
+    addNewSpriteWithCoords:function(p){
+        var sprite = new cc.EffectSprite3D("Sprite3DTest/orc.c3b");
+        sprite.setScale(3);
+        sprite.setRotation3D(cc.vec3(0, 180, 0));
+        this.addChild(sprite);
+        sprite.setPosition(p);
+
+        var effect = new cc.Effect3DOutline();
+        effect.setOutlineColor(cc.vec3(1, 0, 0));
+        effect.setOutlineWidth(0.01);
+        sprite.addEffect(effect, -1);
+
+        var effect2 = new cc.Effect3DOutline();
+        effect2.setOutlineColor(cc.vec3(1, 1, 0));
+        effect2.setOutlineWidth(0.02);
+        sprite.addEffect(effect2, -2);
+
+        var animation = cc.Animation3D.create("Sprite3DTest/orc.c3b");
+        if(animation){
+            var animate = cc.Animate3D.create(animation);
+            var inverse = Math.random() < 0.33 ? true : false;
+
+            var rand2 = Math.random();
+            var speed = 1.0;
+            if(rand2 < 0.33)
+                speed = animate.getSpeed() + Math.random();
+            else if(rand2 < 0.66)            
+                spped = animate.getSpeed() - 0.5 * Math.random();
+
+            animate.setSpeed(inverse ? -speed : speed);
+            sprite.runAction(new cc.RepeatForever(animate));
+        }
+    },
+
+    onTouchesBegan:function(touches, event){
+        for(var i = 0; i < touches.length; ++i){
+            var location = touches[i].getLocation();
+            this.addNewSpriteWithCoords(location);
+        }
+    }
+});
+
 //
 // Flow control
 //
@@ -1068,8 +1126,19 @@ var arrayOfSprite3DTest = [
     Sprite3DForceDepthTest,
     UseCaseSprite3D1,
     UseCaseSprite3D2
-    //TODO 3D effects test
 ];
+
+// 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
+if(cc.sys.OS !== cc.sys.OS_WP8){
+    arrayOfSprite3DTest = arrayOfSprite3DTest.concat([
+        Sprite3DWithSkinOutlineTest,
+        // Sprite3DEffectTest,
+        // Sprite3DUVAnimationTest,
+        // Sprite3DFakeShadowTest,
+        // Sprite3DBasicToonShaderTest,
+        // Sprite3DLightMapTest
+    ]);
+}
 
 var nextSprite3DTest = function () {
     Sprite3DTestIdx++;
