@@ -28,6 +28,7 @@
 
 #include "XMLHTTPRequest.h"
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -60,6 +61,14 @@ void MinXmlHttpRequest::_gotHeader(string header)
         if (!http_value.empty() && http_value[http_value.size() - 1] == '\n') {
             http_value.erase(http_value.size() - 1);
         }
+
+        // Get rid of leading space (header is field: value format)
+        if (!http_value.empty() && http_value[0] == ' ') {
+            http_value.erase(0, 1);
+        }
+        
+        // Transform field name to lower case as they are case-insensitive
+        std::transform(http_field.begin(), http_field.end(), http_field.begin(), ::tolower);
         
         _httpHeader[http_field] = http_value;
         
@@ -827,6 +836,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, getResponseHeader)
     streamdata << data;
 
     string value = streamdata.str();
+    std::transform(value.begin(), value.end(), value.begin(), ::tolower);
     
     auto iter = _httpHeader.find(value);
     if (iter != _httpHeader.end())
