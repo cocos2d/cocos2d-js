@@ -2021,7 +2021,6 @@ bool js_cocos2dx_GLProgramState_setUniformVec2(JSContext *cx, uint32_t argc, jsv
 bool js_cocos2dx_GLProgramState_getVertexAttribsFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_setVertexAttribCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_apply(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_GLProgramState_setVertexAttribPointer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_getGLProgram(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_getOrCreateWithGLProgramName(JSContext *cx, uint32_t argc, jsval *vp);

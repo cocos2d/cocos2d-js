@@ -614,18 +614,6 @@ getVertexBuffer : function (
 },
 
 /**
- * @method getMeshVertexAttribute
- * @param {int} arg0
- * @return {cc.MeshVertexAttrib}
- */
-getMeshVertexAttribute : function (
-int 
-)
-{
-    return cc.MeshVertexAttrib;
-},
-
-/**
  * @method hasVertexAttrib
  * @param {int} arg0
  * @return {bool}

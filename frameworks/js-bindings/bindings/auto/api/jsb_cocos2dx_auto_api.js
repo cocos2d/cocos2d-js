@@ -10352,26 +10352,6 @@ mat4
 },
 
 /**
- * @method setVertexAttribPointer
- * @param {String} arg0
- * @param {int} arg1
- * @param {unsigned int} arg2
- * @param {unsigned char} arg3
- * @param {int} arg4
- * @param {void} arg5
- */
-setVertexAttribPointer : function (
-str, 
-int, 
-int, 
-char, 
-int, 
-void 
-)
-{
-},
-
-/**
  * @method getGLProgram
  * @return {cc.GLProgram}
  */
