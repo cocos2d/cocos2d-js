@@ -1094,6 +1094,159 @@ var CameraArcBallDemo = Camera3DTestDemo.extend({
     }
 });
 
+var FogTestDemo = Camera3DTestDemo.extend({
+    _title:"Fog Test Demo",
+    _subtitle:"",
+    _sprite3D1:null,
+    _sprite3D2:null,
+    _camera:null,
+    _state:null,
+
+    ctor:function(){
+        this._super();
+        cc.director.setClearColor(cc.color(128, 128, 128));
+
+        cc.eventManager.addListener({
+            event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesMoved:this.onTouchesMoved.bind(this)
+        }, this);
+
+        // swich fog type
+        var label1 = new cc.LabelTTF("Linear", "Arial", 20);
+        var item1 = new cc.MenuItemLabel(label1, this.switchTypeCallback, this);
+        item1.setUserData(0);
+        var label2 = new cc.LabelTTF("Exp", "Arial", 20);
+        var item2 = new cc.MenuItemLabel(label2, this.switchTypeCallback, this);
+        item2.setUserData(1);
+        var label3 = new cc.LabelTTF("Exp2", "Arial", 20);
+        var item3 = new cc.MenuItemLabel(label3, this.switchTypeCallback, this);
+        item3.setUserData(2);
+        var menu = new cc.Menu(item1, item2, item3);
+        menu.setPosition(cc.p(0, 0));
+
+        item1.setPosition(cc.visibleRect.left.x + 60, cc.visibleRect.top.y - 50);
+        item2.setPosition(cc.visibleRect.left.x + 60, cc.visibleRect.top.y - 100);
+        item3.setPosition(cc.visibleRect.left.x + 60, cc.visibleRect.top.y - 150);
+        this.addChild(menu, 0);
+
+        var layer3D = new cc.Layer();
+        this.addChild(layer3D, 0);
+
+        var shader = new cc.GLProgram("Sprite3DTest/fog.vert", "Sprite3DTest/fog.frag");
+        var state = cc.GLProgramState.create(shader);
+        this._state = state;
+
+        this._sprite3D1 = new cc.Sprite3D("Sprite3DTest/teapot.c3b");
+        this._sprite3D2 = new cc.Sprite3D("Sprite3DTest/teapot.c3b");
+
+        this._sprite3D1.setGLProgramState(state);
+        this._sprite3D2.setGLProgramState(state);
+
+        //pass mesh's attribute to shader
+        var offset = 0;
+        var attributeCount = this._sprite3D1.getMesh().getMeshVertexAttribCount();
+        for(var i = 0; i < attributeCount; ++i){
+            var meshattribute = this._sprite3D1.getMesh().getMeshVertexAttribute(i);
+            state.setVertexAttribPointer(cc.attributeNames[meshattribute.vertexAttrib],
+                meshattribute.size,
+                meshattribute.type,
+                gl.FALSE,
+                this._sprite3D1.getMesh().getVertexSizeInBytes(),
+                offset);
+            offset += meshattribute.attribSizeBytes;
+        }
+
+        var offset1 = 0;
+        var attributeCount = this._sprite3D2.getMesh().getMeshVertexAttribCount();
+        for(var i = 0; i < attributeCount; ++i){
+            var meshattribute = this._sprite3D2.getMesh().getMeshVertexAttribute(i);
+            state.setVertexAttribPointer(cc.attributeNames[meshattribute.vertexAttrib],
+                meshattribute.size,
+                meshattribute.type,
+                gl.FALSE,
+                this._sprite3D2.getMesh().getVertexSizeInBytes(),
+                offset1);
+            offset1 += meshattribute.attribSizeBytes;
+        }
+
+        state.setUniformVec4("u_fogColor", cc.vec4(0.5, 0.5, 0.5, 1.0));
+        state.setUniformFloat("u_fogStart", 10);
+        state.setUniformFloat("u_fogEnd", 60);
+        state.setUniformInt("u_fogEquation", 0);
+
+        layer3D.addChild(this._sprite3D1);
+        this._sprite3D1.setPosition3D(cc.vec3(0, 0, 0));
+        this._sprite3D1.setScale(2);
+        this._sprite3D1.setRotation3D(cc.vec3(-90, 180, 0));
+
+        layer3D.addChild(this._sprite3D2);
+        this._sprite3D2.setPosition3D(cc.vec3(0, 0, -20));
+        this._sprite3D2.setScale(2);
+        this._sprite3D2.setRotation3D(cc.vec3(-90, 180, 0));
+
+        this._camera = cc.Camera.createPerspective(60, cc.winSize.width/cc.winSize.height, 1, 1000);
+        this._camera.setCameraFlag(cc.CameraFlag.USER1);
+        this._camera.setPosition3D(cc.vec3(0, 30, 40));
+        this._camera.lookAt(cc.vec3(0, 0, 0), cc.vec3(0, 1, 0));
+        layer3D.addChild(this._camera);
+        layer3D.setCameraMask(2);
+    },
+
+    onExit:function(){
+        this._super();
+        cc.director.setClearColor(cc.color(0, 0, 0));
+    },
+
+    switchTypeCallback:function(sender){
+        var type = sender.getUserData();
+        if(type === 0){
+            this._state.setUniformVec4("u_fogColor", cc.vec4(0.5, 0.5, 0.5, 1.0));
+            this._state.setUniformFloat("u_fogStart", 10);
+            this._state.setUniformFloat("u_fogEnd", 60);
+            this._state.setUniformInt("u_fogEquation", 0);
+
+            this._sprite3D1.setGLProgramState(this._state);
+            this._sprite3D2.setGLProgramState(this._state);
+        }else if(type === 1){
+            this._state.setUniformVec4("u_fogColor", cc.vec4(0.5, 0.5, 0.5, 1.0));
+            this._state.setUniformFloat("u_fogDensity", 0.03);
+            this._state.setUniformInt("u_fogEquation", 1);
+
+            this._sprite3D1.setGLProgramState(this._state);
+            this._sprite3D2.setGLProgramState(this._state);
+        }else if(type === 2){
+            this._state.setUniformVec4("u_fogColor", cc.vec4(0.5, 0.5, 0.5, 1.0));
+            this._state.setUniformFloat("u_fogDensity", 0.03);
+            this._state.setUniformInt("u_fogEquation", 2);
+
+            this._sprite3D1.setGLProgramState(this._state);
+            this._sprite3D2.setGLProgramState(this._state);
+        }
+    },
+
+    onTouchesMoved:function(touches, event){
+        if(touches.length === 1){
+            var prelocation = touches[0].getPreviousLocationInView();
+            var location = touches[0].getLocationInView();
+            var newPos = cc.vec3Sub(prelocation, location);
+
+            var m = this._camera.getNodeToWorldTransform3D();
+            var cameraDir = cc.vec3(-m[8], -m[9], -m[10]);
+            cameraDir.normalize();
+            cameraDir.y = 0;
+            var cameraRightDir = cc.vec3(m[0], m[1], m[2]);
+            cameraRightDir.normalize();
+            cameraRightDir.y = 0;
+
+            var cameraPos = this._camera.getPosition3D();
+            cameraPos.x += cameraDir.x*newPos.y*0.1 + cameraRightDir.x*newPos.x*0.1;
+            cameraPos.y += cameraDir.y*newPos.y*0.1 + cameraRightDir.y*newPos.x*0.1;
+            cameraPos.z += cameraDir.z*newPos.y*0.1 + cameraRightDir.z*newPos.x*0.1;
+            this._camera.setPosition3D(cameraPos);
+        }
+    }
+});
+
 //
 // Flow control
 //
@@ -1103,6 +1256,10 @@ var arrayOfCamera3DTest = [
     CameraCullingDemo,
     CameraArcBallDemo
 ];
+
+if(cc.sys.OS !== cc.sys.OS_WP8){
+    arrayOfCamera3DTest.push(FogTestDemo);
+}
 
 var nextCamera3DTest = function () {
     Camera3DTestIdx++;

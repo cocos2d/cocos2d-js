@@ -195,6 +195,12 @@ cc.ray = function(origin, direction){
     return new cc.Ray(origin, direction);
 };
 
+cc.Vec4 = cc.Quaternion;
+
+cc.vec4 = function(x, y, z, w){
+    return new cc.Vec4(x, y, z, w);
+};
+
 cc.Sprite3D.prototype._ctor = function(modelPath, texturePath){
     if(modelPath === undefined){
         this.init();
