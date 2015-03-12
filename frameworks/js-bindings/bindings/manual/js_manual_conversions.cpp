@@ -1476,6 +1476,35 @@ bool jsval_to_vector3(JSContext *cx, JS::HandleValue vp, cocos2d::Vec3* ret)
     return true;
 }
 
+bool jsval_to_vector4(JSContext *cx, JS::HandleValue vp, cocos2d::Vec4* ret)
+{
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jsx(cx);
+    JS::RootedValue jsy(cx);
+    JS::RootedValue jsz(cx);
+    JS::RootedValue jsw(cx);
+    double x, y, z, w;
+    bool ok = vp.isObject() &&
+    JS_ValueToObject(cx, vp, &tmp) &&
+    JS_GetProperty(cx, tmp, "x", &jsx) &&
+    JS_GetProperty(cx, tmp, "y", &jsy) &&
+    JS_GetProperty(cx, tmp, "z", &jsz) &&
+    JS_GetProperty(cx, tmp, "w", &jsw) &&
+    JS::ToNumber(cx, jsx, &x) &&
+    JS::ToNumber(cx, jsy, &y) &&
+    JS::ToNumber(cx, jsz, &z) &&
+    JS::ToNumber(cx, jsw, &w) &&
+    !isnan(x) && !isnan(y) && !isnan(z) && !isnan(w);
+    
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+    
+    ret->x = (float)x;
+    ret->y = (float)y;
+    ret->z = (float)z;
+    ret->w = (float)w;
+    return true;
+}
+
 bool jsval_to_blendfunc(JSContext *cx, JS::HandleValue vp, cocos2d::BlendFunc* ret)
 {
     JS::RootedObject tmp(cx);
