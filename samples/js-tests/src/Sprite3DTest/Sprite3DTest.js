@@ -1399,7 +1399,7 @@ var Sprite3DFakeShadowTest = Sprite3DTestDemo.extend({
                 var up = cc.vec3(m[4], m[5], m[6]);
                 up.normalize();
 
-                var right = cc.vec3cross(cc.vec3(-newFaceDir.x, -newFaceDir.y, -newFaceDir.z), up);
+                var right = cc.vec3Cross(cc.vec3(-newFaceDir.x, -newFaceDir.y, -newFaceDir.z), up);
                 right.normalize();
 
                 var mat = [right.x,      right.y,      right.z,      0,
@@ -1422,7 +1422,7 @@ var Sprite3DFakeShadowTest = Sprite3DTestDemo.extend({
         var newFaceDir = cc.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
         newFaceDir.y = 0;
         newFaceDir.normalize();
-        var cosAngle = Math.abs(cc.vec3dot(curFaceDir, newFaceDir) - 1);
+        var cosAngle = Math.abs(cc.vec3Dot(curFaceDir, newFaceDir) - 1);
         
         var dx = curPos.x - this._targetPos.x,
             dy = curPos.y - this._targetPos.y,

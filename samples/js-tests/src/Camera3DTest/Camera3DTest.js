@@ -394,7 +394,7 @@ var Camera3DTest = (function(){
             var newFaceDir = cc.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
             newFaceDir.y = 0;
             newFaceDir.normalize();
-            var cosAngle = Math.abs(cc.vec3dot(curFaceDir, newFaceDir) - 1);
+            var cosAngle = Math.abs(cc.vec3Dot(curFaceDir, newFaceDir) - 1);
             
             var dx = curPos.x - this._targetPos.x,
                 dy = curPos.y - this._targetPos.y,
@@ -450,7 +450,7 @@ var Camera3DTest = (function(){
                         var up = cc.vec3(m[4], m[5], m[6]);
                         up.normalize();
 
-                        var right = cc.vec3cross(cc.vec3(-newFaceDir.x, -newFaceDir.y, -newFaceDir.z), up);
+                        var right = cc.vec3Cross(cc.vec3(-newFaceDir.x, -newFaceDir.y, -newFaceDir.z), up);
                         right.normalize();
 
                         var mat = [right.x,      right.y,      right.z,      0,
@@ -468,7 +468,7 @@ var Camera3DTest = (function(){
                     var cameraPos = this._camera.getPosition3D();
                     var spritePos = this._sprite3D.getPosition3D();
                     var lookDir = cc.vec3(cameraPos.x - spritePos.x, cameraPos.y - spritePos.y, cameraPos.z - spritePos.z);
-                    if(cc.vec3length(lookDir) <= 300){
+                    if(cc.vec3Length(lookDir) <= 300){
                         lookDir.normalize();
                         cameraPos.x += lookDir.x;
                         cameraPos.y += lookDir.y;
@@ -477,8 +477,8 @@ var Camera3DTest = (function(){
                     }
                 }else if(this._cameraType == CameraType.Free){
                     var cameraPos = this._camera.getPosition3D();
-                    if(cc.vec3length(cameraPos) <= 300){
-                        var n = cc.vec3normalize(cameraPos);
+                    if(cc.vec3Length(cameraPos) <= 300){
+                        var n = cc.vec3Normalize(cameraPos);
                         cameraPos.x += n.x;
                         cameraPos.y += n.y;
                         cameraPos.z += n.z;
@@ -492,7 +492,7 @@ var Camera3DTest = (function(){
                     var cameraPos = this._camera.getPosition3D();
                     var spritePos = this._sprite3D.getPosition3D();
                     var lookDir = cc.vec3(cameraPos.x - spritePos.x, cameraPos.y - spritePos.y, cameraPos.z - spritePos.z);
-                    if(cc.vec3length(lookDir) >= 50){
+                    if(cc.vec3Length(lookDir) >= 50){
                         lookDir.normalize();
                         cameraPos.x -= lookDir.x;
                         cameraPos.y -= lookDir.y;
@@ -501,8 +501,8 @@ var Camera3DTest = (function(){
                     }
                 }else if(this._cameraType == CameraType.Free){
                     var cameraPos = this._camera.getPosition3D();
-                    if(cc.vec3length(cameraPos) >= 50){
-                        var n = cc.vec3normalize(cameraPos);
+                    if(cc.vec3Length(cameraPos) >= 50){
+                        var n = cc.vec3Normalize(cameraPos);
                         cameraPos.x -= n.x;
                         cameraPos.y -= n.y;
                         cameraPos.z -= n.z;
@@ -1067,10 +1067,10 @@ var CameraArcBallDemo = Camera3DTestDemo.extend({
         z = this.projectToSphere(this._radius, p2x, p2y);
         var p2 = cc.vec3Sub(cc.vec3Add(cc.vec3(sv.x * p2x, sv.y * p2x, sv.z * p2x), cc.vec3(uv.x * p2y, uv.y * p2y, uv.z *p2y)), cc.vec3(lv.x * z, lv.y * z, lv.z * z));  //end point screen transform to 3d
 
-        axis = cc.vec3cross(p2, p1); //calculate rotation axis
+        axis = cc.vec3Cross(p2, p1); //calculate rotation axis
         axis.normalize();
 
-        var t = cc.vec3length(cc.vec3Sub(p2, p1)) / (2 * this._radius);
+        var t = cc.vec3Length(cc.vec3Sub(p2, p1)) / (2 * this._radius);
         //clamp -1 to 1
         if(t > 1) t = 1;
         if(t < -1) t = -1;
