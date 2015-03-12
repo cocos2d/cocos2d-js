@@ -860,7 +860,8 @@ JSObject* getObjectFromNamespace(JSContext* cx, JS::HandleObject ns, const char 
 jsval anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* string) {
     JS::RootedValue out(cx);
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-    if (JS_EvaluateScript(cx, thisObj, string, strlen(string), "(string)", 1, &out) == true) {
+    JS::OwningCompileOptions opts(cx);
+    if (JS::Evaluate(cx, thisObj, opts, string, strlen(string), &out) == true) {
         return out.get();
     }
     return JSVAL_VOID;
