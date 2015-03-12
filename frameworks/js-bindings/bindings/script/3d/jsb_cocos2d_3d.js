@@ -121,6 +121,14 @@ cc.vec3normalize = function(v){
     return cc.vec3(v.x * n, v.y * n, v.z * n);
 };
 
+cc.vec3Add = function(v1, v2){
+    return new cc.Vec3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+};
+
+cc.vec3Sub = function(v1, v2){
+    return new cc.Vec3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+};
+
 cc.Quaternion = function(x=0, y=0, z=0, w=0){
     this.x = x;
     this.y = y;

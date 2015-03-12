@@ -3662,7 +3662,7 @@ bool js_cocos2dx_ccobbIntersects(JSContext *cx, uint32_t argc, jsval *vp)
         return true;
     }
 
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 
@@ -3684,7 +3684,115 @@ bool js_cocos2dx_ccrayIntersectsObb(JSContext *cx, uint32_t argc, jsval *vp)
         return true;
     }
 
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+
+bool js_cocos2dx_ccmat4CreateTranslation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 1)
+    {
+        cocos2d::Vec3 arg0;
+        bool ok = jsval_to_vector3(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        cocos2d::Mat4 ret;
+        cocos2d::Mat4::createTranslation(arg0, &ret);
+        jsval jsret = matrix_to_jsval(cx, ret);
+
+        args.rval().set(jsret);
+        return true;
+    }
+
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
+bool js_cocos2dx_ccmat4CreateRotation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 1)
+    {
+        cocos2d::Quaternion arg0;
+        bool ok = jsval_to_quaternion(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        cocos2d::Mat4 ret;
+        cocos2d::Mat4::createRotation(arg0, &ret);
+        jsval jsret = matrix_to_jsval(cx, ret);
+
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
+bool js_cocos2dx_ccmat4Multiply(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 2)
+    {
+        cocos2d::Mat4 arg0;
+        cocos2d::Mat4 arg1;
+        bool ok = jsval_to_matrix(cx, args.get(0), &arg0);
+        ok &= jsval_to_matrix(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        cocos2d::Mat4 ret = arg0 * arg1;
+        jsval jsret = matrix_to_jsval(cx, ret);
+
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+
+bool js_cocos2dx_ccmat4MultiplyVec3(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 2)
+    {
+        cocos2d::Mat4 arg0;
+        cocos2d::Vec3 arg1;
+        bool ok = jsval_to_matrix(cx, args.get(0), &arg0);
+        ok &= jsval_to_vector3(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        cocos2d::Vec3 ret = arg0 * arg1;
+        jsval jsret = vector3_to_jsval(cx, ret);
+
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+
+bool js_cocos2dx_ccquatMultiply(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 2)
+    {
+        cocos2d::Quaternion arg0;
+        cocos2d::Quaternion arg1;
+        bool ok = jsval_to_quaternion(cx, args.get(0), &arg0);
+        ok &= jsval_to_quaternion(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        cocos2d::Quaternion ret = arg0 * arg1;
+        jsval jsret = quaternion_to_jsval(cx, ret);
+
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 
@@ -5228,7 +5336,13 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, ccObj, "obbGetCorners", js_cocos2dx_ccobbGetCorners, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ccObj, "obbIntersectsObb", js_cocos2dx_ccobbIntersects, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ccObj, "rayIntersectsObb", js_cocos2dx_ccrayIntersectsObb, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    
+
+    JS_DefineFunction(cx, ccObj, "mat4CreateTranslation", js_cocos2dx_ccmat4CreateTranslation, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ccObj, "mat4CreateRotation", js_cocos2dx_ccmat4CreateRotation, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ccObj, "mat4Multiply", js_cocos2dx_ccmat4Multiply, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ccObj, "mat4MultiplyVec3", js_cocos2dx_ccmat4MultiplyVec3, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ccObj, "quatMultiply", js_cocos2dx_ccquatMultiply, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+
     js_register_cocos2dx_EventKeyboard(cx, ccObj);
 
     JS::RootedObject consoleObj(cx);

@@ -30,6 +30,11 @@ var CameraType = {
     ThirdPerson : 2,      
 };
 
+var OperateCamType = {
+    MoveCamera : 0,
+    RotateCamera : 1
+};
+
 var Camera3DTestIdx = -1;
 
 var Camera3DTestDemo = cc.Layer.extend({
@@ -920,6 +925,175 @@ var CameraCullingDemo = Camera3DTestDemo.extend({
         this._drawFrustum.drawLine(bl_1, tl_1, color);
     }
 });
+
+var CameraArcBallDemo = Camera3DTestDemo.extend({
+    _title:"Camera ArcBall Moving",
+    _subtitle:"",
+    _rotationQuat:cc.quaternion(0, 0, 0, 1),
+    _layer3D:null,
+    _camera:null,
+    _sprite3D1:null,
+    _sprite3D2:null,
+    _drawGrid:null,
+    _operate:OperateCamType.RotateCamera,
+    _target:0,
+    _center:cc.vec3(0, 0, 0),
+    _distanceZ:50,
+    _radius:1,
+
+    ctor:function(){
+        this._super();
+
+        cc.eventManager.addListener({
+            event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesMoved:this.onTouchesMoved.bind(this)
+        }, this);
+
+        cc.MenuItemFont.setFontName("Arial");
+        cc.MenuItemFont.setFontSize(20);
+
+        var item1 = new cc.MenuItemFont("Switch Operation", this.switchOperateCallback, this);
+        item1.setColor(cc.color(0, 200, 20));
+        var item2 = new cc.MenuItemFont("Switch Target", this.switchTargetCallback, this);
+        item2.setColor(cc.color(0, 200, 20));
+        var menu = new cc.Menu(item1, item2);
+        menu.setPosition(cc.p(0, 0));
+        item1.setPosition(cc.visibleRect.left.x + 80, cc.visibleRect.top.y - 70);
+        item2.setPosition(cc.visibleRect.left.x + 80, cc.visibleRect.top.y - 100);
+        this.addChild(menu, 1);
+
+        var layer3D = new cc.Layer();
+        this.addChild(layer3D);
+        this._layer3D = layer3D;
+
+        this._camera = cc.Camera.createPerspective(60, cc.winSize.width/cc.winSize.height, 1, 1000);
+        this._camera.setCameraFlag(cc.CameraFlag.USER1);
+        this._camera.setPosition3D(cc.vec3(0, 10, 50));
+        this._camera.lookAt(cc.vec3(0, 0, 0), cc.vec3(0, 1, 0));
+        layer3D.addChild(this._camera);
+
+        this._sprite3D1 = new cc.Sprite3D("Sprite3DTest/orc.c3b");
+        this._sprite3D1.setScale(0.5);
+        this._sprite3D1.setRotation3D(cc.vec3(0, 180, 0));
+        this._sprite3D1.setPosition3D(cc.vec3(0, 0, 0));
+        layer3D.addChild(this._sprite3D1);
+
+        this._sprite3D2 = new cc.Sprite3D("Sprite3DTest/boss.c3b");
+        this._sprite3D2.setScale(0.6);
+        this._sprite3D2.setRotation3D(cc.vec3(-90, 0, 0));
+        this._sprite3D2.setPosition3D(cc.vec3(20, 0, 0));
+        layer3D.addChild(this._sprite3D2);
+
+        this._drawGrid = new cc.DrawNode3D();
+        //draw x
+        for(var i = -20; i < 20; ++i)
+            this._drawGrid.drawLine(cc.vec3(-100, 0, 5*i), cc.vec3(100, 0, 5*i), cc.color(0, 0, 255));
+
+        //draw z
+        for(var j = -20; j < 20; ++j)
+            this._drawGrid.drawLine(cc.vec3(5*j, 0, -100), cc.vec3(5*j, 0, 100), cc.color(0, 255, 0));
+
+        //draw y
+        this._drawGrid.drawLine(cc.vec3(0, 0, 0), cc.vec3(0, 50, 0), cc.color(0, 255, 0));
+
+        layer3D.addChild(this._drawGrid);
+        layer3D.setCameraMask(2);
+        this.updateCameraTransform();
+    },
+
+    updateCameraTransform:function(){
+        var trans = cc.mat4CreateTranslation(cc.vec3(0, 10, this._distanceZ));
+        var rot = cc.mat4CreateRotation(this._rotationQuat);
+        var center = cc.mat4CreateTranslation(this._center);
+
+        var result = cc.mat4Multiply(cc.mat4Multiply(center, rot), trans);
+        this._camera.setNodeToParentTransform(result);
+    },
+
+    switchOperateCallback:function(sender){
+        if(this._operate === OperateCamType.MoveCamera)
+            this._operate = OperateCamType.RotateCamera;
+        else if(this._operate === OperateCamType.RotateCamera)
+            this._operate =  OperateCamType.MoveCamera;
+    },
+
+    switchTargetCallback:function(sender){
+        if(this._target === 0 ){
+            this._target = 1;
+            this._center = this._sprite3D2.getPosition3D();
+            this.updateCameraTransform();
+        }else if(this._target === 1){
+            this._target = 0;
+            this._center = this._sprite3D1.getPosition3D();
+            this.updateCameraTransform();
+        }
+    },
+
+    onTouchesMoved:function(touches, event){
+        if(touches.length > 0){
+            if(this._operate === OperateCamType.RotateCamera){    //arc ball rotate
+                var visibleSize = cc.director.getVisibleSize();
+                var prelocation = touches[0].getPreviousLocationInView();
+                var location = touches[0].getLocationInView();
+                location.x = 2 * location.x / visibleSize.width - 1;
+                location.y = 2 * (visibleSize.height - location.y) / visibleSize.height - 1;
+                prelocation.x = 2 * prelocation.x / visibleSize.width - 1;
+                prelocation.y = 2 * (visibleSize.height - prelocation.y) / visibleSize.height - 1;    
+
+                var quat = this.calculateArcBall(prelocation.x, prelocation.y, location.x, location.y);    //calculate  rotation quaternion parameters
+                this._rotationQuat = cc.quatMultiply(quat, this._rotationQuat);
+
+                this.updateCameraTransform();
+            }else if(this._operate === OperateCamType.MoveCamera){ //camera zoom
+                var newPos = cc.pSub(touches[0].getPreviousLocation(), touches[0].getLocation());
+                this._distanceZ -= newPos.y * 0.1;
+
+                this.updateCameraTransform();
+            }
+        }
+    },
+
+    calculateArcBall:function(p1x, p1y, p2x, p2y){
+        var axis, angle;
+
+        var rotation_matrix = cc.mat4CreateRotation(this._rotationQuat);
+
+        var uv = cc.mat4MultiplyVec3(rotation_matrix, cc.vec3(0, 1, 0)); //rotation y
+        var sv = cc.mat4MultiplyVec3(rotation_matrix, cc.vec3(1, 0, 0)); //rotation x
+        var lv = cc.mat4MultiplyVec3(rotation_matrix, cc.vec3(0, 0, -1));//rotation z
+
+        var z = this.projectToSphere(this._radius, p1x, p1y);
+        var p1 = cc.vec3Sub(cc.vec3Add(cc.vec3(sv.x * p1x, sv.y * p1x, sv.z * p1x), cc.vec3(uv.x * p1y, uv.y * p1y, uv.z *p1y)), cc.vec3(lv.x * z, lv.y * z, lv.z * z));  //start point screen transform to 3d
+        z = this.projectToSphere(this._radius, p2x, p2y);
+        var p2 = cc.vec3Sub(cc.vec3Add(cc.vec3(sv.x * p2x, sv.y * p2x, sv.z * p2x), cc.vec3(uv.x * p2y, uv.y * p2y, uv.z *p2y)), cc.vec3(lv.x * z, lv.y * z, lv.z * z));  //end point screen transform to 3d
+
+        axis = cc.vec3cross(p2, p1); //calculate rotation axis
+        axis.normalize();
+
+        var t = cc.vec3length(cc.vec3Sub(p2, p1)) / (2 * this._radius);
+        //clamp -1 to 1
+        if(t > 1) t = 1;
+        if(t < -1) t = -1;
+        angle = Math.asin(t);      //rotation angle*/
+
+        return cc.quaternion(axis, angle)
+    },
+
+    /* project an x,y pair onto a sphere of radius r or a
+    hyperbolic sheet if we are away from the center of the sphere. */
+    projectToSphere:function(r, x, y){
+        var d = Math.sqrt(x*x + y*y);
+        var t, z;
+        if(d < r * 0.70710678118654752440)//inside sphere
+            z = Math.sqrt(r*r - d*d)
+        else{
+            t = r / 1.41421356237309504880;
+            z = t*t / d;
+        }
+        return z;
+    }
+});
+
 //
 // Flow control
 //
@@ -927,7 +1101,7 @@ var arrayOfCamera3DTest = [
     CameraRotationTest,
     Camera3DTest,
     CameraCullingDemo,
-    // CameraArcBallDemo
+    CameraArcBallDemo
 ];
 
 var nextCamera3DTest = function () {
