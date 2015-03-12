@@ -236,8 +236,14 @@ _p._ctor = function(normalImage, selectedImage, three, four, five) {
             callback = three;
         }
         else if (five === undefined) {
-            callback = three;
-            target = four;
+            if (typeof three === "function") {
+                callback = three;
+                target = four;
+            }
+            else {
+                disabledImage = three;
+                callback = four;
+            }
         }
         else if (five) {
             disabledImage = three;
