@@ -32446,37 +32446,6 @@ bool js_cocos2dx_GLProgramState_apply(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_GLProgramState_apply : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_GLProgramState_setVertexAttribPointer(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::GLProgramState* cobj = (cocos2d::GLProgramState *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramState_setVertexAttribPointer : Invalid Native Object");
-    if (argc == 6) {
-        std::string arg0;
-        int arg1;
-        unsigned int arg2;
-        uint16_t arg3;
-        int arg4;
-        void* arg5;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        ok &= jsval_to_uint32(cx, args.get(2), &arg2);
-        ok &= jsval_to_uint16(cx, args.get(3), &arg3);
-        ok &= jsval_to_int32(cx, args.get(4), (int32_t *)&arg4);
-        #pragma warning NO CONVERSION TO NATIVE FOR void*
-		ok = false;
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgramState_setVertexAttribPointer : Error processing arguments");
-        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, arg5);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_GLProgramState_setVertexAttribPointer : wrong number of arguments: %d, was expecting %d", argc, 6);
-    return false;
-}
 bool js_cocos2dx_GLProgramState_getGLProgram(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -32632,7 +32601,6 @@ void js_register_cocos2dx_GLProgramState(JSContext *cx, JS::HandleObject global)
         JS_FN("getVertexAttribsFlags", js_cocos2dx_GLProgramState_getVertexAttribsFlags, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setVertexAttribCallback", js_cocos2dx_GLProgramState_setVertexAttribCallback, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("apply", js_cocos2dx_GLProgramState_apply, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setVertexAttribPointer", js_cocos2dx_GLProgramState_setVertexAttribPointer, 6, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getGLProgram", js_cocos2dx_GLProgramState_getGLProgram, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
