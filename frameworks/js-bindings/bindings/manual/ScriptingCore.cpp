@@ -761,7 +761,7 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
     auto fullpath = fileUtil->fullPathForFilename(path);
     auto content = fileUtil->getStringFromFile(fullpath);
     JSAutoCompartment ac(cx, global);
-    bool evaluatedOK = JS_EvaluateScript(cx, global, content.c_str(), content.length(), path, 0);
+    bool evaluatedOK = JS_EvaluateScript(cx, global, content.c_str(), content.length(), path, 1);
 #else
     compileScript(path,global,cx);
     JS::RootedScript script(cx, getScript(path));
