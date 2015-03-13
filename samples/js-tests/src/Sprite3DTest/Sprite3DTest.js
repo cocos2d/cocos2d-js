@@ -476,7 +476,7 @@ var AttachmentTest = Sprite3DTestDemo.extend({
     addNewSpriteWithCoords:function(position){
         var sprite = new cc.Sprite3D("Sprite3DTest/orc.c3b");
         sprite.setScale(5);
-        sprite.setRotation3D(cc.vec3(0, 180, 0));
+        sprite.setRotation3D(cc.math.vec3(0, 180, 0));
         this.addChild(sprite);
         sprite.setPosition(position);
 
@@ -563,7 +563,7 @@ var Sprite3DReskinTest = (function(){
         addNewSpriteWithCoords:function(position){
             var sprite = new cc.Sprite3D("Sprite3DTest/ReskinGirl.c3b");
             sprite.setScale(4);
-            sprite.setRotation3D(cc.vec3(0, 0, 0));
+            sprite.setRotation3D(cc.math.vec3(0, 0, 0));
             this.addChild(sprite);
             sprite.setPosition(cc.p(position.x, position.y - 60));
             var animation = cc.Animation3D.create("Sprite3DTest/ReskinGirl.c3b");
@@ -674,15 +674,15 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
 
             this._obbt.center = this._sprite.getPosition3D();
 
-            var corners = cc.obbGetCorners(this._obbt);
+            var corners = cc.math.obbGetCorners(this._obbt);
             this._drawDebug.drawCube(corners, cc.color(0, 0, 255));
         }
 
         if(this._obb.length > 0){
             this._drawOBB.clear();
             for(var i = 0; i < this._obb.length; ++i){
-                corners = cc.obbGetCorners(this._obb[i]);
-                this._drawOBB.drawCube(corners, cc.obbIntersectsObb(this._obbt, this._obb[i]) ? cc.color(255, 0, 0) : cc.color(0, 255, 0));
+                corners = cc.math.obbGetCorners(this._obb[i]);
+                this._drawOBB.drawCube(corners, cc.math.obbIntersectsObb(this._obbt, this._obb[i]) ? cc.color(255, 0, 0) : cc.color(0, 255, 0));
             }
         }
     },
@@ -713,7 +713,7 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
         sprite.runAction(seq);
 
         var aabb = sprite.getAABB();
-        this._obbt = cc.obb(aabb);
+        this._obbt = cc.math.obb(aabb);
 
         this._drawDebug = new cc.DrawNode3D();
         this.addChild(this._drawDebug);
@@ -736,9 +736,9 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
         var s = cc.winSize;
         for(var i = 0; i < 10; ++i){
             var randompos = cc.p(Math.random() * s.width, Math.random() * s.height);
-            var aabb = cc.aabb(cc.vec3(-10, -10, -10), cc.vec3(10, 10, 10));
-            var obb = cc.obb(aabb);
-            obb.center = cc.vec3(randompos.x, randompos.y, 0);
+            var aabb = cc.math.aabb(cc.math.vec3(-10, -10, -10), cc.math.vec3(10, 10, 10));
+            var obb = cc.math.obb(aabb);
+            obb.center = cc.math.vec3(randompos.x, randompos.y, 0);
             this._obb.push(obb);
         }
         this._labelCubeCount.setString(this._obb.length + " cubes");
@@ -756,7 +756,7 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
         var location = touches[0].getLocationInView();
         var ray = this.calculateRayByLocationInView(location);
         for(var j = 0; j < this._obb.length; ++j){
-            if(cc.rayIntersectsObb(ray, this._obb[j])){
+            if(cc.math.rayIntersectsObb(ray, this._obb[j])){
                 this._targetObbIndex = j;
                 return;
             }
@@ -767,7 +767,7 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
     onTouchesMoved:function(touches, event){
         if(this._targetObbIndex >= 0){
             var location = touches[0].getLocation();
-            this._obb[this._targetObbIndex].center = cc.vec3(location.x, location.y, 0);    
+            this._obb[this._targetObbIndex].center = cc.math.vec3(location.x, location.y, 0);    
         }
     },
 
@@ -775,16 +775,16 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
         var camera = cc.Camera.getDefaultCamera();
         var size = cc.winSize;
 
-        var src = cc.vec3(location.x, location.y, -1);
+        var src = cc.math.vec3(location.x, location.y, -1);
         var nearPoint = camera.unproject(size, src);
 
-        src = cc.vec3(location.x, location.y, 1);
+        src = cc.math.vec3(location.x, location.y, 1);
         var farPoint = camera.unproject(size, src);
 
-        var direction = cc.vec3(farPoint.x - nearPoint.x, farPoint.y - nearPoint.y, farPoint.z - nearPoint.z);
+        var direction = cc.math.vec3(farPoint.x - nearPoint.x, farPoint.y - nearPoint.y, farPoint.z - nearPoint.z);
         direction.normalize();
 
-        return cc.ray(nearPoint, direction);
+        return cc.math.ray(nearPoint, direction);
     }
 });
 
@@ -803,7 +803,7 @@ var Sprite3DMirrorTest = Sprite3DTestDemo.extend({
         var fileName = "Sprite3DTest/orc.c3b";
         var sprite = new cc.Sprite3D("Sprite3DTest/orc.c3b");
         sprite.setScale(5);
-        sprite.setRotation3D(cc.vec3(0, 180, 0));
+        sprite.setRotation3D(cc.math.vec3(0, 180, 0));
         this.addChild(sprite);
         sprite.setPosition(cc.p(position.x - 80, position.y));
 
@@ -822,7 +822,7 @@ var Sprite3DMirrorTest = Sprite3DTestDemo.extend({
         sprite.setScale(5);
         sprite.setScaleX(-5);
         sprite.setCullFace(gl.FRONT);
-        sprite.setRotation3D(cc.vec3(0, 180, 0));
+        sprite.setRotation3D(cc.math.vec3(0, 180, 0));
         this.addChild(sprite);
         sprite.setPosition(cc.p(position.x + 80, position.y));
 
@@ -872,7 +872,7 @@ var QuaternionTest = Sprite3DTestDemo.extend({
         var s = cc.winSize;
         this._sprite.setPosition(cc.p(s.width / 2 + this._radius * Math.cos(this._accAngle), s.height / 2 + this._radius * Math.sin(this._accAngle)));
 
-        var quat = cc.quaternion(cc.vec3(0, 0, 1), this._accAngle - Math.PI * 0.5);
+        var quat = cc.math.quaternion(cc.math.vec3(0, 0, 1), this._accAngle - Math.PI * 0.5);
         this._sprite.setRotationQuat(quat);
     }
 });
@@ -904,7 +904,7 @@ var Sprite3DForceDepthTest = Sprite3DTestDemo.extend({
         orc.setNormalizedPosition(cc.p(0.5, 0.3));
         // orc.setPositionZ(40);
         orc.setVertexZ(40);
-        orc.setRotation3D(cc.vec3(0, 180, 0));
+        orc.setRotation3D(cc.math.vec3(0, 180, 0));
         orc.setGlobalZOrder(-1);
 
         this.addChild(orc);
@@ -913,7 +913,7 @@ var Sprite3DForceDepthTest = Sprite3DTestDemo.extend({
         ship.setScale(5);
         ship.setTexture("Sprite3DTest/boss.png");
         ship.setNormalizedPosition(cc.p(0.5, 0.5));
-        ship.setRotation3D(cc.vec3(90, 0, 0));
+        ship.setRotation3D(cc.math.vec3(90, 0, 0));
         ship.setForceDepthWrite(true);
 
         this.addChild(ship);
@@ -932,8 +932,8 @@ var UseCaseSprite3D1 = Sprite3DTestDemo.extend({
         //setup camera
         var camera = cc.Camera.createPerspective(40, s.width/s.height, 0.01, 1000);
         camera.setCameraFlag(cc.CameraFlag.USER1);
-        camera.setPosition3D(cc.vec3(0, 30, 100));
-        camera.lookAt(cc.vec3(0, 0, 0));
+        camera.setPosition3D(cc.math.vec3(0, 30, 100));
+        camera.lookAt(cc.math.vec3(0, 0, 0));
         this.addChild(camera);
 
         var sprite = new cc.Sprite3D("Sprite3DTest/girl.c3b");
@@ -948,12 +948,12 @@ var UseCaseSprite3D1 = Sprite3DTestDemo.extend({
         var circle = new cc.Sprite("Sprite3DTest/circle.png");
         circleBack.setScale(0.5);
         circleBack.addChild(circle);
-        circle.runAction(cc.rotateBy(3, cc.vec3(0, 0, 360)).repeatForever());
+        circle.runAction(cc.rotateBy(3, cc.math.vec3(0, 0, 360)).repeatForever());
 
-        circleBack.setRotation3D(cc.vec3(90, 0, 0));
+        circleBack.setRotation3D(cc.math.vec3(90, 0, 0));
 
         var pos = sprite.getPosition3D();
-        circleBack.setPosition3D(cc.vec3(pos.x, pos.y, pos.z-1));
+        circleBack.setPosition3D(cc.math.vec3(pos.x, pos.y, pos.z-1));
 
         sprite.setOpacity(250);
         sprite.setCameraMask(2);
@@ -995,8 +995,8 @@ var UseCaseSprite3D2 = Sprite3DTestDemo.extend({
         //setup camera
         var camera = cc.Camera.createPerspective(40, s.width/s.height, 0.01, 1000);
         camera.setCameraFlag(cc.CameraFlag.USER1);
-        camera.setPosition3D(cc.vec3(0, 30, 100));
-        camera.lookAt(cc.vec3(0, 0, 0));
+        camera.setPosition3D(cc.math.vec3(0, 30, 100));
+        camera.lookAt(cc.math.vec3(0, 0, 0));
         this.addChild(camera);
 
         var layer = new cc.LayerColor(cc.color(0, 0, 100, 255), s.width/2, s.height/2);
@@ -1068,12 +1068,12 @@ var Sprite3DEffectTest = Sprite3DTestDemo.extend({
     addNewSpriteWithCoords:function(position){
         var sprite = new cc.EffectSprite3D("Sprite3DTest/boss1.obj", "Sprite3DTest/boss.png");
         var effect = new cc.Effect3DOutline();
-        effect.setOutlineColor(cc.vec3(1, 0, 0));
+        effect.setOutlineColor(cc.math.vec3(1, 0, 0));
         effect.setOutlineWidth(0.01);
         sprite.addEffect(effect, -1);
 
         var effect2 = new cc.Effect3DOutline();
-        effect2.setOutlineColor(cc.vec3(1, 1, 0));
+        effect2.setOutlineColor(cc.math.vec3(1, 1, 0));
         effect2.setOutlineWidth(0.02);
         sprite.addEffect(effect2, -2);
 
@@ -1126,17 +1126,17 @@ var Sprite3DWithSkinOutlineTest = Sprite3DTestDemo.extend({
     addNewSpriteWithCoords:function(p){
         var sprite = new cc.EffectSprite3D("Sprite3DTest/orc.c3b");
         sprite.setScale(3);
-        sprite.setRotation3D(cc.vec3(0, 180, 0));
+        sprite.setRotation3D(cc.math.vec3(0, 180, 0));
         this.addChild(sprite);
         sprite.setPosition(p);
 
         var effect = new cc.Effect3DOutline();
-        effect.setOutlineColor(cc.vec3(1, 0, 0));
+        effect.setOutlineColor(cc.math.vec3(1, 0, 0));
         effect.setOutlineWidth(0.01);
         sprite.addEffect(effect, -1);
 
         var effect2 = new cc.Effect3DOutline();
-        effect2.setOutlineColor(cc.vec3(1, 1, 0));
+        effect2.setOutlineColor(cc.math.vec3(1, 1, 0));
         effect2.setOutlineWidth(0.02);
         sprite.addEffect(effect2, -2);
 
@@ -1178,8 +1178,8 @@ var Sprite3DLightMapTest = Sprite3DTestDemo.extend({
         var visibleSize = cc.director.getVisibleSize();
         this._camera = cc.Camera.createPerspective(60, visibleSize.width/visibleSize.height, 0.1, 200);
         this._camera.setCameraFlag(cc.CameraFlag.USER1);
-        this._camera.setPosition3D(cc.vec3(0, 25, 15));
-        this._camera.setRotation3D(cc.vec3(-35, 0, 0));
+        this._camera.setPosition3D(cc.math.vec3(0, 25, 15));
+        this._camera.setRotation3D(cc.math.vec3(-35, 0, 0));
 
         var LightMapScene = new cc.Sprite3D("Sprite3DTest/LightMapScene.c3b");
         LightMapScene.setScale(0.1);
@@ -1188,7 +1188,7 @@ var Sprite3DLightMapTest = Sprite3DTestDemo.extend({
         this.setCameraMask(2);
 
         //add a point light
-        var light = cc.PointLight.create(cc.vec3(35, 75, -20.5), cc.color(255, 255, 255), 150);
+        var light = cc.PointLight.create(cc.math.vec3(35, 75, -20.5), cc.color(255, 255, 255), 150);
         this.addChild(light);
         //set the ambient light 
         var ambient = cc.AmbientLight.create(cc.color(55, 55, 55));
@@ -1210,11 +1210,11 @@ var Sprite3DLightMapTest = Sprite3DTestDemo.extend({
             var newPos = cc.p(previousLocation.x - location.x, previousLocation.y - location.y);
 
             var m = this._camera.getNodeToWorldTransform3D();
-            var cameraDir = cc.vec3(-m[8], -m[9], -m[10]);
+            var cameraDir = cc.math.vec3(-m[8], -m[9], -m[10]);
             cameraDir.normalize();
             cameraDir.y = 0;
 
-            var cameraRightDir = cc.vec3(m[0], m[1], m[2]);
+            var cameraRightDir = cc.math.vec3(m[0], m[1], m[2]);
             cameraRightDir.normalize();
             cameraRightDir.y = 0;
 
@@ -1250,7 +1250,7 @@ var Sprite3DUVAnimationTest = Sprite3DTestDemo.extend({
         this.addChild(cylinder);
         cylinder.setScale(3);
         cylinder.setPosition(visibleSize.width/2, visibleSize.height/2);
-        cylinder.setRotation3D(cc.vec3(-90, 0, 0));
+        cylinder.setRotation3D(cc.math.vec3(-90, 0, 0));
 
         //create and set our custom shader
         var shader = new cc.GLProgram("Sprite3DTest/cylinder.vert","Sprite3DTest/cylinder.frag");
@@ -1337,15 +1337,15 @@ var Sprite3DFakeShadowTest = Sprite3DTestDemo.extend({
 
         this._orc = new cc.Sprite3D("Sprite3DTest/orc.c3b");
         this._orc.setScale(0.2);
-        this._orc.setRotation3D(cc.vec3(0, 180, 0));
-        this._orc.setPosition3D(cc.vec3(0, 0, 0));
+        this._orc.setRotation3D(cc.math.vec3(0, 180, 0));
+        this._orc.setPosition3D(cc.math.vec3(0, 0, 0));
 
         this._targetPos = this._orc.getPosition3D();
         this.addChild(this._orc);
 
         //create a plane
         this._plane = new cc.Sprite3D("Sprite3DTest/plane.c3t");
-        this._plane.setRotation3D(cc.vec3(90, 0, 0));
+        this._plane.setRotation3D(cc.math.vec3(90, 0, 0));
         this.addChild(this._plane);
 
         //use a custom shader
@@ -1376,8 +1376,8 @@ var Sprite3DFakeShadowTest = Sprite3DTestDemo.extend({
         
         this._camera = cc.Camera.createPerspective(60, s.width/s.height, 1, 1000);
         this._camera.setCameraFlag(cc.CameraFlag.USER1);
-        this._camera.setPosition3D(cc.vec3(0, 20, 25));
-        this._camera.lookAt(cc.vec3(0, 0, 0));
+        this._camera.setPosition3D(cc.math.vec3(0, 20, 25));
+        this._camera.lookAt(cc.math.vec3(0, 0, 0));
         this.addChild(this._camera);
         this.setCameraMask(2);
 
@@ -1391,15 +1391,15 @@ var Sprite3DFakeShadowTest = Sprite3DTestDemo.extend({
             this.move3D(dt);
             if(this.isState(State.State_Rotate)){
                 var curPos = this._orc.getPosition3D();
-                var newFaceDir = cc.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
+                var newFaceDir = cc.math.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
                 newFaceDir.y = 0;
                 newFaceDir.normalize();
 
                 var m = this._orc.getNodeToWorldTransform3D();
-                var up = cc.vec3(m[4], m[5], m[6]);
+                var up = cc.math.vec3(m[4], m[5], m[6]);
                 up.normalize();
 
-                var right = cc.vec3Cross(cc.vec3(-newFaceDir.x, -newFaceDir.y, -newFaceDir.z), up);
+                var right = cc.math.vec3Cross(cc.math.vec3(-newFaceDir.x, -newFaceDir.y, -newFaceDir.z), up);
                 right.normalize();
 
                 var mat = [right.x,      right.y,      right.z,      0,
@@ -1417,12 +1417,12 @@ var Sprite3DFakeShadowTest = Sprite3DTestDemo.extend({
             return;
         var curPos = this._orc.getPosition3D();
         var m = this._orc.getNodeToWorldTransform3D();
-        var curFaceDir = cc.vec3(m[8], m[9], m[10]);
+        var curFaceDir = cc.math.vec3(m[8], m[9], m[10]);
         curFaceDir.normalize();
-        var newFaceDir = cc.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
+        var newFaceDir = cc.math.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
         newFaceDir.y = 0;
         newFaceDir.normalize();
-        var cosAngle = Math.abs(cc.vec3Dot(curFaceDir, newFaceDir) - 1);
+        var cosAngle = Math.abs(cc.math.vec3Dot(curFaceDir, newFaceDir) - 1);
         
         var dx = curPos.x - this._targetPos.x,
             dy = curPos.y - this._targetPos.y,
@@ -1450,10 +1450,10 @@ var Sprite3DFakeShadowTest = Sprite3DTestDemo.extend({
         if(!this._targetPos)
             return;
         var curPos = this._orc.getPosition3D();
-        var newFaceDir = cc.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
+        var newFaceDir = cc.math.vec3(this._targetPos.x - curPos.x, this._targetPos.y - curPos.y, this._targetPos.z - curPos.z);
         newFaceDir.y = 0;
         newFaceDir.normalize();
-        var offset = cc.vec3(newFaceDir.x * 25 * dt, newFaceDir.y * 25 * dt, newFaceDir.z * 25 * dt);
+        var offset = cc.math.vec3(newFaceDir.x * 25 * dt, newFaceDir.y * 25 * dt, newFaceDir.z * 25 * dt);
         curPos.x += offset.x;
         curPos.y += offset.y;
         curPos.z += offset.z;
@@ -1466,18 +1466,18 @@ var Sprite3DFakeShadowTest = Sprite3DTestDemo.extend({
         var touch = touches[0];
         var location = touch.getLocationInView();
         if(this._camera !== null){
-           var nearP = cc.vec3(location.x, location.y, -1);
-            var farP = cc.vec3(location.x, location.y, 1);
+           var nearP = cc.math.vec3(location.x, location.y, -1);
+            var farP = cc.math.vec3(location.x, location.y, 1);
 
             var size = cc.winSize;
             nearP = this._camera.unproject(size, nearP);
             farP = this._camera.unproject(size, farP);
 
-            var dir = cc.vec3(farP.x-nearP.x, farP.y-nearP.y, farP.z-nearP.z);
+            var dir = cc.math.vec3(farP.x-nearP.x, farP.y-nearP.y, farP.z-nearP.z);
             var ndd = dir.y; // (0, 1, 0) * dir
             var ndo = nearP.y; // (0, 1, 0) * nearP
             var dist = - ndo / ndd;
-            var p = cc.vec3(nearP.x+dist*dir.x, nearP.y+dist*dir.y, nearP.z+dist*dir.z);
+            var p = cc.math.vec3(nearP.x+dist*dir.x, nearP.y+dist*dir.y, nearP.z+dist*dir.z);
 
             if(p.x > 100)
                 p.x = 100;
@@ -1511,10 +1511,10 @@ var Sprite3DBasicToonShaderTest = Sprite3DTestDemo.extend({
         var shader = new cc.GLProgram("Sprite3DTest/toon.vert", "Sprite3DTest/toon.frag");
         var state = cc.GLProgramState.create(shader);
         teapot.setGLProgramState(state);
-        teapot.setPosition3D(cc.vec3(cc.winSize.width/2, cc.winSize.height/2, -20));
-        teapot.setRotation3D(cc.vec3(-90, 180, 0));
+        teapot.setPosition3D(cc.math.vec3(cc.winSize.width/2, cc.winSize.height/2, -20));
+        teapot.setRotation3D(cc.math.vec3(-90, 180, 0));
         teapot.setScale(10);
-        teapot.runAction(cc.rotateBy(1.5, cc.vec3(0, 30, 0)).repeatForever());
+        teapot.runAction(cc.rotateBy(1.5, cc.math.vec3(0, 30, 0)).repeatForever());
         this.addChild(teapot);
 
         //pass mesh's attribute to shader

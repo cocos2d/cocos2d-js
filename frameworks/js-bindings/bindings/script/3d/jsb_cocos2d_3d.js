@@ -83,13 +83,15 @@ cc.attributeNames = [cc.ATTRIBUTE_NAME_POSITION,
     cc.ATTRIBUTE_NAME_BLEND_WEIGHT,
     cc.ATTRIBUTE_NAME_BLEND_INDEX];
 
-cc.Vec3 = function(x=0, y=0, z=0){
+cc.math = cc.math || {};
+
+cc.math.Vec3 = function(x=0, y=0, z=0){
     this.x = x;
     this.y = y;
     this.z = z;
 };
 
-cc.Vec3.prototype.normalize = function(){
+cc.math.Vec3.prototype.normalize = function(){
     var n = this.x * this.x + this.y * this.y + this.z * this.z;
     n = 1 / Math.sqrt(n);
     this.x *= n;
@@ -97,108 +99,108 @@ cc.Vec3.prototype.normalize = function(){
     this.z *= n;
 };
 
-cc.vec3 = function(x, y, z){
-    return new cc.Vec3(x, y, z);
+cc.math.vec3 = function(x, y, z){
+    return new cc.math.Vec3(x, y, z);
 };
 
-cc.vec3Cross = function(v1, v2){
-    return new cc.Vec3(v1.y * v2.z - v1.z * v2.y,
+cc.math.vec3Cross = function(v1, v2){
+    return new cc.math.Vec3(v1.y * v2.z - v1.z * v2.y,
                        v1.z * v2.x - v1.x * v2.z,
                        v1.x * v2.y - v1.y * v2.x);
 };
 
-cc.vec3Dot = function(v1, v2){
+cc.math.vec3Dot = function(v1, v2){
     return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 };
 
-cc.vec3Length = function(v){
+cc.math.vec3Length = function(v){
     return Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 };
 
-cc.vec3Normalize = function(v){
+cc.math.vec3Normalize = function(v){
     var n = v.x * v.x + v.y * v.y + v.z * v.z;
     n = 1 / Math.sqrt(n);
-    return cc.vec3(v.x * n, v.y * n, v.z * n);
+    return cc.math.vec3(v.x * n, v.y * n, v.z * n);
 };
 
-cc.vec3Add = function(v1, v2){
-    return new cc.Vec3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+cc.math.vec3Add = function(v1, v2){
+    return new cc.math.Vec3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
 };
 
-cc.vec3Sub = function(v1, v2){
-    return new cc.Vec3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+cc.math.vec3Sub = function(v1, v2){
+    return new cc.math.Vec3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
 };
 
-cc.Quaternion = function(x=0, y=0, z=0, w=0){
+cc.math.Quaternion = function(x=0, y=0, z=0, w=0){
     this.x = x;
     this.y = y;
     this.z = z;
     this.w = w;
 };
 
-cc.quaternion = function(xOrAxis, yOrAngle, z, w){
+cc.math.quaternion = function(xOrAxis, yOrAngle, z, w){
     if(w !== undefined){
-        return new cc.Quaternion(xOrAxis, yOrAngle, z, w);
+        return new cc.math.Quaternion(xOrAxis, yOrAngle, z, w);
     }
     else if(yOrAngle !== undefined){
         var sinHalfAngle = Math.sin(yOrAngle / 2);
-        var normal = cc.vec3(xOrAxis.x, xOrAxis.y, xOrAxis.z);
+        var normal = cc.math.vec3(xOrAxis.x, xOrAxis.y, xOrAxis.z);
         normal.normalize();
-        return cc.quaternion(normal.x * sinHalfAngle, normal.y * sinHalfAngle, normal.z * sinHalfAngle, Math.cos(yOrAngle / 2));
+        return cc.math.quaternion(normal.x * sinHalfAngle, normal.y * sinHalfAngle, normal.z * sinHalfAngle, Math.cos(yOrAngle / 2));
     }
 };
 
-cc.AABB = function(min=cc.vec3(99999, 99999, 99999), max=cc.vec3(-99999, -99999, -99999)){
+cc.math.AABB = function(min=cc.math.vec3(99999, 99999, 99999), max=cc.math.vec3(-99999, -99999, -99999)){
     this.min = min;
     this.max = max;
 };
 
-cc.aabb = function(min, max){
-    return new cc.AABB(min, max);
+cc.math.aabb = function(min, max){
+    return new cc.math.AABB(min, max);
 };
 
-cc.aabbGetCorners = function(aabb){
+cc.math.aabbGetCorners = function(aabb){
     var corners = new Array(8);
-    corners[0] = cc.vec3(aabb.min.x, aabb.max.y, aabb.max.z);
-    corners[1] = cc.vec3(aabb.min.x, aabb.min.y, aabb.max.z);
-    corners[2] = cc.vec3(aabb.max.x, aabb.min.y, aabb.max.z);
-    corners[3] = cc.vec3(aabb.max.x, aabb.max.y, aabb.max.z);
+    corners[0] = cc.math.vec3(aabb.min.x, aabb.max.y, aabb.max.z);
+    corners[1] = cc.math.vec3(aabb.min.x, aabb.min.y, aabb.max.z);
+    corners[2] = cc.math.vec3(aabb.max.x, aabb.min.y, aabb.max.z);
+    corners[3] = cc.math.vec3(aabb.max.x, aabb.max.y, aabb.max.z);
 
-    corners[4] = cc.vec3(aabb.max.x, aabb.max.y, aabb.min.z);
-    corners[5] = cc.vec3(aabb.max.x, aabb.min.y, aabb.min.z);
-    corners[6] = cc.vec3(aabb.min.x, aabb.min.y, aabb.min.z);
-    corners[7] = cc.vec3(aabb.min.x, aabb.max.y, aabb.min.z);
+    corners[4] = cc.math.vec3(aabb.max.x, aabb.max.y, aabb.min.z);
+    corners[5] = cc.math.vec3(aabb.max.x, aabb.min.y, aabb.min.z);
+    corners[6] = cc.math.vec3(aabb.min.x, aabb.min.y, aabb.min.z);
+    corners[7] = cc.math.vec3(aabb.min.x, aabb.max.y, aabb.min.z);
     return corners;
 };
 
-cc.OBB = function(aabb){
-    this.center = cc.vec3((aabb.min.x + aabb.max.x)/2, (aabb.min.y + aabb.max.y)/2, (aabb.min.z + aabb.max.z)/2);   // obb center
-    this.xAxis = cc.vec3(1, 0, 0);    // x axis of obb, unit vector
-    this.yAxis = cc.vec3(0, 1, 0);    // y axis of obb, unit vecotr
-    this.zAxis = cc.vec3(0, 0, 1);    // z axis of obb, unit vector
-    this.extents = cc.vec3((aabb.max.x - aabb.min.x)/2, (aabb.max.y - aabb.min.y)/2, (aabb.max.z - aabb.min.z)/2);  // obb length along each axis
-    this.extentX = cc.vec3((aabb.max.x - aabb.min.x)/2, 0, 0);  // _xAxis * _extents.x
-    this.extentY = cc.vec3(0, (aabb.max.y - aabb.min.y)/2, 0);  // _yAxis * _extents.y
-    this.extentZ = cc.vec3(0, 0, (aabb.max.z - aabb.min.z)/2);  // _zAxis * _extents.z
+cc.math.OBB = function(aabb){
+    this.center = cc.math.vec3((aabb.min.x + aabb.max.x)/2, (aabb.min.y + aabb.max.y)/2, (aabb.min.z + aabb.max.z)/2);   // obb center
+    this.xAxis = cc.math.vec3(1, 0, 0);    // x axis of obb, unit vector
+    this.yAxis = cc.math.vec3(0, 1, 0);    // y axis of obb, unit vecotr
+    this.zAxis = cc.math.vec3(0, 0, 1);    // z axis of obb, unit vector
+    this.extents = cc.math.vec3((aabb.max.x - aabb.min.x)/2, (aabb.max.y - aabb.min.y)/2, (aabb.max.z - aabb.min.z)/2);  // obb length along each axis
+    this.extentX = cc.math.vec3((aabb.max.x - aabb.min.x)/2, 0, 0);  // _xAxis * _extents.x
+    this.extentY = cc.math.vec3(0, (aabb.max.y - aabb.min.y)/2, 0);  // _yAxis * _extents.y
+    this.extentZ = cc.math.vec3(0, 0, (aabb.max.z - aabb.min.z)/2);  // _zAxis * _extents.z
 };
 
-cc.obb = function(aabb){
-    return new cc.OBB(aabb);
+cc.math.obb = function(aabb){
+    return new cc.math.OBB(aabb);
 };
 
-cc.Ray = function(origin = cc.vec(0, 0, 0), direction = cc.vec3(0, 0, 1)){
+cc.math.Ray = function(origin = cc.math.vec3(0, 0, 0), direction = cc.math.vec3(0, 0, 1)){
     this.origin = origin;
     this.direction = direction;
 };
 
-cc.ray = function(origin, direction){
-    return new cc.Ray(origin, direction);
+cc.math.ray = function(origin, direction){
+    return new cc.math.Ray(origin, direction);
 };
 
-cc.Vec4 = cc.Quaternion;
+cc.math.Vec4 = cc.math.Quaternion;
 
-cc.vec4 = function(x, y, z, w){
-    return new cc.Vec4(x, y, z, w);
+cc.math.vec4 = function(x, y, z, w){
+    return new cc.math.Vec4(x, y, z, w);
 };
 
 cc.Sprite3D.prototype._ctor = function(modelPath, texturePath){
