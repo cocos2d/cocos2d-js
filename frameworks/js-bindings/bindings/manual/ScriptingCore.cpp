@@ -501,8 +501,7 @@ bool ScriptingCore::evalString(const char *string, jsval *outVal, const char *fi
         global = _global.ref().get();
 
     JSAutoCompartment ac(cx, global);
-    JS::OwningCompileOptions opts(cx);
-    return JS::Evaluate(cx, JS::RootedObject(cx, global), opts, string, strlen(string));
+    return JS_EvaluateScript(cx, JS::RootedObject(cx, global), string, strlen(string), "ScriptingCore::evalString", 1);
 }
 
 void ScriptingCore::start()
@@ -745,7 +744,7 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
     auto content = fileUtil->getStringFromFile(fullpath);
 
     JSAutoCompartment ac(cx, global);
-    bool evaluatedOK = JS::Evaluate(cx, global, opts, content.c_str(), content.length);
+    bool evaluatedOK = JS_EvaluateScript(cx, global, content.c_str(), content.length(), path, 0);
 #else
     compileScript(path,global,cx);
     JS::RootedScript script(cx, getScript(path));
