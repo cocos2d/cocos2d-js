@@ -929,7 +929,7 @@ var CameraCullingDemo = Camera3DTestDemo.extend({
 var CameraArcBallDemo = Camera3DTestDemo.extend({
     _title:"Camera ArcBall Moving",
     _subtitle:"",
-    _rotationQuat:cc.math.quaternion(0, 0, 0, 1),
+    _rotationQuat: null,
     _layer3D:null,
     _camera:null,
     _sprite3D1:null,
@@ -943,7 +943,7 @@ var CameraArcBallDemo = Camera3DTestDemo.extend({
 
     ctor:function(){
         this._super();
-
+        this._rotationQuat = cc.math.quaternion(0, 0, 0, 1);
         cc.eventManager.addListener({
             event:cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesMoved:this.onTouchesMoved.bind(this)
