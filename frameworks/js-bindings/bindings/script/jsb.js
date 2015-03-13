@@ -129,3 +129,7 @@ if (jsb.fileUtils.isFileExist('jsb_pluginx.js')) {
 if (window.sp) {
     require('script/jsb_spine.js');
 }
+
+if(cc.Sprite3D){
+    require('script/3d/jsb_cocos2d_3d.js');
+}

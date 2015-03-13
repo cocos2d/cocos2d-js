@@ -1058,6 +1058,16 @@ getonEnterTransitionDidFinishCallback : function (
 },
 
 /**
+ * @method isOpacityModifyRGB
+ * @return {bool}
+ */
+isOpacityModifyRGB : function (
+)
+{
+    return false;
+},
+
+/**
  * @method getNodeToWorldAffineTransform
  * @return {cc.AffineTransform}
  */
@@ -1065,16 +1075,6 @@ getNodeToWorldAffineTransform : function (
 )
 {
     return cc.AffineTransform;
-},
-
-/**
- * @method getNodeToWorldTransform
- * @return {mat4_object}
- */
-getNodeToWorldTransform : function (
-)
-{
-    return cc.Mat4;
 },
 
 /**
@@ -1224,13 +1224,13 @@ getRotationSkewY : function (
 },
 
 /**
- * @method getNodeToParentAffineTransform
- * @return {cc.AffineTransform}
+ * @method getNodeToWorldTransform
+ * @return {mat4_object}
  */
-getNodeToParentAffineTransform : function (
+getNodeToWorldTransform : function (
 )
 {
-    return cc.AffineTransform;
+    return cc.Mat4;
 },
 
 /**
@@ -1274,13 +1274,13 @@ getRotation3D : function (
 },
 
 /**
- * @method getNodeToParentTransform
- * @return {mat4_object}
+ * @method getNodeToParentAffineTransform
+ * @return {cc.AffineTransform}
  */
-getNodeToParentTransform : function (
+getNodeToParentAffineTransform : function (
 )
 {
-    return cc.Mat4;
+    return cc.AffineTransform;
 },
 
 /**
@@ -1436,6 +1436,16 @@ getChildrenCount : function (
 },
 
 /**
+ * @method getNodeToParentTransform
+ * @return {mat4_object}
+ */
+getNodeToParentTransform : function (
+)
+{
+    return cc.Mat4;
+},
+
+/**
  * @method convertToNodeSpaceAR
  * @param {vec2_object} arg0
  * @return {vec2_object}
@@ -1513,6 +1523,16 @@ getAnchorPointInPoints : function (
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method getRotationQuat
+ * @return {cc.Quaternion}
+ */
+getRotationQuat : function (
+)
+{
+    return cc.Quaternion;
 },
 
 /**
@@ -1650,16 +1670,6 @@ str
 },
 
 /**
- * @method setAdditionalTransform
-* @param {cc.AffineTransform|mat4_object} affinetransform
-*/
-setAdditionalTransform : function(
-mat4 
-)
-{
-},
-
-/**
  * @method updatePhysicsBodyTransform
  * @param {mat4_object} arg0
  * @param {unsigned int} arg1
@@ -1703,16 +1713,6 @@ getScheduler : function(
 )
 {
     return cc.Scheduler;
-},
-
-/**
- * @method getParentToNodeAffineTransform
- * @return {cc.AffineTransform}
- */
-getParentToNodeAffineTransform : function (
-)
-{
-    return cc.AffineTransform;
 },
 
 /**
@@ -1766,6 +1766,16 @@ getParent : function(
 )
 {
     return cc.Node;
+},
+
+/**
+ * @method getWorldToNodeTransform
+ * @return {mat4_object}
+ */
+getWorldToNodeTransform : function (
+)
+{
+    return cc.Mat4;
 },
 
 /**
@@ -1831,13 +1841,13 @@ bool
 },
 
 /**
- * @method getParentToNodeTransform
- * @return {mat4_object}
+ * @method getParentToNodeAffineTransform
+ * @return {cc.AffineTransform}
  */
-getParentToNodeTransform : function (
+getParentToNodeAffineTransform : function (
 )
 {
-    return cc.Mat4;
+    return cc.AffineTransform;
 },
 
 /**
@@ -1942,16 +1952,6 @@ setLocalZOrder : function (
 int 
 )
 {
-},
-
-/**
- * @method getWorldToNodeAffineTransform
- * @return {cc.AffineTransform}
- */
-getWorldToNodeAffineTransform : function (
-)
-{
-    return cc.AffineTransform;
 },
 
 /**
@@ -2129,13 +2129,13 @@ sortAllChildren : function (
 },
 
 /**
- * @method getWorldToNodeTransform
- * @return {mat4_object}
+ * @method getWorldToNodeAffineTransform
+ * @return {cc.AffineTransform}
  */
-getWorldToNodeTransform : function (
+getWorldToNodeAffineTransform : function (
 )
 {
-    return cc.Mat4;
+    return cc.AffineTransform;
 },
 
 /**
@@ -2156,6 +2156,16 @@ getNormalizedPosition : function (
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method getParentToNodeTransform
+ * @return {mat4_object}
+ */
+getParentToNodeTransform : function (
+)
+{
+    return cc.Mat4;
 },
 
 /**
@@ -2191,13 +2201,13 @@ isCascadeColorEnabled : function (
 },
 
 /**
- * @method isOpacityModifyRGB
- * @return {bool}
+ * @method setRotationQuat
+ * @param {cc.Quaternion} arg0
  */
-isOpacityModifyRGB : function (
+setRotationQuat : function (
+quaternion 
 )
 {
-    return false;
 },
 
 /**
@@ -10342,26 +10352,6 @@ mat4
 },
 
 /**
- * @method setVertexAttribPointer
- * @param {String} arg0
- * @param {int} arg1
- * @param {unsigned int} arg2
- * @param {unsigned char} arg3
- * @param {int} arg4
- * @param {void} arg5
- */
-setVertexAttribPointer : function (
-str, 
-int, 
-int, 
-char, 
-int, 
-void 
-)
-{
-},
-
-/**
  * @method getGLProgram
  * @return {cc.GLProgram}
  */
@@ -14710,14 +14700,6 @@ init : function (
 },
 
 /**
- * @method alignItemsHorizontally
- */
-alignItemsHorizontally : function (
-)
-{
-},
-
-/**
  * @method alignItemsHorizontallyWithPadding
  * @param {float} arg0
  */
@@ -14733,6 +14715,14 @@ float
  */
 alignItemsVerticallyWithPadding : function (
 float 
+)
+{
+},
+
+/**
+ * @method alignItemsHorizontally
+ */
+alignItemsHorizontally : function (
 )
 {
 },
@@ -18505,18 +18495,6 @@ vec3
 },
 
 /**
- * @method isVisibleInFrustum
- * @param {cc.AABB} arg0
- * @return {bool}
- */
-isVisibleInFrustum : function (
-aabb 
-)
-{
-    return false;
-},
-
-/**
  * @method setCameraFlag
  * @param {cc.CameraFlag} arg0
  */
@@ -18653,6 +18631,371 @@ getVisitingCamera : function (
  * @constructor
  */
 Camera : function (
+)
+{
+},
+
+};
+
+/**
+ * @class BaseLight
+ */
+cc.BaseLight = {
+
+/**
+ * @method setEnabled
+ * @param {bool} arg0
+ */
+setEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getIntensity
+ * @return {float}
+ */
+getIntensity : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method isEnabled
+ * @return {bool}
+ */
+isEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getLightType
+ * @return {cc.LightType}
+ */
+getLightType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setLightFlag
+ * @param {cc.LightFlag} arg0
+ */
+setLightFlag : function (
+lightflag 
+)
+{
+},
+
+/**
+ * @method setIntensity
+ * @param {float} arg0
+ */
+setIntensity : function (
+float 
+)
+{
+},
+
+/**
+ * @method getLightFlag
+ * @return {cc.LightFlag}
+ */
+getLightFlag : function (
+)
+{
+    return 0;
+},
+
+};
+
+/**
+ * @class DirectionLight
+ */
+cc.DirectionLight = {
+
+/**
+ * @method getDirection
+ * @return {vec3_object}
+ */
+getDirection : function (
+)
+{
+    return cc.Vec3;
+},
+
+/**
+ * @method getDirectionInWorld
+ * @return {vec3_object}
+ */
+getDirectionInWorld : function (
+)
+{
+    return cc.Vec3;
+},
+
+/**
+ * @method setDirection
+ * @param {vec3_object} arg0
+ */
+setDirection : function (
+vec3 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {vec3_object} arg0
+ * @param {color3b_object} arg1
+ * @return {cc.DirectionLight}
+ */
+create : function (
+vec3, 
+color3b 
+)
+{
+    return cc.DirectionLight;
+},
+
+/**
+ * @method DirectionLight
+ * @constructor
+ */
+DirectionLight : function (
+)
+{
+},
+
+};
+
+/**
+ * @class PointLight
+ */
+cc.PointLight = {
+
+/**
+ * @method getRange
+ * @return {float}
+ */
+getRange : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setRange
+ * @param {float} arg0
+ */
+setRange : function (
+float 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {vec3_object} arg0
+ * @param {color3b_object} arg1
+ * @param {float} arg2
+ * @return {point_object}
+ */
+create : function (
+vec3, 
+color3b, 
+float 
+)
+{
+    return cc.PointLight;
+},
+
+/**
+ * @method PointLight
+ * @constructor
+ */
+PointLight : function (
+)
+{
+},
+
+};
+
+/**
+ * @class SpotLight
+ */
+cc.SpotLight = {
+
+/**
+ * @method getRange
+ * @return {float}
+ */
+getRange : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setDirection
+ * @param {vec3_object} arg0
+ */
+setDirection : function (
+vec3 
+)
+{
+},
+
+/**
+ * @method getCosInnerAngle
+ * @return {float}
+ */
+getCosInnerAngle : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getOuterAngle
+ * @return {float}
+ */
+getOuterAngle : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getInnerAngle
+ * @return {float}
+ */
+getInnerAngle : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getDirection
+ * @return {vec3_object}
+ */
+getDirection : function (
+)
+{
+    return cc.Vec3;
+},
+
+/**
+ * @method getCosOuterAngle
+ * @return {float}
+ */
+getCosOuterAngle : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setOuterAngle
+ * @param {float} arg0
+ */
+setOuterAngle : function (
+float 
+)
+{
+},
+
+/**
+ * @method setInnerAngle
+ * @param {float} arg0
+ */
+setInnerAngle : function (
+float 
+)
+{
+},
+
+/**
+ * @method getDirectionInWorld
+ * @return {vec3_object}
+ */
+getDirectionInWorld : function (
+)
+{
+    return cc.Vec3;
+},
+
+/**
+ * @method setRange
+ * @param {float} arg0
+ */
+setRange : function (
+float 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {vec3_object} arg0
+ * @param {vec3_object} arg1
+ * @param {color3b_object} arg2
+ * @param {float} arg3
+ * @param {float} arg4
+ * @param {float} arg5
+ * @return {cc.SpotLight}
+ */
+create : function (
+vec3, 
+vec3, 
+color3b, 
+float, 
+float, 
+float 
+)
+{
+    return cc.SpotLight;
+},
+
+/**
+ * @method SpotLight
+ * @constructor
+ */
+SpotLight : function (
+)
+{
+},
+
+};
+
+/**
+ * @class AmbientLight
+ */
+cc.AmbientLight = {
+
+/**
+ * @method create
+ * @param {color3b_object} arg0
+ * @return {cc.AmbientLight}
+ */
+create : function (
+color3b 
+)
+{
+    return cc.AmbientLight;
+},
+
+/**
+ * @method AmbientLight
+ * @constructor
+ */
+AmbientLight : function (
 )
 {
 },
@@ -21333,6 +21676,41 @@ getInstance : function (
 )
 {
     return cc.SimpleAudioEngine;
+},
+
+};
+
+/**
+ * @class AsyncTaskPool
+ */
+cc.AsyncTaskPool = {
+
+/**
+ * @method stopTasks
+ * @param {cc.AsyncTaskPool::TaskType} arg0
+ */
+stopTasks : function (
+tasktype 
+)
+{
+},
+
+/**
+ * @method destoryInstance
+ */
+destoryInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {cc.AsyncTaskPool}
+ */
+getInstance : function (
+)
+{
+    return cc.AsyncTaskPool;
 },
 
 };

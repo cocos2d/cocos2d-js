@@ -7,6 +7,8 @@
 #include "jsb_cocos2dx_builder_auto.hpp"
 #include "jsb_cocos2dx_spine_auto.hpp"
 #include "jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_3d_auto.hpp"
+#include "3d/jsb_cocos2dx_3d_manual.h"
 #include "ui/jsb_cocos2dx_ui_manual.h"
 #include "cocostudio/jsb_cocos2dx_studio_manual.h"
 #include "cocosbuilder/js_bindings_ccbreader.h"
@@ -48,11 +50,15 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
-	auto glview = director->getOpenGLView();
-	if(!glview) {
-		glview = cocos2d::GLViewImpl::createWithRect("HelloJavascript", Rect(0,0,900,640));
-		director->setOpenGLView(glview);
-	}
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+        glview = cocos2d::GLViewImpl::create("HelloJavascript");
+#else
+        glview = cocos2d::GLViewImpl::createWithRect("HelloJavascript", Rect(0,0,900,640));
+#endif
+        director->setOpenGLView(glview);
+}
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
@@ -94,6 +100,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_jsb_websocket);
     // sokcet io can be commented out to reduce the package
     sc->addRegisterCallback(register_jsb_socketio);
+
+    // 3d can be commented out to reduce the package
+    sc->addRegisterCallback(register_all_cocos2dx_3d);
+    sc->addRegisterCallback(register_all_cocos2dx_3d_manual);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
@@ -103,8 +113,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->start();    
     sc->runScript("script/jsb_boot.js");
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
-	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->runScript("main.js");
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    ScriptingCore::getInstance()->runScript("main.js");
 
     return true;
 }

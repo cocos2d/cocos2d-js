@@ -244,12 +244,28 @@ var testNames = [
         }
     },
     {
+        title:"BillBoard Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/BillBoardTest/BillBoardTest.js",
+        testScene:function () {
+            return new BillBoardTestScene();
+        }
+    },
+    {
         title:"Box2D Test",
         resource:g_box2d,
         platforms: PLATFORM_HTML5,
         linksrc:"src/Box2dTest/Box2dTest.js",
         testScene:function () {
             return new Box2DTestScene();
+        }
+    },
+    {
+        title:"Camera3D Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/Camera3DTest/Camera3DTest.js",
+        testScene:function () {
+            return new Camera3DTestScene();
         }
     },
     {
@@ -415,6 +431,14 @@ var testNames = [
         }
     },
     {
+        title:"Light Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/LightTest/LightTest.js",
+        testScene:function () {
+            return new LightTestScene();
+        }
+    },
+    {
         title:"Loader Test",
         platforms: PLATFORM_ALL,
         linksrc:"src/LoaderTest/LoaderTest.js",
@@ -546,6 +570,14 @@ var testNames = [
         linksrc:"src/SpineTest/SpineTest.js",
         testScene:function () {
             return new SpineTestScene();
+        }
+    },
+    {
+        title:"Sprite3D Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/Sprite3DTest/Sprite3DTest.js",
+        testScene:function () {
+            return new Sprite3DTestScene();
         }
     },
     {

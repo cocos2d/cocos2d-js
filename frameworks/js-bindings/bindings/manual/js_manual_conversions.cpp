@@ -518,16 +518,18 @@ bool jsval_to_ulong( JSContext *cx, JS::HandleValue vp, unsigned long *out)
 
 bool jsval_to_long_long(JSContext *cx, JS::HandleValue vp, long long* r)
 {
-    JS::RootedObject tmp_arg(cx);
-    bool ok = JS_ValueToObject( cx, vp, &tmp_arg );
-    JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
-    JSB_PRECONDITION3( tmp_arg && JS_IsTypedArrayObject( tmp_arg ), cx, false, "Not a TypedArray object");
-    JSB_PRECONDITION3( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), cx, false, "Invalid Typed Array length");
+    JSString *jsstr = JS::ToString(cx, vp);
+    JSB_PRECONDITION2(jsstr, cx, false, "Error converting value to string");
     
-    uint32_t* arg_array = (uint32_t*)JS_GetArrayBufferViewData( tmp_arg );
-    long long ret =  arg_array[0];
-    ret = ret << 32;
-    ret |= arg_array[1];
+    char *str = JS_EncodeString(cx, jsstr);
+    JSB_PRECONDITION2(str, cx, false, "Error encoding string");
+    
+    char *endptr;
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    __int64 ret = _strtoi64(str, &endptr, 10);
+#else
+    long long ret = strtoll(str, &endptr, 10);
+#endif
     
     *r = ret;
     return true;
@@ -586,6 +588,99 @@ bool jsval_to_ccacceleration(JSContext* cx, JS::HandleValue v, Acceleration* ret
     ret->y = y;
     ret->z = z;
     ret->timestamp = timestamp;
+    return true;
+}
+
+bool jsval_to_quaternion( JSContext *cx, JS::HandleValue v, cocos2d::Quaternion* ret)
+{
+    JS::RootedObject tmp(cx);
+    JS::RootedValue x(cx);
+    JS::RootedValue y(cx);
+    JS::RootedValue z(cx);
+    JS::RootedValue w(cx);
+    
+    double xx, yy, zz, ww;
+    bool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
+        JS_GetProperty(cx, tmp, "x", &x) &&
+        JS_GetProperty(cx, tmp, "y", &y) &&
+        JS_GetProperty(cx, tmp, "z", &z) &&
+        JS_GetProperty(cx, tmp, "w", &w) &&
+        JS::ToNumber(cx, x, &xx) &&
+        JS::ToNumber(cx, y, &yy) &&
+        JS::ToNumber(cx, z, &zz) &&
+        JS::ToNumber(cx, w, &ww) &&
+        !isnan(xx) && !isnan(yy) && !isnan(zz) && !isnan(ww);
+    
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+
+    ret->set(xx, yy, zz, ww);
+
+    return true;
+}
+
+bool jsval_to_obb(JSContext *cx, JS::HandleValue v, cocos2d::OBB* ret)
+{
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jscenter(cx);
+    JS::RootedValue jsxAxis(cx);
+    JS::RootedValue jsyAxis(cx);
+    JS::RootedValue jszAxis(cx);
+    JS::RootedValue jsextents(cx);
+    JS::RootedValue jsextentx(cx);
+    JS::RootedValue jsextenty(cx);
+    JS::RootedValue jsextentz(cx);
+    
+    cocos2d::Vec3 center, xAxis, yAxis, zAxis, extents, extentx, extenty, extentz;
+    bool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
+        JS_GetProperty(cx, tmp, "center", &jscenter) &&
+        JS_GetProperty(cx, tmp, "xAxis", &jsxAxis) &&
+        JS_GetProperty(cx, tmp, "yAxis", &jsyAxis) &&
+        JS_GetProperty(cx, tmp, "zAxis", &jszAxis) &&
+        JS_GetProperty(cx, tmp, "extents", &jsextents) &&
+        JS_GetProperty(cx, tmp, "extentX", &jsextentx) &&
+        JS_GetProperty(cx, tmp, "extentY", &jsextenty) &&
+        JS_GetProperty(cx, tmp, "extentZ", &jsextentz) &&
+        jsval_to_vector3(cx, jscenter, &center) &&
+        jsval_to_vector3(cx, jsxAxis, &xAxis) &&
+        jsval_to_vector3(cx, jsyAxis, &yAxis) &&
+        jsval_to_vector3(cx, jszAxis, &zAxis) &&
+        jsval_to_vector3(cx, jsextents, &extents) &&
+        jsval_to_vector3(cx, jsextentx, &extentx) &&
+        jsval_to_vector3(cx, jsextenty, &extenty) &&
+        jsval_to_vector3(cx, jsextentz, &extentz);
+
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+
+    ret->_center.set(center);
+    ret->_xAxis.set(xAxis);
+    ret->_yAxis.set(yAxis);
+    ret->_zAxis.set(zAxis);
+    ret->_extents.set(extents);
+    ret->_extentX.set(extentx);
+    ret->_extentY.set(extenty);
+    ret->_extentZ.set(extentz);
+    return true;
+}
+
+bool jsval_to_ray(JSContext *cx, JS::HandleValue v, cocos2d::Ray* ret)
+{
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jsorigin(cx);
+    JS::RootedValue jsdirection(cx);
+
+    cocos2d::Vec3 origin, direction;
+    bool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
+        JS_GetProperty(cx, tmp, "origin", &jsorigin) &&
+        JS_GetProperty(cx, tmp, "direction", &jsdirection) &&
+        jsval_to_vector3(cx, jsorigin, &origin) && 
+        jsval_to_vector3(cx, jsdirection, &direction);
+
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+    
+    ret->set(origin, direction);
     return true;
 }
 
@@ -1381,6 +1476,35 @@ bool jsval_to_vector3(JSContext *cx, JS::HandleValue vp, cocos2d::Vec3* ret)
     return true;
 }
 
+bool jsval_to_vector4(JSContext *cx, JS::HandleValue vp, cocos2d::Vec4* ret)
+{
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jsx(cx);
+    JS::RootedValue jsy(cx);
+    JS::RootedValue jsz(cx);
+    JS::RootedValue jsw(cx);
+    double x, y, z, w;
+    bool ok = vp.isObject() &&
+    JS_ValueToObject(cx, vp, &tmp) &&
+    JS_GetProperty(cx, tmp, "x", &jsx) &&
+    JS_GetProperty(cx, tmp, "y", &jsy) &&
+    JS_GetProperty(cx, tmp, "z", &jsz) &&
+    JS_GetProperty(cx, tmp, "w", &jsw) &&
+    JS::ToNumber(cx, jsx, &x) &&
+    JS::ToNumber(cx, jsy, &y) &&
+    JS::ToNumber(cx, jsz, &z) &&
+    JS::ToNumber(cx, jsw, &w) &&
+    !isnan(x) && !isnan(y) && !isnan(z) && !isnan(w);
+    
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+    
+    ret->x = (float)x;
+    ret->y = (float)y;
+    ret->z = (float)z;
+    ret->w = (float)w;
+    return true;
+}
+
 bool jsval_to_blendfunc(JSContext *cx, JS::HandleValue vp, cocos2d::BlendFunc* ret)
 {
     JS::RootedObject tmp(cx);
@@ -1818,6 +1942,34 @@ jsval ccaffinetransform_to_jsval(JSContext* cx, const AffineTransform& t)
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }
+    return JSVAL_NULL;
+}
+
+jsval quaternion_to_jsval(JSContext* cx, const cocos2d::Quaternion& q)
+{
+    JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
+    if(!tmp) return JSVAL_NULL;
+    bool ok = JS_DefineProperty(cx, tmp, "x", q.x, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "y", q.y, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "z", q.z, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "w", q.w, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if(ok)
+        return OBJECT_TO_JSVAL(tmp);
+
+    return JSVAL_NULL;
+}
+
+jsval meshVertexAttrib_to_jsval(JSContext* cx, const cocos2d::MeshVertexAttrib& q)
+{
+    JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
+    if(!tmp) return JSVAL_NULL;
+    bool ok = JS_DefineProperty(cx, tmp, "size", q.size, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "type", q.type, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "vertexAttrib", q.vertexAttrib, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "attribSizeBytes", q.attribSizeBytes, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if(ok)
+        return OBJECT_TO_JSVAL(tmp);
+
     return JSVAL_NULL;
 }
 
@@ -2344,23 +2496,18 @@ jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v)
 
 jsval matrix_to_jsval(JSContext *cx, const cocos2d::Mat4& v)
 {
-    /*JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 16));
     
     for (int i = 0; i < 16; i++) {
         JS::RootedValue arrElement(cx);
         arrElement = DOUBLE_TO_JSVAL(v.m[i]);
         
-        if (!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+        if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
             break;
         }
     }
     
-    return OBJECT_TO_JSVAL(jsretArr);*/
-    
-    //convert Mat4 to AffineTransform to be compatible with html5
-    cocos2d::AffineTransform affineTransform;
-    cocos2d::GLToCGAffine(v.m, &affineTransform);
-    return ccaffinetransform_to_jsval(cx, affineTransform);
+    return OBJECT_TO_JSVAL(jsretArr);
 }
 
 jsval vector2_to_jsval(JSContext *cx, const cocos2d::Vec2& v)

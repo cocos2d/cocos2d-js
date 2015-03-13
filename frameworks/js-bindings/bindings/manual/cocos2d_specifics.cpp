@@ -3617,6 +3617,186 @@ bool js_cocos2dx_ccpNormalize(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+bool js_cocos2dx_ccobbGetCorners(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 1)
+    {
+        cocos2d::OBB obb;
+        bool ok = jsval_to_obb(cx, args.get(0), &obb);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        cocos2d::Vec3 verts[8];
+        obb.getCorners(verts);
+
+        JS::RootedObject array(cx, JS_NewArrayObject(cx, 8));
+        for(int i = 0; i < 8; ++i)
+        {
+            JS::RootedValue vec(cx, vector3_to_jsval(cx, verts[i]));
+            ok &= JS_SetElement(cx, array, i, vec);
+            if(!ok)
+                break;
+        }
+
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+        args.rval().set(OBJECT_TO_JSVAL(array));
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
+bool js_cocos2dx_ccobbIntersects(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 2)
+    {
+        cocos2d::OBB obb1, obb2;
+        bool ok = jsval_to_obb(cx, args.get(0), &obb1);
+        ok &= jsval_to_obb(cx, args.get(1), &obb2);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        bool ret = obb1.intersects(obb2);
+
+        args.rval().set(BOOLEAN_TO_JSVAL(ret));
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+
+bool js_cocos2dx_ccrayIntersectsObb(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 2)
+    {
+        cocos2d::Ray ray;
+        cocos2d::OBB obb;
+
+        bool ok = jsval_to_ray(cx, args.get(0), &ray);
+        ok &= jsval_to_obb(cx, args.get(1), &obb);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        bool ret = ray.intersects(obb);
+
+        args.rval().set(BOOLEAN_TO_JSVAL(ret));
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+
+bool js_cocos2dx_ccmat4CreateTranslation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 1)
+    {
+        cocos2d::Vec3 arg0;
+        bool ok = jsval_to_vector3(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        cocos2d::Mat4 ret;
+        cocos2d::Mat4::createTranslation(arg0, &ret);
+        jsval jsret = matrix_to_jsval(cx, ret);
+
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
+bool js_cocos2dx_ccmat4CreateRotation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 1)
+    {
+        cocos2d::Quaternion arg0;
+        bool ok = jsval_to_quaternion(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        cocos2d::Mat4 ret;
+        cocos2d::Mat4::createRotation(arg0, &ret);
+        jsval jsret = matrix_to_jsval(cx, ret);
+
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
+bool js_cocos2dx_ccmat4Multiply(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 2)
+    {
+        cocos2d::Mat4 arg0;
+        cocos2d::Mat4 arg1;
+        bool ok = jsval_to_matrix(cx, args.get(0), &arg0);
+        ok &= jsval_to_matrix(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        cocos2d::Mat4 ret = arg0 * arg1;
+        jsval jsret = matrix_to_jsval(cx, ret);
+
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+
+bool js_cocos2dx_ccmat4MultiplyVec3(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 2)
+    {
+        cocos2d::Mat4 arg0;
+        cocos2d::Vec3 arg1;
+        bool ok = jsval_to_matrix(cx, args.get(0), &arg0);
+        ok &= jsval_to_vector3(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        cocos2d::Vec3 ret = arg0 * arg1;
+        jsval jsret = vector3_to_jsval(cx, ret);
+
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+
+bool js_cocos2dx_ccquatMultiply(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 2)
+    {
+        cocos2d::Quaternion arg0;
+        cocos2d::Quaternion arg1;
+        bool ok = jsval_to_quaternion(cx, args.get(0), &arg0);
+        ok &= jsval_to_quaternion(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        cocos2d::Quaternion ret = arg0 * arg1;
+        jsval jsret = quaternion_to_jsval(cx, ret);
+
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+
 bool js_cocos2dx_CCSprite_textureLoaded(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4136,6 +4316,80 @@ bool js_cocos2dx_CCGLProgram_getProgram(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+bool js_cocos2dx_GLProgramState_setVertexAttribPointer(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::GLProgramState* cobj = (cocos2d::GLProgramState *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramState_setVertexAttribPointer : Invalid Native Object");
+    if (argc == 6) {
+        std::string arg0;
+        int arg1;
+        unsigned int arg2;
+        uint16_t arg3;
+        int arg4;
+        long arg5;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        ok &= jsval_to_uint32(cx, args.get(2), &arg2);
+        ok &= jsval_to_uint16(cx, args.get(3), &arg3);
+        ok &= jsval_to_int32(cx, args.get(4), (int32_t *)&arg4);
+        ok &= jsval_to_long(cx, args.get(5), &arg5);
+
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgramState_setVertexAttribPointer : Error processing arguments");
+        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (GLvoid*)arg5);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_GLProgramState_setVertexAttribPointer : wrong number of arguments: %d, was expecting %d", argc, 6);
+    return false;
+}
+
+bool js_cocos2dx_GLProgramState_setUniformVec4(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t* proxy = jsb_get_js_proxy(obj);
+    cocos2d::GLProgramState* cobj = (cocos2d::GLProgramState *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramState_setUniformVec4 : Invalid Native Object");
+    bool ok = true;
+    if(argc == 2)
+    {
+        do {
+            if (argc == 2) {
+                std::string arg0;
+                ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+                if (!ok) { ok = true; break; }
+                cocos2d::Vec4 arg1;
+                ok &= jsval_to_vector4(cx, args.get(1), &arg1);
+                if (!ok) { ok = true; break; }
+                cobj->setUniformVec4(arg0, arg1);
+                args.rval().setUndefined();
+                return true;
+            }
+        } while(0);
+
+        do {
+            if (argc == 2) {
+                int arg0;
+                ok &= jsval_to_int(cx, args.get(0), &arg0);
+                if (!ok) { ok = true; break; }
+                cocos2d::Vec4 arg1;
+                ok &= jsval_to_vector4(cx, args.get(1), &arg1);
+                if (!ok) { ok = true; break; }
+                cobj->setUniformVec4(arg0, arg1);
+                args.rval().setUndefined();
+                return true;
+            }
+        } while(0);
+    }
+    JS_ReportError(cx, "js_cocos2dx_GLProgramState_setUniformVec4 : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+
 #define js_cocos2dx_CCCamera_getXYZ(funcName) \
     bool ok = true;                                                                                                  \
     JSObject *obj = JS_THIS_OBJECT(cx, vp);                                                                               \
@@ -4263,6 +4517,8 @@ bool js_PlistParser_parse(JSContext *cx, unsigned argc, JS::Value *vp) {
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
         std::string parsedStr = delegator->parseText(arg0);
+        std::replace(parsedStr.begin(), parsedStr.end(), '\n', ' ');
+        
         jsval strVal = std_string_to_jsval(cx, parsedStr);
         // create a new js obj of the parsed string
         JS::RootedValue outVal(cx);
@@ -4655,6 +4911,100 @@ bool js_cocos2dx_RenderTexture_saveToFile(JSContext *cx, uint32_t argc, jsval *v
     return false;
 }
 
+bool js_cocos2dx_Camera_unproject(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_unproject : Invalid Native Object");
+    if (argc == 2) {
+        cocos2d::Size arg0;
+        cocos2d::Vec3 arg1;
+        cocos2d::Vec3 arg2;
+        ok &= jsval_to_ccsize(cx, args.get(0), &arg0);
+        ok &= jsval_to_vector3(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_unproject : Error processing arguments");
+        cobj->unproject(arg0, &arg1, &arg2);
+        args.rval().set(vector3_to_jsval(cx, arg2));
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_unproject : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+
+bool js_cocos2dx_Camera_isVisibleInFrustum(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_isVisibleInFrustum : Invalid Native Object");
+    if (argc == 1) {
+         cocos2d::Vec3  min;
+        JS::RootedValue jsmin(cx);
+        ok &= JS_GetProperty(cx, JS::RootedObject(cx, args.get(0).toObjectOrNull()), "min", &jsmin);
+        ok &= jsval_to_vector3(cx, jsmin, &min);
+
+        cocos2d::Vec3 max;
+        JS::RootedValue jsmax(cx);
+        ok &= JS_GetProperty(cx, JS::RootedObject(cx, args.get(0).toObjectOrNull()), "max", &jsmax);
+        ok &= jsval_to_vector3(cx, jsmax, &max);
+
+        cocos2d::AABB aabb(min, max);
+
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_isVisibleInFrustum : Error processing arguments");
+        bool ret = cobj->isVisibleInFrustum(&aabb);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_isVisibleInFrustum : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
+bool js_cocos2dx_Node_setAdditionalTransform(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+
+    JS::RootedObject obj(cx);
+    cocos2d::Node* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_setAdditionalTransform : Invalid Native Object");
+
+    do {
+        if (argc == 1) {
+            cocos2d::Mat4 arg0;
+            ok &= jsval_to_matrix(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            cobj->setAdditionalTransform(&arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 1) {
+            cocos2d::AffineTransform arg0;
+            ok &= jsval_to_ccaffinetransform(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            cobj->setAdditionalTransform(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_Node_setAdditionalTransform : wrong number of arguments");
+    return false;
+}
 
 // EventKeyboard class bindings, need manual bind for transform key codes
 
@@ -4841,6 +5191,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, nodeProto, "setColor", js_cocos2dx_CCNode_setColor, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, nodeProto, "pause", js_cocos2dx_CCNode_pause, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, nodeProto, "resume", js_cocos2dx_CCNode_resume, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, nodeProto, "setAdditionalTransform", js_cocos2dx_Node_setAdditionalTransform, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     JS::RootedObject eventListenerProto(cx, jsb_cocos2d_EventListener_prototype);
     JS_DefineFunction(cx, eventListenerProto, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -4860,6 +5211,10 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, glProgramProto, "setUniformLocationF32", js_cocos2dx_CCGLProgram_setUniformLocationWith4f, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, glProgramProto, "getProgram", js_cocos2dx_CCGLProgram_getProgram, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
+    JS::RootedObject glProgramStateProto(cx, jsb_cocos2d_GLProgramState_prototype);
+    JS_DefineFunction(cx, glProgramStateProto, "setVertexAttribPointer", js_cocos2dx_GLProgramState_setVertexAttribPointer, 6, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, glProgramStateProto, "setUniformVec4", js_cocos2dx_GLProgramState_setUniformVec4, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
     JS::RootedObject componentProto(cx, jsb_cocos2d_Component_prototype);
     JS_DefineFunction(cx, componentProto, "onEnter", js_cocos2dx_Component_onEnter, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
     JS_DefineFunction(cx, componentProto, "onExit", js_cocos2dx_Component_onExit, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
@@ -4992,7 +5347,10 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     tmpObj = anonEvaluate(cx, global, "(function () { return this; })()").toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
-
+    JS::RootedObject camera(cx, jsb_cocos2d_Camera_prototype);
+    JS_DefineFunction(cx, camera, "unproject", js_cocos2dx_Camera_unproject, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, camera, "isVisibleInFrustum", js_cocos2dx_Camera_isVisibleInFrustum, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
     JS::RootedObject ccObj(cx);
     create_js_root_obj(cx, global, "cc", &ccObj);
 
@@ -5020,7 +5378,16 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, ccObj, "registerStandardDelegate", js_cocos2dx_JSTouchDelegate_registerStandardDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ccObj, "unregisterTouchDelegate", js_cocos2dx_JSTouchDelegate_unregisterTouchDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
-    
+    JS_DefineFunction(cx, ccObj, "obbGetCorners", js_cocos2dx_ccobbGetCorners, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ccObj, "obbIntersectsObb", js_cocos2dx_ccobbIntersects, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ccObj, "rayIntersectsObb", js_cocos2dx_ccrayIntersectsObb, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+
+    JS_DefineFunction(cx, ccObj, "mat4CreateTranslation", js_cocos2dx_ccmat4CreateTranslation, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ccObj, "mat4CreateRotation", js_cocos2dx_ccmat4CreateRotation, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ccObj, "mat4Multiply", js_cocos2dx_ccmat4Multiply, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ccObj, "mat4MultiplyVec3", js_cocos2dx_ccmat4MultiplyVec3, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ccObj, "quatMultiply", js_cocos2dx_ccquatMultiply, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+
     js_register_cocos2dx_EventKeyboard(cx, ccObj);
 
     JS::RootedObject consoleObj(cx);

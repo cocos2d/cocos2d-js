@@ -824,8 +824,7 @@ bool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc > 0) {
-        JSString *string = NULL;
-        JS_ConvertArguments(cx, args, "S", &string);
+        JSString *string = JS::ToString(cx, args.get(0));
         if (string) {
             JSStringWrapper wrapper(string);
             js_log("%s", wrapper.get());
@@ -913,13 +912,11 @@ bool ScriptingCore::addRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc == 1) {
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//        JSObject *o = NULL;
-        JS::Heap<JSObject*> *o = new JS::Heap<JSObject*>();
-        if (JS_ConvertArguments(cx, args, "o", o) == true) {
-            if (AddNamedObjectRoot(cx, o, "from-js") == false) {
-                LOGD("something went wrong when setting an object to the root");
-            }
+        JS::Heap<JSObject*> o(args.get(0).toObjectOrNull());
+        if (AddNamedObjectRoot(cx, &o, "from-js") == false) {
+            LOGD("something went wrong when setting an object to the root");
         }
+        
         return true;
     }
     return false;
@@ -929,10 +926,9 @@ bool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc == 1) {
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//        JSObject *o = NULL;
-        JS::Heap<JSObject*> *o = new JS::Heap<JSObject*>();
-        if (JS_ConvertArguments(cx, args, "o", o) == true) {
-            RemoveObjectRoot(cx, o);
+        JS::Heap<JSObject*> o(args.get(0).toObjectOrNull());
+        if (o != nullptr) {
+            RemoveObjectRoot(cx, &o);
         }
         return true;
     }

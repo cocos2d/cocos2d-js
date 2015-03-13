@@ -7,7 +7,9 @@ LOCAL_MODULE := js_tests_shared
 LOCAL_MODULE_FILENAME := libjs_tests
 
 LOCAL_SRC_FILES := main.cpp \
-                   ../../Classes/AppDelegate.cpp
+                   ../../Classes/AppDelegate.cpp \
+                   ../../Classes/js_DrawNode3D_bindings.cpp \
+                   ../../Classes/js_Effect3D_bindings.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 

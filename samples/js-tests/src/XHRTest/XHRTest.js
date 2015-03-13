@@ -24,6 +24,33 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+//some utils functions
+function ensureLeftAligned (label) {
+    label.anchorX = 0;
+    label.anchorY = 1;
+    label.textAlign = cc.TEXT_ALIGNMENT_LEFT;
+}
+
+function streamXHREventsToLabel ( xhr, label, textbox, method ) {
+    // Simple events
+    ['loadstart', 'abort', 'error', 'load', 'loadend', 'timeout'].forEach(function (eventname) {
+        xhr["on" + eventname] = function () {
+            label.string += "\nEvent : " + eventname
+        }
+    });
+
+    // Special event
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207)) {
+            var httpStatus = xhr.statusText;
+            var response = xhr.responseText.substring(0, 100) + "...";
+            textbox.string = method + " Response (100 chars):\n"
+            textbox.string += response
+            label.string += "\nStatus: Got " + method + " response! " + httpStatus
+        }
+    }
+}
+
 
 var XHRTestScene = TestScene.extend({
     ctor:function () {
@@ -57,96 +84,79 @@ var XHRTestLayer = cc.Layer.extend({
     },
 
     sendGetRequest: function() {
-        var that = this;
-        var xhr = cc.loader.getXMLHttpRequest();
-        var statusGetLabel = new cc.LabelTTF("Status:", "Thonburi", 18);
+        var statusGetLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusGetLabel, 1);
-        statusGetLabel.x = winSize.width / 2;
+
+        statusGetLabel.x = 10
         statusGetLabel.y = winSize.height - 100;
+        ensureLeftAligned(statusGetLabel);
         statusGetLabel.setString("Status: Send Get Request to httpbin.org");
+
+        var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
+        this.addChild(responseLabel, 1);
+
+        ensureLeftAligned(responseLabel);
+        responseLabel.x = 10;
+        responseLabel.y = winSize.height / 2;
+
+        var xhr = cc.loader.getXMLHttpRequest();
+        streamXHREventsToLabel(xhr, statusGetLabel, responseLabel, "GET");
+        // 5 seconds for timeout
+        xhr.timeout = 5000;
+        
         //set arguments with <URL>?xxx=xxx&yyy=yyy
         xhr.open("GET", "http://httpbin.org/get?show_env=1", true);
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207)) {
-                var httpStatus = xhr.statusText;
-                var response = xhr.responseText.substring(0, 100) + "...";
-                var responseLabel = new cc.LabelTTF("GET Response (100 chars): \n" + response, "Thonburi", 16);
-                that.addChild(responseLabel, 1);
-                responseLabel.anchorX = 0;
-                responseLabel.anchorY = 1;
-                responseLabel.textAlign = cc.TEXT_ALIGNMENT_LEFT;
-
-                responseLabel.x = 10;
-                responseLabel.y = winSize.height / 2;
-                statusGetLabel.setString("Status: Got GET response! " + httpStatus);
-            }
-        };
         xhr.send();
     },
 
     sendPostPlainText: function() {
-        var that = this;
-        var xhr = cc.loader.getXMLHttpRequest();
-        var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 18);
+        var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusPostLabel, 1);
 
-        statusPostLabel.x = winSize.width / 2;
-
-        statusPostLabel.y = winSize.height - 140;
+        statusPostLabel.x = winSize.width / 10 * 3;
+        statusPostLabel.y = winSize.height - 100;
+        ensureLeftAligned(statusPostLabel);
         statusPostLabel.setString("Status: Send Post Request to httpbin.org with plain text");
+
+
+        var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
+        this.addChild(responseLabel, 1);
+        ensureLeftAligned(responseLabel);
+        responseLabel.x = winSize.width / 10 * 3;
+        responseLabel.y = winSize.height / 2;
+        
+        var xhr = cc.loader.getXMLHttpRequest();
+        streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST");
 
         xhr.open("POST", "http://httpbin.org/post");
         //set Content-type "text/plain;charset=UTF-8" to post plain text
         xhr.setRequestHeader("Content-Type","text/plain;charset=UTF-8");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207)) {
-                var httpStatus = xhr.statusText;
-                var response = xhr.responseText.substring(0, 100) + "...";
-                var responseLabel = new cc.LabelTTF("POST Response (100 chars):  \n" + response, "Thonburi", 16);
-                that.addChild(responseLabel, 1);
-                responseLabel.anchorX = 0;
-                responseLabel.anchorY = 1;
-                responseLabel.textAlign = cc.TEXT_ALIGNMENT_LEFT;
-
-                responseLabel.x = winSize.width / 10 * 3;
-                responseLabel.y = winSize.height / 2;
-                statusPostLabel.setString("Status: Got POST response! " + httpStatus);
-            }
-        };
         xhr.send("plain text message");
     },
 
     sendPostForms: function() {
-        var that = this;
-        var xhr = cc.loader.getXMLHttpRequest();
-        var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 18);
+        var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusPostLabel, 1);
 
-        statusPostLabel.x = winSize.width / 2;
-
-        statusPostLabel.y = winSize.height - 180;
+        statusPostLabel.x = winSize.width / 10 * 7;
+        statusPostLabel.y = winSize.height - 100;
+        ensureLeftAligned(statusPostLabel);
         statusPostLabel.setString("Status: Send Post Request to httpbin.org width form data");
+
+        var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
+        this.addChild(responseLabel, 1);
+
+        ensureLeftAligned(responseLabel);
+        responseLabel.x = winSize.width / 10 * 7;
+        responseLabel.y = winSize.height / 2;
+
+        var xhr = cc.loader.getXMLHttpRequest();
+        streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST");
 
         xhr.open("POST", "http://httpbin.org/post");
         //set Content-Type "application/x-www-form-urlencoded" to post form data
         //mulipart/form-data for upload
         xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207)) {
-                var httpStatus = xhr.statusText;
-                var response = xhr.responseText.substring(0, 100) + "...";
-                var responseLabel = new cc.LabelTTF("POST Response (100 chars):  \n" + response, "Thonburi", 16);
-                that.addChild(responseLabel, 1);
-                responseLabel.anchorX = 0;
-                responseLabel.anchorY = 1;
-                responseLabel.textAlign = cc.TEXT_ALIGNMENT_LEFT;
-
-                responseLabel.x = winSize.width / 10 * 7;
-                responseLabel.y = winSize.height / 2;
-                statusPostLabel.setString("Status: Got POST response! " + httpStatus);
-            }
-        };
         /**
         form : {
             "a" : "hello",
@@ -155,7 +165,6 @@ var XHRTestLayer = cc.Layer.extend({
         **/
         var args = "a=hello&b=world";
         xhr.send(args);
-                
     },
 
     scrollViewDidScroll:function (view) {

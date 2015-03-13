@@ -812,7 +812,11 @@ cc.Touch.prototype._ctor = function(x, y, id) {
 };
 
 cc.GLProgram.prototype._ctor = function(vShaderFileName, fShaderFileName) {
-    vShaderFileName !== undefined && fShaderFileName !== undefined && cc.GLProgram.prototype.init.call(this, vShaderFileName, fShaderFileName);
+    if(vShaderFileName !== undefined && fShaderFileName !== undefined){
+        cc.GLProgram.prototype.init.call(this, vShaderFileName, fShaderFileName);
+        cc.GLProgram.prototype.link.call(this);
+        cc.GLProgram.prototype.updateUniforms.call(this);
+    } 
 };
 
 

@@ -101,7 +101,8 @@ cc.isString = function(obj) {
  * @returns {boolean}
  */
 cc.isArray = function(obj) {
-    return Object.prototype.toString.call(obj) == '[object Array]';
+    return Array.isArray(obj) ||
+        (typeof obj === 'object' && objectToString(obj) === '[object Array]');
 };
 
 /**
@@ -110,7 +111,7 @@ cc.isArray = function(obj) {
  * @returns {boolean}
  */
 cc.isUndefined = function(obj) {
-    return typeof obj == 'undefined';
+    return typeof obj === 'undefined';
 };
 
 /**
@@ -119,9 +120,8 @@ cc.isUndefined = function(obj) {
  * @returns {boolean}
  */
 cc.isObject = function(obj) {
-    var type = typeof obj;
-
-    return type == 'function' || (obj && type == 'object');
+    return obj.__nativeObj !== undefined ||
+        ( typeof obj === "object" && Object.prototype.toString.call(obj) === '[object Object]' );
 };
 
 /**

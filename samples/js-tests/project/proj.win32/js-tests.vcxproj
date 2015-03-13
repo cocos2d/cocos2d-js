@@ -102,7 +102,7 @@
     </ResourceCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\prebuilt\win32\debug-build\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\cocos2d-x\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
@@ -163,7 +163,7 @@ copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
     </ResourceCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonkey\prebuilt\win32\release-build\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\cocos2d-x\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
@@ -189,10 +189,14 @@ copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Classes\js_DrawNode3D_bindings.cpp" />
+    <ClCompile Include="..\Classes\js_Effect3D_bindings.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Classes\js_DrawNode3D_bindings.h" />
+    <ClInclude Include="..\Classes\js_Effect3D_bindings.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
