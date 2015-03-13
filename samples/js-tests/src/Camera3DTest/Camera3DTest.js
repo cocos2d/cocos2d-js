@@ -1257,7 +1257,7 @@ var arrayOfCamera3DTest = [
     CameraArcBallDemo
 ];
 
-if(cc.sys.OS !== cc.sys.OS_WP8){
+if(cc.sys.os !== cc.sys.OS_WP8){
     arrayOfCamera3DTest.push(FogTestDemo);
 }
 

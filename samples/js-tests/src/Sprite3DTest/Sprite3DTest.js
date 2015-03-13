@@ -1554,7 +1554,7 @@ var arrayOfSprite3DTest = [
 ];
 
 // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
-if(cc.sys.OS !== cc.sys.OS_WP8){
+if(cc.sys.os !== cc.sys.OS_WP8){
     arrayOfSprite3DTest = arrayOfSprite3DTest.concat([
         Sprite3DEffectTest,
         Sprite3DWithSkinOutlineTest,
