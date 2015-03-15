@@ -109,10 +109,10 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos\base;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support\spine;$(EngineRoot)cocos\editor-support\cocosbuilder;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\editor-support;$(EngineRoot)extensions;$(EngineRoot)\..\external\spidermonkey\include\wp8;$(ProjectDir)..\..\..\auto;$(ProjectDir)..\..\..\manual;$(ProjectDir)..\..\..\manual\cocostudio;$(ProjectDir)..\..\..\manual\spine;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4800;4703;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <WarningLevel>Level1</WarningLevel>
+      <DisableSpecificWarnings>4800;4703;4101;4083;4700;4068;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>None</DebugInformationFormat>
@@ -124,16 +124,17 @@
     </Link>
     <Lib>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos\base;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support\spine;$(EngineRoot)cocos\editor-support\cocosbuilder;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\editor-support;$(EngineRoot)extensions;$(EngineRoot)\..\external\spidermonkey\include\wp8;$(ProjectDir)..\..\..\auto;$(ProjectDir)..\..\..\manual;$(ProjectDir)..\..\..\manual\cocostudio;$(ProjectDir)..\..\..\manual\spine;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4800;4703;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <WarningLevel>Level1</WarningLevel>
+      <DisableSpecificWarnings>4800;4703;4101;4083;4700;4068;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -141,15 +142,18 @@
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos\base;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support\spine;$(EngineRoot)cocos\editor-support\cocosbuilder;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\editor-support;$(EngineRoot)extensions;$(EngineRoot)\..\external\spidermonkey\include\wp8;$(ProjectDir)..\..\..\auto;$(ProjectDir)..\..\..\manual;$(ProjectDir)..\..\..\manual\cocostudio;$(ProjectDir)..\..\..\manual\spine;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4800;4703;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <WarningLevel>Level1</WarningLevel>
+      <DisableSpecificWarnings>4800;4703;4101;4083;4700;4068;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>None</DebugInformationFormat>
@@ -161,6 +165,7 @@
     </Link>
     <Lib>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
