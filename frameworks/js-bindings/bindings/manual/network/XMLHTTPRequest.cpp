@@ -736,7 +736,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
         }
         else if (args.get(0).isObject())
         {
-            JSObject obj = args.get(0).toObjectOrNull();
+            JSObject *obj = args.get(0).toObjectOrNull();
             if (JS_IsArrayBufferObject(obj))
             {
                 _setHttpRequestData((const char *)JS_GetArrayBufferData(obj), JS_GetArrayBufferByteLength(obj));

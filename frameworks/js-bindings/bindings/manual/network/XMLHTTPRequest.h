@@ -92,6 +92,7 @@ private:
     void _gotHeader(std::string header);
     void _setRequestHeader(const char* field, const char* value);
     void _setHttpRequestHeader();
+    void _setHttpRequestData(const char *data, size_t len);
     void _sendRequest(JSContext *cx);
     void _notify(JSObject * callback);
     
