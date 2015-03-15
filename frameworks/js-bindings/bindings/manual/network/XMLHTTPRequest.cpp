@@ -741,7 +741,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
             {
                 _setHttpRequestData((const char *)JS_GetArrayBufferData(obj), JS_GetArrayBufferByteLength(obj));
             }
-            else if (JS_IsArrayBufferViewObject(&obj))
+            else if (JS_IsArrayBufferViewObject(obj))
             {
                 _setHttpRequestData((const char *)JS_GetArrayBufferViewData(obj), JS_GetArrayBufferViewByteLength(obj));
             }
