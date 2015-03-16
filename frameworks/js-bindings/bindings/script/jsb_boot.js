@@ -945,6 +945,21 @@ cc.TextureCache.prototype.addImageAsync = function(url, cb, target) {
     });
     return localTex;
 };
+// Fix for compatibility with old APIs
+cc.TextureCache.prototype._addImage = cc.TextureCache.prototype.addImage;
+cc.TextureCache.prototype.addImage = function(url, cb, target) {
+    if (typeof cb === "function") {
+        return this.addImageAsync(url, cb, target);
+    }
+    else {
+        if (cb) {
+            return this._addImage(url, cb)
+        }
+        else {
+            return this._addImage(url);
+        }
+    }
+};
 /**
  * @type {Object}
  * @name cc.shaderCache
