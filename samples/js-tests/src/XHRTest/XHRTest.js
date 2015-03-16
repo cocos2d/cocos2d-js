@@ -81,6 +81,7 @@ var XHRTestLayer = cc.Layer.extend({
         this.sendGetRequest();
         this.sendPostPlainText();
         this.sendPostForms();
+        this.sendPostArrayBuffer();
     },
 
     sendGetRequest: function() {
@@ -113,7 +114,7 @@ var XHRTestLayer = cc.Layer.extend({
         var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusPostLabel, 1);
 
-        statusPostLabel.x = winSize.width / 10 * 3;
+        statusPostLabel.x = winSize.width / 10 * 2.5;
         statusPostLabel.y = winSize.height - 100;
         ensureLeftAligned(statusPostLabel);
         statusPostLabel.setString("Status: Send Post Request to httpbin.org with plain text");
@@ -122,7 +123,7 @@ var XHRTestLayer = cc.Layer.extend({
         var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
         this.addChild(responseLabel, 1);
         ensureLeftAligned(responseLabel);
-        responseLabel.x = winSize.width / 10 * 3;
+        responseLabel.x = winSize.width / 10 * 2.5;
         responseLabel.y = winSize.height / 2;
         
         var xhr = cc.loader.getXMLHttpRequest();
@@ -138,7 +139,7 @@ var XHRTestLayer = cc.Layer.extend({
         var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusPostLabel, 1);
 
-        statusPostLabel.x = winSize.width / 10 * 7;
+        statusPostLabel.x = winSize.width / 10 * 5;
         statusPostLabel.y = winSize.height - 100;
         ensureLeftAligned(statusPostLabel);
         statusPostLabel.setString("Status: Send Post Request to httpbin.org width form data");
@@ -147,7 +148,7 @@ var XHRTestLayer = cc.Layer.extend({
         this.addChild(responseLabel, 1);
 
         ensureLeftAligned(responseLabel);
-        responseLabel.x = winSize.width / 10 * 7;
+        responseLabel.x = winSize.width / 10 * 5;
         responseLabel.y = winSize.height / 2;
 
         var xhr = cc.loader.getXMLHttpRequest();
@@ -165,6 +166,32 @@ var XHRTestLayer = cc.Layer.extend({
         **/
         var args = "a=hello&b=world";
         xhr.send(args);
+    },
+
+    sendPostArrayBuffer: function() {
+        var statusPostLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
+        this.addChild(statusPostLabel, 1);
+
+        statusPostLabel.x = winSize.width / 10 * 7.5;
+        statusPostLabel.y = winSize.height - 100;
+        ensureLeftAligned(statusPostLabel);
+        statusPostLabel.setString("Status: Send Post Request to httpbin.org with ArrayBuffer");
+
+
+        var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
+        this.addChild(responseLabel, 1);
+        ensureLeftAligned(responseLabel);
+        responseLabel.x = winSize.width / 10 * 7.5;
+        responseLabel.y = winSize.height / 2;
+        
+        var xhr = cc.loader.getXMLHttpRequest();
+        streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST");
+
+        xhr.open("POST", "http://httpbin.org/post");
+        //set Content-type "text/plain" to post ArrayBuffer or ArrayBufferView
+        xhr.setRequestHeader("Content-Type","text/plain");
+        // Uint8Array is an ArrayBufferView
+        xhr.send(new Uint8Array([1,2,3,4,5]));
     },
 
     scrollViewDidScroll:function (view) {
