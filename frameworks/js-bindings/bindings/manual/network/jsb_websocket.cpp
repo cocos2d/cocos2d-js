@@ -252,8 +252,8 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
         } while (0);
         
-        //JS::RootedObject obj(cx, JS_NewObject(cx, js_cocos2dx_websocket_class, JS::RootedObject(cx, js_cocos2dx_websocket_prototype), JS::NullPtr()));
-        JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, js_cocos2dx_websocket_class, args));
+        JS::RootedObject obj(cx, JS_NewObject(cx, js_cocos2dx_websocket_class, JS::RootedObject(cx, js_cocos2dx_websocket_prototype), JS::NullPtr()));
+        //JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, js_cocos2dx_websocket_class, args));
         
         WebSocket* cobj = new WebSocket();
         JSB_WebSocketDelegate* delegate = new JSB_WebSocketDelegate();
