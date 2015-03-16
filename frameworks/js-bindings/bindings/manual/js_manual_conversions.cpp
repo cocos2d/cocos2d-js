@@ -50,9 +50,7 @@ JSStringWrapper::JSStringWrapper(jsval val, JSContext* cx/* = NULL*/)
 
 JSStringWrapper::~JSStringWrapper()
 {
-#if(CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
-    CC_SAFE_DELETE_ARRAY(_buffer); //XXX: why break on wp8?
-#endif
+    JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)_buffer);
 }
 
 void JSStringWrapper::set(jsval val, JSContext* cx)
@@ -83,7 +81,11 @@ void JSStringWrapper::set(JSString* str, JSContext* cx)
 
 //    _buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
 
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     _buffer = JS_EncodeString(cx, str);
+#else
+    _buffer = JS_EncodeStringToUTF8(cx, JS::RootedString(cx, str));
+#endif
 }
 
 const char* JSStringWrapper::get()
@@ -1799,7 +1801,8 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
     jsval ret = JSVAL_NULL;
 
     //XXX: JS_NewUCStringCopyN can't be resolved on Win32
-/*    int utf16_size = 0;
+#if(CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    int utf16_size = 0;
     jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v, (int)length, &utf16_size);
     
     if (strUTF16 && utf16_size > 0) {
@@ -1809,12 +1812,13 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
         }
         delete[] strUTF16;
     }
-*/
+#else
     JSString* str = JS_NewStringCopyN(cx, v, length);
     if(str)
     {
         ret = STRING_TO_JSVAL(str);
     }
+#endif
     return ret;
 }
 

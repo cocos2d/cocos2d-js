@@ -649,18 +649,27 @@ bool js_cocos2dx_MenuItem_setCallback(JSContext *cx, uint32_t argc, jsval *vp)
         do {
 		    if(JS_TypeOfValue(cx, args[0]) == JSTYPE_FUNCTION)
 		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), args[0]));
+                JSObject* thisObj;
+                if (args.get(1).isObject())
+                {
+                    thisObj = args.get(1).toObjectOrNull();
+                }
+                else
+                {
+                    thisObj = JS_THIS_OBJECT(cx, vp);
+                }
+                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, thisObj, args[0]));
 		        auto lambda = [=](cocos2d::Ref* larg0) -> void {
 		            jsval largv[1];
-		            do {
-		            if (larg0) {
-		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Ref>(cx, (cocos2d::Ref*)larg0);
-		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
-		            } else {
-		                largv[0] = JSVAL_NULL;
-		            }
-		        } while (0);
-		            JS::RootedValue rval(cx);
+                    do {
+                        if (larg0) {
+                            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Ref>(cx, (cocos2d::Ref*)larg0);
+                            largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
+                        } else {
+                            largv[0] = JSVAL_NULL;
+                        }
+                    } while (0);
+                    JS::RootedValue rval(cx);
 		            bool ok = func->invoke(1, &largv[0], &rval);
 		            if (!ok && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
