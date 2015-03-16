@@ -673,6 +673,14 @@ var testNames = [
         testScene:function () {
             return new XHRTestScene();
         }
+    },
+    {
+        title:"XMLHttpRequest send ArrayBuffer",
+        platforms: PLATFORM_ALL,
+        linksrc:"src/XHRTest/XHRArrayBufferTest.js",
+        testScene:function () {
+            return new XHRArrayBufferTestScene();
+        }
     }
 
     //"UserDefaultTest",
