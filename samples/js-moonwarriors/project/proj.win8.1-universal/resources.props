@@ -3,12 +3,15 @@
   <ImportGroup Label="PropertySheets" />
 
   <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(EngineRoot)..\bindings\manual;$(EngineRoot)..\bindings\auto;$(EngineRoot)..\external\spidermonkey\include\$(COCOS2D_PLATFORM);$(EngineRoot)cocos\base;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+    </ClCompile>
     <Link>
       <AdditionalDependencies>mozjs-33.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(EngineRoot)..\external\spidermonkey\prebuilt\$(COCOS2D_PLATFORM)\$(Platform);%(AdditionalLibraryDirectories);</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-
+  
   <PropertyGroup Label="APP_DLLS">
     <SpiderMonkeyBinPath Condition=" '$(SpiderMonkeyBinPath)' == '' ">$(EngineRoot)..\external\spidermonkey\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</SpiderMonkeyBinPath>
   </PropertyGroup>
