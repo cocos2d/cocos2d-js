@@ -41,13 +41,13 @@
 /* #undef JS_HAVE_SYS_ISA_DEFS_H */
 
 /* Define to 1 if SpiderMonkey is in NUNBOX32 mode. */
-/* #undef JS_NUNBOX32 */
+#define JS_NUNBOX32 1
 
 /* Define to 1 if SpiderMonkey is in PUNBOX64 mode. */
-#define JS_PUNBOX64 1
+/* #undef JS_PUNBOX64 */
 
 /* MOZILLA JSAPI version number components */
-#define MOZJS_MAJOR_VERSION 33
-#define MOZJS_MINOR_VERSION 1
+#define MOZJS_MAJOR_VERSION 34
+#define MOZJS_MINOR_VERSION 0
 
 #endif /* js_config_h */
