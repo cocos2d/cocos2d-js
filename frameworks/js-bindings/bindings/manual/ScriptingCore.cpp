@@ -389,18 +389,19 @@ bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 };
 
 void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
+    // Hack for iOS 32 bit architectures
+    JS::HandleObject g(global);
     // first, try to get the ns
     JS::RootedValue nsval(cx);
     JS::RootedObject ns(cx);
-    JS_GetProperty(cx, global, "cc", &nsval);
-    if (nsval == JSVAL_VOID) {
-        JS::RootedObject proto(cx);
-        JS::RootedObject parent(cx);
-        ns = JS_NewObject(cx, NULL, proto, parent);
+    JS_GetProperty(cx, g, "cc", &nsval);
+    ns = nsval.toObjectOrNull();
+    // Not exist, create it
+    if (ns.get() == nullptr)
+    {
+        ns = JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr());
         nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, global, "cc", nsval);
-    } else {
-        JS_ValueToObject(cx, nsval, &ns);
+        JS_SetProperty(cx, g, "cc", nsval);
     }
 
     //
@@ -411,7 +412,7 @@ void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
     JS::RootedObject jsc(cx, JS_NewObject(cx, NULL, proto, parent));
     JS::RootedValue jscVal(cx);
     jscVal = OBJECT_TO_JSVAL(jsc);
-    JS_SetProperty(cx, global, "__jsc__", jscVal);
+    JS_SetProperty(cx, g, "__jsc__", jscVal);
 
     JS_DefineFunction(cx, jsc, "garbageCollect", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, jsc, "dumpRoot", ScriptingCore::dumpRoot, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
@@ -420,16 +421,16 @@ void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
     JS_DefineFunction(cx, jsc, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
     // register some global functions
-    JS_DefineFunction(cx, global, "require", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, global, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, global, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, global, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, g, "require", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, g, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, g, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, g, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    JS_DefineFunction(cx, global, "__getPlatform", JSBCore_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, global, "__getOS", JSBCore_os, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-    JS_DefineFunction(cx, global, "__cleanScript", JSB_cleanScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, g, "__getPlatform", JSBCore_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, g, "__getOS", JSBCore_os, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, g, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, g, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    JS_DefineFunction(cx, g, "__cleanScript", JSB_cleanScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
 static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
@@ -554,12 +555,12 @@ static JSSecurityCallbacks securityCallbacks = {
 };
 
 void ScriptingCore::createGlobalContext() {
-    if (this->_cx && this->_rt) {
-        ScriptingCore::removeAllRoots(this->_cx);
-        JS_DestroyContext(this->_cx);
-        JS_DestroyRuntime(this->_rt);
-        this->_cx = NULL;
-        this->_rt = NULL;
+    if (_cx && _rt) {
+        ScriptingCore::removeAllRoots(_cx);
+        JS_DestroyContext(_cx);
+        JS_DestroyRuntime(_rt);
+        _cx = NULL;
+        _rt = NULL;
     }
     
     // Start the engine. Added in SpiderMonkey v25
@@ -568,40 +569,38 @@ void ScriptingCore::createGlobalContext() {
     
     // Removed from Spidermonkey 19.
     //JS_SetCStringsAreUTF8();
-    this->_rt = JS_NewRuntime(8L * 1024L * 1024L);
+    _rt = JS_NewRuntime(8L * 1024L * 1024L);
     JS_SetGCParameter(_rt, JSGC_MAX_BYTES, 0xffffffff);
     
     JS_SetTrustedPrincipals(_rt, &shellTrustedPrincipals);
     JS_SetSecurityCallbacks(_rt, &securityCallbacks);
     JS_SetNativeStackQuota(_rt, JSB_MAX_STACK_QUOTA);
     
-    this->_cx = JS_NewContext(_rt, 8192);
+    _cx = JS_NewContext(_rt, 8192);
     
     // Removed in Firefox v27
 //    JS_SetOptions(this->_cx, JSOPTION_TYPE_INFERENCE);
     // Removed in Firefox v33
 //    JS::ContextOptionsRef(_cx).setTypeInference(true);
-//    JS::ContextOptionsRef(_cx).setIon(true);
-//    JS::ContextOptionsRef(_cx).setBaseline(true);
 
     JS::RuntimeOptionsRef(_rt).setIon(true);
     JS::RuntimeOptionsRef(_rt).setBaseline(true);
 
 //    JS_SetVersion(this->_cx, JSVERSION_LATEST);
     
-    JS_SetErrorReporter(this->_cx, ScriptingCore::reportError);
+    JS_SetErrorReporter(_cx, ScriptingCore::reportError);
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
     //JS_SetGCZeal(this->_cx, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
-    this->_global.construct(_cx);
-    this->_global.ref() = NewGlobalObject(_cx);
-
-    JSAutoCompartment ac(_cx, _global.ref().get());
-    js::SetDefaultObjectForContext(_cx, _global.ref().get());
+    _global.construct(_cx);
+    _global.ref() = NewGlobalObject(_cx);
+    
+    JSAutoCompartment ac(_cx, _global.ref());
+    js::SetDefaultObjectForContext(_cx, _global.ref());
     
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
-        callback(this->_cx, JS::RootedObject(this->_cx, this->_global.ref().get()));
+        callback(_cx, _global.ref());
     }
 }
 
@@ -727,8 +726,7 @@ void ScriptingCore::cleanAllScript()
 
 bool ScriptingCore::runScript(const char *path)
 {
-    JS::RootedObject global(_cx, _global.ref().get());
-    return runScript(path, global, _cx);
+    return runScript(path, _global.ref(), _cx);
 }
 
 bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSContext* cx)

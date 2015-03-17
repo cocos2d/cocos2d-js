@@ -25,6 +25,7 @@
 #include "jsfriendapi.h"
 #include "extensions/cocos-ext.h"
 #include "js_bindings_config.h"
+#include "cocos2d_specifics.hpp"
 #ifdef JSB_INCLUDE_CHIPMUNK
 
 #include "js_bindings_chipmunk_manual.h"
@@ -579,33 +580,15 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JS::HandleObject globalO
 
 
 void register_CCPhysicsSprite(JSContext *cx, JS::HandleObject obj) {
-    JS::RootedValue nsval(cx);
-    JS::RootedObject ns(cx);
-    JS_GetProperty(cx, obj, "cc", &nsval);
-    if (nsval == JSVAL_VOID) {
-        ns = JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr());
-        nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, obj, "cc", nsval);
-    } else {
-        JS_ValueToObject(cx, nsval, &ns);
-    }
-    //obj = ns;
-    JSPROXY_CCPhysicsSprite_createClass(cx, ns);
+    JS::RootedObject ccObj(cx);
+    create_js_root_obj(cx, obj, "cc", &ccObj);
+    JSPROXY_CCPhysicsSprite_createClass(cx, ccObj);
 }
 
 void register_CCPhysicsDebugNode(JSContext *cx, JS::HandleObject obj) {
-    JS::RootedValue nsval(cx);
-    JS::RootedObject ns(cx);
-    JS_GetProperty(cx, obj, "cc", &nsval);
-    if (nsval == JSVAL_VOID) {
-        ns = JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr());
-        nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, obj, "cc", nsval);
-    } else {
-        JS_ValueToObject(cx, nsval, &ns);
-    }
-    //obj = ns;
-    JSB_CCPhysicsDebugNode_createClass(cx, ns, "PhysicsDebugNode");
+    JS::RootedObject ccObj(cx);
+    create_js_root_obj(cx, obj, "cc", &ccObj);
+    JSB_CCPhysicsDebugNode_createClass(cx, ccObj, "PhysicsDebugNode");
 }
 
 bool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )

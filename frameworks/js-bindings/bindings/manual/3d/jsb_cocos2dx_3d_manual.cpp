@@ -144,8 +144,15 @@ bool js_cocos2dx_Mesh_getMeshVertexAttribute(JSContext *cx, uint32_t argc, jsval
 
 void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
 {
+    // Hack for iOS 32 bit architectures
+    JS::HandleObject g(global);
+    JS::RootedValue tmpVal(cx);
+    JS::RootedObject ccObj(cx);
     JS::RootedObject tmpObj(cx);
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.Sprite3D; })()").toObjectOrNull();
+    create_js_root_obj(cx, g, "cc", &ccObj);
+    
+    JS_GetProperty(cx, ccObj, "Sprite3D", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "createAsync", js_cocos2dx_Sprite3D_createAsync, 4, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Sprite3D_prototype), "getAABB", js_cocos2dx_Sprite3D_getAABB, 0, JSPROP_READONLY | JSPROP_PERMANENT);
