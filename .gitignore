@@ -32,6 +32,7 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 ipch/
 *.opensdf
+Generated Files
 
 # Ignore zip file created by download-deps.py if saved by user
 *-deps-*.zip
