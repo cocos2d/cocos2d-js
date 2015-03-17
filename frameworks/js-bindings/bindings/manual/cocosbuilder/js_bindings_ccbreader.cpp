@@ -320,12 +320,10 @@ extern JSObject* jsb_cocosbuilder_CCBAnimationManager_prototype;
 
 void register_CCBuilderReader(JSContext *cx, JS::HandleObject global)
 {
-    // Hack for iOS 32 bit architectures
-    JS::HandleObject g(global);
     JS::RootedObject ccObj(cx);
     JS::RootedValue tmpVal(cx);
     JS::RootedObject tmpObj(cx);
-    create_js_root_obj(cx, g, "cc", &ccObj);
+    create_js_root_obj(cx, global, "cc", &ccObj);
     
     JS_GetProperty(cx, ccObj, "_Reader", &tmpVal);
     tmpObj = tmpVal.toObjectOrNull();

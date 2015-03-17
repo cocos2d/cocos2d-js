@@ -5141,16 +5141,14 @@ bool js_console_log(JSContext *cx, uint32_t argc, jsval *vp)
 
 void create_js_root_obj(JSContext* cx, JS::HandleObject obj, const std::string &name, JS::MutableHandleObject jsObj)
 {
-    // Hack for iOS 32 bit architectures
-    JS::HandleObject g(obj);
     JS::RootedValue nsval(cx);
     JS::RootedObject tmp(cx);
-    JS_GetProperty(cx, g, name.c_str(), &nsval);
+    JS_GetProperty(cx, obj, name.c_str(), &nsval);
     tmp = nsval.toObjectOrNull();
     if (!tmp.get()) {
         jsObj.set(JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
         nsval = OBJECT_TO_JSVAL(jsObj);
-        JS_SetProperty(cx, g, name.c_str(), nsval);
+        JS_SetProperty(cx, obj, name.c_str(), nsval);
     } else {
         jsObj.set(tmp);
     }
@@ -5158,12 +5156,10 @@ void create_js_root_obj(JSContext* cx, JS::HandleObject obj, const std::string &
 
 void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
 {
-    // Hack for iOS 32 bit architectures
-    JS::HandleObject g(global);
     JS::RootedObject ccObj(cx);
     JS::RootedValue tmpVal(cx);
     JS::RootedObject tmpObj(cx);
-    create_js_root_obj(cx, g, "cc", &ccObj);
+    create_js_root_obj(cx, global, "cc", &ccObj);
     
     create_js_root_obj(cx, ccObj, "PlistParser", &tmpObj);
     JS_DefineFunction(cx, tmpObj, "getInstance", js_PlistParser_getInstance, 0, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -5373,7 +5369,7 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCGLProgram_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "createWithString", js_cocos2dx_CCGLProgram_createWithString, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    JS_DefineFunction(cx, g, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS::RootedObject camera(cx, jsb_cocos2d_Camera_prototype);
     JS_DefineFunction(cx, camera, "unproject", js_cocos2dx_Camera_unproject, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -5417,7 +5413,7 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     js_register_cocos2dx_EventKeyboard(cx, ccObj);
 
     JS::RootedObject consoleObj(cx);
-    create_js_root_obj(cx, g, "console", &consoleObj);
+    create_js_root_obj(cx, global, "console", &consoleObj);
     
     JS_DefineFunction(cx, consoleObj, "log", js_console_log, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 }

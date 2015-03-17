@@ -144,12 +144,10 @@ bool js_cocos2dx_Mesh_getMeshVertexAttribute(JSContext *cx, uint32_t argc, jsval
 
 void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
 {
-    // Hack for iOS 32 bit architectures
-    JS::HandleObject g(global);
     JS::RootedValue tmpVal(cx);
     JS::RootedObject ccObj(cx);
     JS::RootedObject tmpObj(cx);
-    create_js_root_obj(cx, g, "cc", &ccObj);
+    create_js_root_obj(cx, global, "cc", &ccObj);
     
     JS_GetProperty(cx, ccObj, "Sprite3D", &tmpVal);
     tmpObj = tmpVal.toObjectOrNull();
