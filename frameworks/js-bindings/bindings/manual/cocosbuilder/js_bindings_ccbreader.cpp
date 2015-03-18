@@ -323,7 +323,7 @@ void register_CCBuilderReader(JSContext *cx, JS::HandleObject global)
     JS::RootedObject ccObj(cx);
     JS::RootedValue tmpVal(cx);
     JS::RootedObject tmpObj(cx);
-    create_js_root_obj(cx, global, "cc", &ccObj);
+    get_or_create_js_obj(cx, global, "cc", &ccObj);
     
     JS_GetProperty(cx, ccObj, "_Reader", &tmpVal);
     tmpObj = tmpVal.toObjectOrNull();

@@ -393,13 +393,16 @@ void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
     JS::RootedValue nsval(cx);
     JS::RootedObject ns(cx);
     JS_GetProperty(cx, global, "cc", &nsval);
-    ns = nsval.toObjectOrNull();
     // Not exist, create it
-    if (ns.get() == nullptr)
+    if (nsval == JSVAL_VOID)
     {
-        ns = JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr());
+        ns.set(JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
         nsval = OBJECT_TO_JSVAL(ns);
         JS_SetProperty(cx, global, "cc", nsval);
+    }
+    else
+    {
+        ns.set(nsval.toObjectOrNull());
     }
 
     //

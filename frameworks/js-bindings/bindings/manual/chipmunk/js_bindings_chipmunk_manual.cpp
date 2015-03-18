@@ -581,13 +581,13 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JS::HandleObject globalO
 
 void register_CCPhysicsSprite(JSContext *cx, JS::HandleObject obj) {
     JS::RootedObject ccObj(cx);
-    create_js_root_obj(cx, obj, "cc", &ccObj);
+    get_or_create_js_obj(cx, obj, "cc", &ccObj);
     JSPROXY_CCPhysicsSprite_createClass(cx, ccObj);
 }
 
 void register_CCPhysicsDebugNode(JSContext *cx, JS::HandleObject obj) {
     JS::RootedObject ccObj(cx);
-    create_js_root_obj(cx, obj, "cc", &ccObj);
+    get_or_create_js_obj(cx, obj, "cc", &ccObj);
     JSB_CCPhysicsDebugNode_createClass(cx, ccObj, "PhysicsDebugNode");
 }
 

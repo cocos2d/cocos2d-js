@@ -45,7 +45,7 @@ void JSB_register_opengl(JSContext *_cx, JS::HandleObject object)
     JS_SetProperty(_cx, object, "gl", openglVal);
 
     JS::RootedObject ccns(_cx);
-    create_js_root_obj(_cx, object, "cc", &ccns);
+    get_or_create_js_obj(_cx, object, "cc", &ccns);
     
     js_register_cocos2dx_GLNode(_cx, ccns);
     

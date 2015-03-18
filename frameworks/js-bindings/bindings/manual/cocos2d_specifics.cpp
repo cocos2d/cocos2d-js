@@ -5139,18 +5139,16 @@ bool js_console_log(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
-void create_js_root_obj(JSContext* cx, JS::HandleObject obj, const std::string &name, JS::MutableHandleObject jsObj)
+void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string &name, JS::MutableHandleObject jsObj)
 {
     JS::RootedValue nsval(cx);
-    JS::RootedObject tmp(cx);
     JS_GetProperty(cx, obj, name.c_str(), &nsval);
-    tmp = nsval.toObjectOrNull();
-    if (!tmp.get()) {
+    if (nsval == JSVAL_VOID) {
         jsObj.set(JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
         nsval = OBJECT_TO_JSVAL(jsObj);
         JS_SetProperty(cx, obj, name.c_str(), nsval);
     } else {
-        jsObj.set(tmp);
+        jsObj.set(nsval.toObjectOrNull());
     }
 }
 
@@ -5159,9 +5157,10 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS::RootedObject ccObj(cx);
     JS::RootedValue tmpVal(cx);
     JS::RootedObject tmpObj(cx);
-    create_js_root_obj(cx, global, "cc", &ccObj);
+    get_or_create_js_obj(cx, global, "cc", &ccObj);
     
-    create_js_root_obj(cx, ccObj, "PlistParser", &tmpObj);
+    JS_GetProperty(cx, ccObj, "PlistParser", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "getInstance", js_PlistParser_getInstance, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS::RootedObject proto(cx, jsb_cocos2d_SAXParser_prototype);
     JS_DefineFunction(cx, proto, "parse", js_PlistParser_parse, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -5400,7 +5399,7 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, ccObj, "unregisterTouchDelegate", js_cocos2dx_JSTouchDelegate_unregisterTouchDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS::RootedObject mathObj(cx);
-    create_js_root_obj(cx, ccObj, "math", &mathObj);
+    get_or_create_js_obj(cx, ccObj, "math", &mathObj);
     JS_DefineFunction(cx, mathObj, "obbGetCorners", js_cocos2dx_ccobbGetCorners, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, mathObj, "obbIntersectsObb", js_cocos2dx_ccobbIntersects, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, mathObj, "rayIntersectsObb", js_cocos2dx_ccrayIntersectsObb, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -5413,7 +5412,7 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     js_register_cocos2dx_EventKeyboard(cx, ccObj);
 
     JS::RootedObject consoleObj(cx);
-    create_js_root_obj(cx, global, "console", &consoleObj);
+    get_or_create_js_obj(cx, global, "console", &consoleObj);
     
     JS_DefineFunction(cx, consoleObj, "log", js_console_log, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 }
