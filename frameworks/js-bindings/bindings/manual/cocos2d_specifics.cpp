@@ -5171,8 +5171,11 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
 //XXX: why named this as extensions?
 void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
 {
+    JS::RootedObject tmpObj(cx);
+    tmpObj = anonEvaluate(cx, global, "(function () { return cc.Label; })()").toObjectOrNull();
+    JS_DefineFunction(cx, tmpObj, "createWithTTF", js_cocos2dx_Label_createWithTTF, 4, JSPROP_READONLY | JSPROP_PERMANENT);
+    
     JS::RootedObject labelProto(cx, jsb_cocos2d_Label_prototype);
-    JS_DefineFunction(cx, labelProto, "createWithTTF", js_cocos2dx_Label_createWithTTF, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, labelProto, "setTTFConfig", js_cocos2dx_Label_setTTFConfig, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     JS::RootedObject nodeGridProto(cx, jsb_cocos2d_NodeGrid_prototype);
@@ -5259,7 +5262,6 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, fileUtilsProto, "createDictionaryWithContentsOfFile", js_cocos2dx_FileUtils_createDictionaryWithContentsOfFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, fileUtilsProto, "getDataFromFile", js_cocos2dx_CCFileUtils_getDataFromFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS::RootedObject tmpObj(cx);
     tmpObj = anonEvaluate(cx, global, "(function () { return cc.EventListenerTouchOneByOne; })()").toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_EventListenerTouchOneByOne_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     
