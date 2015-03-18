@@ -24,6 +24,7 @@
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"
 #include "jsfriendapi.h"
+#include "cocos2d_specifics.hpp"
 #include "jsb_opengl_manual.h"
 #include "js_bindings_opengl.h"
 
@@ -43,16 +44,8 @@ void JSB_register_opengl(JSContext *_cx, JS::HandleObject object)
     openglVal = OBJECT_TO_JSVAL(opengl);
     JS_SetProperty(_cx, object, "gl", openglVal);
 
-    JS::RootedValue nsval(_cx);
     JS::RootedObject ccns(_cx);
-    JS_GetProperty(_cx, object, "cc", &nsval);
-    if (nsval == JSVAL_VOID) {
-        ccns = JS_NewObject(_cx, NULL, JS::NullPtr(), JS::NullPtr());
-        nsval = OBJECT_TO_JSVAL(ccns);
-        JS_SetProperty(_cx, object, "cc", nsval);
-    } else {
-        JS_ValueToObject(_cx, nsval, &ccns);
-    }
+    get_or_create_js_obj(_cx, object, "cc", &ccns);
     
     js_register_cocos2dx_GLNode(_cx, ccns);
     
