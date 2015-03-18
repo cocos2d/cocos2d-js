@@ -2172,7 +2172,6 @@ var templateSetBlendFunc = function(src, dst) {
     else
         blendf = {src: src, dst: dst};
     this._setBlendFunc(blendf);
-    var b = this.getBlendFunc();
 };
 for (var i = 0, l = protoHasBlend.length; i < l; i++) {
     var proto = protoHasBlend[i];
