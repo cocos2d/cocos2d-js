@@ -5165,8 +5165,11 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS::RootedObject proto(cx, jsb_cocos2d_SAXParser_prototype);
     JS_DefineFunction(cx, proto, "parse", js_PlistParser_parse, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
+    JS_GetProperty(cx, ccObj, "Label", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
+    JS_DefineFunction(cx, tmpObj, "createWithTTF", js_cocos2dx_Label_createWithTTF, 4, JSPROP_READONLY | JSPROP_PERMANENT);
+    
     JS::RootedObject labelProto(cx, jsb_cocos2d_Label_prototype);
-    JS_DefineFunction(cx, labelProto, "createWithTTF", js_cocos2dx_Label_createWithTTF, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, labelProto, "setTTFConfig", js_cocos2dx_Label_setTTFConfig, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     JS::RootedObject nodeGridProto(cx, jsb_cocos2d_NodeGrid_prototype);
