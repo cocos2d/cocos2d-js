@@ -1745,46 +1745,44 @@ bool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 
 void ScriptingCore::enableDebugger(unsigned int port)
 {
-    if (_debugGlobal.isSome())
+    if (_debugGlobal.isNothing())
     {
-        _debugGlobal.reset();
+        JSAutoCompartment ac0(_cx, _global.ref().get());
+        
+        JS_SetDebugMode(_cx, true);
+        
+        _debugGlobal.emplace(_cx);
+        _debugGlobal.ref() = NewGlobalObject(_cx, true);
+        // Adds the debugger object to root, otherwise it may be collected by GC.
+        //AddObjectRoot(_cx, &_debugGlobal); no need, it's persistent rooted now
+        JS::RootedObject rootedDebugObj(_cx, _debugGlobal.ref());
+        JS_WrapObject(_cx, &rootedDebugObj);
+        //JSAutoCompartment ac(_cx, _debugGlobal.ref()); //really needed?
+        // these are used in the debug program
+        JS_DefineFunction(_cx, rootedDebugObj, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_ENUMERATE | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, rootedDebugObj, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, rootedDebugObj, "_enterNestedEventLoop", JSBDebug_enterNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, rootedDebugObj, "_exitNestedEventLoop", JSBDebug_exitNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, rootedDebugObj, "_getEventLoopNestLevel", JSBDebug_getEventLoopNestLevel, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        
+        
+        runScript("script/jsb_debugger.js", rootedDebugObj);
+        
+        // prepare the debugger
+        jsval argv = OBJECT_TO_JSVAL(_global.ref().get());
+        JS::RootedValue outval(_cx);
+        bool ok = JS_CallFunctionName(_cx, rootedDebugObj, "_prepareDebugger", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
+        if (!ok) {
+            JS_ReportPendingException(_cx);
+        }
+        
+        // start bg thread
+        auto t = std::thread(&serverEntryPoint,port);
+        t.detach();
+        
+        Scheduler* scheduler = Director::getInstance()->getScheduler();
+        scheduler->scheduleUpdate(this->_runLoop, 0, false);
     }
-    
-    JSAutoCompartment ac0(_cx, _global.ref().get());
-    
-    JS_SetDebugMode(_cx, true);
-    
-    _debugGlobal.emplace(_cx);
-    _debugGlobal.ref() = NewGlobalObject(_cx, true);
-    // Adds the debugger object to root, otherwise it may be collected by GC.
-    //AddObjectRoot(_cx, &_debugGlobal); no need, it's persistent rooted now
-    JS::RootedObject rootedDebugObj(_cx, _debugGlobal.ref());
-    JS_WrapObject(_cx, &rootedDebugObj);
-    //JSAutoCompartment ac(_cx, _debugGlobal.ref()); //really needed?
-    // these are used in the debug program
-    JS_DefineFunction(_cx, rootedDebugObj, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(_cx, rootedDebugObj, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(_cx, rootedDebugObj, "_enterNestedEventLoop", JSBDebug_enterNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(_cx, rootedDebugObj, "_exitNestedEventLoop", JSBDebug_exitNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(_cx, rootedDebugObj, "_getEventLoopNestLevel", JSBDebug_getEventLoopNestLevel, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    
-    
-    runScript("script/jsb_debugger.js", rootedDebugObj);
-    
-    // prepare the debugger
-    jsval argv = OBJECT_TO_JSVAL(_global.ref().get());
-    JS::RootedValue outval(_cx);
-    bool ok = JS_CallFunctionName(_cx, rootedDebugObj, "_prepareDebugger", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
-    if (!ok) {
-        JS_ReportPendingException(_cx);
-    }
-    
-    // start bg thread
-    auto t = std::thread(&serverEntryPoint,port);
-    t.detach();
-    
-    Scheduler* scheduler = Director::getInstance()->getScheduler();
-    scheduler->scheduleUpdate(this->_runLoop, 0, false);
 }
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug)
