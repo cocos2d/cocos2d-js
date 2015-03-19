@@ -100,7 +100,7 @@ var UICheckBoxOldTest = UICheckBoxEditorTest.extend({
 var UICheckBoxNewTest = UICheckBoxEditorTest.extend({
     ctor: function () {
         this._super();
-        var root = ccs.load("res/cocosui/UIEditorTest/UICheckBox_Editor/MainScene.json");
+        var root = ccs.load("res/cocosui/CCS/CheckBox/MainScene.json");
         this._mainNode.addChild(root.node);
         var checkbox = ccui.helper.seekWidgetByName(root.node, "CheckBox_1");
         checkbox.addEventListener(this.selectedStateEvent,this);
