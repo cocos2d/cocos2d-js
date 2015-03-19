@@ -25,6 +25,7 @@
 #include "jsfriendapi.h"
 #include "extensions/cocos-ext.h"
 #include "js_bindings_config.h"
+#include "cocos2d_specifics.hpp"
 #ifdef JSB_INCLUDE_CHIPMUNK
 
 #include "js_bindings_chipmunk_manual.h"
@@ -272,7 +273,8 @@ bool JSB_CCPhysicsDebugNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, typeClass->jsclass, args));
+    //JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, typeClass->jsclass, args));
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, JS::RootedObject(cx, typeClass->proto), JS::RootedObject(cx, typeClass->parentProto)));
     args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
@@ -494,7 +496,8 @@ bool JSPROXY_CCPhysicsSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, typeClass->jsclass, args));
+    //JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, typeClass->jsclass, args));
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, JS::RootedObject(cx, typeClass->proto), JS::RootedObject(cx, typeClass->parentProto)));
     args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
@@ -579,33 +582,15 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JS::HandleObject globalO
 
 
 void register_CCPhysicsSprite(JSContext *cx, JS::HandleObject obj) {
-    JS::RootedValue nsval(cx);
-    JS::RootedObject ns(cx);
-    JS_GetProperty(cx, obj, "cc", &nsval);
-    if (nsval == JSVAL_VOID) {
-        ns = JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr());
-        nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, obj, "cc", nsval);
-    } else {
-        JS_ValueToObject(cx, nsval, &ns);
-    }
-    //obj = ns;
-    JSPROXY_CCPhysicsSprite_createClass(cx, ns);
+    JS::RootedObject ccObj(cx);
+    get_or_create_js_obj(cx, obj, "cc", &ccObj);
+    JSPROXY_CCPhysicsSprite_createClass(cx, ccObj);
 }
 
 void register_CCPhysicsDebugNode(JSContext *cx, JS::HandleObject obj) {
-    JS::RootedValue nsval(cx);
-    JS::RootedObject ns(cx);
-    JS_GetProperty(cx, obj, "cc", &nsval);
-    if (nsval == JSVAL_VOID) {
-        ns = JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr());
-        nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, obj, "cc", nsval);
-    } else {
-        JS_ValueToObject(cx, nsval, &ns);
-    }
-    //obj = ns;
-    JSB_CCPhysicsDebugNode_createClass(cx, ns, "PhysicsDebugNode");
+    JS::RootedObject ccObj(cx);
+    get_or_create_js_obj(cx, obj, "cc", &ccObj);
+    JSB_CCPhysicsDebugNode_createClass(cx, ccObj, "PhysicsDebugNode");
 }
 
 bool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )

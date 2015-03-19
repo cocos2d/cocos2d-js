@@ -2556,8 +2556,8 @@ bool JSB_cpSpace_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments");
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsobj = JS_NewObjectForConstructor(cx, JSB_cpSpace_class, args);
-    //JSObject *jsobj = JS_NewObject(cx, JSB_cpSpace_class, JS::RootedObject(cx, JSB_cpSpace_object), JS::NullPtr());
+    //JSObject* jsobj = JS_NewObjectForConstructor(cx, JSB_cpSpace_class, args);
+    JSObject *jsobj = JS_NewObject(cx, JSB_cpSpace_class, JS::RootedObject(cx, JSB_cpSpace_object), JS::NullPtr());
     void*   ret_val = cpSpaceNew( );
 
     jsb_set_jsobject_for_proxy(jsobj, ret_val);
