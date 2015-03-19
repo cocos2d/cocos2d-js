@@ -1766,18 +1766,9 @@ void js_register_cocos2dx_builder_CCBReader(JSContext *cx, JS::HandleObject glob
 }
 
 void register_all_cocos2dx_builder(JSContext* cx, JS::HandleObject obj) {
-    // first, try to get the ns
-    JS::RootedValue nsval(cx);
+    // Get the ns
     JS::RootedObject ns(cx);
-    JS_GetProperty(cx, obj, "cc", &nsval);
-    if (nsval == JSVAL_VOID) {
-        ns = JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr());
-        nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, obj, "cc", nsval);
-    } else {
-        JS_ValueToObject(cx, nsval, &ns);
-    }
-    //obj = ns;
+    get_or_create_js_obj(cx, obj, "cc", &ns);
 
     js_register_cocos2dx_builder_CCBAnimationManager(cx, ns);
     js_register_cocos2dx_builder_CCBReader(cx, ns);

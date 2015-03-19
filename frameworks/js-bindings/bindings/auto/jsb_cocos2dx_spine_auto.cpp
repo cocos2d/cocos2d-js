@@ -1846,18 +1846,9 @@ void js_register_cocos2dx_spine_SkeletonAnimation(JSContext *cx, JS::HandleObjec
 }
 
 void register_all_cocos2dx_spine(JSContext* cx, JS::HandleObject obj) {
-    // first, try to get the ns
-    JS::RootedValue nsval(cx);
+    // Get the ns
     JS::RootedObject ns(cx);
-    JS_GetProperty(cx, obj, "sp", &nsval);
-    if (nsval == JSVAL_VOID) {
-        ns = JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr());
-        nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, obj, "sp", nsval);
-    } else {
-        JS_ValueToObject(cx, nsval, &ns);
-    }
-    //obj = ns;
+    get_or_create_js_obj(cx, obj, "sp", &ns);
 
     js_register_cocos2dx_spine_SkeletonRenderer(cx, ns);
     js_register_cocos2dx_spine_SkeletonAnimation(cx, ns);

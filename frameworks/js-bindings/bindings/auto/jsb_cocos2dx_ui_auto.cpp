@@ -15724,18 +15724,9 @@ void js_register_cocos2dx_ui_LayoutComponent(JSContext *cx, JS::HandleObject glo
 }
 
 void register_all_cocos2dx_ui(JSContext* cx, JS::HandleObject obj) {
-    // first, try to get the ns
-    JS::RootedValue nsval(cx);
+    // Get the ns
     JS::RootedObject ns(cx);
-    JS_GetProperty(cx, obj, "ccui", &nsval);
-    if (nsval == JSVAL_VOID) {
-        ns = JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr());
-        nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, obj, "ccui", nsval);
-    } else {
-        JS_ValueToObject(cx, nsval, &ns);
-    }
-    //obj = ns;
+    get_or_create_js_obj(cx, obj, "ccui", &ns);
 
     js_register_cocos2dx_ui_Widget(cx, ns);
     js_register_cocos2dx_ui_Layout(cx, ns);
