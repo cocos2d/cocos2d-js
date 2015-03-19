@@ -184,12 +184,14 @@ static bool js_cocos2dx_UICheckBox_addEventListener(JSContext *cx, uint32_t argc
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
         tmpObj->autorelease();
         
-        cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
-        if (nullptr == dict)
+        CallbacksComponent *comp = static_cast<CallbacksComponent *>(cobj->getComponent(CallbacksComponent::NAME));
+        if (nullptr == comp)
         {
-            dict = cocos2d::__Dictionary::create();
-            cobj->setUserObject(dict);
+            comp = new CallbacksComponent();
+            comp->autorelease();
+            cobj->addComponent(comp);
         }
+        cocos2d::__Dictionary* dict = comp->callbacks;
         dict->setObject(tmpObj, "checkBoxEventListener");
 
         tmpObj->setJSCallbackFunc(args.get(0));
@@ -236,12 +238,14 @@ static bool js_cocos2dx_UISlider_addEventListener(JSContext *cx, uint32_t argc, 
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
         tmpObj->autorelease();
         
-        cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
-        if (nullptr == dict)
+        CallbacksComponent *comp = static_cast<CallbacksComponent *>(cobj->getComponent(CallbacksComponent::NAME));
+        if (nullptr == comp)
         {
-            dict = cocos2d::__Dictionary::create();
-            cobj->setUserObject(dict);
+            comp = new CallbacksComponent();
+            comp->autorelease();
+            cobj->addComponent(comp);
         }
+        cocos2d::__Dictionary* dict = comp->callbacks;
         dict->setObject(tmpObj, "sliderEventListener");
 
         tmpObj->setJSCallbackFunc(args.get(0));
@@ -288,12 +292,14 @@ static bool js_cocos2dx_UITextField_addEventListener(JSContext *cx, uint32_t arg
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
         tmpObj->autorelease();
         
-        cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
-        if (nullptr == dict)
+        CallbacksComponent *comp = static_cast<CallbacksComponent *>(cobj->getComponent(CallbacksComponent::NAME));
+        if (nullptr == comp)
         {
-            dict = cocos2d::__Dictionary::create();
-            cobj->setUserObject(dict);
+            comp = new CallbacksComponent();
+            comp->autorelease();
+            cobj->addComponent(comp);
         }
+        cocos2d::__Dictionary* dict = comp->callbacks;
         dict->setObject(tmpObj, "textfieldEventListener");
 
         tmpObj->setJSCallbackFunc(args.get(0));
@@ -340,12 +346,14 @@ static bool js_cocos2dx_UIPageView_addEventListener(JSContext *cx, uint32_t argc
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
         tmpObj->autorelease();
         
-        cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
-        if (nullptr == dict)
+        CallbacksComponent *comp = static_cast<CallbacksComponent *>(cobj->getComponent(CallbacksComponent::NAME));
+        if (nullptr == comp)
         {
-            dict = cocos2d::__Dictionary::create();
-            cobj->setUserObject(dict);
+            comp = new CallbacksComponent();
+            comp->autorelease();
+            cobj->addComponent(comp);
         }
+        cocos2d::__Dictionary* dict = comp->callbacks;
         dict->setObject(tmpObj, "pageViewEventListener");
 
         tmpObj->setJSCallbackFunc(args.get(0));
@@ -392,12 +400,14 @@ static bool js_cocos2dx_UIScrollView_addEventListener(JSContext *cx, uint32_t ar
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
         tmpObj->autorelease();
         
-        cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
-        if (nullptr == dict)
+        CallbacksComponent *comp = static_cast<CallbacksComponent *>(cobj->getComponent(CallbacksComponent::NAME));
+        if (nullptr == comp)
         {
-            dict = cocos2d::__Dictionary::create();
-            cobj->setUserObject(dict);
+            comp = new CallbacksComponent();
+            comp->autorelease();
+            cobj->addComponent(comp);
         }
+        cocos2d::__Dictionary* dict = comp->callbacks;
         dict->setObject(tmpObj, "scrollViewEventListener");
         
         tmpObj->setJSCallbackFunc(args.get(0));
@@ -443,12 +453,14 @@ static bool js_cocos2dx_UIListView_addEventListener(JSContext *cx, uint32_t argc
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
         tmpObj->autorelease();
         
-        cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
-        if (nullptr == dict)
+        CallbacksComponent *comp = static_cast<CallbacksComponent *>(cobj->getComponent(CallbacksComponent::NAME));
+        if (nullptr == comp)
         {
-            dict = cocos2d::__Dictionary::create();
-            cobj->setUserObject(dict);
+            comp = new CallbacksComponent();
+            comp->autorelease();
+            cobj->addComponent(comp);
         }
+        cocos2d::__Dictionary* dict = comp->callbacks;
         dict->setObject(tmpObj, "listViewEventListener");
 
         tmpObj->setJSCallbackFunc(args.get(0));
