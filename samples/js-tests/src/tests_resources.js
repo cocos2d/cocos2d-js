@@ -1073,3 +1073,10 @@ var g_spine = [
     "res/skeletons/spineboy.json",
     "res/skeletons/spineboy.png"
 ];
+
+var g_ccs2 = [
+    "res/ActionTimeline/boy_1.csb",
+    "res/ActionTimeline/armature/Cowboy0.plist",
+    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.fnt",
+    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.png"
+];
