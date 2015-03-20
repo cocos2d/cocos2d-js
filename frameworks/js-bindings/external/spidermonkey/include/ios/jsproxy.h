@@ -87,14 +87,6 @@ class JS_FRIEND_API(Wrapper);
  */
 class JS_FRIEND_API(BaseProxyHandler)
 {
-    /*
-     * Sometimes it's desirable to designate groups of proxy handlers as "similar".
-     * For this, we use the notion of a "family": A consumer-provided opaque pointer
-     * that designates the larger group to which this proxy belongs.
-     *
-     * If it will never be important to differentiate this proxy from others as
-     * part of a distinct group, nullptr may be used instead.
-     */
     const void *mFamily;
 
     /*
@@ -125,12 +117,9 @@ class JS_FRIEND_API(BaseProxyHandler)
     bool mHasSecurityPolicy;
 
   public:
-    explicit MOZ_CONSTEXPR BaseProxyHandler(const void *aFamily, bool aHasPrototype = false,
-                                            bool aHasSecurityPolicy = false)
-      : mFamily(aFamily),
-        mHasPrototype(aHasPrototype),
-        mHasSecurityPolicy(aHasSecurityPolicy)
-    { }
+    explicit BaseProxyHandler(const void *family, bool hasPrototype = false,
+                              bool hasSecurityPolicy = false);
+    virtual ~BaseProxyHandler();
 
     bool hasPrototype() const {
         return mHasPrototype;
@@ -166,9 +155,9 @@ class JS_FRIEND_API(BaseProxyHandler)
      * may still decide to squelch the error).
      *
      * We make these OR-able so that assertEnteredPolicy can pass a union of them.
-     * For example, get{,Own}PropertyDescriptor is invoked by calls to ::get()
-     * ::set(), in addition to being invoked on its own, so there are several
-     * valid Actions that could have been entered.
+     * For example, get{,Own}PropertyDescriptor is invoked by both calls to ::get()
+     * and ::set() (since we need to look up the accessor), so its
+     * assertEnteredPolicy would pass GET | SET.
      */
     typedef uint32_t Action;
     enum {
@@ -176,8 +165,7 @@ class JS_FRIEND_API(BaseProxyHandler)
         GET       = 0x01,
         SET       = 0x02,
         CALL      = 0x04,
-        ENUMERATE = 0x08,
-        GET_PROPERTY_DESCRIPTOR = 0x10
+        ENUMERATE = 0x08
     };
 
     virtual bool enter(JSContext *cx, HandleObject wrapper, HandleId id, Action act,
@@ -217,7 +205,6 @@ class JS_FRIEND_API(BaseProxyHandler)
     virtual const char *className(JSContext *cx, HandleObject proxy) const;
     virtual JSString *fun_toString(JSContext *cx, HandleObject proxy, unsigned indent) const;
     virtual bool regexp_toShared(JSContext *cx, HandleObject proxy, RegExpGuard *g) const;
-    virtual bool boxedValue_unbox(JSContext *cx, HandleObject proxy, MutableHandleValue vp) const;
     virtual bool defaultValue(JSContext *cx, HandleObject obj, JSType hint, MutableHandleValue vp) const;
     virtual void finalize(JSFreeOp *fop, JSObject *proxy) const;
     virtual bool getPrototypeOf(JSContext *cx, HandleObject proxy, MutableHandleObject protop) const;
@@ -250,10 +237,8 @@ class JS_FRIEND_API(BaseProxyHandler)
 class JS_PUBLIC_API(DirectProxyHandler) : public BaseProxyHandler
 {
   public:
-    explicit MOZ_CONSTEXPR DirectProxyHandler(const void *aFamily, bool aHasPrototype = false,
-                                              bool aHasSecurityPolicy = false)
-      : BaseProxyHandler(aFamily, aHasPrototype, aHasSecurityPolicy)
-    { }
+    explicit DirectProxyHandler(const void *family, bool hasPrototype = false,
+                                bool hasSecurityPolicy = false);
 
     /* ES5 Harmony fundamental proxy traps. */
     virtual bool preventExtensions(JSContext *cx, HandleObject proxy) const MOZ_OVERRIDE;
@@ -303,7 +288,6 @@ class JS_PUBLIC_API(DirectProxyHandler) : public BaseProxyHandler
                                    unsigned indent) const MOZ_OVERRIDE;
     virtual bool regexp_toShared(JSContext *cx, HandleObject proxy,
                                  RegExpGuard *g) const MOZ_OVERRIDE;
-    virtual bool boxedValue_unbox(JSContext *cx, HandleObject proxy, MutableHandleValue vp) const;
     virtual JSObject *weakmapKeyDelegate(JSObject *proxy) const MOZ_OVERRIDE;
 };
 
@@ -353,7 +337,6 @@ class Proxy
     static const char *className(JSContext *cx, HandleObject proxy);
     static JSString *fun_toString(JSContext *cx, HandleObject proxy, unsigned indent);
     static bool regexp_toShared(JSContext *cx, HandleObject proxy, RegExpGuard *g);
-    static bool boxedValue_unbox(JSContext *cx, HandleObject proxy, MutableHandleValue vp);
     static bool defaultValue(JSContext *cx, HandleObject obj, JSType hint, MutableHandleValue vp);
     static bool getPrototypeOf(JSContext *cx, HandleObject proxy, MutableHandleObject protop);
     static bool setPrototypeOf(JSContext *cx, HandleObject proxy, HandleObject proto, bool *bp);
@@ -517,7 +500,7 @@ class JS_FRIEND_API(AutoEnterPolicy)
         : context(nullptr)
         , enteredAction(BaseProxyHandler::NONE)
 #endif
-        {}
+        {};
     void reportErrorIfExceptionIsNotPending(JSContext *cx, jsid id);
     bool allow;
     bool rv;
@@ -569,7 +552,7 @@ assertEnteredPolicy(JSContext *cx, JSObject *obj, jsid id,
 #else
 inline void assertEnteredPolicy(JSContext *cx, JSObject *obj, jsid id,
                                 BaseProxyHandler::Action act)
-{}
+{};
 #endif
 
 } /* namespace js */

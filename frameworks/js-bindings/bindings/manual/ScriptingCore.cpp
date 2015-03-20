@@ -593,19 +593,14 @@ void ScriptingCore::createGlobalContext() {
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
     //JS_SetGCZeal(this->_cx, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    _global.emplace(_cx);
-#else
+
     _global.construct(_cx);
-#endif
     _global.ref() = NewGlobalObject(_cx);
     
     JSAutoCompartment ac(_cx, _global.ref());
     
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
     // Removed in Firefox v34
     js::SetDefaultObjectForContext(_cx, _global.ref());
-#endif
     
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
@@ -1754,20 +1749,13 @@ bool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 
 void ScriptingCore::enableDebugger(unsigned int port)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    if (_debugGlobal.isNothing())
-#else
     if (_debugGlobal.empty())
-#endif
     {
         JSAutoCompartment ac0(_cx, _global.ref().get());
         
         JS_SetDebugMode(_cx, true);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        _debugGlobal.emplace(_cx);
-#else
+        
         _debugGlobal.construct(_cx);
-#endif
         _debugGlobal.ref() = NewGlobalObject(_cx, true);
         // Adds the debugger object to root, otherwise it may be collected by GC.
         //AddObjectRoot(_cx, &_debugGlobal); no need, it's persistent rooted now
