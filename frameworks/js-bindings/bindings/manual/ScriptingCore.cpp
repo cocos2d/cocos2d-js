@@ -393,14 +393,16 @@ void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
     JS::RootedValue nsval(cx);
     JS::RootedObject ns(cx);
     JS_GetProperty(cx, global, "cc", &nsval);
-    if (nsval == JSVAL_VOID) {
-        JS::RootedObject proto(cx);
-        JS::RootedObject parent(cx);
-        ns = JS_NewObject(cx, NULL, proto, parent);
+    // Not exist, create it
+    if (nsval == JSVAL_VOID)
+    {
+        ns.set(JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
         nsval = OBJECT_TO_JSVAL(ns);
         JS_SetProperty(cx, global, "cc", nsval);
-    } else {
-        JS_ValueToObject(cx, nsval, &ns);
+    }
+    else
+    {
+        ns.set(nsval.toObjectOrNull());
     }
 
     //
@@ -554,12 +556,12 @@ static JSSecurityCallbacks securityCallbacks = {
 };
 
 void ScriptingCore::createGlobalContext() {
-    if (this->_cx && this->_rt) {
-        ScriptingCore::removeAllRoots(this->_cx);
-        JS_DestroyContext(this->_cx);
-        JS_DestroyRuntime(this->_rt);
-        this->_cx = NULL;
-        this->_rt = NULL;
+    if (_cx && _rt) {
+        ScriptingCore::removeAllRoots(_cx);
+        JS_DestroyContext(_cx);
+        JS_DestroyRuntime(_rt);
+        _cx = NULL;
+        _rt = NULL;
     }
     
     // Start the engine. Added in SpiderMonkey v25
@@ -568,40 +570,46 @@ void ScriptingCore::createGlobalContext() {
     
     // Removed from Spidermonkey 19.
     //JS_SetCStringsAreUTF8();
-    this->_rt = JS_NewRuntime(8L * 1024L * 1024L);
+    _rt = JS_NewRuntime(8L * 1024L * 1024L);
     JS_SetGCParameter(_rt, JSGC_MAX_BYTES, 0xffffffff);
     
     JS_SetTrustedPrincipals(_rt, &shellTrustedPrincipals);
     JS_SetSecurityCallbacks(_rt, &securityCallbacks);
     JS_SetNativeStackQuota(_rt, JSB_MAX_STACK_QUOTA);
     
-    this->_cx = JS_NewContext(_rt, 8192);
+    _cx = JS_NewContext(_rt, 8192);
     
     // Removed in Firefox v27
 //    JS_SetOptions(this->_cx, JSOPTION_TYPE_INFERENCE);
     // Removed in Firefox v33
 //    JS::ContextOptionsRef(_cx).setTypeInference(true);
-//    JS::ContextOptionsRef(_cx).setIon(true);
-//    JS::ContextOptionsRef(_cx).setBaseline(true);
 
     JS::RuntimeOptionsRef(_rt).setIon(true);
     JS::RuntimeOptionsRef(_rt).setBaseline(true);
 
 //    JS_SetVersion(this->_cx, JSVERSION_LATEST);
     
-    JS_SetErrorReporter(this->_cx, ScriptingCore::reportError);
+    JS_SetErrorReporter(_cx, ScriptingCore::reportError);
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
     //JS_SetGCZeal(this->_cx, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
-    this->_global.construct(_cx);
-    this->_global.ref() = NewGlobalObject(_cx);
-
-    JSAutoCompartment ac(_cx, _global.ref().get());
-    js::SetDefaultObjectForContext(_cx, _global.ref().get());
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    _global.emplace(_cx);
+#else
+    _global.construct(_cx);
+#endif
+    _global.ref() = NewGlobalObject(_cx);
+    
+    JSAutoCompartment ac(_cx, _global.ref());
+    
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+    // Removed in Firefox v34
+    js::SetDefaultObjectForContext(_cx, _global.ref());
+#endif
     
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
-        callback(this->_cx, JS::RootedObject(this->_cx, this->_global.ref().get()));
+        callback(_cx, _global.ref());
     }
 }
 
@@ -727,8 +735,7 @@ void ScriptingCore::cleanAllScript()
 
 bool ScriptingCore::runScript(const char *path)
 {
-    JS::RootedObject global(_cx, _global.ref().get());
-    return runScript(path, global, _cx);
+    return runScript(path, _global.ref(), _cx);
 }
 
 bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSContext* cx)
@@ -740,11 +747,28 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     //FIX ME : compileScript breaks on windows, execute the script directly 
     auto fileUtil = FileUtils::getInstance();
+
+
+    // check jsc file first
+    std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+
+    // Check whether '.jsc' files exist to avoid outputing log which says 'couldn't find .jsc file'.
+    if (fileUtil->isFileExist(byteCodePath))
+    {
+        Data data = fileUtil->getDataFromFile(byteCodePath);
+        if (!data.isNull())
+        {
+            JSAutoCompartment ac(cx, global);
+            JS::RootedScript script(cx, JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr));
+            bool ok = JS_ExecuteScript(cx, global, script);
+            return ok;
+        }
+    }
+    
     auto fullpath = fileUtil->fullPathForFilename(path);
     auto content = fileUtil->getStringFromFile(fullpath);
-
     JSAutoCompartment ac(cx, global);
-    bool evaluatedOK = JS_EvaluateScript(cx, global, content.c_str(), content.length(), path, 0);
+    bool evaluatedOK = JS_EvaluateScript(cx, global, content.c_str(), content.length(), path, 1);
 #else
     compileScript(path,global,cx);
     JS::RootedScript script(cx, getScript(path));
@@ -1730,13 +1754,20 @@ bool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 
 void ScriptingCore::enableDebugger(unsigned int port)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    if (_debugGlobal.isNothing())
+#else
     if (_debugGlobal.empty())
+#endif
     {
         JSAutoCompartment ac0(_cx, _global.ref().get());
         
         JS_SetDebugMode(_cx, true);
-        
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        _debugGlobal.emplace(_cx);
+#else
         _debugGlobal.construct(_cx);
+#endif
         _debugGlobal.ref() = NewGlobalObject(_cx, true);
         // Adds the debugger object to root, otherwise it may be collected by GC.
         //AddObjectRoot(_cx, &_debugGlobal); no need, it's persistent rooted now
@@ -1764,7 +1795,7 @@ void ScriptingCore::enableDebugger(unsigned int port)
         // start bg thread
         auto t = std::thread(&serverEntryPoint,port);
         t.detach();
-
+        
         Scheduler* scheduler = Director::getInstance()->getScheduler();
         scheduler->scheduleUpdate(this->_runLoop, 0, false);
     }

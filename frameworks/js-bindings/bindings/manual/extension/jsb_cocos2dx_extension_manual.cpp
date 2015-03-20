@@ -1038,6 +1038,11 @@ extern JSObject* jsb_cocos2d_extension_Manifest_prototype;
 
 void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject global)
 {
+    JS::RootedObject ccObj(cx);
+    JS::RootedValue tmpVal(cx);
+    JS::RootedObject tmpObj(cx);
+    get_or_create_js_obj(cx, global, "cc", &ccObj);
+    
     JS::RootedObject am(cx, jsb_cocos2d_extension_AssetsManagerEx_prototype); 
     JS_DefineFunction(cx, am, "retain", js_cocos2dx_ext_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, am, "release", js_cocos2dx_ext_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -1057,12 +1062,12 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject glob
     JS_DefineFunction(cx, control, "addTargetWithActionForControlEvents", js_cocos2dx_CCControl_addTargetWithActionForControlEvents, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, control, "removeTargetWithActionForControlEvents", js_cocos2dx_CCControl_removeTargetWithActionForControlEvents, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    JS::RootedObject tmpObj(cx, anonEvaluate(cx, global, "(function () { return cc.TableView; })()").toObjectOrNull());
+    JS_GetProperty(cx, ccObj, "TableView", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCTableView_create, 3, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    
     JS::RootedObject jsbObj(cx);
-    create_js_root_obj(cx, global, "jsb", &jsbObj);
+    get_or_create_js_obj(cx, global, "cc", &jsbObj);
     
     JS_DefineFunction(cx, jsbObj, "loadRemoteImg", js_load_remote_image, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 }
