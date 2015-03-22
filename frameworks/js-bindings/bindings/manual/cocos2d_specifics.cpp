@@ -868,7 +868,7 @@ JSObject* getObjectFromNamespace(JSContext* cx, JS::HandleObject ns, const char 
 
 jsval anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* string) {
     JS::RootedValue out(cx);
-    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    //JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     if (JS_EvaluateScript(cx, thisObj, string, strlen(string), "(string)", 1, &out) == true) {
         return out.get();
     }
@@ -5139,40 +5139,34 @@ bool js_console_log(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
-void create_js_root_obj(JSContext* cx, JS::HandleObject global, const std::string &name, JS::MutableHandleObject jsObj)
+void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string &name, JS::MutableHandleObject jsObj)
 {
     JS::RootedValue nsval(cx);
-    JS_GetProperty(cx, global, name.c_str(), &nsval);
-    if (nsval.isNullOrUndefined()) {
-        JS::RootedObject proto(cx);
-        JS::RootedObject parent(cx);
-        jsObj.set(JS_NewObject(cx, NULL, proto, parent));
+    JS_GetProperty(cx, obj, name.c_str(), &nsval);
+    if (nsval == JSVAL_VOID) {
+        jsObj.set(JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
         nsval = OBJECT_TO_JSVAL(jsObj);
-        JS_SetProperty(cx, global, name.c_str(), nsval);
+        JS_SetProperty(cx, obj, name.c_str(), nsval);
     } else {
-        JS_ValueToObject(cx, nsval, jsObj);
+        jsObj.set(nsval.toObjectOrNull());
     }
 }
-//XXX:why need this?
+
 void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
 {
-//    JS::RootedObject ccObj(cx);
-//    create_js_root_obj(cx, global, "cc", &ccObj);
-
+    JS::RootedObject ccObj(cx);
+    JS::RootedValue tmpVal(cx);
     JS::RootedObject tmpObj(cx);
-
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.PlistParser; })()").toObjectOrNull();
+    get_or_create_js_obj(cx, global, "cc", &ccObj);
+    
+    JS_GetProperty(cx, ccObj, "PlistParser", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "getInstance", js_PlistParser_getInstance, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.PlistParser.getInstance(); })()").toObjectOrNull();
-    JS_DefineFunction(cx, tmpObj, "parse", js_PlistParser_parse, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-
-}
-
-//XXX: why named this as extensions?
-void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
-{
-    JS::RootedObject tmpObj(cx);
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.Label; })()").toObjectOrNull();
+    JS::RootedObject proto(cx, jsb_cocos2d_SAXParser_prototype);
+    JS_DefineFunction(cx, proto, "parse", js_PlistParser_parse, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    JS_GetProperty(cx, ccObj, "Label", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "createWithTTF", js_cocos2dx_Label_createWithTTF, 4, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JS::RootedObject labelProto(cx, jsb_cocos2d_Label_prototype);
@@ -5262,41 +5256,52 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, fileUtilsProto, "createDictionaryWithContentsOfFile", js_cocos2dx_FileUtils_createDictionaryWithContentsOfFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, fileUtilsProto, "getDataFromFile", js_cocos2dx_CCFileUtils_getDataFromFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.EventListenerTouchOneByOne; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "EventListenerTouchOneByOne", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_EventListenerTouchOneByOne_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.EventListenerTouchAllAtOnce; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "EventListenerTouchAllAtOnce", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_EventListenerTouchAllAtOnce_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.EventListenerMouse; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "EventListenerMouse", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_EventListenerMouse_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.EventListenerKeyboard; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "EventListenerKeyboard", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_EventListenerKeyboard_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.EventListenerFocus; })()").toObjectOrNull();
+    
+    JS_GetProperty(cx, ccObj, "EventListenerFocus", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_EventListenerFocus_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.BezierBy; })()").toObjectOrNull();
+    
+    JS_GetProperty(cx, ccObj, "BezierBy", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCBezierBy_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_BezierBy_prototype), "initWithDuration", JSB_CCBezierBy_initWithDuration, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.BezierTo; })()").toObjectOrNull();
+    
+    JS_GetProperty(cx, ccObj, "BezierTo", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCBezierTo_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_BezierTo_prototype), "initWithDuration", JSB_CCBezierTo_initWithDuration, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.CardinalSplineBy; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "CardinalSplineBy", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCCardinalSplineBy_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.CardinalSplineTo; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "CardinalSplineTo", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCCardinalSplineTo_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_CardinalSplineTo_prototype), "initWithDuration", js_cocos2dx_CardinalSplineTo_initWithDuration, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.CatmullRomBy; })()").toObjectOrNull();
+    
+    JS_GetProperty(cx, ccObj, "CatmullRomBy", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCCatmullRomBy_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_CatmullRomBy_prototype), "initWithDuration", JSB_CatmullRomBy_initWithDuration, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.CatmullRomTo; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "CatmullRomTo", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCCatmullRomTo_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_CatmullRomTo_prototype), "initWithDuration", JSB_CatmullRomBy_initWithDuration, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
@@ -5321,48 +5326,56 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_RenderTexture_prototype), "saveToFile", js_cocos2dx_RenderTexture_saveToFile, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.Menu; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "Menu", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "_create", js_cocos2dx_CCMenu_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.MenuItem; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "MenuItem", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItem_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.MenuItemSprite; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "MenuItemSprite", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemSprite_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.MenuItemLabel; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "MenuItemLabel", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemLabel_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.MenuItemAtlasFont; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "MenuItemAtlasFont", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemAtlasFont_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.MenuItemFont; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "MenuItemFont", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemFont_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.MenuItemToggle; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "MenuItemToggle", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "_create", js_cocos2dx_CCMenuItemToggle_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.Sequence; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "Sequence", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCSequence_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.Spawn; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "Spawn", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCSpawn_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    //tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.Animation; })()"));
+    //JS_GetProperty(cx, ccObj, "Animation", &tmpVal);
+    //tmpObj = tmpVal.toObjectOrNull();
     //JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCAnimation_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Scene_prototype), "init", js_cocos2dx_CCScene_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE);
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.LayerMultiplex; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "LayerMultiplex", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCLayerMultiplex_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.CallFunc; })()").toObjectOrNull();
+    
+    JS_GetProperty(cx, ccObj, "CallFunc", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_callFunc, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_CallFuncN_prototype), "initWithFunction", js_cocos2dx_CallFunc_initWithFunction, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    
-    tmpObj = anonEvaluate(cx, global, "(function () { return cc.GLProgram; })()").toObjectOrNull();
+    JS_GetProperty(cx, ccObj, "GLProgram", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCGLProgram_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "createWithString", js_cocos2dx_CCGLProgram_createWithString, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-
-    tmpObj = anonEvaluate(cx, global, "(function () { return this; })()").toObjectOrNull();
-    JS_DefineFunction(cx, tmpObj, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    JS_DefineFunction(cx, global, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS::RootedObject camera(cx, jsb_cocos2d_Camera_prototype);
     JS_DefineFunction(cx, camera, "unproject", js_cocos2dx_Camera_unproject, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, camera, "isVisibleInFrustum", js_cocos2dx_Camera_isVisibleInFrustum, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
-    JS::RootedObject ccObj(cx);
-    create_js_root_obj(cx, global, "cc", &ccObj);
 
     JS_DefineFunction(cx, ccObj, "glEnableVertexAttribs", js_cocos2dx_ccGLEnableVertexAttribs, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ccObj, "pAdd", js_cocos2dx_ccpAdd, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -5389,7 +5402,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, ccObj, "unregisterTouchDelegate", js_cocos2dx_JSTouchDelegate_unregisterTouchDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS::RootedObject mathObj(cx);
-    create_js_root_obj(cx, ccObj, "math", &mathObj);
+    get_or_create_js_obj(cx, ccObj, "math", &mathObj);
     JS_DefineFunction(cx, mathObj, "obbGetCorners", js_cocos2dx_ccobbGetCorners, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, mathObj, "obbIntersectsObb", js_cocos2dx_ccobbIntersects, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, mathObj, "rayIntersectsObb", js_cocos2dx_ccrayIntersectsObb, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -5402,7 +5415,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JS::HandleObject global)
     js_register_cocos2dx_EventKeyboard(cx, ccObj);
 
     JS::RootedObject consoleObj(cx);
-    create_js_root_obj(cx, global, "console", &consoleObj);
+    get_or_create_js_obj(cx, global, "console", &consoleObj);
     
     JS_DefineFunction(cx, consoleObj, "log", js_console_log, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 }

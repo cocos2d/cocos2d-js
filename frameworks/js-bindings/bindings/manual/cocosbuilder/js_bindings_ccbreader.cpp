@@ -318,21 +318,15 @@ bool js_CocosBuilder_create(JSContext *cx, uint32_t argc, jsval *vp)
 extern JSObject* jsb_cocosbuilder_CCBReader_prototype;
 extern JSObject* jsb_cocosbuilder_CCBAnimationManager_prototype;
 
-void register_CCBuilderReader(JSContext *cx, JS::HandleObject obj) {
-    //this doesn't make sense
-    //JS::RootedValue  nsval(cx);
-    //JS::RootedObject ns(cx);
-    //JS_GetProperty(cx, obj, "cc", &nsval);
-    //if (nsval == JSVAL_VOID) {
-    //    ns = JS_NewObject(cx, NULL, NULL, NULL);
-    //    nsval = OBJECT_TO_JSVAL(ns);
-    //    JS_SetProperty(cx, obj, "cc", nsval);
-    //} else {
-    //    JS_ValueToObject(cx, nsval, &ns);
-    //}
-    //obj = ns;
-
-    JS::RootedObject tmpObj(cx, anonEvaluate(cx, obj, "(function () { return cc._Reader; })()").toObjectOrNull());
+void register_CCBuilderReader(JSContext *cx, JS::HandleObject global)
+{
+    JS::RootedObject ccObj(cx);
+    JS::RootedValue tmpVal(cx);
+    JS::RootedObject tmpObj(cx);
+    get_or_create_js_obj(cx, global, "cc", &ccObj);
+    
+    JS_GetProperty(cx, ccObj, "_Reader", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_CocosBuilder_create, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "loadScene", js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     

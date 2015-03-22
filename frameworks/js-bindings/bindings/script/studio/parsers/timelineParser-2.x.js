@@ -293,6 +293,8 @@
             widget.setColor(getColor(color));
 
         var layoutComponent = ccui.LayoutComponent.bindLayoutComponent(widget);
+        if(!layoutComponent)
+            return;
 
         var positionXPercentEnabled = json["PositionPercentXEnable"] || false;
         var positionYPercentEnabled = json["PositionPercentYEnable"] || false;

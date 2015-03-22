@@ -588,11 +588,6 @@ void js_register_cocos2dx_DrawNode3D(JSContext *cx, JS::HandleObject global) {
 void register_DrawNode3D_bindings(JSContext *cx, JS::HandleObject global)
 {
     JS::RootedObject ccobj(cx);
-    JS::RootedValue ccval(cx);
-    JS_GetProperty(cx, global, "cc", &ccval);
-    if(!ccval.isNullOrUndefined())
-    {
-        ccobj = ccval.toObjectOrNull();
-        js_register_cocos2dx_DrawNode3D(cx, ccobj);
-    }
+    get_or_create_js_obj(cx, global, "cc", &ccobj);
+    js_register_cocos2dx_DrawNode3D(cx, ccobj);
 }

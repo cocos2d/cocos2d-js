@@ -27,7 +27,7 @@
 var UISliderEditorTest = UIBaseLayer.extend({
     ctor: function () {
         this._super();
-        var root = this._parseUIFile("res/cocosui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.json");
+        var root = this._parseUIFile("res/cocosui/CCS/Slider/slider_1.json");
         this._mainNode.addChild(root);
 
         var back_label =ccui.helper.seekWidgetByName(root, "back");
