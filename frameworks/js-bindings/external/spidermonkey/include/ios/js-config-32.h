@@ -47,7 +47,7 @@
 /* #undef JS_PUNBOX64 */
 
 /* MOZILLA JSAPI version number components */
-#define MOZJS_MAJOR_VERSION 34
-#define MOZJS_MINOR_VERSION 0
+#define MOZJS_MAJOR_VERSION 33
+#define MOZJS_MINOR_VERSION 1
 
 #endif /* js_config_h */

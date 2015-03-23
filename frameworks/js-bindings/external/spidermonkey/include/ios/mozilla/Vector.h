@@ -124,7 +124,7 @@ struct VectorImpl
   {
     MOZ_ASSERT(!aV.usingInlineStorage());
     MOZ_ASSERT(!CapacityHasExcessSpace<T>(aNewCap));
-    T* newbuf = aV.template pod_malloc<T>(aNewCap);
+    T* newbuf = reinterpret_cast<T*>(aV.malloc_(aNewCap * sizeof(T)));
     if (!newbuf) {
       return false;
     }
@@ -204,7 +204,9 @@ struct VectorImpl<T, N, AP, ThisVector, true>
   {
     MOZ_ASSERT(!aV.usingInlineStorage());
     MOZ_ASSERT(!CapacityHasExcessSpace<T>(aNewCap));
-    T* newbuf = aV.template pod_realloc<T>(aV.mBegin, aV.mCapacity, aNewCap);
+    size_t oldSize = sizeof(T) * aV.mCapacity;
+    size_t newSize = sizeof(T) * aNewCap;
+    T* newbuf = reinterpret_cast<T*>(aV.realloc_(aV.mBegin, oldSize, newSize));
     if (!newbuf) {
       return false;
     }
@@ -702,7 +704,7 @@ VectorBase<T, N, AP, TV>::convertToHeapStorage(size_t aNewCap)
 
   /* Allocate buffer. */
   MOZ_ASSERT(!detail::CapacityHasExcessSpace<T>(aNewCap));
-  T* newBuf = this->template pod_malloc<T>(aNewCap);
+  T* newBuf = reinterpret_cast<T*>(this->malloc_(aNewCap * sizeof(T)));
   if (!newBuf) {
     return false;
   }
@@ -811,7 +813,7 @@ VectorBase<T, N, AP, TV>::initCapacity(size_t aRequest)
   if (aRequest == 0) {
     return true;
   }
-  T* newbuf = this->template pod_malloc<T>(aRequest);
+  T* newbuf = reinterpret_cast<T*>(this->malloc_(aRequest * sizeof(T)));
   if (!newbuf) {
     return false;
   }
@@ -1135,7 +1137,7 @@ VectorBase<T, N, AP, TV>::extractRawBuffer()
 {
   T* ret;
   if (usingInlineStorage()) {
-    ret = this->template pod_malloc<T>(mLength);
+    ret = reinterpret_cast<T*>(this->malloc_(mLength * sizeof(T)));
     if (!ret) {
       return nullptr;
     }

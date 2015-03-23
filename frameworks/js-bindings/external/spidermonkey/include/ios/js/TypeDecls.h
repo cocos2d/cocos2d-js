@@ -21,7 +21,7 @@
 #include <stdint.h>
 
 #include "js-config.h"
- 
+
 // Needed for cocos2d-js
 #define JS_NO_JSVAL_JSID_STRUCT_TYPES
 
