@@ -111,7 +111,7 @@ static MOZ_ALWAYS_INLINE js::gc::Cell *
 AsCell(JSObject *obj)
 {
     js::gc::Cell *cell = reinterpret_cast<js::gc::Cell *>(obj);
-    js::gc::AssertGCThingHasType(cell, JSTRACE_OBJECT);
+    AssertGCThingHasType(cell, JSTRACE_OBJECT);
     return cell;
 }
 
@@ -119,7 +119,7 @@ static MOZ_ALWAYS_INLINE js::gc::Cell *
 AsCell(JSFunction *fun)
 {
     js::gc::Cell *cell = reinterpret_cast<js::gc::Cell *>(fun);
-    js::gc::AssertGCThingHasType(cell, JSTRACE_OBJECT);
+    AssertGCThingHasType(cell, JSTRACE_OBJECT);
     return cell;
 }
 
@@ -127,7 +127,7 @@ static MOZ_ALWAYS_INLINE js::gc::Cell *
 AsCell(JSString *str)
 {
     js::gc::Cell *cell = reinterpret_cast<js::gc::Cell *>(str);
-    js::gc::AssertGCThingHasType(cell, JSTRACE_STRING);
+    AssertGCThingHasType(cell, JSTRACE_STRING);
     return cell;
 }
 
@@ -135,7 +135,7 @@ static MOZ_ALWAYS_INLINE js::gc::Cell *
 AsCell(JSFlatString *flat)
 {
     js::gc::Cell *cell = reinterpret_cast<js::gc::Cell *>(flat);
-    js::gc::AssertGCThingHasType(cell, JSTRACE_STRING);
+    AssertGCThingHasType(cell, JSTRACE_STRING);
     return cell;
 }
 
@@ -143,7 +143,7 @@ static MOZ_ALWAYS_INLINE js::gc::Cell *
 AsCell(JS::Symbol *sym)
 {
     js::gc::Cell *cell = reinterpret_cast<js::gc::Cell *>(sym);
-    js::gc::AssertGCThingHasType(cell, JSTRACE_SYMBOL);
+    AssertGCThingHasType(cell, JSTRACE_SYMBOL);
     return cell;
 }
 
@@ -151,7 +151,7 @@ static MOZ_ALWAYS_INLINE js::gc::Cell *
 AsCell(JSScript *script)
 {
     js::gc::Cell *cell = reinterpret_cast<js::gc::Cell *>(script);
-    js::gc::AssertGCThingHasType(cell, JSTRACE_SCRIPT);
+    AssertGCThingHasType(cell, JSTRACE_SCRIPT);
     return cell;
 }
 
@@ -169,20 +169,20 @@ struct Zone
     JSTracer *const barrierTracer_;     // A pointer to the JSRuntime's |gcMarker|.
 
   public:
-    bool needsIncrementalBarrier_;
+    bool needsBarrier_;
 
     Zone(JSRuntime *runtime, JSTracer *barrierTracerArg)
       : runtime_(runtime),
         barrierTracer_(barrierTracerArg),
-        needsIncrementalBarrier_(false)
+        needsBarrier_(false)
     {}
 
-    bool needsIncrementalBarrier() const {
-        return needsIncrementalBarrier_;
+    bool needsBarrier() const {
+        return needsBarrier_;
     }
 
     JSTracer *barrierTracer() {
-        MOZ_ASSERT(needsIncrementalBarrier_);
+        MOZ_ASSERT(needsBarrier_);
         MOZ_ASSERT(js::CurrentThreadCanAccessRuntime(runtime_));
         return barrierTracer_;
     }
@@ -274,22 +274,21 @@ IsInsideNursery(const js::gc::Cell *cell)
 namespace JS {
 
 static MOZ_ALWAYS_INLINE Zone *
-GetTenuredGCThingZone(void *thing)
+GetGCThingZone(void *thing)
 {
     MOZ_ASSERT(thing);
-#ifdef JSGC_GENERATIONAL
-    JS_ASSERT(!js::gc::IsInsideNursery((js::gc::Cell *)thing));
-#endif
     return js::gc::GetGCThingArena(thing)->zone;
 }
 
-extern JS_PUBLIC_API(Zone *)
-GetObjectZone(JSObject *obj);
+static MOZ_ALWAYS_INLINE Zone *
+GetObjectZone(JSObject *obj)
+{
+    return GetGCThingZone(obj);
+}
 
 static MOZ_ALWAYS_INLINE bool
 GCThingIsMarkedGray(void *thing)
 {
-    MOZ_ASSERT(thing);
 #ifdef JSGC_GENERATIONAL
     /*
      * GC things residing in the nursery cannot be gray: they have no mark bits.
@@ -305,16 +304,12 @@ GCThingIsMarkedGray(void *thing)
 }
 
 static MOZ_ALWAYS_INLINE bool
-IsIncrementalBarrierNeededOnTenuredGCThing(shadow::Runtime *rt, void *thing, JSGCTraceKind kind)
+IsIncrementalBarrierNeededOnGCThing(shadow::Runtime *rt, void *thing, JSGCTraceKind kind)
 {
-    MOZ_ASSERT(thing);
-#ifdef JSGC_GENERATIONAL
-    MOZ_ASSERT(!js::gc::IsInsideNursery((js::gc::Cell *)thing));
-#endif
-    if (!rt->needsIncrementalBarrier())
+    if (!rt->needsBarrier_)
         return false;
-    JS::Zone *zone = GetTenuredGCThingZone(thing);
-    return reinterpret_cast<shadow::Zone *>(zone)->needsIncrementalBarrier();
+    JS::Zone *zone = GetGCThingZone(thing);
+    return reinterpret_cast<shadow::Zone *>(zone)->needsBarrier_;
 }
 
 } /* namespace JS */

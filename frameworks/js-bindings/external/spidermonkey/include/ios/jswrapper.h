@@ -30,13 +30,13 @@ class MOZ_STACK_CLASS WrapperOptions : public ProxyOptions {
     explicit WrapperOptions(JSContext *cx) : ProxyOptions(false, nullptr),
                                              proto_()
     {
-        proto_.emplace(cx);
+        proto_.construct(cx);
     }
 
     inline JSObject *proto() const;
     WrapperOptions &setProto(JSObject *protoArg) {
-        JS_ASSERT(proto_);
-        *proto_ = protoArg;
+        JS_ASSERT(!proto_.empty());
+        proto_.ref() = protoArg;
         return *this;
     }
 
@@ -81,15 +81,12 @@ class JS_FRIEND_API(Wrapper) : public DirectProxyHandler
         return mFlags;
     }
 
-    explicit MOZ_CONSTEXPR Wrapper(unsigned aFlags, bool aHasPrototype = false,
-                                   bool aHasSecurityPolicy = false)
-      : DirectProxyHandler(&family, aHasPrototype, aHasSecurityPolicy),
-        mFlags(aFlags)
-    { }
+    explicit Wrapper(unsigned flags, bool hasPrototype = false, bool hasSecurityPolicy = false);
+
+    virtual ~Wrapper();
 
     virtual bool finalizeInBackground(Value priv) const MOZ_OVERRIDE;
 
-    static const char family;
     static const Wrapper singleton;
     static const Wrapper singletonWithPrototype;
 
@@ -99,17 +96,17 @@ class JS_FRIEND_API(Wrapper) : public DirectProxyHandler
 inline JSObject *
 WrapperOptions::proto() const
 {
-    return proto_ ? *proto_ : Wrapper::defaultProto;
+    return proto_.empty() ? Wrapper::defaultProto : proto_.ref();
 }
 
 /* Base class for all cross compartment wrapper handlers. */
 class JS_FRIEND_API(CrossCompartmentWrapper) : public Wrapper
 {
   public:
-    explicit MOZ_CONSTEXPR CrossCompartmentWrapper(unsigned aFlags, bool aHasPrototype = false,
-                                                   bool aHasSecurityPolicy = false)
-      : Wrapper(CROSS_COMPARTMENT | aFlags, aHasPrototype, aHasSecurityPolicy)
-    { }
+    explicit CrossCompartmentWrapper(unsigned flags, bool hasPrototype = false,
+                                     bool hasSecurityPolicy = false);
+
+    virtual ~CrossCompartmentWrapper();
 
     /* ES5 Harmony fundamental wrapper traps. */
     virtual bool preventExtensions(JSContext *cx, HandleObject wrapper) const MOZ_OVERRIDE;
@@ -147,7 +144,6 @@ class JS_FRIEND_API(CrossCompartmentWrapper) : public Wrapper
     virtual JSString *fun_toString(JSContext *cx, HandleObject wrapper,
                                    unsigned indent) const MOZ_OVERRIDE;
     virtual bool regexp_toShared(JSContext *cx, HandleObject proxy, RegExpGuard *g) const MOZ_OVERRIDE;
-    virtual bool boxedValue_unbox(JSContext *cx, HandleObject proxy, MutableHandleValue vp) const MOZ_OVERRIDE;
     virtual bool defaultValue(JSContext *cx, HandleObject wrapper, JSType hint,
                               MutableHandleValue vp) const MOZ_OVERRIDE;
     virtual bool getPrototypeOf(JSContext *cx, HandleObject proxy,
@@ -172,9 +168,7 @@ template <class Base>
 class JS_FRIEND_API(SecurityWrapper) : public Base
 {
   public:
-    explicit MOZ_CONSTEXPR SecurityWrapper(unsigned flags, bool hasPrototype = false)
-      : Base(flags, hasPrototype, /* hasSecurityPolicy = */ true)
-    { }
+    explicit SecurityWrapper(unsigned flags, bool hasPrototype = false);
 
     virtual bool isExtensible(JSContext *cx, HandleObject wrapper, bool *extensible) const MOZ_OVERRIDE;
     virtual bool preventExtensions(JSContext *cx, HandleObject wrapper) const MOZ_OVERRIDE;
@@ -187,7 +181,6 @@ class JS_FRIEND_API(SecurityWrapper) : public Base
     virtual bool objectClassIs(HandleObject obj, ESClassValue classValue,
                                JSContext *cx) const MOZ_OVERRIDE;
     virtual bool regexp_toShared(JSContext *cx, HandleObject proxy, RegExpGuard *g) const MOZ_OVERRIDE;
-    virtual bool boxedValue_unbox(JSContext *cx, HandleObject proxy, MutableHandleValue vp) const MOZ_OVERRIDE;
     virtual bool defineProperty(JSContext *cx, HandleObject wrapper, HandleId id,
                                 MutableHandle<JSPropertyDescriptor> desc) const MOZ_OVERRIDE;
 
@@ -212,9 +205,10 @@ typedef SecurityWrapper<CrossCompartmentWrapper> CrossCompartmentSecurityWrapper
 class JS_FRIEND_API(DeadObjectProxy) : public BaseProxyHandler
 {
   public:
-    explicit MOZ_CONSTEXPR DeadObjectProxy()
-      : BaseProxyHandler(&family)
-    { }
+    // This variable exists solely to provide a unique address for use as an identifier.
+    static const char sDeadObjectFamily;
+
+    explicit DeadObjectProxy();
 
     /* ES5 Harmony fundamental wrapper traps. */
     virtual bool preventExtensions(JSContext *cx, HandleObject proxy) const MOZ_OVERRIDE;
@@ -247,18 +241,22 @@ class JS_FRIEND_API(DeadObjectProxy) : public BaseProxyHandler
     virtual bool getPrototypeOf(JSContext *cx, HandleObject proxy,
                                 MutableHandleObject protop) const MOZ_OVERRIDE;
 
-    static const char family;
     static const DeadObjectProxy singleton;
 };
 
 extern JSObject *
 TransparentObjectWrapper(JSContext *cx, HandleObject existing, HandleObject obj,
-                         HandleObject parent);
+                         HandleObject parent, unsigned flags);
+
+// Proxy family for wrappers. Public so that IsWrapper() can be fully inlined by
+// jsfriendapi users.
+// This variable exists solely to provide a unique address for use as an identifier.
+extern JS_FRIEND_DATA(const char) sWrapperFamily;
 
 inline bool
 IsWrapper(JSObject *obj)
 {
-    return IsProxy(obj) && GetProxyHandler(obj)->family() == &Wrapper::family;
+    return IsProxy(obj) && GetProxyHandler(obj)->family() == &sWrapperFamily;
 }
 
 // Given a JSObject, returns that object stripped of wrappers. If
@@ -305,6 +303,34 @@ RemapAllWrappersForObject(JSContext *cx, JSObject *oldTarget,
 JS_FRIEND_API(bool)
 RecomputeWrappers(JSContext *cx, const CompartmentFilter &sourceFilter,
                   const CompartmentFilter &targetFilter);
+
+/*
+ * This auto class should be used around any code, such as brain transplants,
+ * that may touch dead zones. Brain transplants can cause problems
+ * because they operate on all compartments, whether live or dead. A brain
+ * transplant can cause a formerly dead object to be "reanimated" by causing a
+ * read or write barrier to be invoked on it during the transplant. In this way,
+ * a zone becomes a zombie, kept alive by repeatedly consuming
+ * (transplanted) brains.
+ *
+ * To work around this issue, we observe when mark bits are set on objects in
+ * dead zones. If this happens during a brain transplant, we do a full,
+ * non-incremental GC at the end of the brain transplant. This will clean up any
+ * objects that were improperly marked.
+ */
+struct JS_FRIEND_API(AutoMaybeTouchDeadZones)
+{
+    // The version that takes an object just uses it for its runtime.
+    explicit AutoMaybeTouchDeadZones(JSContext *cx);
+    explicit AutoMaybeTouchDeadZones(JSObject *obj);
+    ~AutoMaybeTouchDeadZones();
+
+  private:
+    JSRuntime *runtime;
+    unsigned markCount;
+    bool inIncremental;
+    bool manipulatingDeadZones;
+};
 
 } /* namespace js */
 

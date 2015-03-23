@@ -210,7 +210,7 @@ IsInBounds(const From aFrom)
  */
 template<typename To, typename From>
 inline To
-AssertedCast(const From aFrom)
+SafeCast(const From aFrom)
 {
   MOZ_ASSERT((detail::IsInBounds<From, To>(aFrom)));
   return static_cast<To>(aFrom);

@@ -73,6 +73,7 @@ public:
 
     T* last = lookup(aValue);
     splay(last);
+    checkCoherency(mRoot, nullptr);
     return Comparator::compare(aValue, *last) == 0 ? last : nullptr;
   }
 
@@ -93,6 +94,7 @@ public:
     aValue->mParent = last;
 
     splay(aValue);
+    checkCoherency(mRoot, nullptr);
     return true;
   }
 
@@ -152,6 +154,7 @@ public:
       mRoot->mRight->mParent = mRoot;
     }
 
+    checkCoherency(mRoot, nullptr);
     return last;
   }
 
@@ -164,12 +167,6 @@ public:
       min = min->mLeft;
     }
     return remove(*min);
-  }
-
-  // For testing purposes only.
-  void checkCoherency()
-  {
-    checkCoherency(mRoot, nullptr);
   }
 
 private:
@@ -267,29 +264,27 @@ private:
 
   T* checkCoherency(T* aNode, T* aMinimum)
   {
-    if (mRoot) {
-      MOZ_RELEASE_ASSERT(!mRoot->mParent);
-    }
+#ifdef DEBUG
+    MOZ_ASSERT_IF(mRoot, !mRoot->mParent);
     if (!aNode) {
-      MOZ_RELEASE_ASSERT(!mRoot);
+      MOZ_ASSERT(!mRoot);
       return nullptr;
     }
-    if (!aNode->mParent) {
-      MOZ_RELEASE_ASSERT(aNode == mRoot);
-    }
-    if (aMinimum) {
-      MOZ_RELEASE_ASSERT(Comparator::compare(*aMinimum, *aNode) < 0);
-    }
+    MOZ_ASSERT_IF(!aNode->mParent, aNode == mRoot);
+    MOZ_ASSERT_IF(aMinimum, Comparator::compare(*aMinimum, *aNode) < 0);
     if (aNode->mLeft) {
-      MOZ_RELEASE_ASSERT(aNode->mLeft->mParent == aNode);
+      MOZ_ASSERT(aNode->mLeft->mParent == aNode);
       T* leftMaximum = checkCoherency(aNode->mLeft, aMinimum);
-      MOZ_RELEASE_ASSERT(Comparator::compare(*leftMaximum, *aNode) < 0);
+      MOZ_ASSERT(Comparator::compare(*leftMaximum, *aNode) < 0);
     }
     if (aNode->mRight) {
-      MOZ_RELEASE_ASSERT(aNode->mRight->mParent == aNode);
+      MOZ_ASSERT(aNode->mRight->mParent == aNode);
       return checkCoherency(aNode->mRight, aNode);
     }
     return aNode;
+#else
+    return nullptr;
+#endif
   }
 
   SplayTree(const SplayTree&) MOZ_DELETE;

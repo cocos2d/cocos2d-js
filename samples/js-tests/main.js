@@ -87,7 +87,7 @@ if(cc.sys){
 }
 
 cc.game.onStart = function(){
-    
+    cc.view.enableRetina(false);
     if (cc.sys.isNative) {
         cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.FIXED_HEIGHT);
         cc.view.resizeWithBrowserSize(true);
