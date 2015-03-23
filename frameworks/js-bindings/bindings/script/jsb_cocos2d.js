@@ -2799,3 +2799,8 @@ cc.LabelTTF.prototype.setDimensions = function (dim, height) {
     }
     this._setDimensions(dim);
 };
+
+//
+// Label enableStroke
+//
+cc.Label.prototype.enableStroke = cc.Label.prototype.enableOutline;
