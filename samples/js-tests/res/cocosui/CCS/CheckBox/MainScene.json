@@ -1,0 +1,101 @@
+{
+  "ID": "fb5c107c-6fa8-43bd-9caf-107658f450ba",
+  "Version": "2.1.5.0",
+  "Name": "MainScene",
+  "Content": {
+    "Content": {
+      "Animation": {
+        "Duration": 0,
+        "Speed": 1.0,
+        "Timelines": [],
+        "ctype": "TimelineActionData"
+      },
+      "AnimationList": [],
+      "ObjectData": {
+        "Tag": 20,
+        "PrePosition": {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "PreSize": {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Children": [
+          {
+            "NormalBackFileData": {
+              "Type": "Normal",
+              "Path": "img/btn_music.png"
+            },
+            "PressedBackFileData": {
+              "Type": "Normal",
+              "Path": "img/btn_music.png"
+            },
+            "DisableBackFileData": {
+              "Type": "Default",
+              "Path": "Default/CheckBox_Disable.png"
+            },
+            "NodeNormalFileData": {
+              "Type": "Normal",
+              "Path": "img/btn_sound_off.png"
+            },
+            "NodeDisableFileData": {
+              "Type": "Normal",
+              "Path": "img/btn_sound_off.png"
+            },
+            "TouchEnable": true,
+            "Tag": 21,
+            "PrePosition": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "PreSize": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "ActionTag": 454440131,
+            "Position": {
+              "X": 290.5,
+              "Y": 250.5
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "AnchorPoint": {
+              "ScaleX": 0.5,
+              "ScaleY": 0.5
+            },
+            "CColor": {},
+            "Size": {
+              "X": 40.0,
+              "Y": 40.0
+            },
+            "FrameEvent": "",
+            "Name": "CheckBox_1",
+            "ctype": "CheckBoxObjectData"
+          }
+        ],
+        "Position": {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Scale": {
+          "ScaleX": 1.0,
+          "ScaleY": 1.0
+        },
+        "AnchorPoint": {},
+        "CColor": {},
+        "Size": {
+          "X": 640.0,
+          "Y": 960.0
+        },
+        "FrameEvent": "",
+        "Name": "Scene",
+        "ctype": "SingleNodeObjectData"
+      },
+      "ctype": "GameProjectData"
+    }
+  },
+  "Type": "Scene"
+}

@@ -412,15 +412,12 @@
 
         }
 
-        var bgStartColor = json["FirstColor"];
-        var bgEndColor = json["EndColor"];
-        if(bgStartColor != null && bgEndColor != null){
-            var startC = getColor(bgStartColor);
-            if(bgEndColor["R"] == null && bgEndColor["G"] == null && bgEndColor["B"] == null)
-                widget.setBackGroundColor( startC );
-            else
-                widget.setBackGroundColor( startC, getColor(bgEndColor) );
-        }
+        var firstColor = json["FirstColor"];
+        var endColor = json["EndColor"];
+        if(endColor["R"] != null && endColor["G"] != null && endColor["B"] != null)
+            widget.setBackGroundColor(getColor(firstColor), getColor(endColor));
+        else
+            widget.setBackGroundColor(getColor(json["SingleColor"]));
 
         var colorVector = json["ColorVector"];
         if(colorVector != null)
@@ -638,6 +635,10 @@
 
         this.widgetAttributes(widget, json);
 
+        loadTexture(json["FileData"], resourcePath, function(path, type){
+            widget.setBackGroundImage(path, type);
+        });
+
         var clipEnabled = json["ClipAble"];
         widget.setClippingEnabled(clipEnabled);
 
@@ -683,10 +684,6 @@
             var colorVectorY = getParam(colorVector["ScaleY"], 1);
             widget.setBackGroundColorVector(cc.p(colorVectorX, colorVectorY));
         }
-
-        loadTexture(json["FileData"], resourcePath, function(path, type){
-            widget.setBackGroundImage(path, type);
-        });
 
         var innerNodeSize = json["InnerNodeSize"];
         var innerSize = cc.size(
@@ -822,6 +819,10 @@
 
         this.widgetAttributes(widget, json);
 
+        loadTexture(json["FileData"], resourcePath, function(path, type){
+            widget.setBackGroundImage(path, type);
+        });
+
         var clipEnabled = json["ClipAble"] || false;
         widget.setClippingEnabled(clipEnabled);
 
@@ -862,10 +863,6 @@
         if(bgColorOpacity != null)
             widget.setBackGroundColorOpacity(bgColorOpacity);
 
-        loadTexture(json["FileData"], resourcePath, function(path, type){
-            widget.setBackGroundImage(path, type);
-        });
-
         setContentSize(widget, json["Size"]);
 
         return widget;
@@ -883,6 +880,10 @@
         var widget = new ccui.ListView();
 
         this.widgetAttributes(widget, json);
+
+        loadTexture(json["FileData"], resourcePath, function(path, type){
+            widget.setBackGroundImage(path, type);
+        });
 
         var clipEnabled = json["ClipAble"] || false;
         widget.setClippingEnabled(clipEnabled);
@@ -956,11 +957,6 @@
             widget.setBackGroundColorVector(cc.p(colorVector["ScaleX"], colorVector["ScaleY"]));
         if(bgColorOpacity != null)
             widget.setBackGroundColorOpacity(bgColorOpacity);
-
-
-        loadTexture(json["FileData"], resourcePath, function(path, type){
-            widget.setBackGroundImage(path, type);
-        });
 
         setContentSize(widget, json["Size"]);
 

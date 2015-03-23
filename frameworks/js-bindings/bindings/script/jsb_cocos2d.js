@@ -2802,6 +2802,12 @@ cc.LabelTTF.prototype.setDimensions = function (dim, height) {
 
 
 //
+// Label enableStroke
+//
+cc.Label.prototype.enableStroke = cc.Label.prototype.enableOutline;
+
+
+//
 // 3D module rename to jsb namespace
 //
 jsb.BaseLight = cc.BaseLight;

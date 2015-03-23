@@ -282,7 +282,9 @@ var g_sprites = [
     s_tcc_issue_2,
 
     s_s9s_blocks9_plist,
-    s_s9s_blocks9
+    s_s9s_blocks9,
+    "res/Images/dot.png",
+    "res/Images/wood.jpg"
 ];
 
 var g_menu = [
@@ -598,6 +600,10 @@ var g_cocoStudio = [
     "res/cocosui/CCS/CheckBox/selected01.png",
     "res/cocosui/CCS/CheckBox/selected02.png",
     "res/cocosui/CCS/CheckBox/checkbox_1.json",
+    "res/cocosui/CCS/CheckBox/MainScene.json",
+    "res/cocosui/CCS/CheckBox/Default/CheckBox_Disable.png",
+    "res/cocosui/CCS/CheckBox/img/btn_music.png",
+    "res/cocosui/CCS/CheckBox/img/btn_sound_off.png",
     "res/cocosui/CCS/ImageView/background.png",
     "res/cocosui/CCS/ImageView/buttonBackground.png",
     "res/cocosui/CCS/ImageView/buttonHighlighted.png",

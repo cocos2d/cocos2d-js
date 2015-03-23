@@ -34,7 +34,7 @@ var s_GuiTestEditorArray = [
     {
         title: "CheckBox",
         layer: function () {
-            return new UICheckBoxEditorTest();
+            return new CEHCK_BOX_SCENE[0]();
         }
     },
     {

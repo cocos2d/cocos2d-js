@@ -5329,6 +5329,73 @@ var SpriteWithRepeatingTexture = SpriteTestDemo.extend({
     }
 });
 
+var SpriteBlendFuncTest = SpriteTestDemo.extend({
+    //webgl only
+    _title: "",          //Sprite BlendFunc test
+    _subtitle: "",
+
+    ctor: function(){
+        //----start59----ctor
+        this._super();
+
+        var destFactors = [gl.ZERO, gl.ONE, gl.SRC_COLOR, gl.ONE_MINUS_SRC_COLOR, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA],
+           srcFactors = [gl.ZERO, gl.ONE, gl.DST_COLOR, gl.ONE_MINUS_DST_COLOR, gl.DST_ALPHA, gl.ONE_MINUS_DST_ALPHA];
+        var destTitles = ["ZERO", "ONE", "SRC_COLOR", "ONE_MINUS_SRC_COLOR", "SRC_ALPHA", "ONE_MINUS_SRC_ALPHA"],
+            srcTitles = ["ZERO", "ONE", "DST_COLOR", "ONE_MINUS_DST_COLOR", "SRC_ALPHA", "ONE_MINUS_SRC_ALPHA"];
+
+        var sourceImg = "res/Images/dot.png", destImg = "res/Images/wood.jpg";
+        var sourceTexture = cc.textureCache.addImage(sourceImg);
+        sourceTexture.handleLoadedTexture(true);
+        var sourceSprite = new cc.Sprite(sourceImg);
+        var destSprite = new cc.Sprite(destImg);
+        sourceSprite.setScale(0.8);
+        destSprite.setScale(0.8);
+        sourceSprite.setPosition(60,400);
+        destSprite.setPosition(120,400);
+        this.addChild(sourceSprite);
+        this.addChild(destSprite);
+
+        var i, j,  title, fontSize, titleLabel;
+        for(i = 0; i < destTitles.length; i++){
+            title = destTitles[i];
+            fontSize = (title.length > 10) ? 14 : 18;
+            titleLabel = new cc.LabelTTF(title, "Arial", fontSize);
+            titleLabel.setAnchorPoint(0, 0.5);
+            titleLabel.setPosition(0, 355 - 60 * i);
+            this.addChild(titleLabel);
+        }
+
+        for(i = 0; i < srcTitles.length; i++){
+            title = srcTitles[i];
+            fontSize = (title.length > 10) ? 14 : 18;
+            titleLabel = new cc.LabelTTF(title, "Arial", fontSize);
+            titleLabel.setAnchorPoint(0, 0.5);
+            titleLabel.setPosition(220 + i * 60, 390);
+            titleLabel.setRotation(-20);
+            this.addChild(titleLabel);
+        }
+        //j = 0;
+        for(i = 0; i < srcFactors.length; i++){
+            for(j = 0; j < destFactors.length; j++){
+                sourceSprite = new cc.Sprite(sourceImg);
+                //sourceSprite.setScale(0.8);
+                sourceSprite.setPosition( 220 + i * 60, 355 - j * 60);
+                sourceSprite.setBlendFunc(srcFactors[i], destFactors[j]);
+
+
+                destSprite = new cc.Sprite(destImg);
+                //destSprite.setScale(0.8);
+                destSprite.setPosition( 220 + i * 60, 355 - j * 60);
+//                destSprite.setBlendFunc(srcFactors[j], destFactors[i]);
+                                                
+                this.addChild(destSprite,1);
+                this.addChild(sourceSprite,2);
+            }
+        }
+        //----end59----
+    }
+});
+
 var SpriteTestScene = TestScene.extend({
     runThisTest:function (num) {
         spriteTestIdx = (num || num == 0) ? (num - 1) : -1;
@@ -5401,7 +5468,8 @@ var arrayOfSpriteTest = [
     TextureColorCacheIssue,
     TextureColorCacheIssue2,
     TextureRotatedSpriteFrame,
-    SpriteWithRepeatingTexture
+    SpriteWithRepeatingTexture,
+    SpriteBlendFuncTest
 ];
 
 var nextSpriteTest = function () {
