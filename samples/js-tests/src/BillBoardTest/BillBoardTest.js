@@ -127,16 +127,16 @@ var BillBoardRotationTest = BillBoardTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var root = new cc.Sprite3D();
+        var root = new jsb.Sprite3D();
         root.setNormalizedPosition(cc.p(0.5, 0.25));
         this.addChild(root);
 
-        var model = new cc.Sprite3D("Sprite3DTest/orc.c3b");
+        var model = new jsb.Sprite3D("Sprite3DTest/orc.c3b");
         model.setScale(5);
         model.setRotation3D(cc.math.vec3(0, 180, 0));
         root.addChild(model);
 
-        var bill = new cc.BillBoard();
+        var bill = new jsb.BillBoard();
         bill.setPosition(0, 120);
         root.addChild(bill);
 
@@ -187,7 +187,7 @@ var BillBoardTest = BillBoardTestDemo.extend({
         var imgs = ["Images/Icon.png", "Images/r2.png"];
         for(var i = 0; i < 4; ++i){
             var layer = new cc.Layer();
-            var billboard = new cc.BillBoard(imgs[Math.floor(Math.random() + 0.5)]);
+            var billboard = new jsb.BillBoard(imgs[Math.floor(Math.random() + 0.5)]);
             billboard.setScale(0.5);
             billboard.setPosition3D(cc.math.vec3(0, 0, (Math.random() * 2 - 1) * 150));
             billboard.setOpacity(Math.random() * 128 + 128);
@@ -198,17 +198,17 @@ var BillBoardTest = BillBoardTestDemo.extend({
         }
 
         {
-            var billboard1 = new cc.BillBoard("Images/Icon.png");
+            var billboard1 = new jsb.BillBoard("Images/Icon.png");
             billboard1.setScale(0.2);
             billboard1.setPosition3D(cc.math.vec3(0, 30, 0));
 
-            var billboard2 = new cc.BillBoard("Images/r2.png");
+            var billboard2 = new jsb.BillBoard("Images/r2.png");
             billboard2.setPosition3D(cc.math.vec3(0, 0, 100));
             billboard1.addChild(billboard2);
             this._billboards.push(billboard1);
             this._billboards.push(billboard2);
 
-            var sprite3d = new cc.Sprite3D("Sprite3DTest/orc.c3b");
+            var sprite3d = new jsb.Sprite3D("Sprite3DTest/orc.c3b");
             sprite3d.setScale(2);
             sprite3d.addChild(billboard1);
             sprite3d.runAction(cc.rotateBy(10, cc.math.vec3(0, 360, 0)).repeatForever());
@@ -262,7 +262,7 @@ var BillBoardTest = BillBoardTestDemo.extend({
     addNewBillBoradWithCoords:function(position){
         var imgs = ["Images/Icon.png", "Images/r2.png"];
         for(var i = 0; i < 10; ++i){
-            var billboard = new cc.BillBoard(imgs[Math.floor(Math.random() + 0.5)]);
+            var billboard = new jsb.BillBoard(imgs[Math.floor(Math.random() + 0.5)]);
             billboard.setScale(0.5);
             billboard.setPosition3D(cc.math.vec3(position.x, position.y, -150+30*i));
             billboard.setOpacity(Math.random() * 128 + 128);
@@ -273,7 +273,7 @@ var BillBoardTest = BillBoardTestDemo.extend({
 
     addNewAniBillBoradWithCoords:function(position){
         for(var i = 0; i < 10; ++i){
-            var billboardAni = new cc.BillBoard("Images/grossini.png");
+            var billboardAni = new jsb.BillBoard("Images/grossini.png");
             billboardAni.setScale(0.5);
             billboardAni.setPosition3D(cc.math.vec3(position.x, position.y, -150+30*i));
             this._layerBillBorad.addChild(billboardAni);
@@ -298,13 +298,13 @@ var BillBoardTest = BillBoardTestDemo.extend({
 
     menuCallback_orientedPoint:function(sender){
         for(var i = 0; i < this._billboards.length; ++i){
-            this._billboards[i].setMode(cc.BillBoard.Mode.VIEW_POINT_ORIENTED);
+            this._billboards[i].setMode(jsb.BillBoard.Mode.VIEW_POINT_ORIENTED);
         }
     },
 
     menuCallback_orientedPlane:function(sender){
         for(var i = 0; i < this._billboards.length; ++i){
-            this._billboards[i].setMode(cc.BillBoard.Mode.VIEW_PLANE_ORIENTED);
+            this._billboards[i].setMode(jsb.BillBoard.Mode.VIEW_PLANE_ORIENTED);
         }
     },
 

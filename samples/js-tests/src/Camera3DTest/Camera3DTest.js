@@ -150,7 +150,7 @@ var CameraRotationTest = Camera3DTestDemo.extend({
         this._camNode.setVertexZ(cc.Camera.getDefaultCamera().getPosition3D().z);
         this._camControlNode.addChild(this._camNode);
 
-        var sp3d = new cc.Sprite3D();
+        var sp3d = new jsb.Sprite3D();
         sp3d.setPosition(s.width/2, s.height/2);
         this.addChild(sp3d);
 
@@ -160,7 +160,7 @@ var CameraRotationTest = Camera3DTestDemo.extend({
 
         //Billboards
         //Yellow is at the back
-        var bill1 = new cc.BillBoard("Images/Icon.png");
+        var bill1 = new jsb.BillBoard("Images/Icon.png");
         bill1.setPosition3D(cc.math.vec3(50, 10, -10));
         bill1.setColor(cc.color.YELLOW);
         bill1.setScale(0.6);
@@ -176,7 +176,7 @@ var CameraRotationTest = Camera3DTestDemo.extend({
         p1.setPosition(30, 80);
         bill1.addChild(p1);
 
-        var bill2 = new cc.BillBoard("Images/Icon.png");
+        var bill2 = new jsb.BillBoard("Images/Icon.png");
         bill2.setPosition3D(cc.math.vec3(-50, -10, 10));
         bill2.setScale(0.6);
         sp3d.addChild(bill2);
@@ -192,7 +192,7 @@ var CameraRotationTest = Camera3DTestDemo.extend({
         bill2.addChild(p2);
 
         //3D models
-        var model = new cc.Sprite3D("Sprite3DTest/boss1.obj");
+        var model = new jsb.Sprite3D("Sprite3DTest/boss1.obj");
         model.setScale(4);
         model.setTexture("Sprite3DTest/boss.png");
         model.setPosition3D(cc.math.vec3(s.width/2, s.height/2, 0));
@@ -366,15 +366,15 @@ var Camera3DTest = (function(){
         },
 
         addNewSpriteWithCoords:function(postion, file, playAnimation, scale, bindCamera){
-            var sprite = new cc.Sprite3D(file);
+            var sprite = new jsb.Sprite3D(file);
             this._layer3D.addChild(sprite);
             var globalZOrder = sprite.getGlobalZOrder();
             sprite.setPosition3D(postion);
             sprite.setGlobalZOrder(globalZOrder);
             if(playAnimation){
-                var animation = cc.Animation3D.create(file, "Take 001");
+                var animation = jsb.Animation3D.create(file, "Take 001");
                 if(animation){
-                    var animate = cc.Animate3D.create(animation);
+                    var animate = jsb.Animate3D.create(animation);
                     sprite.runAction(cc.repeatForever(animate));
                 }
             }
@@ -825,7 +825,7 @@ var CameraCullingDemo = Camera3DTestDemo.extend({
         this._row--;
         for(var x = -this._row; x < this._row; ++x){
             for(var z = -this._row; z < this._row; ++z){
-                var sprite = new cc.Sprite3D("Sprite3DTest/orc.c3b");
+                var sprite = new jsb.Sprite3D("Sprite3DTest/orc.c3b");
                 sprite.setPosition3D(cc.math.vec3(x * 30, 0, z * 30));
                 sprite.setRotation3D(cc.math.vec3(0, 180, 0));
                 this._objects.push(sprite);
@@ -848,7 +848,7 @@ var CameraCullingDemo = Camera3DTestDemo.extend({
         this._row++;
         for(var x = -this._row; x < this._row; ++x){
             for(var z = -this._row; z < this._row; ++z){
-                var sprite = new cc.Sprite3D("Sprite3DTest/orc.c3b");
+                var sprite = new jsb.Sprite3D("Sprite3DTest/orc.c3b");
                 sprite.setPosition3D(cc.math.vec3(x * 30, 0, z * 30));
                 sprite.setRotation3D(cc.math.vec3(0, 180, 0));
                 this._objects.push(sprite);
@@ -972,13 +972,13 @@ var CameraArcBallDemo = Camera3DTestDemo.extend({
         this._camera.lookAt(cc.math.vec3(0, 0, 0), cc.math.vec3(0, 1, 0));
         layer3D.addChild(this._camera);
 
-        this._sprite3D1 = new cc.Sprite3D("Sprite3DTest/orc.c3b");
+        this._sprite3D1 = new jsb.Sprite3D("Sprite3DTest/orc.c3b");
         this._sprite3D1.setScale(0.5);
         this._sprite3D1.setRotation3D(cc.math.vec3(0, 180, 0));
         this._sprite3D1.setPosition3D(cc.math.vec3(0, 0, 0));
         layer3D.addChild(this._sprite3D1);
 
-        this._sprite3D2 = new cc.Sprite3D("Sprite3DTest/boss.c3b");
+        this._sprite3D2 = new jsb.Sprite3D("Sprite3DTest/boss.c3b");
         this._sprite3D2.setScale(0.6);
         this._sprite3D2.setRotation3D(cc.math.vec3(-90, 0, 0));
         this._sprite3D2.setPosition3D(cc.math.vec3(20, 0, 0));
@@ -1136,8 +1136,8 @@ var FogTestDemo = Camera3DTestDemo.extend({
         var state = cc.GLProgramState.create(shader);
         this._state = state;
 
-        this._sprite3D1 = new cc.Sprite3D("Sprite3DTest/teapot.c3b");
-        this._sprite3D2 = new cc.Sprite3D("Sprite3DTest/teapot.c3b");
+        this._sprite3D1 = new jsb.Sprite3D("Sprite3DTest/teapot.c3b");
+        this._sprite3D2 = new jsb.Sprite3D("Sprite3DTest/teapot.c3b");
 
         this._sprite3D1.setGLProgramState(state);
         this._sprite3D2.setGLProgramState(state);

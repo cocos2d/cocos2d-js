@@ -176,32 +176,32 @@ var LightTest = LightTestDemo.extend({
     addSprite:function(){
         var s = cc.winSize;
 
-        var orc = new cc.Sprite3D("Sprite3DTest/orc.c3b");
+        var orc = new jsb.Sprite3D("Sprite3DTest/orc.c3b");
         orc.setRotation3D(cc.math.vec3(0, 180, 0));
         orc.setPosition(cc.p(0, 0));
         orc.setScale(2.0);
-        var axe = new cc.Sprite3D("Sprite3DTest/axe.c3b");
+        var axe = new jsb.Sprite3D("Sprite3DTest/axe.c3b");
         orc.getAttachNode("Bip001 R Hand").addChild(axe);
-        var animation = cc.Animation3D.create("Sprite3DTest/orc.c3b");
+        var animation = jsb.Animation3D.create("Sprite3DTest/orc.c3b");
         if(animation){
-            var animate = cc.Animate3D.create(animation);
+            var animate = jsb.Animate3D.create(animation);
             orc.runAction(cc.repeatForever(animate));
         }
         this.addChild(orc);
         orc.setCameraMask(2);
 
-        var sphere1 = new cc.Sprite3D("Sprite3DTest/sphere.c3b");
+        var sphere1 = new jsb.Sprite3D("Sprite3DTest/sphere.c3b");
         sphere1.setPosition(cc.p(30, 0));
         this.addChild(sphere1);
         sphere1.setCameraMask(2);
 
-        var sphere2 = new cc.Sprite3D("Sprite3DTest/sphere.c3b");
+        var sphere2 = new jsb.Sprite3D("Sprite3DTest/sphere.c3b");
         sphere2.setPosition(cc.p(-50, 0));
         sphere2.setScale(0.5);
         this.addChild(sphere2);
         sphere2.setCameraMask(2);
 
-        var sphere3 = new cc.Sprite3D("Sprite3DTest/sphere.c3b");
+        var sphere3 = new jsb.Sprite3D("Sprite3DTest/sphere.c3b");
         sphere3.setPosition(cc.p(-30, 0));
         sphere3.setScale(0.5);
         this.addChild(sphere3);

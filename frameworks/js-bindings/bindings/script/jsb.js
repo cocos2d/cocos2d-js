@@ -130,6 +130,6 @@ if (window.sp) {
     require('script/jsb_spine.js');
 }
 
-if(cc.Sprite3D){
+if (jsb.Sprite3D){
     require('script/3d/jsb_cocos2d_3d.js');
 }
