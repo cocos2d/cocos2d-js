@@ -282,7 +282,9 @@ var g_sprites = [
     s_tcc_issue_2,
 
     s_s9s_blocks9_plist,
-    s_s9s_blocks9
+    s_s9s_blocks9,
+    "res/Images/dot.png",
+    "res/Images/wood.jpg"
 ];
 
 var g_menu = [
