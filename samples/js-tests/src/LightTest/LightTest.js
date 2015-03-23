@@ -209,22 +209,22 @@ var LightTest = LightTestDemo.extend({
     },
 
     addLights:function(){
-        this._ambientLight = cc.AmbientLight.create(cc.color(200, 200, 200));
+        this._ambientLight = jsb.AmbientLight.create(cc.color(200, 200, 200));
         this._ambientLight.setEnabled(true);
         this.addChild(this._ambientLight);
         this._ambientLight.setCameraMask(2);
 
-        this._directionalLight = cc.DirectionLight.create(cc.math.vec3(-1, -1, 0), cc.color(200, 200, 200));
+        this._directionalLight = jsb.DirectionLight.create(cc.math.vec3(-1, -1, 0), cc.color(200, 200, 200));
         this._directionalLight.setEnabled(false);
         this.addChild(this._directionalLight);
         this._directionalLight.setCameraMask(2);
 
-        this._pointLight = cc.PointLight.create(cc.math.vec3(0, 0, 0), cc.color(200, 200, 200), 10000);
+        this._pointLight = jsb.PointLight.create(cc.math.vec3(0, 0, 0), cc.color(200, 200, 200), 10000);
         this._pointLight.setEnabled(false);
         this.addChild(this._pointLight);
         this._pointLight.setCameraMask(2);
 
-        this._spotLight = cc.SpotLight.create(cc.math.vec3(-1, -1, 0), cc.math.vec3(0, 0, 0), cc.color(200, 200, 200), 0, 0.5, 10000);
+        this._spotLight = jsb.SpotLight.create(cc.math.vec3(-1, -1, 0), cc.math.vec3(0, 0, 0), cc.color(200, 200, 200), 0, 0.5, 10000);
         this._spotLight.setEnabled(false);
         this.addChild(this._spotLight);
         this._spotLight.setCameraMask(2);

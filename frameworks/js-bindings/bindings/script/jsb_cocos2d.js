@@ -2799,3 +2799,18 @@ cc.LabelTTF.prototype.setDimensions = function (dim, height) {
     }
     this._setDimensions(dim);
 };
+
+
+//
+// 3D module rename to jsb namespace
+//
+jsb.BaseLight = cc.BaseLight;
+delete cc.BaseLight;
+jsb.DirectionLight = cc.DirectionLight;
+delete cc.DirectionLight;
+jsb.PointLight = cc.PointLight;
+delete cc.PointLight;
+jsb.SpotLight = cc.SpotLight;
+delete cc.SpotLight;
+jsb.AmbientLight = cc.AmbientLight;
+delete cc.AmbientLight;
