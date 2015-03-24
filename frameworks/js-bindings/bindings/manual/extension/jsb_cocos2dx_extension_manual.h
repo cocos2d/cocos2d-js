@@ -40,6 +40,7 @@ protected:
 private:
     void onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
     void onError(const cocos2d::extension::Downloader::Error &error);
+    void onHeader(const std::string &srcUrl, const cocos2d::extension::Downloader::HeaderInfo &info);
     JS::Heap<jsval> _jsCallback;
     unsigned char *_buffer;
     long _size;
