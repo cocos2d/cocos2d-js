@@ -3127,7 +3127,7 @@ void js_register_cocos2dx_3d_BillBoard(JSContext *cx, JS::HandleObject global) {
 void register_all_cocos2dx_3d(JSContext* cx, JS::HandleObject obj) {
     // Get the ns
     JS::RootedObject ns(cx);
-    get_or_create_js_obj(cx, obj, "cc", &ns);
+    get_or_create_js_obj(cx, obj, "jsb", &ns);
 
     js_register_cocos2dx_3d_Animate3D(cx, ns);
     js_register_cocos2dx_3d_Sprite3D(cx, ns);

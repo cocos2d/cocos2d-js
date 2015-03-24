@@ -1,12 +1,12 @@
 /**
  * @module cocos2dx_3d
  */
-var cc = cc || {};
+var jsb = jsb || {};
 
 /**
  * @class Skeleton3D
  */
-cc.Skeleton3D = {
+jsb.Skeleton3D = {
 
 /**
  * @method removeAllBones
@@ -116,7 +116,7 @@ Skeleton3D : function (
 /**
  * @class Sprite3D
  */
-cc.Sprite3D = {
+jsb.Sprite3D = {
 
 /**
  * @method setCullFaceEnabled
@@ -480,7 +480,7 @@ Sprite3D : function (
 /**
  * @class Sprite3DCache
  */
-cc.Sprite3DCache = {
+jsb.Sprite3DCache = {
 
 /**
  * @method removeSprite3DData
@@ -523,7 +523,7 @@ getInstance : function (
 /**
  * @class Mesh
  */
-cc.Mesh = {
+jsb.Mesh = {
 
 /**
  * @method setTexture
@@ -777,7 +777,7 @@ Mesh : function (
 /**
  * @class Animation3D
  */
-cc.Animation3D = {
+jsb.Animation3D = {
 
 /**
  * @method init
@@ -841,7 +841,7 @@ Animation3D : function (
 /**
  * @class Animate3D
  */
-cc.Animate3D = {
+jsb.Animate3D = {
 
 /**
  * @method getSpeed
@@ -969,7 +969,7 @@ Animate3D : function (
 /**
  * @class AttachNode
  */
-cc.AttachNode = {
+jsb.AttachNode = {
 
 /**
  * @method create
@@ -997,7 +997,7 @@ AttachNode : function (
 /**
  * @class BillBoard
  */
-cc.BillBoard = {
+jsb.BillBoard = {
 
 /**
  * @method getMode
