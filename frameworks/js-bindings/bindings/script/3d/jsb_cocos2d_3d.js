@@ -68,7 +68,7 @@ cc.AsyncTaskPool.TaskType = {
     TASK_MAX_TYPE : 3
 };
 
-cc.BillBoard.Mode = {
+jsb.BillBoard.Mode = {
     VIEW_POINT_ORIENTED : 0, // orient to the camera
     VIEW_PLANE_ORIENTED : 1  // orient to the XOY plane of camera
 };
@@ -203,7 +203,9 @@ cc.math.vec4 = function(x, y, z, w){
     return new cc.math.Vec4(x, y, z, w);
 };
 
-cc.Sprite3D.prototype._ctor = function(modelPath, texturePath){
+jsb.sprite3DCache = jsb.Sprite3DCache.getInstance();
+
+jsb.Sprite3D.prototype._ctor = function(modelPath, texturePath){
     if(modelPath === undefined){
         this.init();
     }else{
@@ -220,9 +222,9 @@ cc.Sprite3D.prototype._ctor = function(modelPath, texturePath){
     }
 };
 
-cc.BillBoard.prototype._ctor = function(filename, rect, mode = cc.BillBoard.Mode.VIEW_POINT_ORIENTED){
+jsb.BillBoard.prototype._ctor = function(filename, rect, mode = jsb.BillBoard.Mode.VIEW_POINT_ORIENTED){
     if(filename !== undefined && filename instanceof cc.Texture2D){
-        rect = rect || cc.BillBoard.Mode.VIEW_POINT_ORIENTED;
+        rect = rect || jsb.BillBoard.Mode.VIEW_POINT_ORIENTED;
         this.initWithTexture(filename);
         this.setMode(rect);
     }else if(filename !== undefined && typeof filename === "string"){
@@ -236,10 +238,10 @@ cc.BillBoard.prototype._ctor = function(filename, rect, mode = cc.BillBoard.Mode
             }
         }else{
             this.initWithFile(filename);
-            this.setMode(cc.BillBoard.Mode.VIEW_POINT_ORIENTED);
+            this.setMode(jsb.BillBoard.Mode.VIEW_POINT_ORIENTED);
         }
     }else{
-        filename = filename || cc.BillBoard.Mode.VIEW_POINT_ORIENTED;
+        filename = filename || jsb.BillBoard.Mode.VIEW_POINT_ORIENTED;
         this.init();
         this.setMode(filename);
     }

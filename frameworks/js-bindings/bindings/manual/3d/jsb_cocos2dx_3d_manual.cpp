@@ -147,7 +147,7 @@ void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
     JS::RootedValue tmpVal(cx);
     JS::RootedObject ccObj(cx);
     JS::RootedObject tmpObj(cx);
-    get_or_create_js_obj(cx, global, "cc", &ccObj);
+    get_or_create_js_obj(cx, global, "jsb", &ccObj);
     
     JS_GetProperty(cx, ccObj, "Sprite3D", &tmpVal);
     tmpObj = tmpVal.toObjectOrNull();
