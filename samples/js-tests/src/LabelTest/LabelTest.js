@@ -1331,7 +1331,7 @@ var LabelTTFChinese = AtlasDemo.extend({
         //----start21----ctor
         this._super();
         var size = director.getWinSize();
-        var label = new cc.LabelTTF("中国", (cc.sys.os == cc.sys.OS_WP8) ? "fonts/arialuni.ttf" : "Microsoft Yahei", 30);
+        var label = new cc.LabelTTF("中国", (cc.sys.os == cc.sys.OS_WP8 || cc.sys.os == cc.sys.OS_WINRT || cc.sys.os == cc.sys.OS_WINRT) ? "fonts/arialuni.ttf" : "Microsoft Yahei", 30);
         label.x = size.width / 2;
         label.y = size.height / 3 * 2;
         this.addChild(label);
@@ -1941,7 +1941,7 @@ var WrapAlgorithmTest = AtlasDemo.extend({
             LabelTTF.boundingWidth = 120;
             LabelTTF.boundingHeight = 0;
             LabelTTF.enableStroke(cc.color(0, 0, 0, 1), 3.0);
-            if(cc.sys.os == cc.sys.OS_WP8)
+            if (cc.sys.os == cc.sys.OS_WP8 || cc.sys.os == cc.sys.OS_WINRT)
                 LabelTTF.setFontName("fonts/arialuni.ttf");
             self.addChild(LabelTTF);
         });
@@ -1965,7 +1965,7 @@ var WrapAlgorithmTest = AtlasDemo.extend({
             LabelTTF.boundingWidth = 3;
             LabelTTF.boundingHeight = 0;
             LabelTTF.enableStroke(cc.color(0, 0, 0, 1), 3.0);
-            if(cc.sys.os == cc.sys.OS_WP8)
+            if (cc.sys.os == cc.sys.OS_WP8 || cc.sys.os == cc.sys.OS_WINRT)
                 LabelTTF.setFontName("fonts/arialuni.ttf");
             self.addChild(LabelTTF);
         });
@@ -1985,7 +1985,7 @@ var WrapAlgorithmTest = AtlasDemo.extend({
             LabelTTF.boundingWidth = 90;
             LabelTTF.boundingHeight = 0;
             LabelTTF.enableStroke(cc.color(0, 0, 0, 1), 3.0);
-            if(cc.sys.os == cc.sys.OS_WP8)
+            if (cc.sys.os == cc.sys.OS_WP8 || cc.sys.os == cc.sys.OS_WINRT)
                 LabelTTF.setFontName("fonts/arialuni.ttf");
             self.addChild(LabelTTF);
         });
