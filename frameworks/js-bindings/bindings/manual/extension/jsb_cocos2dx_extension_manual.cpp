@@ -916,6 +916,7 @@ __JSDownloaderDelegator::__JSDownloaderDelegator(JSContext *cx, JSObject *obj, c
     _downloader = std::make_shared<cocos2d::extension::Downloader>();
     _downloader->setConnectionTimeout(8);
     _downloader->setErrorCallback( std::bind(&__JSDownloaderDelegator::onError, this, std::placeholders::_1) );
+    _downloader->setHeaderCallback( std::bind(&__JSDownloaderDelegator::onHeader, this, std::placeholders::_1, std::placeholders::_2) );
     _downloader->setSuccessCallback( std::bind(&__JSDownloaderDelegator::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3) );
     
     JSContext *globalCx = ScriptingCore::getInstance()->getGlobalContext();
@@ -923,16 +924,7 @@ __JSDownloaderDelegator::__JSDownloaderDelegator(JSContext *cx, JSObject *obj, c
         JS::AddNamedValueRoot(globalCx, &_jsCallback, "JSB_DownloadDelegator_jsCallback");
     }
     
-    long contentSize = _downloader->getContentSize(_url);
-    if (contentSize == -1) {
-        cocos2d::extension::Downloader::Error err;
-        onError(err);
-    }
-    else {
-        _size = contentSize / sizeof(unsigned char);
-        _buffer = (unsigned char*)malloc(contentSize);
-        _downloader->downloadToBufferAsync(_url, _buffer, _size);
-    }
+    _downloader->getContentSizeAsync(_url);
 }
 
 __JSDownloaderDelegator::~__JSDownloaderDelegator()
@@ -960,6 +952,19 @@ void __JSDownloaderDelegator::onError(const cocos2d::extension::Downloader::Erro
         JS::RemoveValueRoot(cx, &_jsCallback);
     }
     this->release();
+}
+
+void __JSDownloaderDelegator::onHeader(const std::string &srcUrl, const cocos2d::extension::Downloader::HeaderInfo &info)
+{
+    if (info.contentSize == -1) {
+        cocos2d::extension::Downloader::Error err;
+        onError(err);
+    }
+    else {
+        _size = info.contentSize / sizeof(unsigned char);
+        _buffer = (unsigned char*)malloc(info.contentSize);
+        _downloader->downloadToBufferAsync(_url, _buffer, _size);
+    }
 }
 
 void __JSDownloaderDelegator::onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId)
