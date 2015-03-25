@@ -973,7 +973,7 @@ void __JSDownloaderDelegator::onSuccess(const std::string &srcUrl, const std::st
     JS::RootedObject global(cx, ScriptingCore::getInstance()->getGlobalObject());
     cocos2d::TextureCache *cache = Director::getInstance()->getTextureCache();
     
-    JSAutoCompartment ac(_cx, _obj.ref() ? global : _obj.ref());
+    JSAutoCompartment ac(_cx, _obj.ref() ? _obj.ref() : global);
     
     Texture2D *tex = cache->getTextureForKey(_url);
     if (tex)
