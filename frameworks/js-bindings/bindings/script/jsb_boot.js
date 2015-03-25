@@ -1174,119 +1174,204 @@ cc._initSys = function(config, CONFIG_KEY){
      */
     locSys.LANGUAGE_POLISH = "pl";
 
+    /**
+     * @memberof cc.sys
+     * @name OS_IOS
+     * @constant
+     * @type {string}
+     */
+    sys.OS_IOS = "iOS";
+    /**
+     * @memberof cc.sys
+     * @name OS_ANDROID
+     * @constant
+     * @type {string}
+     */
+    sys.OS_ANDROID = "Android";
+    /**
+     * @memberof cc.sys
+     * @name OS_WINDOWS
+     * @constant
+     * @type {string}
+     */
+    sys.OS_WINDOWS = "Windows";
+    /**
+     * @memberof cc.sys
+     * @name OS_MARMALADE
+     * @constant
+     * @type {string}
+     */
+    sys.OS_MARMALADE = "Marmalade";
+    /**
+     * @memberof cc.sys
+     * @name OS_LINUX
+     * @constant
+     * @type {string}
+     */
+    sys.OS_LINUX = "Linux";
+    /**
+     * @memberof cc.sys
+     * @name OS_BADA
+     * @constant
+     * @type {string}
+     */
+    sys.OS_BADA = "Bada";
+    /**
+     * @memberof cc.sys
+     * @name OS_BLACKBERRY
+     * @constant
+     * @type {string}
+     */
+    sys.OS_BLACKBERRY = "Blackberry";
+    /**
+     * @memberof cc.sys
+     * @name OS_OSX
+     * @constant
+     * @type {string}
+     */
+    sys.OS_OSX = "OS X";
+    /**
+     * @memberof cc.sys
+     * @name OS_WP8
+     * @constant
+     * @type {string}
+     */
+    sys.OS_WP8 = "WP8";
+    /**
+     * @memberof cc.sys
+     * @name OS_WINRT
+     * @constant
+     * @type {string}
+     */
+    sys.OS_WINRT = "WINRT";
+    /**
+     * @memberof cc.sys
+     * @name OS_UNKNOWN
+     * @constant
+     * @type {string}
+     */
+    sys.OS_UNKNOWN = "Unknown";
 
     /**
-     * @constant
-     * @default
-     * @type {string}
-     */
-    locSys.OS_WINDOWS = "Windows";
-    /**
-     * @constant
-     * @default
-     * @type {string}
-     */
-    locSys.OS_IOS = "iOS";
-    /**
-     * @constant
-     * @default
-     * @type {string}
-     */
-    locSys.OS_OSX = "OS X";
-    /**
-     * @constant
-     * @default
-     * @type {string}
-     */
-    locSys.OS_UNIX = "UNIX";
-    /**
-     * @constant
-     * @default
-     * @type {string}
-     */
-    locSys.OS_LINUX = "Linux";
-    /**
-     * @constant
-     * @default
-     * @type {string}
-     */
-    locSys.OS_ANDROID = "Android";
-    locSys.OS_WP8 = "WP8";
-    locSys.OS_WINRT = "WINRT";
-    locSys.OS_UNKNOWN = "unknown";
-
-    /**
+     * @memberof cc.sys
+     * @name UNKNOWN
      * @constant
      * @default
      * @type {Number}
      */
-    locSys.WINDOWS = 0;
+    sys.UNKNOWN = 0;
     /**
+     * @memberof cc.sys
+     * @name IOS
      * @constant
      * @default
      * @type {Number}
      */
-    locSys.LINUX = 1;
+    sys.IOS = 1;
     /**
+     * @memberof cc.sys
+     * @name ANDROID
      * @constant
      * @default
      * @type {Number}
      */
-    locSys.MACOS = 2;
+    sys.ANDROID = 2;
     /**
+     * @memberof cc.sys
+     * @name WIN32
      * @constant
      * @default
      * @type {Number}
      */
-    locSys.ANDROID = 3;
+    sys.WIN32 = 3;
     /**
+     * @memberof cc.sys
+     * @name MARMALADE
      * @constant
      * @default
      * @type {Number}
      */
-    locSys.IPHONE = 4;
+    sys.MARMALADE = 4;
     /**
+     * @memberof cc.sys
+     * @name LINUX
      * @constant
      * @default
      * @type {Number}
      */
-    locSys.IPAD = 5;
+    sys.LINUX = 5;
     /**
+     * @memberof cc.sys
+     * @name BADA
      * @constant
      * @default
      * @type {Number}
      */
-    locSys.BLACKBERRY = 6;
+    sys.BADA = 6;
     /**
+     * @memberof cc.sys
+     * @name BLACKBERRY
      * @constant
      * @default
      * @type {Number}
      */
-    locSys.NACL = 7;
+    sys.BLACKBERRY = 7;
     /**
+     * @memberof cc.sys
+     * @name MACOS
      * @constant
      * @default
      * @type {Number}
      */
-    locSys.EMSCRIPTEN = 8;
+    sys.MACOS = 8;
     /**
+     * @memberof cc.sys
+     * @name NACL
      * @constant
      * @default
      * @type {Number}
      */
-    locSys.TIZEN = 9;
+    sys.NACL = 9;
     /**
+     * @memberof cc.sys
+     * @name EMSCRIPTEN
      * @constant
      * @default
      * @type {Number}
      */
-    locSys.WINRT = 10;
+    sys.EMSCRIPTEN = 10;
     /**
+     * @memberof cc.sys
+     * @name TIZEN
      * @constant
      * @default
      * @type {Number}
      */
-    locSys.WP8 = 11;
+    sys.TIZEN = 11;
+    /**
+     * @memberof cc.sys
+     * @name QT5
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.QT5 = 12;
+    /**
+     * @memberof cc.sys
+     * @name WP8
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.WP8 = 13;
+    /**
+     * @memberof cc.sys
+     * @name WINRT
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.WINRT = 14;
     /**
      * @constant
      * @default
