@@ -10,13 +10,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d_wp8", "..\framew
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBinding", "..\frameworks\js-bindings\bindings\proj.wp8\libJSBinding.vcxproj", "{DD11890A-006E-4D4B-BBE6-A577601288A2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js-moonwarriors", "js-moonwarriors", "{A5EDCD95-9C67-4438-A3AE-9F29AE2BD775}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js-moonwarriors-wp8-xaml", "js-moonwarriors-wp8-xaml", "{A5EDCD95-9C67-4438-A3AE-9F29AE2BD775}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js-moonwarriorsComponent", "..\samples\js-moonwarriors\project\proj.wp8-xaml\js-moonwarriorsComponent\js-moonwarriorsComponent.vcxproj", "{F5D665F8-AE19-4F3F-99A7-230A1E8305D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "js-moonwarriors", "..\samples\js-moonwarriors\project\proj.wp8-xaml\js-moonwarriors\js-moonwarriors.csproj", "{5921FE12-7EF3-4847-8453-42EF286DDBE7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js-tests", "js-tests", "{43CCF70A-4690-4153-8C03-BE593E34B99A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js-tests-wp8-xaml", "js-tests-wp8-xaml", "{43CCF70A-4690-4153-8C03-BE593E34B99A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js-testsComponent", "..\samples\js-tests\project\proj.wp8-xaml\js-testsComponent\js-testsComponent.vcxproj", "{878A2939-C627-4E6E-907D-38381FF35E5A}"
 EndProject
