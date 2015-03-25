@@ -1072,7 +1072,7 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject glob
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCTableView_create, 3, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JS::RootedObject jsbObj(cx);
-    get_or_create_js_obj(cx, global, "cc", &jsbObj);
+    get_or_create_js_obj(cx, global, "jsb", &jsbObj);
     
     JS_DefineFunction(cx, jsbObj, "loadRemoteImg", js_load_remote_image, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 }
