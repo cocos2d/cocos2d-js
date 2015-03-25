@@ -110,7 +110,7 @@ var SpineTestLayerNormal = SpineTestLayer.extend({
             cc.log("%d complete: %d", traceIndex, loopCount);
         });
         spineBoy.setEventListener(function(traceIndex, event){
-            cc.log( traceIndex + " event: ", event);
+            cc.log( traceIndex + " event: %s, %d, %f, %s",event.data.name, event.intValue, event.floatValue, event.stringValue);
         });
 
         var jumpEntry = spineBoy.addAnimation(0, "jump", false, 3);
