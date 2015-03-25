@@ -167,16 +167,6 @@ isPushed : function (
 },
 
 /**
- * @method setSelected
- * @param {bool} arg0
- */
-setSelected : function (
-bool 
-)
-{
-},
-
-/**
  * @method setTitleLabelForState
  * @param {cc.Node} arg0
  * @param {cc.Control::State} arg1
@@ -193,26 +183,6 @@ state
  * @param {bool} arg0
  */
 setAdjustBackgroundImage : function (
-bool 
-)
-{
-},
-
-/**
- * @method setHighlighted
- * @param {bool} arg0
- */
-setHighlighted : function (
-bool 
-)
-{
-},
-
-/**
- * @method setZoomOnTouchDown
- * @param {bool} arg0
- */
-setZoomOnTouchDown : function (
 bool 
 )
 {
@@ -329,10 +299,10 @@ getCurrentTitleColor : function (
 },
 
 /**
- * @method setEnabled
+ * @method setZoomOnTouchDown
  * @param {bool} arg0
  */
-setEnabled : function (
+setZoomOnTouchDown : function (
 bool 
 )
 {
@@ -371,14 +341,6 @@ getHorizontalOrigin : function (
 },
 
 /**
- * @method needsLayout
- */
-needsLayout : function (
-)
-{
-},
-
-/**
  * @method initWithTitleAndFontNameAndFontSize
  * @param {String} arg0
  * @param {String} arg1
@@ -395,13 +357,15 @@ float
 },
 
 /**
- * @method getCurrentTitle
-* @return {String|String}
-*/
-getCurrentTitle : function(
+ * @method setTitleBMFontForState
+ * @param {String} arg0
+ * @param {cc.Control::State} arg1
+ */
+setTitleBMFontForState : function (
+str, 
+state 
 )
 {
-    return ;
 },
 
 /**
@@ -505,17 +469,15 @@ float
 },
 
 /**
- * @method initWithLabelAndBackgroundSprite
- * @param {cc.Node} arg0
- * @param {ccui.Scale9Sprite} arg1
- * @return {bool}
+ * @method getTitleBMFontForState
+ * @param {cc.Control::State} arg0
+ * @return {String}
  */
-initWithLabelAndBackgroundSprite : function (
-node, 
-scale9sprite 
+getTitleBMFontForState : function (
+state 
 )
 {
-    return false;
+    return ;
 },
 
 /**
@@ -573,27 +535,27 @@ int
 },
 
 /**
- * @method setTitleBMFontForState
- * @param {String} arg0
- * @param {cc.Control::State} arg1
- */
-setTitleBMFontForState : function (
-str, 
-state 
-)
-{
-},
-
-/**
- * @method getTitleBMFontForState
- * @param {cc.Control::State} arg0
- * @return {String}
- */
-getTitleBMFontForState : function (
-state 
+ * @method getCurrentTitle
+* @return {String|String}
+*/
+getCurrentTitle : function(
 )
 {
     return ;
+},
+
+/**
+ * @method initWithLabelAndBackgroundSprite
+ * @param {cc.Node} arg0
+ * @param {ccui.Scale9Sprite} arg1
+ * @return {bool}
+ */
+initWithLabelAndBackgroundSprite : function (
+node, 
+scale9sprite 
+)
+{
+    return false;
 },
 
 /**
@@ -649,16 +611,6 @@ ControlButton : function (
  * @class ControlHuePicker
  */
 cc.ControlHuePicker = {
-
-/**
- * @method setEnabled
- * @param {bool} arg0
- */
-setEnabled : function (
-bool 
-)
-{
-},
 
 /**
  * @method initWithTargetAndPos
@@ -839,16 +791,6 @@ getOverlay : function (
 },
 
 /**
- * @method setEnabled
- * @param {bool} arg0
- */
-setEnabled : function (
-bool 
-)
-{
-},
-
-/**
  * @method getSlider
  * @return {cc.Sprite}
  */
@@ -919,11 +861,13 @@ ControlSaturationBrightnessPicker : function (
 cc.ControlColourPicker = {
 
 /**
- * @method setEnabled
- * @param {bool} arg0
+ * @method hueSliderValueChanged
+ * @param {cc.Ref} arg0
+ * @param {cc.Control::EventType} arg1
  */
-setEnabled : function (
-bool 
+hueSliderValueChanged : function (
+ref, 
+eventtype 
 )
 {
 },
@@ -936,28 +880,6 @@ getHuePicker : function (
 )
 {
     return cc.ControlHuePicker;
-},
-
-/**
- * @method setColor
- * @param {color3b_object} arg0
- */
-setColor : function (
-color3b 
-)
-{
-},
-
-/**
- * @method hueSliderValueChanged
- * @param {cc.Ref} arg0
- * @param {cc.Control::EventType} arg1
- */
-hueSliderValueChanged : function (
-ref, 
-eventtype 
-)
-{
 },
 
 /**
@@ -1279,42 +1201,10 @@ ControlPotentiometer : function (
 cc.ControlSlider = {
 
 /**
- * @method getSelectedThumbSprite
- * @return {cc.Sprite}
- */
-getSelectedThumbSprite : function (
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method locationFromTouch
- * @param {cc.Touch} arg0
- * @return {vec2_object}
- */
-locationFromTouch : function (
-touch 
-)
-{
-    return cc.Vec2;
-},
-
-/**
- * @method setSelectedThumbSprite
+ * @method setBackgroundSprite
  * @param {cc.Sprite} arg0
  */
-setSelectedThumbSprite : function (
-sprite 
-)
-{
-},
-
-/**
- * @method setProgressSprite
- * @param {cc.Sprite} arg0
- */
-setProgressSprite : function (
+setBackgroundSprite : function (
 sprite 
 )
 {
@@ -1331,6 +1221,24 @@ getMaximumAllowedValue : function (
 },
 
 /**
+ * @method initWithSprites
+* @param {cc.Sprite|cc.Sprite} sprite
+* @param {cc.Sprite|cc.Sprite} sprite
+* @param {cc.Sprite|cc.Sprite} sprite
+* @param {cc.Sprite} sprite
+* @return {bool|bool}
+*/
+initWithSprites : function(
+sprite,
+sprite,
+sprite,
+sprite 
+)
+{
+    return false;
+},
+
+/**
  * @method getMinimumAllowedValue
  * @return {float}
  */
@@ -1338,6 +1246,46 @@ getMinimumAllowedValue : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getMaximumValue
+ * @return {float}
+ */
+getMaximumValue : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getSelectedThumbSprite
+ * @return {cc.Sprite}
+ */
+getSelectedThumbSprite : function (
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method setProgressSprite
+ * @param {cc.Sprite} arg0
+ */
+setProgressSprite : function (
+sprite 
+)
+{
+},
+
+/**
+ * @method setMaximumValue
+ * @param {float} arg0
+ */
+setMaximumValue : function (
+float 
+)
+{
 },
 
 /**
@@ -1361,6 +1309,58 @@ sprite
 },
 
 /**
+ * @method getValue
+ * @return {float}
+ */
+getValue : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getBackgroundSprite
+ * @return {cc.Sprite}
+ */
+getBackgroundSprite : function (
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method getThumbSprite
+ * @return {cc.Sprite}
+ */
+getThumbSprite : function (
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method setValue
+ * @param {float} arg0
+ */
+setValue : function (
+float 
+)
+{
+},
+
+/**
+ * @method locationFromTouch
+ * @param {cc.Touch} arg0
+ * @return {vec2_object}
+ */
+locationFromTouch : function (
+touch 
+)
+{
+    return cc.Vec2;
+},
+
+/**
  * @method setMinimumValue
  * @param {float} arg0
  */
@@ -1381,114 +1381,6 @@ float
 },
 
 /**
- * @method setEnabled
- * @param {bool} arg0
- */
-setEnabled : function (
-bool 
-)
-{
-},
-
-/**
- * @method setValue
- * @param {float} arg0
- */
-setValue : function (
-float 
-)
-{
-},
-
-/**
- * @method setMaximumValue
- * @param {float} arg0
- */
-setMaximumValue : function (
-float 
-)
-{
-},
-
-/**
- * @method needsLayout
- */
-needsLayout : function (
-)
-{
-},
-
-/**
- * @method getBackgroundSprite
- * @return {cc.Sprite}
- */
-getBackgroundSprite : function (
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method initWithSprites
-* @param {cc.Sprite|cc.Sprite} sprite
-* @param {cc.Sprite|cc.Sprite} sprite
-* @param {cc.Sprite|cc.Sprite} sprite
-* @param {cc.Sprite} sprite
-* @return {bool|bool}
-*/
-initWithSprites : function(
-sprite,
-sprite,
-sprite,
-sprite 
-)
-{
-    return false;
-},
-
-/**
- * @method getMaximumValue
- * @return {float}
- */
-getMaximumValue : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method isTouchInside
- * @param {cc.Touch} arg0
- * @return {bool}
- */
-isTouchInside : function (
-touch 
-)
-{
-    return false;
-},
-
-/**
- * @method getValue
- * @return {float}
- */
-getValue : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getThumbSprite
- * @return {cc.Sprite}
- */
-getThumbSprite : function (
-)
-{
-    return cc.Sprite;
-},
-
-/**
  * @method getProgressSprite
  * @return {cc.Sprite}
  */
@@ -1499,10 +1391,10 @@ getProgressSprite : function (
 },
 
 /**
- * @method setBackgroundSprite
+ * @method setSelectedThumbSprite
  * @param {cc.Sprite} arg0
  */
-setBackgroundSprite : function (
+setSelectedThumbSprite : function (
 sprite 
 )
 {
@@ -1553,46 +1445,6 @@ ControlSlider : function (
 cc.ControlStepper = {
 
 /**
- * @method setMinusSprite
- * @param {cc.Sprite} arg0
- */
-setMinusSprite : function (
-sprite 
-)
-{
-},
-
-/**
- * @method getMinusLabel
- * @return {cc.Label}
- */
-getMinusLabel : function (
-)
-{
-    return cc.Label;
-},
-
-/**
- * @method setWraps
- * @param {bool} arg0
- */
-setWraps : function (
-bool 
-)
-{
-},
-
-/**
- * @method isContinuous
- * @return {bool}
- */
-isContinuous : function (
-)
-{
-    return false;
-},
-
-/**
  * @method getMinusSprite
  * @return {cc.Sprite}
  */
@@ -1600,86 +1452,6 @@ getMinusSprite : function (
 )
 {
     return cc.Sprite;
-},
-
-/**
- * @method updateLayoutUsingTouchLocation
- * @param {vec2_object} arg0
- */
-updateLayoutUsingTouchLocation : function (
-vec2 
-)
-{
-},
-
-/**
- * @method setValueWithSendingEvent
- * @param {double} arg0
- * @param {bool} arg1
- */
-setValueWithSendingEvent : function (
-double, 
-bool 
-)
-{
-},
-
-/**
- * @method getPlusLabel
- * @return {cc.Label}
- */
-getPlusLabel : function (
-)
-{
-    return cc.Label;
-},
-
-/**
- * @method stopAutorepeat
- */
-stopAutorepeat : function (
-)
-{
-},
-
-/**
- * @method setMinimumValue
- * @param {double} arg0
- */
-setMinimumValue : function (
-double 
-)
-{
-},
-
-/**
- * @method getPlusSprite
- * @return {cc.Sprite}
- */
-getPlusSprite : function (
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method setPlusSprite
- * @param {cc.Sprite} arg0
- */
-setPlusSprite : function (
-sprite 
-)
-{
-},
-
-/**
- * @method setMinusLabel
- * @param {cc.Label} arg0
- */
-setMinusLabel : function (
-label 
-)
-{
 },
 
 /**
@@ -1703,34 +1475,6 @@ double
 },
 
 /**
- * @method setMaximumValue
- * @param {double} arg0
- */
-setMaximumValue : function (
-double 
-)
-{
-},
-
-/**
- * @method update
- * @param {float} arg0
- */
-update : function (
-float 
-)
-{
-},
-
-/**
- * @method startAutorepeat
- */
-startAutorepeat : function (
-)
-{
-},
-
-/**
  * @method initWithMinusSpriteAndPlusSprite
  * @param {cc.Sprite} arg0
  * @param {cc.Sprite} arg1
@@ -1745,6 +1489,124 @@ sprite
 },
 
 /**
+ * @method setValueWithSendingEvent
+ * @param {double} arg0
+ * @param {bool} arg1
+ */
+setValueWithSendingEvent : function (
+double, 
+bool 
+)
+{
+},
+
+/**
+ * @method setMaximumValue
+ * @param {double} arg0
+ */
+setMaximumValue : function (
+double 
+)
+{
+},
+
+/**
+ * @method getMinusLabel
+ * @return {cc.Label}
+ */
+getMinusLabel : function (
+)
+{
+    return cc.Label;
+},
+
+/**
+ * @method getPlusLabel
+ * @return {cc.Label}
+ */
+getPlusLabel : function (
+)
+{
+    return cc.Label;
+},
+
+/**
+ * @method setWraps
+ * @param {bool} arg0
+ */
+setWraps : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setMinusLabel
+ * @param {cc.Label} arg0
+ */
+setMinusLabel : function (
+label 
+)
+{
+},
+
+/**
+ * @method startAutorepeat
+ */
+startAutorepeat : function (
+)
+{
+},
+
+/**
+ * @method updateLayoutUsingTouchLocation
+ * @param {vec2_object} arg0
+ */
+updateLayoutUsingTouchLocation : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method isContinuous
+ * @return {bool}
+ */
+isContinuous : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method stopAutorepeat
+ */
+stopAutorepeat : function (
+)
+{
+},
+
+/**
+ * @method setMinimumValue
+ * @param {double} arg0
+ */
+setMinimumValue : function (
+double 
+)
+{
+},
+
+/**
+ * @method setPlusLabel
+ * @param {cc.Label} arg0
+ */
+setPlusLabel : function (
+label 
+)
+{
+},
+
+/**
  * @method getValue
  * @return {double}
  */
@@ -1755,11 +1617,31 @@ getValue : function (
 },
 
 /**
- * @method setPlusLabel
- * @param {cc.Label} arg0
+ * @method getPlusSprite
+ * @return {cc.Sprite}
  */
-setPlusLabel : function (
-label 
+getPlusSprite : function (
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method setPlusSprite
+ * @param {cc.Sprite} arg0
+ */
+setPlusSprite : function (
+sprite 
+)
+{
+},
+
+/**
+ * @method setMinusSprite
+ * @param {cc.Sprite} arg0
+ */
+setMinusSprite : function (
+sprite 
 )
 {
 },
@@ -1795,16 +1677,6 @@ ControlStepper : function (
 cc.ControlSwitch = {
 
 /**
- * @method setEnabled
- * @param {bool} arg0
- */
-setEnabled : function (
-bool 
-)
-{
-},
-
-/**
  * @method setOn
 * @param {bool|bool} bool
 * @param {bool} bool
@@ -1814,6 +1686,18 @@ bool,
 bool 
 )
 {
+},
+
+/**
+ * @method locationFromTouch
+ * @param {cc.Touch} arg0
+ * @return {vec2_object}
+ */
+locationFromTouch : function (
+touch 
+)
+{
+    return cc.Vec2;
 },
 
 /**
@@ -1856,18 +1740,6 @@ hasMoved : function (
 )
 {
     return false;
-},
-
-/**
- * @method locationFromTouch
- * @param {cc.Touch} arg0
- * @return {vec2_object}
- */
-locationFromTouch : function (
-touch 
-)
-{
-    return cc.Vec2;
 },
 
 /**
@@ -2067,13 +1939,13 @@ direction
 },
 
 /**
- * @method init
- * @return {bool}
+ * @method setBounceable
+ * @param {bool} arg0
  */
-init : function (
+setBounceable : function (
+bool 
 )
 {
-    return false;
 },
 
 /**
@@ -2186,16 +2058,6 @@ maxContainerOffset : function (
 )
 {
     return cc.Vec2;
-},
-
-/**
- * @method setBounceable
- * @param {bool} arg0
- */
-setBounceable : function (
-bool 
-)
-{
 },
 
 /**

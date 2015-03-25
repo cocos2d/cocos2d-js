@@ -3903,18 +3903,6 @@ bool
 },
 
 /**
- * @method hitTest
- * @param {vec2_object} arg0
- * @return {bool}
- */
-hitTest : function (
-vec2 
-)
-{
-    return false;
-},
-
-/**
  * @method setMaxLength
  * @param {int} arg0
  */
@@ -4556,31 +4544,11 @@ int
 },
 
 /**
- * @method setAnchorPoint
- * @param {vec2_object} arg0
- */
-setAnchorPoint : function (
-vec2 
-)
-{
-},
-
-/**
  * @method pushBackElement
  * @param {ccui.RichElement} arg0
  */
 pushBackElement : function (
 richelement 
-)
-{
-},
-
-/**
- * @method ignoreContentAdaptWithSize
- * @param {bool} arg0
- */
-ignoreContentAdaptWithSize : function (
-bool 
 )
 {
 },
@@ -4907,11 +4875,11 @@ float
  * @method init
 * @param {cc.Sprite|cc.Sprite|cc.Sprite} sprite
 * @param {rect_object|rect_object|rect_object} rect
-* @param {bool|rect_object|bool} bool
+* @param {rect_object|bool|bool} rect
 * @param {rect_object|vec2_object} rect
 * @param {size_object} size
 * @param {rect_object} rect
-* @return {bool|bool|bool|bool}
+* @return {bool|bool|bool}
 */
 init : function(
 sprite,
@@ -4945,6 +4913,16 @@ spriteframe,
 rect 
 )
 {
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
 },
 
 /**
@@ -5011,6 +4989,16 @@ rect
 )
 {
     return false;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
 },
 
 /**
@@ -5239,9 +5227,9 @@ inputmode
 
 /**
  * @method setPlaceholderFontColor
- * @param {color3b_object} arg0
- */
-setPlaceholderFontColor : function (
+* @param {color4b_object|color3b_object} color4b
+*/
+setPlaceholderFontColor : function(
 color3b 
 )
 {
@@ -5249,9 +5237,9 @@ color3b
 
 /**
  * @method setFontColor
- * @param {color3b_object} arg0
- */
-setFontColor : function (
+* @param {color4b_object|color3b_object} color4b
+*/
+setFontColor : function(
 color3b 
 )
 {

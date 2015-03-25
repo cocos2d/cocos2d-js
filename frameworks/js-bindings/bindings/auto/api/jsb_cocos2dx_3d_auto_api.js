@@ -241,16 +241,6 @@ materialdatas
 },
 
 /**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
  * @method getMeshCount
  * @return {long}
  */
@@ -556,14 +546,6 @@ getSkin : function (
 },
 
 /**
- * @method calcuateAABB
- */
-calcuateAABB : function (
-)
-{
-},
-
-/**
  * @method getVertexSizeInBytes
  * @return {int}
  */
@@ -611,6 +593,14 @@ getVertexBuffer : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method calculateAABB
+ */
+calculateAABB : function (
+)
+{
 },
 
 /**
@@ -780,6 +770,20 @@ Mesh : function (
 jsb.Animation3D = {
 
 /**
+ * @method initWithFile
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+initWithFile : function (
+str, 
+str 
+)
+{
+    return false;
+},
+
+/**
  * @method init
  * @param {cc.Animation3DData} arg0
  * @return {bool}
@@ -872,6 +876,24 @@ float
 },
 
 /**
+ * @method initWithFrames
+ * @param {cc.Animation3D} arg0
+ * @param {int} arg1
+ * @param {int} arg2
+ * @param {float} arg3
+ * @return {bool}
+ */
+initWithFrames : function (
+animation3d, 
+int, 
+int, 
+float 
+)
+{
+    return false;
+},
+
+/**
  * @method getOriginInterval
  * @return {float}
  */
@@ -889,6 +911,22 @@ setSpeed : function (
 float 
 )
 {
+},
+
+/**
+ * @method init
+* @param {cc.Animation3D|cc.Animation3D} animation3d
+* @param {float} float
+* @param {float} float
+* @return {bool|bool}
+*/
+init : function(
+animation3d,
+float,
+float 
+)
+{
+    return false;
 },
 
 /**
@@ -956,6 +994,16 @@ float
 },
 
 /**
+ * @method setTransitionTime
+ * @param {float} arg0
+ */
+setTransitionTime : function (
+float 
+)
+{
+},
+
+/**
  * @method Animate3D
  * @constructor
  */
@@ -1007,20 +1055,6 @@ getMode : function (
 )
 {
     return 0;
-},
-
-/**
- * @method visit
- * @param {cc.Renderer} arg0
- * @param {mat4_object} arg1
- * @param {unsigned int} arg2
- */
-visit : function (
-renderer, 
-mat4, 
-int 
-)
-{
 },
 
 /**
