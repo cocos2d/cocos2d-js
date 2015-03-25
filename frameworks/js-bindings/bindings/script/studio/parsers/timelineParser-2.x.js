@@ -28,8 +28,12 @@
 
     var Parser = baseParser.extend({
 
-        parse: function(file, json){
-            var resourcePath = this._dirname(file);
+        parse: function(file, json, path){
+            var resourcePath;
+            if(path !== undefined)
+                resourcePath = path;
+            else
+                resourcePath = this._dirname(file);
             this.pretreatment(json, resourcePath, file);
             var node = this.parseNode(this.getNodeJson(json), resourcePath);
             this.deferred(json, resourcePath, node, file);
@@ -169,7 +173,6 @@
                 var spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
                 node.setSpriteFrame(spriteFrame);
             }
-
         });
 
         if(json["FlipX"])
@@ -687,8 +690,8 @@
 
         var innerNodeSize = json["InnerNodeSize"];
         var innerSize = cc.size(
-                innerNodeSize["Width"] || 0,
-                innerNodeSize["Height"] || 0
+            innerNodeSize["Width"] || 0,
+            innerNodeSize["Height"] || 0
         );
         widget.setInnerContainerSize(innerSize);
 
@@ -1142,7 +1145,7 @@
         if(projectFile != null && projectFile["Path"]){
             var file = resourcePath + projectFile["Path"];
             if(cc.loader.getRes(file)){
-                var obj = ccs.load(file);
+                var obj = ccs.load(file, resourcePath);
                 parser.generalAttributes(obj.node, json);
                 if(obj.action && obj.node){
                     obj.action.tag = obj.node.tag;
@@ -1246,6 +1249,7 @@
 
     var register = [
         {name: "SingleNodeObjectData", handle: parser.initSingleNode},
+        {name: "NodeObjectData", handle: parser.initSingleNode},
         {name: "LayerObjectData", handle: parser.initSingleNode},
         {name: "SpriteObjectData", handle: parser.initSprite},
         {name: "ParticleObjectData", handle: parser.initParticle},
