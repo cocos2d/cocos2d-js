@@ -3353,6 +3353,16 @@ float
 },
 
 /**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
+},
+
+/**
  * @method performFunctionInCocosThread
  * @param {function} arg0
  */
@@ -14639,18 +14649,6 @@ getAlphaThreshold : function (
 )
 {
     return 0;
-},
-
-/**
- * @method init
- * @param {cc.Node} arg0
- * @return {bool}
- */
-init : function (
-node 
-)
-{
-    return false;
 },
 
 /**
