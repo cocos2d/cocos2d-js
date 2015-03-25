@@ -25,6 +25,8 @@
 #include "extensions/cocos-ext.h"
 #include "ScriptingCore.h"
 #include "cocos2d_specifics.hpp"
+#include "jsb_cocos2dx_auto.hpp"
+#include <thread>
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -916,20 +918,27 @@ __JSDownloaderDelegator::__JSDownloaderDelegator(JSContext *cx, JS::HandleObject
     _jsCallback.construct(_cx);
     _jsCallback.ref().set(callback);
     
-    _downloader = std::make_shared<cocos2d::extension::Downloader>();
-    _downloader->setConnectionTimeout(8);
-    _downloader->setErrorCallback( std::bind(&__JSDownloaderDelegator::onError, this, std::placeholders::_1) );
-    _downloader->setSuccessCallback( std::bind(&__JSDownloaderDelegator::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3) );
-    
-    long contentSize = _downloader->getContentSize(_url);
-    if (contentSize == -1) {
-        cocos2d::extension::Downloader::Error err;
-        onError(err);
+    if (Director::getInstance()->getTextureCache()->getTextureForKey(_url))
+    {
+        onSuccess(nullptr, nullptr, nullptr);
     }
-    else {
-        _size = contentSize / sizeof(unsigned char);
-        _buffer = (unsigned char*)malloc(contentSize);
-        _downloader->downloadToBufferSync(_url, _buffer, _size);
+    else
+    {
+        _downloader = std::make_shared<cocos2d::extension::Downloader>();
+        _downloader->setConnectionTimeout(8);
+        _downloader->setErrorCallback( std::bind(&__JSDownloaderDelegator::onError, this, std::placeholders::_1) );
+        _downloader->setSuccessCallback( std::bind(&__JSDownloaderDelegator::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3) );
+        
+        long contentSize = _downloader->getContentSize(_url);
+        if (contentSize == -1) {
+            cocos2d::extension::Downloader::Error err;
+            onError(err);
+        }
+        else {
+            _size = contentSize / sizeof(unsigned char);
+            _buffer = (unsigned char*)malloc(contentSize);
+            _downloader->downloadToBufferSync(_url, _buffer, _size);
+        }
     }
 }
 
@@ -962,17 +971,24 @@ void __JSDownloaderDelegator::onSuccess(const std::string &srcUrl, const std::st
     jsval valArr[2];
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JS::RootedObject global(cx, ScriptingCore::getInstance()->getGlobalObject());
+    cocos2d::TextureCache *cache = Director::getInstance()->getTextureCache();
     
-    JSAutoCompartment ac(_cx, _obj.ref());
+    JSAutoCompartment ac(_cx, _obj.ref() ? global : _obj.ref());
     
-    if(image->initWithImageData(_buffer, _size))
+    Texture2D *tex = cache->getTextureForKey(_url);
+    if (tex)
     {
-        Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(image, srcUrl);
+        valArr[0] = BOOLEAN_TO_JSVAL(true);
+        js_proxy_t* p = jsb_get_native_proxy(tex);
+        valArr[1] = OBJECT_TO_JSVAL(p->obj);
+    }
+    else if (image->initWithImageData(_buffer, _size))
+    {
+        tex = Director::getInstance()->getTextureCache()->addImage(image, _url);
         valArr[0] = BOOLEAN_TO_JSVAL(true);
         
-        js_type_class_t *classType = js_get_type_from_native<cocos2d::Texture2D>(tex);
-        assert(classType);
-        JSObject *obj = JS_NewObject(cx, classType->jsclass, JS::RootedObject(cx, classType->proto), JS::RootedObject(cx, classType->parentProto));
+        JS::RootedObject texProto(cx, jsb_cocos2d_Texture2D_prototype);
+        JSObject *obj = JS_NewObject(cx, jsb_cocos2d_Texture2D_class, texProto, global);
         // link the native object with the javascript object
         js_proxy_t* p = jsb_new_proxy(tex, obj);
         JS::AddNamedObjectRoot(cx, &p->obj, "cocos2d::Texture2D");
