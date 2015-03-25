@@ -25,5 +25,23 @@
         "run_root_dir": "../../",
         "sub_url": "/samples/js-tests/"
     },
+    "wp8_cfg" : {
+        "project_path": "../../build",
+        "sln_file": "cocos2d-jsb-samples.wp8.sln",
+        "project_name": "js-tests",
+        "wp8_proj_path" : "project/proj.wp8-xaml",
+        "build_folder_path": "js-tests/Bin/x86",
+        "manifest_path": "js-tests/Properties/WMAppManifest.xml"
+    },
+    "wp8_1_cfg" : {
+        "project_path": "../../build",
+        "sln_file": "cocos2d-jsb-samples-win8.1-universal.sln",
+        "project_name": "js-tests.WindowsPhone"
+    },
+    "metro_cfg" : {
+        "project_path": "../../build",
+        "sln_file": "cocos2d-jsb-samples-win8.1-universal.sln",
+        "project_name": "js-tests.Windows"
+    },
     "engine_dir": "../../"
 }
