@@ -25,5 +25,23 @@
         "run_root_dir": "../../",
         "sub_url": "/samples/js-moonwarriors/"
     },
+    "wp8_cfg" : {
+        "project_path": "../../build",
+        "sln_file": "cocos2d-jsb-samples.wp8.sln",
+        "project_name": "js-moonwarriors",
+        "wp8_proj_path" : "project/proj.wp8-xaml",
+        "build_folder_path": "js-moonwarriors/Bin/x86",
+        "manifest_path": "js-moonwarriors/Properties/WMAppManifest.xml"
+    },
+    "wp8_1_cfg" : {
+        "project_path": "../../build",
+        "sln_file": "cocos2d-jsb-samples-win8.1-universal.sln",
+        "project_name": "js-moonwarriors.WindowsPhone"
+    },
+    "metro_cfg" : {
+        "project_path": "../../build",
+        "sln_file": "cocos2d-jsb-samples-win8.1-universal.sln",
+        "project_name": "js-moonwarriors.Windows"
+    },
     "engine_dir": "../../"
 }

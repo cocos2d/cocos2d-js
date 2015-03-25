@@ -205,6 +205,8 @@ cc.math.vec4 = function(x, y, z, w){
 
 jsb.sprite3DCache = jsb.Sprite3DCache.getInstance();
 
+jsb.Sprite3D.extend = cc.Class.extend;
+
 jsb.Sprite3D.prototype._ctor = function(modelPath, texturePath){
     if(modelPath === undefined){
         this.init();

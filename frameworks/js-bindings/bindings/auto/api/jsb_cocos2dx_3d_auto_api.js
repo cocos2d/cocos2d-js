@@ -1,12 +1,12 @@
 /**
  * @module cocos2dx_3d
  */
-var cc = cc || {};
+var jsb = jsb || {};
 
 /**
  * @class Skeleton3D
  */
-cc.Skeleton3D = {
+jsb.Skeleton3D = {
 
 /**
  * @method removeAllBones
@@ -116,7 +116,7 @@ Skeleton3D : function (
 /**
  * @class Sprite3D
  */
-cc.Sprite3D = {
+jsb.Sprite3D = {
 
 /**
  * @method setCullFaceEnabled
@@ -238,16 +238,6 @@ materialdatas
 )
 {
     return cc.Sprite3D;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
 },
 
 /**
@@ -480,7 +470,7 @@ Sprite3D : function (
 /**
  * @class Sprite3DCache
  */
-cc.Sprite3DCache = {
+jsb.Sprite3DCache = {
 
 /**
  * @method removeSprite3DData
@@ -523,7 +513,7 @@ getInstance : function (
 /**
  * @class Mesh
  */
-cc.Mesh = {
+jsb.Mesh = {
 
 /**
  * @method setTexture
@@ -553,14 +543,6 @@ getSkin : function (
 )
 {
     return cc.MeshSkin;
-},
-
-/**
- * @method calcuateAABB
- */
-calcuateAABB : function (
-)
-{
 },
 
 /**
@@ -611,6 +593,14 @@ getVertexBuffer : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method calculateAABB
+ */
+calculateAABB : function (
+)
+{
 },
 
 /**
@@ -777,7 +767,21 @@ Mesh : function (
 /**
  * @class Animation3D
  */
-cc.Animation3D = {
+jsb.Animation3D = {
+
+/**
+ * @method initWithFile
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+initWithFile : function (
+str, 
+str 
+)
+{
+    return false;
+},
 
 /**
  * @method init
@@ -841,7 +845,7 @@ Animation3D : function (
 /**
  * @class Animate3D
  */
-cc.Animate3D = {
+jsb.Animate3D = {
 
 /**
  * @method getSpeed
@@ -872,6 +876,24 @@ float
 },
 
 /**
+ * @method initWithFrames
+ * @param {cc.Animation3D} arg0
+ * @param {int} arg1
+ * @param {int} arg2
+ * @param {float} arg3
+ * @return {bool}
+ */
+initWithFrames : function (
+animation3d, 
+int, 
+int, 
+float 
+)
+{
+    return false;
+},
+
+/**
  * @method getOriginInterval
  * @return {float}
  */
@@ -889,6 +911,22 @@ setSpeed : function (
 float 
 )
 {
+},
+
+/**
+ * @method init
+* @param {cc.Animation3D|cc.Animation3D} animation3d
+* @param {float} float
+* @param {float} float
+* @return {bool|bool}
+*/
+init : function(
+animation3d,
+float,
+float 
+)
+{
+    return false;
 },
 
 /**
@@ -956,6 +994,16 @@ float
 },
 
 /**
+ * @method setTransitionTime
+ * @param {float} arg0
+ */
+setTransitionTime : function (
+float 
+)
+{
+},
+
+/**
  * @method Animate3D
  * @constructor
  */
@@ -969,7 +1017,7 @@ Animate3D : function (
 /**
  * @class AttachNode
  */
-cc.AttachNode = {
+jsb.AttachNode = {
 
 /**
  * @method create
@@ -997,7 +1045,7 @@ AttachNode : function (
 /**
  * @class BillBoard
  */
-cc.BillBoard = {
+jsb.BillBoard = {
 
 /**
  * @method getMode
@@ -1007,20 +1055,6 @@ getMode : function (
 )
 {
     return 0;
-},
-
-/**
- * @method visit
- * @param {cc.Renderer} arg0
- * @param {mat4_object} arg1
- * @param {unsigned int} arg2
- */
-visit : function (
-renderer, 
-mat4, 
-int 
-)
-{
 },
 
 /**

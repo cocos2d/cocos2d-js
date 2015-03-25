@@ -923,16 +923,7 @@ __JSDownloaderDelegator::__JSDownloaderDelegator(JSContext *cx, JSObject *obj, c
         JS::AddNamedValueRoot(globalCx, &_jsCallback, "JSB_DownloadDelegator_jsCallback");
     }
     
-    long contentSize = _downloader->getContentSize(_url);
-    if (contentSize == -1) {
-        cocos2d::extension::Downloader::Error err;
-        onError(err);
-    }
-    else {
-        _size = contentSize / sizeof(unsigned char);
-        _buffer = (unsigned char*)malloc(contentSize);
-        _downloader->downloadToBufferAsync(_url, _buffer, _size);
-    }
+    _downloader->getHeaderAsync(_url, std::bind(&__JSDownloaderDelegator::downloadWithHeader, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 __JSDownloaderDelegator::~__JSDownloaderDelegator()
@@ -960,6 +951,19 @@ void __JSDownloaderDelegator::onError(const cocos2d::extension::Downloader::Erro
         JS::RemoveValueRoot(cx, &_jsCallback);
     }
     this->release();
+}
+
+void __JSDownloaderDelegator::downloadWithHeader(const std::string &srcUrl, const cocos2d::extension::Downloader::HeaderInfo &info)
+{
+    if (info.contentSize == -1) {
+        cocos2d::extension::Downloader::Error err;
+        onError(err);
+    }
+    else {
+        _size = info.contentSize / sizeof(unsigned char);
+        _buffer = (unsigned char*)malloc(info.contentSize);
+        _downloader->downloadToBufferAsync(_url, _buffer, _size);
+    }
 }
 
 void __JSDownloaderDelegator::onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId)
@@ -1067,7 +1071,7 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject glob
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCTableView_create, 3, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JS::RootedObject jsbObj(cx);
-    get_or_create_js_obj(cx, global, "cc", &jsbObj);
+    get_or_create_js_obj(cx, global, "jsb", &jsbObj);
     
     JS_DefineFunction(cx, jsbObj, "loadRemoteImg", js_load_remote_image, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 }
