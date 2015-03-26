@@ -35,7 +35,7 @@
     </_CustomResource>
   </ItemGroup>
   <ItemGroup>
-    <_CustomResource Include="..\..\..\..\..\..\frameworks\js-bindings\bindings\script\**\*">
+    <_CustomResource Include="..\..\..\..\frameworks\js-bindings\bindings\script\**\*">
       <Link>Assets\Resources\script\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <DeploymentContent>true</DeploymentContent>
     </_CustomResource>
