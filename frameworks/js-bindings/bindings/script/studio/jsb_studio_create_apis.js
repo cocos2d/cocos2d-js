@@ -96,5 +96,8 @@ ccs.ActionTimelineData.prototype._ctor = function(actionTag) {
     {
         ccs.ActionTimelineData.prototype.init.call(this,actionTag);
     }
+};
 
+ccs.ObjectExtensionData.prototype._ctor = function() {
+    ccs.ObjectExtensionData.prototype.init.call(this);
 };
