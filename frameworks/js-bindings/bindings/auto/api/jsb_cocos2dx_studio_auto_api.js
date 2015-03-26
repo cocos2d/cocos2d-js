@@ -3698,16 +3698,6 @@ InnerActionFrame : function (
 ccs.ColorFrame = {
 
 /**
- * @method getAlpha
- * @return {unsigned char}
- */
-getAlpha : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getColor
  * @return {color3b_object}
  */
@@ -3715,16 +3705,6 @@ getColor : function (
 )
 {
     return cc.Color3B;
-},
-
-/**
- * @method setAlpha
- * @param {unsigned char} arg0
- */
-setAlpha : function (
-char 
-)
-{
 },
 
 /**
