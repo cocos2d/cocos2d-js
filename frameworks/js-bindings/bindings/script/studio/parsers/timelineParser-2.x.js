@@ -111,7 +111,14 @@
 
         node.setTag(json["Tag"] || 0);
 
-        node.setUserObject(new ccs.ActionTimelineData(json["ActionTag"] || 0));
+        //Temporary solution
+        if(cc.sys.isNative){
+            var extensionData = new ccs.ObjectExtensionData();
+            extensionData.setCustomProperty(customProperty);
+            extensionData.setActionTag(actionTag);
+            node.setUserObject(extensionData);
+        }else
+            node.setUserObject(new ccs.ActionTimelineData(json["ActionTag"] || 0));
 
         node.setCascadeColorEnabled(true);
         node.setCascadeOpacityEnabled(true);
