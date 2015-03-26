@@ -624,9 +624,7 @@ bool js_cocos2dx_studio_ColorFrame_constructor(JSContext *cx, uint32_t argc, jsv
 void js_cocos2dx_studio_ColorFrame_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_studio_ColorFrame(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx_studio(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_studio_ColorFrame_getAlpha(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ColorFrame_getColor(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ColorFrame_setAlpha(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ColorFrame_setColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ColorFrame_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ColorFrame_ColorFrame(JSContext *cx, uint32_t argc, jsval *vp);
