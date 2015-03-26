@@ -49,10 +49,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\js-moonwarriors\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration).win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\js-moonwarriors\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration).win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
@@ -107,23 +107,23 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonk
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>libcurl_imp.lib;mozjs-33.lib;ws2_32.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)$(Configuration).win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\js-moonwarriors-res" rd /s /q "$(OutDir)\js-moonwarriors-res"
-mkdir "$(OutDir)\js-moonwarriors-res"
-mkdir "$(OutDir)\js-moonwarriors-res\script"
-mkdir "$(OutDir)\js-moonwarriors-res\src"
-mkdir "$(OutDir)\js-moonwarriors-res\res"
-xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-moonwarriors-res\script" /e /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)\js-moonwarriors-res\src\" /e /Y
-xcopy "$(ProjectDir)..\..\res" "$(OutDir)\js-moonwarriors-res\res\" /e /Y
-copy "$(ProjectDir)..\..\main.js" "$(OutDir)\js-moonwarriors-res"
-copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-moonwarriors-res"</Command>
+
+mkdir "$(OutDir)\script"
+mkdir "$(OutDir)\src"
+mkdir "$(OutDir)\res"
+xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y
+xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\script" /e /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)\src\" /e /Y
+xcopy "$(ProjectDir)..\..\res" "$(OutDir)\res\" /e /Y
+copy "$(ProjectDir)..\..\main.js" "$(OutDir)"
+copy "$(ProjectDir)..\..\project.json" "$(OutDir)"</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -166,23 +166,23 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\frameworks\js-bindings\external\spidermonk
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>libcurl_imp.lib;mozjs-33.lib;ws2_32.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)$(Configuration).win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\js-moonwarriors-res" rd /s /q "$(OutDir)\js-moonwarriors-res"
-mkdir "$(OutDir)\js-moonwarriors-res"
-mkdir "$(OutDir)\js-moonwarriors-res\script"
-mkdir "$(OutDir)\js-moonwarriors-res\src"
-mkdir "$(OutDir)\js-moonwarriors-res\res"
-xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\js-moonwarriors-res\script" /e /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)\js-moonwarriors-res\src\" /e /Y
-xcopy "$(ProjectDir)..\..\res" "$(OutDir)\js-moonwarriors-res\res\" /e /Y
-copy "$(ProjectDir)..\..\main.js" "$(OutDir)\js-moonwarriors-res"
-copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-moonwarriors-res"</Command>
+
+mkdir "$(OutDir)\script"
+mkdir "$(OutDir)\src"
+mkdir "$(OutDir)\res"
+xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y
+xcopy "$(ProjectDir)..\..\..\..\frameworks\js-bindings\bindings\script\*" "$(OutDir)\script" /e /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)\src\" /e /Y
+xcopy "$(ProjectDir)..\..\res" "$(OutDir)\res\" /e /Y
+copy "$(ProjectDir)..\..\main.js" "$(OutDir)"
+copy "$(ProjectDir)..\..\project.json" "$(OutDir)"</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
