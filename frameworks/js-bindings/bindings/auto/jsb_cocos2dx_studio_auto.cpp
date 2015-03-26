@@ -10613,24 +10613,6 @@ void js_register_cocos2dx_studio_InnerActionFrame(JSContext *cx, JS::HandleObjec
 JSClass  *jsb_cocostudio_timeline_ColorFrame_class;
 JSObject *jsb_cocostudio_timeline_ColorFrame_prototype;
 
-bool js_cocos2dx_studio_ColorFrame_getAlpha(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocostudio::timeline::ColorFrame* cobj = (cocostudio::timeline::ColorFrame *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ColorFrame_getAlpha : Invalid Native Object");
-    if (argc == 0) {
-        uint16_t ret = cobj->getAlpha();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_studio_ColorFrame_getAlpha : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_studio_ColorFrame_getColor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -10647,26 +10629,6 @@ bool js_cocos2dx_studio_ColorFrame_getColor(JSContext *cx, uint32_t argc, jsval 
     }
 
     JS_ReportError(cx, "js_cocos2dx_studio_ColorFrame_getColor : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_studio_ColorFrame_setAlpha(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocostudio::timeline::ColorFrame* cobj = (cocostudio::timeline::ColorFrame *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ColorFrame_setAlpha : Invalid Native Object");
-    if (argc == 1) {
-        uint16_t arg0;
-        ok &= jsval_to_uint16(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ColorFrame_setAlpha : Error processing arguments");
-        cobj->setAlpha(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_studio_ColorFrame_setAlpha : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_studio_ColorFrame_setColor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -10765,9 +10727,7 @@ void js_register_cocos2dx_studio_ColorFrame(JSContext *cx, JS::HandleObject glob
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("getAlpha", js_cocos2dx_studio_ColorFrame_getAlpha, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getColor", js_cocos2dx_studio_ColorFrame_getColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setAlpha", js_cocos2dx_studio_ColorFrame_setAlpha, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setColor", js_cocos2dx_studio_ColorFrame_setColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
