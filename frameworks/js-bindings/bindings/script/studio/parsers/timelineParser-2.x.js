@@ -114,6 +114,8 @@
         //Temporary solution
         if(cc.sys.isNative){
             var extensionData = new ccs.ObjectExtensionData();
+            //https://github.com/cocos2d/cocos2d-x/pull/10836/files#diff-d9641c94ed6e3ac6e7e924e57c2b2587R186
+            var customProperty = json["UserData"];
             extensionData.setCustomProperty(customProperty);
             extensionData.setActionTag(actionTag);
             node.setUserObject(extensionData);
