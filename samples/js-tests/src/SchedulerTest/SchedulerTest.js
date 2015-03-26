@@ -676,6 +676,7 @@ var SchedulerTestScene = TestScene.extend({
 //
 
 var arrayOfSchedulerTest = [
+    SchedulerTimeScale,
     SchedulerAutoremove,
     SchedulerPauseResume,
     SchedulerUnscheduleAll,
