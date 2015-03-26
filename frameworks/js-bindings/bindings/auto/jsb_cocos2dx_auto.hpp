@@ -412,6 +412,7 @@ void js_cocos2dx_Scheduler_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_Scheduler(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_Scheduler_setTimeScale(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Scheduler_update(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_performFunctionInCocosThread(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_getTimeScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_Scheduler(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2824,7 +2825,6 @@ bool js_cocos2dx_ClippingNode_hasContent(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_ClippingNode_setInverted(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ClippingNode_setStencil(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ClippingNode_getAlphaThreshold(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ClippingNode_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ClippingNode_getStencil(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ClippingNode_setAlphaThreshold(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ClippingNode_isInverted(JSContext *cx, uint32_t argc, jsval *vp);
