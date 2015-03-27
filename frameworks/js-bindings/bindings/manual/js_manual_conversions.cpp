@@ -538,12 +538,17 @@ bool jsval_to_long_long(JSContext *cx, JS::HandleValue vp, long long* r)
 }
 
 bool jsval_to_std_string(JSContext *cx, JS::HandleValue v, std::string* ret) {
-    JSString *tmp = JS::ToString(cx, v);
-    JSB_PRECONDITION3(tmp, cx, false, "Error processing arguments");
-    
-    JSStringWrapper str(tmp);
-    *ret = str.get();
-    return true;
+    if(v.isString() || v.isNumber())
+    {
+        JSString *tmp = JS::ToString(cx, v);
+        JSB_PRECONDITION3(tmp, cx, false, "Error processing arguments");
+
+        JSStringWrapper str(tmp);
+        *ret = str.get();
+        return true;
+    }
+
+    return false;
 }
 
 bool jsval_to_ccpoint(JSContext *cx, JS::HandleValue v, Point* ret) {

@@ -880,6 +880,10 @@ var DemoParticleFromFile = ParticleDemo.extend({
         this._background = null;
 
         this._emitter = new cc.ParticleSystem(s_resprefix + "Particles/" + this._title + ".plist");
+        // test create from a object
+        // var plistData = jsb.fileUtils.getValueMapFromFile(s_resprefix + "Particles/" + this._title + ".plist");
+        // this._emitter = new cc.ParticleSystem(plistData);
+
         this.addChild(this._emitter, 10);
 
         if (this._title == "Flower") {
