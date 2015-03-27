@@ -28,8 +28,12 @@
 
     var Parser = baseParser.extend({
 
-        parse: function(file, json){
-            var resourcePath = this._dirname(file);
+        parse: function(file, json, path){
+            var resourcePath;
+            if(path !== undefined)
+                resourcePath = path;
+            else
+                resourcePath = this._dirname(file);
             this.pretreatment(json, resourcePath, file);
             var node = this.parseNode(this.getNodeJson(json), resourcePath);
             this.deferred(json, resourcePath, node, file);
@@ -107,7 +111,16 @@
 
         node.setTag(json["Tag"] || 0);
 
-        node.setUserObject(new ccs.ActionTimelineData(json["ActionTag"] || 0));
+        var actionTag = json["ActionTag"] || 0;
+        if (cc.sys.isNative){
+            var extensionData = new ccs.ObjectExtensionData();
+            var customProperty = json["UserData"];
+            extensionData.setCustomProperty(customProperty);
+            extensionData.setActionTag(actionTag);
+            node.setUserObject(extensionData);
+        } else {
+            node.setUserObject(new ccs.ActionTimelineData(actionTag));
+        }
 
         node.setCascadeColorEnabled(true);
         node.setCascadeOpacityEnabled(true);
@@ -169,7 +182,6 @@
                 var spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
                 node.setSpriteFrame(spriteFrame);
             }
-
         });
 
         if(json["FlipX"])
@@ -224,7 +236,16 @@
 
         var actionTag = json["ActionTag"] || 0;
         widget.setActionTag(actionTag);
-        widget.setUserObject(new ccs.ActionTimelineData(actionTag));
+
+        if (cc.sys.isNative){
+            var extensionData = new ccs.ObjectExtensionData();
+            var customProperty = json["UserData"];
+            extensionData.setCustomProperty(customProperty);
+            extensionData.setActionTag(actionTag);
+            widget.setUserObject(extensionData);
+        } else {
+            widget.setUserObject(new ccs.ActionTimelineData(actionTag));
+        }
 
         var rotationSkewX = json["RotationSkewX"];
         if (rotationSkewX)
@@ -687,8 +708,8 @@
 
         var innerNodeSize = json["InnerNodeSize"];
         var innerSize = cc.size(
-                innerNodeSize["Width"] || 0,
-                innerNodeSize["Height"] || 0
+            innerNodeSize["Width"] || 0,
+            innerNodeSize["Height"] || 0
         );
         widget.setInnerContainerSize(innerSize);
 
@@ -1142,7 +1163,7 @@
         if(projectFile != null && projectFile["Path"]){
             var file = resourcePath + projectFile["Path"];
             if(cc.loader.getRes(file)){
-                var obj = ccs.load(file);
+                var obj = ccs.load(file, resourcePath);
                 parser.generalAttributes(obj.node, json);
                 if(obj.action && obj.node){
                     obj.action.tag = obj.node.tag;
@@ -1246,6 +1267,7 @@
 
     var register = [
         {name: "SingleNodeObjectData", handle: parser.initSingleNode},
+        {name: "NodeObjectData", handle: parser.initSingleNode},
         {name: "LayerObjectData", handle: parser.initSingleNode},
         {name: "SpriteObjectData", handle: parser.initSprite},
         {name: "ParticleObjectData", handle: parser.initParticle},

@@ -1077,7 +1077,11 @@ var g_tilemaps = [
 var g_spine = [
     "res/skeletons/spineboy.atlas",
     "res/skeletons/spineboy.json",
-    "res/skeletons/spineboy.png"
+    "res/skeletons/spineboy.png",
+    "res/skeletons/sprite.png",
+    "res/skeletons/goblins-ffd.png",
+    "res/skeletons/goblins-ffd.atlas",
+    "res/skeletons/goblins-ffd.json"
 ];
 
 var g_ccs2 = [

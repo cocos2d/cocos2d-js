@@ -26,27 +26,28 @@
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
+#include "mozilla/Maybe.h"
 #include "extensions/assets-manager/Downloader.h"
 
 class __JSDownloaderDelegator : cocos2d::Ref
 {
 public:
-    static void download(JSContext *cx, JSObject *obj, const std::string &url, const jsval &callback);
+    static void download(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleValue callback);
     
 protected:
-    __JSDownloaderDelegator(JSContext *cx, JSObject *obj, const std::string &url, const jsval &callback);
+    __JSDownloaderDelegator(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleValue callback);
     ~__JSDownloaderDelegator();
     
 private:
     void onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
     void onError(const cocos2d::extension::Downloader::Error &error);
-    JS::Heap<jsval> _jsCallback;
     unsigned char *_buffer;
     long _size;
     std::shared_ptr<cocos2d::extension::Downloader> _downloader;
     std::string _url;
     JSContext *_cx;
-    JS::Heap<JSObject*> _obj;
+    mozilla::Maybe<JS::RootedValue> _jsCallback;
+    mozilla::Maybe<JS::RootedObject> _obj;
 };
 
 void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject global);

@@ -988,8 +988,9 @@ void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
     JS::RootedObject obj(_cx, p->obj.get());
     __Array* arr = JSScheduleWrapper::getTargetForJSObject(obj);
     if (arr) {
-        Scheduler* pScheduler = Director::getInstance()->getScheduler();
-        Ref* pObj = NULL;
+        Node* node = (Node*)p->ptr;
+        Scheduler* pScheduler = node->getScheduler();
+        Ref* pObj = nullptr;
         CCARRAY_FOREACH(arr, pObj)
         {
             pScheduler->unscheduleAllForTarget(pObj);

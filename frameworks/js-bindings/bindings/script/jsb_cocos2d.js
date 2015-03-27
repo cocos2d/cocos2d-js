@@ -2800,7 +2800,26 @@ cc.LabelTTF.prototype.setDimensions = function (dim, height) {
     this._setDimensions(dim);
 };
 
+
 //
-// Label enableStroke
+// Label adaptation to LabelTTF/LabelBMFont/LabelAtlas
 //
-cc.Label.prototype.enableStroke = cc.Label.prototype.enableOutline;
+_p = cc.Label.prototype;
+_p.enableStroke = _p.enableOutline;
+_p.setBoundingWidth = _p.setWidth;
+_p.setBoundingHeight = _p.setHeight;
+
+
+//
+// 3D module rename to jsb namespace
+//
+jsb.BaseLight = cc.BaseLight;
+delete cc.BaseLight;
+jsb.DirectionLight = cc.DirectionLight;
+delete cc.DirectionLight;
+jsb.PointLight = cc.PointLight;
+delete cc.PointLight;
+jsb.SpotLight = cc.SpotLight;
+delete cc.SpotLight;
+jsb.AmbientLight = cc.AmbientLight;
+delete cc.AmbientLight;
