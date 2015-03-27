@@ -207,6 +207,12 @@ jsb.sprite3DCache = jsb.Sprite3DCache.getInstance();
 
 jsb.Sprite3D.extend = cc.Class.extend;
 
+jsb.Sprite3D.prototype._setBlendFunc = jsb.Sprite3D.prototype.setBlendFunc;
+jsb.Sprite3D.prototype.setBlendFunc = templateSetBlendFunc;
+
+jsb.Mesh.prototype._setBlendFunc = jsb.Mesh.prototype.setBlendFunc;
+jsb.Mesh.prototype.setBlendFunc = templateSetBlendFunc;
+
 jsb.Sprite3D.prototype._ctor = function(modelPath, texturePath){
     if(modelPath === undefined){
         this.init();

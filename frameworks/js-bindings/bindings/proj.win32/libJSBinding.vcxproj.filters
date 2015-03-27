@@ -135,7 +135,7 @@
       <Filter>manual\3d</Filter>
     </ClCompile>
     <ClCompile Include="..\auto\jsb_cocos2dx_3d_extension_auto.cpp">
-      <Filter>manual</Filter>
+      <Filter>auto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
