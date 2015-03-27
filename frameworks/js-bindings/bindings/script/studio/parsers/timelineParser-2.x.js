@@ -106,7 +106,7 @@
 
         setContentSize(node, json["Size"]);
 
-        if (json["Alpha"] != null && json["Alpha"] != undefined)
+        if (json["Alpha"] !== undefined)
             node.setOpacity(json["Alpha"]);
 
         node.setTag(json["Tag"] || 0);
