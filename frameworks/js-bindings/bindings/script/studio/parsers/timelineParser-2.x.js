@@ -106,7 +106,7 @@
 
         setContentSize(node, json["Size"]);
 
-        if (json["Alpha"] != null)
+        if (json["Alpha"] != null && json["Alpha"] != undefined)
             node.setOpacity(json["Alpha"]);
 
         node.setTag(json["Tag"] || 0);
@@ -1378,9 +1378,6 @@
         if(node) {
             this.general3DAttributes(node, json);
 
-            var alpha = getParam(json["Alpha"], 255);
-            node.setOpacity(alpha * 100 / 255);
-
             if(json["CColor"]) {
                 var col = getColor(json["CColor"]);
                 if(col && col.r != 255 || col.g != 255 || col.b != 255)
@@ -1389,10 +1386,10 @@
 
             var autoAction = getParam(json["RunAction3D"], false);
             if(autoAction && resFile){
-                var  animation = new jsb.Animation3D.create(path, "");
+                var  animation = jsb.Animation3D.create(resFile, "");
                 if(animation){
                     var animate = jsb.Animate3D.create(animation);
-                    var action = jsb.RepeatForever.create(animate);
+                    var action = cc.RepeatForever.create(animate);
                     node.runAction(action);
                 }
             }
