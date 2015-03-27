@@ -115,7 +115,8 @@
         if (cc.sys.isNative){
             var extensionData = new ccs.ObjectExtensionData();
             var customProperty = json["UserData"];
-            extensionData.setCustomProperty(customProperty);
+            if(customProperty !== undefined)
+                extensionData.setCustomProperty(customProperty);
             extensionData.setActionTag(actionTag);
             node.setUserObject(extensionData);
         } else {
@@ -240,7 +241,8 @@
         if (cc.sys.isNative){
             var extensionData = new ccs.ObjectExtensionData();
             var customProperty = json["UserData"];
-            extensionData.setCustomProperty(customProperty);
+            if(customProperty !== undefined)
+                extensionData.setCustomProperty(customProperty);
             extensionData.setActionTag(actionTag);
             widget.setUserObject(extensionData);
         } else {
@@ -1167,7 +1169,9 @@
                 parser.generalAttributes(obj.node, json);
                 if(obj.action && obj.node){
                     obj.action.tag = obj.node.tag;
-                    obj.action.setTimeSpeed(json["InnerActionSpeed"]);
+                    var InnerActionSpeed = json["InnerActionSpeed"];
+                    if(InnerActionSpeed !== undefined)
+                        obj.action.setTimeSpeed(InnerActionSpeed);
                     obj.node.runAction(obj.action);
                     obj.action.gotoFrameAndPause(0);
                 }

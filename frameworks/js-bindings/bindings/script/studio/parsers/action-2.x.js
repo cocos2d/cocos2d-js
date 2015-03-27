@@ -231,7 +231,8 @@
                 var singleFrameIndex = options["SingleFrameIndex"];
 
                 var frameIndex = options["FrameIndex"];
-                frame.setFrameIndex(frameIndex);
+                if(frameIndex !== undefined)
+                    frame.setFrameIndex(frameIndex);
 
                 frame.setInnerActionType(ccs.InnerActionType[innerActionType]);
                 frame.setSingleFrameIndex(singleFrameIndex);
