@@ -119,6 +119,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\spine\jsb_cocos2dx_spine_manual.h">
       <Filter>manual\spine</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_extension_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_auto.cpp">
@@ -216,6 +219,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\spine\jsb_cocos2dx_spine_manual.cpp">
       <Filter>manual\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_extension_auto.cpp">
+      <Filter>auto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
