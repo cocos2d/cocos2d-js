@@ -1167,6 +1167,7 @@
                 parser.generalAttributes(obj.node, json);
                 if(obj.action && obj.node){
                     obj.action.tag = obj.node.tag;
+                    obj.action.setTimeSpeed(json["InnerActionSpeed"]);
                     obj.node.runAction(obj.action);
                     obj.action.gotoFrameAndPause(0);
                 }
