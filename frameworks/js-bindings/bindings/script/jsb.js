@@ -133,3 +133,7 @@ if (window.sp) {
 if (jsb.Sprite3D){
     require('script/3d/jsb_cocos2d_3d.js');
 }
+
+if (jsb.ParticleSystem3D) {
+    require('script/3d/jsb_cocos2d_3d_ext.js');   
+}
