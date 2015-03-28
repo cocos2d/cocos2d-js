@@ -1294,7 +1294,7 @@
         node.setScaleZ(scale.z);
 
         var camMask =json["CameraFlagMode"];
-        if(!(undefined === camMask) && !(null === camMask))
+        if(undefined !== camMask && null !== camMask)
             node.setCameraMask(camMask);
 
         this.generalAttributes(node, json);
@@ -1324,8 +1324,12 @@
         var nearClip = 1;
         var farClip = 500;
         if(json["ClipPlane"]){
-            nearClip = json["ClipPlane"]["ValueX"] ? json["ClipPlane"]["ValueX"] : nearClip;
-            farClip = json["ClipPlane"]["ValueY"] ? json["ClipPlane"]["ValueY"] : farClip;
+            nearClip = json["ClipPlane"]["ValueX"];
+            farClip  = json["ClipPlane"]["ValueY"];
+            if(null === nearClip || isNaN(nearClip))
+                nearClip = 1;
+            if(null === farClip || isNaN(farClip))
+                farClip = 500;
         }
 
         var node = cc.Camera.createPerspective(fov, s.width/s.height, nearClip, farClip);
@@ -1383,7 +1387,7 @@
 
             if(json["CColor"]) {
                 var col = getColor(json["CColor"]);
-                if(col && col.r != 255 || col.g != 255 || col.b != 255)
+                if(col && col.r !== 255 || col.g !== 255 || col.b !== 255)
                     node.setColor(col);
             }
 
