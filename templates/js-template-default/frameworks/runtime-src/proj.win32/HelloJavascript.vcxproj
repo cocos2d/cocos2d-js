@@ -113,9 +113,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\js-bindings\cocos2d-x\external\websockets\prebui
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\script" /e /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\src" /e /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\res" /e /Y
+      <Command>xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\script" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\src" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\res" /D /E /I /F /Y
 copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\" /Y
 copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\" /Y</Command>
     </PreBuildEvent>
@@ -168,9 +168,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\js-bindings\cocos2d-x\external\websockets\prebui
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\script" /e /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\src" /e /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\res" /e /Y
+      <Command>xcopy "$(ProjectDir)..\..\js-bindings\bindings\script" "$(OutDir)\script" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\src" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\res" /D /E /I /F /Y
 copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\" /Y
 copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\" /Y</Command>
       <Message>Copy js and resource files.</Message>

@@ -95,6 +95,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(EngineRoot)..\bindings\manual;$(EngineRoot)..\bindings\auto;$(EngineRoot)..\external\spidermonkey\include\wp8;$(EngineRoot)cocos\base;$(ProjectDir)..\..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SDLCheck>false</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -115,6 +116,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(EngineRoot)..\bindings\manual;$(EngineRoot)..\bindings\auto;$(EngineRoot)..\external\spidermonkey\include\wp8;$(EngineRoot)cocos\base;$(ProjectDir)..\..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SDLCheck>false</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,6 +137,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(EngineRoot)..\bindings\manual;$(EngineRoot)..\bindings\auto;$(EngineRoot)..\external\spidermonkey\include\wp8;$(EngineRoot)cocos\base;$(ProjectDir)..\..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SDLCheck>false</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,6 +158,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(EngineRoot)..\bindings\manual;$(EngineRoot)..\bindings\auto;$(EngineRoot)..\external\spidermonkey\include\wp8;$(EngineRoot)cocos\base;$(ProjectDir)..\..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SDLCheck>false</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
