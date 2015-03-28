@@ -233,10 +233,16 @@ cocos_find_package(TIFF TIFF REQUIRED)
 cocos_find_package(WEBSOCKETS WEBSOCKETS REQUIRED)
 cocos_find_package(CURL CURL REQUIRED)
 
-# build for 3rd party libraries
-if(LINUX OR APPLE)
+
+add_subdirectory(frameworks/js-bindings/cocos2d-x/external/flatbuffers)
+set(FLATBUFFERS_INCLUDE_DIRS frameworks/js-bindings/cocos2d-x/external)
+message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
+
+
+# build xxhash
 add_subdirectory(frameworks/js-bindings/cocos2d-x/external/xxhash)
-endif()
+include_directories(frameworks/js-bindings/cocos2d-x/external/xxhash)
+
 
 # cocos2d library
 add_subdirectory(frameworks/js-bindings/cocos2d-x/cocos)

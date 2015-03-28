@@ -1188,10 +1188,10 @@ var Sprite3DLightMapTest = Sprite3DTestDemo.extend({
         this.setCameraMask(2);
 
         //add a point light
-        var light = cc.PointLight.create(cc.math.vec3(35, 75, -20.5), cc.color(255, 255, 255), 150);
+        var light = jsb.PointLight.create(cc.math.vec3(35, 75, -20.5), cc.color(255, 255, 255), 150);
         this.addChild(light);
         //set the ambient light 
-        var ambient = cc.AmbientLight.create(cc.color(55, 55, 55));
+        var ambient = jsb.AmbientLight.create(cc.color(55, 55, 55));
         this.addChild(ambient);
 
         //create a listener
@@ -1554,7 +1554,7 @@ var arrayOfSprite3DTest = [
 ];
 
 // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
-if (cc.sys.os == cc.sys.OS_WP8 || cc.sys.os == cc.sys.OS_WINRT) {
+if (cc.sys.os !== cc.sys.OS_WP8 || cc.sys.os !== cc.sys.OS_WINRT) {
     arrayOfSprite3DTest = arrayOfSprite3DTest.concat([
         Sprite3DEffectTest,
         Sprite3DWithSkinOutlineTest,
