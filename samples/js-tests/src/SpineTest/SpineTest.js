@@ -115,9 +115,9 @@ var SpineTestLayerNormal = SpineTestLayer.extend({
 
         var jumpEntry = spineBoy.addAnimation(0, "jump", false, 3);
         spineBoy.addAnimation(0, "run", true);
-        spineBoy.setTrackStartListener(jumpEntry, function(traceIndex){
-            cc.log("jumped!");
-        });
+        // spineBoy.setTrackStartListener(jumpEntry, function(traceIndex){
+        //     cc.log("jumped!");
+        // });
 
         cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ALL_AT_ONCE,

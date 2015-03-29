@@ -97,6 +97,7 @@ add_library(jsbindings STATIC
 target_link_libraries(jsbindings
   sqlite3
   js_static
+  xxhash
 )
 
 set_target_properties(jsbindings
