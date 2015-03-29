@@ -5,12 +5,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)App.xaml.h" />
     <CLCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\projects\foo\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\projects\foo\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLES.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\projects\foo\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Cocos2dRenderer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)OpenGLES.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)OpenGLESPage.xaml.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\js_DrawNode3D_bindings.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
@@ -27,14 +27,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\projects\foo\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\Cocos2dRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\projects\foo\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLES.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\projects\foo\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AppMacros.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)OpenGLES.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)OpenGLESPage.xaml.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\js_DrawNode3D_bindings.h">
       <Filter>Classes</Filter>
     </ClInclude>
@@ -43,6 +41,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)OpenGLESPage.xaml" />
+    <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\..\projects\foo\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
   </ItemGroup>
 </Project>
