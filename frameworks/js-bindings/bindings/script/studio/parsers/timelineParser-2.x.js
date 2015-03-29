@@ -106,7 +106,7 @@
 
         setContentSize(node, json["Size"]);
 
-        if (json["Alpha"] != null)
+        if (json["Alpha"] !== undefined)
             node.setOpacity(json["Alpha"]);
 
         node.setTag(json["Tag"] || 0);
@@ -115,7 +115,8 @@
         if (cc.sys.isNative){
             var extensionData = new ccs.ObjectExtensionData();
             var customProperty = json["UserData"];
-            extensionData.setCustomProperty(customProperty);
+            if(customProperty !== undefined)
+                extensionData.setCustomProperty(customProperty);
             extensionData.setActionTag(actionTag);
             node.setUserObject(extensionData);
         } else {
@@ -240,7 +241,8 @@
         if (cc.sys.isNative){
             var extensionData = new ccs.ObjectExtensionData();
             var customProperty = json["UserData"];
-            extensionData.setCustomProperty(customProperty);
+            if(customProperty !== undefined)
+                extensionData.setCustomProperty(customProperty);
             extensionData.setActionTag(actionTag);
             widget.setUserObject(extensionData);
         } else {
@@ -596,10 +598,10 @@
             widget.setUnifySizeEnabled(false);
             widget.ignoreContentAdaptWithSize(false);
             var capInsets = cc.rect(
-                    json["Scale9OriginX"] || 0,
-                    json["Scale9OriginY"] || 0,
-                    json["Scale9Width"] || 0,
-                    json["Scale9Height"] || 0
+                json["Scale9OriginX"] || 0,
+                json["Scale9OriginY"] || 0,
+                json["Scale9Width"] || 0,
+                json["Scale9Height"] || 0
             );
             widget.setCapInsets(capInsets);
 
@@ -1167,6 +1169,9 @@
                 parser.generalAttributes(obj.node, json);
                 if(obj.action && obj.node){
                     obj.action.tag = obj.node.tag;
+                    var InnerActionSpeed = json["InnerActionSpeed"];
+                    if(InnerActionSpeed !== undefined)
+                        obj.action.setTimeSpeed(InnerActionSpeed);
                     obj.node.runAction(obj.action);
                     obj.action.gotoFrameAndPause(0);
                 }
@@ -1265,6 +1270,167 @@
             node.setContentSize(cc.size(x, y));
     };
 
+    var get3DVector = function(json, name, defValue){
+        var x = defValue, y = defValue, z = defValue;
+        if(json && name && json[name]){
+            x = null != json[name]["ValueX"] ? json[name]["ValueX"] : defValue;
+            y = null != json[name]["ValueY"] ? json[name]["ValueY"] : defValue;
+            z = null != json[name]["ValueZ"] ? json[name]["ValueZ"] : defValue;
+        }
+        var vec3 = cc.math.vec3(x, y, z);
+        return vec3;
+    };
+
+    parser.general3DAttributes = function(node, json){
+        var pos = get3DVector(json, "Position3D", 0);
+        node.setPosition3D(pos);
+
+        var rotation = get3DVector(json, "Rotation3D", 0);
+        node.setRotation3D(rotation);
+
+        var scale = get3DVector(json, "Scale3D", 1.0);
+        node.setScaleX(scale.x);
+        node.setScaleY(scale.y);
+        node.setScaleZ(scale.z);
+
+        var camMask =json["CameraFlagMode"];
+        if(undefined !== camMask && null !== camMask)
+            node.setCameraMask(camMask);
+
+        this.generalAttributes(node, json);
+    };
+
+    /**
+     * Node3D
+     * @param json
+     * @returns {*}
+     */
+    parser.initNode3D = function(json){
+        var node = cc.Node.create();
+        if(node)
+            this.general3DAttributes(node, json);
+        return node;
+    };
+
+    /**
+     * Camera
+     * @param json
+     * @returns {*}
+     */
+    parser.initCamera = function(json){
+        var s = cc.winSize;
+        var fov = json["Fov"] ? json["Fov"] : 60;
+
+        var nearClip = 1;
+        var farClip = 500;
+        if(json["ClipPlane"]){
+            nearClip = json["ClipPlane"]["ValueX"];
+            farClip  = json["ClipPlane"]["ValueY"];
+            if(null === nearClip || isNaN(nearClip))
+                nearClip = 1;
+            if(null === farClip || isNaN(farClip))
+                farClip = 500;
+        }
+
+        var node = cc.Camera.createPerspective(fov, s.width/s.height, nearClip, farClip);
+
+        if(node){
+            this.general3DAttributes(node, json);
+
+            var camMode = json["UserCameraFlagMode"];
+            switch(camMode){
+                case "USER1":
+                    node.setCameraFlag(cc.CameraFlag.USER1); break;
+                case "USER2":
+                    node.setCameraFlag(cc.CameraFlag.USER2); break;
+                case "USER3":
+                    node.setCameraFlag(cc.CameraFlag.USER3); break;
+                case "USER4":
+                    node.setCameraFlag(cc.CameraFlag.USER4); break;
+                case "USER5":
+                    node.setCameraFlag(cc.CameraFlag.USER5); break;
+                case "USER6":
+                    node.setCameraFlag(cc.CameraFlag.USER6); break;
+                case "USER7":
+                    node.setCameraFlag(cc.CameraFlag.USER7); break;
+                case "USER8":
+                    node.setCameraFlag(cc.CameraFlag.USER8); break;
+                case "DEFAULT":
+                    node.setCameraFlag(cc.CameraFlag.DEFAULT); break;
+                default:
+                    node.setCameraFlag(cc.CameraFlag.USER1);
+            }
+        }
+
+        return node;
+    };
+
+    /**
+     * Sprite3D
+     * @param json
+     * @param resourcePath
+     * @returns {*}
+     */
+    parser.initSprite3D = function(json, resourcePath){
+        var resFile = null;
+        if(json["FileData"] && json["FileData"]["Path"])
+            resFile = resourcePath + json["FileData"]["Path"];
+
+        var node;
+        if(resFile)
+            node = jsb.Sprite3D.create(resFile);
+        else
+            node = jsb.Sprite3D.create();
+
+        if(node) {
+            this.general3DAttributes(node, json);
+
+            if(json["CColor"]) {
+                var col = getColor(json["CColor"]);
+                if(col && col.r !== 255 || col.g !== 255 || col.b !== 255)
+                    node.setColor(col);
+            }
+
+            var autoAction = getParam(json["RunAction3D"], false);
+            if(autoAction && resFile){
+                var  animation = jsb.Animation3D.create(resFile, "");
+                if(animation){
+                    var animate = jsb.Animate3D.create(animation);
+                    var action = cc.RepeatForever.create(animate);
+                    node.runAction(action);
+                }
+            }
+        }
+
+        return node;
+    };
+
+    /**
+     * Particle3D
+     * @param json
+     * @param resourcePath
+     * @returns {*}
+     */
+    parser.initParticle3D = function(json, resourcePath){
+        var node = null;
+
+        var resFile = null;
+        if(json["FileData"] && json["FileData"]["Path"])
+            resFile = resourcePath+json["FileData"]["Path"];
+
+        if(resFile)
+            node = jsb.PUParticleSystem3D.create(resFile);
+        else
+            node = jsb.PUParticleSystem3D.create();
+
+        if(node){
+            this.general3DAttributes(node, json);
+            node.startParticleSystem();
+        }
+
+        return node;
+    };
+
     var register = [
         {name: "SingleNodeObjectData", handle: parser.initSingleNode},
         {name: "NodeObjectData", handle: parser.initSingleNode},
@@ -1287,7 +1453,12 @@
         {name: "SimpleAudioObjectData", handle: parser.initSimpleAudio},
         {name: "GameMapObjectData", handle: parser.initGameMap},
         {name: "ProjectNodeObjectData", handle: parser.initProjectNode},
-        {name: "ArmatureNodeObjectData", handle: parser.initArmature}
+        {name: "ArmatureNodeObjectData", handle: parser.initArmature},
+
+        {name: "Sprite3DObjectData", handle: parser.initSprite3D},
+        {name: "Particle3DObjectData", handle: parser.initParticle3D},
+        {name: "UserCameraObjectData", handle: parser.initCamera},
+        {name: "Node3DObjectData", handle: parser.initNode3D}
     ];
 
     register.forEach(function(item){
