@@ -1485,6 +1485,16 @@ cc._initSys = function(config, CONFIG_KEY){
         capabilities["keyboard"] = true;
         capabilities["mouse"] = true;
     }
+
+    /**
+     * Open a url in browser
+     * @memberof cc.sys
+     * @name openURL
+     * @param {String} url
+     */
+    locSys.openURL = function(url){
+        cc.Application.getInstance().openURL(url);
+    }
 };
 
 //+++++++++++++++++++++++++something about sys end+++++++++++++++++++++++++++++
