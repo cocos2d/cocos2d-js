@@ -16,19 +16,23 @@
     <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLES.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp">
+      <DependentUpon>$(MSBuildThisFileDirectory)..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLESPage.xaml</DependentUpon>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\js_DrawNode3D_bindings.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\js_Effect3D_bindings.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)App.xaml.cpp">
       <DependentUpon>$(MSBuildThisFileDirectory)App.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Cocos2dRenderer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)OpenGLES.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)OpenGLESPage.xaml.cpp">
-      <DependentUpon>$(MSBuildThisFileDirectory)OpenGLESPage.xaml</DependentUpon>
-    </ClCompile>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\Cocos2dRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLES.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLESPage.xaml.h">
+      <DependentUpon>$(MSBuildThisFileDirectory)..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLESPage.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AppMacros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\js_DrawNode3D_bindings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\js_Effect3D_bindings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)App.xaml.h">
@@ -37,10 +41,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClInclude Include="$(MSBuildThisFileDirectory)OpenGLES.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)OpenGLESPage.xaml.h">
-      <DependentUpon>$(MSBuildThisFileDirectory)OpenGLESPage.xaml</DependentUpon>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -53,7 +53,7 @@
     </_CustomResource>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)OpenGLESPage.xaml" />
+    <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
   </ItemGroup>
   <Target Name="_CollectCustomResources" BeforeTargets="AssignTargetPaths">
     <Message Text="Adding resource: %(_CustomResource.Identity) -&gt; %(_CustomResource.Link)" />
