@@ -39,7 +39,7 @@
 #include <assert.h>
 #include <memory>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.4"
+#define ENGINE_VERSION "Cocos2d-JS v3.5"
 
 void js_log(const char *format, ...);
 
