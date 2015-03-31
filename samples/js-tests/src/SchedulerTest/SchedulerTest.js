@@ -658,6 +658,39 @@ var SchedulerTimeScale = SchedulerTestLayer.extend({
     }
 });
 
+var unScheduleAndRepeatTest = SchedulerTestLayer.extend({
+
+    onEnter: function(){
+        this._super();
+        cc.log("start schedule 'repeat': run once and repeat 4 times");
+        this.schedule(this.repeat, 0.5, 4);
+        cc.log("start schedule 'forever': repeat forever (stop in 8s)");
+        this.schedule(this.forever, 0.5);
+        this.schedule(function(){
+            cc.log("stop the 'forever'");
+            this.unschedule(this.forever);
+        }, 8);
+    },
+
+    _times: 5,
+
+    repeat: function(){
+        cc.log("Repeat - the remaining number: " + this._times--);
+    },
+
+    forever: function(){
+        cc.log("Repeat Forever...");
+    },
+
+    title: function(){
+        return "Repeat And unschedule Test";
+    },
+
+    subtitle: function(){
+        return "Repeat will print 5 times\nForever will stop in 8 seconds.";
+    }
+});
+
 /*
     main entry
 */
@@ -686,7 +719,8 @@ var arrayOfSchedulerTest = [
     SchedulerUpdateAndCustom,
     SchedulerUpdateFromCustom,
     RescheduleCallback,
-    ScheduleUsingSchedulerTest
+    ScheduleUsingSchedulerTest,
+    unScheduleAndRepeatTest
 ];
 
 var nextSchedulerTest = function () {
