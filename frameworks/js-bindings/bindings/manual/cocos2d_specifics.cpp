@@ -4938,7 +4938,15 @@ bool js_cocos2dx_Camera_unproject(JSContext *cx, uint32_t argc, jsval *vp)
         args.rval().set(vector3_to_jsval(cx, arg2));
         return true;
     }
-
+    else if (argc == 1)
+    {
+        cocos2d::Vec3 arg0;
+        ok &= jsval_to_vector3(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_unproject : Error processing arguments");
+        cocos2d::Vec3 ret = cobj->unproject(arg0);
+        args.rval().set(vector3_to_jsval(cx, ret));
+        return true;
+    }
     JS_ReportError(cx, "js_cocos2dx_Camera_unproject : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
@@ -5435,7 +5443,7 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, global, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     tmpObj.set(jsb_cocos2d_Camera_prototype);
-    JS_DefineFunction(cx, tmpObj, "unproject", js_cocos2dx_Camera_unproject, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unproject", js_cocos2dx_Camera_unproject, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "isVisibleInFrustum", js_cocos2dx_Camera_isVisibleInFrustum, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     tmpObj.set(jsb_cocos2d_ClippingNode_prototype);
