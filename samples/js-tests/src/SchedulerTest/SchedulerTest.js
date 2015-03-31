@@ -662,10 +662,10 @@ var unScheduleAndRepeatTest = SchedulerTestLayer.extend({
 
     onEnter: function(){
         this._super();
-        cc.log("start schedule 'repeat': run once and repeat 4");
-        this.schedule(this.repeat, 1, 4);
+        cc.log("start schedule 'repeat': run once and repeat 4 times");
+        this.schedule(this.repeat, 0.5, 4);
         cc.log("start schedule 'forever': repeat forever (stop in 8s)");
-        this.schedule(this.forever, 1);
+        this.schedule(this.forever, 0.5);
         this.schedule(function(){
             cc.log("stop the 'forever'");
             this.unschedule(this.forever);
