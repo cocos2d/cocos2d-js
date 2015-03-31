@@ -47,12 +47,16 @@ _p._ctor = function(color, w, h) {
 
 
 _p = cc.LayerGradient.prototype;
-_p._ctor = function(start, end, v) {
+_p._ctor = function(start, end, v, colorStops) {
     start = start || cc.color(0,0,0,255);
     end = end || cc.color(0,0,0,255);
     v = v || cc.p(0, -1);
 
     this.initWithColor(start, end, v);
+
+    if (colorStops instanceof Array) {
+        cc.log("Warning: Color stops parameter is not supported in JSB.");
+    }
 };
 
 
@@ -232,8 +236,14 @@ _p._ctor = function(normalImage, selectedImage, three, four, five) {
             callback = three;
         }
         else if (five === undefined) {
-            callback = three;
-            target = four;
+            if (typeof three === "function") {
+                callback = three;
+                target = four;
+            }
+            else {
+                disabledImage = three;
+                callback = four;
+            }
         }
         else if (five) {
             disabledImage = three;
@@ -297,8 +307,10 @@ _p._ctor = function(plistFile){
     if (!plistFile || typeof(plistFile) === "number") {
         var ton = plistFile || 100;
         this.initWithTotalParticles(ton);
-    } else if (plistFile) {
+    } else if ( typeof plistFile === "string") {
         this.initWithFile(plistFile);
+    } else if(plistFile){
+        this.initWithDictionary(plistFile);
     }
 };
 
@@ -802,7 +814,11 @@ cc.Touch.prototype._ctor = function(x, y, id) {
 };
 
 cc.GLProgram.prototype._ctor = function(vShaderFileName, fShaderFileName) {
-    vShaderFileName !== undefined && fShaderFileName !== undefined && cc.GLProgram.prototype.init.call(this, vShaderFileName, fShaderFileName);
+    if(vShaderFileName !== undefined && fShaderFileName !== undefined){
+        cc.GLProgram.prototype.init.call(this, vShaderFileName, fShaderFileName);
+        cc.GLProgram.prototype.link.call(this);
+        cc.GLProgram.prototype.updateUniforms.call(this);
+    } 
 };
 
 
@@ -1004,7 +1020,7 @@ cc.ParticleSystem.create = function(plistFile){
     var particleSystem =null;
     if (typeof(plistFile) === "number") {
         particleSystem = cc.ParticleSystem.createWithTotalParticles(plistFile);
-    }else if(typeof(plistFile) === "string"){
+    }else if(typeof(plistFile) === "string" || typeof(plistFile) === "object"){
         particleSystem = cc.ParticleSystem._create(plistFile);
     }
     return particleSystem;
