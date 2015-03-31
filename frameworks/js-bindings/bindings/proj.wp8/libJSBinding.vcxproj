@@ -75,7 +75,7 @@
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos\base;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support\spine;$(EngineRoot)cocos\editor-support\cocosbuilder;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\editor-support;$(EngineRoot)extensions;$(EngineRoot)\..\external\spidermonkey\include\wp8;$(ProjectDir)..\auto;$(ProjectDir)..\manual;$(ProjectDir)..\manual\cocostudio;$(ProjectDir)..\manual\spine;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WP8;_DEBUG;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4267;4251;4244;4700;4083;4068;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>
       </ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
@@ -99,6 +99,8 @@
       <ForcedIncludeFiles>
       </ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4267;4251;4244;4700;4083;4068;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -106,6 +108,7 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -116,7 +119,7 @@
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos\base;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support\spine;$(EngineRoot)cocos\editor-support\cocosbuilder;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\editor-support;$(EngineRoot)extensions;$(EngineRoot)\..\external\spidermonkey\include\wp8;$(ProjectDir)..\auto;$(ProjectDir)..\manual;$(ProjectDir)..\manual\cocostudio;$(ProjectDir)..\manual\spine;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WP8;_DEBUG;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4267;4251;4244;4700;4083;4068;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>
       </ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
@@ -142,6 +145,8 @@
       </ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4267;4251;4244;4700;4083;4068;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,6 +154,7 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
