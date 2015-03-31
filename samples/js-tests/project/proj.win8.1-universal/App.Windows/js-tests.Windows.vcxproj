@@ -121,7 +121,7 @@
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)..\external\win8.1-universal;$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -130,7 +130,7 @@
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)..\external\win8.1-universal;$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -139,7 +139,7 @@
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)..\external\win8.1-universal;$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -148,7 +148,7 @@
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)..\external\win8.1-universal;$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -157,7 +157,7 @@
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)..\external\win8.1-universal;$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -166,7 +166,7 @@
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)..\external\win8.1-universal;$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
     </ClCompile>
   </ItemDefinitionGroup>
