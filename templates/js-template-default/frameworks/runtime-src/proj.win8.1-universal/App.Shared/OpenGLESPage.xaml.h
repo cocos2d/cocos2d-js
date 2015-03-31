@@ -21,6 +21,7 @@
 #include "OpenGLES.h"
 #include "OpenGLESPage.g.h"
 #include <memory>
+#include <atomic>
 
 #include "Cocos2dRenderer.h"
 
@@ -56,7 +57,6 @@ namespace cocos2d
         bool mUseCustomRenderSurfaceSize;
 
         EGLSurface mRenderSurface;     // This surface is associated with a swapChainPanel on the page
-        Concurrency::critical_section mRenderSurfaceCriticalSection;
         Windows::Foundation::IAsyncAction^ mRenderLoopWorker;
 
         // Track user input on a background worker thread.
@@ -71,7 +71,8 @@ namespace cocos2d
         void OnOrientationChanged(Windows::Graphics::Display::DisplayInformation^ sender, Platform::Object^ args);
 
         float m_dpi;
-        bool m_deviceLost;
+        std::atomic<bool> m_visible;
+        std::atomic<bool> m_deviceLost;
         Windows::Graphics::Display::DisplayOrientations m_orientation;
 
     };

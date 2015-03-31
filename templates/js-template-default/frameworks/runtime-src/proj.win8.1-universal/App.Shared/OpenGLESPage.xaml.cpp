@@ -49,6 +49,7 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
     mUseCustomRenderSurfaceSize(false),
     m_coreInput(nullptr),
     m_dpi(0.0f),
+    m_visible(false),
     m_deviceLost(false),
     m_orientation(DisplayOrientations::Landscape)
 {
@@ -118,6 +119,7 @@ void OpenGLESPage::OnPageLoaded(Platform::Object^ sender, Windows::UI::Xaml::Rou
 {
     // The SwapChainPanel has been created and arranged in the page layout, so EGL can be initialized.
     CreateRenderSurface();
+    m_visible = true;
     StartRenderLoop();
 }
 
@@ -155,11 +157,11 @@ void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Wi
 {
     if (args->Visible && mRenderSurface != EGL_NO_SURFACE)
     {
-        StartRenderLoop();
+        m_visible = true;
     }
     else
     {
-        StopRenderLoop();
+        m_visible = false;
     }
 }
 
@@ -215,19 +217,10 @@ void OpenGLESPage::DestroyRenderSurface()
 
 void OpenGLESPage::RecoverFromLostDevice()
 {
-    // Stop the render loop, reset OpenGLES, recreate the render surface
-    // and start the render loop again to recover from a lost device.
-
-    StopRenderLoop();
-
-    {
-        critical_section::scoped_lock lock(mRenderSurfaceCriticalSection);
-        DestroyRenderSurface();
-        mOpenGLES->Reset();
-        CreateRenderSurface();
-    }
-
-    StartRenderLoop();
+    // resets OpenGLES, recreates the render surface
+    DestroyRenderSurface();
+    mOpenGLES->Reset();
+    CreateRenderSurface();
 }
 
 void OpenGLESPage::StartRenderLoop()
@@ -246,34 +239,30 @@ void OpenGLESPage::StartRenderLoop()
     // Create a task for rendering that will be run on a background thread.
     auto workItemHandler = ref new Windows::System::Threading::WorkItemHandler([this, dispatcher](Windows::Foundation::IAsyncAction ^ action)
     {
-        critical_section::scoped_lock lock(mRenderSurfaceCriticalSection);
-
         mOpenGLES->MakeCurrent(mRenderSurface);
-
         GLsizei panelWidth = 0;
         GLsizei panelHeight = 0;
         GetSwapChainPanelSize(&panelWidth, &panelHeight);
-        
-
 
         if (m_renderer.get() == nullptr)
         {
             m_renderer = std::make_shared<Cocos2dRenderer>(panelWidth, panelHeight, m_dpi, m_orientation, dispatcher, swapChainPanel);
         }
 
-        if (m_deviceLost)
-        {
-            m_deviceLost = false;
-            m_renderer->DeviceLost();
-        }
-        else
-        {
-            m_renderer->Resume();
-        }
-
+        m_renderer->Resume();
 
         while (action->Status == Windows::Foundation::AsyncStatus::Started && !m_deviceLost)
         {
+            if (!m_visible)
+            {
+                m_renderer->Pause();
+                while (!m_visible)
+                {
+                    Sleep(500);
+                }
+                m_renderer->Resume();
+            }
+           
             GetSwapChainPanelSize(&panelWidth, &panelHeight);
             m_renderer.get()->Draw(panelWidth, panelHeight, m_dpi, m_orientation);
 
@@ -289,7 +278,12 @@ void OpenGLESPage::StartRenderLoop()
                     RecoverFromLostDevice();
                 }, CallbackContext::Any));
 
-                return;
+                while(m_deviceLost)
+                {
+                    Sleep(500);
+                }
+                mOpenGLES->MakeCurrent(mRenderSurface);
+                m_renderer->DeviceLost();
             }
         }
     });
