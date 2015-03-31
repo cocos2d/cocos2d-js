@@ -121,54 +121,96 @@
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)..\external\win8.1-universal;$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>echo "Copying Windows 8.1 Universal App CPP template files"
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)..\external\win8.1-universal;$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>echo "Copying Windows 8.1 Universal App CPP template files"
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)..\external\win8.1-universal;$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>echo "Copying Windows 8.1 Universal App CPP template files"
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)..\external\win8.1-universal;$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>echo "Copying Windows 8.1 Universal App CPP template files"
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)..\external\win8.1-universal;$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>echo "Copying Windows 8.1 Universal App CPP template files"
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)..\external\win8.1-universal;$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>echo "Copying Windows 8.1 Universal App CPP template files"
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+xcopy "$(EngineRoot)..\external\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)..\..\..\templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
+</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

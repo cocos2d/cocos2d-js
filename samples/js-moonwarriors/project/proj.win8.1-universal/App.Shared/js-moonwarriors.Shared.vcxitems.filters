@@ -29,6 +29,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\..\frameworks\js-bindings\cocos2d-x\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
+    <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\..\frameworks\js-bindings\external\win8.1-universal\OpenGLESPage.xaml" />
   </ItemGroup>
 </Project>
