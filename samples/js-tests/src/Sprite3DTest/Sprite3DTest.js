@@ -773,13 +773,12 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
 
     calculateRayByLocationInView:function(location){
         var camera = cc.Camera.getDefaultCamera();
-        var size = cc.winSize;
 
         var src = cc.math.vec3(location.x, location.y, -1);
-        var nearPoint = camera.unproject(size, src);
+        var nearPoint = camera.unproject(src);
 
         src = cc.math.vec3(location.x, location.y, 1);
-        var farPoint = camera.unproject(size, src);
+        var farPoint = camera.unproject(src);
 
         var direction = cc.math.vec3(farPoint.x - nearPoint.x, farPoint.y - nearPoint.y, farPoint.z - nearPoint.z);
         direction.normalize();
@@ -1469,9 +1468,8 @@ var Sprite3DFakeShadowTest = Sprite3DTestDemo.extend({
            var nearP = cc.math.vec3(location.x, location.y, -1);
             var farP = cc.math.vec3(location.x, location.y, 1);
 
-            var size = cc.winSize;
-            nearP = this._camera.unproject(size, nearP);
-            farP = this._camera.unproject(size, farP);
+            nearP = this._camera.unproject(nearP);
+            farP = this._camera.unproject(farP);
 
             var dir = cc.math.vec3(farP.x-nearP.x, farP.y-nearP.y, farP.z-nearP.z);
             var ndd = dir.y; // (0, 1, 0) * dir
