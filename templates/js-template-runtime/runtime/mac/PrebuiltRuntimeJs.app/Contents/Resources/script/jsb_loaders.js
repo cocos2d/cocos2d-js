@@ -26,6 +26,18 @@
 // This helper file should be required after jsb_cocos2d.js
 //
 
+cc._emptyLoader = {
+    load : function(realUrl, url){
+        return null;
+    }
+};
+
+cc.loader.register([
+                        "mp3", "ogg", "wav", "mp4", "m4a", 
+                        "font", "eot", "ttf", "woff", "svg"
+                    ], 
+                    cc._emptyLoader);
+
 cc._txtLoader = {
     load : function(realUrl, url){
         return jsb.fileUtils.getStringFromFile(realUrl);
@@ -67,13 +79,6 @@ cc._plistLoader = {
     }
 };
 cc.loader.register(["plist"], cc._plistLoader);
-
-cc._fontLoader = {
-    load : function(realUrl, url){
-        return null;
-    }
-};
-cc.loader.register(["font", "eot", "ttf", "woff", "svg"], cc._fontLoader);
 
 cc._binaryLoader = {
     load : function(realUrl, url){

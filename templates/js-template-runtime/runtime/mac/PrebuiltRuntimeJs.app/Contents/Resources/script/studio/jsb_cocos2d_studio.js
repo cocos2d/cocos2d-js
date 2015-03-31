@@ -63,6 +63,9 @@ if(ccs.Armature){
   ccs.Armature.extend = cc.Class.extend;
 }
 
+ccs.Armature.prototype._setBlendFunc = ccs.Armature.prototype.setBlendFunc;
+ccs.Armature.prototype.setBlendFunc = templateSetBlendFunc;
+
 
 ccs.sendEvent = function (event) {
     var triggerObjArr = ccs.triggerManager.get(event);

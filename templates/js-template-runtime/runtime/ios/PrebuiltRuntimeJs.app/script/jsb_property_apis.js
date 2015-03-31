@@ -43,6 +43,13 @@ cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
 cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
 cc.defineGetterSetter(_proto, "color", _proto.getColor, _proto.setColor);
 
+_proto = cc.Label.prototype;
+cc.defineGetterSetter(_proto, "size", _proto.getContentSize, _proto.setContentSize);
+cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
+cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
+cc.defineGetterSetter(_proto, "boundingWidth", _proto.getWidth, _proto.setWidth);
+cc.defineGetterSetter(_proto, "boundingHeight", _proto.getHeight, _proto.setHeight);
+
 _proto = cc.LabelTTF.prototype;
 cc.defineGetterSetter(_proto, "size", _proto.getContentSize, _proto.setContentSize);
 cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
@@ -260,6 +267,7 @@ _proto = cc.LabelBMFont.prototype;
 cc.defineGetterSetter(_proto, "string", _proto.getString, _proto._setStringForSetter);
 cc.defineGetterSetter(_proto, "textAlign", _proto._getAlignment, _proto.setAlignment);
 cc.defineGetterSetter(_proto, "boundingWidth", _proto._getBoundingWidth, _proto.setBoundingWidth);
+cc.defineGetterSetter(_proto, "boundingHeight", _proto._getBoundingHeight, _proto.setBoundingHeight);
 
 _proto = cc.Menu.prototype;
 cc.defineGetterSetter(_proto, "enabled", _proto.getEnabled, _proto.setEnabled);
