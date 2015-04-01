@@ -36,7 +36,7 @@
 static JSClass js_class; \
 static JSObject* js_proto; \
 static JSObject* js_parent; \
-static void _js_register(JSContext* cx, JSObject* global);
+static void _js_register(JSContext* cx, JS::HandleObject global);
 
 #define JS_BINDED_CLASS_GLUE_IMPL(klass) \
 JSClass klass::js_class = {}; \
@@ -77,42 +77,46 @@ out = OBJECT_TO_JSVAL(obj); \
 JS_FN(#name, klass##_func_##name, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT)
 
 #define JS_BINDED_PROP_GET(klass, propName) \
-bool _js_get_##propName(JSContext *cx, JS::HandleId id, JS::MutableHandleValue vp)
+bool _js_get_##propName(JSContext *cx, const JS::CallArgs& args)
 
 #define JS_BINDED_PROP_GET_IMPL(klass, propName) \
-static bool _js_get_##klass##_##propName(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) { \
+static bool _js_get_##klass##_##propName(JSContext *cx, unsigned argc, jsval *vp) { \
+JS::CallArgs args = JS::CallArgsFromVp(argc, vp); \
+JSObject* obj = args.thisv().toObjectOrNull(); \
 klass* cobj = (klass*)JS_GetPrivate(obj); \
 if (cobj) { \
-return cobj->_js_get_##propName(cx, id, vp); \
+return cobj->_js_get_##propName(cx, args); \
 } \
 JS_ReportError(cx, "Invalid getter call for property %s", #propName); \
 return false; \
 } \
-bool klass::_js_get_##propName(JSContext *cx, JS::HandleId id, JS::MutableHandleValue vp)
+bool klass::_js_get_##propName(JSContext *cx, const JS::CallArgs& args)
 
 #define JS_BINDED_PROP_SET(klass, propName) \
-bool _js_set_##propName(JSContext *cx, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
+bool _js_set_##propName(JSContext *cx, const JS::CallArgs& args)
 
 #define JS_BINDED_PROP_SET_IMPL(klass, propName) \
-static bool _js_set_##klass##_##propName(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp) { \
+static bool _js_set_##klass##_##propName(JSContext *cx, unsigned argc, jsval *vp) { \
+JS::CallArgs args = JS::CallArgsFromVp(argc, vp); \
+JSObject* obj = args.thisv().toObjectOrNull(); \
 klass* cobj = (klass*)JS_GetPrivate(obj); \
 if (cobj) { \
-return cobj->_js_set_##propName(cx, id, strict, vp); \
+return cobj->_js_set_##propName(cx, args); \
 } \
 JS_ReportError(cx, "Invalid setter call for property %s", #propName); \
 return false; \
 } \
-bool klass::_js_set_##propName(JSContext *cx, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
+bool klass::_js_set_##propName(JSContext *cx, const JS::CallArgs& args)
 
 #define JS_BINDED_PROP_ACCESSOR(klass, propName) \
 JS_BINDED_PROP_GET(klass, propName); \
 JS_BINDED_PROP_SET(klass, propName);
 
 #define JS_BINDED_PROP_DEF_GETTER(klass, propName) \
-{#propName, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(_js_get_##klass##_##propName), NULL}
+JS_PSG(#propName, _js_get_##klass##_##propName, JSPROP_ENUMERATE | JSPROP_PERMANENT)
 
 #define JS_BINDED_PROP_DEF_ACCESSOR(klass, propName) \
-{#propName, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(_js_get_##klass##_##propName), JSOP_WRAPPER(_js_set_##klass##_##propName)}
+JS_PSGS(#propName, _js_get_##klass##_##propName, _js_set_##klass##_##propName, JSPROP_ENUMERATE | JSPROP_PERMANENT)
 
 #define JS_CREATE_UINT_WRAPPED(valOut, propName, val) \
 do { \

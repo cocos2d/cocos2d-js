@@ -30,7 +30,7 @@
 
 typedef struct js_proxy {
     void *ptr;
-    JSObject *obj;
+    JS::Heap<JSObject*> obj;
     UT_hash_handle hh;
 } js_proxy_t;
 
@@ -39,8 +39,8 @@ extern js_proxy_t *_js_native_global_ht;
 
 typedef struct js_type_class {
     JSClass *jsclass;
-    JSObject *proto;
-    JSObject *parentProto;
+    JS::Heap<JSObject*> proto;
+    JS::Heap<JSObject*> parentProto;
 } js_type_class_t;
 
 extern std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;

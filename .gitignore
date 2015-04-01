@@ -7,6 +7,7 @@ Thumbs.db
 *.pdb
 *.aps
 *.vcproj.*.user
+*.vcxproj.user
 *.vspscc
 *_i.c
 *.i
@@ -32,6 +33,11 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 ipch/
 *.opensdf
+Generated Files
+AppPackages
+
+# Ignore zip file created by download-deps.py if saved by user
+*-deps-*.zip
 
 # Ignore files build by ndk and eclipse
 libs/
@@ -104,3 +110,5 @@ frameworks/js-bindings/bindings/proj.ios_mac/build/
 
 # Ignore files copied in compilation
 samples/*/project/proj.android/src
+
+*.jsc

@@ -60,11 +60,17 @@ public:
     
     JS_BINDED_CLASS_GLUE(MinXmlHttpRequest);
     JS_BINDED_CONSTRUCTOR(MinXmlHttpRequest);
+    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onloadstart);
     JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onreadystatechange);
-    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, responseType);
+    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onabort);
+    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onerror);
+    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onload);
+    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onloadend);
+    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, ontimeout);
     JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, withCredentials);
     JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, upload);
     JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, timeout);
+    JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, responseType);
     JS_BINDED_PROP_GET(MinXmlHttpRequest, readyState);
     JS_BINDED_PROP_GET(MinXmlHttpRequest, status);
     JS_BINDED_PROP_GET(MinXmlHttpRequest, statusText);
@@ -81,12 +87,14 @@ public:
 
     void handle_requestResponse(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response);
 
-
+    void update(float dt);
 private:
     void _gotHeader(std::string header);
     void _setRequestHeader(const char* field, const char* value);
     void _setHttpRequestHeader();
+    void _setHttpRequestData(const char *data, size_t len);
     void _sendRequest(JSContext *cx);
+    void _notify(JSObject * callback);
     
     std::string                       _url;
     JSContext*                        _cx;
@@ -94,12 +102,19 @@ private:
     std::string                       _type;
     char*                             _data;
     uint32_t                          _dataSize;
-    JSObject*                         _onreadystateCallback;
+    JS::Heap<JSObject*>               _onloadstartCallback;
+    JS::Heap<JSObject*>               _onabortCallback;
+    JS::Heap<JSObject*>               _onerrorCallback;
+    JS::Heap<JSObject*>               _onloadCallback;
+    JS::Heap<JSObject*>               _onloadendCallback;
+    JS::Heap<JSObject*>               _ontimeoutCallback;
+    JS::Heap<JSObject*>               _onreadystateCallback;
     int                               _readyState;
     int                               _status;
     std::string                       _statusText;
     ResponseType                      _responseType;
-    unsigned                          _timeout;
+    unsigned long long                _timeout;
+    float                             _elapsedTime;
     bool                              _isAsync;
     cocos2d::network::HttpRequest*    _httpRequest;
     bool                              _isNetwork;
@@ -108,6 +123,7 @@ private:
     std::unordered_map<std::string, std::string>          _httpHeader;
     std::unordered_map<std::string, std::string>          _requestHeader;
     bool                              _isAborted;
+    cocos2d::Scheduler*               _scheduler;
 };
 
 #endif

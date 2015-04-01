@@ -20,44 +20,27 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "js-config.h"
+
+// Needed for cocos2d-js
+#define JS_NO_JSVAL_JSID_STRUCT_TYPES
+
 struct JSContext;
 class JSFunction;
 class JSObject;
 class JSScript;
 class JSString;
+class JSAddonId;
 
-// In release builds, jsid is defined to be an integral type. This
-// prevents many bugs from being caught at compile time. E.g.:
-//
-//  jsid id = ...
-//  if (id)             // error
-//    ...
-//
-//  size_t n = id;      // error
-//
-// To catch more errors, jsid is given a struct type in C++ debug builds.
-// Struct assignment and (in C++) operator== allow correct code to be mostly
-// oblivious to the change. This feature can be explicitly disabled in debug
-// builds by defining JS_NO_JSVAL_JSID_STRUCT_TYPES.
-//
-
-// Needed for cocos2d-js
-#define JS_NO_JSVAL_JSID_STRUCT_TYPES
-
-#if defined(DEBUG) && !defined(JS_NO_JSVAL_JSID_STRUCT_TYPES)
-# define JS_USE_JSID_STRUCT_TYPES
-#endif
-
-#ifdef JS_USE_JSID_STRUCT_TYPES
 struct jsid;
-#else
-typedef ptrdiff_t jsid;
-#endif
 
 typedef char16_t jschar;
 
 namespace JS {
 
+typedef unsigned char Latin1Char;
+
+class Symbol;
 class Value;
 template <typename T> class Handle;
 template <typename T> class MutableHandle;
@@ -69,6 +52,7 @@ typedef Handle<jsid>        HandleId;
 typedef Handle<JSObject*>   HandleObject;
 typedef Handle<JSScript*>   HandleScript;
 typedef Handle<JSString*>   HandleString;
+typedef Handle<JS::Symbol*> HandleSymbol;
 typedef Handle<Value>       HandleValue;
 
 typedef MutableHandle<JSFunction*> MutableHandleFunction;
@@ -76,12 +60,14 @@ typedef MutableHandle<jsid>        MutableHandleId;
 typedef MutableHandle<JSObject*>   MutableHandleObject;
 typedef MutableHandle<JSScript*>   MutableHandleScript;
 typedef MutableHandle<JSString*>   MutableHandleString;
+typedef MutableHandle<JS::Symbol*> MutableHandleSymbol;
 typedef MutableHandle<Value>       MutableHandleValue;
 
 typedef Rooted<JSObject*>       RootedObject;
 typedef Rooted<JSFunction*>     RootedFunction;
 typedef Rooted<JSScript*>       RootedScript;
 typedef Rooted<JSString*>       RootedString;
+typedef Rooted<JS::Symbol*>     RootedSymbol;
 typedef Rooted<jsid>            RootedId;
 typedef Rooted<JS::Value>       RootedValue;
 
@@ -90,6 +76,7 @@ typedef PersistentRooted<jsid>        PersistentRootedId;
 typedef PersistentRooted<JSObject*>   PersistentRootedObject;
 typedef PersistentRooted<JSScript*>   PersistentRootedScript;
 typedef PersistentRooted<JSString*>   PersistentRootedString;
+typedef PersistentRooted<JS::Symbol*> PersistentRootedSymbol;
 typedef PersistentRooted<Value>       PersistentRootedValue;
 
 } // namespace JS

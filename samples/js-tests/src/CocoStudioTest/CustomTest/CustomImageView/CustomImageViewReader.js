@@ -37,6 +37,6 @@ var customImageViewReader = {
     },
 
     setPropsFromJsonDictionary: function(){
-        ccs.ImageViewReader.setPropsFromJsonDictionary.apply(this, arguments);
+        ccs.imageViewReader.setPropsFromJsonDictionary.apply(this, arguments);
     }
 };

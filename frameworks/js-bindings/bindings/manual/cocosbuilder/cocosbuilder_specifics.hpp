@@ -26,20 +26,24 @@
 
 #include "../cocos2d_specifics.hpp"
 
-class JSCCBAnimationWrapper: public JSCallbackWrapper {
+class JSCCBAnimationWrapper: public JSCallbackWrapper 
+{
 public:
     JSCCBAnimationWrapper() {}
     virtual ~JSCCBAnimationWrapper() {}
     
-    void animationCompleteCallback() {
-        
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        jsval retval = JSVAL_NULL;
-        
-        if(!JSVAL_IS_VOID(_jsCallback)  && !JSVAL_IS_VOID(_jsThisObj)) {
+    void animationCompleteCallback() 
+    {
+                
+        if(!_jsCallback.isNullOrUndefined()  && !_jsThisObj.isNullOrUndefined()) 
+        {
+
+            JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+            JS::RootedValue retval(cx);
+
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             
-            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(_jsThisObj), _jsCallback, 0, NULL, &retval);
+            JS_CallFunctionValue(cx, JS::RootedObject(cx, _jsThisObj.toObjectOrNull()), JS::RootedValue(cx, _jsCallback), JS::HandleValueArray::empty(), &retval);
         }
     }
     

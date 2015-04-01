@@ -39,6 +39,7 @@ var GameControlMenu = cc.Layer.extend({
         cc.MenuItemFont.setFontSize(24);
         cc.MenuItemFont.setFontName("Arial");
         var systemMenu = new cc.MenuItemFont("Main Menu", this.onSysMenu);
+        systemMenu.setColor(cc.color(MW.FONTCOLOR));
         var menu = new cc.Menu(systemMenu);
         menu.x = 0;
         menu.y = 0;

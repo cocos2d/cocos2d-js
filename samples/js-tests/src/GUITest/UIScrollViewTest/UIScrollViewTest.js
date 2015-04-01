@@ -281,3 +281,135 @@ var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = UIScene.extend({
         return false;
     }
 });
+
+//2015-01-14
+var UIScrollViewNestTest = UIScene.extend({
+    init: function(){
+        if(this._super()){
+            var widgetSize = this._widget.getContentSize();
+
+            // Add a label in which the scrollview alert will be displayed
+            this._topDisplayLabel.setString("Move by vertical direction");
+
+            // Add the alert
+            this._bottomDisplayLabel.setString("ScrollView vertical");
+            this._bottomDisplayLabel.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075);
+
+            var root = this._mainNode.getChildByTag(81);
+
+            var background = root.getChildByName("background_Panel");
+
+            // Create the scrollview by vertical
+            var scrollView = new ccui.ScrollView();
+            scrollView.setContentSize(cc.size(280.0, 150.0));
+            scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
+            var backgroundSize = background.getContentSize();
+            scrollView.setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2.0 +
+                (backgroundSize.width - scrollView.getContentSize().width) / 2.0,
+                (widgetSize.height - backgroundSize.height) / 2.0 +
+                (backgroundSize.height - scrollView.getContentSize().height) / 2.0));
+            this._mainNode.addChild(scrollView);
+
+            var imageView = new ccui.ImageView("res/cocosui/ccicon.png");
+
+            var innerWidth = scrollView.getContentSize().width;
+            var innerHeight = scrollView.getContentSize().height + imageView.getContentSize().height;
+
+            scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
+
+            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+            button.setPosition(cc.p(innerWidth / 2.0, scrollView.getInnerContainerSize().height - button.getContentSize().height / 2.0));
+            scrollView.addChild(button);
+
+            var titleButton = new ccui.Button("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png");
+            titleButton.setTitleText("Title Button");
+            titleButton.setPosition(cc.p(innerWidth / 2.0, button.getBottomBoundary() - button.getContentSize().height));
+            scrollView.addChild(titleButton);
+
+            var button_scale9 = new ccui.Button("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png");
+            button_scale9.setScale9Enabled(true);
+            button_scale9.setContentSize(cc.size(100.0, button_scale9.getVirtualRendererSize().height));
+            button_scale9.setPosition(cc.p(innerWidth / 2.0, titleButton.getBottomBoundary() - titleButton.getContentSize().height));
+            scrollView.addChild(button_scale9);
+
+            imageView.setPosition(cc.p(innerWidth / 2.0, imageView.getContentSize().height / 2.0));
+            scrollView.addChild(imageView);
+
+            // Create the scrollview by horizontal
+            var sc = new ccui.ScrollView();
+            sc.setBackGroundColor(cc.color.GREEN);
+            sc.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
+            sc.setBounceEnabled(true);
+            sc.setDirection(ccui.ScrollView.DIR_BOTH);
+            sc.setInnerContainerSize(cc.size(480, 320));
+            sc.setContentSize(cc.size(100,100));
+            sc.setPropagateTouchEvents(false);
+            sc.setPosition(cc.p(180,100));
+            sc.scrollToPercentBothDirection(cc.p(50, 50), 1, true);
+            var iv = new ccui.ImageView("res/cocosui/Hello.png");
+            iv.setPosition(cc.p(240, 160));
+            sc.addChild(iv);
+            scrollView.addChild(sc);
+
+            return true;
+        }
+    }
+
+});
+
+//2015-01-14
+var UIScrollViewRotated = UIScene.extend({
+    init: function(){
+        if(this._super()){
+            var widgetSize = this._widget.getContentSize();
+
+            // Add a label in which the scrollview alert will be displayed
+            this._topDisplayLabel.setString("Move by vertical direction");
+
+            // Add the alert
+            this._bottomDisplayLabel.setString("ScrollView vertical");
+            this._bottomDisplayLabel.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075);
+
+            var root = this._mainNode.getChildByTag(81);
+            var background = root.getChildByName("background_Panel");
+
+            // Create the scrollview by vertical
+            var scrollView = new ccui.ScrollView();
+            scrollView.setContentSize(cc.size(280.0, 150.0));
+            scrollView.setDirection(ccui.ScrollView.DIR_BOTH);
+            var backgroundSize = background.getContentSize();
+            scrollView.setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2.0 +
+                (backgroundSize.width - scrollView.getContentSize().width) / 2.0,
+                (widgetSize.height - backgroundSize.height) / 2.0 +
+                (backgroundSize.height - scrollView.getContentSize().height) / 2.0 + 100) );
+            scrollView.setRotation(45);
+            this._mainNode.addChild(scrollView);
+
+            var imageView = new ccui.ImageView("res/cocosui/ccicon.png");
+
+            var innerWidth = scrollView.getContentSize().width;
+            var innerHeight = scrollView.getContentSize().height + imageView.getContentSize().height;
+            scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
+
+            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+            button.setPosition(cc.p(innerWidth / 2.0, scrollView.getInnerContainerSize().height - button.getContentSize().height / 2.0));
+            scrollView.addChild(button);
+
+            var titleButton = new ccui.Button("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png");
+            titleButton.setTitleText("Title Button");
+            titleButton.setPosition(cc.p(innerWidth / 2.0, button.getBottomBoundary() - button.getContentSize().height));
+            scrollView.addChild(titleButton);
+
+            var button_scale9 = new ccui.Button("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png");
+            button_scale9.setScale9Enabled(true);
+            button_scale9.setContentSize(cc.size(100.0, button_scale9.getVirtualRendererSize().height));
+            button_scale9.setPosition(cc.p(innerWidth / 2.0, titleButton.getBottomBoundary() - titleButton.getContentSize().height));
+            scrollView.addChild(button_scale9);
+
+            imageView.setPosition(cc.p(innerWidth / 2.0, imageView.getContentSize().height / 2.0));
+            scrollView.addChild(imageView);
+
+            return true;
+        }
+    }
+});

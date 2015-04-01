@@ -175,7 +175,7 @@ var GameLayer = cc.Layer.extend({
         this.schedule(this.scoreCounter, 1);
 
         if (MW.SOUND)
-            cc.audioEngine.playMusic(res.bgMusic_mp3, true);
+            cc.audioEngine.playMusic(cc.sys.os == cc.sys.OS_WP8 || cc.sys.os == cc.sys.OS_WINRT ? res.bgMusic_wav : res.bgMusic_mp3, true);
 
         g_sharedGameLayer = this;
 

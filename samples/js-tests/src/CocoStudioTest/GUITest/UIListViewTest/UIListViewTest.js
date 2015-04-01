@@ -24,14 +24,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 var LISTVIEW_RES = [
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/ui_listview_editor_1.json",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/ui_listview_horizontal_editor_1.json"
+    "res/cocosui/CCS/ListView/Vertical/vertical_1.json",
+    "res/cocosui/CCS/ListView/Horizontal/horizontal_1.json"
 ];
 var LISTVIEW_INDEX = 0;
 var UIListViewEditorTest = UIBaseLayer.extend({
     ctor: function () {
         this._super();
-        var root = ccs.uiReader.widgetFromJsonFile(LISTVIEW_RES[LISTVIEW_INDEX]);
+        var root = this._parseUIFile(LISTVIEW_RES[LISTVIEW_INDEX]);
         this._mainNode.addChild(root);
 
         var back_label = ccui.helper.seekWidgetByName(root, "back");

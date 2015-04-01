@@ -99,3 +99,77 @@ var UISliderTest_Scale9 = UIScene.extend({
         }
     }
 });
+
+//2015-01-14
+var UISliderNormalDefaultTest = UIScene.extend({
+    init: function () {
+        if (this._super()) {
+            var widgetSize = this._widget.getContentSize();
+
+            this._bottomDisplayLabel.setString("");
+
+            // Add the alert
+            var alert = new ccui.Text("when pressed, the slider ball should scale","Marker Felt",20);
+            alert.setColor(cc.color(159, 168, 176));
+            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.75));
+            this._mainNode.addChild(alert);
+
+            // Create the slider
+            var slider = new ccui.Slider();
+            slider.loadBarTexture("res/cocosui/sliderTrack.png");
+            slider.loadSlidBallTextures("res/cocosui/sliderThumb.png");
+            slider.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + 50));
+            this._mainNode.addChild(slider);
+
+            var sliderScale9 = new ccui.Slider("res/cocosui/sliderTrack2.png", "res/cocosui/sliderThumb.png");
+            sliderScale9.setScale9Enabled(true);
+            sliderScale9.setCapInsets(cc.rect(0, 0, 0, 0));
+            sliderScale9.setZoomScale(1);
+            sliderScale9.setContentSize(cc.size(250, 19));
+            sliderScale9.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - 20));
+            this._mainNode.addChild(sliderScale9);
+
+
+            return true;
+        }
+        return false;
+    }
+});
+
+//2015-01-14
+var UISliderDisabledDefaultTest = UIScene.extend({
+    init: function () {
+        if (this._super()) {
+            var widgetSize = this._widget.getContentSize();
+
+            this._bottomDisplayLabel.setString("");
+
+            // Add the alert
+            var alert = new ccui.Text("slider ball should be gray.","Marker Felt",20);
+            alert.setColor(cc.color(159, 168, 176));
+            alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.height * 3.75));
+            this._mainNode.addChild(alert);
+
+            // Create the slider
+            var slider = new ccui.Slider();
+            slider.loadBarTexture("res/cocosui/slidbar.png");
+            slider.loadSlidBallTextureNormal("res/cocosui/sliderballnormal.png");
+            slider.setEnabled(false);
+            slider.setBright(false);
+            slider.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + 50));
+            this._mainNode.addChild(slider);
+
+            var sliderScale9 = new ccui.Slider("res/cocosui/slidbar.png", "res/cocosui/sliderballnormal.png");
+            sliderScale9.setScale9Enabled(true);
+            sliderScale9.setEnabled(false);
+            sliderScale9.setBright(false);
+            sliderScale9.setCapInsets(cc.rect(0, 0, 0, 0));
+            sliderScale9.setContentSize(cc.size(250, 10));
+            sliderScale9.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - 20));
+            this._mainNode.addChild(sliderScale9);
+
+            return true;
+        }
+        return false;
+    }
+});

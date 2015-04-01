@@ -7,6 +7,9 @@
 #include "jsb_cocos2dx_builder_auto.hpp"
 #include "jsb_cocos2dx_spine_auto.hpp"
 #include "jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_3d_auto.hpp"
+#include "jsb_cocos2dx_3d_extension_auto.hpp"
+#include "3d/jsb_cocos2dx_3d_manual.h"
 #include "ui/jsb_cocos2dx_ui_manual.h"
 #include "cocostudio/jsb_cocos2dx_studio_manual.h"
 #include "cocosbuilder/js_bindings_ccbreader.h"
@@ -82,7 +85,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_cocos2dx_js_core);
-    sc->addRegisterCallback(register_cocos2dx_js_extensions);
     sc->addRegisterCallback(jsb_register_system);
 
     // extension can be commented out to reduce the package
@@ -116,6 +118,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_jsb_websocket);
     // sokcet io can be commented out to reduce the package
     sc->addRegisterCallback(register_jsb_socketio);
+    
+    // 3d can be commented out to reduce the package
+    sc->addRegisterCallback(register_all_cocos2dx_3d);
+    sc->addRegisterCallback(register_all_cocos2dx_3d_manual);
+    
+    // 3d extension can be commented out to reduce the package
+    sc->addRegisterCallback(register_all_cocos2dx_3d_extension);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);

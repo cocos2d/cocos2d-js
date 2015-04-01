@@ -37,7 +37,8 @@ void GLNode::onDraw(Mat4 &transform, uint32_t flags)
     proxy = js_get_or_create_proxy<cocos2d::Node>(cx, this);
 
     if( proxy ) {
-        JSObject *jsObj = proxy->obj;
+//        JSObject *jsObj = proxy->obj;
+        JS::RootedObject jsObj(cx, proxy->obj.get());
         if (jsObj) {
              bool found = false;
              JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
@@ -50,10 +51,9 @@ void GLNode::onDraw(Mat4 &transform, uint32_t flags)
 
                  JS::RootedValue rval(cx);
                  JS::RootedValue fval(cx);
-                 jsval *argv = NULL; unsigned argc=0;
-
                  JS_GetProperty(cx, jsObj, "draw", &fval);
-                 JS_CallFunctionValue(cx, jsObj, fval, argc, argv, rval.address());
+
+                 JS_CallFunctionValue(cx, jsObj, fval, JS::HandleValueArray::empty(), &rval);
 
                  director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
              }
@@ -85,12 +85,13 @@ bool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
         typeClass = typeMapIter->second;
         CCASSERT(typeClass, "The value is null.");
 
-        JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+        JSObject *obj = JS_NewObject(cx, typeClass->jsclass, JS::RootedObject(cx, typeClass->proto), JS::RootedObject(cx, typeClass->parentProto));
+        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+        args.rval().set(OBJECT_TO_JSVAL(obj));
         // link the native object with the javascript object
         js_proxy_t *p = jsb_new_proxy(cobj, obj);
 
-        JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::GLNode");
+        JS::AddNamedObjectRoot(cx, &p->obj, "cocos2d::GLNode");
 
         return true;
     }
@@ -107,13 +108,15 @@ static bool js_cocos2dx_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::GLNode *nobj = new cocos2d::GLNode();
     js_proxy_t* p = jsb_new_proxy(nobj, obj);
     nobj->autorelease();
-    JS_AddNamedObjectRoot(cx, &p->obj, "GLNode");
-    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    JS::AddNamedObjectRoot(cx, &p->obj, "GLNode");
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    args.rval().setUndefined();
     return true;
 }
 
 bool js_cocos2dx_GLNode_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     cocos2d::GLNode* ret = new cocos2d::GLNode();
     jsval jsret;
     do {
@@ -124,13 +127,13 @@ bool js_cocos2dx_GLNode_create(JSContext *cx, uint32_t argc, jsval *vp)
             jsret = JSVAL_NULL;
         }
     } while (0);
-    JS_SET_RVAL(cx, vp, jsret);
+    args.rval().set(jsret);
     return true;
 }
 
 extern JSObject* jsb_cocos2d_Node_prototype;
 
-void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global) {
+void js_register_cocos2dx_GLNode(JSContext *cx, JS::HandleObject global) {
     js_cocos2dx_GLNode_class = (JSClass *)calloc(1, sizeof(JSClass));
     js_cocos2dx_GLNode_class->name = "GLNode";
     js_cocos2dx_GLNode_class->addProperty = JS_PropertyStub;
@@ -159,7 +162,7 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global) {
 
     js_cocos2dx_GLNode_prototype = JS_InitClass(
         cx, global,
-        jsb_cocos2d_Node_prototype,
+        JS::RootedObject(cx, jsb_cocos2d_Node_prototype),
         js_cocos2dx_GLNode_class,
         js_cocos2dx_GLNode_constructor, 0, // constructor
         properties,

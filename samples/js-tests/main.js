@@ -80,14 +80,17 @@
  *
  */
 
-var scene3SearchPaths = cc.sys.localStorage.getItem("Scene3SearchPaths");
-if (scene3SearchPaths)
-    jsb.fileUtils.setSearchPaths(JSON.parse(scene3SearchPaths));
+if(cc.sys){
+    var scene3SearchPaths = cc.sys.localStorage.getItem("Scene3SearchPaths");
+    if (scene3SearchPaths)
+        jsb.fileUtils.setSearchPaths(JSON.parse(scene3SearchPaths));
+}
 
 cc.game.onStart = function(){
-    
+    cc.view.enableRetina(false);
     if (cc.sys.isNative) {
-        cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.FIXED_HEIGHT);
+        var resolutionPolicy = (cc.sys.os == cc.sys.OS_WP8 || cc.sys.os == cc.sys.OS_WINRT) ? cc.ResolutionPolicy.SHOW_ALL : cc.ResolutionPolicy.FIXED_HEIGHT;
+        cc.view.setDesignResolutionSize(800, 450, resolutionPolicy);
         cc.view.resizeWithBrowserSize(true);
         var searchPaths = jsb.fileUtils.getSearchPaths();
         searchPaths.push('script');
@@ -111,7 +114,6 @@ cc.game.onStart = function(){
         }
         jsb.fileUtils.setSearchPaths(searchPaths);
     }
-    
     cc.LoaderScene.preload(g_resources, function () {
         if(window.sideIndexBar && typeof sideIndexBar.start === 'function'){
             sideIndexBar.start();

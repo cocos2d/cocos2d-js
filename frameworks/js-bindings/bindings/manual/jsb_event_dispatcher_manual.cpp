@@ -29,19 +29,20 @@ USING_NS_CC;
 
 bool js_EventListenerTouchOneByOne_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         auto ret = EventListenerTouchOneByOne::create();
         
-        ret->onTouchBegan = [ret](Touch* touch, Event* event) -> bool {
-            jsval jsret = JSVAL_NULL;
+        ret->onTouchBegan = [cx, ret](Touch* touch, Event* event) -> bool {
+            JS::RootedValue jsret(cx);
             bool ok = ScriptingCore::getInstance()->handleTouchEvent(ret, EventTouch::EventCode::BEGAN, touch, event, &jsret);
             
             // Not found the method, just return false.
             if (!ok)
                 return false;
 
-            CCASSERT(JSVAL_IS_BOOLEAN(jsret), "the return value of onTouchBegan isn't boolean");
-            return JSVAL_TO_BOOLEAN(jsret);
+            CCASSERT(jsret.isBoolean(), "the return value of onTouchBegan isn't boolean");
+            return jsret.toBoolean();
         };
         
         ret->onTouchMoved = [ret](Touch* touch, Event* event) {
@@ -57,7 +58,7 @@ bool js_EventListenerTouchOneByOne_create(JSContext *cx, uint32_t argc, jsval *v
         };
         
         jsval jsret = getJSObject(cx, ret);
-        JS_SET_RVAL(cx, vp, jsret);
+        args.rval().set(jsret);
         return true;
     }
     
@@ -67,6 +68,7 @@ bool js_EventListenerTouchOneByOne_create(JSContext *cx, uint32_t argc, jsval *v
 
 bool js_EventListenerTouchAllAtOnce_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         auto ret = EventListenerTouchAllAtOnce::create();
         
@@ -87,7 +89,7 @@ bool js_EventListenerTouchAllAtOnce_create(JSContext *cx, uint32_t argc, jsval *
         };
         
         jsval jsret = getJSObject(cx, ret);
-        JS_SET_RVAL(cx, vp, jsret);
+        args.rval().set(jsret);
         return true;
     }
     
@@ -97,6 +99,7 @@ bool js_EventListenerTouchAllAtOnce_create(JSContext *cx, uint32_t argc, jsval *
 
 bool js_EventListenerMouse_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         auto ret = EventListenerMouse::create();
         
@@ -117,7 +120,7 @@ bool js_EventListenerMouse_create(JSContext *cx, uint32_t argc, jsval *vp)
         };
         
         jsval jsret = getJSObject(cx, ret);
-        JS_SET_RVAL(cx, vp, jsret);
+        args.rval().set(jsret);
         return true;
     }
     
@@ -127,6 +130,7 @@ bool js_EventListenerMouse_create(JSContext *cx, uint32_t argc, jsval *vp)
 
 bool js_EventListenerKeyboard_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         auto ret = EventListenerKeyboard::create();
         
@@ -139,7 +143,7 @@ bool js_EventListenerKeyboard_create(JSContext *cx, uint32_t argc, jsval *vp)
         };
         
         jsval jsret = getJSObject(cx, ret);
-        JS_SET_RVAL(cx, vp, jsret);
+        args.rval().set(jsret);
         return true;
     }
     
@@ -147,4 +151,23 @@ bool js_EventListenerKeyboard_create(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+bool js_EventListenerFocus_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if(argc == 0)
+    {
+        auto ret = EventListenerFocus::create();
+        ret->onFocusChanged = [ret](ui::Widget* widgetLoseFocus, ui::Widget* widgetGetFocus){
+            ScriptingCore::getInstance()->handleFocusEvent(ret, widgetLoseFocus, widgetGetFocus);
+        };
+
+        jsval jsret = getJSObject(cx, ret);
+
+        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 

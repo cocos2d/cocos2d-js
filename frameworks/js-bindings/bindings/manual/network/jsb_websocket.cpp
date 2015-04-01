@@ -68,7 +68,7 @@ public:
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
         
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        JSObject* jsobj = JS_NewObject(cx, NULL, NULL, NULL);
+        JS::RootedObject jsobj(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
         JS::RootedValue vp(cx);
         vp = c_string_to_jsval(cx, "open");
         JS_SetProperty(cx, jsobj, "type", vp);
@@ -86,7 +86,7 @@ public:
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
         
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        JSObject* jsobj = JS_NewObject(cx, NULL, NULL, NULL);
+        JS::RootedObject jsobj(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
         JS::RootedValue vp(cx);
         vp = c_string_to_jsval(cx, "message");
         JS_SetProperty(cx, jsobj, "type", vp);
@@ -120,7 +120,7 @@ public:
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
         
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        JSObject* jsobj = JS_NewObject(cx, NULL, NULL, NULL);
+        JS::RootedObject jsobj(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
         JS::RootedValue vp(cx);
         vp = c_string_to_jsval(cx, "close");
         JS_SetProperty(cx, jsobj, "type", vp);
@@ -129,7 +129,7 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "onclose", 1, &args);
 
         js_proxy_t* jsproxy = jsb_get_js_proxy(p->obj);
-        JS_RemoveObjectRoot(cx, &jsproxy->obj);
+        JS::RemoveObjectRoot(cx, &jsproxy->obj);
         jsb_remove_proxy(p, jsproxy);
         CC_SAFE_DELETE(ws);
     }
@@ -142,7 +142,7 @@ public:
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
         
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        JSObject* jsobj = JS_NewObject(cx, NULL, NULL, NULL);
+        JS::RootedObject jsobj(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
         JS::RootedValue vp(cx);
         vp = c_string_to_jsval(cx, "error");
         JS_SetProperty(cx, jsobj, "type", vp);
@@ -157,7 +157,7 @@ public:
         _JSDelegate = pJSDelegate;
     }
 private:
-    JSObject* _JSDelegate;
+    JS::Heap<JSObject*> _JSDelegate;
 };
 
 JSClass  *js_cocos2dx_websocket_class;
@@ -169,7 +169,7 @@ void js_cocos2dx_WebSocket_finalize(JSFreeOp *fop, JSObject *obj) {
 
 bool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    jsval *argv = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
@@ -178,20 +178,20 @@ bool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *v
     if(argc == 1){
         do
         {
-            if (JSVAL_IS_STRING(argv[0]))
+            if (args.get(0).isString())
             {
                 std::string data;
-                jsval_to_std_string(cx, argv[0], &data);
+                jsval_to_std_string(cx, args.get(0), &data);
                 cobj->send(data);
                 break;
             }
 
-            if (argv[0].isObject())
+            if (args.get(0).isObject())
             {
                 uint8_t *bufdata = NULL;
                 uint32_t len = 0;
                 
-                JSObject* jsobj = JSVAL_TO_OBJECT(argv[0]);
+                JSObject* jsobj = args.get(0).toObjectOrNull();
                 if (JS_IsArrayBufferObject(jsobj))
                 {
                     bufdata = JS_GetArrayBufferData(jsobj);
@@ -214,7 +214,7 @@ bool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *v
 
         } while (0);
         
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        args.rval().setUndefined();
 
         return true;
     }
@@ -223,6 +223,7 @@ bool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *v
 }
 
 bool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *vp){
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
@@ -230,7 +231,7 @@ bool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *
     
     if(argc == 0){
         cobj->close();
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        args.rval().setUndefined();
         return true;
     }
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
@@ -239,7 +240,7 @@ bool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *
 
 bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    jsval *argv = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     
     if (argc == 1 || argc == 2)
     {
@@ -247,12 +248,12 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
         std::string url;
         
         do {
-            bool ok = jsval_to_std_string(cx, argv[0], &url);
+            bool ok = jsval_to_std_string(cx, args.get(0), &url);
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
         } while (0);
         
-        JSObject *obj = JS_NewObject(cx, js_cocos2dx_websocket_class, js_cocos2dx_websocket_prototype, NULL);
-        
+        JS::RootedObject obj(cx, JS_NewObject(cx, js_cocos2dx_websocket_class, JS::RootedObject(cx, js_cocos2dx_websocket_prototype), JS::NullPtr()));
+        //JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, js_cocos2dx_websocket_class, args));
         
         WebSocket* cobj = new WebSocket();
         JSB_WebSocketDelegate* delegate = new JSB_WebSocketDelegate();
@@ -262,19 +263,19 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
         {
             std::vector<std::string> protocols;
             
-            if (JSVAL_IS_STRING(argv[1]))
+            if (args.get(1).isString())
             {
                 std::string protocol;
                 do {
-                    bool ok = jsval_to_std_string(cx, argv[1], &protocol);
+                    bool ok = jsval_to_std_string(cx, args.get(1), &protocol);
                     JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
                 } while (0);
                 protocols.push_back(protocol);
             }
-            else if (argv[1].isObject())
+            else if (args.get(1).isObject())
             {
                 bool ok = true;
-                JSObject* arg2 = JSVAL_TO_OBJECT(argv[1]);
+                JS::RootedObject arg2(cx, args.get(1).toObjectOrNull());
                 JSB_PRECONDITION(JS_IsArrayObject( cx, arg2 ),  "Object must be an array");
                 
                 uint32_t len = 0;
@@ -301,18 +302,16 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
         }
         
         
-        JS_DefineProperty(cx, obj, "URL", argv[0]
-                          , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
+        JS_DefineProperty(cx, obj, "URL", args.get(0), JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
         
         //protocol not support yet (always return "")
-        JS_DefineProperty(cx, obj, "protocol", c_string_to_jsval(cx, "")
-                          , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
+        JS_DefineProperty(cx, obj, "protocol", JS::RootedValue(cx, c_string_to_jsval(cx, "")), JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
         
         // link the native object with the javascript object
         js_proxy_t *p = jsb_new_proxy(cobj, obj);
-        JS_AddNamedObjectRoot(cx, &p->obj, "WebSocket");
+        JS::AddNamedObjectRoot(cx, &p->obj, "WebSocket");
         
-        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+        args.rval().set(OBJECT_TO_JSVAL(obj));
         return true;
     }
     
@@ -320,15 +319,16 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
     return false;
 }
 
-static bool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+static bool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JSObject* jsobj = args.thisv().toObjectOrNull();
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     
     if (cobj) {
-        vp.set(INT_TO_JSVAL((int)cobj->getReadyState()));
+        args.rval().set(INT_TO_JSVAL((int)cobj->getReadyState()));
         return true;
     } else {
         JS_ReportError(cx, "Error: WebSocket instance is invalid.");
@@ -336,7 +336,7 @@ static bool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, JS::Ha
     }
 }
 
-void register_jsb_websocket(JSContext *cx, JSObject *global) {
+void register_jsb_websocket(JSContext *cx, JS::HandleObject global) {
     
     js_cocos2dx_websocket_class = (JSClass *)calloc(1, sizeof(JSClass));
     js_cocos2dx_websocket_class->name = "WebSocket";
@@ -351,8 +351,8 @@ void register_jsb_websocket(JSContext *cx, JSObject *global) {
     js_cocos2dx_websocket_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
     
     static JSPropertySpec properties[] = {
-        {"readyState", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_cocos2dx_extension_WebSocket_get_readyState), NULL},
-        {0, 0, 0, 0, 0}
+        JS_PSG("readyState", js_cocos2dx_extension_WebSocket_get_readyState, JSPROP_ENUMERATE | JSPROP_PERMANENT),
+        JS_PS_END
     };
     
     static JSFunctionSpec funcs[] = {
@@ -367,7 +367,7 @@ void register_jsb_websocket(JSContext *cx, JSObject *global) {
     
     js_cocos2dx_websocket_prototype = JS_InitClass(
                                                 cx, global,
-                                                NULL,
+                                                JS::NullPtr(),
                                                 js_cocos2dx_websocket_class,
                                                 js_cocos2dx_extension_WebSocket_constructor, 0, // constructor
                                                 properties,
@@ -375,16 +375,12 @@ void register_jsb_websocket(JSContext *cx, JSObject *global) {
                                                 NULL, // no static properties
                                                 st_funcs);
     
-    JSObject* jsclassObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return WebSocket; })()"));
+    JS::RootedObject jsclassObj(cx, anonEvaluate(cx, global, "(function () { return WebSocket; })()").toObjectOrNull());
 
-    JS_DefineProperty(cx, jsclassObj, "CONNECTING", INT_TO_JSVAL((int)WebSocket::State::CONNECTING)
-                      , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
-    JS_DefineProperty(cx, jsclassObj, "OPEN", INT_TO_JSVAL((int)WebSocket::State::OPEN)
-                      , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
-    JS_DefineProperty(cx, jsclassObj, "CLOSING", INT_TO_JSVAL((int)WebSocket::State::CLOSING)
-                      , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
-    JS_DefineProperty(cx, jsclassObj, "CLOSED", INT_TO_JSVAL((int)WebSocket::State::CLOSED)
-                      , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
+    JS_DefineProperty(cx, jsclassObj, "CONNECTING", (int)WebSocket::State::CONNECTING, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
+    JS_DefineProperty(cx, jsclassObj, "OPEN", (int)WebSocket::State::OPEN, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
+    JS_DefineProperty(cx, jsclassObj, "CLOSING", (int)WebSocket::State::CLOSING, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
+    JS_DefineProperty(cx, jsclassObj, "CLOSED", (int)WebSocket::State::CLOSED, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
     
     // make the class enumerable in the registered namespace
 //FIXME:    bool found;

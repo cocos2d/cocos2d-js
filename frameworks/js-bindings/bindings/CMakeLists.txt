@@ -38,6 +38,8 @@ set(JSBINDING_SRC
   auto/jsb_cocos2dx_spine_auto.cpp
   auto/jsb_cocos2dx_studio_auto.cpp
   auto/jsb_cocos2dx_ui_auto.cpp
+  auto/jsb_cocos2dx_3d_auto.cpp
+  auto/jsb_cocos2dx_3d_extension_auto.cpp
   manual/ScriptingCore.cpp
   manual/cocos2d_specifics.cpp
   manual/js_manual_conversions.cpp
@@ -53,6 +55,7 @@ set(JSBINDING_SRC
   manual/chipmunk/js_bindings_chipmunk_registration.cpp
   manual/cocosbuilder/js_bindings_ccbreader.cpp
   manual/cocostudio/jsb_cocos2dx_studio_manual.cpp
+  manual/cocostudio/jsb_cocos2dx_studio_conversions.cpp
   manual/extension/jsb_cocos2dx_extension_manual.cpp
   manual/localstorage/js_bindings_system_functions.cpp
   manual/localstorage/js_bindings_system_registration.cpp
@@ -61,12 +64,15 @@ set(JSBINDING_SRC
   manual/network/jsb_socketio.cpp
   manual/spine/jsb_cocos2dx_spine_manual.cpp
   manual/ui/jsb_cocos2dx_ui_manual.cpp
+  manual/3d/jsb_cocos2dx_3d_manual.cpp
   ../cocos2d-x/cocos/storage/local-storage/LocalStorage.cpp
 )
 
 include_directories(
   auto
   manual
+  manual/cocostudio
+  manual/spine
   ../external/spidermonkey/include/${PLATFORM_FOLDER}
   ../cocos2d-x/cocos/base
   ../cocos2d-x/cocos/2d
@@ -91,6 +97,7 @@ add_library(jsbindings STATIC
 target_link_libraries(jsbindings
   sqlite3
   js_static
+  xxhash
 )
 
 set_target_properties(jsbindings

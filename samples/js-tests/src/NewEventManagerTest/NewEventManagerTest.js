@@ -1200,6 +1200,56 @@ PauseResumeTargetTest.create = function(){
     return test;
 };
 
+var Issue9898 = EventDispatcherTestDemo.extend({
+
+    title: function(){
+        return "Issue9898";
+    },
+
+    subtitle: function(){
+        return "Should not crash if dispatch event after remove\n event listener in callback";
+    },
+
+    ctor: function(){
+        this._super();
+        //----start12----ctor
+
+        var origin = cc.director.getVisibleOrigin();
+        var size = cc.director.getVisibleSize();
+
+        var node = new cc.Node();
+        this.addChild(node);
+
+        var _listener = cc.EventListener.create({
+            event: cc.EventListener.CUSTOM,
+            eventName: "Issue9898",
+            callback: function(event){
+                cc.eventManager.removeListener(_listener);
+                event = new cc.EventCustom("Issue9898");
+                cc.eventManager.dispatchEvent(event);
+            }
+        });
+        cc.eventManager.addListener(_listener, 1);
+        var menuItem  = new cc.MenuItemFont("Dispatch Custom Event1", function(sender){
+            var event = new cc.EventCustom("Issue9898");
+            cc.eventManager.dispatchEvent(event);
+        });
+        menuItem.setPosition(origin.x + size.width/2, origin.y + size.height/2);
+
+        var menu = new cc.Menu(menuItem);
+        menu.setPosition(0, 0);
+        this.addChild(menu);
+        //----end12----
+    }
+
+});
+
+Issue9898.create = function(){
+    var test = new Issue9898();
+    test.init();
+    return test;
+};
+
 var EventDispatcherTestScene = TestScene.extend({
     runThisTest:function (num) {
         eventDispatcherSceneIdx = (num || num == 0) ? (num - 1) : -1;
@@ -1221,7 +1271,8 @@ var arrayOfEventDispatcherTest = [
     //GlobalZTouchTest,
     StopPropagationTest,
     Issue4160,
-    PauseResumeTargetTest
+    PauseResumeTargetTest,
+    Issue9898
 ];
 
 var nextDispatcherTest = function () {

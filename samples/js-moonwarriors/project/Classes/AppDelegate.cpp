@@ -1,8 +1,6 @@
 #include "AppDelegate.h"
 
-#include "cocos2d.h"
 #include "SimpleAudioEngine.h"
-#include "ScriptingCore.h"
 #include "jsb_cocos2dx_auto.hpp"
 #include "cocos2d_specifics.hpp"
 #include "localstorage/js_bindings_system_registration.h"
@@ -32,7 +30,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+        glview = cocos2d::GLViewImpl::create("js-moonwarriors");
+#else
         glview = cocos2d::GLViewImpl::createWithRect("js-moonwarriors", Rect(0, 0, 480, 720));
+#endif
         director->setOpenGLView(glview);
     }
 
@@ -42,7 +44,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_cocos2dx_js_core);
-    sc->addRegisterCallback(register_cocos2dx_js_extensions);
     sc->addRegisterCallback(jsb_register_system);
 
     sc->start();

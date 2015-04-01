@@ -25,15 +25,15 @@
  ****************************************************************************/
 
 var SCROLLVIEW_RES = [
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.json",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.json",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.json"
+    "res/cocosui/CCS/ScrollView/Vertical/vertical_1.json",
+    "res/cocosui/CCS/ScrollView/Horizontal/horizontal_1.json",
+    "res/cocosui/CCS/ScrollView/Both/both_1.json"
 ];
 var SCROLLVIEW_INDEX = 0;
 var UIScrollViewEditorTest = UIBaseLayer.extend({
     ctor: function () {
         this._super();
-        var root = ccs.uiReader.widgetFromJsonFile(SCROLLVIEW_RES[SCROLLVIEW_INDEX]);
+        var root = this._parseUIFile(SCROLLVIEW_RES[SCROLLVIEW_INDEX]);
         this._mainNode.addChild(root);
 
         var back_label = ccui.helper.seekWidgetByName(root, "back");

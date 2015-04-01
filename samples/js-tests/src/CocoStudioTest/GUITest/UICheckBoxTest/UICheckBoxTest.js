@@ -23,19 +23,49 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+var CEHCK_BOX_INDEX = 0;
 
 var UICheckBoxEditorTest = UIBaseLayer.extend({
     ctor: function () {
         this._super();
-        var root = ccs.uiReader.widgetFromJsonFile("res/cocosui/UIEditorTest/UICheckBox_Editor/ui_checkbox_editor_1.json");
-        this._mainNode.addChild(root);
+        var left_button = new ccui.Button();
+        left_button.loadTextures("res/Images/b1.png", "res/Images/b2.png", "");
+        left_button.x = 240-50;
+        left_button.y = 50;
+        left_button.anchorX = 0.5;
+        left_button.anchorY = 0.5;
+        left_button.addTouchEventListener(this.previousCallback, this);
+        this._mainNode.addChild(left_button, 999);
 
-        var back_label =ccui.helper.seekWidgetByName(root, "back");
-        back_label.addTouchEventListener(this.backEvent,this);
-
-        var checkbox = ccui.helper.seekWidgetByName(root, "CheckBox_540");
-        checkbox.addEventListener(this.selectedStateEvent,this);
-
+        var right_button = new ccui.Button();
+        right_button.loadTextures("res/Images/f1.png", "res/Images/f2.png", "");
+        right_button.x = 240+50;
+        right_button.y = 50;
+        right_button.anchorX = 0.5;
+        right_button.anchorY = 0.5;
+        right_button.addTouchEventListener(this.nextCallback, this);
+        this._mainNode.addChild(right_button, 999);
+    },
+    previousCallback: function (render, type) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
+            CEHCK_BOX_INDEX--;
+            if (CEHCK_BOX_INDEX < 0)CEHCK_BOX_INDEX = CEHCK_BOX_SCENE.length-1;
+            if (CEHCK_BOX_INDEX >= CEHCK_BOX_SCENE.length)CEHCK_BOX_INDEX = 0;
+            this.runNextScene();
+        }
+    },
+    nextCallback: function (render, type) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
+            CEHCK_BOX_INDEX++;
+            if (CEHCK_BOX_INDEX < 0)CEHCK_BOX_INDEX = CEHCK_BOX_SCENE.length-1;
+            if (CEHCK_BOX_INDEX >= CEHCK_BOX_SCENE.length)CEHCK_BOX_INDEX = 0;
+            this.runNextScene();
+        }
+    },
+    runNextScene: function () {
+        var scene = new cc.Scene();
+        scene.addChild(new CEHCK_BOX_SCENE[CEHCK_BOX_INDEX]());
+        cc.director.runScene(scene);
     },
 
     selectedStateEvent: function (sender, type) {
@@ -52,3 +82,32 @@ var UICheckBoxEditorTest = UIBaseLayer.extend({
         }
     }
 });
+
+var UICheckBoxOldTest = UICheckBoxEditorTest.extend({
+    ctor: function () {
+        this._super();
+        var root = this._parseUIFile("res/cocosui/CCS/CheckBox/checkbox_1.json");
+        this._mainNode.addChild(root);
+
+        var back_label =ccui.helper.seekWidgetByName(root, "back");
+        back_label.addTouchEventListener(this.backEvent,this);
+
+        var checkbox = ccui.helper.seekWidgetByName(root, "CheckBox_540");
+        checkbox.addEventListener(this.selectedStateEvent,this);
+    }
+});
+
+var UICheckBoxNewTest = UICheckBoxEditorTest.extend({
+    ctor: function () {
+        this._super();
+        var root = ccs.load("res/cocosui/CCS/CheckBox/MainScene.json");
+        this._mainNode.addChild(root.node);
+        var checkbox = ccui.helper.seekWidgetByName(root.node, "CheckBox_1");
+        checkbox.addEventListener(this.selectedStateEvent,this);
+    }
+});
+
+var CEHCK_BOX_SCENE = [
+    UICheckBoxOldTest,
+    UICheckBoxNewTest
+];

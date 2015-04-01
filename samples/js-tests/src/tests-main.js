@@ -104,7 +104,8 @@ var TestController = cc.LayerGradient.extend({
         var toggleAutoTestItem = new cc.MenuItemToggle(subItem1, subItem2);
         toggleAutoTestItem.setCallback(this.onToggleAutoTest, this);
         toggleAutoTestItem.x = winSize.width - toggleAutoTestItem.width / 2 - 10;
-	    toggleAutoTestItem.y = 20;
+        toggleAutoTestItem.y = 20;
+        toggleAutoTestItem.setVisible(false);
         if( autoTestEnabled )
             toggleAutoTestItem.setSelectedIndex(1);
 
@@ -243,12 +244,28 @@ var testNames = [
         }
     },
     {
+        title:"BillBoard Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/BillBoardTest/BillBoardTest.js",
+        testScene:function () {
+            return new BillBoardTestScene();
+        }
+    },
+    {
         title:"Box2D Test",
         resource:g_box2d,
         platforms: PLATFORM_HTML5,
         linksrc:"src/Box2dTest/Box2dTest.js",
         testScene:function () {
             return new Box2DTestScene();
+        }
+    },
+    {
+        title:"Camera3D Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/Camera3DTest/Camera3DTest.js",
+        testScene:function () {
+            return new Camera3DTestScene();
         }
     },
     {
@@ -414,6 +431,14 @@ var testNames = [
         }
     },
     {
+        title:"Light Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/LightTest/LightTest.js",
+        testScene:function () {
+            return new LightTestScene();
+        }
+    },
+    {
         title:"Loader Test",
         platforms: PLATFORM_ALL,
         linksrc:"src/LoaderTest/LoaderTest.js",
@@ -548,6 +573,14 @@ var testNames = [
         }
     },
     {
+        title:"Sprite3D Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/Sprite3DTest/Sprite3DTest.js",
+        testScene:function () {
+            return new Sprite3DTestScene();
+        }
+    },
+    {
         title:"Sprite Test",
         resource:g_sprites,
         platforms: PLATFORM_ALL,
@@ -639,6 +672,14 @@ var testNames = [
         linksrc:"src/XHRTest/XHRTest.js",
         testScene:function () {
             return new XHRTestScene();
+        }
+    },
+    {
+        title:"XMLHttpRequest send ArrayBuffer",
+        platforms: PLATFORM_ALL,
+        linksrc:"src/XHRTest/XHRArrayBufferTest.js",
+        testScene:function () {
+            return new XHRArrayBufferTestScene();
         }
     }
 

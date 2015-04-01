@@ -97,7 +97,40 @@ var CocoStudioMainLayer = cc.Layer.extend({
     }
 });
 
+var cocoStudioOldApiFlag = 0;
 var CocoStudioTestScene = TestScene.extend({
+
+    onEnter: function(){
+        TestScene.prototype.onEnter.call(this);
+
+        var winSize = cc.director.getWinSize();
+
+        var pMenu = new cc.Menu();
+        pMenu.x = 0;
+        pMenu.y = 0;
+        cc.MenuItemFont.setFontName("Arial");
+        cc.MenuItemFont.setFontSize(24);
+        var str = "new api";
+        if(cocoStudioOldApiFlag){
+            str = "old api";
+        }
+        var pItem = new cc.MenuItemFont(str,
+            function(){
+                if(cocoStudioOldApiFlag){
+                    cocoStudioOldApiFlag = 0;
+                    pItem.setString("new api");
+                }else{
+                    cocoStudioOldApiFlag = 1;
+                    pItem.setString("old api");
+                }
+            }, this);
+        pItem.x = 50;
+        pItem.y = winSize.height - 20;
+        pMenu.addChild(pItem);
+
+        this.addChild(pMenu);
+    },
+
     runThisTest:function () {
         var pLayer = new CocoStudioMainLayer();
         this.addChild(pLayer);

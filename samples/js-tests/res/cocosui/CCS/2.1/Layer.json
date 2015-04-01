@@ -1,0 +1,233 @@
+{
+  "ID": "4d5b94bb-1f52-4466-a3fb-6fc29d787caa",
+  "Version": "2.0.0.0",
+  "Type": "Layer",
+  "Name": "Layer",
+  "Content": {
+    "Content": {
+      "Animation": {
+        "Duration": 0,
+        "Speed": 1.0,
+        "Timelines": [],
+        "ctype": "TimelineActionData"
+      },
+      "AnimationList": [],
+      "ObjectData": {
+        "ComboBoxIndex": 1,
+        "SingleColor": {
+          "R": 0,
+          "G": 0,
+          "B": 0
+        },
+        "FirstColor": {
+          "R": 0,
+          "G": 0,
+          "B": 0
+        },
+        "EndColor": {},
+        "ColorVector": {
+          "ScaleX": 1.0
+        },
+        "ColorAngle": 0.0,
+        "PrePosition": {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "PreSize": {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Children": [
+          {
+            "FileData": {
+              "Type": "Normal",
+              "Path": "ditu/isometric_grass_and_water.tmx"
+            },
+            "Tag": 38,
+            "ObjectIndex": 1,
+            "PrePosition": {
+              "X": 0.087,
+              "Y": 0.0627
+            },
+            "PreSize": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "Children": [
+              {
+                "FileData": {
+                  "Type": "Normal",
+                  "Path": "particle/blue.plist"
+                },
+                "Tag": 55,
+                "ObjectIndex": 1,
+                "PrePosition": {
+                  "X": 0.59,
+                  "Y": 0.4892
+                },
+                "PreSize": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "ActionTag": 91,
+                "Position": {
+                  "X": 943.9235,
+                  "Y": 391.3527
+                },
+                "Scale": {
+                  "ScaleX": 2.0115,
+                  "ScaleY": 1.3099
+                },
+                "AnchorPoint": {
+                  "ScaleX": 0.5,
+                  "ScaleY": 0.5
+                },
+                "CColor": {},
+                "Size": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "FrameEvent": "",
+                "Name": "Particle_1",
+                "ctype": "ParticleObjectData"
+              },
+              {
+                "FontSize": 24,
+                "ButtonText": "Button",
+                "FontResource": {
+                  "Type": "Normal",
+                  "Path": "ttf/A Damn Mess.ttf"
+                },
+                "TextColor": {
+                  "R": 65,
+                  "G": 65,
+                  "B": 70
+                },
+                "DisabledFileData": {
+                  "Type": "Default",
+                  "Path": "Default/Button_Disable.png"
+                },
+                "PressedFileData": {
+                  "Type": "Normal",
+                  "Path": "Button/button_common_box03_003 copy 221.png"
+                },
+                "NormalFileData": {
+                  "Type": "Normal",
+                  "Path": "Button/button_common_box03_001.png"
+                },
+                "Scale9Enable": true,
+                "Scale9Width": 58,
+                "Scale9Height": 58,
+                "TouchEnable": true,
+                "Tag": 57,
+                "ObjectIndex": 1,
+                "PrePositionEnabled": true,
+                "PrePosition": {
+                  "X": 0.2381,
+                  "Y": 0.4363
+                },
+                "PreSizeEnable": true,
+                "PreSize": {
+                  "X": 0.0288,
+                  "Y": 0.045
+                },
+                "ActionTag": 93,
+                "Position": {
+                  "X": 381.0,
+                  "Y": 349.0
+                },
+                "Scale": {
+                  "ScaleX": 1.0,
+                  "ScaleY": 1.0
+                },
+                "AnchorPoint": {
+                  "ScaleX": 0.5,
+                  "ScaleY": 0.5
+                },
+                "CColor": {},
+                "Size": {
+                  "X": 46.0,
+                  "Y": 36.0
+                },
+                "FrameEvent": "",
+                "Name": "Button_1",
+                "ctype": "ButtonObjectData"
+              }
+            ],
+            "ActionTag": 40,
+            "Position": {
+              "X": 89.048,
+              "Y": 48.1427
+            },
+            "Scale": {
+              "ScaleX": 0.5323,
+              "ScaleY": 0.8687
+            },
+            "AnchorPoint": {},
+            "CColor": {},
+            "Size": {
+              "X": 1600.0,
+              "Y": 800.0
+            },
+            "FrameEvent": "",
+            "Name": "Map_1",
+            "ctype": "GameMapObjectData"
+          },
+          {
+            "FileData": {
+              "Type": "Default",
+              "Path": "Default/defaultMap.tmx"
+            },
+            "Tag": 118,
+            "ObjectIndex": 2,
+            "PrePosition": {
+              "X": 0.7035,
+              "Y": 0.1311
+            },
+            "PreSize": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "ActionTag": 147,
+            "Position": {
+              "X": 720.3335,
+              "Y": 100.6667
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "AnchorPoint": {},
+            "CColor": {},
+            "Size": {
+              "X": 128.0,
+              "Y": 64.0
+            },
+            "FrameEvent": "",
+            "Name": "Map_2",
+            "ctype": "GameMapObjectData"
+          }
+        ],
+        "CanEdit": false,
+        "Position": {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Scale": {
+          "ScaleX": 1.0,
+          "ScaleY": 1.0
+        },
+        "AnchorPoint": {},
+        "CColor": {},
+        "Size": {
+          "X": 1024.0,
+          "Y": 768.0
+        },
+        "FrameEvent": "",
+        "Name": "Layer",
+        "ctype": "PanelObjectData"
+      },
+      "ctype": "GameProjectData"
+    }
+  }
+}

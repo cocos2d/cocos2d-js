@@ -529,6 +529,168 @@ var ScheduleUsingSchedulerTest = SchedulerTestLayer.extend({
     }
 });
 
+// SchedulerTimeScale
+
+var SchedulerTimeScale = SchedulerTestLayer.extend({
+    _newScheduler: null,
+    _newActionManager: null,
+
+    onEnter: function() {
+        this._super();
+
+        this._newScheduler = new cc.Scheduler();
+        this._newActionManager = new cc.ActionManager();
+        
+        var s = cc.winSize;
+
+        // rotate and jump
+        var jump1 = new cc.JumpBy(4, cc.p(-s.width+80,0), 100, 4);
+        var jump2 = jump1.reverse();
+        var rot1 = new cc.RotateBy(4, 360*2);
+        var rot2 = rot1.reverse();
+
+        var seq3_1 = new cc.Sequence(jump2, jump1);
+        var seq3_2 = new cc.Sequence(rot1, rot2);
+        var spawn = new cc.Spawn(seq3_1, seq3_2);
+        var action = new cc.Repeat(spawn, 50);
+
+        var action2 = action.clone();
+        var action3 = action.clone();
+
+        var grossini = new cc.Sprite("res/Images/grossini.png");
+        var tamara = new cc.Sprite("res/Images/grossinis_sister1.png");
+        var kathia = new cc.Sprite("res/Images/grossinis_sister2.png");
+        
+        grossini.setActionManager(this._newActionManager);
+        grossini.setScheduler(this._newScheduler);
+
+        grossini.setPosition(cc.p(40,80));
+        tamara.setPosition(cc.p(40,80));
+        kathia.setPosition(cc.p(40,80));
+
+        this.addChild(grossini);
+        this.addChild(tamara);
+        this.addChild(kathia);
+
+        grossini.runAction(new cc.Speed(action, 0.5));
+        tamara.runAction(new cc.Speed(action2, 1.5));
+        kathia.runAction(new cc.Speed(action3, 1.0));
+        
+        cc.director.getScheduler().scheduleUpdateForTarget(this._newScheduler, 0, false);
+        
+        this._newScheduler.scheduleUpdateForTarget(this._newActionManager, 0, false);
+
+        var emitter = new cc.ParticleFireworks();
+        emitter.setTexture( cc.textureCache.addImage(s_stars1) );
+        this.addChild(emitter);
+
+        var slider = null;
+        var l = null;
+
+        slider = new ccui.Slider();
+        slider.setTouchEnabled(true);
+        slider.loadBarTexture("res/cocosui/sliderTrack.png");
+        slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
+        slider.loadProgressBarTexture("res/cocosui/sliderProgress.png");
+        slider.x = cc.winSize.width / 2.0;
+        slider.y = cc.winSize.height / 3.0 * 2;
+        slider.addEventListener(this.sliderEventForGrossini, this);
+        this.addChild(slider);
+        slider.setPercent(20);
+
+        l = new cc.LabelTTF("Control time scale only for Grossini", "Thonburi", 16);
+        this.addChild(l);
+        l.x = slider.x;
+        l.y = slider.y + 30;
+
+        slider = new ccui.Slider();
+        slider.setTouchEnabled(true);
+        slider.loadBarTexture("res/cocosui/sliderTrack.png");
+        slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
+        slider.loadProgressBarTexture("res/cocosui/sliderProgress.png");
+        slider.x = cc.winSize.width / 2.0;
+        slider.y = cc.winSize.height / 3.0;
+        slider.addEventListener(this.sliderEventForGlobal, this);
+        this.addChild(slider);
+        slider.setPercent(20);
+        l = new cc.LabelTTF("Control time scale for all", "Thonburi", 16);
+        this.addChild(l);
+        l.x = slider.x;
+        l.y = slider.y + 30;
+    },
+
+    sliderEventForGrossini: function (sender, type) {
+        switch (type) {
+            case ccui.Slider.EVENT_PERCENT_CHANGED:
+                var slider = sender;
+                var percent = slider.getPercent() / 100.0 * 5;
+                this._newScheduler.setTimeScale(percent);
+                break;
+            default:
+                break;
+        }
+    },
+
+    sliderEventForGlobal: function (sender, type) {
+        switch (type) {
+            case ccui.Slider.EVENT_PERCENT_CHANGED:
+                var slider = sender;
+                var percent = slider.getPercent() / 100.0 * 5;
+                cc.director.getScheduler().setTimeScale(percent);
+                break;
+            default:
+                break;
+        }
+    },
+
+    onExit: function() {
+        // restore scale
+        cc.director.getScheduler().unscheduleUpdateForTarget(this._newScheduler);
+        this._super();
+    },
+
+    title:function () {
+        return "Scheduler timeScale Test";
+    },
+
+    subtitle:function () {
+        return "Fast-forward and rewind using scheduler.timeScale";
+    }
+});
+
+var unScheduleAndRepeatTest = SchedulerTestLayer.extend({
+
+    onEnter: function(){
+        this._super();
+        cc.log("start schedule 'repeat': run once and repeat 4 times");
+        this.schedule(this.repeat, 0.5, 4);
+        cc.log("start schedule 'forever': repeat forever (stop in 8s)");
+        this.schedule(this.forever, 0.5);
+        this.schedule(function(){
+            cc.log("stop the 'forever'");
+            this.unschedule(this.forever);
+        }, 8);
+    },
+
+    _times: 5,
+
+    repeat: function(){
+        cc.log("Repeat - the remaining number: " + this._times--);
+    },
+
+    forever: function(){
+        cc.log("Repeat Forever...");
+    },
+
+    title: function(){
+        return "Repeat And unschedule Test";
+    },
+
+    subtitle: function(){
+        return "Repeat will print 5 times\nForever will stop in 8 seconds.";
+    }
+});
+
 /*
     main entry
 */
@@ -547,6 +709,7 @@ var SchedulerTestScene = TestScene.extend({
 //
 
 var arrayOfSchedulerTest = [
+    SchedulerTimeScale,
     SchedulerAutoremove,
     SchedulerPauseResume,
     SchedulerUnscheduleAll,
@@ -556,7 +719,8 @@ var arrayOfSchedulerTest = [
     SchedulerUpdateAndCustom,
     SchedulerUpdateFromCustom,
     RescheduleCallback,
-    ScheduleUsingSchedulerTest
+    ScheduleUsingSchedulerTest,
+    unScheduleAndRepeatTest
 ];
 
 var nextSchedulerTest = function () {

@@ -86,7 +86,7 @@ var Enemy = cc.Sprite.extend({
         });
         SparkEffect.getOrCreateSparkEffect(this.x, this.y);
         if (MW.SOUND) {
-	        cc.audioEngine.playEffect(res.explodeEffect_mp3);
+            cc.audioEngine.playEffect(cc.sys.os == cc.sys.OS_WP8 || cc.sys.os == cc.sys.OS_WINRT ? res.explodeEffect_wav : res.explodeEffect_mp3);
         }
         this.visible = false;
         this.active = false;

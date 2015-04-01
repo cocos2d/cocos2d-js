@@ -115,7 +115,7 @@ var Ship = cc.Sprite.extend({
 	    explosion.y = this.y;
 
         if (MW.SOUND) {
-	        cc.audioEngine.playEffect(res.shipDestroyEffect_mp3);
+            cc.audioEngine.playEffect(cc.sys.os == cc.sys.OS_WP8 || cc.sys.os == cc.sys.OS_WINRT ? res.shipDestroyEffect_wav : res.shipDestroyEffect_mp3);
         }
     },
     hurt:function () {

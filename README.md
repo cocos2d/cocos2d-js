@@ -1,4 +1,4 @@
-<img src="http://www.cocos2d-x.org/attachments/801/cocos2dx_portrait.png" width=200>
+<img src="http://cocos2d-x.org/s/images/img-cocos2djs.jpg" width=200>
 
 Cocos2d-JS
 ===========
@@ -33,7 +33,6 @@ Furthermore, JavaScript friendly APIs make your game development experience a br
 
 - [Getting Started with Cocos2d-JS](http://www.cocos2d-x.org/docs/manual/framework/html5/en)
 - [Cocos2d-JS release notes](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/en)
-- [Cocos2d-JS v3.0 upgrade guide](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.0rc0/upgrade-guide/en)
 
 ## About Cocos2d family
 
@@ -73,8 +72,8 @@ Example:
 * Compile and run project in Cocos2d-JSB :
 
 	```
-	cocos compile -p ios|mac|android|web
-	cocos run -p ios|mac|android|web
+	cocos compile -p ios|mac|android|win32|web
+	cocos run -p ios|mac|android|win32|web
 	```
 
 You may need to provide your Android NDK, Android SDK and ANT's paths during the setup. Note that this tool is developed with python, so you will need python (32bit) 2.7.5 or later installed on your machine (but it doesn't support Python3). Please refer to [Cocos Console document](http://www.cocos2d-x.org/docs/manual/framework/html5/v2/cocos-console/en).
@@ -103,16 +102,18 @@ There are two prebuilt projects in Cocos2d-JS repo:
 
 - Test cases, located in `samples/js-tests`
 
- ```
- cd samples/js-tests
- run -p ios|mac|android|web
- ```
+```
+cd samples/js-tests
+run -p ios|mac|android|win32|web
+```
+
 - Game sample : Moon Warriors, located in `samples/js-moonwarriors`
 
 ```
 cd samples/js-moonwarriors
-run -p ios|mac|android|web
+run -p ios|mac|android|win32|web
 ```
+
 And they share the same project files which are located in `build` folder, there are Xcode and Visual Studio projects.
 
 ##Main features
@@ -153,7 +154,7 @@ And they share the same project files which are located in `build` folder, there
 
 For JSB build, there are some restrictions :
 
-- [Android build] NDK version must be r9d
+- [Android build] NDK version must be r10c
 - [iOS build] Xcode version must be 5.1.1 +
 
 ##Github note
@@ -165,12 +166,3 @@ If you fork our github repository or download the package from github, you will 
 - Run `tools/cocos2d-console/download-bin.py` to download bin files for some cocos2d-console plugins like Google Closure Compiler and JSC Compiler.
 
 Otherwise, you will fail to compile your JSB projects.
-
-## Roadmap
-
-Cocos2d-JS have greatly simplified cross platform development. For the next step, we will focus on improving performance on mobile web, toolchain enhancement and completing documentation. Here is a list of main tasks we consider to accomplish in v3.1 :
-
-- The research for performance improvement on Web engine have already made great progress, the new renderer for canvas render mode is ready and will be merged in v3.1. The performance is upto 50% better than v3.0 based on various tests.
-- Facebook SDK for Cocos2d-JS will be released with v3.1, developers can use all Facebook features on iOS/Android/Web with the same JavaScript code.
-- Continue the research of memory model in JSB, improve the stability and simplify the usage.
-- Complete the Cocos2d-JS Programming Guide document to cover all important aspects about Cocos2d-JS development.

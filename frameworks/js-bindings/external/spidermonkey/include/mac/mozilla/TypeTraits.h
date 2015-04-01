@@ -9,6 +9,8 @@
 #ifndef mozilla_TypeTraits_h
 #define mozilla_TypeTraits_h
 
+#include "mozilla/Types.h"
+
 /*
  * These traits are approximate copies of the traits and semantics from C++11's
  * <type_traits> header.  Don't add traits not in that header!  When all
@@ -32,9 +34,9 @@ template<typename> struct RemoveCV;
 template<typename T, T Value>
 struct IntegralConstant
 {
-    static const T value = Value;
-    typedef T ValueType;
-    typedef IntegralConstant<T, Value> Type;
+  static const T value = Value;
+  typedef T ValueType;
+  typedef IntegralConstant<T, Value> Type;
 };
 
 /** Convenient aliases. */
@@ -44,6 +46,27 @@ typedef IntegralConstant<bool, false> FalseType;
 /* 20.9.4 Unary type traits [meta.unary] */
 
 /* 20.9.4.1 Primary type categories [meta.unary.cat] */
+
+namespace detail {
+
+template<typename T>
+struct IsVoidHelper : FalseType {};
+
+template<>
+struct IsVoidHelper<void> : TrueType {};
+
+} // namespace detail
+
+/**
+ * IsVoid determines whether a type is void.
+ *
+ * mozilla::IsVoid<int>::value is false;
+ * mozilla::IsVoid<void>::value is true;
+ * mozilla::IsVoid<void*>::value is false;
+ * mozilla::IsVoid<volatile void>::value is true.
+ */
+template<typename T>
+struct IsVoid : detail::IsVoidHelper<typename RemoveCV<T>::Type> {};
 
 namespace detail {
 
@@ -114,6 +137,31 @@ struct IsFloatingPoint
   : detail::IsFloatingPointHelper<typename RemoveCV<T>::Type>
 {};
 
+namespace detail {
+
+template<typename T>
+struct IsArrayHelper : FalseType {};
+
+template<typename T, decltype(sizeof(1)) N>
+struct IsArrayHelper<T[N]> : TrueType {};
+
+template<typename T>
+struct IsArrayHelper<T[]> : TrueType {};
+
+} // namespace detail
+
+/**
+ * IsArray determines whether a type is an array type, of known or unknown
+ * length.
+ *
+ * mozilla::IsArray<int>::value is false;
+ * mozilla::IsArray<int[]>::value is true;
+ * mozilla::IsArray<int[5]>::value is true.
+ */
+template<typename T>
+struct IsArray : detail::IsArrayHelper<typename RemoveCV<T>::Type>
+{};
+
 /**
  * IsPointer determines whether a type is a pointer type (but not a pointer-to-
  * member type).
@@ -129,6 +177,40 @@ struct IsPointer : FalseType {};
 
 template<typename T>
 struct IsPointer<T*> : TrueType {};
+
+/**
+ * IsLvalueReference determines whether a type is an lvalue reference.
+ *
+ * mozilla::IsLvalueReference<struct S*>::value is false;
+ * mozilla::IsLvalueReference<int**>::value is false;
+ * mozilla::IsLvalueReference<void (*)(void)>::value is false;
+ * mozilla::IsLvalueReference<int>::value is false;
+ * mozilla::IsLvalueReference<struct S>::value is false;
+ * mozilla::IsLvalueReference<struct S*&>::value is true;
+ * mozilla::IsLvalueReference<struct S&&>::value is false.
+ */
+template<typename T>
+struct IsLvalueReference : FalseType {};
+
+template<typename T>
+struct IsLvalueReference<T&> : TrueType {};
+
+/**
+ * IsRvalueReference determines whether a type is an rvalue reference.
+ *
+ * mozilla::IsRvalueReference<struct S*>::value is false;
+ * mozilla::IsRvalueReference<int**>::value is false;
+ * mozilla::IsRvalueReference<void (*)(void)>::value is false;
+ * mozilla::IsRvalueReference<int>::value is false;
+ * mozilla::IsRvalueReference<struct S>::value is false;
+ * mozilla::IsRvalueReference<struct S*&>::value is false;
+ * mozilla::IsRvalueReference<struct S&&>::value is true.
+ */
+template<typename T>
+struct IsRvalueReference : FalseType {};
+
+template<typename T>
+struct IsRvalueReference<T&&> : TrueType {};
 
 namespace detail {
 
@@ -152,7 +234,54 @@ struct IsEnum
   : detail::IsEnumHelper<typename RemoveCV<T>::Type>
 {};
 
+namespace detail {
+
+// __is_class is a supported extension across all of our supported compilers:
+// http://llvm.org/releases/3.0/docs/ClangReleaseNotes.html
+// http://gcc.gnu.org/onlinedocs/gcc-4.4.7/gcc/Type-Traits.html#Type-Traits
+// http://msdn.microsoft.com/en-us/library/ms177194%28v=vs.100%29.aspx
+template<typename T>
+struct IsClassHelper
+  : IntegralConstant<bool, __is_class(T)>
+{};
+
+} // namespace detail
+
+/**
+ * IsClass determines whether a type is a class type (but not a union).
+ *
+ * struct S {};
+ * union U {};
+ * mozilla::IsClass<int>::value is false;
+ * mozilla::IsClass<const S>::value is true;
+ * mozilla::IsClass<U>::value is false;
+ */
+template<typename T>
+struct IsClass
+  : detail::IsClassHelper<typename RemoveCV<T>::Type>
+{};
+
 /* 20.9.4.2 Composite type traits [meta.unary.comp] */
+
+/**
+ * IsReference determines whether a type is an lvalue or rvalue reference.
+ *
+ * mozilla::IsReference<struct S*>::value is false;
+ * mozilla::IsReference<int**>::value is false;
+ * mozilla::IsReference<int&>::value is true;
+ * mozilla::IsReference<void (*)(void)>::value is false;
+ * mozilla::IsReference<const int&>::value is true;
+ * mozilla::IsReference<int>::value is false;
+ * mozilla::IsReference<struct S>::value is false;
+ * mozilla::IsReference<struct S&>::value is true;
+ * mozilla::IsReference<struct S*&>::value is true;
+ * mozilla::IsReference<struct S&&>::value is true.
+ */
+template<typename T>
+struct IsReference
+  : IntegralConstant<bool,
+                     IsLvalueReference<T>::value || IsRvalueReference<T>::value>
+{};
 
 /**
  * IsArithmetic determines whether a type is arithmetic.  A type is arithmetic
@@ -228,25 +357,89 @@ template<typename T> struct IsPod<T*>       : TrueType {};
 
 namespace detail {
 
-template<typename T, bool = IsFloatingPoint<T>::value>
+// __is_empty is a supported extension across all of our supported compilers:
+// http://llvm.org/releases/3.0/docs/ClangReleaseNotes.html
+// http://gcc.gnu.org/onlinedocs/gcc-4.4.7/gcc/Type-Traits.html#Type-Traits
+// http://msdn.microsoft.com/en-us/library/ms177194%28v=vs.100%29.aspx
+template<typename T>
+struct IsEmptyHelper
+  : IntegralConstant<bool, IsClass<T>::value && __is_empty(T)>
+{};
+
+} // namespace detail
+
+/**
+ * IsEmpty determines whether a type is a class (but not a union) that is empty.
+ *
+ * A class is empty iff it and all its base classes have no non-static data
+ * members (except bit-fields of length 0) and no virtual member functions, and
+ * no base class is empty or a virtual base class.
+ *
+ * Intuitively, empty classes don't have any data that has to be stored in
+ * instances of those classes.  (The size of the class must still be non-zero,
+ * because distinct array elements of any type must have different addresses.
+ * However, if the Empty Base Optimization is implemented by the compiler [most
+ * compilers implement it, and in certain cases C++11 requires it], the size of
+ * a class inheriting from an empty |Base| class need not be inflated by
+ * |sizeof(Base)|.)  And intuitively, non-empty classes have data members and/or
+ * vtable pointers that must be stored in each instance for proper behavior.
+ *
+ *   static_assert(!mozilla::IsEmpty<int>::value, "not a class => not empty");
+ *   union U1 { int x; };
+ *   static_assert(!mozilla::IsEmpty<U1>::value, "not a class => not empty");
+ *   struct E1 {};
+ *   struct E2 { int : 0 };
+ *   struct E3 : E1 {};
+ *   struct E4 : E2 {};
+ *   static_assert(mozilla::IsEmpty<E1>::value &&
+ *                 mozilla::IsEmpty<E2>::value &&
+ *                 mozilla::IsEmpty<E3>::value &&
+ *                 mozilla::IsEmpty<E4>::value,
+ *                 "all empty");
+ *   union U2 { E1 e1; };
+ *   static_assert(!mozilla::IsEmpty<U2>::value, "not a class => not empty");
+ *   struct NE1 { int x; };
+ *   struct NE2 : virtual E1 {};
+ *   struct NE3 : E2 { virtual ~NE3() {} };
+ *   struct NE4 { virtual void f() {} };
+ *   static_assert(!mozilla::IsEmpty<NE1>::value &&
+ *                 !mozilla::IsEmpty<NE2>::value &&
+ *                 !mozilla::IsEmpty<NE3>::value &&
+ *                 !mozilla::IsEmpty<NE4>::value,
+ *                 "all empty");
+ */
+template<typename T>
+struct IsEmpty : detail::IsEmptyHelper<typename RemoveCV<T>::Type>
+{};
+
+
+namespace detail {
+
+template<typename T,
+         bool = IsFloatingPoint<T>::value,
+         bool = IsIntegral<T>::value,
+         typename NoCV = typename RemoveCV<T>::Type>
 struct IsSignedHelper;
 
-template<typename T>
-struct IsSignedHelper<T, true> : TrueType {};
+// Floating point is signed.
+template<typename T, typename NoCV>
+struct IsSignedHelper<T, true, false, NoCV> : TrueType {};
 
-template<typename T>
-struct IsSignedHelper<T, false>
-  : IntegralConstant<bool, IsArithmetic<T>::value && T(-1) < T(1)>
+// Integral is conditionally signed.
+template<typename T, typename NoCV>
+struct IsSignedHelper<T, false, true, NoCV>
+  : IntegralConstant<bool, bool(NoCV(-1) < NoCV(1))>
 {};
+
+// Non-floating point, non-integral is not signed.
+template<typename T, typename NoCV>
+struct IsSignedHelper<T, false, false, NoCV> : FalseType {};
 
 } // namespace detail
 
 /**
  * IsSigned determines whether a type is a signed arithmetic type.  |char| is
  * considered a signed type if it has the same representation as |signed char|.
- *
- * Don't use this if the type might be user-defined!  You might or might not get
- * a compile error, depending.
  *
  * mozilla::IsSigned<int>::value is true;
  * mozilla::IsSigned<const unsigned int>::value is false;
@@ -258,27 +451,31 @@ struct IsSigned : detail::IsSignedHelper<T> {};
 
 namespace detail {
 
-template<typename T, bool = IsFloatingPoint<T>::value>
+template<typename T,
+         bool = IsFloatingPoint<T>::value,
+         bool = IsIntegral<T>::value,
+         typename NoCV = typename RemoveCV<T>::Type>
 struct IsUnsignedHelper;
 
-template<typename T>
-struct IsUnsignedHelper<T, true> : FalseType {};
+// Floating point is not unsigned.
+template<typename T, typename NoCV>
+struct IsUnsignedHelper<T, true, false, NoCV> : FalseType {};
 
-template<typename T>
-struct IsUnsignedHelper<T, false>
+// Integral is conditionally unsigned.
+template<typename T, typename NoCV>
+struct IsUnsignedHelper<T, false, true, NoCV>
   : IntegralConstant<bool,
-                     IsArithmetic<T>::value &&
-                     (IsSame<typename RemoveCV<T>::Type, bool>::value ||
-                      T(1) < T(-1))>
+                     (IsSame<NoCV, bool>::value || bool(NoCV(1) < NoCV(-1)))>
 {};
+
+// Non-floating point, non-integral is not unsigned.
+template<typename T, typename NoCV>
+struct IsUnsignedHelper<T, false, false, NoCV> : FalseType {};
 
 } // namespace detail
 
 /**
  * IsUnsigned determines whether a type is an unsigned arithmetic type.
- *
- * Don't use this if the type might be user-defined!  You might or might not get
- * a compile error, depending.
  *
  * mozilla::IsUnsigned<int>::value is false;
  * mozilla::IsUnsigned<const unsigned int>::value is true;
@@ -310,6 +507,13 @@ struct IsSame<T, T> : TrueType {};
 
 namespace detail {
 
+#if defined(__GNUC__) || defined(__clang__) || defined(_MSC_VER)
+
+template<class Base, class Derived>
+struct BaseOfTester : IntegralConstant<bool, __is_base_of(Base, Derived)> {};
+
+#else
+
 // The trickery used to implement IsBaseOf here makes it possible to use it for
 // the cases of private and multiple inheritance.  This code was inspired by the
 // sample code here:
@@ -318,35 +522,35 @@ namespace detail {
 template<class Base, class Derived>
 struct BaseOfHelper
 {
-  public:
-    operator Base*() const;
-    operator Derived*();
+public:
+  operator Base*() const;
+  operator Derived*();
 };
 
 template<class Base, class Derived>
 struct BaseOfTester
 {
-  private:
-    template<class T>
-    static char test(Derived*, T);
-    static int test(Base*, int);
+private:
+  template<class T>
+  static char test(Derived*, T);
+  static int test(Base*, int);
 
-  public:
-    static const bool value =
-      sizeof(test(BaseOfHelper<Base, Derived>(), int())) == sizeof(char);
+public:
+  static const bool value =
+    sizeof(test(BaseOfHelper<Base, Derived>(), int())) == sizeof(char);
 };
 
 template<class Base, class Derived>
 struct BaseOfTester<Base, const Derived>
 {
-  private:
-    template<class T>
-    static char test(Derived*, T);
-    static int test(Base*, int);
+private:
+  template<class T>
+  static char test(Derived*, T);
+  static int test(Base*, int);
 
-  public:
-    static const bool value =
-      sizeof(test(BaseOfHelper<Base, Derived>(), int())) == sizeof(char);
+public:
+  static const bool value =
+    sizeof(test(BaseOfHelper<Base, Derived>(), int())) == sizeof(char);
 };
 
 template<class Base, class Derived>
@@ -357,6 +561,8 @@ struct BaseOfTester<Type, Type> : TrueType {};
 
 template<class Type>
 struct BaseOfTester<Type, const Type> : TrueType {};
+
+#endif
 
 } /* namespace detail */
 
@@ -382,18 +588,18 @@ namespace detail {
 template<typename From, typename To>
 struct ConvertibleTester
 {
-  private:
-    static From create();
+private:
+  static From create();
 
-    template<typename From1, typename To1>
-    static char test(To to);
+  template<typename From1, typename To1>
+  static char test(To to);
 
-    template<typename From1, typename To1>
-    static int test(...);
+  template<typename From1, typename To1>
+  static int test(...);
 
-  public:
-    static const bool value =
-      sizeof(test<From, To>(create())) == sizeof(char);
+public:
+  static const bool value =
+    sizeof(test<From, To>(create())) == sizeof(char);
 };
 
 } // namespace detail
@@ -424,16 +630,6 @@ struct IsConvertible
   : IntegralConstant<bool, detail::ConvertibleTester<From, To>::value>
 {};
 
-/**
- * Is IsLvalueReference<T> is true if its template param is T& and is false if
- * its type is T or T&&.
- */
-template<typename T>
-struct IsLvalueReference : FalseType {};
-
-template<typename T>
-struct IsLvalueReference<T&> : TrueType {};
-
 /* 20.9.7 Transformations between types [meta.trans] */
 
 /* 20.9.7.1 Const-volatile modifications [meta.trans.cv] */
@@ -449,13 +645,13 @@ struct IsLvalueReference<T&> : TrueType {};
 template<typename T>
 struct RemoveConst
 {
-    typedef T Type;
+  typedef T Type;
 };
 
 template<typename T>
 struct RemoveConst<const T>
 {
-    typedef T Type;
+  typedef T Type;
 };
 
 /**
@@ -469,13 +665,13 @@ struct RemoveConst<const T>
 template<typename T>
 struct RemoveVolatile
 {
-    typedef T Type;
+  typedef T Type;
 };
 
 template<typename T>
 struct RemoveVolatile<volatile T>
 {
-    typedef T Type;
+  typedef T Type;
 };
 
 /**
@@ -489,7 +685,7 @@ struct RemoveVolatile<volatile T>
 template<typename T>
 struct RemoveCV
 {
-    typedef typename RemoveConst<typename RemoveVolatile<T>::Type>::Type Type;
+  typedef typename RemoveConst<typename RemoveVolatile<T>::Type>::Type Type;
 };
 
 /* 20.9.7.2 Reference modifications [meta.trans.ref] */
@@ -505,28 +701,68 @@ struct RemoveCV
 template<typename T>
 struct RemoveReference
 {
-    typedef T Type;
+  typedef T Type;
 };
 
 template<typename T>
 struct RemoveReference<T&>
 {
-    typedef T Type;
+  typedef T Type;
 };
 
 template<typename T>
 struct RemoveReference<T&&>
 {
-    typedef T Type;
+  typedef T Type;
 };
+
+template<bool Condition, typename A, typename B>
+struct Conditional;
+
+namespace detail {
+
+enum Voidness { TIsVoid, TIsNotVoid };
+
+template<typename T, Voidness V = IsVoid<T>::value ? TIsVoid : TIsNotVoid>
+struct AddLvalueReferenceHelper;
+
+template<typename T>
+struct AddLvalueReferenceHelper<T, TIsVoid>
+{
+  typedef void Type;
+};
+
+template<typename T>
+struct AddLvalueReferenceHelper<T, TIsNotVoid>
+{
+  typedef T& Type;
+};
+
+} // namespace detail
+
+/**
+ * AddLvalueReference adds an lvalue & reference to T if one isn't already
+ * present.  (Note: adding an lvalue reference to an rvalue && reference in
+ * essence replaces the && with a &&, per C+11 reference collapsing rules.  For
+ * example, int&& would become int&.)
+ *
+ * The final computed type will only *not* be an lvalue reference if T is void.
+ *
+ * mozilla::AddLvalueReference<int>::Type is int&;
+ * mozilla::AddLvalueRference<volatile int&>::Type is volatile int&;
+ * mozilla::AddLvalueReference<void*>::Type is void*&;
+ * mozilla::AddLvalueReference<void>::Type is void;
+ * mozilla::AddLvalueReference<struct S&&>::Type is struct S&.
+ */
+template<typename T>
+struct AddLvalueReference
+  : detail::AddLvalueReferenceHelper<T>
+{};
 
 /* 20.9.7.3 Sign modifications [meta.trans.sign] */
 
 template<bool B, typename T = void>
 struct EnableIf;
-
-template<bool Condition, typename A, typename B>
-struct Conditional;
 
 namespace detail {
 
@@ -568,7 +804,7 @@ struct MakeSigned;
 template<typename T, typename CVRemoved>
 struct MakeSigned<T, CVRemoved, true>
 {
-    typedef T Type;
+  typedef T Type;
 };
 
 template<typename T, typename CVRemoved>
@@ -603,7 +839,8 @@ struct MakeSigned<T, CVRemoved, false>
  */
 template<typename T>
 struct MakeSigned
-  : EnableIf<IsIntegral<T>::value && !IsSame<bool, typename RemoveCV<T>::Type>::value,
+  : EnableIf<IsIntegral<T>::value &&
+             !IsSame<bool, typename RemoveCV<T>::Type>::value,
              typename detail::MakeSigned<T>
             >::Type
 {};
@@ -636,7 +873,7 @@ struct MakeUnsigned;
 template<typename T, typename CVRemoved>
 struct MakeUnsigned<T, CVRemoved, true>
 {
-    typedef T Type;
+  typedef T Type;
 };
 
 template<typename T, typename CVRemoved>
@@ -671,12 +908,40 @@ struct MakeUnsigned<T, CVRemoved, false>
  */
 template<typename T>
 struct MakeUnsigned
-  : EnableIf<IsIntegral<T>::value && !IsSame<bool, typename RemoveCV<T>::Type>::value,
+  : EnableIf<IsIntegral<T>::value &&
+             !IsSame<bool, typename RemoveCV<T>::Type>::value,
              typename detail::MakeUnsigned<T>
             >::Type
 {};
 
 /* 20.9.7.4 Array modifications [meta.trans.arr] */
+
+/**
+ * RemoveExtent produces either the type of the elements of the array T, or T
+ * itself.
+ *
+ * mozilla::RemoveExtent<int>::Type is int;
+ * mozilla::RemoveExtent<const int[]>::Type is const int;
+ * mozilla::RemoveExtent<volatile int[5]>::Type is volatile int;
+ * mozilla::RemoveExtent<long[][17]>::Type is long[17].
+ */
+template<typename T>
+struct RemoveExtent
+{
+  typedef T Type;
+};
+
+template<typename T>
+struct RemoveExtent<T[]>
+{
+  typedef T Type;
+};
+
+template<typename T, decltype(sizeof(1)) N>
+struct RemoveExtent<T[N]>
+{
+  typedef T Type;
+};
 
 /* 20.9.7.5 Pointer modifications [meta.trans.ptr] */
 
@@ -707,7 +972,7 @@ struct EnableIf
 template<typename T>
 struct EnableIf<true, T>
 {
-    typedef T Type;
+  typedef T Type;
 };
 
 /**
@@ -719,13 +984,13 @@ struct EnableIf<true, T>
 template<bool Condition, typename A, typename B>
 struct Conditional
 {
-    typedef A Type;
+  typedef A Type;
 };
 
 template<class A, class B>
 struct Conditional<false, A, B>
 {
-    typedef B Type;
+  typedef B Type;
 };
 
 } /* namespace mozilla */
