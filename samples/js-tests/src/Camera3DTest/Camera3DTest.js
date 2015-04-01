@@ -773,7 +773,7 @@ var CameraCullingDemo = Camera3DTestDemo.extend({
             camera.setCameraFlag(cc.CameraFlag.USER8);
             camera.setPosition3D(cc.math.vec3(-100, 0, 0));
             camera.lookAt(cc.math.vec3(1000, 0, 0));
-            this._moveAction = cc.moveTo(4, cc.p(100, 0));
+            this._moveAction = cc.moveBy(4, cc.p(200, 0));
             this._moveAction.retain();
             var seq = cc.sequence(this._moveAction, cc.callFunc(this.reachEndCallBack, this));
             seq.setTag(100);
