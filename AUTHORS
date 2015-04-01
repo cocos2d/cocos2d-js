@@ -76,12 +76,17 @@ Simon de Lang       @simondel       Fixed use of deprecated cc, ccs and ccui cre
 
 Craig P Jolicoeur   @cpjolicoeur    Fix typos in setup.py
 
-Dale Stammen        @Stammen        Polish Windows Phone 8 support
+Dale Stammen        @Stammen        Add Windows Phone 8 support
+                                    Add Windows Universal app support
 
 Jeff Oh             @redsim         Fixed http response header parsing bug
 
 Thomas Jablonski    @thomas-jablonski
                                     Add cocos attr to the script element in templates
+
+James Chen          @dumganhar      Support to set custom scheduler & actionmanager for node
+
+小马哥               @andot          Patch xhr.send for ArrayBuffer & ArrayBufferView.
 
 Cocos2d-JS can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!

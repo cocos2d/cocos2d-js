@@ -1,4 +1,4 @@
-# Cocos2d-JS v3.4 Beta0 release note
+# Cocos2d-JS v3.5 release note
 
 <img src="http://files.cocos2d-x.org/images/orgsite/logo.png" height=180> 
 
@@ -10,42 +10,48 @@ In addition, Cocos2d-JS v3.x is super powerful along with all these cool new fea
 
 One more thing, Facebook Integration for Cocos2d-JS have brought a huge opportunity for game developers who want to integrate Facebook functionality into their games. With a single code base, they can release fully cross-platform games across Facebook Canvas, iOS and Android.
 
+## Version notice
+
+The version v3.4 is renamed to v3.5, because we have upgraded the internal Cocos2d-x to v3.5 and we don't want our user to get confused about the version mapping between Cocos2d-JS and Cocos2d-x.
+
 ## Highlights
 
-* 3D feature ready! Bound 3D modules including camera, light, sprite 3d, animation 3d, billboard, etc.
-* Windows Phone 8.0 platform support is finally ready! Thanks to the contribution from Microsoft.
+* 3D feature ready! Bound 3D modules including camera, light, sprite 3d, animation 3d, billboard, 3D particle system with Particle Universe etc.
+* Supported Cocos Studio 2.2 3D scene editing.
+* Windows Phone 8.0 and Windows Universal support are finally ready! Thanks to the contribution from Microsoft.
 * Upgraded SpiderMonkey to v33, greatly improved JavaScript memory management and performance.
+* Supported latest version of Spine editor.
 * Continuously improved web engine performance.
 
 ## Notice
 
 For JSB build, there are some restrictions :
 
-- [Android build] Suggested NDK version is r10c, if you don't need Android 5.0 compatibility, you can also use r9d, other NDKs are not supported.
+- [Android build] Suggested NDK version is r10c +, if you don't need Android 5.0 compatibility, you can also use r9d, other NDKs are not supported.
 - [iOS build] Xcode version must be 5.1.1 +
 - [Web code obfuscation] JRE or JDK version must be 1.6+
 
 ## Download
 
-- [Cocos2d-JS v3.4 Beta0](http://www.cocos2d-x.org/filedown/cocos2d-js-v3.4-beta0.zip)
+- [Cocos2d-JS v3.5](http://www.cocos2d-x.org/filedown/cocos2d-js-v3.5.zip)
 - [Cocos2d-JS Lite Version](http://cocos2d-x.org/filecenter/jsbuilder/)
 - [Cocos Dev Tool](http://h5.cocos.com/static/cocos-devtools/index-en.html)
 - [Online API reference](http://www.cocos2d-x.org/wiki/reference/)
-- [Downloadable API Reference](http://www.cocos2d-x.org/filedown/Cocos2d-JS-v3.3-API.zip)
+- [Downloadable API Reference](http://www.cocos2d-x.org/filedown/Cocos2d-JS-v3.5-API.zip)
 - [Online test cases](http://cocos2d-x.org/js-tests/)
 
 ## More information
 
 Read more about all the features and bug fixes
 
-- [Cocos2d-JS v3.4 Beta0 changelog](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.4b/changelog/en)
-- [Cocos2d-JS v3.4 Beta0 upgrade guide](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.4/upgrade-guide/en)
+- [Cocos2d-JS v3.5 changelog](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.5/changelog/en)
+- [Cocos2d-JS v3.5 upgrade guide](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.5/upgrade-guide/en)
 
 ## Upgrade your project from previous versions
 
-If you want to upgrade your game based on v3.0 previous version to the v3.4, you should follow these steps:
+If you want to upgrade your game based on v3.0 previous version to the v3.5, you should follow these steps:
 
-1. Download the Cocos2d-JS v3.4 package.
+1. Download the Cocos2d-JS v3.5 package.
 2. Upgrade cocos command with `setup.py`.
 3. Create a new project with `cocos new` command.
 4. Replace the "src", "res", "index.html", "project.json", "main.js" etc with your old project.
@@ -53,10 +59,10 @@ If you want to upgrade your game based on v3.0 previous version to the v3.4, you
 
 ## About Cocos2d family
 
-- Cocos2d-JS v3.4 uses Cocos2d-x v3.4 as base of JSB solution.
-- Cocos2d-JS v3.4 uses SpiderMonkey v33 as builtin JavaScript engine.
-- Cocos2d-JS v3.4 is compatible with Cocos Code IDE v1.1.0, but you need to rebuild the runtime with source code.
-- Cocos2d-JS v3.4 is compatible with Cocos Studio v1.2 - v1.6 and Cocos Studio 2.1+. Cocos Studio 2.x support need JSON export file, and Cocos2d-JS won't support flatbuffer files.
+- Cocos2d-JS v3.5 uses Cocos2d-x v3.5 as base of JSB solution.
+- Cocos2d-JS v3.5 uses SpiderMonkey v33 as builtin JavaScript engine.
+- Cocos2d-JS v3.5 is compatible with Cocos Code IDE v1.2.0.
+- Cocos2d-JS v3.5 is compatible with Cocos Studio v1.2 - v1.6 and Cocos Studio 2.1+..
 
 With any problems you might have, our communities are happy to help:
 

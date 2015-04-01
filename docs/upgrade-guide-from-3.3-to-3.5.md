@@ -29,7 +29,27 @@ Follow these steps can help you upgrade to v3.4, then create a project and at la
 
 The biggest feature in Cocos2d-JS v3.4 is the 3D modules. We have bound Cocos2d-x's 3D modules to JSB, so that you can now code 3D games using JavaScript. Please note that it's a native engine exclusive feature, you can not use 3D classes in the web engine. We are not planning to support 3D for the web in the near future.
 
-Sorry that we don't have a JavaScript document for 3D modules, we will add them as soon as possible.
+All bound 3D classes or objects are listed here:
+
+```
+jsb.Animate3D
+jsb.Animation3D
+jsb.Sprite3D
+jsb.Skeleton3D 
+jsb.Mesh
+jsb.AttachNode
+jsb.BillBoard
+jsb.sprite3DCache
+jsb.ParticleSystem3D
+jsb.PUParticleSystem3D
+jsb.BaseLight
+jsb.DirectionLight
+jsb.PointLight
+jsb.SpotLight
+jsb.AmbientLight
+```
+
+Sorry that we don't have a complete JavaScript document for 3D modules, we will add them as soon as possible.
 
 To know how to use the new 3D modules, please refer to the following documents:
 
@@ -68,4 +88,27 @@ this.addChild(gradient, 10);
 
 Result:
 
-![](gradient-color-stop.jpg)
+![](../../res/gradient-color-stop.jpg)
+
+## 4. cc.sys.OpenURL
+
+You can now use `cc.sys.OpenURL(url)` to open the targeted url in web browser.
+In case of web engine, it will open another page in the current browser.
+In case of native engine, it will open the url in an external web browser.
+
+## 5. [Web Exclusive] Tip message in cc.TextFieldTTF
+
+We have added a tip message getter/setter for `cc.TextFieldTTF`. APIs are:
+
+```
+textFieldTTF.setTipMessage(tipMessage);
+var message = textFieldTTF.getTipMessage();
+```
+
+## 6. Load cocos studio resources within a relative path
+
+You can now pass a `path` parameter to `ccs.load` to specify a relative path for resources linked by the targeted json file.
+
+```
+ccs.load(jsonFile, path);
+```
