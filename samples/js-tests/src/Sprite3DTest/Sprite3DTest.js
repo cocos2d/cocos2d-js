@@ -384,7 +384,7 @@ var Animate3DTest = (function(){
                 this._state = State.SWIMMING;
             }
 
-            this._moveAction = cc.moveTo(4.0, cc.p(s.width / 5, s.height / 2));
+            this._moveAction = cc.moveBy(4.0, cc.p(-s.width / 5 * 3, 0));
             this._moveAction.retain();
             var seq = cc.sequence(this._moveAction, cc.callFunc(this.reachEndCallBack, this));
             seq.setTag(100);
@@ -706,7 +706,7 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
             sprite.runAction(cc.repeatForever(animate));
         }
 
-        this._moveAction = cc.moveTo(4, cc.p(s.width / 5, s.height / 2));
+        this._moveAction = cc.moveBy(4, cc.p(-s.width * 3 / 5, 0));
         this._moveAction.retain();
         var seq = cc.sequence(this._moveAction, cc.callFunc(this.reachEndCallBack, this));
         seq.setTag(100);
