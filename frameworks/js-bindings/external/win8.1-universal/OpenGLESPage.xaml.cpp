@@ -36,6 +36,10 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+using namespace Windows::Phone::UI::Input;
+#endif
+
 OpenGLESPage::OpenGLESPage() :
     OpenGLESPage(nullptr)
 {
@@ -77,6 +81,7 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
 
 #if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
     Windows::UI::ViewManagement::StatusBar::GetForCurrentView()->HideAsync();
+    HardwareButtons::BackPressed += ref new EventHandler<BackPressedEventArgs^>(this, &OpenGLESPage::OnBackButtonPressed);   
 #else
     // Disable all pointer visual feedback for better performance when touching.
     // This is not supported on Windows Phone applications.
@@ -165,6 +170,21 @@ void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Wi
     }
 }
 
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+void OpenGLESPage::OnBackButtonPressed(Object^ sender, BackPressedEventArgs^ args)
+{
+    bool myAppCanNavigate = false;
+    if (myAppCanNavigate)
+    {
+        args->Handled = true;
+    }
+    else {
+        // Do nothing. Leave args->Handled set to the current value, false.
+    }
+}
+#endif
+
+
 void OpenGLESPage::OnSwapChainPanelSizeChanged(Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e)
 {
     // Size change events occur outside of the render thread.  A lock is required when updating
@@ -251,13 +271,17 @@ void OpenGLESPage::StartRenderLoop()
 
         m_renderer->Resume();
 
-        while (action->Status == Windows::Foundation::AsyncStatus::Started && !m_deviceLost)
+        while (action->Status == Windows::Foundation::AsyncStatus::Started)
         {
             if (!m_visible)
             {
                 m_renderer->Pause();
                 while (!m_visible)
                 {
+                    if (action->Status != Windows::Foundation::AsyncStatus::Started)
+                    {
+                        return;
+                    }
                     Sleep(500);
                 }
                 m_renderer->Resume();
@@ -280,6 +304,10 @@ void OpenGLESPage::StartRenderLoop()
 
                 while(m_deviceLost)
                 {
+                    if (action->Status != Windows::Foundation::AsyncStatus::Started)
+                    {
+                        return;
+                    }
                     Sleep(500);
                 }
                 mOpenGLES->MakeCurrent(mRenderSurface);
@@ -298,10 +326,5 @@ void OpenGLESPage::StopRenderLoop()
     {
         mRenderLoopWorker->Cancel();
         mRenderLoopWorker = nullptr;
-    }
-
-    if (m_renderer)
-    {
-        m_renderer->Pause();
     }
 }
