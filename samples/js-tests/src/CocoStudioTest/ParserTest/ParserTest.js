@@ -73,7 +73,7 @@ var CocostudioParserJsonLayer = cc.Layer.extend({
             var json = ccs.load(this._jsonFile);
             layout = json.node;
         }else{
-            //old api
+            //ccs.uiReader.widgetFromJsonFile only supports 1.x file
             cc.log("ccs.uiReader.widgetFromJsonFile : %s", this._jsonFile);
             var guiReader = ccs.uiReader;
             layout = guiReader.widgetFromJsonFile(this._jsonFile);
