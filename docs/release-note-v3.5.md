@@ -62,7 +62,7 @@ If you want to upgrade your game based on v3.0 previous version to the v3.5, you
 - Cocos2d-JS v3.5 uses Cocos2d-x v3.5 as base of JSB solution.
 - Cocos2d-JS v3.5 uses SpiderMonkey v33 as builtin JavaScript engine.
 - Cocos2d-JS v3.5 is compatible with Cocos Code IDE v1.2.0.
-- Cocos2d-JS v3.5 is compatible with Cocos Studio v1.2 - v1.6 and Cocos Studio 2.1+..
+- Cocos2d-JS v3.5 is compatible with Cocos Studio v1.2 - v1.6 and Cocos Studio 2.1+.
 
 With any problems you might have, our communities are happy to help:
 
