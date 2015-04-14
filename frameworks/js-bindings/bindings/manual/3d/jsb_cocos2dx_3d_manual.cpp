@@ -142,6 +142,39 @@ bool js_cocos2dx_Mesh_getMeshVertexAttribute(JSContext *cx, uint32_t argc, jsval
     return false;
 }
 
+bool js_cocos2dx_CCTextureCube_setTexParameters(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    TextureCube* cobj = (TextureCube*)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, cobj)
+
+    if (argc == 4)
+    {
+        bool ok = true;
+
+        GLuint arg0, arg1, arg2, arg3;
+
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint32(cx, args.get(2), &arg2);
+        ok &= jsval_to_uint32(cx, args.get(3), &arg3);
+
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        Texture2D::TexParams param = { arg0, arg1, arg2, arg3 };
+
+        cobj->setTexParameters(param);
+
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+
 void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
 {
     JS::RootedValue tmpVal(cx);
@@ -156,4 +189,6 @@ void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Sprite3D_prototype), "getAABB", js_cocos2dx_Sprite3D_getAABB, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Mesh_prototype), "getMeshVertexAttribute", js_cocos2dx_Mesh_getMeshVertexAttribute, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+
+    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_TextureCube_prototype), "setTexParameters", js_cocos2dx_CCTextureCube_setTexParameters, 4, JSPROP_READONLY | JSPROP_PERMANENT);
 }
