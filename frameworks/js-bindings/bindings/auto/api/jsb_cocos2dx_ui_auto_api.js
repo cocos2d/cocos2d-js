@@ -1984,8 +1984,10 @@ getString : function (
 
 /**
  * @method disableEffect
- */
-disableEffect : function (
+* @param {cc.LabelEffect} labeleffect
+*/
+disableEffect : function(
+labeleffect 
 )
 {
 },
