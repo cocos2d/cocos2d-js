@@ -106,22 +106,18 @@
 
         setContentSize(node, json["Size"]);
 
-        if (json["Alpha"] !== undefined)
+        if (json["Alpha"] != null)
             node.setOpacity(json["Alpha"]);
 
         node.setTag(json["Tag"] || 0);
 
         var actionTag = json["ActionTag"] || 0;
-        if (cc.sys.isNative){
-            var extensionData = new ccs.ObjectExtensionData();
-            var customProperty = json["UserData"];
-            if(customProperty !== undefined)
-                extensionData.setCustomProperty(customProperty);
-            extensionData.setActionTag(actionTag);
-            node.setUserObject(extensionData);
-        } else {
-            node.setUserObject(new ccs.ActionTimelineData(actionTag));
-        }
+        var extensionData = new ccs.ObjectExtensionData();
+        var customProperty = json["UserData"];
+        if(customProperty !== undefined)
+            extensionData.setCustomProperty(customProperty);
+        extensionData.setActionTag(actionTag);
+        node.setUserObject(extensionData);
 
         node.setCascadeColorEnabled(true);
         node.setCascadeOpacityEnabled(true);
@@ -141,7 +137,7 @@
                             node.pushBackCustomItem(child);
                     } else {
                         if(!(node instanceof ccui.Layout) && child instanceof ccui.Widget) {
-                            if(child.getPositionType() == ccui.Widget.POSITION_PERCENT) {
+                            if(child.getPositionType() === ccui.Widget.POSITION_PERCENT) {
                                 var position = child.getPositionPercent();
                                 var anchor = node.getAnchorPoint();
                                 child.setPositionPercent(cc.p(position.x + anchor.x, position.y + anchor.y));
@@ -177,13 +173,23 @@
         var node =  new cc.Sprite();
 
         loadTexture(json["FileData"], resourcePath, function(path, type){
-            if(type == 0)
+            if(type === 0)
                 node.setTexture(path);
-            else if(type == 1){
+            else if(type === 1){
                 var spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
                 node.setSpriteFrame(spriteFrame);
             }
         });
+
+        var blendData = json["BlendFunc"];
+        if(json["BlendFunc"]) {
+            var blendFunc = cc.BlendFunc.ALPHA_PREMULTIPLIED;
+            if (blendData["Src"] !== undefined)
+                blendFunc.src = blendData["Src"];
+            if (blendData["Dst"] !== undefined)
+                blendFunc.dst = blendData["Dst"];
+            node.setBlendFunc(blendFunc);
+        }
 
         if(json["FlipX"])
             node.setFlippedX(true);
@@ -213,6 +219,16 @@
             node = new cc.ParticleSystem(path);
             self.generalAttributes(node, json);
             !cc.sys.isNative && node.setDrawMode(cc.ParticleSystem.TEXTURE_MODE);
+
+            var blendData = json["BlendFunc"];
+            if(json["BlendFunc"]){
+                var blendFunc = cc.BlendFunc.ALPHA_PREMULTIPLIED;
+                if(blendData["Src"] !== undefined)
+                    blendFunc.src = blendData["Src"];
+                if(blendData["Dst"] !== undefined)
+                    blendFunc.dst = blendData["Dst"];
+                node.setBlendFunc(new cc.BlendFunc());
+            }
         });
         return node;
     };
@@ -222,7 +238,7 @@
     // WIDGET //
     ////////////
 
-    parser.widgetAttributes = function(widget, json) {
+    parser.widgetAttributes = function (widget, json) {
         widget.setCascadeColorEnabled(true);
         widget.setCascadeOpacityEnabled(true);
 
@@ -237,17 +253,12 @@
 
         var actionTag = json["ActionTag"] || 0;
         widget.setActionTag(actionTag);
-
-        if (cc.sys.isNative){
-            var extensionData = new ccs.ObjectExtensionData();
-            var customProperty = json["UserData"];
-            if(customProperty !== undefined)
-                extensionData.setCustomProperty(customProperty);
-            extensionData.setActionTag(actionTag);
-            widget.setUserObject(extensionData);
-        } else {
-            widget.setUserObject(new ccs.ActionTimelineData(actionTag));
-        }
+        var extensionData = new ccs.ObjectExtensionData();
+        var customProperty = json["UserData"];
+        if(customProperty !== undefined)
+            extensionData.setCustomProperty(customProperty);
+        extensionData.setActionTag(actionTag);
+        widget.setUserObject(extensionData);
 
         var rotationSkewX = json["RotationSkewX"];
         if (rotationSkewX)
@@ -358,23 +369,30 @@
         layoutComponent.setStretchHeightEnabled(stretchVerticalEnabled);
 
         var horizontalEdgeType = ccui.LayoutComponent.horizontalEdge.NONE;
-        if (horizontalEdge == "LeftEdge") {
+        if (horizontalEdge === "LeftEdge") {
             horizontalEdgeType = ccui.LayoutComponent.horizontalEdge.LEFT;
-        } else if (horizontalEdge == "RightEdge") {
+        } else if (horizontalEdge === "RightEdge") {
             horizontalEdgeType = ccui.LayoutComponent.horizontalEdge.RIGHT;
-        } else if (horizontalEdge == "BothEdge") {
+        } else if (horizontalEdge === "BothEdge") {
             horizontalEdgeType = ccui.LayoutComponent.horizontalEdge.CENTER;
         }
         layoutComponent.setHorizontalEdge(horizontalEdgeType);
 
         var verticalEdgeType = ccui.LayoutComponent.verticalEdge.NONE;
-        if (verticalEdge == "TopEdge") {
+        if (verticalEdge === "TopEdge") {
             verticalEdgeType = ccui.LayoutComponent.verticalEdge.TOP;
-        } else if (verticalEdge == "BottomEdge") {
+        } else if (verticalEdge === "BottomEdge") {
             verticalEdgeType = ccui.LayoutComponent.verticalEdge.BOTTOM;
-        } else if (verticalEdge == "BothEdge") {
+        } else if (verticalEdge === "BothEdge") {
             verticalEdgeType = ccui.LayoutComponent.verticalEdge.CENTER;
         }
+        layoutComponent.setVerticalEdge(verticalEdgeType);
+
+        layoutComponent.setTopMargin(topMargin);
+        layoutComponent.setBottomMargin(bottomMargin);
+        layoutComponent.setLeftMargin(leftMargin);
+        layoutComponent.setRightMargin(rightMargin);
+
         layoutComponent.setVerticalEdge(verticalEdgeType);
 
         layoutComponent.setTopMargin(topMargin);
@@ -505,6 +523,16 @@
         }
         widget.setTextVerticalAlignment(v_alignment);
 
+        if(json["OutlineEnabled"] && json["OutlineColor"])
+            widget.enableOutline(getColor(json["OutlineColor"]), json["OutlineSize"] || 0);
+
+        if(json["ShadowEnabled"] && json["ShadowColor"])
+            widget.enableShadow(
+                getColor(json["ShadowColor"]),
+                cc.size(getParam(json["ShadowOffsetX"], 2), getParam(json["ShadowOffsetY"], -2)),
+                json["ShadowBlurRadius"] || 0
+            );
+
         //todo check it
         var isCustomSize = json["IsCustomSize"];
         if(isCustomSize != null)
@@ -598,10 +626,10 @@
             widget.setUnifySizeEnabled(false);
             widget.ignoreContentAdaptWithSize(false);
             var capInsets = cc.rect(
-                json["Scale9OriginX"] || 0,
-                json["Scale9OriginY"] || 0,
-                json["Scale9Width"] || 0,
-                json["Scale9Height"] || 0
+                    json["Scale9OriginX"] || 0,
+                    json["Scale9OriginY"] || 0,
+                    json["Scale9Width"] || 0,
+                    json["Scale9Height"] || 0
             );
             widget.setCapInsets(capInsets);
 
@@ -716,9 +744,9 @@
         widget.setInnerContainerSize(innerSize);
 
         var direction = 0;
-        if(json["ScrollDirectionType"] == "Vertical") direction = 1;
-        if(json["ScrollDirectionType"] == "Horizontal") direction = 2;
-        if(json["ScrollDirectionType"] == "Vertical_Horizontal") direction = 3;
+        if(json["ScrollDirectionType"] === "Vertical") direction = 1;
+        if(json["ScrollDirectionType"] === "Horizontal") direction = 2;
+        if(json["ScrollDirectionType"] === "Vertical_Horizontal") direction = 3;
         widget.setDirection(direction);
 
         var bounceEnabled = getParam(json["IsBounceEnabled"], false);
@@ -815,7 +843,7 @@
         ];
         textureList.forEach(function(item){
             loadTexture(json[item.name], resourcePath, function(path, type){
-                if(type == 0 && !loader.getRes(path))
+                if(type === 0 && !loader.getRes(path))
                     cc.log("%s need to be preloaded", path);
                 item.handle.call(widget, path, type);
             });
@@ -936,19 +964,19 @@
         var horizontalType = getParam(json["HorizontalType"], "Align_Top");
         if(!directionType){
             widget.setDirection(ccui.ScrollView.DIR_HORIZONTAL);
-            if(verticalType == "Align_Bottom")
+            if(verticalType === "Align_Bottom")
                 widget.setGravity(ccui.ListView.GRAVITY_BOTTOM);
-            else if(verticalType == "Align_VerticalCenter")
+            else if(verticalType === "Align_VerticalCenter")
                 widget.setGravity(ccui.ListView.GRAVITY_CENTER_VERTICAL);
             else
                 widget.setGravity(ccui.ListView.GRAVITY_TOP);
-        }else if(directionType == "Vertical"){
+        }else if(directionType === "Vertical"){
             widget.setDirection(ccui.ScrollView.DIR_VERTICAL);
-            if (horizontalType == "")
+            if (horizontalType === "")
                 widget.setGravity(ccui.ListView.GRAVITY_LEFT);
-            else if (horizontalType == "Align_Right")
+            else if (horizontalType === "Align_Right")
                 widget.setGravity(ccui.ListView.GRAVITY_RIGHT);
-            else if (horizontalType == "Align_HorizontalCenter")
+            else if (horizontalType === "Align_HorizontalCenter")
                 widget.setGravity(ccui.ListView.GRAVITY_CENTER_HORIZONTAL);
         }
 
@@ -1005,7 +1033,7 @@
         loadTexture(json["LabelAtlasFileImage_CNB"], resourcePath, function(path, type){
             if(!cc.loader.getRes(path))
                 cc.log("%s need to be preloaded", path);
-            if(type == 0){
+            if(type === 0){
                 widget.setProperty(stringValue, path, itemWidth, itemHeight, startCharMap);
             }
         });
@@ -1033,6 +1061,7 @@
                 cc.log("%s need to be pre loaded", path);
             widget.setFntFile(path);
         });
+        widget.ignoreContentAdaptWithSize(true);
         return widget;
     };
 
@@ -1145,7 +1174,7 @@
         var node = null;
 
         loadTexture(json["FileData"], resourcePath, function(path, type){
-            if(type == 0)
+            if(type === 0)
                 node = new cc.TMXTiledMap(path);
 
             parser.generalAttributes(node, json);
@@ -1234,7 +1263,7 @@
         if(json != null){
             var path = json["Path"];
             var type;
-            if(json["Type"] == "Default" || json["Type"] == "Normal")
+            if(json["Type"] === "Default" || json["Type"] === "Normal")
                 type = 0;
             else
                 type = 1;
@@ -1260,7 +1289,8 @@
         var r = json["R"] != null ? json["R"] : 255;
         var g = json["G"] != null ? json["G"] : 255;
         var b = json["B"] != null ? json["B"] : 255;
-        return cc.color(r, g, b);
+        var a = json["A"] != null ? json["A"] : 255;
+        return cc.color(r, g, b, a);
     };
 
     var setContentSize = function(node, size){

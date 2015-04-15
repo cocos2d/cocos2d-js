@@ -2287,20 +2287,24 @@ bool js_cocos2dx_3d_Animate3D_getSpeed(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_getSpeed : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_3d_Animate3D_removeFromMap(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_3d_Animate3D_setHighQuality(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_removeFromMap : Invalid Native Object");
-    if (argc == 0) {
-        cobj->removeFromMap();
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_setHighQuality : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setHighQuality : Error processing arguments");
+        cobj->setHighQuality(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_removeFromMap : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_setHighQuality : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_3d_Animate3D_setWeight(JSContext *cx, uint32_t argc, jsval *vp)
@@ -2321,6 +2325,22 @@ bool js_cocos2dx_3d_Animate3D_setWeight(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_setWeight : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_removeFromMap(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_removeFromMap : Invalid Native Object");
+    if (argc == 0) {
+        cobj->removeFromMap();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_removeFromMap : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_3d_Animate3D_initWithFrames(JSContext *cx, uint32_t argc, jsval *vp)
@@ -2454,6 +2474,24 @@ bool js_cocos2dx_3d_Animate3D_init(JSContext *cx, uint32_t argc, jsval *vp)
     } while(0);
 
     JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_init : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_isHighQuality(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_isHighQuality : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isHighQuality();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_isHighQuality : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_3d_Animate3D_setOriginInterval(JSContext *cx, uint32_t argc, jsval *vp)
@@ -2713,12 +2751,14 @@ void js_register_cocos2dx_3d_Animate3D(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec funcs[] = {
         JS_FN("getSpeed", js_cocos2dx_3d_Animate3D_getSpeed, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeFromMap", js_cocos2dx_3d_Animate3D_removeFromMap, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setHighQuality", js_cocos2dx_3d_Animate3D_setHighQuality, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setWeight", js_cocos2dx_3d_Animate3D_setWeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeFromMap", js_cocos2dx_3d_Animate3D_removeFromMap, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithFrames", js_cocos2dx_3d_Animate3D_initWithFrames, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOriginInterval", js_cocos2dx_3d_Animate3D_getOriginInterval, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSpeed", js_cocos2dx_3d_Animate3D_setSpeed, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_cocos2dx_3d_Animate3D_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isHighQuality", js_cocos2dx_3d_Animate3D_isHighQuality, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setOriginInterval", js_cocos2dx_3d_Animate3D_setOriginInterval, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getWeight", js_cocos2dx_3d_Animate3D_getWeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -3212,6 +3252,405 @@ void js_register_cocos2dx_3d_BillBoard(JSContext *cx, JS::HandleObject global) {
     }
 }
 
+JSClass  *jsb_cocos2d_TextureCube_class;
+JSObject *jsb_cocos2d_TextureCube_prototype;
+
+bool js_cocos2dx_3d_TextureCube_reloadTexture(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TextureCube* cobj = (cocos2d::TextureCube *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_TextureCube_reloadTexture : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->reloadTexture();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_TextureCube_reloadTexture : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_3d_TextureCube_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 6) {
+        std::string arg0;
+        std::string arg1;
+        std::string arg2;
+        std::string arg3;
+        std::string arg4;
+        std::string arg5;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        ok &= jsval_to_std_string(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= jsval_to_std_string(cx, args.get(5), &arg5);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_TextureCube_create : Error processing arguments");
+        cocos2d::TextureCube* ret = cocos2d::TextureCube::create(arg0, arg1, arg2, arg3, arg4, arg5);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::TextureCube>(cx, (cocos2d::TextureCube*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_3d_TextureCube_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_3d_TextureCube_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::TextureCube* cobj = new (std::nothrow) cocos2d::TextureCube();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::TextureCube> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::TextureCube");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+
+extern JSObject *jsb_cocos2d_Texture2D_prototype;
+
+void js_cocos2d_TextureCube_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (TextureCube)", obj);
+}
+
+void js_register_cocos2dx_3d_TextureCube(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_TextureCube_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_TextureCube_class->name = "TextureCube";
+    jsb_cocos2d_TextureCube_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_TextureCube_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_TextureCube_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_TextureCube_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_TextureCube_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_TextureCube_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_TextureCube_class->convert = JS_ConvertStub;
+    jsb_cocos2d_TextureCube_class->finalize = js_cocos2d_TextureCube_finalize;
+    jsb_cocos2d_TextureCube_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("reloadTexture", js_cocos2dx_3d_TextureCube_reloadTexture, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_3d_TextureCube_create, 6, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_TextureCube_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_cocos2d_Texture2D_prototype),
+        jsb_cocos2d_TextureCube_class,
+        js_cocos2dx_3d_TextureCube_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "TextureCube", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::TextureCube> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_TextureCube_class;
+        p->proto = jsb_cocos2d_TextureCube_prototype;
+        p->parentProto = jsb_cocos2d_Texture2D_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
+JSClass  *jsb_cocos2d_Skybox_class;
+JSObject *jsb_cocos2d_Skybox_prototype;
+
+bool js_cocos2dx_3d_Skybox_reload(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Skybox* cobj = (cocos2d::Skybox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Skybox_reload : Invalid Native Object");
+    if (argc == 0) {
+        cobj->reload();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Skybox_reload : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_3d_Skybox_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+
+    JS::RootedObject obj(cx);
+    cocos2d::Skybox* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocos2d::Skybox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Skybox_init : Invalid Native Object");
+    do {
+        if (argc == 6) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            std::string arg1;
+            ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            std::string arg2;
+            ok &= jsval_to_std_string(cx, args.get(2), &arg2);
+            if (!ok) { ok = true; break; }
+            std::string arg3;
+            ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+            if (!ok) { ok = true; break; }
+            std::string arg4;
+            ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+            if (!ok) { ok = true; break; }
+            std::string arg5;
+            ok &= jsval_to_std_string(cx, args.get(5), &arg5);
+            if (!ok) { ok = true; break; }
+            bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5);
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 0) {
+            bool ret = cobj->init();
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Skybox_init : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_3d_Skybox_setTexture(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Skybox* cobj = (cocos2d::Skybox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Skybox_setTexture : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::TextureCube* arg0;
+        do {
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::TextureCube*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Skybox_setTexture : Error processing arguments");
+        cobj->setTexture(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Skybox_setTexture : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_3d_Skybox_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    
+    do {
+        if (argc == 6) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            std::string arg1;
+            ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            std::string arg2;
+            ok &= jsval_to_std_string(cx, args.get(2), &arg2);
+            if (!ok) { ok = true; break; }
+            std::string arg3;
+            ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+            if (!ok) { ok = true; break; }
+            std::string arg4;
+            ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+            if (!ok) { ok = true; break; }
+            std::string arg5;
+            ok &= jsval_to_std_string(cx, args.get(5), &arg5);
+            if (!ok) { ok = true; break; }
+            cocos2d::Skybox* ret = cocos2d::Skybox::create(arg0, arg1, arg2, arg3, arg4, arg5);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Skybox>(cx, (cocos2d::Skybox*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 0) {
+            cocos2d::Skybox* ret = cocos2d::Skybox::create();
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Skybox>(cx, (cocos2d::Skybox*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    JS_ReportError(cx, "js_cocos2dx_3d_Skybox_create : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_3d_Skybox_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::Skybox* cobj = new (std::nothrow) cocos2d::Skybox();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::Skybox> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Skybox");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+
+extern JSObject *jsb_cocos2d_Node_prototype;
+
+void js_cocos2d_Skybox_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (Skybox)", obj);
+}
+
+void js_register_cocos2dx_3d_Skybox(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_Skybox_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_Skybox_class->name = "Skybox";
+    jsb_cocos2d_Skybox_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_Skybox_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_Skybox_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_Skybox_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_Skybox_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_Skybox_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_Skybox_class->convert = JS_ConvertStub;
+    jsb_cocos2d_Skybox_class->finalize = js_cocos2d_Skybox_finalize;
+    jsb_cocos2d_Skybox_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("reload", js_cocos2dx_3d_Skybox_reload, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_cocos2dx_3d_Skybox_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTexture", js_cocos2dx_3d_Skybox_setTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_3d_Skybox_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_Skybox_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_cocos2d_Node_prototype),
+        jsb_cocos2d_Skybox_class,
+        js_cocos2dx_3d_Skybox_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "Skybox", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::Skybox> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_Skybox_class;
+        p->proto = jsb_cocos2d_Skybox_prototype;
+        p->parentProto = jsb_cocos2d_Node_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
 void register_all_cocos2dx_3d(JSContext* cx, JS::HandleObject obj) {
     // Get the ns
     JS::RootedObject ns(cx);
@@ -3220,7 +3659,9 @@ void register_all_cocos2dx_3d(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_3d_Animate3D(cx, ns);
     js_register_cocos2dx_3d_Sprite3D(cx, ns);
     js_register_cocos2dx_3d_AttachNode(cx, ns);
+    js_register_cocos2dx_3d_TextureCube(cx, ns);
     js_register_cocos2dx_3d_Sprite3DCache(cx, ns);
+    js_register_cocos2dx_3d_Skybox(cx, ns);
     js_register_cocos2dx_3d_BillBoard(cx, ns);
     js_register_cocos2dx_3d_Animation3D(cx, ns);
     js_register_cocos2dx_3d_Skeleton3D(cx, ns);
