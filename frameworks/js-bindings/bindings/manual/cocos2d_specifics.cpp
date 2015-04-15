@@ -2034,15 +2034,41 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         bool ok = true;
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
         
-        JSObject *obj = JS_THIS_OBJECT(cx, vp);
+        JS::RootedObject obj(cx);
+        cocos2d::Scheduler* cobj = NULL;
+        obj = args.thisv().toObjectOrNull();
         js_proxy_t *proxy = jsb_get_js_proxy(obj);
         cocos2d::Scheduler *sched = (cocos2d::Scheduler *)(proxy ? proxy->ptr : NULL);
         
         JSScheduleWrapper *tmpCObj = NULL;
         
-        JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
+        JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
         proxy = jsb_get_js_proxy(tmpObj);
         bool isPureJSTarget = proxy ? false : true;
+        
+        std::function<void (float)> callback;
+        do {
+            if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+            {
+                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, tmpObj, args.get(0)));
+                auto lambda = [=](float larg0) -> void {
+                    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+                    jsval largv[1];
+                    largv[0] = DOUBLE_TO_JSVAL(larg0);
+                    JS::RootedValue rval(cx);
+                    bool ok = func->invoke(1, &largv[0], &rval);
+                    if (!ok && JS_IsExceptionPending(cx)) {
+                        JS_ReportPendingException(cx);
+                    }
+                };
+                callback = lambda;
+            }
+            else
+            {
+                ok = false;
+                callback = nullptr;
+            }
+        } while(0);
         
         double interval = 0;
         if( argc >= 3 ) {
@@ -2071,6 +2097,12 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
             paused = JS::ToBoolean(JS::RootedValue(cx,  args.get(5)));
         }
         
+        std::string key;
+        
+        if( argc >= 7 ) {
+            ok &= jsval_to_std_string(cx, args.get(6), &key);
+        }
+        
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
         bool bFound = false;
@@ -2091,17 +2123,17 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         {
             tmpCObj = new JSScheduleWrapper();
             tmpCObj->autorelease();
-            tmpCObj->setJSCallbackThis(args.get(0));
-            tmpCObj->setJSCallbackFunc(args.get(1));
+            tmpCObj->setJSCallbackThis(args.get(1));
+            tmpCObj->setJSCallbackFunc(args.get(0));
             if (isPureJSTarget) {
                 tmpCObj->setPureJSTarget(tmpObj);
             }
             
-            JSScheduleWrapper::setTargetForSchedule(args.get(1), tmpCObj);
+            JSScheduleWrapper::setTargetForSchedule(args.get(0), tmpCObj);
             JSScheduleWrapper::setTargetForJSObject(tmpObj, tmpCObj);
         }
         
-        sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCObj, interval, repeat, delay, paused);
+        sched->schedule(callback, tmpCObj, interval, repeat, delay, paused, key);
                 
         args.rval().setUndefined();
         return true;
@@ -5274,10 +5306,10 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, tmpObj, "resumeTarget", js_cocos2dx_CCScheduler_resumeTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "pauseTarget", js_cocos2dx_CCScheduler_pauseTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "scheduleUpdateForTarget", js_CCScheduler_scheduleUpdateForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "unscheduleUpdateForTarget", js_CCScheduler_unscheduleUpdateForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "scheduleCallbackForTarget", js_CCScheduler_schedule, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "unscheduleCallbackForTarget", js_CCScheduler_unscheduleCallbackForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "unscheduleAllCallbacksForTarget", js_cocos2dx_CCScheduler_unscheduleAllSelectorsForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unscheduleUpdate", js_CCScheduler_unscheduleUpdateForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "schedule", js_CCScheduler_schedule, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unschedule", js_CCScheduler_unscheduleCallbackForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unscheduleAllForTarget", js_cocos2dx_CCScheduler_unscheduleAllSelectorsForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "unscheduleAllCallbacks", js_cocos2dx_CCScheduler_unscheduleAll, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "unscheduleAllCallbacksWithMinPriority", js_cocos2dx_CCScheduler_unscheduleAllCallbacksWithMinPriority, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "isTargetPaused", js_cocos2dx_CCScheduler_isTargetPaused, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
