@@ -39,7 +39,7 @@ var UIWebViewTest = UIScene.extend({
                 return;
             }
 
-            this._webView = ccexp.WebView.create();
+            this._webView = ccui.WebView.create();
             this._webView.setAnchorPoint(cc.p(0.5, 0.5));
             this._webView.setPosition(cc.p(winSize.width / 2, winSize.height / 2));
             this._webView.setContentSize(cc.size(winSize.width * 0.5, winSize.height * 0.5));
