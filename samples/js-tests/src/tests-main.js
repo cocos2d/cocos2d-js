@@ -599,6 +599,14 @@ var testNames = [
         }
     },
     {
+        title:"Terrain Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/TerrainTest/TerrainTest.js",
+        testScene:function () {
+            return new TerrainTestScene();
+        }
+    },
+    {
         title:"TextInput Test",
         platforms: PLATFORM_HTML5,
         linksrc:"src/TextInputTest/TextInputTest.js",

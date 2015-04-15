@@ -73,6 +73,11 @@ jsb.BillBoard.Mode = {
     VIEW_PLANE_ORIENTED : 1  // orient to the XOY plane of camera
 };
 
+jsb.Terrain.CrackFixedType = {
+    SKIRT : 0,
+    INCREASE_LOWER : 1
+};
+
 cc.attributeNames = [cc.ATTRIBUTE_NAME_POSITION, 
     cc.ATTRIBUTE_NAME_COLOR, 
     cc.ATTRIBUTE_NAME_TEX_COORD,
