@@ -2283,16 +2283,6 @@ __NodeRGBA : function (
 cc.Scene = {
 
 /**
- * @method initWithPhysics
- * @return {bool}
- */
-initWithPhysics : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setCameraOrderDirty
  */
 setCameraOrderDirty : function (
@@ -2318,16 +2308,6 @@ onProjectionChanged : function (
 eventcustom 
 )
 {
-},
-
-/**
- * @method getPhysicsWorld
- * @return {cc.PhysicsWorld}
- */
-getPhysicsWorld : function (
-)
-{
-    return cc.PhysicsWorld;
 },
 
 /**
@@ -2369,16 +2349,6 @@ size
  * @return {cc.Scene}
  */
 create : function (
-)
-{
-    return cc.Scene;
-},
-
-/**
- * @method createWithPhysics
- * @return {cc.Scene}
- */
-createWithPhysics : function (
 )
 {
     return cc.Scene;
@@ -3363,6 +3333,16 @@ float
 },
 
 /**
+ * @method unscheduleAllWithMinPriority
+ * @param {int} arg0
+ */
+unscheduleAllWithMinPriority : function (
+int 
+)
+{
+},
+
+/**
  * @method update
  * @param {float} arg0
  */
@@ -3373,11 +3353,29 @@ float
 },
 
 /**
+ * @method unscheduleScriptEntry
+ * @param {unsigned int} arg0
+ */
+unscheduleScriptEntry : function (
+int 
+)
+{
+},
+
+/**
  * @method performFunctionInCocosThread
  * @param {function} arg0
  */
 performFunctionInCocosThread : function (
 func 
+)
+{
+},
+
+/**
+ * @method unscheduleAll
+ */
+unscheduleAll : function (
 )
 {
 },
