@@ -9,92 +9,10 @@ var cc = cc || {};
 cc.Configuration = {
 
 /**
- * @method checkForGLExtension
- * @param {String} arg0
- * @return {bool}
- */
-checkForGLExtension : function (
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method supportsS3TC
- * @return {bool}
- */
-supportsS3TC : function (
-)
-{
-    return false;
-},
-
-/**
  * @method supportsPVRTC
  * @return {bool}
  */
 supportsPVRTC : function (
-)
-{
-    return false;
-},
-
-/**
- * @method supportsShareableVAO
- * @return {bool}
- */
-supportsShareableVAO : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getInfo
- * @return {String}
- */
-getInfo : function (
-)
-{
-    return ;
-},
-
-/**
- * @method getMaxSupportSpotLightInShader
- * @return {int}
- */
-getMaxSupportSpotLightInShader : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getMaxTextureUnits
- * @return {int}
- */
-getMaxTextureUnits : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method supportsNPOT
- * @return {bool}
- */
-supportsNPOT : function (
 )
 {
     return false;
@@ -111,10 +29,32 @@ getMaxModelviewStackDepth : function (
 },
 
 /**
- * @method supportsDiscardFramebuffer
+ * @method supportsShareableVAO
  * @return {bool}
  */
-supportsDiscardFramebuffer : function (
+supportsShareableVAO : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsBGRA8888
+ * @return {bool}
+ */
+supportsBGRA8888 : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method checkForGLExtension
+ * @param {String} arg0
+ * @return {bool}
+ */
+checkForGLExtension : function (
+str 
 )
 {
     return false;
@@ -131,6 +71,46 @@ supportsATITC : function (
 },
 
 /**
+ * @method supportsNPOT
+ * @return {bool}
+ */
+supportsNPOT : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getMaxSupportPointLightInShader
+ * @return {int}
+ */
+getMaxSupportPointLightInShader : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getMaxTextureSize
+ * @return {int}
+ */
+getMaxTextureSize : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setValue
  * @param {String} arg0
  * @param {cc.Value} arg1
@@ -143,11 +123,13 @@ value
 },
 
 /**
- * @method gatherGPUInfo
+ * @method getMaxSupportSpotLightInShader
+ * @return {int}
  */
-gatherGPUInfo : function (
+getMaxSupportSpotLightInShader : function (
 )
 {
+    return 0;
 },
 
 /**
@@ -171,13 +153,13 @@ getMaxSupportDirLightInShader : function (
 },
 
 /**
- * @method getMaxSupportPointLightInShader
- * @return {int}
+ * @method isHighAnimate3DQuality
+ * @return {bool}
  */
-getMaxSupportPointLightInShader : function (
+isHighAnimate3DQuality : function (
 )
 {
-    return 0;
+    return false;
 },
 
 /**
@@ -188,6 +170,46 @@ loadConfigFile : function (
 str 
 )
 {
+},
+
+/**
+ * @method supportsDiscardFramebuffer
+ * @return {bool}
+ */
+supportsDiscardFramebuffer : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsS3TC
+ * @return {bool}
+ */
+supportsS3TC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getInfo
+ * @return {String}
+ */
+getInfo : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getMaxTextureUnits
+ * @return {int}
+ */
+getMaxTextureUnits : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -205,23 +227,11 @@ value
 },
 
 /**
- * @method getMaxTextureSize
- * @return {int}
+ * @method gatherGPUInfo
  */
-getMaxTextureSize : function (
+gatherGPUInfo : function (
 )
 {
-    return 0;
-},
-
-/**
- * @method supportsBGRA8888
- * @return {bool}
- */
-supportsBGRA8888 : function (
-)
-{
-    return false;
 },
 
 /**
@@ -11610,8 +11620,10 @@ getHeight : function (
 
 /**
  * @method disableEffect
- */
-disableEffect : function (
+* @param {cc.LabelEffect} labeleffect
+*/
+disableEffect : function(
+labeleffect 
 )
 {
 },
@@ -12634,6 +12646,16 @@ actioninterval
 cc.TransitionScene = {
 
 /**
+ * @method getInScene
+ * @return {cc.Scene}
+ */
+getInScene : function (
+)
+{
+    return cc.Scene;
+},
+
+/**
  * @method finish
  */
 finish : function (
@@ -12653,6 +12675,16 @@ scene
 )
 {
     return false;
+},
+
+/**
+ * @method getDuration
+ * @return {float}
+ */
+getDuration : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -14798,6 +14830,16 @@ isFastMode : function (
 },
 
 /**
+ * @method getStroke
+ * @return {float}
+ */
+getStroke : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method initWithFade
 * @param {float|float} float
 * @param {float|float} float
@@ -14823,6 +14865,16 @@ str
  */
 setFastMode : function (
 bool 
+)
+{
+},
+
+/**
+ * @method setStroke
+ * @param {float} arg0
+ */
+setStroke : function (
+float 
 )
 {
 },
