@@ -42,7 +42,7 @@
 #include "js_Effect3D_bindings.h"
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "jsb_cocos2dx_experimental_webView_auto.hpp"
 #include "experimental/jsb_cocos2dx_experimental_webView_manual.h"
 #endif
