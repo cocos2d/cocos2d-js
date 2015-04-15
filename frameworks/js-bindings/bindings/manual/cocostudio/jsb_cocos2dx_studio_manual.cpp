@@ -359,6 +359,76 @@ bool js_cocos2dx_studio_ColliderBody_getCalculatedVertexList(JSContext *cx, uint
     return false;
 }
 
+static bool js_cocos2dx_studio_Frame_setEasingParams(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::Frame* cobj = (cocostudio::timeline::Frame *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
+    if(argc == 1)
+    {
+        JS::RootedObject jsobj(cx);
+        bool ok = args.get(0).isObject() && JS_ValueToObject( cx, args.get(0), &jsobj );
+        JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
+        JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "argument must be an array");
+
+        std::vector<float> arg0;
+        uint32_t length = 0;
+        ok &= JS_GetArrayLength(cx, jsobj, & length);
+        arg0.reserve(length);
+
+        for (uint32_t i = 0; i < length; ++i)
+        {
+            JS::RootedValue value(cx);
+            if (JS_GetElement(cx, jsobj, i, &value))
+            {
+                arg0.push_back(value.toNumber());
+            }
+            else
+            {
+                ok = false;
+                break;
+            }
+        }
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Frame_setEasingParams : Error processing arguments");
+
+        cobj->setEasingParams(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
+static bool js_cocos2dx_studio_Frame_getEasingParams(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::Frame* cobj = (cocostudio::timeline::Frame *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
+    if(argc == 0)
+    {
+        const std::vector<float> ret = cobj->getEasingParams();
+
+        JS::RootedObject jsobj(cx, JS_NewArrayObject(cx, ret.size()));
+        bool ok = true;
+        for(size_t i = 0; i < ret.size(); ++i)
+        {
+            ok &= JS_SetElement(cx, jsobj, i, ret[i]);
+        }
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Frame_getEasingParams : Error processing arguments");
+
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+
 // BaseData Properties
 
 bool js_get_BaseData_x(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) {
@@ -1368,6 +1438,7 @@ extern JSObject* jsb_cocostudio_MovementData_prototype;
 extern JSObject* jsb_cocostudio_ActionManagerEx_prototype;
 extern JSObject* jsb_cocostudio_ContourData_prototype;
 extern JSObject* jsb_cocostudio_TextureData_prototype;
+extern JSObject* jsb_cocostudio_timeline_Frame_prototype;
 
 void register_all_cocos2dx_studio_manual(JSContext* cx, JS::HandleObject global)
 {
@@ -1380,6 +1451,10 @@ void register_all_cocos2dx_studio_manual(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocostudio_ArmatureDataManager_prototype), "addArmatureFileInfoAsync", jsb_Animation_addArmatureFileInfoAsyncCallFunc, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
    
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocostudio_ActionManagerEx_prototype), "initWithDictionaryEx", js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+
+    JS::RootedObject frame(cx, jsb_cocostudio_timeline_Frame_prototype);
+    JS_DefineFunction(cx, frame, "setEasingParams", js_cocos2dx_studio_Frame_setEasingParams, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, frame, "getEasingParams", js_cocos2dx_studio_Frame_getEasingParams, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE);
 
     JS::RootedObject baseData(cx, jsb_cocostudio_BaseData_prototype);
     JS_DefineProperty(cx, baseData, "x", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_BaseData_x, js_set_BaseData_x);
