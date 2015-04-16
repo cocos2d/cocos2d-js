@@ -227,7 +227,7 @@ bool jsval_to_TerrainData(JSContext* cx, JS::HandleValue v, Terrain::TerrainData
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     ret->_heightMapSrc = heightMap.c_str();
-    char tmp[alphaMap.size() + 1];
+    char* tmp = (char*)malloc(sizeof(char) * (alphaMap.size() + 1));
     strcpy(tmp, alphaMap.c_str());
     tmp[alphaMap.size()] = '\0';
     ret->_alphaMapSrc = tmp;

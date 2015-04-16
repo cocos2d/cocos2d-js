@@ -136,18 +136,18 @@ var TerrainSimple = TerrainTestDemo.extend({
         this._camera.setPosition3D(cc.math.vec3(-1, 1.6, 4));
         this.addChild(this._camera);
 
-        var r = {file:"TerrainTest/dirt.jpg", size:35},
-            g = {file:"TerrainTest/Grass2.jpg", size:35},
-            b = {file:"TerrainTest/road.jpg", size:35},
-            a = {file:"TerrainTest/GreenSkin.jpg", size:35};
-        var data = {
-            heightMap : "TerrainTest/heightmap16.jpg",
-            alphaMap : "TerrainTest/alphamap.png",
-            detailMap : [r, g, b, a],
-            chunkSize : cc.size(32,32),
-            mapHeight : 2,
-            mapScale : 0.1
-        };
+        var r = jsb.Terrain.detailMap("TerrainTest/dirt.jpg", 35),
+            g = jsb.Terrain.detailMap("TerrainTest/Grass2.jpg", 35),
+            b = jsb.Terrain.detailMap("TerrainTest/road.jpg", 35),
+            a = jsb.Terrain.detailMap("TerrainTest/GreenSkin.jpg", 35);
+        var data = jsb.Terrain.terrainData(
+            "TerrainTest/heightmap16.jpg",
+            "TerrainTest/alphamap.png",
+            [r, g, b, a],
+            cc.size(32,32),
+            2,
+            0.1
+        );
 
         var terrain = jsb.Terrain.create(data, jsb.Terrain.CrackFixedType.SKIRT);
         terrain.setLODDistance(3.2,6.4,9.6);
@@ -186,12 +186,222 @@ var TerrainSimple = TerrainTestDemo.extend({
     }
 });
 
+var TerrainWalkThru = (function(){
+    const PlayerState = {
+        LEFT : 0,
+        RIGHT : 1,
+        IDLE : 2,
+        FORWARD : 3,
+        BACKWARD : 4
+    };
 
+    const PLAYER_HEIGHT = 0;
+    const camera_offset = cc.math.vec3(0, 45, 60);
+
+    var Player = jsb.Sprite3D.extend({
+        _targetPos:null,
+        _headingAxis:null,
+        _headingAngle:0,
+        _playerState:PlayerState.IDLE,
+        _camera:null,
+        _terrain:null,
+
+        ctor:function(file, camera, terrain){
+            this._super(file);
+            this._camera = camera;
+            this._terrain = terrain;
+            this.scheduleUpdate();
+        },
+
+        update:function(dt){
+            switch(this._playerState){
+            case PlayerState.IDLE:
+                break;
+            case PlayerState.FORWARD:
+                let curPos = this.getPosition3D();
+                let newFaceDir = cc.math.vec3Sub(this._targetPos, curPos);
+                newFaceDir.y = 0;
+                newFaceDir.normalize();
+                curPos.x += newFaceDir.x * 25 * dt;
+                curPos.y += newFaceDir.y * 25 * dt;
+                curPos.z += newFaceDir.z * 25 * dt;
+                this.setPosition3D(curPos);
+                break;
+            case PlayerState.BACKWARD:
+                break;
+            case PlayerState.LEFT:
+                this.setRotation3D(cc.math.vec3Add(this.getRotation3D(), cc.math.vec3(0, 25*dt, 0)));
+                break;
+            case PlayerState.RIGHT:
+                this.setRotation3D(cc.math.vec3Add(this.getRotation3D(), cc.math.vec3(0, -25*dt, 0)));
+                break;
+            default:
+                break;
+            }
+
+            var player_h = this._terrain.getHeight(this.getPositionX(), this.getVertexZ());
+            this.y = player_h + PLAYER_HEIGHT;
+            this._camera.setPosition3D(cc.math.vec3Add(this.getPosition3D(), camera_offset));
+
+            if(this._headingAxis){
+                var quat = cc.math.quaternion(cc.math.vec3(0, 1, 0), -Math.PI);
+                var headingQ = cc.math.quaternion(this._headingAxis, this._headingAngle);
+                this.setRotationQuat(cc.math.quatMultiply(quat, headingQ));
+            }
+
+            this.updateState();
+        },
+
+        turnLeft:function(){
+            this._playerState = PlayerState.LEFT;
+        },
+
+        turnRight:function(){
+            this._playerState = PlayerState.RIGHT;
+        },
+
+        forward:function(){
+            this._playerState = PlayerState.FORWARD;
+        },
+
+        backward:function(){
+            this._playerState = PlayerState.BACKWARD;
+        },
+
+        idle:function(){
+            this._playerState = PlayerState.IDLE;
+        },
+
+        updateState:function(){
+            if(this._playerState === PlayerState.FORWARD){
+                var playerPos = cc.p(this.getPositionX(), this.getVertexZ());
+                var targetPos = cc.p(this._targetPos.x, this._targetPos.z);
+                var dist = cc.pDistance(playerPos, targetPos);
+                if(dist < 1){
+                    this._playerState = PlayerState.IDLE;
+                }
+            }
+        }
+    });
+
+    return TerrainTestDemo.extend({
+        _title:"Player walk around in terrain",
+        _subtitle:"touch to move",
+        _camera:null,
+        _player:null,
+        _terrain:null,
+
+        ctor:function(){
+            this._super();
+
+            cc.eventManager.addListener({
+                event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+                onTouchesEnded:this.onTouchesEnded.bind(this)
+            }, this);
+
+            var visibleSize = cc.director.getVisibleSize();
+            this._camera = cc.Camera.createPerspective(60, visibleSize.width/visibleSize.height, 0.1, 200);
+            this._camera.setCameraFlag(cc.CameraFlag.USER1);
+            this.addChild(this._camera);
+
+            var r = jsb.Terrain.detailMap("TerrainTest/dirt.jpg"),
+                g = jsb.Terrain.detailMap("TerrainTest/Grass2.jpg", 10),
+                b = jsb.Terrain.detailMap("TerrainTest/road.jpg"),
+                a = jsb.Terrain.detailMap("TerrainTest/GreenSkin.jpg", 20);
+            var data = jsb.Terrain.terrainData(
+                "TerrainTest/heightmap16.jpg",
+                "TerrainTest/alphamap.png",
+                [r, g, b, a],
+                cc.size(32,32),
+                40.0,
+                2
+            );
+
+            this._terrain = jsb.Terrain.create(data, jsb.Terrain.CrackFixedType.SKIRT);
+            this._terrain.setLODDistance(64, 128, 192);
+            this._terrain.setMaxDetailMapAmount(4);
+            this._terrain.setCameraMask(2);
+            this._terrain.setDrawWire(false);
+            this._terrain.setSkirtHeightRatio(3);
+            this.addChild(this._terrain);
+
+            this._player = new Player("Sprite3DTest/girl.c3b", this._camera, this._terrain);
+            this._player.setCameraMask(2);
+            this._player.setScale(0.08);
+            this._player.y = this._terrain.getHeight(this._player.x, this._player.getVertexZ()) + PLAYER_HEIGHT;
+
+            var animation = jsb.Animation3D.create("Sprite3DTest/girl.c3b", "Take 001");
+            if(animation){
+                var animate = jsb.Animate3D.create(animation);
+                this._player.runAction(cc.repeatForever(animate));
+            }
+
+            this.addChild(this._player);
+
+            this._camera.setPosition3D(cc.math.vec3Add(this._player.getPosition3D(), camera_offset));
+            this._camera.setRotation3D(cc.math.vec3(-45, 0, 0));
+        },
+
+        onTouchesEnded:function(touches, event){
+            var touch = touches[0];
+            var location = touch.getLocationInView();
+            if(this._camera && this._player){
+                var nearP = cc.math.vec3(location.x, location.y, 0);
+                var farP = cc.math.vec3(location.x, location.y, 1);
+
+                nearP = this._camera.unproject(nearP);
+                farP = this._camera.unproject(farP);
+
+                var dir = cc.math.vec3Sub(farP, nearP);
+                dir.normalize();
+                var rayStep = cc.math.vec3(15*dir.x, 15*dir.y, 15*dir.z);
+                var rayPos = nearP;
+                var rayStartPosition = nearP;
+                var lastRayPosition = rayPos;
+                rayPos.x += rayStep.x;
+                rayPos.y += rayStep.y;
+                rayPos.z += rayStep.z;
+
+                // Linear search - Loop until find a point inside and outside the terrain Vector3
+                var height = this._terrain.getHeight(rayPos.x, rayPos.z);
+                while(rayPos.y > height){
+                    lastRayPosition = rayPos;
+                    rayPos.x += rayStep.x;
+                    rayPos.y += rayStep.y;
+                    rayPos.z += rayStep.z;
+                    height = this._terrain.getHeight(rayPos.x, rayPos.z);
+                }
+
+                var startPosition = lastRayPosition;
+                var endPosition = rayPos;
+
+                for(let i = 0; i < 32; ++i){
+                    // Binary search pass
+                    let middlePoint = cc.math.vec3((startPosition.x+endPosition.x)*0.5, (startPosition.y+endPosition.y)*0.5, (startPosition.z+endPosition.z)*0.5);
+                    if(middlePoint.y < height)
+                        endPosition = middlePoint;
+                    else
+                        startPosition = middlePoint;
+                }
+
+                var collisionPoint = cc.math.vec3((startPosition.x+endPosition.x)*0.5, (startPosition.y+endPosition.y)*0.5, (startPosition.z+endPosition.z)*0.5);
+                dir = cc.math.vec3Sub(collisionPoint, this._player.getPosition3D());
+                dir.y = 0;
+                dir.normalize();
+                this._player._headingAngle = -1 * Math.acos(cc.math.vec3Dot(dir, cc.math.vec3(0, 0, -1)));
+                this._player._headingAxis = cc.math.vec3Cross(dir, cc.math.vec3(0, 0, -1));
+                this._player._targetPos = collisionPoint;
+                this._player.forward();
+            }
+        }
+    });
+})();
 //
 // Flow control
 //
 var arrayOfTerrainTest = [
-    TerrainSimple
+    TerrainSimple,
+    TerrainWalkThru
 ];
 
 var nextTerrainTest = function () {
