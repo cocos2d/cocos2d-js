@@ -37,7 +37,6 @@
             }
         ],
         "UIButton": [
-
             {
                 title: "UIButtonTest",
                 func: function () {
