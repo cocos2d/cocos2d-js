@@ -490,6 +490,13 @@ var testNames = [
         }
     },
     {
+        title:"Particle3D Test",
+        platforms: PLATFORM_JSB,
+        testScene:function () {
+            return new Particle3DTestScene();
+        }
+    },
+    {
         title:"Particle Test",
         platforms: PLATFORM_ALL,
         linksrc:"",
