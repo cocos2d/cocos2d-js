@@ -2724,17 +2724,6 @@ cc.Node.prototype._getBoundingBoxToCurrentNode = function (parentTransform) {
     return rect;
 };
 
-cc.Node.prototype._setNormalizedPosition = cc.Node.prototype.setNormalizedPosition;
-cc.Node.prototype.setNormalizedPosition = function (posOrX, y) {
-    if (y === undefined) {
-        this._setNormalizedPosition(posOrX);
-    }
-    else {
-        this._setNormalizedPosition(cc.p(posOrX, y));
-    }
-};
-
-
 //
 // cc.Layer bake/unbake/isBaked
 //
