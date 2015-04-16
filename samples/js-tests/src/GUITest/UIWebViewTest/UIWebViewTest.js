@@ -46,9 +46,9 @@ var UIWebViewTest = UIScene.extend({
             this._webView.loadURL("http://www.baidu.com");
             this._webView.setScalesPageToFit(true);
 
-            this._webView.setOnShouldStartLoading(this.onWebViewShouldStartLoading, this);
-            this._webView.setOnDidFinishLoading(this.onWebViewDidFinishLoading, this);
-            this._webView.setOnDidFailLoading(this.onWebViewDidFailLoading, this);
+            this._webView.setOnShouldStartLoading(this.onWebViewShouldStartLoading);
+            this._webView.setOnDidFinishLoading(this.onWebViewDidFinishLoading);
+            this._webView.setOnDidFailLoading(this.onWebViewDidFailLoading);
 
             this._mainNode.addChild(this._webView);
 
