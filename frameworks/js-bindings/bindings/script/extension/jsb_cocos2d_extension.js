@@ -180,8 +180,7 @@ cc.AUTOREPEAT_DELTATIME = 0.15;
 cc.AUTOREPEAT_INCREASETIME_INCREMENT = 12;
 
 var _proto = null;
-if (cc.AssetsManager)
-{
+if (cc.AssetsManager){
     /**
      * @type {Object}
      * @name jsb.AssetsManager
@@ -193,8 +192,7 @@ if (cc.AssetsManager)
     delete cc.AssetsManager;
 }
 
-if (cc.EventListenerAssetsManager)
-{
+if (cc.EventListenerAssetsManager){
     /**
      * @type {Object}
      * @name jsb.EventListenerAssetsManager
@@ -210,8 +208,7 @@ if (cc.EventListenerAssetsManager)
     };
 }
 
-if (cc.EventAssetsManager)
-{
+if (cc.EventAssetsManager){
     /**
      * @type {Object}
      * @name jsb.EventAssetsManager
@@ -235,8 +232,7 @@ if (cc.EventAssetsManager)
     jsb.EventAssetsManager.ERROR_DECOMPRESS = 10;
 }
 
-if (cc.Control)
-{
+if (cc.Control){
     _proto = cc.Control.prototype;
     cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
     cc.defineGetterSetter(_proto, "state", _proto.getState);
@@ -245,8 +241,7 @@ if (cc.Control)
     cc.defineGetterSetter(_proto, "highlighted", _proto.isHighlighted, _proto.setHighlighted);
 }
 
-if (cc.ControlButton)
-{
+if (cc.ControlButton){
     cc.ControlButton.extend = cc.Class.extend;
 
     _proto = cc.ControlButton.prototype;
@@ -270,8 +265,7 @@ if (cc.ControlButton)
 
 }
 
-if (cc.ControlColourPicker)
-{
+if (cc.ControlColourPicker){
     cc.ControlColourPicker.extend = cc.Class.extend;
 
     _proto = cc.ControlColourPicker.prototype;
@@ -285,8 +279,7 @@ if (cc.ControlColourPicker)
 
 }
 
-if (cc.ControlHuePicker)
-{
+if (cc.ControlHuePicker){
     _proto = cc.ControlHuePicker.prototype;
     cc.defineGetterSetter(_proto, "enabled", _proto.isEnabled, _proto.setEnabled);
     cc.defineGetterSetter(_proto, "hue", _proto.getHue, _proto.setHue);
@@ -296,8 +289,7 @@ if (cc.ControlHuePicker)
     cc.defineGetterSetter(_proto, "startPos", _proto.getStartPos);
 }
 
-if (cc.ControlSaturationBrightnessPicker)
-{
+if (cc.ControlSaturationBrightnessPicker){
     _proto = cc.ControlSaturationBrightnessPicker.prototype;
     cc.defineGetterSetter(_proto, "enabled", _proto.isEnabled, _proto.setEnabled);
     cc.defineGetterSetter(_proto, "saturation", _proto.getSaturation);
@@ -309,8 +301,7 @@ if (cc.ControlSaturationBrightnessPicker)
     cc.defineGetterSetter(_proto, "startPos", _proto.getStartPos);
 }
 
-if (cc.ControlPotentiometer)
-{
+if (cc.ControlPotentiometer){
     cc.ControlPotentiometer.extend = cc.Class.extend;
 
     _proto = cc.ControlPotentiometer.prototype;
@@ -337,8 +328,7 @@ if (cc.ControlPotentiometer)
     };
 }
 
-if (cc.ControlSlider)
-{
+if (cc.ControlSlider){
     cc.ControlSlider.extend = cc.Class.extend;
 
     _proto = cc.ControlSlider.prototype;
@@ -368,8 +358,7 @@ if (cc.ControlSlider)
     };
 }
 
-if (cc.ControlStepper)
-{
+if (cc.ControlStepper){
     cc.ControlStepper.extend = cc.Class.extend;
 
     _proto = cc.ControlStepper.prototype;
@@ -389,8 +378,7 @@ if (cc.ControlStepper)
     };
 }
 
-if (cc.ControlSwitch)
-{
+if (cc.ControlSwitch){
     cc.ControlSwitch.extend = cc.Class.extend;
 
     _proto = cc.ControlSwitch.prototype;
@@ -401,8 +389,7 @@ if (cc.ControlSwitch)
     };
 }
 
-if (cc.ScrollView)
-{
+if (cc.ScrollView){
     cc.ScrollView.extend = cc.Class.extend;
 
     _proto = cc.ScrollView.prototype;
@@ -415,8 +402,7 @@ if (cc.ScrollView)
     };
 }
 
-if (cc.TableView)
-{
+if (cc.TableView){
     cc.TableView.extend = cc.Class.extend;
 
     cc.TableView.prototype._ctor = function(dataSouurce, size, container){
@@ -424,8 +410,7 @@ if (cc.TableView)
     };
 }
 
-if (cc.TableViewCell)
-{
+if (cc.TableViewCell){
     cc.TableViewCell.extend = cc.Class.extend;
 
     _proto = cc.TableViewCell.prototype;
