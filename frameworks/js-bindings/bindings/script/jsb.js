@@ -96,11 +96,7 @@ if (window.ccui) {
     require('script/ccui/jsb_ccui_deprecated.js');
 }
 
-if (cc.ControlButton) {
-    require('script/extension/jsb_cocos2d_extension.js');
-    require('script/extension/jsb_ext_property_apis.js');
-    require('script/extension/jsb_ext_create_apis.js');
-}
+require('script/extension/jsb_cocos2d_extension.js');
 
 if (cc.PhysicsSprite) {
     cc.PhysicsSprite.extend = cc.Class.extend;// move from jsb_cocos2d.js
