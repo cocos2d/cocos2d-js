@@ -1253,3 +1253,224 @@ Skybox : function (
 },
 
 };
+
+/**
+ * @class Terrain
+ */
+jsb.Terrain = {
+
+/**
+ * @method initHeightMap
+ * @param {char} arg0
+ * @return {bool}
+ */
+initHeightMap : function (
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method getIntersectionPoint
+ * @param {cc.Ray} arg0
+ * @return {vec3_object}
+ */
+getIntersectionPoint : function (
+ray 
+)
+{
+    return cc.Vec3;
+},
+
+/**
+ * @method setAlphaMap
+ * @param {cc.Texture2D} arg0
+ */
+setAlphaMap : function (
+texture2d 
+)
+{
+},
+
+/**
+ * @method setSkirtHeightRatio
+ * @param {float} arg0
+ */
+setSkirtHeightRatio : function (
+float 
+)
+{
+},
+
+/**
+ * @method convertToTerrainSpace
+ * @param {vec2_object} arg0
+ * @return {vec2_object}
+ */
+convertToTerrainSpace : function (
+vec2 
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method getHeight
+* @param {vec2_object|float} vec2
+* @param {vec3_object|float} vec3
+* @param {vec3_object} vec3
+* @return {float|float}
+*/
+getHeight : function(
+float,
+float,
+vec3 
+)
+{
+    return 0;
+},
+
+/**
+ * @method initTextures
+ * @return {bool}
+ */
+initTextures : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method initProperties
+ * @return {bool}
+ */
+initProperties : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getNormal
+ * @param {int} arg0
+ * @param {int} arg1
+ * @return {vec3_object}
+ */
+getNormal : function (
+int, 
+int 
+)
+{
+    return cc.Vec3;
+},
+
+/**
+ * @method setDrawWire
+ * @param {bool} arg0
+ */
+setDrawWire : function (
+bool 
+)
+{
+},
+
+/**
+ * @method reload
+ */
+reload : function (
+)
+{
+},
+
+/**
+ * @method setDetailMap
+ * @param {unsigned int} arg0
+ * @param {cc.Terrain::DetailMap} arg1
+ */
+setDetailMap : function (
+int, 
+map 
+)
+{
+},
+
+/**
+ * @method getImageHeight
+ * @param {int} arg0
+ * @param {int} arg1
+ * @return {float}
+ */
+getImageHeight : function (
+int, 
+int 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getMinHeight
+ * @return {float}
+ */
+getMinHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setLODDistance
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ */
+setLODDistance : function (
+float, 
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method resetHeightMap
+ * @param {char} arg0
+ */
+resetHeightMap : function (
+char 
+)
+{
+},
+
+/**
+ * @method getMaxHeight
+ * @return {float}
+ */
+getMaxHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setMaxDetailMapAmount
+ * @param {int} arg0
+ */
+setMaxDetailMapAmount : function (
+int 
+)
+{
+},
+
+/**
+ * @method setIsEnableFrustumCull
+ * @param {bool} arg0
+ */
+setIsEnableFrustumCull : function (
+bool 
+)
+{
+},
+
+};
