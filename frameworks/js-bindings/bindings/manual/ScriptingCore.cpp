@@ -1761,10 +1761,9 @@ void ScriptingCore::enableDebugger(unsigned int port)
         _debugGlobal.construct(_cx);
         _debugGlobal.ref() = NewGlobalObject(_cx, true);
         // Adds the debugger object to root, otherwise it may be collected by GC.
-        //AddObjectRoot(_cx, &_debugGlobal); no need, it's persistent rooted now
+        //AddObjectRoot(_cx, &_debugGlobal.ref()); no need, it's persistent rooted now
+        //JS_WrapObject(_cx, &_debugGlobal.ref()); Not really needed, JS_WrapObject makes a cross-compartment wrapper for the given JS object
         JS::RootedObject rootedDebugObj(_cx, _debugGlobal.ref().get());
-        //JS_WrapObject(_cx, &rootedDebugObj); Not really needed, JS_WrapObject makes a cross-compartment wrapper for the given JS object
-        rootedDebugObj.set(_debugGlobal.ref().get());
         JSAutoCompartment ac(_cx, rootedDebugObj);
         // these are used in the debug program
         JS_DefineFunction(_cx, rootedDebugObj, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_ENUMERATE | JSPROP_PERMANENT);
