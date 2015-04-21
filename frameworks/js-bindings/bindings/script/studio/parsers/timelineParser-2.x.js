@@ -227,7 +227,7 @@
                     blendFunc.src = blendData["Src"];
                 if(blendData["Dst"] !== undefined)
                     blendFunc.dst = blendData["Dst"];
-                node.setBlendFunc(new cc.BlendFunc());
+                node.setBlendFunc(blendFunc);
             }
         });
         return node;
@@ -601,6 +601,17 @@
         var textColor = json["TextColor"];
         if(textColor != null)
             widget.setTitleColor(getColor(textColor));
+
+        var label = widget.getTitleRenderer();
+        if(label && json["ShadowEnabled"] && json["ShadowColor"]){
+            label.enableShadow(
+                getColor(json["ShadowColor"]),
+                cc.size(getParam(json["ShadowOffsetX"], 2), getParam(json["ShadowOffsetY"], -2)),
+                json["ShadowBlurRadius"] || 0
+            );
+        }
+        if(label && json["OutlineEnabled"] && json["OutlineColor"])
+            label.enableOutline(getColor(json["OutlineColor"]), json["OutlineSize"] || 0);
 
         var displaystate = getParam(json["DisplayState"], true);
         widget.setBright(displaystate);

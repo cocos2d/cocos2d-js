@@ -255,7 +255,7 @@ JS_BINDED_FUNC_IMPL(JavaScriptObjCBridge, callStaticMethod){
         CallInfo call(arg0.get(),arg1.get());
         bool ok = call.execute(cx,args.array(),argc);
         if(!ok){
-            JS_ReportError(cx, "js_cocos2dx_JSJavaBridge : call result code: %d", call.getErrorCode());
+            JS_ReportError(cx, "js_cocos2dx_JSObjCBridge : call result code: %d", call.getErrorCode());
             return false;
         }
         args.rval().set(convertReturnValue(cx, call.getReturnValue(), call.getReturnValueType()));
