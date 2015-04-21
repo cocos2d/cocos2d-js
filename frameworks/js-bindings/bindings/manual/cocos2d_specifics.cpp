@@ -2583,6 +2583,56 @@ bool js_cocos2dx_CCNode_resume(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+bool js_cocos2dx_CCNode_convertToWorldSpace(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CCNode_convertToWorldSpace : Invalid Native Object");
+    cocos2d::Vec2 arg0;
+    if (argc == 1) {
+        ok &= jsval_to_vector2(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CCNode_convertToWorldSpace : Error processing arguments");
+    }
+    else if (argc != 0) {
+        JS_ReportError(cx, "js_cocos2dx_CCNode_convertToWorldSpace : wrong number of arguments: %d, was expecting 0 or 1", argc);
+        return false;
+    }
+    
+    cocos2d::Vec2 ret = cobj->convertToWorldSpace(arg0);
+    jsval jsret = JSVAL_NULL;
+    jsret = vector2_to_jsval(cx, ret);
+    args.rval().set(jsret);
+    return true;
+}
+
+bool js_cocos2dx_CCNode_convertToWorldSpaceAR(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CCNode_convertToWorldSpaceAR : Invalid Native Object");
+    cocos2d::Vec2 arg0;
+    if (argc == 1) {
+        ok &= jsval_to_vector2(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CCNode_convertToWorldSpaceAR : Error processing arguments");
+    }
+    else if (argc != 0) {
+        JS_ReportError(cx, "js_cocos2dx_CCNode_convertToWorldSpaceAR : wrong number of arguments: %d, was expecting 0 or 1", argc);
+        return false;
+    }
+    
+    cocos2d::Vec2 ret = cobj->convertToWorldSpaceAR(arg0);
+    jsval jsret = JSVAL_NULL;
+    jsret = vector2_to_jsval(cx, ret);
+    args.rval().set(jsret);
+    return true;
+}
+
 bool js_cocos2dx_Component_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
@@ -5272,6 +5322,8 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, tmpObj, "setColor", js_cocos2dx_CCNode_setColor, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "pause", js_cocos2dx_CCNode_pause, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "resume", js_cocos2dx_CCNode_resume, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "convertToWorldSpace", js_cocos2dx_CCNode_convertToWorldSpace, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "convertToWorldSpaceAR", js_cocos2dx_CCNode_convertToWorldSpaceAR, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "setAdditionalTransform", js_cocos2dx_Node_setAdditionalTransform, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     tmpObj.set(jsb_cocos2d_EventListener_prototype);
