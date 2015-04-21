@@ -432,6 +432,7 @@ void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
     JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, global, "__cleanScript", JSB_cleanScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "__isObjectValid", ScriptingCore::isObjectValid, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
 static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
@@ -1511,6 +1512,26 @@ bool ScriptingCore::parseConfig(ConfigType type, const std::string &str)
     args[0] = int32_to_jsval(_cx, static_cast<int>(type));
     args[1] = std_string_to_jsval(_cx, str);
     return (true == executeFunctionWithOwner(OBJECT_TO_JSVAL(_global.ref().get()), "__onParseConfig", 2, args));
+}
+
+bool ScriptingCore::isObjectValid(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 1) {
+        JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
+        js_proxy_t *proxy = jsb_get_js_proxy(tmpObj);
+        if (proxy && proxy->ptr) {
+            args.rval().set(JSVAL_TRUE);
+        }
+        else {
+            args.rval().set(JSVAL_FALSE);
+        }
+        return true;
+    }
+    else {
+        JS_ReportError(cx, "Invalid number of arguments: %d. Expecting: 1", argc);
+        return false;
+    }
 }
 
 #pragma mark - Debug
