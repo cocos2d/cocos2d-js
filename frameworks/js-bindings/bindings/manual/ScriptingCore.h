@@ -244,6 +244,8 @@ public:
     static bool dumpRoot(JSContext *cx, uint32_t argc, jsval *vp);
     static bool addRootJS(JSContext *cx, uint32_t argc, jsval *vp);
     static bool removeRootJS(JSContext *cx, uint32_t argc, jsval *vp);
+    
+    static bool isObjectValid(JSContext *cx, uint32_t argc, jsval *vp);
 
     /**
      * enable the debug environment
