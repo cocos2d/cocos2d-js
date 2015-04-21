@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.5";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.6 Beta";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
