@@ -1772,8 +1772,10 @@ void ScriptingCore::enableDebugger(unsigned int port)
         
         runScript("script/jsb_debugger.js", rootedDebugObj);
         
+        JS::RootedObject globalObj(_cx, _global.ref().get());
+        JS_WrapObject(_cx, &globalObj);
         // prepare the debugger
-        jsval argv = OBJECT_TO_JSVAL(_global.ref().get());
+        jsval argv = OBJECT_TO_JSVAL(globalObj);
         JS::RootedValue outval(_cx);
         bool ok = JS_CallFunctionName(_cx, rootedDebugObj, "_prepareDebugger", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
         if (!ok) {
