@@ -886,18 +886,6 @@ func
 },
 
 /**
- * @method convertToWorldSpaceAR
- * @param {vec2_object} arg0
- * @return {vec2_object}
- */
-convertToWorldSpaceAR : function (
-vec2 
-)
-{
-    return cc.Vec2;
-},
-
-/**
  * @method isIgnoreAnchorPointForPosition
  * @return {bool}
  */
@@ -1107,18 +1095,6 @@ node,
 bool 
 )
 {
-},
-
-/**
- * @method convertToWorldSpace
- * @param {vec2_object} arg0
- * @return {vec2_object}
- */
-convertToWorldSpace : function (
-vec2 
-)
-{
-    return cc.Vec2;
 },
 
 /**
