@@ -1380,9 +1380,6 @@ bool ScriptingCore::handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widge
 
     bool ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onFocusChanged", 2, args);
 
-    removeJSObject(_cx, widgetLoseFocus);
-    removeJSObject(_cx, widgetGetFocus);
-
     return ret;
 }
 
