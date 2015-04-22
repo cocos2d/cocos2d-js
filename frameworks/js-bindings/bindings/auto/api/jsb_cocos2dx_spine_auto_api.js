@@ -30,12 +30,12 @@ getDebugSlotsEnabled : function (
 
 /**
  * @method setAttachment
- * @param {String} arg0
- * @param {String} arg1
- * @return {bool}
- */
-setAttachment : function (
-str, 
+* @param {String|String} str
+* @param {char|String} char
+* @return {bool|bool}
+*/
+setAttachment : function(
+str,
 str 
 )
 {
@@ -202,10 +202,10 @@ blendfunc
 
 /**
  * @method setSkin
- * @param {String} arg0
- * @return {bool}
- */
-setSkin : function (
+* @param {char|String} char
+* @return {bool|bool}
+*/
+setSkin : function(
 str 
 )
 {
