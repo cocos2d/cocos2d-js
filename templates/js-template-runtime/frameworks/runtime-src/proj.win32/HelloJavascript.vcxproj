@@ -104,7 +104,7 @@
     </ResourceCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\js-bindings\external\spidermonkey\prebuilt\win32\debug-build\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\js-bindings\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\js-bindings\cocos2d-x\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
@@ -162,7 +162,7 @@ xcopy /s "$(ProjectDir)..\..\js-bindings\bindings\script" "$(ProjectDir)..\..\..
     </ResourceCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\js-bindings\external\spidermonkey\prebuilt\win32\release-build\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\js-bindings\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\js-bindings\cocos2d-x\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
