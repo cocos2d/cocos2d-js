@@ -5345,7 +5345,7 @@ var SpriteBlendFuncTest = SpriteTestDemo.extend({
 
         var sourceImg = "res/Images/dot.png", destImg = "res/Images/wood.jpg";
         var sourceTexture = cc.textureCache.addImage(sourceImg);
-        //sourceTexture.handleLoadedTexture(true);
+        sourceTexture.handleLoadedTexture(true);
         var sourceSprite = new cc.Sprite(sourceImg);
         var destSprite = new cc.Sprite(destImg);
         sourceSprite.setScale(0.8);
