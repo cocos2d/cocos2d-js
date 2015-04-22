@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Cocos2d-html5 Show Case - MoonWarriors</title>
+    <meta name="viewport" content="user-scalable=no"/>
+    <meta charset="utf-8"/>
+    <meta name="author" content="html5china"/>
+</head>
+<body>
+<canvas id="gameCanvas" width="320" height="480"></canvas>
+<script>
+    if(window.CocosRuntime){
+        var configObj = {
+            "orientation": "portrait",
+            "version_code":3,
+            "game_url": "http://115.28.72.132/test/v0.9.6-1st/org.cocos2dx.moonwarriors.v3/3"
+        };
+
+        CocosRuntime.start(JSON.stringify(configObj));
+    }else{
+
+        var sources = [
+            "../../frameworks/cocos2d-html5/CCBoot.js",
+            "main.js"
+        ];
+
+        for (var i = 0; i < sources.length; ++i) {
+            var script = document.createElement("script");
+            script.src = sources[i];
+            script.async = false;
+            document.body.appendChild(script);
+        }
+    }
+</script>
+</body>
+</html>
