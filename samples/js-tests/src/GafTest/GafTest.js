@@ -6,9 +6,16 @@
 
     var Scene = TestScene.extend({
         runThisTest:function () {
-            var layer = new GafLayer();
-            layer.setScale(0.9);
-            this.addChild(layer);
+            if(!cc.sys.isNative){
+                var layer = new GafLayer();
+                layer.setScale(0.9);
+                this.addChild(layer);
+            }else{
+                var ttf = new cc.LabelTTF("Currently only supports the web platform");
+                ttf.setFontSize(26);
+                ttf.setPosition(cc.p(400, 225));
+                this.addChild(ttf);
+            }
             director.runScene(this);
         }
     });
