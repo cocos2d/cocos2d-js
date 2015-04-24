@@ -573,6 +573,15 @@ var testNames = [
         }
     },
     {
+        title:"Gaf Test",
+        resource: g_gaf,
+        platforms: PLATFORM_ALL,
+        linksrc:"src/GafTest/GafTest.js",
+        testScene:function () {
+            return new GafTestScene();
+        }
+    },
+    {
         title:"Sprite3D Test",
         platforms: PLATFORM_JSB,
         linksrc:"src/Sprite3DTest/Sprite3DTest.js",
