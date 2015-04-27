@@ -1534,7 +1534,7 @@ var setTimeout = function (code, delay) {
         original.apply(this, arguments);
         clearTimeout(target._intervalId);
     }
-    cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, 0, 0, false);
+    cc.director.getScheduler().schedule(target.fun, target, delay / 1000, 0, 0, false, target._intervalId+"");
     _windowTimeFunHash[target._intervalId] = target;
     return target._intervalId;
 };
@@ -1549,7 +1549,7 @@ var setInterval = function (code, delay) {
     var target = new WindowTimeFun(code);
     if (arguments.length > 2)
         target._args = Array.prototype.slice.call(arguments, 2);
-    cc.director.getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, cc.REPEAT_FOREVER, 0, false);
+    cc.director.getScheduler().schedule(target.fun, target, delay / 1000, cc.REPEAT_FOREVER, 0, false, target._intervalId+"");
     _windowTimeFunHash[target._intervalId] = target;
     return target._intervalId;
 };
@@ -1561,7 +1561,7 @@ var setInterval = function (code, delay) {
 var clearInterval = function (intervalId) {
     var target = _windowTimeFunHash[intervalId];
     if (target) {
-        cc.Director.getInstance().getScheduler().unscheduleCallbackForTarget(target, target.fun);
+        cc.director.getScheduler().unschedule(target._intervalId+"", target);
         delete _windowTimeFunHash[intervalId];
     }
 };
@@ -2761,9 +2761,7 @@ cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS,
     this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
 };
 
-cc.Texture2D.prototype.handleLoadedTexture = function (premultipled) {
-
-};
+cc.Texture2D.prototype.handleLoadedTexture = function (premultipled) {};
 
 
 //
@@ -2817,10 +2815,6 @@ _p.setBoundingHeight = _p.setHeight;
 // cc.Scheduler scheduleCallbackForTarget
 //
 _p = cc.Scheduler.prototype;
-_p.scheduleCallbackForTarget = function (target, callback_fn, interval, repeat, delay, paused) {
-    this.schedule(callback_fn, target, interval, repeat, delay, paused, target.__instanceId + "");
-};
-_p.unscheduleCallbackForTarget = _p.unschedule;
 _p.unscheduleUpdateForTarget = _p.unscheduleUpdate;
 _p.unscheduleAllCallbacksForTarget = _p.unscheduleAllForTarget;
 
