@@ -23,6 +23,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+if(cc.sys.isNative)(function(){
+
 var TerrainTestIdx = -1;
 
 var TerrainTestDemo = cc.Layer.extend({
@@ -91,7 +93,7 @@ var TerrainTestDemo = cc.Layer.extend({
     },
 });
 
-var TerrainTestScene = cc.Scene.extend({
+TerrainTestScene = cc.Scene.extend({
     ctor:function () {
         this._super();
 
@@ -218,8 +220,8 @@ var TerrainWalkThru = (function(){
             case PlayerState.IDLE:
                 break;
             case PlayerState.FORWARD:
-                let curPos = this.getPosition3D();
-                let newFaceDir = cc.math.vec3Sub(this._targetPos, curPos);
+                var curPos = this.getPosition3D();
+                var newFaceDir = cc.math.vec3Sub(this._targetPos, curPos);
                 newFaceDir.y = 0;
                 newFaceDir.normalize();
                 curPos.x += newFaceDir.x * 25 * dt;
@@ -375,9 +377,9 @@ var TerrainWalkThru = (function(){
                 var startPosition = lastRayPosition;
                 var endPosition = rayPos;
 
-                for(let i = 0; i < 32; ++i){
+                for(var i = 0; i < 32; ++i){
                     // Binary search pass
-                    let middlePoint = cc.math.vec3((startPosition.x+endPosition.x)*0.5, (startPosition.y+endPosition.y)*0.5, (startPosition.z+endPosition.z)*0.5);
+                    var middlePoint = cc.math.vec3((startPosition.x+endPosition.x)*0.5, (startPosition.y+endPosition.y)*0.5, (startPosition.z+endPosition.z)*0.5);
                     if(middlePoint.y < height)
                         endPosition = middlePoint;
                     else
@@ -420,3 +422,5 @@ var previousTerrainTest = function () {
 var restartTerrainTest = function () {
     return new arrayOfTerrainTest[TerrainTestIdx ]();
 };
+
+})();
