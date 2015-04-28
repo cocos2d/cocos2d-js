@@ -1,4 +1,4 @@
-# Cocos2d-JS v3.6 Beta release note
+# Cocos2d-JS v3.6 release note
 
 <img src="http://files.cocos2d-x.org/images/orgsite/logo.png" height=180> 
 
@@ -14,9 +14,8 @@ One more thing, Facebook Integration for Cocos2d-JS have brought a huge opportun
 
 * Added new 3D features: Skybox and Terrain.
 * Upgraded support of Cocos editor to the latest version.
-* Added `enumerateChildren` function which support powerful children searching with name and patterns.
-* Added `cc.sys.isObjectValid` for detecting famous `Invalid Native Object` issue.
-* Reactivated Firefox remote debug functionality with SpiderMonkey v33, refer to the [manual document](http://cocos2d-x.org/docs/manual/framework/native/v3/js-remote-debugger/en).
+* Added `enumerateChildren` function which support powerful children searching in the child node tree with name and patterns.
+* Added `cc.sys.isObjectValid` for detecting node's validity to prevent the famous `Invalid Native Object` issue.
 
 ## Notice
 
@@ -28,7 +27,7 @@ For JSB build, there are some restrictions :
 
 ## Download
 
-- [Cocos2d-JS v3.6 Beta](http://www.cocos2d-x.org/filedown/cocos2d-js-v3.6-beta.zip)
+- [Cocos2d-JS v3.6](http://www.cocos2d-x.org/filedown/cocos2d-js-v3.6.zip)
 - [Cocos2d-JS Lite Version](http://cocos2d-x.org/filecenter/jsbuilder/)
 - [Cocos Dev Tool](http://h5.cocos.com/static/cocos-devtools/index-en.html)
 - [Online API reference](http://www.cocos2d-x.org/wiki/reference/)
@@ -38,14 +37,14 @@ For JSB build, there are some restrictions :
 
 Read more about all the features and bug fixes
 
-- [Cocos2d-JS v3.6 Beta changelog](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.6b/changelog/en)
-- [Cocos2d-JS v3.6 Beta upgrade guide](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.6/upgrade-guide/en)
+- [Cocos2d-JS v3.6 changelog](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.6/changelog/en)
+- [Cocos2d-JS v3.6 upgrade guide](http://www.cocos2d-x.org/docs/manual/framework/html5/release-notes/v3.6/upgrade-guide/en)
 
 ## Upgrade your project from previous versions
 
-If you want to upgrade your game based on v3.0 previous version to the v3.6 Beta, you should follow these steps:
+If you want to upgrade your game based on v3.0 previous version to the v3.6, you should follow these steps:
 
-1. Download the Cocos2d-JS v3.6 Beta package.
+1. Download the Cocos2d-JS v3.6 package.
 2. Upgrade cocos command with `setup.py`.
 3. Create a new project with `cocos new` command.
 4. Replace the "src", "res", "index.html", "project.json", "main.js" etc with your old project.
@@ -53,10 +52,10 @@ If you want to upgrade your game based on v3.0 previous version to the v3.6 Beta
 
 ## About Cocos2d family
 
-- Cocos2d-JS v3.6 Beta uses Cocos2d-x v3.6 Beta0 as base of JSB solution.
-- Cocos2d-JS v3.6 Beta uses SpiderMonkey v33 as builtin JavaScript engine.
-- Cocos2d-JS v3.6 Beta is compatible with Cocos Code IDE v1.2.0.
-- Cocos2d-JS v3.6 Beta is compatible with Cocos Studio v1.2 - v1.6 and Cocos Studio 2.1+..
+- Cocos2d-JS v3.6 uses Cocos2d-x v3.6 as base of JSB solution.
+- Cocos2d-JS v3.6 uses SpiderMonkey v33 as builtin JavaScript engine.
+- Cocos2d-JS v3.6 is compatible with Cocos Code IDE v1.2.0.
+- Cocos2d-JS v3.6 is compatible with Cocos Studio v1.2 - v1.6 and Cocos Studio 2.1+..
 
 With any problems you might have, our communities are happy to help:
 
