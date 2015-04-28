@@ -4,252 +4,311 @@
 var cc = cc || {};
 
 /**
- * @class Configuration
+ * @class Action
  */
-cc.Configuration = {
+cc.Action = {
 
 /**
- * @method supportsPVRTC
- * @return {bool}
+ * @method startWithTarget
+ * @param {cc.Node} arg0
  */
-supportsPVRTC : function (
+startWithTarget : function (
+node 
 )
 {
-    return false;
 },
 
 /**
- * @method getMaxModelviewStackDepth
+ * @method setOriginalTarget
+ * @param {cc.Node} arg0
+ */
+setOriginalTarget : function (
+node 
+)
+{
+},
+
+/**
+ * @method clone
+ * @return {cc.Action}
+ */
+clone : function (
+)
+{
+    return cc.Action;
+},
+
+/**
+ * @method getOriginalTarget
+ * @return {cc.Node}
+ */
+getOriginalTarget : function (
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method stop
+ */
+stop : function (
+)
+{
+},
+
+/**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
+},
+
+/**
+ * @method getTarget
+ * @return {cc.Node}
+ */
+getTarget : function (
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method step
+ * @param {float} arg0
+ */
+step : function (
+float 
+)
+{
+},
+
+/**
+ * @method setTag
+ * @param {int} arg0
+ */
+setTag : function (
+int 
+)
+{
+},
+
+/**
+ * @method getTag
  * @return {int}
  */
-getMaxModelviewStackDepth : function (
+getTag : function (
 )
 {
     return 0;
 },
 
 /**
- * @method supportsShareableVAO
+ * @method setTarget
+ * @param {cc.Node} arg0
+ */
+setTarget : function (
+node 
+)
+{
+},
+
+/**
+ * @method isDone
  * @return {bool}
  */
-supportsShareableVAO : function (
+isDone : function (
 )
 {
     return false;
 },
 
 /**
- * @method supportsBGRA8888
- * @return {bool}
+ * @method reverse
+ * @return {cc.Action}
  */
-supportsBGRA8888 : function (
+reverse : function (
 )
 {
-    return false;
+    return cc.Action;
+},
+
+};
+
+/**
+ * @class FiniteTimeAction
+ */
+cc.FiniteTimeAction = {
+
+/**
+ * @method setDuration
+ * @param {float} arg0
+ */
+setDuration : function (
+float 
+)
+{
 },
 
 /**
- * @method checkForGLExtension
- * @param {String} arg0
- * @return {bool}
+ * @method getDuration
+ * @return {float}
  */
-checkForGLExtension : function (
-str 
+getDuration : function (
 )
 {
-    return false;
+    return 0;
+},
+
+};
+
+/**
+ * @class Speed
+ */
+cc.Speed = {
+
+/**
+ * @method setInnerAction
+ * @param {cc.ActionInterval} arg0
+ */
+setInnerAction : function (
+actioninterval 
+)
+{
 },
 
 /**
- * @method supportsATITC
- * @return {bool}
+ * @method getSpeed
+ * @return {float}
  */
-supportsATITC : function (
-)
-{
-    return false;
-},
-
-/**
- * @method supportsNPOT
- * @return {bool}
- */
-supportsNPOT : function (
-)
-{
-    return false;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getMaxSupportPointLightInShader
- * @return {int}
- */
-getMaxSupportPointLightInShader : function (
+getSpeed : function (
 )
 {
     return 0;
 },
 
 /**
- * @method getMaxTextureSize
- * @return {int}
+ * @method setSpeed
+ * @param {float} arg0
  */
-getMaxTextureSize : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setValue
- * @param {String} arg0
- * @param {cc.Value} arg1
- */
-setValue : function (
-str, 
-value 
+setSpeed : function (
+float 
 )
 {
 },
 
 /**
- * @method getMaxSupportSpotLightInShader
- * @return {int}
- */
-getMaxSupportSpotLightInShader : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method supportsETC
+ * @method initWithAction
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
  * @return {bool}
  */
-supportsETC : function (
+initWithAction : function (
+actioninterval, 
+float 
 )
 {
     return false;
 },
 
 /**
- * @method getMaxSupportDirLightInShader
- * @return {int}
+ * @method getInnerAction
+ * @return {cc.ActionInterval}
  */
-getMaxSupportDirLightInShader : function (
+getInnerAction : function (
 )
 {
-    return 0;
+    return cc.ActionInterval;
 },
 
 /**
- * @method isHighAnimate3DQuality
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.Speed}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.Speed;
+},
+
+/**
+ * @method Speed
+ * @constructor
+ */
+Speed : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Follow
+ */
+cc.Follow = {
+
+/**
+ * @method setBoundarySet
+ * @param {bool} arg0
+ */
+setBoundarySet : function (
+bool 
+)
+{
+},
+
+/**
+ * @method initWithTarget
+ * @param {cc.Node} arg0
+ * @param {rect_object} arg1
  * @return {bool}
  */
-isHighAnimate3DQuality : function (
+initWithTarget : function (
+node, 
+rect 
 )
 {
     return false;
 },
 
 /**
- * @method loadConfigFile
- * @param {String} arg0
- */
-loadConfigFile : function (
-str 
-)
-{
-},
-
-/**
- * @method supportsDiscardFramebuffer
+ * @method isBoundarySet
  * @return {bool}
  */
-supportsDiscardFramebuffer : function (
+isBoundarySet : function (
 )
 {
     return false;
 },
 
 /**
- * @method supportsS3TC
- * @return {bool}
+ * @method create
+ * @param {cc.Node} arg0
+ * @param {rect_object} arg1
+ * @return {cc.Follow}
  */
-supportsS3TC : function (
+create : function (
+node, 
+rect 
 )
 {
-    return false;
+    return cc.Follow;
 },
 
 /**
- * @method getInfo
- * @return {String}
+ * @method Follow
+ * @constructor
  */
-getInfo : function (
+Follow : function (
 )
 {
-    return ;
-},
-
-/**
- * @method getMaxTextureUnits
- * @return {int}
- */
-getMaxTextureUnits : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getValue
- * @param {String} arg0
- * @param {cc.Value} arg1
- * @return {cc.Value}
- */
-getValue : function (
-str, 
-value 
-)
-{
-    return cc.Value;
-},
-
-/**
- * @method gatherGPUInfo
- */
-gatherGPUInfo : function (
-)
-{
-},
-
-/**
- * @method destroyInstance
- */
-destroyInstance : function (
-)
-{
-},
-
-/**
- * @method getInstance
- * @return {cc.Configuration}
- */
-getInstance : function (
-)
-{
-    return cc.Configuration;
 },
 
 };
@@ -2249,6 +2308,2068 @@ cc.NodeRGBA = {
 __NodeRGBA : function (
 )
 {
+},
+
+};
+
+/**
+ * @class SpriteFrame
+ */
+cc.SpriteFrame = {
+
+/**
+ * @method clone
+ * @return {cc.SpriteFrame}
+ */
+clone : function (
+)
+{
+    return cc.SpriteFrame;
+},
+
+/**
+ * @method setRotated
+ * @param {bool} arg0
+ */
+setRotated : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setTexture
+ * @param {cc.Texture2D} arg0
+ */
+setTexture : function (
+texture2d 
+)
+{
+},
+
+/**
+ * @method getOffset
+ * @return {vec2_object}
+ */
+getOffset : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method setRectInPixels
+ * @param {rect_object} arg0
+ */
+setRectInPixels : function (
+rect 
+)
+{
+},
+
+/**
+ * @method getTexture
+ * @return {cc.Texture2D}
+ */
+getTexture : function (
+)
+{
+    return cc.Texture2D;
+},
+
+/**
+ * @method getRect
+ * @return {rect_object}
+ */
+getRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method setOffsetInPixels
+ * @param {vec2_object} arg0
+ */
+setOffsetInPixels : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method getRectInPixels
+ * @return {rect_object}
+ */
+getRectInPixels : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method setOriginalSize
+ * @param {size_object} arg0
+ */
+setOriginalSize : function (
+size 
+)
+{
+},
+
+/**
+ * @method getOriginalSizeInPixels
+ * @return {size_object}
+ */
+getOriginalSizeInPixels : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method setOriginalSizeInPixels
+ * @param {size_object} arg0
+ */
+setOriginalSizeInPixels : function (
+size 
+)
+{
+},
+
+/**
+ * @method setOffset
+ * @param {vec2_object} arg0
+ */
+setOffset : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method initWithTexture
+* @param {cc.Texture2D|cc.Texture2D} texture2d
+* @param {rect_object|rect_object} rect
+* @param {bool} bool
+* @param {vec2_object} vec2
+* @param {size_object} size
+* @return {bool|bool}
+*/
+initWithTexture : function(
+texture2d,
+rect,
+bool,
+vec2,
+size 
+)
+{
+    return false;
+},
+
+/**
+ * @method isRotated
+ * @return {bool}
+ */
+isRotated : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithTextureFilename
+* @param {String|String} str
+* @param {rect_object|rect_object} rect
+* @param {bool} bool
+* @param {vec2_object} vec2
+* @param {size_object} size
+* @return {bool|bool}
+*/
+initWithTextureFilename : function(
+str,
+rect,
+bool,
+vec2,
+size 
+)
+{
+    return false;
+},
+
+/**
+ * @method setRect
+ * @param {rect_object} arg0
+ */
+setRect : function (
+rect 
+)
+{
+},
+
+/**
+ * @method getOffsetInPixels
+ * @return {vec2_object}
+ */
+getOffsetInPixels : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method getOriginalSize
+ * @return {size_object}
+ */
+getOriginalSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method create
+* @param {String|String} str
+* @param {rect_object|rect_object} rect
+* @param {bool} bool
+* @param {vec2_object} vec2
+* @param {size_object} size
+* @return {cc.SpriteFrame|cc.SpriteFrame}
+*/
+create : function(
+str,
+rect,
+bool,
+vec2,
+size 
+)
+{
+    return cc.SpriteFrame;
+},
+
+/**
+ * @method createWithTexture
+* @param {cc.Texture2D|cc.Texture2D} texture2d
+* @param {rect_object|rect_object} rect
+* @param {bool} bool
+* @param {vec2_object} vec2
+* @param {size_object} size
+* @return {cc.SpriteFrame|cc.SpriteFrame}
+*/
+createWithTexture : function(
+texture2d,
+rect,
+bool,
+vec2,
+size 
+)
+{
+    return cc.SpriteFrame;
+},
+
+/**
+ * @method SpriteFrame
+ * @constructor
+ */
+SpriteFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class AnimationFrame
+ */
+cc.AnimationFrame = {
+
+/**
+ * @method setSpriteFrame
+ * @param {cc.SpriteFrame} arg0
+ */
+setSpriteFrame : function (
+spriteframe 
+)
+{
+},
+
+/**
+ * @method getUserInfo
+* @return {map_object|map_object}
+*/
+getUserInfo : function(
+)
+{
+    return map_object;
+},
+
+/**
+ * @method setDelayUnits
+ * @param {float} arg0
+ */
+setDelayUnits : function (
+float 
+)
+{
+},
+
+/**
+ * @method clone
+ * @return {cc.AnimationFrame}
+ */
+clone : function (
+)
+{
+    return cc.AnimationFrame;
+},
+
+/**
+ * @method getSpriteFrame
+ * @return {cc.SpriteFrame}
+ */
+getSpriteFrame : function (
+)
+{
+    return cc.SpriteFrame;
+},
+
+/**
+ * @method getDelayUnits
+ * @return {float}
+ */
+getDelayUnits : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setUserInfo
+ * @param {map_object} arg0
+ */
+setUserInfo : function (
+map 
+)
+{
+},
+
+/**
+ * @method initWithSpriteFrame
+ * @param {cc.SpriteFrame} arg0
+ * @param {float} arg1
+ * @param {map_object} arg2
+ * @return {bool}
+ */
+initWithSpriteFrame : function (
+spriteframe, 
+float, 
+map 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {cc.SpriteFrame} arg0
+ * @param {float} arg1
+ * @param {map_object} arg2
+ * @return {cc.AnimationFrame}
+ */
+create : function (
+spriteframe, 
+float, 
+map 
+)
+{
+    return cc.AnimationFrame;
+},
+
+/**
+ * @method AnimationFrame
+ * @constructor
+ */
+AnimationFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Animation
+ */
+cc.Animation = {
+
+/**
+ * @method getLoops
+ * @return {unsigned int}
+ */
+getLoops : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method addSpriteFrame
+ * @param {cc.SpriteFrame} arg0
+ */
+addSpriteFrame : function (
+spriteframe 
+)
+{
+},
+
+/**
+ * @method setRestoreOriginalFrame
+ * @param {bool} arg0
+ */
+setRestoreOriginalFrame : function (
+bool 
+)
+{
+},
+
+/**
+ * @method clone
+ * @return {cc.Animation}
+ */
+clone : function (
+)
+{
+    return cc.Animation;
+},
+
+/**
+ * @method getDuration
+ * @return {float}
+ */
+getDuration : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method initWithAnimationFrames
+ * @param {Array} arg0
+ * @param {float} arg1
+ * @param {unsigned int} arg2
+ * @return {bool}
+ */
+initWithAnimationFrames : function (
+array, 
+float, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setFrames
+ * @param {Array} arg0
+ */
+setFrames : function (
+array 
+)
+{
+},
+
+/**
+ * @method getFrames
+ * @return {Array}
+ */
+getFrames : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method setLoops
+ * @param {unsigned int} arg0
+ */
+setLoops : function (
+int 
+)
+{
+},
+
+/**
+ * @method setDelayPerUnit
+ * @param {float} arg0
+ */
+setDelayPerUnit : function (
+float 
+)
+{
+},
+
+/**
+ * @method addSpriteFrameWithFile
+ * @param {String} arg0
+ */
+addSpriteFrameWithFile : function (
+str 
+)
+{
+},
+
+/**
+ * @method getTotalDelayUnits
+ * @return {float}
+ */
+getTotalDelayUnits : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getDelayPerUnit
+ * @return {float}
+ */
+getDelayPerUnit : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method initWithSpriteFrames
+ * @param {Array} arg0
+ * @param {float} arg1
+ * @param {unsigned int} arg2
+ * @return {bool}
+ */
+initWithSpriteFrames : function (
+array, 
+float, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method getRestoreOriginalFrame
+ * @return {bool}
+ */
+getRestoreOriginalFrame : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method addSpriteFrameWithTexture
+ * @param {cc.Texture2D} arg0
+ * @param {rect_object} arg1
+ */
+addSpriteFrameWithTexture : function (
+texture2d, 
+rect 
+)
+{
+},
+
+/**
+ * @method create
+* @param {Array} array
+* @param {float} float
+* @param {unsigned int} int
+* @return {cc.Animation|cc.Animation}
+*/
+create : function(
+array,
+float,
+int 
+)
+{
+    return cc.Animation;
+},
+
+/**
+ * @method createWithSpriteFrames
+ * @param {Array} arg0
+ * @param {float} arg1
+ * @param {unsigned int} arg2
+ * @return {cc.Animation}
+ */
+createWithSpriteFrames : function (
+array, 
+float, 
+int 
+)
+{
+    return cc.Animation;
+},
+
+/**
+ * @method Animation
+ * @constructor
+ */
+Animation : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ActionInterval
+ */
+cc.ActionInterval = {
+
+/**
+ * @method getAmplitudeRate
+ * @return {float}
+ */
+getAmplitudeRate : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @return {bool}
+ */
+initWithDuration : function (
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method setAmplitudeRate
+ * @param {float} arg0
+ */
+setAmplitudeRate : function (
+float 
+)
+{
+},
+
+/**
+ * @method getElapsed
+ * @return {float}
+ */
+getElapsed : function (
+)
+{
+    return 0;
+},
+
+};
+
+/**
+ * @class Sequence
+ */
+cc.Sequence = {
+
+/**
+ * @method initWithTwoActions
+ * @param {cc.FiniteTimeAction} arg0
+ * @param {cc.FiniteTimeAction} arg1
+ * @return {bool}
+ */
+initWithTwoActions : function (
+finitetimeaction, 
+finitetimeaction 
+)
+{
+    return false;
+},
+
+/**
+ * @method Sequence
+ * @constructor
+ */
+Sequence : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Repeat
+ */
+cc.Repeat = {
+
+/**
+ * @method setInnerAction
+ * @param {cc.FiniteTimeAction} arg0
+ */
+setInnerAction : function (
+finitetimeaction 
+)
+{
+},
+
+/**
+ * @method initWithAction
+ * @param {cc.FiniteTimeAction} arg0
+ * @param {unsigned int} arg1
+ * @return {bool}
+ */
+initWithAction : function (
+finitetimeaction, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method getInnerAction
+ * @return {cc.FiniteTimeAction}
+ */
+getInnerAction : function (
+)
+{
+    return cc.FiniteTimeAction;
+},
+
+/**
+ * @method create
+ * @param {cc.FiniteTimeAction} arg0
+ * @param {unsigned int} arg1
+ * @return {cc.Repeat}
+ */
+create : function (
+finitetimeaction, 
+int 
+)
+{
+    return cc.Repeat;
+},
+
+/**
+ * @method Repeat
+ * @constructor
+ */
+Repeat : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RepeatForever
+ */
+cc.RepeatForever = {
+
+/**
+ * @method setInnerAction
+ * @param {cc.ActionInterval} arg0
+ */
+setInnerAction : function (
+actioninterval 
+)
+{
+},
+
+/**
+ * @method initWithAction
+ * @param {cc.ActionInterval} arg0
+ * @return {bool}
+ */
+initWithAction : function (
+actioninterval 
+)
+{
+    return false;
+},
+
+/**
+ * @method getInnerAction
+ * @return {cc.ActionInterval}
+ */
+getInnerAction : function (
+)
+{
+    return cc.ActionInterval;
+},
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @return {cc.RepeatForever}
+ */
+create : function (
+actioninterval 
+)
+{
+    return cc.RepeatForever;
+},
+
+/**
+ * @method RepeatForever
+ * @constructor
+ */
+RepeatForever : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Spawn
+ */
+cc.Spawn = {
+
+/**
+ * @method initWithTwoActions
+ * @param {cc.FiniteTimeAction} arg0
+ * @param {cc.FiniteTimeAction} arg1
+ * @return {bool}
+ */
+initWithTwoActions : function (
+finitetimeaction, 
+finitetimeaction 
+)
+{
+    return false;
+},
+
+/**
+ * @method Spawn
+ * @constructor
+ */
+Spawn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RotateTo
+ */
+cc.RotateTo = {
+
+/**
+ * @method initWithDuration
+* @param {float|float} float
+* @param {vec3_object|float} vec3
+* @param {float} float
+* @return {bool|bool}
+*/
+initWithDuration : function(
+float,
+float,
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {float|float|float} float
+* @param {float|float|vec3_object} float
+* @param {float} float
+* @return {cc.RotateTo|cc.RotateTo|cc.RotateTo}
+*/
+create : function(
+float,
+float,
+float 
+)
+{
+    return cc.RotateTo;
+},
+
+/**
+ * @method RotateTo
+ * @constructor
+ */
+RotateTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RotateBy
+ */
+cc.RotateBy = {
+
+/**
+ * @method initWithDuration
+* @param {float|float|float} float
+* @param {float|float|vec3_object} float
+* @param {float} float
+* @return {bool|bool|bool}
+*/
+initWithDuration : function(
+float,
+float,
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {float|float|float} float
+* @param {float|float|vec3_object} float
+* @param {float} float
+* @return {cc.RotateBy|cc.RotateBy|cc.RotateBy}
+*/
+create : function(
+float,
+float,
+float 
+)
+{
+    return cc.RotateBy;
+},
+
+/**
+ * @method RotateBy
+ * @constructor
+ */
+RotateBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class MoveBy
+ */
+cc.MoveBy = {
+
+/**
+ * @method initWithDuration
+* @param {float|float} float
+* @param {vec3_object|vec2_object} vec3
+* @return {bool|bool}
+*/
+initWithDuration : function(
+float,
+vec2 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {float|float} float
+* @param {vec3_object|vec2_object} vec3
+* @return {cc.MoveBy|cc.MoveBy}
+*/
+create : function(
+float,
+vec2 
+)
+{
+    return cc.MoveBy;
+},
+
+/**
+ * @method MoveBy
+ * @constructor
+ */
+MoveBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class MoveTo
+ */
+cc.MoveTo = {
+
+/**
+ * @method initWithDuration
+* @param {float|float} float
+* @param {vec3_object|vec2_object} vec3
+* @return {bool|bool}
+*/
+initWithDuration : function(
+float,
+vec2 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {float|float} float
+* @param {vec3_object|vec2_object} vec3
+* @return {cc.MoveTo|cc.MoveTo}
+*/
+create : function(
+float,
+vec2 
+)
+{
+    return cc.MoveTo;
+},
+
+/**
+ * @method MoveTo
+ * @constructor
+ */
+MoveTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class SkewTo
+ */
+cc.SkewTo = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @return {cc.SkewTo}
+ */
+create : function (
+float, 
+float, 
+float 
+)
+{
+    return cc.SkewTo;
+},
+
+/**
+ * @method SkewTo
+ * @constructor
+ */
+SkewTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class SkewBy
+ */
+cc.SkewBy = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @return {cc.SkewBy}
+ */
+create : function (
+float, 
+float, 
+float 
+)
+{
+    return cc.SkewBy;
+},
+
+/**
+ * @method SkewBy
+ * @constructor
+ */
+SkewBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class JumpBy
+ */
+cc.JumpBy = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {vec2_object} arg1
+ * @param {float} arg2
+ * @param {int} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+vec2, 
+float, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {vec2_object} arg1
+ * @param {float} arg2
+ * @param {int} arg3
+ * @return {cc.JumpBy}
+ */
+create : function (
+float, 
+vec2, 
+float, 
+int 
+)
+{
+    return cc.JumpBy;
+},
+
+/**
+ * @method JumpBy
+ * @constructor
+ */
+JumpBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class JumpTo
+ */
+cc.JumpTo = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {vec2_object} arg1
+ * @param {float} arg2
+ * @param {int} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+vec2, 
+float, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {vec2_object} arg1
+ * @param {float} arg2
+ * @param {int} arg3
+ * @return {cc.JumpTo}
+ */
+create : function (
+float, 
+vec2, 
+float, 
+int 
+)
+{
+    return cc.JumpTo;
+},
+
+/**
+ * @method JumpTo
+ * @constructor
+ */
+JumpTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class BezierBy
+ */
+cc.BezierBy = {
+
+/**
+ * @method BezierBy
+ * @constructor
+ */
+BezierBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class BezierTo
+ */
+cc.BezierTo = {
+
+/**
+ * @method BezierTo
+ * @constructor
+ */
+BezierTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ScaleTo
+ */
+cc.ScaleTo = {
+
+/**
+ * @method initWithDuration
+* @param {float|float|float} float
+* @param {float|float|float} float
+* @param {float|float} float
+* @param {float} float
+* @return {bool|bool|bool}
+*/
+initWithDuration : function(
+float,
+float,
+float,
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {float|float|float} float
+* @param {float|float|float} float
+* @param {float|float} float
+* @param {float} float
+* @return {cc.ScaleTo|cc.ScaleTo|cc.ScaleTo}
+*/
+create : function(
+float,
+float,
+float,
+float 
+)
+{
+    return cc.ScaleTo;
+},
+
+/**
+ * @method ScaleTo
+ * @constructor
+ */
+ScaleTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ScaleBy
+ */
+cc.ScaleBy = {
+
+/**
+ * @method create
+* @param {float|float|float} float
+* @param {float|float|float} float
+* @param {float|float} float
+* @param {float} float
+* @return {cc.ScaleBy|cc.ScaleBy|cc.ScaleBy}
+*/
+create : function(
+float,
+float,
+float,
+float 
+)
+{
+    return cc.ScaleBy;
+},
+
+/**
+ * @method ScaleBy
+ * @constructor
+ */
+ScaleBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Blink
+ */
+cc.Blink = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {int} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {int} arg1
+ * @return {cc.Blink}
+ */
+create : function (
+float, 
+int 
+)
+{
+    return cc.Blink;
+},
+
+/**
+ * @method Blink
+ * @constructor
+ */
+Blink : function (
+)
+{
+},
+
+};
+
+/**
+ * @class FadeTo
+ */
+cc.FadeTo = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {unsigned char} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {unsigned char} arg1
+ * @return {cc.FadeTo}
+ */
+create : function (
+float, 
+char 
+)
+{
+    return cc.FadeTo;
+},
+
+/**
+ * @method FadeTo
+ * @constructor
+ */
+FadeTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class FadeIn
+ */
+cc.FadeIn = {
+
+/**
+ * @method setReverseAction
+ * @param {cc.FadeTo} arg0
+ */
+setReverseAction : function (
+fadeto 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @return {cc.FadeIn}
+ */
+create : function (
+float 
+)
+{
+    return cc.FadeIn;
+},
+
+/**
+ * @method FadeIn
+ * @constructor
+ */
+FadeIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class FadeOut
+ */
+cc.FadeOut = {
+
+/**
+ * @method setReverseAction
+ * @param {cc.FadeTo} arg0
+ */
+setReverseAction : function (
+fadeto 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @return {cc.FadeOut}
+ */
+create : function (
+float 
+)
+{
+    return cc.FadeOut;
+},
+
+/**
+ * @method FadeOut
+ * @constructor
+ */
+FadeOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TintTo
+ */
+cc.TintTo = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {unsigned char} arg1
+ * @param {unsigned char} arg2
+ * @param {unsigned char} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+char, 
+char, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {float|float} float
+* @param {color3b_object|unsigned char} color3b
+* @param {unsigned char} char
+* @param {unsigned char} char
+* @return {cc.TintTo|cc.TintTo}
+*/
+create : function(
+float,
+char,
+char,
+char 
+)
+{
+    return cc.TintTo;
+},
+
+/**
+ * @method TintTo
+ * @constructor
+ */
+TintTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TintBy
+ */
+cc.TintBy = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {short} arg1
+ * @param {short} arg2
+ * @param {short} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+short, 
+short, 
+short 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {short} arg1
+ * @param {short} arg2
+ * @param {short} arg3
+ * @return {cc.TintBy}
+ */
+create : function (
+float, 
+short, 
+short, 
+short 
+)
+{
+    return cc.TintBy;
+},
+
+/**
+ * @method TintBy
+ * @constructor
+ */
+TintBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class DelayTime
+ */
+cc.DelayTime = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @return {cc.DelayTime}
+ */
+create : function (
+float 
+)
+{
+    return cc.DelayTime;
+},
+
+/**
+ * @method DelayTime
+ * @constructor
+ */
+DelayTime : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ReverseTime
+ */
+cc.ReverseTime = {
+
+/**
+ * @method initWithAction
+ * @param {cc.FiniteTimeAction} arg0
+ * @return {bool}
+ */
+initWithAction : function (
+finitetimeaction 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {cc.FiniteTimeAction} arg0
+ * @return {cc.ReverseTime}
+ */
+create : function (
+finitetimeaction 
+)
+{
+    return cc.ReverseTime;
+},
+
+/**
+ * @method ReverseTime
+ * @constructor
+ */
+ReverseTime : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Animate
+ */
+cc.Animate = {
+
+/**
+ * @method getAnimation
+* @return {cc.Animation|cc.Animation}
+*/
+getAnimation : function(
+)
+{
+    return cc.Animation;
+},
+
+/**
+ * @method initWithAnimation
+ * @param {cc.Animation} arg0
+ * @return {bool}
+ */
+initWithAnimation : function (
+animation 
+)
+{
+    return false;
+},
+
+/**
+ * @method setAnimation
+ * @param {cc.Animation} arg0
+ */
+setAnimation : function (
+animation 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {cc.Animation} arg0
+ * @return {cc.Animate}
+ */
+create : function (
+animation 
+)
+{
+    return cc.Animate;
+},
+
+/**
+ * @method Animate
+ * @constructor
+ */
+Animate : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TargetedAction
+ */
+cc.TargetedAction = {
+
+/**
+ * @method getForcedTarget
+* @return {cc.Node|cc.Node}
+*/
+getForcedTarget : function(
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method initWithTarget
+ * @param {cc.Node} arg0
+ * @param {cc.FiniteTimeAction} arg1
+ * @return {bool}
+ */
+initWithTarget : function (
+node, 
+finitetimeaction 
+)
+{
+    return false;
+},
+
+/**
+ * @method setForcedTarget
+ * @param {cc.Node} arg0
+ */
+setForcedTarget : function (
+node 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {cc.Node} arg0
+ * @param {cc.FiniteTimeAction} arg1
+ * @return {cc.TargetedAction}
+ */
+create : function (
+node, 
+finitetimeaction 
+)
+{
+    return cc.TargetedAction;
+},
+
+/**
+ * @method TargetedAction
+ * @constructor
+ */
+TargetedAction : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Configuration
+ */
+cc.Configuration = {
+
+/**
+ * @method supportsPVRTC
+ * @return {bool}
+ */
+supportsPVRTC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getMaxModelviewStackDepth
+ * @return {int}
+ */
+getMaxModelviewStackDepth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method supportsShareableVAO
+ * @return {bool}
+ */
+supportsShareableVAO : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsBGRA8888
+ * @return {bool}
+ */
+supportsBGRA8888 : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method checkForGLExtension
+ * @param {String} arg0
+ * @return {bool}
+ */
+checkForGLExtension : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsATITC
+ * @return {bool}
+ */
+supportsATITC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsNPOT
+ * @return {bool}
+ */
+supportsNPOT : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getAnimate3DQuality
+ * @return {cc.Animate3DQuality}
+ */
+getAnimate3DQuality : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getMaxSupportPointLightInShader
+ * @return {int}
+ */
+getMaxSupportPointLightInShader : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getMaxTextureSize
+ * @return {int}
+ */
+getMaxTextureSize : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setValue
+ * @param {String} arg0
+ * @param {cc.Value} arg1
+ */
+setValue : function (
+str, 
+value 
+)
+{
+},
+
+/**
+ * @method getMaxSupportSpotLightInShader
+ * @return {int}
+ */
+getMaxSupportSpotLightInShader : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method supportsETC
+ * @return {bool}
+ */
+supportsETC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getMaxSupportDirLightInShader
+ * @return {int}
+ */
+getMaxSupportDirLightInShader : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method loadConfigFile
+ * @param {String} arg0
+ */
+loadConfigFile : function (
+str 
+)
+{
+},
+
+/**
+ * @method supportsDiscardFramebuffer
+ * @return {bool}
+ */
+supportsDiscardFramebuffer : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsS3TC
+ * @return {bool}
+ */
+supportsS3TC : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getInfo
+ * @return {String}
+ */
+getInfo : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getMaxTextureUnits
+ * @return {int}
+ */
+getMaxTextureUnits : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getValue
+ * @param {String} arg0
+ * @param {cc.Value} arg1
+ * @return {cc.Value}
+ */
+getValue : function (
+str, 
+value 
+)
+{
+    return cc.Value;
+},
+
+/**
+ * @method gatherGPUInfo
+ */
+gatherGPUInfo : function (
+)
+{
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {cc.Configuration}
+ */
+getInstance : function (
+)
+{
+    return cc.Configuration;
 },
 
 };
@@ -4385,2127 +6506,6 @@ init : function (
  * @constructor
  */
 EventListenerFocus : function (
-)
-{
-},
-
-};
-
-/**
- * @class Action
- */
-cc.Action = {
-
-/**
- * @method startWithTarget
- * @param {cc.Node} arg0
- */
-startWithTarget : function (
-node 
-)
-{
-},
-
-/**
- * @method setOriginalTarget
- * @param {cc.Node} arg0
- */
-setOriginalTarget : function (
-node 
-)
-{
-},
-
-/**
- * @method clone
- * @return {cc.Action}
- */
-clone : function (
-)
-{
-    return cc.Action;
-},
-
-/**
- * @method getOriginalTarget
- * @return {cc.Node}
- */
-getOriginalTarget : function (
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method stop
- */
-stop : function (
-)
-{
-},
-
-/**
- * @method update
- * @param {float} arg0
- */
-update : function (
-float 
-)
-{
-},
-
-/**
- * @method getTarget
- * @return {cc.Node}
- */
-getTarget : function (
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method step
- * @param {float} arg0
- */
-step : function (
-float 
-)
-{
-},
-
-/**
- * @method setTag
- * @param {int} arg0
- */
-setTag : function (
-int 
-)
-{
-},
-
-/**
- * @method getTag
- * @return {int}
- */
-getTag : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setTarget
- * @param {cc.Node} arg0
- */
-setTarget : function (
-node 
-)
-{
-},
-
-/**
- * @method isDone
- * @return {bool}
- */
-isDone : function (
-)
-{
-    return false;
-},
-
-/**
- * @method reverse
- * @return {cc.Action}
- */
-reverse : function (
-)
-{
-    return cc.Action;
-},
-
-};
-
-/**
- * @class FiniteTimeAction
- */
-cc.FiniteTimeAction = {
-
-/**
- * @method setDuration
- * @param {float} arg0
- */
-setDuration : function (
-float 
-)
-{
-},
-
-/**
- * @method getDuration
- * @return {float}
- */
-getDuration : function (
-)
-{
-    return 0;
-},
-
-};
-
-/**
- * @class Speed
- */
-cc.Speed = {
-
-/**
- * @method setInnerAction
- * @param {cc.ActionInterval} arg0
- */
-setInnerAction : function (
-actioninterval 
-)
-{
-},
-
-/**
- * @method getSpeed
- * @return {float}
- */
-getSpeed : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setSpeed
- * @param {float} arg0
- */
-setSpeed : function (
-float 
-)
-{
-},
-
-/**
- * @method initWithAction
- * @param {cc.ActionInterval} arg0
- * @param {float} arg1
- * @return {bool}
- */
-initWithAction : function (
-actioninterval, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method getInnerAction
- * @return {cc.ActionInterval}
- */
-getInnerAction : function (
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method create
- * @param {cc.ActionInterval} arg0
- * @param {float} arg1
- * @return {cc.Speed}
- */
-create : function (
-actioninterval, 
-float 
-)
-{
-    return cc.Speed;
-},
-
-/**
- * @method Speed
- * @constructor
- */
-Speed : function (
-)
-{
-},
-
-};
-
-/**
- * @class Follow
- */
-cc.Follow = {
-
-/**
- * @method setBoundarySet
- * @param {bool} arg0
- */
-setBoundarySet : function (
-bool 
-)
-{
-},
-
-/**
- * @method initWithTarget
- * @param {cc.Node} arg0
- * @param {rect_object} arg1
- * @return {bool}
- */
-initWithTarget : function (
-node, 
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method isBoundarySet
- * @return {bool}
- */
-isBoundarySet : function (
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {cc.Node} arg0
- * @param {rect_object} arg1
- * @return {cc.Follow}
- */
-create : function (
-node, 
-rect 
-)
-{
-    return cc.Follow;
-},
-
-/**
- * @method Follow
- * @constructor
- */
-Follow : function (
-)
-{
-},
-
-};
-
-/**
- * @class SpriteFrame
- */
-cc.SpriteFrame = {
-
-/**
- * @method clone
- * @return {cc.SpriteFrame}
- */
-clone : function (
-)
-{
-    return cc.SpriteFrame;
-},
-
-/**
- * @method setRotated
- * @param {bool} arg0
- */
-setRotated : function (
-bool 
-)
-{
-},
-
-/**
- * @method setTexture
- * @param {cc.Texture2D} arg0
- */
-setTexture : function (
-texture2d 
-)
-{
-},
-
-/**
- * @method getOffset
- * @return {vec2_object}
- */
-getOffset : function (
-)
-{
-    return cc.Vec2;
-},
-
-/**
- * @method setRectInPixels
- * @param {rect_object} arg0
- */
-setRectInPixels : function (
-rect 
-)
-{
-},
-
-/**
- * @method getTexture
- * @return {cc.Texture2D}
- */
-getTexture : function (
-)
-{
-    return cc.Texture2D;
-},
-
-/**
- * @method getRect
- * @return {rect_object}
- */
-getRect : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
- * @method setOffsetInPixels
- * @param {vec2_object} arg0
- */
-setOffsetInPixels : function (
-vec2 
-)
-{
-},
-
-/**
- * @method getRectInPixels
- * @return {rect_object}
- */
-getRectInPixels : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
- * @method setOriginalSize
- * @param {size_object} arg0
- */
-setOriginalSize : function (
-size 
-)
-{
-},
-
-/**
- * @method getOriginalSizeInPixels
- * @return {size_object}
- */
-getOriginalSizeInPixels : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method setOriginalSizeInPixels
- * @param {size_object} arg0
- */
-setOriginalSizeInPixels : function (
-size 
-)
-{
-},
-
-/**
- * @method setOffset
- * @param {vec2_object} arg0
- */
-setOffset : function (
-vec2 
-)
-{
-},
-
-/**
- * @method initWithTexture
-* @param {cc.Texture2D|cc.Texture2D} texture2d
-* @param {rect_object|rect_object} rect
-* @param {bool} bool
-* @param {vec2_object} vec2
-* @param {size_object} size
-* @return {bool|bool}
-*/
-initWithTexture : function(
-texture2d,
-rect,
-bool,
-vec2,
-size 
-)
-{
-    return false;
-},
-
-/**
- * @method isRotated
- * @return {bool}
- */
-isRotated : function (
-)
-{
-    return false;
-},
-
-/**
- * @method initWithTextureFilename
-* @param {String|String} str
-* @param {rect_object|rect_object} rect
-* @param {bool} bool
-* @param {vec2_object} vec2
-* @param {size_object} size
-* @return {bool|bool}
-*/
-initWithTextureFilename : function(
-str,
-rect,
-bool,
-vec2,
-size 
-)
-{
-    return false;
-},
-
-/**
- * @method setRect
- * @param {rect_object} arg0
- */
-setRect : function (
-rect 
-)
-{
-},
-
-/**
- * @method getOffsetInPixels
- * @return {vec2_object}
- */
-getOffsetInPixels : function (
-)
-{
-    return cc.Vec2;
-},
-
-/**
- * @method getOriginalSize
- * @return {size_object}
- */
-getOriginalSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method create
-* @param {String|String} str
-* @param {rect_object|rect_object} rect
-* @param {bool} bool
-* @param {vec2_object} vec2
-* @param {size_object} size
-* @return {cc.SpriteFrame|cc.SpriteFrame}
-*/
-create : function(
-str,
-rect,
-bool,
-vec2,
-size 
-)
-{
-    return cc.SpriteFrame;
-},
-
-/**
- * @method createWithTexture
-* @param {cc.Texture2D|cc.Texture2D} texture2d
-* @param {rect_object|rect_object} rect
-* @param {bool} bool
-* @param {vec2_object} vec2
-* @param {size_object} size
-* @return {cc.SpriteFrame|cc.SpriteFrame}
-*/
-createWithTexture : function(
-texture2d,
-rect,
-bool,
-vec2,
-size 
-)
-{
-    return cc.SpriteFrame;
-},
-
-/**
- * @method SpriteFrame
- * @constructor
- */
-SpriteFrame : function (
-)
-{
-},
-
-};
-
-/**
- * @class AnimationFrame
- */
-cc.AnimationFrame = {
-
-/**
- * @method setSpriteFrame
- * @param {cc.SpriteFrame} arg0
- */
-setSpriteFrame : function (
-spriteframe 
-)
-{
-},
-
-/**
- * @method getUserInfo
-* @return {map_object|map_object}
-*/
-getUserInfo : function(
-)
-{
-    return map_object;
-},
-
-/**
- * @method setDelayUnits
- * @param {float} arg0
- */
-setDelayUnits : function (
-float 
-)
-{
-},
-
-/**
- * @method clone
- * @return {cc.AnimationFrame}
- */
-clone : function (
-)
-{
-    return cc.AnimationFrame;
-},
-
-/**
- * @method getSpriteFrame
- * @return {cc.SpriteFrame}
- */
-getSpriteFrame : function (
-)
-{
-    return cc.SpriteFrame;
-},
-
-/**
- * @method getDelayUnits
- * @return {float}
- */
-getDelayUnits : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setUserInfo
- * @param {map_object} arg0
- */
-setUserInfo : function (
-map 
-)
-{
-},
-
-/**
- * @method initWithSpriteFrame
- * @param {cc.SpriteFrame} arg0
- * @param {float} arg1
- * @param {map_object} arg2
- * @return {bool}
- */
-initWithSpriteFrame : function (
-spriteframe, 
-float, 
-map 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {cc.SpriteFrame} arg0
- * @param {float} arg1
- * @param {map_object} arg2
- * @return {cc.AnimationFrame}
- */
-create : function (
-spriteframe, 
-float, 
-map 
-)
-{
-    return cc.AnimationFrame;
-},
-
-/**
- * @method AnimationFrame
- * @constructor
- */
-AnimationFrame : function (
-)
-{
-},
-
-};
-
-/**
- * @class Animation
- */
-cc.Animation = {
-
-/**
- * @method getLoops
- * @return {unsigned int}
- */
-getLoops : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method addSpriteFrame
- * @param {cc.SpriteFrame} arg0
- */
-addSpriteFrame : function (
-spriteframe 
-)
-{
-},
-
-/**
- * @method setRestoreOriginalFrame
- * @param {bool} arg0
- */
-setRestoreOriginalFrame : function (
-bool 
-)
-{
-},
-
-/**
- * @method clone
- * @return {cc.Animation}
- */
-clone : function (
-)
-{
-    return cc.Animation;
-},
-
-/**
- * @method getDuration
- * @return {float}
- */
-getDuration : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method initWithAnimationFrames
- * @param {Array} arg0
- * @param {float} arg1
- * @param {unsigned int} arg2
- * @return {bool}
- */
-initWithAnimationFrames : function (
-array, 
-float, 
-int 
-)
-{
-    return false;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setFrames
- * @param {Array} arg0
- */
-setFrames : function (
-array 
-)
-{
-},
-
-/**
- * @method getFrames
- * @return {Array}
- */
-getFrames : function (
-)
-{
-    return new Array();
-},
-
-/**
- * @method setLoops
- * @param {unsigned int} arg0
- */
-setLoops : function (
-int 
-)
-{
-},
-
-/**
- * @method setDelayPerUnit
- * @param {float} arg0
- */
-setDelayPerUnit : function (
-float 
-)
-{
-},
-
-/**
- * @method addSpriteFrameWithFile
- * @param {String} arg0
- */
-addSpriteFrameWithFile : function (
-str 
-)
-{
-},
-
-/**
- * @method getTotalDelayUnits
- * @return {float}
- */
-getTotalDelayUnits : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getDelayPerUnit
- * @return {float}
- */
-getDelayPerUnit : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method initWithSpriteFrames
- * @param {Array} arg0
- * @param {float} arg1
- * @param {unsigned int} arg2
- * @return {bool}
- */
-initWithSpriteFrames : function (
-array, 
-float, 
-int 
-)
-{
-    return false;
-},
-
-/**
- * @method getRestoreOriginalFrame
- * @return {bool}
- */
-getRestoreOriginalFrame : function (
-)
-{
-    return false;
-},
-
-/**
- * @method addSpriteFrameWithTexture
- * @param {cc.Texture2D} arg0
- * @param {rect_object} arg1
- */
-addSpriteFrameWithTexture : function (
-texture2d, 
-rect 
-)
-{
-},
-
-/**
- * @method create
-* @param {Array} array
-* @param {float} float
-* @param {unsigned int} int
-* @return {cc.Animation|cc.Animation}
-*/
-create : function(
-array,
-float,
-int 
-)
-{
-    return cc.Animation;
-},
-
-/**
- * @method createWithSpriteFrames
- * @param {Array} arg0
- * @param {float} arg1
- * @param {unsigned int} arg2
- * @return {cc.Animation}
- */
-createWithSpriteFrames : function (
-array, 
-float, 
-int 
-)
-{
-    return cc.Animation;
-},
-
-/**
- * @method Animation
- * @constructor
- */
-Animation : function (
-)
-{
-},
-
-};
-
-/**
- * @class ActionInterval
- */
-cc.ActionInterval = {
-
-/**
- * @method getAmplitudeRate
- * @return {float}
- */
-getAmplitudeRate : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @return {bool}
- */
-initWithDuration : function (
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method setAmplitudeRate
- * @param {float} arg0
- */
-setAmplitudeRate : function (
-float 
-)
-{
-},
-
-/**
- * @method getElapsed
- * @return {float}
- */
-getElapsed : function (
-)
-{
-    return 0;
-},
-
-};
-
-/**
- * @class Sequence
- */
-cc.Sequence = {
-
-/**
- * @method initWithTwoActions
- * @param {cc.FiniteTimeAction} arg0
- * @param {cc.FiniteTimeAction} arg1
- * @return {bool}
- */
-initWithTwoActions : function (
-finitetimeaction, 
-finitetimeaction 
-)
-{
-    return false;
-},
-
-/**
- * @method Sequence
- * @constructor
- */
-Sequence : function (
-)
-{
-},
-
-};
-
-/**
- * @class Repeat
- */
-cc.Repeat = {
-
-/**
- * @method setInnerAction
- * @param {cc.FiniteTimeAction} arg0
- */
-setInnerAction : function (
-finitetimeaction 
-)
-{
-},
-
-/**
- * @method initWithAction
- * @param {cc.FiniteTimeAction} arg0
- * @param {unsigned int} arg1
- * @return {bool}
- */
-initWithAction : function (
-finitetimeaction, 
-int 
-)
-{
-    return false;
-},
-
-/**
- * @method getInnerAction
- * @return {cc.FiniteTimeAction}
- */
-getInnerAction : function (
-)
-{
-    return cc.FiniteTimeAction;
-},
-
-/**
- * @method create
- * @param {cc.FiniteTimeAction} arg0
- * @param {unsigned int} arg1
- * @return {cc.Repeat}
- */
-create : function (
-finitetimeaction, 
-int 
-)
-{
-    return cc.Repeat;
-},
-
-/**
- * @method Repeat
- * @constructor
- */
-Repeat : function (
-)
-{
-},
-
-};
-
-/**
- * @class RepeatForever
- */
-cc.RepeatForever = {
-
-/**
- * @method setInnerAction
- * @param {cc.ActionInterval} arg0
- */
-setInnerAction : function (
-actioninterval 
-)
-{
-},
-
-/**
- * @method initWithAction
- * @param {cc.ActionInterval} arg0
- * @return {bool}
- */
-initWithAction : function (
-actioninterval 
-)
-{
-    return false;
-},
-
-/**
- * @method getInnerAction
- * @return {cc.ActionInterval}
- */
-getInnerAction : function (
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method create
- * @param {cc.ActionInterval} arg0
- * @return {cc.RepeatForever}
- */
-create : function (
-actioninterval 
-)
-{
-    return cc.RepeatForever;
-},
-
-/**
- * @method RepeatForever
- * @constructor
- */
-RepeatForever : function (
-)
-{
-},
-
-};
-
-/**
- * @class Spawn
- */
-cc.Spawn = {
-
-/**
- * @method initWithTwoActions
- * @param {cc.FiniteTimeAction} arg0
- * @param {cc.FiniteTimeAction} arg1
- * @return {bool}
- */
-initWithTwoActions : function (
-finitetimeaction, 
-finitetimeaction 
-)
-{
-    return false;
-},
-
-/**
- * @method Spawn
- * @constructor
- */
-Spawn : function (
-)
-{
-},
-
-};
-
-/**
- * @class RotateTo
- */
-cc.RotateTo = {
-
-/**
- * @method initWithDuration
-* @param {float|float} float
-* @param {vec3_object|float} vec3
-* @param {float} float
-* @return {bool|bool}
-*/
-initWithDuration : function(
-float,
-float,
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method create
-* @param {float|float|float} float
-* @param {float|float|vec3_object} float
-* @param {float} float
-* @return {cc.RotateTo|cc.RotateTo|cc.RotateTo}
-*/
-create : function(
-float,
-float,
-float 
-)
-{
-    return cc.RotateTo;
-},
-
-/**
- * @method RotateTo
- * @constructor
- */
-RotateTo : function (
-)
-{
-},
-
-};
-
-/**
- * @class RotateBy
- */
-cc.RotateBy = {
-
-/**
- * @method initWithDuration
-* @param {float|float|float} float
-* @param {float|float|vec3_object} float
-* @param {float} float
-* @return {bool|bool|bool}
-*/
-initWithDuration : function(
-float,
-float,
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method create
-* @param {float|float|float} float
-* @param {float|float|vec3_object} float
-* @param {float} float
-* @return {cc.RotateBy|cc.RotateBy|cc.RotateBy}
-*/
-create : function(
-float,
-float,
-float 
-)
-{
-    return cc.RotateBy;
-},
-
-/**
- * @method RotateBy
- * @constructor
- */
-RotateBy : function (
-)
-{
-},
-
-};
-
-/**
- * @class MoveBy
- */
-cc.MoveBy = {
-
-/**
- * @method initWithDuration
-* @param {float|float} float
-* @param {vec3_object|vec2_object} vec3
-* @return {bool|bool}
-*/
-initWithDuration : function(
-float,
-vec2 
-)
-{
-    return false;
-},
-
-/**
- * @method create
-* @param {float|float} float
-* @param {vec3_object|vec2_object} vec3
-* @return {cc.MoveBy|cc.MoveBy}
-*/
-create : function(
-float,
-vec2 
-)
-{
-    return cc.MoveBy;
-},
-
-/**
- * @method MoveBy
- * @constructor
- */
-MoveBy : function (
-)
-{
-},
-
-};
-
-/**
- * @class MoveTo
- */
-cc.MoveTo = {
-
-/**
- * @method initWithDuration
-* @param {float|float} float
-* @param {vec3_object|vec2_object} vec3
-* @return {bool|bool}
-*/
-initWithDuration : function(
-float,
-vec2 
-)
-{
-    return false;
-},
-
-/**
- * @method create
-* @param {float|float} float
-* @param {vec3_object|vec2_object} vec3
-* @return {cc.MoveTo|cc.MoveTo}
-*/
-create : function(
-float,
-vec2 
-)
-{
-    return cc.MoveTo;
-},
-
-/**
- * @method MoveTo
- * @constructor
- */
-MoveTo : function (
-)
-{
-},
-
-};
-
-/**
- * @class SkewTo
- */
-cc.SkewTo = {
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-float, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @return {cc.SkewTo}
- */
-create : function (
-float, 
-float, 
-float 
-)
-{
-    return cc.SkewTo;
-},
-
-/**
- * @method SkewTo
- * @constructor
- */
-SkewTo : function (
-)
-{
-},
-
-};
-
-/**
- * @class SkewBy
- */
-cc.SkewBy = {
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-float, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @return {cc.SkewBy}
- */
-create : function (
-float, 
-float, 
-float 
-)
-{
-    return cc.SkewBy;
-},
-
-/**
- * @method SkewBy
- * @constructor
- */
-SkewBy : function (
-)
-{
-},
-
-};
-
-/**
- * @class JumpBy
- */
-cc.JumpBy = {
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {vec2_object} arg1
- * @param {float} arg2
- * @param {int} arg3
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-vec2, 
-float, 
-int 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {vec2_object} arg1
- * @param {float} arg2
- * @param {int} arg3
- * @return {cc.JumpBy}
- */
-create : function (
-float, 
-vec2, 
-float, 
-int 
-)
-{
-    return cc.JumpBy;
-},
-
-/**
- * @method JumpBy
- * @constructor
- */
-JumpBy : function (
-)
-{
-},
-
-};
-
-/**
- * @class JumpTo
- */
-cc.JumpTo = {
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {vec2_object} arg1
- * @param {float} arg2
- * @param {int} arg3
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-vec2, 
-float, 
-int 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {vec2_object} arg1
- * @param {float} arg2
- * @param {int} arg3
- * @return {cc.JumpTo}
- */
-create : function (
-float, 
-vec2, 
-float, 
-int 
-)
-{
-    return cc.JumpTo;
-},
-
-/**
- * @method JumpTo
- * @constructor
- */
-JumpTo : function (
-)
-{
-},
-
-};
-
-/**
- * @class BezierBy
- */
-cc.BezierBy = {
-
-/**
- * @method BezierBy
- * @constructor
- */
-BezierBy : function (
-)
-{
-},
-
-};
-
-/**
- * @class BezierTo
- */
-cc.BezierTo = {
-
-/**
- * @method BezierTo
- * @constructor
- */
-BezierTo : function (
-)
-{
-},
-
-};
-
-/**
- * @class ScaleTo
- */
-cc.ScaleTo = {
-
-/**
- * @method initWithDuration
-* @param {float|float|float} float
-* @param {float|float|float} float
-* @param {float|float} float
-* @param {float} float
-* @return {bool|bool|bool}
-*/
-initWithDuration : function(
-float,
-float,
-float,
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method create
-* @param {float|float|float} float
-* @param {float|float|float} float
-* @param {float|float} float
-* @param {float} float
-* @return {cc.ScaleTo|cc.ScaleTo|cc.ScaleTo}
-*/
-create : function(
-float,
-float,
-float,
-float 
-)
-{
-    return cc.ScaleTo;
-},
-
-/**
- * @method ScaleTo
- * @constructor
- */
-ScaleTo : function (
-)
-{
-},
-
-};
-
-/**
- * @class ScaleBy
- */
-cc.ScaleBy = {
-
-/**
- * @method create
-* @param {float|float|float} float
-* @param {float|float|float} float
-* @param {float|float} float
-* @param {float} float
-* @return {cc.ScaleBy|cc.ScaleBy|cc.ScaleBy}
-*/
-create : function(
-float,
-float,
-float,
-float 
-)
-{
-    return cc.ScaleBy;
-},
-
-/**
- * @method ScaleBy
- * @constructor
- */
-ScaleBy : function (
-)
-{
-},
-
-};
-
-/**
- * @class Blink
- */
-cc.Blink = {
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {int} arg1
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-int 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {int} arg1
- * @return {cc.Blink}
- */
-create : function (
-float, 
-int 
-)
-{
-    return cc.Blink;
-},
-
-/**
- * @method Blink
- * @constructor
- */
-Blink : function (
-)
-{
-},
-
-};
-
-/**
- * @class FadeTo
- */
-cc.FadeTo = {
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {unsigned char} arg1
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-char 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {unsigned char} arg1
- * @return {cc.FadeTo}
- */
-create : function (
-float, 
-char 
-)
-{
-    return cc.FadeTo;
-},
-
-/**
- * @method FadeTo
- * @constructor
- */
-FadeTo : function (
-)
-{
-},
-
-};
-
-/**
- * @class FadeIn
- */
-cc.FadeIn = {
-
-/**
- * @method setReverseAction
- * @param {cc.FadeTo} arg0
- */
-setReverseAction : function (
-fadeto 
-)
-{
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @return {cc.FadeIn}
- */
-create : function (
-float 
-)
-{
-    return cc.FadeIn;
-},
-
-/**
- * @method FadeIn
- * @constructor
- */
-FadeIn : function (
-)
-{
-},
-
-};
-
-/**
- * @class FadeOut
- */
-cc.FadeOut = {
-
-/**
- * @method setReverseAction
- * @param {cc.FadeTo} arg0
- */
-setReverseAction : function (
-fadeto 
-)
-{
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @return {cc.FadeOut}
- */
-create : function (
-float 
-)
-{
-    return cc.FadeOut;
-},
-
-/**
- * @method FadeOut
- * @constructor
- */
-FadeOut : function (
-)
-{
-},
-
-};
-
-/**
- * @class TintTo
- */
-cc.TintTo = {
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {unsigned char} arg1
- * @param {unsigned char} arg2
- * @param {unsigned char} arg3
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-char, 
-char, 
-char 
-)
-{
-    return false;
-},
-
-/**
- * @method create
-* @param {float|float} float
-* @param {color3b_object|unsigned char} color3b
-* @param {unsigned char} char
-* @param {unsigned char} char
-* @return {cc.TintTo|cc.TintTo}
-*/
-create : function(
-float,
-char,
-char,
-char 
-)
-{
-    return cc.TintTo;
-},
-
-/**
- * @method TintTo
- * @constructor
- */
-TintTo : function (
-)
-{
-},
-
-};
-
-/**
- * @class TintBy
- */
-cc.TintBy = {
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {short} arg1
- * @param {short} arg2
- * @param {short} arg3
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-short, 
-short, 
-short 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {short} arg1
- * @param {short} arg2
- * @param {short} arg3
- * @return {cc.TintBy}
- */
-create : function (
-float, 
-short, 
-short, 
-short 
-)
-{
-    return cc.TintBy;
-},
-
-/**
- * @method TintBy
- * @constructor
- */
-TintBy : function (
-)
-{
-},
-
-};
-
-/**
- * @class DelayTime
- */
-cc.DelayTime = {
-
-/**
- * @method create
- * @param {float} arg0
- * @return {cc.DelayTime}
- */
-create : function (
-float 
-)
-{
-    return cc.DelayTime;
-},
-
-/**
- * @method DelayTime
- * @constructor
- */
-DelayTime : function (
-)
-{
-},
-
-};
-
-/**
- * @class ReverseTime
- */
-cc.ReverseTime = {
-
-/**
- * @method initWithAction
- * @param {cc.FiniteTimeAction} arg0
- * @return {bool}
- */
-initWithAction : function (
-finitetimeaction 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {cc.FiniteTimeAction} arg0
- * @return {cc.ReverseTime}
- */
-create : function (
-finitetimeaction 
-)
-{
-    return cc.ReverseTime;
-},
-
-/**
- * @method ReverseTime
- * @constructor
- */
-ReverseTime : function (
-)
-{
-},
-
-};
-
-/**
- * @class Animate
- */
-cc.Animate = {
-
-/**
- * @method getAnimation
-* @return {cc.Animation|cc.Animation}
-*/
-getAnimation : function(
-)
-{
-    return cc.Animation;
-},
-
-/**
- * @method initWithAnimation
- * @param {cc.Animation} arg0
- * @return {bool}
- */
-initWithAnimation : function (
-animation 
-)
-{
-    return false;
-},
-
-/**
- * @method setAnimation
- * @param {cc.Animation} arg0
- */
-setAnimation : function (
-animation 
-)
-{
-},
-
-/**
- * @method create
- * @param {cc.Animation} arg0
- * @return {cc.Animate}
- */
-create : function (
-animation 
-)
-{
-    return cc.Animate;
-},
-
-/**
- * @method Animate
- * @constructor
- */
-Animate : function (
-)
-{
-},
-
-};
-
-/**
- * @class TargetedAction
- */
-cc.TargetedAction = {
-
-/**
- * @method getForcedTarget
-* @return {cc.Node|cc.Node}
-*/
-getForcedTarget : function(
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method initWithTarget
- * @param {cc.Node} arg0
- * @param {cc.FiniteTimeAction} arg1
- * @return {bool}
- */
-initWithTarget : function (
-node, 
-finitetimeaction 
-)
-{
-    return false;
-},
-
-/**
- * @method setForcedTarget
- * @param {cc.Node} arg0
- */
-setForcedTarget : function (
-node 
-)
-{
-},
-
-/**
- * @method create
- * @param {cc.Node} arg0
- * @param {cc.FiniteTimeAction} arg1
- * @return {cc.TargetedAction}
- */
-create : function (
-node, 
-finitetimeaction 
-)
-{
-    return cc.TargetedAction;
-},
-
-/**
- * @method TargetedAction
- * @constructor
- */
-TargetedAction : function (
 )
 {
 },
@@ -19601,18 +19601,6 @@ texture2d
 },
 
 /**
- * @method addSpriteFramesWithFile
-* @param {String|String|String} str
-* @param {String|cc.Texture2D} str
-*/
-addSpriteFramesWithFile : function(
-str,
-texture2d 
-)
-{
-},
-
-/**
  * @method addSpriteFrame
  * @param {cc.SpriteFrame} arg0
  * @param {String} arg1
@@ -19625,9 +19613,13 @@ str
 },
 
 /**
- * @method removeUnusedSpriteFrames
- */
-removeUnusedSpriteFrames : function (
+ * @method addSpriteFramesWithFile
+* @param {String|String|String} str
+* @param {String|cc.Texture2D} str
+*/
+addSpriteFramesWithFile : function(
+str,
+texture2d 
 )
 {
 },
@@ -19673,11 +19665,9 @@ removeSpriteFrames : function (
 },
 
 /**
- * @method removeSpriteFramesFromTexture
- * @param {cc.Texture2D} arg0
+ * @method removeUnusedSpriteFrames
  */
-removeSpriteFramesFromTexture : function (
-texture2d 
+removeUnusedSpriteFrames : function (
 )
 {
 },
@@ -19698,6 +19688,28 @@ str
  */
 removeSpriteFrameByName : function (
 str 
+)
+{
+},
+
+/**
+ * @method isSpriteFramesWithFileLoaded
+ * @param {String} arg0
+ * @return {bool}
+ */
+isSpriteFramesWithFileLoaded : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method removeSpriteFramesFromTexture
+ * @param {cc.Texture2D} arg0
+ */
+removeSpriteFramesFromTexture : function (
+texture2d 
 )
 {
 },
