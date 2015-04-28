@@ -43,6 +43,7 @@
 
             action.setDuration(json["Duration"]);
             action.setTimeSpeed(json["Speed"] || 1);
+
             //The process of analysis
             var timelines = json["Timelines"];
             timelines.forEach(function(timeline){
@@ -51,7 +52,7 @@
                 if(parser)
                     frame = parser.call(self, timeline, resourcePath);
                 else
-                    cc.log("parser is not exists : %s", timeline["Property"]);
+                    cc.log("parser does not exist : %s", timeline["Property"]);
                 if(frame)
                     action.addTimeline(frame);
             });
@@ -62,17 +63,15 @@
         },
 
         deferred: function(json, resourcePath, action, file){
-            if(cc.sys.isNative){
-                var animationlist = json["Content"]["Content"]["AnimationList"];
-                var length = animationlist ? animationlist.length : 0;
-                for (var i = 0; i < length; i++){
-                    var animationdata = animationlist[i];
-                    var info = { name: null, startIndex: null, endIndex: null };
-                    info.name = animationdata["Name"];
-                    info.startIndex = animationdata["StartIndex"];
-                    info.endIndex = animationdata["EndIndex"];
-                    action.addAnimationInfo(info);
-                }
+            var animationlist = json["Content"]["Content"]["AnimationList"];
+            var length = animationlist ? animationlist.length : 0;
+            for (var i = 0; i < length; i++){
+                var animationdata = animationlist[i];
+                var info = { name: null, startIndex: null, endIndex: null };
+                info.name = animationdata["Name"];
+                info.startIndex = animationdata["StartIndex"];
+                info.endIndex = animationdata["EndIndex"];
+                action.addAnimationInfo(info);
             }
         }
 
@@ -245,6 +244,18 @@
         }
     ];
 
+    var loadEasingDataWithFlatBuffers = function(frame, options){
+        var type = options["Type"];
+        frame.setTweenType(type);
+        var points = options["Points"];
+        if(points){
+            points = points.map(function(p){
+                return cc.p(p["X"], p["Y"]);
+            });
+            frame.setEasingParams(points);
+        }
+    };
+
     frameList.forEach(function(item){
         parser.registerParser(item.name, function(options, resourcePath){
             var timeline = new ccs.Timeline();
@@ -257,6 +268,10 @@
                     frame.setFrameIndex(frameData["FrameIndex"]);
                     var tween = frameData["Tween"] != null ? frameData["Tween"] : true;
                     frame.setTween(tween);
+                    //https://github.com/cocos2d/cocos2d-x/pull/11388/files
+                    var easingData = frameData["EasingData"];
+                    if(easingData)
+                        loadEasingDataWithFlatBuffers(frame, easingData);
                     timeline.addFrame(frame);
                 });
             }
