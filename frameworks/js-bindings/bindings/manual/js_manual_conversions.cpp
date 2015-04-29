@@ -1814,7 +1814,6 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
 
     return ret;
 }
-#include <yvals.h>
 
 jsval ccpoint_to_jsval(JSContext* cx, const Point& v)
 {
