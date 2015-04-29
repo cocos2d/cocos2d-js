@@ -740,32 +740,6 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
         cx = _cx;
     }
 
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    //FIX ME : compileScript breaks on windows, execute the script directly 
-    auto fileUtil = FileUtils::getInstance();
-
-
-    // check jsc file first
-    std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-
-    // Check whether '.jsc' files exist to avoid outputing log which says 'couldn't find .jsc file'.
-    if (fileUtil->isFileExist(byteCodePath))
-    {
-        Data data = fileUtil->getDataFromFile(byteCodePath);
-        if (!data.isNull())
-        {
-            JSAutoCompartment ac(cx, global);
-            JS::RootedScript script(cx, JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr));
-            bool ok = JS_ExecuteScript(cx, global, script);
-            return ok;
-        }
-    }
-    
-    auto fullpath = fileUtil->fullPathForFilename(path);
-    auto content = fileUtil->getStringFromFile(fullpath);
-    JSAutoCompartment ac(cx, global);
-    bool evaluatedOK = JS_EvaluateScript(cx, global, content.c_str(), content.length(), path, 1);
-#else
     compileScript(path,global,cx);
     JS::RootedScript script(cx, getScript(path));
     bool evaluatedOK = false;
@@ -778,7 +752,7 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
             JS_ReportPendingException(cx);
         }
     }
-#endif   
+ 
     return evaluatedOK;
 }
 
