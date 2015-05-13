@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.6";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.6.1";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -246,8 +246,8 @@ cc.EventMouse.UP = 2;
 cc.EventMouse.MOVE = 3;
 cc.EventMouse.SCROLL = 4;
 cc.EventMouse.BUTTON_LEFT = 0;
-cc.EventMouse.BUTTON_RIGHT = 2;
-cc.EventMouse.BUTTON_MIDDLE = 1;
+cc.EventMouse.BUTTON_RIGHT = 1;
+cc.EventMouse.BUTTON_MIDDLE = 2;
 cc.EventMouse.BUTTON_4 = 3;
 cc.EventMouse.BUTTON_5 = 4;
 cc.EventMouse.BUTTON_6 = 5;
