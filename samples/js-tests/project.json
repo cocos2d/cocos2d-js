@@ -43,6 +43,7 @@
         "src/LayerTest/LayerTest.js",
         "src/SceneTest/SceneTest.js",
         "src/SpineTest/SpineTest.js",
+        "src/GafTest/GafTest.js",
         "src/SpriteTest/SpriteTest.js",
         "src/Sprite3DTest/Sprite3DTest.js",
         "src/LightTest/LightTest.js",

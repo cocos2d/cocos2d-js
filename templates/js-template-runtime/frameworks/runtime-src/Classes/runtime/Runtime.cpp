@@ -88,7 +88,6 @@ const char* getRuntimeVersion()
 
 bool startScript()
 {
-    ScriptingCore::getInstance()->runScript("script/jsb_boot.js");
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     return ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());

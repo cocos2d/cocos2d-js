@@ -23,9 +23,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+if(cc.sys.isNative)(function(){
+
 var Particle3DTestIdx = -1;
 
 const PARTICLE_SYSTEM_TAG = 0x0001;
+
+jsb.fileUtils.addSearchPath("res/Sprite3DTest");
+jsb.fileUtils.addSearchPath("res/Particle3D/materials");
+jsb.fileUtils.addSearchPath("res/Particle3D/scripts");
 
 var Particle3DTestDemo = cc.Layer.extend({
     _title:"Particle3D Test",
@@ -36,10 +42,6 @@ var Particle3DTestDemo = cc.Layer.extend({
 
     ctor:function () {
         this._super();
-
-        jsb.fileUtils.addSearchPath("res/Sprite3DTest");
-        jsb.fileUtils.addSearchPath("res/Particle3D/materials");
-        jsb.fileUtils.addSearchPath("res/Particle3D/scripts");
     },
 
     //
@@ -116,7 +118,7 @@ var Particle3DTestDemo = cc.Layer.extend({
             var count = 0;
             var children = ps.children;
             for(var i = 0; i < children.length; ++i){
-                let child = children[i];
+                var child = children[i];
                 if(child && child.getAliveParticleCount)
                     count += child.getAliveParticleCount();
             }
@@ -143,7 +145,7 @@ var Particle3DTestDemo = cc.Layer.extend({
     }
 });
 
-var Particle3DTestScene = cc.Scene.extend({
+Particle3DTestScene = cc.Scene.extend({
     ctor:function () {
         this._super();
 
@@ -178,7 +180,7 @@ var Particle3DExplosionSystemDemo = Particle3DTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var rootps = jsb.PUParticleSystem3D.create("Particle3D/scripts/explosionSystem.pu");
+        var rootps = jsb.PUParticleSystem3D.create("explosionSystem.pu");
         rootps.setCameraMask(cc.CameraFlag.USER1);
         rootps.startParticleSystem();
         this.addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
@@ -191,7 +193,7 @@ var Particle3DLineStreakDemo = Particle3DTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var rootps = jsb.PUParticleSystem3D.create("Particle3D/scripts/lineStreak.pu", "Particle3D/material/pu_mediapack_01.material");
+        var rootps = jsb.PUParticleSystem3D.create("lineStreak.pu", "pu_mediapack_01.material");
         rootps.setCameraMask(2);
         rootps.setScale(5);
         rootps.startParticleSystem();
@@ -205,7 +207,7 @@ var Particle3DBlackHoleDemo = Particle3DTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var rootps = jsb.PUParticleSystem3D.create("Particle3D/scripts/blackHole.pu", "Particle3D/material/pu_mediapack_01.material");
+        var rootps = jsb.PUParticleSystem3D.create("blackHole.pu", "pu_mediapack_01.material");
         rootps.setCameraMask(2);
         rootps.runAction(cc.sequence(
             cc.moveBy(2, cc.p(50, 0)),
@@ -223,7 +225,7 @@ var Particle3DHypnoDemo = Particle3DTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var rootps = jsb.PUParticleSystem3D.create("Particle3D/scripts/hypno.pu", "Particle3D/materials/pu_mediapack_01.math");
+        var rootps = jsb.PUParticleSystem3D.create("hypno.pu", "pu_mediapack_01.math");
         rootps.setCameraMask(2);
         rootps.startParticleSystem();
         this.addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
@@ -236,7 +238,7 @@ var Particle3DAdvancedLodSystemDemo = Particle3DTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var rootps = jsb.PUParticleSystem3D.create("Particle3D/scripts/advancedLodSystem.pu");
+        var rootps = jsb.PUParticleSystem3D.create("advancedLodSystem.pu");
         rootps.setCameraMask(2);
         rootps.runAction(cc.rotateBy(1, cc.math.vec3(0, 0, 100)).repeatForever());
         var scale = cc.scaleBy(1, 2, 2, 2);
@@ -430,3 +432,5 @@ var previousParticle3DTest = function () {
 var restartParticle3DTest = function () {
     return new arrayOfParticle3DTest[Particle3DTestIdx ]();
 };
+
+})();

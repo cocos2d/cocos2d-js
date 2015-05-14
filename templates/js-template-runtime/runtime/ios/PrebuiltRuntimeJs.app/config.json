@@ -3,7 +3,7 @@
     "isLandscape": true,
     "isWindowTop": false,
     "name": "PrebuiltRuntimeJs",
-    "width": 960,
+    "width": 1136,
     "height": 640,
     "entry": "main.js",
     "consolePort": 6050,

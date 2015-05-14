@@ -71,7 +71,7 @@ DebuggerTransport.prototype = {
 
     let data_for_len = utf16to8(data);
 
-    this._outgoing = data_for_len.length + ':' + data;
+    this._outgoing = data_for_len.length + ':' + (cc.sys.os == cc.sys.OS_WINDOWS ? data_for_len : data);
 
     this._flushOutgoing();
   },
