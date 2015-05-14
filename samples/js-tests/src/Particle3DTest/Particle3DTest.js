@@ -225,7 +225,7 @@ var Particle3DHypnoDemo = Particle3DTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var rootps = jsb.PUParticleSystem3D.create("hypno.pu", "pu_mediapack_01.math");
+        var rootps = jsb.PUParticleSystem3D.create("hypno.pu", "pu_mediapack_01.material");
         rootps.setCameraMask(2);
         rootps.startParticleSystem();
         this.addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
@@ -254,7 +254,7 @@ var Particle3DTimeShiftDemo = Particle3DTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var rootps = jsb.PUParticleSystem3D.create("timeShift.pu", "pu_mediapack_01.math");
+        var rootps = jsb.PUParticleSystem3D.create("timeShift.pu", "pu_mediapack_01.material");
         rootps.setScale(2);
         rootps.setCameraMask(2);
         rootps.startParticleSystem();
@@ -268,7 +268,7 @@ var Particle3DUVAnimDemo = Particle3DTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var rootps = jsb.PUParticleSystem3D.create("UVAnimation.pu", "pu_mediapack_01.math");
+        var rootps = jsb.PUParticleSystem3D.create("UVAnimation.pu", "pu_mediapack_01.material");
         rootps.setCameraMask(2);
         rootps.startParticleSystem();
         this.addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
@@ -280,7 +280,7 @@ var Particle3DFirePlaceDemo = Particle3DTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var rootps = jsb.PUParticleSystem3D.create("mp_torch.pu", "pu_mediapack_01.math");
+        var rootps = jsb.PUParticleSystem3D.create("mp_torch.pu", "pu_mediapack_01.material");
         rootps.setScale(5);
         rootps.setCameraMask(2);
         rootps.startParticleSystem();
