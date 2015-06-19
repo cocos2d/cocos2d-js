@@ -1,12 +1,12 @@
 [submodule "frameworks/js-bindings/cocos2d-x"]
 	path = frameworks/js-bindings/cocos2d-x
-	url = git://github.com/cocos2d-html5/cocos2d-x.git
+	url = https://github.com/cocos2d-html5/cocos2d-x.git
 [submodule "frameworks/cocos2d-html5"]
 	path = frameworks/cocos2d-html5
-	url = git://github.com/cocos2d/cocos2d-html5.git
+	url = https://github.com/cocos2d/cocos2d-html5.git
 [submodule "tools/cocos2d-console"]
 	path = tools/cocos2d-console
-	url = git://github.com/cocos2d/cocos2d-console.git
+	url = https://github.com/YuriArthas/cocos2d-console.git
 [submodule "tools/bindings-generator"]
 	path = tools/bindings-generator
-	url = git://github.com/cocos2d/bindings-generator.git
+	url = https://github.com/cocos2d/bindings-generator.git
