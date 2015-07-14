@@ -88,7 +88,6 @@ const char* getRuntimeVersion()
 
 bool startScript()
 {
-    ScriptingCore::getInstance()->runScript("script/jsb_boot.js");
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     return ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
@@ -220,14 +219,16 @@ void initRuntime()
 
 void startRuntime()
 {
-    ScriptingCore::getInstance()->addRegisterCallback(register_FileUtils);
-    ScriptingCore::getInstance()->start();
+    ScriptingCore* sc = ScriptingCore::getInstance();
+    sc->addRegisterCallback(register_FileUtils);
+    sc->start();
+    sc->runScript("script/jsb_boot.js");
 
     int debugPort = 5086; 
 #if(CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM)
         debugPort = ConfigParser::getInstance()->getDebugPort();
 #endif
-    ScriptingCore::getInstance()->enableDebugger(debugPort);
+    sc->enableDebugger(debugPort);
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
 

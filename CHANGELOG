@@ -1,5 +1,90 @@
 ChangeLog:
 
+Cocos2d-JS v3.6.1 (hotfix) @ May 13 2015
+
+* Bug fixes:
+    1. [JSB] Fixed an issue of jsc compiler that the generated jsc file contains sources code.
+    2. [JSB] Fixed jsb remote debugger issue that it doesn't support runtime template on windows platform.
+    3. [JSB] Added `cc.sys.localStorage.clear` function.
+    4. [JSB] Fixed crash issues of `sp.BoneData` and `sp.Bone`'s conversion function.
+    5. [JSB] Fixed an issue of `cc.Scale9Sprite` that its `init` function can't be overloaded.
+    6. [JSB] Fixed mistakes in `cc.EventMouse`'s constant values.
+
+Cocos2d-JS v3.6 @ April 29 2015
+
+* Added GAF web runtime to the web engine, the native support will be merged in future version.
+* Synchronised Cocos2d-x v3.6.
+* [JSB] Added `ccs.FrameEaseType` in JSB.
+* [JSB] Added SpiderMonkey remote debugger support in default template.
+
+* Bug fixes:
+    1. Fixed a bug of Cocos Studio parser that it doesn't parse correctly the outline of text widget and button widget.
+    2. Fixed a bug of Cocos Studio parser that it doesn't support inner action correctly.
+    3. Fixed a bug of Cocos Studio parser that `ccui.Text`'s content size is set incorrectly.
+    4. Fixed a bug of Cocos Studio parser that `ccui.Layout`'s background color is set incorrectly.
+    5. Fixed a bug of `cc.Node`'s `removeAllChildren` that it doesn't notify the renderer to update.
+    6. Fixed a bug of audio system that the resume of music may start from the beginning.
+    7. Fixed a bug that sprite's `setTexture` fails to update its content size.
+    8. Fixed a bug that Scale9Sprite's children doesn't get transformed recursively.
+    9. Fixed constant naming issue of `ccs.FrameEaseType`.
+    10. Fixed `cc.LoaderScene.preload` API inconsistency between web engine and native engine.
+    11. Fixed a bug that `ccui.Slider` doesn't act correctly when it's scaled.
+    12. Fixed a bug that `ccui.Button` renders incorrectly when scale9sprite option enabled.
+    13. Fixed circular invocation issue in `cc.Sprite`'s canvas render command.
+    14. [JSB] Fixed naming issue of `ccs.ActionTimeline.isAnimationInfoExists`.
+    15. [JSB] Fixed `clearInterval` issue by fixing scheduler APIs.
+    16. [JSB] Fixed `cc.DrawNode`'s `drawSegment` parameter issue by adding default value for line width.
+
+Cocos2d-JS v3.6 Beta @ April 22 2015
+
+* Upgraded Action Timeline and parser for the latest version of Cocos editor.
+* Added `cc.sys.isObjectValid` to detect whether an object is still valid (in web and native engine).
+* Added `enumerateChildren` function for `cc.Node`.
+* Improved TMX transform to support RotationX and RotationY.
+* Refactored Spine skeleton render command.
+* Added checks to prevent issues when `cc.Node.WebGLRenderCmd` is not exist.
+* Improved iOS browsers detection.
+* Added getter setter function for `cc.MotionStreak`'s stroke property.
+* Improved the detection of render mode.
+* Make `cc.Scale9Sprite` support unpreloaded texture.
+* [JSB] Added Skybox and its test case.
+* [JSB] Added Terrain and its test case.
+* [JSB] Reactivated Firefox remote debug functionality with SpiderMonkey v33.
+* [JSB] Made `cc.Node`'s `setNormalizedPosition` function accept two parameter.
+* [JSB] Synced `cc.Texture2D`'s pixel format constants with Cocos2d-x.
+* [JSB] Added `cc.BlendFunc` and some predefined blend functions alias.
+* [JSB] Upgraded `cc.Scheduler`'s API.
+* [JSB] Added g/setEasingParams for `ccs.Frame`.
+* [JSB] Added ccs.TweenType in JSB.
+* [JSB] Removed Windows Phone 8 platform because it's deprecated in Angle support. (After discussed with Microsoft on the market share, we think it's reasonable to remove WP8 support. Developers can still deploy their games on Windows Phone 8.1 and universal platforms)
+
+* Bug fixes:
+    1. Fixed a bug that `cc.Scheduler`'s `scheduleOnce` runs multiply times.
+    2. Fixed a bug of `cc.Scheduler`'s `pauseAllTargetsWithMinPriority`.
+    3. Fixed a bug of `cc.eventManager` that its event listeners' order is incorrect when some nodes haven't been added to the scene graph or have been removed from parent without cleanup.
+    4. Fixed a bug of `cc.LabelTTF` that `enableShadow` doesn't work.
+    5. Fixed a bug of `cc.LabelTTF` that `setColor` doesn't set shadow color under Canvas render mode.
+    6. Fixed a bug that stopped audios can be resume after invoking pause on them.
+    7. Fixed a bug that `ccui.LoadingBar`'s texture renders incorrectly without preload.
+    8. Fixed a bug that cocos builder's callback doesn't get invoked.
+    9. Fixed a bug that TMX objects' position is incorrect when content scale factor is modified.
+    10. Fixed a mistaken usage of `cc.isObject` in `cc.Sprite` implementation.
+    11. Fixed a bug that position type haven't been copied in `cc.ParticleSystem`'s `clone` function.
+    12. Fixed some undefined parameter check issues in `cc.Node`.
+    13. Fixed a bug that setter for `scaleY` of `cc.EditBox` is incorrect.
+    14. Fixed a bug of `cc.SkeletonAnimation` that its canvas render command doesn't work correctly.
+    15. Fixed a parsing issue for the width of `cc.LabelBMFont`.
+    16. Fixed `ccs.TweenType`'s constants naming issue.
+    17. Fixed a bug that the spine skeleton may be rendered under the unsupported mode.
+    18. Fixed a bug when setting `cc.ParticleSystem`'s blend function in the ActionTimeline parser.
+    19. Added check to prevent issues that functions may not exist in the ActionTimeline parser.
+    20. Fixed a typo of `ccs.displayFactory`.
+    21. Fixed a bug of `cc.Node.setPosition` that parameter check is incorrect.
+    22. [JSB] Fixed converToWorldSpace(AR) API inconsistency.
+    23. [JSB] Fixed warning of redefining macro.
+    24. [JSB] Fixed an issue of focus event dispatching that the widget dispatched will get deleted after the event.
+    25. [JSB] Fixed a bug that `cc.sys.localStorage` get empty string from null item.
+
 Cocos2d-JS v3.5 @ April 1 2015
 
 * Supported Windows Universal application publish which includes Windows, Windows RT, Windows Phone 8.1 platforms.

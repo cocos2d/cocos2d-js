@@ -4,6 +4,276 @@
 var jsb = jsb || {};
 
 /**
+ * @class Animation3D
+ */
+jsb.Animation3D = {
+
+/**
+ * @method initWithFile
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+initWithFile : function (
+str, 
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method init
+ * @param {cc.Animation3DData} arg0
+ * @return {bool}
+ */
+init : function (
+animation3ddata 
+)
+{
+    return false;
+},
+
+/**
+ * @method getBoneCurveByName
+ * @param {String} arg0
+ * @return {cc.Animation3D::Curve}
+ */
+getBoneCurveByName : function (
+str 
+)
+{
+    return cc.Animation3D::Curve;
+},
+
+/**
+ * @method getDuration
+ * @return {float}
+ */
+getDuration : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {cc.Animation3D}
+ */
+create : function (
+str, 
+str 
+)
+{
+    return cc.Animation3D;
+},
+
+/**
+ * @method Animation3D
+ * @constructor
+ */
+Animation3D : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Animate3D
+ */
+jsb.Animate3D = {
+
+/**
+ * @method getSpeed
+ * @return {float}
+ */
+getSpeed : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setQuality
+ * @param {cc.Animate3DQuality} arg0
+ */
+setQuality : function (
+animate3dquality 
+)
+{
+},
+
+/**
+ * @method setWeight
+ * @param {float} arg0
+ */
+setWeight : function (
+float 
+)
+{
+},
+
+/**
+ * @method removeFromMap
+ */
+removeFromMap : function (
+)
+{
+},
+
+/**
+ * @method initWithFrames
+ * @param {cc.Animation3D} arg0
+ * @param {int} arg1
+ * @param {int} arg2
+ * @param {float} arg3
+ * @return {bool}
+ */
+initWithFrames : function (
+animation3d, 
+int, 
+int, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method getOriginInterval
+ * @return {float}
+ */
+getOriginInterval : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setSpeed
+ * @param {float} arg0
+ */
+setSpeed : function (
+float 
+)
+{
+},
+
+/**
+ * @method init
+* @param {cc.Animation3D|cc.Animation3D} animation3d
+* @param {float} float
+* @param {float} float
+* @return {bool|bool}
+*/
+init : function(
+animation3d,
+float,
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method setOriginInterval
+ * @param {float} arg0
+ */
+setOriginInterval : function (
+float 
+)
+{
+},
+
+/**
+ * @method getWeight
+ * @return {float}
+ */
+getWeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getQuality
+ * @return {cc.Animate3DQuality}
+ */
+getQuality : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+* @param {cc.Animation3D|cc.Animation3D} animation3d
+* @param {float} float
+* @param {float} float
+* @return {cc.Animate3D|cc.Animate3D}
+*/
+create : function(
+animation3d,
+float,
+float 
+)
+{
+    return cc.Animate3D;
+},
+
+/**
+ * @method getTransitionTime
+ * @return {float}
+ */
+getTransitionTime : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method createWithFrames
+ * @param {cc.Animation3D} arg0
+ * @param {int} arg1
+ * @param {int} arg2
+ * @param {float} arg3
+ * @return {cc.Animate3D}
+ */
+createWithFrames : function (
+animation3d, 
+int, 
+int, 
+float 
+)
+{
+    return cc.Animate3D;
+},
+
+/**
+ * @method setTransitionTime
+ * @param {float} arg0
+ */
+setTransitionTime : function (
+float 
+)
+{
+},
+
+/**
+ * @method Animate3D
+ * @constructor
+ */
+Animate3D : function (
+)
+{
+},
+
+};
+
+/**
  * @class Skeleton3D
  */
 jsb.Skeleton3D = {
@@ -765,256 +1035,6 @@ Mesh : function (
 };
 
 /**
- * @class Animation3D
- */
-jsb.Animation3D = {
-
-/**
- * @method initWithFile
- * @param {String} arg0
- * @param {String} arg1
- * @return {bool}
- */
-initWithFile : function (
-str, 
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method init
- * @param {cc.Animation3DData} arg0
- * @return {bool}
- */
-init : function (
-animation3ddata 
-)
-{
-    return false;
-},
-
-/**
- * @method getBoneCurveByName
- * @param {String} arg0
- * @return {cc.Animation3D::Curve}
- */
-getBoneCurveByName : function (
-str 
-)
-{
-    return cc.Animation3D::Curve;
-},
-
-/**
- * @method getDuration
- * @return {float}
- */
-getDuration : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @return {cc.Animation3D}
- */
-create : function (
-str, 
-str 
-)
-{
-    return cc.Animation3D;
-},
-
-/**
- * @method Animation3D
- * @constructor
- */
-Animation3D : function (
-)
-{
-},
-
-};
-
-/**
- * @class Animate3D
- */
-jsb.Animate3D = {
-
-/**
- * @method getSpeed
- * @return {float}
- */
-getSpeed : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method removeFromMap
- */
-removeFromMap : function (
-)
-{
-},
-
-/**
- * @method setWeight
- * @param {float} arg0
- */
-setWeight : function (
-float 
-)
-{
-},
-
-/**
- * @method initWithFrames
- * @param {cc.Animation3D} arg0
- * @param {int} arg1
- * @param {int} arg2
- * @param {float} arg3
- * @return {bool}
- */
-initWithFrames : function (
-animation3d, 
-int, 
-int, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method getOriginInterval
- * @return {float}
- */
-getOriginInterval : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setSpeed
- * @param {float} arg0
- */
-setSpeed : function (
-float 
-)
-{
-},
-
-/**
- * @method init
-* @param {cc.Animation3D|cc.Animation3D} animation3d
-* @param {float} float
-* @param {float} float
-* @return {bool|bool}
-*/
-init : function(
-animation3d,
-float,
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method setOriginInterval
- * @param {float} arg0
- */
-setOriginInterval : function (
-float 
-)
-{
-},
-
-/**
- * @method getWeight
- * @return {float}
- */
-getWeight : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method create
-* @param {cc.Animation3D|cc.Animation3D} animation3d
-* @param {float} float
-* @param {float} float
-* @return {cc.Animate3D|cc.Animate3D}
-*/
-create : function(
-animation3d,
-float,
-float 
-)
-{
-    return cc.Animate3D;
-},
-
-/**
- * @method getTransitionTime
- * @return {float}
- */
-getTransitionTime : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method createWithFrames
- * @param {cc.Animation3D} arg0
- * @param {int} arg1
- * @param {int} arg2
- * @param {float} arg3
- * @return {cc.Animate3D}
- */
-createWithFrames : function (
-animation3d, 
-int, 
-int, 
-float 
-)
-{
-    return cc.Animate3D;
-},
-
-/**
- * @method setTransitionTime
- * @param {float} arg0
- */
-setTransitionTime : function (
-float 
-)
-{
-},
-
-/**
- * @method Animate3D
- * @constructor
- */
-Animate3D : function (
-)
-{
-},
-
-};
-
-/**
  * @class AttachNode
  */
 jsb.AttachNode = {
@@ -1102,6 +1122,353 @@ mode
  * @constructor
  */
 BillBoard : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TextureCube
+ */
+jsb.TextureCube = {
+
+/**
+ * @method reloadTexture
+ * @return {bool}
+ */
+reloadTexture : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @return {cc.TextureCube}
+ */
+create : function (
+str, 
+str, 
+str, 
+str, 
+str, 
+str 
+)
+{
+    return cc.TextureCube;
+},
+
+/**
+ * @method TextureCube
+ * @constructor
+ */
+TextureCube : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Skybox
+ */
+jsb.Skybox = {
+
+/**
+ * @method reload
+ */
+reload : function (
+)
+{
+},
+
+/**
+ * @method init
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @return {bool|bool}
+*/
+init : function(
+str,
+str,
+str,
+str,
+str,
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method setTexture
+ * @param {cc.TextureCube} arg0
+ */
+setTexture : function (
+texturecube 
+)
+{
+},
+
+/**
+ * @method create
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @return {cc.Skybox|cc.Skybox}
+*/
+create : function(
+str,
+str,
+str,
+str,
+str,
+str 
+)
+{
+    return cc.Skybox;
+},
+
+/**
+ * @method Skybox
+ * @constructor
+ */
+Skybox : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Terrain
+ */
+jsb.Terrain = {
+
+/**
+ * @method initHeightMap
+ * @param {char} arg0
+ * @return {bool}
+ */
+initHeightMap : function (
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method getIntersectionPoint
+ * @param {cc.Ray} arg0
+ * @return {vec3_object}
+ */
+getIntersectionPoint : function (
+ray 
+)
+{
+    return cc.Vec3;
+},
+
+/**
+ * @method setAlphaMap
+ * @param {cc.Texture2D} arg0
+ */
+setAlphaMap : function (
+texture2d 
+)
+{
+},
+
+/**
+ * @method setSkirtHeightRatio
+ * @param {float} arg0
+ */
+setSkirtHeightRatio : function (
+float 
+)
+{
+},
+
+/**
+ * @method convertToTerrainSpace
+ * @param {vec2_object} arg0
+ * @return {vec2_object}
+ */
+convertToTerrainSpace : function (
+vec2 
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method getHeight
+* @param {vec2_object|float} vec2
+* @param {vec3_object|float} vec3
+* @param {vec3_object} vec3
+* @return {float|float}
+*/
+getHeight : function(
+float,
+float,
+vec3 
+)
+{
+    return 0;
+},
+
+/**
+ * @method initTextures
+ * @return {bool}
+ */
+initTextures : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method initProperties
+ * @return {bool}
+ */
+initProperties : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getNormal
+ * @param {int} arg0
+ * @param {int} arg1
+ * @return {vec3_object}
+ */
+getNormal : function (
+int, 
+int 
+)
+{
+    return cc.Vec3;
+},
+
+/**
+ * @method setDrawWire
+ * @param {bool} arg0
+ */
+setDrawWire : function (
+bool 
+)
+{
+},
+
+/**
+ * @method reload
+ */
+reload : function (
+)
+{
+},
+
+/**
+ * @method setDetailMap
+ * @param {unsigned int} arg0
+ * @param {cc.Terrain::DetailMap} arg1
+ */
+setDetailMap : function (
+int, 
+map 
+)
+{
+},
+
+/**
+ * @method getImageHeight
+ * @param {int} arg0
+ * @param {int} arg1
+ * @return {float}
+ */
+getImageHeight : function (
+int, 
+int 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getMinHeight
+ * @return {float}
+ */
+getMinHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setLODDistance
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ */
+setLODDistance : function (
+float, 
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method resetHeightMap
+ * @param {char} arg0
+ */
+resetHeightMap : function (
+char 
+)
+{
+},
+
+/**
+ * @method getMaxHeight
+ * @return {float}
+ */
+getMaxHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setMaxDetailMapAmount
+ * @param {int} arg0
+ */
+setMaxDetailMapAmount : function (
+int 
+)
+{
+},
+
+/**
+ * @method setIsEnableFrustumCull
+ * @param {bool} arg0
+ */
+setIsEnableFrustumCull : function (
+bool 
 )
 {
 },

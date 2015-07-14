@@ -3027,6 +3027,16 @@ clone : function (
 },
 
 /**
+ * @method setTweenType
+ * @param {cc.tweenfunc::TweenType} arg0
+ */
+setTweenType : function (
+tweentype 
+)
+{
+},
+
+/**
  * @method setNode
  * @param {cc.Node} arg0
  */
@@ -3054,6 +3064,16 @@ isEnterWhenPassed : function (
 )
 {
     return false;
+},
+
+/**
+ * @method getTweenType
+ * @return {cc.tweenfunc::TweenType}
+ */
+getTweenType : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -4176,14 +4196,6 @@ timeline
 },
 
 /**
- * @method clearFrameEventCallFunc
- */
-clearFrameEventCallFunc : function (
-)
-{
-},
-
-/**
  * @method setLastFrameCallFunc
  * @param {function} arg0
  */
@@ -4191,6 +4203,18 @@ setLastFrameCallFunc : function (
 func 
 )
 {
+},
+
+/**
+ * @method IsAnimationInfoExists
+ * @param {String} arg0
+ * @return {bool}
+ */
+IsAnimationInfoExists : function (
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -4312,15 +4336,11 @@ bool
 },
 
 /**
- * @method IsAnimationInfoExists
- * @param {String} arg0
- * @return {bool}
+ * @method clearFrameEventCallFunc
  */
-IsAnimationInfoExists : function (
-str 
+clearFrameEventCallFunc : function (
 )
 {
-    return false;
 },
 
 /**

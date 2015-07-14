@@ -77,19 +77,37 @@ var LocalStorageTest = SysTestBase.extend({
 
         var key = 'key_' + Math.random();
         var ls = cc.sys.localStorage;
-        cc.log(1);
+        cc.log("- Adding items");
         ls.setItem(key, "Hello world");
+        var key1 = "1" + key;
+        ls.setItem(key1, "Hello JavaScript");
+        var key2 = "2" + key;
+        ls.setItem(key2, "Hello Cocos2d-JS");
+        var key3 = "3" + key;
+        ls.setItem(key3, "Hello Cocos");
 
-        cc.log(2);
+        cc.log("- Getting Hello world");
         var r = ls.getItem(key);
         cc.log(r);
 
-        cc.log(3);
+        cc.log("- Removing Hello world");
         ls.removeItem(key);
 
-        cc.log(4);
+        cc.log("- Getting Hello world");
         r = ls.getItem(key);
         cc.log(r);
+
+        cc.log("- Getting other items");
+        cc.log( ls.getItem(key1) );
+        cc.log( ls.getItem(key2) );
+        cc.log( ls.getItem(key3) );
+
+        cc.log("- Clearing local storage");
+        ls.clear();
+        cc.log("- Getting other items");
+        cc.log( ls.getItem(key1) );
+        cc.log( ls.getItem(key2) );
+        cc.log( ls.getItem(key3) );
     }
 
 });
@@ -270,6 +288,11 @@ var RestartGameLayerTest = SysTestBase.extend({
     }
 });
 
+//------------------------------------------------------------------
+//
+// Open URL test
+//
+//------------------------------------------------------------------
 var OpenURLTest = SysTestBase.extend({
     getTitle:function(){
         return "Open URL Test";
@@ -296,6 +319,47 @@ var OpenURLTest = SysTestBase.extend({
     }
 });
 
+//------------------------------------------------------------------
+//
+// Check object valid test
+//
+//------------------------------------------------------------------
+var ValidObjectTest = SysTestBase.extend({
+    getTitle:function(){
+        return "Check Object Valid Test";
+    },
+    _subtitle:"Object1 should be valid, object2 shouldn't be valid",
+
+    label: null,
+    obj1: null,
+    obj2: null,
+
+    ctor:function(){
+        this._super();
+        
+        this.label = new cc.LabelTTF("Wait for result", "Arial", 22);
+        this.addChild(this.label);
+        this.label.setPosition(cc.winSize.width/2, cc.winSize.height/2);
+
+        this.obj1 = new cc.Node();
+        this.addChild(this.obj1);
+        this.obj2 = new cc.Node();
+
+        this.scheduleOnce(this.check, 1);
+    },
+
+    check: function () {
+        if (!cc.sys.isNative) {
+            // Manually disvalid the object2 in web engine
+            this.obj2 = null;
+        }
+        this.label.string = "Object 1 "
+                     + (cc.sys.isObjectValid(this.obj1) ? "is valid" : "isn't valid")
+                     + "\nObject 2 "
+                     + (cc.sys.isObjectValid(this.obj2) ? "is valid" : "isn't valid");
+    }
+});
+
 //
 // Flow control
 //
@@ -303,7 +367,8 @@ var OpenURLTest = SysTestBase.extend({
 var arrayOfSysTest = [
     LocalStorageTest,
     CapabilitiesTest,
-    OpenURLTest
+    OpenURLTest,
+    ValidObjectTest
 ];
 
 if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {

@@ -34,11 +34,11 @@ public:
     JSB_HeapValueWrapper(JSContext* cx, JS::HandleValue value):_cx(cx), _data(value){
         JS::AddValueRoot(_cx, &_data);
     }
-    
+
     ~JSB_HeapValueWrapper(){
         JS::RemoveValueRoot(_cx, &_data);
     }
-    
+
     JS::Value get(){
         return _data.get();
     }
@@ -58,25 +58,25 @@ static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval
         std::function<void(Sprite3D*, void*)> callback;
         std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.get(argc == 4 ? 2 : 3).toObjectOrNull(), args.get(argc == 4 ? 1 : 2)));
         auto lambda = [=](Sprite3D* larg0, void* larg1) -> void{
-            
+
             jsval largv[2];
             js_proxy_t* proxy = js_get_or_create_proxy(cx, larg0);
             largv[0] = proxy ? OBJECT_TO_JSVAL(proxy->obj) : JS::UndefinedValue();
             JSB_HeapValueWrapper* v = (JSB_HeapValueWrapper*)larg1;
             largv[1] = v->get();
-            
+
             JS::RootedValue rval(cx);
 		    bool ok = func->invoke(2, largv, &rval);
 		    if (!ok && JS_IsExceptionPending(cx)) {
 		        JS_ReportPendingException(cx);
 		    }
-            
+
             delete v;
         };
         callback = lambda;
-        
+
         JSB_HeapValueWrapper* data = new JSB_HeapValueWrapper(cx, args.get(argc == 4 ? 3 : 4));
-        
+
         if(argc == 4)
             cocos2d::Sprite3D::createAsync(modelPath, callback, data);
         else
@@ -87,7 +87,7 @@ static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval
         }
         return true;
     }
-    
+
     JS_ReportError(cx, "wrong number of arguments");
     return false;
 }
@@ -142,18 +142,166 @@ bool js_cocos2dx_Mesh_getMeshVertexAttribute(JSContext *cx, uint32_t argc, jsval
     return false;
 }
 
+bool js_cocos2dx_CCTextureCube_setTexParameters(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    TextureCube* cobj = (TextureCube*)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, cobj)
+
+    if (argc == 4)
+    {
+        bool ok = true;
+
+        GLuint arg0, arg1, arg2, arg3;
+
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint32(cx, args.get(2), &arg2);
+        ok &= jsval_to_uint32(cx, args.get(3), &arg3);
+
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        Texture2D::TexParams param = { arg0, arg1, arg2, arg3 };
+
+        cobj->setTexParameters(param);
+
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+
+bool jsval_to_DetailMap(JSContext* cx, JS::HandleValue v, Terrain::DetailMap* ret)
+{
+    JS::RootedObject jsobj(cx, v.toObjectOrNull());
+
+    JS::RootedValue js_file(cx);
+    JS::RootedValue js_size(cx);
+
+    std::string file;
+    double size;
+
+    bool ok = JS_GetProperty(cx, jsobj, "file", &js_file) &&
+            JS_GetProperty(cx, jsobj, "size", &js_size) &&
+            jsval_to_std_string(cx, js_file, &file) &&
+            JS::ToNumber(cx, js_size, &size);
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+    ret->_detailMapSrc = file;
+    ret->_detailMapSize = size;
+
+    return true;
+}
+
+bool jsval_to_TerrainData(JSContext* cx, JS::HandleValue v, Terrain::TerrainData* ret)
+{
+    JS::RootedObject jsobj(cx, v.toObjectOrNull());
+
+    JS::RootedValue js_heightMap(cx);
+    JS::RootedValue js_alphaMap(cx);
+    JS::RootedValue js_chunkSize(cx);
+    JS::RootedValue js_mapHeight(cx);
+    JS::RootedValue js_mapScale(cx);
+    JS::RootedValue js_detailMap(cx);
+
+    std::string heightMap, alphaMap;
+    Size chunkSize;
+    double mapScale, mapHeight;
+
+    bool ok = true;
+    ok &= JS_GetProperty(cx, jsobj, "heightMap", &js_heightMap) &&
+        JS_GetProperty(cx, jsobj, "alphaMap", &js_alphaMap) &&
+        JS_GetProperty(cx, jsobj, "chunkSize", &js_chunkSize) &&
+        JS_GetProperty(cx, jsobj, "mapHeight", &js_mapHeight) &&
+        JS_GetProperty(cx, jsobj, "mapScale", &js_mapScale) &&
+        JS_GetProperty(cx, jsobj, "detailMap", &js_detailMap) &&
+        jsval_to_std_string(cx, js_heightMap, &heightMap) &&
+        jsval_to_std_string(cx, js_alphaMap, &alphaMap) &&
+        jsval_to_ccsize(cx, js_chunkSize, &chunkSize) &&
+        JS::ToNumber(cx, js_mapScale, &mapScale) &&
+        JS::ToNumber(cx, js_mapHeight, &mapHeight);
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+    ret->_heightMapSrc = heightMap.c_str();
+    char* tmp = (char*)malloc(sizeof(char) * (alphaMap.size() + 1));
+    strcpy(tmp, alphaMap.c_str());
+    tmp[alphaMap.size()] = '\0';
+    ret->_alphaMapSrc = tmp;
+    ret->_chunkSize = chunkSize;
+    ret->_mapHeight = mapHeight;
+    ret->_mapScale = mapScale;
+    ret->_skirtHeightRatio = 1;
+
+    JS::RootedObject jsobj_detailMap(cx, js_detailMap.toObjectOrNull());
+    uint32_t length = 0;
+    JS_GetArrayLength(cx, jsobj_detailMap, &length);
+    for(uint32_t i = 0; i < length; ++i)
+    {
+        JS::RootedValue element(cx);
+        JS_GetElement(cx, jsobj_detailMap, i, &element);
+
+        Terrain::DetailMap dm;
+        jsval_to_DetailMap(cx, element, &dm);
+        ret->_detailMaps[i] = dm;
+    }
+    ret->_detailMapAmount = length;
+
+    return true;
+}
+
+bool js_cocos2dx_Terrain_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if(argc == 1 || argc == 2)
+    {
+        bool ok = true;
+        Terrain* ret = nullptr;
+
+        Terrain::TerrainData arg0;
+        ok &= jsval_to_TerrainData(cx, args.get(0), &arg0);
+        if(argc == 1)
+        {
+            JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+            ret = Terrain::create(arg0);
+        }
+        else if(argc == 2)
+        {
+            Terrain::CrackFixedType arg1;
+            ok &= jsval_to_int32(cx, args.get(1), (int32_t*)&arg1);
+            JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+            ret = Terrain::create(arg0, arg1);
+        }
+
+        js_proxy_t *jsProxy = js_get_or_create_proxy<Terrain>(cx, (Terrain*)ret);
+        args.rval().set(OBJECT_TO_JSVAL(jsProxy->obj));
+        return true;
+    }
+    JS_ReportError(cx, "wrong number of arguments");
+    return false;
+}
+
 void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
 {
     JS::RootedValue tmpVal(cx);
     JS::RootedObject ccObj(cx);
     JS::RootedObject tmpObj(cx);
     get_or_create_js_obj(cx, global, "jsb", &ccObj);
-    
+
     JS_GetProperty(cx, ccObj, "Sprite3D", &tmpVal);
     tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "createAsync", js_cocos2dx_Sprite3D_createAsync, 4, JSPROP_READONLY | JSPROP_PERMANENT);
 
+    JS_GetProperty(cx, ccObj, "Terrain", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
+    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_Terrain_create, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Sprite3D_prototype), "getAABB", js_cocos2dx_Sprite3D_getAABB, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Mesh_prototype), "getMeshVertexAttribute", js_cocos2dx_Mesh_getMeshVertexAttribute, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+
+    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_TextureCube_prototype), "setTexParameters", js_cocos2dx_CCTextureCube_setTexParameters, 4, JSPROP_READONLY | JSPROP_PERMANENT);
 }

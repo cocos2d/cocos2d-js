@@ -24,11 +24,15 @@ bool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     std::string ret_val;
 
-    ret_val = localStorageGetItem(arg0);
-
-    jsval ret_jsval = std_string_to_jsval(cx, ret_val);
-    args.rval().set(ret_jsval);
-
+    ok = localStorageGetItem(arg0, &ret_val);
+    if (ok) {
+        jsval ret_jsval = std_string_to_jsval(cx, ret_val);
+        args.rval().set(ret_jsval);
+    }
+    else {
+        args.rval().set(JSVAL_NULL);
+    }
+    
     return true;
 }
 
@@ -61,6 +65,17 @@ bool JSB_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     localStorageSetItem(arg0 , arg1);
+    args.rval().setUndefined();
+    return true;
+}
+
+// Arguments: char*, char*
+// Ret value: void
+bool JSB_localStorageClear(JSContext *cx, uint32_t argc, jsval *vp) {
+    JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+
+    localStorageClear();
     args.rval().setUndefined();
     return true;
 }

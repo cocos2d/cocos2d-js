@@ -2028,13 +2028,14 @@ bool js_CCScheduler_unscheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsva
     return false;
 }
 
-bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_CCScheduler_scheduleCallbackForTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc >= 2) {
         bool ok = true;
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
         
-        JSObject *obj = JS_THIS_OBJECT(cx, vp);
+        JS::RootedObject obj(cx);
+        obj = args.thisv().toObjectOrNull();
         js_proxy_t *proxy = jsb_get_js_proxy(obj);
         cocos2d::Scheduler *sched = (cocos2d::Scheduler *)(proxy ? proxy->ptr : NULL);
         
@@ -2086,7 +2087,7 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
                 break;
             }
         }
-
+        
         if (!bFound)
         {
             tmpCObj = new JSScheduleWrapper();
@@ -2102,6 +2103,87 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         }
         
         sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCObj, interval, repeat, delay, paused);
+        
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "wrong number of arguments");
+    return false;
+}
+
+bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc >= 2) {
+        bool ok = true;
+        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+        
+        JS::RootedObject obj(cx);
+        obj = args.thisv().toObjectOrNull();
+        js_proxy_t *proxy = jsb_get_js_proxy(obj);
+        cocos2d::Scheduler *sched = (cocos2d::Scheduler *)(proxy ? proxy->ptr : NULL);
+        
+        JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
+        
+        std::function<void (float)> callback;
+        do {
+            if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+            {
+                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, tmpObj, args.get(0)));
+                auto lambda = [=](float larg0) -> void {
+                    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+                    jsval largv[1];
+                    largv[0] = DOUBLE_TO_JSVAL(larg0);
+                    JS::RootedValue rval(cx);
+                    bool ok = func->invoke(1, &largv[0], &rval);
+                    if (!ok && JS_IsExceptionPending(cx)) {
+                        JS_ReportPendingException(cx);
+                    }
+                };
+                callback = lambda;
+            }
+            else
+            {
+                ok = false;
+                callback = nullptr;
+            }
+        } while(0);
+        
+        double interval = 0;
+        if( argc >= 3 ) {
+            ok &= JS::ToNumber(cx, JS::RootedValue(cx, args.get(2)), &interval );
+        }
+        
+        //
+        // repeat
+        //
+        double repeat = kRepeatForever;
+        if( argc >= 4 ) {
+            ok &= JS::ToNumber(cx, JS::RootedValue(cx, args.get(3)), &repeat );
+        }
+        
+        //
+        // delay
+        //
+        double delay = 0;
+        if( argc >= 5 ) {
+            ok &= JS::ToNumber(cx, JS::RootedValue(cx, args.get(4)), &delay );
+        }
+        
+        bool paused = false;
+        
+        if( argc >= 6 ) {
+            paused = JS::ToBoolean(JS::RootedValue(cx,  args.get(5)));
+        }
+        
+        std::string key;
+        
+        if( argc >= 7 ) {
+            ok &= jsval_to_std_string(cx, args.get(6), &key);
+        }
+        
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+        
+        sched->schedule(callback, tmpObj, interval, repeat, delay, paused, key);
                 
         args.rval().setUndefined();
         return true;
@@ -2120,22 +2202,32 @@ bool js_CCScheduler_unscheduleCallbackForTarget(JSContext *cx, uint32_t argc, js
     
     if (argc == 2) {
         do {
-            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
-            
-            __Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
-            // If there aren't any targets, just return true.
-            // Otherwise, the for loop will break immediately.
-            // It will lead to logic errors.
-            // For details to reproduce it, please refer to SchedulerTest/SchedulerUpdate.
-            if(! arr) return true;
-            
-            JSScheduleWrapper* wrapper = NULL;
-            for(ssize_t i = 0; i < arr->count(); ++i) {
-                wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
-                if(wrapper && wrapper->getJSCallbackFunc() == args.get(1)) {
-                    cobj->unschedule(schedule_selector(JSScheduleWrapper::scheduleFunc), wrapper);
-                    JSScheduleWrapper::removeTargetForJSObject(tmpObj, wrapper);
-                    break;
+            if (args.get(0).isString()) {
+                std::string key;
+                bool ok = jsval_to_std_string(cx, args.get(0), &key);
+                JSB_PRECONDITION2(ok, cx, false, "Error processing argument: key");
+                
+                JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
+                cobj->unschedule(key, tmpObj);
+            }
+            else {
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
+                
+                __Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
+                // If there aren't any targets, just return true.
+                // Otherwise, the for loop will break immediately.
+                // It will lead to logic errors.
+                // For details to reproduce it, please refer to SchedulerTest/SchedulerUpdate.
+                if(! arr) return true;
+                
+                JSScheduleWrapper* wrapper = NULL;
+                for(ssize_t i = 0; i < arr->count(); ++i) {
+                    wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
+                    if(wrapper && wrapper->getJSCallbackFunc() == args.get(1)) {
+                        cobj->unschedule(schedule_selector(JSScheduleWrapper::scheduleFunc), wrapper);
+                        JSScheduleWrapper::removeTargetForJSObject(tmpObj, wrapper);
+                        break;
+                    }
                 }
             }
         } while (0);
@@ -2549,6 +2641,56 @@ bool js_cocos2dx_CCNode_resume(JSContext *cx, uint32_t argc, jsval *vp)
 
     JS_ReportError(cx, "js_cocos2dx_Node_resume : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
+}
+
+bool js_cocos2dx_CCNode_convertToWorldSpace(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CCNode_convertToWorldSpace : Invalid Native Object");
+    cocos2d::Vec2 arg0;
+    if (argc == 1) {
+        ok &= jsval_to_vector2(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CCNode_convertToWorldSpace : Error processing arguments");
+    }
+    else if (argc != 0) {
+        JS_ReportError(cx, "js_cocos2dx_CCNode_convertToWorldSpace : wrong number of arguments: %d, was expecting 0 or 1", argc);
+        return false;
+    }
+    
+    cocos2d::Vec2 ret = cobj->convertToWorldSpace(arg0);
+    jsval jsret = JSVAL_NULL;
+    jsret = vector2_to_jsval(cx, ret);
+    args.rval().set(jsret);
+    return true;
+}
+
+bool js_cocos2dx_CCNode_convertToWorldSpaceAR(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CCNode_convertToWorldSpaceAR : Invalid Native Object");
+    cocos2d::Vec2 arg0;
+    if (argc == 1) {
+        ok &= jsval_to_vector2(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CCNode_convertToWorldSpaceAR : Error processing arguments");
+    }
+    else if (argc != 0) {
+        JS_ReportError(cx, "js_cocos2dx_CCNode_convertToWorldSpaceAR : wrong number of arguments: %d, was expecting 0 or 1", argc);
+        return false;
+    }
+    
+    cocos2d::Vec2 ret = cobj->convertToWorldSpaceAR(arg0);
+    jsval jsret = JSVAL_NULL;
+    jsret = vector2_to_jsval(cx, ret);
+    args.rval().set(jsret);
+    return true;
 }
 
 bool js_cocos2dx_Component_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
@@ -5240,6 +5382,8 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, tmpObj, "setColor", js_cocos2dx_CCNode_setColor, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "pause", js_cocos2dx_CCNode_pause, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "resume", js_cocos2dx_CCNode_resume, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "convertToWorldSpace", js_cocos2dx_CCNode_convertToWorldSpace, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "convertToWorldSpaceAR", js_cocos2dx_CCNode_convertToWorldSpaceAR, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "setAdditionalTransform", js_cocos2dx_Node_setAdditionalTransform, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     tmpObj.set(jsb_cocos2d_EventListener_prototype);
@@ -5274,10 +5418,12 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, tmpObj, "resumeTarget", js_cocos2dx_CCScheduler_resumeTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "pauseTarget", js_cocos2dx_CCScheduler_pauseTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "scheduleUpdateForTarget", js_CCScheduler_scheduleUpdateForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "unscheduleUpdateForTarget", js_CCScheduler_unscheduleUpdateForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "scheduleCallbackForTarget", js_CCScheduler_schedule, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "unscheduleCallbackForTarget", js_CCScheduler_unscheduleCallbackForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "unscheduleAllCallbacksForTarget", js_cocos2dx_CCScheduler_unscheduleAllSelectorsForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unscheduleUpdate", js_CCScheduler_unscheduleUpdateForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "schedule", js_CCScheduler_schedule, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "scheduleCallbackForTarget", js_CCScheduler_scheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unschedule", js_CCScheduler_unscheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unscheduleCallbackForTarget", js_CCScheduler_unscheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unscheduleAllForTarget", js_cocos2dx_CCScheduler_unscheduleAllSelectorsForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "unscheduleAllCallbacks", js_cocos2dx_CCScheduler_unscheduleAll, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "unscheduleAllCallbacksWithMinPriority", js_cocos2dx_CCScheduler_unscheduleAllCallbacksWithMinPriority, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "isTargetPaused", js_cocos2dx_CCScheduler_isTargetPaused, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);

@@ -3222,7 +3222,7 @@ bool js_cocos2dx_ui_Button_getTitleText(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::ui::Button* cobj = (cocos2d::ui::Button *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getTitleText : Invalid Native Object");
     if (argc == 0) {
-        const std::string& ret = cobj->getTitleText();
+        const std::string ret = cobj->getTitleText();
         jsval jsret = JSVAL_NULL;
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
@@ -3755,7 +3755,7 @@ bool js_cocos2dx_ui_Button_getTitleFontName(JSContext *cx, uint32_t argc, jsval 
     cocos2d::ui::Button* cobj = (cocos2d::ui::Button *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getTitleFontName : Invalid Native Object");
     if (argc == 0) {
-        const std::string& ret = cobj->getTitleFontName();
+        const std::string ret = cobj->getTitleFontName();
         jsval jsret = JSVAL_NULL;
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
@@ -5158,17 +5158,34 @@ bool js_cocos2dx_ui_Text_getString(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_ui_Text_disableEffect(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ui::Text* cobj = (cocos2d::ui::Text *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_disableEffect : Invalid Native Object");
-    if (argc == 0) {
-        cobj->disableEffect();
-        args.rval().setUndefined();
-        return true;
-    }
+    bool ok = true;
 
-    JS_ReportError(cx, "js_cocos2dx_ui_Text_disableEffect : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS::RootedObject obj(cx);
+    cocos2d::ui::Text* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocos2d::ui::Text *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_disableEffect : Invalid Native Object");
+    do {
+        if (argc == 1) {
+            cocos2d::LabelEffect arg0;
+            ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+            if (!ok) { ok = true; break; }
+            cobj->disableEffect(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 0) {
+            cobj->disableEffect();
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_ui_Text_disableEffect : wrong number of arguments");
     return false;
 }
 bool js_cocos2dx_ui_Text_getTextColor(JSContext *cx, uint32_t argc, jsval *vp)

@@ -31,7 +31,7 @@ class JSAddonId;
 
 struct jsid;
 
-typedef char16_t jschar;
+typedef wchar_t jschar;
 
 namespace JS {
 
