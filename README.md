@@ -1,3 +1,7 @@
+
+*** 2/27/2016 - This repository is no longer active. Cocos2d-JS was merged with Cocos2d-x starting at version 3.7.
+*** please go [here](https://github.com/cocos2d/cocos2d-x)
+
 <img src="http://cocos2d-x.org/s/images/img-cocos2djs.jpg" width=200>
 
 Cocos2d-JS
