@@ -28,6 +28,14 @@
     var currentTestingArray = null;
 
     var testingItems = {
+        "UIVideoPlayerTest": [
+            {
+                title: "UIVideoPlayerTest",
+                func: function () {
+                    return new UIVideoPlayerTest();
+                }
+            }
+        ],
         "UIButton": [
             {
                 title: "UIButtonTest",

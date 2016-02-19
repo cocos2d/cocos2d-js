@@ -954,7 +954,8 @@ var g_ui = [
     "res/cocosui/100/1000.plist",
     "res/cocosui/100/1000.png",
     s_s9s_blocks9_plist,
-    "res/cocosui/CloseSelected.png"
+    "res/cocosui/CloseSelected.png",
+    "res/cocosvideo.mp4"
 ];
 
 var g_performace = [
