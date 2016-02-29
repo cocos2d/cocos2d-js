@@ -1,0 +1,96 @@
+{
+    "boot": {
+        "priority": 0,
+        "files": [
+            "res_engine/dialog_bg.png",
+            "res_engine/dialog_cancel_normal.png",
+            "res_engine/dialog_cancel_press.png",
+            "res_engine/dialog_confirm_normal.png",
+            "res_engine/dialog_confirm_press.png",
+            "res_engine/preload_bg.jpg",
+            "res_engine/preload_logo.png",
+            "res_engine/preload_title.png",
+            "res_engine/progress_bar.png",
+            "res_engine/progress_bg.png",
+            "res_engine/progress_light.png",
+            "res_engine/progress_shadow.png",
+            "res/dialog_bg.png",
+            "res/dialog_cancel_normal.png",
+            "res/dialog_cancel_press.png",
+            "res/dialog_confirm_normal.png",
+            "res/dialog_confirm_press.png",
+            "res/flare.jpg",
+            "res/loading.png",
+            "res/logoBack.png",
+            "res/logo.png",
+            "res/menu.png",
+            "res/Music/buttonEffet.mp3",
+            "res/Music/buttonEffet.ogg",
+            "res/Music/mainMainMusic.mp3",
+            "res/Music/mainMainMusic.ogg",
+            "res/textureTransparentPack.plist",
+            "res/textureTransparentPack.png",
+            "src/AboutLayer.js",
+            "src/Background.js",
+            "src/Bullet.js",
+            "src/config/EnemyType.js",
+            "src/config/GameConfig.js",
+            "src/config/Level.js",
+            "src/Effect.js",
+            "src/Enemy.js",
+            "src/Explosion.js",
+            "src/GameController.js",
+            "src/GameControlMenu.js",
+            "src/GameLayer.js",
+            "src/GameOver.js",
+            "src/HitEffect.js",
+            "src/LevelManager.js",
+            "src/Resource.js",
+            "src/SettingsLayer.js",
+            "src/Ship.js",
+            "src/SparkEffect.js",
+            "src/SysMenu.js"
+        ]
+    },
+
+    "common": {
+        "priority": 1,
+        "files": [
+            "res/menuTitle.png"
+        ]
+    },
+
+    "gamelayer": {
+        "priority": 2,
+        "files": [
+            "res/arial-14.fnt",
+            "res/arial-14.GlyphProject",
+            "res/arial-14.png",
+            "res/b01.plist",
+            "res/b01.png",
+            "res/explode.plist",
+            "res/explosion.plist",
+            "res/explosion.png",
+            "res/level01.tmx",
+            "res/Music/bgMusic.mp3",
+            "res/Music/bgMusic.ogg",
+            "res/Music/explodeEffect.mp3",
+            "res/Music/explodeEffect.ogg",
+            "res/Music/fireEffect.mp3",
+            "res/Music/fireEffect.ogg",
+            "res/Music/shipDestroyEffect.mp3",
+            "res/Music/shipDestroyEffect.ogg",
+            "res/textureOpaquePack.plist",
+            "res/textureOpaquePack.png"
+        ]
+    },
+
+    "gameover": {
+        "priority": 3,
+        "files": [
+            "res/cocos2d-html5.png",
+            "res/gameOver.png",
+            "res/gameoverBack.png"
+        ]
+    }
+}
