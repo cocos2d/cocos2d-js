@@ -56,6 +56,7 @@ import subprocess
 from optparse import OptionParser
 
 COCOS_CONSOLE_ROOT = 'COCOS_CONSOLE_ROOT'
+COCOS_JS_ROOT = 'COCOS_JS_ROOT'
 NDK_ROOT = 'NDK_ROOT'
 ANDROID_SDK_ROOT = 'ANDROID_SDK_ROOT'
 ANT_ROOT = 'ANT_ROOT'
@@ -460,6 +461,28 @@ class SetEnvVar(object):
 
             self._force_update_env(COCOS_CONSOLE_ROOT, cocos_consle_root)
 
+    def set_cocos_js_root(self):
+        print("->Check environment variable %s" % COCOS_JS_ROOT)
+        cocos_js_root = self.current_absolute_path
+        old_dir = self._find_environment_variable(COCOS_JS_ROOT)
+        if old_dir is None:
+            # add environment variable
+            if self._isWindows():
+                self.set_windows_path(cocos_js_root)
+
+            self._set_environment_variable(COCOS_JS_ROOT, cocos_js_root)
+        else:
+            if old_dir == cocos_js_root:
+                # is same with before, nothing to do
+                return
+
+            # update the environment variable
+            if self._isWindows():
+                self.remove_dir_from_win_path(old_dir)
+                self.set_windows_path(cocos_js_root)
+
+            self._force_update_env(COCOS_JS_ROOT, cocos_js_root)
+
     def _force_update_unix_env(self, var_name, value):
         import re
         home = os.path.expanduser('~')
@@ -600,6 +623,7 @@ class SetEnvVar(object):
         self.file_used_for_setup = self._get_filepath_for_setup()
         
         self.set_console_root()
+        self.set_cocos_js_root()
 
         if self._isWindows():
             print('->Configuration for Android platform only, you can also skip and manually edit your environment variables\n')
