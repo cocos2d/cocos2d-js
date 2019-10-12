@@ -65,7 +65,7 @@ Example:
     $ cocos new MyGame -l js -d /directory/to/project
     $ cd /directory/to/project/MyGame
 
-###Run the project under the game directory
+### Run the project under the game directory
 
 * Run Cocos2d-html5 project with a Websever:
 
@@ -86,7 +86,7 @@ And if you have any doubt about the usage, please use `-h` with any command to h
 
 You can also use prebuilt Xcode or Visual Studio projects which are located in `Game/frameworks/runtime-src/proj.xxx`
 
-##Folder structure of new project
+## Folder structure of new project
 
 - frameworks
     - cocos2d-html5     : Cocos2d-JS html5 engine source
@@ -120,7 +120,7 @@ run -p ios|mac|android|win32|web
 
 And they share the same project files which are located in `build` folder, there are Xcode and Visual Studio projects.
 
-##Main features
+## Main features
 
    * Support All modern browsers and native platforms
    * Scene management (workflow)
@@ -161,7 +161,7 @@ For JSB build, there are some restrictions :
 - [Android build] NDK version must be r10c
 - [iOS build] Xcode version must be 5.1.1 +
 
-##Github note
+## Github note
 
 If you fork our github repository or download the package from github, you will need to do some extra tasks:
 
