@@ -23,7 +23,7 @@ bool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp) {
     ok &= jsval_to_std_string( cx, args.get(0), &arg0 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     std::string ret_val;
-
+#if(CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
     ok = localStorageGetItem(arg0, &ret_val);
     if (ok) {
         jsval ret_jsval = std_string_to_jsval(cx, ret_val);
@@ -32,7 +32,11 @@ bool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp) {
     else {
         args.rval().set(JSVAL_NULL);
     }
-    
+#else
+	ret_val = localStorageGetItem(arg0);
+	jsval ret_jsval = std_string_to_jsval(cx, ret_val);
+	args.rval().set(ret_jsval);
+#endif
     return true;
 }
 

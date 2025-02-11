@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var WebSocket = WebSocket || window.WebSocket || window.MozWebSocket; 
+var WebSocket = WebSocket || window.WebSocket || window.MozWebSocket;
 
 var WebSocketTestLayer = cc.Layer.extend({
 

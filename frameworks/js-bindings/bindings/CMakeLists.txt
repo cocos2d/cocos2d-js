@@ -27,6 +27,8 @@ if(WIN32) # Win32
   set(PLATFORM_FOLDER win32)
 elseif(APPLE)# osx or ios
   set(PLATFORM_FOLDER mac)
+elseif(OHOS)
+  set(PLATFORM_FOLDER ohos)
 else() # Assume Linux
   set(PLATFORM_FOLDER linux)
 endif()
@@ -67,7 +69,6 @@ set(JSBINDING_SRC
   manual/3d/jsb_cocos2dx_3d_manual.cpp
   ../cocos2d-x/cocos/storage/local-storage/LocalStorage.cpp
 )
-
 include_directories(
   auto
   manual
@@ -89,6 +90,17 @@ include_directories(
   ../cocos2d-x/cocos/editor-support/cocostudio
   ../cocos2d-x/external/chipmunk/include/chipmunk
 )
+if(OHOS)
+  include_directories(
+      ../cocos2d-x/cocos
+      ../cocos2d-x/external/sqlite3/include
+  )
+  add_library(sqlite3 STATIC IMPORTED)
+  set_target_properties(sqlite3 PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../cocos2d-x/external/sqlite3/libraries/ohos/libsqlite3.a)
+
+  add_library(js_static STATIC IMPORTED)
+  set_target_properties(js_static PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../external/spidermonkey/prebuilt/ohos/libjs_static.a)
+endif()
 
 add_library(jsbindings STATIC
   ${JSBINDING_SRC}

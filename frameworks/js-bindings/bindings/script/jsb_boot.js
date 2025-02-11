@@ -1246,6 +1246,13 @@ cc._initSys = function(config, CONFIG_KEY){
     sys.OS_WINRT = "WINRT";
     /**
      * @memberof cc.sys
+     * @name OS_OH
+     * @constant
+     * @type {string}
+     */
+    sys.OS_OHOS = "OHOS";
+    /**
+     * @memberof cc.sys
      * @name OS_UNKNOWN
      * @constant
      * @type {string}
@@ -1373,6 +1380,14 @@ cc._initSys = function(config, CONFIG_KEY){
      */
     sys.WINRT = 14;
     /**
+     * @memberof cc.sys
+     * @name OH
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.OHOS = 15;
+    /**
      * @constant
      * @default
      * @type {Number}
@@ -1454,7 +1469,7 @@ cc._initSys = function(config, CONFIG_KEY){
         cc.log(str);
     }
 
-    locSys.isMobile = (locSys.os == locSys.OS_ANDROID || locSys.os == locSys.OS_IOS || locSys.os == locSys.OS_WP8 || locSys.os == locSys.OS_WINRT) ? true : false;
+    locSys.isMobile = (locSys.os == locSys.OS_OHOS ||locSys.os == locSys.OS_ANDROID || locSys.os == locSys.OS_IOS || locSys.os == locSys.OS_WP8 || locSys.os == locSys.OS_WINRT) ? true : false;
 
     locSys.language = (function(){
         var language = cc.Application.getInstance().getCurrentLanguage();
