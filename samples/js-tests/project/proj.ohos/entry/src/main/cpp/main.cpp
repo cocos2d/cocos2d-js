@@ -10,7 +10,7 @@ extern "C"
 
 void Cocos2dxRenderer_nativeInit(int w, int h)
 {
-    OHOS_LOGD("Cocos2dxRenderer_nativeInit() - window width:[%d], height:[%d]", w, h);
+    OHOS_LOGD("Cocos2dxRenderer_nativeInit() - window width:[%{public}d], height:[%{public}d]", w, h);
     if (!CCDirector::sharedDirector()->getOpenGLView())
     {
         OHOS_LOGD("Cocos2dxRenderer_nativeInit() - branch 1");
