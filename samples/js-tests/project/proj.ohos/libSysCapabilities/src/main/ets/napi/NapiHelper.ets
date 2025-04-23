@@ -6,7 +6,6 @@ import { ApplicationManager } from '../system/application/ApplicationManager'
 import { CocosEditBox } from '../components/editbox/CocosEditBox'
 import { WebView } from '../components/webview/WebView'
 import { VideoPlayer } from '../components/videoplayer/VideoPlayer'
-import Accelerometer from '../system/sensor/AccelerometerUtils'
 import Preferences from '../preferences/Preferences'
 
 export class NapiHelper {
@@ -17,7 +16,6 @@ export class NapiHelper {
         NapiHelper.registerEditBox(registerFunc);
         NapiHelper.registerWebView(registerFunc);
         NapiHelper.registerVideoPlay(registerFunc);
-        NapiHelper.registerSensor(registerFunc);
         NapiHelper.registerPreferences(registerFunc);
     }
 
@@ -43,6 +41,10 @@ export class NapiHelper {
         registerFunc('DeviceUtils.getOrientation', DeviceUtils.getOrientation);
         registerFunc('DeviceUtils.getCutoutHeight', DeviceUtils.getCutoutHeight);
         registerFunc('DeviceUtils.getCutoutWidth', DeviceUtils.getCutoutWidth);
+        registerFunc('DeviceUtils.getSafeAreaLeft', DeviceUtils.getSafeAreaLeft);
+        registerFunc('DeviceUtils.getSafeAreaTop', DeviceUtils.getSafeAreaTop);
+        registerFunc('DeviceUtils.getSafeAreaWidth', DeviceUtils.getSafeAreaWidth);
+        registerFunc('DeviceUtils.getSafeAreaHeight', DeviceUtils.getSafeAreaHeight);
     }
 
     private static registerEditBox(registerFunc : Function) {
@@ -100,10 +102,7 @@ export class NapiHelper {
         registerFunc('VideoPlayer.setKeepAspectRatioEnabled', VideoPlayer.setKeepAspectRatioEnabled);
     }
 
-    private static registerSensor(registerFunc : Function) {
-        registerFunc('Accelerometer.enable', Accelerometer.enable);
-        registerFunc('Accelerometer.disable', Accelerometer.disable);
-    }
+
 
     private static registerPreferences(registerFunc : Function) {
         registerFunc('Preferences.get', Preferences.get);
